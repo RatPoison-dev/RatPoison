@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-//package com.charlatano.scripts
+package com.charlatano.scripts
 
 import com.charlatano.game.CSGO.clientDLL
 import com.charlatano.game.angle
