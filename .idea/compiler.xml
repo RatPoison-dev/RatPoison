@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="Charlatano_main" target="1.8" />
       <module name="Charlatano_test" target="1.8" />
+      <module name="com.charlatano.Charlatano.main" target="11" />
+      <module name="com.charlatano.Charlatano.test" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
