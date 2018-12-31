@@ -21,6 +21,7 @@ package com.charlatano.scripts.aim
 import com.charlatano.game.*
 import com.charlatano.game.entity.*
 import com.charlatano.game.entity.EntityType.Companion.ccsPlayer
+import com.charlatano.scripts.boneTrigger
 import com.charlatano.settings.*
 import com.charlatano.utils.*
 import org.jire.arrowhead.keyPressed
@@ -39,7 +40,7 @@ internal fun reset() {
 }
 
 internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
-                        lockFOV: Int = AIM_FOV, boneID: Int = HEAD_BONE,
+                        lockFOV: Int = AIM_FOV, BONE: Int = HEAD_BONE,
                         yawOnly: Boolean): Player {
 	var closestFOV = Double.MAX_VALUE
 	var closestDelta = Double.MAX_VALUE
@@ -51,7 +52,7 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			return@result false
 		}
 		
-		val ePos: Angle = entity.bones(boneID)
+		val ePos: Angle = entity.bones(BONE)
 		val distance = position.distanceTo(ePos)
 		
 		val dest = calculateAngle(me, ePos)
@@ -102,7 +103,12 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	
 	val aim = ACTIVATE_FROM_FIRE_KEY && keyPressed(FIRE_KEY)
 	val forceAim = keyPressed(FORCE_AIM_KEY)
-	val pressed = aim or forceAim
+	val boneTrig = ENABLE_BONE_TRIGGER && AIM_ON_BONE_TRIGGER && findTarget(me.position(), clientState.angle(), false, BONE_TRIGGER_FOV, BONE_TRIGGER_BONE, false) >= 0
+
+	if (boneTrig)
+		bone.set(BONE_TRIGGER_BONE)
+
+	val pressed = aim or forceAim or boneTrig
 	var currentTarget = target.get()
 	
 	if (!pressed) {
@@ -134,8 +140,8 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			Thread.sleep(randLong(TARGET_SWAP_MIN_DELAY, TARGET_SWAP_MAX_DELAY))
 		}
 	} else if (currentTarget.onGround() && me.onGround()) {
-		val boneID = bone.get()
-		val bonePosition = currentTarget.bones(boneID)
+		val BONE = bone.get()
+		val bonePosition = currentTarget.bones(BONE)
 		
 		val destinationAngle = calculateAngle(me, bonePosition)
 		if (AIM_ASSIST_MODE) destinationAngle.finalize(currentAngle, AIM_ASSIST_STRICTNESS / 100.0)
