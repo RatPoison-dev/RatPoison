@@ -30,10 +30,12 @@ free and open-source cheating software!
 * Glow ESP (not stream-proof)
 * Humanized bunny hop using scroll input
 * "Flat" aim bot with traditional linear-regression paths (not safe for use on leagues! use "PathAim" instead)
+* Bone trigger aims with specified aimbot
 
 ---
 
 **Beginner's Guide**
+This branch is being updated at [AStupidRat's Github Repository](https://github.com/AStupidRat/Charlatano)
 
 Before doing anything, make sure you have
 [Java Development Kit (JDK) 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
