@@ -32,7 +32,7 @@ fun worldToScreen(from: Vector, vOut: Vector) = try {
 	for (row in 0..3) for (col in 0..3) {
 		val value = buffer.getFloat(offset.toLong())
 		viewMatrix[row][col] = value.toDouble()
-		offset += 4
+		offset = offset+4 //Changed, error but not compd
 	}
 	
 	vOut.x = viewMatrix[0][0] * from.x + viewMatrix[0][1] * from.y + viewMatrix[0][2] * from.z + viewMatrix[0][3]
