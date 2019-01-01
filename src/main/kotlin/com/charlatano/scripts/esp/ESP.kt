@@ -26,4 +26,5 @@ fun esp() {
 	glowEsp()
 	boxEsp()
 	skeletonEsp()
+	chamsEsp()
 }
