@@ -31,6 +31,7 @@ import com.charlatano.utils.Dojo
 import com.sun.jna.platform.win32.WinNT
 import org.jetbrains.kotlin.cli.common.environment.setIdeaIoUseFallback
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.FileReader
 import java.util.*
 
@@ -54,6 +55,7 @@ fun main(args: Array<String>) {
 		GLOW_ESP = false
 		BOX_ESP = false
 		SKELETON_ESP = false
+		CHAMS_ESP = false
 		ENABLE_ESP = false
 		
 		ENABLE_BOMB_TIMER = false
@@ -67,9 +69,21 @@ fun main(args: Array<String>) {
 	
 	val scanner = Scanner(System.`in`)
 	while (!Thread.interrupted()) {
-		when (scanner.nextLine()) {
-			"exit", "quit" -> System.exit(0)
-			"reload" -> loadSettings()
+		val line = scanner.nextLine()
+		when {
+			line == "help" -> println("Available commands: exit/quit, reload, list, read [file name]")
+			line == "exit" || line == "quit" -> System.exit(0)
+			line == "reload" -> loadSettings()
+			line == "list" -> { println(); File(SETTINGS_DIRECTORY).listFiles().forEach { println(it) }; println() }
+			line.startsWith("read") -> {
+				println()
+				try{
+					File(SETTINGS_DIRECTORY + "\\" + line.trim().split(" ".toRegex())[1] +".kts").readLines().forEach { if (!it.startsWith("/") && !it.startsWith("*") && !it.startsWith(" ") && !it.trim().isEmpty() && !it.startsWith("import")) {println(it) } }
+				} catch (e: FileNotFoundException) {
+					println("File not found, use list to see current files")
+				}
+				println()
+			}
 		}
 	}
 }
