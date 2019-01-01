@@ -40,6 +40,13 @@ BOX_ESP = false
  */
 GLOW_ESP = true
 
+/**
+ * Paints the models with their respective colors.
+ *
+ * WARNING: This may cause random game crashes if you enable it.
+ */
+CHAMS_ESP = false
+
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -110,14 +117,7 @@ WEAPON_COLOR = Color(0, 255, 0, 0.5)
  */
 GRENADE_COLOR = Color(0, 255, 0, 1.0)
 
-
-///////////////////////////////////////////////////////////////////////////////
-//                          --- MISCELLANEOUS ---                            //
-///////////////////////////////////////////////////////////////////////////////
-
 /**
- * Paints the models with their respective colors.
- *
- * WARNING: This may cause random game crashes if you enable it.
+ * The color to make the enemy
  */
-COLOR_MODELS = false
+CHAMS_ESP_COLOR = Color(255, 0, 255, 1.0)
