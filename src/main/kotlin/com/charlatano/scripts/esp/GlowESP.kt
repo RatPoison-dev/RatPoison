@@ -46,15 +46,12 @@ internal fun glowEsp() = every(4) {
 				val team = !DANGER_ZONE && myTeam == entityTeam
 				if (SHOW_ENEMIES && !team) {
 					glowAddress.glow(ENEMY_COLOR)
-					entity.chams(ENEMY_COLOR)
 				} else if (SHOW_TEAM && team) {
 					glowAddress.glow(TEAM_COLOR)
-					entity.chams(TEAM_COLOR)
 				}
 			}
 			EntityType.CPlantedC4, EntityType.CC4 -> if (SHOW_BOMB) {
 				glowAddress.glow(BOMB_COLOR)
-				entity.chams(BOMB_COLOR)
 			}
 			else ->
 				if (SHOW_WEAPONS && it.type.weapon) glowAddress.glow(WEAPON_COLOR)
@@ -71,13 +68,4 @@ private fun Entity.glow(color: Color) {
 	csgoEXE[this + 0xC] = color.blue / 255F
 	csgoEXE[this + 0x10] = color.alpha.toFloat()
 	csgoEXE[this + 0x24] = true
-}
-
-private fun Entity.chams(color: Color) {
-	if (COLOR_MODELS) {
-		csgoEXE[this + 0x70] = color.red.toByte()
-		csgoEXE[this + 0x71] = color.green.toByte()
-		csgoEXE[this + 0x72] = color.blue.toByte()
-		csgoEXE[this + 0x73] = color.alpha.toByte()
-	}
 }
