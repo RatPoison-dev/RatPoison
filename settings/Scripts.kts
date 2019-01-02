@@ -1,21 +1,3 @@
-/*
- * Charlatano: Free and open-source (FOSS) cheat for CS:GO/CS:CO
- * Copyright (C) 2017 - Thomas G. P. Nappo, Jonathan Beaudoin
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 import com.charlatano.settings.*
 
 /**
@@ -34,26 +16,26 @@ ENABLE_BUNNY_HOP = false
 /**
  * Enables the recoil control system (RCS) script.
  */
-ENABLE_RCS = true
+ENABLE_RCS = false
 
 /**
  * Enables the extra sensory perception (ESP) script.
  */
-ENABLE_ESP = true
+ENABLE_ESP = false
 
 /**
  * Enables the flat aim script.
  *
  * This script uses traditional flat linear-regression smoothing.
  */
-ENABLE_FLAT_AIM = true
+ENABLE_FLAT_AIM = false
 
 /**
  * Enables the path aim script.
  *
  * This script uses an advanced path generation smoothing.
  */
-ENABLE_PATH_AIM = false
+ENABLE_PATH_AIM = true
 
 /**
  * Enables the bone trigger bot script.

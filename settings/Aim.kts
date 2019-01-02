@@ -1,21 +1,3 @@
-/*
- * Charlatano: Free and open-source (FOSS) cheat for CS:GO/CS:CO
- * Copyright (C) 2017 - Thomas G. P. Nappo, Jonathan Beaudoin
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 import com.charlatano.settings.*
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -45,7 +27,7 @@ FORCE_AIM_KEY = 5
 /**
  * The field of view of the aimbot, in degrees (0 to 360).
  */
-AIM_FOV = 50
+AIM_FOV = 30
 
 /**
  * The aimbot's "playback" speed, the higher the value the slower the playback.
@@ -105,12 +87,12 @@ PERFECT_AIM_CHANCE = 100
  *
  * This setting should be used by high-level players who are experienced aimers.
  */
-AIM_ASSIST_MODE = false
+AIM_ASSIST_MODE = true
 
 /**
  * The amount of strictness for the aim assist mode, with a minimum value of 1.
  */
-AIM_ASSIST_STRICTNESS = 40
+AIM_ASSIST_STRICTNESS = 60
 
 
 
@@ -126,9 +108,9 @@ AIM_DURATION = 1
 /**
  * The amount of sprayed shots until the aimbot shifts to aiming at the [SHOULDER_BONE].
  */
-SHIFT_TO_SHOULDER_SHOTS = 4
+SHIFT_TO_SHOULDER_SHOTS = 3
 
 /**
  * The amount of sprayed shots until the aimbot shifts to aiming at the [BODY_BONE].
  */
-SHIFT_TO_BODY_SHOTS = 7
+SHIFT_TO_BODY_SHOTS = 4

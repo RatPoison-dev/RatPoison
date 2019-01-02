@@ -1,21 +1,3 @@
-/*
- * Charlatano: Free and open-source (FOSS) cheat for CS:GO/CS:CO
- * Copyright (C) 2017 - Thomas G. P. Nappo, Jonathan Beaudoin
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 package com.charlatano.settings
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -45,7 +27,7 @@ var FORCE_AIM_KEY = 5
 /**
  * The field of view of the aimbot, in degrees (0 to 360).
  */
-var AIM_FOV = 50
+var AIM_FOV = 30
 
 /**
  * The aimbot's "playback" speed, the higher the value the slower the playback.
@@ -61,7 +43,7 @@ var AIM_SPEED_MAX = 36
  *
  * The minimum value is 1.0
  */
-var AIM_STRICTNESS = 2.4
+var AIM_STRICTNESS = 1.0
 
 /**
  * The minimum and maximum time in milliseconds to delay the aimbot after
@@ -104,12 +86,12 @@ var PERFECT_AIM_CHANCE = 100
  *
  * This setting should be used by high-level players who are experienced aimers.
  */
-var AIM_ASSIST_MODE = false
+var AIM_ASSIST_MODE = true
 
 /**
  * The amount of strictness for the aim assist mode, with a mimimum value of 1.
  */
-var AIM_ASSIST_STRICTNESS = 40
+var AIM_ASSIST_STRICTNESS = 60
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,9 +106,9 @@ var AIM_DURATION = 1
 /**
  * The amount of sprayed shots until the aimbot shifts to aiming at the [SHOULDER_BONE].
  */
-var SHIFT_TO_SHOULDER_SHOTS = 4
+var SHIFT_TO_SHOULDER_SHOTS = 3
 
 /**
  * The amount of sprayed shots until the aimbot shifts to aiming at the [BODY_BONE].
  */
-var SHIFT_TO_BODY_SHOTS = 7
+var SHIFT_TO_BODY_SHOTS = 4
