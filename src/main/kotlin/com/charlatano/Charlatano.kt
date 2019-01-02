@@ -70,12 +70,28 @@ fun main(args: Array<String>) {
 		GARBAGE_COLLECT_ON_MAP_START = true // get rid of traces
 	}
 
+	println("Type help for options\n")
+
     //Major optimization, needs to be fixed later
 	val scanner = Scanner(System.`in`)
 	while (!Thread.interrupted()) {
 		val line = scanner.nextLine().trim()
 		when {
-			line.equals("help", true) -> println("Available commands: exit/quit, reload, list, read [file name], write [file name] [variable name] = [value]")
+			line.startsWith("help") -> {
+				if (line == "help") {
+					println("\nAvailable commands: exit, reload, list, read [file name], write [file name] [variable name] = [value]\n")
+				} else {
+					val helpcommand = line.split(" ".toRegex(), 2)[1]
+					when (helpcommand) {
+						"exit" -> println("\nCloses program and cmd\n")
+						"reload" -> println("\nReloads all settings files, is done automatically on write\n")
+						"list" -> println("\nLists all settings files\n")
+						"read" -> println("\n Syntax: read [file name] ; Replace [file name] with the file name, viewable from the list command, excluding .kts. Example: read General")
+						"write" -> println("\n Syntax: write [file name] [variable name] = [value] ; Replace [file name] with the file name, replace [variable name] with the name of the variable inside of the file from [file name], and replace [value] with the value for the variable")
+					}
+				}
+
+			}
 			line.equals("exit", true) -> System.exit(0)
 			line.equals("reload", true) -> { println(); loadSettings(); println() }
 			line.equals("list", true) -> { println(); File(SETTINGS_DIRECTORY).listFiles().forEach { println(it) }; println() }
@@ -124,7 +140,6 @@ fun main(args: Array<String>) {
                 } catch (e: ScriptException) {
                     println("Invalid variable/value")
                 }
-
             }
 		}
 	}
