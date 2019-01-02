@@ -27,10 +27,7 @@ import com.charlatano.settings.*
 import com.charlatano.utils.every
 
 internal fun chamsEsp() = every(4) {
-    if (!CHAMS_ESP) {
-
-        return@every
-    }
+    if (!CHAMS_ESP || !ENABLE_ESP) return@every
 
     val myTeam = me.team()
 

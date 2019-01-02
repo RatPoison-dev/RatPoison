@@ -28,7 +28,7 @@ import com.charlatano.game.me
 import com.charlatano.game.offsets.EngineOffsets.pStudioModel
 import com.charlatano.game.worldToScreen
 import com.charlatano.overlay.CharlatanoOverlay
-import com.charlatano.settings.SKELETON_ESP
+import com.charlatano.settings.*
 import com.charlatano.utils.Vector
 import com.charlatano.utils.collections.CacheableList
 import com.charlatano.utils.extensions.uint
@@ -40,7 +40,7 @@ private var currentIdx = 0
 
 internal fun skeletonEsp() {
 	CharlatanoOverlay {
-		if (!SKELETON_ESP) return@CharlatanoOverlay
+		if (!SKELETON_ESP || !ENABLE_ESP) return@CharlatanoOverlay
 		
 		forEntities(ccsPlayer) {
 			val entity = it.entity
