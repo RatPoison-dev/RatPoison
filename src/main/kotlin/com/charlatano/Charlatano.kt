@@ -33,7 +33,10 @@ import org.jetbrains.kotlin.cli.common.environment.setIdeaIoUseFallback
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileReader
+import java.nio.file.Files
+import java.nio.file.StandardOpenOption
 import java.util.*
+import javax.script.ScriptException
 
 const val SETTINGS_DIRECTORY = "settings"
 
@@ -66,16 +69,17 @@ fun main(args: Array<String>) {
 		PROCESS_ACCESS_FLAGS = WinNT.PROCESS_QUERY_INFORMATION or WinNT.PROCESS_VM_READ // all we need
 		GARBAGE_COLLECT_ON_MAP_START = true // get rid of traces
 	}
-	
+
+    //Major optimization, needs to be fixed later
 	val scanner = Scanner(System.`in`)
 	while (!Thread.interrupted()) {
-		val line = scanner.nextLine()
+		val line = scanner.nextLine().trim()
 		when {
-			line == "help" -> println("Available commands: exit/quit, reload, list, read [file name]")
-			line == "exit" || line == "quit" -> System.exit(0)
-			line == "reload" -> loadSettings()
-			line == "list" -> { println(); File(SETTINGS_DIRECTORY).listFiles().forEach { println(it) }; println() }
-			line.startsWith("read") -> {
+			line.equals("help", true) -> println("Available commands: exit/quit, reload, list, read [file name], write [file name] [variable name] = [value]")
+			line.equals("exit", true) -> System.exit(0)
+			line.equals("reload", true) -> { println(); loadSettings(); println() }
+			line.equals("list", true) -> { println(); File(SETTINGS_DIRECTORY).listFiles().forEach { println(it) }; println() }
+			line.startsWith("read") -> { //Read file's variables
 				println()
 				try{
 					File(SETTINGS_DIRECTORY + "\\" + line.trim().split(" ".toRegex())[1] +".kts").readLines().forEach { if (!it.startsWith("/") && !it.startsWith("*") && !it.startsWith(" ") && !it.trim().isEmpty() && !it.startsWith("import")) {println(it) } }
@@ -84,6 +88,44 @@ fun main(args: Array<String>) {
 				}
 				println()
 			}
+            line.startsWith("set") -> { //Set variable, instance use only
+                println()
+                try {
+                    Dojo.script(line.trim().split(" ".toRegex(), 2)[1])
+                    println("Set " + line.trim().split(" ".toRegex(), 2)[1])
+                } catch (e: ScriptException) {
+                    println("Invalid variable")
+                }
+                println()
+            }
+            line.startsWith("write") -> {
+                val FileDir = SETTINGS_DIRECTORY + "\\" + line.trim().split(" ".toRegex())[1]+".kts"
+                val Command = line.trim().split(" ".toRegex(),3)[2]
+                var prevFile = ""
+                println()
+                try {
+                    try { //Check for file + variable
+                        File(FileDir).readLines().forEach {
+                            if (!it.startsWith("/") && !it.startsWith("*") && !it.startsWith(" ") && !it.trim().isEmpty() && !it.startsWith("import") && it.startsWith(Command.split(" ".toRegex(),3)[0])) {
+                                prevFile = prevFile + Command + System.lineSeparator()
+                            } else {
+                                prevFile = prevFile + it + System.lineSeparator()
+                            }
+                        }
+                        println("Writing to " + FileDir)
+                        println("Set " + Command)
+                        Files.write(File(FileDir).toPath(), prevFile.toByteArray(), StandardOpenOption.WRITE)
+                        println("Reloading settings"); loadSettings()
+                        println()
+                    } catch (e: FileNotFoundException) {
+                        println("File not found, use list to see current files")
+                    }
+
+                } catch (e: ScriptException) {
+                    println("Invalid variable/value")
+                }
+
+            }
 		}
 	}
 }
