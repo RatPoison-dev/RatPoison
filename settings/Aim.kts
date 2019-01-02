@@ -27,15 +27,15 @@ FORCE_AIM_KEY = 5
 /**
  * The field of view of the aimbot, in degrees (0 to 360).
  */
-AIM_FOV = 30
+AIM_FOV = 40
 
 /**
  * The aimbot's "playback" speed, the higher the value the slower the playback.
  *
  * The minimum value is 1, and max must always be greater than min.
  */
-AIM_SPEED_MIN = 28
-AIM_SPEED_MAX = 36
+AIM_SPEED_MIN = 16
+AIM_SPEED_MAX = 32
 
 /**
  * The strictness, or "stickiness" of the aimbot; the higher the number, the
@@ -43,7 +43,7 @@ AIM_SPEED_MAX = 36
  *
  * The minimum value is 1.0
  */
-AIM_STRICTNESS = 1.0
+AIM_STRICTNESS = 2.0
 
 /**
  * The minimum and maximum time in milliseconds to delay the aimbot after
@@ -92,7 +92,7 @@ AIM_ASSIST_MODE = true
 /**
  * The amount of strictness for the aim assist mode, with a minimum value of 1.
  */
-AIM_ASSIST_STRICTNESS = 60
+AIM_ASSIST_STRICTNESS = 40
 
 
 

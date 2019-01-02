@@ -21,9 +21,9 @@ AIM_ON_BONE_TRIGGER = true
 BONE_TRIGGER_ENABLE_KEY = false
 
 /**
- * Key to use bone trigger for if bone trigger key is enabled
+ * Key to use bone trigger for if bone trigger key is enabled; F by default
  */
-BONE_TRIGGER_KEY = 6
+BONE_TRIGGER_KEY = 70
 
 /**
  * Default minimum time in milliseconds to fire shots when requirements met
