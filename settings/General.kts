@@ -1,21 +1,3 @@
-/*
- * Charlatano: Free and open-source (FOSS) cheat for CS:GO/CS:CO
- * Copyright (C) 2017 - Thomas G. P. Nappo, Jonathan Beaudoin
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 import com.charlatano.settings.*
 
 /**
@@ -35,6 +17,16 @@ CLASSIC_OFFENSIVE = false
  * By default, this is left click (1).
  */
 FIRE_KEY = 1
+
+/**
+ * Enable actions log in cmd
+ */
+ACTION_LOG = true
+
+/**
+ * Key to disable ESP (say if a friend walks into your room); default G key
+ */
+ESP_TOGGLE_KEY = 71
 
 /**
  * The bone IDs of the respective bones for a player.
