@@ -1,4 +1,4 @@
-import com.charlatano.settings.*
+import rat.plague.settings.*
 
 /**
  * The range of recoil control you want to have applied.

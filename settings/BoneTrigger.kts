@@ -1,4 +1,4 @@
-import com.charlatano.settings.*
+import rat.plague.settings.*
 
 /**
  * The field of view (in degrees, 0 to 360) for the bone trigger.

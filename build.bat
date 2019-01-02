@@ -1,4 +1,4 @@
 @echo off
-title Charlatano Builder
-call gradlew charlatano
+title RatPlague Builder
+call gradlew RatPlague
 pause

@@ -1,4 +1,4 @@
-import com.charlatano.settings.*
+import rat.plague.settings.*
 
 /**
  * Set this to true if you're playing on a league like ESEA, FaceIT, etc.

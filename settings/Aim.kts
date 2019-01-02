@@ -1,4 +1,4 @@
-import com.charlatano.settings.*
+import rat.plague.settings.*
 
 ///////////////////////////////////////////////////////////////////////////////
 //                             --- GENERAL ---                               //
