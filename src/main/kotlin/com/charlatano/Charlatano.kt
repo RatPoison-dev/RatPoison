@@ -1,21 +1,3 @@
-/*
- * Charlatano: Free and open-source (FOSS) cheat for CS:GO/CS:CO
- * Copyright (C) 2017 - Thomas G. P. Nappo, Jonathan Beaudoin
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 @file:JvmName("Charlatano")
 
 package com.charlatano
@@ -30,6 +12,7 @@ import com.charlatano.settings.*
 import com.charlatano.utils.Dojo
 import com.sun.jna.platform.win32.WinNT
 import org.jetbrains.kotlin.cli.common.environment.setIdeaIoUseFallback
+import org.jire.arrowhead.keyPressed
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileReader
@@ -70,9 +53,18 @@ fun main(args: Array<String>) {
 		GARBAGE_COLLECT_ON_MAP_START = true // get rid of traces
 	}
 
-	println("Type help for options\n")
+	if (keyPressed(ESP_TOGGLE_KEY)) {
+		ENABLE_ESP = !ENABLE_ESP
+		if (ACTION_LOG) {
+			println("ESP toggled to $ENABLE_ESP")
+		}
+	}
 
-    //Major optimization, needs to be fixed later
+	if (ACTION_LOG) {
+		println("Type help for options\n")
+	}
+
+    //Major optimization, needs to be fixed later, probably move this massive dump elsewhere
 	val scanner = Scanner(System.`in`)
 	while (!Thread.interrupted()) {
 		val line = scanner.nextLine().trim()
@@ -115,24 +107,26 @@ fun main(args: Array<String>) {
                 println()
             }
             line.startsWith("write") -> {
-                val FileDir = SETTINGS_DIRECTORY + "\\" + line.trim().split(" ".toRegex())[1]+".kts"
-                val Command = line.trim().split(" ".toRegex(),3)[2]
+                val fileDir = SETTINGS_DIRECTORY + "\\" + line.trim().split(" ".toRegex())[1]+".kts"
+                val command = line.trim().split(" ".toRegex(),3)[2]
                 var prevFile = ""
                 println()
                 try {
                     try { //Check for file + variable
-                        File(FileDir).readLines().forEach {
-                            if (!it.startsWith("/") && !it.startsWith("*") && !it.startsWith(" ") && !it.trim().isEmpty() && !it.startsWith("import") && it.startsWith(Command.split(" ".toRegex(),3)[0])) {
-                                prevFile = prevFile + Command + System.lineSeparator()
+                        File(fileDir).readLines().forEach {
+                            if (!it.startsWith("/") && !it.startsWith("*") && !it.startsWith(" ") && !it.trim().isEmpty() && !it.startsWith("import") && it.startsWith(command.split(" ".toRegex(),3)[0])) {
+                                prevFile = prevFile + command + System.lineSeparator()
                             } else {
                                 prevFile = prevFile + it + System.lineSeparator()
                             }
                         }
-                        println("Writing to " + FileDir)
-                        println("Set " + Command)
-                        Files.write(File(FileDir).toPath(), prevFile.toByteArray(), StandardOpenOption.WRITE)
-                        println("Reloading settings"); loadSettings()
-                        println()
+						if (ACTION_LOG) {
+							println("Writing to " + fileDir)
+							println("Set " + command)
+							Files.write(File(fileDir).toPath(), prevFile.toByteArray(), StandardOpenOption.WRITE)
+							println("Reloading settings"); loadSettings()
+							println()
+						}
                     } catch (e: FileNotFoundException) {
                         println("File not found, use list to see current files")
                     }
