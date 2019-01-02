@@ -7,12 +7,11 @@ import com.charlatano.overlay.Overlay
 import com.charlatano.scripts.*
 import com.charlatano.scripts.aim.flatAim
 import com.charlatano.scripts.aim.pathAim
-import com.charlatano.scripts.esp.esp
+import com.charlatano.scripts.esp.*
 import com.charlatano.settings.*
 import com.charlatano.utils.Dojo
 import com.sun.jna.platform.win32.WinNT
 import org.jetbrains.kotlin.cli.common.environment.setIdeaIoUseFallback
-import org.jire.arrowhead.keyPressed
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileReader
@@ -24,41 +23,35 @@ import javax.script.ScriptException
 const val SETTINGS_DIRECTORY = "settings"
 
 fun main(args: Array<String>) {
-	loadSettings()
-	
-	CSGO.initialize()
-	
-	bunnyHop()
-	rcs()
-	esp()
-	flatAim()
-	pathAim()
-	boneTrigger()
-	reducedFlash()
-	bombTimer()
-	
-	if (LEAGUE_MODE) {
-		GLOW_ESP = false
-		BOX_ESP = false
-		SKELETON_ESP = false
-		CHAMS_ESP = false
-		ENABLE_ESP = false
-		
-		ENABLE_BOMB_TIMER = false
-		ENABLE_REDUCED_FLASH = false
-		ENABLE_FLAT_AIM = false
-		
-		SERVER_TICK_RATE = 128 // most leagues are 128-tick
-		PROCESS_ACCESS_FLAGS = WinNT.PROCESS_QUERY_INFORMATION or WinNT.PROCESS_VM_READ // all we need
-		GARBAGE_COLLECT_ON_MAP_START = true // get rid of traces
-	}
+    loadSettings()
 
-	if (keyPressed(ESP_TOGGLE_KEY)) {
-		ENABLE_ESP = !ENABLE_ESP
-		if (ACTION_LOG) {
-			println("ESP toggled to $ENABLE_ESP")
-		}
-	}
+    CSGO.initialize()
+
+    bunnyHop()
+    rcs()
+    esp()
+    flatAim()
+    pathAim()
+    boneTrigger()
+    reducedFlash()
+    bombTimer()
+    espToggle()
+
+    if (LEAGUE_MODE) {
+        GLOW_ESP = false
+        BOX_ESP = false
+        SKELETON_ESP = false
+        CHAMS_ESP = false
+        ENABLE_ESP = false
+
+        ENABLE_BOMB_TIMER = false
+        ENABLE_REDUCED_FLASH = false
+        ENABLE_FLAT_AIM = false
+
+        SERVER_TICK_RATE = 128 // most leagues are 128-tick
+        PROCESS_ACCESS_FLAGS = WinNT.PROCESS_QUERY_INFORMATION or WinNT.PROCESS_VM_READ // all we need
+        GARBAGE_COLLECT_ON_MAP_START = true // get rid of traces
+    }
 
 	if (ACTION_LOG) {
 		println("Type help for options\n")
@@ -71,7 +64,7 @@ fun main(args: Array<String>) {
 		when {
 			line.startsWith("help") -> {
 				if (line == "help") {
-					println("\nAvailable commands: exit, reload, list, read [file name], write [file name] [variable name] = [value]\n")
+					println("\nAvailable commands: help [command], exit, reload, list, read [file name], write [file name] [variable name] = [value]\n")
 				} else {
 					val helpcommand = line.split(" ".toRegex(), 2)[1]
 					when (helpcommand) {
@@ -80,7 +73,8 @@ fun main(args: Array<String>) {
 						"list" -> println("\nLists all settings files\n")
 						"read" -> println("\n Syntax: read [file name] ; Replace [file name] with the file name, viewable from the list command, excluding .kts. Example: read General")
 						"write" -> println("\n Syntax: write [file name] [variable name] = [value] ; Replace [file name] with the file name, replace [variable name] with the name of the variable inside of the file from [file name], and replace [value] with the value for the variable")
-					}
+					    "help" -> println("\n Standalone or Syntax: help [command] ; Replace [command] with the command listed in list")
+                    }
 				}
 
 			}
@@ -138,6 +132,7 @@ fun main(args: Array<String>) {
 		}
 	}
 }
+
 
 private fun loadSettings() {
 	setIdeaIoUseFallback()
