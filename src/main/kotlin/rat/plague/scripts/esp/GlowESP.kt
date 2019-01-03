@@ -52,4 +52,5 @@ private fun Entity.glow(color: Color) {
 	csgoEXE[this + 0xC] = color.blue / 255F
 	csgoEXE[this + 0x10] = color.alpha.toFloat()
 	csgoEXE[this + 0x24] = true
+	csgoEXE[this + 0x2C] = MODEL_ESP
 }
