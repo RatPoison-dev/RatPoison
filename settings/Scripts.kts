@@ -1,4 +1,4 @@
-import rat.plague.settings.*
+import rat.poison.settings.*
 
 /**
  * Enables the bunny hop script.

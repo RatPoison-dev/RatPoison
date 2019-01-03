@@ -1,6 +1,6 @@
 
 
-import rat.plague.settings.*
+import rat.poison.settings.*
 
 /**
  * The amount of FPS to run the OpenGL overlay at.

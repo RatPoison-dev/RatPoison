@@ -1,4 +1,4 @@
-import rat.plague.settings.*
+import rat.poison.settings.*
 
 /**
  * Set this to true if you're playing on a league like ESEA, FaceIT, etc.

@@ -5,9 +5,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Charlatano.iml" filepath="$PROJECT_DIR$/.idea/modules/Charlatano.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Charlatano_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Charlatano_main.iml" group="Charlatano" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Charlatano_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Charlatano_test.iml" group="Charlatano" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rat.plague.RatPlague.iml" filepath="$PROJECT_DIR$/.idea/modules/rat.plague.RatPlague.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rat.plague.RatPlague.main.iml" filepath="$PROJECT_DIR$/.idea/modules/rat.plague.RatPlague.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rat.plague.RatPlague.test.iml" filepath="$PROJECT_DIR$/.idea/modules/rat.plague.RatPlague.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rat.poison.RatPoison.iml" filepath="$PROJECT_DIR$/.idea/modules/rat.poison.RatPoison.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rat.poison.RatPoison.main.iml" filepath="$PROJECT_DIR$/.idea/modules/rat.poison.RatPoison.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rat.poison.RatPoison.test.iml" filepath="$PROJECT_DIR$/.idea/modules/rat.poison.RatPoison.test.iml" />
     </modules>
   </component>
 </project>

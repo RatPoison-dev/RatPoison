@@ -1,6 +1,6 @@
 
 
-import rat.plague.settings.*
+import rat.poison.settings.*
 import java.awt.event.KeyEvent
 
 /**

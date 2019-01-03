@@ -1,6 +1,6 @@
 
 
-import rat.plague.settings.*
+import rat.poison.settings.*
 
 /**
  * The maximum alpha for the flashbang effect.

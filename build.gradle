@@ -21,10 +21,10 @@ apply plugin: "kotlin"
 apply plugin: "application"
 apply plugin: "com.github.johnrengelman.shadow"
 
-group "rat.plague"
+group "rat.poison"
 version "1.0.11"
 
-mainClassName = "rat.plague.RatPlague"
+mainClassName = "rat.poison.RatPoison"
 
 repositories {
 	jcenter()
@@ -57,13 +57,13 @@ jar {
 }
 
 shadowJar {
-	baseName = 'RatPlague'
+	baseName = 'RatPoison'
 	classifier = null
 }
 
-task RatPlague {
+task RatPoison {
 	doLast {
-		def name = "RatPlague $version"
+		def name = "RatPoison $version"
 		
 		def dir = file("build/$name/")
 		if (dir.exists()) dir.deleteDir()
@@ -71,7 +71,7 @@ task RatPlague {
 		
 		def jarName = "${name}.jar"
 		def jar = file(new File(dir, jarName))
-		def allJar = file("build/libs/RatPlague-${version}.jar")
+		def allJar = file("build/libs/RatPoison-${version}.jar")
 		Files.copy(allJar.toPath(), jar.toPath())
 		
 		def bat = file(new File(dir, "Start ${name}.bat"))
@@ -94,8 +94,8 @@ task RatPlague {
 	}
 }
 
-RatPlague.dependsOn shadowJar
-RatPlague.mustRunAfter shadowJar
+RatPoison.dependsOn shadowJar
+RatPoison.mustRunAfter shadowJar
 
 sourceSets {
 	main.java.srcDirs += 'src/main/java'

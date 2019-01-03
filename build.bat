@@ -1,4 +1,4 @@
 @echo off
-title RatPlague Builder
-call gradlew RatPlague
+title RatPoison Builder
+call gradlew RatPoison
 pause
