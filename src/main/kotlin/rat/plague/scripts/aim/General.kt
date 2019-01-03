@@ -91,7 +91,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	if (boneTrig)
 		bone.set(BONE_TRIGGER_BONE)
 
-	val pressed = aim or forceAim or boneTrig
+	val pressed = ((aim or forceAim or boneTrig) && !inBackground)
 	var currentTarget = target.get()
 	
 	if (!pressed) {
