@@ -20,14 +20,21 @@ BOX_ESP = false
  *
  * This ESP **CANNOT** be hidden from game capture for streaming.
  */
-GLOW_ESP = false
+GLOW_ESP = true
 
 /**
- * Whether or not to use chams ESP
+ * Model ESP glow tied to glow_esp, makes the model glow and only when visible, instead of an outline through walls newer chams, will be tied to later
+ */
+MODEL_ESP = true
+
+/**
+ * Whether or not to use chams ESP, may require a game restart to stop/fix
  *
  *
  */
 CHAMS_ESP = false
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

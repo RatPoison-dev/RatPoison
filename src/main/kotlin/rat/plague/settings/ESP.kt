@@ -26,6 +26,11 @@ var BOX_ESP = false
 var GLOW_ESP = false
 
 /**
+ * Model ESP glow tied to glow_esp, makes the model glow and only when visible, instead of an outline through walls newer chams, will be tied to later
+ */
+var MODEL_ESP = true
+
+/**
  * Whether or not to use chams ESP
  *
  *
