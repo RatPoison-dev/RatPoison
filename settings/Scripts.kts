@@ -21,7 +21,7 @@ ENABLE_RCS = false
 /**
  * Enables the extra sensory perception (ESP) script.
  */
-ENABLE_ESP = false
+ENABLE_ESP = true
 
 /**
  * Enables the flat aim script.
