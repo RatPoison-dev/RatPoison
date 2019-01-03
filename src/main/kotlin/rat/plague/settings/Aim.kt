@@ -5,6 +5,11 @@ package rat.plague.settings
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+ * Default aim bone the aims go to
+ */
+var AIM_BONE = HEAD_BONE
+
+/**
  * Whether or not to aim when using the [FIRE_KEY] (by default left click).
  *
  * You should disable this if you don't want aim to activate when left clicking.

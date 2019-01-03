@@ -13,17 +13,17 @@ import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
 
 val target = AtomicLong(-1)
-val bone = AtomicInteger(HEAD_BONE)
+val bone = AtomicInteger(AIM_BONE)
 val perfect = AtomicBoolean() // only applicable for safe aim
 
 internal fun reset() {
 	target.set(-1L)
-	bone.set(HEAD_BONE)
+	bone.set(AIM_BONE)
 	perfect.set(false)
 }
 
 internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
-                        lockFOV: Int = AIM_FOV, BONE: Int = HEAD_BONE,
+                        lockFOV: Int = AIM_FOV, BONE: Int = AIM_BONE,
                         yawOnly: Boolean): Player {
 	var closestFOV = Double.MAX_VALUE
 	var closestDelta = Double.MAX_VALUE
