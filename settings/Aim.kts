@@ -5,9 +5,9 @@ import rat.plague.settings.*
 ///////////////////////////////////////////////////////////////////////////////
 
 /**
- * Default aim bone the aims go to
+ * Default aim bone the aims go to BODY_BONE, HEAD_BONE, SHOULDER_BONE
  */
-AIM_BONE = HEAD_BONE
+AIM_BONE = BODY_BONE
 
 /**
  * Whether or not to aim when using the [FIRE_KEY] (by default left click).
@@ -39,8 +39,8 @@ AIM_FOV = 40
  *
  * The minimum value is 1, and max must always be greater than min.
  */
-AIM_SPEED_MIN = 16
-AIM_SPEED_MAX = 32
+AIM_SPEED_MIN = 8
+AIM_SPEED_MAX = 24
 
 /**
  * The strictness, or "stickiness" of the aimbot; the higher the number, the
@@ -48,7 +48,7 @@ AIM_SPEED_MAX = 32
  *
  * The minimum value is 1.0
  */
-AIM_STRICTNESS = 2.0
+AIM_STRICTNESS = 1.5
 
 /**
  * The minimum and maximum time in milliseconds to delay the aimbot after
