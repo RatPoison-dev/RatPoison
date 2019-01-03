@@ -18,7 +18,7 @@ AIM_ON_BONE_TRIGGER = true
 /**
  * Enable using a key for bone trigger
  */
-BONE_TRIGGER_ENABLE_KEY = false
+BONE_TRIGGER_ENABLE_KEY = true
 
 /**
  * Key to use bone trigger for if bone trigger key is enabled; F by default
