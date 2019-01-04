@@ -1,5 +1,4 @@
 import rat.poison.settings.*
-import rat.poison.game.Color
 
 /**
  * Enables the bunny hop script.
