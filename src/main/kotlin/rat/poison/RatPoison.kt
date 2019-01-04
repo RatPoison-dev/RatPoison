@@ -24,6 +24,7 @@ fun main(args: Array<String>) {
 
     bunnyHop()
     rcs()
+    rcrosshair()
     esp()
     flatAim()
     pathAim()
@@ -62,6 +63,6 @@ fun loadSettings() {
 		}
 	}
 	
-	val needsOverlay = ENABLE_BOMB_TIMER or (ENABLE_ESP and (SKELETON_ESP or BOX_ESP))
+	val needsOverlay = ENABLE_BOMB_TIMER || (ENABLE_ESP && (SKELETON_ESP || BOX_ESP)) || ENABLE_RECOIL_CROSSHAIR
 	if (!Overlay.opened && needsOverlay) Overlay.open()
 }
