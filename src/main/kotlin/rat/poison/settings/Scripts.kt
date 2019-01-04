@@ -1,5 +1,6 @@
 package rat.poison.settings
 
+import rat.poison.game.Color
 /**
  * Enables the bunny hop script.
  *
@@ -17,6 +18,16 @@ var ENABLE_BUNNY_HOP = false
  * Enables the recoil control system (RCS) script.
  */
 var ENABLE_RCS = false
+
+/**
+ * Enables the recoil crosshair
+ */
+var ENABLE_RECOIL_CROSSHAIR = true
+
+/**
+ * Recoil crosshair color
+ */
+var RCROSSHAIR_COLOR = Color(255,255,0, 1.0)
 
 /**
  * Enables the extra sensory perception (ESP) script.
