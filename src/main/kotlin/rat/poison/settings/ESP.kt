@@ -1,5 +1,3 @@
-
-
 package rat.poison.settings
 
 import rat.poison.game.Color

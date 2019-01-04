@@ -1,5 +1,3 @@
-
-
 package rat.poison.scripts.esp
 
 import com.badlogic.gdx.graphics.Color
