@@ -25,11 +25,6 @@ var ENABLE_RCS = false
 var ENABLE_RECOIL_CROSSHAIR = true
 
 /**
- * Recoil crosshair color
- */
-var RCROSSHAIR_COLOR = Color(255,255,0, 1.0)
-
-/**
  * Enables the extra sensory perception (ESP) script.
  */
 var ENABLE_ESP = false

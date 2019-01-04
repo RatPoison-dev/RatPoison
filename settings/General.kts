@@ -25,6 +25,7 @@ ACTION_LOG = true
 
 /**
  * Key to disable ESP (say if a friend walks into your room); default G key
+ * This key also currently disabled the recoil crosshair if enabled
  */
 ESP_TOGGLE_KEY = 71
 
