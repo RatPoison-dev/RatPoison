@@ -1,14 +1,13 @@
 package rat.poison.scripts.esp
 
-import rat.poison.settings.ACTION_LOG
-import rat.poison.settings.ENABLE_ESP
-import rat.poison.settings.ESP_TOGGLE_KEY
+import rat.poison.settings.*
 import rat.poison.utils.*
 import org.jire.arrowhead.keyPressed
 
 fun espToggle() = every(4) {
     if (keyPressed(ESP_TOGGLE_KEY) && !inBackground) {
         ENABLE_ESP = !ENABLE_ESP
+        ENABLE_RECOIL_CROSSHAIR = !ENABLE_RECOIL_CROSSHAIR
         esp()
         if (ACTION_LOG) {
             println("ESP toggled to " + ENABLE_ESP)
