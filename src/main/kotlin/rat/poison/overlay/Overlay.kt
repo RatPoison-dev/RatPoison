@@ -47,7 +47,7 @@ object Overlay {
 				Overlay.hwnd = hwnd
 				break
 			}
-			Thread.sleep(64) // decreased so it won't go black as long
+			Thread.sleep(32) // decreased so it won't go black as long
 		} while (!Thread.interrupted())
 		
 		// sets up window to be fullscreen, click-through, etc.
