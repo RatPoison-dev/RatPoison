@@ -13,6 +13,6 @@ fun espToggle() = every(4) {
         if (ACTION_LOG) {
             println("ESP toggled to " + ENABLE_ESP)
         }
-        Thread.sleep(500)
+        Thread.sleep(200)
     }
 }
