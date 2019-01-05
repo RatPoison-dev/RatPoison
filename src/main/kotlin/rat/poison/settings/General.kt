@@ -26,7 +26,7 @@ var FIRE_KEY = 1
 /**
  * Key to disable ESP (say if a friend walks into your room); default G key
  */
-var ESP_TOGGLE_KEY = 71
+var VISUALS_TOGGLE_KEY = 71
 
 /**
  * Enable actions log in cmd
