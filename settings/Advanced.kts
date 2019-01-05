@@ -1,5 +1,3 @@
-
-
 import rat.poison.settings.*
 import com.sun.jna.platform.win32.WinNT
 
