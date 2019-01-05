@@ -21,7 +21,7 @@ ENABLE_RCS = false
 /**
  * Enables the recoil crosshair
  */
-ENABLE_RECOIL_CROSSHAIR = false
+ENABLE_RECOIL_CROSSHAIR = true
 
 /**
  * Enables the extra sensory perception (ESP) script.
