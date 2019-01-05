@@ -26,7 +26,7 @@ ACTION_LOG = true
 /**
  * Key to disable ESP (say if a friend walks into your room); default G key
  */
-ESP_TOGGLE_KEY = 71
+VISUALS_TOGGLE_KEY = 71
 
 /**
  * The bone IDs of the respective bones for a player.
