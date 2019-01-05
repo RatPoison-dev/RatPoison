@@ -8,7 +8,7 @@ import rat.poison.settings.*
 /**
  * Whether or not to use skeleton ESP.
  */
- SKELETON_ESP = false
+SKELETON_ESP = false
 
 /**
  * Whether or not to use box ESP.
@@ -20,19 +20,24 @@ BOX_ESP = false
  *
  * This ESP **CANNOT** be hidden from game capture for streaming.
  */
-GLOW_ESP = true
+GLOW_ESP = false
 
 /**
  * Model ESP glow tied to glow_esp, makes the model glow and only when visible, instead of an outline through walls newer chams, will be tied to later
  */
-MODEL_ESP = true
+MODEL_ESP = false
 
 /**
  * Whether or not to use chams ESP, may require a game restart to stop/fix
- *
+ * To disable chams & brightness on exit (as models will stay colored normally), you must type exit into the cmd to close the program
  *
  */
-CHAMS_ESP = false
+CHAMS_ESP = true
+
+/**
+ * Brightness for chams esp (from 0 to 1000)
+ */
+CHAMS_BRIGHTNESS = 0
 
 
 
