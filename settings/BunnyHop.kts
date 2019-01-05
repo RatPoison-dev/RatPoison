@@ -1,5 +1,3 @@
-
-
 import rat.poison.settings.*
 import java.awt.event.KeyEvent
 
