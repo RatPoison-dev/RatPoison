@@ -1,8 +1,9 @@
 package rat.poison.scripts
 
 import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.game.Color
 import rat.poison.loadSettings
-import rat.poison.settings.ACTION_LOG
+import rat.poison.settings.*
 import rat.poison.utils.Dojo
 import java.io.File
 import java.io.FileNotFoundException
@@ -37,7 +38,12 @@ fun scanner() {
                 }
 
             }
-            line.equals("exit", true) -> System.exit(0)
+            line.equals("exit", true) -> {
+                CHAMS_BRIGHTNESS = 0
+                CHAMS_ESP_COLOR = Color(255, 255, 255, 1.0)
+                Thread.sleep(1000)
+                System.exit(0)
+            }
             line.equals("reload", true) -> {
                 println(); loadSettings(); println()
             }
