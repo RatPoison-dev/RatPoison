@@ -25,14 +25,14 @@ GLOW_ESP = false
 /**
  * Model ESP glow tied to glow_esp, makes the model glow and only when visible, instead of an outline through walls newer chams, will be tied to later
  */
-MODEL_ESP = true
+MODEL_ESP = false
 
 /**
  * Whether or not to use chams ESP, may require a game restart to stop/fix
  * To disable chams & brightness on exit (as models will stay colored normally), you must type exit into the cmd to close the program
- *
+ * This modifies a cvar that currently isn't being checked, this can change at anytime, use at your own discretion
  */
-CHAMS_ESP = true
+CHAMS_ESP = false
 
 /**
  * Brightness for chams esp (from 0 to 1000)
