@@ -5,7 +5,7 @@ import rat.poison.utils.*
 import org.jire.arrowhead.keyPressed
 
 fun espToggle() = every(4) {
-    if (keyPressed(ESP_TOGGLE_KEY) && !inBackground) {
+    if (keyPressed(VISUALS_TOGGLE_KEY) && !inBackground) {
         ENABLE_ESP = !ENABLE_ESP
         ENABLE_RECOIL_CROSSHAIR = !ENABLE_RECOIL_CROSSHAIR
         esp()
