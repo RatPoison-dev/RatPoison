@@ -19,11 +19,13 @@ internal fun rcrosshair() = RatPoisonOverlay {
 
     lastpunch = me.punch() //Punch seems to be one shot ahead so update it for the next shot
 
+    //Move to punch and vector eyes ?
+
     shapeRenderer.apply sR@ {
         begin()
         this@sR.color = Color.YELLOW
-        rect(x-5, y, 10.toFloat(), 1.toFloat())
-        rect(x, y - 5, 1.toFloat(), 10.toFloat())
+        rect(x-RCROSSHAIR_LENGTH/2, y, RCROSSHAIR_LENGTH.toFloat(), RCROSSHAIR_WIDTH.toFloat())
+        rect(x, y-RCROSSHAIR_LENGTH/2, RCROSSHAIR_WIDTH.toFloat(), RCROSSHAIR_LENGTH.toFloat())
         end()
     }
 }
