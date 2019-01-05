@@ -1,15 +1,17 @@
 package rat.poison.scripts.esp
 
 import rat.poison.game.CSGO.csgoEXE
+import rat.poison.game.CSGO.engineDLL
 import rat.poison.game.Color
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.me
+import rat.poison.game.offsets.EngineOffsets.dwModelAmbientMin
 import rat.poison.settings.*
 import rat.poison.utils.every
 
 internal fun chamsEsp() = every(4) {
-    if (!CHAMS_ESP || !ENABLE_ESP) return@every
+    if ((!CHAMS_ESP || !ENABLE_ESP)) return@every
 
     val myTeam = me.team()
 
@@ -48,6 +50,8 @@ private fun Entity.chams(color: Color) {
         csgoEXE[this + 0x70] = color.red.toByte()
         csgoEXE[this + 0x71] = color.green.toByte()
         csgoEXE[this + 0x72] = color.blue.toByte()
-        csgoEXE[this + 0x73] = color.alpha.toByte()
+
+        //Chams brightness, possibly move to less looped call location
+        engineDLL[dwModelAmbientMin] = CHAMS_BRIGHTNESS.toFloat().hashCode() xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
     }
 }
