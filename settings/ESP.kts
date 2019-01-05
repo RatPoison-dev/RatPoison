@@ -25,7 +25,7 @@ GLOW_ESP = false
 /**
  * Model ESP glow tied to glow_esp, makes the model glow and only when visible, instead of an outline through walls newer chams, will be tied to later
  */
-MODEL_ESP = false
+MODEL_ESP = true
 
 /**
  * Whether or not to use chams ESP, may require a game restart to stop/fix
@@ -37,7 +37,7 @@ CHAMS_ESP = true
 /**
  * Brightness for chams esp (from 0 to 1000)
  */
-CHAMS_BRIGHTNESS = 0
+CHAMS_BRIGHTNESS = 100
 
 
 
