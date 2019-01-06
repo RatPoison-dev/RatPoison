@@ -31,7 +31,12 @@ internal fun chamsEsp() = every(4) {
                 val team = !DANGER_ZONE && myTeam == entityTeam
 
                 if (SHOW_ENEMIES && !team) {
-                    entity.chams(CHAMS_ESP_COLOR)
+                    if (CHAMS_SHOW_HEALTH) {
+                        entity.chams(Color((255 - 2.55*entity.health()).toInt(), (2.55*entity.health()).toInt(), 0, 1.0))
+                    }
+                    else {
+                        entity.chams(CHAMS_ESP_COLOR)
+                    }
                 } else if (SHOW_TEAM && team) {
                     entity.chams(TEAM_COLOR)
                 }

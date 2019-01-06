@@ -36,9 +36,14 @@ var MODEL_ESP = true
 var CHAMS_ESP = false
 
 /**
+ * When this is and CHAMS_ESP are enabled the enemy models will be colored based on health, and will override CHAMS_ESP_COLOR
+ */
+var CHAMS_SHOW_HEALTH = true
+
+/**
  * Brightness for chams esp (from 0 to 1000)
  */
-var CHAMS_BRIGHTNESS = 0
+var CHAMS_BRIGHTNESS = 100
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

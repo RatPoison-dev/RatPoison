@@ -41,6 +41,7 @@ fun scanner() {
             line.equals("exit", true) -> {
                 CHAMS_BRIGHTNESS = 0
                 CHAMS_ESP_COLOR = Color(255, 255, 255, 1.0)
+                CHAMS_SHOW_HEALTH = false
                 Thread.sleep(1000)
                 System.exit(0)
             }
