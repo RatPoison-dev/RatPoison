@@ -1,5 +1,3 @@
-
-
 package rat.poison.scripts.aim
 
 import rat.poison.game.*
@@ -91,7 +89,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	if (boneTrig)
 		bone.set(BONE_TRIGGER_BONE)
 
-	val pressed = ((aim or forceAim or boneTrig) && !inBackground)
+	val pressed = (aim or forceAim or boneTrig) && !MENUTOG
 	var currentTarget = target.get()
 	
 	if (!pressed) {
