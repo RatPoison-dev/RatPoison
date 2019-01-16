@@ -2,7 +2,7 @@ package rat.poison.game.netvars
 
 object NetVarOffsets {
 	
-	val dwModel = 0x6C
+	const val dwModel = 0x6C
 	val iTeamNum by netVar("DT_BaseEntity")
 	val bSpotted by netVar("DT_BaseEntity")
 	val bSpottedByMask by netVar("DT_BaseEntity")
@@ -41,6 +41,8 @@ object NetVarOffsets {
 	val iClip2 by netVar("DT_BaseCombatWeapon")
 	
 	val iItemDefinitionIndex by netVar("DT_BaseCombatWeapon")
+
+	val m_hViewModel by netVar("DT_BasePlayer", "m_hViewModel[0]") //[0] works for weapon, doesn't work otherwise
 
 	val SurvivalGameRuleDecisionTypes by netVar("DT_CSGameRulesProxy")
 }
