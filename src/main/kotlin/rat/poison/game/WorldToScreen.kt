@@ -16,7 +16,7 @@ fun worldToScreen(from: Vector, vOut: Vector) = try {
 	for (row in 0..3) for (col in 0..3) {
 		val value = buffer.getFloat(offset.toLong())
 		viewMatrix[row][col] = value.toDouble()
-		offset = offset+4 //Changed, error but not compd
+		offset += 4 //Changed, error but not compd
 	}
 	
 	vOut.x = viewMatrix[0][0] * from.x + viewMatrix[0][1] * from.y + viewMatrix[0][2] * from.z + viewMatrix[0][3]
@@ -36,12 +36,31 @@ fun worldToScreen(from: Vector, vOut: Vector) = try {
 		var y = height / 2.0
 		
 		x += 0.5 * vOut.x * width + 0.5
-		y -= 0.5 * vOut.y * height + 0.5
-		
+		y += 0.5 * vOut.y * height + 0.5 //For future, -= was changed to +=, it was flipped for some reason
+
 		vOut.x = x
 		vOut.y = y
 		
 		true
+	} else if (!w.isNaN() && w < 0.001F) { //If behind
+		val invw = -1.0 / w
+
+		vOut.x *= invw
+		vOut.y *= invw
+
+		val width = gameWidth
+		val height = gameHeight
+
+		var x = width / 2.0
+		var y = height / 2.0
+
+		x += 0.5 * vOut.x * width * 0.5
+		y += 0.5 * vOut.y * height + 0.5
+
+		vOut.x = x
+		vOut.y = y
+
+		false
 	} else false
 } catch (e: Exception) {
 	e.printStackTrace()
