@@ -1,5 +1,3 @@
-
-
 package rat.poison.scripts.esp
 
 import rat.poison.settings.ENABLE_ESP
@@ -11,4 +9,5 @@ fun esp() {
 	boxEsp()
 	skeletonEsp()
 	chamsEsp()
+	miscEsp()
 }

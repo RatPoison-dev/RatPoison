@@ -1,5 +1,3 @@
-
-
 package rat.poison.scripts
 
 import rat.poison.game.CSGO.clientDLL

@@ -1,26 +1,26 @@
 package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
+import rat.poison.App
 import rat.poison.game.CSGO
 import rat.poison.game.entity.*
 import rat.poison.game.entityByType
 import rat.poison.game.offsets.EngineOffsets
-import rat.poison.overlay.RatPoisonOverlay
 import rat.poison.settings.ENABLE_BOMB_TIMER
 import rat.poison.utils.every
 
 private var bombState = BombState()
 
-fun bombTimer() {
+fun bombTimer() { //Don't know if works
     bombUpdater()
 
-    RatPoisonOverlay {
+    App {
         bombState.apply {
             if (ENABLE_BOMB_TIMER && this.planted) {
-                batch.begin()
+                sb.begin()
                 textRenderer.color = Color.ORANGE
-                textRenderer.draw(batch, bombState.toString(), 20F, 500F)
-                batch.end()
+                textRenderer.draw(sb, bombState.toString(), 20F, 500F)
+                sb.end()
             }
         }
     }

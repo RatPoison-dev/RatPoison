@@ -11,62 +11,62 @@ import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.game.offsets.EngineOffsets.pStudioModel
 import rat.poison.game.worldToScreen
-import rat.poison.overlay.RatPoisonOverlay
 import rat.poison.settings.*
 import rat.poison.utils.Vector
 import rat.poison.utils.collections.CacheableList
 import rat.poison.utils.extensions.uint
 import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap
+import rat.poison.App
 
 private val bones = Array(2048) { Line() }
 private val entityBones = Long2ObjectArrayMap<CacheableList<Pair<Int, Int>>>()
 private var currentIdx = 0
 
 internal fun skeletonEsp() {
-	RatPoisonOverlay {
-		if (!SKELETON_ESP || !ENABLE_ESP) return@RatPoisonOverlay
-		
-		forEntities(ccsPlayer) {
+	App {
+		if (!SKELETON_ESP || !ENABLE_ESP || MENUTOG) return@App
+
+		forEntities(ccsPlayer) { it ->
 			val entity = it.entity
 			if (entity > 0 && entity != me && !entity.dead() && !entity.dormant()) {
-				(entityBones.get(entity) ?: CacheableList<Pair<Int, Int>>(20)).apply {
+				(entityBones.get(entity) ?: CacheableList(20)).apply {
 					if (isEmpty()) {
 						//val entityModel = entity.model() //no longer needed since we bypass the findStudioModel call for updated pointer method
 						val studioModel = csgoEXE.uint(entity.studioHdr())
-						val numbones = csgoEXE.uint(studioModel + 0x9C).toInt()
+						val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
 						val boneIndex = csgoEXE.uint(studioModel + 0xA0)
-						
+
 						var offset = 0
-						for (idx in 0..numbones - 1) {
+						for (idx in 0 until numBones) {
 							val parent = csgoEXE.int(studioModel + boneIndex + 0x4 + offset)
 							if (parent != -1) {
 								val flags = csgoEXE.uint(studioModel + boneIndex + 0xA0 + offset) and 0x100
 								if (flags != 0L) add(parent to idx)
 							}
-							
+
 							offset += 216
 						}
-						
-						entityBones.put(entity, this)
+
+						entityBones[entity] = this
 					}
-					
+
 					forEach { drawBone(entity, it.first, it.second); false }
 				}
 			}
-			
+
 			false
 		}
-		
+
 		shapeRenderer.apply {
 			begin()
-			for (i in 0..currentIdx - 1) {
+			for (i in 0 until currentIdx) {
 				val bone = bones[i]
 				color = bone.color
 				line(bone.sX.toFloat(), bone.sY.toFloat(), bone.eX.toFloat(), bone.eY.toFloat())
 			}
 			end()
 		}
-		
+
 		currentIdx = 0
 	}
 }
