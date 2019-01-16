@@ -1,7 +1,6 @@
-
-
 package rat.poison.game.hooks
 
+import com.sun.jna.platform.win32.WinNT
 import rat.poison.game.*
 import rat.poison.game.CSGO.GLOW_OBJECT_SIZE
 import rat.poison.game.CSGO.clientDLL
@@ -13,10 +12,7 @@ import rat.poison.game.offsets.ClientOffsets.dwGlowObject
 import rat.poison.game.offsets.ClientOffsets.dwLocalPlayer
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.game.offsets.EngineOffsets.dwClientState
-import rat.poison.settings.CLEANUP_TIME
-import rat.poison.settings.DANGER_ZONE
-import rat.poison.settings.GARBAGE_COLLECT_ON_MAP_START
-import rat.poison.settings.MAX_ENTITIES
+import rat.poison.settings.*
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.notInGame
@@ -39,6 +35,17 @@ private fun reset() {
 private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
     if (old != new) {
         notInGame = if (new == SignOnState.IN_GAME) {
+            if (PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0) {
+                val write = (if (FLICKER_FREE_GLOW) 0xEB else 0x74).toByte()
+                try {
+                    clientDLL[ClientOffsets.dwGlowUpdate] = write
+                } catch (e: Exception) {}
+
+                try {
+                    clientDLL[ClientOffsets.dwGlowUpdate2] = write
+                } catch (e: Exception) {}
+            }
+
             if (GARBAGE_COLLECT_ON_MAP_START) {
                 System.gc()
             }

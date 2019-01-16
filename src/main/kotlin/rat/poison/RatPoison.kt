@@ -2,6 +2,8 @@
 
 package rat.poison
 
+///Fuck these imports holy shit, move app somewhere else
+
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Gdx.gl
@@ -56,26 +58,12 @@ const val SETTINGS_DIRECTORY = "settings"
 fun main(args: Array<String>) {
     System.setProperty("jna.nosys", "true")
 
-    CSGO.initialize()
-
-    loadSettings()
-
-    bunnyHop()
-    rcs()
-    rcrosshair()
-    flatAim()
-    pathAim()
-    boneTrigger()
-    reducedFlash()
-    bombTimer()
-    esp()
-    espToggle()
-
-    App.open() //New overlay, change name to 'App' later
-
     //scanner() //not needed, keeping until menu fully finished, possibly implemented UI console
-    //implement to ui console?
+    //implement to ui console? or keep and add a disable menu
 
+    if (FLICKER_FREE_GLOW) {
+        PROCESS_ACCESS_FLAGS = PROCESS_ACCESS_FLAGS or WinNT.PROCESS_VM_OPERATION
+    }
 
     if (LEAGUE_MODE) { //Currently not updated
         GLOW_ESP = false
@@ -92,6 +80,23 @@ fun main(args: Array<String>) {
         PROCESS_ACCESS_FLAGS = WinNT.PROCESS_QUERY_INFORMATION or WinNT.PROCESS_VM_READ // all we need
         GARBAGE_COLLECT_ON_MAP_START = true // get rid of traces
     }
+
+    CSGO.initialize()
+
+    loadSettings()
+
+    bunnyHop()
+    rcs()
+    rcrosshair()
+    flatAim()
+    pathAim()
+    boneTrigger()
+    reducedFlash()
+    bombTimer()
+    esp()
+    espToggle()
+
+    App.open() //New overlay, change name to 'App' later
 
     Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
         setTitle("Rat Poison UI")

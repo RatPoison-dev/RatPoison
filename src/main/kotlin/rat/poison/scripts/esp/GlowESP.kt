@@ -41,9 +41,9 @@ internal fun glowEsp() = every(4) {
 				else if (SHOW_GRENADES && it.type.grenade)
 					glowAddress.glow(TEAM_COLOR, entity.spotted()) //If spotted enable model esp
 		}
-		
 		return@body false
 	}
+	if (FLICKER_FREE_GLOW) {Thread.sleep(256)}
 }
 
 private fun Entity.glow(color: Color, model: Boolean) {

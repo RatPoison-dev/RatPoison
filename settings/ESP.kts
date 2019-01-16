@@ -28,6 +28,11 @@ GLOW_ESP = true
 MODEL_ESP = false
 
 /**
+ * This gets rid of glow ESP "flicker", and more importantly reduces CPU usage.
+ */
+FLICKER_FREE_GLOW = true
+
+/**
  * Whether or not to use chams ESP, may require a game restart to stop/fix
  * To disable chams & brightness on exit (as models will stay colored normally), you must type exit into the cmd to close the program
  * This modifies a cvar that currently isn't being checked, this can change at anytime, use at your own discretion
