@@ -29,6 +29,11 @@ ACTION_LOG = true
 VISUALS_TOGGLE_KEY = 71
 
 /**
+ * Key to toggle open gl menu, default is F1
+ */
+MENU_KEY = 112
+
+/**
  * The bone IDs of the respective bones for a player.
  *
  * The left-side number is for CS:CO, and the right-side number is for CS:GO.

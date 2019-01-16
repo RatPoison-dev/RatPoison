@@ -13,7 +13,7 @@ SKELETON_ESP = false
 /**
  * Whether or not to use box ESP.
  */
-BOX_ESP = false
+BOX_ESP = true
 
 /**
  * Whether or not to use the within-game glow ESP.
@@ -25,25 +25,34 @@ GLOW_ESP = true
 /**
  * Model ESP glow tied to glow_esp, makes the model glow and only when visible, instead of an outline through walls newer chams, will be tied to later
  */
-MODEL_ESP = true
+MODEL_ESP = false
 
 /**
  * Whether or not to use chams ESP, may require a game restart to stop/fix
  * To disable chams & brightness on exit (as models will stay colored normally), you must type exit into the cmd to close the program
  * This modifies a cvar that currently isn't being checked, this can change at anytime, use at your own discretion
  */
-CHAMS_ESP = true
+CHAMS_ESP = false
 
 /**
  * When this is and CHAMS_ESP are enabled the enemy models will be colored based on health, and will override CHAMS_ESP_COLOR
  */
-CHAMS_SHOW_HEALTH = true
+CHAMS_SHOW_HEALTH = false
+
+/**
+ * Glow esp will work when enemy is not visible, chams will work when enemy is visible (visibility check is delayed as a netvar)
+ */
+MODEL_AND_GLOW = false
 
 /**
  * Brightness for chams esp (from 0 to 1000)
  */
-CHAMS_BRIGHTNESS = 100
+CHAMS_BRIGHTNESS = 0
 
+/**
+ * Will draw circles around your screen to indicate enemy players location in relation to you
+ */
+ENEMY_INDICATOR = true
 
 
 
@@ -77,7 +86,7 @@ SHOW_BOMB = true
 /**
  * Whether or not to highlight weapons.
  */
-SHOW_WEAPONS = false
+SHOW_WEAPONS = true
 
 /**
  * Whether or not to highlight grenades.
@@ -107,7 +116,7 @@ BOMB_COLOR = Color(255, 255, 0, 1.0)
 /**
  * The color to highlight weapons.
  */
-WEAPON_COLOR = Color(0, 255, 0, 0.5)
+WEAPON_COLOR = Color(0,0,0,1.0)
 
 /**
  * The color to highlight grenades.

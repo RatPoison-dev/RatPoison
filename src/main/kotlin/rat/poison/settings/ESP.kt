@@ -41,9 +41,19 @@ var CHAMS_ESP = false
 var CHAMS_SHOW_HEALTH = true
 
 /**
+ * Glow esp will work when enemy is not visible, chams will work when enemy is visible (visibility check is delayed as a netvar), takes 1 to 2 seconds to switch between
+ */
+var MODEL_AND_GLOW = true
+
+/**
  * Brightness for chams esp (from 0 to 1000)
  */
 var CHAMS_BRIGHTNESS = 100
+
+/**
+ * Will draw circles around your screen to indicate enemy players location in relation to you
+ */
+var ENEMY_INDICATOR = true
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
