@@ -53,11 +53,6 @@ object CSGO {
 		val hwd = CUser32.FindWindowA(null, "Counter-Strike: "
 				+ (if (CLASSIC_OFFENSIVE) "Classic" else "Global") + " Offensive")
 
-		var lastWidth = 0
-		var lastHeight = 0
-		var lastX = 0
-		var lastY = 0
-
 		every(1000) {
 			if (!CUser32.GetClientRect(hwd, rect)) System.exit(2)
 			gameWidth = rect.right - rect.left
@@ -66,17 +61,6 @@ object CSGO {
 			if (!CUser32.GetWindowRect(hwd, rect)) System.exit(3)
 			gameX = rect.left + (((rect.right - rect.left) - gameWidth) / 2)
 			gameY = rect.top + ((rect.bottom - rect.top) - gameHeight)
-
-//			if (Overlay.opened && (lastX != gameX || lastY != gameY))
-//				User32.INSTANCE.MoveWindow(Overlay.hwnd, gameX, gameY, gameWidth, gameHeight, false)
-//
-//			if (Overlay.opened && RatPoisonOverlay.created && (lastWidth != gameWidth || lastHeight != gameHeight))
-//				camera.setToOrtho(true, gameWidth.toFloat(), gameHeight.toFloat())
-
-			lastWidth = gameWidth
-			lastHeight = gameHeight
-			lastX = gameX
-			lastY = gameY
 		}
 
 		every(1024, continuous = true) {

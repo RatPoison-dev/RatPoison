@@ -7,13 +7,15 @@ import rat.poison.settings.*
 
 /**
  * Whether or not to use skeleton ESP.
+ * This requires the overlay which only works when borderless fullscreen or windowed.
  */
 SKELETON_ESP = false
 
 /**
  * Whether or not to use box ESP.
+ * This requires the overlay which only works when borderless fullscreen or windowed.
  */
-BOX_ESP = true
+BOX_ESP = false
 
 /**
  * Whether or not to use the within-game glow ESP.
@@ -23,7 +25,7 @@ BOX_ESP = true
 GLOW_ESP = true
 
 /**
- * Model ESP glow tied to glow_esp, makes the model glow and only when visible, instead of an outline through walls newer chams, will be tied to later
+ * Model ESP glow tied to glow_esp, makes the model glow and only when visible, instead of an outline through walls
  */
 MODEL_ESP = false
 
@@ -56,6 +58,7 @@ CHAMS_BRIGHTNESS = 0
 
 /**
  * Will draw circles around your screen to indicate enemy players location in relation to you
+ * This requires the overlay which only works when borderless fullscreen or windowed.
  */
 ENEMY_INDICATOR = true
 

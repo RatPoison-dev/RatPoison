@@ -29,17 +29,17 @@ internal fun glowEsp() = every(4) {
 				if (SHOW_ENEMIES && !team) {
 					glowAddress.glow(ENEMY_COLOR, entity.spotted())
 				} else if (SHOW_TEAM && team) {
-					glowAddress.glow(TEAM_COLOR, entity.spotted()) //If spotted enable model esp
+					glowAddress.glow(TEAM_COLOR, entity.spotted())
 				}
 			}
 			EntityType.CPlantedC4, EntityType.CC4 -> if (SHOW_BOMB) {
-				glowAddress.glow(BOMB_COLOR, entity.spotted()) //If spotted enable model esp
+				glowAddress.glow(BOMB_COLOR, entity.spotted())
 			}
 			else ->
 				if (SHOW_WEAPONS && it.type.weapon)
-					glowAddress.glow(WEAPON_COLOR, entity.spotted()) //If spotted enable model esp
+					glowAddress.glow(WEAPON_COLOR, entity.spotted())
 				else if (SHOW_GRENADES && it.type.grenade)
-					glowAddress.glow(TEAM_COLOR, entity.spotted()) //If spotted enable model esp
+					glowAddress.glow(GRENADE_COLOR, entity.spotted())
 		}
 		return@body false
 	}

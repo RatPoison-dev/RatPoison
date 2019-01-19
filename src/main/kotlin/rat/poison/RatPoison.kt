@@ -70,6 +70,10 @@ fun main(args: Array<String>) {
         BOX_ESP = false
         SKELETON_ESP = false
         CHAMS_ESP = false
+        CHAMS_BRIGHTNESS = 0
+        MODEL_ESP = false
+        MODEL_AND_GLOW = false
+        ENEMY_INDICATOR = false
         ENABLE_ESP = false
 
         ENABLE_BOMB_TIMER = false
@@ -96,12 +100,15 @@ fun main(args: Array<String>) {
     esp()
     espToggle()
 
-    App.open() //New overlay, change name to 'App' later
+    //Check if we need to use the overlay
+    if (MENU || BOX_ESP || SKELETON_ESP || ENABLE_BOMB_TIMER || ENABLE_RECOIL_CROSSHAIR || ENEMY_INDICATOR) {
+        App.open() //New overlay, change name to 'App' later
 
-    Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
-        setTitle("Rat Poison UI")
-        setWindowedMode(CSGO.gameWidth, CSGO.gameHeight)
-    })
+        Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
+            setTitle("Rat Poison UI")
+            setWindowedMode(CSGO.gameWidth, CSGO.gameHeight)
+        })
+    }
 }
 
 
@@ -110,7 +117,7 @@ fun loadSettings() {
 	
 	File(SETTINGS_DIRECTORY).listFiles().forEach {
         if (it.name != "cfg.kts") {
-            FileReader(it).use { it ->
+            FileReader(it).use {
                 Dojo.script(it
                         .readLines()
                         .joinToString("\n"))

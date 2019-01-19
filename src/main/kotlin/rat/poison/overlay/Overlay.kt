@@ -47,7 +47,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 		}
 	}
 
-	override var protectAgainstScreenshots: Boolean by Delegates.observable(false) { _, _, value -> //Not it
+	override var protectAgainstScreenshots: Boolean by Delegates.observable(false) { _, _, /*value*/_ ->
 //		with(User32) { //Warned against by Noad
 //			SetWindowDisplayAffinity(myHWND, if (value) 1 else 0)
 //		}
@@ -65,11 +65,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 					Thread.sleep(100)
 					monitorTargetApp()
 				}
-			} catch (e: InterruptedException) {
-				//ignore
-			} catch (e: Exception) {
-				e.printStackTrace()
-			}
+			} catch (e: InterruptedException) { } catch (e: Exception) { e.printStackTrace() }
 			run = false
 			println("${Thread.currentThread().name} died!")
 		}
@@ -81,9 +77,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 				run = false
 				overlayWindowMonitorThread?.apply { interrupt(); join() }
 			}
-		} catch (e: Exception) {
-			e.printStackTrace()
-		}
+		} catch (e: Exception) { e.printStackTrace() }
 		overlayWindowMonitorThread = null
 		targetAppHWND = HWND_ZERO
 	}
@@ -260,8 +254,8 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 		//makeBlurBehind()
 		if (targetAppHWND != HWND_ZERO) {
 			SetWindowLongA(myHWND, com.sun.jna.platform.win32.WinUser.GWL_EXSTYLE, WS_EX_TOOLWINDOW or WS_EX_TOPMOST)
-			val dwCurrentThread = GetWindowThreadProcessId(myHWND, null)
-			val dwFGThread = GetWindowThreadProcessId(targetAppHWND, null)
+			//val dwCurrentThread = GetWindowThreadProcessId(myHWND, null)
+			//val dwFGThread = GetWindowThreadProcessId(targetAppHWND, null)
 			//AttachThreadInput(dwCurrentThread.toLong(), dwFGThread.toLong(), true) //Warned against by Noad
 			SetForegroundWindow(myHWND)
 			SetActiveWindow(myHWND)

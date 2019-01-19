@@ -85,11 +85,12 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	val aim = ACTIVATE_FROM_FIRE_KEY && keyPressed(FIRE_KEY)
 	val forceAim = keyPressed(FORCE_AIM_KEY)
 	val boneTrig = ENABLE_BONE_TRIGGER && AIM_ON_BONE_TRIGGER && findTarget(me.position(), clientState.angle(), false, BONE_TRIGGER_FOV, BONE_TRIGGER_BONE, false) >= 0
+	val haveAmmo = me.weaponEntity().bullets() > 0
 
 	if (boneTrig)
 		bone.set(BONE_TRIGGER_BONE)
 
-	val pressed = (aim or forceAim or boneTrig) && !MENUTOG
+	val pressed = (aim or forceAim or boneTrig) && !MENUTOG && haveAmmo
 	var currentTarget = target.get()
 	
 	if (!pressed) {

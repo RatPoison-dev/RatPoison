@@ -1,6 +1,12 @@
 package rat.poison.settings
 
 /**
+ * Turn the overlay menu on or off, if enabled the cmd will not be used
+ * The menu only shows up while in game windowed or fullscreen windowed
+ */
+var MENU = true
+
+/**
  * Set this to true if you're playing on a league like ESEA, FaceIT, etc.
  * This will disable writing to the game and disable all visuals.
  */

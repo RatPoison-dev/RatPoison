@@ -44,7 +44,6 @@ internal fun chamsEsp() = every(500) {
 
         //Not exhaustive @warning
         when (it.type) {
-
             EntityType.CCSPlayer -> {
                 if (entity.dead() || entity == me || (!SHOW_DORMANT && entity.dormant())) return@body false
 
@@ -66,6 +65,12 @@ internal fun chamsEsp() = every(500) {
             EntityType.CPlantedC4, EntityType.CC4 -> if (SHOW_BOMB) {
                 entity.chams(BOMB_COLOR)
             }
+
+            else ->
+                if (SHOW_WEAPONS && it.type.weapon)
+                    entity.chams(WEAPON_COLOR)
+                else if (SHOW_GRENADES && it.type.grenade)
+                    entity.chams(GRENADE_COLOR)
         }
         return@body false
     }

@@ -35,21 +35,21 @@ fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: 
 fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double)
 		= clientState.setAngle(applyFlatSmoothing(currentAngle, destinationAngle, smoothing))
 
-fun flatAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double, sensMultiplier: Double = 1.0) {
-	applyFlatSmoothing(currentAngle, destinationAngle, smoothing)
-	if (!destinationAngle.isValid()) return
-	
-	val delta = delta.get()
-	delta.set(currentAngle.y - destinationAngle.y, currentAngle.x - destinationAngle.x, 0.0)
-	
-	var sens = GAME_SENSITIVITY * sensMultiplier
-	if (sens < GAME_SENSITIVITY) sens = GAME_SENSITIVITY
-	
-	val dx = Math.round(delta.x / (sens * GAME_PITCH))
-	val dy = Math.round(-delta.y / (sens * GAME_YAW))
-	
-	mouseMove((dx / 2).toInt(), (dy / 2).toInt())
-}
+//fun flatAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double, sensMultiplier: Double = 1.0) { //Currently not used
+//	applyFlatSmoothing(currentAngle, destinationAngle, smoothing)
+//	if (!destinationAngle.isValid()) return
+//
+//	val delta = delta.get()
+//	delta.set(currentAngle.y - destinationAngle.y, currentAngle.x - destinationAngle.x, 0.0)
+//
+//	var sens = GAME_SENSITIVITY * sensMultiplier
+//	if (sens < GAME_SENSITIVITY) sens = GAME_SENSITIVITY
+//
+//	val dx = Math.round(delta.x / (sens * GAME_PITCH))
+//	val dy = Math.round(-delta.y / (sens * GAME_YAW))
+//
+//	mouseMove((dx / 2).toInt(), (dy / 2).toInt())
+//}
 
 fun pathAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Int,
             randomSleepMax: Int = 10, staticSleep: Int = 2,

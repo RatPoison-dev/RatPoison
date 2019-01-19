@@ -21,28 +21,28 @@ internal fun miscEsp() = App {
 
     forEntities(EntityType.ccsPlayer) {
         val entity = it.entity
+
         if (entity == me || entity.dead() || entity.dormant()) return@forEntities false
 
         if (entity.team() != me.team()) { //Enemy team only
-            val screenpos = Vector()
+            val screenPos = Vector()
 
-            val entitypos = entity.position() //convert to v3?
-            worldToScreen(entitypos, screenpos)
-            //val screenposv3 = Vector3(screenpos.x.toFloat(), screenpos.y.toFloat(), 0F)
-            //val indicatorpos = screenposv3
-            val indicatorpos = Vector3(screenpos.x.toFloat(), screenpos.y.toFloat(), 0F)
-            /*val rotation =*/ indicatorPosition(indicatorpos, indicatorpos)
+            val entityPos = entity.position() //convert to v3?
+            if (!worldToScreen(entityPos, screenPos)) {
+                val indicatorPos = Vector3(screenPos.x.toFloat(), screenPos.y.toFloat(), 0F)
+                indicatorPosition(indicatorPos, indicatorPos)
 
-            shapeRenderer.apply {
-                begin()
-                if (ENEMY_INDICATOR) { //Redundant for now, but adding more options
-                    set(ShapeRenderer.ShapeType.Filled)
-                    color = Color(255F, 0F, 0F, .5F)
-                    circle(indicatorpos.x - 10, indicatorpos.y - 10, 10F)
-                    color = Color(255F, 255F, 255F, 1F)
-                    set(ShapeRenderer.ShapeType.Line)
+                shapeRenderer.apply {
+                    begin()
+                    if (ENEMY_INDICATOR) { //Redundant for now, but adding more options
+                        set(ShapeRenderer.ShapeType.Filled)
+                        color = Color(255F, 0F, 0F, .5F)
+                        circle(indicatorPos.x - 10, indicatorPos.y - 10, 10F)
+                        color = Color(255F, 255F, 255F, 1F)
+                        set(ShapeRenderer.ShapeType.Line)
+                    }
+                    end()
                 }
-                end()
             }
         }
         false

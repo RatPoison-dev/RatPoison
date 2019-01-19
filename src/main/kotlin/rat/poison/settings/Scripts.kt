@@ -20,6 +20,7 @@ var ENABLE_RCS = false
 
 /**
  * Enables the recoil crosshair
+ * This requires the overlay which only works when borderless fullscreen or windowed.
  */
 var ENABLE_RECOIL_CROSSHAIR = true
 
@@ -54,5 +55,6 @@ var ENABLE_REDUCED_FLASH = false
 
 /**
  * Enables the bomb timer script.
+ * This requires the overlay which only works when borderless fullscreen or windowed.
  */
 var ENABLE_BOMB_TIMER = false

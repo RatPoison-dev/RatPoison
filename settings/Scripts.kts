@@ -16,12 +16,13 @@ ENABLE_BUNNY_HOP = false
 /**
  * Enables the recoil control system (RCS) script.
  */
-ENABLE_RCS = false
+ENABLE_RCS = true
 
 /**
  * Enables the recoil crosshair
+ * This requires the overlay which only works when borderless fullscreen or windowed.
  */
-ENABLE_RECOIL_CROSSHAIR = false
+ENABLE_RECOIL_CROSSHAIR = true
 
 /**
  * Enables the extra sensory perception (ESP) script.
@@ -54,5 +55,6 @@ ENABLE_REDUCED_FLASH = false
 
 /**
  * Enables the bomb timer script.
+ * This requires the overlay which only works when borderless fullscreen or windowed.
  */
 ENABLE_BOMB_TIMER = false
