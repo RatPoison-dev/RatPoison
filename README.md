@@ -1,5 +1,7 @@
 THIS CHEATS BASE IS CHARLATANO AVAILABLE [HERE](https://github.com/Jire/Charlatano)
 
+If you have problems join the discord and @Stupid Rat#9999
+
 ## Need help? Want to chat? Join our Discord
 **Join our Discord:** https://discord.gg/Kej7DEq
 
@@ -18,6 +20,9 @@ THIS CHEATS BASE IS CHARLATANO AVAILABLE [HERE](https://github.com/Jire/Charlata
 * Humanized bunny hop using scroll input
 * "Flat" aim bot with traditional linear-regression paths (not safe for use on leagues! use "PathAim" instead)
 * Bone trigger aims with specified aimbot
+* Recoil crosshair
+* Ingame menu (borderless and windowed only)
+* Esp indicators of enemies that are off screen
 
 ---
 
