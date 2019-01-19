@@ -20,6 +20,9 @@ If you have problems join the discord and @Stupid Rat#9999
 * Humanized bunny hop using scroll input
 * "Flat" aim bot with traditional linear-regression paths (not safe for use on leagues! use "PathAim" instead)
 * Bone trigger aims with specified aimbot
+* Recoil crosshair
+* Ingame menu (borderless and windowed only)
+* Esp indicators of enemies that are off screen
 
 ---
 
