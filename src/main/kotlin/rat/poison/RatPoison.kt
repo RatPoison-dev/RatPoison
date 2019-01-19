@@ -100,8 +100,8 @@ fun main(args: Array<String>) {
     esp()
     espToggle()
 
-    //Check if we need to use the overlay
-    if (MENU || BOX_ESP || SKELETON_ESP || ENABLE_BOMB_TIMER || ENABLE_RECOIL_CROSSHAIR || ENEMY_INDICATOR) {
+    //Overlay check, not updated?
+    if (MENU || BOX_ESP || SKELETON_ESP || ENABLE_BOMB_TIMER || ENABLE_RECOIL_CROSSHAIR || ENEMY_INDICATOR) { //Illegal reflective access, search says need coffee 9 or higher big fuck
         App.open() //New overlay, change name to 'App' later
 
         Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
@@ -124,11 +124,10 @@ fun loadSettings() {
             }
         }
     }
-    //Removed need overlay check, always needed because menu (possibly disable menu in settings files?) //remove later
 }
 
 
-////Courtesy of Mr. Noad, given as lmlapp, converted to normal
+////Courtesy of Mr. Noad, lmlapp converted to normal
 object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
@@ -187,14 +186,14 @@ object App : ApplicationAdapter() {
             }
             sb.projectionMatrix = stage.camera.combined
 
-            //Extra bits might not be needed
+            //Extra bits might not be needed, from deprecated overlay
             glEnable(GL20.GL_BLEND)
             glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
             glClearColor(0F, 0F, 0F, 0F)
             shapeRenderer.projectionMatrix = stage.camera.combined
             for (i in 0 until bodies.size) bodies[i]()
             glDisable(GL20.GL_BLEND)
-            //Extra bits might not be needed
+            //Extra bits might not be needed, from deprecated overlay
 
             //ree?
             sb.begin()
