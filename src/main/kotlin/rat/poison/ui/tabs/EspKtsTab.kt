@@ -45,7 +45,7 @@ class EspKts : Tab(false, false) {
         if (SKELETON_ESP) enableSkeletonEspToggle.toggle()
         enableSkeletonEspToggle.changed { _, _ ->
             if (true) {
-                SKELETON_ESP = !SKELETON_ESP
+                SKELETON_ESP = enableSkeletonEspToggle.isChecked//!SKELETON_ESP
             }
         }
 
@@ -54,7 +54,7 @@ class EspKts : Tab(false, false) {
         if (BOX_ESP) enableBoxEspToggle.toggle()
         enableBoxEspToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                BOX_ESP = !BOX_ESP
+                BOX_ESP = enableBoxEspToggle.isChecked//!BOX_ESP
             }
         }
 
@@ -63,7 +63,7 @@ class EspKts : Tab(false, false) {
         if (GLOW_ESP) enableGlowEspToggle.toggle()
         enableGlowEspToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                GLOW_ESP = !GLOW_ESP
+                GLOW_ESP = enableGlowEspToggle.isChecked//!GLOW_ESP
             }
         }
 
@@ -72,7 +72,7 @@ class EspKts : Tab(false, false) {
         if (MODEL_ESP) enableModelEspToggle.toggle()
         enableModelEspToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                MODEL_ESP = !MODEL_ESP
+                MODEL_ESP = enableModelEspToggle.isChecked//!MODEL_ESP
             }
         }
 
@@ -81,7 +81,7 @@ class EspKts : Tab(false, false) {
         if (CHAMS_ESP) enableChamsEspToggle.toggle()
         enableChamsEspToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                CHAMS_ESP = !CHAMS_ESP
+                CHAMS_ESP = enableChamsEspToggle.isChecked//!CHAMS_ESP
             }
         }
 
@@ -90,7 +90,7 @@ class EspKts : Tab(false, false) {
         if (CHAMS_SHOW_HEALTH) enableChamsShowHealthToggle.toggle()
         enableChamsShowHealthToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                CHAMS_SHOW_HEALTH = !CHAMS_SHOW_HEALTH
+                CHAMS_SHOW_HEALTH = enableChamsShowHealthToggle.isChecked//!CHAMS_SHOW_HEALTH
             }
         }
 
@@ -112,7 +112,7 @@ class EspKts : Tab(false, false) {
         if (SHOW_TEAM) enableShowTeamToggle.toggle()
         enableShowTeamToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                SHOW_TEAM = !SHOW_TEAM
+                SHOW_TEAM = enableShowTeamToggle.isChecked//!SHOW_TEAM
             }
         }
 
@@ -121,7 +121,7 @@ class EspKts : Tab(false, false) {
         if (SHOW_ENEMIES) enableShowEnemiesToggle.toggle()
         enableShowEnemiesToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                SHOW_ENEMIES = !SHOW_ENEMIES
+                SHOW_ENEMIES = enableShowEnemiesToggle.isChecked//!SHOW_ENEMIES
             }
         }
 
@@ -130,7 +130,7 @@ class EspKts : Tab(false, false) {
         if (SHOW_DORMANT) enableShowDormantToggle.toggle()
         enableShowDormantToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                SHOW_DORMANT = !SHOW_DORMANT
+                SHOW_DORMANT = enableShowDormantToggle.isChecked//!SHOW_DORMANT
             }
         }
 
@@ -139,7 +139,7 @@ class EspKts : Tab(false, false) {
         if (SHOW_BOMB) enableShowBombToggle.toggle()
         enableShowBombToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                SHOW_BOMB = !SHOW_BOMB
+                SHOW_BOMB = enableShowBombToggle.isChecked//!SHOW_BOMB
             }
         }
 
@@ -148,7 +148,7 @@ class EspKts : Tab(false, false) {
         if (SHOW_WEAPONS) enableShowWeaponsToggle.toggle()
         enableShowWeaponsToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                SHOW_WEAPONS = !SHOW_WEAPONS
+                SHOW_WEAPONS = enableShowWeaponsToggle.isChecked//!SHOW_WEAPONS
             }
         }
 
@@ -157,7 +157,7 @@ class EspKts : Tab(false, false) {
         if (SHOW_GRENADES) enableShowGrenadesToggle.toggle()
         enableShowGrenadesToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                SHOW_GRENADES = !SHOW_GRENADES
+                SHOW_GRENADES = enableShowGrenadesToggle.isChecked//!SHOW_GRENADES
             }
         }
 

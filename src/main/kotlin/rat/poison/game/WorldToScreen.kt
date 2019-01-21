@@ -24,7 +24,7 @@ fun worldToScreen(from: Vector, vOut: Vector) = try {
 	
 	val w = viewMatrix[3][0] * from.x + viewMatrix[3][1] * from.y + viewMatrix[3][2] * from.z + viewMatrix[3][3]
 	
-	if (!w.isNaN() && w >= 0.01F) {
+	if (!w.isNaN() && w >= 0.01F) { //If infront (on screen)
 		val invw = 1.0 / w
 		vOut.x *= invw
 		vOut.y *= invw

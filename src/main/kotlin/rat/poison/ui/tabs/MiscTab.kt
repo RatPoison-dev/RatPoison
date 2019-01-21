@@ -68,7 +68,7 @@ class Misc : Tab(false, false) {
         if (AIM_ON_BONE_TRIGGER) aimOnBoneTrigger.toggle()
         aimOnBoneTrigger.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                AIM_ON_BONE_TRIGGER = !AIM_ON_BONE_TRIGGER
+                AIM_ON_BONE_TRIGGER = aimOnBoneTrigger.isChecked//AIM_ON_BONE_TRIGGER
             }
         }
 
@@ -77,7 +77,7 @@ class Misc : Tab(false, false) {
         if (BONE_TRIGGER_ENABLE_KEY) boneTriggerEnableKey.toggle()
         boneTriggerEnableKey.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                BONE_TRIGGER_ENABLE_KEY = !BONE_TRIGGER_ENABLE_KEY
+                BONE_TRIGGER_ENABLE_KEY = boneTriggerEnableKey.isChecked//!BONE_TRIGGER_ENABLE_KEY
             }
         }
 
@@ -197,7 +197,7 @@ class Misc : Tab(false, false) {
         if (ENEMY_INDICATOR) enemyIndicator.toggle()
         enemyIndicator.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                ENEMY_INDICATOR = !ENEMY_INDICATOR
+                ENEMY_INDICATOR = enemyIndicator.isChecked//!ENEMY_INDICATOR
             }
         }
 

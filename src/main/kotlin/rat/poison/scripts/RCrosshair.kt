@@ -12,7 +12,7 @@ import rat.poison.utils.Vector
 private var lastpunch = Vector(0.0, 0.0, 0.0)
 
 internal fun rcrosshair() = App { //Currently not completely centered
-    if (!ENABLE_RECOIL_CROSSHAIR || MENUTOG) return@App
+    if (!ENABLE_RECOIL_CROSSHAIR || MENUTOG || !ENABLE_ESP) return@App
 
     val x = ((gameWidth/2F+3F) - ((gameWidth/90F)*lastpunch.y.toFloat()))
     val y = ((gameHeight/2F-1F) - ((gameHeight/90F)*lastpunch.x.toFloat()))

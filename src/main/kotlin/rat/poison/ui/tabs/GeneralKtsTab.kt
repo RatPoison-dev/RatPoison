@@ -28,7 +28,7 @@ class GeneralKts : Tab(false, false) { //Aim.kts tab
         if (LEAGUE_MODE) leagueModeToggle.toggle()
         leagueModeToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                LEAGUE_MODE = !LEAGUE_MODE
+                LEAGUE_MODE = leagueModeToggle.isChecked//!LEAGUE_MODE
             }
         }
 

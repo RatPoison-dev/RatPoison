@@ -27,7 +27,7 @@ class ScriptsKts : Tab(false, false) {
         if (LEAGUE_MODE) enableBunnyHopToggle.toggle()
         enableBunnyHopToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_BUNNY_HOP = !ENABLE_BUNNY_HOP
+                ENABLE_BUNNY_HOP = enableBunnyHopToggle.isChecked//!ENABLE_BUNNY_HOP
             }
         }
 
@@ -36,7 +36,7 @@ class ScriptsKts : Tab(false, false) {
         if (ENABLE_RCS) enableRCSToggle.toggle()
         enableRCSToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_RCS = !ENABLE_RCS
+                ENABLE_RCS = enableRCSToggle.isChecked//!ENABLE_RCS
             }
         }
 
@@ -45,7 +45,7 @@ class ScriptsKts : Tab(false, false) {
         if (ENABLE_RECOIL_CROSSHAIR) enableRCrosshairToggle.toggle()
         enableRCrosshairToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_RECOIL_CROSSHAIR = !ENABLE_RECOIL_CROSSHAIR
+                ENABLE_RECOIL_CROSSHAIR = enableRCrosshairToggle.isChecked//!ENABLE_RECOIL_CROSSHAIR
             }
         }
 ////Marked for fix, enable esp needs to turn all the esps off
@@ -54,7 +54,8 @@ class ScriptsKts : Tab(false, false) {
         if (ENABLE_ESP) enableEspToggle.toggle()
         enableEspToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_ESP = !ENABLE_ESP
+                ENABLE_ESP = enableEspToggle.isChecked//!ENABLE_ESP
+                println(ENABLE_ESP)
             }
         }
 
@@ -63,7 +64,7 @@ class ScriptsKts : Tab(false, false) {
         if (ENABLE_FLAT_AIM) enableFlatAimToggle.toggle()
         enableFlatAimToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_FLAT_AIM = !ENABLE_FLAT_AIM
+                ENABLE_FLAT_AIM = enableFlatAimToggle.isChecked//enableFlatAimToggle.isChecked//!ENABLE_FLAT_AIM
             }
         }
 
@@ -72,7 +73,7 @@ class ScriptsKts : Tab(false, false) {
         if (ENABLE_PATH_AIM) enablePathAimToggle.toggle()
         enablePathAimToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_PATH_AIM = !ENABLE_PATH_AIM
+                ENABLE_PATH_AIM = enablePathAimToggle.isChecked//!ENABLE_PATH_AIM
             }
         }
 
@@ -81,7 +82,7 @@ class ScriptsKts : Tab(false, false) {
         if (ENABLE_BONE_TRIGGER) enableBoneTriggerToggle.toggle()
         enableBoneTriggerToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_BONE_TRIGGER = !ENABLE_BONE_TRIGGER
+                ENABLE_BONE_TRIGGER = enableBoneTriggerToggle.isChecked//!ENABLE_BONE_TRIGGER
             }
         }
 
@@ -90,7 +91,7 @@ class ScriptsKts : Tab(false, false) {
         if (ENABLE_REDUCED_FLASH) enableReducedFlashToggle.toggle()
         enableReducedFlashToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_REDUCED_FLASH = !ENABLE_REDUCED_FLASH
+                ENABLE_REDUCED_FLASH = enableReducedFlashToggle.isChecked//!ENABLE_REDUCED_FLASH
             }
         }
 
@@ -99,7 +100,7 @@ class ScriptsKts : Tab(false, false) {
         if (ENABLE_BOMB_TIMER) enableBombTimerToggle.toggle()
         enableBombTimerToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_BOMB_TIMER = !ENABLE_BOMB_TIMER
+                ENABLE_BOMB_TIMER = enableBombTimerToggle.isChecked//!ENABLE_BOMB_TIMER
             }
         }
 
@@ -120,6 +121,6 @@ class ScriptsKts : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Settings.kts"
+        return "Scripts.kts"
     }
 }

@@ -61,7 +61,7 @@ class AimKts : Tab(true, false) { //Aim.kts tab
         if (ACTIVATE_FROM_FIRE_KEY) activateFromFireKey.toggle()
         activateFromFireKey.changed { _, _ ->
             if (true) {
-                ACTIVATE_FROM_FIRE_KEY = !ACTIVATE_FROM_FIRE_KEY
+                ACTIVATE_FROM_FIRE_KEY = activateFromFireKey.isChecked//!ACTIVATE_FROM_FIRE_KEY
             }
         }
 
@@ -70,7 +70,7 @@ class AimKts : Tab(true, false) { //Aim.kts tab
         if (TEAMMATES_ARE_ENEMIES) teammatesAreEnemies.toggle()
         teammatesAreEnemies.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic /fixl ater
-                TEAMMATES_ARE_ENEMIES = !TEAMMATES_ARE_ENEMIES
+                TEAMMATES_ARE_ENEMIES = teammatesAreEnemies.isChecked//!TEAMMATES_ARE_ENEMIES
             }
         }
 

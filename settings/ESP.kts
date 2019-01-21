@@ -32,7 +32,7 @@ MODEL_ESP = false
 /**
  * This gets rid of glow ESP "flicker", and more importantly reduces CPU usage.
  */
-FLICKER_FREE_GLOW = true
+FLICKER_FREE_GLOW = false
 
 /**
  * Whether or not to use chams ESP, may require a game restart to stop/fix
