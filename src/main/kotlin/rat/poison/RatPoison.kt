@@ -61,6 +61,8 @@ fun main(args: Array<String>) {
     //scanner() //not needed, keeping until menu fully finished, possibly implemented UI console
     //implement to ui console? or keep and add a disable menu
 
+    loadSettings()
+
     if (FLICKER_FREE_GLOW) {
         PROCESS_ACCESS_FLAGS = PROCESS_ACCESS_FLAGS or WinNT.PROCESS_VM_OPERATION
     }
@@ -86,8 +88,6 @@ fun main(args: Array<String>) {
     }
 
     CSGO.initialize()
-
-    loadSettings()
 
     bunnyHop()
     rcs()

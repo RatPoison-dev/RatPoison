@@ -13,22 +13,17 @@ var prevchamsespcolor = CHAMS_ESP_COLOR
 
 fun espToggle() = every(4) {
     if (keyPressed(VISUALS_TOGGLE_KEY) && !MENUTOG) {
-        println("esp before: " + ENABLE_ESP)
 
-        if (!ENABLE_ESP) { //Could interfere with overlay, replace this later
-            println("called enabled")
+        if (!ENABLE_ESP) {
             CHAMS_SHOW_HEALTH = prevchamsshowhealth
             CHAMS_BRIGHTNESS = prevchamsbrightness
             CHAMS_ESP_COLOR = prevchamsespcolor
-            println(CHAMS_ESP_COLOR)
 
             val write = (if (FLICKER_FREE_GLOW) 0xEB else 0x74).toByte()
             try { CSGO.clientDLL[ClientOffsets.dwGlowUpdate] = write } catch (e: Exception) {}
             try { CSGO.clientDLL[ClientOffsets.dwGlowUpdate2] = write } catch (e: Exception) {}
         }
         else {
-            println("called disabled")
-
             prevchamsshowhealth = CHAMS_SHOW_HEALTH
             prevchamsbrightness = CHAMS_BRIGHTNESS
             prevchamsespcolor = CHAMS_ESP_COLOR
@@ -36,6 +31,7 @@ fun espToggle() = every(4) {
             CHAMS_BRIGHTNESS = 0
             CHAMS_SHOW_HEALTH = false
             CHAMS_ESP_COLOR = Color(255, 255, 255, 1.0)
+
             try { CSGO.clientDLL[ClientOffsets.dwGlowUpdate] = 0x74.toByte() } catch (e: Exception) {}
             try { CSGO.clientDLL[ClientOffsets.dwGlowUpdate2] = 0x74.toByte() } catch (e: Exception) {}
         }
@@ -44,10 +40,6 @@ fun espToggle() = every(4) {
         Thread.sleep(50) //Wait to make sure settings loop
 
         UIUpdate()
-
-        println("esp after: " + ENABLE_ESP)
-
-        //UIUpdate()
 
         Thread.sleep(200)
     }

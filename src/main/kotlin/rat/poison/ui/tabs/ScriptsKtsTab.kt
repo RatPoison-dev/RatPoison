@@ -55,7 +55,6 @@ class ScriptsKts : Tab(false, false) {
         enableEspToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
                 ENABLE_ESP = enableEspToggle.isChecked//!ENABLE_ESP
-                println(ENABLE_ESP)
             }
         }
 

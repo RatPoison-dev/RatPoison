@@ -26,6 +26,12 @@ var BOX_ESP = false
 var GLOW_ESP = false
 
 /**
+ * Whether or not to invert the glow esp and highlight the player model instead of the outline
+ * This works through walls, to change how thick/blurry it is adjust the alpha .5 through 1 should work fine
+ */
+var INV_GLOW_ESP = false
+
+/**
  * Model ESP glow tied to glow_esp, makes the model glow and only when visible, instead of an outline through walls
  */
 var MODEL_ESP = true

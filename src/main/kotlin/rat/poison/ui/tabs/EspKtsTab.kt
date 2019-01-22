@@ -20,6 +20,7 @@ class EspKts : Tab(false, false) {
     val enableSkeletonEspToggle = VisTextButton("SKELETON_ESP", "toggle") //Skeleton_Esp
     val enableBoxEspToggle = VisTextButton("BOX_ESP", "toggle") //Box_Esp
     val enableGlowEspToggle = VisTextButton("GLOW_ESP", "toggle") //Glow_Esp
+    val enableInvGlowEspToggle = VisTextButton("INV_GLOW_ESP", "toggle") //Inv_Glow_Esp
     val enableModelEspToggle = VisTextButton("MODEL_ESP", "toggle") //Model_Esp
     val enableChamsEspToggle = VisTextButton("CHAMS_ESP", "toggle") //Chams_Esp
     val enableChamsShowHealthToggle = VisTextButton("CHAMS_SHOW_HEALTH", "toggle") //Chams_Show_Health
@@ -64,6 +65,15 @@ class EspKts : Tab(false, false) {
         enableGlowEspToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
                 GLOW_ESP = enableGlowEspToggle.isChecked//!GLOW_ESP
+            }
+        }
+
+        //Create Inv_Glow_Esp Toggle
+        //val enableInvGlowEspToggle = VisTextButton("INV_GLOW_ESP", "toggle")
+        if (INV_GLOW_ESP) enableInvGlowEspToggle.toggle()
+        enableInvGlowEspToggle.changed { _, _ ->
+            if (true) { //type Any? changes didnt work im autistic //fix later
+                INV_GLOW_ESP = enableInvGlowEspToggle.isChecked//!GLOW_ESP
             }
         }
 
@@ -295,20 +305,20 @@ class EspKts : Tab(false, false) {
         chamsColor.add(chamsColorShow)
 
         //Add all items to label for tabbed pane content
-        table.add(enableSkeletonEspToggle).row() //Add Enable_Bunny_Hop Toggle
-        table.add(enableBoxEspToggle).row() //Add Enable_Bunny_Hop Toggle
-        table.add(enableGlowEspToggle).row() //Add Enable_Bunny_Hop Toggle
-        table.add(enableModelEspToggle).row() //Add Enable_Bunny_Hop Toggle
-        table.add(enableChamsEspToggle).row() //Add Enable_Bunny_Hop Toggle
-        table.add(enableChamsShowHealthToggle).row() //Add Enable_Bunny_Hop Toggle
-        table.add(enableSkeletonEspToggle).row() //Add Enable_Bunny_Hop Toggle
+        table.add(enableSkeletonEspToggle).row() //Add Enable_Skeleton_Esp Toggle
+        table.add(enableBoxEspToggle).row() //Add Enable_Box_Esp Toggle
+        table.add(enableGlowEspToggle).row() //Add Enable_Glow_Esp Toggle
+        table.add(enableInvGlowEspToggle).row() //Add Enable_Inv_Glow_Esp Toggle
+        table.add(enableModelEspToggle).row() //Add Enable_Model_Esp Toggle
+        table.add(enableChamsEspToggle).row() //Add Enable_Chams_Esp Toggle
+        table.add(enableChamsShowHealthToggle).row() //Add Enable_Chams_Show_Health Toggle
         table.add(chamsBrightness).width(250F).row() //Add Chams_Brightness Slider
         table.add(enableShowTeamToggle).row() //Add Enable_Bunny_Hop Toggle
-        table.add(enableShowEnemiesToggle).row() //Add Enable_Bunny_Hop Toggle
-        table.add(enableShowDormantToggle).row() //Add Enable_Bunny_Hop Toggle
-        table.add(enableShowBombToggle).row() //Add Enable_Bunny_Hop Toggle
-        table.add(enableShowWeaponsToggle).row() //Add Enable_Bunny_Hop Toggle
-        table.add(enableShowGrenadesToggle).row() //Add Enable_Bunny_Hop Toggle
+        table.add(enableShowEnemiesToggle).row() //Add Enable_Show_Enemies Toggle
+        table.add(enableShowDormantToggle).row() //Add Enable_Show_Dormant Toggle
+        table.add(enableShowBombToggle).row() //Add Enable_Show_Bomb Toggle
+        table.add(enableShowWeaponsToggle).row() //Add Enable_Show_Weapons Toggle
+        table.add(enableShowGrenadesToggle).row() //Add Enable_Show_Grenades Toggle
         table.add(teamColor).row() //Add Team_Color Picker + Button
         table.add(enemyColor).row() //Add Team_Color Picker + Button
         table.add(bombColor).row() //Add Bomb_Color Picker + Button

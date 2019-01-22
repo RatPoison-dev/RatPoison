@@ -72,7 +72,7 @@ class Options : Tab(false, false) {
                 cfgfiletext += "VISUALS_TOGGLE_KEY = " + VISUALS_TOGGLE_KEY + System.lineSeparator()
                 cfgfiletext += "MENU_KEY = " + MENU_KEY + System.lineSeparator()
 
-                //From Settings.kts
+                //From Scripts.kts
                 cfgfiletext += "ENABLE_BUNNY_HOP = " + ENABLE_BUNNY_HOP + System.lineSeparator()
                 cfgfiletext += "ENABLE_RCS = " + ENABLE_RCS + System.lineSeparator()
                 cfgfiletext += "ENABLE_RECOIL_CROSSHAIR = " + ENABLE_RECOIL_CROSSHAIR + System.lineSeparator()
@@ -86,6 +86,7 @@ class Options : Tab(false, false) {
                 //From ESP.kts
                 cfgfiletext += "BOX_ESP = " + BOX_ESP + System.lineSeparator()
                 cfgfiletext += "GLOW_ESP = " + GLOW_ESP + System.lineSeparator()
+                cfgfiletext += "INV_GLOW_ESP = " + INV_GLOW_ESP + System.lineSeparator()
                 cfgfiletext += "MODEL_ESP = " + MODEL_ESP + System.lineSeparator()
                 cfgfiletext += "CHAMS_ESP = " + CHAMS_ESP + System.lineSeparator()
                 cfgfiletext += "CHAMS_SHOW_HEALTH = " + CHAMS_SHOW_HEALTH + System.lineSeparator()
