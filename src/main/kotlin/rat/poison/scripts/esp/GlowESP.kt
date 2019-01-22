@@ -50,7 +50,7 @@ private fun Entity.glow(color: Color, model: Boolean) {
 	csgoEXE[this + 0x4] = color.red / 255F
 	csgoEXE[this + 0x8] = color.green / 255F
 	csgoEXE[this + 0xC] = color.blue / 255F
-	csgoEXE[this + 0x10] = 1F//color.alpha.toFloat()
+	csgoEXE[this + 0x10] = color.alpha.toFloat()//color.alpha.toFloat()
 	csgoEXE[this + 0x24] = true //Render When Occluded
 	//csgoEXE[this + 0x25] = false //Render When Unoccluded
 
