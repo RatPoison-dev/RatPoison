@@ -31,6 +31,7 @@ MODEL_ESP = false
 
 /**
  * This gets rid of glow ESP "flicker", and more importantly reduces CPU usage.
+ * This glow will remain visible even after you close the cheat, toggle visuals off or restart csgo to fix.
  */
 FLICKER_FREE_GLOW = false
 

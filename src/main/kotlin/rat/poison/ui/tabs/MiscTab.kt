@@ -12,7 +12,7 @@ class Misc : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     val boneTriggerFovLabel = VisLabel("Bone Trigger Fov: " + BONE_TRIGGER_FOV.toString() + when(BONE_TRIGGER_FOV.toString().length) {3->"  " 2->"    " else ->"      "}) //Bone_Trigger_Fov
-    val boneTriggerFovSlider = VisSlider(0F, 1000F, 1F, false) //Bone_Trigger_Fov
+    val boneTriggerFovSlider = VisSlider(0F, 360F, 1F, false) //Bone_Trigger_Fov
     val boneTriggerBoneBox = VisSelectBox<String>() //Bone_Trigger_Bone
     val aimOnBoneTrigger = VisTextButton("AIM_ON_BONE_TRIGGER", "toggle") //Aim_On_Bone_Trigger
     val boneTriggerEnableKey = VisTextButton("BONE_TRIGGER_ENABLE_KEY", "toggle") //Bone_Trigger_Enable_Key
