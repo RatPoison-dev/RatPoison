@@ -108,6 +108,9 @@ fun main(args: Array<String>) {
             setTitle("Rat Poison UI")
             setWindowedMode(CSGO.gameWidth, CSGO.gameHeight)
         })
+    } else {
+        //reimplement scanner if menu isnt needed
+        scanner()
     }
 }
 
