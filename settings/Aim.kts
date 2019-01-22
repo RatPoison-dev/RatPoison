@@ -40,7 +40,7 @@ AIM_FOV = 40
  * The minimum value is 1, and max must always be greater than min.
  */
 AIM_SPEED_MIN = 8
-AIM_SPEED_MAX = 24
+AIM_SPEED_MAX = 16
 
 /**
  * The strictness, or "stickiness" of the aimbot; the higher the number, the
@@ -48,7 +48,7 @@ AIM_SPEED_MAX = 24
  *
  * The minimum value is 1.0
  */
-AIM_STRICTNESS = 1.5
+AIM_STRICTNESS = 1.2
 
 /**
  * The minimum and maximum time in milliseconds to delay the aimbot after
@@ -97,7 +97,7 @@ AIM_ASSIST_MODE = true
 /**
  * The amount of strictness for the aim assist mode, with a minimum value of 1.
  */
-AIM_ASSIST_STRICTNESS = 40
+AIM_ASSIST_STRICTNESS = 60
 
 
 

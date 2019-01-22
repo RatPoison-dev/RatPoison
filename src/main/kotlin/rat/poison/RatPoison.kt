@@ -109,7 +109,7 @@ fun main(args: Array<String>) {
             setWindowedMode(CSGO.gameWidth, CSGO.gameHeight)
         })
     } else {
-        //reimplement scanner if menu isnt needed
+        //reimplement scanner if overlay isnt needed at all
         scanner()
     }
 }
@@ -121,9 +121,7 @@ fun loadSettings() {
 	File(SETTINGS_DIRECTORY).listFiles().forEach {
         if (it.name != "cfg.kts") {
             FileReader(it).use {
-                Dojo.script(it
-                        .readLines()
-                        .joinToString("\n"))
+                Dojo.script(it.readLines().joinToString("\n"))
             }
         }
     }
