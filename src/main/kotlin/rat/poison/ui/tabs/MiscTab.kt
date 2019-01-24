@@ -177,8 +177,8 @@ class Misc : Tab(false, false) {
         //val flashMaxAlphaSlider = VisSlider(0.02F, 2F, .01F, false)
         flashMaxAlphaSlider.value = FLASH_MAX_ALPHA
         flashMaxAlphaSlider.changed { _, _ ->
-            FLASH_MAX_ALPHA = "%.2f".format(flashMaxAlphaSlider.value).toFloat()
-            rcsMaxLabel.setText("Flash Max Alpha: " + FLASH_MAX_ALPHA.toString() + when(FLASH_MAX_ALPHA.toString().length) {3->"  " 2->"    " else ->"      "})
+            FLASH_MAX_ALPHA = "%.0f".format(flashMaxAlphaSlider.value).toFloat()
+            flashMaxAlphaLabel.setText("Flash Max Alpha: " + FLASH_MAX_ALPHA.toString() + when(FLASH_MAX_ALPHA.toString().length) {3->"  " 2->"    " else ->"      "})
         }
         flashMaxAlpha.add(flashMaxAlphaLabel)//.spaceRight(6F) //when gets rid of spaceright
         flashMaxAlpha.add(flashMaxAlphaSlider)
