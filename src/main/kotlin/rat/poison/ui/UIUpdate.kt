@@ -31,7 +31,7 @@ fun UIUpdate() {
 
     //GeneralKts Tab
     generalkts.leagueModeToggle.isChecked = LEAGUE_MODE
-    generalkts.fireKeyField.text = ACTIVATE_FROM_FIRE_KEY.toString()
+    generalkts.fireKeyField.text = FIRE_KEY.toString()
     generalkts.visualsToggleKeyField.text = VISUALS_TOGGLE_KEY.toString()
     generalkts.menuKeyField.text = MENU_KEY.toString()
 

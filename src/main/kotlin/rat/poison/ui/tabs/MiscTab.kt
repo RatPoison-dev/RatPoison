@@ -145,8 +145,8 @@ class Misc : Tab(false, false) {
             }
             else
             {
-                RCS_MIN_DURATION = AIM_SPEED_MAX -1
-                rcsMinDurationSlider.value = (AIM_SPEED_MAX -1).toFloat()
+                RCS_MIN_DURATION = RCS_MAX_DURATION-1
+                rcsMinDurationSlider.value = (RCS_MAX_DURATION-1).toFloat()
             }
         }
         rcsMinDuration.add(rcsMinDurationLabel)//.spaceRight(6F)
@@ -164,8 +164,8 @@ class Misc : Tab(false, false) {
             }
             else
             {
-                RCS_MAX_DURATION = RCS_MIN_DURATION +1
-                rcsMaxDurationSlider.value = (RCS_MAX_DURATION +1).toFloat()
+                RCS_MAX_DURATION = RCS_MIN_DURATION+1
+                rcsMaxDurationSlider.value = (RCS_MIN_DURATION+1).toFloat()
             }
         }
         rcsMaxDuration.add(rcsMaxDurationLabel)//.spaceRight(6F) //when gets rid of spaceright

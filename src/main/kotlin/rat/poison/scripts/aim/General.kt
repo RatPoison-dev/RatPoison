@@ -16,7 +16,7 @@ val perfect = AtomicBoolean() // only applicable for safe aim
 
 internal fun reset() {
 	target.set(-1L)
-	bone.set(AIM_BONE)
+	//bone.set(AIM_BONE)
 	perfect.set(false)
 }
 
@@ -87,8 +87,11 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	val boneTrig = ENABLE_BONE_TRIGGER && AIM_ON_BONE_TRIGGER && findTarget(me.position(), clientState.angle(), false, BONE_TRIGGER_FOV, BONE_TRIGGER_BONE, false) >= 0
 	val haveAmmo = me.weaponEntity().bullets() > 0
 
-	if (boneTrig)
+    bone.set(AIM_BONE)
+
+	if (boneTrig) {
 		bone.set(BONE_TRIGGER_BONE)
+	}
 
 	val pressed = (aim or forceAim or boneTrig) && !MENUTOG && haveAmmo
 	var currentTarget = target.get()
@@ -122,8 +125,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			Thread.sleep(randLong(TARGET_SWAP_MIN_DELAY, TARGET_SWAP_MAX_DELAY))
 		}
 	} else if (currentTarget.onGround() && me.onGround()) {
-		val BONE = AIM_BONE
-		val bonePosition = currentTarget.bones(BONE)
+		val bonePosition = currentTarget.bones(bone.get())
 		
 		val destinationAngle = calculateAngle(me, bonePosition)
 		if (AIM_ASSIST_MODE) destinationAngle.finalize(currentAngle, AIM_ASSIST_STRICTNESS / 100.0)
