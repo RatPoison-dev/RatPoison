@@ -142,6 +142,7 @@ class Options : Tab(false, false) {
         val sickoMode = VisTextButton("Activate Sicko Mode")
         sickoMode.changed { _, _ ->
             Dojo.script(FileReader(SETTINGS_DIRECTORY + "\\sickomode.kts").readLines().joinToString("\n"))
+            UIUpdate()
         }
 
         table.add(menuAlpha).row() //width 250F
