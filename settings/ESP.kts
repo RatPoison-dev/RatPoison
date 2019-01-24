@@ -18,6 +18,11 @@ SKELETON_ESP = false
 BOX_ESP = false
 
 /**
+ * Whether or not health and weapon is displayed with box esp
+ */
+BOX_ESP_DETAILS = false
+
+/**
  * Whether or not to use the within-game glow ESP.
  *
  * This ESP **CANNOT** be hidden from game capture for streaming.

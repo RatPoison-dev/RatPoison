@@ -119,7 +119,7 @@ fun loadSettings() {
 	setIdeaIoUseFallback()
 	
 	File(SETTINGS_DIRECTORY).listFiles().forEach {
-        if (it.name != "cfg.kts") {
+        if (it.name != "cfg.kts" && it.name != "sickomode.kts") {
             FileReader(it).use {
                 Dojo.script(it.readLines().joinToString("\n"))
             }
@@ -197,9 +197,9 @@ object App : ApplicationAdapter() {
             //Extra bits might not be needed, from deprecated overlay
 
             //ree?
-            sb.begin()
-            textRenderer.draw(sb, glyphLayout, Gdx.graphics.width - 100f, Gdx.graphics.height - 72f) //Dont know if works
-            sb.end()
+            //sb.begin()
+            //textRenderer.draw(sb, glyphLayout, Gdx.graphics.width - 100f, Gdx.graphics.height - 72f) //Dont know if works
+            //sb.end()
         }
 
         Menu_Key.update()

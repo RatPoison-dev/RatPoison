@@ -1,5 +1,7 @@
 package rat.poison.ui
 
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
+import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.*
 import rat.poison.ui.tabs.*
@@ -39,10 +41,21 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
         defaults().left()
 
         val tabbedPane = TabbedPane()
+
+
         val tabbedPaneContent = VisTable()
+        tabbedPaneContent.padTop(10F)
+        tabbedPaneContent.padBottom(10F)
+        tabbedPaneContent.align(Align.top)
+
+        val scrollPane = ScrollPane(tabbedPaneContent)
+        scrollPane.setFlickScroll(false)
 
         this.x = 960F
         this.y = 540F
+        this.align(Align.topLeft)
+
+        this.isResizable = true
 
         //Add tabs to tab-pane
         tabbedPane.add(aimkts)
@@ -65,12 +78,10 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
                     aimkts -> {
                         tabbedPaneContent.clear()
                         tabbedPaneContent.add(aimkts.contentTable)
-                        tabbedPaneContent.setSize(500F, 500F)
                     }
                     generalkts -> {
                         tabbedPaneContent.clear()
                         tabbedPaneContent.add(generalkts.contentTable)
-                        tabbedPaneContent.setSize(500F, 250F)
 
                     }
                     settings -> {
@@ -93,10 +104,9 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
             }
         })
 
-        add(tabbedPane.table).growX().row()
-        add(tabbedPaneContent).size(500F, 750F)
+        add(tabbedPane.table).growX().minSize(25F).row()
 
-        //setColor(Color.RED)
+        add(scrollPane).minSize(500F, 500F).align(Align.center)//.size(500F, 500F)
 
         pack()
         centerWindow()

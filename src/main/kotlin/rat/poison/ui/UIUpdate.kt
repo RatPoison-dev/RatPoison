@@ -49,6 +49,7 @@ fun UIUpdate() {
     //EspKts Tab
     espkts.enableSkeletonEspToggle.isChecked = SKELETON_ESP
     espkts.enableBoxEspToggle.isChecked = BOX_ESP
+    espkts.enableBoxEspDetailsToggle.isChecked = BOX_ESP_DETAILS
     espkts.enableGlowEspToggle.isChecked = GLOW_ESP
     espkts.enableModelEspToggle.isChecked = MODEL_ESP
     espkts.enableChamsEspToggle.isChecked = CHAMS_ESP

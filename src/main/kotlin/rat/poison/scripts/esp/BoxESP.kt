@@ -1,14 +1,14 @@
 package rat.poison.scripts.esp
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.g2d.GlyphLayout
+import com.badlogic.gdx.utils.Align
 import rat.poison.App
+import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
-import rat.poison.game.entityByType
-import rat.poison.game.forEntities
-import rat.poison.game.me
-import rat.poison.game.worldToScreen
 import rat.poison.settings.BOX_ESP
+import rat.poison.settings.BOX_ESP_DETAILS
 import rat.poison.settings.ENABLE_ESP
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.Vector
@@ -50,6 +50,8 @@ internal fun boxEsp() = App {
 				w = Math.ceil(boxW * 2).toInt()
 				h = boxH.toInt()
 				color = c
+				health = entity.health()
+				weapon = entity.weapon().name
 			}
 
 			currentIdx++
@@ -58,10 +60,23 @@ internal fun boxEsp() = App {
 		false
 	}
 
-	shapeRenderer.apply {
+	shapeRenderer.apply sr@ {
 		begin()
 		for (i in 0 until currentIdx) boxes[i].apply {
+			this@sr.color = color
 			rect(x.toFloat(), y.toFloat(), w.toFloat(), h.toFloat())
+
+			if (BOX_ESP_DETAILS) {
+				sb.begin()
+				textRenderer.apply {
+					val text = StringBuilder()
+					val glyph = GlyphLayout()
+					text.append("Health: " + health.toLong() + '\n' + "Weapon: " + weapon)
+					glyph.setText(textRenderer, text, 0, (text as CharSequence).length, Color.WHITE, 10F, Align.left, false, null)
+					textRenderer.draw(sb, glyph, x.toFloat() + 2F, y.toFloat())
+				}
+				sb.end()
+			}
 		}
 		end()
 	}
@@ -71,4 +86,4 @@ internal fun boxEsp() = App {
 
 private data class Box(var x: Int = -1, var y: Int = -1,
                        var w: Int = -1, var h: Int = -1,
-                       var color: Color = Color.WHITE)
+                       var color: Color = Color.WHITE, var health: Int = 100, var weapon: String = "")

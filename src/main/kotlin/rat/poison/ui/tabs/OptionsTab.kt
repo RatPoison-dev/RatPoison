@@ -8,6 +8,7 @@ import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.App
+import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.settings.*
 import rat.poison.ui.UIUpdate
 import rat.poison.ui.changed
@@ -24,11 +25,11 @@ class Options : Tab(false, false) {
         //Create UI_Alpha Slider
         val menuAlpha = VisTable()
         val menuAlphaLabel = VisLabel("Menu Alpha: " + 1F) //1F is default
-        val menuAlphaSlider = VisSlider(.1F, 1F, .1F, false)
-        menuAlphaSlider.value = PERFECT_AIM_FOV.toFloat()
+        val menuAlphaSlider = VisSlider(0.1F, 1F, 0.1F, false)
+        menuAlphaSlider.value = 1F
         menuAlphaSlider.changed { _, _ ->
-            menuAlpha.parent.parent.parent.color.a = (Math.round(menuAlphaSlider.value * 10.0)/10.0).toFloat() //Set the top level parents alpha (currently .parent.parent.parent is the only way, instead of a way to find top most instantly
-            menuAlphaLabel.setText("Menu Alpha: " + menuAlpha.parent.parent.parent.color.a.toString()) //Same parent situation
+            menuAlpha.parent.parent.parent.parent.color.a = (Math.round(menuAlphaSlider.value * 10F) / 10F) //Set the top level parents alpha (currently .parent.parent.parent.parent is the only way, instead of a way to find top most instantly
+            menuAlphaLabel.setText("Menu Alpha: " + menuAlpha.parent.parent.parent.parent.color.a.toString()) //Same parent situation
         }
         menuAlpha.add(menuAlphaLabel).spaceRight(6F)
         menuAlpha.add(menuAlphaSlider)
@@ -84,13 +85,14 @@ class Options : Tab(false, false) {
                 cfgfiletext += "ENABLE_BOMB_TIMER = " + ENABLE_BOMB_TIMER + System.lineSeparator()
 
                 //From ESP.kts
+                cfgfiletext += "SKELETON_ESP = " + SKELETON_ESP + System.lineSeparator()
                 cfgfiletext += "BOX_ESP = " + BOX_ESP + System.lineSeparator()
+                cfgfiletext += "BOX_ESP_DETAILS = " + BOX_ESP_DETAILS + System.lineSeparator()
                 cfgfiletext += "GLOW_ESP = " + GLOW_ESP + System.lineSeparator()
                 cfgfiletext += "INV_GLOW_ESP = " + INV_GLOW_ESP + System.lineSeparator()
                 cfgfiletext += "MODEL_ESP = " + MODEL_ESP + System.lineSeparator()
                 cfgfiletext += "CHAMS_ESP = " + CHAMS_ESP + System.lineSeparator()
                 cfgfiletext += "CHAMS_SHOW_HEALTH = " + CHAMS_SHOW_HEALTH + System.lineSeparator()
-                cfgfiletext += "SKELETON_ESP = " + SKELETON_ESP + System.lineSeparator()
                 cfgfiletext += "CHAMS_BRIGHTNESS = " + CHAMS_BRIGHTNESS + System.lineSeparator()
                 cfgfiletext += "SHOW_TEAM = " + SHOW_TEAM + System.lineSeparator()
                 cfgfiletext += "SHOW_ENEMIES = " + SHOW_ENEMIES + System.lineSeparator()
@@ -123,7 +125,7 @@ class Options : Tab(false, false) {
             }
         }
 
-        //Create Save Button
+        //Create Load Button
         val loadButton = VisTextButton("Load Previously Saved Configuration")
         loadButton.changed { _, _ ->
             val cfgfile = File("settings" + "\\" + "cfg.kts")
@@ -136,9 +138,16 @@ class Options : Tab(false, false) {
             }
         }
 
-        table.add(menuAlpha).width(250F).row()
+        //Create SickoMode Button
+        val sickoMode = VisTextButton("Activate Sicko Mode")
+        sickoMode.changed { _, _ ->
+            Dojo.script(FileReader(SETTINGS_DIRECTORY + "\\sickomode.kts").readLines().joinToString("\n"))
+        }
+
+        table.add(menuAlpha).row() //width 250F
         table.add(saveButton).row()
-        table.add(loadButton)
+        table.add(loadButton).row()
+        table.add(sickoMode)
     }
 
     override fun getContentTable(): Table? {

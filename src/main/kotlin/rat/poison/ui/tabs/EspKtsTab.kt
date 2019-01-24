@@ -19,6 +19,7 @@ class EspKts : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     val enableSkeletonEspToggle = VisTextButton("SKELETON_ESP", "toggle") //Skeleton_Esp
     val enableBoxEspToggle = VisTextButton("BOX_ESP", "toggle") //Box_Esp
+    val enableBoxEspDetailsToggle = VisTextButton("BOX_ESP_DETAILS", "toggle") //Box_Esp_Details
     val enableGlowEspToggle = VisTextButton("GLOW_ESP", "toggle") //Glow_Esp
     val enableInvGlowEspToggle = VisTextButton("INV_GLOW_ESP", "toggle") //Inv_Glow_Esp
     val enableModelEspToggle = VisTextButton("MODEL_ESP", "toggle") //Model_Esp
@@ -56,6 +57,15 @@ class EspKts : Tab(false, false) {
         enableBoxEspToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
                 BOX_ESP = enableBoxEspToggle.isChecked//!BOX_ESP
+            }
+        }
+
+        //Create Box_Esp_Details Toggle
+        //val enableBoxEspDetailsToggle = VisTextButton("BOX_ESP", "toggle")
+        if (BOX_ESP_DETAILS) enableBoxEspDetailsToggle.toggle()
+        enableBoxEspDetailsToggle.changed { _, _ ->
+            if (true) { //type Any? changes didnt work im autistic //fix later
+                BOX_ESP_DETAILS = enableBoxEspDetailsToggle.isChecked//!BOX_ESP
             }
         }
 
@@ -306,7 +316,10 @@ class EspKts : Tab(false, false) {
 
         //Add all items to label for tabbed pane content
         table.add(enableSkeletonEspToggle).row() //Add Enable_Skeleton_Esp Toggle
+
         table.add(enableBoxEspToggle).row() //Add Enable_Box_Esp Toggle
+        table.add(enableBoxEspDetailsToggle).row() //Add Enable_Box_Esp_Details Toggle
+
         table.add(enableGlowEspToggle).row() //Add Enable_Glow_Esp Toggle
         table.add(enableInvGlowEspToggle).row() //Add Enable_Inv_Glow_Esp Toggle
         table.add(enableModelEspToggle).row() //Add Enable_Model_Esp Toggle
