@@ -24,7 +24,6 @@ fun rcs() = every(RCS_MIN_DURATION, RCS_MAX_DURATION) {
 	val shotsFired = me.shotsFired()
 	val forceSet = (shotsFired == 0 && !lastPunch.isZero)
 	if (forceSet || shotsFired > 0 /*|| weaponEntity.bullets() < 1*/) { //Fixes aim jumping down
-	//if (keyPressed(2)) {
 		val p = me.punch()
 		playerPunch.set(p.x.toFloat(), p.y.toFloat(), p.z.toFloat())
 		newPunch.set(playerPunch.x - lastPunch.x, playerPunch.y - lastPunch.y)
@@ -41,17 +40,10 @@ fun rcs() = every(RCS_MIN_DURATION, RCS_MAX_DURATION) {
 		lastPunch.x = playerPunch.x
 		lastPunch.y = playerPunch.y
 
-		if (keyPressed(2)) {
-			if (LEAGUE_MODE) mouse(MOUSEEVENTF_LEFTDOWN) else CSGO.clientDLL[ClientOffsets.dwForceAttack] = 5.toByte() //Mouse press
-			Thread.sleep(randLong(16))
-			if (LEAGUE_MODE) mouse(MOUSEEVENTF_LEFTUP) else CSGO.clientDLL[ClientOffsets.dwForceAttack] = 4.toByte() //Mouse release
-		}
-
 		if (forceSet) {
 			lastPunch.set(0F, 0F)
 		}
 	}
-	//}
 	
 	bone.set(when {
 		shotsFired >= SHIFT_TO_BODY_SHOTS -> BODY_BONE
