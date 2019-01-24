@@ -15,19 +15,19 @@ SKELETON_ESP = false
  * Whether or not to use box ESP.
  * This requires the overlay which only works when borderless fullscreen or windowed.
  */
-BOX_ESP = false
+BOX_ESP = true
 
 /**
  * Whether or not health and weapon is displayed with box esp
  */
-BOX_ESP_DETAILS = false
+BOX_ESP_DETAILS = true
 
 /**
  * Whether or not to use the within-game glow ESP.
  *
  * This ESP **CANNOT** be hidden from game capture for streaming.
  */
-GLOW_ESP = true
+GLOW_ESP = false
 
 /**
  * Whether or not to invert the glow esp and highlight the player model instead of the outline

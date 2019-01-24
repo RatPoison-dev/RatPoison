@@ -16,7 +16,7 @@ ENABLE_BUNNY_HOP = false
 /**
  * Enables the recoil control system (RCS) script.
  */
-ENABLE_RCS = true
+ENABLE_RCS = false
 
 /**
  * Enables the recoil crosshair

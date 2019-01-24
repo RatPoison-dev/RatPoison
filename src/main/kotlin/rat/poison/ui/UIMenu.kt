@@ -28,10 +28,10 @@ import rat.poison.ui.tabs.*
 //fuck cleanup release soon regardless
 
 //Tabs, public to access in UIUpdate
-val aimkts = AimKts()
-val generalkts = GeneralKts()
-val scriptskts = ScriptsKts()
-val espkts = EspKts()
+val aimKts = AimKts()
+val generalKts = GeneralKts()
+val scriptsKts = ScriptsKts()
+val espKts = EspKts()
 val misc = Misc()
 val settings = Options()
 
@@ -58,43 +58,43 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
         this.isResizable = true
 
         //Add tabs to tab-pane
-        tabbedPane.add(aimkts)
-        tabbedPane.add(generalkts)
-        tabbedPane.add(scriptskts)
-        tabbedPane.add(espkts)
+        tabbedPane.add(aimKts)
+        tabbedPane.add(generalKts)
+        tabbedPane.add(scriptsKts)
+        tabbedPane.add(espKts)
         tabbedPane.add(misc)
         tabbedPane.add(settings)
 
-        //Set default tab to first (aimkts)
-        tabbedPane.switchTab(aimkts)
+        //Set default tab to first (aimKts)
+        tabbedPane.switchTab(aimKts)
 
-        tabbedPaneContent.add(aimkts.contentTable) //Aim.kts is the initial window, initialize pane content with tabs contents
+        tabbedPaneContent.add(aimKts.contentTable) //Aim.kts is the initial window, initialize pane content with tabs contents
 
         tabbedPane.addListener(object : TabbedPaneAdapter() {
             override fun switchedTab(tab: Tab?) {
                 if (tab == null) return
 
                 when (tab) {
-                    aimkts -> {
+                    aimKts -> {
                         tabbedPaneContent.clear()
-                        tabbedPaneContent.add(aimkts.contentTable)
+                        tabbedPaneContent.add(aimKts.contentTable)
                     }
-                    generalkts -> {
+                    generalKts -> {
                         tabbedPaneContent.clear()
-                        tabbedPaneContent.add(generalkts.contentTable)
+                        tabbedPaneContent.add(generalKts.contentTable)
 
                     }
                     settings -> {
                         tabbedPaneContent.clear()
                         tabbedPaneContent.add(settings.contentTable)
                     }
-                    scriptskts -> {
+                    scriptsKts -> {
                         tabbedPaneContent.clear()
-                        tabbedPaneContent.add(scriptskts.contentTable)
+                        tabbedPaneContent.add(scriptsKts.contentTable)
                     }
-                    espkts -> {
+                    espKts -> {
                         tabbedPaneContent.clear()
-                        tabbedPaneContent.add(espkts.contentTable)
+                        tabbedPaneContent.add(espKts.contentTable)
                     }
                     misc -> {
                         tabbedPaneContent.clear()
