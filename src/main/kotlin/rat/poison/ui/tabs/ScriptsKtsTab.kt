@@ -8,6 +8,7 @@ import rat.poison.game.CSGO
 import rat.poison.game.Color
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.settings.*
+import rat.poison.ui.UIUpdate
 import rat.poison.ui.changed
 
 class ScriptsKts : Tab(false, false) {
@@ -87,6 +88,8 @@ class ScriptsKts : Tab(false, false) {
                 Thread.sleep(250) //Wait to make sure settings loop
 
                 ENABLE_ESP = enableEspToggle.isChecked
+
+                UIUpdate()
             }
         }
 
