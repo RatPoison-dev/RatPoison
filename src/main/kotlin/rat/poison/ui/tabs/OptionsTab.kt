@@ -13,6 +13,7 @@ import rat.poison.settings.*
 import rat.poison.ui.UIUpdate
 import rat.poison.ui.changed
 import rat.poison.utils.Dojo
+import rat.poison.utils.Dojo.engine
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
@@ -145,10 +146,35 @@ class Options : Tab(false, false) {
             UIUpdate()
         }
 
+        //Create Save Current Config To Default
+        val saveCurConfig = VisTextButton("Save Current Config To Default Settings")
+        saveCurConfig.changed { _, _ ->
+            //Files.write(File("settings\\"))
+            //val fileDir = "settings\\Aim.kts"
+            File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
+                var prevLines = ""
+                if (file.name != "cfg.kts" && file.name != "sickomode.kts") {
+                    FileReader(file).readLines().forEach { line ->
+                        if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
+                            val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
+                            //println(engine.eval("AIM_SPEED_MIN"))
+                            //println(test)
+                            prevLines += curLine[0] + " = " + engine.eval(curLine[0]) + System.lineSeparator()
+                        } else { //If line is a comment instead of a command
+                            prevLines += line + System.lineSeparator()
+                        }
+                    }
+                    Files.write(file.toPath(), prevLines.toByteArray(), StandardOpenOption.WRITE)
+                }
+            }
+            println("\n Saving complete! \n")
+        }
+
         table.add(menuAlpha).row() //width 250F
         table.add(saveButton).row()
         table.add(loadButton).row()
-        table.add(sickoMode)
+        table.add(sickoMode).row()
+        table.add(saveCurConfig).row()
     }
 
     override fun getContentTable(): Table? {

@@ -45,6 +45,7 @@ import java.io.FileReader
 
 //todo? cut down extras from mr noads proj, change from current dc
 //continue ui menu, ui menu has xxxtra todos in its own file
+//Fix box esp other drawing shit using the wrong color, were not setting the color back to white
 
 //convert CUser32 to normal User32
 

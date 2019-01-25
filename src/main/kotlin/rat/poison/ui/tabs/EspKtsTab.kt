@@ -185,11 +185,12 @@ class EspKts : Tab(false, false) {
         //Create Team_Color Picker
         val teamColor = VisTable()
         //val teamColorShow = VisTextButton("Set Team Color")
-        teamColorShow.setColor(TEAM_COLOR.red.toFloat(), TEAM_COLOR.green.toFloat(), TEAM_COLOR.blue.toFloat(), TEAM_COLOR.alpha.toFloat())
+        teamColorShow.setColor(TEAM_COLOR.red.toFloat(), TEAM_COLOR.green.toFloat(), TEAM_COLOR.blue.toFloat(), 1F/*TEAM_COLOR.alpha.toFloat()*/)
         val teamColorPicker = ColorPicker("Color Picker", object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
-                teamColorShow.color = newCol
                 TEAM_COLOR = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
+                newCol.a = 1F
+                teamColorShow.color = newCol
                 dispose()
             }
 
@@ -207,11 +208,12 @@ class EspKts : Tab(false, false) {
         //Create Enemy_Color Picker
         val enemyColor = VisTable()
         //val enemyColorShow = VisTextButton("Set Enemy Color")
-        enemyColorShow.setColor(ENEMY_COLOR.red.toFloat(), ENEMY_COLOR.green.toFloat(), ENEMY_COLOR.blue.toFloat(), ENEMY_COLOR.alpha.toFloat())
+        enemyColorShow.setColor(ENEMY_COLOR.red.toFloat(), ENEMY_COLOR.green.toFloat(), ENEMY_COLOR.blue.toFloat(), 1F/*ENEMY_COLOR.alpha.toFloat()*/)
         val enemyColorPicker = ColorPicker("Color Picker", object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
-                enemyColorShow.color = newCol
                 ENEMY_COLOR = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
+                newCol.a = 1F
+                enemyColorShow.color = newCol
                 dispose()
             }
 
@@ -219,6 +221,8 @@ class EspKts : Tab(false, false) {
                 dispose()
             }
         })
+
+        //enemyColorPicker
 
         enemyColorShow.changed { _, _ ->
             App.stage.addActor(enemyColorPicker.fadeIn())
@@ -229,11 +233,12 @@ class EspKts : Tab(false, false) {
         //Create Bomb_Color Picker
         val bombColor = VisTable()
         //val bombColorShow = VisTextButton("Set Bomb Color")
-        bombColorShow.setColor(BOMB_COLOR.red.toFloat(), BOMB_COLOR.green.toFloat(), BOMB_COLOR.blue.toFloat(), BOMB_COLOR.alpha.toFloat())
+        bombColorShow.setColor(BOMB_COLOR.red.toFloat(), BOMB_COLOR.green.toFloat(), BOMB_COLOR.blue.toFloat(), 1F/*BOMB_COLOR.alpha.toFloat()*/)
         val bombColorPicker = ColorPicker("Color Picker", object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
-                bombColorShow.color = newCol
                 BOMB_COLOR = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
+                newCol.a = 1F
+                bombColorShow.color = newCol
                 dispose()
             }
 
@@ -251,11 +256,11 @@ class EspKts : Tab(false, false) {
         //Create Weapon_Color Picker
         val weaponColor = VisTable()
         //val weaponColorShow = VisTextButton("Set Weapon Color")
-        weaponColorShow.setColor(WEAPON_COLOR.red.toFloat(), WEAPON_COLOR.green.toFloat(), WEAPON_COLOR.blue.toFloat(), WEAPON_COLOR.alpha.toFloat())
+        weaponColorShow.setColor(WEAPON_COLOR.red.toFloat(), WEAPON_COLOR.green.toFloat(), WEAPON_COLOR.blue.toFloat(), 1F/*WEAPON_COLOR.alpha.toFloat()*/)
         val weaponColorPicker = ColorPicker("Color Picker", object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
-                weaponColorShow.color = newCol
                 WEAPON_COLOR = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
+                newCol.a = 1F
                 dispose()
             }
 
@@ -273,11 +278,12 @@ class EspKts : Tab(false, false) {
         //Create Grenade_Color Picker
         val grenadeColor = VisTable()
         //val grenadeColorShow = VisTextButton("Set Weapon Color")
-        grenadeColorShow.setColor(GRENADE_COLOR.red.toFloat(), GRENADE_COLOR.green.toFloat(), GRENADE_COLOR.blue.toFloat(), GRENADE_COLOR.alpha.toFloat())
+        grenadeColorShow.setColor(GRENADE_COLOR.red.toFloat(), GRENADE_COLOR.green.toFloat(), GRENADE_COLOR.blue.toFloat(), 1F/*GRENADE_COLOR.alpha.toFloat()*/)
         val grenadeColorPicker = ColorPicker("Color Picker", object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
-                grenadeColorShow.color = newCol
                 GRENADE_COLOR = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
+                newCol.a = 1F
+                grenadeColorShow.color = newCol
                 dispose()
             }
 
@@ -295,11 +301,12 @@ class EspKts : Tab(false, false) {
         //Create Chams_Esp_Color Picker
         val chamsColor = VisTable()
         //val chamsColorShow = VisTextButton("Set Chams Color")
-        chamsColorShow.setColor(CHAMS_ESP_COLOR.red.toFloat(), CHAMS_ESP_COLOR.green.toFloat(), CHAMS_ESP_COLOR.blue.toFloat(), CHAMS_ESP_COLOR.alpha.toFloat())
+        chamsColorShow.setColor(CHAMS_ESP_COLOR.red.toFloat(), CHAMS_ESP_COLOR.green.toFloat(), CHAMS_ESP_COLOR.blue.toFloat(), 1F/*CHAMS_ESP_COLOR.alpha.toFloat()*/)
         val chamsColorPicker = ColorPicker("Color Picker", object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
-                chamsColorShow.color = newCol
                 CHAMS_ESP_COLOR = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
+                newCol.a = 1F
+                chamsColorShow.color = newCol
                 dispose()
             }
 
