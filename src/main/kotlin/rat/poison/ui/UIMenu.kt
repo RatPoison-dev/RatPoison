@@ -7,7 +7,6 @@ import com.kotcrab.vis.ui.widget.tabbedpane.*
 import rat.poison.ui.tabs.*
 
 //Issues/todo
-//Remove libktx, not using it
 //Solution for when str.length spacing //so-1 - try a divider between label and slider
 //Massive cleanup
 //Fix if(true) quickfix for return Any? problem -- might be autistic
@@ -20,12 +19,6 @@ import rat.poison.ui.tabs.*
 //A lot of problems/workarounds below, needs optimzation
 
 ////Marked for fix, enable esp needs to turn all the esps off
-
-//Grow a massive penis
-
-//1000 lines of FUCK, split tabs into new files?
-
-//fuck cleanup release soon regardless
 
 //Tabs, public to access in UIUpdate
 val aimKts = AimKts()
@@ -41,7 +34,6 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
         defaults().left()
 
         val tabbedPane = TabbedPane()
-
 
         val tabbedPaneContent = VisTable()
         tabbedPaneContent.padTop(10F)
@@ -112,15 +104,4 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
         centerWindow()
     }
 }
-//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA FUCK
-//Expected a value of type Any? - am I autistic or what
-//HOLY FUCK THIS A LOT OF SHIT
-
-
-
-
-//Second cluster fuck below, couldnt think of a quick ez way to save settings without a pre-set format, put save button bs in another script/file later
-//change from above, save all settings into a standard config folder
-
-
 

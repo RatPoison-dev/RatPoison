@@ -4,6 +4,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.game.CSGO
+import rat.poison.game.Color
+import rat.poison.game.offsets.ClientOffsets
 import rat.poison.settings.*
 import rat.poison.ui.changed
 
@@ -20,6 +23,11 @@ class ScriptsKts : Tab(false, false) {
     val enableBoneTriggerToggle = VisTextButton("ENABLE_BONE_TRIGGER", "toggle") //Bone_Trigger
     val enableReducedFlashToggle = VisTextButton("ENABLE_REDUCED_FLASH", "toggle") //Reduced_Flash
     val enableBombTimerToggle = VisTextButton("ENABLE_BOMB_TIMER", "toggle") //Bomb_Timer
+
+    //Needed to toggle esp
+    var prevchamsshowhealth = CHAMS_SHOW_HEALTH
+    var prevchamsbrightness = CHAMS_BRIGHTNESS
+    var prevchamsespcolor = CHAMS_ESP_COLOR
 
     init {
         //Create Enable_Bunny_Hop Toggle
@@ -54,7 +62,31 @@ class ScriptsKts : Tab(false, false) {
         if (ENABLE_ESP) enableEspToggle.toggle()
         enableEspToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_ESP = enableEspToggle.isChecked//!ENABLE_ESP
+                if (!ENABLE_ESP) {
+                    CHAMS_SHOW_HEALTH = rat.poison.scripts.esp.prevchamsshowhealth
+                    CHAMS_BRIGHTNESS = rat.poison.scripts.esp.prevchamsbrightness
+                    CHAMS_ESP_COLOR = rat.poison.scripts.esp.prevchamsespcolor
+
+                    val write = (if (FLICKER_FREE_GLOW) 0xEB else 0x74).toByte()
+                    try { CSGO.clientDLL[ClientOffsets.dwGlowUpdate] = write } catch (e: Exception) { }
+                    try { CSGO.clientDLL[ClientOffsets.dwGlowUpdate2] = write } catch(e: Exception) { }
+                }
+                else {
+                    rat.poison.scripts.esp.prevchamsshowhealth = CHAMS_SHOW_HEALTH
+                    rat.poison.scripts.esp.prevchamsbrightness = CHAMS_BRIGHTNESS
+                    rat.poison.scripts.esp.prevchamsespcolor = CHAMS_ESP_COLOR
+
+                    CHAMS_BRIGHTNESS = 0
+                    CHAMS_SHOW_HEALTH = false
+                    CHAMS_ESP_COLOR = Color(255, 255, 255, 1.0)
+
+                    try { CSGO.clientDLL[ClientOffsets.dwGlowUpdate] = 0x74.toByte() } catch (e: Exception) {}
+                    try { CSGO.clientDLL[ClientOffsets.dwGlowUpdate2] = 0x74.toByte() } catch (e: Exception) {}
+                }
+
+                Thread.sleep(250) //Wait to make sure settings loop
+
+                ENABLE_ESP = enableEspToggle.isChecked
             }
         }
 

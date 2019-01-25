@@ -27,7 +27,6 @@ class Misc : Tab(false, false) {
     val rcsMaxDurationSlider = VisSlider(1F, 100F, 1F, false) //RCS_Max_Duration
     val flashMaxAlphaLabel = VisLabel("Flash Max Alpha: " + FLASH_MAX_ALPHA.toString() + when(FLASH_MAX_ALPHA.toString().length) {3->"  " 2->"    " else ->"      "}) //Flash_Max_Alpha
     val flashMaxAlphaSlider = VisSlider(0.02F, 2F, .01F, false) //Flash_Max_Alpha
-    //val drawFov = VisTextButton("DRAW_FOV", "toggle") //Draw_Fov
     val enemyIndicator = VisTextButton("ENEMY_INDICATOR", "toggle")
 
 
@@ -183,15 +182,6 @@ class Misc : Tab(false, false) {
         flashMaxAlpha.add(flashMaxAlphaLabel)//.spaceRight(6F) //when gets rid of spaceright
         flashMaxAlpha.add(flashMaxAlphaSlider)
 
-        //Create DRAW_FOV Toggle
-        //val drawFov = VisTextButton("DRAW_FOV", "toggle")
-//        if (DRAW_FOV) drawFov.toggle()
-//        drawFov.changed { _, _ ->
-//            if (true) { //type Any? changes didnt work im autistic //fix later
-//                DRAW_FOV = !DRAW_FOV
-//            }
-//        }
-
         //Create ENEMY_INDICATOR Toggle
         //val enemyIndicator = VisTextButton("ENEMY_INDICATOR", "toggle")
         if (ENEMY_INDICATOR) enemyIndicator.toggle()
@@ -211,7 +201,6 @@ class Misc : Tab(false, false) {
         table.add(rcsMinDuration).row() //Add RCS_Min_Duration Slider
         table.add(rcsMaxDuration).row() //Add RCS_Max_Duration Slider
         table.add(flashMaxAlpha).row() //Add Flash_Max_Alpha Slider
-        //table.add(drawFov).row() //Add Draw_Fov Toggle
         table.add(enemyIndicator).row() //Add Enemy_Indicator Toggle
     }
 
