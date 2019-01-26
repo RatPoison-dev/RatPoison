@@ -52,7 +52,6 @@ class Options : Tab(false, false) {
 
                 File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
                     if (file.name != "cfg.kts" && file.name != "sickomode.kts" && file.name != "Advanced.kts") {
-                        println(file)
                         FileReader(file).readLines().forEach { line ->
                             if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
                                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
