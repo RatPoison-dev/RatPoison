@@ -9,7 +9,6 @@ import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.App
 import rat.poison.SETTINGS_DIRECTORY
-import rat.poison.settings.*
 import rat.poison.ui.UIUpdate
 import rat.poison.ui.changed
 import rat.poison.utils.Dojo

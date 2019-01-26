@@ -88,6 +88,14 @@ fun main(args: Array<String>) {
         GARBAGE_COLLECT_ON_MAP_START = true // get rid of traces
     }
 
+    if (!MENU) {
+        BOX_ESP = false
+        SKELETON_ESP = false
+        ENABLE_RECOIL_CROSSHAIR = false
+        ENABLE_BOMB_TIMER = false
+        ENEMY_INDICATOR = false
+    }
+
     CSGO.initialize()
 
     bunnyHop()
@@ -108,6 +116,7 @@ fun main(args: Array<String>) {
         Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
             setTitle("Rat Poison UI")
             setWindowedMode(CSGO.gameWidth, CSGO.gameHeight)
+            useVsync(OPENGL_VSYNC)
         })
     } else {
         //reimplement scanner if overlay isnt needed at all

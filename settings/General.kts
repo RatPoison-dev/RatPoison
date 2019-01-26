@@ -1,8 +1,10 @@
 import rat.poison.settings.*
 
 /**
- * Turn the overlay menu on or off, if enabled the cmd will not be used
+ * Turn the overlay and menu on or off, if enabled the cmd will not be used
  * The menu only shows up while in game windowed or fullscreen windowed
+ * If disabled will turn off anything that uses the overlay
+ * The menu
  */
 MENU = true
 

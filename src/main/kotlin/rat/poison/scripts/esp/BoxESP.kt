@@ -2,6 +2,7 @@ package rat.poison.scripts.esp
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.utils.Align
 import rat.poison.App
 import rat.poison.game.*
@@ -50,7 +51,7 @@ internal fun boxEsp() = App {
 				w = Math.ceil(boxW * 2).toInt()
 				h = boxH.toInt()
 				color = c
-				health = entity.health()
+				health = entity.health().toFloat()
 				weapon = entity.weapon().name
 			}
 
@@ -67,15 +68,27 @@ internal fun boxEsp() = App {
 			rect(x.toFloat(), y.toFloat(), w.toFloat(), h.toFloat())
 
 			if (BOX_ESP_DETAILS) {
-				sb.begin()
 				textRenderer.apply {
-					val text = StringBuilder()
 					val glyph = GlyphLayout()
-					text.append("Health: " + health.toLong() + '\n' + "Weapon: " + weapon)
-					glyph.setText(textRenderer, text, 0, (text as CharSequence).length, Color.WHITE, 10F, Align.left, false, null)
-					textRenderer.draw(sb, glyph, x.toFloat() + 2F, y.toFloat())
+
+//					text.append("Health: " + health.toLong())
+//					glyph.setText(textRenderer, text, 0, (text as CharSequence).length, Color.WHITE, 10F, Align.center, false, null)
+//					textRenderer.draw(sb, glyph, (x+(w/2)).toFloat(), (y+16).toFloat())
+
+					sb.begin()
+					color = Color.WHITE
+					val text = StringBuilder()
+					text.append(weapon)
+					glyph.setText(textRenderer,text, 0, (text as CharSequence).length, Color.WHITE, 10F, Align.center, false, null)
+					textRenderer.draw(sb, glyph, (x+(w/2)).toFloat(), (y+h-4).toFloat())
+					sb.end()
+
+					set(ShapeRenderer.ShapeType.Filled)
+					this@sr.color = Color(1F - (.01F*health), (.01F*health), 0F, 1F)
+					rect(x+w-4F, (y+h).toFloat(), -4F, -(h*(health/100F))) //Something better than ((4F*((x+w)/(x+w)*1.2F)
+					set(ShapeRenderer.ShapeType.Line)
+					this@sr.color = Color.WHITE
 				}
-				sb.end()
 			}
 		}
 		end()
@@ -86,4 +99,4 @@ internal fun boxEsp() = App {
 
 private data class Box(var x: Int = -1, var y: Int = -1,
                        var w: Int = -1, var h: Int = -1,
-                       var color: Color = Color.WHITE, var health: Int = 100, var weapon: String = "")
+                       var color: Color = Color.WHITE, var health: Float = 100F, var weapon: String = "")
