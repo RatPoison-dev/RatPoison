@@ -153,17 +153,25 @@ class Options : Tab(false, false) {
             //val fileDir = "settings\\Aim.kts"
             File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
                 var prevLines = ""
-                if (file.name != "cfg.kts" && file.name != "sickomode.kts") {
+                if (file.name != "cfg.kts" && file.name != "sickomode.kts" && file.name != "Advanced.kts") {
                     FileReader(file).readLines().forEach { line ->
                         if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
                             val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
-                            //println(engine.eval("AIM_SPEED_MIN"))
-                            //println(test)
-                            prevLines += curLine[0] + " = " + engine.eval(curLine[0]) + System.lineSeparator()
-                        } else { //If line is a comment instead of a command
+
+                            //Add custom checks for variables that need a type ident ie F
+                            when {
+                                /*Case: 1*/     curLine[0] == "FLASH_MAX_ALPHA" -> {prevLines += curLine[0] + " = " + engine.eval(curLine[0]) + "F" + System.lineSeparator(); println("called flash alpha") }
+                                /*Case: Else*/  else -> { prevLines += curLine[0] + " = " + engine.eval(curLine[0]) + System.lineSeparator(); println("called else") }
+                            }
+
+                        } else {
                             prevLines += line + System.lineSeparator()
                         }
                     }
+
+                    //Wipe file? Had problems with last line staying
+                    Files.delete(file.toPath())
+                    Files.createFile(file.toPath())
                     Files.write(file.toPath(), prevLines.toByteArray(), StandardOpenOption.WRITE)
                 }
             }
