@@ -177,45 +177,49 @@ object App : ApplicationAdapter() {
     }
 
     override fun render() {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
+        sync(OPENGL_FPS)
 
-        gl.apply {
-            //Add stage
-            stage.act(Gdx.graphics.deltaTime)
-            val camera = stage.viewport.camera
-            camera.update()
+        if (!Thread.interrupted()) {
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
 
-            if (!stage.root.isVisible) return
+            gl.apply {
+                //Add stage
+                stage.act(Gdx.graphics.deltaTime)
+                val camera = stage.viewport.camera
+                camera.update()
 
-            if (!overlay.clickThrough) {
-                val batch = stage.batch
-                batch.projectionMatrix = camera.combined
-                batch.begin()
-                batch.enableBlending()
-                stage.root.draw(batch, 1F)
-                batch.end()
+                if (!stage.root.isVisible) return
+
+                if (!overlay.clickThrough) {
+                    val batch = stage.batch
+                    batch.projectionMatrix = camera.combined
+                    batch.begin()
+                    batch.enableBlending()
+                    stage.root.draw(batch, 1F)
+                    batch.end()
+                }
+                sb.projectionMatrix = stage.camera.combined
+
+                //Extra bits might not be needed, from deprecated overlay
+                glEnable(GL20.GL_BLEND)
+                glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
+                glClearColor(0F, 0F, 0F, 0F)
+                shapeRenderer.projectionMatrix = stage.camera.combined
+                for (i in 0 until bodies.size) bodies[i]()
+                glDisable(GL20.GL_BLEND)
+                //Extra bits might not be needed, from deprecated overlay
+
+                //ree?
+                //sb.begin()
+                //textRenderer.draw(sb, glyphLayout, Gdx.graphics.width - 100f, Gdx.graphics.height - 72f) //Dont know if works
+                //sb.end()
             }
-            sb.projectionMatrix = stage.camera.combined
 
-            //Extra bits might not be needed, from deprecated overlay
-            glEnable(GL20.GL_BLEND)
-            glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
-            glClearColor(0F, 0F, 0F, 0F)
-            shapeRenderer.projectionMatrix = stage.camera.combined
-            for (i in 0 until bodies.size) bodies[i]()
-            glDisable(GL20.GL_BLEND)
-            //Extra bits might not be needed, from deprecated overlay
-
-            //ree?
-            //sb.begin()
-            //textRenderer.draw(sb, glyphLayout, Gdx.graphics.width - 100f, Gdx.graphics.height - 72f) //Dont know if works
-            //sb.end()
-        }
-
-        Menu_Key.update()
-        if (Menu_Key.justBecomeTrue) {
-            MENUTOG = !MENUTOG
-            overlay.clickThrough = !overlay.clickThrough
+            Menu_Key.update()
+            if (Menu_Key.justBecomeTrue) {
+                MENUTOG = !MENUTOG
+                overlay.clickThrough = !overlay.clickThrough
+            }
         }
     }
 
@@ -244,6 +248,44 @@ object App : ApplicationAdapter() {
             override fun onBackground(overlay: IOverlay) {}
             override fun onForeground(overlay: IOverlay) {}
             override fun onBoundsChange(overlay: IOverlay, x: Int, y: Int, width: Int, height: Int) {}
+        }
+    }
+}
+
+var variableYieldTime = 0.toLong()
+var lastSyncTime = 0.toLong()
+
+fun sync(fps : Int) {
+    if (fps <= 0) {
+        return
+    }
+
+    val NANO_SEC = 1000000000L
+
+    var overSleep = 0.toLong()
+    val sleepTime = NANO_SEC/fps
+    val yieldTime = Math.min(sleepTime, variableYieldTime + sleepTime % (1000000L))
+
+    try {
+        while(true) {
+            val t = System.nanoTime() - lastSyncTime
+
+            if (t < sleepTime - yieldTime) {
+                Thread.sleep(1)
+            } else if (t < sleepTime) {
+                Thread.yield()
+            } else {
+                overSleep = t - sleepTime
+                break
+            }
+        }
+    } catch (ex: InterruptedException) { } finally {
+        lastSyncTime = System.nanoTime() - Math.min(overSleep, sleepTime)
+
+        if (overSleep > variableYieldTime) {
+            variableYieldTime = Math.min(variableYieldTime + 200 * 1000, sleepTime)
+        } else if (overSleep < variableYieldTime - 200 * 1000) {
+            variableYieldTime = Math.max(variableYieldTime - 2 * 1000, 0)
         }
     }
 }

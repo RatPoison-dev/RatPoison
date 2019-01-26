@@ -21,12 +21,12 @@ private val onBoneTriggerTarget = hook(1) {
 
 fun boneTrigger() = onBoneTriggerTarget {
 
-	if (me.punch().x == 0.0 && me.punch().y == 0.00) {
+	//if (me.punch().x == 0.0 && me.punch().y == 0.00) {
 		if ((keyReleased(FIRE_KEY) && BONE_TRIGGER_ENABLE_KEY && keyPressed(BONE_TRIGGER_KEY)) || (keyReleased(FIRE_KEY) && !BONE_TRIGGER_ENABLE_KEY)) {
 			if (LEAGUE_MODE) mouse(MOUSEEVENTF_LEFTDOWN) else clientDLL[dwForceAttack] = 5.toByte() //Mouse press
 			Thread.sleep(randLong(16))
 			if (LEAGUE_MODE) mouse(MOUSEEVENTF_LEFTUP) else clientDLL[dwForceAttack] = 4.toByte() //Mouse release
 			//Thread.sleep(BONE_TRIGGER_SHOT_DELAY.toLong() /*+ randLong(16)*/) //Make sure we can shoot an accurate shot
 		}
-	}
+	//}
 }
