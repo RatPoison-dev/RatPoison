@@ -18,9 +18,10 @@ fun rcs() = every(1) {
 	val weapon = me.weapon(weaponEntity)
 	if (!weapon.automatic) return@every
 	val shotsFired = me.shotsFired()
+	val forceSet = (shotsFired == 0 && !lastPunch.isZero)
 	val p = me.punch()
-	val finishPunch = (p.x != 0.0 && p.y != 0.0)
-	if (finishPunch || shotsFired > 1) { //Fixes aim jumping down
+	val finishPunch = false//(p.x != 0.0 && p.y != 0.0)
+	if (forceSet || finishPunch || shotsFired > 1) { //Fixes aim jumping down
 		playerPunch.set(p.x.toFloat(), p.y.toFloat(), p.z.toFloat())
 		newPunch.set(playerPunch.x - lastPunch.x, playerPunch.y - lastPunch.y)
 		newPunch.scl(2F, 2F)
@@ -34,6 +35,10 @@ fun rcs() = every(1) {
 		clientState.setAngle(angle)
 		lastPunch.x = playerPunch.x
 		lastPunch.y = playerPunch.y
+
+		if (forceSet) {
+			lastPunch.set(0F, 0F)
+		}
 	}
 
 	bone.set(when {
