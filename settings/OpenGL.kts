@@ -5,9 +5,9 @@ import rat.poison.settings.*
  *
  * Usually you want to use V-sync for the overlay if you use V-sync in game.
  */
-OPENGL_VSYNC = true
+OPENGL_VSYNC = false
 
 /**
  * FPS of the OpenGL overlay
  */
-var OPENGL_FPS = 60
+OPENGL_FPS = 60

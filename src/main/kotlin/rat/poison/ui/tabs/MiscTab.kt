@@ -17,14 +17,8 @@ class Misc : Tab(false, false) {
     val aimOnBoneTrigger = VisTextButton("AIM_ON_BONE_TRIGGER", "toggle") //Aim_On_Bone_Trigger
     val boneTriggerEnableKey = VisTextButton("BONE_TRIGGER_ENABLE_KEY", "toggle") //Bone_Trigger_Enable_Key
     val boneTriggerKeyField = VisValidatableTextField(Validators.FLOATS) //Bone_Trigger_Key
-    val rcsMinLabel = VisLabel("RCS Min: " + RCS_MIN.toString() + when(RCS_MIN.toString().length) {4->"  " 3->"    " 2->"      " else ->"        "}) //RCS_Min
-    val rcsMinSlider = VisSlider(0.01F, 1.99F, .01F, false) //RCS_Min
-    val rcsMaxLabel = VisLabel("RCS Max: " + RCS_MAX.toString() + when(RCS_MAX.toString().length) {4->"  " 3->"    " 2->"      " else ->"        "}) //RCS_Max
-    val rcsMaxSlider = VisSlider(0.02F, 2F, .01F, false) //RCS_Max
-    val rcsMinDurationLabel = VisLabel("RCS Min Duration: " + RCS_MIN_DURATION.toString() + when(RCS_MIN_DURATION.toString().length) {2->"  " else->"    "}) //RCS_Min_Duration
-    val rcsMinDurationSlider = VisSlider(1F, 100F, 1F, false) //RCS_Min_Duration
-    val rcsMaxDurationLabel = VisLabel("RCS Max Duration: " + RCS_MAX_DURATION.toString() + when(RCS_MAX_DURATION.toString().length) {2->"  " else->"    "}) //RCS_Max_Duration
-    val rcsMaxDurationSlider = VisSlider(1F, 100F, 1F, false) //RCS_Max_Duration
+    val rcsSmoothingLabel = VisLabel("RCS Smoothing: " + RCS_SMOOTHING.toString()/* + when(RCS_SMOOTHING.toString().length) {2->"  " else->"    "}*/) //RCS_SMOOTHING
+    val rcsSmoothingSlider = VisSlider(0.1F, 1F, .1F, false) //RCS_SMOOTHING
     val flashMaxAlphaLabel = VisLabel("Flash Max Alpha: " + FLASH_MAX_ALPHA.toString() + when(FLASH_MAX_ALPHA.toString().length) {3->"  " 2->"    " else ->"      "}) //Flash_Max_Alpha
     val flashMaxAlphaSlider = VisSlider(0.02F, 2F, .01F, false) //Flash_Max_Alpha
     val enemyIndicator = VisTextButton("ENEMY_INDICATOR", "toggle")
@@ -94,81 +88,17 @@ class Misc : Tab(false, false) {
         boneTriggerKey.add(boneTriggerKeyField).spaceRight(6F).width(40F)
         boneTriggerKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
 
-        //Create RCS_Min Slider
-        val rcsMin = VisTable()
-        //val rcsMinLabel = VisLabel("RCS Min: " + RCS_MIN.toString() + when(RCS_MIN.toString().length) {4->"  " 3->"    " 2->"      " else ->"        "})
-        //val rcsMinSlider = VisSlider(0.01F, 1.99F, .01F, false)
-        rcsMinSlider.value = RCS_MIN.toFloat()
-        rcsMinSlider.changed { _, _ ->
-            if ((rcsMinSlider.value < RCS_MAX)) {
-                RCS_MIN = "%.2f".format(rcsMinSlider.value).toDouble()
-                rcsMinLabel.setText("RCS Min: " + RCS_MIN.toString() + when(RCS_MIN.toString().length) {4->"  " 3->"    " 2->"      " else ->"        "})
-            }
-            else
-            {
-                RCS_MIN = RCS_MAX -.01F
-                rcsMinSlider.value = (RCS_MAX -.01).toFloat()
-            }
+        //Create RCS_Smoothing
+        val rcsSmoothing = VisTable()
+        //val rcsSmoothingLabel = VisLabel("RCS Smoothing: " + RCS_SMOOTHING.toString() + when(RCS_SMOOTHING.toString().length) {2->"  " else->"    "})
+        //val rcsSmoothingSlider = VisSlider(0.1F, 1F, .1F, false)
+        rcsSmoothingSlider.value = RCS_SMOOTHING.toFloat()
+        rcsSmoothingSlider.changed { _, _ ->
+                RCS_SMOOTHING = Math.round(rcsSmoothingSlider.value.toDouble() * 10.0)/10.0
+                rcsSmoothingLabel.setText("RCS Smoothing: " + RCS_SMOOTHING.toString())/* + when(RCS_SMOOTHING.toString().length) {2->"  " else->"    "})*/
         }
-        rcsMin.add(rcsMinLabel)//.spaceRight(6F)
-        rcsMin.add(rcsMinSlider)
-
-        //Create RCS_Max Slider
-        val rcsMax = VisTable()
-        //val rcsMaxLabel = VisLabel("RCS Max: " + RCS_MAX.toString() + when(RCS_MAX.toString().length) {4->"  " 3->"    " 2->"      " else ->"        "})
-        //val rcsMaxSlider = VisSlider(0.02F, 2F, .01F, false)
-        rcsMaxSlider.value = RCS_MAX.toFloat()
-        rcsMaxSlider.changed { _, _ ->
-            if ((rcsMaxSlider.value > RCS_MIN)) {
-                RCS_MAX = "%.2f".format(rcsMaxSlider.value).toDouble()
-                rcsMaxLabel.setText("RCS Max: " + RCS_MAX.toString() + when(RCS_MAX.toString().length) {4->"  " 3->"    " 2->"      " else ->"        "})
-            }
-            else
-            {
-                RCS_MAX = RCS_MIN +.01F
-                rcsMaxSlider.value = (RCS_MIN +.01).toFloat()
-            }
-        }
-        rcsMax.add(rcsMaxLabel)//.spaceRight(6F) //when gets rid of spaceright
-        rcsMax.add(rcsMaxSlider)
-
-        //Create RCS_Min_Duration
-        val rcsMinDuration = VisTable()
-        //val rcsMinDurationLabel = VisLabel("RCS Min Duration: " + RCS_MIN_DURATION.toString() + when(RCS_MIN_DURATION.toString().length) {2->"  " else->"    "})
-        //val rcsMinDurationSlider = VisSlider(1F, 100F, 1F, false)
-        rcsMinDurationSlider.value = RCS_MIN_DURATION.toFloat()
-        rcsMinDurationSlider.changed { _, _ ->
-            if ((rcsMinDurationSlider.value.toInt() < RCS_MAX_DURATION)) {
-                RCS_MIN_DURATION = rcsMinDurationSlider.value.toInt()
-                rcsMinDurationLabel.setText("RCS Min Duration: " + RCS_MIN_DURATION.toString() + when(RCS_MIN_DURATION.toString().length) {2->"  " else->"    "})
-            }
-            else
-            {
-                RCS_MIN_DURATION = RCS_MAX_DURATION-1
-                rcsMinDurationSlider.value = (RCS_MAX_DURATION-1).toFloat()
-            }
-        }
-        rcsMinDuration.add(rcsMinDurationLabel)//.spaceRight(6F)
-        rcsMinDuration.add(rcsMinDurationSlider)
-
-        //Create RCS_Max_Duration
-        val rcsMaxDuration = VisTable()
-        //val rcsMaxDurationLabel = VisLabel("RCS Max Duration: " + RCS_MAX_DURATION.toString() + when(RCS_MAX_DURATION.toString().length) {2->"  " else->"    "})
-        //val rcsMaxDurationSlider = VisSlider(1F, 100F, 1F, false)
-        rcsMaxDurationSlider.value = RCS_MAX_DURATION.toFloat()
-        rcsMaxDurationSlider.changed { _, _ ->
-            if ((rcsMaxDurationSlider.value.toInt() > RCS_MIN_DURATION)) {
-                RCS_MAX_DURATION = rcsMaxDurationSlider.value.toInt()
-                rcsMaxDurationLabel.setText("RCS Max Duration: " + RCS_MAX_DURATION.toString() + when(RCS_MAX_DURATION.toString().length) {2->"  " else->"    "})
-            }
-            else
-            {
-                RCS_MAX_DURATION = RCS_MIN_DURATION+1
-                rcsMaxDurationSlider.value = (RCS_MIN_DURATION+1).toFloat()
-            }
-        }
-        rcsMaxDuration.add(rcsMaxDurationLabel)//.spaceRight(6F) //when gets rid of spaceright
-        rcsMaxDuration.add(rcsMaxDurationSlider)
+        rcsSmoothing.add(rcsSmoothingLabel)//.spaceRight(6F) //when gets rid of spaceright
+        rcsSmoothing.add(rcsSmoothingSlider)
 
         //Create Flash_Max_Alpha
         val flashMaxAlpha = VisTable()
@@ -196,10 +126,7 @@ class Misc : Tab(false, false) {
         table.add(aimOnBoneTrigger).row() //Add Aim_On_Bone_Trigger Toggle
         table.add(boneTriggerEnableKey).row() //Add Bone_Trigger_Enable_Key
         table.add(boneTriggerKey).row() //Add Bone_Trigger_Key Field
-        table.add(rcsMin).row() //Add RCS_Min Slider
-        table.add(rcsMax).row() //Add RCS_Max Slider
-        table.add(rcsMinDuration).row() //Add RCS_Min_Duration Slider
-        table.add(rcsMaxDuration).row() //Add RCS_Max_Duration Slider
+        table.add(rcsSmoothing).row() //Add RCS_Smoothing Slider
         table.add(flashMaxAlpha).row() //Add Flash_Max_Alpha Slider
         table.add(enemyIndicator).row() //Add Enemy_Indicator Toggle
     }

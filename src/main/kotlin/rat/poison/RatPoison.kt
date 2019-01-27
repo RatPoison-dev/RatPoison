@@ -61,7 +61,6 @@ fun main(args: Array<String>) {
 
     //scanner() //not needed, keeping until menu fully finished, possibly implemented UI console
     //implement to ui console? or keep and add a disable menu
-
     loadSettings()
 
     if (FLICKER_FREE_GLOW) {
@@ -117,6 +116,7 @@ fun main(args: Array<String>) {
             setTitle("Rat Poison UI")
             setWindowedMode(CSGO.gameWidth, CSGO.gameHeight)
             useVsync(OPENGL_VSYNC)
+            //setBackBufferConfig(8, 8, 8, 8, 16, 0, 8) OPENGL_MSAA_SAMPLES
         })
     } else {
         //reimplement scanner if overlay isnt needed at all
@@ -177,7 +177,7 @@ object App : ApplicationAdapter() {
     }
 
     override fun render() {
-        sync(OPENGL_FPS)
+        //sync(OPENGL_FPS)
 
         if (!Thread.interrupted()) {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
@@ -208,11 +208,6 @@ object App : ApplicationAdapter() {
                 for (i in 0 until bodies.size) bodies[i]()
                 glDisable(GL20.GL_BLEND)
                 //Extra bits might not be needed, from deprecated overlay
-
-                //ree?
-                //sb.begin()
-                //textRenderer.draw(sb, glyphLayout, Gdx.graphics.width - 100f, Gdx.graphics.height - 72f) //Dont know if works
-                //sb.end()
             }
 
             Menu_Key.update()

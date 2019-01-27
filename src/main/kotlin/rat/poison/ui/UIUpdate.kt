@@ -75,14 +75,8 @@ fun UIUpdate() {
     misc.aimOnBoneTrigger.isChecked = AIM_ON_BONE_TRIGGER
     misc.boneTriggerEnableKey.isChecked = BONE_TRIGGER_ENABLE_KEY
     misc.boneTriggerKeyField.text = BONE_TRIGGER_KEY.toString()
-    misc.rcsMinLabel.setText("RCS Min: " + RCS_MIN.toString() + when(RCS_MIN.toString().length) {4->"  " 3->"    " 2->"      " else ->"        "})
-    misc.rcsMinSlider.value = RCS_MIN.toFloat()
-    misc.rcsMaxLabel.setText("RCS Max: " + RCS_MAX.toString() + when(RCS_MAX.toString().length) {4->"  " 3->"    " 2->"      " else ->"        "})
-    misc.rcsMaxSlider.value = RCS_MAX.toFloat()
-    misc.rcsMinDurationLabel.setText("RCS Min Duration: " + RCS_MIN_DURATION.toString() + when(RCS_MIN_DURATION.toString().length) {2->"  " else->"    "})
-    misc.rcsMinDurationSlider.value = RCS_MIN_DURATION.toFloat()
-    misc.rcsMaxDurationLabel.setText("RCS Max Duration: " + RCS_MAX_DURATION.toString() + when(RCS_MAX_DURATION.toString().length) {2->"  " else->"    "})
-    misc.rcsMaxDurationSlider.value = RCS_MAX_DURATION.toFloat()
+    misc.rcsSmoothingLabel.setText("RCS Smoothing: $RCS_SMOOTHING")
+    misc.rcsSmoothingSlider.value = RCS_SMOOTHING.toFloat()
     misc.flashMaxAlphaLabel.setText("Flash Max Alpha: " + FLASH_MAX_ALPHA.toString() + when(FLASH_MAX_ALPHA.toString().length) {3->"  " 2->"    " else ->"      "})
     misc.flashMaxAlphaSlider.value = FLASH_MAX_ALPHA
     //misc.drawFov.isChecked = DRAW_FOV
