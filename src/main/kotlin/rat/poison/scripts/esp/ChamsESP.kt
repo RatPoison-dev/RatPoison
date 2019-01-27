@@ -31,7 +31,8 @@ internal fun chamsEsp() = every(500) {
         //Edit playermodel to counter weapon brightness
         val ClientVModEnt = csgoEXE.uint(clientDLL.address + dwEntityList + (((csgoEXE.uint(csgoEXE.uint(clientDLL.address + dwLocalPlayer)+ m_hViewModel)) and 0xFFF) - 1) * 16)
 
-        try { //Possibly convert vals to floats, then final .toInt for more accurate value
+        try {
+            (255F / (CHAMS_BRIGHTNESS/10F)) //Should cause an error in try instead of writing invalids, might fix crash error
             csgoEXE[ClientVModEnt + 0x70] = Color((255F / (CHAMS_BRIGHTNESS/10F)).toInt(), 0, 0, 1.0).red.toByte()
             csgoEXE[ClientVModEnt + 0x71] = Color(0, (255F / (CHAMS_BRIGHTNESS/10F)).toInt(), 0, 1.0).green.toByte()
             csgoEXE[ClientVModEnt + 0x72] = Color(0, 0, (255F / (CHAMS_BRIGHTNESS/10F)).toInt(), 1.0).blue.toByte()
@@ -41,6 +42,9 @@ internal fun chamsEsp() = every(500) {
             csgoEXE[ClientVModEnt + 0x71] = Color(0, 255, 0, 1.0).green.toByte()
             csgoEXE[ClientVModEnt + 0x72] = Color(0, 0, 255, 1.0).blue.toByte()
         }
+
+        //Set cvar
+        engineDLL[dwModelAmbientMin] = floatToIntBits(CHAMS_BRIGHTNESS.toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
 
         //Not exhaustive @warning
         when (it.type) {
@@ -81,7 +85,5 @@ private fun Entity.chams(color: Color) {
         csgoEXE[this + 0x70] = color.red.toByte()
         csgoEXE[this + 0x71] = color.green.toByte()
         csgoEXE[this + 0x72] = color.blue.toByte()
-
-        engineDLL[dwModelAmbientMin] = floatToIntBits(CHAMS_BRIGHTNESS.toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
     }
 }
