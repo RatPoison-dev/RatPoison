@@ -1,12 +1,10 @@
 package rat.poison.ui.tabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.game.CSGO
-import rat.poison.game.Color
-import rat.poison.game.offsets.ClientOffsets
 import rat.poison.scripts.esp.disableEsp
 import rat.poison.settings.*
 import rat.poison.ui.*
@@ -15,15 +13,15 @@ class ScriptsTab : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
-    val enableBunnyHopToggle = VisTextButton("ENABLE_BUNNY_HOP", "toggle") //Bunny_Hop
-    val enableRCSToggle = VisTextButton("ENABLE_RCS", "toggle") //RCS
-    val enableRCrosshairToggle = VisTextButton("ENABLE_RECOIL_CROSSHAIR", "toggle") //Recoil_Crosshair
-    val enableEspToggle = VisTextButton("ENABLE_ESP", "toggle") //ESP
-    val enableFlatAimToggle = VisTextButton("ENABLE_FLAT_AIM", "toggle") //Enable_Flat_Aim
-    val enablePathAimToggle = VisTextButton("ENABLE_PATH_AIM", "toggle") //Enable_Path_Aim
-    val enableBoneTriggerToggle = VisTextButton("ENABLE_BONE_TRIGGER", "toggle") //Bone_Trigger
-    val enableReducedFlashToggle = VisTextButton("ENABLE_REDUCED_FLASH", "toggle") //Reduced_Flash
-    val enableBombTimerToggle = VisTextButton("ENABLE_BOMB_TIMER", "toggle") //Bomb_Timer
+    val enableBunnyHop = VisTextButton("ENABLE_BUNNY_HOP", "toggle") //Bunny_Hop
+    val enableRCS = VisTextButton("ENABLE_RCS", "toggle") //RCS
+    val enableRCrosshair = VisTextButton("ENABLE_RECOIL_CROSSHAIR", "toggle") //Recoil_Crosshair
+    val enableEsp = VisTextButton("ENABLE_ESP", "toggle") //ESP
+    val enableFlatAim = VisTextButton("ENABLE_FLAT_AIM", "toggle") //Enable_Flat_Aim
+    val enablePathAim = VisTextButton("ENABLE_PATH_AIM", "toggle") //Enable_Path_Aim
+    val enableBoneTrigger = VisTextButton("ENABLE_BONE_TRIGGER", "toggle") //Bone_Trigger
+    val enableReducedFlash = VisTextButton("ENABLE_REDUCED_FLASH", "toggle") //Reduced_Flash
+    val enableBombTimer = VisTextButton("ENABLE_BOMB_TIMER", "toggle") //Bomb_Timer
 
     //Needed to toggle esp
     var prevchamsshowhealth = CHAMS_SHOW_HEALTH
@@ -32,36 +30,40 @@ class ScriptsTab : Tab(false, false) {
 
     init {
         //Create Enable_Bunny_Hop Toggle
-        //val enableBunnyHopToggle = VisTextButton("ENABLE_BUNNY_HOP", "toggle")
-        enableBunnyHopToggle.isChecked = ENABLE_BUNNY_HOP
-        enableBunnyHopToggle.changed { _, _ ->
-            ENABLE_BUNNY_HOP = enableBunnyHopToggle.isChecked
+        //val enableBunnyHop = VisTextButton("ENABLE_BUNNY_HOP", "toggle")
+        Tooltip.Builder("Whether or not to enable bunny hop").target(enableBunnyHop).build()
+        enableBunnyHop.isChecked = ENABLE_BUNNY_HOP
+        enableBunnyHop.changed { _, _ ->
+            ENABLE_BUNNY_HOP = enableBunnyHop.isChecked
             true
         }
 
         //Create Enable_Rcs Toggle
-        //val enableRCSToggle = VisTextButton("ENABLE_RCS", "toggle")
-        enableRCSToggle.isChecked = ENABLE_RCS
-        enableRCSToggle.changed { _, _ ->
-            ENABLE_RCS = enableRCSToggle.isChecked
+        //val enableRCS = VisTextButton("ENABLE_RCS", "toggle")
+        Tooltip.Builder("Whether or not to enable the recoil control system").target(enableRCS).build()
+        enableRCS.isChecked = ENABLE_RCS
+        enableRCS.changed { _, _ ->
+            ENABLE_RCS = enableRCS.isChecked
             tabbedPane.disableTab(rcsTab, !ENABLE_RCS)
             true
         }
 
         //Create Enable_Recoil_Crosshair Toggle
-        //val enableRCrosshairToggle = VisTextButton("ENABLE_RECOIL_CROSSHAIR", "toggle")
-        enableRCrosshairToggle.isChecked = ENABLE_RECOIL_CROSSHAIR
-        enableRCrosshairToggle.changed { _, _ ->
-            ENABLE_RECOIL_CROSSHAIR = enableRCrosshairToggle.isChecked
+        //val enableRCrosshair = VisTextButton("ENABLE_RECOIL_CROSSHAIR", "toggle")
+        Tooltip.Builder("Whether or not to enable the recoil crosshair").target(enableRCrosshair).build()
+        enableRCrosshair.isChecked = ENABLE_RECOIL_CROSSHAIR
+        enableRCrosshair.changed { _, _ ->
+            ENABLE_RECOIL_CROSSHAIR = enableRCrosshair.isChecked
             true
         }
 
         //Create Enable_Esp Toggle
-        //val enableEspToggle = VisTextButton("ENABLE_ESP", "toggle")
-        enableEspToggle.isChecked = ENABLE_ESP
-        enableEspToggle.changed { _, _ ->
+        //val enableEsp = VisTextButton("ENABLE_ESP", "toggle")
+        Tooltip.Builder("Whether or not to enable esp").target(enableEsp).build()
+        enableEsp.isChecked = ENABLE_ESP
+        enableEsp.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_ESP = enableEspToggle.isChecked
+                ENABLE_ESP = enableEsp.isChecked
 
                 val lastTab = tabbedPane.activeTab
                 tabbedPane.disableTab(espTab, !ENABLE_ESP)
@@ -74,55 +76,60 @@ class ScriptsTab : Tab(false, false) {
         }
 
         //Create Enable_Flat_Aim Toggle
-        //val enableFlatAimToggle = VisTextButton("ENABLE_FLAT_AIM", "toggle")
-        enableFlatAimToggle.isChecked = ENABLE_FLAT_AIM
-        enableFlatAimToggle.changed { _, _ ->
-            ENABLE_FLAT_AIM = enableFlatAimToggle.isChecked
+        //val enableFlatAim = VisTextButton("ENABLE_FLAT_AIM", "toggle")
+        Tooltip.Builder("Whether or not to enable flat aim").target(enableFlatAim).build()
+        enableFlatAim.isChecked = ENABLE_FLAT_AIM
+        enableFlatAim.changed { _, _ ->
+            ENABLE_FLAT_AIM = enableFlatAim.isChecked
             true
         }
 
         //Create Enable_Path_Aim Toggle
-        //val enablePathAimToggle = VisTextButton("ENABLE_PATH_AIM", "toggle")
-        enablePathAimToggle.isChecked = ENABLE_PATH_AIM
-        enablePathAimToggle.changed { _, _ ->
-            ENABLE_PATH_AIM = enablePathAimToggle.isChecked
+        //val enablePathAim = VisTextButton("ENABLE_PATH_AIM", "toggle")
+        Tooltip.Builder("Whether or not to enable path aim").target(enablePathAim).build()
+        enablePathAim.isChecked = ENABLE_PATH_AIM
+        enablePathAim.changed { _, _ ->
+            ENABLE_PATH_AIM = enablePathAim.isChecked
             true
         }
 
         //Create Enable_Bone_Trigger Toggle
-        //val enableBoneTriggerToggle = VisTextButton("ENABLE_BONE_TRIGGER", "toggle")
-        enableBoneTriggerToggle.isChecked = ENABLE_BONE_TRIGGER
-        enableBoneTriggerToggle.changed { _, _ ->
-            ENABLE_BONE_TRIGGER = enableBoneTriggerToggle.isChecked
+        //val enableBoneTrigger = VisTextButton("ENABLE_BONE_TRIGGER", "toggle")
+        Tooltip.Builder("Whether or not to enable bone trigger").target(enableBoneTrigger).build()
+        enableBoneTrigger.isChecked = ENABLE_BONE_TRIGGER
+        enableBoneTrigger.changed { _, _ ->
+            ENABLE_BONE_TRIGGER = enableBoneTrigger.isChecked
             tabbedPane.disableTab(bTrigTab, !ENABLE_BONE_TRIGGER)
         }
 
         //Create Enable_Reduced_Flash Toggle
-        //val enableReducedFlashToggle = VisTextButton("ENABLE_REDUCED_FLASH", "toggle")
-        enableReducedFlashToggle.isChecked = ENABLE_REDUCED_FLASH
-        enableReducedFlashToggle.changed { _, _ ->
-            ENABLE_REDUCED_FLASH = enableReducedFlashToggle.isChecked
+        //val enableReducedFlash = VisTextButton("ENABLE_REDUCED_FLASH", "toggle")
+        Tooltip.Builder("Whether or not to enable reduced flash").target(enableReducedFlash).build()
+        enableReducedFlash.isChecked = ENABLE_REDUCED_FLASH
+        enableReducedFlash.changed { _, _ ->
+            ENABLE_REDUCED_FLASH = enableReducedFlash.isChecked
             true
         }
 
         //Create Enable_Bomb_Timer Toggle
-        //val enableBombTimerToggle = VisTextButton("ENABLE_BOMB_TIMER", "toggle")
-        enableBombTimerToggle.isChecked = ENABLE_BOMB_TIMER
-        enableBombTimerToggle.changed { _, _ ->
-            ENABLE_BOMB_TIMER = enableBombTimerToggle.isChecked
+        //val enableBombTimer = VisTextButton("ENABLE_BOMB_TIMER", "toggle")
+        Tooltip.Builder("Whether or not to enable bomb timer").target(enableBombTimer).build()
+        enableBombTimer.isChecked = ENABLE_BOMB_TIMER
+        enableBombTimer.changed { _, _ ->
+            ENABLE_BOMB_TIMER = enableBombTimer.isChecked
             true
         }
 
         //Add all items to label for tabbed pane content
-        table.add(enableBunnyHopToggle).row() //Add Enable_Bunny_Hop Toggle
-        table.add(enableRCSToggle).row() //Add Enable_Rcs Toggle
-        table.add(enableRCrosshairToggle).row() //Add Enable_RCrosshair Toggle
-        table.add(enableEspToggle).row() //Add Enable_RCrosshair Toggle
-        table.add(enableFlatAimToggle).row() //Add Enable_Flat_Aim Toggle
-        table.add(enablePathAimToggle).row() //Add Enable_Path_Aim Toggle
-        table.add(enableBoneTriggerToggle).row() //Add Enable_Bone_Trigger Toggle
-        table.add(enableReducedFlashToggle).row() //Add Enable_Reduced_Flash Toggle
-        table.add(enableBombTimerToggle).row() //Add Enable_Bomb_Timer Toggle
+        table.add(enableBunnyHop).row() //Add Enable_Bunny_Hop Toggle
+        table.add(enableRCS).row() //Add Enable_Rcs Toggle
+        table.add(enableRCrosshair).row() //Add Enable_RCrosshair Toggle
+        table.add(enableEsp).row() //Add Enable_RCrosshair Toggle
+        table.add(enableFlatAim).row() //Add Enable_Flat_Aim Toggle
+        table.add(enablePathAim).row() //Add Enable_Path_Aim Toggle
+        table.add(enableBoneTrigger).row() //Add Enable_Bone_Trigger Toggle
+        table.add(enableReducedFlash).row() //Add Enable_Reduced_Flash Toggle
+        table.add(enableBombTimer).row() //Add Enable_Bomb_Timer Toggle
     }
 
     override fun getContentTable(): Table? {

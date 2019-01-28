@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.util.Validators
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import com.sun.jna.platform.win32.WinNT
 import org.jire.arrowhead.keyPressed
 import rat.poison.App
 import rat.poison.settings.*
@@ -24,15 +25,36 @@ class Misc : Tab(false, false) {
     init {
         //Create League_Mode Toggle
         //val leagueModeToggle = VisTextButton("LEAGUE_MODE", "toggle")
+        Tooltip.Builder("Whether or not to enable league mode").target(leagueModeToggle).build()
         if (LEAGUE_MODE) leagueModeToggle.toggle()
         leagueModeToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
                 LEAGUE_MODE = leagueModeToggle.isChecked//!LEAGUE_MODE
+                if (LEAGUE_MODE) {
+                    GLOW_ESP = false
+                    BOX_ESP = false
+                    SKELETON_ESP = false
+                    CHAMS_ESP = false
+                    CHAMS_BRIGHTNESS = 0
+                    MODEL_ESP = false
+                    MODEL_AND_GLOW = false
+                    ENEMY_INDICATOR = false
+                    ENABLE_ESP = false
+
+                    ENABLE_BOMB_TIMER = false
+                    ENABLE_REDUCED_FLASH = false
+                    ENABLE_FLAT_AIM = false
+
+                    SERVER_TICK_RATE = 128 // most leagues are 128-tick
+                    PROCESS_ACCESS_FLAGS = WinNT.PROCESS_QUERY_INFORMATION or WinNT.PROCESS_VM_READ // all we need
+                    GARBAGE_COLLECT_ON_MAP_START = true // get rid of traces
+                }
             }
         }
 
         //Create Fire_Key Input
         val fireKey = VisTable()
+        Tooltip.Builder("The key code of your in-game fire key (default m1)").target(fireKey).build()
         val fireKeyLabel = VisLabel("Fire Key: ")
         //val fireKeyField = VisValidatableTextField(Validators.FLOATS)
         fireKeyField.text = FIRE_KEY.toString()
@@ -47,6 +69,7 @@ class Misc : Tab(false, false) {
 
         //Create Visuals_Toggle_Key Input
         val visualsToggleKey = VisTable()
+        Tooltip.Builder("The key code that will toggle all enabled visuals on or off").target(visualsToggleKey).build()
         val visualsToggleKeyLabel = VisLabel("Visuals Toggle Key: ")
         //val visualsToggleKeyField = VisValidatableTextField(Validators.FLOATS)
         visualsToggleKeyField.text = VISUALS_TOGGLE_KEY.toString()
@@ -61,6 +84,7 @@ class Misc : Tab(false, false) {
 
         //Create Menu_Key Input
         val menuKey = VisTable()
+        Tooltip.Builder("The key code that will toggle the menu on or off").target(menuKey).build()
         val menuKeyLabel = VisLabel("Menu Key: ")
         //val menuKeyField = VisValidatableTextField(Validators.FLOATS)
         menuKeyField.text = MENU_KEY.toString()
@@ -77,6 +101,7 @@ class Misc : Tab(false, false) {
 
         //Create Flash_Max_Alpha
         val flashMaxAlpha = VisTable()
+        Tooltip.Builder("The maximum alpha of flashes (0 is no effect, 255 is normal)").target(flashMaxAlpha).build()
         //val flashMaxAlphaLabel = VisLabel("Flash Max Alpha: " + FLASH_MAX_ALPHA.toString() + when(FLASH_MAX_ALPHA.toString().length) {3->"  " 2->"    " else ->"      "})
         //val flashMaxAlphaSlider = VisSlider(0.02F, 2F, .01F, false)
         flashMaxAlphaSlider.value = FLASH_MAX_ALPHA

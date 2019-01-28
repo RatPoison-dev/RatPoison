@@ -38,13 +38,14 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
     init {
         //Create Aim_Bone Selector
-        val aimBoneSelector = VisTable()
+        val aimBone = VisTable()
+        Tooltip.Builder("The default aim bone to aim at").target(aimBone).build()
         //val aimBoneBox = VisSelectBox<String>()
         val aimBoneLabel = VisLabel("Aim Bone: ")
         aimBoneBox.setItems("HEAD_BONE", "BODY_BONE")
         aimBoneBox.selected = if (AIM_BONE == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
-        aimBoneSelector.add(aimBoneLabel).top().spaceRight(6F)
-        aimBoneSelector.add(aimBoneBox)
+        aimBone.add(aimBoneLabel).top().spaceRight(6F)
+        aimBone.add(aimBoneBox)
 
 
         aimBoneBox.changed { _, _ ->
@@ -58,6 +59,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
         //Create Activate_From_Fire_Key Toggle
         //val activateFromFireKey = VisTextButton("ACTIVATE_FROM_FIRE_KEY", "toggle")
+        Tooltip.Builder("Activate aim if pressing predefined fire key").target(activateFromFireKey).build()
         if (ACTIVATE_FROM_FIRE_KEY) activateFromFireKey.toggle()
         activateFromFireKey.changed { _, _ ->
             if (true) {
@@ -67,6 +69,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
         //Create Teammates_Are_Enemies Toggle
         //val teammatesAreEnemies = VisTextButton("TEAMMATES_ARE_ENEMIES", "toggle")
+        Tooltip.Builder("Teammates will be treated as enemies").target(teammatesAreEnemies).build()
         if (TEAMMATES_ARE_ENEMIES) teammatesAreEnemies.toggle()
         teammatesAreEnemies.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic /fixl ater
@@ -76,6 +79,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
         //Create Force_Aim_Key Input
         val forceAimKey = VisTable()
+        Tooltip.Builder("The key to force lock onto any enemy inside aim fov").target(forceAimKey).build()
         val forceAimKeyLabel = VisLabel("Force Aim Key: ")
         //val forceAimKeyField = VisValidatableTextField(Validators.FLOATS)
         forceAimKeyField.text = FORCE_AIM_KEY.toString()
@@ -90,25 +94,27 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
         //Create Aim_Fov Slider
         val aimFov = VisTable()
+        Tooltip.Builder("The aim field of view").target(aimFov).build()
         //val aimFovLabel = VisLabel("Aim Fov: " + AIM_FOV.toString() + when(AIM_FOV.toString().length) {3->"  " 2->"    " else ->"      "}) //Need alternative for all of these, has to be some kind of setup for it
         //val aimFovSlider = VisSlider(1F, 360F, 2F, false)
         aimFovSlider.value = AIM_FOV.toFloat()
         aimFovSlider.changed { _, _ ->
             AIM_FOV = aimFovSlider.value.toInt()
-            aimFovLabel.setText("Aim Fov: " + AIM_FOV.toString() + when(AIM_FOV.toString().length) {3->"  " 2->"    " else ->"      "})
+            aimFovLabel.setText("Aim Fov: $AIM_FOV" + when(AIM_FOV.toString().length) {3->"  " 2->"    " else ->"      "})
         }
         aimFov.add(aimFovLabel)//.spaceRight(6F)
         aimFov.add(aimFovSlider)
 
         //Create Aim_Speed_Min Slider
         val aimSpeedMin = VisTable()
+        Tooltip.Builder("The minimum aim speed in milliseconds").target(aimSpeedMin).build()
         //val aimSpeedMinLabel = VisLabel("Aim Speed Min: " + AIM_SPEED_MIN.toString() + when(AIM_SPEED_MIN.toString().length) {3->"  " 2->"    " else ->"      "})
         //val aimSpeedMinSlider = VisSlider(1F, 100F, 1F, false)
         aimSpeedMinSlider.value = AIM_SPEED_MIN.toFloat()
         aimSpeedMinSlider.changed { _, _ ->
             if ((aimSpeedMinSlider.value.toInt() < AIM_SPEED_MAX)) {
                 AIM_SPEED_MIN = aimSpeedMinSlider.value.toInt()
-                aimSpeedMinLabel.setText("Aim Speed Min: " + AIM_SPEED_MIN.toString() + when(AIM_SPEED_MIN.toString().length) {3->"  " 2->"    " else ->"      "})
+                aimSpeedMinLabel.setText("Aim Speed Min: $AIM_SPEED_MIN" + when(AIM_SPEED_MIN.toString().length) {3->"  " 2->"    " else ->"      "})
             }
             else
             {
@@ -121,13 +127,14 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
         //Create Aim_Speed_Max
         val aimSpeedMax = VisTable()
+        Tooltip.Builder("The maximum aim speed in milliseconds").target(aimSpeedMax).build()
         //val aimSpeedMaxLabel = VisLabel("Aim Speed Max: " + AIM_SPEED_MAX.toString() + when(AIM_SPEED_MAX.toString().length) {3->"  " 2->"    " else ->"      "})
         //val aimSpeedMaxSlider = VisSlider(2F, 100F, 1F, false)
         aimSpeedMaxSlider.value = AIM_SPEED_MAX.toFloat()
         aimSpeedMaxSlider.changed { _, _ ->
             if ((aimSpeedMaxSlider.value.toInt() > AIM_SPEED_MIN)) {
                 AIM_SPEED_MAX = aimSpeedMaxSlider.value.toInt()
-                aimSpeedMaxLabel.setText("Aim Speed Max: " + AIM_SPEED_MAX.toString() + when(AIM_SPEED_MAX.toString().length) {3->"  " 2->"    " else ->"      "})
+                aimSpeedMaxLabel.setText("Aim Speed Max: $AIM_SPEED_MAX" + when(AIM_SPEED_MAX.toString().length) {3->"  " 2->"    " else ->"      "})
             }
             else
             {
@@ -140,19 +147,20 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
         //Create Aim_Strictness Slider
         val aimStrictness = VisTable()
+        Tooltip.Builder("The aim sensitivity (multiplier)").target(aimStrictness).build()
         //val aimStrictnessLabel = VisLabel("Aim Strictness: " + AIM_STRICTNESS.toString()) //Doesnt need when as it stays 1.0 through 5.0
         //val aimStrictnessSlider = VisSlider(1F, 5F, 0.1F, false)
         aimStrictnessSlider.value = AIM_STRICTNESS.toFloat()
         aimStrictnessSlider.changed { _, _ ->
             AIM_STRICTNESS = Math.round(aimStrictnessSlider.value.toDouble() * 10.0)/10.0 //Round to 1 decimal place
-            aimStrictnessLabel.setText("Aim Strictness: " + AIM_STRICTNESS.toString())
+            aimStrictnessLabel.setText("Aim Strictness: $AIM_STRICTNESS")
         }
         aimStrictness.add(aimStrictnessLabel).spaceRight(6F)
         aimStrictness.add(aimStrictnessSlider)
 
         //Create Perfect_Aim Collapsible Check Box
         //val perfectAimCheckBox = VisCheckBox("Enable Perfect Aim")
-
+        Tooltip.Builder("Whether or not to enable perfect aim").target(perfectAimCheckBox).build()
         perfectAimCheckBox.isChecked = PERFECT_AIM
 
         //val perfectAimTable = VisTable()
@@ -161,12 +169,13 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
         //Create Perfect_Aim_Fov Slider
         val perfectAimFov = VisTable()
+        Tooltip.Builder("The perfect aim field of view").target(perfectAimFov).build()
         //val perfectAimFovLabel = VisLabel("Perfect Aim Fov: " + PERFECT_AIM_FOV.toString() + when(PERFECT_AIM_FOV.toString().length) {3->"  " 2->"    " else ->"      "})
         //val perfectAimFovSlider = VisSlider(0F, 100F, 1F, false)
         perfectAimFovSlider.value = PERFECT_AIM_FOV.toFloat()
         perfectAimFovSlider.changed { _, _ ->
             PERFECT_AIM_FOV = perfectAimFovSlider.value.toInt()
-            perfectAimFovLabel.setText("Perfect Aim Fov: " + PERFECT_AIM_FOV.toString() + when(PERFECT_AIM_FOV.toString().length) {3->"  " 2->"    " else ->"      "})
+            perfectAimFovLabel.setText("Perfect Aim Fov: $PERFECT_AIM_FOV" + when(PERFECT_AIM_FOV.toString().length) {3->"  " 2->"    " else ->"      "})
         }
         perfectAimFov.add(perfectAimFovLabel)//.spaceRight(6F)
         perfectAimFov.add(perfectAimFovSlider)
@@ -174,6 +183,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
         //Create Perfect_Aim_Chance Slider
         val perfectAimChance = VisTable()
+        Tooltip.Builder("The perfect aim chance (per calculation)").target(perfectAimChance).build()
         //val perfectAimChanceLabel = VisLabel("Perfect Aim Chance: " + PERFECT_AIM_CHANCE.toString() + when(PERFECT_AIM_CHANCE.toString().length) {3->"  " 2->"    " else ->"      "})
         //val perfectAimChanceSlider = VisSlider(0F, 100F, 1F, false)
         perfectAimChanceSlider.value = PERFECT_AIM_CHANCE.toFloat()
@@ -197,7 +207,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
         //Create Aim_Assist_Mode Collapsible Check Box
         //val aimAssistCheckBox = VisCheckBox("Enable Aim Assist")
-
+        Tooltip.Builder("Whether or not to enable aim assistance").target(aimAssistCheckBox).build()
         aimAssistCheckBox.isChecked = AIM_ASSIST_MODE
 
         if (AIM_ASSIST_MODE) aimAssistCheckBox.isChecked
@@ -207,6 +217,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
         //Create Aim_Assist_Strictness Slider
         val aimAssistStrictness = VisTable()
+        Tooltip.Builder("The aim assistance smoothness").target(aimAssistStrictness).build()
         //val aimAssistStrictnessLabel = VisLabel("Aim Assist Strictness: " + AIM_ASSIST_STRICTNESS.toString() + when(AIM_ASSIST_STRICTNESS.toString().length) {3->"  " 2->"    " else ->"      "})
         //val aimAssistStrictnessSlider = VisSlider(0F, 100F, 1F, false)
         aimAssistStrictnessSlider.value = AIM_ASSIST_STRICTNESS.toFloat()
@@ -228,7 +239,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         //End Aim_Assist_Mode Collapsible Check Box
 
         //Add all items to label for tabbed pane content
-        table.add(aimBoneSelector).row() //Add Aim_Bone Selector
+        table.add(aimBone).row() //Add Aim_Bone Selector
         table.add(activateFromFireKey).width(250F).row() //Add Activate_From_Fire_Key Toggle
         table.add(teammatesAreEnemies).width(250F).row() //Add Teammates_Are_Enemies Toggle
         table.add(forceAimKey).width(250F).row() //Add Force_Aim Input

@@ -17,6 +17,7 @@ class RcsTab : Tab(false, false) {
     init {
         //Create RCS_Smoothing
         val rcsSmoothing = VisTable()
+        Tooltip.Builder("The smoothing of the recoil control system").target(rcsSmoothing).build()
         //val rcsSmoothingLabel = VisLabel("RCS Smoothing: " + RCS_SMOOTHING.toString() + when(RCS_SMOOTHING.toString().length) {2->"  " else->"    "})
         //val rcsSmoothingSlider = VisSlider(0.1F, 1F, .1F, false)
         rcsSmoothingSlider.value = RCS_SMOOTHING.toFloat()
@@ -29,6 +30,7 @@ class RcsTab : Tab(false, false) {
 
         //Create RCS_ReturnAim
         //val rcsReturnAim = VisTextButton("RCS_RETURNAIM", "toggle")
+        Tooltip.Builder("Whether or not to reset your crosshair after spraying").target(rcsReturnAim).build()
         if (RCS_RETURNAIM) rcsReturnAim.toggle()
         rcsReturnAim.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later

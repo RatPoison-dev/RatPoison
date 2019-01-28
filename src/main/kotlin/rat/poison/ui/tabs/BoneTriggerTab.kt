@@ -21,6 +21,7 @@ class BTrig : Tab(false, false) {
     init {
         //Create Bone_Trigger_Fov Slider
         val boneTriggerFov = VisTable()
+        Tooltip.Builder("The bone trigger field of view").target(boneTriggerFov).build()
         //val boneTriggerFovLabel = VisLabel("Bone Trigger Fov: " + BONE_TRIGGER_FOV.toString() + when(BONE_TRIGGER_FOV.toString().length) {3->"  " 2->"    " else ->"      "})
         //val boneTriggerFovSlider = VisSlider(0F, 1000F, 1F, false)
         boneTriggerFovSlider.value = BONE_TRIGGER_FOV.toFloat()
@@ -34,6 +35,7 @@ class BTrig : Tab(false, false) {
 
         //Create Bone_Trigger_Bone Selector
         val boneTriggerBone = VisTable()
+        Tooltip.Builder("The aim bone that bone trigger will fire at").target(boneTriggerBone).build()
         //val boneTriggerBoneBox = VisSelectBox<String>()
         val boneTriggerBoneLabel = VisLabel("Bone Trigger Bone: ")
         boneTriggerBoneBox.setItems("HEAD_BONE", "BODY_BONE")
@@ -52,6 +54,7 @@ class BTrig : Tab(false, false) {
 
         //Create Aim_On_Bone_Trigger Toggle
         //val aimOnBoneTrigger = VisTextButton("AIM_ON_BONE_TRIGGER", "toggle")
+        Tooltip.Builder("Whether or not to use current aim configuration with bone trigger").target(aimOnBoneTrigger).build()
         if (AIM_ON_BONE_TRIGGER) aimOnBoneTrigger.toggle()
         aimOnBoneTrigger.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
@@ -61,6 +64,7 @@ class BTrig : Tab(false, false) {
 
         //Create Bone_Trigger_Enable_Key Toggle
         //val boneTriggerEnableKey = VisTextButton("BONE_TRIGGER_ENABLE_KEY", "toggle")
+        Tooltip.Builder("Whether or not bone trigger activates when an aim key is held down").target(boneTriggerEnableKey).build()
         if (BONE_TRIGGER_ENABLE_KEY) boneTriggerEnableKey.toggle()
         boneTriggerEnableKey.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
@@ -70,6 +74,7 @@ class BTrig : Tab(false, false) {
 
         //Create Bone_Trigger_Key
         val boneTriggerKey = VisTable()
+        Tooltip.Builder("The key bone trigger will check is being held down if BONE_TRIGGER_ENABLE_KEY is enabled").target(boneTriggerKey).build()
         val boneTriggerKeyLabel = VisLabel("BONE_TRIGGER_KEY: ")
         //val boneTriggerKeyField = VisValidatableTextField(Validators.FLOATS)
         boneTriggerKeyField.text = BONE_TRIGGER_KEY.toString()

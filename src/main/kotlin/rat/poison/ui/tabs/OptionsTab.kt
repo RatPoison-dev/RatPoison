@@ -2,10 +2,7 @@ package rat.poison.ui.tabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.util.dialog.Dialogs
-import com.kotcrab.vis.ui.widget.VisLabel
-import com.kotcrab.vis.ui.widget.VisSlider
-import com.kotcrab.vis.ui.widget.VisTable
-import com.kotcrab.vis.ui.widget.VisTextButton
+import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.App
 import rat.poison.SETTINGS_DIRECTORY
@@ -24,6 +21,7 @@ class Options : Tab(false, false) {
     init {
         //Create UI_Alpha Slider
         val menuAlpha = VisTable()
+        Tooltip.Builder("The alpha of the menu").target(menuAlpha).build()
         val menuAlphaLabel = VisLabel("Menu Alpha: " + 1F) //1F is default
         val menuAlphaSlider = VisSlider(0.1F, 1F, 0.1F, false)
         menuAlphaSlider.value = 1F
@@ -36,6 +34,7 @@ class Options : Tab(false, false) {
 
         //Create Save Button
         val saveButton = VisTextButton("Save Current Configuration")
+        Tooltip.Builder("Save current configuration to the cfg file").target(saveButton).build()
         saveButton.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
                 val cfgfile = File("settings" + "\\" + "cfg.kts")
@@ -76,6 +75,7 @@ class Options : Tab(false, false) {
 
         //Create Load Button
         val loadButton = VisTextButton("Load Previously Saved Configuration")
+        Tooltip.Builder("Load the previously saved configuration from the cfg file").target(loadButton).build()
         loadButton.changed { _, _ ->
             val cfgfile = File("settings\\cfg.kts")
             if (!cfgfile.exists()) {
@@ -90,6 +90,7 @@ class Options : Tab(false, false) {
 
         //Create SickoMode Button
         val sickoMode = VisTextButton("Activate Sicko Mode")
+        Tooltip.Builder("Activate rage settings").target(sickoMode).build()
         sickoMode.changed { _, _ ->
             Dojo.script(FileReader(SETTINGS_DIRECTORY + "\\sickomode.kts").readLines().joinToString("\n"))
             UIUpdate()
@@ -97,6 +98,7 @@ class Options : Tab(false, false) {
 
         //Create Save Current Config To Default
         val saveCurConfig = VisTextButton("Save Current Config To Default Settings")
+        Tooltip.Builder("Save current configuration to the settings files").target(saveCurConfig).build()
         saveCurConfig.changed { _, _ ->
             //Files.write(File("settings\\"))
             //val fileDir = "settings\\Aim.kts"

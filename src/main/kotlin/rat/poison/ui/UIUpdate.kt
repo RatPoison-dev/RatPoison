@@ -57,27 +57,28 @@ fun UIUpdate() {
 
     //Scripts Tab
     scriptsTab.apply {
-        enableBunnyHopToggle.isChecked = ENABLE_BUNNY_HOP
-        enableRCSToggle.isChecked = ENABLE_RCS
-        enableRCrosshairToggle.isChecked = ENABLE_RECOIL_CROSSHAIR
-        enableEspToggle.isChecked = ENABLE_ESP
-        enableFlatAimToggle.isChecked = ENABLE_FLAT_AIM
-        enablePathAimToggle.isChecked = ENABLE_PATH_AIM
-        enableBoneTriggerToggle.isChecked = ENABLE_BONE_TRIGGER
-        enableReducedFlashToggle.isChecked = ENABLE_REDUCED_FLASH
-        enableBombTimerToggle.isChecked = ENABLE_BOMB_TIMER
+        enableBunnyHop.isChecked = ENABLE_BUNNY_HOP
+        enableRCS.isChecked = ENABLE_RCS
+        enableRCrosshair.isChecked = ENABLE_RECOIL_CROSSHAIR
+        enableEsp.isChecked = ENABLE_ESP
+        enableFlatAim.isChecked = ENABLE_FLAT_AIM
+        enablePathAim.isChecked = ENABLE_PATH_AIM
+        enableBoneTrigger.isChecked = ENABLE_BONE_TRIGGER
+        enableReducedFlash.isChecked = ENABLE_REDUCED_FLASH
+        enableBombTimer.isChecked = ENABLE_BOMB_TIMER
     }
 
     //Esp Tab
     espTab.apply {
-        enableSkeletonEspToggle.isChecked = SKELETON_ESP
-        enableBoxEspToggle.isChecked = BOX_ESP
-        enableBoxEspDetailsToggle.isChecked = BOX_ESP_DETAILS
-        enableGlowEspToggle.isChecked = GLOW_ESP
-        enableModelEspToggle.isChecked = MODEL_ESP
+        skeletonEsp.isChecked = SKELETON_ESP
+        boxEsp.isChecked = BOX_ESP
+        boxEspDetails.isChecked = BOX_ESP_DETAILS
+        glowEsp.isChecked = GLOW_ESP
+        invGlowEsp.isChecked = INV_GLOW_ESP
+        modelEsp.isChecked = MODEL_ESP
         enemyIndicator.isChecked = ENEMY_INDICATOR
-        enableChamsEspToggle.isChecked = CHAMS_ESP
-        enableChamsShowHealthToggle.isChecked = CHAMS_SHOW_HEALTH
+        chamsEsp.isChecked = CHAMS_ESP
+        chamsShowHealth.isChecked = CHAMS_SHOW_HEALTH
         chamsBrightnessLabel.setText("Chams Brightness: $CHAMS_BRIGHTNESS" + when (CHAMS_BRIGHTNESS.toString().length) {
             4 -> "  "
             3 -> "    "
@@ -85,12 +86,12 @@ fun UIUpdate() {
             else -> "        "
         })
         chamsBrightnessSlider.value = CHAMS_BRIGHTNESS.toFloat()
-        enableShowTeamToggle.isChecked = SHOW_TEAM
-        enableShowEnemiesToggle.isChecked = SHOW_ENEMIES
-        enableShowDormantToggle.isChecked = SHOW_DORMANT
-        enableShowBombToggle.isChecked = SHOW_BOMB
-        enableShowWeaponsToggle.isChecked = SHOW_WEAPONS
-        enableShowGrenadesToggle.isChecked = SHOW_GRENADES
+        showTeam.isChecked = SHOW_TEAM
+        showEnemies.isChecked = SHOW_ENEMIES
+        showDormant.isChecked = SHOW_DORMANT
+        showBomb.isChecked = SHOW_BOMB
+        showWeapons.isChecked = SHOW_WEAPONS
+        showGrenades.isChecked = SHOW_GRENADES
         teamColorShow.setColor(TEAM_COLOR.red.toFloat(), TEAM_COLOR.green.toFloat(), TEAM_COLOR.blue.toFloat(), TEAM_COLOR.alpha.toFloat())
         enemyColorShow.setColor(ENEMY_COLOR.red.toFloat(), ENEMY_COLOR.green.toFloat(), ENEMY_COLOR.blue.toFloat(), ENEMY_COLOR.alpha.toFloat())
         bombColorShow.setColor(BOMB_COLOR.red.toFloat(), BOMB_COLOR.green.toFloat(), BOMB_COLOR.blue.toFloat(), BOMB_COLOR.alpha.toFloat())
