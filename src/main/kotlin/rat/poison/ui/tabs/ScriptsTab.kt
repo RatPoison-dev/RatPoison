@@ -7,6 +7,7 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.game.CSGO
 import rat.poison.game.Color
 import rat.poison.game.offsets.ClientOffsets
+import rat.poison.scripts.esp.disableEsp
 import rat.poison.settings.*
 import rat.poison.ui.*
 
@@ -54,40 +55,21 @@ class ScriptsTab : Tab(false, false) {
             ENABLE_RECOIL_CROSSHAIR = enableRCrosshairToggle.isChecked
             true
         }
-////Marked for fix, enable esp needs to turn all the esps off
+
         //Create Enable_Esp Toggle
         //val enableEspToggle = VisTextButton("ENABLE_ESP", "toggle")
         enableEspToggle.isChecked = ENABLE_ESP
         enableEspToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                if (!ENABLE_ESP) {
-                    CHAMS_SHOW_HEALTH = rat.poison.scripts.esp.prevchamsshowhealth
-                    CHAMS_BRIGHTNESS = rat.poison.scripts.esp.prevchamsbrightness
-                    CHAMS_ESP_COLOR = rat.poison.scripts.esp.prevchamsespcolor
-
-                    val write = (if (FLICKER_FREE_GLOW) 0xEB else 0x74).toByte()
-                    try { CSGO.clientDLL[ClientOffsets.dwGlowUpdate] = write } catch (e: Exception) { }
-                    try { CSGO.clientDLL[ClientOffsets.dwGlowUpdate2] = write } catch(e: Exception) { }
-                }
-                else {
-                    rat.poison.scripts.esp.prevchamsshowhealth = CHAMS_SHOW_HEALTH
-                    rat.poison.scripts.esp.prevchamsbrightness = CHAMS_BRIGHTNESS
-                    rat.poison.scripts.esp.prevchamsespcolor = CHAMS_ESP_COLOR
-
-                    CHAMS_BRIGHTNESS = 0
-                    CHAMS_SHOW_HEALTH = false
-                    CHAMS_ESP_COLOR = Color(255, 255, 255, 1.0)
-
-                    try { CSGO.clientDLL[ClientOffsets.dwGlowUpdate] = 0x74.toByte() } catch (e: Exception) {}
-                    try { CSGO.clientDLL[ClientOffsets.dwGlowUpdate2] = 0x74.toByte() } catch (e: Exception) {}
-                }
-
-                Thread.sleep(250) //Wait to make sure settings loop
-
                 ENABLE_ESP = enableEspToggle.isChecked
-                tabbedPane.disableTab(espTab, !ENABLE_ESP)
 
-                UIUpdate()
+                val lastTab = tabbedPane.activeTab
+                tabbedPane.disableTab(espTab, !ENABLE_ESP)
+                tabbedPane.switchTab(lastTab)
+
+                if (!ENABLE_ESP) {
+                    disableEsp()
+                }
             }
         }
 

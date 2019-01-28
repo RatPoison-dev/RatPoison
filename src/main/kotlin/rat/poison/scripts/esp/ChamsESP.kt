@@ -81,9 +81,7 @@ internal fun chamsEsp() = every(500) {
 }
 
 private fun Entity.chams(color: Color) {
-    if (CHAMS_ESP) {
-        csgoEXE[this + 0x70] = color.red.toByte()
-        csgoEXE[this + 0x71] = color.green.toByte()
-        csgoEXE[this + 0x72] = color.blue.toByte()
-    }
+    csgoEXE[this + 0x70] = color.red.toByte()
+    csgoEXE[this + 0x71] = color.green.toByte()
+    csgoEXE[this + 0x72] = color.blue.toByte()
 }
