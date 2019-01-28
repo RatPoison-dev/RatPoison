@@ -18,9 +18,6 @@ class Misc : Tab(false, false) {
     val fireKeyField = VisValidatableTextField(Validators.FLOATS) //Activate_From_Fire_Key
     val visualsToggleKeyField = VisValidatableTextField(Validators.FLOATS) //Visuals_Toggle_Key
     val menuKeyField = VisValidatableTextField(Validators.FLOATS) //Menu_Key_Field
-    val rcsSmoothingLabel = VisLabel("RCS Smoothing: " + RCS_SMOOTHING.toString()/* + when(RCS_SMOOTHING.toString().length) {2->"  " else->"    "}*/) //RCS_Smoothing
-    val rcsSmoothingSlider = VisSlider(0.1F, 1F, .1F, false) //RCS_Smoothing
-    val rcsReturnAim = VisTextButton("RCS_RETURNAIM", "toggle") //RCS_ReturnAim
     val flashMaxAlphaLabel = VisLabel("Flash Max Alpha: " + FLASH_MAX_ALPHA.toString() + when(FLASH_MAX_ALPHA.toString().length) {3->"  " 2->"    " else ->"      "}) //Flash_Max_Alpha
     val flashMaxAlphaSlider = VisSlider(0.02F, 2F, .01F, false) //Flash_Max_Alpha
 
@@ -77,26 +74,6 @@ class Misc : Tab(false, false) {
         menuKey.add(menuKeyField).spaceRight(6F).width(40F)
         menuKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
 
-        //Create RCS_Smoothing
-        val rcsSmoothing = VisTable()
-        //val rcsSmoothingLabel = VisLabel("RCS Smoothing: " + RCS_SMOOTHING.toString() + when(RCS_SMOOTHING.toString().length) {2->"  " else->"    "})
-        //val rcsSmoothingSlider = VisSlider(0.1F, 1F, .1F, false)
-        rcsSmoothingSlider.value = RCS_SMOOTHING.toFloat()
-        rcsSmoothingSlider.changed { _, _ ->
-                RCS_SMOOTHING = Math.round(rcsSmoothingSlider.value.toDouble() * 10.0)/10.0
-                rcsSmoothingLabel.setText("RCS Smoothing: $RCS_SMOOTHING")/* + when(RCS_SMOOTHING.toString().length) {2->"  " else->"    "})*/
-        }
-        rcsSmoothing.add(rcsSmoothingLabel)//.spaceRight(6F) //when gets rid of spaceright
-        rcsSmoothing.add(rcsSmoothingSlider)
-
-        //Create RCS_ReturnAim
-        //val rcsReturnAim = VisTextButton("RCS_RETURNAIM", "toggle")
-        if (RCS_RETURNAIM) rcsReturnAim.toggle()
-        rcsReturnAim.changed { _, _ ->
-            if (true) { //type Any? changes didnt work im autistic //fix later
-                RCS_RETURNAIM = rcsReturnAim.isChecked
-            }
-        }
 
         //Create Flash_Max_Alpha
         val flashMaxAlpha = VisTable()
@@ -116,8 +93,6 @@ class Misc : Tab(false, false) {
         table.add(fireKey).row() //Add Fire_Key Input
         table.add(visualsToggleKey).row() //Add Visuals_Toggle_Key Input
         table.add(menuKey).row() //Add Menu_Key Input
-        table.add(rcsSmoothing).row() //Add RCS_Smoothing Slider
-        table.add(rcsReturnAim).row() //Add RCS_ReturnAim Toggle
         table.add(flashMaxAlpha).row() //Add Flash_Max_Alpha Slider
     }
 

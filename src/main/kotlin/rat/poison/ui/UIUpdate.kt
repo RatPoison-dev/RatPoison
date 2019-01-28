@@ -117,11 +117,6 @@ fun UIUpdate() {
     misc.fireKeyField.text = FIRE_KEY.toString()
     misc.visualsToggleKeyField.text = VISUALS_TOGGLE_KEY.toString()
     misc.menuKeyField.text = MENU_KEY.toString()
-
-
-    misc.rcsSmoothingLabel.setText("RCS Smoothing: $RCS_SMOOTHING")
-    misc.rcsSmoothingSlider.value = RCS_SMOOTHING.toFloat()
-    misc.rcsReturnAim.isChecked = RCS_RETURNAIM
     misc.flashMaxAlphaLabel.setText("Flash Max Alpha: $FLASH_MAX_ALPHA" + when(FLASH_MAX_ALPHA.toString().length) {3->"  " 2->"    " else ->"      "})
     misc.flashMaxAlphaSlider.value = FLASH_MAX_ALPHA
 

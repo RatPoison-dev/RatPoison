@@ -26,7 +26,7 @@ internal fun skeletonEsp() {
 	App {
 		if (!SKELETON_ESP || !ENABLE_ESP || MENUTOG) return@App
 
-		forEntities(ccsPlayer) { it ->
+		forEntities(ccsPlayer) {
 			val entity = it.entity
 			if (entity > 0 && entity != me && !entity.dead() && !entity.dormant()) {
 				(entityBones.get(entity) ?: CacheableList(20)).apply {
