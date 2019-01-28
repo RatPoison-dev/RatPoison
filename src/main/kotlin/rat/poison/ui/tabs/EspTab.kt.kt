@@ -13,7 +13,7 @@ import rat.poison.App
 import rat.poison.settings.*
 import rat.poison.ui.changed
 
-class EspKts : Tab(false, false) {
+class EspTab : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
@@ -23,6 +23,7 @@ class EspKts : Tab(false, false) {
     val enableGlowEspToggle = VisTextButton("GLOW_ESP", "toggle") //Glow_Esp
     val enableInvGlowEspToggle = VisTextButton("INV_GLOW_ESP", "toggle") //Inv_Glow_Esp
     val enableModelEspToggle = VisTextButton("MODEL_ESP", "toggle") //Model_Esp
+    val enemyIndicator = VisTextButton("ENEMY_INDICATOR", "toggle") //Enemy_Indicator
     val enableChamsEspToggle = VisTextButton("CHAMS_ESP", "toggle") //Chams_Esp
     val enableChamsShowHealthToggle = VisTextButton("CHAMS_SHOW_HEALTH", "toggle") //Chams_Show_Health
     val chamsBrightnessLabel = VisLabel("Chams Brightness: " + CHAMS_BRIGHTNESS.toString() + when(CHAMS_BRIGHTNESS.toString().length) {4->"  " 3->"    " 2->"      " else ->"        "}) //Chams_Brightness
@@ -93,6 +94,15 @@ class EspKts : Tab(false, false) {
         enableModelEspToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
                 MODEL_ESP = enableModelEspToggle.isChecked//!MODEL_ESP
+            }
+        }
+
+        //Create ENEMY_INDICATOR Toggle
+        //val enemyIndicator = VisTextButton("ENEMY_INDICATOR", "toggle")
+        if (ENEMY_INDICATOR) enemyIndicator.toggle()
+        enemyIndicator.changed { _, _ ->
+            if (true) { //type Any? changes didnt work im autistic //fix later
+                ENEMY_INDICATOR = enemyIndicator.isChecked//!ENEMY_INDICATOR
             }
         }
 
@@ -330,6 +340,7 @@ class EspKts : Tab(false, false) {
         table.add(enableGlowEspToggle).row() //Add Enable_Glow_Esp Toggle
         table.add(enableInvGlowEspToggle).row() //Add Enable_Inv_Glow_Esp Toggle
         table.add(enableModelEspToggle).row() //Add Enable_Model_Esp Toggle
+        table.add(enemyIndicator).row()
         table.add(enableChamsEspToggle).row() //Add Enable_Chams_Esp Toggle
         table.add(enableChamsShowHealthToggle).row() //Add Enable_Chams_Show_Health Toggle
         table.add(chamsBrightness).width(250F).row() //Add Chams_Brightness Slider
@@ -352,6 +363,6 @@ class EspKts : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "ESP.kts"
+        return "ESP"
     }
 }

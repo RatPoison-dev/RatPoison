@@ -21,19 +21,19 @@ import rat.poison.ui.tabs.*
 ////Marked for fix, enable esp needs to turn all the esps off
 
 //Tabs, public to access in UIUpdate
-val aimKts = AimKts()
-val generalKts = GeneralKts()
-val scriptsKts = ScriptsKts()
-val espKts = EspKts()
+val aimTab = AimTab()
+val scriptsTab = ScriptsTab()
+val espTab = EspTab()
+val rcsTab = RcsTab()
+val bTrigTab = BTrig()
 val misc = Misc()
 val settings = Options()
+val tabbedPane = TabbedPane()
 
 class DebuggerWindow : VisWindow("RatPoison UI") {
 
     init {
         defaults().left()
-
-        val tabbedPane = TabbedPane()
 
         val tabbedPaneContent = VisTable()
         tabbedPaneContent.padTop(10F)
@@ -50,46 +50,44 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
         this.isResizable = true
 
         //Add tabs to tab-pane
-        tabbedPane.add(aimKts)
-        tabbedPane.add(generalKts)
-        tabbedPane.add(scriptsKts)
-        tabbedPane.add(espKts)
+        tabbedPane.add(aimTab)
+        tabbedPane.add(scriptsTab)
+        tabbedPane.add(espTab)
+        tabbedPane.add(rcsTab)
+        tabbedPane.add(bTrigTab)
         tabbedPane.add(misc)
         tabbedPane.add(settings)
 
         //Set default tab to first (aimKts)
-        tabbedPane.switchTab(aimKts)
+        tabbedPane.switchTab(aimTab)
 
-        tabbedPaneContent.add(aimKts.contentTable) //Aim.kts is the initial window, initialize pane content with tabs contents
+        tabbedPaneContent.add(aimTab.contentTable) //Aim.kts is the initial window, initialize pane content with tabs contents
 
         tabbedPane.addListener(object : TabbedPaneAdapter() {
             override fun switchedTab(tab: Tab?) {
                 if (tab == null) return
 
+                tabbedPaneContent.clear()
                 when (tab) {
-                    aimKts -> {
-                        tabbedPaneContent.clear()
-                        tabbedPaneContent.add(aimKts.contentTable)
-                    }
-                    generalKts -> {
-                        tabbedPaneContent.clear()
-                        tabbedPaneContent.add(generalKts.contentTable)
-
+                    aimTab -> {
+                        tabbedPaneContent.add(aimTab.contentTable)
                     }
                     settings -> {
-                        tabbedPaneContent.clear()
                         tabbedPaneContent.add(settings.contentTable)
                     }
-                    scriptsKts -> {
-                        tabbedPaneContent.clear()
-                        tabbedPaneContent.add(scriptsKts.contentTable)
+                    scriptsTab -> {
+                        tabbedPaneContent.add(scriptsTab.contentTable)
                     }
-                    espKts -> {
-                        tabbedPaneContent.clear()
-                        tabbedPaneContent.add(espKts.contentTable)
+                    rcsTab -> {
+                        tabbedPaneContent.add(rcsTab.contentTable)
+                    }
+                    bTrigTab -> {
+                        tabbedPaneContent.add(bTrigTab.contentTable)
+                    }
+                    espTab -> {
+                        tabbedPaneContent.add(espTab.contentTable)
                     }
                     misc -> {
-                        tabbedPaneContent.clear()
                         tabbedPaneContent.add(misc.contentTable)
                     }
                 }
@@ -102,6 +100,8 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
 
         pack()
         centerWindow()
+
+        UIUpdate()
     }
 }
 

@@ -8,10 +8,9 @@ import rat.poison.game.CSGO
 import rat.poison.game.Color
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.settings.*
-import rat.poison.ui.UIUpdate
-import rat.poison.ui.changed
+import rat.poison.ui.*
 
-class ScriptsKts : Tab(false, false) {
+class ScriptsTab : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
@@ -33,34 +32,32 @@ class ScriptsKts : Tab(false, false) {
     init {
         //Create Enable_Bunny_Hop Toggle
         //val enableBunnyHopToggle = VisTextButton("ENABLE_BUNNY_HOP", "toggle")
-        if (LEAGUE_MODE) enableBunnyHopToggle.toggle()
+        enableBunnyHopToggle.isChecked = ENABLE_BUNNY_HOP
         enableBunnyHopToggle.changed { _, _ ->
-            if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_BUNNY_HOP = enableBunnyHopToggle.isChecked//!ENABLE_BUNNY_HOP
-            }
+            ENABLE_BUNNY_HOP = enableBunnyHopToggle.isChecked
+            true
         }
 
         //Create Enable_Rcs Toggle
         //val enableRCSToggle = VisTextButton("ENABLE_RCS", "toggle")
-        if (ENABLE_RCS) enableRCSToggle.toggle()
+        enableRCSToggle.isChecked = ENABLE_RCS
         enableRCSToggle.changed { _, _ ->
-            if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_RCS = enableRCSToggle.isChecked//!ENABLE_RCS
-            }
+            ENABLE_RCS = enableRCSToggle.isChecked
+            tabbedPane.disableTab(rcsTab, !ENABLE_RCS)
+            true
         }
 
         //Create Enable_Recoil_Crosshair Toggle
         //val enableRCrosshairToggle = VisTextButton("ENABLE_RECOIL_CROSSHAIR", "toggle")
-        if (ENABLE_RECOIL_CROSSHAIR) enableRCrosshairToggle.toggle()
+        enableRCrosshairToggle.isChecked = ENABLE_RECOIL_CROSSHAIR
         enableRCrosshairToggle.changed { _, _ ->
-            if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_RECOIL_CROSSHAIR = enableRCrosshairToggle.isChecked//!ENABLE_RECOIL_CROSSHAIR
-            }
+            ENABLE_RECOIL_CROSSHAIR = enableRCrosshairToggle.isChecked
+            true
         }
 ////Marked for fix, enable esp needs to turn all the esps off
         //Create Enable_Esp Toggle
         //val enableEspToggle = VisTextButton("ENABLE_ESP", "toggle")
-        if (ENABLE_ESP) enableEspToggle.toggle()
+        enableEspToggle.isChecked = ENABLE_ESP
         enableEspToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
                 if (!ENABLE_ESP) {
@@ -88,6 +85,7 @@ class ScriptsKts : Tab(false, false) {
                 Thread.sleep(250) //Wait to make sure settings loop
 
                 ENABLE_ESP = enableEspToggle.isChecked
+                tabbedPane.disableTab(espTab, !ENABLE_ESP)
 
                 UIUpdate()
             }
@@ -95,47 +93,42 @@ class ScriptsKts : Tab(false, false) {
 
         //Create Enable_Flat_Aim Toggle
         //val enableFlatAimToggle = VisTextButton("ENABLE_FLAT_AIM", "toggle")
-        if (ENABLE_FLAT_AIM) enableFlatAimToggle.toggle()
+        enableFlatAimToggle.isChecked = ENABLE_FLAT_AIM
         enableFlatAimToggle.changed { _, _ ->
-            if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_FLAT_AIM = enableFlatAimToggle.isChecked//enableFlatAimToggle.isChecked//!ENABLE_FLAT_AIM
-            }
+            ENABLE_FLAT_AIM = enableFlatAimToggle.isChecked
+            true
         }
 
         //Create Enable_Path_Aim Toggle
         //val enablePathAimToggle = VisTextButton("ENABLE_PATH_AIM", "toggle")
-        if (ENABLE_PATH_AIM) enablePathAimToggle.toggle()
+        enablePathAimToggle.isChecked = ENABLE_PATH_AIM
         enablePathAimToggle.changed { _, _ ->
-            if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_PATH_AIM = enablePathAimToggle.isChecked//!ENABLE_PATH_AIM
-            }
+            ENABLE_PATH_AIM = enablePathAimToggle.isChecked
+            true
         }
 
         //Create Enable_Bone_Trigger Toggle
         //val enableBoneTriggerToggle = VisTextButton("ENABLE_BONE_TRIGGER", "toggle")
-        if (ENABLE_BONE_TRIGGER) enableBoneTriggerToggle.toggle()
+        enableBoneTriggerToggle.isChecked = ENABLE_BONE_TRIGGER
         enableBoneTriggerToggle.changed { _, _ ->
-            if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_BONE_TRIGGER = enableBoneTriggerToggle.isChecked//!ENABLE_BONE_TRIGGER
-            }
+            ENABLE_BONE_TRIGGER = enableBoneTriggerToggle.isChecked
+            tabbedPane.disableTab(bTrigTab, !ENABLE_BONE_TRIGGER)
         }
 
         //Create Enable_Reduced_Flash Toggle
         //val enableReducedFlashToggle = VisTextButton("ENABLE_REDUCED_FLASH", "toggle")
-        if (ENABLE_REDUCED_FLASH) enableReducedFlashToggle.toggle()
+        enableReducedFlashToggle.isChecked = ENABLE_REDUCED_FLASH
         enableReducedFlashToggle.changed { _, _ ->
-            if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_REDUCED_FLASH = enableReducedFlashToggle.isChecked//!ENABLE_REDUCED_FLASH
-            }
+            ENABLE_REDUCED_FLASH = enableReducedFlashToggle.isChecked
+            true
         }
 
         //Create Enable_Bomb_Timer Toggle
         //val enableBombTimerToggle = VisTextButton("ENABLE_BOMB_TIMER", "toggle")
-        if (ENABLE_BOMB_TIMER) enableBombTimerToggle.toggle()
+        enableBombTimerToggle.isChecked = ENABLE_BOMB_TIMER
         enableBombTimerToggle.changed { _, _ ->
-            if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_BOMB_TIMER = enableBombTimerToggle.isChecked//!ENABLE_BOMB_TIMER
-            }
+            ENABLE_BOMB_TIMER = enableBombTimerToggle.isChecked
+            true
         }
 
         //Add all items to label for tabbed pane content
@@ -155,6 +148,6 @@ class ScriptsKts : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Scripts.kts"
+        return "Scripts"
     }
 }

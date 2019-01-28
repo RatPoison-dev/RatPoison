@@ -7,7 +7,7 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.settings.*
 import rat.poison.ui.changed
 
-class AimKts : Tab(true, false) { //Aim.kts tab
+class AimTab : Tab(true, false) { //Aim.kts tab
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
@@ -250,6 +250,6 @@ class AimKts : Tab(true, false) { //Aim.kts tab
     }
 
     override fun getTabTitle(): String? {
-        return "Aim.kts"
+        return "Aim"
     }
 }

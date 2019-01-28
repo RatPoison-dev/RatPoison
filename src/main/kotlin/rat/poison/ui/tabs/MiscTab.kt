@@ -4,89 +4,78 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.util.Validators
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import org.jire.arrowhead.keyPressed
+import rat.poison.App
 import rat.poison.settings.*
 import rat.poison.ui.changed
+import rat.poison.utils.ObservableBoolean
 
 class Misc : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
-    val boneTriggerFovLabel = VisLabel("Bone Trigger Fov: " + BONE_TRIGGER_FOV.toString() + when(BONE_TRIGGER_FOV.toString().length) {3->"  " 2->"    " else ->"      "}) //Bone_Trigger_Fov
-    val boneTriggerFovSlider = VisSlider(0F, 360F, 1F, false) //Bone_Trigger_Fov
-    val boneTriggerBoneBox = VisSelectBox<String>() //Bone_Trigger_Bone
-    val aimOnBoneTrigger = VisTextButton("AIM_ON_BONE_TRIGGER", "toggle") //Aim_On_Bone_Trigger
-    val boneTriggerEnableKey = VisTextButton("BONE_TRIGGER_ENABLE_KEY", "toggle") //Bone_Trigger_Enable_Key
-    val boneTriggerKeyField = VisValidatableTextField(Validators.FLOATS) //Bone_Trigger_Key
-    val rcsSmoothingLabel = VisLabel("RCS Smoothing: " + RCS_SMOOTHING.toString()/* + when(RCS_SMOOTHING.toString().length) {2->"  " else->"    "}*/) //RCS_SMOOTHING
-    val rcsSmoothingSlider = VisSlider(0.1F, 1F, .1F, false) //RCS_SMOOTHING
+    val leagueModeToggle = VisTextButton("LEAGUE_MODE", "toggle") //League_Mode
+    val fireKeyField = VisValidatableTextField(Validators.FLOATS) //Activate_From_Fire_Key
+    val visualsToggleKeyField = VisValidatableTextField(Validators.FLOATS) //Visuals_Toggle_Key
+    val menuKeyField = VisValidatableTextField(Validators.FLOATS) //Menu_Key_Field
+    val rcsSmoothingLabel = VisLabel("RCS Smoothing: " + RCS_SMOOTHING.toString()/* + when(RCS_SMOOTHING.toString().length) {2->"  " else->"    "}*/) //RCS_Smoothing
+    val rcsSmoothingSlider = VisSlider(0.1F, 1F, .1F, false) //RCS_Smoothing
+    val rcsReturnAim = VisTextButton("RCS_RETURNAIM", "toggle") //RCS_ReturnAim
     val flashMaxAlphaLabel = VisLabel("Flash Max Alpha: " + FLASH_MAX_ALPHA.toString() + when(FLASH_MAX_ALPHA.toString().length) {3->"  " 2->"    " else ->"      "}) //Flash_Max_Alpha
     val flashMaxAlphaSlider = VisSlider(0.02F, 2F, .01F, false) //Flash_Max_Alpha
-    val enemyIndicator = VisTextButton("ENEMY_INDICATOR", "toggle")
-
 
     init {
-        //Create Bone_Trigger_Fov Slider
-        val boneTriggerFov = VisTable()
-        //val boneTriggerFovLabel = VisLabel("Bone Trigger Fov: " + BONE_TRIGGER_FOV.toString() + when(BONE_TRIGGER_FOV.toString().length) {3->"  " 2->"    " else ->"      "})
-        //val boneTriggerFovSlider = VisSlider(0F, 1000F, 1F, false)
-        boneTriggerFovSlider.value = BONE_TRIGGER_FOV.toFloat()
-        boneTriggerFovSlider.changed { _, _ ->
-            BONE_TRIGGER_FOV = boneTriggerFovSlider.value.toInt()
-            boneTriggerFovLabel.setText("Bone Trigger Fov: " + BONE_TRIGGER_FOV.toString() + when(BONE_TRIGGER_FOV.toString().length) {3->"  " 2->"    " else ->"      "}) //When is used to not make the sliders jitter when you go from 10 to 9, or 100 to 99, as that character space shifts everything, one character is 2 spaces
-        }
-
-        boneTriggerFov.add(boneTriggerFovLabel).spaceRight(6F)
-        boneTriggerFov.add(boneTriggerFovSlider)
-
-        //Create Bone_Trigger_Bone Selector
-        val boneTriggerBone = VisTable()
-        //val boneTriggerBoneBox = VisSelectBox<String>()
-        val boneTriggerBoneLabel = VisLabel("Bone Trigger Bone: ")
-        boneTriggerBoneBox.setItems("HEAD_BONE", "BODY_BONE")
-        boneTriggerBoneBox.selected = if (BONE_TRIGGER_BONE == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
-        boneTriggerBone.add(boneTriggerBoneLabel).top().spaceRight(6F)
-        boneTriggerBone.add(boneTriggerBoneBox)
-
-        boneTriggerBoneBox.changed { _, _ ->
-            if (boneTriggerBoneBox.selected.toString() == "HEAD_BONE") {
-                BONE_TRIGGER_BONE = HEAD_BONE
-            }
-            else if (boneTriggerBoneBox.selected.toString() == "BODY_BONE") {
-                BONE_TRIGGER_BONE = BODY_BONE
-            }
-        }
-
-        //Create Aim_On_Bone_Trigger Toggle
-        //val aimOnBoneTrigger = VisTextButton("AIM_ON_BONE_TRIGGER", "toggle")
-        if (AIM_ON_BONE_TRIGGER) aimOnBoneTrigger.toggle()
-        aimOnBoneTrigger.changed { _, _ ->
+        //Create League_Mode Toggle
+        //val leagueModeToggle = VisTextButton("LEAGUE_MODE", "toggle")
+        if (LEAGUE_MODE) leagueModeToggle.toggle()
+        leagueModeToggle.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                AIM_ON_BONE_TRIGGER = aimOnBoneTrigger.isChecked//AIM_ON_BONE_TRIGGER
+                LEAGUE_MODE = leagueModeToggle.isChecked//!LEAGUE_MODE
             }
         }
 
-        //Create Bone_Trigger_Enable_Key Toggle
-        //val boneTriggerEnableKey = VisTextButton("BONE_TRIGGER_ENABLE_KEY", "toggle")
-        if (BONE_TRIGGER_ENABLE_KEY) boneTriggerEnableKey.toggle()
-        boneTriggerEnableKey.changed { _, _ ->
-            if (true) { //type Any? changes didnt work im autistic //fix later
-                BONE_TRIGGER_ENABLE_KEY = boneTriggerEnableKey.isChecked//!BONE_TRIGGER_ENABLE_KEY
+        //Create Fire_Key Input
+        val fireKey = VisTable()
+        val fireKeyLabel = VisLabel("Fire Key: ")
+        //val fireKeyField = VisValidatableTextField(Validators.FLOATS)
+        fireKeyField.text = FIRE_KEY.toString()
+        fireKey.changed { _, _ ->
+            if (fireKeyField.text.toIntOrNull() != null) {
+                FIRE_KEY = fireKeyField.text.toInt()
             }
         }
+        fireKey.add(fireKeyLabel)
+        fireKey.add(fireKeyField).spaceRight(6F).width(40F)
+        fireKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
 
-        //Create Bone_Trigger_Key
-        val boneTriggerKey = VisTable()
-        val boneTriggerKeyLabel = VisLabel("BONE_TRIGGER_KEY: ")
-        //val boneTriggerKeyField = VisValidatableTextField(Validators.FLOATS)
-        boneTriggerKeyField.text = BONE_TRIGGER_KEY.toString()
-        boneTriggerKey.changed { _, _ ->
-            if (boneTriggerKeyField.text.toIntOrNull() != null) {
-                BONE_TRIGGER_KEY = boneTriggerKeyField.text.toInt()
+        //Create Visuals_Toggle_Key Input
+        val visualsToggleKey = VisTable()
+        val visualsToggleKeyLabel = VisLabel("Visuals Toggle Key: ")
+        //val visualsToggleKeyField = VisValidatableTextField(Validators.FLOATS)
+        visualsToggleKeyField.text = VISUALS_TOGGLE_KEY.toString()
+        visualsToggleKey.changed { _, _ ->
+            if (fireKeyField.text.toIntOrNull() != null) {
+                VISUALS_TOGGLE_KEY = visualsToggleKeyField.text.toInt()
             }
         }
-        boneTriggerKey.add(boneTriggerKeyLabel)
-        boneTriggerKey.add(boneTriggerKeyField).spaceRight(6F).width(40F)
-        boneTriggerKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
+        visualsToggleKey.add(visualsToggleKeyLabel)
+        visualsToggleKey.add(visualsToggleKeyField).spaceRight(6F).width(40F)
+        visualsToggleKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
+
+        //Create Menu_Key Input
+        val menuKey = VisTable()
+        val menuKeyLabel = VisLabel("Menu Key: ")
+        //val menuKeyField = VisValidatableTextField(Validators.FLOATS)
+        menuKeyField.text = MENU_KEY.toString()
+        menuKey.changed { _, _ ->
+            if (menuKeyField.text.toIntOrNull() != null) {
+                MENU_KEY = menuKeyField.text.toInt()
+                App.Menu_Key = ObservableBoolean({ keyPressed(MENU_KEY) })
+            }
+        }
+        menuKey.add(menuKeyLabel)
+        menuKey.add(menuKeyField).spaceRight(6F).width(40F)
+        menuKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
 
         //Create RCS_Smoothing
         val rcsSmoothing = VisTable()
@@ -95,10 +84,19 @@ class Misc : Tab(false, false) {
         rcsSmoothingSlider.value = RCS_SMOOTHING.toFloat()
         rcsSmoothingSlider.changed { _, _ ->
                 RCS_SMOOTHING = Math.round(rcsSmoothingSlider.value.toDouble() * 10.0)/10.0
-                rcsSmoothingLabel.setText("RCS Smoothing: " + RCS_SMOOTHING.toString())/* + when(RCS_SMOOTHING.toString().length) {2->"  " else->"    "})*/
+                rcsSmoothingLabel.setText("RCS Smoothing: $RCS_SMOOTHING")/* + when(RCS_SMOOTHING.toString().length) {2->"  " else->"    "})*/
         }
         rcsSmoothing.add(rcsSmoothingLabel)//.spaceRight(6F) //when gets rid of spaceright
         rcsSmoothing.add(rcsSmoothingSlider)
+
+        //Create RCS_ReturnAim
+        //val rcsReturnAim = VisTextButton("RCS_RETURNAIM", "toggle")
+        if (RCS_RETURNAIM) rcsReturnAim.toggle()
+        rcsReturnAim.changed { _, _ ->
+            if (true) { //type Any? changes didnt work im autistic //fix later
+                RCS_RETURNAIM = rcsReturnAim.isChecked
+            }
+        }
 
         //Create Flash_Max_Alpha
         val flashMaxAlpha = VisTable()
@@ -112,23 +110,15 @@ class Misc : Tab(false, false) {
         flashMaxAlpha.add(flashMaxAlphaLabel)//.spaceRight(6F) //when gets rid of spaceright
         flashMaxAlpha.add(flashMaxAlphaSlider)
 
-        //Create ENEMY_INDICATOR Toggle
-        //val enemyIndicator = VisTextButton("ENEMY_INDICATOR", "toggle")
-        if (ENEMY_INDICATOR) enemyIndicator.toggle()
-        enemyIndicator.changed { _, _ ->
-            if (true) { //type Any? changes didnt work im autistic //fix later
-                ENEMY_INDICATOR = enemyIndicator.isChecked//!ENEMY_INDICATOR
-            }
-        }
 
-        table.add(boneTriggerFov).row() //Add Bone_Trigger_Fov Slider
-        table.add(boneTriggerBone).row() //Add Bone_Trigger_Bone Selector
-        table.add(aimOnBoneTrigger).row() //Add Aim_On_Bone_Trigger Toggle
-        table.add(boneTriggerEnableKey).row() //Add Bone_Trigger_Enable_Key
-        table.add(boneTriggerKey).row() //Add Bone_Trigger_Key Field
+        //Add all items to label for tabbed pane content
+        table.add(leagueModeToggle).row() //Add League_Mode Toggle
+        table.add(fireKey).row() //Add Fire_Key Input
+        table.add(visualsToggleKey).row() //Add Visuals_Toggle_Key Input
+        table.add(menuKey).row() //Add Menu_Key Input
         table.add(rcsSmoothing).row() //Add RCS_Smoothing Slider
+        table.add(rcsReturnAim).row() //Add RCS_ReturnAim Toggle
         table.add(flashMaxAlpha).row() //Add Flash_Max_Alpha Slider
-        table.add(enemyIndicator).row() //Add Enemy_Indicator Toggle
     }
 
     override fun getContentTable(): Table? {

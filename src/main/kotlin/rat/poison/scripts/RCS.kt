@@ -18,9 +18,20 @@ fun rcs() = every(1) {
 	val weapon = me.weapon(weaponEntity)
 	if (!weapon.automatic) return@every
 	val shotsFired = me.shotsFired()
-	val forceSet = (shotsFired == 0 && !lastPunch.isZero)
 	val p = me.punch()
-	val finishPunch = false//(p.x != 0.0 && p.y != 0.0)
+
+	val forceSet : Boolean
+	val finishPunch : Boolean
+
+	if (RCS_RETURNAIM) {
+		forceSet = false//(shotsFired == 0 && !lastPunch.isZero)
+		finishPunch = (p.x != 0.0 && p.y != 0.0)
+	}
+	else
+	{
+		forceSet = (shotsFired == 0 && !lastPunch.isZero)
+		finishPunch = false
+	}
 	if (forceSet || finishPunch || shotsFired > 1) { //Fixes aim jumping down
 		playerPunch.set(p.x.toFloat(), p.y.toFloat(), p.z.toFloat())
 		newPunch.set(playerPunch.x - lastPunch.x, playerPunch.y - lastPunch.y)
