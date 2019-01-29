@@ -21,9 +21,12 @@ class EspTab : Tab(false, false) {
     val invGlowEsp = VisTextButton("INV_GLOW_ESP", "toggle") //Inv_Glow_Esp
     val modelEsp = VisTextButton("MODEL_ESP", "toggle") //Model_Esp
     val enemyIndicator = VisTextButton("ENEMY_INDICATOR", "toggle") //Enemy_Indicator
+    val hitSound = VisTextButton("ENABLE_HITSOUND", "toggle") //Hit_Sound
+    val hitSoundVolumeLabel = VisLabel("Hitsound Volume: $HITSOUND_VOLUME") //Hit_Sound_Volume
+    val hitSoundVolumeSlider = VisSlider(0.1F, 1F, 0.1F, false) //Hit_Sound_Volume
     val chamsEsp = VisTextButton("CHAMS_ESP", "toggle") //Chams_Esp
     val chamsShowHealth = VisTextButton("CHAMS_SHOW_HEALTH", "toggle") //Chams_Show_Health
-    val chamsBrightnessLabel = VisLabel("Chams Brightness: " + CHAMS_BRIGHTNESS.toString() + when(CHAMS_BRIGHTNESS.toString().length) {4->"  " 3->"    " 2->"      " else ->"        "}) //Chams_Brightness
+    val chamsBrightnessLabel = VisLabel("Chams Brightness: $CHAMS_BRIGHTNESS" + when(CHAMS_BRIGHTNESS.toString().length) {4->"  " 3->"    " 2->"      " else ->"        "}) //Chams_Brightness
     val chamsBrightnessSlider = VisSlider(0F, 1000F, 1F, false) //Chams_Brightness
     val showTeam = VisTextButton("SHOW_TEAM", "toggle") //Show_Team
     val showEnemies = VisTextButton("SHOW_ENEMIES", "toggle") //Show_Enemies
@@ -109,6 +112,29 @@ class EspTab : Tab(false, false) {
                 ENEMY_INDICATOR = enemyIndicator.isChecked//!ENEMY_INDICATOR
             }
         }
+
+        //Create ENEMY_INDICATOR Toggle
+        //val hitSound = VisTextButton("ENEMY_INDICATOR", "toggle")
+        Tooltip.Builder("Whether or not to enable a hitsound on hit").target(hitSound).build()
+        if (ENABLE_HITSOUND) hitSound.toggle()
+        hitSound.changed { _, _ ->
+            if (true) { //type Any? changes didnt work im autistic //fix later
+                ENABLE_HITSOUND = hitSound.isChecked//!ENEMY_INDICATOR
+            }
+        }
+
+        //Create Hit_Sound_Volume Slider
+        val hitSoundVolume = VisTable()
+        Tooltip.Builder("The volume of the hitsound if the hitsound is enabled").target(hitSoundVolume).build()
+        //val hitSoundVolumeLabel = VisLabel("Hitsound Volume: " + HITSOUND_VOLUME.toString())
+        //val hitSoundVolumeSlider = VisSlider(0.1F, 1F, 0.1F, false)
+        hitSoundVolumeSlider.value = HITSOUND_VOLUME.toFloat()
+        hitSoundVolumeSlider.changed { _, _ ->
+            HITSOUND_VOLUME = Math.round(hitSoundVolumeSlider.value.toDouble() * 10.0)/10.0 //Round to 1 decimal place
+            hitSoundVolumeLabel.setText("Hitsound Volume: $HITSOUND_VOLUME")
+        }
+        hitSoundVolume.add(hitSoundVolumeLabel).spaceRight(6F)
+        hitSoundVolume.add(hitSoundVolumeSlider)
 
         //Create Chams_Esp Toggle
         //val chamsEsp = VisTextButton("CHAMS_ESP", "toggle")
@@ -360,7 +386,9 @@ class EspTab : Tab(false, false) {
         table.add(glowEsp).row() //Add Enable_Glow_Esp Toggle
         table.add(invGlowEsp).row() //Add Enable_Inv_Glow_Esp Toggle
         table.add(modelEsp).row() //Add Enable_Model_Esp Toggle
-        table.add(enemyIndicator).row()
+        table.add(enemyIndicator).row() //Add Enemy_Indicator Toggle
+        table.add(hitSound).row() //Add Hit_Sound Toggle
+        table.add(hitSoundVolume).row() //Add Hit_Sound_Volume Slider
         table.add(chamsEsp).row() //Add Enable_Chams_Esp Toggle
         table.add(chamsShowHealth).row() //Add Enable_Chams_Show_Health Toggle
         table.add(chamsBrightness).width(250F).row() //Add Chams_Brightness Slider

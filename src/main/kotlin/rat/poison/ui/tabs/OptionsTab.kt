@@ -49,7 +49,7 @@ class Options : Tab(false, false) {
                 cfgfiletext += "import rat.poison.game.Color" + System.lineSeparator() + System.lineSeparator()
 
                 File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
-                    if (file.name != "cfg.kts" && file.name != "sickomode.kts" && file.name != "Advanced.kts") {
+                    if (file.name != "cfg.kts" && file.name != "sickomode.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
                         FileReader(file).readLines().forEach { line ->
                             if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
                                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
@@ -104,7 +104,7 @@ class Options : Tab(false, false) {
             //val fileDir = "settings\\Aim.kts"
             File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
                 var prevLines = ""
-                if (file.name != "cfg.kts" && file.name != "sickomode.kts" && file.name != "Advanced.kts") {
+                if (file.name != "cfg.kts" && file.name != "sickomode.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
                     FileReader(file).readLines().forEach { line ->
                         if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
                             val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE

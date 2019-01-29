@@ -127,9 +127,9 @@ fun main(args: Array<String>) {
 
 fun loadSettings() {
 	setIdeaIoUseFallback()
-	
+
 	File(SETTINGS_DIRECTORY).listFiles().forEach {
-        if (it.name != "cfg.kts" && it.name != "sickomode.kts") {
+        if (it.name != "cfg.kts" && it.name != "sickomode.kts" && it.name != "hitsound.mp3") {
             FileReader(it).use {
                 Dojo.script(it.readLines().joinToString("\n"))
             }

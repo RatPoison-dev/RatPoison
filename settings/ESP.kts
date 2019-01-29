@@ -74,6 +74,16 @@ CHAMS_BRIGHTNESS = 0
  */
 ENEMY_INDICATOR = true
 
+/**
+ * Will play a hitsound on enemy hit
+ */
+ENABLE_HITSOUND = true
+
+/**
+ * Volume of the hitsound
+ */
+HITSOUND_VOLUME = 0.2
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

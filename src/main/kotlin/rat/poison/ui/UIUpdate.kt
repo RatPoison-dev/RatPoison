@@ -77,6 +77,9 @@ fun UIUpdate() {
         invGlowEsp.isChecked = INV_GLOW_ESP
         modelEsp.isChecked = MODEL_ESP
         enemyIndicator.isChecked = ENEMY_INDICATOR
+        hitSound.isChecked = ENABLE_HITSOUND
+        hitSoundVolumeLabel.setText("Hitsound Volume: $HITSOUND_VOLUME")
+        hitSoundVolumeSlider.value = HITSOUND_VOLUME.toFloat()
         chamsEsp.isChecked = CHAMS_ESP
         chamsShowHealth.isChecked = CHAMS_SHOW_HEALTH
         chamsBrightnessLabel.setText("Chams Brightness: $CHAMS_BRIGHTNESS" + when (CHAMS_BRIGHTNESS.toString().length) {

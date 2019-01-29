@@ -10,4 +10,5 @@ fun esp() {
 	skeletonEsp()
 	chamsEsp()
 	miscEsp()
+	hitSoundEsp()
 }

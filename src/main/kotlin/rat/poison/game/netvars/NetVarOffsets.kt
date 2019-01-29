@@ -45,4 +45,6 @@ object NetVarOffsets {
 	val m_hViewModel by netVar("DT_BasePlayer", "m_hViewModel[0]") //[0] works for weapon, doesn't work otherwise
 
 	val SurvivalGameRuleDecisionTypes by netVar("DT_CSGameRulesProxy")
+
+	val m_totalHitsOnServer by netVar("DT_CSPlayer", "m_totalHitsOnServer")
 }
