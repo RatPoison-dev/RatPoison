@@ -77,7 +77,7 @@ ENEMY_INDICATOR = true
 /**
  * Will play a hitsound on enemy hit
  */
-ENABLE_HITSOUND = true
+ENABLE_HITSOUND = false
 
 /**
  * Volume of the hitsound
