@@ -25,14 +25,15 @@ fun rcs() = every(1) {
 
 	if (RCS_RETURNAIM) {
 		forceSet = false//(shotsFired == 0 && !lastPunch.isZero)
-		finishPunch = (p.x != 0.0 && p.y != 0.0)
+		//finishPunch = (p.x != 0.0 && p.y != 0.0)
+		finishPunch = ((p.x in -0.1..0.1) && (p.y in -0.1..0.1))
 	}
 	else
 	{
 		forceSet = (shotsFired == 0 && !lastPunch.isZero)
-		finishPunch = false
+		finishPunch = true//false
 	}
-	if (forceSet || finishPunch || shotsFired > 1) { //Fixes aim jumping down
+	if (forceSet || !finishPunch || shotsFired > 1) { //Fixes aim jumping down
 		playerPunch.set(p.x.toFloat(), p.y.toFloat(), p.z.toFloat())
 		newPunch.set(playerPunch.x - lastPunch.x, playerPunch.y - lastPunch.y)
 		newPunch.scl(2F, 2F)
