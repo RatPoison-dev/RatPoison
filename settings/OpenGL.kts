@@ -11,3 +11,12 @@ OPENGL_VSYNC = false
  * FPS of the OpenGL overlay
  */
 OPENGL_FPS = 60
+
+/**
+ * The amount of MSAA antialiasing samples for the OpenGL overlay.
+ *
+ * Decreasing this number may help improve your FPS! Use 0 to disable.
+ *
+ * Valid sample amounts are 0 (disable), 2, 4, and 8.
+ */
+OPENGL_MSAA_SAMPLES = 8

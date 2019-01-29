@@ -116,7 +116,7 @@ fun main(args: Array<String>) {
             setTitle("Rat Poison UI")
             setWindowedMode(CSGO.gameWidth, CSGO.gameHeight)
             useVsync(OPENGL_VSYNC)
-            //setBackBufferConfig(8, 8, 8, 8, 16, 0, 8) OPENGL_MSAA_SAMPLES
+            setBackBufferConfig(8, 8, 8, 8, 16, 0, OPENGL_MSAA_SAMPLES)
         })
     } else {
         //reimplement scanner if overlay isnt needed at all
@@ -177,7 +177,7 @@ object App : ApplicationAdapter() {
     }
 
     override fun render() {
-        //sync(OPENGL_FPS)
+        sync(OPENGL_FPS)
 
         if (!Thread.interrupted()) {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
