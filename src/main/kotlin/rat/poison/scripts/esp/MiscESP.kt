@@ -50,8 +50,8 @@ internal fun miscEsp() = App {
 }
 
 fun indicatorPosition(screenPos: Vector3, indicatorPos: Vector3): Float {
-    val centerX = CSGO.gameWidth /2F
-    val centerY = CSGO.gameHeight /2F
+    val centerX = CSGO.gameWidth / 2F
+    val centerY = CSGO.gameHeight / 2F
 
     val d = Vector2.dst(screenPos.x, screenPos.y, centerX, centerY)
 

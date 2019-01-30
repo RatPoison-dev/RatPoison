@@ -96,7 +96,7 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
 
         add(tabbedPane.table).growX().minSize(25F).row()
 
-        add(scrollPane).minSize(500F, 500F).align(Align.center)//.size(500F, 500F)
+        add(scrollPane).minSize(500F, 500F).align(Align.center)
 
         pack()
         centerWindow()

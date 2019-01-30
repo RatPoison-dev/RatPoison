@@ -153,6 +153,6 @@ var WEAPON_COLOR = Color(0, 255, 0, 0.5)
 var GRENADE_COLOR = Color(0, 255, 0, 1.0)
 
 /**
- * The color to make the enemy
+ * The color to make the chams
  */
 var CHAMS_ESP_COLOR = Color(255, 0, 255, 1.0)

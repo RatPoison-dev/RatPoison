@@ -102,6 +102,13 @@ fun UIUpdate() {
         chamsColorShow.setColor(CHAMS_ESP_COLOR.red.toFloat(), CHAMS_ESP_COLOR.green.toFloat(), CHAMS_ESP_COLOR.blue.toFloat(), CHAMS_ESP_COLOR.alpha.toFloat())
     }
 
+    //Rcs Tab
+    rcsTab.apply {
+        rcsSmoothingLabel.setText("RCS Smoothing: $RCS_SMOOTHING")
+        rcsSmoothingSlider.value = RCS_SMOOTHING.toFloat()
+        rcsReturnAim.isChecked = RCS_RETURNAIM
+    }
+
     //BTrig Tab
     bTrigTab.apply {
         boneTriggerFovLabel.setText("Bone Trigger Fov: $BONE_TRIGGER_FOV" + when (BONE_TRIGGER_FOV.toString().length) {
@@ -117,7 +124,7 @@ fun UIUpdate() {
     }
 
     //Misc Tab
-    misc.leagueModeToggle.isChecked = LEAGUE_MODE
+    misc.leagueMode.isChecked = LEAGUE_MODE
     misc.fireKeyField.text = FIRE_KEY.toString()
     misc.visualsToggleKeyField.text = VISUALS_TOGGLE_KEY.toString()
     misc.menuKeyField.text = MENU_KEY.toString()
@@ -127,5 +134,15 @@ fun UIUpdate() {
     //Custom disable tabs
     tabbedPane.disableTab(bTrigTab, !ENABLE_BONE_TRIGGER)
     tabbedPane.disableTab(espTab, !ENABLE_ESP)
-    tabbedPane.disableTab(rcsTab, !ENABLE_RCS)
+    tabbedPane.disableTab(rcsTab, (!ENABLE_RCS && !ENABLE_RECOIL_CROSSHAIR))
+
+    //Custom disable items
+    rcsTab.apply {
+        rcsSmoothingSlider.isDisabled = !ENABLE_RCS
+        rcsReturnAim.isDisabled = !ENABLE_RCS
+        rCrosshairWidthSlider.isDisabled = !ENABLE_RECOIL_CROSSHAIR
+        rcsCrosshairLengthSlider.isDisabled = !ENABLE_RECOIL_CROSSHAIR
+        rCrosshairAlphaSlider.isDisabled = !ENABLE_RECOIL_CROSSHAIR
+        rCrosshairColorShow.isDisabled = !ENABLE_RECOIL_CROSSHAIR
+    }
 }

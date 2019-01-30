@@ -44,7 +44,9 @@ class ScriptsTab : Tab(false, false) {
         enableRCS.isChecked = ENABLE_RCS
         enableRCS.changed { _, _ ->
             ENABLE_RCS = enableRCS.isChecked
-            tabbedPane.disableTab(rcsTab, !ENABLE_RCS)
+            tabbedPane.disableTab(rcsTab, (!ENABLE_RCS && !ENABLE_RECOIL_CROSSHAIR))
+            rcsTab.rcsSmoothingSlider.isDisabled = !ENABLE_RCS
+            rcsTab.rcsReturnAim.isDisabled = !ENABLE_RCS
             true
         }
 
@@ -54,6 +56,13 @@ class ScriptsTab : Tab(false, false) {
         enableRCrosshair.isChecked = ENABLE_RECOIL_CROSSHAIR
         enableRCrosshair.changed { _, _ ->
             ENABLE_RECOIL_CROSSHAIR = enableRCrosshair.isChecked
+            tabbedPane.disableTab(rcsTab, (!ENABLE_RCS && !ENABLE_RECOIL_CROSSHAIR))
+            rcsTab.apply {
+                rCrosshairWidthSlider.isDisabled = !ENABLE_RECOIL_CROSSHAIR
+                rcsCrosshairLengthSlider.isDisabled = !ENABLE_RECOIL_CROSSHAIR
+                rCrosshairAlphaSlider.isDisabled = !ENABLE_RECOIL_CROSSHAIR
+                rCrosshairColorShow.isDisabled = !ENABLE_RECOIL_CROSSHAIR
+            }
             true
         }
 

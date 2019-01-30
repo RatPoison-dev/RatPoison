@@ -15,21 +15,21 @@ class Misc : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
-    val leagueModeToggle = VisTextButton("LEAGUE_MODE", "toggle") //League_Mode
+    val leagueMode = VisTextButton("LEAGUE_MODE", "toggle") //League_Mode
     val fireKeyField = VisValidatableTextField(Validators.FLOATS) //Activate_From_Fire_Key
     val visualsToggleKeyField = VisValidatableTextField(Validators.FLOATS) //Visuals_Toggle_Key
     val menuKeyField = VisValidatableTextField(Validators.FLOATS) //Menu_Key_Field
-    val flashMaxAlphaLabel = VisLabel("Flash Max Alpha: " + FLASH_MAX_ALPHA.toString() + when(FLASH_MAX_ALPHA.toString().length) {3->"  " 2->"    " else ->"      "}) //Flash_Max_Alpha
-    val flashMaxAlphaSlider = VisSlider(0.02F, 2F, .01F, false) //Flash_Max_Alpha
+    val flashMaxAlphaLabel = VisLabel("Flash Max Alpha: " + FLASH_MAX_ALPHA.toInt().toString() + when(FLASH_MAX_ALPHA.toInt().toString().length) {3->"  " 2->"    " else ->"      "}) //Flash_Max_Alpha
+    val flashMaxAlphaSlider = VisSlider(0F, 255F, 1F, false) //Flash_Max_Alpha
 
     init {
         //Create League_Mode Toggle
-        //val leagueModeToggle = VisTextButton("LEAGUE_MODE", "toggle")
-        Tooltip.Builder("Whether or not to enable league mode").target(leagueModeToggle).build()
-        if (LEAGUE_MODE) leagueModeToggle.toggle()
-        leagueModeToggle.changed { _, _ ->
+        //val leagueMode = VisTextButton("LEAGUE_MODE", "toggle")
+        Tooltip.Builder("Whether or not to enable league mode").target(leagueMode).build()
+        if (LEAGUE_MODE) leagueMode.toggle()
+        leagueMode.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                LEAGUE_MODE = leagueModeToggle.isChecked//!LEAGUE_MODE
+                LEAGUE_MODE = leagueMode.isChecked//!LEAGUE_MODE
                 if (LEAGUE_MODE) {
                     GLOW_ESP = false
                     BOX_ESP = false
@@ -106,15 +106,15 @@ class Misc : Tab(false, false) {
         //val flashMaxAlphaSlider = VisSlider(0.02F, 2F, .01F, false)
         flashMaxAlphaSlider.value = FLASH_MAX_ALPHA
         flashMaxAlphaSlider.changed { _, _ ->
-            FLASH_MAX_ALPHA = "%.0f".format(flashMaxAlphaSlider.value).toFloat()
-            flashMaxAlphaLabel.setText("Flash Max Alpha: " + FLASH_MAX_ALPHA.toString() + when(FLASH_MAX_ALPHA.toString().length) {3->"  " 2->"    " else ->"      "})
+            FLASH_MAX_ALPHA = flashMaxAlphaSlider.value//"%.0f".format(flashMaxAlphaSlider.value).toFloat()
+            flashMaxAlphaLabel.setText("Flash Max Alpha: " + FLASH_MAX_ALPHA.toInt().toString() + when(FLASH_MAX_ALPHA.toInt().toString().length) {3->"  " 2->"    " else ->"      "})
         }
         flashMaxAlpha.add(flashMaxAlphaLabel)//.spaceRight(6F) //when gets rid of spaceright
         flashMaxAlpha.add(flashMaxAlphaSlider)
 
 
         //Add all items to label for tabbed pane content
-        table.add(leagueModeToggle).row() //Add League_Mode Toggle
+        table.add(leagueMode).row() //Add League_Mode Toggle
         table.add(fireKey).row() //Add Fire_Key Input
         table.add(visualsToggleKey).row() //Add Visuals_Toggle_Key Input
         table.add(menuKey).row() //Add Menu_Key Input
