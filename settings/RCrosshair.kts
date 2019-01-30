@@ -15,9 +15,9 @@ RCROSSHAIR_LENGTH = 11
 /**
  * Alpha of the crosshair
  */
-RCROSSHAIR_ALPHA = .5
+RCROSSHAIR_ALPHA = 0.5
 
 /**
  * The color to make the recoil crosshair
  */
-RCROSSHAIR_COLOR = Color(255, 255, 255, 1.0)
+RCROSSHAIR_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)

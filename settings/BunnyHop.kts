@@ -6,4 +6,4 @@ import java.awt.event.KeyEvent
  *
  * By default, this is the space bar key.
  */
-BUNNY_HOP_KEY = KeyEvent.VK_SPACE
+BUNNY_HOP_KEY = 32

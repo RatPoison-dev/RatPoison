@@ -17,8 +17,6 @@ class ScriptsTab : Tab(false, false) {
     val enableRCS = VisTextButton("ENABLE_RCS", "toggle") //RCS
     val enableRCrosshair = VisTextButton("ENABLE_RECOIL_CROSSHAIR", "toggle") //Recoil_Crosshair
     val enableEsp = VisTextButton("ENABLE_ESP", "toggle") //ESP
-    val enableFlatAim = VisTextButton("ENABLE_FLAT_AIM", "toggle") //Enable_Flat_Aim
-    val enablePathAim = VisTextButton("ENABLE_PATH_AIM", "toggle") //Enable_Path_Aim
     val enableBoneTrigger = VisTextButton("ENABLE_BONE_TRIGGER", "toggle") //Bone_Trigger
     val enableReducedFlash = VisTextButton("ENABLE_REDUCED_FLASH", "toggle") //Reduced_Flash
     val enableBombTimer = VisTextButton("ENABLE_BOMB_TIMER", "toggle") //Bomb_Timer
@@ -44,7 +42,7 @@ class ScriptsTab : Tab(false, false) {
         enableRCS.isChecked = ENABLE_RCS
         enableRCS.changed { _, _ ->
             ENABLE_RCS = enableRCS.isChecked
-            tabbedPane.disableTab(rcsTab, (!ENABLE_RCS && !ENABLE_RECOIL_CROSSHAIR))
+            mainTabbedPane.disableTab(rcsTab, (!ENABLE_RCS && !ENABLE_RECOIL_CROSSHAIR))
             rcsTab.rcsSmoothingSlider.isDisabled = !ENABLE_RCS
             rcsTab.rcsReturnAim.isDisabled = !ENABLE_RCS
             true
@@ -56,7 +54,7 @@ class ScriptsTab : Tab(false, false) {
         enableRCrosshair.isChecked = ENABLE_RECOIL_CROSSHAIR
         enableRCrosshair.changed { _, _ ->
             ENABLE_RECOIL_CROSSHAIR = enableRCrosshair.isChecked
-            tabbedPane.disableTab(rcsTab, (!ENABLE_RCS && !ENABLE_RECOIL_CROSSHAIR))
+            mainTabbedPane.disableTab(rcsTab, (!ENABLE_RCS && !ENABLE_RECOIL_CROSSHAIR))
             rcsTab.apply {
                 rCrosshairWidthSlider.isDisabled = !ENABLE_RECOIL_CROSSHAIR
                 rcsCrosshairLengthSlider.isDisabled = !ENABLE_RECOIL_CROSSHAIR
@@ -74,32 +72,14 @@ class ScriptsTab : Tab(false, false) {
             if (true) { //type Any? changes didnt work im autistic //fix later
                 ENABLE_ESP = enableEsp.isChecked
 
-                val lastTab = tabbedPane.activeTab
-                tabbedPane.disableTab(espTab, !ENABLE_ESP)
-                tabbedPane.switchTab(lastTab)
+                val lastTab = mainTabbedPane.activeTab
+                mainTabbedPane.disableTab(espTab, !ENABLE_ESP)
+                mainTabbedPane.switchTab(lastTab)
 
                 if (!ENABLE_ESP) {
                     disableEsp()
                 }
             }
-        }
-
-        //Create Enable_Flat_Aim Toggle
-        //val enableFlatAim = VisTextButton("ENABLE_FLAT_AIM", "toggle")
-        Tooltip.Builder("Whether or not to enable flat aim").target(enableFlatAim).build()
-        enableFlatAim.isChecked = ENABLE_FLAT_AIM
-        enableFlatAim.changed { _, _ ->
-            ENABLE_FLAT_AIM = enableFlatAim.isChecked
-            true
-        }
-
-        //Create Enable_Path_Aim Toggle
-        //val enablePathAim = VisTextButton("ENABLE_PATH_AIM", "toggle")
-        Tooltip.Builder("Whether or not to enable path aim").target(enablePathAim).build()
-        enablePathAim.isChecked = ENABLE_PATH_AIM
-        enablePathAim.changed { _, _ ->
-            ENABLE_PATH_AIM = enablePathAim.isChecked
-            true
         }
 
         //Create Enable_Bone_Trigger Toggle
@@ -108,7 +88,7 @@ class ScriptsTab : Tab(false, false) {
         enableBoneTrigger.isChecked = ENABLE_BONE_TRIGGER
         enableBoneTrigger.changed { _, _ ->
             ENABLE_BONE_TRIGGER = enableBoneTrigger.isChecked
-            tabbedPane.disableTab(bTrigTab, !ENABLE_BONE_TRIGGER)
+            mainTabbedPane.disableTab(bTrigTab, !ENABLE_BONE_TRIGGER)
         }
 
         //Create Enable_Reduced_Flash Toggle
@@ -134,8 +114,6 @@ class ScriptsTab : Tab(false, false) {
         table.add(enableRCS).row() //Add Enable_Rcs Toggle
         table.add(enableRCrosshair).row() //Add Enable_RCrosshair Toggle
         table.add(enableEsp).row() //Add Enable_RCrosshair Toggle
-        table.add(enableFlatAim).row() //Add Enable_Flat_Aim Toggle
-        table.add(enablePathAim).row() //Add Enable_Path_Aim Toggle
         table.add(enableBoneTrigger).row() //Add Enable_Bone_Trigger Toggle
         table.add(enableReducedFlash).row() //Add Enable_Reduced_Flash Toggle
         table.add(enableBombTimer).row() //Add Enable_Bomb_Timer Toggle

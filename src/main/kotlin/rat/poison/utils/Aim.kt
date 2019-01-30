@@ -32,8 +32,7 @@ fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: 
 	normalize()
 }
 
-fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double)
-		= clientState.setAngle(applyFlatSmoothing(currentAngle, destinationAngle, smoothing))
+fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double) = clientState.setAngle(applyFlatSmoothing(currentAngle, destinationAngle, smoothing))
 
 //fun flatAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double, sensMultiplier: Double = 1.0) { //Currently not used
 //	applyFlatSmoothing(currentAngle, destinationAngle, smoothing)
@@ -71,11 +70,10 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Int,
 	val target = target.get()
 	target.set((mousePos.x + (dx / 2)).toInt(), (mousePos.y + (dy / 2)).toInt())
 	
-	if (target.x <= 0 || target.x >= gameX + gameWidth
-			|| target.y <= 0 || target.y >= gameY + gameHeight) return
-	
+	if (target.x <= 0 || target.x >= gameX + gameWidth || target.y <= 0 || target.y >= gameY + gameHeight) return
+
 	if (perfect) {
-		mouseMove((dx / 2).toInt(), (dy / 2).toInt())
+		mouseMove((dx).toInt(), (dy).toInt())
 		Thread.sleep(20)
 	} else HumanMouse.fastSteps(mousePos, target) { steps, i ->
 		mousePos.refresh()

@@ -56,8 +56,9 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	
 	if (closestDelta == Double.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return -1
 	
-	if (PERFECT_AIM && allowPerfect && closestFOV <= PERFECT_AIM_FOV && randInt(100 + 1) <= PERFECT_AIM_CHANCE)
+	if (PERFECT_AIM && allowPerfect && closestFOV <= PERFECT_AIM_FOV && randInt(100 + 1) <= PERFECT_AIM_CHANCE) {
 		perfect.set(true)
+	}
 	
 	return closestPlayer
 }
@@ -128,7 +129,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		val bonePosition = currentTarget.bones(bone.get())
 		
 		val destinationAngle = calculateAngle(me, bonePosition)
-		if (AIM_ASSIST_MODE) destinationAngle.finalize(currentAngle, AIM_ASSIST_STRICTNESS / 100.0)
+		if (AIM_ASSIST_MODE && !perfect.get()) destinationAngle.finalize(currentAngle, AIM_ASSIST_STRICTNESS / 100.0)
 		
 		val aimSpeed = AIM_SPEED_MIN + randInt(AIM_SPEED_MAX - AIM_SPEED_MIN)
 		doAim(destinationAngle, currentAngle, aimSpeed)

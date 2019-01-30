@@ -9,6 +9,50 @@ import rat.poison.settings.*
 MENU = true
 
 /**
+ * Whether or not to aim when using the [FIRE_KEY] (by default left click).
+ *
+ * You should disable this if you don't want aim to activate when left clicking.
+ */
+ACTIVATE_FROM_FIRE_KEY = true
+
+/**
+ * This will allow you to shoot teammates with aimbot when turned on.
+ */
+TEAMMATES_ARE_ENEMIES = false
+
+/**
+ * The key code of the force aim button.
+ *
+ * By default, this uses the backward mouse button
+ * (button 5, the button on the bottom left of gaming mice).
+ */
+FORCE_AIM_KEY = 5
+
+/**
+ * The minimum and maximum time in milliseconds to delay the aimbot after
+ * targets have been swapped.
+ *
+ * Set these both to 0L for there to be no delay.
+ */
+TARGET_SWAP_MIN_DELAY = 200
+TARGET_SWAP_MAX_DELAY = 350
+
+/**
+ * The duration in milliseconds at which aimbot paths are recalculated.
+ */
+AIM_DURATION = 1
+
+/**
+ * The amount of sprayed shots until the aimbot shifts to aiming at the [SHOULDER_BONE].
+ */
+SHIFT_TO_SHOULDER_SHOTS = 3
+
+/**
+ * The amount of sprayed shots until the aimbot shifts to aiming at the [BODY_BONE].
+ */
+SHIFT_TO_BODY_SHOTS = 4
+
+/**
  * Set this to true if you're playing on a league like ESEA, FaceIT, etc.
  * This will disable writing to the game and disable all visuals.
  */
@@ -46,6 +90,6 @@ MENU_KEY = 112
  *
  * The left-side number is for CS:CO, and the right-side number is for CS:GO.
  */
-HEAD_BONE = if (CLASSIC_OFFENSIVE) 6 else 8
-SHOULDER_BONE = if (CLASSIC_OFFENSIVE) 5 else 7
-BODY_BONE = if (CLASSIC_OFFENSIVE) 4 else 6
+HEAD_BONE = 8
+SHOULDER_BONE = 7
+BODY_BONE = 6

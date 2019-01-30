@@ -131,29 +131,29 @@ SHOW_GRENADES = false
 /**
  * The color to highlight your team mates.
  */
-TEAM_COLOR = Color(0, 0, 255, 1.0)
+TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
 
 /**
  * The color to highlight your enemies.
  */
-ENEMY_COLOR = Color(255, 0, 0, 1.0)
+ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=1.0)
 
 /**
  * The color to highlight the bomb.
  */
-BOMB_COLOR = Color(255, 255, 0, 1.0)
+BOMB_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
 
 /**
  * The color to highlight weapons.
  */
-WEAPON_COLOR = Color(0,0,0,1.0)
+WEAPON_COLOR = Color(red=0, green=0, blue=0, alpha=1.0)
 
 /**
  * The color to highlight grenades.
  */
-GRENADE_COLOR = Color(0, 255, 0, 1.0)
+GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)
 
 /**
  * The color to make the chams
  */
-CHAMS_ESP_COLOR = Color(255, 0, 255, 1.0)
+CHAMS_ESP_COLOR = Color(red=255, green=0, blue=255, alpha=1.0)

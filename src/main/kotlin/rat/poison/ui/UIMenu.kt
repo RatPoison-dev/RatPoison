@@ -2,9 +2,17 @@ package rat.poison.ui
 
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Align
+import com.kotcrab.vis.ui.util.Validators
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.*
+import rat.poison.settings.ACTIVATE_FROM_FIRE_KEY
+import rat.poison.settings.FORCE_AIM_KEY
+import rat.poison.settings.TEAMMATES_ARE_ENEMIES
 import rat.poison.ui.tabs.*
+import rat.poison.ui.tabs.aimtabs.AimPistolTab
+import rat.poison.ui.tabs.aimtabs.AimRifleTab
+import rat.poison.ui.tabs.aimtabs.AimShotgunTab
+import rat.poison.ui.tabs.aimtabs.AimSniperTab
 
 //Issues/todo
 //Solution for when str.length spacing //so-1 - try a divider between label and slider
@@ -21,82 +29,184 @@ import rat.poison.ui.tabs.*
 ////Marked for fix, enable esp needs to turn all the esps off
 
 //Tabs, public to access in UIUpdate
-val aimTab = AimTab()
-val scriptsTab = ScriptsTab()
-val espTab = EspTab()
-val rcsTab = RcsTab()
-val bTrigTab = BTrig()
-val misc = Misc()
-val settings = Options()
-val tabbedPane = TabbedPane()
+val mainTabbedPane = TabbedPane()
+    val aimTab = AimTab()
+    val scriptsTab = ScriptsTab()
+    val espTab = EspTab()
+    val rcsTab = RcsTab()
+    val bTrigTab = BTrig()
+    val misc = Misc()
+    val settings = Options()
+
+val aimTabbedPane = TabbedPane()
+    val aimRifleTab = AimRifleTab()
+    val aimPistolTab = AimPistolTab()
+    val aimSniperTab = AimSniperTab()
+    val aimShotgunTab = AimShotgunTab()
+
+val activateFromFireKey = VisTextButton("ACTIVATE_FROM_FIRE_KEY", "toggle") //Activate_From_Fire_Key
+val teammatesAreEnemies = VisTextButton("TEAMMATES_ARE_ENEMIES", "toggle") //Teammates_Are_Enemies
+val forceAimKeyField = VisValidatableTextField(Validators.FLOATS) //Force_Aim_Key
 
 class DebuggerWindow : VisWindow("RatPoison UI") {
-
     init {
         defaults().left()
 
-        val tabbedPaneContent = VisTable()
-        tabbedPaneContent.padTop(10F)
-        tabbedPaneContent.padBottom(10F)
-        tabbedPaneContent.align(Align.top)
 
-        val scrollPane = ScrollPane(tabbedPaneContent)
-        scrollPane.setFlickScroll(false)
+        val mainTabbedPaneContent = VisTable()
+        mainTabbedPaneContent.padTop(10F)
+        mainTabbedPaneContent.padBottom(10F)
+        mainTabbedPaneContent.align(Align.top)
+
+        val aimTabbedPaneContent = VisTable()
+        aimTabbedPaneContent.padTop(10F)
+        aimTabbedPaneContent.padBottom(10F)
+        mainTabbedPaneContent.align(Align.top)
+
+        val mainScrollPane = ScrollPane(mainTabbedPaneContent)
+        mainScrollPane.setFlickScroll(false)
+
+        val aimTable = VisTable(true).padBottom(8F)
+        //Create Activate_From_Fire_Key Toggle
+        //val activateFromFireKey = VisTextButton("ACTIVATE_FROM_FIRE_KEY", "toggle")
+        Tooltip.Builder("Activate aim if pressing predefined fire key").target(activateFromFireKey).build()
+        if (ACTIVATE_FROM_FIRE_KEY) activateFromFireKey.toggle()
+        activateFromFireKey.changed { _, _ ->
+            if (true) {
+                ACTIVATE_FROM_FIRE_KEY = activateFromFireKey.isChecked//!ACTIVATE_FROM_FIRE_KEY
+            }
+        }
+
+        //Create Teammates_Are_Enemies Toggle
+        //val teammatesAreEnemies = VisTextButton("TEAMMATES_ARE_ENEMIES", "toggle")
+        Tooltip.Builder("Teammates will be treated as enemies").target(teammatesAreEnemies).build()
+        if (TEAMMATES_ARE_ENEMIES) teammatesAreEnemies.toggle()
+        teammatesAreEnemies.changed { _, _ ->
+            if (true) { //type Any? changes didnt work im autistic /fixl ater
+                TEAMMATES_ARE_ENEMIES = teammatesAreEnemies.isChecked//!TEAMMATES_ARE_ENEMIES
+            }
+        }
+
+        //Create Force_Aim_Key Input
+        val forceAimKey = VisTable()
+        Tooltip.Builder("The key to force lock onto any enemy inside aim fov").target(forceAimKey).build()
+        val forceAimKeyLabel = VisLabel("Force Aim Key: ")
+        //val forceAimKeyField = VisValidatableTextField(Validators.FLOATS)
+        forceAimKeyField.text = FORCE_AIM_KEY.toString()
+        forceAimKey.changed { _, _ ->
+            if (forceAimKeyField.text.toIntOrNull() != null) {
+                FORCE_AIM_KEY = forceAimKeyField.text.toInt()
+            }
+        }
+        forceAimKey.add(forceAimKeyLabel)
+        forceAimKey.add(forceAimKeyField).spaceRight(6F).width(40F)
+        forceAimKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
+
+        aimTable.add(activateFromFireKey).row()
+        aimTable.add(teammatesAreEnemies).row()
+        aimTable.add(forceAimKey).row()
 
         this.x = 960F
         this.y = 540F
         this.align(Align.topLeft)
 
-        this.isResizable = true
+        this.isResizable = false
 
-        //Add tabs to tab-pane
-        tabbedPane.add(aimTab)
-        tabbedPane.add(scriptsTab)
-        tabbedPane.add(espTab)
-        tabbedPane.add(rcsTab)
-        tabbedPane.add(bTrigTab)
-        tabbedPane.add(misc)
-        tabbedPane.add(settings)
+        //Add tabs to main tab-pane
+        mainTabbedPane.add(aimTab)
+        mainTabbedPane.add(scriptsTab)
+        mainTabbedPane.add(espTab)
+        mainTabbedPane.add(rcsTab)
+        mainTabbedPane.add(bTrigTab)
+        mainTabbedPane.add(misc)
+        mainTabbedPane.add(settings)
 
-        //Set default tab to first (aimKts)
-        tabbedPane.switchTab(aimTab)
+        //Add tabs to aim tab-pane
+        aimTabbedPane.add(aimRifleTab)
+        aimTabbedPane.add(aimPistolTab)
+        aimTabbedPane.add(aimSniperTab)
+        aimTabbedPane.add(aimShotgunTab)
 
-        tabbedPaneContent.add(aimTab.contentTable) //Aim.kts is the initial window, initialize pane content with tabs contents
+        //Set default tab to first (aimTab)
+        mainTabbedPane.switchTab(aimTab)
+        //Set default tab to first (aimGeneralTab)
+        aimTabbedPane.switchTab(aimRifleTab)
 
-        tabbedPane.addListener(object : TabbedPaneAdapter() {
+
+
+
+
+        aimTabbedPaneContent.add(aimRifleTab.contentTable)
+
+        //mainTabbedPaneContent.add(aimTab.contentTable) //Aim.kts is the initial window, initialize pane content with tabs contents
+        mainTabbedPaneContent.add(aimTable).row()
+        mainTabbedPaneContent.add(aimTabbedPane.table).growX().minSize(25F).row()
+        mainTabbedPaneContent.add(aimTabbedPaneContent)
+
+
+        mainTabbedPane.addListener(object : TabbedPaneAdapter() {
             override fun switchedTab(tab: Tab?) {
                 if (tab == null) return
 
-                tabbedPaneContent.clear()
+                mainTabbedPaneContent.clear()
+
                 when (tab) {
                     aimTab -> {
-                        tabbedPaneContent.add(aimTab.contentTable)
+                        mainTabbedPaneContent.add(aimTable).row()
+                        mainTabbedPaneContent.add(aimTabbedPane.table).growX().minSize(25F).row()
+                        mainTabbedPaneContent.add(aimTabbedPaneContent)
                     }
                     settings -> {
-                        tabbedPaneContent.add(settings.contentTable)
+                        mainTabbedPaneContent.add(settings.contentTable)
                     }
                     scriptsTab -> {
-                        tabbedPaneContent.add(scriptsTab.contentTable)
+                        mainTabbedPaneContent.add(scriptsTab.contentTable)
                     }
                     rcsTab -> {
-                        tabbedPaneContent.add(rcsTab.contentTable)
+                        mainTabbedPaneContent.add(rcsTab.contentTable)
                     }
                     bTrigTab -> {
-                        tabbedPaneContent.add(bTrigTab.contentTable)
+                        mainTabbedPaneContent.add(bTrigTab.contentTable)
                     }
                     espTab -> {
-                        tabbedPaneContent.add(espTab.contentTable)
+                        mainTabbedPaneContent.add(espTab.contentTable)
                     }
                     misc -> {
-                        tabbedPaneContent.add(misc.contentTable)
+                        mainTabbedPaneContent.add(misc.contentTable)
                     }
                 }
             }
         })
 
-        add(tabbedPane.table).growX().minSize(25F).row()
+        aimTabbedPane.addListener(object : TabbedPaneAdapter() {
+            override fun switchedTab(tab: Tab?) {
+                if (tab == null) return
 
-        add(scrollPane).minSize(500F, 500F).align(Align.center)
+                aimTabbedPaneContent.clear()
+
+                when (tab) {
+                    aimRifleTab -> {
+                        aimTabbedPaneContent.add(aimRifleTab.contentTable)
+                    }
+
+                    aimPistolTab -> {
+                        aimTabbedPaneContent.add(aimPistolTab.contentTable)
+                    }
+
+                    aimSniperTab -> {
+                        aimTabbedPaneContent.add(aimSniperTab.contentTable)
+                    }
+
+                    aimShotgunTab -> {
+                        aimTabbedPaneContent.add(aimShotgunTab.contentTable)
+                    }
+                }
+            }
+        })
+
+        add(mainTabbedPane.table).growX().minSize(25F).row()
+
+        add(mainScrollPane).minSize(500F, 500F).align(Align.center)
 
         pack()
         centerWindow()

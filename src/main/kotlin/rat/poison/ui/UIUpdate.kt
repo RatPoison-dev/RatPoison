@@ -5,54 +5,205 @@ import rat.poison.settings.*
 //shoot me
 
 fun UIUpdate() {
-    //Aim Tab
-    aimTab.apply {
-        aimBoneBox.selected = if (AIM_BONE == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
-        activateFromFireKey.isChecked = ACTIVATE_FROM_FIRE_KEY //Don't know if works
-        teammatesAreEnemies.isChecked = TEAMMATES_ARE_ENEMIES
-        forceAimKeyField.text = FORCE_AIM_KEY.toString()
-        aimFovLabel.setText("Aim Fov: $AIM_FOV" + when (AIM_FOV.toString().length) {
+    //General Aim Tab
+    activateFromFireKey.isChecked = ACTIVATE_FROM_FIRE_KEY
+    teammatesAreEnemies.isChecked = TEAMMATES_ARE_ENEMIES
+    forceAimKeyField.text = FORCE_AIM_KEY.toString()
+
+    //Rifle Aim Tab
+    aimRifleTab.apply {
+        enableFlatAim.isChecked = RIFLE_ENABLE_FLAT_AIM
+        enablePathAim.isChecked = RIFLE_ENABLE_PATH_AIM
+        aimBoneBox.selected = if (RIFLE_AIM_BONE == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
+        aimFovLabel.setText("Aim Fov: $RIFLE_AIM_FOV" + when (RIFLE_AIM_FOV.toString().length) {
             3 -> "  "
             2 -> "    "
             else -> "      "
         })
-        aimFovSlider.value = AIM_FOV.toFloat()
-        aimSpeedMinLabel.setText("Aim Speed Min: $AIM_SPEED_MIN" + when (AIM_SPEED_MIN.toString().length) {
+        aimFovSlider.value = RIFLE_AIM_FOV.toFloat()
+        aimSpeedMinLabel.setText("Aim Speed Min: $RIFLE_AIM_SPEED_MIN" + when (RIFLE_AIM_SPEED_MIN.toString().length) {
             3 -> "  "
             2 -> "    "
             else -> "      "
         })
-        aimSpeedMinSlider.value = AIM_SPEED_MIN.toFloat()
-        aimSpeedMaxLabel.setText("Aim Speed Max: $AIM_SPEED_MAX" + when (AIM_SPEED_MAX.toString().length) {
+        aimSpeedMinSlider.value = RIFLE_AIM_SPEED_MIN.toFloat()
+        aimSpeedMaxLabel.setText("Aim Speed Max: $RIFLE_AIM_SPEED_MAX" + when (RIFLE_AIM_SPEED_MAX.toString().length) {
             3 -> "  "
             2 -> "    "
             else -> "      "
         })
-        aimSpeedMaxSlider.value = AIM_SPEED_MAX.toFloat()
-        aimStrictnessLabel.setText("Aim Strictness: $AIM_STRICTNESS")
-        aimStrictnessSlider.value = AIM_STRICTNESS.toFloat()
-        perfectAimCheckBox.isChecked = PERFECT_AIM
-        perfectAimCollapsible.isCollapsed = !PERFECT_AIM
-        perfectAimFovLabel.setText("Perfect Aim Fov: $PERFECT_AIM_FOV" + when (PERFECT_AIM_FOV.toString().length) {
+        aimSpeedMaxSlider.value = RIFLE_AIM_SPEED_MAX.toFloat()
+        aimStrictnessLabel.setText("Aim Strictness: $RIFLE_AIM_STRICTNESS")
+        aimStrictnessSlider.value = RIFLE_AIM_STRICTNESS.toFloat()
+        perfectAimCheckBox.isChecked = RIFLE_PERFECT_AIM
+        perfectAimCollapsible.isCollapsed = !RIFLE_PERFECT_AIM
+        perfectAimFovLabel.setText("Perfect Aim Fov: $RIFLE_PERFECT_AIM_FOV" + when (RIFLE_PERFECT_AIM_FOV.toString().length) {
             3 -> "  "
             2 -> "    "
             else -> "      "
         })
-        perfectAimFovSlider.value = PERFECT_AIM_FOV.toFloat()
-        perfectAimChanceLabel.setText("Perfect Aim Chance: $PERFECT_AIM_CHANCE" + when (PERFECT_AIM_CHANCE.toString().length) {
+        perfectAimFovSlider.value = RIFLE_PERFECT_AIM_FOV.toFloat()
+        perfectAimChanceLabel.setText("Perfect Aim Chance: $RIFLE_PERFECT_AIM_CHANCE" + when (RIFLE_PERFECT_AIM_CHANCE.toString().length) {
             3 -> "  "
             2 -> "    "
             else -> "      "
         })
-        perfectAimChanceSlider.value = PERFECT_AIM_CHANCE.toFloat()
-        aimAssistCheckBox.isChecked = AIM_ASSIST_MODE
-        aimAssistCollapsible.isCollapsed = !AIM_ASSIST_MODE
-        aimAssistStrictnessLabel.setText("Aim Assist Strictness: $AIM_ASSIST_STRICTNESS" + when (AIM_ASSIST_STRICTNESS.toString().length) {
+        perfectAimChanceSlider.value = RIFLE_PERFECT_AIM_CHANCE.toFloat()
+        aimAssistCheckBox.isChecked = RIFLE_AIM_ASSIST_MODE
+        aimAssistCollapsible.isCollapsed = !RIFLE_AIM_ASSIST_MODE
+        aimAssistStrictnessLabel.setText("Aim Assist Strictness: $RIFLE_AIM_ASSIST_STRICTNESS" + when (RIFLE_AIM_ASSIST_STRICTNESS.toString().length) {
             3 -> "  "
             2 -> "    "
             else -> "      "
         })
-        aimAssistStrictnessSlider.value = AIM_ASSIST_STRICTNESS.toFloat()
+        aimAssistStrictnessSlider.value = RIFLE_AIM_ASSIST_STRICTNESS.toFloat()
+    }
+
+    //Pistol Aim Tab
+    aimPistolTab.apply {
+        enableFlatAim.isChecked = PISTOL_ENABLE_FLAT_AIM
+        enablePathAim.isChecked = PISTOL_ENABLE_PATH_AIM
+        aimBoneBox.selected = if (PISTOL_AIM_BONE == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
+        aimFovLabel.setText("Aim Fov: $PISTOL_AIM_FOV" + when (PISTOL_AIM_FOV.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        aimFovSlider.value = PISTOL_AIM_FOV.toFloat()
+        aimSpeedMinLabel.setText("Aim Speed Min: $PISTOL_AIM_SPEED_MIN" + when (PISTOL_AIM_SPEED_MIN.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        aimSpeedMinSlider.value = PISTOL_AIM_SPEED_MIN.toFloat()
+        aimSpeedMaxLabel.setText("Aim Speed Max: $PISTOL_AIM_SPEED_MAX" + when (PISTOL_AIM_SPEED_MAX.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        aimSpeedMaxSlider.value = PISTOL_AIM_SPEED_MAX.toFloat()
+        aimStrictnessLabel.setText("Aim Strictness: $PISTOL_AIM_STRICTNESS")
+        aimStrictnessSlider.value = PISTOL_AIM_STRICTNESS.toFloat()
+        perfectAimCheckBox.isChecked = PISTOL_PERFECT_AIM
+        perfectAimCollapsible.isCollapsed = !PISTOL_PERFECT_AIM
+        perfectAimFovLabel.setText("Perfect Aim Fov: $PISTOL_PERFECT_AIM_FOV" + when (PISTOL_PERFECT_AIM_FOV.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        perfectAimFovSlider.value = PISTOL_PERFECT_AIM_FOV.toFloat()
+        perfectAimChanceLabel.setText("Perfect Aim Chance: $PISTOL_PERFECT_AIM_CHANCE" + when (PISTOL_PERFECT_AIM_CHANCE.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        perfectAimChanceSlider.value = PISTOL_PERFECT_AIM_CHANCE.toFloat()
+        aimAssistCheckBox.isChecked = PISTOL_AIM_ASSIST_MODE
+        aimAssistCollapsible.isCollapsed = !PISTOL_AIM_ASSIST_MODE
+        aimAssistStrictnessLabel.setText("Aim Assist Strictness: $PISTOL_AIM_ASSIST_STRICTNESS" + when (PISTOL_AIM_ASSIST_STRICTNESS.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        aimAssistStrictnessSlider.value = PISTOL_AIM_ASSIST_STRICTNESS.toFloat()
+    }
+
+    //Sniper Aim Tab
+    aimSniperTab.apply {
+        enableFlatAim.isChecked = SNIPER_ENABLE_FLAT_AIM
+        enablePathAim.isChecked = SNIPER_ENABLE_PATH_AIM
+        aimBoneBox.selected = if (SNIPER_AIM_BONE == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
+        aimFovLabel.setText("Aim Fov: $SNIPER_AIM_FOV" + when (SNIPER_AIM_FOV.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        aimFovSlider.value = SNIPER_AIM_FOV.toFloat()
+        aimSpeedMinLabel.setText("Aim Speed Min: $SNIPER_AIM_SPEED_MIN" + when (SNIPER_AIM_SPEED_MIN.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        aimSpeedMinSlider.value = SNIPER_AIM_SPEED_MIN.toFloat()
+        aimSpeedMaxLabel.setText("Aim Speed Max: $SNIPER_AIM_SPEED_MAX" + when (SNIPER_AIM_SPEED_MAX.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        aimSpeedMaxSlider.value = SNIPER_AIM_SPEED_MAX.toFloat()
+        aimStrictnessLabel.setText("Aim Strictness: $SNIPER_AIM_STRICTNESS")
+        aimStrictnessSlider.value = SNIPER_AIM_STRICTNESS.toFloat()
+        perfectAimCheckBox.isChecked = SNIPER_PERFECT_AIM
+        perfectAimCollapsible.isCollapsed = !SNIPER_PERFECT_AIM
+        perfectAimFovLabel.setText("Perfect Aim Fov: $SNIPER_PERFECT_AIM_FOV" + when (SNIPER_PERFECT_AIM_FOV.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        perfectAimFovSlider.value = SNIPER_PERFECT_AIM_FOV.toFloat()
+        perfectAimChanceLabel.setText("Perfect Aim Chance: $SNIPER_PERFECT_AIM_CHANCE" + when (SNIPER_PERFECT_AIM_CHANCE.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        perfectAimChanceSlider.value = SNIPER_PERFECT_AIM_CHANCE.toFloat()
+        aimAssistCheckBox.isChecked = SNIPER_AIM_ASSIST_MODE
+        aimAssistCollapsible.isCollapsed = !SNIPER_AIM_ASSIST_MODE
+        aimAssistStrictnessLabel.setText("Aim Assist Strictness: $SNIPER_AIM_ASSIST_STRICTNESS" + when (SNIPER_AIM_ASSIST_STRICTNESS.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        aimAssistStrictnessSlider.value = SNIPER_AIM_ASSIST_STRICTNESS.toFloat()
+    }
+
+    //Shotgun Aim Tab
+    aimShotgunTab.apply {
+        enableFlatAim.isChecked = SHOTGUN_ENABLE_FLAT_AIM
+        enablePathAim.isChecked = SHOTGUN_ENABLE_PATH_AIM
+        aimBoneBox.selected = if (SHOTGUN_AIM_BONE == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
+        aimFovLabel.setText("Aim Fov: $SHOTGUN_AIM_FOV" + when (SHOTGUN_AIM_FOV.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        aimFovSlider.value = SHOTGUN_AIM_FOV.toFloat()
+        aimSpeedMinLabel.setText("Aim Speed Min: $SHOTGUN_AIM_SPEED_MIN" + when (SHOTGUN_AIM_SPEED_MIN.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        aimSpeedMinSlider.value = SHOTGUN_AIM_SPEED_MIN.toFloat()
+        aimSpeedMaxLabel.setText("Aim Speed Max: $SHOTGUN_AIM_SPEED_MAX" + when (SHOTGUN_AIM_SPEED_MAX.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        aimSpeedMaxSlider.value = SHOTGUN_AIM_SPEED_MAX.toFloat()
+        aimStrictnessLabel.setText("Aim Strictness: $SHOTGUN_AIM_STRICTNESS")
+        aimStrictnessSlider.value = SHOTGUN_AIM_STRICTNESS.toFloat()
+        perfectAimCheckBox.isChecked = SHOTGUN_PERFECT_AIM
+        perfectAimCollapsible.isCollapsed = !SHOTGUN_PERFECT_AIM
+        perfectAimFovLabel.setText("Perfect Aim Fov: $SHOTGUN_PERFECT_AIM_FOV" + when (SHOTGUN_PERFECT_AIM_FOV.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        perfectAimFovSlider.value = SHOTGUN_PERFECT_AIM_FOV.toFloat()
+        perfectAimChanceLabel.setText("Perfect Aim Chance: $SHOTGUN_PERFECT_AIM_CHANCE" + when (SHOTGUN_PERFECT_AIM_CHANCE.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        perfectAimChanceSlider.value = SHOTGUN_PERFECT_AIM_CHANCE.toFloat()
+        aimAssistCheckBox.isChecked = SHOTGUN_AIM_ASSIST_MODE
+        aimAssistCollapsible.isCollapsed = !SHOTGUN_AIM_ASSIST_MODE
+        aimAssistStrictnessLabel.setText("Aim Assist Strictness: $SHOTGUN_AIM_ASSIST_STRICTNESS" + when (SHOTGUN_AIM_ASSIST_STRICTNESS.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        aimAssistStrictnessSlider.value = SHOTGUN_AIM_ASSIST_STRICTNESS.toFloat()
     }
 
     //Scripts Tab
@@ -61,8 +212,6 @@ fun UIUpdate() {
         enableRCS.isChecked = ENABLE_RCS
         enableRCrosshair.isChecked = ENABLE_RECOIL_CROSSHAIR
         enableEsp.isChecked = ENABLE_ESP
-        enableFlatAim.isChecked = ENABLE_FLAT_AIM
-        enablePathAim.isChecked = ENABLE_PATH_AIM
         enableBoneTrigger.isChecked = ENABLE_BONE_TRIGGER
         enableReducedFlash.isChecked = ENABLE_REDUCED_FLASH
         enableBombTimer.isChecked = ENABLE_BOMB_TIMER
@@ -132,9 +281,9 @@ fun UIUpdate() {
     misc.flashMaxAlphaSlider.value = FLASH_MAX_ALPHA
 
     //Custom disable tabs
-    tabbedPane.disableTab(bTrigTab, !ENABLE_BONE_TRIGGER)
-    tabbedPane.disableTab(espTab, !ENABLE_ESP)
-    tabbedPane.disableTab(rcsTab, (!ENABLE_RCS && !ENABLE_RECOIL_CROSSHAIR))
+    mainTabbedPane.disableTab(bTrigTab, !ENABLE_BONE_TRIGGER)
+    mainTabbedPane.disableTab(espTab, !ENABLE_ESP)
+    mainTabbedPane.disableTab(rcsTab, (!ENABLE_RCS && !ENABLE_RECOIL_CROSSHAIR))
 
     //Custom disable items
     rcsTab.apply {
