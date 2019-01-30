@@ -24,14 +24,13 @@ fun rcs() = every(1) {
 	val finishPunch : Boolean
 
 	if (RCS_RETURNAIM) {
-		forceSet = false//(shotsFired == 0 && !lastPunch.isZero)
-		//finishPunch = (p.x != 0.0 && p.y != 0.0)
+		forceSet = false
 		finishPunch = ((p.x in -0.1..0.1) && (p.y in -0.1..0.1))
 	}
 	else
 	{
 		forceSet = (shotsFired == 0 && !lastPunch.isZero)
-		finishPunch = true//false
+		finishPunch = true
 	}
 	if (forceSet || !finishPunch || shotsFired > 1) { //Fixes aim jumping down
 		playerPunch.set(p.x.toFloat(), p.y.toFloat(), p.z.toFloat())

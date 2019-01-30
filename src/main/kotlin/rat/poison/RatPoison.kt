@@ -8,13 +8,9 @@ import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Gdx.gl
 import com.badlogic.gdx.InputMultiplexer
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
-import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.graphics.g2d.GlyphLayout
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.backends.lwjgl3.*
+import com.badlogic.gdx.graphics.*
+import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.kotcrab.vis.ui.VisUI
@@ -24,21 +20,16 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import org.jetbrains.kotlin.cli.common.environment.setIdeaIoUseFallback
 import org.jire.arrowhead.keyPressed
 import rat.poison.game.CSGO
-import rat.poison.interfaces.IOverlay
-import rat.poison.interfaces.IOverlayListener
+import rat.poison.interfaces.*
 import rat.poison.jna.enums.AccentStates
 import rat.poison.overlay.Overlay
 import rat.poison.scripts.*
-import rat.poison.scripts.aim.flatAim
-import rat.poison.scripts.aim.pathAim
-import rat.poison.scripts.esp.esp
-import rat.poison.scripts.esp.espToggle
+import rat.poison.scripts.aim.*
+import rat.poison.scripts.esp.*
 import rat.poison.settings.*
 import rat.poison.ui.DebuggerWindow
-import rat.poison.utils.Dojo
-import rat.poison.utils.ObservableBoolean
-import java.io.File
-import java.io.FileReader
+import rat.poison.utils.*
+import java.io.*
 
 //imports make me wet, cleanup later, offload to other files?
 //this bitch is a fucking m e s s //remove and cleanup before pushing, if i dont forget/sudoku
@@ -109,8 +100,8 @@ fun main(args: Array<String>) {
     espToggle()
 
     //Overlay check, not updated?
-    if (MENU || BOX_ESP || SKELETON_ESP || ENABLE_BOMB_TIMER || ENABLE_RECOIL_CROSSHAIR || ENEMY_INDICATOR) { //Illegal reflective access, search says need coffee 9 or higher big fuck
-        App.open() //New overlay, change name to 'App' later
+    if (MENU || BOX_ESP || SKELETON_ESP || ENABLE_BOMB_TIMER || ENABLE_RECOIL_CROSSHAIR || ENEMY_INDICATOR) {
+        App.open()
 
         Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
             setTitle("Rat Poison UI")
@@ -119,7 +110,6 @@ fun main(args: Array<String>) {
             setBackBufferConfig(8, 8, 8, 8, 16, 0, OPENGL_MSAA_SAMPLES)
         })
     } else {
-        //reimplement scanner if overlay isnt needed at all
         scanner()
     }
 }
