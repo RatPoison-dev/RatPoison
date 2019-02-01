@@ -21,11 +21,6 @@ class ScriptsTab : Tab(false, false) {
     val enableReducedFlash = VisTextButton("ENABLE_REDUCED_FLASH", "toggle") //Reduced_Flash
     val enableBombTimer = VisTextButton("ENABLE_BOMB_TIMER", "toggle") //Bomb_Timer
 
-    //Needed to toggle esp
-    var prevchamsshowhealth = CHAMS_SHOW_HEALTH
-    var prevchamsbrightness = CHAMS_BRIGHTNESS
-    var prevchamsespcolor = CHAMS_ESP_COLOR
-
     init {
         //Create Enable_Bunny_Hop Toggle
         //val enableBunnyHop = VisTextButton("ENABLE_BUNNY_HOP", "toggle")

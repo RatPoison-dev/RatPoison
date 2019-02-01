@@ -93,7 +93,7 @@ HITSOUND_VOLUME = 0.2
 /**
  * Whether or not to highlight your team mates.
  */
-SHOW_TEAM = true
+SHOW_TEAM = false
 
 /**
  * Whether or not to highlight enemies.
@@ -152,8 +152,3 @@ WEAPON_COLOR = Color(red=0, green=0, blue=0, alpha=1.0)
  * The color to highlight grenades.
  */
 GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)
-
-/**
- * The color to make the chams
- */
-CHAMS_ESP_COLOR = Color(red=255, green=0, blue=255, alpha=1.0)

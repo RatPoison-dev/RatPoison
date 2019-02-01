@@ -39,7 +39,6 @@ class EspTab : Tab(false, false) {
     val bombColorShow = VisTextButton("Set Bomb Color") //Bomb_Color
     val weaponColorShow = VisTextButton("Set Weapon Color") //Weapon_Color
     val grenadeColorShow = VisTextButton("Set Weapon Color") //Grenade_Color
-    val chamsColorShow = VisTextButton("Set Chams Color") //Chams_Color
 
 
     init {
@@ -353,30 +352,6 @@ class EspTab : Tab(false, false) {
 
         grenadeColor.add(grenadeColorShow)
 
-        //Create Chams_Esp_Color Picker
-        val chamsColor = VisTable()
-        Tooltip.Builder("The esp color of chams on enemies").target(chamsColor).build()
-        //val chamsColorShow = VisTextButton("Set Chams Color")
-        chamsColorShow.setColor(CHAMS_ESP_COLOR.red.toFloat(), CHAMS_ESP_COLOR.green.toFloat(), CHAMS_ESP_COLOR.blue.toFloat(), 1F/*CHAMS_ESP_COLOR.alpha.toFloat()*/)
-        val chamsColorPicker = ColorPicker("Color Picker", object : ColorPickerAdapter() {
-            override fun finished(newCol: Color) {
-                CHAMS_ESP_COLOR = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
-                newCol.a = 1F
-                chamsColorShow.color = newCol
-                dispose()
-            }
-
-            override fun canceled(oldCol: Color) {
-                dispose()
-            }
-        })
-
-        chamsColorShow.changed { _, _ ->
-            App.stage.addActor(chamsColorPicker.fadeIn())
-        }
-
-        chamsColor.add(chamsColorShow)
-
         //Add all items to label for tabbed pane content
         table.add(skeletonEsp).row() //Add Enable_Skeleton_Esp Toggle
 
@@ -403,7 +378,6 @@ class EspTab : Tab(false, false) {
         table.add(bombColor).row() //Add Bomb_Color Picker + Button
         table.add(weaponColor).row() //Add Weapon_Color Picker + Button
         table.add(grenadeColor).row() //Add Grenade_Color Picker + Button
-        table.add(chamsColor).row() //Add Chams_Color Picker + Button
     }
 
     override fun getContentTable(): Table? {

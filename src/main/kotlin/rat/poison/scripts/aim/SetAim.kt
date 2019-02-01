@@ -6,7 +6,7 @@ import rat.poison.settings.*
 import rat.poison.utils.every
 
 fun setAim() = every(100){
-    if (me.weapon().automatic) {
+    if (me.weapon().rifle) {
         AIM_BONE = RIFLE_AIM_BONE
         AIM_FOV = RIFLE_AIM_FOV
         AIM_SPEED_MIN = RIFLE_AIM_SPEED_MIN
@@ -19,6 +19,19 @@ fun setAim() = every(100){
         AIM_ASSIST_STRICTNESS = RIFLE_AIM_ASSIST_STRICTNESS
         ENABLE_FLAT_AIM = RIFLE_ENABLE_FLAT_AIM
         ENABLE_PATH_AIM = RIFLE_ENABLE_PATH_AIM
+    } else if (me.weapon().smg) {
+        AIM_BONE = SMG_AIM_BONE
+        AIM_FOV = SMG_AIM_FOV
+        AIM_SPEED_MIN = SMG_AIM_SPEED_MIN
+        AIM_SPEED_MAX = SMG_AIM_SPEED_MAX
+        AIM_STRICTNESS = SMG_AIM_STRICTNESS
+        PERFECT_AIM = SMG_PERFECT_AIM
+        PERFECT_AIM_FOV = SMG_PERFECT_AIM_FOV
+        PERFECT_AIM_CHANCE = SMG_PERFECT_AIM_CHANCE
+        AIM_ASSIST_MODE = SMG_AIM_ASSIST_MODE
+        AIM_ASSIST_STRICTNESS = SMG_AIM_ASSIST_STRICTNESS
+        ENABLE_FLAT_AIM = SMG_ENABLE_FLAT_AIM
+        ENABLE_PATH_AIM = SMG_ENABLE_PATH_AIM
     } else if (me.weapon().pistol) {
         AIM_BONE = PISTOL_AIM_BONE
         AIM_FOV = PISTOL_AIM_FOV

@@ -59,7 +59,7 @@ internal fun chamsEsp() = every(500) {
                         entity.chams(Color((255 - 2.55*entity.health()).toInt(), (2.55*entity.health()).toInt(), 0, 1.0))
                     }
                     else {
-                        entity.chams(CHAMS_ESP_COLOR)
+                        entity.chams(ENEMY_COLOR)
                     }
                 } else if (SHOW_TEAM && team) {
                     entity.chams(TEAM_COLOR)
