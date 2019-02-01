@@ -83,6 +83,8 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	}
 
 	private fun init() {
+		println("Initializing overlay")
+
 		saveStyle()
 
 		makeUndecorated()
@@ -95,6 +97,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	private fun monitorTargetApp() = with(User32) {
 		if (targetAppHWND == HWND_ZERO) {
 			//kotlin.io.println("Waiting for CSGO")
+			println("Waiting for CSGO")
 			targetAppHWND = getWindowHWND(targetAppTitle, kotlin.Long.MAX_VALUE)
 			if (targetAppHWND == HWND_ZERO) {
 				return@with
