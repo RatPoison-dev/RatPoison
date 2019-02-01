@@ -16,11 +16,14 @@ class Misc : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
-    val leagueMode = VisTextButton("LEAGUE_MODE", "toggle") //League_Mode
+    val leagueMode = VisCheckBox("Enable League Mode") //League_Mode
+    val enableBunnyHop = VisCheckBox("Enable Bunny Hop") //Bunny_Hop
+    val enableBombTimer = VisCheckBox("Enable Bomb Timer") //Bomb_Timer
     val fireKeyField = VisValidatableTextField(Validators.FLOATS) //Activate_From_Fire_Key
     val visualsToggleKeyField = VisValidatableTextField(Validators.FLOATS) //Visuals_Toggle_Key
     val menuKeyField = VisValidatableTextField(Validators.FLOATS) //Menu_Key_Field
-    val flashMaxAlphaLabel = VisLabel("Flash Max Alpha: " + FLASH_MAX_ALPHA.toInt().toString() + when(FLASH_MAX_ALPHA.toInt().toString().length) {3->"  " 2->"    " else ->"      "}) //Flash_Max_Alpha
+    val enableReducedFlash = VisCheckBox("Enable Reduced Flash") //Reduced_Flash
+    val flashMaxAlphaLabel = VisLabel("Flash Max Alpha: $FLASH_MAX_ALPHA" + when(FLASH_MAX_ALPHA.toInt().toString().length) {3->"  " 2->"    " else ->"      "}) //Flash_Max_Alpha
     val flashMaxAlphaSlider = VisSlider(0F, 255F, 1F, false) //Flash_Max_Alpha
 
     init {
@@ -53,6 +56,24 @@ class Misc : Tab(false, false) {
                     UIUpdate()
                 }
             }
+        }
+
+        //Create Enable_Bunny_Hop Toggle
+        //val enableBunnyHop = VisTextButton("ENABLE_BUNNY_HOP", "toggle")
+        Tooltip.Builder("Whether or not to enable bunny hop").target(enableBunnyHop).build()
+        enableBunnyHop.isChecked = ENABLE_BUNNY_HOP
+        enableBunnyHop.changed { _, _ ->
+            ENABLE_BUNNY_HOP = enableBunnyHop.isChecked
+            true
+        }
+
+        //Create Enable_Bomb_Timer Toggle
+        //val enableBombTimer = VisTextButton("ENABLE_BOMB_TIMER", "toggle")
+        Tooltip.Builder("Whether or not to enable bomb timer").target(enableBombTimer).build()
+        enableBombTimer.isChecked = ENABLE_BOMB_TIMER
+        enableBombTimer.changed { _, _ ->
+            ENABLE_BOMB_TIMER = enableBombTimer.isChecked
+            true
         }
 
         //Create Fire_Key Input
@@ -101,6 +122,14 @@ class Misc : Tab(false, false) {
         menuKey.add(menuKeyField).spaceRight(6F).width(40F)
         menuKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
 
+        //Create Enable_Reduced_Flash Toggle
+        //val enableReducedFlash = VisTextButton("ENABLE_REDUCED_FLASH", "toggle")
+        Tooltip.Builder("Whether or not to enable reduced flash").target(enableReducedFlash).build()
+        enableReducedFlash.isChecked = ENABLE_REDUCED_FLASH
+        enableReducedFlash.changed { _, _ ->
+            ENABLE_REDUCED_FLASH = enableReducedFlash.isChecked
+            true
+        }
 
         //Create Flash_Max_Alpha
         val flashMaxAlpha = VisTable()
@@ -118,9 +147,18 @@ class Misc : Tab(false, false) {
 
         //Add all items to label for tabbed pane content
         table.add(leagueMode).row() //Add League_Mode Toggle
+        table.add(enableBunnyHop).row() //Add Enable_Bunny_Hop Toggle
+        table.add(enableBombTimer).row() //Add Enable_Bomb_Timer Toggle
+
+        table.addSeparator()
+
         table.add(fireKey).row() //Add Fire_Key Input
         table.add(visualsToggleKey).row() //Add Visuals_Toggle_Key Input
         table.add(menuKey).row() //Add Menu_Key Input
+
+        table.addSeparator()
+
+        table.add(enableReducedFlash).row() //Add Enable_Reduced_Flash Toggle
         table.add(flashMaxAlpha).row() //Add Flash_Max_Alpha Slider
     }
 

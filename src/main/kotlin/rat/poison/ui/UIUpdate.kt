@@ -254,19 +254,9 @@ fun UIUpdate() {
         }
     }
 
-    //Scripts Tab
-    scriptsTab.apply {
-        enableBunnyHop.isChecked = ENABLE_BUNNY_HOP
-        enableRCS.isChecked = ENABLE_RCS
-        enableRCrosshair.isChecked = ENABLE_RECOIL_CROSSHAIR
-        enableEsp.isChecked = ENABLE_ESP
-        enableBoneTrigger.isChecked = ENABLE_BONE_TRIGGER
-        enableReducedFlash.isChecked = ENABLE_REDUCED_FLASH
-        enableBombTimer.isChecked = ENABLE_BOMB_TIMER
-    }
-
     //Esp Tab
-    espTab.apply {
+    visualsTab.apply {
+        enableEsp.isChecked = ENABLE_ESP
         skeletonEsp.isChecked = SKELETON_ESP
         boxEsp.isChecked = BOX_ESP
         boxEspDetails.isChecked = BOX_ESP_DETAILS
@@ -293,10 +283,11 @@ fun UIUpdate() {
         showBomb.isChecked = SHOW_BOMB
         showWeapons.isChecked = SHOW_WEAPONS
         showGrenades.isChecked = SHOW_GRENADES
-        teamColorShow.setColor(TEAM_COLOR.red.toFloat(), TEAM_COLOR.green.toFloat(), TEAM_COLOR.blue.toFloat(), TEAM_COLOR.alpha.toFloat())
-        enemyColorShow.setColor(ENEMY_COLOR.red.toFloat(), ENEMY_COLOR.green.toFloat(), ENEMY_COLOR.blue.toFloat(), ENEMY_COLOR.alpha.toFloat())
-        bombColorShow.setColor(BOMB_COLOR.red.toFloat(), BOMB_COLOR.green.toFloat(), BOMB_COLOR.blue.toFloat(), BOMB_COLOR.alpha.toFloat())
-        weaponColorShow.setColor(WEAPON_COLOR.red.toFloat(), WEAPON_COLOR.green.toFloat(), WEAPON_COLOR.blue.toFloat(), WEAPON_COLOR.alpha.toFloat())
+        teamColorShow.setColor(TEAM_COLOR.red.toFloat(), TEAM_COLOR.green.toFloat(), TEAM_COLOR.blue.toFloat(), 1F)
+        enemyColorShow.setColor(ENEMY_COLOR.red.toFloat(), ENEMY_COLOR.green.toFloat(), ENEMY_COLOR.blue.toFloat(), 1F)
+        bombColorShow.setColor(BOMB_COLOR.red.toFloat(), BOMB_COLOR.green.toFloat(), BOMB_COLOR.blue.toFloat(), 1F)
+        weaponColorShow.setColor(WEAPON_COLOR.red.toFloat(), WEAPON_COLOR.green.toFloat(), WEAPON_COLOR.blue.toFloat(), 1F)
+        grenadeColor.setColor(GRENADE_COLOR.red.toFloat(), GRENADE_COLOR.green.toFloat(), GRENADE_COLOR.blue.toFloat(), 1F)
     }
 
     //Rcs Tab
@@ -308,6 +299,7 @@ fun UIUpdate() {
 
     //BTrig Tab
     bTrigTab.apply {
+        enableBoneTrigger.isChecked = ENABLE_BONE_TRIGGER
         boneTriggerFovLabel.setText("Bone Trigger Fov: $BONE_TRIGGER_FOV" + when (BONE_TRIGGER_FOV.toString().length) {
             3 -> "  "
             2 -> "    "
@@ -321,22 +313,28 @@ fun UIUpdate() {
     }
 
     //Misc Tab
-    misc.leagueMode.isChecked = LEAGUE_MODE
-    misc.fireKeyField.text = FIRE_KEY.toString()
-    misc.visualsToggleKeyField.text = VISUALS_TOGGLE_KEY.toString()
-    misc.menuKeyField.text = MENU_KEY.toString()
-    misc.flashMaxAlphaLabel.setText("Flash Max Alpha: $FLASH_MAX_ALPHA" + when(FLASH_MAX_ALPHA.toString().length) {3->"  " 2->"    " else ->"      "})
-    misc.flashMaxAlphaSlider.value = FLASH_MAX_ALPHA
-
-    //Custom disable tabs
-    mainTabbedPane.disableTab(bTrigTab, !ENABLE_BONE_TRIGGER)
-    mainTabbedPane.disableTab(espTab, !ENABLE_ESP)
-    mainTabbedPane.disableTab(rcsTab, (!ENABLE_RCS && !ENABLE_RECOIL_CROSSHAIR))
+    misc.apply {
+        leagueMode.isChecked = LEAGUE_MODE
+        enableBunnyHop.isChecked = ENABLE_BUNNY_HOP
+        enableBombTimer.isChecked = ENABLE_BOMB_TIMER
+        fireKeyField.text = FIRE_KEY.toString()
+        visualsToggleKeyField.text = VISUALS_TOGGLE_KEY.toString()
+        menuKeyField.text = MENU_KEY.toString()
+        enableReducedFlash.isChecked = ENABLE_REDUCED_FLASH
+        flashMaxAlphaLabel.setText("Flash Max Alpha: $FLASH_MAX_ALPHA" + when (FLASH_MAX_ALPHA.toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        flashMaxAlphaSlider.value = FLASH_MAX_ALPHA
+    }
 
     //Custom disable items
     rcsTab.apply {
+        enableRCS.isChecked = ENABLE_RCS
         rcsSmoothingSlider.isDisabled = !ENABLE_RCS
         rcsReturnAim.isDisabled = !ENABLE_RCS
+        enableRCrosshair.isChecked = ENABLE_RECOIL_CROSSHAIR
         rCrosshairWidthSlider.isDisabled = !ENABLE_RECOIL_CROSSHAIR
         rcsCrosshairLengthSlider.isDisabled = !ENABLE_RECOIL_CROSSHAIR
         rCrosshairAlphaSlider.isDisabled = !ENABLE_RECOIL_CROSSHAIR

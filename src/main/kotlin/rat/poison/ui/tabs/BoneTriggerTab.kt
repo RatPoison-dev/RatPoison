@@ -5,20 +5,32 @@ import com.kotcrab.vis.ui.util.Validators
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.settings.*
+import rat.poison.ui.bTrigTab
 import rat.poison.ui.changed
+import rat.poison.ui.mainTabbedPane
 
 class BTrig : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
+    val enableBoneTrigger = VisCheckBox("Enable Bone Trigger") //Bone_Trigger
     val boneTriggerFovLabel = VisLabel("Bone Trigger Fov: " + BONE_TRIGGER_FOV.toString() + when(BONE_TRIGGER_FOV.toString().length) {3->"  " 2->"    " else ->"      "}) //Bone_Trigger_Fov
     val boneTriggerFovSlider = VisSlider(0F, 360F, 1F, false) //Bone_Trigger_Fov
     val boneTriggerBoneBox = VisSelectBox<String>() //Bone_Trigger_Bone
-    val aimOnBoneTrigger = VisTextButton("AIM_ON_BONE_TRIGGER", "toggle") //Aim_On_Bone_Trigger
-    val boneTriggerEnableKey = VisTextButton("BONE_TRIGGER_ENABLE_KEY", "toggle") //Bone_Trigger_Enable_Key
+    val aimOnBoneTrigger = VisCheckBox("Enable Aim On Bone Trigger") //Aim_On_Bone_Trigger
+    val boneTriggerEnableKey = VisCheckBox("Enable Bone Trigger On Key") //Bone_Trigger_Enable_Key
     val boneTriggerKeyField = VisValidatableTextField(Validators.FLOATS) //Bone_Trigger_Key
 
     init {
+        //Create Enable_Bone_Trigger Toggle
+        //val enableBoneTrigger = VisTextButton("ENABLE_BONE_TRIGGER", "toggle")
+        Tooltip.Builder("Whether or not to enable bone trigger").target(enableBoneTrigger).build()
+        enableBoneTrigger.isChecked = ENABLE_BONE_TRIGGER
+        enableBoneTrigger.changed { _, _ ->
+            ENABLE_BONE_TRIGGER = enableBoneTrigger.isChecked
+            true
+        }
+
         //Create Bone_Trigger_Fov Slider
         val boneTriggerFov = VisTable()
         Tooltip.Builder("The bone trigger field of view").target(boneTriggerFov).build()
@@ -38,16 +50,16 @@ class BTrig : Tab(false, false) {
         Tooltip.Builder("The aim bone that bone trigger will fire at").target(boneTriggerBone).build()
         //val boneTriggerBoneBox = VisSelectBox<String>()
         val boneTriggerBoneLabel = VisLabel("Bone Trigger Bone: ")
-        boneTriggerBoneBox.setItems("HEAD_BONE", "BODY_BONE")
-        boneTriggerBoneBox.selected = if (BONE_TRIGGER_BONE == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
+        boneTriggerBoneBox.setItems("Head Bone", "Body Bone")
+        boneTriggerBoneBox.selected = if (BONE_TRIGGER_BONE == HEAD_BONE) "Head Bone" else "Body Bone"
         boneTriggerBone.add(boneTriggerBoneLabel).top().spaceRight(6F)
         boneTriggerBone.add(boneTriggerBoneBox)
 
         boneTriggerBoneBox.changed { _, _ ->
-            if (boneTriggerBoneBox.selected.toString() == "HEAD_BONE") {
+            if (boneTriggerBoneBox.selected.toString() == "Head Bone") {
                 BONE_TRIGGER_BONE = HEAD_BONE
             }
-            else if (boneTriggerBoneBox.selected.toString() == "BODY_BONE") {
+            else if (boneTriggerBoneBox.selected.toString() == "Body Bone") {
                 BONE_TRIGGER_BONE = BODY_BONE
             }
         }
@@ -75,7 +87,7 @@ class BTrig : Tab(false, false) {
         //Create Bone_Trigger_Key
         val boneTriggerKey = VisTable()
         Tooltip.Builder("The key bone trigger will check is being held down if BONE_TRIGGER_ENABLE_KEY is enabled").target(boneTriggerKey).build()
-        val boneTriggerKeyLabel = VisLabel("BONE_TRIGGER_KEY: ")
+        val boneTriggerKeyLabel = VisLabel("Bone Trigger Key: ")
         //val boneTriggerKeyField = VisValidatableTextField(Validators.FLOATS)
         boneTriggerKeyField.text = BONE_TRIGGER_KEY.toString()
         boneTriggerKey.changed { _, _ ->
@@ -87,6 +99,8 @@ class BTrig : Tab(false, false) {
         boneTriggerKey.add(boneTriggerKeyField).spaceRight(6F).width(40F)
         boneTriggerKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
 
+        //Add all items to label for tabbed pane content
+        table.add(enableBoneTrigger).row() //Add Enable_Bone_Trigger Toggle
         table.add(boneTriggerFov).row() //Add Bone_Trigger_Fov Slider
         table.add(boneTriggerBone).row() //Add Bone_Trigger_Bone Selector
         table.add(aimOnBoneTrigger).row() //Add Aim_On_Bone_Trigger Toggle

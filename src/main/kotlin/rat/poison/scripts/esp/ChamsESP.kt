@@ -69,15 +69,24 @@ internal fun chamsEsp() = every(500) {
                 }
             }
 
-            EntityType.CPlantedC4, EntityType.CC4 -> if (SHOW_BOMB) {
-                entity.chams(BOMB_COLOR)
+            EntityType.CPlantedC4, EntityType.CC4 -> {
+                if (SHOW_BOMB) {
+                    entity.chams(BOMB_COLOR)
+                }
+                else
+                {
+                    entity.chams(Color((255F / (CHAMS_BRIGHTNESS/10F)).toInt(), (255F / (CHAMS_BRIGHTNESS/10F)).toInt(), (255F / (CHAMS_BRIGHTNESS/10F)).toInt(), 1.0))
+                }
             }
 
             else ->
-                if (SHOW_WEAPONS && it.type.weapon)
+                if (SHOW_WEAPONS && it.type.weapon) {
                     entity.chams(WEAPON_COLOR)
-                else if (SHOW_GRENADES && it.type.grenade)
+                } else if (SHOW_GRENADES && it.type.grenade) {
                     entity.chams(GRENADE_COLOR)
+                } else {
+                    entity.chams(Color((255F / (CHAMS_BRIGHTNESS/10F)).toInt(), (255F / (CHAMS_BRIGHTNESS/10F)).toInt(), (255F / (CHAMS_BRIGHTNESS/10F)).toInt(), 1.0))
+                }
         }
         return@body false
     }

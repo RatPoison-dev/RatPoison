@@ -7,42 +7,59 @@ import com.kotcrab.vis.ui.widget.color.ColorPicker
 import com.kotcrab.vis.ui.widget.color.ColorPickerAdapter
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.App
+import rat.poison.scripts.esp.disableEsp
 import rat.poison.settings.*
+import rat.poison.ui.UIUpdate
 import rat.poison.ui.changed
 
-class EspTab : Tab(false, false) {
+class VisualsTab : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
-    val skeletonEsp = VisTextButton("SKELETON_ESP", "toggle") //Skeleton_Esp
-    val boxEsp = VisTextButton("BOX_ESP", "toggle") //Box_Esp
-    val boxEspDetails = VisTextButton("BOX_ESP_DETAILS", "toggle") //Box_Esp_Details
-    val glowEsp = VisTextButton("GLOW_ESP", "toggle") //Glow_Esp
-    val invGlowEsp = VisTextButton("INV_GLOW_ESP", "toggle") //Inv_Glow_Esp
-    val modelEsp = VisTextButton("MODEL_ESP", "toggle") //Model_Esp
-    val modelAndGlow = VisTextButton("MODEL_AND_GLOW", "toggle")
-    val enemyIndicator = VisTextButton("ENEMY_INDICATOR", "toggle") //Enemy_Indicator
-    val hitSound = VisTextButton("ENABLE_HITSOUND", "toggle") //Hit_Sound
+    val enableEsp = VisCheckBox("Enable Esp") //ESP
+    val skeletonEsp = VisCheckBox("Skeleton Esp") //Skeleton_Esp
+    val boxEsp = VisCheckBox("Box Esp") //Box_Esp
+    val boxEspDetails = VisCheckBox("Box Esp Details") //Box_Esp_Details
+    val glowEsp = VisCheckBox("Glow Esp") //Glow_Esp
+    val invGlowEsp = VisCheckBox("Inv Glow Esp") //Inv_Glow_Esp
+    val modelEsp = VisCheckBox("Model Esp") //Model_Esp
+    val modelAndGlow = VisCheckBox("Model & Glow Esp") //Model_And_Glow
+    val enemyIndicator = VisCheckBox("Enemy Indicator") //Enemy_Indicator
+    val hitSound = VisCheckBox("Hitsound") //Hit_Sound
     val hitSoundVolumeLabel = VisLabel("Hitsound Volume: $HITSOUND_VOLUME") //Hit_Sound_Volume
     val hitSoundVolumeSlider = VisSlider(0.1F, 1F, 0.1F, false) //Hit_Sound_Volume
-    val chamsEsp = VisTextButton("CHAMS_ESP", "toggle") //Chams_Esp
-    val chamsShowHealth = VisTextButton("CHAMS_SHOW_HEALTH", "toggle") //Chams_Show_Health
-    val chamsBrightnessLabel = VisLabel("Chams Brightness: $CHAMS_BRIGHTNESS" + when(CHAMS_BRIGHTNESS.toString().length) {4->"  " 3->"    " 2->"      " else ->"        "}) //Chams_Brightness
+    val chamsEsp = VisCheckBox("Chams Esp") //Chams_Esp
+    val chamsShowHealth = VisCheckBox("Chams Show Health") //Chams_Show_Health
+    val chamsBrightnessLabel = VisLabel("Chams Brightness: $CHAMS_BRIGHTNESS" + when(CHAMS_BRIGHTNESS.toString().length) {4->"" 3->"  " 2->"    " else ->"      "}) //Chams_Brightness
     val chamsBrightnessSlider = VisSlider(0F, 1000F, 1F, false) //Chams_Brightness
-    val showTeam = VisTextButton("SHOW_TEAM", "toggle") //Show_Team
-    val showEnemies = VisTextButton("SHOW_ENEMIES", "toggle") //Show_Enemies
-    val showDormant = VisTextButton("SHOW_DORMANT", "toggle") //Show_Dormant
-    val showBomb = VisTextButton("SHOW_BOMB", "toggle") //Show_Bomb
-    val showWeapons = VisTextButton("SHOW_WEAPONS", "toggle") //Show_Weapons
-    val showGrenades = VisTextButton("SHOW_GRENADES", "toggle") //Show_Grenades
+    val showTeam = VisCheckBox("Show Team") //Show_Team
+    val showEnemies = VisCheckBox("Show Enemies") //Show_Enemies
+    val showDormant = VisCheckBox("Show Dormant") //Show_Dormant
+    val showBomb = VisCheckBox("Show Bomb") //Show_Bomb
+    val showWeapons = VisCheckBox("Show Weapons") //Show_Weapons
+    val showGrenades = VisCheckBox("Show Grenades") //Show_Grenades
     val teamColorShow = VisTextButton("Set Team Color") //Team_Color
     val enemyColorShow = VisTextButton("Set Enemy Color") //Enemy_Color
     val bombColorShow = VisTextButton("Set Bomb Color") //Bomb_Color
     val weaponColorShow = VisTextButton("Set Weapon Color") //Weapon_Color
-    val grenadeColorShow = VisTextButton("Set Weapon Color") //Grenade_Color
+    val grenadeColor = VisTextButton("Set Grenade Color") //Grenade_Color
 
 
     init {
+        //Create Enable_Esp Toggle
+        //val enableEsp = VisTextButton("ENABLE_ESP", "toggle")
+        Tooltip.Builder("Whether or not to enable esp").target(enableEsp).build()
+        enableEsp.isChecked = ENABLE_ESP
+        enableEsp.changed { _, _ ->
+            if (true) { //type Any? changes didnt work im autistic //fix later
+                ENABLE_ESP = enableEsp.isChecked
+
+                if (!ENABLE_ESP) {
+                    disableEsp()
+                }
+            }
+        }
+
         //Create Skeleton_Esp Toggle
         //val skeletonEsp = VisTextButton("SKELETON_ESP", "toggle")
         Tooltip.Builder("Whether or not to enable skeleton esp").target(skeletonEsp).build()
@@ -70,6 +87,11 @@ class EspTab : Tab(false, false) {
         boxEspDetails.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
                 BOX_ESP_DETAILS = boxEspDetails.isChecked//!BOX_ESP
+
+                if (BOX_ESP_DETAILS) {
+                    BOX_ESP = true
+                }
+                UIUpdate()
             }
         }
 
@@ -90,6 +112,11 @@ class EspTab : Tab(false, false) {
         invGlowEsp.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
                 INV_GLOW_ESP = invGlowEsp.isChecked//!GLOW_ESP
+
+                if (INV_GLOW_ESP) {
+                    GLOW_ESP = true
+                }
+                UIUpdate()
             }
         }
 
@@ -153,6 +180,10 @@ class EspTab : Tab(false, false) {
         chamsEsp.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
                 CHAMS_ESP = chamsEsp.isChecked//!CHAMS_ESP
+
+                if (!CHAMS_ESP) {
+                    disableEsp()
+                }
             }
         }
 
@@ -168,14 +199,14 @@ class EspTab : Tab(false, false) {
 
         //Create Chams_Brightness Slider
         val chamsBrightness = VisTable()
-        //val chamsBrightnessLabel = VisLabel("Chams Brightness: " + CHAMS_BRIGHTNESS.toString() + when(CHAMS_BRIGHTNESS.toString().length) {4->"  " 3->"    " 2->"      " else ->"        "})
+        //val chamsBrightnessLabel = VisLabel("Chams Brightness: " + CHAMS_BRIGHTNESS.toString() + when(CHAMS_BRIGHTNESS.toString().length) {4->"" 3->"  " 2->"    " else ->"      "})
         Tooltip.Builder("Whether or not to enable chams brightness").target(chamsBrightnessLabel).build()
         //val chamsBrightnessSlider = VisSlider(0F, 1000F, 1F, false)
         Tooltip.Builder("The brightness of chams if chams brightness is enabled").target(chamsBrightnessSlider).build()
         chamsBrightnessSlider.value = CHAMS_BRIGHTNESS.toFloat()
         chamsBrightnessSlider.changed { _, _ ->
             CHAMS_BRIGHTNESS = chamsBrightnessSlider.value.toInt()
-            chamsBrightnessLabel.setText("Chams Brightness: " + CHAMS_BRIGHTNESS.toString() + when(CHAMS_BRIGHTNESS.toString().length) {4->"  " 3->"    " 2->"      " else ->"        "}) //When is used to not make the sliders jitter when you go from 10 to 9, or 100 to 99, as that character space shifts everything, one character is 2 spaces
+            chamsBrightnessLabel.setText("Chams Brightness: $CHAMS_BRIGHTNESS" + when(CHAMS_BRIGHTNESS.toString().length) {4->"" 3->"  " 2->"    " else ->"      "}) //When is used to not make the sliders jitter when you go from 10 to 9, or 100 to 99, as that character space shifts everything, one character is 2 spaces
         }
 
         chamsBrightness.add(chamsBrightnessLabel).spaceRight(6F)
@@ -325,6 +356,7 @@ class EspTab : Tab(false, false) {
             override fun finished(newCol: Color) {
                 WEAPON_COLOR = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
                 newCol.a = 1F
+                weaponColorShow.color = newCol
                 dispose()
             }
 
@@ -340,15 +372,14 @@ class EspTab : Tab(false, false) {
         weaponColor.add(weaponColorShow)
 
         //Create Grenade_Color Picker
-        val grenadeColor = VisTable()
-        Tooltip.Builder("The esp color of grenades").target(grenadeColor).build()
         //val grenadeColorShow = VisTextButton("Set Weapon Color")
-        grenadeColorShow.setColor(GRENADE_COLOR.red.toFloat(), GRENADE_COLOR.green.toFloat(), GRENADE_COLOR.blue.toFloat(), 1F/*GRENADE_COLOR.alpha.toFloat()*/)
+        grenadeColor.setColor(GRENADE_COLOR.red.toFloat(), GRENADE_COLOR.green.toFloat(), GRENADE_COLOR.blue.toFloat(), 1F/*GRENADE_COLOR.alpha.toFloat()*/)
+        Tooltip.Builder("The esp color of grenades").target(grenadeColor).build()
         val grenadeColorPicker = ColorPicker("Color Picker", object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
                 GRENADE_COLOR = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
                 newCol.a = 1F
-                grenadeColorShow.color = newCol
+                grenadeColor.color = newCol
                 dispose()
             }
 
@@ -357,39 +388,59 @@ class EspTab : Tab(false, false) {
             }
         })
 
-        grenadeColorShow.changed { _, _ ->
+        grenadeColor.changed { _, _ ->
             App.stage.addActor(grenadeColorPicker.fadeIn())
         }
 
-        grenadeColor.add(grenadeColorShow)
 
         //Add all items to label for tabbed pane content
-        table.add(skeletonEsp).row() //Add Enable_Skeleton_Esp Toggle
+        table.columnDefaults(2)
 
+        table.add(enableEsp).colspan(2).row() //Add Enable_RCrosshair Toggle
+
+        table.addSeparator().colspan(2)
+
+        table.add(skeletonEsp) //Add Enable_Skeleton_Esp Toggle
         table.add(boxEsp).row() //Add Enable_Box_Esp Toggle
+
+        table.add(glowEsp) //Add Enable_Glow_Esp Toggle
         table.add(boxEspDetails).row() //Add Enable_Box_Esp_Details Toggle
 
-        table.add(glowEsp).row() //Add Enable_Glow_Esp Toggle
-        table.add(invGlowEsp).row() //Add Enable_Inv_Glow_Esp Toggle
+        table.add(invGlowEsp) //Add Enable_Inv_Glow_Esp Toggle
         table.add(modelEsp).row() //Add Enable_Model_Esp Toggle
-        table.add(modelAndGlow).row() //Add Model_And_Glow Toggle
+
+        table.add(modelAndGlow) //Add Model_And_Glow Toggle
         table.add(enemyIndicator).row() //Add Enemy_Indicator Toggle
-        table.add(hitSound).row() //Add Hit_Sound Toggle
-        table.add(hitSoundVolume).row() //Add Hit_Sound_Volume Slider
-        table.add(chamsEsp).row() //Add Enable_Chams_Esp Toggle
+
+        table.addSeparator().colspan(2)
+
+        table.add(chamsEsp) //Add Enable_Chams_Esp Toggle
         table.add(chamsShowHealth).row() //Add Enable_Chams_Show_Health Toggle
-        table.add(chamsBrightness).width(250F).row() //Add Chams_Brightness Slider
-        table.add(showTeam).row() //Add Enable_Bunny_Hop Toggle
+        table.add(chamsBrightness).colspan(2).row() //Add Chams_Brightness Slider
+
+        table.addSeparator().colspan(2)
+
+        table.add(hitSound).colspan(2).row() //Add Hit_Sound Toggle
+        table.add(hitSoundVolume).colspan(2).row() //Add Hit_Sound_Volume Slider
+
+        table.addSeparator().colspan(2)
+
+        table.add(showTeam) //Add Enable_Bunny_Hop Toggle
         table.add(showEnemies).row() //Add Enable_Show_Enemies Toggle
-        table.add(showDormant).row() //Add Enable_Show_Dormant Toggle
+
+        table.add(showDormant) //Add Enable_Show_Dormant Toggle
         table.add(showBomb).row() //Add Enable_Show_Bomb Toggle
-        table.add(showWeapons).row() //Add Enable_Show_Weapons Toggle
+
+        table.add(showWeapons) //Add Enable_Show_Weapons Toggle
         table.add(showGrenades).row() //Add Enable_Show_Grenades Toggle
-        table.add(teamColor).row() //Add Team_Color Picker + Button
-        table.add(enemyColor).row() //Add Team_Color Picker + Button
-        table.add(bombColor).row() //Add Bomb_Color Picker + Button
-        table.add(weaponColor).row() //Add Weapon_Color Picker + Button
-        table.add(grenadeColor).row() //Add Grenade_Color Picker + Button
+
+        table.add(teamColor).right() //Add Team_Color Picker + Button
+        table.add(enemyColor).left().row() //Add Team_Color Picker + Button
+
+        table.add(bombColor).right() //Add Bomb_Color Picker + Button
+        table.add(weaponColor).left().row() //Add Weapon_Color Picker + Button
+
+        table.add(grenadeColor).colspan(2).row() //Add Grenade_Color Picker + Button
     }
 
     override fun getContentTable(): Table? {
@@ -397,6 +448,6 @@ class EspTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "ESP"
+        return "Visuals"
     }
 }

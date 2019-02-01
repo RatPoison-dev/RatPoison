@@ -16,15 +16,15 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     var categorySelected = ""
 
     //Init labels/sliders/boxes that show values here
-    val activateFromFireKey = VisTextButton("ACTIVATE_FROM_FIRE_KEY", "toggle") //Activate_From_Fire_Key
-    val teammatesAreEnemies = VisTextButton("TEAMMATES_ARE_ENEMIES", "toggle") //Teammates_Are_Enemies
+    val activateFromFireKey = VisCheckBox("Activate From Fire Key") //Activate_From_Fire_Key
+    val teammatesAreEnemies = VisCheckBox("Teammates Are Enemies") //Teammates_Are_Enemies
     val forceAimKeyField = VisValidatableTextField(Validators.FLOATS) //Force_Aim_Key
 
     val categorySelectionBox = VisSelectBox<String>() //Category
 
 
-    val enableFlatAim = VisTextButton("ENABLE_FLAT_AIM", "toggle") //Enable_Flat_Aim
-    val enablePathAim = VisTextButton("ENABLE_PATH_AIM", "toggle") //Enable_Path_Aim
+    val enableFlatAim = VisCheckBox("Flat Aim") //Enable_Flat_Aim
+    val enablePathAim = VisCheckBox("Path Aim") //Enable_Path_Aim
     val aimBoneBox = VisSelectBox<String>() //Aim_Bone
     val aimFovLabel = VisLabel("Aim Fov: " + PISTOL_AIM_FOV.toString() + when(PISTOL_AIM_FOV.toString().length) {3->"  " 2->"    " else ->"      "}) //Aim_Fov
     val aimFovSlider = VisSlider(1F, 360F, 2F, false) //Aim_Fov
@@ -110,27 +110,37 @@ class AimTab : Tab(true, false) { //Aim.kts tab
             when (categorySelected) {
                 "PISTOL" -> {
                     PISTOL_ENABLE_FLAT_AIM = enableFlatAim.isChecked
-                    PISTOL_ENABLE_PATH_AIM = !PISTOL_ENABLE_FLAT_AIM
+                    if (PISTOL_ENABLE_FLAT_AIM) {
+                        PISTOL_ENABLE_PATH_AIM = false
+                    }
                 }
                 
                 "RIFLE" -> {
                     RIFLE_ENABLE_FLAT_AIM = enableFlatAim.isChecked
-                    RIFLE_ENABLE_PATH_AIM = !RIFLE_ENABLE_FLAT_AIM
+                    if (RIFLE_ENABLE_FLAT_AIM) {
+                        RIFLE_ENABLE_PATH_AIM = false
+                    }
                 }
                 
                 "SMG" -> {
                     SMG_ENABLE_FLAT_AIM = enableFlatAim.isChecked
-                    SMG_ENABLE_PATH_AIM = !SMG_ENABLE_FLAT_AIM
+                    if (SMG_ENABLE_PATH_AIM) {
+                        SMG_ENABLE_PATH_AIM = false
+                    }
                 }
                 
                 "SNIPER" -> {
                     SNIPER_ENABLE_FLAT_AIM = enableFlatAim.isChecked
-                    SNIPER_ENABLE_PATH_AIM = !SNIPER_ENABLE_FLAT_AIM
+                    if (SNIPER_ENABLE_PATH_AIM) {
+                        SNIPER_ENABLE_PATH_AIM = false
+                    }
                 }
                 
                 "SHOTGUN" -> {
                     SHOTGUN_ENABLE_FLAT_AIM = enableFlatAim.isChecked
-                    SHOTGUN_ENABLE_PATH_AIM = !SHOTGUN_ENABLE_FLAT_AIM
+                    if (SHOTGUN_ENABLE_FLAT_AIM) {
+                        SHOTGUN_ENABLE_PATH_AIM = false
+                    }
                 }
             }
             UIUpdate()
@@ -145,27 +155,35 @@ class AimTab : Tab(true, false) { //Aim.kts tab
             when (categorySelected) {
                 "PISTOL" -> {
                     PISTOL_ENABLE_PATH_AIM = enablePathAim.isChecked
-                    PISTOL_ENABLE_FLAT_AIM = !PISTOL_ENABLE_PATH_AIM
+                    if (PISTOL_ENABLE_PATH_AIM) {
+                        PISTOL_ENABLE_FLAT_AIM = false
+                    }
                 }
 
                 "RIFLE" -> {
                     RIFLE_ENABLE_PATH_AIM = enablePathAim.isChecked
-                    RIFLE_ENABLE_FLAT_AIM = !RIFLE_ENABLE_PATH_AIM
+                    if (RIFLE_ENABLE_PATH_AIM) {
+                        RIFLE_ENABLE_FLAT_AIM = false
+                    }
                 }
 
                 "SMG" -> {
                     SMG_ENABLE_PATH_AIM = enablePathAim.isChecked
-                    SMG_ENABLE_FLAT_AIM = !SMG_ENABLE_PATH_AIM
+                    if (SMG_ENABLE_PATH_AIM) {
+                        SMG_ENABLE_FLAT_AIM = false
+                    }
                 }
 
                 "SNIPER" -> {
                     SNIPER_ENABLE_PATH_AIM = enablePathAim.isChecked
-                    SNIPER_ENABLE_FLAT_AIM = !SNIPER_ENABLE_PATH_AIM
+                    if (SNIPER_ENABLE_PATH_AIM) {
+                        SNIPER_ENABLE_FLAT_AIM = false
+                    }
                 }
 
                 "SHOTGUN" -> {
                     SHOTGUN_ENABLE_PATH_AIM = enablePathAim.isChecked
-                    if (SHOTGUN_ENABLE_PATH_AIM) { //Dont have both on
+                    if (SHOTGUN_ENABLE_PATH_AIM) {
                         SHOTGUN_ENABLE_FLAT_AIM = false
                     }
                 }

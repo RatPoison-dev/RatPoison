@@ -52,7 +52,7 @@ private fun Entity.glow(color: Color, model: Boolean) {
 	csgoEXE[this + 0xC] = color.blue / 255F
 	csgoEXE[this + 0x10] = color.alpha.toFloat()//color.alpha.toFloat()
 	csgoEXE[this + 0x24] = true //Render When Occluded
-	//csgoEXE[this + 0x25] = false //Render When Unoccluded
+	csgoEXE[this + 0x25] = false //Render When Unoccluded
 
 	csgoEXE[this + 0x26] = INV_GLOW_ESP //Full Bloom Render
 

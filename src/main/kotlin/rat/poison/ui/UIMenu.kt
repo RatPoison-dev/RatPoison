@@ -23,8 +23,7 @@ import rat.poison.ui.tabs.*
 //Tabs, public to access in UIUpdate
 val mainTabbedPane = TabbedPane()
     val aimTab = AimTab()
-    val scriptsTab = ScriptsTab()
-    val espTab = EspTab()
+    val visualsTab = VisualsTab()
     val rcsTab = RcsTab()
     val bTrigTab = BTrig()
     val misc = Misc()
@@ -42,6 +41,7 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
 
         val mainScrollPane = ScrollPane(mainTabbedPaneContent)
         mainScrollPane.setFlickScroll(false)
+        mainScrollPane.setSize(1000F, 1000F)
 
         this.x = 960F
         this.y = 540F
@@ -51,8 +51,7 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
 
         //Add tabs to main tab-pane
         mainTabbedPane.add(aimTab)
-        mainTabbedPane.add(scriptsTab)
-        mainTabbedPane.add(espTab)
+        mainTabbedPane.add(visualsTab)
         mainTabbedPane.add(rcsTab)
         mainTabbedPane.add(bTrigTab)
         mainTabbedPane.add(misc)
@@ -62,7 +61,7 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
         mainTabbedPane.switchTab(aimTab)
 
         //mainTabbedPaneContent.add(aimTab.contentTable) //Aim.kts is the initial window, initialize pane content with tabs contents
-        mainTabbedPaneContent.add(aimTab.contentTable)
+        mainTabbedPaneContent.add(aimTab.contentTable).growX()
 
 
         mainTabbedPane.addListener(object : TabbedPaneAdapter() {
@@ -73,25 +72,22 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
 
                 when (tab) {
                     aimTab -> {
-                        mainTabbedPaneContent.add(aimTab.contentTable)
+                        mainTabbedPaneContent.add(aimTab.contentTable).growX()
                     }
                     settings -> {
-                        mainTabbedPaneContent.add(settings.contentTable)
-                    }
-                    scriptsTab -> {
-                        mainTabbedPaneContent.add(scriptsTab.contentTable)
+                        mainTabbedPaneContent.add(settings.contentTable).growX()
                     }
                     rcsTab -> {
-                        mainTabbedPaneContent.add(rcsTab.contentTable)
+                        mainTabbedPaneContent.add(rcsTab.contentTable).growX()
                     }
                     bTrigTab -> {
-                        mainTabbedPaneContent.add(bTrigTab.contentTable)
+                        mainTabbedPaneContent.add(bTrigTab.contentTable).growX()
                     }
-                    espTab -> {
-                        mainTabbedPaneContent.add(espTab.contentTable)
+                    visualsTab -> {
+                        mainTabbedPaneContent.add(visualsTab.contentTable).growX()
                     }
                     misc -> {
-                        mainTabbedPaneContent.add(misc.contentTable)
+                        mainTabbedPaneContent.add(misc.contentTable).growX()
                     }
                 }
             }
@@ -99,7 +95,7 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
 
         add(mainTabbedPane.table).growX().minSize(25F).row()
 
-        add(mainScrollPane).minSize(500F, 500F).align(Align.center)
+        add(mainScrollPane).minSize(500F, 500F).align(Align.left).growX().row()
 
         pack()
         centerWindow()

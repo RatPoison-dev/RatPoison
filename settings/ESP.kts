@@ -15,25 +15,25 @@ SKELETON_ESP = false
  * Whether or not to use box ESP.
  * This requires the overlay which only works when borderless fullscreen or windowed.
  */
-BOX_ESP = true
+BOX_ESP = false
 
 /**
  * Whether or not health and weapon is displayed with box esp
  */
-BOX_ESP_DETAILS = true
+BOX_ESP_DETAILS = false
 
 /**
  * Whether or not to use the within-game glow ESP.
  *
  * This ESP **CANNOT** be hidden from game capture for streaming.
  */
-GLOW_ESP = false
+GLOW_ESP = true
 
 /**
  * Whether or not to invert the glow esp and highlight the player model instead of the outline
  * This works through walls, to change how thick/blurry it is adjust the alpha .5 through 1 should work fine
  */
-INV_GLOW_ESP = false
+INV_GLOW_ESP = true
 
 /**
  * Model ESP glow tied to glow_esp, makes the model glow and only when visible, instead of an outline through walls
@@ -136,7 +136,7 @@ TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
 /**
  * The color to highlight your enemies.
  */
-ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=1.0)
+ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6745098233222961)
 
 /**
  * The color to highlight the bomb.
@@ -146,7 +146,7 @@ BOMB_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
 /**
  * The color to highlight weapons.
  */
-WEAPON_COLOR = Color(red=0, green=0, blue=0, alpha=1.0)
+WEAPON_COLOR = Color(red=251, green=0, blue=255, alpha=0.49803921580314636)
 
 /**
  * The color to highlight grenades.

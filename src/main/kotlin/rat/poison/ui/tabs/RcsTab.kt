@@ -9,14 +9,21 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.App
 import rat.poison.settings.*
 import rat.poison.ui.changed
+import rat.poison.ui.rcsTab
 
 class RcsTab : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
+    val enableRCS = VisCheckBox("Enable RCS") //RCS
+
     val rcsSmoothingLabel = VisLabel("RCS Smoothing: $RCS_SMOOTHING") //RCS_Smoothing
     val rcsSmoothingSlider = VisSlider(0.1F, 1F, .1F, false) //RCS_Smoothing
-    val rcsReturnAim = VisTextButton("RCS_RETURNAIM", "toggle") //RCS_ReturnAim
+    val rcsReturnAim = VisCheckBox("Return Aim") //RCS_ReturnAim
+
+
+    val enableRCrosshair = VisCheckBox("Enable Recoil Crosshair") //Recoil_Crosshair
+
     val rCrosshairWidthLabel = VisLabel("RCrosshair Width: $RCROSSHAIR_WIDTH") //RCrosshair_Width
     val rCrosshairWidthSlider = VisSlider(1F, 5F, 1F, false) //RCrosshair_Width
     val rcsCrosshairLengthLabel = VisLabel("RCrosshair Length: $RCROSSHAIR_LENGTH" + when(RCROSSHAIR_LENGTH.toString().length) { 2->"  " else ->"    "}) //RCrosshair_Length
@@ -26,6 +33,17 @@ class RcsTab : Tab(false, false) {
     val rCrosshairColorShow = VisTextButton("Set RCrosshair Color") //RCrosshair_Color
 
     init {
+        //Create Enable_Rcs Toggle
+        //val enableRCS = VisCheckBox("Enable RCS")
+        Tooltip.Builder("Whether or not to enable the recoil control system").target(enableRCS).build()
+        enableRCS.isChecked = ENABLE_RCS
+        enableRCS.changed { _, _ ->
+            ENABLE_RCS = enableRCS.isChecked
+            rcsTab.rcsSmoothingSlider.isDisabled = !ENABLE_RCS
+            rcsTab.rcsReturnAim.isDisabled = !ENABLE_RCS
+            true
+        }
+
         //Create RCS_Smoothing
         val rcsSmoothing = VisTable()
         Tooltip.Builder("The smoothing of the recoil control system").target(rcsSmoothing).build()
@@ -40,13 +58,28 @@ class RcsTab : Tab(false, false) {
         rcsSmoothing.add(rcsSmoothingSlider)
 
         //Create RCS_ReturnAim
-        //val rcsReturnAim = VisTextButton("RCS_RETURNAIM", "toggle")
+        //val rcsReturnAim = VisCheckBox("Return Aim")
         Tooltip.Builder("Whether or not to reset your crosshair after spraying").target(rcsReturnAim).build()
         if (RCS_RETURNAIM) rcsReturnAim.toggle()
         rcsReturnAim.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
                 RCS_RETURNAIM = rcsReturnAim.isChecked
             }
+        }
+
+        //Create Enable_Recoil_Crosshair Toggle
+        //val enableRCrosshair = VisCheckBox("Enable Recoil Crosshair")
+        Tooltip.Builder("Whether or not to enable the recoil crosshair").target(enableRCrosshair).build()
+        enableRCrosshair.isChecked = ENABLE_RECOIL_CROSSHAIR
+        enableRCrosshair.changed { _, _ ->
+            ENABLE_RECOIL_CROSSHAIR = enableRCrosshair.isChecked
+            rcsTab.apply {
+                rCrosshairWidthSlider.isDisabled = !ENABLE_RECOIL_CROSSHAIR
+                rcsCrosshairLengthSlider.isDisabled = !ENABLE_RECOIL_CROSSHAIR
+                rCrosshairAlphaSlider.isDisabled = !ENABLE_RECOIL_CROSSHAIR
+                rCrosshairColorShow.isDisabled = !ENABLE_RECOIL_CROSSHAIR
+            }
+            true
         }
 
         //Create RCrosshair_Width
@@ -115,9 +148,11 @@ class RcsTab : Tab(false, false) {
 
 
         //Add all items to label for tabbed pane content
+        table.add(enableRCS).row() //Add Enable_Rcs Toggle
         table.add(rcsSmoothing).row() //Add RCS_Smoothing Slider
         table.add(rcsReturnAim).row() //Add RCS_ReturnAim Toggle
         table.addSeparator()
+        table.add(enableRCrosshair).row() //Add Enable_RCrosshair Toggle
         table.add(rCrosshairWidth).row() //Add RCrosshair_Width Slider
         table.add(rCrosshairLength).row() //Add RCrosshair_Length Slider
         table.add(rCrosshairAlpha).row() //Add RCrosshair_Alpha Slider
