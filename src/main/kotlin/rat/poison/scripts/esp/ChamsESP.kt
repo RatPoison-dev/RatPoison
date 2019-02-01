@@ -64,6 +64,9 @@ internal fun chamsEsp() = every(500) {
                 } else if (SHOW_TEAM && team) {
                     entity.chams(TEAM_COLOR)
                 }
+                else {
+                    entity.chams(Color((255F / (CHAMS_BRIGHTNESS/10F)).toInt(), (255F / (CHAMS_BRIGHTNESS/10F)).toInt(), (255F / (CHAMS_BRIGHTNESS/10F)).toInt(), 1.0))
+                }
             }
 
             EntityType.CPlantedC4, EntityType.CC4 -> if (SHOW_BOMB) {
