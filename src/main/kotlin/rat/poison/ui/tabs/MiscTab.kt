@@ -8,6 +8,7 @@ import com.sun.jna.platform.win32.WinNT
 import org.jire.arrowhead.keyPressed
 import rat.poison.App
 import rat.poison.settings.*
+import rat.poison.ui.UIUpdate
 import rat.poison.ui.changed
 import rat.poison.utils.ObservableBoolean
 
@@ -48,6 +49,8 @@ class Misc : Tab(false, false) {
                     SERVER_TICK_RATE = 128 // most leagues are 128-tick
                     PROCESS_ACCESS_FLAGS = WinNT.PROCESS_QUERY_INFORMATION or WinNT.PROCESS_VM_READ // all we need
                     GARBAGE_COLLECT_ON_MAP_START = true // get rid of traces
+
+                    UIUpdate()
                 }
             }
         }

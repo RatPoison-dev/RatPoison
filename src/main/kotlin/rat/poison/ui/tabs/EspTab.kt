@@ -20,6 +20,7 @@ class EspTab : Tab(false, false) {
     val glowEsp = VisTextButton("GLOW_ESP", "toggle") //Glow_Esp
     val invGlowEsp = VisTextButton("INV_GLOW_ESP", "toggle") //Inv_Glow_Esp
     val modelEsp = VisTextButton("MODEL_ESP", "toggle") //Model_Esp
+    val modelAndGlow = VisTextButton("MODEL_AND_GLOW", "toggle")
     val enemyIndicator = VisTextButton("ENEMY_INDICATOR", "toggle") //Enemy_Indicator
     val hitSound = VisTextButton("ENABLE_HITSOUND", "toggle") //Hit_Sound
     val hitSoundVolumeLabel = VisLabel("Hitsound Volume: $HITSOUND_VOLUME") //Hit_Sound_Volume
@@ -99,6 +100,16 @@ class EspTab : Tab(false, false) {
         modelEsp.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
                 MODEL_ESP = modelEsp.isChecked//!MODEL_ESP
+            }
+        }
+
+        //Create Model_And_Glow Toggle
+        //val modelAndGlow = VisTextButton("MODEL_AND_GLOW", "toggle")
+        Tooltip.Builder("Whether or not to enable model when visible, glow when not visible esp").target(modelAndGlow).build()
+        modelAndGlow.isChecked = MODEL_AND_GLOW
+        modelAndGlow.changed { _, _ ->
+            if (true) { //type Any? changes didnt work im autistic //fix later
+                MODEL_AND_GLOW = modelAndGlow.isChecked//!MODEL_ESP
             }
         }
 
@@ -361,6 +372,7 @@ class EspTab : Tab(false, false) {
         table.add(glowEsp).row() //Add Enable_Glow_Esp Toggle
         table.add(invGlowEsp).row() //Add Enable_Inv_Glow_Esp Toggle
         table.add(modelEsp).row() //Add Enable_Model_Esp Toggle
+        table.add(modelAndGlow).row() //Add Model_And_Glow Toggle
         table.add(enemyIndicator).row() //Add Enemy_Indicator Toggle
         table.add(hitSound).row() //Add Hit_Sound Toggle
         table.add(hitSoundVolume).row() //Add Hit_Sound_Volume Slider
