@@ -30,6 +30,7 @@ import rat.poison.settings.*
 import rat.poison.ui.DebuggerWindow
 import rat.poison.utils.*
 import java.io.*
+import javax.script.ScriptEngineManager
 
 //imports make me wet, cleanup later, offload to other files?
 //this bitch is a fucking m e s s //remove and cleanup before pushing, if i dont forget/sudoku
@@ -116,19 +117,25 @@ fun main(args: Array<String>) {
     }
 }
 
+//fun eval(script: String): Any? {
+//    with (ScriptEngineManager().getEngineByExtension("kts")) {
+//        return eval(script)
+//    }
+//}
+
+var engine = ScriptEngineManager().getEngineByName("kotlin")
 
 fun loadSettings() {
 	setIdeaIoUseFallback()
 
-	File(SETTINGS_DIRECTORY).listFiles().forEach {
+    File(SETTINGS_DIRECTORY).listFiles().forEach {
         if (it.name != "cfg.kts" && it.name != "sickomode.kts" && it.name != "hitsound.mp3") {
             FileReader(it).use {
-                Dojo.script(it.readLines().joinToString("\n"))
+                engine.eval(it.readLines().joinToString("\n"))
             }
         }
     }
 }
-
 
 ////Courtesy of Mr. Noad, lmlapp converted to normal
 object App : ApplicationAdapter() {

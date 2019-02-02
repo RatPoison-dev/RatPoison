@@ -136,7 +136,7 @@ TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
 /**
  * The color to highlight your enemies.
  */
-ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6745098233222961)
+ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6117647290229797)
 
 /**
  * The color to highlight the bomb.

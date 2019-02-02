@@ -1,10 +1,8 @@
 package rat.poison.scripts
 
 import rat.poison.SETTINGS_DIRECTORY
-import rat.poison.game.Color
 import rat.poison.loadSettings
 import rat.poison.settings.*
-import rat.poison.utils.Dojo
 import java.io.File
 import java.io.FileNotFoundException
 import java.nio.file.Files
@@ -66,7 +64,7 @@ fun scanner() {
             line.startsWith("set") -> { //Set variable, instance use only
                 println()
                 try {
-                    Dojo.script(line.trim().split(" ".toRegex(), 2)[1])
+                    //Dojo.script(line.trim().split(" ".toRegex(), 2)[1])
                     println("Set " + line.trim().split(" ".toRegex(), 2)[1])
                 } catch (e: ScriptException) {
                     println("Invalid variable")

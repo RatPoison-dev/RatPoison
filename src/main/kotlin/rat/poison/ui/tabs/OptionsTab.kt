@@ -4,16 +4,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.App
-import rat.poison.SETTINGS_DIRECTORY
+import org.jetbrains.kotlin.cli.common.environment.setIdeaIoUseFallback
+import rat.poison.*
 import rat.poison.ui.UIUpdate
 import rat.poison.ui.changed
-import rat.poison.utils.Dojo
-import rat.poison.utils.Dojo.engine
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
 import java.nio.file.StandardOpenOption
+import javax.script.ScriptEngineManager
 
 class Options : Tab(false, false) {
     private val table = VisTable(true)
@@ -37,6 +36,8 @@ class Options : Tab(false, false) {
         Tooltip.Builder("Save current configuration to the cfg file").target(saveButton).build()
         saveButton.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
+                setIdeaIoUseFallback()
+
                 val cfgfile = File("settings" + "\\" + "cfg.kts")
                 var cfgfiletext = ""
 
@@ -56,7 +57,7 @@ class Options : Tab(false, false) {
 
                                 //Add custom checks for variables that need a type ident ie F
                                 when {
-                                    /*Case: 1*/     curLine[0] == "FLASH_MAX_ALPHA" -> {cfgfiletext += curLine[0] + " = " + engine.eval(curLine[0]) + "F" + System.lineSeparator() }
+                                    /*Case: 1*/     curLine[0] == "FLASH_MAX_ALPHA" -> {cfgfiletext += curLine[0] + " = " + engine.eval(curLine[0]) + "F" + System.lineSeparator() } //conv to double later
                                     /*Case: Else*/  else -> { cfgfiletext += curLine[0] + " = " + engine.eval(curLine[0]) + System.lineSeparator() }
                                 }
 
@@ -65,10 +66,13 @@ class Options : Tab(false, false) {
                     }
                 }
 
+                //cleanup later
                 val saveFile = File("settings\\cfg.kts")
                 Files.delete(saveFile.toPath())
                 Files.createFile(saveFile.toPath())
                 Files.write(saveFile.toPath(), cfgfiletext.toByteArray(), StandardOpenOption.WRITE)
+                engine = ScriptEngineManager().getEngineByName("kotlin")
+                loadSettings()
                 println("\n Saving complete! \n")
             }
         }
@@ -82,7 +86,9 @@ class Options : Tab(false, false) {
                 Dialogs.showErrorDialog(App.stage, "Error", "cfg.kts not found, save your configuration first!")
             }
             else{
-                FileReader(cfgfile).use { Dojo.script(it.readLines().joinToString("\n"))}
+                FileReader(cfgfile).use { engine.eval(it.readLines().joinToString("\n"))}
+                engine = ScriptEngineManager().getEngineByName("kotlin")
+                loadSettings()
                 UIUpdate()
                 println("\n Loading complete! \n")
             }
@@ -92,8 +98,11 @@ class Options : Tab(false, false) {
         val sickoMode = VisTextButton("Activate Sicko Mode")
         Tooltip.Builder("Activate rage settings").target(sickoMode).build()
         sickoMode.changed { _, _ ->
-            Dojo.script(FileReader(SETTINGS_DIRECTORY + "\\sickomode.kts").readLines().joinToString("\n"))
+            engine.eval(FileReader("$SETTINGS_DIRECTORY\\sickomode.kts").readLines().joinToString("\n"))
+            engine = ScriptEngineManager().getEngineByName("kotlin")
+            loadSettings()
             UIUpdate()
+            println("\n Sicko mode activated! \n")
         }
 
         //Create Save Current Config To Default
@@ -119,13 +128,13 @@ class Options : Tab(false, false) {
                             prevLines += line + System.lineSeparator()
                         }
                     }
-
-                    //Wipe file? Had problems with last line staying
                     Files.delete(file.toPath())
                     Files.createFile(file.toPath())
                     Files.write(file.toPath(), prevLines.toByteArray(), StandardOpenOption.WRITE)
                 }
             }
+            engine = ScriptEngineManager().getEngineByName("kotlin")
+            loadSettings()
             println("\n Saving complete! \n")
         }
 
