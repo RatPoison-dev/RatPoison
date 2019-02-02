@@ -86,6 +86,11 @@ VISUALS_TOGGLE_KEY = 71
 MENU_KEY = 112
 
 /**
+ * Name of config file
+ */
+CFG_NAME = "Null"
+
+/**
  * The bone IDs of the respective bones for a player.
  *
  * The left-side number is for CS:CO, and the right-side number is for CS:GO.

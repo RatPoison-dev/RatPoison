@@ -88,7 +88,15 @@ var ACTION_LOG = true
  */
 var MENU_KEY = 112
 
+/**
+ * Key to toggle open gl menu, default is F1
+ */
 var MENUTOG = false
+
+/**
+ * Name of config file
+ */
+var CFG_NAME = "Null"
 
 /**
  * The bone IDs of the respective bones for a player.
