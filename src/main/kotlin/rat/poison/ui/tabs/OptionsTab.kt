@@ -72,7 +72,9 @@ class Options : Tab(false, false) {
                 Files.createFile(saveFile.toPath())
                 Files.write(saveFile.toPath(), cfgfiletext.toByteArray(), StandardOpenOption.WRITE)
                 engine = ScriptEngineManager().getEngineByName("kotlin")
-                loadSettings()
+                FileReader(saveFile).use {
+                    engine.eval(it.readLines().joinToString("\n"))
+                }
                 println("\n Saving complete! \n")
             }
         }
@@ -88,7 +90,7 @@ class Options : Tab(false, false) {
             else{
                 FileReader(cfgfile).use { engine.eval(it.readLines().joinToString("\n"))}
                 engine = ScriptEngineManager().getEngineByName("kotlin")
-                loadSettings()
+                FileReader(cfgfile).use { engine.eval(it.readLines().joinToString("\n"))}
                 UIUpdate()
                 println("\n Loading complete! \n")
             }
