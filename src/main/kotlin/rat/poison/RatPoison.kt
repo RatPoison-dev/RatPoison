@@ -117,19 +117,13 @@ fun main(args: Array<String>) {
     }
 }
 
-//fun eval(script: String): Any? {
-//    with (ScriptEngineManager().getEngineByExtension("kts")) {
-//        return eval(script)
-//    }
-//}
-
 var engine = ScriptEngineManager().getEngineByName("kotlin")
 
 fun loadSettings() {
 	setIdeaIoUseFallback()
 
     File(SETTINGS_DIRECTORY).listFiles().forEach {
-        if (it.name != "cfg.kts" && it.name != "sickomode.kts" && it.name != "hitsound.mp3") {
+        if (it.name != "cfg.kts" && it.name != "hitsound.mp3") {
             FileReader(it).use {
                 engine.eval(it.readLines().joinToString("\n"))
             }

@@ -50,7 +50,7 @@ class Options : Tab(false, false) {
                 cfgfiletext += "import rat.poison.game.Color" + System.lineSeparator() + System.lineSeparator()
 
                 File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
-                    if (file.name != "cfg.kts" && file.name != "sickomode.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
+                    if (file.name != "cfg.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
                         FileReader(file).readLines().forEach { line ->
                             if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
                                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
@@ -96,17 +96,6 @@ class Options : Tab(false, false) {
             }
         }
 
-        //Create SickoMode Button
-        val sickoMode = VisTextButton("Activate Sicko Mode")
-        Tooltip.Builder("Activate rage settings").target(sickoMode).build()
-        sickoMode.changed { _, _ ->
-            engine.eval(FileReader("$SETTINGS_DIRECTORY\\sickomode.kts").readLines().joinToString("\n"))
-            engine = ScriptEngineManager().getEngineByName("kotlin")
-            loadSettings()
-            UIUpdate()
-            println("\n Sicko mode activated! \n")
-        }
-
         //Create Save Current Config To Default
         val saveCurConfig = VisTextButton("Save Current Config To Default Settings")
         Tooltip.Builder("Save current configuration to the settings files").target(saveCurConfig).build()
@@ -115,7 +104,7 @@ class Options : Tab(false, false) {
             //val fileDir = "settings\\Aim.kts"
             File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
                 var prevLines = ""
-                if (file.name != "cfg.kts" && file.name != "sickomode.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
+                if (file.name != "cfg.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
                     FileReader(file).readLines().forEach { line ->
                         if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
                             val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
@@ -143,7 +132,6 @@ class Options : Tab(false, false) {
         table.add(menuAlpha).row() //width 250F
         table.add(saveButton).row()
         table.add(loadButton).row()
-        table.add(sickoMode).row()
         table.add(saveCurConfig).row()
     }
 
