@@ -102,6 +102,9 @@ class VisualsTab : Tab(false, false) {
         glowEsp.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
                 GLOW_ESP = glowEsp.isChecked//!GLOW_ESP
+                if (!GLOW_ESP) {
+                    disableEsp()
+                }
             }
         }
 
