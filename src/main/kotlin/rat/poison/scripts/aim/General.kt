@@ -125,7 +125,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		if (TARGET_SWAP_MAX_DELAY > 0) {
 			Thread.sleep(randLong(TARGET_SWAP_MIN_DELAY, TARGET_SWAP_MAX_DELAY))
 		}
-	} else if (currentTarget.onGround() && me.onGround()) {
+	} else { /*if (/*currentTarget.onGround() &&*/ me.onGround())*/
 		val bonePosition = currentTarget.bones(bone.get())
 		
 		val destinationAngle = calculateAngle(me, bonePosition)
