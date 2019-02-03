@@ -24,7 +24,7 @@ private var currentIdx = 0
 
 internal fun skeletonEsp() {
 	App {
-		if (!SKELETON_ESP || !ENABLE_ESP) return@App
+		if (!SKELETON_ESP || !ENABLE_ESP || MENUTOG) return@App
 
 		forEntities(ccsPlayer) {
 			val entity = it.entity
