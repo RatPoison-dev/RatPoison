@@ -60,26 +60,6 @@ fun main(args: Array<String>) {
         PROCESS_ACCESS_FLAGS = PROCESS_ACCESS_FLAGS or WinNT.PROCESS_VM_OPERATION
     }
 
-    if (LEAGUE_MODE) { //Currently not updated
-        GLOW_ESP = false
-        BOX_ESP = false
-        SKELETON_ESP = false
-        CHAMS_ESP = false
-        CHAMS_BRIGHTNESS = 0
-        MODEL_ESP = false
-        MODEL_AND_GLOW = false
-        ENEMY_INDICATOR = false
-        ENABLE_ESP = false
-
-        ENABLE_BOMB_TIMER = false
-        ENABLE_REDUCED_FLASH = false
-        ENABLE_FLAT_AIM = false
-
-        SERVER_TICK_RATE = 128 // most leagues are 128-tick
-        PROCESS_ACCESS_FLAGS = WinNT.PROCESS_QUERY_INFORMATION or WinNT.PROCESS_VM_READ // all we need
-        GARBAGE_COLLECT_ON_MAP_START = true // get rid of traces
-    }
-
     if (!MENU) {
         BOX_ESP = false
         SKELETON_ESP = false
@@ -101,6 +81,7 @@ fun main(args: Array<String>) {
     bombTimer()
     esp()
     espToggle()
+    automaticWeapon()
 
     //Overlay check, not updated?
     if (MENU || BOX_ESP || SKELETON_ESP || ENABLE_BOMB_TIMER || ENABLE_RECOIL_CROSSHAIR || ENEMY_INDICATOR) {

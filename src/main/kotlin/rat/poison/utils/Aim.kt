@@ -73,7 +73,8 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Int,
 	if (target.x <= 0 || target.x >= gameX + gameWidth || target.y <= 0 || target.y >= gameY + gameHeight) return
 
 	if (perfect) {
-		mouseMove((dx).toInt(), (dy).toInt())
+//		mouseMove((dx).toInt(), (dy).toInt())
+		writeAim(currentAngle, destinationAngle, 1.0)
 		Thread.sleep(20)
 	} else HumanMouse.fastSteps(mousePos, target) { steps, i ->
 		mousePos.refresh()

@@ -21,6 +21,18 @@ ACTIVATE_FROM_FIRE_KEY = true
 TEAMMATES_ARE_ENEMIES = false
 
 /**
+ * Whether non-automatic weapons shoot when FIRE_KEY is held down
+ */
+AUTOMATIC_WEAPONS = true
+
+/**
+ * Punch check delay in ms, if punch has been 0 for this amount of time in ms, shoot
+ * This is used to tap while using AUTOMATIC_WEAPONS
+ * The lower the less accurate
+ */
+MAX_PUNCH_CHECK = 16
+
+/**
  * The key code of the force aim button.
  *
  * By default, this uses the backward mouse button
@@ -51,12 +63,6 @@ SHIFT_TO_SHOULDER_SHOTS = 3
  * The amount of sprayed shots until the aimbot shifts to aiming at the [BODY_BONE].
  */
 SHIFT_TO_BODY_SHOTS = 4
-
-/**
- * Set this to true if you're playing on a league like ESEA, FaceIT, etc.
- * This will disable writing to the game and disable all visuals.
- */
-LEAGUE_MODE = false
 
 /**
  * Set this to true if you're playing CS:CO (Counter-Strike: Classic Offensive).

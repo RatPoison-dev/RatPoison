@@ -19,6 +19,18 @@ var ACTIVATE_FROM_FIRE_KEY = true
 var TEAMMATES_ARE_ENEMIES = false
 
 /**
+ * Whether non-automatic weapons shoot when FIRE_KEY is held down
+ */
+var AUTOMATIC_WEAPONS = true
+
+/**
+ * Punch check delay in ms, if punch has been 0 for this amount of time in ms, shoot
+ * This is used to tap while using AUTOMATIC_WEAPONS
+ * The lower the less accurate
+ */
+var MAX_PUNCH_CHECK = 16
+
+/**
  * The key code of the force aim button.
  *
  * By default, this uses the backward mouse button
@@ -49,12 +61,6 @@ var SHIFT_TO_SHOULDER_SHOTS = 3
  * The amount of sprayed shots until the aimbot shifts to aiming at the [BODY_BONE].
  */
 var SHIFT_TO_BODY_SHOTS = 4
-
-/**
- * Set this to true if you're playing on a league like ESEA, FaceIT, etc.
- * This will disable writing to the game and disable all visuals.
- */
-var LEAGUE_MODE = false
 
 /**
  * This will be set by constructEntities hook

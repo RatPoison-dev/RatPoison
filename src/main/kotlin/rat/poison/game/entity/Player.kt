@@ -15,7 +15,6 @@ import rat.poison.game.netvars.NetVarOffsets.hActiveWeapon
 import rat.poison.game.netvars.NetVarOffsets.iHealth
 import rat.poison.game.netvars.NetVarOffsets.lifeState
 import rat.poison.game.netvars.NetVarOffsets.nTickBase
-import rat.poison.game.netvars.NetVarOffsets.vecPunch
 import rat.poison.game.netvars.NetVarOffsets.vecVelocity
 import rat.poison.game.netvars.NetVarOffsets.vecViewOffset
 import rat.poison.game.offsets.ClientOffsets.dwEntityList
@@ -27,6 +26,7 @@ import rat.poison.utils.extensions.uint
 import rat.poison.utils.readCached
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
+import rat.poison.game.netvars.NetVarOffsets.aimPunchAngle
 
 typealias Player = Long
 
@@ -59,8 +59,8 @@ internal fun Player.dead() = try {
 private val player2Punch: Long2ObjectMap<Angle> = Long2ObjectOpenHashMap(255)
 
 internal fun Player.punch(): Angle = readCached(player2Punch) {
-	x = csgoEXE.float(it + vecPunch).toDouble()
-	y = csgoEXE.float(it + vecPunch + 4).toDouble()
+	x = csgoEXE.float(it + aimPunchAngle).toDouble()
+	y = csgoEXE.float(it + aimPunchAngle + 4).toDouble()
 	z = 0.0
 }
 

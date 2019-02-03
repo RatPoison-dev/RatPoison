@@ -16,7 +16,6 @@ class Misc : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
-    val leagueMode = VisCheckBox("Enable League Mode") //League_Mode
     val enableBunnyHop = VisCheckBox("Enable Bunny Hop") //Bunny_Hop
     val enableBombTimer = VisCheckBox("Enable Bomb Timer") //Bomb_Timer
     val fireKeyField = VisValidatableTextField(Validators.FLOATS) //Activate_From_Fire_Key
@@ -27,37 +26,6 @@ class Misc : Tab(false, false) {
     val flashMaxAlphaSlider = VisSlider(0F, 255F, 1F, false) //Flash_Max_Alpha
 
     init {
-        //Create League_Mode Toggle
-        //val leagueMode = VisTextButton("LEAGUE_MODE", "toggle")
-        Tooltip.Builder("Whether or not to enable league mode").target(leagueMode).build()
-        if (LEAGUE_MODE) leagueMode.toggle()
-        leagueMode.changed { _, _ ->
-            if (true) { //type Any? changes didnt work im autistic //fix later
-                LEAGUE_MODE = leagueMode.isChecked//!LEAGUE_MODE
-                if (LEAGUE_MODE) {
-                    GLOW_ESP = false
-                    BOX_ESP = false
-                    SKELETON_ESP = false
-                    CHAMS_ESP = false
-                    CHAMS_BRIGHTNESS = 0
-                    MODEL_ESP = false
-                    MODEL_AND_GLOW = false
-                    ENEMY_INDICATOR = false
-                    ENABLE_ESP = false
-
-                    ENABLE_BOMB_TIMER = false
-                    ENABLE_REDUCED_FLASH = false
-                    ENABLE_FLAT_AIM = false
-
-                    SERVER_TICK_RATE = 128 // most leagues are 128-tick
-                    PROCESS_ACCESS_FLAGS = WinNT.PROCESS_QUERY_INFORMATION or WinNT.PROCESS_VM_READ // all we need
-                    GARBAGE_COLLECT_ON_MAP_START = true // get rid of traces
-
-                    UIUpdate()
-                }
-            }
-        }
-
         //Create Enable_Bunny_Hop Toggle
         //val enableBunnyHop = VisTextButton("ENABLE_BUNNY_HOP", "toggle")
         Tooltip.Builder("Whether or not to enable bunny hop").target(enableBunnyHop).build()
@@ -146,7 +114,6 @@ class Misc : Tab(false, false) {
 
 
         //Add all items to label for tabbed pane content
-        table.add(leagueMode).row() //Add League_Mode Toggle
         table.add(enableBunnyHop).row() //Add Enable_Bunny_Hop Toggle
         table.add(enableBombTimer).row() //Add Enable_Bomb_Timer Toggle
 

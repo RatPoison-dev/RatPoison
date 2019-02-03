@@ -314,7 +314,6 @@ fun UIUpdate() {
 
     //Misc Tab
     misc.apply {
-        leagueMode.isChecked = LEAGUE_MODE
         enableBunnyHop.isChecked = ENABLE_BUNNY_HOP
         enableBombTimer.isChecked = ENABLE_BOMB_TIMER
         fireKeyField.text = FIRE_KEY.toString()

@@ -19,9 +19,11 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val activateFromFireKey = VisCheckBox("Activate From Fire Key") //Activate_From_Fire_Key
     val teammatesAreEnemies = VisCheckBox("Teammates Are Enemies") //Teammates_Are_Enemies
     val forceAimKeyField = VisValidatableTextField(Validators.FLOATS) //Force_Aim_Key
+    val automaticWeapons = VisCheckBox("Automatic Weapons")
+    val maxPunchCheckLabel = VisLabel("Max Punch Check: " + MAX_PUNCH_CHECK.toString() + when(MAX_PUNCH_CHECK.toString().length) {3->"" 2->"  " else ->"    "}) //Max_Punch_Check
+    val maxPunchCheckSlider = VisSlider(1F, 32F, 1F, false) //Max_Punch_Check
 
     val categorySelectionBox = VisSelectBox<String>() //Category
-
 
     val enableFlatAim = VisCheckBox("Flat Aim") //Enable_Flat_Aim
     val enablePathAim = VisCheckBox("Path Aim") //Enable_Path_Aim
@@ -67,6 +69,29 @@ class AimTab : Tab(true, false) { //Aim.kts tab
                 TEAMMATES_ARE_ENEMIES = teammatesAreEnemies.isChecked//!TEAMMATES_ARE_ENEMIES
             }
         }
+
+        //Create Automatic_Weapons Toggle
+        //val automaticWeapons = VisTextButton("Automatic Weapons", "toggle")
+        Tooltip.Builder("Non-automatic weapons will auto shoot when there is no punch and the fire key is pressed").target(automaticWeapons).build()
+        automaticWeapons.isChecked = AUTOMATIC_WEAPONS
+        automaticWeapons.changed { _, _ ->
+            if (true) { //type Any? changes didnt work im autistic /fixl ater
+                AUTOMATIC_WEAPONS = automaticWeapons.isChecked
+            }
+        }
+
+        //Create Max_Punch_Check Slider
+        val maxPunchCheck = VisTable()
+        Tooltip.Builder("The ms delay between checking punch to fire a shot using AUTOMATIC_WEAPONS, the lower the less accurate but faster firing").target(maxPunchCheck).build()
+//      val maxPunchCheckLabel = VisLabel("Max Punch Check: " + MAX_PUNCH_CHECK.toString() + when(MAX_PUNCH_CHECK.toString().length) {3->"" 2->"  " else ->"    "}) //Max_Punch_Check
+//      val maxPunchCheckSlider = VisSlider(1F, 32F, 1F, false) //Max_Punch_Check
+        maxPunchCheckSlider.value = MAX_PUNCH_CHECK.toFloat()
+        maxPunchCheckSlider.changed { _, _ ->
+            MAX_PUNCH_CHECK = maxPunchCheckSlider.value.toInt()
+            maxPunchCheckLabel.setText("Max Punch Check: " + MAX_PUNCH_CHECK.toString() + when(MAX_PUNCH_CHECK.toString().length) {3->"" 2->"  " else ->"    "})
+        }
+        maxPunchCheck.add(maxPunchCheckLabel)//.spaceRight(6F)
+        maxPunchCheck.add(maxPunchCheckSlider)
 
         //Create Force_Aim_Key Input
         val forceAimKey = VisTable()
@@ -654,6 +679,8 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         //Add all items to label for tabbed pane content
         table.add(activateFromFireKey).row()
         table.add(teammatesAreEnemies).row()
+        table.add(automaticWeapons).row()
+        table.add(maxPunchCheck).row()
         table.add(forceAimKey).row()
         table.addSeparator()
         table.add(categorySelection).row() //Add Category_Selection
