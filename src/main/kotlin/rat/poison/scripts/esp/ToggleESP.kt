@@ -8,7 +8,7 @@ import rat.poison.ui.UIUpdate
 import rat.poison.utils.every
 
 fun espToggle() = every(4) {
-    if (keyPressed(VISUALS_TOGGLE_KEY) && !MENUTOG) {
+    if (keyPressed(VISUALS_TOGGLE_KEY)) {
         ENABLE_ESP = !ENABLE_ESP
         if (!ENABLE_ESP) {
             disableEsp()

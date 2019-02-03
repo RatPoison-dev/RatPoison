@@ -1,5 +1,6 @@
 package rat.poison.utils
 
+import rat.poison.settings.MENUTOG
 import java.util.concurrent.ThreadLocalRandom
 import kotlin.concurrent.thread
 
@@ -15,9 +16,8 @@ inline fun every(minDuration: Int, maxDuration: Int,
                  continuous: Boolean = false,
                  crossinline body: () -> Unit) = thread {
     while (!Thread.interrupted()) {
-        if (continuous || !(inBackground && notInGame)) body()
-        Thread.sleep((if (maxDuration > minDuration)
-            ThreadLocalRandom.current().nextInt(maxDuration - minDuration + 1) + minDuration
-        else minDuration).toLong())
+        if (continuous || (!MENUTOG && !inBackground && !notInGame)) body()
+
+        Thread.sleep((if (maxDuration > minDuration) ThreadLocalRandom.current().nextInt(maxDuration - minDuration + 1) + minDuration else minDuration).toLong())
     }
 }
