@@ -16,7 +16,7 @@ inline fun every(minDuration: Int, maxDuration: Int,
                  continuous: Boolean = false,
                  crossinline body: () -> Unit) = thread {
     while (!Thread.interrupted()) {
-        if (continuous || (!MENUTOG && !inBackground && !notInGame)) body()
+        if (continuous || (!MENUTOG && !inBackground)) body()
 
         Thread.sleep((if (maxDuration > minDuration) ThreadLocalRandom.current().nextInt(maxDuration - minDuration + 1) + minDuration else minDuration).toLong())
     }

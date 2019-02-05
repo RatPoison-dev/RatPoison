@@ -40,10 +40,10 @@ fun rcs() = every(1) {
 			normalize()
 		}
 
+		clientState.setAngle(angle)
+
 		lastPunch.x = playerPunch.x
 		lastPunch.y = playerPunch.y
-
-		clientState.setAngle(angle)
 
 		if (forceSet) {
 			lastPunch.set(0F, 0F)

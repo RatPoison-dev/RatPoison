@@ -13,12 +13,11 @@ import rat.poison.settings.*
 import rat.poison.utils.Vector
 import rat.poison.utils.distanceTo
 import rat.poison.utils.inBackground
-import rat.poison.utils.notInGame
 
 //Add radius var and oval toggle
 
 internal fun miscEsp() = App {
-    if (!ENABLE_ESP || MENUTOG || inBackground || notInGame || !INDICATOR_ESP) return@App //Needed menutog/notingame/inbackground or would crash at w2s view matrix
+    if (!ENABLE_ESP || MENUTOG || inBackground || !INDICATOR_ESP) return@App //Needed menutog/notingame/inbackground or would crash at w2s view matrix
 
     forEntities {
         val entity = it.entity
