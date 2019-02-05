@@ -138,7 +138,7 @@ class Options : Tab(false, false) {
                             //Add custom checks for variables that need a type ident ie F
                             when {
                                 /*Case: 1*/     curLine[0] == "FLASH_MAX_ALPHA" -> {prevLines += curLine[0] + " = " + engine.eval(curLine[0]) + "F" + System.lineSeparator() }
-                                /*Case: 2*/     curLine[0] == "CFG_NAME" -> {prevLines += curLine[0] + "= \"" + engine.eval(curLine[0]) + "\"" + System.lineSeparator()}
+                                /*Case: 2*/     curLine[0] == "CFG_NAME" -> {prevLines += curLine[0] + " = \"" + engine.eval(curLine[0]) + "\"" + System.lineSeparator()}
                                 /*Case: Else*/  else -> { prevLines += curLine[0] + " = " + engine.eval(curLine[0]) + System.lineSeparator() }
                             }
 

@@ -23,8 +23,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val maxPunchCheckLabel = VisLabel("Max Punch Check: " + MAX_PUNCH_CHECK.toString() + when(MAX_PUNCH_CHECK.toString().length) {3->"" 2->"  " else ->"    "}) //Max_Punch_Check
     val maxPunchCheckSlider = VisSlider(1F, 32F, 1F, false) //Max_Punch_Check
 
-    val categorySelectionBox = VisSelectBox<String>() //Category
-
+    private val categorySelectionBox = VisSelectBox<String>() //Category
     val enableFlatAim = VisCheckBox("Flat Aim") //Enable_Flat_Aim
     val enablePathAim = VisCheckBox("Path Aim") //Enable_Path_Aim
     val aimBoneBox = VisSelectBox<String>() //Aim_Bone
@@ -40,14 +39,14 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     private val perfectAimTable = VisTable() //Perfect_Aim_Collapsible Table
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable) //Perfect_Aim_Collapsible
     val perfectAimFovLabel = VisLabel("Perfect Aim Fov: " + PISTOL_PERFECT_AIM_FOV.toString() + when(PISTOL_PERFECT_AIM_FOV.toString().length) {3->"  " 2->"    " else ->"      "}) //Perfect_Aim_Fov
-    val perfectAimFovSlider = VisSlider(0F, 100F, 1F, false) //Perfect_Aim_Fov
+    val perfectAimFovSlider = VisSlider(1F, 100F, 1F, false) //Perfect_Aim_Fov
     val perfectAimChanceLabel = VisLabel("Perfect Aim Chance: " + PISTOL_PERFECT_AIM_CHANCE.toString() + when(PISTOL_PERFECT_AIM_CHANCE.toString().length) {3->"  " 2->"    " else ->"      "}) //Perfect_Aim_Chance
-    val perfectAimChanceSlider = VisSlider(0F, 100F, 1F, false) //Perfect_Aim_Chance
+    val perfectAimChanceSlider = VisSlider(1F, 100F, 1F, false) //Perfect_Aim_Chance
     val aimAssistCheckBox = VisCheckBox("Enable Aim Assist") //Aim_Assist
     private val aimAssistTable = VisTable() //Aim_Assist_Collapsible Table
     val aimAssistCollapsible = CollapsibleWidget(aimAssistTable) //Aim_Assist_Collapsible
     val aimAssistStrictnessLabel = VisLabel("Aim Assist Strictness: " + PISTOL_AIM_ASSIST_STRICTNESS.toString() + when(PISTOL_AIM_ASSIST_STRICTNESS.toString().length) {3->"  " 2->"    " else ->"      "}) //Aim_Assist_Strictness
-    val aimAssistStrictnessSlider = VisSlider(0F, 100F, 1F, false) //Aim_Assist_Strictness
+    val aimAssistStrictnessSlider = VisSlider(1F, 100F, 1F, false) //Aim_Assist_Strictness
 
     init {
         //Create Activate_From_Fire_Key Toggle
@@ -607,7 +606,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
         //Create Aim_Assist_Strictness Slider
         val aimAssistStrictness = VisTable()
-        Tooltip.Builder("The aim assistance smoothness").target(aimAssistStrictness).build()
+        Tooltip.Builder("How close your crosshair is to the aim bone to determine whether to stop aiming").target(aimAssistStrictness).build()
         //val aimAssistStrictnessLabel = VisLabel("Aim Assist Strictness: " + RIFLE_AIM_ASSIST_STRICTNESS.toString() + when(RIFLE_AIM_ASSIST_STRICTNESS.toString().length) {3->"  " 2->"    " else ->"      "})
         //val aimAssistStrictnessSlider = VisSlider(0F, 100F, 1F, false)
         aimAssistStrictnessSlider.value = PISTOL_AIM_ASSIST_STRICTNESS.toFloat()

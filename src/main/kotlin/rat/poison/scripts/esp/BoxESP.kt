@@ -71,10 +71,6 @@ internal fun boxEsp() = App {
 				textRenderer.apply {
 					val glyph = GlyphLayout()
 
-//					text.append("Health: " + health.toLong())
-//					glyph.setText(textRenderer, text, 0, (text as CharSequence).length, Color.WHITE, 10F, Align.center, false, null)
-//					textRenderer.draw(sb, glyph, (x+(w/2)).toFloat(), (y+16).toFloat())
-
 					sb.begin()
 					color = Color.WHITE
 					val text = StringBuilder()
@@ -85,7 +81,7 @@ internal fun boxEsp() = App {
 
 					set(ShapeRenderer.ShapeType.Filled)
 					this@sr.color = Color(1F - (.01F*health), (.01F*health), 0F, 1F)
-					rect(x+w-4F, (y+h).toFloat(), -4F, -(h*(health/100F))) //Something better than ((4F*((x+w)/(x+w)*1.2F)
+					rect(x+w-4F, (y+h).toFloat(), w*.1F, -(h*(health/100F))) //Something better than ((4F*((x+w)/(x+w)*1.2F)
 					set(ShapeRenderer.ShapeType.Line)
 					this@sr.color = Color.WHITE
 				}

@@ -65,7 +65,7 @@ fun main(args: Array<String>) {
         SKELETON_ESP = false
         ENABLE_RECOIL_CROSSHAIR = false
         ENABLE_BOMB_TIMER = false
-        ENEMY_INDICATOR = false
+        INDICATOR_ESP = false
     }
 
     CSGO.initialize()
@@ -84,7 +84,7 @@ fun main(args: Array<String>) {
     automaticWeapon()
 
     //Overlay check, not updated?
-    if (MENU || BOX_ESP || SKELETON_ESP || ENABLE_BOMB_TIMER || ENABLE_RECOIL_CROSSHAIR || ENEMY_INDICATOR) {
+    if (MENU || BOX_ESP || SKELETON_ESP || ENABLE_BOMB_TIMER || ENABLE_RECOIL_CROSSHAIR || INDICATOR_ESP) {
         App.open()
 
         Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {

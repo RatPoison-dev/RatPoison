@@ -17,8 +17,8 @@ class RcsTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     val enableRCS = VisCheckBox("Enable RCS") //RCS
 
-    val rcsSmoothingLabel = VisLabel("RCS Smoothing: $RCS_SMOOTHING") //RCS_Smoothing
-    val rcsSmoothingSlider = VisSlider(0.1F, 1F, .1F, false) //RCS_Smoothing
+    val rcsSmoothingLabel = VisLabel("RCS Smoothing: $RCS_SMOOTHING" + when(RCS_SMOOTHING.toString().length) {3->"" 2->"  " else->"    "}) //RCS_Smoothing
+    val rcsSmoothingSlider = VisSlider(0.1F, 1F, .02F, false) //RCS_Smoothing
     val rcsReturnAim = VisCheckBox("Return Aim") //RCS_ReturnAim
 
 
@@ -26,7 +26,7 @@ class RcsTab : Tab(false, false) {
 
     val rCrosshairWidthLabel = VisLabel("RCrosshair Width: $RCROSSHAIR_WIDTH") //RCrosshair_Width
     val rCrosshairWidthSlider = VisSlider(1F, 5F, 1F, false) //RCrosshair_Width
-    val rcsCrosshairLengthLabel = VisLabel("RCrosshair Length: $RCROSSHAIR_LENGTH" + when(RCROSSHAIR_LENGTH.toString().length) { 2->"  " else ->"    "}) //RCrosshair_Length
+    val rcsCrosshairLengthLabel = VisLabel("RCrosshair Length: $RCROSSHAIR_LENGTH" + when(RCROSSHAIR_LENGTH.toString().length) {2->"  " else ->"    "}) //RCrosshair_Length
     val rcsCrosshairLengthSlider = VisSlider(3F, 30F, 1F, false) //RCrosshair_Length
     val rCrosshairAlphaLabel = VisLabel("RCrosshair Alpha: $RCROSSHAIR_ALPHA") //RCrosshair_Alpha
     val rCrosshairAlphaSlider = VisSlider(0.1F, 1F, 0.1F, false) //RCrosshair_Alpha
@@ -51,8 +51,8 @@ class RcsTab : Tab(false, false) {
         //val rcsSmoothingSlider = VisSlider(0.1F, 1F, .1F, false)
         rcsSmoothingSlider.value = RCS_SMOOTHING.toFloat()
         rcsSmoothingSlider.changed { _, _ ->
-            RCS_SMOOTHING = Math.round(rcsSmoothingSlider.value.toDouble() * 10.0)/10.0
-            rcsSmoothingLabel.setText("RCS Smoothing: $RCS_SMOOTHING")
+            RCS_SMOOTHING = Math.round(rcsSmoothingSlider.value.toDouble() * 100.0)/100.0
+            rcsSmoothingLabel.setText("RCS Smoothing: $RCS_SMOOTHING" + when(RCS_SMOOTHING.toString().length) {4->"" 3->"  " 2->"    " else->"      "})
         }
         rcsSmoothing.add(rcsSmoothingLabel).spaceRight(6F) //when gets rid of spaceright
         rcsSmoothing.add(rcsSmoothingSlider)

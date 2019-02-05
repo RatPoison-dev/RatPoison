@@ -36,13 +36,13 @@ fun worldToScreen(from: Vector, vOut: Vector) = try {
 		var y = height / 2.0
 		
 		x += 0.5 * vOut.x * width + 0.5
-		y += 0.5 * vOut.y * height + 0.5 //For future, -= was changed to +=, it was flipped for some reason
+		y += 0.5 * vOut.y * height + 0.5 //For future, -= was changed to +=, it was flipped
 
 		vOut.x = x
 		vOut.y = y
 		
 		true
-	} else if (!w.isNaN() && w < 0.001F) { //If behind
+	} else if (!w.isNaN() && w < 0.01F) { //If behind
 		val invw = -1.0 / w
 
 		vOut.x *= invw

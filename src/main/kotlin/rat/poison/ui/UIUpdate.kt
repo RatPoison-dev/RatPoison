@@ -10,6 +10,9 @@ fun UIUpdate() {
         activateFromFireKey.isChecked = ACTIVATE_FROM_FIRE_KEY
         teammatesAreEnemies.isChecked = TEAMMATES_ARE_ENEMIES
         forceAimKeyField.text = FORCE_AIM_KEY.toString()
+        automaticWeapons.isChecked = AUTOMATIC_WEAPONS
+        maxPunchCheckLabel.setText("Max Punch Check: " + MAX_PUNCH_CHECK.toString() + when(MAX_PUNCH_CHECK.toString().length) {3->"" 2->"  " else ->"    "}) //Max_Punch_Check)
+        maxPunchCheckSlider.value = MAX_PUNCH_CHECK.toFloat()
 
         when (categorySelected) {
             "PISTOL" -> {
@@ -264,7 +267,11 @@ fun UIUpdate() {
         invGlowEsp.isChecked = INV_GLOW_ESP
         modelEsp.isChecked = MODEL_ESP
         modelAndGlow.isChecked = MODEL_AND_GLOW
-        enemyIndicator.isChecked = ENEMY_INDICATOR
+        indicatorEsp.isChecked = INDICATOR_ESP
+        indicatorOnScreen.isChecked = INDICATOR_SHOW_ONSCREEN
+        indicatorOval.isChecked = INDICATOR_OVAL
+        indicatorDistanceLabel.setText("Indicator Distance: $INDICATOR_DISTANCE")
+        indicatorDistanceSlider.value = INDICATOR_DISTANCE.toFloat()
         hitSound.isChecked = ENABLE_HITSOUND
         hitSoundVolumeLabel.setText("Hitsound Volume: $HITSOUND_VOLUME")
         hitSoundVolumeSlider.value = HITSOUND_VOLUME.toFloat()

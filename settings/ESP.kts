@@ -27,13 +27,13 @@ BOX_ESP_DETAILS = false
  *
  * This ESP **CANNOT** be hidden from game capture for streaming.
  */
-GLOW_ESP = true
+GLOW_ESP = false
 
 /**
  * Whether or not to invert the glow esp and highlight the player model instead of the outline
  * This works through walls, to change how thick/blurry it is adjust the alpha .5 through 1 should work fine
  */
-INV_GLOW_ESP = true
+INV_GLOW_ESP = false
 
 /**
  * Model ESP glow tied to glow_esp, makes the model glow and only when visible, instead of an outline through walls
@@ -72,7 +72,22 @@ CHAMS_BRIGHTNESS = 0
  * Will draw circles around your screen to indicate enemy players location in relation to you
  * This requires the overlay which only works when borderless fullscreen or windowed.
  */
-ENEMY_INDICATOR = true
+INDICATOR_ESP = true
+
+/**
+ * Whether enemy indicator will indicate on screen entities
+ */
+INDICATOR_SHOW_ONSCREEN = true
+
+/**
+ * The distance from the edge of the screen for the indicator circle/oval
+ */
+INDICATOR_DISTANCE = 3.0
+
+/**
+ * Whether the indicators are in a circle of an oval on screen
+ */
+INDICATOR_OVAL = true
 
 /**
  * Will play a hitsound on enemy hit

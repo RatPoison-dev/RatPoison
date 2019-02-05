@@ -72,7 +72,22 @@ var CHAMS_BRIGHTNESS = 100
  * Will draw circles around your screen to indicate enemy players location in relation to you
  * This requires the overlay which only works when borderless fullscreen or windowed.
  */
-var ENEMY_INDICATOR = true
+var INDICATOR_ESP = true
+
+/**
+ * Whether enemy indicator will indicate on screen entities
+ */
+var INDICATOR_SHOW_ONSCREEN = true
+
+/**
+ * The distance from the edge of the screen for the indicator circle/oval
+ */
+var INDICATOR_DISTANCE = 3.0
+
+/**
+ * Whether the indicators are in a circle of an oval on screen
+ */
+var INDICATOR_OVAL = true
 
 /**
  * Will play a hitsound on enemy hit

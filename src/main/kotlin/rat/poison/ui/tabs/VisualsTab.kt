@@ -24,7 +24,11 @@ class VisualsTab : Tab(false, false) {
     val invGlowEsp = VisCheckBox("Inv Glow Esp") //Inv_Glow_Esp
     val modelEsp = VisCheckBox("Model Esp") //Model_Esp
     val modelAndGlow = VisCheckBox("Model & Glow Esp") //Model_And_Glow
-    val enemyIndicator = VisCheckBox("Enemy Indicator") //Enemy_Indicator
+    val indicatorEsp = VisCheckBox("Entity Indicator") //Enemy_Indicator
+    val indicatorOnScreen = VisCheckBox("Indicator Show Onscreen")
+    val indicatorOval = VisCheckBox("Indicator As Oval")
+    val indicatorDistanceLabel = VisLabel("Indicator Distance: $INDICATOR_DISTANCE")
+    val indicatorDistanceSlider = VisSlider(2.5F, 25F, 0.1F, false)
     val hitSound = VisCheckBox("Hitsound") //Hit_Sound
     val hitSoundVolumeLabel = VisLabel("Hitsound Volume: $HITSOUND_VOLUME") //Hit_Sound_Volume
     val hitSoundVolumeSlider = VisSlider(0.1F, 1F, 0.1F, false) //Hit_Sound_Volume
@@ -143,23 +147,53 @@ class VisualsTab : Tab(false, false) {
             }
         }
 
-        //Create ENEMY_INDICATOR Toggle
-        //val enemyIndicator = VisTextButton("ENEMY_INDICATOR", "toggle")
-        Tooltip.Builder("Whether or not to enable enemy indicator esp").target(enemyIndicator).build()
-        if (ENEMY_INDICATOR) enemyIndicator.toggle()
-        enemyIndicator.changed { _, _ ->
-            if (true) { //type Any? changes didnt work im autistic //fix later
-                ENEMY_INDICATOR = enemyIndicator.isChecked//!ENEMY_INDICATOR
-            }
+        //Create Indicator Esp Toggle
+        //val indicatorEsp = VisTextButton("INDICATOR_ESP", "toggle")
+        Tooltip.Builder("Whether or not to enable entity indicator esp").target(indicatorEsp).build()
+        indicatorEsp.isChecked = INDICATOR_ESP
+        indicatorEsp.changed { _, _ ->
+            INDICATOR_ESP = indicatorEsp.isChecked
+            true
         }
 
-        //Create ENEMY_INDICATOR Toggle
-        //val hitSound = VisTextButton("ENEMY_INDICATOR", "toggle")
+        //Create Onscreen Toggle
+        //val indicatorOnScreen =
+        Tooltip.Builder("Whether or not to indicate entities onscreen").target(indicatorOnScreen).build()
+        indicatorOnScreen.isChecked = INDICATOR_SHOW_ONSCREEN
+        indicatorOnScreen.changed { _, _ ->
+            INDICATOR_SHOW_ONSCREEN = indicatorOnScreen.isChecked
+            true
+        }
+
+        //Create Oval Toggle
+        //val indicatorOval =
+        Tooltip.Builder("Whether or not to display entities offscreen in an oval shape").target(indicatorOval).build()
+        indicatorOval.isChecked = INDICATOR_OVAL
+        indicatorOval.changed { _, _ ->
+            INDICATOR_OVAL = indicatorOval.isChecked
+            true
+        }
+
+        //Create Indicator Distance Slider
+        val indicatorDistance = VisTable()
+        Tooltip.Builder("The radius of the circle/oval of indicators").target(indicatorDistance).build()
+        //val indicatorDistanceLabel =
+        //val indicatorDistanceSlider =
+        indicatorDistanceSlider.value = INDICATOR_DISTANCE.toFloat()
+        indicatorDistanceSlider.changed { _, _ ->
+            INDICATOR_DISTANCE = Math.round(indicatorDistanceSlider.value.toDouble() * 10.0)/10.0 //Round to 1 decimal place
+            indicatorDistanceLabel.setText("Indicator Distance: $INDICATOR_DISTANCE")
+        }
+        indicatorDistance.add(indicatorDistanceLabel).spaceRight(6F)
+        indicatorDistance.add(indicatorDistanceSlider)
+
+        //Create Hit_Sound Toggle
+        //val hitSound = VisTextButton("Hit Sound", "toggle")
         Tooltip.Builder("Whether or not to enable a hitsound on hit").target(hitSound).build()
         if (ENABLE_HITSOUND) hitSound.toggle()
         hitSound.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_HITSOUND = hitSound.isChecked//!ENEMY_INDICATOR
+                ENABLE_HITSOUND = hitSound.isChecked//!INDICATOR_ESP
             }
         }
 
@@ -412,8 +446,16 @@ class VisualsTab : Tab(false, false) {
         table.add(invGlowEsp) //Add Enable_Inv_Glow_Esp Toggle
         table.add(modelEsp).row() //Add Enable_Model_Esp Toggle
 
-        table.add(modelAndGlow) //Add Model_And_Glow Toggle
-        table.add(enemyIndicator).row() //Add Enemy_Indicator Toggle
+        table.add(modelAndGlow).colspan(2).row() //Add Model_And_Glow Toggle
+
+        table.addSeparator().colspan(2)
+
+        table.add(indicatorEsp).colspan(2).row() //Add Enemy_Indicator Toggle
+
+        table.add(indicatorOnScreen)
+        table.add(indicatorOval).row()
+
+        table.add(indicatorDistance).colspan(2).row()
 
         table.addSeparator().colspan(2)
 
