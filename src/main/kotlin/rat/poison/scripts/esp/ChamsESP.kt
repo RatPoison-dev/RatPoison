@@ -36,11 +36,12 @@ internal fun chamsEsp() = every(500) {
             brightnessCounter = (255F/(CHAMS_BRIGHTNESS/10F)).toInt()
         } catch (ex: Exception) { }
 
+        //Set VMod
         csgoEXE[ClientVModEnt + 0x70] = Color(brightnessCounter, 0, 0, 1.0).red.toByte()
         csgoEXE[ClientVModEnt + 0x71] = Color(0, brightnessCounter, 0, 1.0).red.toByte()
         csgoEXE[ClientVModEnt + 0x72] = Color(0, 0, brightnessCounter, 1.0).red.toByte()
 
-        //Set cvar
+        //Set Cvar
         engineDLL[dwModelAmbientMin] = floatToIntBits(CHAMS_BRIGHTNESS.toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
 
         //Not exhaustive @warning
