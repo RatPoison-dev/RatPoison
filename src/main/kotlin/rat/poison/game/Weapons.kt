@@ -1,7 +1,7 @@
 package rat.poison.game
 
 enum class Weapons(val id: Int, val automatic: Boolean = false, val grenade: Boolean = false,
-                   val knife: Boolean = false, val bomb: Boolean = false, val sniper: Boolean = false, val boltAction: Boolean = false,
+                   val knife: Boolean = false, val sniper: Boolean = false, val boltAction: Boolean = false,
                    val pistol: Boolean = false, val shotgun: Boolean = false, val rifle: Boolean = false, val smg: Boolean = false) {
 	
 	NONE(0),
@@ -43,7 +43,7 @@ enum class Weapons(val id: Int, val automatic: Boolean = false, val grenade: Boo
 	MOLOTOV(46, grenade = true),
 	DECOY_GRENADE(47, grenade = true),
 	INCENDIARY_GRENADE(48, grenade = true),
-	C4(49, bomb = true),
+	C4(49),
 	KNIFE_T(59, knife = true),
 	M4A1_SILENCER(60, automatic = true, rifle = true),
 	USP_SILENCER(61, pistol = true),

@@ -76,10 +76,6 @@ fun indicatorPosition(screenPos: Vector3, indicatorPos: Vector3): Float {
 }
 
 fun w2sHandler(vector: Vector, dist: Double, drawColor: rat.poison.game.Color) {
-    if (vector.x == 0.0 && vector.y == 0.0 && vector.z == 0.0) { //Fixes ghost entities
-        return
-    }
-
     val vOut = Vector()
     val wTest = wTest(vector)
 

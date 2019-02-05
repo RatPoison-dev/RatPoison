@@ -16,7 +16,7 @@ var punchCheck = 0
 fun automaticWeapon() = every(4) {
     if (!AUTOMATIC_WEAPONS) return@every
 
-    if (!me.weapon().automatic && !me.weapon().bomb && keyPressed(FIRE_KEY)) {
+    if (!me.weapon().automatic && keyPressed(FIRE_KEY)) {
         val p = me.punch()
 
         //val pp = me.punchtest()
