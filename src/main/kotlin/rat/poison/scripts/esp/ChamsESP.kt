@@ -31,17 +31,14 @@ internal fun chamsEsp() = every(500) {
         //Edit playermodel to counter weapon brightness
         val ClientVModEnt = csgoEXE.uint(clientDLL.address + dwEntityList + (((csgoEXE.uint(csgoEXE.uint(clientDLL.address + dwLocalPlayer)+ m_hViewModel)) and 0xFFF) - 1) * 16)
 
+        var brightnessCounter = 255
         try {
-            (255F / (CHAMS_BRIGHTNESS/10F)) //Should cause an error in try instead of writing invalids, might fix crash error
-            csgoEXE[ClientVModEnt + 0x70] = Color((255F / (CHAMS_BRIGHTNESS/10F)).toInt(), 0, 0, 1.0).red.toByte()
-            csgoEXE[ClientVModEnt + 0x71] = Color(0, (255F / (CHAMS_BRIGHTNESS/10F)).toInt(), 0, 1.0).green.toByte()
-            csgoEXE[ClientVModEnt + 0x72] = Color(0, 0, (255F / (CHAMS_BRIGHTNESS/10F)).toInt(), 1.0).blue.toByte()
-        }
-        catch (ex: ArithmeticException) { //Divide by 0 catch ? //might be in wrong location, but hasn't happened since, guessing chamsbrightness/10 rounds down to 0
-            csgoEXE[ClientVModEnt + 0x70] = Color(255, 0, 0, 1.0).red.toByte()
-            csgoEXE[ClientVModEnt + 0x71] = Color(0, 255, 0, 1.0).green.toByte()
-            csgoEXE[ClientVModEnt + 0x72] = Color(0, 0, 255, 1.0).blue.toByte()
-        }
+            brightnessCounter = (255F/(CHAMS_BRIGHTNESS/10F)).toInt()
+        } catch (ex: Exception) { }
+
+        csgoEXE[ClientVModEnt + 0x70] = Color(brightnessCounter, 0, 0, 1.0).red.toByte()
+        csgoEXE[ClientVModEnt + 0x71] = Color(0, brightnessCounter, 0, 1.0).red.toByte()
+        csgoEXE[ClientVModEnt + 0x72] = Color(0, 0, brightnessCounter, 1.0).red.toByte()
 
         //Set cvar
         engineDLL[dwModelAmbientMin] = floatToIntBits(CHAMS_BRIGHTNESS.toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
@@ -65,7 +62,7 @@ internal fun chamsEsp() = every(500) {
                     entity.chams(TEAM_COLOR)
                 }
                 else {
-                    entity.chams(Color((255F / (CHAMS_BRIGHTNESS/10F)).toInt(), (255F / (CHAMS_BRIGHTNESS/10F)).toInt(), (255F / (CHAMS_BRIGHTNESS/10F)).toInt(), 1.0))
+                    entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
                 }
             }
 
@@ -75,7 +72,7 @@ internal fun chamsEsp() = every(500) {
                 }
                 else
                 {
-                    entity.chams(Color((255F / (CHAMS_BRIGHTNESS/10F)).toInt(), (255F / (CHAMS_BRIGHTNESS/10F)).toInt(), (255F / (CHAMS_BRIGHTNESS/10F)).toInt(), 1.0))
+                    entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
                 }
             }
 
@@ -85,7 +82,7 @@ internal fun chamsEsp() = every(500) {
                 } else if (SHOW_GRENADES && it.type.grenade) {
                     entity.chams(GRENADE_COLOR)
                 } else {
-                    entity.chams(Color((255F / (CHAMS_BRIGHTNESS/10F)).toInt(), (255F / (CHAMS_BRIGHTNESS/10F)).toInt(), (255F / (CHAMS_BRIGHTNESS/10F)).toInt(), 1.0))
+                    entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
                 }
         }
         return@body false
