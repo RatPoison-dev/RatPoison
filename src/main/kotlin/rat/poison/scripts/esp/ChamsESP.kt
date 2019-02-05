@@ -28,18 +28,27 @@ internal fun chamsEsp() = every(500) {
         val glowAddress = it.glowAddress
         if (glowAddress <= 0) return@body false
 
-        //Edit playermodel to counter weapon brightness
-        val ClientVModEnt = csgoEXE.uint(clientDLL.address + dwEntityList + (((csgoEXE.uint(csgoEXE.uint(clientDLL.address + dwLocalPlayer)+ m_hViewModel)) and 0xFFF) - 1) * 16)
+        var brightnessCounter : Int
 
-        var brightnessCounter = 255
         try {
             brightnessCounter = (255F/(CHAMS_BRIGHTNESS/10F)).toInt()
-        } catch (ex: Exception) { }
+        } catch (ex: Exception) { brightnessCounter = 255 }
+
+        if (brightnessCounter > 255) {
+            brightnessCounter = 255
+        } else if (brightnessCounter < 0) {
+            brightnessCounter = 0
+        }
+
+        //Setting weapon/bomb causes crashes as far as I could narrow it from testing
+
+        //Edit playermodel to counter weapon brightness
+        val clientVModEnt = csgoEXE.uint(clientDLL.address + dwEntityList + (((csgoEXE.uint(csgoEXE.uint(clientDLL.address + dwLocalPlayer)+ m_hViewModel)) and 0xFFF) - 1) * 16)
 
         //Set VMod
-        csgoEXE[ClientVModEnt + 0x70] = Color(brightnessCounter, 0, 0, 1.0).red.toByte()
-        csgoEXE[ClientVModEnt + 0x71] = Color(0, brightnessCounter, 0, 1.0).red.toByte()
-        csgoEXE[ClientVModEnt + 0x72] = Color(0, 0, brightnessCounter, 1.0).red.toByte()
+        csgoEXE[clientVModEnt + 0x70] = brightnessCounter.toByte()//Color(brightnessCounter, 0, 0, 1.0).red.toByte()
+        csgoEXE[clientVModEnt + 0x71] = brightnessCounter.toByte()//Color(0, brightnessCounter, 0, 1.0).red.toByte()
+        csgoEXE[clientVModEnt + 0x72] = brightnessCounter.toByte()//Color(0, 0, brightnessCounter, 1.0).red.toByte()
 
         //Set Cvar
         engineDLL[dwModelAmbientMin] = floatToIntBits(CHAMS_BRIGHTNESS.toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
@@ -54,11 +63,12 @@ internal fun chamsEsp() = every(500) {
 
                 if (SHOW_ENEMIES && !team) {
                     if (CHAMS_SHOW_HEALTH) {
-                        entity.chams(Color((255 - 2.55*entity.health()).toInt(), (2.55*entity.health()).toInt(), 0, 1.0))
-                    }
-                    else {
+                        entity.chams(Color((255 - 2.55 * entity.health()).toInt(), (2.55 * entity.health()).toInt(), 0, 1.0))
+                    } else {
                         entity.chams(ENEMY_COLOR)
                     }
+                } else if (!SHOW_ENEMIES) {
+                    entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
                 } else if (SHOW_TEAM && team) {
                     entity.chams(TEAM_COLOR)
                 }
@@ -66,25 +76,6 @@ internal fun chamsEsp() = every(500) {
                     entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
                 }
             }
-
-            EntityType.CPlantedC4, EntityType.CC4 -> {
-                if (SHOW_BOMB) {
-                    entity.chams(BOMB_COLOR)
-                }
-                else
-                {
-                    entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
-                }
-            }
-
-            else ->
-                if (SHOW_WEAPONS && it.type.weapon) {
-                    entity.chams(WEAPON_COLOR)
-                } else if (SHOW_GRENADES && it.type.grenade) {
-                    entity.chams(GRENADE_COLOR)
-                } else {
-                    entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
-                }
         }
         return@body false
     }
