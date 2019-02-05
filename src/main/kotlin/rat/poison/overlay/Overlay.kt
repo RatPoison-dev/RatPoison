@@ -65,7 +65,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 					Thread.sleep(100)
 					monitorTargetApp()
 				}
-			} catch (e: InterruptedException) { } catch (e: Exception) { e.printStackTrace() }
+			} catch (e: InterruptedException) { println("InterruptedException"); e.printStackTrace() } catch (e: Exception) { println("StandardException"); e.printStackTrace() }
 			run = false
 			println("${Thread.currentThread().name} died!")
 		}

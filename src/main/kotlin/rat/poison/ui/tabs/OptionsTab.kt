@@ -109,14 +109,13 @@ class Options : Tab(false, false) {
         //val loadButton = VisTextButton("Load: $CFG_NAME")
         Tooltip.Builder("Load the previously saved configuration from the cfg file").target(loadButton).build()
         loadButton.changed { _, _ ->
-            val cfgfile = File("settings\\cfg.kts")
-            if (!cfgfile.exists()) {
+            val cfgFile = File("settings\\cfg.kts")
+            if (!cfgFile.exists()) {
                 Dialogs.showErrorDialog(App.stage, "Error", "cfg.kts not found, save your configuration first!")
-            }
-            else{
-                FileReader(cfgfile).use { engine.eval(it.readLines().joinToString("\n"))}
+            } else {
+                FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n"))}
                 engine = ScriptEngineManager().getEngineByName("kotlin")
-                FileReader(cfgfile).use { engine.eval(it.readLines().joinToString("\n"))}
+                FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n"))}
                 UIUpdate()
                 println("\n Loading complete! \n")
             }

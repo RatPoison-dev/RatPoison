@@ -94,7 +94,7 @@ MENU_KEY = 112
 /**
  * Name of config file
  */
-CFG_NAME = "Null"
+CFG_NAME = "reeee"
 
 /**
  * The bone IDs of the respective bones for a player.
