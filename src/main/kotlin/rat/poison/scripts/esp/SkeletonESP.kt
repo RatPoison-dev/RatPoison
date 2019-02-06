@@ -28,10 +28,9 @@ internal fun skeletonEsp() {
 
 		forEntities(ccsPlayer) {
 			val entity = it.entity
-			if (entity > 0 && entity != me && !entity.dead() && !entity.dormant()) {
+			if (entity == me || entity.dead() || (!SKELETON_SHOW_DORMANT && entity.dormant()) || (!SKELETON_SHOW_TEAM && me.team() == entity.team()) || (!SKELETON_SHOW_ENEMIES && me.team() != entity.team())) return@forEntities false
 				(entityBones.get(entity) ?: CacheableList(20)).apply {
 					if (isEmpty()) {
-						//val entityModel = entity.model() //no longer needed since we bypass the findStudioModel call for updated pointer method
 						val studioModel = csgoEXE.uint(entity.studioHdr())
 						val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
 						val boneIndex = csgoEXE.uint(studioModel + 0xA0)
@@ -52,7 +51,6 @@ internal fun skeletonEsp() {
 
 					forEach { drawBone(entity, it.first, it.second); false }
 				}
-			}
 
 			false
 		}

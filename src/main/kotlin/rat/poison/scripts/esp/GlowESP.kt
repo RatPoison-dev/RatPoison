@@ -22,23 +22,23 @@ internal fun glowEsp() = every(4) {
 
 		when (it.type) {
 			EntityType.CCSPlayer -> {
-				if (entity.dead() || (!SHOW_DORMANT && entity.dormant())) return@body false
+				if (entity.dead() || (!GLOW_SHOW_DORMANT && entity.dormant())) return@body false
 				
 				val entityTeam = entity.team()
 				val team = !DANGER_ZONE && myTeam == entityTeam
-				if (SHOW_ENEMIES && !team) {
+				if (GLOW_SHOW_ENEMIES && !team) {
 					glowAddress.glow(ENEMY_COLOR, entity.spotted())
-				} else if (SHOW_TEAM && team) {
+				} else if (GLOW_SHOW_TEAM && team) {
 					glowAddress.glow(TEAM_COLOR, entity.spotted())
 				}
 			}
-			EntityType.CPlantedC4, EntityType.CC4 -> if (SHOW_BOMB) {
+			EntityType.CPlantedC4, EntityType.CC4 -> if (GLOW_SHOW_BOMB) {
 				glowAddress.glow(BOMB_COLOR, entity.spotted())
 			}
 			else ->
-				if (SHOW_WEAPONS && it.type.weapon)
+				if (GLOW_SHOW_WEAPONS && it.type.weapon)
 					glowAddress.glow(WEAPON_COLOR, entity.spotted())
-				else if (SHOW_GRENADES && it.type.grenade)
+				else if (GLOW_SHOW_GRENADES && it.type.grenade)
 					glowAddress.glow(GRENADE_COLOR, entity.spotted())
 		}
 		return@body false

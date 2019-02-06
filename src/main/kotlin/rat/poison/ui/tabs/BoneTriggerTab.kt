@@ -9,7 +9,7 @@ import rat.poison.ui.bTrigTab
 import rat.poison.ui.changed
 import rat.poison.ui.mainTabbedPane
 
-class BTrig : Tab(false, false) {
+class BTrigTab : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here

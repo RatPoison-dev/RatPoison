@@ -12,7 +12,7 @@ import rat.poison.ui.UIUpdate
 import rat.poison.ui.changed
 import rat.poison.utils.ObservableBoolean
 
-class Misc : Tab(false, false) {
+class MiscTab : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
@@ -24,6 +24,9 @@ class Misc : Tab(false, false) {
     val enableReducedFlash = VisCheckBox("Enable Reduced Flash") //Reduced_Flash
     val flashMaxAlphaLabel = VisLabel("Flash Max Alpha: $FLASH_MAX_ALPHA" + when(FLASH_MAX_ALPHA.toInt().toString().length) {3->"  " 2->"    " else ->"      "}) //Flash_Max_Alpha
     val flashMaxAlphaSlider = VisSlider(0F, 255F, 1F, false) //Flash_Max_Alpha
+    val hitSound = VisCheckBox("Hitsound") //Hit_Sound
+    val hitSoundVolumeLabel = VisLabel("Hitsound Volume: $HITSOUND_VOLUME") //Hit_Sound_Volume
+    val hitSoundVolumeSlider = VisSlider(0.1F, 1F, 0.1F, false) //Hit_Sound_Volume
 
     init {
         //Create Enable_Bunny_Hop Toggle
@@ -112,6 +115,29 @@ class Misc : Tab(false, false) {
         flashMaxAlpha.add(flashMaxAlphaLabel)//.spaceRight(6F) //when gets rid of spaceright
         flashMaxAlpha.add(flashMaxAlphaSlider)
 
+        //Create Hit_Sound Toggle
+        //val hitSound = VisTextButton("Hit Sound", "toggle")
+        Tooltip.Builder("Whether or not to enable a hitsound on hit").target(hitSound).build()
+        if (ENABLE_HITSOUND) hitSound.toggle()
+        hitSound.changed { _, _ ->
+            if (true) { //type Any? changes didnt work im autistic //fix later
+                ENABLE_HITSOUND = hitSound.isChecked//!INDICATOR_ESP
+            }
+        }
+
+        //Create Hit_Sound_Volume Slider
+        val hitSoundVolume = VisTable()
+        Tooltip.Builder("The volume of the hitsound if the hitsound is enabled").target(hitSoundVolume).build()
+        //val hitSoundVolumeLabel = VisLabel("Hitsound Volume: " + HITSOUND_VOLUME.toString())
+        //val hitSoundVolumeSlider = VisSlider(0.1F, 1F, 0.1F, false)
+        hitSoundVolumeSlider.value = HITSOUND_VOLUME.toFloat()
+        hitSoundVolumeSlider.changed { _, _ ->
+            HITSOUND_VOLUME = Math.round(hitSoundVolumeSlider.value.toDouble() * 10.0)/10.0 //Round to 1 decimal place
+            hitSoundVolumeLabel.setText("Hitsound Volume: $HITSOUND_VOLUME")
+        }
+        hitSoundVolume.add(hitSoundVolumeLabel).spaceRight(6F)
+        hitSoundVolume.add(hitSoundVolumeSlider)
+
 
         //Add all items to label for tabbed pane content
         table.add(enableBunnyHop).row() //Add Enable_Bunny_Hop Toggle
@@ -127,6 +153,10 @@ class Misc : Tab(false, false) {
 
         table.add(enableReducedFlash).row() //Add Enable_Reduced_Flash Toggle
         table.add(flashMaxAlpha).row() //Add Flash_Max_Alpha Slider
+
+        table.addSeparator()
+        table.add(hitSound).row()
+        table.add(hitSoundVolume)
     }
 
     override fun getContentTable(): Table? {

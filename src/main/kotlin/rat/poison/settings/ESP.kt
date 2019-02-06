@@ -7,87 +7,9 @@ import rat.poison.game.Color
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Whether or not to use skeleton ESP.
- * This requires the overlay which only works when borderless fullscreen or windowed.
- */
-var SKELETON_ESP = false
-
-/**
- * Whether or not to use box ESP.
- * This requires the overlay which only works when borderless fullscreen or windowed.
- */
-var BOX_ESP = false
-
-/**
- * Whether or not health and weapon is displayed with box esp
- */
-var BOX_ESP_DETAILS = false
-
-/**
- * Whether or not to use the within-game glow ESP.
- *
- * This ESP **CANNOT** be hidden from game capture for streaming.
- */
-var GLOW_ESP = false
-
-/**
- * Whether or not to invert the glow esp and highlight the player model instead of the outline
- * This works through walls, to change how thick/blurry it is adjust the alpha .5 through 1 should work fine
- */
-var INV_GLOW_ESP = false
-
-/**
- * Model ESP glow tied to glow_esp, makes the model glow and only when visible, instead of an outline through walls
- */
-var MODEL_ESP = true
-
-/**
  * This gets rid of glow ESP "flicker", and more importantly reduces CPU usage.
  */
 var FLICKER_FREE_GLOW = true
-
-/**
- * Whether or not to use chams ESP, may require a game restart to stop/fix
- * To disable chams & brightness on exit (as models will stay colored normally), you must type exit into the cmd to close the program
- * This modifies a cvar that currently isn't being checked, this can change at anytime, use at your own discretion
- */
-var CHAMS_ESP = false
-
-/**
- * When this is and CHAMS_ESP are enabled the enemy models will be colored based on health, and will override CHAMS_ESP_COLOR
- */
-var CHAMS_SHOW_HEALTH = true
-
-/**
- * Glow esp will work when enemy is not visible, chams will work when enemy is visible (visibility check is delayed as a netvar), takes 1 to 2 seconds to switch between
- */
-var MODEL_AND_GLOW = true
-
-/**
- * Brightness for chams esp (from 0 to 1000)
- */
-var CHAMS_BRIGHTNESS = 100
-
-/**
- * Will draw circles around your screen to indicate enemy players location in relation to you
- * This requires the overlay which only works when borderless fullscreen or windowed.
- */
-var INDICATOR_ESP = true
-
-/**
- * Whether enemy indicator will indicate on screen entities
- */
-var INDICATOR_SHOW_ONSCREEN = true
-
-/**
- * The distance from the edge of the screen for the indicator circle/oval
- */
-var INDICATOR_DISTANCE = 3.0
-
-/**
- * Whether the indicators are in a circle of an oval on screen
- */
-var INDICATOR_OVAL = true
 
 /**
  * Will play a hitsound on enemy hit

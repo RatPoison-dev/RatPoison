@@ -8,10 +8,7 @@ import rat.poison.App
 import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
-import rat.poison.settings.BOX_ESP
-import rat.poison.settings.BOX_ESP_DETAILS
-import rat.poison.settings.ENABLE_ESP
-import rat.poison.settings.MENUTOG
+import rat.poison.settings.*
 import rat.poison.utils.Vector
 
 private val vHead = Vector()
@@ -29,7 +26,7 @@ internal fun boxEsp() = App {
 
 	forEntities(ccsPlayer) { //Only enemies atm
 		val entity = it.entity
-		if (entity == me || entity.dead() || entity.dormant()) return@forEntities false
+		if (entity == me || entity.dead() || entity.dormant() || (!BOX_SHOW_ENEMIES && me.team() != entity.team()) || (!BOX_SHOW_TEAM && me.team() == entity.team()) ) return@forEntities false
 
 		vHead.set(entity.bone(0xC), entity.bone(0x1C), entity.bone(0x2C) + 9)
 		vFeet.set(vHead.x, vHead.y, vHead.z - 75)
@@ -38,9 +35,8 @@ internal fun boxEsp() = App {
 			val boxH = vBot.y - vTop.y
 			val boxW = boxH / 5F
 
-			val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1
-			val c = if (bomb > 0 && entity == bomb.carrier()) Color.GREEN
-			else if (me.team() == entity.team()) Color.BLUE else Color.RED
+			//val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1
+			val c = /*if (bomb > 0 && entity == bomb.carrier()) Color.GREEN else*/ if (me.team() == entity.team()) Color(TEAM_COLOR.red.toFloat(), TEAM_COLOR.green.toFloat(), TEAM_COLOR.blue.toFloat(), 1F) else Color(ENEMY_COLOR.red.toFloat(), ENEMY_COLOR.green.toFloat(), ENEMY_COLOR.blue.toFloat(), 1F)
 
 			val sx = (vTop.x - boxW).toInt()
 			val sy = vTop.y.toInt()

@@ -9,6 +9,6 @@ fun esp() {
 	boxEsp()
 	skeletonEsp()
 	chamsEsp()
-	miscEsp()
+	indicatorEsp()
 	hitSoundEsp()
 }

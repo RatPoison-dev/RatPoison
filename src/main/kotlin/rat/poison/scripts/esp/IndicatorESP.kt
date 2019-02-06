@@ -16,8 +16,8 @@ import rat.poison.utils.inBackground
 
 //Add radius var and oval toggle
 
-internal fun miscEsp() = App {
-    if (!ENABLE_ESP || MENUTOG || inBackground || !INDICATOR_ESP) return@App //Needed menutog/notingame/inbackground or would crash at w2s view matrix
+internal fun indicatorEsp() = App {
+    if (!ENABLE_ESP || MENUTOG || !INDICATOR_ESP) return@App //Needed menutog/notingame/inbackground or would crash at w2s view matrix
 
     forEntities {
         val entity = it.entity
@@ -27,23 +27,23 @@ internal fun miscEsp() = App {
             EntityType.CCSPlayer -> {
                 if (entity.dead() || entity.dormant()) return@forEntities false
 
-                if (SHOW_ENEMIES && me.team() != entity.team()) {
+                if (INDICATOR_SHOW_ENEMIES && me.team() != entity.team()) {
                     w2sHandler(entity.position(), me.position().distanceTo(entity.position()), ENEMY_COLOR)
-                } else if (SHOW_TEAM && me.team() == entity.team()) {
+                } else if (INDICATOR_SHOW_TEAM && me.team() == entity.team()) {
                     w2sHandler(entity.position(), me.position().distanceTo(entity.position()), TEAM_COLOR)
                 }
             }
 
             EntityType.CPlantedC4, EntityType.CC4 -> {
-                if (SHOW_BOMB) {
+                if (INDICATOR_SHOW_BOMB) {
                     w2sHandler(entity.position(), me.position().distanceTo(entity.position()), BOMB_COLOR)
                 }
             }
 
             else -> {
-                if (SHOW_WEAPONS && it.type.weapon) {
+                if (INDICATOR_SHOW_WEAPONS && it.type.weapon) {
                     w2sHandler(entity.position(), me.position().distanceTo(entity.position()), WEAPON_COLOR)
-                } else if (SHOW_GRENADES && it.type.grenade) {
+                } else if (INDICATOR_SHOW_GRENADES && it.type.grenade) {
                     w2sHandler(entity.position(), me.position().distanceTo(entity.position()), GRENADE_COLOR)
                 }
             }
@@ -91,7 +91,7 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: rat.poison.game.Color) {
             begin()
             if (INDICATOR_ESP) { //Redundant for now, but adding more options
                 set(ShapeRenderer.ShapeType.Filled)
-                color = com.badlogic.gdx.graphics.Color(drawColor.red.toFloat(), drawColor.green.toFloat(), drawColor.blue.toFloat(), drawColor.alpha.toFloat())
+                color = com.badlogic.gdx.graphics.Color(drawColor.red.toFloat(), drawColor.green.toFloat(), drawColor.blue.toFloat(), .5F)
                 circle(vOut.x.toFloat(), vOut.y.toFloat(), 10F)
                 color = com.badlogic.gdx.graphics.Color(255F, 255F, 255F, 1F)
                 set(ShapeRenderer.ShapeType.Line)
@@ -109,7 +109,7 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: rat.poison.game.Color) {
             begin()
             if (INDICATOR_ESP) { //Redundant for now, but adding more options
                 set(ShapeRenderer.ShapeType.Filled)
-                color = com.badlogic.gdx.graphics.Color(drawColor.red.toFloat(), drawColor.green.toFloat(), drawColor.blue.toFloat(), drawColor.alpha.toFloat())
+                color = com.badlogic.gdx.graphics.Color(drawColor.red.toFloat(), drawColor.green.toFloat(), drawColor.blue.toFloat(), .5F)
                 circle(indicatorPos.x, indicatorPos.y, 10F)
                 color = com.badlogic.gdx.graphics.Color(255F, 255F, 255F, 1F)
                 set(ShapeRenderer.ShapeType.Line)

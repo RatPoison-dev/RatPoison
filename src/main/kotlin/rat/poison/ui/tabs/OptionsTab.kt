@@ -16,7 +16,7 @@ import java.nio.file.Files
 import java.nio.file.StandardOpenOption
 import javax.script.ScriptEngineManager
 
-class Options : Tab(false, false) {
+class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
     val loadButton = VisTextButton("Load $CFG_NAME")

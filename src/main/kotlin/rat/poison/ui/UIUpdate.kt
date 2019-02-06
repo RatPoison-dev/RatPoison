@@ -1,8 +1,7 @@
 package rat.poison.ui
 
 import rat.poison.settings.*
-
-//shoot me
+import rat.poison.ui.tabs.*
 
 fun UIUpdate() {
     //Aim Tab
@@ -260,21 +259,27 @@ fun UIUpdate() {
     //Esp Tab
     visualsTab.apply {
         enableEsp.isChecked = ENABLE_ESP
-        skeletonEsp.isChecked = SKELETON_ESP
-        boxEsp.isChecked = BOX_ESP
-        boxEspDetails.isChecked = BOX_ESP_DETAILS
+        teamColorShow.setColor(TEAM_COLOR.red.toFloat(), TEAM_COLOR.green.toFloat(), TEAM_COLOR.blue.toFloat(), 1F)
+        enemyColorShow.setColor(ENEMY_COLOR.red.toFloat(), ENEMY_COLOR.green.toFloat(), ENEMY_COLOR.blue.toFloat(), 1F)
+        bombColorShow.setColor(BOMB_COLOR.red.toFloat(), BOMB_COLOR.green.toFloat(), BOMB_COLOR.blue.toFloat(), 1F)
+        weaponColorShow.setColor(WEAPON_COLOR.red.toFloat(), WEAPON_COLOR.green.toFloat(), WEAPON_COLOR.blue.toFloat(), 1F)
+        grenadeColorShow.setColor(GRENADE_COLOR.red.toFloat(), GRENADE_COLOR.green.toFloat(), GRENADE_COLOR.blue.toFloat(), 1F)
+    }
+
+    glowEspTab.apply {
         glowEsp.isChecked = GLOW_ESP
         invGlowEsp.isChecked = INV_GLOW_ESP
         modelEsp.isChecked = MODEL_ESP
         modelAndGlow.isChecked = MODEL_AND_GLOW
-        indicatorEsp.isChecked = INDICATOR_ESP
-        indicatorOnScreen.isChecked = INDICATOR_SHOW_ONSCREEN
-        indicatorOval.isChecked = INDICATOR_OVAL
-        indicatorDistanceLabel.setText("Indicator Distance: $INDICATOR_DISTANCE")
-        indicatorDistanceSlider.value = INDICATOR_DISTANCE.toFloat()
-        hitSound.isChecked = ENABLE_HITSOUND
-        hitSoundVolumeLabel.setText("Hitsound Volume: $HITSOUND_VOLUME")
-        hitSoundVolumeSlider.value = HITSOUND_VOLUME.toFloat()
+        showTeam.isChecked = GLOW_SHOW_TEAM
+        showEnemies.isChecked = GLOW_SHOW_ENEMIES
+        showDormant.isChecked = GLOW_SHOW_DORMANT
+        showBomb.isChecked = GLOW_SHOW_BOMB
+        showWeapons.isChecked = GLOW_SHOW_WEAPONS
+        showGrenades.isChecked = GLOW_SHOW_GRENADES
+    }
+
+    chamsEspTab.apply {
         chamsEsp.isChecked = CHAMS_ESP
         chamsShowHealth.isChecked = CHAMS_SHOW_HEALTH
         chamsBrightnessLabel.setText("Chams Brightness: $CHAMS_BRIGHTNESS" + when (CHAMS_BRIGHTNESS.toString().length) {
@@ -284,18 +289,38 @@ fun UIUpdate() {
             else -> "        "
         })
         chamsBrightnessSlider.value = CHAMS_BRIGHTNESS.toFloat()
-        showTeam.isChecked = SHOW_TEAM
-        showEnemies.isChecked = SHOW_ENEMIES
-        showDormant.isChecked = SHOW_DORMANT
-        showBomb.isChecked = SHOW_BOMB
-        showWeapons.isChecked = SHOW_WEAPONS
-        showGrenades.isChecked = SHOW_GRENADES
-        teamColorShow.setColor(TEAM_COLOR.red.toFloat(), TEAM_COLOR.green.toFloat(), TEAM_COLOR.blue.toFloat(), 1F)
-        enemyColorShow.setColor(ENEMY_COLOR.red.toFloat(), ENEMY_COLOR.green.toFloat(), ENEMY_COLOR.blue.toFloat(), 1F)
-        bombColorShow.setColor(BOMB_COLOR.red.toFloat(), BOMB_COLOR.green.toFloat(), BOMB_COLOR.blue.toFloat(), 1F)
-        weaponColorShow.setColor(WEAPON_COLOR.red.toFloat(), WEAPON_COLOR.green.toFloat(), WEAPON_COLOR.blue.toFloat(), 1F)
-        grenadeColor.setColor(GRENADE_COLOR.red.toFloat(), GRENADE_COLOR.green.toFloat(), GRENADE_COLOR.blue.toFloat(), 1F)
+        showTeam.isChecked = CHAMS_SHOW_TEAM
+        showEnemies.isChecked = CHAMS_SHOW_ENEMIES
     }
+
+    indicatorEspTab.apply {
+        indicatorEsp.isChecked = INDICATOR_ESP
+        indicatorOnScreen.isChecked = INDICATOR_SHOW_ONSCREEN
+        indicatorOval.isChecked = INDICATOR_OVAL
+        indicatorDistanceLabel.setText("Indicator Distance: $INDICATOR_DISTANCE")
+        indicatorDistanceSlider.value = INDICATOR_DISTANCE.toFloat()
+        showTeam.isChecked = INDICATOR_SHOW_TEAM
+        showEnemies.isChecked = INDICATOR_SHOW_ENEMIES
+        showDormant.isChecked = INDICATOR_SHOW_DORMANT
+        showBomb.isChecked = INDICATOR_SHOW_BOMB
+        showWeapons.isChecked = INDICATOR_SHOW_WEAPONS
+        showGrenades.isChecked = INDICATOR_SHOW_GRENADES
+    }
+
+    boxEspTab.apply {
+        boxEsp.isChecked = BOX_ESP
+        boxEspDetails.isChecked = BOX_ESP_DETAILS
+        showTeam.isChecked = BOX_SHOW_TEAM
+        showEnemies.isChecked = BOX_SHOW_ENEMIES
+    }
+
+    skeletonEspTab.apply {
+        skeletonEsp.isChecked = SKELETON_ESP
+        showTeam.isChecked = BOX_SHOW_TEAM
+        showEnemies.isChecked = BOX_SHOW_ENEMIES
+    }
+
+
 
     //Rcs Tab
     rcsTab.apply {
@@ -320,7 +345,7 @@ fun UIUpdate() {
     }
 
     //Misc Tab
-    misc.apply {
+    miscTab.apply {
         enableBunnyHop.isChecked = ENABLE_BUNNY_HOP
         enableBombTimer.isChecked = ENABLE_BOMB_TIMER
         fireKeyField.text = FIRE_KEY.toString()
@@ -333,6 +358,9 @@ fun UIUpdate() {
             else -> "      "
         })
         flashMaxAlphaSlider.value = FLASH_MAX_ALPHA
+        hitSound.isChecked = ENABLE_HITSOUND
+        hitSoundVolumeLabel.setText("Hitsound Volume: $HITSOUND_VOLUME")
+        hitSoundVolumeSlider.value = HITSOUND_VOLUME.toFloat()
     }
 
     //Custom disable items

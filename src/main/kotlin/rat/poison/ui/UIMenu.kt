@@ -2,9 +2,11 @@ package rat.poison.ui
 
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Align
+import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.*
 import rat.poison.ui.tabs.*
+import rat.poison.ui.tabs.esptabs.*
 
 //Issues/todo
 //Solution for when str.length spacing //so-1 - try a divider between label and slider
@@ -25,9 +27,9 @@ val mainTabbedPane = TabbedPane()
     val aimTab = AimTab()
     val visualsTab = VisualsTab()
     val rcsTab = RcsTab()
-    val bTrigTab = BTrig()
-    val misc = Misc()
-    val settings = Options()
+    val bTrigTab = BTrigTab()
+    val miscTab = MiscTab()
+    val settingsTab = OptionsTab()
 
 class DebuggerWindow : VisWindow("RatPoison UI") {
     init {
@@ -43,6 +45,11 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
         mainScrollPane.setFlickScroll(false)
         mainScrollPane.setSize(1000F, 1000F)
 
+        val aimTabbedPaneContent = VisTable()
+        aimTabbedPaneContent.padTop(10F)
+        aimTabbedPaneContent.padBottom(10F)
+        aimTabbedPaneContent.align(Align.top)
+
         this.x = 960F
         this.y = 540F
         this.align(Align.topLeft)
@@ -54,8 +61,8 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
         mainTabbedPane.add(visualsTab)
         mainTabbedPane.add(rcsTab)
         mainTabbedPane.add(bTrigTab)
-        mainTabbedPane.add(misc)
-        mainTabbedPane.add(settings)
+        mainTabbedPane.add(miscTab)
+        mainTabbedPane.add(settingsTab)
 
         //Set default tab to first (aimTab)
         mainTabbedPane.switchTab(aimTab)
@@ -74,8 +81,8 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
                     aimTab -> {
                         mainTabbedPaneContent.add(aimTab.contentTable).growX()
                     }
-                    settings -> {
-                        mainTabbedPaneContent.add(settings.contentTable).growX()
+                    settingsTab -> {
+                        mainTabbedPaneContent.add(settingsTab.contentTable).growX()
                     }
                     rcsTab -> {
                         mainTabbedPaneContent.add(rcsTab.contentTable).growX()
@@ -86,8 +93,8 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
                     visualsTab -> {
                         mainTabbedPaneContent.add(visualsTab.contentTable).growX()
                     }
-                    misc -> {
-                        mainTabbedPaneContent.add(misc.contentTable).growX()
+                    miscTab -> {
+                        mainTabbedPaneContent.add(miscTab.contentTable).growX()
                     }
                 }
             }
