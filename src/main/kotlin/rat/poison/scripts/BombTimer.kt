@@ -1,10 +1,13 @@
 package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.math.Vector3
 import rat.poison.App
 import rat.poison.game.CSGO
 import rat.poison.game.entity.*
 import rat.poison.game.entityByType
+import rat.poison.game.me
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.settings.ENABLE_BOMB_TIMER
 import rat.poison.utils.every
@@ -15,12 +18,22 @@ fun bombTimer() { //Don't know if works
     bombUpdater()
 
     App {
-        bombState.apply {
-            if (ENABLE_BOMB_TIMER && this.planted) {
-                sb.begin()
-                textRenderer.color = Color.ORANGE
-                textRenderer.draw(sb, bombState.toString(), 20F, 500F)
-                sb.end()
+        if (ENABLE_BOMB_TIMER && bombState.planted) {
+            shapeRenderer.apply {
+                begin()
+                set(ShapeRenderer.ShapeType.Filled)
+                if ((me.team() == 3.toLong() && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) {
+                    //color = Color((1F - .01F * ((bombState.timeLeftToExplopade / 40F) * 100F)), (.01F * ((bombState.timeLeftToExplode / 40F) * 100F)), 0F, .5F)
+                    color = Color(255F, 220F, 0F, .5F)
+                } else  if ((me.team() == 3.toLong() && bombState.timeLeftToDefuse > bombState.timeLeftToExplode) || (me.team() == 2.toLong() && !bombState.gettingDefused)) {
+                    color = Color(255F, 220F, 0F, .5F)
+                } else {
+                    color = Color(1F, 0F, 0F, .25F)
+                }
+                rect(0F, 0F, CSGO.gameWidth.toFloat()*(bombState.timeLeftToExplode/40F), CSGO.gameHeight * .01F)
+                set(ShapeRenderer.ShapeType.Line)
+                color = Color(1F, 1F, 1F, 1F)
+                end()
             }
         }
     }

@@ -338,7 +338,7 @@ fun UIUpdate() {
             else -> "      "
         })
         boneTriggerFovSlider.value = BONE_TRIGGER_FOV.toFloat()
-        boneTriggerBoneBox.selected = if (BONE_TRIGGER_BONE == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
+        boneTriggerBoneBox.selected = if (BONE_TRIGGER_BONE == HEAD_BONE) "Head Bone" else "Body Bone"
         aimOnBoneTrigger.isChecked = AIM_ON_BONE_TRIGGER
         boneTriggerEnableKey.isChecked = BONE_TRIGGER_ENABLE_KEY
         boneTriggerKeyField.text = BONE_TRIGGER_KEY.toString()

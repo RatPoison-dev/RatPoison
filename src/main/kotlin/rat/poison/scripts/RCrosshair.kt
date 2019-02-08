@@ -13,7 +13,7 @@ import rat.poison.utils.Vector
 private var lastpunch = Vector(0.0, 0.0, 0.0)
 
 internal fun rcrosshair() = App { //Currently not completely centered
-    if (!ENABLE_RECOIL_CROSSHAIR || !ENABLE_ESP || MENUTOG) return@App
+    if (!ENABLE_RECOIL_CROSSHAIR || MENUTOG) return@App
 
     //Need offsets because draw is bottom left
     val originOffset = 2F

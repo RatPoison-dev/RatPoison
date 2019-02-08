@@ -12,7 +12,6 @@ import rat.poison.game.offsets.ClientOffsets
 import rat.poison.settings.*
 import rat.poison.utils.Vector
 import rat.poison.utils.distanceTo
-import rat.poison.utils.inBackground
 
 //Add radius var and oval toggle
 
@@ -77,7 +76,7 @@ fun indicatorPosition(screenPos: Vector3, indicatorPos: Vector3): Float {
 }
 
 fun w2sHandler(vector: Vector, dist: Double, drawColor: rat.poison.game.Color) {
-    if (vector.x == 0.0 && vector.y == 0.0 && vector.z == 0.0) { //Fixes ghost entities
+    if (vector.x == 0.0 && vector.y == 0.0 && vector.z == 0.0) {
         return
     }
 
@@ -85,35 +84,33 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: rat.poison.game.Color) {
     val wTest = wTest(vector)
 
     if (INDICATOR_SHOW_ONSCREEN && (wTest >= dist/3)) { //On screen
-        worldToScreen(vector, vOut)
-
-        shapeRenderer.apply {
-            begin()
-            if (INDICATOR_ESP) { //Redundant for now, but adding more options
-                set(ShapeRenderer.ShapeType.Filled)
-                color = com.badlogic.gdx.graphics.Color(drawColor.red.toFloat(), drawColor.green.toFloat(), drawColor.blue.toFloat(), .5F)
-                circle(vOut.x.toFloat(), vOut.y.toFloat(), 10F)
-                color = com.badlogic.gdx.graphics.Color(255F, 255F, 255F, 1F)
-                set(ShapeRenderer.ShapeType.Line)
-            }
-            end()
-        }
-    } else if (wTest < dist/3) {
-        var z = vector.z //Fuck doing this headache ass bitch AAAAAAAAAAAAA
-        z *= .5
-        worldToScreen(Vector(vector.x, vector.y, z), vOut)
+        vector.z *= 2
+        worldToScreen(Vector(vector.x, vector.y, vector.z), vOut)
         shapeRenderer.apply {
             val indicatorPos = Vector3(vOut.x.toFloat(), vOut.y.toFloat(), 0F)
             indicatorPosition(indicatorPos, indicatorPos)
 
             begin()
-            if (INDICATOR_ESP) { //Redundant for now, but adding more options
-                set(ShapeRenderer.ShapeType.Filled)
-                color = com.badlogic.gdx.graphics.Color(drawColor.red.toFloat(), drawColor.green.toFloat(), drawColor.blue.toFloat(), .5F)
-                circle(indicatorPos.x, indicatorPos.y, 10F)
-                color = com.badlogic.gdx.graphics.Color(255F, 255F, 255F, 1F)
-                set(ShapeRenderer.ShapeType.Line)
-            }
+            set(ShapeRenderer.ShapeType.Filled)
+            color = com.badlogic.gdx.graphics.Color(drawColor.red.toFloat(), drawColor.green.toFloat(), drawColor.blue.toFloat(), .5F)
+            circle(indicatorPos.x, indicatorPos.y, 10F)
+            color = com.badlogic.gdx.graphics.Color(255F, 255F, 255F, 1F)
+            set(ShapeRenderer.ShapeType.Line)
+            end()
+        }
+    } else if (wTest < dist/3) {
+        vector.z *= .5
+        worldToScreen(Vector(vector.x, vector.y, vector.z), vOut)
+        shapeRenderer.apply {
+            val indicatorPos = Vector3(vOut.x.toFloat(), vOut.y.toFloat(), 0F)
+            indicatorPosition(indicatorPos, indicatorPos)
+
+            begin()
+            set(ShapeRenderer.ShapeType.Filled)
+            color = com.badlogic.gdx.graphics.Color(drawColor.red.toFloat(), drawColor.green.toFloat(), drawColor.blue.toFloat(), .5F)
+            circle(indicatorPos.x, indicatorPos.y, 10F)
+            color = com.badlogic.gdx.graphics.Color(255F, 255F, 255F, 1F)
+            set(ShapeRenderer.ShapeType.Line)
             end()
         }
     }
