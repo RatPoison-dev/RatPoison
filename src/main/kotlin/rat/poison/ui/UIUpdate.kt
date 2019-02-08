@@ -1,9 +1,12 @@
 package rat.poison.ui
 
+import rat.poison.opened
 import rat.poison.settings.*
 import rat.poison.ui.tabs.*
 
 fun UIUpdate() {
+    if (!opened) return
+
     //Aim Tab
     aimTab.apply { //CLEAN THIS BITCH UUUUUPPP
         activateFromFireKey.isChecked = ACTIVATE_FROM_FIRE_KEY

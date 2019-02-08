@@ -13,7 +13,8 @@ fun espToggle() = every(4) {
         if (!ENABLE_ESP) {
             disableEsp()
         }
-        Thread.sleep(100) //Wait to make sure settings loop
+
+        Thread.sleep(100)
 
         UIUpdate()
     }

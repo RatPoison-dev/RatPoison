@@ -112,6 +112,8 @@ fun loadSettings() {
     }
 }
 
+var opened = false
+
 ////Courtesy of Mr. Noad, lmlapp converted to normal
 object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
@@ -126,6 +128,7 @@ object App : ApplicationAdapter() {
     private lateinit var camera: OrthographicCamera
 
     override fun create() {
+        opened = true
         VisUI.load()
         super.create()
         overlay.start()

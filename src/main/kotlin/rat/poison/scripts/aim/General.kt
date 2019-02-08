@@ -78,11 +78,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
                                   crossinline doAim: (destinationAngle: Angle,
                                                       currentAngle: Angle, aimSpeed: Int) -> R) = every(duration) {
 	if (!precheck()) return@every
-	if (!me.weaponEntity().canFire()) {
-		reset()
-		return@every
-	}
-	
+
 	val aim = ACTIVATE_FROM_FIRE_KEY && keyPressed(FIRE_KEY)
 	val forceAim = keyPressed(FORCE_AIM_KEY)
 	val boneTrig = ENABLE_BONE_TRIGGER && AIM_ON_BONE_TRIGGER && findTarget(me.position(), clientState.angle(), false, BONE_TRIGGER_FOV, BONE_TRIGGER_BONE, false) >= 0
@@ -123,7 +119,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		reset()
 		
 		if (TARGET_SWAP_MAX_DELAY > 0) {
-			Thread.sleep(randLong(TARGET_SWAP_MIN_DELAY, TARGET_SWAP_MAX_DELAY))
+			//Thread.sleep(randLong(TARGET_SWAP_MIN_DELAY, TARGET_SWAP_MAX_DELAY))
 		}
 	} else { /*if (/*currentTarget.onGround() &&*/ me.onGround())*/
 		val bonePosition = currentTarget.bones(bone.get())

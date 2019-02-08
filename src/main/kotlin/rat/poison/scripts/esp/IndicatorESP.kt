@@ -84,7 +84,7 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: rat.poison.game.Color) {
     val wTest = wTest(vector)
 
     if (INDICATOR_SHOW_ONSCREEN && (wTest >= dist/3)) { //On screen
-        vector.z *= 2
+        vector.z *= 1.5
         worldToScreen(Vector(vector.x, vector.y, vector.z), vOut)
         shapeRenderer.apply {
             val indicatorPos = Vector3(vOut.x.toFloat(), vOut.y.toFloat(), 0F)

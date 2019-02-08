@@ -14,6 +14,9 @@ private val playerPunch = Vector3()
 
 fun rcs() = every(1) {
 	if (me <= 0 || !ENABLE_RCS) return@every
+	val weaponEntity = me.weaponEntity()
+	val weapon = me.weapon(weaponEntity)
+	if (!weapon.automatic) return@every
 	val shotsFired = me.shotsFired()
 	val p = me.punch()
 
@@ -22,38 +25,31 @@ fun rcs() = every(1) {
 
 	if (RCS_RETURNAIM) {
 		forceSet = false
-		finishPunch = ((p.x in 0.0..0.1) && (p.y in 0.0..0.1))
-	} else {
+		finishPunch = ((p.x in -0.1..0.1) && (p.y in -0.1..0.1))
+	}
+	else
+	{
 		forceSet = (shotsFired == 0 && !lastPunch.isZero)
-		finishPunch = true
+		finishPunch = true//false
 	}
 	if (forceSet || !finishPunch || shotsFired > 1) { //Fixes aim jumping down
 		playerPunch.set(p.x.toFloat(), p.y.toFloat(), p.z.toFloat())
 		newPunch.set(playerPunch.x - lastPunch.x, playerPunch.y - lastPunch.y)
 		newPunch.scl(1F+RCS_SMOOTHING.toFloat(), 1F+RCS_SMOOTHING.toFloat())
 
-
 		val angle = clientState.angle()
 		angle.apply {
-			x -= (newPunch.x)
-			y -= (newPunch.y)
+			x -= newPunch.x
+			y -= newPunch.y
 			normalize()
 		}
-
 		clientState.setAngle(angle)
-
 		lastPunch.x = playerPunch.x
 		lastPunch.y = playerPunch.y
 
 		if (forceSet) {
 			lastPunch.set(0F, 0F)
 		}
-
-		Thread.sleep((.1F/RCS_SMOOTHING).toLong())
-	}
-	else
-	{
-		lastPunch.set(0F, 0F)
 	}
 
 	bone.set(when {

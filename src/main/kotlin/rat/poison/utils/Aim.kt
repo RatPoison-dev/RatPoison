@@ -74,7 +74,7 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
 
 	if (perfect) {
 		writeAim(currentAngle, destinationAngle, 1.0)
-		Thread.sleep(20)
+		//Thread.sleep(20)
 	} else HumanMouse.fastSteps(mousePos, target) { steps, _ ->
 		mousePos.refresh()
 		
@@ -85,6 +85,6 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
 		if (halfIndex == 0) halfIndex = 1
 		mouseMove(tx / halfIndex, ty / halfIndex)
 
-		Thread.sleep((aimSpeed/10.0).toLong())
+		//Thread.sleep((aimSpeed/10.0).toLong())
 	}
 }

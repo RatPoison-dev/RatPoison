@@ -23,9 +23,9 @@ fun bombTimer() { //Don't know if works
                 begin()
                 set(ShapeRenderer.ShapeType.Filled)
                 if ((me.team() == 3.toLong() && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) {
-                    //color = Color((1F - .01F * ((bombState.timeLeftToExplopade / 40F) * 100F)), (.01F * ((bombState.timeLeftToExplode / 40F) * 100F)), 0F, .5F)
                     color = Color(255F, 220F, 0F, .5F)
-                } else  if ((me.team() == 3.toLong() && bombState.timeLeftToDefuse > bombState.timeLeftToExplode) || (me.team() == 2.toLong() && !bombState.gettingDefused)) {
+                } else  if ((me.team() == 3.toLong() && bombState.timeLeftToDefuse < bombState.timeLeftToExplode) || (me.team() == 2.toLong() && !bombState.gettingDefused)) {
+                    println(bombState.timeLeftToDefuse.toString() + " > " + bombState.timeLeftToExplode.toString())
                     color = Color(255F, 220F, 0F, .5F)
                 } else {
                     color = Color(1F, 0F, 0F, .25F)

@@ -6,17 +6,6 @@ import rat.poison.settings.*
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Whether or not to use box ESP.
- * This requires the overlay which only works when borderless fullscreen or windowed.
- */
-BOX_ESP = false
-
-/**
- * Whether or not health and weapon is displayed with box esp
- */
-BOX_ESP_DETAILS = false
-
-/**
  * This gets rid of glow ESP "flicker", and more importantly reduces CPU usage.
  * This glow will remain visible even after you close the cheat, toggle visuals off or restart csgo to fix.
  */
