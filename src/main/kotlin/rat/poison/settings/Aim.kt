@@ -3,8 +3,8 @@ package rat.poison.settings
 //Settings will be overwritten when a weapon is out, change to lateinit?
 var AIM_BONE = HEAD_BONE
 var AIM_FOV = 40
-var AIM_SPEED_MIN = 28
-var AIM_SPEED_MAX = 36
+var AIM_SPEED = 16
+var AIM_SMOOTHNESS = 1.0
 var AIM_STRICTNESS = 1.0
 var PERFECT_AIM = false
 var PERFECT_AIM_FOV = 4

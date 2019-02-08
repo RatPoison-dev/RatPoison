@@ -31,10 +31,14 @@ PISTOL_AIM_FOV = 30
 /**
  * The aimbot's "playback" speed, the higher the value the slower the playback.
  *
- * The minimum value is 1, and max must always be greater than min.
+ * The minimum value is 1
  */
-PISTOL_AIM_SPEED_MIN = 8
-PISTOL_AIM_SPEED_MAX = 16
+PISTOL_AIM_SPEED = 12
+
+/**
+ * The smoothness of the aimbot
+ */
+PISTOL_AIM_SMOOTHNESS = 1.0
 
 /**
  * The strictness, or "stickiness" of the aimbot; the higher the number, the

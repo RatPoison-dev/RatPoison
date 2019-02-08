@@ -33,11 +33,11 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val aimBoneBox = VisSelectBox<String>() //Aim_Bone
     val aimFovLabel = VisLabel("Aim Fov: " + PISTOL_AIM_FOV.toString() + when(PISTOL_AIM_FOV.toString().length) {3->"  " 2->"    " else ->"      "}) //Aim_Fov
     val aimFovSlider = VisSlider(1F, 360F, 2F, false) //Aim_Fov
-    val aimSpeedMinLabel = VisLabel("Aim Speed Min: " + PISTOL_AIM_SPEED_MIN.toString() + when(PISTOL_AIM_SPEED_MIN.toString().length) {3->"  " 2->"    " else ->"      "}) //Aim_Speed_Min
-    val aimSpeedMinSlider = VisSlider(1F, 100F, 1F, false) //Aim_Speed_Min
-    val aimSpeedMaxLabel = VisLabel("Aim Speed Max: " + PISTOL_AIM_SPEED_MAX.toString() + when(PISTOL_AIM_SPEED_MAX.toString().length) {3->"  " 2->"    " else ->"      "}) //Aim_Speed_Max
-    val aimSpeedMaxSlider = VisSlider(2F, 100F, 1F, false) //Aim_Speed_Max
-    val aimStrictnessLabel = VisLabel("Aim Strictness: " + PISTOL_AIM_STRICTNESS.toString()) //Aim_Strictness
+    val aimSpeedLabel = VisLabel("Aim Speed: " + PISTOL_AIM_SPEED.toString() + when(PISTOL_AIM_SPEED.toString().length) {3->"  " 2->"    " else ->"      "}) //Aim_Speed_Min
+    val aimSpeedSlider = VisSlider(1F, 100F, 1F, false) //Aim_Speed_Min
+    val aimSmoothnessLabel = VisLabel("Aim Smoothness: $PISTOL_AIM_SMOOTHNESS") //Aim_Smoothness
+    val aimSmoothnessSlider = VisSlider(1F, 10F, 0.1F, false) //Aim_Smoothness
+    val aimStrictnessLabel = VisLabel("Aim Strictness: $PISTOL_AIM_STRICTNESS") //Aim_Strictness
     val aimStrictnessSlider = VisSlider(1F, 5F, 0.1F, false) //Aim_Strictness
     val perfectAimCheckBox = VisCheckBox("Enable Perfect Aim") //Perfect_Aim
     private val perfectAimTable = VisTable() //Perfect_Aim_Collapsible Table
@@ -290,148 +290,80 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         aimFov.add(aimFovSlider)
 
         //Create Aim_Speed_Min Slider
-        val aimSpeedMin = VisTable()
-        Tooltip.Builder("The minimum aim speed in milliseconds").target(aimSpeedMin).build()
-        aimSpeedMinSlider.value = PISTOL_AIM_SPEED_MIN.toFloat()
-        aimSpeedMinSlider.changed { _, _ ->
+        val aimSpeed = VisTable()
+        Tooltip.Builder("The aim speed delay in milliseconds").target(aimSpeed).build()
+        aimSpeedSlider.value = PISTOL_AIM_SPEED.toFloat()
+        aimSpeedSlider.changed { _, _ ->
             when (categorySelected) {
                 "PISTOL" -> {
-                    if ((aimSpeedMinSlider.value.toInt() < PISTOL_AIM_SPEED_MAX)) {
-                        PISTOL_AIM_SPEED_MIN = aimSpeedMinSlider.value.toInt()
-                        aimSpeedMinLabel.setText("Aim Speed Min: $PISTOL_AIM_SPEED_MIN" + when(PISTOL_AIM_SPEED_MIN.toString().length) {3->"  " 2->"    " else ->"      "})
-                    }
-                    else
-                    {
-                        PISTOL_AIM_SPEED_MIN = PISTOL_AIM_SPEED_MAX -1
-                        aimSpeedMinSlider.value = (PISTOL_AIM_SPEED_MAX -1).toFloat()
-                    }
+                    PISTOL_AIM_SPEED = aimSpeedSlider.value.toInt()
+                    aimSpeedLabel.setText("Aim Speed: " + PISTOL_AIM_SPEED.toString() + when(PISTOL_AIM_SPEED.toString().length) {3->"  " 2->"    " else ->"      "})
                 }
 
                 "RIFLE" -> {
-                    if ((aimSpeedMinSlider.value.toInt() < RIFLE_AIM_SPEED_MAX)) {
-                        RIFLE_AIM_SPEED_MIN = aimSpeedMinSlider.value.toInt()
-                        aimSpeedMinLabel.setText("Aim Speed Min: $RIFLE_AIM_SPEED_MIN" + when(RIFLE_AIM_SPEED_MIN.toString().length) {3->"  " 2->"    " else ->"      "})
-                    }
-                    else
-                    {
-                        RIFLE_AIM_SPEED_MIN = RIFLE_AIM_SPEED_MAX -1
-                        aimSpeedMinSlider.value = (RIFLE_AIM_SPEED_MAX -1).toFloat()
-                    }
+                    RIFLE_AIM_SPEED = aimSpeedSlider.value.toInt()
+                    aimSpeedLabel.setText("Aim Speed: " + RIFLE_AIM_SPEED.toString() + when(RIFLE_AIM_SPEED.toString().length) {3->"  " 2->"    " else ->"      "})
                 }
 
                 "SMG" -> {
-                    if ((aimSpeedMinSlider.value.toInt() < SMG_AIM_SPEED_MAX)) {
-                        SMG_AIM_SPEED_MIN = aimSpeedMinSlider.value.toInt()
-                        aimSpeedMinLabel.setText("Aim Speed Min: $SMG_AIM_SPEED_MIN" + when(SMG_AIM_SPEED_MIN.toString().length) {3->"  " 2->"    " else ->"      "})
-                    }
-                    else
-                    {
-                        SMG_AIM_SPEED_MIN = SMG_AIM_SPEED_MAX -1
-                        aimSpeedMinSlider.value = (SMG_AIM_SPEED_MAX -1).toFloat()
-                    }
+                    SMG_AIM_SPEED = aimSpeedSlider.value.toInt()
+                    aimSpeedLabel.setText("Aim Speed: " + SMG_AIM_SPEED.toString() + when(SMG_AIM_SPEED.toString().length) {3->"  " 2->"    " else ->"      "})
                 }
 
                 "SNIPER" -> {
-                    if ((aimSpeedMinSlider.value.toInt() < SNIPER_AIM_SPEED_MAX)) {
-                        SNIPER_AIM_SPEED_MIN = aimSpeedMinSlider.value.toInt()
-                        aimSpeedMinLabel.setText("Aim Speed Min: $SNIPER_AIM_SPEED_MIN" + when(SNIPER_AIM_SPEED_MIN.toString().length) {3->"  " 2->"    " else ->"      "})
-                    }
-                    else
-                    {
-                        SNIPER_AIM_SPEED_MIN = SNIPER_AIM_SPEED_MAX -1
-                        aimSpeedMinSlider.value = (SNIPER_AIM_SPEED_MAX -1).toFloat()
-                    }
+                    SNIPER_AIM_SPEED = aimSpeedSlider.value.toInt()
+                    aimSpeedLabel.setText("Aim Speed: " + SNIPER_AIM_SPEED.toString() + when(SNIPER_AIM_SPEED.toString().length) {3->"  " 2->"    " else ->"      "})
                 }
 
                 "SHOTGUN" -> {
-                    if ((aimSpeedMinSlider.value.toInt() < SHOTGUN_AIM_SPEED_MAX)) {
-                        SHOTGUN_AIM_SPEED_MIN = aimSpeedMinSlider.value.toInt()
-                        aimSpeedMinLabel.setText("Aim Speed Min: $SHOTGUN_AIM_SPEED_MIN" + when(SHOTGUN_AIM_SPEED_MIN.toString().length) {3->"  " 2->"    " else ->"      "})
-                    }
-                    else
-                    {
-                        SHOTGUN_AIM_SPEED_MIN = SHOTGUN_AIM_SPEED_MAX -1
-                        aimSpeedMinSlider.value = (SHOTGUN_AIM_SPEED_MAX -1).toFloat()
-                    }
+                    SHOTGUN_AIM_SPEED = aimSpeedSlider.value.toInt()
+                    aimSpeedLabel.setText("Aim Speed: " + SHOTGUN_AIM_SPEED.toString() + when(SHOTGUN_AIM_SPEED.toString().length) {3->"  " 2->"    " else ->"      "})
                 }
+
+                else -> {} //When needs an else now for some reason?
             }
         }
-        aimSpeedMin.add(aimSpeedMinLabel)
-        aimSpeedMin.add(aimSpeedMinSlider)
+        aimSpeed.add(aimSpeedLabel)
+        aimSpeed.add(aimSpeedSlider)
 
-        //Create Aim_Speed_Max
-        val aimSpeedMax = VisTable()
-        Tooltip.Builder("The maximum aim speed in milliseconds").target(aimSpeedMax).build()
-        aimSpeedMaxSlider.value = PISTOL_AIM_SPEED_MAX.toFloat()
-        aimSpeedMaxSlider.changed { _, _ ->
+        //Create Aim_Strictness Slider
+        val aimSmoothness = VisTable()
+        Tooltip.Builder("The smoothness of the aimbot (path aim only)").target(aimSmoothness).build()
+        aimSmoothnessSlider.value = PISTOL_AIM_SMOOTHNESS.toFloat()
+        aimSmoothnessSlider.changed { _, _ ->
             when (categorySelected) {
                 "PISTOL" -> {
-                    if ((aimSpeedMaxSlider.value.toInt() > PISTOL_AIM_SPEED_MIN)) {
-                        PISTOL_AIM_SPEED_MAX = aimSpeedMaxSlider.value.toInt()
-                        aimSpeedMaxLabel.setText("Aim Speed Max: $PISTOL_AIM_SPEED_MAX" + when(PISTOL_AIM_SPEED_MAX.toString().length) {3->"  " 2->"    " else ->"      "})
-                    }
-                    else
-                    {
-                        PISTOL_AIM_SPEED_MAX = PISTOL_AIM_SPEED_MIN +1
-                        aimSpeedMaxSlider.value = (PISTOL_AIM_SPEED_MIN +1).toFloat()
-                    }
+                    PISTOL_AIM_SMOOTHNESS = Math.round(aimSmoothnessSlider.value.toDouble() * 10.0)/10.0
+                    aimSmoothnessLabel.setText("Aim Smoothness: $PISTOL_AIM_SMOOTHNESS")
                 }
 
                 "RIFLE" -> {
-                    if ((aimSpeedMaxSlider.value.toInt() > RIFLE_AIM_SPEED_MIN)) {
-                        RIFLE_AIM_SPEED_MAX = aimSpeedMaxSlider.value.toInt()
-                        aimSpeedMaxLabel.setText("Aim Speed Max: $RIFLE_AIM_SPEED_MAX" + when(RIFLE_AIM_SPEED_MAX.toString().length) {3->"  " 2->"    " else ->"      "})
-                    }
-                    else
-                    {
-                        RIFLE_AIM_SPEED_MAX = RIFLE_AIM_SPEED_MIN +1
-                        aimSpeedMaxSlider.value = (RIFLE_AIM_SPEED_MIN +1).toFloat()
-                    }
+                    RIFLE_AIM_SMOOTHNESS = Math.round(aimSmoothnessSlider.value.toDouble() * 10.0)/10.0
+                    aimSmoothnessLabel.setText("Aim Smoothness: $RIFLE_AIM_SMOOTHNESS")
                 }
 
                 "SMG" -> {
-                    if ((aimSpeedMaxSlider.value.toInt() > SMG_AIM_SPEED_MIN)) {
-                        SMG_AIM_SPEED_MAX = aimSpeedMaxSlider.value.toInt()
-                        aimSpeedMaxLabel.setText("Aim Speed Max: $SMG_AIM_SPEED_MAX" + when(SMG_AIM_SPEED_MAX.toString().length) {3->"  " 2->"    " else ->"      "})
-                    }
-                    else
-                    {
-                        SMG_AIM_SPEED_MAX = SMG_AIM_SPEED_MIN +1
-                        aimSpeedMaxSlider.value = (SMG_AIM_SPEED_MIN +1).toFloat()
-                    }
+                    SMG_AIM_SMOOTHNESS = Math.round(aimSmoothnessSlider.value.toDouble() * 10.0)/10.0
+                    aimSmoothnessLabel.setText("Aim Smoothness: $SMG_AIM_SMOOTHNESS")
                 }
 
                 "SNIPER" -> {
-                    if ((aimSpeedMaxSlider.value.toInt() > SNIPER_AIM_SPEED_MIN)) {
-                        SNIPER_AIM_SPEED_MAX = aimSpeedMaxSlider.value.toInt()
-                        aimSpeedMaxLabel.setText("Aim Speed Max: $SNIPER_AIM_SPEED_MAX" + when(SNIPER_AIM_SPEED_MAX.toString().length) {3->"  " 2->"    " else ->"      "})
-                    }
-                    else
-                    {
-                        SNIPER_AIM_SPEED_MAX = SNIPER_AIM_SPEED_MIN +1
-                        aimSpeedMaxSlider.value = (SNIPER_AIM_SPEED_MIN +1).toFloat()
-                    }
+                    SNIPER_AIM_SMOOTHNESS = Math.round(aimSmoothnessSlider.value.toDouble() * 10.0)/10.0
+                    aimSmoothnessLabel.setText("Aim Smoothness: $SNIPER_AIM_SMOOTHNESS")
                 }
 
                 "SHOTGUN" -> {
-                    if ((aimSpeedMaxSlider.value.toInt() > SHOTGUN_AIM_SPEED_MIN)) {
-                        SHOTGUN_AIM_SPEED_MAX = aimSpeedMaxSlider.value.toInt()
-                        aimSpeedMaxLabel.setText("Aim Speed Max: $SHOTGUN_AIM_SPEED_MAX" + when(SHOTGUN_AIM_SPEED_MAX.toString().length) {3->"  " 2->"    " else ->"      "})
-                    }
-                    else
-                    {
-                        SHOTGUN_AIM_SPEED_MAX = SHOTGUN_AIM_SPEED_MIN +1
-                        aimSpeedMaxSlider.value = (SHOTGUN_AIM_SPEED_MIN +1).toFloat()
-                    }
+                    SHOTGUN_AIM_SMOOTHNESS = Math.round(aimSmoothnessSlider.value.toDouble() * 10.0)/10.0
+                    aimSmoothnessLabel.setText("Aim Smoothness: $SHOTGUN_AIM_SMOOTHNESS")
                 }
             }
         }
-        aimSpeedMax.add(aimSpeedMaxLabel)
-        aimSpeedMax.add(aimSpeedMaxSlider)
+        aimSmoothness.add(aimSmoothnessLabel).spaceRight(6F)
+        aimSmoothness.add(aimSmoothnessSlider)
 
         //Create Aim_Strictness Slider
         val aimStrictness = VisTable()
-        Tooltip.Builder("The aim sensitivity (multiplier)").target(aimStrictness).build()
+        Tooltip.Builder("How close to get to the bone before it stops correcting").target(aimStrictness).build()
         aimStrictnessSlider.value = PISTOL_AIM_STRICTNESS.toFloat()
         aimStrictnessSlider.changed { _, _ ->
             when (categorySelected) {
@@ -661,8 +593,8 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         table.add(enablePathAim).row()
         table.add(aimBone).row()
         table.add(aimFov).row()
-        table.add(aimSpeedMin).row()
-        table.add(aimSpeedMax).row()
+        table.add(aimSpeed).row()
+        table.add(aimSmoothness).row()
         table.add(aimStrictness).row()
         table.add(perfectAimCheckBox).row()
         table.add(perfectAimCollapsible).row()

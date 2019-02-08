@@ -24,18 +24,12 @@ fun UIUpdate() {
                     else -> "      "
                 })
                 aimFovSlider.value = PISTOL_AIM_FOV.toFloat()
-                aimSpeedMinLabel.setText("Aim Speed Min: $PISTOL_AIM_SPEED_MIN" + when (PISTOL_AIM_SPEED_MIN.toString().length) {
+                aimSpeedLabel.setText("Aim Speed: $PISTOL_AIM_SPEED" + when (PISTOL_AIM_SPEED.toString().length) {
                     3 -> "  "
                     2 -> "    "
                     else -> "      "
                 })
-                aimSpeedMinSlider.value = PISTOL_AIM_SPEED_MIN.toFloat()
-                aimSpeedMaxLabel.setText("Aim Speed Max: $PISTOL_AIM_SPEED_MAX" + when (PISTOL_AIM_SPEED_MAX.toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                aimSpeedMaxSlider.value = PISTOL_AIM_SPEED_MAX.toFloat()
+                aimSpeedSlider.value = PISTOL_AIM_SPEED.toFloat()
                 aimStrictnessLabel.setText("Aim Strictness: $PISTOL_AIM_STRICTNESS")
                 aimStrictnessSlider.value = PISTOL_AIM_STRICTNESS.toFloat()
                 perfectAimCheckBox.isChecked = PISTOL_PERFECT_AIM
@@ -72,18 +66,12 @@ fun UIUpdate() {
                     else -> "      "
                 })
                 aimFovSlider.value = RIFLE_AIM_FOV.toFloat()
-                aimSpeedMinLabel.setText("Aim Speed Min: $RIFLE_AIM_SPEED_MIN" + when (RIFLE_AIM_SPEED_MIN.toString().length) {
+                aimSpeedLabel.setText("Aim Speed: $RIFLE_AIM_SPEED" + when (RIFLE_AIM_SPEED.toString().length) {
                     3 -> "  "
                     2 -> "    "
                     else -> "      "
                 })
-                aimSpeedMinSlider.value = RIFLE_AIM_SPEED_MIN.toFloat()
-                aimSpeedMaxLabel.setText("Aim Speed Max: $RIFLE_AIM_SPEED_MAX" + when (RIFLE_AIM_SPEED_MAX.toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                aimSpeedMaxSlider.value = RIFLE_AIM_SPEED_MAX.toFloat()
+                aimSpeedSlider.value = RIFLE_AIM_SPEED.toFloat()
                 aimStrictnessLabel.setText("Aim Strictness: $RIFLE_AIM_STRICTNESS")
                 aimStrictnessSlider.value = RIFLE_AIM_STRICTNESS.toFloat()
                 perfectAimCheckBox.isChecked = RIFLE_PERFECT_AIM
@@ -120,18 +108,12 @@ fun UIUpdate() {
                     else -> "      "
                 })
                 aimFovSlider.value = SMG_AIM_FOV.toFloat()
-                aimSpeedMinLabel.setText("Aim Speed Min: $SMG_AIM_SPEED_MIN" + when (SMG_AIM_SPEED_MIN.toString().length) {
+                aimSpeedLabel.setText("Aim Speed: $SMG_AIM_SPEED" + when (SMG_AIM_SPEED.toString().length) {
                     3 -> "  "
                     2 -> "    "
                     else -> "      "
                 })
-                aimSpeedMinSlider.value = SMG_AIM_SPEED_MIN.toFloat()
-                aimSpeedMaxLabel.setText("Aim Speed Max: $SMG_AIM_SPEED_MAX" + when (SMG_AIM_SPEED_MAX.toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                aimSpeedMaxSlider.value = SMG_AIM_SPEED_MAX.toFloat()
+                aimSpeedSlider.value = SMG_AIM_SPEED.toFloat()
                 aimStrictnessLabel.setText("Aim Strictness: $SMG_AIM_STRICTNESS")
                 aimStrictnessSlider.value = SMG_AIM_STRICTNESS.toFloat()
                 perfectAimCheckBox.isChecked = SMG_PERFECT_AIM
@@ -168,18 +150,12 @@ fun UIUpdate() {
                     else -> "      "
                 })
                 aimFovSlider.value = SNIPER_AIM_FOV.toFloat()
-                aimSpeedMinLabel.setText("Aim Speed Min: $SNIPER_AIM_SPEED_MIN" + when (SNIPER_AIM_SPEED_MIN.toString().length) {
+                aimSpeedLabel.setText("Aim Speed: $SNIPER_AIM_SPEED" + when (SNIPER_AIM_SPEED.toString().length) {
                     3 -> "  "
                     2 -> "    "
                     else -> "      "
                 })
-                aimSpeedMinSlider.value = SNIPER_AIM_SPEED_MIN.toFloat()
-                aimSpeedMaxLabel.setText("Aim Speed Max: $SNIPER_AIM_SPEED_MAX" + when (SNIPER_AIM_SPEED_MAX.toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                aimSpeedMaxSlider.value = SNIPER_AIM_SPEED_MAX.toFloat()
+                aimSpeedSlider.value = SNIPER_AIM_SPEED.toFloat()
                 aimStrictnessLabel.setText("Aim Strictness: $SNIPER_AIM_STRICTNESS")
                 aimStrictnessSlider.value = SNIPER_AIM_STRICTNESS.toFloat()
                 perfectAimCheckBox.isChecked = SNIPER_PERFECT_AIM
@@ -216,18 +192,12 @@ fun UIUpdate() {
                     else -> "      "
                 })
                 aimFovSlider.value = SHOTGUN_AIM_FOV.toFloat()
-                aimSpeedMinLabel.setText("Aim Speed Min: $SHOTGUN_AIM_SPEED_MIN" + when (SHOTGUN_AIM_SPEED_MIN.toString().length) {
+                aimSpeedLabel.setText("Aim Speed: $SHOTGUN_AIM_SPEED" + when (SHOTGUN_AIM_SPEED.toString().length) {
                     3 -> "  "
                     2 -> "    "
                     else -> "      "
                 })
-                aimSpeedMinSlider.value = SHOTGUN_AIM_SPEED_MIN.toFloat()
-                aimSpeedMaxLabel.setText("Aim Speed Max: $SHOTGUN_AIM_SPEED_MAX" + when (SHOTGUN_AIM_SPEED_MAX.toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                aimSpeedMaxSlider.value = SHOTGUN_AIM_SPEED_MAX.toFloat()
+                aimSpeedSlider.value = SHOTGUN_AIM_SPEED.toFloat()
                 aimStrictnessLabel.setText("Aim Strictness: $SHOTGUN_AIM_STRICTNESS")
                 aimStrictnessSlider.value = SHOTGUN_AIM_STRICTNESS.toFloat()
                 perfectAimCheckBox.isChecked = SHOTGUN_PERFECT_AIM

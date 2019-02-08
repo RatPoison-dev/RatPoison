@@ -31,10 +31,14 @@ SHOTGUN_AIM_FOV = 70
 /**
  * The aimbot's "playback" speed, the higher the value the slower the playback.
  *
- * The minimum value is 1, and max must always be greater than min.
+ * The minimum value is 1
  */
-SHOTGUN_AIM_SPEED_MIN = 6
-SHOTGUN_AIM_SPEED_MAX = 12
+SHOTGUN_AIM_SPEED = 9
+
+/**
+ * The smoothness of the aimbot
+ */
+SHOTGUN_AIM_SMOOTHNESS = 1.0
 
 /**
  * The strictness, or "stickiness" of the aimbot; the higher the number, the

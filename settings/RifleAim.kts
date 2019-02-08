@@ -31,10 +31,14 @@ RIFLE_AIM_FOV = 40
 /**
  * The aimbot's "playback" speed, the higher the value the slower the playback.
  *
- * The minimum value is 1, and max must always be greater than min.
+ * The minimum value is 1
  */
-RIFLE_AIM_SPEED_MIN = 12
-RIFLE_AIM_SPEED_MAX = 24
+RIFLE_AIM_SPEED = 18
+
+/**
+ * The smoothness of the aimbot
+ */
+RIFLE_AIM_SMOOTHNESS = 1.0
 
 /**
  * The strictness, or "stickiness" of the aimbot; the higher the number, the

@@ -14,6 +14,7 @@ import rat.poison.settings.GAME_YAW
 import rat.poison.utils.extensions.refresh
 import rat.poison.utils.extensions.set
 import com.sun.jna.platform.win32.WinDef.POINT
+import rat.poison.settings.AIM_SMOOTHNESS
 
 private val mousePos = ThreadLocal.withInitial { POINT() }
 private val target = ThreadLocal.withInitial { POINT() }
@@ -50,8 +51,7 @@ fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double) = 
 //	mouseMove((dx / 2).toInt(), (dy / 2).toInt())
 //}
 
-fun pathAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Int,
-            randomSleepMax: Int = 10, staticSleep: Int = 2,
+fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
             sensMultiplier: Double = 1.0, perfect: Boolean = false) {
 	if (!destinationAngle.isValid()) return
 	
@@ -68,15 +68,14 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Int,
 	val mousePos = mousePos.get().refresh()
 	
 	val target = target.get()
-	target.set((mousePos.x + (dx / 2)).toInt(), (mousePos.y + (dy / 2)).toInt())
+	target.set((mousePos.x + dx/AIM_SMOOTHNESS).toInt(), (mousePos.y + dy/AIM_SMOOTHNESS).toInt())
 	
 	if (target.x <= 0 || target.x >= gameX + gameWidth || target.y <= 0 || target.y >= gameY + gameHeight) return
 
 	if (perfect) {
-//		mouseMove((dx).toInt(), (dy).toInt())
 		writeAim(currentAngle, destinationAngle, 1.0)
 		Thread.sleep(20)
-	} else HumanMouse.fastSteps(mousePos, target) { steps, i ->
+	} else HumanMouse.fastSteps(mousePos, target) { steps, _ ->
 		mousePos.refresh()
 		
 		val tx = target.x - mousePos.x
@@ -85,11 +84,7 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Int,
 		var halfIndex = steps / 2
 		if (halfIndex == 0) halfIndex = 1
 		mouseMove(tx / halfIndex, ty / halfIndex)
-		
-		val sleepingFactor = smoothing / 100.0
-		val sleepTime = Math.floor(staticSleep.toDouble()
-				+ randInt(randomSleepMax)
-				+ randInt(i)) * sleepingFactor
-		if (sleepTime > 0) Thread.sleep(sleepTime.toLong())
+
+		Thread.sleep((aimSpeed/10.0).toLong())
 	}
 }

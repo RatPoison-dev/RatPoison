@@ -31,10 +31,14 @@ var SNIPER_AIM_FOV = 40
 /**
  * The aimbot's "playback" speed, the higher the value the slower the playback.
  *
- * The minimum value is 1, and max must always be greater than min.
+ * The minimum value is 1
  */
-var SNIPER_AIM_SPEED_MIN = 28
-var SNIPER_AIM_SPEED_MAX = 36
+var SNIPER_AIM_SPEED = 1
+
+/**
+ * The smoothness of the aimbot
+ */
+var SNIPER_AIM_SMOOTHNESS = 1.0
 
 /**
  * The strictness, or "stickiness" of the aimbot; the higher the number, the

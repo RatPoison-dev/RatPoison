@@ -8,21 +8,6 @@ import com.kotcrab.vis.ui.widget.tabbedpane.*
 import rat.poison.ui.tabs.*
 import rat.poison.ui.tabs.esptabs.*
 
-//Issues/todo
-//Solution for when str.length spacing //so-1 - try a divider between label and slider
-//Massive cleanup
-//Fix if(true) quickfix for return Any? problem -- might be autistic
-//Add UI color colorpicker
-//Never used rename to _ --too widespread atm, not an issue
-//Fix use property access syntax --too widespread atm
-
-//Add tooltips for EVERYTHING (im FUCKING SCRaeAMinG)
-
-//A lot of problems/workarounds below, needs optimzation
-
-////Marked for fix, enable esp needs to turn all the esps off
-
-//Tabs, public to access in UIUpdate
 val mainTabbedPane = TabbedPane()
     val aimTab = AimTab()
     val visualsTab = VisualsTab()
@@ -56,7 +41,6 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
 
         this.isResizable = false
 
-        //Add tabs to main tab-pane
         mainTabbedPane.add(aimTab)
         mainTabbedPane.add(visualsTab)
         mainTabbedPane.add(rcsTab)
@@ -64,12 +48,9 @@ class DebuggerWindow : VisWindow("RatPoison UI") {
         mainTabbedPane.add(miscTab)
         mainTabbedPane.add(settingsTab)
 
-        //Set default tab to first (aimTab)
         mainTabbedPane.switchTab(aimTab)
 
-        //mainTabbedPaneContent.add(aimTab.contentTable) //Aim.kts is the initial window, initialize pane content with tabs contents
         mainTabbedPaneContent.add(aimTab.contentTable).growX()
-
 
         mainTabbedPane.addListener(object : TabbedPaneAdapter() {
             override fun switchedTab(tab: Tab?) {
