@@ -9,14 +9,14 @@ import rat.poison.settings.*
  *
  * This script uses traditional flat linear-regression smoothing.
  */
-SMG_ENABLE_FLAT_AIM = true
+SMG_ENABLE_FLAT_AIM = false
 
 /**
  * Enables the path aim script.
  *
  * This script uses an advanced path generation smoothing.
  */
-SMG_ENABLE_PATH_AIM = false
+SMG_ENABLE_PATH_AIM = true
 
 /**
  * Default aim bone the aims go to
@@ -33,12 +33,12 @@ SMG_AIM_FOV = 40
  *
  * The minimum value is 1
  */
-SMG_AIM_SPEED = 14
+SMG_AIM_SPEED = 24
 
 /**
  * The smoothness of the aimbot
  */
-SMG_AIM_SMOOTHNESS = 1.0
+SMG_AIM_SMOOTHNESS = 1.2
 
 /**
  * The strictness, or "stickiness" of the aimbot; the higher the number, the

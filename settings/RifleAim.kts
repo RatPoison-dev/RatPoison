@@ -33,12 +33,12 @@ RIFLE_AIM_FOV = 40
  *
  * The minimum value is 1
  */
-RIFLE_AIM_SPEED = 18
+RIFLE_AIM_SPEED = 16
 
 /**
  * The smoothness of the aimbot
  */
-RIFLE_AIM_SMOOTHNESS = 1.0
+RIFLE_AIM_SMOOTHNESS = 1.5
 
 /**
  * The strictness, or "stickiness" of the aimbot; the higher the number, the

@@ -85,6 +85,6 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
 		if (halfIndex == 0) halfIndex = 1
 		mouseMove(tx / halfIndex, ty / halfIndex)
 
-		//Thread.sleep((aimSpeed/10.0).toLong())
+		Thread.sleep((aimSpeed/10.0).toLong())
 	}
 }

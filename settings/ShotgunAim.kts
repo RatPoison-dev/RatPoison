@@ -33,12 +33,12 @@ SHOTGUN_AIM_FOV = 70
  *
  * The minimum value is 1
  */
-SHOTGUN_AIM_SPEED = 9
+SHOTGUN_AIM_SPEED = 1
 
 /**
  * The smoothness of the aimbot
  */
-SHOTGUN_AIM_SMOOTHNESS = 1.0
+SHOTGUN_AIM_SMOOTHNESS = 2.5
 
 /**
  * The strictness, or "stickiness" of the aimbot; the higher the number, the
@@ -46,7 +46,7 @@ SHOTGUN_AIM_SMOOTHNESS = 1.0
  *
  * The minimum value is 1.0
  */
-SHOTGUN_AIM_STRICTNESS = 1.0
+SHOTGUN_AIM_STRICTNESS = 1.5
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,9 +80,9 @@ SHOTGUN_PERFECT_AIM_CHANCE = 40
  *
  * This setting should be used by high-level players who are experienced aimers.
  */
-SHOTGUN_AIM_ASSIST_MODE = false
+SHOTGUN_AIM_ASSIST_MODE = true
 
 /**
  * The amount of strictness for the aim assist mode, with a mimimum value of 1.
  */
-SHOTGUN_AIM_ASSIST_STRICTNESS = 80
+SHOTGUN_AIM_ASSIST_STRICTNESS = 20

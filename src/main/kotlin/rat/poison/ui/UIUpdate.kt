@@ -33,6 +33,8 @@ fun UIUpdate() {
                     else -> "      "
                 })
                 aimSpeedSlider.value = PISTOL_AIM_SPEED.toFloat()
+                aimSmoothnessLabel.setText("Aim Smoothness: $PISTOL_AIM_SMOOTHNESS")
+                aimSmoothnessSlider.value = PISTOL_AIM_SMOOTHNESS.toFloat()
                 aimStrictnessLabel.setText("Aim Strictness: $PISTOL_AIM_STRICTNESS")
                 aimStrictnessSlider.value = PISTOL_AIM_STRICTNESS.toFloat()
                 perfectAimCheckBox.isChecked = PISTOL_PERFECT_AIM
@@ -75,6 +77,8 @@ fun UIUpdate() {
                     else -> "      "
                 })
                 aimSpeedSlider.value = RIFLE_AIM_SPEED.toFloat()
+                aimSmoothnessLabel.setText("Aim Smoothness: $RIFLE_AIM_SMOOTHNESS")
+                aimSmoothnessSlider.value = RIFLE_AIM_SMOOTHNESS.toFloat()
                 aimStrictnessLabel.setText("Aim Strictness: $RIFLE_AIM_STRICTNESS")
                 aimStrictnessSlider.value = RIFLE_AIM_STRICTNESS.toFloat()
                 perfectAimCheckBox.isChecked = RIFLE_PERFECT_AIM
@@ -117,6 +121,8 @@ fun UIUpdate() {
                     else -> "      "
                 })
                 aimSpeedSlider.value = SMG_AIM_SPEED.toFloat()
+                aimSmoothnessLabel.setText("Aim Smoothness: $SMG_AIM_SMOOTHNESS")
+                aimSmoothnessSlider.value = SMG_AIM_SMOOTHNESS.toFloat()
                 aimStrictnessLabel.setText("Aim Strictness: $SMG_AIM_STRICTNESS")
                 aimStrictnessSlider.value = SMG_AIM_STRICTNESS.toFloat()
                 perfectAimCheckBox.isChecked = SMG_PERFECT_AIM
@@ -159,6 +165,8 @@ fun UIUpdate() {
                     else -> "      "
                 })
                 aimSpeedSlider.value = SNIPER_AIM_SPEED.toFloat()
+                aimSmoothnessLabel.setText("Aim Smoothness: $SNIPER_AIM_SMOOTHNESS")
+                aimSmoothnessSlider.value = SNIPER_AIM_SMOOTHNESS.toFloat()
                 aimStrictnessLabel.setText("Aim Strictness: $SNIPER_AIM_STRICTNESS")
                 aimStrictnessSlider.value = SNIPER_AIM_STRICTNESS.toFloat()
                 perfectAimCheckBox.isChecked = SNIPER_PERFECT_AIM
@@ -201,6 +209,8 @@ fun UIUpdate() {
                     else -> "      "
                 })
                 aimSpeedSlider.value = SHOTGUN_AIM_SPEED.toFloat()
+                aimSmoothnessLabel.setText("Aim Smoothness: $SHOTGUN_AIM_SMOOTHNESS")
+                aimSmoothnessSlider.value = SHOTGUN_AIM_SMOOTHNESS.toFloat()
                 aimStrictnessLabel.setText("Aim Strictness: $SHOTGUN_AIM_STRICTNESS")
                 aimStrictnessSlider.value = SHOTGUN_AIM_STRICTNESS.toFloat()
                 perfectAimCheckBox.isChecked = SHOTGUN_PERFECT_AIM

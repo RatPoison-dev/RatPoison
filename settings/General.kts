@@ -30,7 +30,7 @@ AUTOMATIC_WEAPONS = true
  * This is used to tap while using AUTOMATIC_WEAPONS
  * The lower the less accurate
  */
-MAX_PUNCH_CHECK = 16
+MAX_PUNCH_CHECK = 1
 
 /**
  * The key code of the force aim button.
