@@ -27,6 +27,7 @@ class MiscTab : Tab(false, false) {
     val hitSound = VisCheckBox("Hitsound") //Hit_Sound
     val hitSoundVolumeLabel = VisLabel("Hitsound Volume: $HITSOUND_VOLUME") //Hit_Sound_Volume
     val hitSoundVolumeSlider = VisSlider(0.1F, 1F, 0.1F, false) //Hit_Sound_Volume
+    val enableRadar = VisCheckBox("RadarHack") //RadarHack
 
     init {
         //Create Enable_Bunny_Hop Toggle
@@ -137,6 +138,16 @@ class MiscTab : Tab(false, false) {
         }
         hitSoundVolume.add(hitSoundVolumeLabel).spaceRight(6F)
         hitSoundVolume.add(hitSoundVolumeSlider)
+        
+        //Create RadarHack Toggle
+        //val enableRadar = VisTextButton("RadarHack", "toggle")
+        Tooltip.Builder("Whether or not to enable a RadarHack").target(enableRadar).build()
+        if (ENABLE_RADAR) enableRadar.toggle()
+        enableRadar.changed { _, _ ->
+            if (true) { //type Any? changes didnt work im autistic //fix later
+                ENABLE_RADAR = enableRadar.isChecked//!ENABLE_RADAR
+            }
+        }
 
 
         //Add all items to label for tabbed pane content
@@ -156,7 +167,10 @@ class MiscTab : Tab(false, false) {
 
         table.addSeparator()
         table.add(hitSound).row()
-        table.add(hitSoundVolume)
+        table.add(hitSoundVolume).row()
+        
+        table.addSeparator()
+        table.add(enableRadar).row()
     }
 
     override fun getContentTable(): Table? {
