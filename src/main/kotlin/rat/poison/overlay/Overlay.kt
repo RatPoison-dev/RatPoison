@@ -256,13 +256,17 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 		//makeBlurBehind()
 		if (targetAppHWND != HWND_ZERO) {
 			SetWindowLongA(myHWND, com.sun.jna.platform.win32.WinUser.GWL_EXSTYLE, WS_EX_TOOLWINDOW or WS_EX_TOPMOST)
+
 //			val dwCurrentThread = GetWindowThreadProcessId(myHWND, null)
 //			val dwFGThread = GetWindowThreadProcessId(targetAppHWND, null)
 //			AttachThreadInput(dwCurrentThread.toLong(), dwFGThread.toLong(), true) //Warned against by Noad
+
 			SetForegroundWindow(myHWND)
 			SetActiveWindow(myHWND)
 			SetFocus(myHWND)
+
 //			AttachThreadInput(dwCurrentThread.toLong(), dwFGThread.toLong(), false) //Warned against by Noad
+
 			SetWindowPos(myHWND, HWND_TOPPOS, x, y, width, height, 0)
 			listener?.onActive(this@Overlay)
 		}

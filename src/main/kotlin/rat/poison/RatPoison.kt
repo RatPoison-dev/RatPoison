@@ -70,6 +70,8 @@ fun main(args: Array<String>) {
 
     CSGO.initialize()
 
+    Thread.sleep(256)
+
     bunnyHop()
     rcs()
     rcrosshair()

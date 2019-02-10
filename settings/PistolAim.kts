@@ -19,6 +19,11 @@ PISTOL_ENABLE_FLAT_AIM = false
 PISTOL_ENABLE_PATH_AIM = true
 
 /**
+ * Whether or not to account for recoil when aiming
+ */
+PISTOL_FACTOR_RECOIL = true
+
+/**
  * Default aim bone the aims go to
  */
 PISTOL_AIM_BONE = 8

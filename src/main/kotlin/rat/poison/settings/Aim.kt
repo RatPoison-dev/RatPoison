@@ -1,6 +1,7 @@
 package rat.poison.settings
 
 //Settings will be overwritten when a weapon is out, change to lateinit?
+var FACTOR_RECOIL = true
 var AIM_BONE = HEAD_BONE
 var AIM_FOV = 40
 var AIM_SPEED = 16

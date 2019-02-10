@@ -19,6 +19,11 @@ var RIFLE_ENABLE_FLAT_AIM = false
 var RIFLE_ENABLE_PATH_AIM = true
 
 /**
+ * Whether or not to account for recoil when aiming
+ */
+var RIFLE_FACTOR_RECOIL = true
+
+/**
  * Default aim bone the aims go to
  */
 var RIFLE_AIM_BONE = HEAD_BONE

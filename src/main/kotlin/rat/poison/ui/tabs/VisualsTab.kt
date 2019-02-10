@@ -48,13 +48,12 @@ class VisualsTab : Tab(false, false) {
         Tooltip.Builder("Whether or not to enable esp").target(enableEsp).build()
         enableEsp.isChecked = ENABLE_ESP
         enableEsp.changed { _, _ ->
-            if (true) { //type Any? changes didnt work im autistic //fix later
-                ENABLE_ESP = enableEsp.isChecked
+            ENABLE_ESP = enableEsp.isChecked
 
-                if (!ENABLE_ESP) {
-                    disableEsp()
-                }
+            if (!ENABLE_ESP) {
+                disableEsp()
             }
+            true
         }
 
         //VisImage(Color) doesnt work??

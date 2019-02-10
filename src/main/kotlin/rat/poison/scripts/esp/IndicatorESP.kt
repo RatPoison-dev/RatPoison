@@ -84,8 +84,9 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: rat.poison.game.Color) {
     val wTest = wTest(vector)
 
     if (INDICATOR_SHOW_ONSCREEN && (wTest >= dist/3)) { //On screen
-        vector.z *= 1.5
-        worldToScreen(Vector(vector.x, vector.y, vector.z), vOut)
+        var z = vector.z
+        z *= 1.5
+        worldToScreen(Vector(vector.x, vector.y, z), vOut)
         shapeRenderer.apply {
             val indicatorPos = Vector3(vOut.x.toFloat(), vOut.y.toFloat(), 0F)
             indicatorPosition(indicatorPos, indicatorPos)
@@ -99,8 +100,9 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: rat.poison.game.Color) {
             end()
         }
     } else if (wTest < dist/3) {
-        vector.z *= .5
-        worldToScreen(Vector(vector.x, vector.y, vector.z), vOut)
+        var z = vector.z
+        z *= .5
+        worldToScreen(Vector(vector.x, vector.y, z), vOut)
         shapeRenderer.apply {
             val indicatorPos = Vector3(vOut.x.toFloat(), vOut.y.toFloat(), 0F)
             indicatorPosition(indicatorPos, indicatorPos)

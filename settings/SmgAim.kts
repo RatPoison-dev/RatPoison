@@ -19,6 +19,11 @@ SMG_ENABLE_FLAT_AIM = false
 SMG_ENABLE_PATH_AIM = true
 
 /**
+ * Whether or not to account for recoil when aiming
+ */
+SMG_FACTOR_RECOIL = true
+
+/**
  * Default aim bone the aims go to
  */
 SMG_AIM_BONE = 6

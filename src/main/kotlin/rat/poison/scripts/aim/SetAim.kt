@@ -5,8 +5,9 @@ import rat.poison.game.me
 import rat.poison.settings.*
 import rat.poison.utils.every
 
-fun setAim() = every(100){
-    if (me.weapon().rifle) {
+fun setAim() = every(128){
+    if (me.weapon().rifle) { //when me.weapon() rifle ->
+        FACTOR_RECOIL = RIFLE_FACTOR_RECOIL
         AIM_BONE = RIFLE_AIM_BONE
         AIM_FOV = RIFLE_AIM_FOV
         AIM_SPEED = RIFLE_AIM_SPEED
@@ -20,6 +21,7 @@ fun setAim() = every(100){
         ENABLE_FLAT_AIM = RIFLE_ENABLE_FLAT_AIM
         ENABLE_PATH_AIM = RIFLE_ENABLE_PATH_AIM
     } else if (me.weapon().smg) {
+        FACTOR_RECOIL = SMG_FACTOR_RECOIL
         AIM_BONE = SMG_AIM_BONE
         AIM_FOV = SMG_AIM_FOV
         AIM_SPEED = SMG_AIM_SPEED
@@ -33,6 +35,7 @@ fun setAim() = every(100){
         ENABLE_FLAT_AIM = SMG_ENABLE_FLAT_AIM
         ENABLE_PATH_AIM = SMG_ENABLE_PATH_AIM
     } else if (me.weapon().pistol) {
+        FACTOR_RECOIL = PISTOL_FACTOR_RECOIL
         AIM_BONE = PISTOL_AIM_BONE
         AIM_FOV = PISTOL_AIM_FOV
         AIM_SPEED = PISTOL_AIM_SPEED
@@ -46,6 +49,7 @@ fun setAim() = every(100){
         ENABLE_FLAT_AIM = PISTOL_ENABLE_FLAT_AIM
         ENABLE_PATH_AIM = PISTOL_ENABLE_PATH_AIM
     } else if (me.weapon().sniper) {
+        FACTOR_RECOIL = SNIPER_FACTOR_RECOIL
         AIM_BONE = SNIPER_AIM_BONE
         AIM_FOV = SNIPER_AIM_FOV
         AIM_SPEED = SNIPER_AIM_SPEED
@@ -59,6 +63,7 @@ fun setAim() = every(100){
         ENABLE_FLAT_AIM = SNIPER_ENABLE_FLAT_AIM
         ENABLE_PATH_AIM = SNIPER_ENABLE_PATH_AIM
     } else if (me.weapon().shotgun) {
+        FACTOR_RECOIL = SHOTGUN_FACTOR_RECOIL
         AIM_BONE = SHOTGUN_AIM_BONE
         AIM_FOV = SHOTGUN_AIM_FOV
         AIM_SPEED = SHOTGUN_AIM_SPEED

@@ -48,7 +48,7 @@ enum class Weapons(val id: Int, val automatic: Boolean = false, val grenade: Boo
 	M4A1_SILENCER(60, automatic = true, rifle = true),
 	USP_SILENCER(61, pistol = true),
 	CZ75A(63, automatic = true, pistol = true),
-	R8_REVOLVER(64, boltAction = true, pistol = true),
+	R8_REVOLVER(64, boltAction = true, pistol = true, automatic = true),
 	KNIFE_BAYONET(500, knife = true),
 	KNIFE_FLIP(505, knife = true),
 	KNIFE_GUT(506, knife = true),

@@ -28,6 +28,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val maxPunchCheckSlider = VisSlider(1F, 32F, 1F, false) //Max_Punch_Check
 
     private val categorySelectionBox = VisSelectBox<String>() //Category
+    val enableFactorRecoil = VisCheckBox("Factor Recoil") //Enable_Path_Aim
     val enableFlatAim = VisCheckBox("Flat Aim") //Enable_Flat_Aim
     val enablePathAim = VisCheckBox("Path Aim") //Enable_Path_Aim
     val aimBoneBox = VisSelectBox<String>() //Aim_Bone
@@ -106,6 +107,34 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         forceAimKey.add(forceAimKeyField).spaceRight(6F).width(40F)
         forceAimKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
 
+        //Create Enable_Path_Aim Toggle
+        Tooltip.Builder("Whether or not to factor in recoil when aiming").target(enableFactorRecoil).build()
+        enableFactorRecoil.isChecked = PISTOL_ENABLE_PATH_AIM
+        enableFactorRecoil.changed { _, _ ->
+            when (categorySelected) {
+                "PISTOL" -> {
+                    PISTOL_FACTOR_RECOIL = enableFactorRecoil.isChecked
+                }
+
+                "RIFLE" -> {
+                    RIFLE_FACTOR_RECOIL = enableFactorRecoil.isChecked
+                }
+
+                "SMG" -> {
+                    SMG_FACTOR_RECOIL = enableFactorRecoil.isChecked
+                }
+
+                "SNIPER" -> {
+                    SNIPER_FACTOR_RECOIL = enableFactorRecoil.isChecked
+                }
+
+                "SHOTGUN" -> {
+                    SHOTGUN_FACTOR_RECOIL = enableFactorRecoil.isChecked
+                }
+            }
+            UIUpdate()
+            true
+        }
 
         //Create Category Selector
         val categorySelection = VisTable()
@@ -589,6 +618,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         table.add(forceAimKey).row()
         table.addSeparator()
         table.add(categorySelection).row()
+        table.add(enableFactorRecoil).row()
         table.add(enableFlatAim).row()
         table.add(enablePathAim).row()
         table.add(aimBone).row()

@@ -19,17 +19,19 @@ fun bombTimer() { //Don't know if works
 
     App {
         if (ENABLE_BOMB_TIMER && bombState.planted) {
+            val Color : Color
+            if ((me.team() == 3.toLong() && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) {
+                Color = Color(255F, 220F, 0F, .5F)
+            } else  if ((me.team() == 3.toLong() && bombState.timeLeftToDefuse < bombState.timeLeftToExplode) || (me.team() == 2.toLong() && !bombState.gettingDefused)) {
+                Color = Color(255F, 220F, 0F, .5F)
+            } else {
+                Color = Color(1F, 0F, 0F, .25F)
+            }
+
             shapeRenderer.apply {
                 begin()
+                color = Color
                 set(ShapeRenderer.ShapeType.Filled)
-                if ((me.team() == 3.toLong() && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) {
-                    color = Color(255F, 220F, 0F, .5F)
-                } else  if ((me.team() == 3.toLong() && bombState.timeLeftToDefuse < bombState.timeLeftToExplode) || (me.team() == 2.toLong() && !bombState.gettingDefused)) {
-                    println(bombState.timeLeftToDefuse.toString() + " > " + bombState.timeLeftToExplode.toString())
-                    color = Color(255F, 220F, 0F, .5F)
-                } else {
-                    color = Color(1F, 0F, 0F, .25F)
-                }
                 rect(0F, 0F, CSGO.gameWidth.toFloat()*(bombState.timeLeftToExplode/40F), CSGO.gameHeight * .01F)
                 set(ShapeRenderer.ShapeType.Line)
                 color = Color(1F, 1F, 1F, 1F)

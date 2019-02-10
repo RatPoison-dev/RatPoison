@@ -19,6 +19,11 @@ var SNIPER_ENABLE_FLAT_AIM = false
 var SNIPER_ENABLE_PATH_AIM = true
 
 /**
+ * Whether or not to account for recoil when aiming
+ */
+var SNIPER_FACTOR_RECOIL = false
+
+/**
  * Default aim bone the aims go to
  */
 var SNIPER_AIM_BONE = HEAD_BONE

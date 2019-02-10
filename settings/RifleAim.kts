@@ -19,6 +19,11 @@ RIFLE_ENABLE_FLAT_AIM = false
 RIFLE_ENABLE_PATH_AIM = true
 
 /**
+ * Whether or not to account for recoil when aiming
+ */
+RIFLE_FACTOR_RECOIL = true
+
+/**
  * Default aim bone the aims go to
  */
 RIFLE_AIM_BONE = 6

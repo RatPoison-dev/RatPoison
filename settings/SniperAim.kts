@@ -19,6 +19,11 @@ SNIPER_ENABLE_FLAT_AIM = true
 SNIPER_ENABLE_PATH_AIM = false
 
 /**
+ * Whether or not to account for recoil when aiming
+ */
+SNIPER_FACTOR_RECOIL = false
+
+/**
  * Default aim bone the aims go to
  */
 SNIPER_AIM_BONE = 6

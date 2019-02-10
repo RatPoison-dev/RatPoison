@@ -19,6 +19,11 @@ var SHOTGUN_ENABLE_FLAT_AIM = false
 var SHOTGUN_ENABLE_PATH_AIM = true
 
 /**
+ * Whether or not to account for recoil when aiming
+ */
+var SHOTGUN_FACTOR_RECOIL = true
+
+/**
  * Default aim bone the aims go to
  */
 var SHOTGUN_AIM_BONE = HEAD_BONE

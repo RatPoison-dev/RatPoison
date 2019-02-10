@@ -18,6 +18,7 @@ fun UIUpdate() {
 
         when (categorySelected) {
             "PISTOL" -> {
+                enableFactorRecoil.isChecked = PISTOL_FACTOR_RECOIL
                 enableFlatAim.isChecked = PISTOL_ENABLE_FLAT_AIM
                 enablePathAim.isChecked = PISTOL_ENABLE_PATH_AIM
                 aimBoneBox.selected = if (PISTOL_AIM_BONE == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
@@ -62,6 +63,7 @@ fun UIUpdate() {
             }
 
             "RIFLE" -> {
+                enableFactorRecoil.isChecked = RIFLE_FACTOR_RECOIL
                 enableFlatAim.isChecked = RIFLE_ENABLE_FLAT_AIM
                 enablePathAim.isChecked = RIFLE_ENABLE_PATH_AIM
                 aimBoneBox.selected = if (RIFLE_AIM_BONE == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
@@ -106,6 +108,7 @@ fun UIUpdate() {
             }
 
             "SMG" -> {
+                enableFactorRecoil.isChecked = SMG_FACTOR_RECOIL
                 enableFlatAim.isChecked = SMG_ENABLE_FLAT_AIM
                 enablePathAim.isChecked = SMG_ENABLE_PATH_AIM
                 aimBoneBox.selected = if (SMG_AIM_BONE == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
@@ -150,6 +153,7 @@ fun UIUpdate() {
             }
 
             "SNIPER" -> {
+                enableFactorRecoil.isChecked = SNIPER_FACTOR_RECOIL
                 enableFlatAim.isChecked = SNIPER_ENABLE_FLAT_AIM
                 enablePathAim.isChecked = SNIPER_ENABLE_PATH_AIM
                 aimBoneBox.selected = if (SNIPER_AIM_BONE == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
@@ -194,6 +198,7 @@ fun UIUpdate() {
             }
 
             "SHOTGUN" -> {
+                enableFactorRecoil.isChecked = SHOTGUN_FACTOR_RECOIL
                 enableFlatAim.isChecked = SHOTGUN_ENABLE_FLAT_AIM
                 enablePathAim.isChecked = SHOTGUN_ENABLE_PATH_AIM
                 aimBoneBox.selected = if (SHOTGUN_AIM_BONE == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
