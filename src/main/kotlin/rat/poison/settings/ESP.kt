@@ -18,6 +18,11 @@ var ENABLE_HITSOUND = true
 var HITSOUND_VOLUME = 0.2
 
 /**
+ * Will enable RadarHack
+ */
+var ENABLE_RADAR = true
+
+/**
  * The color to highlight your team mates.
  */
 var TEAM_COLOR = Color(0, 0, 255, 1.0)
