@@ -16,10 +16,9 @@ val mainTabbedPane = TabbedPane()
     val miscTab = MiscTab()
     val settingsTab = OptionsTab()
 
-class DebuggerWindow : VisWindow("RatPoison UI") {
+class UIMenu : VisWindow("RatPoison UI") {
     init {
         defaults().left()
-
 
         val mainTabbedPaneContent = VisTable()
         mainTabbedPaneContent.padTop(10F)

@@ -12,6 +12,11 @@ import rat.poison.settings.*
 FLICKER_FREE_GLOW = false
 
 /**
+ * Whether or not to enable Radar ESP
+ */
+RADAR_ESP = true
+
+/**
  * Will play a hitsound on enemy hit
  */
 ENABLE_HITSOUND = false

@@ -76,7 +76,7 @@ class VisualsTab : Tab(false, false) {
         })
 
         teamColorShow.changed { _, _ ->
-            App.stage.addActor(teamColorPicker.fadeIn())
+            App.menuStage.addActor(teamColorPicker.fadeIn())
         }
 
         teamColor.add(teamColorShow)
@@ -102,7 +102,7 @@ class VisualsTab : Tab(false, false) {
         //enemyColorPicker
 
         enemyColorShow.changed { _, _ ->
-            App.stage.addActor(enemyColorPicker.fadeIn())
+            App.menuStage.addActor(enemyColorPicker.fadeIn())
         }
 
         enemyColor.add(enemyColorShow)
@@ -126,7 +126,7 @@ class VisualsTab : Tab(false, false) {
         })
 
         bombColorShow.changed { _, _ ->
-            App.stage.addActor(bombColorPicker.fadeIn())
+            App.menuStage.addActor(bombColorPicker.fadeIn())
         }
 
         bombColor.add(bombColorShow)
@@ -150,7 +150,7 @@ class VisualsTab : Tab(false, false) {
         })
 
         weaponColorShow.changed { _, _ ->
-            App.stage.addActor(weaponColorPicker.fadeIn())
+            App.menuStage.addActor(weaponColorPicker.fadeIn())
         }
 
         weaponColor.add(weaponColorShow)
@@ -173,7 +173,7 @@ class VisualsTab : Tab(false, false) {
         })
 
         grenadeColor.changed { _, _ ->
-            App.stage.addActor(grenadeColorPicker.fadeIn())
+            App.menuStage.addActor(grenadeColorPicker.fadeIn())
         }
 
         grenadeColor.add(grenadeColorShow)

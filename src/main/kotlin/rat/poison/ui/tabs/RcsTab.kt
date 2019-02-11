@@ -140,7 +140,7 @@ class RcsTab : Tab(false, false) {
         })
 
         rCrosshairColorShow.changed { _, _ ->
-            App.stage.addActor(rCrosshairColorPicker.fadeIn())
+            App.menuStage.addActor(rCrosshairColorPicker.fadeIn())
         }
 
         rCrosshairColor.add(rCrosshairColorShow)

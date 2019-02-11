@@ -2,7 +2,6 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.badlogic.gdx.math.Vector3
 import rat.poison.App
 import rat.poison.game.CSGO
 import rat.poison.game.entity.*
@@ -10,14 +9,16 @@ import rat.poison.game.entityByType
 import rat.poison.game.me
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.settings.ENABLE_BOMB_TIMER
+import rat.poison.ui.bombText
 import rat.poison.utils.every
 
-private var bombState = BombState()
+var bombState = BombState()
 
-fun bombTimer() { //Don't know if works
+fun bombTimer() {
     bombUpdater()
 
     App {
+        bombText.setText(bombState.toString())
         if (ENABLE_BOMB_TIMER && bombState.planted) {
             val Color : Color
             if ((me.team() == 3.toLong() && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) {
@@ -69,7 +70,7 @@ fun bombUpdater() = every(8, true) {
     }
 }
 
-private data class BombState(var hasBomb: Boolean = false,
+data class BombState(var hasBomb: Boolean = false,
                              var planted: Boolean = false,
                              var canDefuse: Boolean = false,
                              var gettingDefused: Boolean = false,
@@ -81,17 +82,22 @@ private data class BombState(var hasBomb: Boolean = false,
 
     override fun toString(): String {
         sb.setLength(0)
-        sb.append("Bomb Planted!\n")
 
-        sb.append("TimeToExplode : ${formatFloat(timeLeftToExplode)} \n")
+        if (planted) {
+            sb.append("Bomb Planted!\n")
 
-        if (location.isNotBlank())
-            sb.append("Location : $location \n")
-        if (gettingDefused) {
+            sb.append("TimeToExplode : ${formatFloat(timeLeftToExplode)} \n")
+
+            if (location.isNotBlank())
+                sb.append("Location : $location \n")
+            if (gettingDefused) {
 //            sb.append("GettingDefused : $gettingDefused \n")
-            sb.append("CanDefuse : $canDefuse \n")
-            // Redundant as the UI already shows this, but may have a use case I'm missing
-            sb.append("TimeToDefuse : ${formatFloat(timeLeftToDefuse)} ")
+                sb.append("CanDefuse : $canDefuse \n")
+                // Redundant as the UI already shows this, but may have a use case I'm missing
+                sb.append("TimeToDefuse : ${formatFloat(timeLeftToDefuse)} ")
+            }
+        } else {
+            sb.append("Bomb Not Planted!\n")
         }
         return sb.toString()
     }

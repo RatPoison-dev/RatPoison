@@ -11,4 +11,5 @@ fun esp() {
 	chamsEsp()
 	indicatorEsp()
 	hitSoundEsp()
+	radarEsp()
 }

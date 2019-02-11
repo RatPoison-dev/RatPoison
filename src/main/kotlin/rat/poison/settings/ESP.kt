@@ -5,7 +5,12 @@ import rat.poison.game.Color
 /**
  * This gets rid of glow ESP "flicker", and more importantly reduces CPU usage.
  */
-var FLICKER_FREE_GLOW = true
+var FLICKER_FREE_GLOW = false
+
+/**
+ * Whether or not to enable Radar ESP
+ */
+var RADAR_ESP = true
 
 /**
  * Will play a hitsound on enemy hit

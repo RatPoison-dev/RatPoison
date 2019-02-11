@@ -9,12 +9,13 @@ import rat.poison.game.offsets.ClientOffsets
 import rat.poison.settings.AUTOMATIC_WEAPONS
 import rat.poison.settings.FIRE_KEY
 import rat.poison.settings.MAX_PUNCH_CHECK
+import rat.poison.settings.MENUTOG
 import rat.poison.utils.*
 
 var punchCheck = 0
 
 fun automaticWeapon() = every(4) {
-    if (!AUTOMATIC_WEAPONS) return@every
+    if (!AUTOMATIC_WEAPONS || MENUTOG) return@every
 
     if (!me.weapon().automatic && !me.weapon().grenade && !me.weapon().bomb && keyPressed(FIRE_KEY)) {
         val p = me.punch()

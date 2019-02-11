@@ -6,7 +6,7 @@ import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.*
-import rat.poison.App.stage
+import rat.poison.App.menuStage
 import rat.poison.settings.CFG_NAME
 import rat.poison.ui.UIUpdate
 import rat.poison.ui.changed
@@ -40,7 +40,7 @@ class OptionsTab : Tab(false, false) {
         Tooltip.Builder("Save current configuration to the cfg file").target(saveButton).build()
         saveButton.changed { _, _ ->
             if (true) { //type Any? changes didnt work im autistic //fix later
-                Dialogs.showInputDialog(stage, "Enter config name: ", "", object : InputDialogAdapter() {
+                Dialogs.showInputDialog(menuStage, "Enter config name: ", "", object : InputDialogAdapter() {
                     override fun finished (input : String) {
                         CFG_NAME = input
                         loadButton.setText("Load $CFG_NAME")
@@ -111,7 +111,7 @@ class OptionsTab : Tab(false, false) {
         loadButton.changed { _, _ ->
             val cfgFile = File("settings\\cfg.kts")
             if (!cfgFile.exists()) {
-                Dialogs.showErrorDialog(App.stage, "Error", "cfg.kts not found, save your configuration first!")
+                Dialogs.showErrorDialog(App.menuStage, "Error", "cfg.kts not found, save your configuration first!")
             } else {
                 FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n"))}
                 engine = ScriptEngineManager().getEngineByName("kotlin")

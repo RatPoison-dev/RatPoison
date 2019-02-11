@@ -308,8 +308,6 @@ fun UIUpdate() {
         showEnemies.isChecked = BOX_SHOW_ENEMIES
     }
 
-
-
     //Rcs Tab
     rcsTab.apply {
         rcsSmoothingLabel.setText("RCS Smoothing: $RCS_SMOOTHING")
@@ -334,8 +332,9 @@ fun UIUpdate() {
 
     //Misc Tab
     miscTab.apply {
-        enableBunnyHop.isChecked = ENABLE_BUNNY_HOP
-        enableBombTimer.isChecked = ENABLE_BOMB_TIMER
+        bunnyHop.isChecked = ENABLE_BUNNY_HOP
+        bombTimer.isChecked = ENABLE_BOMB_TIMER
+        radarEsp.isChecked = RADAR_ESP
         fireKeyField.text = FIRE_KEY.toString()
         visualsToggleKeyField.text = VISUALS_TOGGLE_KEY.toString()
         menuKeyField.text = MENU_KEY.toString()

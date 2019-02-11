@@ -27,7 +27,8 @@ import rat.poison.scripts.*
 import rat.poison.scripts.aim.*
 import rat.poison.scripts.esp.*
 import rat.poison.settings.*
-import rat.poison.ui.DebuggerWindow
+import rat.poison.ui.UIBombTimer
+import rat.poison.ui.UIMenu
 import rat.poison.utils.*
 import java.io.*
 import javax.script.ScriptEngineManager
@@ -124,7 +125,8 @@ object App : ApplicationAdapter() {
     val overlay = Overlay("Counter-Strike: " + "Global" + " Offensive", "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     var haveTarget = false
     var Menu_Key = ObservableBoolean({ keyPressed(MENU_KEY) })
-    lateinit var stage: Stage
+    lateinit var menuStage: Stage
+    lateinit var bombStage: Stage
     private val glyphLayout = GlyphLayout()
     private val bodies = ObjectArrayList<App.() -> Unit>()
     private lateinit var camera: OrthographicCamera
@@ -136,15 +138,19 @@ object App : ApplicationAdapter() {
         overlay.start()
 
         //Implement stage for menu
-        stage = Stage()
+        menuStage = Stage()
+        bombStage = Stage()
         val root = VisTable()
         root.setFillParent(true)
-        stage.addActor(root)
+        menuStage.addActor(root)
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
-        val UIWindow = DebuggerWindow()
-        stage.addActor(UIWindow)
+        val UIWindow = UIMenu()
+        val UIBombWindow = UIBombTimer()
+        menuStage.addActor(UIWindow)
+        bombStage.addActor(UIBombWindow)
         val inputMultiplexer = InputMultiplexer()
-        inputMultiplexer.addProcessor(stage)
+        inputMultiplexer.addProcessor(menuStage)
+        inputMultiplexer.addProcessor(bombStage)
         //End stage implementation
 
         Gdx.input.inputProcessor = inputMultiplexer
@@ -162,28 +168,40 @@ object App : ApplicationAdapter() {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
 
             gl.apply {
-                //Add stage
-                stage.act(Gdx.graphics.deltaTime)
-                val camera = stage.viewport.camera
-                camera.update()
+                //Add menuStage
+                menuStage.act(Gdx.graphics.deltaTime)
+                bombStage.act(Gdx.graphics.deltaTime)
+                val menuCamera = menuStage.viewport.camera
+                menuCamera.update()
+                val bombCamera = bombStage.viewport.camera
+                bombCamera.update()
 
-                if (!stage.root.isVisible) return
+                if (ENABLE_BOMB_TIMER) {
+                    val stageBatch = bombStage.batch
+                    stageBatch.projectionMatrix = bombCamera.combined
+                    stageBatch.begin()
+                    stageBatch.enableBlending()
+                    bombStage.root.draw(stageBatch, 1F)
+                    stageBatch.end()
+                }
+
+                if (!menuStage.root.isVisible) return
 
                 if (!overlay.clickThrough) {
-                    val batch = stage.batch
-                    batch.projectionMatrix = camera.combined
+                    val batch = menuStage.batch
+                    batch.projectionMatrix = menuCamera.combined //camera to menuCamera
                     batch.begin()
                     batch.enableBlending()
-                    stage.root.draw(batch, 1F)
+                    menuStage.root.draw(batch, 1F)
                     batch.end()
                 }
-                sb.projectionMatrix = stage.camera.combined
+                sb.projectionMatrix = menuStage.camera.combined
 
                 //Extra bits might not be needed, from deprecated overlay
                 glEnable(GL20.GL_BLEND)
                 glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
                 glClearColor(0F, 0F, 0F, 0F)
-                shapeRenderer.projectionMatrix = stage.camera.combined
+                shapeRenderer.projectionMatrix = menuStage.camera.combined
                 for (i in 0 until bodies.size) bodies[i]()
                 glDisable(GL20.GL_BLEND)
                 //Extra bits might not be needed, from deprecated overlay

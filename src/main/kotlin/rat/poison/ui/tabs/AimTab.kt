@@ -6,7 +6,7 @@ import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.App
-import rat.poison.App.stage
+import rat.poison.App.menuStage
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.settings.*
@@ -54,9 +54,9 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val aimAssistStrictnessSlider = VisSlider(1F, 100F, 1F, false) //Aim_Assist_Strictness
 
     init {
-        val dialog = Dialogs.showOKDialog(App.stage, "Warning", "If you have any problems submit an issue on github or @Stupid Rat#9999 for a quick response.\nIf you are crashing or have error message in the cmd, include the error message if there is one,\nsettings that were enabled, and when it happened (such as randomly, when joining a game, on round end, etc)")
+        val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "If you have any problems submit an issue on github or @Stupid Rat#9999 for a quick response.\nIf you are crashing or have error message in the cmd, include the error message if there is one,\nsettings that were enabled, and when it happened (such as randomly, when joining a game, on round end, etc)")
         dialog.setPosition(gameWidth/2F-dialog.width/2F, gameHeight.toFloat())
-        stage.addActor(dialog)
+        menuStage.addActor(dialog)
 
         //Create Activate_From_Fire_Key Toggle
         Tooltip.Builder("Activate aim if pressing predefined fire key").target(activateFromFireKey).build()
