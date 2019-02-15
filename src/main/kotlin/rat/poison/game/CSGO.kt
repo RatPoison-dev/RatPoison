@@ -39,6 +39,7 @@ object CSGO {
 		private set
 
 	fun initialize() {
+
 		retry(128) {
 			csgoEXE = processByName(PROCESS_NAME, PROCESS_ACCESS_FLAGS)!!
 		}
@@ -52,6 +53,15 @@ object CSGO {
 		val rect = WinDef.RECT()
 		val hwd = CUser32.FindWindowA(null, "Counter-Strike: "
 				+ (if (CLASSIC_OFFENSIVE) "Classic" else "Global") + " Offensive")
+
+		//Get initially
+		if (!CUser32.GetClientRect(hwd, rect)) System.exit(2)
+		gameWidth = rect.right - rect.left
+		gameHeight = rect.bottom - rect.top
+
+		if (!CUser32.GetWindowRect(hwd, rect)) System.exit(3)
+		gameX = rect.left + (((rect.right - rect.left) - gameWidth) / 2)
+		gameY = rect.top + ((rect.bottom - rect.top) - gameHeight)
 
 		every(1000) {
 			if (!CUser32.GetClientRect(hwd, rect)) System.exit(2)

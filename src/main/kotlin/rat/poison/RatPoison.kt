@@ -50,6 +50,11 @@ import javax.script.ScriptEngineManager
 const val SETTINGS_DIRECTORY = "settings"
 
 fun main(args: Array<String>) {
+    val test_variable = 3
+
+    val test5 = "ree"
+
+
     System.setProperty("jna.nosys", "true")
 
     //scanner() //not needed, keeping until menu fully finished, possibly implemented UI console
@@ -92,7 +97,11 @@ fun main(args: Array<String>) {
 
         Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
             setTitle("Rat Poison UI")
-            setWindowedMode(CSGO.gameWidth, CSGO.gameHeight)
+            if (CSGO.gameWidth < 1 || CSGO.gameHeight < 1) {
+                setWindowedMode(OVERLAY_WIDTH, OVERLAY_HEIGHT)
+            } else {
+                setWindowedMode(CSGO.gameWidth, CSGO.gameHeight)
+            }
             useVsync(OPENGL_VSYNC)
             setBackBufferConfig(8, 8, 8, 8, 16, 0, OPENGL_MSAA_SAMPLES)
         })

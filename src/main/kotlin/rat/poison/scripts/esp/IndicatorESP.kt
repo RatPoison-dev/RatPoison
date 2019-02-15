@@ -9,6 +9,7 @@ import rat.poison.App.shapeRenderer
 import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.game.offsets.ClientOffsets
+import rat.poison.scripts.bombState
 import rat.poison.settings.*
 import rat.poison.utils.Vector
 import rat.poison.utils.distanceTo
@@ -27,31 +28,29 @@ internal fun indicatorEsp() = App {
                 if (entity.dead() || entity.dormant()) return@forEntities false
 
                 if (INDICATOR_SHOW_ENEMIES && me.team() != entity.team()) {
-                    w2sHandler(entity.position(), me.position().distanceTo(entity.position()), ENEMY_COLOR)
+                    w2sHandler(entity.position(), me.position().distanceTo(entity.position()), ENEMY_COLOR, true)
                 } else if (INDICATOR_SHOW_TEAM && me.team() == entity.team()) {
-                    w2sHandler(entity.position(), me.position().distanceTo(entity.position()), TEAM_COLOR)
+                    w2sHandler(entity.position(), me.position().distanceTo(entity.position()), TEAM_COLOR, true)
                 }
             }
 
             EntityType.CPlantedC4, EntityType.CC4 -> {
-                if (INDICATOR_SHOW_BOMB) {
-                    w2sHandler(entity.position(), me.position().distanceTo(entity.position()), BOMB_COLOR)
+                if (INDICATOR_SHOW_BOMB && bombState.planted) {
+                    w2sHandler(entity.position(), me.position().distanceTo(entity.position()), BOMB_COLOR, false)
                 }
             }
 
             else -> {
                 if (INDICATOR_SHOW_WEAPONS && it.type.weapon) {
-                    w2sHandler(entity.position(), me.position().distanceTo(entity.position()), WEAPON_COLOR)
+                    w2sHandler(entity.position(), me.position().distanceTo(entity.position()), WEAPON_COLOR, false)
                 } else if (INDICATOR_SHOW_GRENADES && it.type.grenade) {
-                    w2sHandler(entity.position(), me.position().distanceTo(entity.position()), GRENADE_COLOR)
+                    w2sHandler(entity.position(), me.position().distanceTo(entity.position()), GRENADE_COLOR, false )
                 }
             }
         }
         false
     }
 }
-
-//calling all of these is not efficient at all
 
 fun indicatorPosition(screenPos: Vector3, indicatorPos: Vector3): Float {
     val centerX = CSGO.gameWidth / 2F
@@ -75,7 +74,7 @@ fun indicatorPosition(screenPos: Vector3, indicatorPos: Vector3): Float {
     return MathUtils.atan2(screenPos.x - centerX, screenPos.y - centerY)
 }
 
-fun w2sHandler(vector: Vector, dist: Double, drawColor: rat.poison.game.Color) {
+fun w2sHandler(vector: Vector, dist: Double, drawColor: rat.poison.game.Color, isPlayer: Boolean) {
     if (vector.x == 0.0 && vector.y == 0.0 && vector.z == 0.0) {
         return
     }
@@ -83,9 +82,11 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: rat.poison.game.Color) {
     val vOut = Vector()
     val wTest = wTest(vector)
 
+    var z = vector.z
+
     if (INDICATOR_SHOW_ONSCREEN && (wTest >= dist/3)) { //On screen
-        var z = vector.z
-        z *= 1.5
+        if (isPlayer) z*=1.5
+
         worldToScreen(Vector(vector.x, vector.y, z), vOut)
         shapeRenderer.apply {
             val indicatorPos = Vector3(vOut.x.toFloat(), vOut.y.toFloat(), 0F)
@@ -100,8 +101,8 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: rat.poison.game.Color) {
             end()
         }
     } else if (wTest < dist/3) {
-        var z = vector.z
-        z *= .5
+        if (isPlayer) z*=0.5
+
         worldToScreen(Vector(vector.x, vector.y, z), vOut)
         shapeRenderer.apply {
             val indicatorPos = Vector3(vOut.x.toFloat(), vOut.y.toFloat(), 0F)

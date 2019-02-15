@@ -7,6 +7,12 @@ package rat.poison.settings
 var MENU = true
 
 /**
+ * Default menu size, if game cannot be found and sized on initialize it refers to this
+ */
+var OVERLAY_WIDTH = 1920
+var OVERLAY_HEIGHT = 1080
+
+/**
  * Whether or not to aim when using the [FIRE_KEY] (by default left click).
  *
  * You should disable this if you don't want aim to activate when left clicking.

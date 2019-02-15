@@ -43,7 +43,7 @@ SMG_AIM_SPEED = 24
 /**
  * The smoothness of the aimbot
  */
-SMG_AIM_SMOOTHNESS = 1.2
+SMG_AIM_SMOOTHNESS = 4.5
 
 /**
  * The strictness, or "stickiness" of the aimbot; the higher the number, the

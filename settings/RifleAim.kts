@@ -43,7 +43,7 @@ RIFLE_AIM_SPEED = 16
 /**
  * The smoothness of the aimbot
  */
-RIFLE_AIM_SMOOTHNESS = 1.5
+RIFLE_AIM_SMOOTHNESS = 5.0
 
 /**
  * The strictness, or "stickiness" of the aimbot; the higher the number, the

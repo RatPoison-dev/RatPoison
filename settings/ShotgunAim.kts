@@ -21,7 +21,7 @@ SHOTGUN_ENABLE_PATH_AIM = true
 /**
  * Whether or not to account for recoil when aiming
  */
-SHOTGUN_FACTOR_RECOIL = true
+SHOTGUN_FACTOR_RECOIL = false
 
 /**
  * Default aim bone the aims go to

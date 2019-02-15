@@ -43,7 +43,7 @@ PISTOL_AIM_SPEED = 10
 /**
  * The smoothness of the aimbot
  */
-PISTOL_AIM_SMOOTHNESS = 2.0
+PISTOL_AIM_SMOOTHNESS = 4.5
 
 /**
  * The strictness, or "stickiness" of the aimbot; the higher the number, the
