@@ -50,11 +50,6 @@ import javax.script.ScriptEngineManager
 const val SETTINGS_DIRECTORY = "settings"
 
 fun main(args: Array<String>) {
-    val test_variable = 3
-
-    val test5 = "ree"
-
-
     System.setProperty("jna.nosys", "true")
 
     //scanner() //not needed, keeping until menu fully finished, possibly implemented UI console
