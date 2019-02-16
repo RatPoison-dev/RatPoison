@@ -56,27 +56,25 @@ internal fun chamsEsp() = every(500) {
         engineDLL[dwModelAmbientMin] = floatToIntBits(CHAMS_BRIGHTNESS.toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
 
         //Not exhaustive @warning
-        when (it.type) {
-            EntityType.CCSPlayer -> {
-                if (entity.dead() || entity == me || entity.dormant()) return@body false
+        if (it.type == EntityType.CCSPlayer) {
+            if (entity.dead() || entity == me || entity.dormant()) return@body false
 
-                val entityTeam = entity.team()
-                val team = !DANGER_ZONE && myTeam == entityTeam
+            val entityTeam = entity.team()
+            val team = !DANGER_ZONE && myTeam == entityTeam
 
-                if (CHAMS_SHOW_ENEMIES && !team) {
-                    if (CHAMS_SHOW_HEALTH) {
-                        entity.chams(Color((255 - 2.55 * entity.health()).toInt(), (2.55 * entity.health()).toInt(), 0, 1.0))
-                    } else {
-                        entity.chams(ENEMY_COLOR)
-                    }
-                } else if (!CHAMS_SHOW_ENEMIES) {
-                    entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
-                } else if (CHAMS_SHOW_TEAM && team) {
-                    entity.chams(TEAM_COLOR)
+            if (CHAMS_SHOW_ENEMIES && !team) {
+                if (CHAMS_SHOW_HEALTH) {
+                    entity.chams(Color((255 - 2.55 * entity.health()).toInt(), (2.55 * entity.health()).toInt(), 0, 1.0))
+                } else {
+                    entity.chams(ENEMY_COLOR)
                 }
-                else {
-                    entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
-                }
+            } else if (!CHAMS_SHOW_ENEMIES) {
+                entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
+            } else if (CHAMS_SHOW_TEAM && team) {
+                entity.chams(TEAM_COLOR)
+            }
+            else {
+                entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
             }
         }
         return@body false
