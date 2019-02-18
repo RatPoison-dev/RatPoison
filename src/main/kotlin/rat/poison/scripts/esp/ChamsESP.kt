@@ -30,10 +30,16 @@ internal fun chamsEsp() = every(256) {
         val glowAddress = it.glowAddress
         if (glowAddress <= 0) return@body false
 
-        val brightnessCounter = (255F/(CHAMS_BRIGHTNESS/10F)).toInt()
+        val brightnessCounter : Int
+
+        if (CHAMS_BRIGHTNESS > 0) {
+            brightnessCounter = (255F / (CHAMS_BRIGHTNESS / 10F)).toInt()
+        } else {
+            brightnessCounter = 255
+        }
 
         //Edit playermodel to counter weapon brightness
-        val clientVModEnt = csgoEXE.uint(clientDLL.address + dwEntityList + (((csgoEXE.uint(csgoEXE.uint(clientDLL.address + dwLocalPlayer)+ m_hViewModel)) and 0xFFF) - 1) * 16)
+        val clientVModEnt = csgoEXE.uint(clientDLL.address + dwEntityList + (((csgoEXE.uint(csgoEXE.uint(clientDLL.address + dwLocalPlayer) + m_hViewModel)) and 0xFFF) - 1) * 16)
 
         //Set VMod
         csgoEXE[clientVModEnt + 0x70] = brightnessCounter.toByte()
