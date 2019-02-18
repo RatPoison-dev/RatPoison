@@ -18,7 +18,7 @@ import java.lang.Float.floatToIntBits
 
 //Change for entities to for entities ccsplayer
 
-internal fun chamsEsp() = every(500) {
+internal fun chamsEsp() = every(256) {
     if ((!CHAMS_ESP || !ENABLE_ESP)) return@every
 
     val myTeam = me.team()
@@ -30,27 +30,15 @@ internal fun chamsEsp() = every(500) {
         val glowAddress = it.glowAddress
         if (glowAddress <= 0) return@body false
 
-        var brightnessCounter : Int
-
-        try {
-            brightnessCounter = (255F/(CHAMS_BRIGHTNESS/10F)).toInt()
-        } catch (ex: Exception) { brightnessCounter = 255 }
-
-        if (brightnessCounter > 255) {
-            brightnessCounter = 255
-        } else if (brightnessCounter < 0) {
-            brightnessCounter = 0
-        }
-
-        //Setting weapon/bomb causes crashes as far as I could narrow it from testing
+        val brightnessCounter = (255F/(CHAMS_BRIGHTNESS/10F)).toInt()
 
         //Edit playermodel to counter weapon brightness
         val clientVModEnt = csgoEXE.uint(clientDLL.address + dwEntityList + (((csgoEXE.uint(csgoEXE.uint(clientDLL.address + dwLocalPlayer)+ m_hViewModel)) and 0xFFF) - 1) * 16)
 
         //Set VMod
-        csgoEXE[clientVModEnt + 0x70] = brightnessCounter.toByte()//Color(brightnessCounter, 0, 0, 1.0).red.toByte()
-        csgoEXE[clientVModEnt + 0x71] = brightnessCounter.toByte()//Color(0, brightnessCounter, 0, 1.0).red.toByte()
-        csgoEXE[clientVModEnt + 0x72] = brightnessCounter.toByte()//Color(0, 0, brightnessCounter, 1.0).red.toByte()
+        csgoEXE[clientVModEnt + 0x70] = brightnessCounter.toByte()
+        csgoEXE[clientVModEnt + 0x71] = brightnessCounter.toByte()
+        csgoEXE[clientVModEnt + 0x72] = brightnessCounter.toByte()
 
         //Set Cvar
         engineDLL[dwModelAmbientMin] = floatToIntBits(CHAMS_BRIGHTNESS.toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
