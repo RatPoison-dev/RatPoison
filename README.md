@@ -5,7 +5,7 @@ THIS CHEATS BASE IS CHARLATANO AVAILABLE [HERE](https://github.com/Jire/Charlata
 If you have problems join the discord and @Stupid Rat#9999
 
 ## Need help? Want to chat? Join our Discord
-**Join our Discord:** https://discord.gg/uhmx5uz
+**Join our Discord:** https://discord.gg/5q5h4ZE
 
 ---
 
