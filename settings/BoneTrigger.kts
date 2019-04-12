@@ -6,9 +6,14 @@ import rat.poison.settings.*
 BONE_TRIGGER_FOV = 12
 
 /**
- * The bone to automatically fire at for the bone trigger.
+ * Whether to trigger on head bone
  */
-BONE_TRIGGER_BONE = 8
+BONE_TRIGGER_HB = true
+
+/**
+ * Whether to trigger on body bone
+ */
+BONE_TRIGGER_BB = true
 
 /**
  * Use aim when bone trigger activates, true by default

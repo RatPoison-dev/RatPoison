@@ -13,20 +13,29 @@ import org.jire.arrowhead.keyPressed
 import org.jire.arrowhead.keyReleased
 import rat.poison.game.entity.punch
 
-private val onBoneTriggerTarget = hook(1) {
+private val onBoneTriggerTarget = every(1) {
 	if (ENABLE_BONE_TRIGGER)
-		findTarget(me.position(), clientState.angle(), false, BONE_TRIGGER_FOV, BONE_TRIGGER_BONE, false) >= 0
-	else false
+	{
+		if (BONE_TRIGGER_HB) { //Head bone check
+			if (findTarget(me.position(), clientState.angle(), false, BONE_TRIGGER_FOV, HEAD_BONE, false) >= 0) {
+				boneTrigger()
+			}
+		}
+
+		if (BONE_TRIGGER_BB) { //Body bone check
+			if (findTarget(me.position(), clientState.angle(), false, BONE_TRIGGER_FOV, BODY_BONE, false) >= 0) {
+				boneTrigger()
+			}
+		}
+	}
 }
 
-fun boneTrigger() = onBoneTriggerTarget {
+fun boneTrigger() {
 
-	//if (me.punch().x == 0.0 && me.punch().y == 0.00) {
-		if ((keyReleased(FIRE_KEY) && BONE_TRIGGER_ENABLE_KEY && keyPressed(BONE_TRIGGER_KEY)) || (keyReleased(FIRE_KEY) && !BONE_TRIGGER_ENABLE_KEY)) {
-				clientDLL[dwForceAttack] = 5.toByte() //Mouse press
-			Thread.sleep(randLong(16))
-				clientDLL[dwForceAttack] = 4.toByte() //Mouse release
-			//Thread.sleep(BONE_TRIGGER_SHOT_DELAY.toLong() /*+ randLong(16)*/) //Make sure we can shoot an accurate shot
-		}
-	//}
+	if ((keyReleased(FIRE_KEY) && BONE_TRIGGER_ENABLE_KEY && keyPressed(BONE_TRIGGER_KEY)) || (keyReleased(FIRE_KEY) && !BONE_TRIGGER_ENABLE_KEY)) {
+		clientDLL[dwForceAttack] = 5.toByte() //Mouse press
+		Thread.sleep(randLong(16))
+		clientDLL[dwForceAttack] = 4.toByte() //Mouse release
+		//Thread.sleep(BONE_TRIGGER_SHOT_DELAY.toLong() /*+ randLong(16)*/) //Make sure we can shoot an accurate shot
+	}
 }

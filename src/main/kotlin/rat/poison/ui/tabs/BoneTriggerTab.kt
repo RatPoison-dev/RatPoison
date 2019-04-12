@@ -17,6 +17,8 @@ class BTrigTab : Tab(false, false) {
     val boneTriggerFovLabel = VisLabel("Bone Trigger Fov: " + BONE_TRIGGER_FOV.toString() + when(BONE_TRIGGER_FOV.toString().length) {3->"  " 2->"    " else ->"      "})
     val boneTriggerFovSlider = VisSlider(0F, 360F, 1F, false)
     val boneTriggerBoneBox = VisSelectBox<String>()
+    val boneTriggerCheckHead = VisCheckBox("Head Bone")
+    val boneTriggerCheckBody = VisCheckBox("Body Bone")
     val aimOnBoneTrigger = VisCheckBox("Enable Aim On Bone Trigger")
     val boneTriggerEnableKey = VisCheckBox("Enable Bone Trigger On Key")
     val boneTriggerKeyField = VisValidatableTextField(Validators.FLOATS)
@@ -42,22 +44,20 @@ class BTrigTab : Tab(false, false) {
         boneTriggerFov.add(boneTriggerFovLabel).spaceRight(6F)
         boneTriggerFov.add(boneTriggerFovSlider)
 
-        //Create Bone_Trigger_Bone Selector
-        val boneTriggerBone = VisTable()
-        Tooltip.Builder("The aim bone that bone trigger will fire at").target(boneTriggerBone).build()
-        val boneTriggerBoneLabel = VisLabel("Bone Trigger Bone: ")
-        boneTriggerBoneBox.setItems("Head Bone", "Body Bone")
-        boneTriggerBoneBox.selected = if (BONE_TRIGGER_BONE == HEAD_BONE) "Head Bone" else "Body Bone"
-        boneTriggerBone.add(boneTriggerBoneLabel).top().spaceRight(6F)
-        boneTriggerBone.add(boneTriggerBoneBox)
+        //Create Bone Trigger Head Bone
+        Tooltip.Builder("Whether to trigger on head bone").target(boneTriggerCheckHead).build()
+        if (BONE_TRIGGER_HB) boneTriggerCheckHead.toggle()
+        boneTriggerCheckHead.changed { _, _ ->
+            BONE_TRIGGER_HB = boneTriggerCheckHead.isChecked
+            true
+        }
 
-        boneTriggerBoneBox.changed { _, _ ->
-            if (boneTriggerBoneBox.selected.toString() == "Head Bone") {
-                BONE_TRIGGER_BONE = HEAD_BONE
-            }
-            else if (boneTriggerBoneBox.selected.toString() == "Body Bone") {
-                BONE_TRIGGER_BONE = BODY_BONE
-            }
+        //Create Bone Trigger Body Bone
+        Tooltip.Builder("Whether to trigger on body bone").target(boneTriggerCheckBody).build()
+        if (BONE_TRIGGER_BB) boneTriggerCheckBody.toggle()
+        boneTriggerCheckBody.changed { _, _ ->
+            BONE_TRIGGER_BB = boneTriggerCheckBody.isChecked
+            true
         }
 
         //Create Aim_On_Bone_Trigger Toggle
@@ -93,7 +93,8 @@ class BTrigTab : Tab(false, false) {
         //Add all items to label for tabbed pane content
         table.add(enableBoneTrigger).row()
         table.add(boneTriggerFov).row()
-        table.add(boneTriggerBone).row()
+        table.add(boneTriggerCheckHead).row()
+        table.add(boneTriggerCheckBody).row()
         table.add(aimOnBoneTrigger).row()
         table.add(boneTriggerEnableKey).row()
         table.add(boneTriggerKey).row()
