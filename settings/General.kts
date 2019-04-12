@@ -29,7 +29,7 @@ TEAMMATES_ARE_ENEMIES = false
 /**
  * Whether non-automatic weapons shoot when FIRE_KEY is held down
  */
-AUTOMATIC_WEAPONS = true
+AUTOMATIC_WEAPONS = false
 
 /**
  * Punch check delay in ms, if punch has been 0 for this amount of time in ms, shoot

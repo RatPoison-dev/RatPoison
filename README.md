@@ -1,6 +1,6 @@
 The Default Menu Key is F1
 
-THIS CHEATS BASE IS CHARLATANO AVAILABLE [HERE](https://github.com/Jire/Charlatano)
+Base is Charlatano available [here](https://github.com/Jire/Charlatano)
 
 ---
 
@@ -10,13 +10,12 @@ THIS CHEATS BASE IS CHARLATANO AVAILABLE [HERE](https://github.com/Jire/Charlata
 * Aim bot with humanized aim paths
 * Low-FOV "perfect aim" (non-silent)
 * Aim assistance mode for professional and high-level players
-* Bone trigger
 * Reduced flash
 * Stream-proof OpenGL overlay with box and skeleton ESP
 * Glow ESP (not stream-proof)
 * Humanized bunny hop using scroll input
-* "Flat" aim bot with traditional linear-regression paths (not safe for use on leagues! use "PathAim" instead)
-* Bone trigger aims with specified aimbot
+* "Flat" aim bot with traditional linear-regression paths
+* Bone trigger with customizable FOV, and bone trigger key
 * Recoil crosshair
 * Ingame menu (borderless and windowed only)
 * Esp indicators of enemies that are off screen
@@ -44,10 +43,10 @@ The first step is to compile the source code into a usable cheat program.
 * Double click on the "_build_" (_build.bat_) script and wait for it to complete
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.0.11**.
+directory, and will in a directory called **RatPoison 1.1**.
 
-From within the **Ratoison 1.0.11** directory, you can start the cheat by running
-the _"Start RatPoison 1.0.11"_ script.
+From within the **Ratoison 1.1** directory, you can start the cheat by running
+the _"Start RatPoison 1.1"_ script.
 
 Before starting the cheat, you should already be spawned in a game with a weapon in hand!
 
