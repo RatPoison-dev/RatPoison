@@ -2,11 +2,6 @@ The Default Menu Key is F1
 
 THIS CHEATS BASE IS CHARLATANO AVAILABLE [HERE](https://github.com/Jire/Charlatano)
 
-If you have problems join the discord and @Stupid Rat#9999
-
-## Need help? Want to chat? Join our Discord
-**Join our Discord:** https://discord.gg/uhmx5uz
-
 ---
 
 **Available Features**
