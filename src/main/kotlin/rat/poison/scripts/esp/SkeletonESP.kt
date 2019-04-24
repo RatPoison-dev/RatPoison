@@ -29,28 +29,28 @@ internal fun skeletonEsp() {
 		forEntities(ccsPlayer) {
 			val entity = it.entity
 			if (entity == me || entity.dead() || (!SKELETON_SHOW_DORMANT && entity.dormant()) || (!SKELETON_SHOW_TEAM && me.team() == entity.team()) || (!SKELETON_SHOW_ENEMIES && me.team() != entity.team())) return@forEntities false
-				(entityBones.get(entity) ?: CacheableList(20)).apply {
-					if (isEmpty()) {
-						val studioModel = csgoEXE.uint(entity.studioHdr())
-						val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
-						val boneIndex = csgoEXE.uint(studioModel + 0xA0)
+			(entityBones.get(entity) ?: CacheableList(20)).apply {
+				if (isEmpty()) {
+					val studioModel = csgoEXE.uint(entity.studioHdr())
+					val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
+					val boneIndex = csgoEXE.uint(studioModel + 0xA0)
 
-						var offset = 0
-						for (idx in 0 until numBones) {
-							val parent = csgoEXE.int(studioModel + boneIndex + 0x4 + offset)
-							if (parent != -1) {
-								val flags = csgoEXE.uint(studioModel + boneIndex + 0xA0 + offset) and 0x100
-								if (flags != 0L) add(parent to idx)
-							}
-
-							offset += 216
+					var offset = 0
+					for (idx in 0 until numBones) {
+						val parent = csgoEXE.int(studioModel + boneIndex + 0x4 + offset)
+						if (parent != -1) {
+							val flags = csgoEXE.uint(studioModel + boneIndex + 0xA0 + offset) and 0x100
+							if (flags != 0L) add(parent to idx)
 						}
 
-						entityBones[entity] = this
+						offset += 216
 					}
 
-					forEach { drawBone(entity, it.first, it.second); false }
+					entityBones[entity] = this
 				}
+
+				forEach { drawBone(entity, it.first, it.second); false }
+			}
 
 			false
 		}
@@ -72,22 +72,22 @@ internal fun skeletonEsp() {
 private fun findStudioModel(pModel: Long): Long {
 	val type = csgoEXE.uint(pModel + 0x0110)
 	if (type != 3L) return 0 // Type is not Studiomodel
-	
+
 	var handle = csgoEXE.uint(pModel + 0x0138) and 0xFFFF
 	if (handle == 0xFFFFL) return 0 // Handle is not valid
 	handle = handle shl 4
-	
+
 	var studioModel = engineDLL.uint(pStudioModel)
 	studioModel = csgoEXE.uint(studioModel + 0x28)
 	studioModel = csgoEXE.uint(studioModel + handle + 0xC)
-	
+
 	return csgoEXE.uint(studioModel + 0x74)
 }
 
 private val colors: Array<Color> = Array(101) {
 	val red = 1 - (it / 100f)
 	val green = (it / 100f)
-	
+
 	Color(red, green, 0f, 1f)
 }
 
@@ -107,7 +107,7 @@ private fun drawBone(target: Player, start: Int, end: Int) {
 			target.bone(0xC, end, boneMatrix),
 			target.bone(0x1C, end, boneMatrix),
 			target.bone(0x2C, end, boneMatrix))
-	
+
 	if (worldToScreen(startBone, startDraw) && worldToScreen(endBone, endDraw)) {
 		bones[currentIdx].apply {
 			sX = startDraw.x.toInt()
@@ -124,5 +124,5 @@ private fun drawBone(target: Player, start: Int, end: Int) {
 }
 
 private data class Line(var sX: Int = -1, var sY: Int = -1,
-                        var eX: Int = -1, var eY: Int = -1,
-                        var color: Color = Color.WHITE)
+						var eX: Int = -1, var eY: Int = -1,
+						var color: Color = Color.WHITE)

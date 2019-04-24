@@ -172,6 +172,8 @@ object App : ApplicationAdapter() {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
 
             gl.apply {
+                if (!menuStage.root.isVisible) return
+
                 //Add menuStage
                 menuStage.act(Gdx.graphics.deltaTime)
                 bombStage.act(Gdx.graphics.deltaTime)
@@ -188,8 +190,6 @@ object App : ApplicationAdapter() {
                     bombStage.root.draw(stageBatch, 1F)
                     stageBatch.end()
                 }
-
-                if (!menuStage.root.isVisible) return
 
                 if (!overlay.clickThrough) {
                     val batch = menuStage.batch

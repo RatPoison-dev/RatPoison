@@ -1,11 +1,10 @@
-import rat.poison.game.Color
 import rat.poison.settings.*
 
 /**
  * Will draw circles around your screen to indicate enemy players location in relation to you
  * This requires the overlay which only works when borderless fullscreen or windowed.
  */
-INDICATOR_ESP = true
+INDICATOR_ESP = false
 
 /**
  * Whether enemy indicator will indicate on screen entities

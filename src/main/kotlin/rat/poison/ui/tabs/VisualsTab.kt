@@ -237,6 +237,7 @@ class VisualsTab : Tab(false, false) {
         })
         //Aim Tab
 
+        aimTabbedPane.disableTab(indicatorEspTab, true)
 
         //Add all items to label for tabbed pane content
         table.add(enableEsp).colspan(2).row()

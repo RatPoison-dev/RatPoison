@@ -7,6 +7,7 @@ import rat.poison.scripts.esp.disableEsp
 import rat.poison.settings.*
 import rat.poison.ui.UIUpdate
 import rat.poison.ui.changed
+import rat.poison.utils.inBackground
 
 class GlowEspTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -44,6 +45,11 @@ class GlowEspTab : Tab(false, false) {
 
             if (INV_GLOW_ESP) {
                 GLOW_ESP = true
+                glowEsp.isDisabled = true
+            }
+            else
+            {
+                glowEsp.isDisabled = false
             }
             UIUpdate()
             true
@@ -54,6 +60,16 @@ class GlowEspTab : Tab(false, false) {
         if (MODEL_ESP) modelEsp.toggle()
         modelEsp.changed { _, _ ->
             MODEL_ESP = modelEsp.isChecked
+
+            if (MODEL_ESP)
+            {
+                GLOW_ESP = true
+                glowEsp.isDisabled = true
+            }
+            else
+            {
+                glowEsp.isDisabled = false
+            }
             true
         }
 
@@ -62,6 +78,20 @@ class GlowEspTab : Tab(false, false) {
         modelAndGlow.isChecked = MODEL_AND_GLOW
         modelAndGlow.changed { _, _ ->
             MODEL_AND_GLOW = modelAndGlow.isChecked
+
+            if (MODEL_AND_GLOW) {
+                MODEL_ESP = true
+                modelEsp.isChecked = true
+                modelEsp.isDisabled = true
+
+                GLOW_ESP = true
+                glowEsp.isChecked = true
+            }
+            else
+            {
+                modelEsp.isDisabled = false
+            }
+
             true
         }
 
