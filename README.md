@@ -24,7 +24,7 @@ Base is Charlatano available [here](https://github.com/Jire/Charlatano)
 
 **Beginner's Guide**
 
-This branch is being updated at [AStupidRat's Github Repository](https://github.com/AStupidRat/Charlatano)
+This branch is being updated at [AStupidRat's Github Repository](https://github.com/AStupidRat/RatPoison)
 The official branch is located at [Jire's GitHub Repository](https://github.com/Jire/Charlatano)
 
 Before doing anything, make sure you have
