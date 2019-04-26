@@ -62,7 +62,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val aimAssistStrictnessSlider = VisSlider(1F, 100F, 1F, false) //Aim_Assist_Strictness
 
     init {
-        val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "If you have any problems submit an issue on github or discord @Stupid Rat#9999 for a quick response.\nIf you are crashing or have an error message in the cmd, include the error message if there is one,\nsettings that were enabled, and when it happened (such as randomly, when joining a game, on round end, etc)")
+        val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "If you have any problems submit an issue on github\nIf you are crashing or have an error message in the cmd, include the error message if there is one,\nsettings that were enabled, and when it happened (such as randomly, when joining a game, on round end, etc)")
         dialog.setPosition(gameWidth/2F-dialog.width/2F, gameHeight.toFloat())
         menuStage.addActor(dialog)
 
