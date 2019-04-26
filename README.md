@@ -29,8 +29,8 @@ The official branch is located at [Jire's GitHub Repository](https://github.com/
 
 Before doing anything, make sure you have
 [Java Development Kit (JDK) 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-or later installed. This is NOT the same thing as the regular Java Runtime (JRE), and you MUST install the JDK
-in order to build Charlatano, as well as any other Java software.
+installed. This is NOT the same thing as the regular Java Runtime (JRE), and you MUST install the JDK
+in order to build Charlatano, as well as any other Java software, and you MUST install JDK 8 (as far as I know)
 
 The first step is to compile the source code into a usable cheat program.
 
