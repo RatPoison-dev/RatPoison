@@ -42,8 +42,9 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 		val yawDiff = Math.abs(angle.y - dest.y)
 		val fov = Math.abs(Math.sin(Math.toRadians(yawDiff)) * distance)
 		val delta = Math.abs((Math.sin(Math.toRadians(pitchDiff)) + Math.sin(Math.toRadians(yawDiff))) * distance)
-		
-		if (if (yawOnly) fov <= lockFOV && delta < closestDelta else delta <= lockFOV && delta <= closestDelta) {
+
+		//if (yawOnly) fov <= lockFOV && delta < closestDelta
+		if (delta <= lockFOV && delta <= closestDelta) {
 			closestFOV = fov
 			closestDelta = delta
 			closestPlayer = entity

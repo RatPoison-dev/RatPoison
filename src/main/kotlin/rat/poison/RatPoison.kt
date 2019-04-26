@@ -2,8 +2,6 @@
 
 package rat.poison
 
-///Fuck these imports holy shit, move app somewhere else
-
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Gdx.gl
@@ -32,19 +30,6 @@ import rat.poison.ui.UIMenu
 import rat.poison.utils.*
 import java.io.*
 import javax.script.ScriptEngineManager
-
-//imports make me wet, cleanup later, offload to other files?
-//this bitch is a fucking m e s s //remove and cleanup before pushing, if i dont forget/sudoku
-
-//todo? cut down extras from mr noads proj, change from current dc
-//continue ui menu, ui menu has xxxtra todos in its own file
-//Fix box esp other drawing shit using the wrong color, were not setting the color back to white
-
-//convert CUser32 to normal User32
-
-//Fix dojo reading cfg file
-
-//Need import color in menu cfg?
 
 //aaaaaaaaaaaaaaaaAAAAAAAAAAAAA
 const val SETTINGS_DIRECTORY = "settings"
@@ -190,7 +175,6 @@ object App : ApplicationAdapter() {
                     bombStage.root.draw(stageBatch, 1F)
                     stageBatch.end()
                 }
-
                 if (!overlay.clickThrough) {
                     val batch = menuStage.batch
                     batch.projectionMatrix = menuCamera.combined //camera to menuCamera

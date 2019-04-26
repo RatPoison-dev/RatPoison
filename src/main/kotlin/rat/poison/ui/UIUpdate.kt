@@ -12,7 +12,8 @@ fun UIUpdate() {
         activateFromFireKey.isChecked = ACTIVATE_FROM_FIRE_KEY
         teammatesAreEnemies.isChecked = TEAMMATES_ARE_ENEMIES
         forceAimKeyField.text = FORCE_AIM_KEY.toString()
-        automaticWeapons.isChecked = AUTOMATIC_WEAPONS
+        automaticWeaponsCheckBox.isChecked = AUTOMATIC_WEAPONS
+        automaticWeaponsCollapsible.isCollapsed = !AUTOMATIC_WEAPONS
         maxPunchCheckLabel.setText("Max Punch Check: " + MAX_PUNCH_CHECK.toString() + when(MAX_PUNCH_CHECK.toString().length) {3->"" 2->"  " else ->"    "}) //Max_Punch_Check)
         maxPunchCheckSlider.value = MAX_PUNCH_CHECK.toFloat()
 

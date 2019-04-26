@@ -23,7 +23,11 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val activateFromFireKey = VisCheckBox("Activate From Fire Key") //Activate_From_Fire_Key
     val teammatesAreEnemies = VisCheckBox("Teammates Are Enemies") //Teammates_Are_Enemies
     val forceAimKeyField = VisValidatableTextField(Validators.FLOATS) //Force_Aim_Key
-    val automaticWeapons = VisCheckBox("Automatic Weapons")
+
+    //Automatic Weapons Collapsible
+    val automaticWeaponsCheckBox = VisCheckBox("Enable Automatic Weapons")
+    private val automaticWeaponsTable = VisTable()
+    val automaticWeaponsCollapsible = CollapsibleWidget(automaticWeaponsTable)
     val maxPunchCheckLabel = VisLabel("Max Punch Check: " + MAX_PUNCH_CHECK.toString() + when(MAX_PUNCH_CHECK.toString().length) {3->"" 2->"  " else ->"    "}) //Max_Punch_Check
     val maxPunchCheckSlider = VisSlider(1F, 32F, 1F, false) //Max_Punch_Check
 
@@ -40,6 +44,8 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val aimSmoothnessSlider = VisSlider(1F, 10F, 0.1F, false) //Aim_Smoothness
     val aimStrictnessLabel = VisLabel("Aim Strictness: $PISTOL_AIM_STRICTNESS") //Aim_Strictness
     val aimStrictnessSlider = VisSlider(1F, 5F, 0.1F, false) //Aim_Strictness
+
+    //Perfect Aim Collapsible
     val perfectAimCheckBox = VisCheckBox("Enable Perfect Aim") //Perfect_Aim
     private val perfectAimTable = VisTable() //Perfect_Aim_Collapsible Table
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable) //Perfect_Aim_Collapsible
@@ -47,6 +53,8 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val perfectAimFovSlider = VisSlider(1F, 100F, 1F, false) //Perfect_Aim_Fov
     val perfectAimChanceLabel = VisLabel("Perfect Aim Chance: " + PISTOL_PERFECT_AIM_CHANCE.toString() + when(PISTOL_PERFECT_AIM_CHANCE.toString().length) {3->"  " 2->"    " else ->"      "}) //Perfect_Aim_Chance
     val perfectAimChanceSlider = VisSlider(1F, 100F, 1F, false) //Perfect_Aim_Chance
+
+    //Aim Assist Collapsible
     val aimAssistCheckBox = VisCheckBox("Enable Aim Assist") //Aim_Assist
     private val aimAssistTable = VisTable() //Aim_Assist_Collapsible Table
     val aimAssistCollapsible = CollapsibleWidget(aimAssistTable) //Aim_Assist_Collapsible
@@ -54,7 +62,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val aimAssistStrictnessSlider = VisSlider(1F, 100F, 1F, false) //Aim_Assist_Strictness
 
     init {
-        val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "If you have any problems submit an issue on github or @Stupid Rat#9999 for a quick response.\nIf you are crashing or have error message in the cmd, include the error message if there is one,\nsettings that were enabled, and when it happened (such as randomly, when joining a game, on round end, etc)")
+        val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "If you have any problems submit an issue on github or discord @Stupid Rat#9999 for a quick response.\nIf you are crashing or have error message in the cmd, include the error message if there is one,\nsettings that were enabled, and when it happened (such as randomly, when joining a game, on round end, etc)")
         dialog.setPosition(gameWidth/2F-dialog.width/2F, gameHeight.toFloat())
         menuStage.addActor(dialog)
 
@@ -74,13 +82,10 @@ class AimTab : Tab(true, false) { //Aim.kts tab
             true
         }
 
-        //Create Automatic_Weapons Toggle
-        Tooltip.Builder("Non-automatic weapons will auto shoot when there is no punch and the fire key is pressed").target(automaticWeapons).build()
-        automaticWeapons.isChecked = AUTOMATIC_WEAPONS
-        automaticWeapons.changed { _, _ ->
-            AUTOMATIC_WEAPONS = automaticWeapons.isChecked
-            true
-        }
+        //Create Automatic_Weapons Collapsible Check Box
+        Tooltip.Builder("Non-automatic weapons will auto shoot when there is no punch and the fire key is pressed").target(automaticWeaponsCheckBox).build()
+        automaticWeaponsCheckBox.isChecked = AUTOMATIC_WEAPONS
+        automaticWeaponsCollapsible.isCollapsed = !AUTOMATIC_WEAPONS
 
         //Create Max_Punch_Check Slider
         val maxPunchCheck = VisTable()
@@ -92,6 +97,16 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         }
         maxPunchCheck.add(maxPunchCheckLabel)
         maxPunchCheck.add(maxPunchCheckSlider)
+
+        //End Aim_Assist_Strictness Slider
+
+        automaticWeaponsTable.add(maxPunchCheck)
+
+        automaticWeaponsCheckBox.changed { _, _ ->
+            AUTOMATIC_WEAPONS = automaticWeaponsCheckBox.isChecked
+            automaticWeaponsCollapsible.setCollapsed(!automaticWeaponsCollapsible.isCollapsed, true)
+        }
+        //End Automatic_Weapons Collapsible Check Box
 
         //Create Force_Aim_Key Input
         val forceAimKey = VisTable()
@@ -610,13 +625,27 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         }
         //End Aim_Assist_Mode Collapsible Check Box
 
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //Start Weapon Override/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
         //Add all items to label for tabbed pane content
         table.add(activateFromFireKey).row()
         table.add(teammatesAreEnemies).row()
-        table.add(automaticWeapons).row()
-        table.add(maxPunchCheck).row()
+        table.add(automaticWeaponsCheckBox).row()
+        table.add(automaticWeaponsCollapsible).row()
         table.add(forceAimKey).row()
+
         table.addSeparator()
+
         table.add(categorySelection).row()
         table.add(enableFactorRecoil).row()
         table.add(enableFlatAim).row()
@@ -629,7 +658,9 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         table.add(perfectAimCheckBox).row()
         table.add(perfectAimCollapsible).row()
         table.add(aimAssistCheckBox).row()
-        table.add(aimAssistCollapsible).expandX()
+        table.add(aimAssistCollapsible).row()//.expandX()
+
+        table.addSeparator()
 
     }
 
