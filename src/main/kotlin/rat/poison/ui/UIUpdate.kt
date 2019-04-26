@@ -247,6 +247,7 @@ fun UIUpdate() {
 
     visualsTab.apply {
         enableEsp.isChecked = ENABLE_ESP
+        visualsToggleKeyField.text = VISUALS_TOGGLE_KEY.toString()
         teamColorShow.setColor(TEAM_COLOR.red.toFloat(), TEAM_COLOR.green.toFloat(), TEAM_COLOR.blue.toFloat(), 1F)
         enemyColorShow.setColor(ENEMY_COLOR.red.toFloat(), ENEMY_COLOR.green.toFloat(), ENEMY_COLOR.blue.toFloat(), 1F)
         bombColorShow.setColor(BOMB_COLOR.red.toFloat(), BOMB_COLOR.green.toFloat(), BOMB_COLOR.blue.toFloat(), 1F)
@@ -337,7 +338,6 @@ fun UIUpdate() {
         bombTimer.isChecked = ENABLE_BOMB_TIMER
         radarEsp.isChecked = RADAR_ESP
         fireKeyField.text = FIRE_KEY.toString()
-        visualsToggleKeyField.text = VISUALS_TOGGLE_KEY.toString()
         menuKeyField.text = MENU_KEY.toString()
         enableReducedFlash.isChecked = ENABLE_REDUCED_FLASH
         flashMaxAlphaLabel.setText("Flash Max Alpha: $FLASH_MAX_ALPHA" + when (FLASH_MAX_ALPHA.toString().length) {

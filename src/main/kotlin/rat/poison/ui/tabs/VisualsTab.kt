@@ -3,6 +3,7 @@ package rat.poison.ui.tabs
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
+import com.kotcrab.vis.ui.util.Validators
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.color.ColorPicker
 import com.kotcrab.vis.ui.widget.color.ColorPickerAdapter
@@ -27,6 +28,9 @@ class VisualsTab : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     val enableEsp = VisCheckBox("Enable Esp") //ESP
+
+    val fireKeyField = VisValidatableTextField(Validators.FLOATS)
+    val visualsToggleKeyField = VisValidatableTextField(Validators.FLOATS)
 
     val showTeam = VisCheckBox("Show Team") //Show_Team
     val showEnemies = VisCheckBox("Show Enemies") //Show_Enemies
@@ -55,6 +59,20 @@ class VisualsTab : Tab(false, false) {
             }
             true
         }
+
+        //Create Visuals_Toggle_Key Input
+        val visualsToggleKey = VisTable()
+        Tooltip.Builder("The key code that will toggle all enabled visuals on or off").target(visualsToggleKey).build()
+        val visualsToggleKeyLabel = VisLabel("Visuals Toggle Key: ")
+        visualsToggleKeyField.text = VISUALS_TOGGLE_KEY.toString()
+        visualsToggleKey.changed { _, _ ->
+            if (fireKeyField.text.toIntOrNull() != null) {
+                VISUALS_TOGGLE_KEY = visualsToggleKeyField.text.toInt()
+            }
+        }
+        visualsToggleKey.add(visualsToggleKeyLabel)
+        visualsToggleKey.add(visualsToggleKeyField).spaceRight(6F).width(40F)
+        visualsToggleKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
 
         //VisImage(Color) doesnt work??
         //Create Team_Color Picker
@@ -241,6 +259,7 @@ class VisualsTab : Tab(false, false) {
 
         //Add all items to label for tabbed pane content
         table.add(enableEsp).colspan(2).row()
+        table.add(visualsToggleKey).row()
         table.add(aimTabbedPane.table).growX().minSize(25F).row()
         table.add(aimTabbedPaneContent).growX()
     }

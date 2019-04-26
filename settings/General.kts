@@ -90,7 +90,7 @@ ACTION_LOG = true
 /**
  * Key to disable ESP (say if a friend walks into your room); default G key
  */
-VISUALS_TOGGLE_KEY = 71
+VISUALS_TOGGLE_KEY = 35
 
 /**
  * Key to toggle open gl menu, default is F1

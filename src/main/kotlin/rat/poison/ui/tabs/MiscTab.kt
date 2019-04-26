@@ -19,7 +19,6 @@ class MiscTab : Tab(false, false) {
     val bunnyHop = VisCheckBox("Enable Bunny Hop")
     val bombTimer = VisCheckBox("Enable Bomb Timer")
     val fireKeyField = VisValidatableTextField(Validators.FLOATS)
-    val visualsToggleKeyField = VisValidatableTextField(Validators.FLOATS)
     val menuKeyField = VisValidatableTextField(Validators.FLOATS)
     val enableReducedFlash = VisCheckBox("Enable Reduced Flash")
     val flashMaxAlphaLabel = VisLabel("Flash Max Alpha: $FLASH_MAX_ALPHA" + when(FLASH_MAX_ALPHA.toInt().toString().length) {3->"  " 2->"    " else ->"      "})
@@ -59,20 +58,6 @@ class MiscTab : Tab(false, false) {
         fireKey.add(fireKeyLabel)
         fireKey.add(fireKeyField).spaceRight(6F).width(40F)
         fireKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
-
-        //Create Visuals_Toggle_Key Input
-        val visualsToggleKey = VisTable()
-        Tooltip.Builder("The key code that will toggle all enabled visuals on or off").target(visualsToggleKey).build()
-        val visualsToggleKeyLabel = VisLabel("Visuals Toggle Key: ")
-        visualsToggleKeyField.text = VISUALS_TOGGLE_KEY.toString()
-        visualsToggleKey.changed { _, _ ->
-            if (fireKeyField.text.toIntOrNull() != null) {
-                VISUALS_TOGGLE_KEY = visualsToggleKeyField.text.toInt()
-            }
-        }
-        visualsToggleKey.add(visualsToggleKeyLabel)
-        visualsToggleKey.add(visualsToggleKeyField).spaceRight(6F).width(40F)
-        visualsToggleKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
 
         //Create Menu_Key Input
         val menuKey = VisTable()
@@ -144,7 +129,6 @@ class MiscTab : Tab(false, false) {
         table.addSeparator()
 
         table.add(fireKey).row()
-        table.add(visualsToggleKey).row()
         table.add(menuKey).row()
 
         table.addSeparator()
