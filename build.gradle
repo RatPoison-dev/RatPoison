@@ -4,7 +4,7 @@ buildscript {
 	ext.kotlin_version = '1.3.20'
 	ext.jnaVersion = '5.2.0'
 	ext.gdxVersion = '1.9.3'
-	ext.visuiVersion = "1.2"
+	ext.visuiVersion = "1.1.1"
 	ext.lmlVersion = "1.9.1.9.6"
 	
 	repositories {
