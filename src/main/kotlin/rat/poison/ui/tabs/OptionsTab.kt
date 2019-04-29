@@ -65,8 +65,15 @@ class OptionsTab : Tab(false, false) {
                                         when {
                                             /*Case: 1*/     curLine[0] == "FLASH_MAX_ALPHA" -> {cfgfiletext += curLine[0] + " = " + engine.eval(curLine[0]) + "F" + System.lineSeparator()} //conv to double later
                                             /*Case: 2*/     curLine[0] == "CFG_NAME" -> {cfgfiletext += curLine[0] + " = \"" + engine.eval(curLine[0]) + "\"" + System.lineSeparator()}
+                                            /*Case: 3*/     file.name == "GunAimOverride.kts" -> {
+                                                                val curOverrideWep = engine.eval(curLine[0]) as kotlin.DoubleArray
+                                                                cfgfiletext += curLine[0] + " = " + curOverrideWep.contentToString() + System.lineSeparator()
+                                                            }
                                             /*Case: Else*/  else -> {cfgfiletext += curLine[0] + " = " + engine.eval(curLine[0]) + System.lineSeparator() }
                                         }
+
+                                        cfgfiletext = cfgfiletext.replace("[", "doubleArrayOf(")
+                                        cfgfiletext = cfgfiletext.replace("]", ")")
 
                                     }
                                 }
@@ -100,6 +107,9 @@ class OptionsTab : Tab(false, false) {
                         Files.write(genFile.toPath(), prevLines.toByteArray(), StandardOpenOption.WRITE)
 
                         println("\n Saving complete! \n")
+
+                        engine = ScriptEngineManager().getEngineByName("kotlin")
+                        loadSettings()
                     }
                 }).setSize(200F, 200F)
             }
@@ -113,9 +123,11 @@ class OptionsTab : Tab(false, false) {
             if (!cfgFile.exists()) {
                 Dialogs.showErrorDialog(App.menuStage, "Error", "cfg.kts not found, save your configuration first!")
             } else {
-                FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n"))}
+                //FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n"))}
                 engine = ScriptEngineManager().getEngineByName("kotlin")
                 FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n"))}
+                engine = ScriptEngineManager().getEngineByName("kotlin")
+                loadSettings()
                 UIUpdate()
                 println("\n Loading complete! \n")
             }
@@ -129,7 +141,7 @@ class OptionsTab : Tab(false, false) {
             //val fileDir = "settings\\Aim.kts"
             File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
                 var prevLines = ""
-                if (file.name != "cfg.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
+                if (file.name != "cfg.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3" && file.name != "GunAimOverride.kts") {
                     FileReader(file).readLines().forEach { line ->
                         if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
                             val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
@@ -145,10 +157,11 @@ class OptionsTab : Tab(false, false) {
                             prevLines += line + System.lineSeparator()
                         }
                     }
-                    Files.delete(file.toPath())
-                    Files.createFile(file.toPath())
-                    Files.write(file.toPath(), prevLines.toByteArray(), StandardOpenOption.WRITE)
                 }
+
+                Files.delete(file.toPath())
+                Files.createFile(file.toPath())
+                Files.write(file.toPath(), prevLines.toByteArray(), StandardOpenOption.WRITE)
             }
             engine = ScriptEngineManager().getEngineByName("kotlin")
             loadSettings()

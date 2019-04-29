@@ -82,7 +82,7 @@ class UIMenu : VisWindow("RatPoison UI") {
 
         add(mainTabbedPane.table).growX().minSize(25F).row()
 
-        add(mainScrollPane).minSize(500F, 500F).align(Align.left).growX().row()
+        add(mainScrollPane).minSize(500F, 500F).maxSize(500F, 500F).align(Align.left).growX().row()
 
         pack()
         centerWindow()

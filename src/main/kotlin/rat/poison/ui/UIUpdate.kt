@@ -243,6 +243,51 @@ fun UIUpdate() {
                 aimAssistStrictnessSlider.value = SHOTGUN_AIM_ASSIST_STRICTNESS.toFloat()
             }
         }
+        ////Custom Overrides
+        overrideEnableOverride.isChecked = curOverrideWep[1].toBool()
+        overrideEnableFactorRecoil.isChecked = curOverrideWep[2].toBool()
+        overrideEnableFlatAim.isChecked = curOverrideWep[3].toBool()
+        overrideEnablePathAim.isChecked = curOverrideWep[4].toBool()
+        overrideAimBoneBox.selected = if (curOverrideWep[5].toInt() == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
+        overrideAimFovLabel.setText("Aim Fov: " + curOverrideWep[6].toInt() + when (curOverrideWep[6].toInt().toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        overrideAimFovSlider.value = curOverrideWep[6].toFloat()
+        overrideAimSpeedLabel.setText("Aim Speed: " + curOverrideWep[7].toInt() + when (curOverrideWep[7].toInt().toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        overrideAimSpeedSlider.value = curOverrideWep[7].toFloat()
+        overrideAimSmoothnessLabel.setText("Aim Smoothness: " + curOverrideWep[8].toInt())
+        overrideAimSmoothnessSlider.value = curOverrideWep[8].toFloat()
+        overrideAimStrictnessLabel.setText("Aim Strictness: " + curOverrideWep[9])
+        overrideAimStrictnessSlider.value = curOverrideWep[9].toFloat()
+        overridePerfectAimCheckBox.isChecked = curOverrideWep[10].toBool()
+        overridePerfectAimCollapsible.isCollapsed = !curOverrideWep[10].toBool()
+        overridePerfectAimFovLabel.setText("Perfect Aim Fov: " + curOverrideWep[11].toInt() + when (curOverrideWep[11].toInt().toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        overridePerfectAimFovSlider.value = curOverrideWep[11].toFloat()
+        overridePerfectAimChanceLabel.setText("Perfect Aim Chance: " + curOverrideWep[12].toInt() + when (curOverrideWep[12].toInt().toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        overridePerfectAimChanceSlider.value = curOverrideWep[12].toFloat()
+        overrideAimAssistCheckBox.isChecked = curOverrideWep[13].toBool()
+        overrideAimAssistCollapsible.isCollapsed = !curOverrideWep[13].toBool()
+        overrideAimAssistStrictnessLabel.setText("Aim Assist Strictness: " + curOverrideWep[14].toInt() + when (curOverrideWep[14].toInt().toString().length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        overrideAimAssistStrictnessSlider.value = curOverrideWep[14].toFloat()
+
     }
 
     visualsTab.apply {

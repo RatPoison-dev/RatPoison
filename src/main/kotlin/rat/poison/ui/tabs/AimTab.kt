@@ -7,6 +7,7 @@ import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.App
 import rat.poison.App.menuStage
+import rat.poison.engine
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.settings.*
@@ -18,6 +19,8 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     private val table = VisTable(true)
 
     var categorySelected = ""
+    var overrideCategorySelected = ""
+    var weaponCategorySelected = ""
 
     //Init labels/sliders/boxes that show values here
     val activateFromFireKey = VisCheckBox("Activate From Fire Key") //Activate_From_Fire_Key
@@ -32,7 +35,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val maxPunchCheckSlider = VisSlider(1F, 32F, 1F, false) //Max_Punch_Check
 
     private val categorySelectionBox = VisSelectBox<String>() //Category
-    val enableFactorRecoil = VisCheckBox("Factor Recoil") //Enable_Path_Aim
+    val enableFactorRecoil = VisCheckBox("Factor Recoil") //Factor Recoil
     val enableFlatAim = VisCheckBox("Flat Aim") //Enable_Flat_Aim
     val enablePathAim = VisCheckBox("Path Aim") //Enable_Path_Aim
     val aimBoneBox = VisSelectBox<String>() //Aim_Bone
@@ -61,8 +64,49 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val aimAssistStrictnessLabel = VisLabel("Aim Assist Strictness: " + PISTOL_AIM_ASSIST_STRICTNESS.toString() + when(PISTOL_AIM_ASSIST_STRICTNESS.toString().length) {3->"  " 2->"    " else ->"      "}) //Aim_Assist_Strictness
     val aimAssistStrictnessSlider = VisSlider(1F, 100F, 1F, false) //Aim_Assist_Strictness
 
+    //Override Weapons Panel
+    val overrideTable = VisTable(true) //Container for all items
+
+    ////Custom Overrides
+    val overrideEnableOverride = VisCheckBox("Enable Override") //Enable Override
+    val overrideEnableFactorRecoil = VisCheckBox("Factor Recoil") //Factor Recoil
+    val overrideEnableFlatAim = VisCheckBox("Flat Aim") //Enable_Flat_Aim
+    val overrideEnablePathAim = VisCheckBox("Path Aim") //Enable_Path_Aim
+    val overrideAimBoneBox = VisSelectBox<String>() //Aim_Bone
+    val overrideAimFovLabel = VisLabel("Aim Fov: " + PISTOL_AIM_FOV.toString() + when(PISTOL_AIM_FOV.toString().length) {3->"  " 2->"    " else ->"      "}) //Aim_Fov
+    val overrideAimFovSlider = VisSlider(1F, 360F, 2F, false) //Aim_Fov
+    val overrideAimSpeedLabel = VisLabel("Aim Speed: " + PISTOL_AIM_SPEED.toString() + when(PISTOL_AIM_SPEED.toString().length) {3->"  " 2->"    " else ->"      "}) //Aim_Speed_Min
+    val overrideAimSpeedSlider = VisSlider(1F, 100F, 1F, false) //Aim_Speed_Min
+    val overrideAimSmoothnessLabel = VisLabel("Aim Smoothness: $PISTOL_AIM_SMOOTHNESS") //Aim_Smoothness
+    val overrideAimSmoothnessSlider = VisSlider(1F, 10F, 0.1F, false) //Aim_Smoothness
+    val overrideAimStrictnessLabel = VisLabel("Aim Strictness: $PISTOL_AIM_STRICTNESS") //Aim_Strictness
+    val overrideAimStrictnessSlider = VisSlider(1F, 5F, 0.1F, false) //Aim_Strictness
+
+    //Perfect Aim Collapsible
+    val overridePerfectAimCheckBox = VisCheckBox("Enable Perfect Aim") //Perfect_Aim
+    private val overridePerfectAimTable = VisTable() //Perfect_Aim_Collapsible Table
+    val overridePerfectAimCollapsible = CollapsibleWidget(overridePerfectAimTable) //Perfect_Aim_Collapsible
+    val overridePerfectAimFovLabel = VisLabel("Perfect Aim Fov: " + PISTOL_PERFECT_AIM_FOV.toString() + when(PISTOL_PERFECT_AIM_FOV.toString().length) {3->"  " 2->"    " else ->"      "}) //Perfect_Aim_Fov
+    val overridePerfectAimFovSlider = VisSlider(1F, 100F, 1F, false) //Perfect_Aim_Fov
+    val overridePerfectAimChanceLabel = VisLabel("Perfect Aim Chance: " + PISTOL_PERFECT_AIM_CHANCE.toString() + when(PISTOL_PERFECT_AIM_CHANCE.toString().length) {3->"  " 2->"    " else ->"      "}) //Perfect_Aim_Chance
+    val overridePerfectAimChanceSlider = VisSlider(1F, 100F, 1F, false) //Perfect_Aim_Chance
+
+    //Aim Assist Collapsible
+    val overrideAimAssistCheckBox = VisCheckBox("Enable Aim Assist") //Aim_Assist
+    private val overrideAimAssistTable = VisTable() //Aim_Assist_Collapsible Table
+    val overrideAimAssistCollapsible = CollapsibleWidget(overrideAimAssistTable) //Aim_Assist_Collapsible
+    val overrideAimAssistStrictnessLabel = VisLabel("Aim Assist Strictness: " + PISTOL_AIM_ASSIST_STRICTNESS.toString() + when(PISTOL_AIM_ASSIST_STRICTNESS.toString().length) {3->"  " 2->"    " else ->"      "}) //Aim_Assist_Strictness
+    val overrideAimAssistStrictnessSlider = VisSlider(1F, 100F, 1F, false) //Aim_Assist_Strictness
+
+    //Desert Eagle is the first item in pistols //proof of working, delete and add function to update info for us
+    var curOverrideWep : kotlin.DoubleArray = engine.eval("DESERT_EAGLE") as kotlin.DoubleArray
+
+    private val overrideCategorySelectionBox = VisSelectBox<String>() //Category
+
+    private val weaponCategorySelectionBox = VisSelectBox<String>() //Category
+
     init {
-        val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "If you have any problems submit an issue on github\nIf you are crashing or have an error message in the cmd, include the error message if there is one,\nsettings that were enabled, and when it happened (such as randomly, when joining a game, on round end, etc)")
+        val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "If you have any problems submit an issue on github\nIf you are crashing or have an error message in the cmd, include the error message if there is one,\nsettings that were enabled, and when it happened (such as randomly, when joining a game, on round end, etc)\n\nWARNING: This update has not been tested extensively, I assume many issues will pop up, please submit an issue on github\nwith information on the issue, the settings used (create a cfg file and put it in a pastebin), and evidence (such as a picture/video)\nor a way to easily replicate the issue.\nThe custom per weapon settings are available in the GunAimOverride.kts file, in arrays, the gun is the variable name, with the array\ninformation at the top.\nGitHub: https://github.com/astupidrat/ratpoison")
         dialog.setPosition(gameWidth/2F-dialog.width/2F, gameHeight.toFloat())
         menuStage.addActor(dialog)
 
@@ -122,7 +166,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         forceAimKey.add(forceAimKeyField).spaceRight(6F).width(40F)
         forceAimKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
 
-        //Create Enable_Path_Aim Toggle
+        //Create Factor Recoil
         Tooltip.Builder("Whether or not to factor in recoil when aiming").target(enableFactorRecoil).build()
         enableFactorRecoil.isChecked = PISTOL_ENABLE_PATH_AIM
         enableFactorRecoil.changed { _, _ ->
@@ -166,7 +210,6 @@ class AimTab : Tab(true, false) { //Aim.kts tab
             UIUpdate()
             true
         }
-
 
         //Create Enable_Flat_Aim Toggle
         Tooltip.Builder("Whether or not to enable flat aim").target(enableFlatAim).build()
@@ -333,7 +376,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         aimFov.add(aimFovLabel)
         aimFov.add(aimFovSlider)
 
-        //Create Aim_Speed_Min Slider
+        //Create Aim_Speed Slider
         val aimSpeed = VisTable()
         Tooltip.Builder("The aim speed delay in milliseconds").target(aimSpeed).build()
         aimSpeedSlider.value = PISTOL_AIM_SPEED.toFloat()
@@ -632,6 +675,238 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        /////Weapon Selection
+        
+        //Create Category Selector
+        val overrideCategorySelection = VisTable()
+        Tooltip.Builder("The weapon category settings to edit").target(overrideCategorySelection).build()
+        val overrideCategorySelectLabel = VisLabel("Weapon Category: ")
+        overrideCategorySelectionBox.setItems("PISTOL", "RIFLE", "SMG", "SNIPER", "SHOTGUN")
+        overrideCategorySelectionBox.selected = "PISTOL"
+        overrideCategorySelected = overrideCategorySelectionBox.selected
+        overrideCategorySelection.add(overrideCategorySelectLabel).top().spaceRight(6F)
+        overrideCategorySelection.add(overrideCategorySelectionBox)
+
+        overrideCategorySelectionBox.changed { _, _ ->
+            overrideCategorySelected = overrideCategorySelectionBox.selected
+
+            when (overrideCategorySelectionBox.selected) //weaponCategorySelectionBox.items.add results in an error, can't look through enum list and check weapon type
+            {
+                "PISTOL" -> { weaponCategorySelectionBox.clearItems(); weaponCategorySelectionBox.setItems("DESERT_EAGLE", "DUAL_BERRETA", "FIVE_SEVEN", "GLOCK", "USP_SILENCER", "CZ75A", "R8_REVOLVER", "P2000", "TEC9", "P250") }
+                "SMG" -> { weaponCategorySelectionBox.clearItems(); weaponCategorySelectionBox.setItems("MAC10", "P90", "MP5", "UMP45", "MP7", "MP9", "PP_BIZON") }
+                "RIFLE" -> { weaponCategorySelectionBox.clearItems(); weaponCategorySelectionBox.setItems("AK47", "AUG", "FAMAS", "GALIL", "M4A4", "M4A1S", "NEGEV", "M249") }
+                "SNIPER" -> { weaponCategorySelectionBox.clearItems(); weaponCategorySelectionBox.setItems("AWP", "G3SG1", "SCAR20", "SG553", "SSG08") }
+                "SHOTGUN" -> { weaponCategorySelectionBox.clearItems(); weaponCategorySelectionBox.setItems("XM1014", "MAG7", "SAWED OFF", "NOVA") }
+            }
+
+            weaponCategorySelectionBox.selected = weaponCategorySelectionBox.items[0]
+            UIUpdate()
+            true
+        }
+
+        //Create Weapon Selector
+        val weaponCategorySelection = VisTable()
+        Tooltip.Builder("The weapon category settings to edit").target(weaponCategorySelection).build()
+        val weaponCategorySelectLabel = VisLabel("Weapon Category: ")
+
+        weaponCategorySelectionBox.setItems("DESERT_EAGLE", "DUAL_BERRETA", "FIVE_SEVEN", "GLOCK", "USP_SILENCER", "CZ75A", "R8_REVOLVER", "P2000", "TEC9", "P250") //First selection is pistol
+
+        weaponCategorySelected = weaponCategorySelectionBox.selected
+        weaponCategorySelection.add(weaponCategorySelectLabel).top().spaceRight(6F)
+        weaponCategorySelection.add(weaponCategorySelectionBox)
+
+        weaponCategorySelectionBox.changed { _, _ ->
+            if (!weaponCategorySelectionBox.selected.isNullOrEmpty())
+            {
+                weaponCategorySelected = weaponCategorySelectionBox.selected
+                curOverrideWep = engine.eval(weaponCategorySelectionBox.selected) as kotlin.DoubleArray
+            }
+            UIUpdate()
+            true
+        }
+
+        //               0      1                2              3              4                5                6         7        8          9               10              11           12               13                  14
+        //Array Format: [WepID, Enable Override, Factor Recoil, Enable Flat Aim, Enable Path Aim, Aim Bone, Aim Fov, Aim Speed, Aim Smoothness, Aim Strictness, Perfect Aim, Perfect Aim FOV, Perfect Aim Chance, Aim Assist Mode, Aim Assist Strictness]
+
+
+
+        //Create Enable Override
+        Tooltip.Builder("Whether or not to override aim when this gun is selected").target(overrideEnableOverride).build()
+        overrideEnableOverride.isChecked = curOverrideWep[1].toBool()
+        overrideEnableOverride.changed { _, _ ->
+            curOverrideWep[1] = overrideEnableOverride.isChecked.toDouble()
+            UIUpdate()
+            true
+        }
+
+        //Create Factor Recoil
+        Tooltip.Builder("Whether or not to factor in recoil when aiming").target(overrideEnableFactorRecoil).build()
+        overrideEnableFactorRecoil.isChecked = curOverrideWep[2].toBool()
+        overrideEnableFactorRecoil.changed { _, _ ->
+            curOverrideWep[2] = overrideEnableOverride.isChecked.toDouble()
+            UIUpdate()
+            true
+        }
+
+        //Create Enable_Flat_Aim Toggle
+        Tooltip.Builder("Whether or not to enable flat aim").target(overrideEnableFlatAim).build()
+        overrideEnableFlatAim.isChecked = curOverrideWep[3].toBool()
+        overrideEnableFlatAim.changed { _, _ ->
+            curOverrideWep[3] = overrideEnableFlatAim.isChecked.toDouble()
+            if (curOverrideWep[3].toBool() && curOverrideWep[4].toBool())
+            {
+                curOverrideWep[4] = 0.0
+            }
+            UIUpdate()
+            true
+        }
+
+        //Create Enable_Path_Aim Toggle
+        Tooltip.Builder("Whether or not to enable path aim").target(overrideEnablePathAim).build()
+        overrideEnablePathAim.isChecked = curOverrideWep[4].toBool()
+        overrideEnablePathAim.changed { _, _ ->
+            curOverrideWep[4] = overrideEnablePathAim.isChecked.toDouble()
+            if (curOverrideWep[4].toBool() && curOverrideWep[3].toBool())
+            {
+                curOverrideWep[3] = 0.0
+            }
+            UIUpdate()
+            true
+        }
+
+        //Create Aim_Bone Selector
+        val overrideAimBone = VisTable()
+        Tooltip.Builder("The default aim bone to aim at").target(overrideAimBone).build()
+        val overrideAimBoneLabel = VisLabel("Aim Bone: ")
+        overrideAimBoneBox.setItems("HEAD_BONE", "BODY_BONE")
+        overrideAimBoneBox.selected = if (curOverrideWep[5] == HEAD_BONE.toDouble()) "HEAD_BONE" else "BODY_BONE"
+        overrideAimBone.add(overrideAimBoneLabel).top().spaceRight(6F)
+        overrideAimBone.add(overrideAimBoneBox)
+
+        overrideAimBoneBox.changed { _, _ ->
+            var overrideSetBone = HEAD_BONE
+
+            if (overrideAimBoneBox.selected.toString() == "HEAD_BONE") {
+                overrideSetBone = HEAD_BONE
+            }
+            else if (overrideAimBoneBox.selected.toString() == "BODY_BONE") {
+                overrideSetBone = BODY_BONE
+            }
+            curOverrideWep[5] = overrideSetBone.toDouble()
+            true
+        }
+
+        //Create Aim_Fov Slider
+        val overrideAimFov = VisTable()
+        Tooltip.Builder("The aim field of view").target(overrideAimFov).build()
+        overrideAimFovSlider.value = curOverrideWep[6].toFloat()
+        overrideAimFovSlider.changed { _, _ ->
+            curOverrideWep[6] = overrideAimFovSlider.value.toInt().toDouble()
+            overrideAimFovLabel.setText("Aim Fov: " + curOverrideWep[6].toInt() + when(curOverrideWep[6].toInt().toString().length) {3->"  " 2->"    " else ->"      "})
+            true
+        }
+        overrideAimFov.add(overrideAimFovLabel)
+        overrideAimFov.add(overrideAimFovSlider)
+
+        //Create Aim_Speed Slider
+        val overrideAimSpeed = VisTable()
+        Tooltip.Builder("The aim speed delay in milliseconds").target(overrideAimSpeed).build()
+        overrideAimSpeedSlider.value = curOverrideWep[7].toFloat()
+        overrideAimSpeedSlider.changed { _, _ ->
+            curOverrideWep[7] = overrideAimSpeedSlider.value.toInt().toDouble()
+            overrideAimSpeedLabel.setText("Aim Speed: " + curOverrideWep[7].toInt() + when(curOverrideWep[7].toInt().toString().length) {3->"  " 2->"    " else ->"      "})
+        }
+        overrideAimSpeed.add(overrideAimSpeedLabel)
+        overrideAimSpeed.add(overrideAimSpeedSlider)
+
+        //Create Aim_Smoothness Slider
+        val overrideAimSmoothness = VisTable()
+        Tooltip.Builder("The smoothness of the aimbot (path aim only)").target(overrideAimSmoothness).build()
+        overrideAimSmoothnessSlider.value = curOverrideWep[8].toFloat()
+        overrideAimSmoothnessSlider.changed { _, _ ->
+
+                    curOverrideWep[8] = Math.round(overrideAimSmoothnessSlider.value.toDouble() * 10.0)/10.0
+                    overrideAimSmoothnessLabel.setText("Aim Smoothness: " + curOverrideWep[8])
+        }
+        overrideAimSmoothness.add(overrideAimSmoothnessLabel).spaceRight(6F)
+        overrideAimSmoothness.add(overrideAimSmoothnessSlider)
+
+        //Create Aim_Strictness Slider
+        val overrideAimStrictness = VisTable()
+        Tooltip.Builder("How close to get to the bone before it stops correcting").target(overrideAimStrictness).build()
+        overrideAimStrictnessSlider.value = curOverrideWep[9].toFloat()
+        overrideAimStrictnessSlider.changed { _, _ ->
+            curOverrideWep[9] = Math.round(overrideAimStrictnessSlider.value.toDouble() * 10.0)/10.0
+            overrideAimStrictnessLabel.setText("Aim Strictness: " + curOverrideWep[9])
+        }
+        overrideAimStrictness.add(overrideAimStrictnessLabel).spaceRight(6F)
+        overrideAimStrictness.add(overrideAimStrictnessSlider)
+
+        //Create Perfect_Aim Collapsible Check Box
+        Tooltip.Builder("Whether or not to enable perfect aim").target(overridePerfectAimCheckBox).build()
+        overridePerfectAimCheckBox.isChecked = curOverrideWep[10].toBool()
+        overridePerfectAimCollapsible.setCollapsed(!overridePerfectAimCollapsible.isCollapsed, true)
+        overridePerfectAimCheckBox.changed { _, _ ->
+            curOverrideWep[10] = overridePerfectAimCheckBox.isChecked.toDouble()
+            overridePerfectAimCollapsible.setCollapsed(!overridePerfectAimCollapsible.isCollapsed, true)
+        }
+
+        //Create Perfect_Aim_Fov Slider
+        val overridePerfectAimFov = VisTable()
+        Tooltip.Builder("The perfect aim field of view").target(overridePerfectAimFov).build()
+        overridePerfectAimFovSlider.value = curOverrideWep[11].toFloat()
+        overridePerfectAimFovSlider.changed { _, _ ->
+            curOverrideWep[11] = overridePerfectAimFovSlider.value.toDouble()
+            overridePerfectAimFovLabel.setText("Perfect Aim Fov: " + curOverrideWep[11].toInt() + when(curOverrideWep[11].toInt().toString().length) {3->"  " 2->"    " else ->"      "})
+        }
+        overridePerfectAimFov.add(overridePerfectAimFovLabel)
+        overridePerfectAimFov.add(overridePerfectAimFovSlider)
+        //End Perfect_Aim_Fov Slider
+
+        //Create Perfect_Aim_Chance Slider
+        val overridePerfectAimChance = VisTable()
+        Tooltip.Builder("The perfect aim chance (per calculation)").target(overridePerfectAimChance).build()
+        overridePerfectAimChanceSlider.value = curOverrideWep[12].toFloat()
+        overridePerfectAimChanceSlider.changed { _, _ ->
+            curOverrideWep[12] = overridePerfectAimChanceSlider.value.toDouble()
+            overridePerfectAimChanceLabel.setText("Perfect Aim Chance: " + curOverrideWep[12].toInt() + when(curOverrideWep[12].toInt().toString().length) {3->"  " 2->"    " else ->"      "})
+        }
+
+        overridePerfectAimChance.add(overridePerfectAimChanceLabel)
+        overridePerfectAimChance.add(overridePerfectAimChanceSlider)
+        //End Perfect_Aim_Chance Slider
+
+        overridePerfectAimTable.add(overridePerfectAimFov).row()
+        overridePerfectAimTable.add(overridePerfectAimChance).row()
+        //End Perfect_Aim Collapsible Check Box
+
+        //Create Aim_Assist_Mode Collapsible Check Box
+        Tooltip.Builder("Whether or not to enable aim assistance").target(overrideAimAssistCheckBox).build()
+        overrideAimAssistCheckBox.isChecked = curOverrideWep[13].toBool()
+        overrideAimAssistCollapsible.setCollapsed(!overrideAimAssistCollapsible.isCollapsed, true)
+
+        //Create Aim_Assist_Strictness Slider
+        val overrideAimAssistStrictness = VisTable()
+        Tooltip.Builder("How close your crosshair is to the aim bone to determine whether to stop aiming").target(overrideAimAssistStrictness).build()
+        overrideAimAssistStrictnessSlider.value = curOverrideWep[14].toFloat()
+        overrideAimAssistStrictnessSlider.changed { _, _ ->
+            curOverrideWep[14] = overrideAimAssistStrictnessSlider.value.toDouble()
+            overrideAimAssistStrictnessLabel.setText("Aim Assist Strictness: " + curOverrideWep[14].toInt() + when(curOverrideWep[14].toInt().toString().length) {3->"  " 2->"    " else ->"      "})
+        }
+
+        overrideAimAssistStrictness.add(overrideAimAssistStrictnessLabel)
+        overrideAimAssistStrictness.add(overrideAimAssistStrictnessSlider).width(125F)
+        //End Aim_Assist_Strictness Slider
+
+        overrideAimAssistTable.add(overrideAimAssistStrictness)
+
+        overrideAimAssistCheckBox.changed { _, _ ->
+            curOverrideWep[13] = overrideAimAssistCheckBox.isChecked.toDouble()
+            overrideAimAssistCollapsible.setCollapsed(!overrideAimAssistCollapsible.isCollapsed, true)
+            true
+        }
+        //End Aim_Assist_Mode Collapsible Check Box
+
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -662,6 +937,21 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
         table.addSeparator()
 
+        table.add(overrideCategorySelection).row()
+        table.add(weaponCategorySelection).row()
+        table.add(overrideEnableOverride).row()
+        table.add(overrideEnableFactorRecoil).row()
+        table.add(overrideEnableFlatAim).row()
+        table.add(overrideEnablePathAim).row()
+        table.add(overrideAimBone).row()
+        table.add(overrideAimFov).row()
+        table.add(overrideAimSpeed).row()
+        table.add(overrideAimSmoothness).row()
+        table.add(overrideAimStrictness).row()
+        table.add(overridePerfectAimCheckBox).row()
+        table.add(overridePerfectAimCollapsible).row()
+        table.add(overrideAimAssistCheckBox).row()
+        table.add(overrideAimAssistCollapsible).row()
     }
 
     override fun getContentTable(): Table? {
@@ -671,4 +961,10 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     override fun getTabTitle(): String? {
         return "Aim"
     }
+
+    fun Boolean.toFloat() = if (this) 1F else 0F
+
+    fun Boolean.toDouble() = this.toString().toDouble()
+
+    fun Double.toBool() = this == 1.0
 }

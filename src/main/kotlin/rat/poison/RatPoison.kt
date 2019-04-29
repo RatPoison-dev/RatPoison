@@ -30,6 +30,7 @@ import rat.poison.ui.UIMenu
 import rat.poison.utils.*
 import java.io.*
 import javax.script.ScriptEngineManager
+//Move separate toBool/toInt/toFloat to public here
 
 //aaaaaaaaaaaaaaaaAAAAAAAAAAAAA
 const val SETTINGS_DIRECTORY = "settings"
@@ -98,6 +99,7 @@ fun loadSettings() {
     File(SETTINGS_DIRECTORY).listFiles().forEach {
         if (it.name != "cfg.kts" && it.name != "hitsound.mp3") {
             FileReader(it).use {
+                engine = ScriptEngineManager().getEngineByName("kotlin")
                 engine.eval(it.readLines().joinToString("\n"))
             }
         }
@@ -111,7 +113,7 @@ object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
-    val overlay = Overlay("Counter-Strike: " + "Global" + " Offensive", "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
+    val overlay = Overlay("Counter-Strike: Global Offensive", "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     var haveTarget = false
     var Menu_Key = ObservableBoolean({ keyPressed(MENU_KEY) })
     lateinit var menuStage: Stage

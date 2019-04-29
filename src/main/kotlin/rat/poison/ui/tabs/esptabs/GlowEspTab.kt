@@ -45,9 +45,10 @@ class GlowEspTab : Tab(false, false) {
 
             if (INV_GLOW_ESP) {
                 GLOW_ESP = true
+                glowEsp.isChecked = true
                 glowEsp.isDisabled = true
             }
-            else
+            else if (!MODEL_ESP)
             {
                 glowEsp.isDisabled = false
             }
@@ -64,9 +65,10 @@ class GlowEspTab : Tab(false, false) {
             if (MODEL_ESP)
             {
                 GLOW_ESP = true
+                glowEsp.isChecked = true
                 glowEsp.isDisabled = true
             }
-            else
+            else if (!INV_GLOW_ESP)
             {
                 glowEsp.isDisabled = false
             }
