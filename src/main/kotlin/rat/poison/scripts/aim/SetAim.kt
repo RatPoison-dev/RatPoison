@@ -4,6 +4,7 @@ import rat.poison.engine
 import rat.poison.game.Weapons
 import rat.poison.game.entity.weapon
 import rat.poison.game.me
+import rat.poison.saving
 import rat.poison.settings.*
 import rat.poison.utils.every
 
@@ -11,26 +12,28 @@ var override = false
 
 fun setAim() = every(256){
     override = false
-        //loadSettings()
-    if (me.weapon().rifle || me.weapon().smg || me.weapon().pistol || me.weapon().sniper || me.weapon().shotgun) {
-        val curWep: DoubleArray = engine.eval(me.weapon().name) as DoubleArray
 
-        enumValues<Weapons>().forEach {
-            if (it.id == me.weapon().id && curWep[1].toBool()) {
-                FACTOR_RECOIL = curWep[2].toBool()
-                AIM_BONE = curWep[5].toInt()
-                AIM_FOV = curWep[6].toInt()
-                AIM_SPEED = curWep[7].toInt()
-                AIM_SMOOTHNESS = curWep[8]
-                AIM_STRICTNESS = curWep[9]
-                PERFECT_AIM = curWep[10].toBool()
-                PERFECT_AIM_FOV = curWep[11].toInt()
-                PERFECT_AIM_CHANCE = curWep[12].toInt()
-                AIM_ASSIST_MODE = curWep[13].toBool()
-                AIM_ASSIST_STRICTNESS = curWep[14].toInt()
-                ENABLE_FLAT_AIM = curWep[3].toBool()
-                ENABLE_PATH_AIM = curWep[4].toBool()
-                override = true
+    if (!saving) {
+        if (me.weapon().rifle || me.weapon().smg || me.weapon().pistol || me.weapon().sniper || me.weapon().shotgun) {
+            val curWep: DoubleArray = engine.eval(me.weapon().name) as DoubleArray
+
+            enumValues<Weapons>().forEach {
+                if (it.id == me.weapon().id && curWep[1].toBool()) {
+                    FACTOR_RECOIL = curWep[2].toBool()
+                    AIM_BONE = curWep[5].toInt()
+                    AIM_FOV = curWep[6].toInt()
+                    AIM_SPEED = curWep[7].toInt()
+                    AIM_SMOOTHNESS = curWep[8]
+                    AIM_STRICTNESS = curWep[9]
+                    PERFECT_AIM = curWep[10].toBool()
+                    PERFECT_AIM_FOV = curWep[11].toInt()
+                    PERFECT_AIM_CHANCE = curWep[12].toInt()
+                    AIM_ASSIST_MODE = curWep[13].toBool()
+                    AIM_ASSIST_STRICTNESS = curWep[14].toInt()
+                    ENABLE_FLAT_AIM = curWep[3].toBool()
+                    ENABLE_PATH_AIM = curWep[4].toBool()
+                    override = true
+                }
             }
         }
     }

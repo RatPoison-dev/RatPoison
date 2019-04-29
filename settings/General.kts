@@ -15,7 +15,7 @@ OVERLAY_WIDTH = 1920
 OVERLAY_HEIGHT = 1080
 
 /**
- * Whether or not to aim when using the [FIRE_KEY] (by default left click).
+ * Whether or not to aim when using the (FIRE_KEY) (by default left click).
  *
  * You should disable this if you don't want aim to activate when left clicking.
  */
@@ -61,12 +61,12 @@ TARGET_SWAP_MAX_DELAY = 350
 AIM_DURATION = 1
 
 /**
- * The amount of sprayed shots until the aimbot shifts to aiming at the [SHOULDER_BONE].
+ * The amount of sprayed shots until the aimbot shifts to aiming at the (SHOULDER_BONE).
  */
 SHIFT_TO_SHOULDER_SHOTS = 3
 
 /**
- * The amount of sprayed shots until the aimbot shifts to aiming at the [BODY_BONE].
+ * The amount of sprayed shots until the aimbot shifts to aiming at the (BODY_BONE).
  */
 SHIFT_TO_BODY_SHOTS = 4
 
@@ -100,7 +100,7 @@ MENU_KEY = 112
 /**
  * Name of config file
  */
-CFG_NAME = "Null"
+CFG_NAME = "test"
 
 /**
  * The bone IDs of the respective bones for a player.

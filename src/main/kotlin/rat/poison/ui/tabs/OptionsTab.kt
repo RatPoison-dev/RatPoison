@@ -1,3 +1,5 @@
+@file:Suppress("BlockingMethodInNonBlockingContext")
+
 package rat.poison.ui.tabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
@@ -5,6 +7,8 @@ import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import rat.poison.*
 import rat.poison.App.menuStage
 import rat.poison.settings.CFG_NAME
@@ -39,97 +43,113 @@ class OptionsTab : Tab(false, false) {
         val saveButton = VisTextButton("Save Current Configuration To Cfg")
         Tooltip.Builder("Save current configuration to the cfg file").target(saveButton).build()
         saveButton.changed { _, _ ->
-            if (true) { //type Any? changes didnt work im autistic //fix later
-                Dialogs.showInputDialog(menuStage, "Enter config name: ", "", object : InputDialogAdapter() {
-                    override fun finished (input : String) {
-                        CFG_NAME = input
-                        loadButton.setText("Load $CFG_NAME")
-                        val cfgFile = File("settings" + "\\" + "cfg.kts")
+            Dialogs.showInputDialog(menuStage, "Enter config name: ", "", object : InputDialogAdapter() {
+                override fun finished(input: String) {
+                    if (!saving) {
+                        GlobalScope.launch {
+                            saving = true
+                            println("\n Saving! \n")
+                            CFG_NAME = input
+                            loadButton.setText("Load $CFG_NAME")
+                            val cfgFile = File("settings" + "\\" + "cfg.kts")
 
-                        if (!cfgFile.exists()) {
-                            cfgFile.createNewFile()
-                        }
+                            if (!cfgFile.exists()) {
+                                cfgFile.createNewFile()
+                            }
 
-                        //Add Imports
-                        var cfgfiletext = ""
-                        cfgfiletext += "import rat.poison.settings.*" + System.lineSeparator()
-                        cfgfiletext += "import rat.poison.game.Color" + System.lineSeparator() + System.lineSeparator()
+                            //Add Imports
+                            var cfgfiletext = ""
+                            cfgfiletext += "import rat.poison.settings.*" + System.lineSeparator()
+                            cfgfiletext += "import rat.poison.game.Color" + System.lineSeparator() + System.lineSeparator()
 
-                        File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
-                            if (file.name != "cfg.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
-                                FileReader(file).readLines().forEach { line ->
-                                    if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
-                                        val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
+                            File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
+                                if (file.name != "cfg.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
+                                    FileReader(file).readLines().forEach { line ->
+                                        if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
+                                            val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
-                                        //Add custom checks for variables that need a type ident ie F
-                                        when {
-                                            /*Case: 1*/     curLine[0] == "FLASH_MAX_ALPHA" -> {cfgfiletext += curLine[0] + " = " + engine.eval(curLine[0]) + "F" + System.lineSeparator()} //conv to double later
-                                            /*Case: 2*/     curLine[0] == "CFG_NAME" -> {cfgfiletext += curLine[0] + " = \"" + engine.eval(curLine[0]) + "\"" + System.lineSeparator()}
-                                            /*Case: 3*/     file.name == "GunAimOverride.kts" -> {
-                                                                val curOverrideWep = engine.eval(curLine[0]) as kotlin.DoubleArray
-                                                                cfgfiletext += curLine[0] + " = " + curOverrideWep.contentToString() + System.lineSeparator()
-                                                            }
-                                            /*Case: Else*/  else -> {cfgfiletext += curLine[0] + " = " + engine.eval(curLine[0]) + System.lineSeparator() }
+                                            //Add custom checks for variables that need a type ident ie F
+                                            when {
+                                                /*Case: 1*/curLine[0] == "FLASH_MAX_ALPHA" -> {
+                                                cfgfiletext += curLine[0] + " = " + engine.eval(curLine[0]) + "F" + System.lineSeparator()
+                                            }
+
+                                                /*Case: 2*/     curLine[0] == "CFG_NAME" -> {
+                                                cfgfiletext += curLine[0] + " = \"" + engine.eval(curLine[0]) + "\"" + System.lineSeparator()
+                                            }
+                                                /*Case: 3*/     file.name == "GunAimOverride.kts" -> {
+                                                val curOverrideWep = engine.eval(curLine[0]) as kotlin.DoubleArray
+                                                cfgfiletext += curLine[0] + " = " + curOverrideWep.contentToString() + System.lineSeparator()
+                                            }
+                                                /*Case: Else*/  else -> {
+                                                cfgfiletext += curLine[0] + " = " + engine.eval(curLine[0]) + System.lineSeparator()
+                                            }
+                                            }
+
+                                            cfgfiletext = cfgfiletext.replace("[", "doubleArrayOf(")
+                                            cfgfiletext = cfgfiletext.replace("]", ")")
+
                                         }
-
-                                        cfgfiletext = cfgfiletext.replace("[", "doubleArrayOf(")
-                                        cfgfiletext = cfgfiletext.replace("]", ")")
-
                                     }
                                 }
                             }
-                        }
 
-                        //cleanup later
-                        Files.delete(cfgFile.toPath())
-                        Files.createFile(cfgFile.toPath())
-                        Files.write(cfgFile.toPath(), cfgfiletext.toByteArray(), StandardOpenOption.WRITE)
-                        engine = ScriptEngineManager().getEngineByName("kotlin")
-                        FileReader(cfgFile).readLines().forEach { line ->
-                            engine.eval(line)
-                        }
-
-                        //Repeat for General.kts to save cfg name
-                        var prevLines = ""
-                        val genFile = File("settings\\General.kts")
-                        FileReader(genFile).readLines().forEach { line ->
-                            if (line.startsWith("CFG_NAME")) {
-                                val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
-
-                                prevLines += curLine[0] + " = \"" + engine.eval(curLine[0]) + "\"" + System.lineSeparator()
-
-                            } else {
-                                prevLines += line + System.lineSeparator()
+                            //cleanup later
+                            Files.delete(cfgFile.toPath())
+                            Files.createFile(cfgFile.toPath())
+                            Files.write(cfgFile.toPath(), cfgfiletext.toByteArray(), StandardOpenOption.WRITE)
+                            engine = ScriptEngineManager().getEngineByName("kotlin")
+                            FileReader(cfgFile).readLines().forEach { line ->
+                                engine.eval(line)
                             }
+
+                            //Repeat for General.kts to save cfg name
+                            var prevLines = ""
+                            val genFile = File("settings\\General.kts")
+                            FileReader(genFile).readLines().forEach { line ->
+                                if (line.startsWith("CFG_NAME")) {
+                                    val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
+
+                                    prevLines += curLine[0] + " = \"" + engine.eval(curLine[0]) + "\"" + System.lineSeparator()
+
+                                } else {
+                                    prevLines += line + System.lineSeparator()
+                                }
+                            }
+                            Files.delete(genFile.toPath())
+                            Files.createFile(genFile.toPath())
+                            Files.write(genFile.toPath(), prevLines.toByteArray(), StandardOpenOption.WRITE)
+
+                            loadSettings()
+                            println("\n Saving complete! \n")
+                            saving = false
                         }
-                        Files.delete(genFile.toPath())
-                        Files.createFile(genFile.toPath())
-                        Files.write(genFile.toPath(), prevLines.toByteArray(), StandardOpenOption.WRITE)
-
-                        println("\n Saving complete! \n")
-
-                        engine = ScriptEngineManager().getEngineByName("kotlin")
-                        loadSettings()
                     }
-                }).setSize(200F, 200F)
-            }
+                }
+            }).setSize(200F, 200F)
+            true
         }
 
         //Create Load Button
         //val loadButton = VisTextButton("Load: $CFG_NAME")
         Tooltip.Builder("Load the previously saved configuration from the cfg file").target(loadButton).build()
         loadButton.changed { _, _ ->
-            val cfgFile = File("settings\\cfg.kts")
-            if (!cfgFile.exists()) {
-                Dialogs.showErrorDialog(App.menuStage, "Error", "cfg.kts not found, save your configuration first!")
-            } else {
-                //FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n"))}
-                engine = ScriptEngineManager().getEngineByName("kotlin")
-                FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n"))}
-                engine = ScriptEngineManager().getEngineByName("kotlin")
-                loadSettings()
-                UIUpdate()
-                println("\n Loading complete! \n")
+            if (!saving) {
+                val cfgFile = File("settings\\cfg.kts")
+                if (!cfgFile.exists()) {
+                    Dialogs.showErrorDialog(App.menuStage, "Error", "cfg.kts not found, save your configuration first!")
+                } else {
+                    GlobalScope.launch {
+                        println("\n Loading! \n")
+                        //FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n"))}
+                        engine = ScriptEngineManager().getEngineByName("kotlin")
+                        FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n")) }
+                        engine = ScriptEngineManager().getEngineByName("kotlin")
+                        loadSettings()
+                        UIUpdate()
+                        println("\n Loading complete! \n")
+                    }
+                }
             }
         }
 
@@ -137,35 +157,55 @@ class OptionsTab : Tab(false, false) {
         val saveCurConfig = VisTextButton("Save Current Config To Default Settings")
         Tooltip.Builder("Save current configuration to the settings files").target(saveCurConfig).build()
         saveCurConfig.changed { _, _ ->
-            //Files.write(File("settings\\"))
-            //val fileDir = "settings\\Aim.kts"
-            File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
-                var prevLines = ""
-                if (file.name != "cfg.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3" && file.name != "GunAimOverride.kts") {
-                    FileReader(file).readLines().forEach { line ->
-                        if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
-                            val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
-
-                            //Add custom checks for variables that need a type ident ie F
-                            when {
-                                /*Case: 1*/     curLine[0] == "FLASH_MAX_ALPHA" -> {prevLines += curLine[0] + " = " + engine.eval(curLine[0]) + "F" + System.lineSeparator() }
-                                /*Case: 2*/     curLine[0] == "CFG_NAME" -> {prevLines += curLine[0] + " = \"" + engine.eval(curLine[0]) + "\"" + System.lineSeparator()}
-                                /*Case: Else*/  else -> { prevLines += curLine[0] + " = " + engine.eval(curLine[0]) + System.lineSeparator() }
+            if (!saving) {
+                GlobalScope.launch {
+                    saving = true
+                    println("\n Saving! \n")
+                    File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
+                        var prevLines = ""
+                        if (file.name != "cfg.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
+                            if (file.name == "Advanced.kts" || file.name == "hitsound.mp3")
+                            {
+                                println("using file we shouldnt")
                             }
+                            FileReader(file).readLines().forEach { line ->
+                                if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
+                                    val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
-                        } else {
-                            prevLines += line + System.lineSeparator()
+                                    //Add custom checks for variables that need a type ident ie F
+                                    when {
+                                        /*Case: 1*/     curLine[0] == "FLASH_MAX_ALPHA" -> {
+                                        prevLines += curLine[0] + " = " + engine.eval(curLine[0]) + "F" + System.lineSeparator()
+                                    }
+                                        /*Case: 2*/     curLine[0] == "CFG_NAME" -> {
+                                        prevLines += curLine[0] + " = \"" + engine.eval(curLine[0]) + "\"" + System.lineSeparator()
+                                    }
+                                        /*Case: 3*/     file.name == "GunAimOverride.kts" -> {
+                                        val curOverrideWep = engine.eval(curLine[0]) as kotlin.DoubleArray; prevLines += curLine[0] + " = " + curOverrideWep.contentToString() + System.lineSeparator()
+                                    }
+                                        /*Case: Else*/  else -> {
+                                        prevLines += curLine[0] + " = " + engine.eval(curLine[0]) + System.lineSeparator()
+                                    }
+                                    }
+
+                                } else {
+                                    prevLines += line + System.lineSeparator()
+                                }
+                            }
+                            prevLines = prevLines.replace("[", "doubleArrayOf(")
+                            prevLines = prevLines.replace("]", ")")
+
+                            Files.delete(file.toPath())
+                            Files.createFile(file.toPath())
+                            Files.write(file.toPath(), prevLines.toByteArray(), StandardOpenOption.WRITE)
                         }
                     }
+                    loadSettings()
+                    println("\n Saving complete! \n")
+                    saving = false
                 }
-
-                Files.delete(file.toPath())
-                Files.createFile(file.toPath())
-                Files.write(file.toPath(), prevLines.toByteArray(), StandardOpenOption.WRITE)
             }
-            engine = ScriptEngineManager().getEngineByName("kotlin")
-            loadSettings()
-            println("\n Saving complete! \n")
+            true
         }
 
         table.add(menuAlpha).row() //width 250F

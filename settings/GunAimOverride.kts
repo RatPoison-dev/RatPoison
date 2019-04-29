@@ -1,7 +1,7 @@
 import rat.poison.settings.*
 
 //               #      True/False       True/False     True/False       True/False       Head/Body 1-360    1-100      1-10            1-5             1-360        True/False   1-100               True/False       1-100
-//Array Format: [WepID, Enable Override, Factor Recoil, Enable Flat Aim, Enable Path Aim, Aim Bone, Aim Fov, Aim Speed, Aim Smoothness, Aim Strictness, Perfect Aim, Perfect Aim FOV, Perfect Aim Chance, Aim Assist Mode, Aim Assist Strictness]
+//Array Format: (WepID, Enable Override, Factor Recoil, Enable Flat Aim, Enable Path Aim, Aim Bone, Aim Fov, Aim Speed, Aim Smoothness, Aim Strictness, Perfect Aim, Perfect Aim FOV, Perfect Aim Chance, Aim Assist Mode, Aim Assist Strictness)
 
 //Can't loop certain values due to script eval being dogshit
 

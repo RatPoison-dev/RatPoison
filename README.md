@@ -1,6 +1,7 @@
 Update 1.2
 
 * Added customizable aim settings for all weapons
+* Saving will work in background, shouldn't freeze game/not responding overlay
 
 WARNING: This update has not been tested extensively, I assume many issues will pop up, please submit an issue on github
 with information on the issue, the settings used (create a cfg file and put it in a pastebin), and evidence (such as a picture/video)

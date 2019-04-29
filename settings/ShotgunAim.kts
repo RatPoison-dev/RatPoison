@@ -60,7 +60,7 @@ SHOTGUN_AIM_STRICTNESS = 1.5
 
 /**
  * Whether or not to use perfect aim, which will instantaneously snap
- * to the aim bone once you are within the [PERFECT_AIM_FOV].
+ * to the aim bone once you are within the (PERFECT_AIM_FOV).
  */
 SHOTGUN_PERFECT_AIM = true
 

@@ -34,6 +34,7 @@ import javax.script.ScriptEngineManager
 
 //aaaaaaaaaaaaaaaaAAAAAAAAAAAAA
 const val SETTINGS_DIRECTORY = "settings"
+var saving = false
 
 fun main(args: Array<String>) {
     System.setProperty("jna.nosys", "true")
@@ -154,6 +155,8 @@ object App : ApplicationAdapter() {
 
     override fun render() {
         sync(OPENGL_FPS)
+
+        println(saving)
 
         if (!Thread.interrupted()) {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
