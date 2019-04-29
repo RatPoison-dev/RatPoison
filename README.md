@@ -8,6 +8,7 @@ or a way to easily replicate the issue.
 The custom per weapon settings are available in the GunAimOverride.kts file, in arrays, the gun is the variable name, with the array
 information at the top.
 
+Possible Issues: Saving to default might crash or not save individual weapon aim settings.
 ---
 
 The Default Menu Key is F1
