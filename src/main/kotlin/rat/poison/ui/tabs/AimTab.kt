@@ -964,7 +964,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
     fun Boolean.toFloat() = if (this) 1F else 0F
 
-    fun Boolean.toDouble() = this.toString().toDouble()
+    fun Boolean.toDouble() = if (this) 1.0 else 0.0
 
     fun Double.toBool() = this == 1.0
 }
