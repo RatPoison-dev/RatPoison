@@ -261,7 +261,7 @@ fun UIUpdate() {
             else -> "      "
         })
         overrideAimSpeedSlider.value = curOverrideWep[7].toFloat()
-        overrideAimSmoothnessLabel.setText("Aim Smoothness: " + curOverrideWep[8].toInt())
+        overrideAimSmoothnessLabel.setText("Aim Smoothness: " + curOverrideWep[8])
         overrideAimSmoothnessSlider.value = curOverrideWep[8].toFloat()
         overrideAimStrictnessLabel.setText("Aim Strictness: " + curOverrideWep[9])
         overrideAimStrictnessSlider.value = curOverrideWep[9].toFloat()
