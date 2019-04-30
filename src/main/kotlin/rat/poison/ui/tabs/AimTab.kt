@@ -743,7 +743,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         Tooltip.Builder("Whether or not to factor in recoil when aiming").target(overrideEnableFactorRecoil).build()
         overrideEnableFactorRecoil.isChecked = curOverrideWep[2].toBool()
         overrideEnableFactorRecoil.changed { _, _ ->
-            curOverrideWep[2] = overrideEnableOverride.isChecked.toDouble()
+            curOverrideWep[2] = overrideEnableFactorRecoil.isChecked.toDouble()
             UIUpdate()
             true
         }
