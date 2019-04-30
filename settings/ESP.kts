@@ -14,7 +14,7 @@ FLICKER_FREE_GLOW = false
 /**
  * Whether or not to enable Radar ESP
  */
-RADAR_ESP = true
+RADAR_ESP = false
 
 /**
  * Will play a hitsound on enemy hit

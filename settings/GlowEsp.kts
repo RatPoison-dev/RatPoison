@@ -5,7 +5,7 @@ import rat.poison.settings.*
  *
  * This ESP **CANNOT** be hidden from game capture for streaming.
  */
-GLOW_ESP = false
+GLOW_ESP = true
 
 /**
  * Whether or not to invert the glow esp and highlight the player model instead of the outline

@@ -3,7 +3,7 @@ import rat.poison.settings.*
 /**
  * The field of view (in degrees, 0 to 360) for the bone trigger.
  */
-BONE_TRIGGER_FOV = 12
+BONE_TRIGGER_FOV = 4
 
 /**
  * Whether to trigger on head bone

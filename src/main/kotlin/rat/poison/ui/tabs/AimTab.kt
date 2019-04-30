@@ -694,8 +694,8 @@ class AimTab : Tab(true, false) { //Aim.kts tab
             {
                 "PISTOL" -> { weaponCategorySelectionBox.clearItems(); weaponCategorySelectionBox.setItems("DESERT_EAGLE", "DUAL_BERRETA", "FIVE_SEVEN", "GLOCK", "USP_SILENCER", "CZ75A", "R8_REVOLVER", "P2000", "TEC9", "P250") }
                 "SMG" -> { weaponCategorySelectionBox.clearItems(); weaponCategorySelectionBox.setItems("MAC10", "P90", "MP5", "UMP45", "MP7", "MP9", "PP_BIZON") }
-                "RIFLE" -> { weaponCategorySelectionBox.clearItems(); weaponCategorySelectionBox.setItems("AK47", "AUG", "FAMAS", "GALIL", "M4A4", "M4A1S", "NEGEV", "M249") }
-                "SNIPER" -> { weaponCategorySelectionBox.clearItems(); weaponCategorySelectionBox.setItems("AWP", "G3SG1", "SCAR20", "SG553", "SSG08") }
+                "RIFLE" -> { weaponCategorySelectionBox.clearItems(); weaponCategorySelectionBox.setItems("AK47", "AUG", "FAMAS", "SG553", "GALIL", "M4A4", "M4A1S", "NEGEV", "M249") }
+                "SNIPER" -> { weaponCategorySelectionBox.clearItems(); weaponCategorySelectionBox.setItems("AWP", "G3SG1", "SCAR20", "SSG08") }
                 "SHOTGUN" -> { weaponCategorySelectionBox.clearItems(); weaponCategorySelectionBox.setItems("XM1014", "MAG7", "SAWED OFF", "NOVA") }
             }
 
