@@ -1,12 +1,9 @@
-
-
 package rat.poison.game.entity
 
 import rat.poison.game.CSGO.csgoEXE
 import org.jire.arrowhead.unsign
 
 enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false) {
-	
 	NULL,
 	CAI_BaseNPC,
 	CAK47(weapon = true),
@@ -40,6 +37,8 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false)
 	CBreachChargeProjectile,
 	CBreakableProp,
 	CBreakableSurface,
+	CBumpMine,
+	CBumpMineProjectile,
 	CC4,
 	CCascadeLight,
 	CChicken,
@@ -136,6 +135,7 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false)
 	CPhysPropWeaponUpgrade,
 	CPlantedC4,
 	CPlasma,
+	CPlayerPing,
 	CPlayerResource,
 	CPointCamera,
 	CPointCommentaryNode,
@@ -163,6 +163,9 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false)
 	CSmokeGrenade(grenade = true),
 	CSmokeGrenadeProjectile(grenade = true),
 	CSmokeStack,
+	CSnowball,
+	CSnowballPile,
+	CSnowballProjectile,
 	CSpatialEntity,
 	CSpotlightEnd,
 	CSprite,
@@ -267,6 +270,7 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false)
 	CWeaponSG550(weapon = true),
 	CWeaponSG552(weapon = true),
 	CWeaponSG556(weapon = true),
+	CWeaponShield,
 	CWeaponSSG08(weapon = true),
 	CWeaponTaser(weapon = true),
 	CWeaponTec9(weapon = true),
