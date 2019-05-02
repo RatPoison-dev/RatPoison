@@ -1,11 +1,13 @@
 Update 1.2 + 1.2.5
 
+* Aimbot should be a lot better at finding the correct target with multiple enemies near the crosshair
+
 * Added customizable aim settings for all weapons
 * Saving will work in background, shouldn't freeze game/not responding overlay
 * 3 total CFGs possible instead of original 1
 * When using glow you now have the option to show what enemy the aimbot will target
 * Small cleanup
-* Bone trigger is more accurate towards finding the chest bone (3 through 7 now instead ofj ust 6)
+* Bone trigger is more accurate towards finding the chest bone (3 through 7 now instead of just 6)
 * Fixed aim on bone trigger
 
 WARNING: This update has not been tested extensively, I assume many issues will pop up, please submit an issue on github

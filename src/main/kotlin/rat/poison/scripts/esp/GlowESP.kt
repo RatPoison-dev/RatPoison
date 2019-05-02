@@ -4,6 +4,7 @@ import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.scripts.aim.findTarget
+import rat.poison.scripts.aim.target
 import rat.poison.settings.*
 import rat.poison.utils.every
 import java.util.concurrent.atomic.AtomicLong
@@ -15,12 +16,16 @@ internal fun glowEsp() = every(4) {
 	
 	val myTeam = me.team()
 
-	if (GLOW_SHOW_TARGET)
+	if (GLOW_SHOW_TARGET && target.get() == -1L)
 	{
 		val currentAngle = clientState.angle()
 		val position = me.position()
 		val currentTarget = findTarget(position, currentAngle, false)
 		glowTarget.set(currentTarget)
+	}
+	else
+	{
+		glowTarget.set(target.get())
 	}
 	
 	forEntities body@ {
