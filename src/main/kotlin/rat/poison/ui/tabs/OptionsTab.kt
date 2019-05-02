@@ -121,7 +121,7 @@ class OptionsTab : Tab(false, false) {
                                         /*Case: 1*/     curLine[0] == "FLASH_MAX_ALPHA" -> {
                                         prevLines += curLine[0] + " = " + engine.eval(curLine[0]) + "F" + System.lineSeparator()
                                     }
-                                        /*Case: 2*/     curLine[0] == "CFG_NAME" -> {
+                                        /*Case: 2*/     curLine[0] == "CFG1_NAME" || curLine[0] == "CFG2_NAME" || curLine[0] == "CFG3_NAME" -> {
                                         prevLines += curLine[0] + " = \"" + engine.eval(curLine[0]) + "\"" + System.lineSeparator()
                                     }
                                         /*Case: 3*/     file.name == "GunAimOverride.kts" -> {

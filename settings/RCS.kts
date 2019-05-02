@@ -8,4 +8,4 @@ RCS_SMOOTHING = 0.8
 /**
  * Moves crosshair back up after spraying
  */
-RCS_RETURNAIM = true
+RCS_RETURNAIM = false
