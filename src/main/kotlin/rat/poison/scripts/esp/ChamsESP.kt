@@ -23,28 +23,28 @@ internal fun chamsEsp() = every(256) {
 
     val myTeam = me.team()
 
+    val brightnessCounter : Int
+
+    if (CHAMS_BRIGHTNESS > 0) {
+        brightnessCounter = (255F / (CHAMS_BRIGHTNESS / 10F)).toInt()
+    } else {
+        brightnessCounter = 255
+    }
+
+    //Edit playermodel to counter weapon brightness
+    val clientVModEnt = csgoEXE.uint(clientDLL.address + dwEntityList + (((csgoEXE.uint(csgoEXE.uint(clientDLL.address + dwLocalPlayer) + m_hViewModel)) and 0xFFF) - 1) * 16)
+
+    //Set VMod
+    csgoEXE[clientVModEnt + 0x70] = brightnessCounter.toByte()
+    csgoEXE[clientVModEnt + 0x71] = brightnessCounter.toByte()
+    csgoEXE[clientVModEnt + 0x72] = brightnessCounter.toByte()
+
     forEntities body@ {
         val entity = it.entity
         if (entity <= 0 || entity == dwLocalPlayer || me == entity) return@body false
 
         val glowAddress = it.glowAddress
         if (glowAddress <= 0) return@body false
-
-        val brightnessCounter : Int
-
-        if (CHAMS_BRIGHTNESS > 0) {
-            brightnessCounter = (255F / (CHAMS_BRIGHTNESS / 10F)).toInt()
-        } else {
-            brightnessCounter = 255
-        }
-
-        //Edit playermodel to counter weapon brightness
-        val clientVModEnt = csgoEXE.uint(clientDLL.address + dwEntityList + (((csgoEXE.uint(csgoEXE.uint(clientDLL.address + dwLocalPlayer) + m_hViewModel)) and 0xFFF) - 1) * 16)
-
-        //Set VMod
-        csgoEXE[clientVModEnt + 0x70] = brightnessCounter.toByte()
-        csgoEXE[clientVModEnt + 0x71] = brightnessCounter.toByte()
-        csgoEXE[clientVModEnt + 0x72] = brightnessCounter.toByte()
 
         //Set Cvar
         engineDLL[dwModelAmbientMin] = floatToIntBits(CHAMS_BRIGHTNESS.toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()

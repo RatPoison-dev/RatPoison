@@ -35,6 +35,7 @@ import javax.script.ScriptEngineManager
 //aaaaaaaaaaaaaaaaAAAAAAAAAAAAA
 const val SETTINGS_DIRECTORY = "settings"
 var saving = false
+var settingsLoaded = false
 
 fun main(args: Array<String>) {
     System.setProperty("jna.nosys", "true")
@@ -43,6 +44,7 @@ fun main(args: Array<String>) {
     //implement to ui console? or keep and add a disable menu
 
     loadSettings()
+    autoReloadSettings()
 
     if (FLICKER_FREE_GLOW) {
         PROCESS_ACCESS_FLAGS = PROCESS_ACCESS_FLAGS or WinNT.PROCESS_VM_OPERATION
@@ -96,7 +98,7 @@ var engine = ScriptEngineManager().getEngineByName("kotlin")
 
 fun loadSettings() {
 	setIdeaIoUseFallback()
-
+    settingsLoaded = false
     File(SETTINGS_DIRECTORY).listFiles().forEach {
         if (it.name != "cfg.kts" && it.name != "hitsound.mp3") {
             FileReader(it).use {
@@ -104,6 +106,13 @@ fun loadSettings() {
                 engine.eval(it.readLines().joinToString("\n"))
             }
         }
+    }
+    settingsLoaded = true
+}
+
+fun autoReloadSettings() = every(120000) {
+    if (!saving && settingsLoaded) {
+        loadSettings()
     }
 }
 
