@@ -44,7 +44,7 @@ fun main(args: Array<String>) {
     //implement to ui console? or keep and add a disable menu
 
     loadSettings()
-    autoReloadSettings()
+    //autoReloadSettings()
 
     if (FLICKER_FREE_GLOW) {
         PROCESS_ACCESS_FLAGS = PROCESS_ACCESS_FLAGS or WinNT.PROCESS_VM_OPERATION

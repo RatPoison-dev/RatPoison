@@ -120,7 +120,9 @@ class OptionsTab : Tab(false, false) {
                             Files.createFile(genFile.toPath())
                             Files.write(genFile.toPath(), prevLines.toByteArray(), StandardOpenOption.WRITE)
 
-                            loadSettings()
+                            engine = ScriptEngineManager().getEngineByName("kotlin")
+                            FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n")) }
+
                             println("\n Saving complete! \n")
                             saving = false
                         }
@@ -144,8 +146,6 @@ class OptionsTab : Tab(false, false) {
                         //FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n"))}
                         engine = ScriptEngineManager().getEngineByName("kotlin")
                         FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n")) }
-                        engine = ScriptEngineManager().getEngineByName("kotlin")
-                        loadSettings()
                         UIUpdate()
                         println("\n Loading complete! \n")
                     }
