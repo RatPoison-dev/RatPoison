@@ -38,7 +38,7 @@ class UIMenu : VisWindow("RatPoison UI") {
         this.y = 540F
         this.align(Align.topLeft)
 
-        this.isResizable = false
+        this.isResizable = true
 
         mainTabbedPane.add(aimTab)
         mainTabbedPane.add(visualsTab)
@@ -82,7 +82,7 @@ class UIMenu : VisWindow("RatPoison UI") {
 
         add(mainTabbedPane.table).growX().minSize(25F).row()
 
-        add(mainScrollPane).minSize(500F, 500F).maxSize(500F, 500F).align(Align.left).growX().row()
+        add(mainScrollPane).minSize(500F, 500F)/*.maxSize(500F, 500F)*/.align(Align.left).growX().row()
 
         pack()
         centerWindow()

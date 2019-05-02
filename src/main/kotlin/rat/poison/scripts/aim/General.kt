@@ -21,8 +21,7 @@ internal fun reset() {
 }
 
 internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
-                        lockFOV: Int = AIM_FOV, BONE: Int = AIM_BONE,
-                        yawOnly: Boolean): Player {
+						lockFOV: Int = AIM_FOV, BONE: Int = AIM_BONE): Player {
 	var closestFOV = Double.MAX_VALUE
 	var closestDelta = Double.MAX_VALUE
 	var closestPlayer = -1L
@@ -109,7 +108,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	
 	val position = me.position()
 	if (currentTarget < 0) {
-		currentTarget = findTarget(position, currentAngle, aim, yawOnly = true)
+		currentTarget = findTarget(position, currentAngle, aim)
 		if (currentTarget < 0) {
 			return@every
 		}

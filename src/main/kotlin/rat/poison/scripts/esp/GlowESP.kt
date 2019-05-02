@@ -1,17 +1,27 @@
 package rat.poison.scripts.esp
 
+import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.Color
 import rat.poison.game.entity.*
-import rat.poison.game.forEntities
-import rat.poison.game.me
+import rat.poison.scripts.aim.findTarget
 import rat.poison.settings.*
 import rat.poison.utils.every
+import java.util.concurrent.atomic.AtomicLong
+
+val glowTarget = AtomicLong(-1)
 
 internal fun glowEsp() = every(4) {
 	if (!GLOW_ESP || !ENABLE_ESP) return@every
 	
 	val myTeam = me.team()
+
+	if (GLOW_SHOW_TARGET)
+	{
+		val currentAngle = clientState.angle()
+		val position = me.position()
+		val currentTarget = findTarget(position, currentAngle, false)
+		glowTarget.set(currentTarget)
+	}
 	
 	forEntities body@ {
 		val entity = it.entity
@@ -26,7 +36,10 @@ internal fun glowEsp() = every(4) {
 				
 				val entityTeam = entity.team()
 				val team = !DANGER_ZONE && myTeam == entityTeam
-				if (GLOW_SHOW_ENEMIES && !team) {
+				if (it.entity == glowTarget.get())
+				{
+					it.glowAddress.glow(HIGHLIGHT_COLOR, true)
+				} else if (GLOW_SHOW_ENEMIES && !team) {
 					glowAddress.glow(ENEMY_COLOR, entity.spotted())
 				} else if (GLOW_SHOW_TEAM && team) {
 					glowAddress.glow(TEAM_COLOR, entity.spotted())
@@ -46,7 +59,7 @@ internal fun glowEsp() = every(4) {
 	if (FLICKER_FREE_GLOW) {Thread.sleep(256)}
 }
 
-private fun Entity.glow(color: Color, model: Boolean) {
+fun Entity.glow(color: Color, model: Boolean) {
 	csgoEXE[this + 0x4] = color.red / 255F
 	csgoEXE[this + 0x8] = color.green / 255F
 	csgoEXE[this + 0xC] = color.blue / 255F

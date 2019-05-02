@@ -11,19 +11,18 @@ import rat.poison.settings.*
 import rat.poison.utils.*
 import org.jire.arrowhead.keyPressed
 import org.jire.arrowhead.keyReleased
-import rat.poison.game.entity.punch
 
 private val onBoneTriggerTarget = every(1) {
 	if (ENABLE_BONE_TRIGGER)
 	{
 		if (BONE_TRIGGER_HB) { //Head bone check
-			if (findTarget(me.position(), clientState.angle(), false, BONE_TRIGGER_FOV, HEAD_BONE, false) >= 0) {
+			if (findTarget(me.position(), clientState.angle(), false, BONE_TRIGGER_FOV, HEAD_BONE) >= 0) {
 				boneTrigger()
 			}
 		}
 
 		if (BONE_TRIGGER_BB) { //Body bone check
-			if (findTarget(me.position(), clientState.angle(), false, BONE_TRIGGER_FOV, BODY_BONE, false) >= 0) {
+			if (findTarget(me.position(), clientState.angle(), false, BONE_TRIGGER_FOV, BODY_BONE) >= 0) {
 				boneTrigger()
 			}
 		}

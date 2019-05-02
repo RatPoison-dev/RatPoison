@@ -24,6 +24,7 @@ class GlowEspTab : Tab(false, false) {
     val showBomb = VisCheckBox("Show Bomb")
     val showWeapons = VisCheckBox("Show Weapons")
     val showGrenades = VisCheckBox("Show Grenades")
+    val showTarget = VisCheckBox("Show Target")
 
     init {
         //Create Glow_Esp Toggle
@@ -145,6 +146,14 @@ class GlowEspTab : Tab(false, false) {
             true
         }
 
+        //Create Show_Target Toggle
+        Tooltip.Builder("Whether or not to show grenades with esp").target(showTarget).build()
+        if (GLOW_SHOW_TARGET) showTarget.toggle()
+        showTarget.changed { _, _ ->
+            GLOW_SHOW_TARGET = showTarget.isChecked
+            true
+        }
+
         table.add(glowEsp)
         table.add(invGlowEsp).row()
         table.add(modelEsp)
@@ -158,6 +167,8 @@ class GlowEspTab : Tab(false, false) {
 
         table.add(showWeapons)
         table.add(showGrenades).row()
+
+        table.add(showTarget).colspan(2).row()
     }
 
     override fun getContentTable(): Table? {

@@ -54,3 +54,8 @@ WEAPON_COLOR = Color(red=251, green=0, blue=255, alpha=0.49803921580314636)
  * The color to highlight grenades.
  */
 GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)
+
+/**
+ * The color to highlight aimed enemies
+ */
+HIGHLIGHT_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)

@@ -44,7 +44,7 @@ fun main(args: Array<String>) {
     //implement to ui console? or keep and add a disable menu
 
     loadSettings()
-    //autoReloadSettings()
+    autoReloadSettings()
 
     if (FLICKER_FREE_GLOW) {
         PROCESS_ACCESS_FLAGS = PROCESS_ACCESS_FLAGS or WinNT.PROCESS_VM_OPERATION
@@ -100,7 +100,7 @@ fun loadSettings() {
 	setIdeaIoUseFallback()
     settingsLoaded = false
     File(SETTINGS_DIRECTORY).listFiles().forEach {
-        if (it.name != "cfg.kts" && it.name != "hitsound.mp3") {
+        if (it.name != "cfg1.kts" && it.name != "cfg2.kts" && it.name != "cfg3.kts" && it.name != "hitsound.mp3") {
             FileReader(it).use {
                 engine = ScriptEngineManager().getEngineByName("kotlin")
                 engine.eval(it.readLines().joinToString("\n"))
@@ -110,7 +110,7 @@ fun loadSettings() {
     settingsLoaded = true
 }
 
-fun autoReloadSettings() = every(120000) {
+fun autoReloadSettings() = every(300000) {
     if (!saving && settingsLoaded) {
         loadSettings()
     }
@@ -179,14 +179,6 @@ object App : ApplicationAdapter() {
                 val bombCamera = bombStage.viewport.camera
                 bombCamera.update()
 
-                if (ENABLE_BOMB_TIMER) {
-                    val stageBatch = bombStage.batch
-                    stageBatch.projectionMatrix = bombCamera.combined
-                    stageBatch.begin()
-                    stageBatch.enableBlending()
-                    bombStage.root.draw(stageBatch, 1F)
-                    stageBatch.end()
-                }
                 if (!overlay.clickThrough) {
                     val batch = menuStage.batch
                     batch.projectionMatrix = menuCamera.combined //camera to menuCamera
@@ -195,6 +187,17 @@ object App : ApplicationAdapter() {
                     menuStage.root.draw(batch, 1F)
                     batch.end()
                 }
+
+                if (ENABLE_BOMB_TIMER)
+                {
+                    val bombBatch = bombStage.batch
+                    bombBatch.projectionMatrix = bombCamera.combined
+                    bombBatch.begin()
+                    bombBatch.enableBlending()
+                    bombStage.root.draw(bombBatch, 1F)
+                    bombBatch.end()
+                }
+
                 sb.projectionMatrix = menuStage.camera.combined
 
                 //Extra bits might not be needed, from deprecated overlay

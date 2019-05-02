@@ -108,7 +108,17 @@ var MENUTOG = false
 /**
  * Name of config file
  */
-var CFG_NAME = "Null"
+var CFG1_NAME = "Null"
+
+/**
+ * Name of config file
+ */
+var CFG2_NAME = "Null"
+
+/**
+ * Name of config file
+ */
+var CFG3_NAME = "Null"
 
 /**
  * The bone IDs of the respective bones for a player.

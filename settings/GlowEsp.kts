@@ -55,3 +55,8 @@ GLOW_SHOW_WEAPONS = true
  * Whether or not to highlight grenades.
  */
 GLOW_SHOW_GRENADES = false
+
+/**
+ * Whether or not to highlight who the aim will aim at
+ */
+GLOW_SHOW_TARGET = true

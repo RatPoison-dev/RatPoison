@@ -2,14 +2,15 @@ Update 1.2
 
 * Added customizable aim settings for all weapons
 * Saving will work in background, shouldn't freeze game/not responding overlay
+* 3 total CFGs possible instead of original 1
+* When using glow you now have the option to show what enemy the aimbot will target
+* Small cleanup
 
 WARNING: This update has not been tested extensively, I assume many issues will pop up, please submit an issue on github
 with information on the issue, the settings used (create a cfg file and put it in a pastebin), and evidence (such as a picture/video)
 or a way to easily replicate the issue.
 The custom per weapon settings are available in the GunAimOverride.kts file, in arrays, the gun is the variable name, with the array
 information at the top.
-
-Saving to default/cfg should work fine.
 
 Known Issues: Individual weapon aim settings don't override while saving
 

@@ -46,3 +46,8 @@ var WEAPON_COLOR = Color(0, 255, 0, 0.5)
  * The color to highlight grenades.
  */
 var GRENADE_COLOR = Color(0, 255, 0, 1.0)
+
+/**
+ * The color to highlight aimed enemies
+ */
+var HIGHLIGHT_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)

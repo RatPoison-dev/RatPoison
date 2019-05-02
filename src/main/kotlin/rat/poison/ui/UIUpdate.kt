@@ -311,6 +311,7 @@ fun UIUpdate() {
         showBomb.isChecked = GLOW_SHOW_BOMB
         showWeapons.isChecked = GLOW_SHOW_WEAPONS
         showGrenades.isChecked = GLOW_SHOW_GRENADES
+        showTarget.isChecked = GLOW_SHOW_TARGET
     }
 
     chamsEspTab.apply {
