@@ -1,10 +1,12 @@
-Update 1.2
+Update 1.2 + 1.2.5
 
 * Added customizable aim settings for all weapons
 * Saving will work in background, shouldn't freeze game/not responding overlay
 * 3 total CFGs possible instead of original 1
 * When using glow you now have the option to show what enemy the aimbot will target
 * Small cleanup
+* Bone trigger is more accurate towards finding the chest bone (3 through 7 now instead ofj ust 6)
+* Fixed aim on bone trigger
 
 WARNING: This update has not been tested extensively, I assume many issues will pop up, please submit an issue on github
 with information on the issue, the settings used (create a cfg file and put it in a pastebin), and evidence (such as a picture/video)
@@ -61,10 +63,10 @@ The first step is to compile the source code into a usable cheat program.
 * Double click on the "_build_" (_build.bat_) script and wait for it to complete
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.2**.
+directory, and will in a directory called **RatPoison 1.2.5**.
 
-From within the **RatPoison 1.2** directory, you can start the cheat by running
-the _"Start RatPoison 1.2"_ script.
+From within the **RatPoison 1.2.5** directory, you can start the cheat by running
+the _"Start RatPoison 1.2.5"_ script.
 
 Before starting the cheat, you should already be spawned in a game with a weapon in hand!
 

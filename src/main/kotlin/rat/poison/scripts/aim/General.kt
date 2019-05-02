@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.AtomicLong
 val target = AtomicLong(-1)
 val bone = AtomicInteger(AIM_BONE)
 val perfect = AtomicBoolean() // only applicable for safe aim
+var boneTrig = false
 
 internal fun reset() {
 	target.set(-1L)
@@ -20,39 +21,141 @@ internal fun reset() {
 	perfect.set(false)
 }
 
+var closestFOV = Double.MAX_VALUE
+var closestDelta = Double.MAX_VALUE
+var closestPlayer = -1L
+
 internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 						lockFOV: Int = AIM_FOV, BONE: Int = AIM_BONE): Player {
-	var closestFOV = Double.MAX_VALUE
-	var closestDelta = Double.MAX_VALUE
-	var closestPlayer = -1L
-	
+	closestFOV = Double.MAX_VALUE
+	closestDelta = Double.MAX_VALUE
+	closestPlayer = -1L
+
 	forEntities(ccsPlayer) result@{
 		val entity = it.entity
 		if (entity <= 0 || entity == me || !entity.canShoot()) {
 			return@result false
 		}
-		
-		val ePos: Angle = entity.bones(BONE)
-		val distance = position.distanceTo(ePos)
-		
-		val dest = calculateAngle(me, ePos)
-		
-		val pitchDiff = Math.abs(angle.x - dest.x)
-		val yawDiff = Math.abs(angle.y - dest.y)
-		val fov = Math.abs(Math.sin(Math.toRadians(yawDiff)) * distance)
-		val delta = Math.abs((Math.sin(Math.toRadians(pitchDiff)) + Math.sin(Math.toRadians(yawDiff))) * distance)
 
-		//if (yawOnly) fov <= lockFOV && delta < closestDelta
-		if (delta <= lockFOV && delta <= closestDelta) {
-			closestFOV = fov
-			closestDelta = delta
-			closestPlayer = entity
-			
-			return@result true
-		} else {
-			return@result false
+		var ret = false
+		if (BONE == -2)
+		{
+			if (BONE_TRIGGER_HB && BONE_TRIGGER_BB)
+			{
+				for (i in 3..8)
+				{
+					if (!ret) ret = calcTarget(entity, position, angle, lockFOV, i) else calcTarget(entity, position, angle, lockFOV, i)
+				}
+				return@result ret
+			}
+			else if (BONE_TRIGGER_BB)
+			{
+				for (i in 3..8)
+				{
+					if (!ret) ret = calcTarget(entity, position, angle, lockFOV, i) else calcTarget(entity, position, angle, lockFOV, i)
+				}
+				return@result ret
+			}
+			else
+			{
+				return@result calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
+			}
 		}
+		else
+		{
+			if (BONE == BODY_BONE)
+			{
+				return@result calcTarget(entity, position, angle, lockFOV, BODY_BONE)
+			}
+			else
+			{
+				return@result calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
+			}
+		}
+
+//		val ePos: Angle = entity.bones(BONE)
+//		val distance = position.distanceTo(ePos)
+//
+//		val dest = calculateAngle(me, ePos)
+//
+//		val pitchDiff = Math.abs(angle.x - dest.x)
+//		val yawDiff = Math.abs(angle.y - dest.y)
+//		val fov = Math.abs(Math.sin(Math.toRadians(yawDiff)) * distance)
+//		val delta = Math.abs((Math.sin(Math.toRadians(pitchDiff)) + Math.sin(Math.toRadians(yawDiff))) * distance)
+//
+//		//if (yawOnly) fov <= lockFOV && delta < closestDelta
+//		if (delta <= lockFOV && delta <= closestDelta) {
+//			closestFOV = fov
+//			closestDelta = delta
+//			closestPlayer = entity
+//
+//			return@result true
+//		} else {
+//			return@result false
+//		}
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//	forEntities(ccsPlayer) result@{
+//		val entity = it.entity
+//		if (entity <= 0 || entity == me || !entity.canShoot()) {
+//			return@result false
+//		}
+//
+//		if (BONE == -2) { //Custom for bone trigger
+//			if (BONE_TRIGGER_HB && BONE_TRIGGER_BB)
+//			{
+//				var ret = false
+//				for (i in 3..8) {
+//					ret = calcTarget(entity, position, angle, lockFOV, i)
+//				}
+//				return@result ret
+//			}
+//			else if (BONE_TRIGGER_HB)
+//			{
+//				return@result calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
+//			}
+//			else if (BONE_TRIGGER_BB)
+//			{
+//				var ret = false
+//				for (i in 3..7) {
+//					ret = calcTarget(entity, position, angle, lockFOV, i)
+//				}
+//				return@result ret
+//			}
+//		}
+//		else if (BONE == BODY_BONE)
+//		{
+//			var ret = false
+//			for (i in 3..7) {
+//				ret = calcTarget(entity, position, angle, lockFOV, i)
+//			}
+//			return@result ret
+//		}
+//		else
+//		{
+//			return@result calcTarget(entity, position, angle, lockFOV, BONE)
+//		}
+//
+//		return@result false
+//	}
 	
 	if (closestDelta == Double.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return -1
 	
@@ -61,6 +164,28 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	}
 	
 	return closestPlayer
+}
+
+internal fun calcTarget(entity: Entity, position: Angle, angle: Angle, lockFOV: Int = AIM_FOV, BONE: Int = HEAD_BONE): Boolean {
+	val ePos: Angle = entity.bones(BONE)
+	val distance = position.distanceTo(ePos)
+
+	val dest = calculateAngle(me, ePos)
+
+	val pitchDiff = Math.abs(angle.x - dest.x)
+	val yawDiff = Math.abs(angle.y - dest.y)
+	val fov = Math.abs(Math.sin(Math.toRadians(yawDiff)) * distance)
+	val delta = Math.abs((Math.sin(Math.toRadians(pitchDiff)) + Math.sin(Math.toRadians(yawDiff))) * distance)
+
+	if (delta <= lockFOV && delta <= closestDelta) {
+		closestFOV = fov
+		closestDelta = delta
+		closestPlayer = entity
+
+		return true
+	} else {
+		return false
+	}
 }
 
 internal fun Entity.inMyTeam() =
@@ -90,7 +215,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	//	bone.set(BONE_TRIGGER_BONE)
 	//}
 
-	val pressed = (aim or forceAim /*or boneTrig*/) && !MENUTOG && haveAmmo
+	val pressed = (aim || forceAim || boneTrig) && !MENUTOG && haveAmmo
 	var currentTarget = target.get()
 	
 	if (!pressed) {

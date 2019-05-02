@@ -15,7 +15,7 @@ class BTrigTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     val enableBoneTrigger = VisCheckBox("Enable Bone Trigger")
     val boneTriggerFovLabel = VisLabel("Bone Trigger Fov: " + BONE_TRIGGER_FOV.toString() + when(BONE_TRIGGER_FOV.toString().length) {3->"  " 2->"    " else ->"      "})
-    val boneTriggerFovSlider = VisSlider(0F, 360F, 1F, false)
+    val boneTriggerFovSlider = VisSlider(0F, 32F, 1F, false)
     val boneTriggerBoneBox = VisSelectBox<String>()
     val boneTriggerCheckHead = VisCheckBox("Head Bone")
     val boneTriggerCheckBody = VisCheckBox("Body Bone")
