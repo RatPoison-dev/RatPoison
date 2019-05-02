@@ -214,7 +214,9 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 			if (hwnd != HWND_ZERO) {
 				return hwnd
 			}
-			java.lang.Thread.sleep(10)
+			try { //Possible fix?
+				java.lang.Thread.sleep(10)
+			} catch (e: InterruptedException) {}
 		} while (!java.lang.Thread.interrupted() && java.lang.System.currentTimeMillis() - start < timeout)
 		return HWND_ZERO
 	}

@@ -12,8 +12,9 @@ var override = false
 
 fun setAim() = every(256){
     if (!saving && settingsLoaded) {
-        if (me.weapon().rifle || me.weapon().smg || me.weapon().pistol || me.weapon().sniper || me.weapon().shotgun) {
-            val curWep: DoubleArray = engine.eval(me.weapon().name) as DoubleArray
+        val curWepCheck = me.weapon()
+        if (curWepCheck.rifle || curWepCheck.smg || curWepCheck.pistol || curWepCheck.sniper || curWepCheck.shotgun) {
+            val curWep: DoubleArray = engine.eval(curWepCheck.name) as DoubleArray
 
             if (curWep[1].toBool()) {
                 FACTOR_RECOIL = curWep[2].toBool()
