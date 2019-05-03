@@ -44,7 +44,7 @@ fun main(args: Array<String>) {
     //implement to ui console? or keep and add a disable menu
 
     loadSettings()
-    autoReloadSettings()
+    //autoReloadSettings()
 
     if (FLICKER_FREE_GLOW) {
         PROCESS_ACCESS_FLAGS = PROCESS_ACCESS_FLAGS or WinNT.PROCESS_VM_OPERATION
@@ -76,7 +76,7 @@ fun main(args: Array<String>) {
     automaticWeapon()
 
     //Overlay check, not updated?
-    if (MENU || BOX_ESP || SKELETON_ESP || ENABLE_BOMB_TIMER || ENABLE_RECOIL_CROSSHAIR || INDICATOR_ESP) {
+    if (MENU && (BOX_ESP || SKELETON_ESP || ENABLE_BOMB_TIMER || ENABLE_RECOIL_CROSSHAIR || INDICATOR_ESP)) {
         App.open()
 
         Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
@@ -89,7 +89,8 @@ fun main(args: Array<String>) {
             useVsync(OPENGL_VSYNC)
             setBackBufferConfig(8, 8, 8, 8, 16, 0, OPENGL_MSAA_SAMPLES)
         })
-    } else {
+    }
+    else {
         scanner()
     }
 }
@@ -99,10 +100,10 @@ var engine = ScriptEngineManager().getEngineByName("kotlin")
 fun loadSettings() {
 	setIdeaIoUseFallback()
     settingsLoaded = false
+    engine = ScriptEngineManager().getEngineByName("kotlin")
     File(SETTINGS_DIRECTORY).listFiles().forEach {
         if (it.name != "cfg1.kts" && it.name != "cfg2.kts" && it.name != "cfg3.kts" && it.name != "hitsound.mp3") {
             FileReader(it).use {
-                engine = ScriptEngineManager().getEngineByName("kotlin")
                 engine.eval(it.readLines().joinToString("\n"))
             }
         }
@@ -110,7 +111,8 @@ fun loadSettings() {
     settingsLoaded = true
 }
 
-fun autoReloadSettings() = every(300000) {
+fun autoReloadSettings() = every(5000) {
+    println("Called to reload settings")
     if (!saving && settingsLoaded) {
         loadSettings()
     }

@@ -16,7 +16,14 @@ or a way to easily replicate the issue.
 The custom per weapon settings are available in the GunAimOverride.kts file, in arrays, the gun is the variable name, with the array
 information at the top.
 
-Known Issues: Individual weapon aim settings don't override while saving
+Known/Possible Issues:
+* Individual weapon aim settings don't override while saving (Tested)
+* FPS degradation over time (Unknown)
+* Bhop 100% cpu usage/out of memory (Unknown)
+* Aimbot/Trigger bot stop working when switching to a new weapon (Possibly Fixed)
+
+(Tested) = I have replicated and know it is an issue.
+(unknown) = I can't replicate/haven't encountered the issue myself.
 
 ---
 
