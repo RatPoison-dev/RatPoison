@@ -36,6 +36,10 @@ fun setAim() = every(256){
             }
         }
     }
+    else
+    {
+        override = false
+    }
 
 
     if (!override) {
