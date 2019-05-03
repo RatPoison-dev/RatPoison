@@ -108,10 +108,6 @@ class OptionsTab : Tab(false, false) {
                     File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
                         val sbLines = StringBuilder()
                         if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
-                            if (file.name == "Advanced.kts" || file.name == "hitsound.mp3")
-                            {
-                                println("using file we shouldnt")
-                            }
                             FileReader(file).readLines().forEach { line ->
                                 if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
                                     val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
@@ -138,7 +134,6 @@ class OptionsTab : Tab(false, false) {
                                 {
                                     sbLines.append(line + "\n")
                                 }
-                                println(line)
                             }
                             Files.delete(file.toPath())
                             Files.createFile(file.toPath())

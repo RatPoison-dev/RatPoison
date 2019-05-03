@@ -10,6 +10,9 @@ Update 1.2 + 1.2.5
 * Bone trigger is more accurate towards finding the chest bone (3 through 7 now instead of just 6)
 * Fixed aim on bone trigger
 
+Latest Hotfixes:
+Fixed MENU = false launching the overlay anyways, (possibly) fixed FPS issues & degrading over time, fixed settings returning to default randomly, (possibly) fixed aimbot/trigger not working with a new weapon, improved cfg save times, fixed saving to default reading cfg files, (possibly) fixed crashing in non-comp games when showing aimbot's target, fixed grenade and highlight color being on the right sides, fixed highlight color missing on init.
+
 WARNING: This update has not been tested extensively, I assume many issues will pop up, please submit an issue on github
 with information on the issue, the settings used (create a cfg file and put it in a pastebin), and evidence (such as a picture/video)
 or a way to easily replicate the issue.
