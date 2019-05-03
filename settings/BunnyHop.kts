@@ -1,5 +1,4 @@
 import rat.poison.settings.*
-import java.awt.event.KeyEvent
 
 /**
  * The hold key which activates bunny hop.

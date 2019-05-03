@@ -243,7 +243,8 @@ class VisualsTab : Tab(false, false) {
         espTabbedPaneContent.add(enemyColor).left().pad(5F).row()
         espTabbedPaneContent.add(bombColor).right().pad(5F)
         espTabbedPaneContent.add(weaponColor).left().pad(5F).row()
-        espTabbedPaneContent.add(grenadeColor).colspan(2).pad(5F).row()
+        espTabbedPaneContent.add(grenadeColor).right().pad(5F)
+        espTabbedPaneContent.add(highlightColor).left().pad(5F).row()
 
         espTabbedPane.addListener(object : TabbedPaneAdapter() {
             override fun switchedTab(tab: Tab?) {
@@ -274,11 +275,10 @@ class VisualsTab : Tab(false, false) {
                 espTabbedPaneContent.add(enemyColor).left().pad(5F).row()
                 espTabbedPaneContent.add(bombColor).right().pad(5F)
                 espTabbedPaneContent.add(weaponColor).left().pad(5F).row()
-                espTabbedPaneContent.add(grenadeColor).left().pad(5F)
-                espTabbedPaneContent.add(highlightColor).right().pad(5F).row()
+                espTabbedPaneContent.add(grenadeColor).right().pad(5F)
+                espTabbedPaneContent.add(highlightColor).left().pad(5F).row()
             }
         })
-        //Aim Tab
 
         espTabbedPane.disableTab(indicatorEspTab, true)
 
