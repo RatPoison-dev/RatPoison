@@ -1,6 +1,7 @@
 package rat.poison.scripts.aim
 
 import rat.poison.engine
+import rat.poison.game.Weapons
 import rat.poison.game.entity.weapon
 import rat.poison.game.me
 import rat.poison.saving
@@ -9,10 +10,14 @@ import rat.poison.settingsLoaded
 import rat.poison.utils.every
 
 var override = false
+var curWepCheck = Weapons.AK47
 
 fun setAim() = every(256){
     if (!saving && settingsLoaded) {
-        val curWepCheck = me.weapon()
+        if (curWepCheck != me.weapon())
+        {
+            curWepCheck = me.weapon()
+        }
         if (curWepCheck.rifle || curWepCheck.smg || curWepCheck.pistol || curWepCheck.sniper || curWepCheck.shotgun) {
             val curWep: DoubleArray = engine.eval(curWepCheck.name) as DoubleArray
 

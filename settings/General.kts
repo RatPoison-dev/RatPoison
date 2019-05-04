@@ -58,7 +58,7 @@ TARGET_SWAP_MAX_DELAY = 350
 /**
  * The duration in milliseconds at which aimbot paths are recalculated.
  */
-AIM_DURATION = 1
+AIM_DURATION = 4
 
 /**
  * The amount of sprayed shots until the aimbot shifts to aiming at the (SHOULDER_BONE).

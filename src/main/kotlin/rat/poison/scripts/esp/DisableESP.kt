@@ -24,12 +24,13 @@ internal fun disableEsp() {
         val entity = it.entity
         if (entity <= 0 || me == entity) return@body false
 
-        val glowAddress = it.glowAddress
-        if (glowAddress <= 0) return@body false
+        if (it.type == EntityType.CCSPlayer) {
+            val glowAddress = it.glowAddress
+            if (glowAddress <= 0) return@body false
 
-        glowAddress.glow(cWhite)
-        entity.chams(cWhite)
-
+            glowAddress.glow(cWhite)
+            entity.chams(cWhite)
+        }
         return@body false
     }
 }

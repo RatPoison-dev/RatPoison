@@ -23,7 +23,7 @@ internal fun glowEsp() = every(4) {
 		val currentTarget = findTarget(position, currentAngle, false)
 		glowTarget.set(currentTarget)
 	}
-	else
+	else if (GLOW_SHOW_TARGET)
 	{
 		glowTarget.set(target.get())
 	}
@@ -41,7 +41,7 @@ internal fun glowEsp() = every(4) {
 				
 				val entityTeam = entity.team()
 				val team = !DANGER_ZONE && myTeam == entityTeam
-				if (it.entity == glowTarget.get() && !me.dead())
+				if (GLOW_SHOW_TARGET && it.entity == glowTarget.get() && !me.dead() && glowTarget.get() != -1L)
 				{
 					it.glowAddress.glow(HIGHLIGHT_COLOR, true)
 				} else if (GLOW_SHOW_ENEMIES && !team) {

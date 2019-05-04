@@ -37,7 +37,7 @@ const val SETTINGS_DIRECTORY = "settings"
 var saving = false
 var settingsLoaded = false
 
-fun main(args: Array<String>) {
+fun main() {
     System.setProperty("jna.nosys", "true")
 
     //scanner() //not needed, keeping until menu fully finished, possibly implemented UI console
@@ -111,12 +111,12 @@ fun loadSettings() {
     settingsLoaded = true
 }
 
-fun autoReloadSettings() = every(5000) {
-    println("Called to reload settings")
-    if (!saving && settingsLoaded) {
-        loadSettings()
-    }
-}
+//fun autoReloadSettings() = every(5000) {
+//    println("Called to reload settings")
+//    if (!saving && settingsLoaded) {
+//        loadSettings()
+//    }
+//}
 
 var opened = false
 
