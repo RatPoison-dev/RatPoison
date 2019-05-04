@@ -102,11 +102,11 @@ internal fun Entity.inMyTeam() =
 			me.survivalTeam().let { it > -1 && it == this.survivalTeam() }
 		} else me.team() == team()
 
-internal fun Entity.canShoot() = if (DANGER_ZONE) true else (!spotted())
+internal fun Entity.canShoot() = (if (DANGER_ZONE) { true } else { spotted() }
 		&& !dormant()
 		&& !dead()
 		&& !inMyTeam()
-		&& !me.dead()
+		&& !me.dead())
 
 internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boolean,
                                   crossinline doAim: (destinationAngle: Angle,
