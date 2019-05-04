@@ -72,11 +72,10 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	}
 
 	if (closestDelta == Double.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return -1
-	
+
 	if (PERFECT_AIM && allowPerfect && closestFOV <= PERFECT_AIM_FOV && randInt(100 + 1) <= PERFECT_AIM_CHANCE) {
 		perfect.set(true)
 	}
-	
 	return closestPlayer
 }
 
@@ -103,7 +102,7 @@ internal fun Entity.inMyTeam() =
 			me.survivalTeam().let { it > -1 && it == this.survivalTeam() }
 		} else me.team() == team()
 
-internal fun Entity.canShoot() = spotted()
+internal fun Entity.canShoot() = if (DANGER_ZONE) true else (!spotted())
 		&& !dormant()
 		&& !dead()
 		&& !inMyTeam()
