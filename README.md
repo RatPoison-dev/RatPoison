@@ -11,7 +11,7 @@ Update 1.2 + 1.2.5 + 1.2.6
 * Fixed aim on bone trigger
 
 Latest Hotfixes:
-Fixed MENU = false launching the overlay anyways, (possibly) fixed FPS issues & degrading over time, fixed settings returning to default randomly, (possibly) fixed aimbot/trigger not working with a new weapon, improved cfg save times, fixed saving to default reading cfg files, (possibly) fixed crashing in non-comp games when showing aimbot's target, fixed grenade and highlight color being on the right sides, fixed highlight color missing on init. Fixed menu being too big on init, (possibly) fixed toggling esp off crashing, aim duration default 1 -> 4, OPENGL_FPS 60 - > 30, (possibly) fixed aimbot target crashing game, fixed aim not working in danger zone
+Fixed MENU = false launching the overlay anyways, (possibly) fixed FPS issues & degrading over time, fixed settings returning to default randomly, (possibly) fixed aimbot/trigger not working with a new weapon, improved cfg save times, fixed saving to default reading cfg files, (possibly) fixed crashing in non-comp games when showing aimbot's target, fixed grenade and highlight color being on the right sides, fixed highlight color missing on init. Fixed menu being too big on init, (possibly) fixed toggling esp off crashing, aim duration default 1 -> 4, OPENGL_FPS 60 - > 30, fixed aim not working in danger zone
 
 
 WARNING: This update has not been tested extensively, I assume many issues will pop up, please submit an issue on github
