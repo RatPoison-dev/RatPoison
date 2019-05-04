@@ -1,4 +1,4 @@
-Update 1.2 + 1.2.5
+Update 1.2 + 1.2.5 + 1.2.6
 
 * Aimbot should be a lot better at finding the correct target with multiple enemies near the crosshair
 
@@ -11,8 +11,7 @@ Update 1.2 + 1.2.5
 * Fixed aim on bone trigger
 
 Latest Hotfixes:
-Fixed MENU = false launching the overlay anyways, (possibly) fixed FPS issues & degrading over time, fixed settings returning to default randomly, (possibly) fixed aimbot/trigger not working with a new weapon, improved cfg save times, fixed saving to default reading cfg files, (possibly) fixed crashing in non-comp games when showing aimbot's target, fixed grenade and highlight color being on the right sides, fixed highlight color missing on init.
-
+Fixed MENU = false launching the overlay anyways, (possibly) fixed FPS issues & degrading over time, fixed settings returning to default randomly, (possibly) fixed aimbot/trigger not working with a new weapon, improved cfg save times, fixed saving to default reading cfg files, (possibly) fixed crashing in non-comp games when showing aimbot's target, fixed grenade and highlight color being on the right sides, fixed highlight color missing on init. Fixed menu being too big on init, (possibly) fixed toggling esp off crashing, aim duration default 1 -> 4, OPENGL_FPS 60 - > 30, (possibly) fixed aimbot target crashing game, fixed aim not working in danger zone
 WARNING: This update has not been tested extensively, I assume many issues will pop up, please submit an issue on github
 with information on the issue, the settings used (create a cfg file and put it in a pastebin), and evidence (such as a picture/video)
 or a way to easily replicate the issue.
@@ -75,10 +74,10 @@ The first step is to compile the source code into a usable cheat program.
 * Double click on the "_build_" (_build.bat_) script and wait for it to complete
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.2.5**.
+directory, and will in a directory called **RatPoison 1.2.6**.
 
-From within the **RatPoison 1.2.5** directory, you can start the cheat by running
-the _"Start RatPoison 1.2.5"_ script.
+From within the **RatPoison 1.2.6** directory, you can start the cheat by running
+the _"Start RatPoison 1.2.6"_ script.
 
 Before starting the cheat, you should already be spawned in a game with a weapon in hand!
 
