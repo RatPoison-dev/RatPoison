@@ -16,7 +16,7 @@ val glowTarget = AtomicLong(-1)
 
 internal fun glowEsp() = every(4) {
 	if (!curSettings["GLOW_ESP"]!!.strToBool() || !curSettings["ENABLE_ESP"]!!.strToBool()) return@every
-	
+
 	val myTeam = me.team()
 
 	if (curSettings["GLOW_SHOW_TARGET"]!!.strToBool() && target.get() == -1L)
@@ -30,7 +30,7 @@ internal fun glowEsp() = every(4) {
 	{
 		glowTarget.set(target.get())
 	}
-	
+
 	forEntities body@ {
 		val entity = it.entity
 		if (entity <= 0 || me == entity) return@body false
@@ -41,7 +41,7 @@ internal fun glowEsp() = every(4) {
 		when (it.type) {
 			EntityType.CCSPlayer -> {
 				if (entity.dead() || (!curSettings["GLOW_SHOW_DORMANT"]!!.strToBool() && entity.dormant())) return@body false
-				
+
 				val entityTeam = entity.team()
 				val team = !DANGER_ZONE && myTeam == entityTeam
 				if (curSettings["GLOW_SHOW_TARGET"]!!.strToBool() && it.entity == glowTarget.get() && !me.dead() && glowTarget.get() != -1L)

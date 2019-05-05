@@ -15,7 +15,6 @@ import rat.poison.utils.extensions.refresh
 import rat.poison.utils.extensions.set
 import com.sun.jna.platform.win32.WinDef.POINT
 import rat.poison.curSettings
-import rat.poison.settings.AIM_SMOOTHNESS
 
 private val mousePos = ThreadLocal.withInitial { POINT() }
 private val target = ThreadLocal.withInitial { POINT() }
@@ -27,10 +26,10 @@ fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: 
 	y -= currentAngle.y
 	z = 0.0
 	normalize()
-	
+
 	x = currentAngle.x + x / 100 * (100 / smoothing)
 	y = currentAngle.y + y / 100 * (100 / smoothing)
-	
+
 	normalize()
 }
 
@@ -53,21 +52,21 @@ fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double) = 
 //}
 
 fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
-            sensMultiplier: Double = 1.0, perfect: Boolean = false) {
+			sensMultiplier: Double = 1.0, perfect: Boolean = false) {
 	if (!destinationAngle.isValid()) return
-	
+
 	val delta = delta.get()
 	delta.set(currentAngle.y - destinationAngle.y, currentAngle.x - destinationAngle.x, 0.0)
-	
+
 	var sens = GAME_SENSITIVITY * sensMultiplier
 	if (sens < GAME_SENSITIVITY) sens = GAME_SENSITIVITY
 	if (perfect) sens = 1.0
-	
+
 	val dx = Math.round(delta.x / (sens * GAME_PITCH))
 	val dy = Math.round(-delta.y / (sens * GAME_YAW))
-	
+
 	val mousePos = mousePos.get().refresh()
-	
+
 	val target = target.get()
 	val smooth = curSettings["AIM_SMOOTHNESS"].toString().toDouble()
 	target.set((mousePos.x + dx/smooth).toInt(), (mousePos.y + dy/smooth).toInt())
@@ -79,10 +78,10 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
 		Thread.sleep(20)
 	} else HumanMouse.fastSteps(mousePos, target) { steps, _ ->
 		mousePos.refresh()
-		
+
 		val tx = target.x - mousePos.x
 		val ty = target.y - mousePos.y
-		
+
 		var halfIndex = steps / 2
 		if (halfIndex == 0) halfIndex = 1
 		mouseMove(tx / halfIndex, ty / halfIndex)

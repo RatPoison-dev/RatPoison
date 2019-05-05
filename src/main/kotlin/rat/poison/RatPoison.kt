@@ -15,7 +15,6 @@ import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.widget.VisTable
 import com.sun.jna.platform.win32.WinNT
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import org.jetbrains.kotlin.cli.common.environment.setIdeaIoUseFallback
 import org.jire.arrowhead.keyPressed
 import rat.poison.game.CSGO
 import rat.poison.interfaces.*
@@ -29,10 +28,7 @@ import rat.poison.ui.UIBombTimer
 import rat.poison.ui.UIMenu
 import rat.poison.utils.*
 import java.io.*
-import javax.script.ScriptEngineManager
-//Move separate toBool/toInt/toFloat to public here
 
-//aaaaaaaaaaaaaaaaAAAAAAAAAAAAA
 const val SETTINGS_DIRECTORY = "settings"
 var saving = false
 var settingsLoaded = false
@@ -42,7 +38,7 @@ val curSettings = Settings()
 fun main() {
     System.setProperty("jna.nosys", "true")
 
-    loadSettingsFromFiles()
+    loadSettingsFromFiles(SETTINGS_DIRECTORY, false)
 
     if (FLICKER_FREE_GLOW) {
         PROCESS_ACCESS_FLAGS = PROCESS_ACCESS_FLAGS or WinNT.PROCESS_VM_OPERATION
@@ -95,16 +91,22 @@ fun main() {
 
 //var engine = ScriptEngineManager().getEngineByName("kotlin")
 
-fun loadSettingsFromFiles() {
-    File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
-        if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
-            FileReader(file).readLines().forEach { line ->
-                if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
-                    val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
+fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean) {
+    if (specificFile)
+    {
 
-                    println(curLine[0] + " = " + curLine[2])
+    }
+    else {
+        File(fileDir).listFiles().forEach { file ->
+            if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
+                FileReader(file).readLines().forEach { line ->
+                    if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
+                        val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
-                    curSettings[curLine[0]] = curLine[2]
+                        println(curLine[0] + " = " + curLine[2])
+
+                        curSettings[curLine[0]] = curLine[2]
+                    }
                 }
             }
         }
@@ -291,10 +293,10 @@ fun convStrToColor(input: String): rat.poison.game.Color {
     var line = input
     line = line.replace("Color(", "").replace(")", "").replace(",", "")
 
-    var curLine = line.trim().split(" ".toRegex(), 4)
+    val curLine = line.trim().split(" ".toRegex(), 4)
 
 
-    var color = rat.poison.game.Color(curLine[0].replace("red=", "").toInt(),
+    val color = rat.poison.game.Color(curLine[0].replace("red=", "").toInt(),
             curLine[1].replace("green=", "").toInt(),
             curLine[2].replace("blue=", "").toInt(),
             curLine[3].replace("alpha=", "").toDouble())

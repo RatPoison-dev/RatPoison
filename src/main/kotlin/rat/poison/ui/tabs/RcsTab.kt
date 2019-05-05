@@ -55,7 +55,7 @@ class RcsTab : Tab(false, false) {
         rcsSmoothingSlider.value = curSettings["RCS_SMOOTHING"].toString().toFloat()
         rcsSmoothingSlider.changed { _, _ ->
             curSettings["RCS_SMOOTHING"] = (Math.round(rcsSmoothingSlider.value.toDouble() * 100.0)/100.0).toString()
-            rcsSmoothingLabel.setText("RCS Smoothing: " + curSettings["RCS_SMOOTHING"].toString() + when(curSettings["RCS_SMOOTHING"].toString().toString().length) {4->"" 3->"  " 2->"    " else->"      "})
+            rcsSmoothingLabel.setText("RCS Smoothing: " + curSettings["RCS_SMOOTHING"].toString() + when(curSettings["RCS_SMOOTHING"].toString().length) {4->"" 3->"  " 2->"    " else->"      "})
         }
         rcsSmoothing.add(rcsSmoothingLabel).spaceRight(6F) //when gets rid of spaceright
         rcsSmoothing.add(rcsSmoothingSlider)

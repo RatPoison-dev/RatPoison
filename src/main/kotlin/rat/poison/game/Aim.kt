@@ -22,11 +22,11 @@ fun calculateAngle(player: Player, dst: Vector): Angle = angles.get().apply {
 	//val weaponEntity = me.weaponEntity()
 	//val shotsFired = me.shotsFired()
 	//val forceSet = shotsFired == 0 && !lastPunch.isZero
-	
+
 	val dX = myPosition.x - dst.x
 	val dY = myPosition.y - dst.y
 	val dZ = myPosition.z + csgoEXE.float(player + vecViewOffset) - dst.z
-	
+
 	val hyp = Math.sqrt((dX * dX) + (dY * dY))
 
 	//Bring back old check?
@@ -39,6 +39,6 @@ fun calculateAngle(player: Player, dst: Vector): Angle = angles.get().apply {
 	}
 	z = 0.0
 	if (dX >= 0.0) y += 180
-	
+
 	normalize()
 }

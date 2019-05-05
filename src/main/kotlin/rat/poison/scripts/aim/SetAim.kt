@@ -1,12 +1,9 @@
 package rat.poison.scripts.aim
 
-//import rat.poison.engine
 import rat.poison.curSettings
 import rat.poison.game.Weapons
 import rat.poison.game.entity.weapon
 import rat.poison.game.me
-import rat.poison.saving
-import rat.poison.settings.*
 import rat.poison.settingsLoaded
 import rat.poison.strToBool
 import rat.poison.utils.every
@@ -16,7 +13,7 @@ var curWepCheck = Weapons.AK47
 
 fun setAim() = every(256){
 
-//    if (!saving && settingsLoaded) {
+    //    if (!saving && settingsLoaded) {
 //        if (curWepCheck != me.weapon())
 //        {
 //            curWepCheck = me.weapon()

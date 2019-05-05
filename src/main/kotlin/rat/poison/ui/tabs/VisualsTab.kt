@@ -19,12 +19,12 @@ import rat.poison.strToBool
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.esptabs.*
 
-    val espTabbedPane = TabbedPane()
-    val glowEspTab = GlowEspTab()
-    val chamsEspTab = ChamsEspTab()
-    val indicatorEspTab = IndicatorEspTab()
-    val boxEspTab = BoxEspTab()
-    val skeletonEspTab = SkeletonEspTab()
+val espTabbedPane = TabbedPane()
+val glowEspTab = GlowEspTab()
+val chamsEspTab = ChamsEspTab()
+val indicatorEspTab = IndicatorEspTab()
+val boxEspTab = BoxEspTab()
+val skeletonEspTab = SkeletonEspTab()
 
 class VisualsTab : Tab(false, false) {
     private val table = VisTable(true)

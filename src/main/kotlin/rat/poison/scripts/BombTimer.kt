@@ -72,12 +72,12 @@ fun bombUpdater() = every(8, true) {
 }
 
 data class BombState(var hasBomb: Boolean = false,
-                             var planted: Boolean = false,
-                             var canDefuse: Boolean = false,
-                             var gettingDefused: Boolean = false,
-                             var timeLeftToExplode: Float = -1f,
-                             var timeLeftToDefuse: Float = -1f,
-                             var location: String = "") {
+                     var planted: Boolean = false,
+                     var canDefuse: Boolean = false,
+                     var gettingDefused: Boolean = false,
+                     var timeLeftToExplode: Float = -1f,
+                     var timeLeftToDefuse: Float = -1f,
+                     var location: String = "") {
 
     private val sb = StringBuilder()
 

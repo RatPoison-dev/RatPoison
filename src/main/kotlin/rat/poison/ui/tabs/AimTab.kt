@@ -551,7 +551,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /////Weapon Selection
-        
+
 //        //Create Category Selector
 //        val overrideCategorySelection = VisTable()
 //        Tooltip.Builder("The weapon category settings to edit").target(overrideCategorySelection).build()

@@ -4,11 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.util.Validators
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import com.sun.jna.platform.win32.WinNT
 import org.jire.arrowhead.keyPressed
 import rat.poison.*
-import rat.poison.settings.*
-//import rat.poison.ui.UIUpdate
 import rat.poison.ui.changed
 import rat.poison.utils.ObservableBoolean
 
@@ -97,7 +94,7 @@ class MiscTab : Tab(false, false) {
         Tooltip.Builder("Whether or not to enable a hitsound on hit").target(hitSound).build()
         if (curSettings["ENABLE_HITSOUND"]!!.strToBool()) hitSound.toggle()
         hitSound.changed { _, _ ->
-                curSettings["ENABLE_HITSOUND"] = hitSound.isChecked.boolToStr()
+            curSettings["ENABLE_HITSOUND"] = hitSound.isChecked.boolToStr()
             true
         }
 

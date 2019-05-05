@@ -7,7 +7,6 @@ import rat.poison.settings.*
 import rat.poison.utils.*
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
-import rat.poison.settingsLoaded
 import rat.poison.strToBool
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
@@ -75,8 +74,8 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	}
 
 	if (closestDelta == Double.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return -1
-		if (curSettings["PERFECT_AIM"]!!.strToBool() && allowPerfect && closestFOV <= curSettings["PERFECT_AIM_FOV"].toString().toInt() && randInt(100 + 1) <= curSettings["PERFECT_AIM_CHANCE"].toString().toInt()) {
-			perfect.set(true)
+	if (curSettings["PERFECT_AIM"]!!.strToBool() && allowPerfect && closestFOV <= curSettings["PERFECT_AIM_FOV"].toString().toInt() && randInt(100 + 1) <= curSettings["PERFECT_AIM_CHANCE"].toString().toInt()) {
+		perfect.set(true)
 	}
 	return closestPlayer
 }
@@ -111,32 +110,32 @@ internal fun Entity.canShoot() = (if (DANGER_ZONE) { true } else { spotted() }
 		&& !me.dead())
 
 internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boolean,
-                                  crossinline doAim: (destinationAngle: Angle,
-                                                      currentAngle: Angle, aimSpeed: Int) -> R) = every(duration) {
+								  crossinline doAim: (destinationAngle: Angle,
+													  currentAngle: Angle, aimSpeed: Int) -> R) = every(duration) {
 	if (!precheck()) return@every
 
 	val aim = curSettings["ACTIVATE_FROM_FIRE_KEY"]!!.strToBool() && keyPressed(curSettings["FIRE_KEY"].toString().toInt())
 	val forceAim = keyPressed(curSettings["FORCE_AIM_KEY"].toString().toInt())
 	val haveAmmo = me.weaponEntity().bullets() > 0
 
-    bone.set(curSettings["AIM_BONE"].toString().toInt())
+	bone.set(curSettings["AIM_BONE"].toString().toInt())
 
 	val pressed = (aim || forceAim || boneTrig) && !MENUTOG && haveAmmo
 	var currentTarget = target.get()
-	
+
 	if (!pressed) {
 		reset()
 		return@every
 	}
-	
+
 	val weapon = me.weapon()
 	if (!weapon.pistol && !weapon.automatic && !weapon.shotgun && !weapon.sniper) {
 		reset()
 		return@every
 	}
-	
+
 	val currentAngle = clientState.angle()
-	
+
 	val position = me.position()
 	if (currentTarget < 0) {
 		currentTarget = findTarget(position, currentAngle, aim)
@@ -145,13 +144,13 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		}
 		target.set(currentTarget)
 	}
-	
+
 	if (currentTarget == me || !currentTarget.canShoot()) {
 		reset()
 		Thread.sleep(500 + randLong(500)) //Possible fix for turning randomly.
 	} else {
 		val bonePosition = currentTarget.bones(bone.get())
-		
+
 		val destinationAngle = calculateAngle(me, bonePosition)
 		if (curSettings["AIM_ASSIST_MODE"]!!.strToBool() && !perfect.get()) destinationAngle.finalize(currentAngle, 1.0)
 

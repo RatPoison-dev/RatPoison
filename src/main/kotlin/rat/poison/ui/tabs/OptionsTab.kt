@@ -112,16 +112,12 @@ class OptionsTab : Tab(false, false) {
 
                                     //Add custom checks for variables that need a type ident ie F
                                     when {
-//                                        curLine[0] == "curSettings["FLASH_MAX_ALPHA"].toString().toFloat()" -> {
-//                                        sbLines.append(curLine[0] + " = " + engine.eval(curLine[0]) + "F\n")
-//                                        }
-
                                         curLine[0] == "CFG1_NAME" || curLine[0] == "CFG2_NAME" || curLine[0] == "CFG3_NAME" -> {
-                                        sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]] + "\"\n")
+                                            sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
                                         }
 
                                         else -> {
-                                        sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
+                                            sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
                                         }
                                     }
 
@@ -198,12 +194,15 @@ class OptionsTab : Tab(false, false) {
                                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
                                 //Add custom checks for variables that need a type ident ie F
-//                                when {
-//                                    /*Case: 1*/     curLine[0] == "curSettings["FLASH_MAX_ALPHA"].toString().toFloat()" -> { sbLines.append(curLine[0] + " = " + engine.eval(curLine[0]) + "F\n") }
-//                                    /*Case: 2*/     (curLine[0] == "CFG1_NAME" || curLine[0] == "CFG2_NAME" || curLine[0] == "CFG3_NAME") -> { sbLines.append(curLine[0] + " = \"" + engine.eval(curLine[0]) + "\"\n") }
-//                                    /*Case: 3*/     file.name == "GunAimOverride.kts" -> { val curOverrideWep = engine.eval(curLine[0]) as kotlin.DoubleArray; sbLines.append((curLine[0] + " = " + curOverrideWep.contentToString() + "\n").replace("[", "doubleArrayOf(").replace("]", ")")) }
-//                                    /*Case: Else*/  else -> { sbLines.append(curLine[0] + " = " + engine.eval(curLine[0]) + "\n")}
-//                                }
+                                when {
+                                        curLine[0] == "CFG1_NAME" || curLine[0] == "CFG2_NAME" || curLine[0] == "CFG3_NAME" -> {
+                                            sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
+                                        }
+
+                                        else -> {
+                                            sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
+                                        }
+                                    }
                             }
                         }
                     }
@@ -219,6 +218,7 @@ class OptionsTab : Tab(false, false) {
 //                FileReader(cfgFile).readLines().forEach { line ->
 //                    engine.eval(line)
 //                }
+                loadSettingsFromFiles(cfgFile.toPath().toString(), true)
 
                 //Repeat for General.kts to save cfg name
                 val genFile = File("settings\\General.kts")
@@ -226,7 +226,7 @@ class OptionsTab : Tab(false, false) {
                     if (line.startsWith(when (cfgNum) {1 -> "CFG1_NAME" 2 -> "CFG2_NAME" else -> "CFG3_NAME"})) {
                         val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
-//                        sbLines.append(curLine[0] + " = \"" + engine.eval(curLine[0]) + "\"\n")
+                        sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
 
                     } else {
                         sbLines.append(line + "\n")
@@ -238,8 +238,7 @@ class OptionsTab : Tab(false, false) {
                 sbLines.lines().forEach {genFile.appendText(if (!firstLine) { firstLine = true; it } else if (!it.isBlank()) "\n" + it else "\n")}
                 sbLines.clear()
 
-//                engine = ScriptEngineManager().getEngineByName("kotlin")
-//                FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n")) }
+                //Dont need to reload settings afaik
 
                 println("\n Saving complete! \n")
                 saving = false
