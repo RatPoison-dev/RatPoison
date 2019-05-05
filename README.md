@@ -1,33 +1,9 @@
-Update 1.2 + 1.2.5 + 1.2.6
+Update 1.3
 
-* Aimbot should be a lot better at finding the correct target with multiple enemies near the crosshair
-
-* Added customizable aim settings for all weapons
-* Saving will work in background, shouldn't freeze game/not responding overlay
-* 3 total CFGs possible instead of original 1
-* When using glow you now have the option to show what enemy the aimbot will target
-* Small cleanup
-* Bone trigger is more accurate towards finding the chest bone (3 through 7 now instead of just 6)
-* Fixed aim on bone trigger
-
-Latest Hotfixes:
-Fixed MENU = false launching the overlay anyways, (possibly) fixed FPS issues & degrading over time, fixed settings returning to default randomly, (possibly) fixed aimbot/trigger not working with a new weapon, improved cfg save times, fixed saving to default reading cfg files, (possibly) fixed crashing in non-comp games when showing aimbot's target, fixed grenade and highlight color being on the right sides, fixed highlight color missing on init. Fixed menu being too big on init, (possibly) fixed toggling esp off crashing, aim duration default 1 -> 4, OPENGL_FPS 60 - > 30, fixed aim not working in danger zone
-
-
-WARNING: This update has not been tested extensively, I assume many issues will pop up, please submit an issue on github
-with information on the issue, the settings used (create a cfg file and put it in a pastebin), and evidence (such as a picture/video)
-or a way to easily replicate the issue.
-The custom per weapon settings are available in the GunAimOverride.kts file, in arrays, the gun is the variable name, with the array
-information at the top.
-
-Known/Possible Issues:
-* Individual weapon aim settings don't override while saving (Tested)
-* FPS degradation over time (Unknown)
-* Bhop 100% cpu usage/out of memory (Unknown)
-* Aimbot/Trigger bot stop working when switching to a new weapon (Possibly Fixed)
-
-(Tested) = I have replicated and know it is an issue.
-(unknown) = I can't replicate/haven't encountered the issue myself.
+* Replaced script.eval for improved performance
+    * Improved performance when saving (a lot faster)
+* Removed override weapons because of possible fps problems, to be implemented later
+* Removed aim strictness, aim assist mode, and aim assist strictness, as the same can be accomplished easier with aim speed and aim smoothness
 
 ---
 

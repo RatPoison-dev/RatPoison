@@ -122,11 +122,15 @@ SHOULDER_BONE = 7
 BODY_BONE = 6
 
 /**
- * Default variables, no effect if changed
+ * Variables used in game, not saved settings, no need to touch
  */
 PERFECT_AIM = false
-PERFECT_AIM_CHANCE = 1
-PERFECT_AIM_FOV = 1
-AIM_BONE = 8
+PERFECT_AIM_CHANCE = 100
+PERFECT_AIM_FOV = 40
+AIM_BONE = 6
 AIM_SPEED = 1
+AIM_FOV = 80
 AIM_ASSIST_MODE = false
+FACTOR_RECOIL = false
+ENABLE_FLAT_AIM = false
+ENABLE_PATH_AIM = false

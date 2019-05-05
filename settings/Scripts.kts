@@ -27,20 +27,6 @@ ENABLE_RECOIL_CROSSHAIR = true
 ENABLE_ESP = true
 
 /**
- * Enables the flat aim script.
- *
- * This script uses traditional flat linear-regression smoothing.
- */
-ENABLE_FLAT_AIM = false
-
-/**
- * Enables the path aim script.
- *
- * This script uses an advanced path generation smoothing.
- */
-ENABLE_PATH_AIM = true
-
-/**
  * Enables the bone trigger bot script.
  */
 ENABLE_BONE_TRIGGER = false

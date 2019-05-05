@@ -38,12 +38,12 @@ SMG_AIM_FOV = 40
  *
  * The minimum value is 1
  */
-SMG_AIM_SPEED = 24
+SMG_AIM_SPEED = 4
 
 /**
  * The smoothness of the aimbot
  */
-SMG_AIM_SMOOTHNESS = 2.0
+SMG_AIM_SMOOTHNESS = 4.0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

@@ -214,12 +214,6 @@ class OptionsTab : Tab(false, false) {
                 sbLines.lines().forEach {cfgFile.appendText(if (!firstLine) { firstLine = true; it } else if (!it.isBlank()) "\n" + it else "\n")}
                 sbLines.clear()
 
-//                engine = ScriptEngineManager().getEngineByName("kotlin")
-//                FileReader(cfgFile).readLines().forEach { line ->
-//                    engine.eval(line)
-//                }
-                loadSettingsFromFiles(cfgFile.toPath().toString(), true)
-
                 //Repeat for General.kts to save cfg name
                 val genFile = File("settings\\General.kts")
                 FileReader(genFile).readLines().forEach { line ->
@@ -256,8 +250,7 @@ class OptionsTab : Tab(false, false) {
             } else {
                 GlobalScope.launch {
                     println("\n Loading! \n")
-//                    engine = ScriptEngineManager().getEngineByName("kotlin")
-//                    FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n")) }
+                    loadSettingsFromFiles("settings\\cfg$cfgNum.kts", true)
                     UIUpdate()
                     println("\n Loading complete! \n")
                 }

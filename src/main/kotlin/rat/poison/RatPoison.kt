@@ -38,7 +38,7 @@ val curSettings = Settings()
 fun main() {
     System.setProperty("jna.nosys", "true")
 
-    loadSettingsFromFiles(SETTINGS_DIRECTORY, false)
+    loadSettingsFromFiles(SETTINGS_DIRECTORY)
 
     if (FLICKER_FREE_GLOW) {
         PROCESS_ACCESS_FLAGS = PROCESS_ACCESS_FLAGS or WinNT.PROCESS_VM_OPERATION
@@ -89,14 +89,22 @@ fun main() {
     }
 }
 
-//var engine = ScriptEngineManager().getEngineByName("kotlin")
-
-fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean) {
+fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
+    settingsLoaded = false
     if (specificFile)
     {
+        FileReader(File(fileDir)).readLines().forEach { line ->
+            if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith("\"") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
+                val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
+                println(curLine[0] + " = " + curLine[2])
+
+                curSettings[curLine[0]] = curLine[2]
+            }
+        }
     }
-    else {
+    else
+        {
         File(fileDir).listFiles().forEach { file ->
             if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
                 FileReader(file).readLines().forEach { line ->
