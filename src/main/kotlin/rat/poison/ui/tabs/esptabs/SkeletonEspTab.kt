@@ -5,7 +5,10 @@ import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisCheckBox
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.boolToStr
+import rat.poison.curSettings
 import rat.poison.settings.*
+import rat.poison.strToBool
 import rat.poison.ui.changed
 
 class SkeletonEspTab : Tab(false, false) {
@@ -18,27 +21,27 @@ class SkeletonEspTab : Tab(false, false) {
     val showEnemies = VisCheckBox("Show Enemies")
 
     init {
-        //Create Skeleton_Esp Toggle
+        //Create curSettings["SKELETON_ESP"]!!.strToBool() Toggle
         Tooltip.Builder("Whether or not to enable skeleton esp").target(skeletonEsp).build()
-        if (SKELETON_ESP) skeletonEsp.toggle()
+        if (curSettings["SKELETON_ESP"]!!.strToBool()) skeletonEsp.toggle()
         skeletonEsp.changed { _, _ ->
-            SKELETON_ESP = skeletonEsp.isChecked
+            curSettings["SKELETON_ESP"] = skeletonEsp.isChecked.boolToStr()
             true
         }
 
         //Create Show_Team Toggle
         Tooltip.Builder("Whether or not to show team with esp").target(showTeam).build()
-        if (SKELETON_SHOW_TEAM) showTeam.toggle()
+        if (curSettings["SKELETON_SHOW_TEAM"]!!.strToBool()) showTeam.toggle()
         showTeam.changed { _, _ ->
-            SKELETON_SHOW_TEAM = showTeam.isChecked
+            curSettings["SKELETON_SHOW_TEAM"] = showTeam.isChecked.boolToStr()
             true
         }
 
         //Create Show_Enemies Toggle
         Tooltip.Builder("Whether or not to show enemies with esp").target(showEnemies).build()
-        if (SKELETON_SHOW_ENEMIES) showEnemies.toggle()
+        if (curSettings["SKELETON_SHOW_ENEMIES"]!!.strToBool()) showEnemies.toggle()
         showEnemies.changed { _, _ ->
-            SKELETON_SHOW_ENEMIES = showEnemies.isChecked
+            curSettings["SKELETON_SHOW_ENEMIES"] = showEnemies.isChecked.boolToStr()
             true
         }
 

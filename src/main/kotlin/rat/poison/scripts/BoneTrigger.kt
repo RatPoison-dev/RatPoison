@@ -12,22 +12,24 @@ import rat.poison.utils.*
 import org.jire.arrowhead.keyPressed
 import org.jire.arrowhead.keyReleased
 import rat.poison.App.haveTarget
+import rat.poison.curSettings
 import rat.poison.opened
 import rat.poison.scripts.aim.boneTrig
-import rat.poison.ui.bTrigTab
+import rat.poison.strToBool
+//import rat.poison.ui.bTrigTab
 import rat.poison.ui.mainTabbedPane
 
 private val onBoneTriggerTarget = every(4) {
 	if (opened && haveTarget) {
 		if (DANGER_ZONE) {
-			mainTabbedPane.disableTab(bTrigTab, true)
+			//mainTabbedPane.disableTab(bTrigTab, true)
 		} else {
-			mainTabbedPane.disableTab(bTrigTab, false)
+			//mainTabbedPane.disableTab(bTrigTab, false)
 
-			if (ENABLE_BONE_TRIGGER) {
-				if (BONE_TRIGGER_HB) { //Head bone check
-					if (findTarget(me.position(), clientState.angle(), false, BONE_TRIGGER_FOV, -2) >= 0) {
-						if (AIM_ON_BONE_TRIGGER) {
+			if (curSettings["ENABLE_BONE_TRIGGER"]!!.strToBool()) {
+				if (curSettings["BONE_TRIGGER_HB"]!!.strToBool()) { //Head bone check
+					if (findTarget(me.position(), clientState.angle(), false, curSettings["BONE_TRIGGER_FOV"].toString().toInt(), -2) >= 0) {
+						if (curSettings["AIM_ON_BONE_TRIGGER"]!!.strToBool()) {
 							boneTrig = true
 						}
 						boneTrigger()
@@ -41,7 +43,7 @@ private val onBoneTriggerTarget = every(4) {
 }
 
 fun boneTrigger() {
-	if ((keyReleased(FIRE_KEY) && BONE_TRIGGER_ENABLE_KEY && keyPressed(BONE_TRIGGER_KEY)) || (keyReleased(FIRE_KEY) && !BONE_TRIGGER_ENABLE_KEY)) {
+	if ((keyReleased(FIRE_KEY) && curSettings["BONE_TRIGGER_ENABLE_KEY"]!!.strToBool() && keyPressed(curSettings["BONE_TRIGGER_KEY"].toString().toInt())) || (keyReleased(FIRE_KEY) && !curSettings["BONE_TRIGGER_ENABLE_KEY"]!!.strToBool())) {
 		clientDLL[dwForceAttack] = 5.toByte() //Mouse press
 		Thread.sleep(randLong(16))
 		clientDLL[dwForceAttack] = 4.toByte() //Mouse release

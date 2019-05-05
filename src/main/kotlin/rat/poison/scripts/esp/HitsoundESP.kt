@@ -5,9 +5,9 @@ import com.badlogic.gdx.audio.Sound
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
-import rat.poison.settings.ENABLE_HITSOUND
-import rat.poison.settings.HITSOUND_VOLUME
 import rat.poison.utils.every
+import rat.poison.curSettings
+import rat.poison.strToBool
 
 var totalHits = 0
 var opened = false
@@ -16,7 +16,7 @@ lateinit var hitSound : Sound
 fun hitSoundEsp() = every(4) {
     val curHits = csgoEXE.int(me + m_totalHitsOnServer)
 
-    if (!ENABLE_HITSOUND) {totalHits = curHits; return@every}
+    if (!curSettings["ENABLE_HITSOUND"]!!.strToBool()) {totalHits = curHits; return@every}
 
     if (!opened) {
         try {
@@ -30,7 +30,7 @@ fun hitSoundEsp() = every(4) {
     }
     else if (totalHits != curHits)
     {
-        hitSound.play(HITSOUND_VOLUME.toFloat())
+        hitSound.play(curSettings["HITSOUND_VOLUME"].toString().toDouble().toFloat())
         totalHits = curHits
     }
 }

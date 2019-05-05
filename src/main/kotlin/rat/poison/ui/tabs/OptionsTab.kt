@@ -19,8 +19,6 @@ import rat.poison.ui.changed
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
-import java.nio.file.StandardOpenOption
-import javax.script.ScriptEngineManager
 
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -114,18 +112,16 @@ class OptionsTab : Tab(false, false) {
 
                                     //Add custom checks for variables that need a type ident ie F
                                     when {
-                                        /*Case: 1*/     curLine[0] == "FLASH_MAX_ALPHA" -> {
-                                        sbLines.append(curLine[0] + " = " + engine.eval(curLine[0]) + "F\n")
+//                                        curLine[0] == "curSettings["FLASH_MAX_ALPHA"].toString().toFloat()" -> {
+//                                        sbLines.append(curLine[0] + " = " + engine.eval(curLine[0]) + "F\n")
+//                                        }
+
+                                        curLine[0] == "CFG1_NAME" || curLine[0] == "CFG2_NAME" || curLine[0] == "CFG3_NAME" -> {
+                                        sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]] + "\"\n")
                                         }
 
-                                        /*Case: 2*/     curLine[0] == "CFG1_NAME" || curLine[0] == "CFG2_NAME" || curLine[0] == "CFG3_NAME" -> {
-                                        sbLines.append(curLine[0] + " = \"" + engine.eval(curLine[0]) + "\"\n")
-                                        }
-
-                                        /*Case: 3*/     file.name == "GunAimOverride.kts" -> { val curOverrideWep = engine.eval(curLine[0]) as kotlin.DoubleArray; sbLines.append((curLine[0] + " = " + curOverrideWep.contentToString() + "\n").replace("[", "doubleArrayOf(").replace("]", ")")) }
-
-                                        /*Case: Else*/  else -> {
-                                        sbLines.append(curLine[0] + " = " + engine.eval(curLine[0]) + "\n")
+                                        else -> {
+                                        sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
                                         }
                                     }
 
@@ -142,7 +138,7 @@ class OptionsTab : Tab(false, false) {
                             sbLines.clear()
                         }
                     }
-                    loadSettings()
+                    //loadSettings()
                     println("\n Saving complete! \n")
                     saving = false
                 }
@@ -202,12 +198,12 @@ class OptionsTab : Tab(false, false) {
                                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
                                 //Add custom checks for variables that need a type ident ie F
-                                when {
-                                    /*Case: 1*/     curLine[0] == "FLASH_MAX_ALPHA" -> { sbLines.append(curLine[0] + " = " + engine.eval(curLine[0]) + "F\n") }
-                                    /*Case: 2*/     (curLine[0] == "CFG1_NAME" || curLine[0] == "CFG2_NAME" || curLine[0] == "CFG3_NAME") -> { sbLines.append(curLine[0] + " = \"" + engine.eval(curLine[0]) + "\"\n") }
-                                    /*Case: 3*/     file.name == "GunAimOverride.kts" -> { val curOverrideWep = engine.eval(curLine[0]) as kotlin.DoubleArray; sbLines.append((curLine[0] + " = " + curOverrideWep.contentToString() + "\n").replace("[", "doubleArrayOf(").replace("]", ")")) }
-                                    /*Case: Else*/  else -> { sbLines.append(curLine[0] + " = " + engine.eval(curLine[0]) + "\n")}
-                                }
+//                                when {
+//                                    /*Case: 1*/     curLine[0] == "curSettings["FLASH_MAX_ALPHA"].toString().toFloat()" -> { sbLines.append(curLine[0] + " = " + engine.eval(curLine[0]) + "F\n") }
+//                                    /*Case: 2*/     (curLine[0] == "CFG1_NAME" || curLine[0] == "CFG2_NAME" || curLine[0] == "CFG3_NAME") -> { sbLines.append(curLine[0] + " = \"" + engine.eval(curLine[0]) + "\"\n") }
+//                                    /*Case: 3*/     file.name == "GunAimOverride.kts" -> { val curOverrideWep = engine.eval(curLine[0]) as kotlin.DoubleArray; sbLines.append((curLine[0] + " = " + curOverrideWep.contentToString() + "\n").replace("[", "doubleArrayOf(").replace("]", ")")) }
+//                                    /*Case: Else*/  else -> { sbLines.append(curLine[0] + " = " + engine.eval(curLine[0]) + "\n")}
+//                                }
                             }
                         }
                     }
@@ -230,7 +226,7 @@ class OptionsTab : Tab(false, false) {
                     if (line.startsWith(when (cfgNum) {1 -> "CFG1_NAME" 2 -> "CFG2_NAME" else -> "CFG3_NAME"})) {
                         val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
-                        sbLines.append(curLine[0] + " = \"" + engine.eval(curLine[0]) + "\"\n")
+//                        sbLines.append(curLine[0] + " = \"" + engine.eval(curLine[0]) + "\"\n")
 
                     } else {
                         sbLines.append(line + "\n")
@@ -242,8 +238,8 @@ class OptionsTab : Tab(false, false) {
                 sbLines.lines().forEach {genFile.appendText(if (!firstLine) { firstLine = true; it } else if (!it.isBlank()) "\n" + it else "\n")}
                 sbLines.clear()
 
-                engine = ScriptEngineManager().getEngineByName("kotlin")
-                FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n")) }
+//                engine = ScriptEngineManager().getEngineByName("kotlin")
+//                FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n")) }
 
                 println("\n Saving complete! \n")
                 saving = false
@@ -261,8 +257,8 @@ class OptionsTab : Tab(false, false) {
             } else {
                 GlobalScope.launch {
                     println("\n Loading! \n")
-                    engine = ScriptEngineManager().getEngineByName("kotlin")
-                    FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n")) }
+//                    engine = ScriptEngineManager().getEngineByName("kotlin")
+//                    FileReader(cfgFile).use { engine.eval(it.readLines().joinToString("\n")) }
                     UIUpdate()
                     println("\n Loading complete! \n")
                 }

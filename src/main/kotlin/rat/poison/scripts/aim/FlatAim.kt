@@ -1,11 +1,9 @@
-
-
 package rat.poison.scripts.aim
 
-import rat.poison.settings.AIM_DURATION
-import rat.poison.settings.ENABLE_FLAT_AIM
+import rat.poison.curSettings
 import rat.poison.utils.writeAim
+import rat.poison.strToBool
 
-fun flatAim() = aimScript(AIM_DURATION, { ENABLE_FLAT_AIM }) { dest, current, aimSpeed ->
+fun flatAim() = aimScript(curSettings["AIM_DURATION"].toString().toInt(), { curSettings["ENABLE_FLAT_AIM"]!!.strToBool() }) { dest, current, aimSpeed ->
 	writeAim(current, dest, aimSpeed.toDouble())
 }

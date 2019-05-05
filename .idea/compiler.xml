@@ -6,8 +6,8 @@
       <module name="Charlatano_test" target="1.8" />
       <module name="com.RatPlague.main" target="11" />
       <module name="com.RatPlague.test" target="11" />
-      <module name="rat.poison.RatPoison.main" target="11" />
-      <module name="rat.poison.RatPoison.test" target="11" />
+      <module name="rat.poison.RatPoison.main" target="1.8" />
+      <module name="rat.poison.RatPoison.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

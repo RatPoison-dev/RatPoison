@@ -11,8 +11,11 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
 import rat.poison.App
+import rat.poison.boolToStr
+import rat.poison.curSettings
 import rat.poison.scripts.esp.disableEsp
 import rat.poison.settings.*
+import rat.poison.strToBool
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.esptabs.*
 
@@ -49,14 +52,14 @@ class VisualsTab : Tab(false, false) {
 
 
     init {
-        //Create Enable_Esp Toggle
-        //val enableEsp = VisTextButton("ENABLE_ESP", "toggle")
+        //Create curSettings["ENABLE_ESP"]!!.strToBool() Toggle
+        //val enableEsp = VisTextButton("curSettings["ENABLE_ESP"]!!.strToBool()", "toggle")
         Tooltip.Builder("Whether or not to enable esp").target(enableEsp).build()
-        enableEsp.isChecked = ENABLE_ESP
+        enableEsp.isChecked = curSettings["ENABLE_ESP"]!!.strToBool()
         enableEsp.changed { _, _ ->
-            ENABLE_ESP = enableEsp.isChecked
+            curSettings["ENABLE_ESP"] = enableEsp.isChecked.boolToStr()
 
-            if (!ENABLE_ESP) {
+            if (!curSettings["ENABLE_ESP"]!!.strToBool()) {
                 disableEsp()
             }
             true

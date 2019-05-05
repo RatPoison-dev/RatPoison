@@ -37,25 +37,23 @@ const val SETTINGS_DIRECTORY = "settings"
 var saving = false
 var settingsLoaded = false
 
+val curSettings = Settings()
+
 fun main() {
     System.setProperty("jna.nosys", "true")
 
-    //scanner() //not needed, keeping until menu fully finished, possibly implemented UI console
-    //implement to ui console? or keep and add a disable menu
-
-    loadSettings()
-    //autoReloadSettings()
+    loadSettingsFromFiles()
 
     if (FLICKER_FREE_GLOW) {
         PROCESS_ACCESS_FLAGS = PROCESS_ACCESS_FLAGS or WinNT.PROCESS_VM_OPERATION
     }
 
     if (!MENU) {
-        BOX_ESP = false
-        SKELETON_ESP = false
-        ENABLE_RECOIL_CROSSHAIR = false
-        ENABLE_BOMB_TIMER = false
-        INDICATOR_ESP = false
+        curSettings["BOX_ESP"] = "false"
+        curSettings["SKELETON_ESP"] = "false"
+        curSettings["ENABLE_RECOIL_CROSSHAIR"] = "false"
+        curSettings["ENABLE_BOMB_TIMER"] = "false"
+        curSettings["INDICATOR_ESP"] = "false"
     }
 
     CSGO.initialize()
@@ -76,7 +74,7 @@ fun main() {
     automaticWeapon()
 
     //Overlay check, not updated?
-    if (MENU && (BOX_ESP || SKELETON_ESP || ENABLE_BOMB_TIMER || ENABLE_RECOIL_CROSSHAIR || INDICATOR_ESP)) {
+    if (MENU && (curSettings["BOX_ESP"]!!.strToBool() || curSettings["SKELETON_ESP"]!!.strToBool() || curSettings["ENABLE_BOMB_TIMER"]!!.strToBool() || curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool() || curSettings["INDICATOR_ESP"]!!.strToBool())) {
         App.open()
 
         Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
@@ -95,30 +93,27 @@ fun main() {
     }
 }
 
-var engine = ScriptEngineManager().getEngineByName("kotlin")
+//var engine = ScriptEngineManager().getEngineByName("kotlin")
 
-fun loadSettings() {
-	setIdeaIoUseFallback()
-    settingsLoaded = false
-    engine = ScriptEngineManager().getEngineByName("kotlin")
-    File(SETTINGS_DIRECTORY).listFiles().forEach {
-        if (it.name != "cfg1.kts" && it.name != "cfg2.kts" && it.name != "cfg3.kts" && it.name != "hitsound.mp3") {
-            FileReader(it).use {
-                engine.eval(it.readLines().joinToString("\n"))
+fun loadSettingsFromFiles() {
+    File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
+        if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
+            FileReader(file).readLines().forEach { line ->
+                if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
+                    val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
+
+                    println(curLine[0] + " = " + curLine[2])
+
+                    curSettings[curLine[0]] = curLine[2]
+                }
             }
         }
     }
     settingsLoaded = true
 }
 
-//fun autoReloadSettings() = every(5000) {
-//    println("Called to reload settings")
-//    if (!saving && settingsLoaded) {
-//        loadSettings()
-//    }
-//}
-
 var opened = false
+var overlayMenuKey = ObservableBoolean({keyPressed(1)})
 
 ////Courtesy of Mr. Noad, lmlapp converted to normal
 object App : ApplicationAdapter() {
@@ -127,7 +122,6 @@ object App : ApplicationAdapter() {
     lateinit var shapeRenderer: ShapeRenderer
     val overlay = Overlay("Counter-Strike: Global Offensive", "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     var haveTarget = false
-    var Menu_Key = ObservableBoolean({ keyPressed(MENU_KEY) })
     lateinit var menuStage: Stage
     lateinit var bombStage: Stage
     private val glyphLayout = GlyphLayout()
@@ -135,6 +129,7 @@ object App : ApplicationAdapter() {
     private lateinit var camera: OrthographicCamera
 
     override fun create() {
+        overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toString().toInt()) })
         opened = true
         VisUI.load()
         super.create()
@@ -190,7 +185,7 @@ object App : ApplicationAdapter() {
                     batch.end()
                 }
 
-                if (ENABLE_BOMB_TIMER)
+                if (curSettings["ENABLE_BOMB_TIMER"]!!.strToBool())
                 {
                     val bombBatch = bombStage.batch
                     bombBatch.projectionMatrix = bombCamera.combined
@@ -212,8 +207,8 @@ object App : ApplicationAdapter() {
                 //Extra bits might not be needed, from deprecated overlay
             }
 
-            Menu_Key.update()
-            if (Menu_Key.justBecomeTrue) {
+            overlayMenuKey.update()
+            if (overlayMenuKey.justBecomeTrue) {
                 MENUTOG = !MENUTOG
                 overlay.clickThrough = !overlay.clickThrough
             }
@@ -285,4 +280,24 @@ fun sync(fps : Int) {
             variableYieldTime = Math.max(variableYieldTime - 2 * 1000, 0)
         }
     }
+}
+
+fun Any.strToBool() = this == "true" || this == true
+fun Any.boolToStr() = this.toString()
+
+fun Any.strToColor() = convStrToColor(this.toString())
+
+fun convStrToColor(input: String): rat.poison.game.Color {
+    var line = input
+    line = line.replace("Color(", "").replace(")", "").replace(",", "")
+
+    var curLine = line.trim().split(" ".toRegex(), 4)
+
+
+    var color = rat.poison.game.Color(curLine[0].replace("red=", "").toInt(),
+            curLine[1].replace("green=", "").toInt(),
+            curLine[2].replace("blue=", "").toInt(),
+            curLine[3].replace("alpha=", "").toDouble())
+
+    return color
 }

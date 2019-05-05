@@ -3,11 +3,13 @@ package rat.poison.ui.tabs.esptabs
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.boolToStr
+import rat.poison.curSettings
 import rat.poison.scripts.esp.disableEsp
 import rat.poison.settings.*
+import rat.poison.strToBool
 import rat.poison.ui.UIUpdate
 import rat.poison.ui.changed
-import rat.poison.utils.inBackground
 
 class GlowEspTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -38,18 +40,18 @@ class GlowEspTab : Tab(false, false) {
             true
         }
 
-        //Create Inv_Glow_Esp Toggle
+        //Create curSettings["INV_GLOW_ESP"]!!.strToBool() Toggle
         Tooltip.Builder("Whether or not to enable inverted glow esp if glow esp is enabled").target(invGlowEsp).build()
-        if (INV_GLOW_ESP) invGlowEsp.toggle()
+        if (curSettings["INV_GLOW_ESP"]!!.strToBool()) invGlowEsp.toggle()
         invGlowEsp.changed { _, _ ->
-            INV_GLOW_ESP = invGlowEsp.isChecked
+            curSettings["INV_GLOW_ESP"] = invGlowEsp.isChecked.boolToStr()
 
-            if (INV_GLOW_ESP) {
+            if (curSettings["INV_GLOW_ESP"]!!.strToBool()) {
                 GLOW_ESP = true
                 glowEsp.isChecked = true
                 glowEsp.isDisabled = true
             }
-            else if (!MODEL_ESP)
+            else if (!curSettings["MODEL_ESP"]!!.strToBool())
             {
                 glowEsp.isDisabled = false
             }
@@ -57,33 +59,33 @@ class GlowEspTab : Tab(false, false) {
             true
         }
 
-        //Create Model_Esp Toggle
+        //Create curSettings["MODEL_ESP"]!!.strToBool() Toggle
         Tooltip.Builder("Whether or not to enable model esp").target(modelEsp).build()
-        if (MODEL_ESP) modelEsp.toggle()
+        if (curSettings["MODEL_ESP"]!!.strToBool()) modelEsp.toggle()
         modelEsp.changed { _, _ ->
-            MODEL_ESP = modelEsp.isChecked
+            curSettings["MODEL_ESP"] = modelEsp.isChecked.boolToStr()
 
-            if (MODEL_ESP)
+            if (curSettings["MODEL_ESP"]!!.strToBool())
             {
                 GLOW_ESP = true
                 glowEsp.isChecked = true
                 glowEsp.isDisabled = true
             }
-            else if (!INV_GLOW_ESP)
+            else if (!curSettings["INV_GLOW_ESP"]!!.strToBool())
             {
                 glowEsp.isDisabled = false
             }
             true
         }
 
-        //Create Model_And_Glow Toggle
+        //Create curSettings["MODEL_AND_GLOW"]!!.strToBool() Toggle
         Tooltip.Builder("Whether or not to enable model when visible, glow when not visible esp").target(modelAndGlow).build()
-        modelAndGlow.isChecked = MODEL_AND_GLOW
+        modelAndGlow.isChecked = curSettings["MODEL_AND_GLOW"]!!.strToBool()
         modelAndGlow.changed { _, _ ->
-            MODEL_AND_GLOW = modelAndGlow.isChecked
+            curSettings["MODEL_AND_GLOW"] = modelAndGlow.isChecked.boolToStr()
 
-            if (MODEL_AND_GLOW) {
-                MODEL_ESP = true
+            if (curSettings["MODEL_AND_GLOW"]!!.strToBool()) {
+                curSettings["MODEL_ESP"] = true
                 modelEsp.isChecked = true
                 modelEsp.isDisabled = true
 
@@ -100,57 +102,57 @@ class GlowEspTab : Tab(false, false) {
 
         //Create Show_Team Toggle
         Tooltip.Builder("Whether or not to show team with esp").target(showTeam).build()
-        if (GLOW_SHOW_TEAM) showTeam.toggle()
+        if (curSettings["GLOW_SHOW_TEAM"]!!.strToBool()) showTeam.toggle()
         showTeam.changed { _, _ ->
-            GLOW_SHOW_TEAM = showTeam.isChecked
+            curSettings["GLOW_SHOW_TEAM"] = showTeam.isChecked.boolToStr()
             true
         }
 
         //Create Show_Enemies Toggle
         Tooltip.Builder("Whether or not to show enemies with esp").target(showEnemies).build()
-        if (GLOW_SHOW_ENEMIES) showEnemies.toggle()
+        if (curSettings["GLOW_SHOW_ENEMIES"]!!.strToBool()) showEnemies.toggle()
         showEnemies.changed { _, _ ->
-            GLOW_SHOW_ENEMIES = showEnemies.isChecked
+            curSettings["GLOW_SHOW_ENEMIES"] = showEnemies.isChecked.boolToStr()
             true
         }
 
         //Create Show_Dormant Toggle
         Tooltip.Builder("Whether or not to show dormant entities with esp").target(showDormant).build()
-        if (GLOW_SHOW_DORMANT) showDormant.toggle()
+        if (curSettings["GLOW_SHOW_DORMANT"]!!.strToBool()) showDormant.toggle()
         showDormant.changed { _, _ ->
-            GLOW_SHOW_DORMANT = showDormant.isChecked
+            curSettings["GLOW_SHOW_DORMANT"] = showDormant.isChecked.boolToStr()
             true
         }
 
         //Create Show_Bomb Toggle
         Tooltip.Builder("Whether or not to show bomb with esp").target(showBomb).build()
-        if (GLOW_SHOW_BOMB) showBomb.toggle()
+        if (curSettings["GLOW_SHOW_BOMB"]!!.strToBool()) showBomb.toggle()
         showBomb.changed { _, _ ->
-            GLOW_SHOW_BOMB = showBomb.isChecked
+            curSettings["GLOW_SHOW_BOMB"] = showBomb.isChecked.boolToStr()
             true
         }
 
         //Create Show_Bomb Toggle
         Tooltip.Builder("Whether or not to show eapons with esp").target(showWeapons).build()
-        if (GLOW_SHOW_WEAPONS) showWeapons.toggle()
+        if (curSettings["GLOW_SHOW_WEAPONS"]!!.strToBool()) showWeapons.toggle()
         showWeapons.changed { _, _ ->
-            GLOW_SHOW_WEAPONS = showWeapons.isChecked
+            curSettings["GLOW_SHOW_WEAPONS"] = showWeapons.isChecked.boolToStr()
             true
         }
 
         //Create Show_Bomb Toggle
         Tooltip.Builder("Whether or not to show grenades with esp").target(showGrenades).build()
-        if (GLOW_SHOW_GRENADES) showGrenades.toggle()
+        if (curSettings["GLOW_SHOW_GRENADES"]!!.strToBool()) showGrenades.toggle()
         showGrenades.changed { _, _ ->
-            GLOW_SHOW_GRENADES = showGrenades.isChecked
+            curSettings["GLOW_SHOW_GRENADES"] = showGrenades.isChecked.boolToStr()
             true
         }
 
         //Create Show_Target Toggle
         Tooltip.Builder("Whether or not to show grenades with esp").target(showTarget).build()
-        if (GLOW_SHOW_TARGET) showTarget.toggle()
+        if (curSettings["GLOW_SHOW_TARGET"]!!.strToBool()) showTarget.toggle()
         showTarget.changed { _, _ ->
-            GLOW_SHOW_TARGET = showTarget.isChecked
+            curSettings["GLOW_SHOW_TARGET"] = showTarget.isChecked.boolToStr()
             true
         }
 

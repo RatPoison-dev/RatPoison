@@ -43,15 +43,7 @@ PISTOL_AIM_SPEED = 24
 /**
  * The smoothness of the aimbot
  */
-PISTOL_AIM_SMOOTHNESS = 4.5
-
-/**
- * The strictness, or "stickiness" of the aimbot; the higher the number, the
- * less strict the aimbot will stick to targets.
- *
- * The minimum value is 1.0
- */
-PISTOL_AIM_STRICTNESS = 1.0
+PISTOL_AIM_SMOOTHNESS = 2.5
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,21 +65,3 @@ PISTOL_PERFECT_AIM_FOV = 10
  * The chance, from 1% to 100% (0 to 100) for perfect aim to activate.
  */
 PISTOL_PERFECT_AIM_CHANCE = 15
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////// --- AIM ASSIST --- //////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-/**
- * Enables "aim assist" mode, which has no stickiness, and gives you small
- * extra movements towards the aim bone.
- *
- * This setting should be used by high-level players who are experienced aimers.
- */
-PISTOL_AIM_ASSIST_MODE = true
-
-/**
- * The amount of strictness for the aim assist mode, with a mimimum value of 1.
- */
-PISTOL_AIM_ASSIST_STRICTNESS = 80

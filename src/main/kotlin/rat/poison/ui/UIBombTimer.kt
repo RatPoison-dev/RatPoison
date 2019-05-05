@@ -36,6 +36,6 @@ class UIBombTimer : VisWindow("RatPoison UI") {
         setPosition(0F, 0F)
         isResizable = false
 
-        UIUpdate()
+        //UIUpdate()
     }
 }

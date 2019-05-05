@@ -1,5 +1,3 @@
-
-
 package rat.poison.scripts.esp
 
 import com.badlogic.gdx.graphics.Color
@@ -17,6 +15,8 @@ import rat.poison.utils.collections.CacheableList
 import rat.poison.utils.extensions.uint
 import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap
 import rat.poison.App
+import rat.poison.curSettings
+import rat.poison.strToBool
 
 private val bones = Array(2048) { Line() }
 private val entityBones = Long2ObjectArrayMap<CacheableList<Pair<Int, Int>>>()
@@ -24,11 +24,11 @@ private var currentIdx = 0
 
 internal fun skeletonEsp() {
 	App {
-		if (!SKELETON_ESP || !ENABLE_ESP || MENUTOG) return@App
+		if (!curSettings["SKELETON_ESP"]!!.strToBool() || !curSettings["ENABLE_ESP"]!!.strToBool() || MENUTOG) return@App
 
 		forEntities(ccsPlayer) {
 			val entity = it.entity
-			if (entity == me || entity.dead() || (!SKELETON_SHOW_DORMANT && entity.dormant()) || (!SKELETON_SHOW_TEAM && me.team() == entity.team()) || (!SKELETON_SHOW_ENEMIES && me.team() != entity.team())) return@forEntities false
+			if (entity == me || entity.dead() || (!curSettings["SKELETON_SHOW_DORMANT"]!!.strToBool() && entity.dormant()) || (!curSettings["SKELETON_SHOW_TEAM"]!!.strToBool() && me.team() == entity.team()) || (!curSettings["SKELETON_SHOW_ENEMIES"]!!.strToBool() && me.team() != entity.team())) return@forEntities false
 			(entityBones.get(entity) ?: CacheableList(20)).apply {
 				if (isEmpty()) {
 					val studioModel = csgoEXE.uint(entity.studioHdr())

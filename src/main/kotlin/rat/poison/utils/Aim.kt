@@ -14,6 +14,7 @@ import rat.poison.settings.GAME_YAW
 import rat.poison.utils.extensions.refresh
 import rat.poison.utils.extensions.set
 import com.sun.jna.platform.win32.WinDef.POINT
+import rat.poison.curSettings
 import rat.poison.settings.AIM_SMOOTHNESS
 
 private val mousePos = ThreadLocal.withInitial { POINT() }
@@ -68,13 +69,14 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
 	val mousePos = mousePos.get().refresh()
 	
 	val target = target.get()
-	target.set((mousePos.x + dx/AIM_SMOOTHNESS).toInt(), (mousePos.y + dy/AIM_SMOOTHNESS).toInt())
-	
+	val smooth = curSettings["AIM_SMOOTHNESS"].toString().toDouble()
+	target.set((mousePos.x + dx/smooth).toInt(), (mousePos.y + dy/smooth).toInt())
+
 	if (target.x <= 0 || target.x >= gameX + gameWidth || target.y <= 0 || target.y >= gameY + gameHeight) return
 
 	if (perfect) {
 		writeAim(currentAngle, destinationAngle, 1.0)
-		//Thread.sleep(20)
+		Thread.sleep(20)
 	} else HumanMouse.fastSteps(mousePos, target) { steps, _ ->
 		mousePos.refresh()
 		

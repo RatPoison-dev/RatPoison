@@ -6,6 +6,7 @@ buildscript {
 	ext.gdxVersion = '1.9.3'
 	ext.visuiVersion = "1.1.1"
 	ext.lmlVersion = "1.9.1.9.6"
+	//ext.jacksonVersion = "2.9.8"
 	
 	repositories {
 		jcenter()
@@ -40,6 +41,11 @@ dependencies {
 	compile "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
 	compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
 	compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+
+	//compile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+	//compile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
+	//compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+	//compile "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion"
 	
 	compile group: 'net.java.dev.jna', name: 'jna', version: jnaVersion
 	compile group: 'net.java.dev.jna', name: 'jna-platform', version: jnaVersion

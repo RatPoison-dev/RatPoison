@@ -1,16 +1,16 @@
 package rat.poison.scripts.esp
 
 import org.jire.arrowhead.keyPressed
-import rat.poison.game.*
-import rat.poison.game.offsets.ClientOffsets
+import rat.poison.curSettings
 import rat.poison.settings.*
+import rat.poison.strToBool
 import rat.poison.ui.UIUpdate
 import rat.poison.utils.every
 
 fun espToggle() = every(4) {
     if (keyPressed(VISUALS_TOGGLE_KEY)) {
-        ENABLE_ESP = !ENABLE_ESP
-        if (!ENABLE_ESP) {
+        curSettings["ENABLE_ESP"] = !curSettings["ENABLE_ESP"]!!.strToBool()
+        if (!curSettings["ENABLE_ESP"]!!.strToBool()) {
             disableEsp()
         }
 

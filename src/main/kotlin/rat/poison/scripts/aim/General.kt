@@ -6,6 +6,9 @@ import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.settings.*
 import rat.poison.utils.*
 import org.jire.arrowhead.keyPressed
+import rat.poison.curSettings
+import rat.poison.settingsLoaded
+import rat.poison.strToBool
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
@@ -25,7 +28,7 @@ var closestDelta = Double.MAX_VALUE
 var closestPlayer = -1L
 
 internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
-						lockFOV: Int = AIM_FOV, BONE: Int = AIM_BONE): Player {
+						lockFOV: Int = curSettings["AIM_FOV"].toString().toInt(), BONE: Int = curSettings["AIM_BONE"].toString().toInt()): Player {
 	closestFOV = Double.MAX_VALUE
 	closestDelta = Double.MAX_VALUE
 	closestPlayer = -1L
@@ -38,14 +41,14 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 
 		if (BONE == -2)
 		{
-			if (BONE_TRIGGER_HB && BONE_TRIGGER_BB)
+			if (curSettings["BONE_TRIGGER_HB"]!!.strToBool() && curSettings["BONE_TRIGGER_BB"]!!.strToBool())
 			{
 				for (i in 3..8)
 				{
 					calcTarget(entity, position, angle, lockFOV, i)
 				}
 			}
-			else if (BONE_TRIGGER_BB)
+			else if (curSettings["BONE_TRIGGER_BB"]!!.strToBool())
 			{
 				for (i in 3..7)
 				{
@@ -72,14 +75,13 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	}
 
 	if (closestDelta == Double.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return -1
-
-	if (PERFECT_AIM && allowPerfect && closestFOV <= PERFECT_AIM_FOV && randInt(100 + 1) <= PERFECT_AIM_CHANCE) {
-		perfect.set(true)
+		if (curSettings["PERFECT_AIM"]!!.strToBool() && allowPerfect && closestFOV <= curSettings["PERFECT_AIM_FOV"].toString().toInt() && randInt(100 + 1) <= curSettings["PERFECT_AIM_CHANCE"].toString().toInt()) {
+			perfect.set(true)
 	}
 	return closestPlayer
 }
 
-internal fun calcTarget(entity: Entity, position: Angle, angle: Angle, lockFOV: Int = AIM_FOV, BONE: Int = HEAD_BONE) {
+internal fun calcTarget(entity: Entity, position: Angle, angle: Angle, lockFOV: Int = curSettings["AIM_FOV"].toString().toInt(), BONE: Int = HEAD_BONE) {
 	val ePos: Angle = entity.bones(BONE)
 	val distance = position.distanceTo(ePos)
 
@@ -98,7 +100,7 @@ internal fun calcTarget(entity: Entity, position: Angle, angle: Angle, lockFOV: 
 }
 
 internal fun Entity.inMyTeam() =
-		!TEAMMATES_ARE_ENEMIES && if (DANGER_ZONE) {
+		!curSettings["TEAMMATES_ARE_ENEMIES"]!!.strToBool() && if (DANGER_ZONE) {
 			me.survivalTeam().let { it > -1 && it == this.survivalTeam() }
 		} else me.team() == team()
 
@@ -113,11 +115,11 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
                                                       currentAngle: Angle, aimSpeed: Int) -> R) = every(duration) {
 	if (!precheck()) return@every
 
-	val aim = ACTIVATE_FROM_FIRE_KEY && keyPressed(FIRE_KEY)
-	val forceAim = keyPressed(FORCE_AIM_KEY)
+	val aim = curSettings["ACTIVATE_FROM_FIRE_KEY"]!!.strToBool() && keyPressed(curSettings["FIRE_KEY"].toString().toInt())
+	val forceAim = keyPressed(curSettings["FORCE_AIM_KEY"].toString().toInt())
 	val haveAmmo = me.weaponEntity().bullets() > 0
 
-    bone.set(AIM_BONE)
+    bone.set(curSettings["AIM_BONE"].toString().toInt())
 
 	val pressed = (aim || forceAim || boneTrig) && !MENUTOG && haveAmmo
 	var currentTarget = target.get()
@@ -146,17 +148,14 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	
 	if (currentTarget == me || !currentTarget.canShoot()) {
 		reset()
-		
-		if (TARGET_SWAP_MAX_DELAY > 0) {
-			Thread.sleep(randLong(TARGET_SWAP_MIN_DELAY, TARGET_SWAP_MAX_DELAY))
-		}
-	} else { /*if (/*currentTarget.onGround() &&*/ me.onGround())*/
+		Thread.sleep(500 + randLong(500)) //Possible fix for turning randomly.
+	} else {
 		val bonePosition = currentTarget.bones(bone.get())
 		
 		val destinationAngle = calculateAngle(me, bonePosition)
-		if (AIM_ASSIST_MODE && !perfect.get()) destinationAngle.finalize(currentAngle, AIM_ASSIST_STRICTNESS / 100.0)
-		
-		val aimSpeed = AIM_SPEED
+		if (curSettings["AIM_ASSIST_MODE"]!!.strToBool() && !perfect.get()) destinationAngle.finalize(currentAngle, 1.0)
+
+		val aimSpeed = curSettings["AIM_SPEED"].toString().toInt()
 		doAim(destinationAngle, currentAngle, aimSpeed)
 	}
 }

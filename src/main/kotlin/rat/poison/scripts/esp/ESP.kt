@@ -1,9 +1,10 @@
 package rat.poison.scripts.esp
 
-import rat.poison.settings.ENABLE_ESP
+import rat.poison.curSettings
+import rat.poison.strToBool
 
 fun esp() {
-	if (!ENABLE_ESP) return
+	if (!curSettings["ENABLE_ESP"]!!.strToBool()) return
 
 	glowEsp()
 	boxEsp()

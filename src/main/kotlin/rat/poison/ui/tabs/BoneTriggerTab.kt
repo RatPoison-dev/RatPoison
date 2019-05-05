@@ -4,7 +4,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.util.Validators
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.boolToStr
+import rat.poison.curSettings
 import rat.poison.settings.*
+import rat.poison.strToBool
 import rat.poison.ui.bTrigTab
 import rat.poison.ui.changed
 import rat.poison.ui.mainTabbedPane
@@ -14,7 +17,7 @@ class BTrigTab : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     val enableBoneTrigger = VisCheckBox("Enable Bone Trigger")
-    val boneTriggerFovLabel = VisLabel("Bone Trigger Fov: " + BONE_TRIGGER_FOV.toString() + when(BONE_TRIGGER_FOV.toString().length) {3->"  " 2->"    " else ->"      "})
+    val boneTriggerFovLabel = VisLabel("Bone Trigger Fov: " + curSettings["BONE_TRIGGER_FOV"].toString().toString() + when(curSettings["BONE_TRIGGER_FOV"].toString().toString().length) {3->"  " 2->"    " else ->"      "})
     val boneTriggerFovSlider = VisSlider(0F, 32F, 1F, false)
     val boneTriggerBoneBox = VisSelectBox<String>()
     val boneTriggerCheckHead = VisCheckBox("Head Bone")
@@ -24,21 +27,21 @@ class BTrigTab : Tab(false, false) {
     val boneTriggerKeyField = VisValidatableTextField(Validators.FLOATS)
 
     init {
-        //Create Enable_Bone_Trigger Toggle
+        //Create curSettings["ENABLE_BONE_TRIGGER"]!!.strToBool() Toggle
         Tooltip.Builder("Whether or not to enable bone trigger").target(enableBoneTrigger).build()
-        enableBoneTrigger.isChecked = ENABLE_BONE_TRIGGER
+        enableBoneTrigger.isChecked = curSettings["ENABLE_BONE_TRIGGER"]!!.strToBool()
         enableBoneTrigger.changed { _, _ ->
-            ENABLE_BONE_TRIGGER = enableBoneTrigger.isChecked
+            curSettings["ENABLE_BONE_TRIGGER"] = enableBoneTrigger.isChecked.boolToStr()
             true
         }
 
-        //Create Bone_Trigger_Fov Slider
+        //Create curSettings["BONE_TRIGGER_FOV"].toString() Slider
         val boneTriggerFov = VisTable()
         Tooltip.Builder("The bone trigger field of view").target(boneTriggerFov).build()
-        boneTriggerFovSlider.value = BONE_TRIGGER_FOV.toFloat()
+        boneTriggerFovSlider.value = curSettings["BONE_TRIGGER_FOV"].toString().toFloat()
         boneTriggerFovSlider.changed { _, _ ->
-            BONE_TRIGGER_FOV = boneTriggerFovSlider.value.toInt()
-            boneTriggerFovLabel.setText("Bone Trigger Fov: " + BONE_TRIGGER_FOV.toString() + when(BONE_TRIGGER_FOV.toString().length) {3->"  " 2->"    " else ->"      "})
+            curSettings["BONE_TRIGGER_FOV"] = boneTriggerFovSlider.value.toInt().toString()
+            boneTriggerFovLabel.setText("Bone Trigger Fov: " + curSettings["BONE_TRIGGER_FOV"].toString().toString() + when(curSettings["BONE_TRIGGER_FOV"].toString().toString().length) {3->"  " 2->"    " else ->"      "})
         }
 
         boneTriggerFov.add(boneTriggerFovLabel).spaceRight(6F)
@@ -46,44 +49,44 @@ class BTrigTab : Tab(false, false) {
 
         //Create Bone Trigger Head Bone
         Tooltip.Builder("Whether to trigger on head bone").target(boneTriggerCheckHead).build()
-        if (BONE_TRIGGER_HB) boneTriggerCheckHead.toggle()
+        if (curSettings["BONE_TRIGGER_HB"]!!.strToBool()) boneTriggerCheckHead.toggle()
         boneTriggerCheckHead.changed { _, _ ->
-            BONE_TRIGGER_HB = boneTriggerCheckHead.isChecked
+            curSettings["BONE_TRIGGER_HB"] = boneTriggerCheckHead.isChecked.boolToStr()
             true
         }
 
         //Create Bone Trigger Body Bone
         Tooltip.Builder("Whether to trigger on body bone").target(boneTriggerCheckBody).build()
-        if (BONE_TRIGGER_BB) boneTriggerCheckBody.toggle()
+        if (curSettings["BONE_TRIGGER_BB"]!!.strToBool()) boneTriggerCheckBody.toggle()
         boneTriggerCheckBody.changed { _, _ ->
-            BONE_TRIGGER_BB = boneTriggerCheckBody.isChecked
+            curSettings["BONE_TRIGGER_BB"] = boneTriggerCheckBody.isChecked.boolToStr()
             true
         }
 
-        //Create Aim_On_Bone_Trigger Toggle
+        //Create curSettings["AIM_ON_BONE_TRIGGER"]!!.strToBool() Toggle
         Tooltip.Builder("Whether or not to use current aim configuration with bone trigger").target(aimOnBoneTrigger).build()
-        if (AIM_ON_BONE_TRIGGER) aimOnBoneTrigger.toggle()
+        if (curSettings["AIM_ON_BONE_TRIGGER"]!!.strToBool()) aimOnBoneTrigger.toggle()
         aimOnBoneTrigger.changed { _, _ ->
-            AIM_ON_BONE_TRIGGER = aimOnBoneTrigger.isChecked
+            curSettings["AIM_ON_BONE_TRIGGER"] = aimOnBoneTrigger.isChecked.boolToStr()
             true
         }
 
-        //Create Bone_Trigger_Enable_Key Toggle
+        //Create curSettings["BONE_TRIGGER_ENABLE_KEY"]!!.strToBool() Toggle
         Tooltip.Builder("Whether or not bone trigger activates when an aim key is held down").target(boneTriggerEnableKey).build()
-        if (BONE_TRIGGER_ENABLE_KEY) boneTriggerEnableKey.toggle()
+        if (curSettings["BONE_TRIGGER_ENABLE_KEY"]!!.strToBool()) boneTriggerEnableKey.toggle()
         boneTriggerEnableKey.changed { _, _ ->
-            BONE_TRIGGER_ENABLE_KEY = boneTriggerEnableKey.isChecked
+            curSettings["BONE_TRIGGER_ENABLE_KEY"] = boneTriggerEnableKey.isChecked.boolToStr()
             true
         }
 
-        //Create Bone_Trigger_Key
+        //Create curSettings["BONE_TRIGGER_KEY"]
         val boneTriggerKey = VisTable()
         Tooltip.Builder("The key bone trigger will check is being held down if BONE_TRIGGER_ENABLE_KEY is enabled").target(boneTriggerKey).build()
         val boneTriggerKeyLabel = VisLabel("Bone Trigger Key: ")
-        boneTriggerKeyField.text = BONE_TRIGGER_KEY.toString()
+        boneTriggerKeyField.text = curSettings["BONE_TRIGGER_KEY"].toString()
         boneTriggerKey.changed { _, _ ->
             if (boneTriggerKeyField.text.toIntOrNull() != null) {
-                BONE_TRIGGER_KEY = boneTriggerKeyField.text.toInt()
+                curSettings["BONE_TRIGGER_KEY"] = boneTriggerKeyField.text.toInt()
             }
         }
         boneTriggerKey.add(boneTriggerKeyLabel)

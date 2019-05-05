@@ -5,10 +5,13 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.utils.Align
 import rat.poison.App
+import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.settings.*
+import rat.poison.strToBool
+import rat.poison.strToColor
 import rat.poison.utils.Vector
 
 private val vHead = Vector()
@@ -22,11 +25,11 @@ private val boxes = Array(128) { Box() }
 private var currentIdx = 0
 
 internal fun boxEsp() = App {
-	if (!BOX_ESP || !ENABLE_ESP || MENUTOG) return@App
+	if (!curSettings["BOX_ESP"]!!.strToBool() || !curSettings["ENABLE_ESP"]!!.strToBool() || MENUTOG) return@App
 
 	forEntities(ccsPlayer) { //Only enemies atm
 		val entity = it.entity
-		if (entity == me || entity.dead() || entity.dormant() || (!BOX_SHOW_ENEMIES && me.team() != entity.team()) || (!BOX_SHOW_TEAM && me.team() == entity.team()) ) return@forEntities false
+		if (entity == me || entity.dead() || entity.dormant() || (!curSettings["BOX_SHOW_ENEMIES"]!!.strToBool() && me.team() != entity.team()) || (!curSettings["BOW_SHOW_ENEMIES"]!!.strToBool() && me.team() == entity.team()) ) return@forEntities false
 
 		vHead.set(entity.bone(0xC), entity.bone(0x1C), entity.bone(0x2C) + 9)
 		vFeet.set(vHead.x, vHead.y, vHead.z - 75)
@@ -36,7 +39,9 @@ internal fun boxEsp() = App {
 			val boxW = boxH / 5F
 
 			//val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1
-			val c = /*if (bomb > 0 && entity == bomb.carrier()) Color.GREEN else*/ if (me.team() == entity.team()) Color(TEAM_COLOR.red.toFloat(), TEAM_COLOR.green.toFloat(), TEAM_COLOR.blue.toFloat(), 1F) else Color(ENEMY_COLOR.red.toFloat(), ENEMY_COLOR.green.toFloat(), ENEMY_COLOR.blue.toFloat(), 1F)
+			val tCol = curSettings["TEAM_COLOR"]!!.strToColor()
+			val eCol = curSettings["ENEMY_COLOR"]!!.strToColor()
+			val c = if (me.team() == entity.team()) Color(tCol.red.toFloat(), tCol.green.toFloat(), tCol.blue.toFloat(), 1F) else Color(eCol.red.toFloat(), eCol.green.toFloat(), eCol.blue.toFloat(), 1F)
 
 			val sx = (vTop.x - boxW).toInt()
 			val sy = vTop.y.toInt()
@@ -63,7 +68,7 @@ internal fun boxEsp() = App {
 			this@sr.color = color
 			rect(x.toFloat(), y.toFloat(), w.toFloat(), h.toFloat())
 
-			if (BOX_ESP_DETAILS) {
+			if (curSettings["BOX_ESP_DETAILS"]!!.strToBool()) {
 				textRenderer.apply {
 					val glyph = GlyphLayout()
 

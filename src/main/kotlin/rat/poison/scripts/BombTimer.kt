@@ -3,12 +3,13 @@ package rat.poison.scripts
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import rat.poison.App
+import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.entity.*
 import rat.poison.game.entityByType
 import rat.poison.game.me
 import rat.poison.game.offsets.EngineOffsets
-import rat.poison.settings.ENABLE_BOMB_TIMER
+import rat.poison.strToBool
 import rat.poison.ui.bombText
 import rat.poison.utils.every
 
@@ -19,7 +20,7 @@ fun bombTimer() {
 
     App {
         bombText.setText(bombState.toString())
-        if (ENABLE_BOMB_TIMER && bombState.planted) {
+        if (curSettings["ENABLE_BOMB_TIMER"]!!.strToBool() && bombState.planted) {
             val Color : Color
             if ((me.team() == 3.toLong() && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) {
                 Color = Color(255F, 220F, 0F, .5F)
@@ -45,7 +46,7 @@ fun bombTimer() {
 private fun currentGameTicks(): Float = CSGO.engineDLL.float(EngineOffsets.dwGlobalVars + 16)
 
 fun bombUpdater() = every(8, true) {
-    if (!ENABLE_BOMB_TIMER) return@every
+    if (!curSettings["ENABLE_BOMB_TIMER"]!!.strToBool()) return@every
 
     val time = currentGameTicks()
     val bomb: Entity = entityByType(EntityType.CPlantedC4)?.entity ?: -1L

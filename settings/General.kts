@@ -120,3 +120,13 @@ CFG3_NAME = "Null"
 HEAD_BONE = 8
 SHOULDER_BONE = 7
 BODY_BONE = 6
+
+/**
+ * Default variables, no effect if changed
+ */
+PERFECT_AIM = false
+PERFECT_AIM_CHANCE = 1
+PERFECT_AIM_FOV = 1
+AIM_BONE = 8
+AIM_SPEED = 1
+AIM_ASSIST_MODE = false

@@ -15,18 +15,21 @@ import rat.poison.settings.*
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import java.lang.Float.floatToIntBits
+import rat.poison.curSettings
+import rat.poison.strToBool
+import rat.poison.strToColor
 
 //Change for entities to for entities ccsplayer
 
 internal fun chamsEsp() = every(256) {
-    if ((!CHAMS_ESP || !ENABLE_ESP)) return@every
+    if ((!curSettings["CHAMS_ESP"]!!.strToBool() || !curSettings["ENABLE_ESP"]!!.strToBool())) return@every
 
     val myTeam = me.team()
 
     val brightnessCounter : Int
 
-    if (CHAMS_BRIGHTNESS > 0) {
-        brightnessCounter = (255F / (CHAMS_BRIGHTNESS / 10F)).toInt()
+    if (curSettings["CHAMS_BRIGHTNESS"].toString().toInt() > 0) {
+        brightnessCounter = (255F / (curSettings["CHAMS_BRIGHTNESS"].toString().toInt() / 10F)).toInt()
     } else {
         brightnessCounter = 255
     }
@@ -47,7 +50,7 @@ internal fun chamsEsp() = every(256) {
         if (glowAddress <= 0) return@body false
 
         //Set Cvar
-        engineDLL[dwModelAmbientMin] = floatToIntBits(CHAMS_BRIGHTNESS.toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
+        engineDLL[dwModelAmbientMin] = floatToIntBits(curSettings["CHAMS_BRIGHTNESS"].toString().toInt().toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
 
         //Not exhaustive @warning
         if (it.type == EntityType.CCSPlayer) {
@@ -56,16 +59,16 @@ internal fun chamsEsp() = every(256) {
             val entityTeam = entity.team()
             val team = !DANGER_ZONE && myTeam == entityTeam
 
-            if (CHAMS_SHOW_ENEMIES && !team) {
-                if (CHAMS_SHOW_HEALTH) {
+            if (curSettings["CHAMS_SHOW_ENEMIES"]!!.strToBool() && !team) {
+                if (curSettings["CHAMS_SHOW_HEALTH"]!!.strToBool()) {
                     entity.chams(Color((255 - 2.55 * entity.health()).toInt(), (2.55 * entity.health()).toInt(), 0, 1.0))
                 } else {
-                    entity.chams(ENEMY_COLOR)
+                    entity.chams(curSettings["ENEMY_COLOR"]!!.strToColor())
                 }
-            } else if (!CHAMS_SHOW_ENEMIES) {
+            } else if (!curSettings["CHAMS_SHOW_ENEMIES"]!!.strToBool()) {
                 entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
-            } else if (CHAMS_SHOW_TEAM && team) {
-                entity.chams(TEAM_COLOR)
+            } else if (curSettings["CHAMS_SHOW_TEAM"]!!.strToBool() && team) {
+                entity.chams(curSettings["TEAM_COLOR"]!!.strToColor())
             }
             else {
                 entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))

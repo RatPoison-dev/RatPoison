@@ -43,15 +43,7 @@ RIFLE_AIM_SPEED = 16
 /**
  * The smoothness of the aimbot
  */
-RIFLE_AIM_SMOOTHNESS = 5.0
-
-/**
- * The strictness, or "stickiness" of the aimbot; the higher the number, the
- * less strict the aimbot will stick to targets.
- *
- * The minimum value is 1.0
- */
-RIFLE_AIM_STRICTNESS = 1.2
+RIFLE_AIM_SMOOTHNESS = 3.0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,21 +65,3 @@ RIFLE_PERFECT_AIM_FOV = 5
  * The chance, from 1% to 100% (0 to 100) for perfect aim to activate.
  */
 RIFLE_PERFECT_AIM_CHANCE = 10
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////// --- AIM ASSIST --- //////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-/**
- * Enables "aim assist" mode, which has no stickiness, and gives you small
- * extra movements towards the aim bone.
- *
- * This setting should be used by high-level players who are experienced aimers.
- */
-RIFLE_AIM_ASSIST_MODE = true
-
-/**
- * The amount of strictness for the aim assist mode, with a mimimum value of 1.
- */
-RIFLE_AIM_ASSIST_STRICTNESS = 60

@@ -1,7 +1,7 @@
 package rat.poison.scripts
 
 import rat.poison.SETTINGS_DIRECTORY
-import rat.poison.loadSettings
+//import rat.poison.loadSettings
 import rat.poison.settings.*
 import java.io.File
 import java.io.FileNotFoundException
@@ -37,13 +37,13 @@ fun scanner() {
 
             }
             line.equals("exit", true) -> {
-                CHAMS_BRIGHTNESS = 0
-                CHAMS_SHOW_HEALTH = false
+                //curSettings["CHAMS_BRIGHTNESS"].toString().toInt() = 0
+                //curSettings["CHAMS_SHOW_HEALTH"]!!.strToBool() = false
                 Thread.sleep(1000)
                 System.exit(0)
             }
             line.equals("reload", true) -> {
-                println(); loadSettings(); println()
+                println(); /*loadSettings();*/ println()
             }
             line.equals("list", true) -> {
                 println(); File(SETTINGS_DIRECTORY).listFiles().forEach { println(it) }; println()
@@ -89,7 +89,7 @@ fun scanner() {
                             println("Writing to " + fileDir)
                             println("Set " + command)
                             Files.write(File(fileDir).toPath(), prevFile.toByteArray(), StandardOpenOption.WRITE)
-                            println("Reloading settings"); loadSettings()
+                            println("Reloading settings"); /*loadSettings()*/
                             println()
                         }
                     } catch (e: FileNotFoundException) {

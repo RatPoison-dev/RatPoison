@@ -11,13 +11,15 @@ import rat.poison.game.entity.*
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.scripts.bombState
 import rat.poison.settings.*
+import rat.poison.strToBool
+import rat.poison.curSettings
 import rat.poison.utils.Vector
 import rat.poison.utils.distanceTo
 
 //Add radius var and oval toggle
 
 internal fun indicatorEsp() = App {
-    if (!ENABLE_ESP || MENUTOG || !INDICATOR_ESP) return@App //Needed menutog/notingame/inbackground or would crash at w2s view matrix
+    if (!curSettings["ENABLE_ESP"]!!.strToBool() || MENUTOG || !curSettings["INDICATOR_ESP"]!!.strToBool()) return@App //Needed menutog/notingame/inbackground or would crash at w2s view matrix
 
     forEntities {
         val entity = it.entity
@@ -27,23 +29,23 @@ internal fun indicatorEsp() = App {
             EntityType.CCSPlayer -> {
                 if (entity.dead() || entity.dormant()) return@forEntities false
 
-                if (INDICATOR_SHOW_ENEMIES && me.team() != entity.team()) {
+                if (curSettings["INDICATOR_SHOW_ENEMIES"]!!.strToBool() && me.team() != entity.team()) {
                     w2sHandler(entity.position(), me.position().distanceTo(entity.position()), ENEMY_COLOR, true)
-                } else if (INDICATOR_SHOW_TEAM && me.team() == entity.team()) {
+                } else if (curSettings["INDICATOR_SHOW_TEAM"]!!.strToBool() && me.team() == entity.team()) {
                     w2sHandler(entity.position(), me.position().distanceTo(entity.position()), TEAM_COLOR, true)
                 }
             }
 
             EntityType.CPlantedC4, EntityType.CC4 -> {
-                if (INDICATOR_SHOW_BOMB && bombState.planted) {
+                if (curSettings["INDICATOR_SHOW_BOMB"]!!.strToBool() && bombState.planted) {
                     w2sHandler(entity.position(), me.position().distanceTo(entity.position()), BOMB_COLOR, false)
                 }
             }
 
             else -> {
-                if (INDICATOR_SHOW_WEAPONS && it.type.weapon) {
+                if (curSettings["INDICATOR_SHOW_WEAPONS"]!!.strToBool() && it.type.weapon) {
                     w2sHandler(entity.position(), me.position().distanceTo(entity.position()), WEAPON_COLOR, false)
-                } else if (INDICATOR_SHOW_GRENADES && it.type.grenade) {
+                } else if (curSettings["INDICATOR_SHOW_GRENADES"]!!.strToBool() && it.type.grenade) {
                     w2sHandler(entity.position(), me.position().distanceTo(entity.position()), GRENADE_COLOR, false )
                 }
             }
@@ -58,14 +60,14 @@ fun indicatorPosition(screenPos: Vector3, indicatorPos: Vector3): Float {
 
     val d = Vector2.dst(screenPos.x, screenPos.y, centerX, centerY)
 
-    if (!INDICATOR_OVAL) {
-        val r = CSGO.gameHeight / INDICATOR_DISTANCE.toFloat() / d
+    if (!curSettings["INDICATOR_OVAL"]!!.strToBool()) {
+        val r = CSGO.gameHeight / curSettings["INDICATOR_DISTANCE"].toString().toDouble().toFloat() / d
 
         indicatorPos.x = r * screenPos.x + (1 - r) * centerX
         indicatorPos.y = r * screenPos.y + (1 - r) * centerY
     } else {
-        val ry = CSGO.gameHeight / INDICATOR_DISTANCE.toFloat() / d
-        val rx = CSGO.gameWidth / INDICATOR_DISTANCE.toFloat() / d
+        val ry = CSGO.gameHeight / curSettings["INDICATOR_DISTANCE"].toString().toDouble().toFloat() / d
+        val rx = CSGO.gameWidth / curSettings["INDICATOR_DISTANCE"].toString().toDouble().toFloat() / d
 
         indicatorPos.x = rx * screenPos.x + (1 - rx) * centerX
         indicatorPos.y = ry * screenPos.y + (1 - ry) * centerY
@@ -84,7 +86,7 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: rat.poison.game.Color, i
 
     var z = vector.z
 
-    if (INDICATOR_SHOW_ONSCREEN && (wTest >= dist/3)) { //On screen
+    if (curSettings["INDICATOR_SHOW_ONSCREEN"]!!.strToBool() && (wTest >= dist/3)) { //On screen
         if (isPlayer) z*=1.5
 
         worldToScreen(Vector(vector.x, vector.y, z), vOut)
