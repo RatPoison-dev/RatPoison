@@ -1,3 +1,5 @@
+Update 1.3 est May 6 or May 7
+
 Update 1.2 + 1.2.5 + 1.2.6
 
 * Aimbot should be a lot better at finding the correct target with multiple enemies near the crosshair
