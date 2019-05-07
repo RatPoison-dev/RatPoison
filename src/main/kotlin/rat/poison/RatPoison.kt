@@ -70,7 +70,7 @@ fun main() {
     automaticWeapon()
 
     //Overlay check, not updated?
-    if (MENU && (curSettings["BOX_ESP"]!!.strToBool() || curSettings["SKELETON_ESP"]!!.strToBool() || curSettings["ENABLE_BOMB_TIMER"]!!.strToBool() || curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool() || curSettings["INDICATOR_ESP"]!!.strToBool())) {
+    if (MENU) {
         App.open()
 
         Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
@@ -87,6 +87,7 @@ fun main() {
     else {
         scanner()
     }
+
 }
 
 fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
