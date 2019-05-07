@@ -14,8 +14,6 @@ Update 1.3
 
 ---
 
-The Default Menu Key is F1
-
 Base is Charlatano available [here](https://github.com/Jire/Charlatano)
 
 ---
