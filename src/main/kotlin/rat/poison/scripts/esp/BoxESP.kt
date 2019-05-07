@@ -29,7 +29,7 @@ internal fun boxEsp() = App {
 
 	forEntities(ccsPlayer) { //Only enemies atm
 		val entity = it.entity
-		if (entity == me || entity.dead() || entity.dormant() || (!curSettings["BOX_SHOW_ENEMIES"]!!.strToBool() && me.team() != entity.team()) || (!curSettings["BOW_SHOW_ENEMIES"]!!.strToBool() && me.team() == entity.team()) ) return@forEntities false
+		if (entity == me || entity.dead() || entity.dormant() || (!curSettings["BOX_SHOW_ENEMIES"]!!.strToBool() && me.team() != entity.team()) || (!curSettings["BOX_SHOW_ENEMIES"]!!.strToBool() && me.team() == entity.team()) ) return@forEntities false
 
 		vHead.set(entity.bone(0xC), entity.bone(0x1C), entity.bone(0x2C) + 9)
 		vFeet.set(vHead.x, vHead.y, vHead.z - 75)

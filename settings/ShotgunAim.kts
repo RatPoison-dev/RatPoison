@@ -38,12 +38,17 @@ SHOTGUN_AIM_FOV = 70
  *
  * The minimum value is 1
  */
-SHOTGUN_AIM_SPEED = 1
+SHOTGUN_AIM_SPEED = 4
 
 /**
  * The smoothness of the aimbot
  */
-SHOTGUN_AIM_SMOOTHNESS = 1.5
+SHOTGUN_AIM_SMOOTHNESS = 3.0
+
+/**
+ * The sens multiplier of the aimbot
+ */
+SHOTGUN_AIM_STRICTNESS = 1.5
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

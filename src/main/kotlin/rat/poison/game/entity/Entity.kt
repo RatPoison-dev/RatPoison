@@ -47,3 +47,9 @@ internal fun Entity.position(): Angle = readCached(entity2Angle) {
 	y = csgoEXE.float(it + vecOrigin + 4).toDouble()
 	z = csgoEXE.float(it + vecOrigin + 8).toDouble() + csgoEXE.float(it + vecViewOffset + 8)
 }
+
+internal fun Entity.absPosition(): Angle = readCached(entity2Angle) {
+	x = csgoEXE.float(it + vecOrigin).toDouble()
+	y = csgoEXE.float(it + vecOrigin + 4).toDouble()
+	z = csgoEXE.float(it + vecOrigin + 8).toDouble()
+}

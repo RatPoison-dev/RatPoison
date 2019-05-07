@@ -97,8 +97,6 @@ fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
             if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith("\"") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
-                println(curLine[0] + " = " + curLine[2])
-
                 curSettings[curLine[0]] = curLine[2]
             }
         }
@@ -110,8 +108,6 @@ fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
                 FileReader(file).readLines().forEach { line ->
                     if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
                         val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
-
-                        println(curLine[0] + " = " + curLine[2])
 
                         curSettings[curLine[0]] = curLine[2]
                     }
@@ -130,7 +126,7 @@ object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
-    val overlay = Overlay("Counter-Strike: Global Offensive", "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
+    private val overlay = Overlay("Counter-Strike: Global Offensive", "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     var haveTarget = false
     lateinit var menuStage: Stage
     lateinit var bombStage: Stage

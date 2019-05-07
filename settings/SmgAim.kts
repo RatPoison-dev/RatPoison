@@ -31,7 +31,7 @@ SMG_AIM_BONE = 6
 /**
  * The field of view of the aimbot, in degrees (0 to 360).
  */
-SMG_AIM_FOV = 40
+SMG_AIM_FOV = 60
 
 /**
  * The aimbot's "playback" speed, the higher the value the slower the playback.
@@ -44,6 +44,11 @@ SMG_AIM_SPEED = 4
  * The smoothness of the aimbot
  */
 SMG_AIM_SMOOTHNESS = 4.0
+
+/**
+ * The sens multiplier of the aimbot
+ */
+SMG_AIM_STRICTNESS = 1.5
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

@@ -22,7 +22,6 @@ import rat.poison.ui.tabs.esptabs.*
 val espTabbedPane = TabbedPane()
 val glowEspTab = GlowEspTab()
 val chamsEspTab = ChamsEspTab()
-val indicatorEspTab = IndicatorEspTab()
 val boxEspTab = BoxEspTab()
 val skeletonEspTab = SkeletonEspTab()
 
@@ -69,10 +68,10 @@ class VisualsTab : Tab(false, false) {
         val visualsToggleKey = VisTable()
         Tooltip.Builder("The key code that will toggle all enabled visuals on or off").target(visualsToggleKey).build()
         val visualsToggleKeyLabel = VisLabel("Visuals Toggle Key: ")
-        visualsToggleKeyField.text = VISUALS_TOGGLE_KEY.toString()
+        visualsToggleKeyField.text = curSettings["VISUALS_TOGGLE_KEY"].toString()
         visualsToggleKey.changed { _, _ ->
             if (fireKeyField.text.toIntOrNull() != null) {
-                VISUALS_TOGGLE_KEY = visualsToggleKeyField.text.toInt()
+                curSettings["VISUALS_TOGGLE_KEY"] = visualsToggleKeyField.text.toInt().toString()
             }
         }
         visualsToggleKey.add(visualsToggleKeyLabel)
@@ -226,7 +225,6 @@ class VisualsTab : Tab(false, false) {
         //Aim Tab
         espTabbedPane.add(glowEspTab)
         espTabbedPane.add(chamsEspTab)
-        espTabbedPane.add(indicatorEspTab)
         espTabbedPane.add(boxEspTab)
         espTabbedPane.add(skeletonEspTab)
 
@@ -262,9 +260,6 @@ class VisualsTab : Tab(false, false) {
                     chamsEspTab -> {
                         espTabbedPaneContent.add(chamsEspTab.contentTable).colspan(2).growX().row()
                     }
-                    indicatorEspTab -> {
-                        espTabbedPaneContent.add(indicatorEspTab.contentTable).colspan(2).growX().row()
-                    }
                     boxEspTab -> {
                         espTabbedPaneContent.add(boxEspTab.contentTable).colspan(2).growX().row()
                     }
@@ -283,7 +278,7 @@ class VisualsTab : Tab(false, false) {
             }
         })
 
-        espTabbedPane.disableTab(indicatorEspTab, true)
+        //espTabbedPane.disableTab(indicatorEspTab, true)
 
         //Add all items to label for tabbed pane content
         table.add(enableEsp).colspan(2).row()

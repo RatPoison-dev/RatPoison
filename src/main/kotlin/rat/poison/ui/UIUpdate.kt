@@ -40,6 +40,8 @@ fun UIUpdate() {
                 aimSpeedSlider.value = curSettings["PISTOL_AIM_SPEED"].toString().toInt().toFloat()
                 aimSmoothnessLabel.setText("Aim Smoothness: " + curSettings["PISTOL_AIM_SMOOTHNESS"].toString().toFloat())
                 aimSmoothnessSlider.value = curSettings["PISTOL_AIM_SMOOTHNESS"].toString().toFloat()
+                aimStrictnessLabel.setText("Aim Strictness: " + curSettings["PISTOL_AIM_STRICTNESS"])
+                aimStrictnessSlider.value = curSettings["PISTOL_AIM_STRICTNESS"].toString().toFloat()
                 perfectAimCheckBox.isChecked = curSettings["PISTOL_PERFECT_AIM"]!!.strToBool()
                 perfectAimCollapsible.isCollapsed = !curSettings["PISTOL_PERFECT_AIM"]!!.strToBool()
                 perfectAimFovLabel.setText("Perfect Aim Fov: " + curSettings["PISTOL_PERFECT_AIM_FOV"].toString().toInt() + when (curSettings["PISTOL_PERFECT_AIM_FOV"].toString().length) {
@@ -75,6 +77,8 @@ fun UIUpdate() {
                 aimSpeedSlider.value = curSettings["RIFLE_AIM_SPEED"].toString().toInt().toFloat()
                 aimSmoothnessLabel.setText("Aim Smoothness: " + curSettings["RIFLE_AIM_SMOOTHNESS"].toString().toFloat())
                 aimSmoothnessSlider.value = curSettings["RIFLE_AIM_SMOOTHNESS"].toString().toFloat()
+                aimStrictnessLabel.setText("Aim Strictness: " + curSettings["RIFLE_AIM_STRICTNESS"])
+                aimStrictnessSlider.value = curSettings["RIFLE_AIM_STRICTNESS"].toString().toFloat()
                 perfectAimCheckBox.isChecked = curSettings["RIFLE_PERFECT_AIM"]!!.strToBool()
                 perfectAimCollapsible.isCollapsed = !curSettings["RIFLE_PERFECT_AIM"]!!.strToBool()
                 perfectAimFovLabel.setText("Perfect Aim Fov: " + curSettings["RIFLE_PERFECT_AIM_FOV"].toString().toInt() + when (curSettings["RIFLE_PERFECT_AIM_FOV"].toString().length) {
@@ -110,6 +114,8 @@ fun UIUpdate() {
                 aimSpeedSlider.value = curSettings["SMG_AIM_SPEED"].toString().toInt().toFloat()
                 aimSmoothnessLabel.setText("Aim Smoothness: " + curSettings["SMG_AIM_SMOOTHNESS"].toString().toFloat())
                 aimSmoothnessSlider.value = curSettings["SMG_AIM_SMOOTHNESS"].toString().toFloat()
+                aimStrictnessLabel.setText("Aim Strictness: " + curSettings["SMG_AIM_STRICTNESS"])
+                aimStrictnessSlider.value = curSettings["SMG_AIM_STRICTNESS"].toString().toFloat()
                 perfectAimCheckBox.isChecked = curSettings["SMG_PERFECT_AIM"]!!.strToBool()
                 perfectAimCollapsible.isCollapsed = !curSettings["SMG_PERFECT_AIM"]!!.strToBool()
                 perfectAimFovLabel.setText("Perfect Aim Fov: " + curSettings["SMG_PERFECT_AIM_FOV"].toString().toInt() + when (curSettings["SMG_PERFECT_AIM_FOV"].toString().length) {
@@ -145,6 +151,8 @@ fun UIUpdate() {
                 aimSpeedSlider.value = curSettings["SNIPER_AIM_SPEED"].toString().toInt().toFloat()
                 aimSmoothnessLabel.setText("Aim Smoothness: " + curSettings["SNIPER_AIM_SMOOTHNESS"].toString().toFloat())
                 aimSmoothnessSlider.value = curSettings["SNIPER_AIM_SMOOTHNESS"].toString().toFloat()
+                aimStrictnessLabel.setText("Aim Strictness: " + curSettings["SNIPER_AIM_STRICTNESS"])
+                aimStrictnessSlider.value = curSettings["SNIPER_AIM_STRICTNESS"].toString().toFloat()
                 perfectAimCheckBox.isChecked = curSettings["SNIPER_PERFECT_AIM"]!!.strToBool()
                 perfectAimCollapsible.isCollapsed = !curSettings["SNIPER_PERFECT_AIM"]!!.strToBool()
                 perfectAimFovLabel.setText("Perfect Aim Fov: " + curSettings["SNIPER_PERFECT_AIM_FOV"].toString().toInt() + when (curSettings["SNIPER_PERFECT_AIM_FOV"].toString().length) {
@@ -180,6 +188,8 @@ fun UIUpdate() {
                 aimSpeedSlider.value = curSettings["SHOTGUN_AIM_SPEED"].toString().toInt().toFloat()
                 aimSmoothnessLabel.setText("Aim Smoothness: " + curSettings["SHOTGUN_AIM_SMOOTHNESS"].toString().toFloat())
                 aimSmoothnessSlider.value = curSettings["SHOTGUN_AIM_SMOOTHNESS"].toString().toFloat()
+                aimStrictnessLabel.setText("Aim Strictness: " + curSettings["SHOTGUN_AIM_STRICTNESS"])
+                aimStrictnessSlider.value = curSettings["SHOTGUN_AIM_STRICTNESS"].toString().toFloat()
                 perfectAimCheckBox.isChecked = curSettings["SHOTGUN_PERFECT_AIM"]!!.strToBool()
                 perfectAimCollapsible.isCollapsed = !curSettings["SHOTGUN_PERFECT_AIM"]!!.strToBool()
                 perfectAimFovLabel.setText("Perfect Aim Fov: " + curSettings["SHOTGUN_PERFECT_AIM_FOV"].toString().toInt() + when (curSettings["SHOTGUN_PERFECT_AIM_FOV"].toString().length) {
@@ -243,7 +253,7 @@ fun UIUpdate() {
 
     visualsTab.apply {
         enableEsp.isChecked = curSettings["ENABLE_ESP"]!!.strToBool()
-        visualsToggleKeyField.text = VISUALS_TOGGLE_KEY.toString()
+        visualsToggleKeyField.text = curSettings["VISUALS_TOGGLE_KEY"].toString()
         var col = curSettings["TEAM_COLOR"]!!.strToColor()
         teamColorShow.setColor(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
         col = curSettings["ENEMY_COLOR"]!!.strToColor()
@@ -282,20 +292,6 @@ fun UIUpdate() {
         chamsBrightnessSlider.value = curSettings["CHAMS_BRIGHTNESS"].toString().toInt().toFloat()
         showTeam.isChecked = curSettings["CHAMS_SHOW_TEAM"]!!.strToBool()
         showEnemies.isChecked = curSettings["CHAMS_SHOW_ENEMIES"]!!.strToBool()
-    }
-
-    indicatorEspTab.apply {
-        indicatorEsp.isChecked = curSettings["INDICATOR_ESP"]!!.strToBool()
-        indicatorOnScreen.isChecked = curSettings["INDICATOR_SHOW_ONSCREEN"]!!.strToBool()
-        indicatorOval.isChecked = curSettings["INDICATOR_OVAL"]!!.strToBool()
-        indicatorDistanceLabel.setText("Indicator Distance: "  + curSettings["INDICATOR_DISTANCE"].toString().toDouble())
-        indicatorDistanceSlider.value = curSettings["INDICATOR_DISTANCE"].toString().toDouble().toFloat()
-        showTeam.isChecked = curSettings["INDICATOR_SHOW_TEAM"]!!.strToBool()
-        showEnemies.isChecked = curSettings["INDICATOR_SHOW_ENEMIES"]!!.strToBool()
-        showDormant.isChecked = curSettings["INDICATOR_SHOW_DORMANT"]!!.strToBool()
-        showBomb.isChecked = curSettings["INDICATOR_SHOW_BOMB"]!!.strToBool()
-        showWeapons.isChecked = curSettings["INDICATOR_SHOW_WEAPONS"]!!.strToBool()
-        showGrenades.isChecked = curSettings["INDICATOR_SHOW_GRENADES"]!!.strToBool()
     }
 
     boxEspTab.apply {

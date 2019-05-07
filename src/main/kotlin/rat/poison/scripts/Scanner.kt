@@ -11,7 +11,7 @@ import java.util.*
 import javax.script.ScriptException
 
 fun scanner() {
-    if (ACTION_LOG) {
+    if (/*ACTION_LOG*/true) {
         println("Type help for options\n")
     }
 
@@ -85,11 +85,11 @@ fun scanner() {
                                 prevFile = prevFile + it + System.lineSeparator()
                             }
                         }
-                        if (ACTION_LOG) {
+                        if (/*ACTION_LOG*/true) {
                             println("Writing to " + fileDir)
                             println("Set " + command)
                             Files.write(File(fileDir).toPath(), prevFile.toByteArray(), StandardOpenOption.WRITE)
-                            println("Reloading settings"); /*loadSettings()*/
+                            println("Reloading settings") /*loadSettings()*/
                             println()
                         }
                     } catch (e: FileNotFoundException) {

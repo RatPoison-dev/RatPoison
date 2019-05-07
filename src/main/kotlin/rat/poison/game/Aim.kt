@@ -19,9 +19,6 @@ private val lastPunch = Vector2()
 fun calculateAngle(player: Player, dst: Vector): Angle = angles.get().apply {
 	val myPunch = player.punch()
 	val myPosition = player.position()
-	//val weaponEntity = me.weaponEntity()
-	//val shotsFired = me.shotsFired()
-	//val forceSet = shotsFired == 0 && !lastPunch.isZero
 
 	val dX = myPosition.x - dst.x
 	val dY = myPosition.y - dst.y
@@ -29,8 +26,7 @@ fun calculateAngle(player: Player, dst: Vector): Angle = angles.get().apply {
 
 	val hyp = Math.sqrt((dX * dX) + (dY * dY))
 
-	//Bring back old check?
-	if (curSettings["FACTOR_RECOIL"]!!.strToBool() /*|| (forceSet || shotsFired > 0 || weaponEntity.bullets() < 1*/)/*Make sure we have it normally*/ {
+	if (curSettings["FACTOR_RECOIL"]!!.strToBool()) {
 		x = toDegrees(atan(dZ / hyp)) - myPunch.x * 2.0
 		y = toDegrees(atan(dY / dX)) - myPunch.y * 2.0
 	} else {

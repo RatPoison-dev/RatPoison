@@ -21,7 +21,7 @@ PISTOL_ENABLE_PATH_AIM = true
 /**
  * Whether or not to account for recoil when aiming
  */
-PISTOL_FACTOR_RECOIL = true
+PISTOL_FACTOR_RECOIL = false
 
 /**
  * Default aim bone the aims go to
@@ -44,6 +44,11 @@ PISTOL_AIM_SPEED = 12
  * The smoothness of the aimbot
  */
 PISTOL_AIM_SMOOTHNESS = 2.5
+
+/**
+ * The sens multiplier of the aimbot
+ */
+PISTOL_AIM_STRICTNESS = 2.0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

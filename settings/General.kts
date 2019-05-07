@@ -47,18 +47,9 @@ MAX_PUNCH_CHECK = 1
 FORCE_AIM_KEY = 5
 
 /**
- * The minimum and maximum time in milliseconds to delay the aimbot after
- * targets have been swapped.
- *
- * Set these both to 0L for there to be no delay.
- */
-TARGET_SWAP_MIN_DELAY = 200
-TARGET_SWAP_MAX_DELAY = 350
-
-/**
  * The duration in milliseconds at which aimbot paths are recalculated.
  */
-AIM_DURATION = 4
+AIM_DURATION = 1
 
 /**
  * The amount of sprayed shots until the aimbot shifts to aiming at the (SHOULDER_BONE).
@@ -81,11 +72,6 @@ CLASSIC_OFFENSIVE = false
  * By default, this is left click (1).
  */
 FIRE_KEY = 1
-
-/**
- * Enable actions log in cmd
- */
-ACTION_LOG = true
 
 /**
  * Key to disable ESP (say if a friend walks into your room); default G key
@@ -124,13 +110,14 @@ BODY_BONE = 6
 /**
  * Variables used in game, not saved settings, no need to touch
  */
-PERFECT_AIM = false
-PERFECT_AIM_CHANCE = 100
-PERFECT_AIM_FOV = 40
+PERFECT_AIM = true
+PERFECT_AIM_CHANCE = 10
+PERFECT_AIM_FOV = 5
 AIM_BONE = 6
-AIM_SPEED = 1
+AIM_SPEED = 16
 AIM_FOV = 80
 AIM_ASSIST_MODE = false
-FACTOR_RECOIL = false
+FACTOR_RECOIL = true
 ENABLE_FLAT_AIM = false
-ENABLE_PATH_AIM = false
+ENABLE_PATH_AIM = true
+AIM_STRICTNESS = 2.0

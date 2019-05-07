@@ -11,9 +11,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import rat.poison.*
 import rat.poison.App.menuStage
-import rat.poison.settings.CFG1_NAME
-import rat.poison.settings.CFG2_NAME
-import rat.poison.settings.CFG3_NAME
 import rat.poison.ui.UIUpdate
 import rat.poison.ui.changed
 import java.io.File
@@ -23,9 +20,9 @@ import java.nio.file.Files
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
-    val loadButton1 = VisTextButton("Load $CFG1_NAME")
-    val loadButton2 = VisTextButton("Load $CFG2_NAME")
-    val loadButton3 = VisTextButton("Load $CFG3_NAME")
+    val loadButton1 = VisTextButton("Load " + curSettings["CFG1_NAME"].toString().replace("\"", ""))
+    val loadButton2 = VisTextButton("Load " + curSettings["CFG2_NAME"].toString().replace("\"", ""))
+    val loadButton3 = VisTextButton("Load " + curSettings["CFG2_NAME"].toString().replace("\"", ""))
 
     init {
         //Create UI_Alpha Slider
@@ -134,7 +131,6 @@ class OptionsTab : Tab(false, false) {
                             sbLines.clear()
                         }
                     }
-                    //loadSettings()
                     println("\n Saving complete! \n")
                     saving = false
                 }
@@ -171,9 +167,9 @@ class OptionsTab : Tab(false, false) {
 
                 when (cfgNum)
                 {
-                    1 -> { CFG1_NAME = cfgName; loadButton1.setText("Load $CFG1_NAME") }
-                    2 -> { CFG2_NAME = cfgName; loadButton2.setText("Load $CFG2_NAME") }
-                    else -> { CFG3_NAME = cfgName; loadButton3.setText("Load $CFG3_NAME") }
+                    1 -> { curSettings["CFG1_NAME"] = cfgName; loadButton1.setText("Load " + curSettings["CFG1_NAME"].toString().replace("\"", "")) }
+                    2 -> { curSettings["CFG2_NAME"] = cfgName; loadButton2.setText("Load " + curSettings["CFG2_NAME"].toString().replace("\"", "")) }
+                    else -> { curSettings["CFG3_NAME"] = cfgName; loadButton3.setText("Load " + curSettings["CFG3_NAME"].toString().replace("\"", "")) }
                 }
 
                 val cfgFile = File("settings\\cfg$cfgNum.kts")
@@ -196,7 +192,7 @@ class OptionsTab : Tab(false, false) {
                                 //Add custom checks for variables that need a type ident ie F
                                 when {
                                         curLine[0] == "CFG1_NAME" || curLine[0] == "CFG2_NAME" || curLine[0] == "CFG3_NAME" -> {
-                                            sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
+                                            sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]].toString().replace("\"", "") + "\"\n")
                                         }
 
                                         else -> {
@@ -220,7 +216,7 @@ class OptionsTab : Tab(false, false) {
                     if (line.startsWith(when (cfgNum) {1 -> "CFG1_NAME" 2 -> "CFG2_NAME" else -> "CFG3_NAME"})) {
                         val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
-                        sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
+                        sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]] + "\"\n")
 
                     } else {
                         sbLines.append(line + "\n")

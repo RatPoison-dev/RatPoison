@@ -62,7 +62,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 		overlayWindowMonitorThread = thread(name = "OverlayWindowMonitorThread") {
 			try {
 				while (run && !Thread.interrupted()) {
-					Thread.sleep(100)
+					Thread.sleep(10)
 					monitorTargetApp()
 				}
 			} catch (e: InterruptedException) { println("InterruptedException"); e.printStackTrace() } catch (e: Exception) { println("StandardException"); e.printStackTrace() }

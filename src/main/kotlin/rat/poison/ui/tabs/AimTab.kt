@@ -47,6 +47,8 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val aimSpeedSlider = VisSlider(1F, 100F, 1F, false) //Aim_Speed_Min
     val aimSmoothnessLabel = VisLabel("Aim Smoothness: " + curSettings["PISTOL_AIM_SMOOTHNESS"].toString().toFloat()) //Aim_Smoothness
     val aimSmoothnessSlider = VisSlider(1F, 10F, 0.1F, false) //Aim_Smoothness
+    val aimStrictnessLabel = VisLabel("Aim Strictness: " + curSettings["PISTOL_AIM_STRICTNESS"]) //Aim_Strictness
+    val aimStrictnessSlider = VisSlider(1F, 5F, 0.1F, false) //Aim_Strictness
 
     //Perfect Aim Collapsible
     val perfectAimCheckBox = VisCheckBox("Enable Perfect Aim") //Perfect_Aim
@@ -95,7 +97,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 //    private val weaponCategorySelectionBox = VisSelectBox<String>() //Category
 
     init {
-        val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "If you have any problems submit an issue on github\nIf you are crashing or have an error message in the cmd, include the error message if there is one,\nsettings that were enabled, and when it happened (such as randomly, when joining a game, on round end, etc)\n\nWARNING: This update has not been tested extensively, I assume many issues will pop up, please submit an issue on github\nwith information on the issue, the settings used (create a cfg file and put it in a pastebin), and evidence (such as a picture/video)\nor a way to easily replicate the issue.\nThe custom per weapon settings are available in the GunAimOverride.kts file, in arrays, the gun is the variable name, with the array\ninformation at the top.\nGitHub: https://github.com/astupidrat/ratpoison")
+        val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.3\nIf you have any problems submit an issue on Github\n\nGitHub: https://github.com/astupidrat/ratpoison")
         dialog.setPosition(gameWidth/2F-dialog.width/2F, gameHeight.toFloat())
         menuStage.addActor(dialog)
 
@@ -436,6 +438,41 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         }
         aimSmoothness.add(aimSmoothnessLabel).spaceRight(6F)
         aimSmoothness.add(aimSmoothnessSlider)
+
+        //Create Aim_Strictness Slider
+        val aimStrictness = VisTable()
+        Tooltip.Builder("The sens multiplier of the aimbot").target(aimStrictness).build()
+        aimStrictnessSlider.value = curSettings["PISTOL_AIM_STRICTNESS"].toString().toFloat()
+        aimStrictnessSlider.changed { _, _ ->
+            when (categorySelected) {
+                "PISTOL" -> {
+                    curSettings["PISTOL_AIM_STRICTNESS"] = (Math.round(aimStrictnessSlider.value.toDouble() * 10.0)/10.0).toString()
+                    aimStrictnessLabel.setText("Aim Strictness: " + curSettings["PISTOL_AIM_STRICTNESS"])
+                }
+
+                "RIFLE" -> {
+                    curSettings["RIFLE_AIM_STRICTNESS"] = (Math.round(aimStrictnessSlider.value.toDouble() * 10.0)/10.0).toString()
+                    aimStrictnessLabel.setText("Aim Strictness: " + curSettings["RIFLE_AIM_STRICTNESS"])
+                }
+
+                "SMG" -> {
+                    curSettings["SMG_AIM_STRICTNESS"] = (Math.round(aimStrictnessSlider.value.toDouble() * 10.0)/10.0).toString()
+                    aimStrictnessLabel.setText("Aim Strictness: " + curSettings["SMG_AIM_STRICTNESS"])
+                }
+
+                "SNIPER" -> {
+                    curSettings["SNIPER_AIM_STRICTNESS"] = (Math.round(aimStrictnessSlider.value.toDouble() * 10.0)/10.0).toString()
+                    aimStrictnessLabel.setText("Aim Strictness: " + curSettings["SNIPER_AIM_STRICTNESS"])
+                }
+
+                "SHOTGUN" -> {
+                    curSettings["SHOTGUN_AIM_STRICTNESS"] = (Math.round(aimStrictnessSlider.value.toDouble() * 10.0)/10.0).toString()
+                    aimStrictnessLabel.setText("Aim Strictness: " + curSettings["SHOTGUN_AIM_STRICTNESS"])
+                }
+            }
+        }
+        aimStrictness.add(aimStrictnessLabel).spaceRight(6F)
+        aimStrictness.add(aimStrictnessSlider)
 
         //Create Perfect_Aim Collapsible Check Box
         Tooltip.Builder("Whether or not to enable perfect aim").target(perfectAimCheckBox).build()
@@ -784,6 +821,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         table.add(aimFov).row()
         table.add(aimSpeed).row()
         table.add(aimSmoothness).row()
+        table.add(aimStrictness).row()
         table.add(perfectAimCheckBox).row()
         table.add(perfectAimCollapsible).row()
 

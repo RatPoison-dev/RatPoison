@@ -55,7 +55,7 @@ fun worldToScreen(from: Vector, vOut: Vector) = try {
 		var y = height / 2.0
 
 		x += 0.5 * vOut.x * width + 0.5
-		y += 0.5 * vOut.y * height + 0.5
+		y -= 0.5 * vOut.y * height + 0.5
 
 		vOut.x = x
 		vOut.y = y
