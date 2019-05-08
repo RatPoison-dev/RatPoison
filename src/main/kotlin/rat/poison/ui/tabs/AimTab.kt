@@ -34,7 +34,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     private val automaticWeaponsTable = VisTable()
     val automaticWeaponsCollapsible = CollapsibleWidget(automaticWeaponsTable)
     val maxPunchCheckLabel = VisLabel("Max Punch Check: " + curSettings["MAX_PUNCH_CHECK"].toString() + when(curSettings["MAX_PUNCH_CHECK"].toString().length) {3->"" 2->"  " else ->"    "}) //curSettings["MAX_PUNCH_CHECK"]
-    val maxPunchCheckSlider = VisSlider(1F, 32F, 1F, false) //curSettings["MAX_PUNCH_CHECK"]
+    val maxPunchCheckSlider = VisSlider(10F, 500F, 10F, false) //curSettings["MAX_PUNCH_CHECK"]
 
     private val categorySelectionBox = VisSelectBox<String>() //Category
     val enableFactorRecoil = VisCheckBox("Factor Recoil") //Factor Recoil
