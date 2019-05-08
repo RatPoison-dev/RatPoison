@@ -43,7 +43,7 @@ PISTOL_AIM_SPEED = 12
 /**
  * The smoothness of the aimbot
  */
-PISTOL_AIM_SMOOTHNESS = 1.0
+PISTOL_AIM_SMOOTHNESS = 2.5
 
 /**
  * The sens multiplier of the aimbot

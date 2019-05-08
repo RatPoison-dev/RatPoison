@@ -16,7 +16,7 @@ SMG_ENABLE_FLAT_AIM = false
  *
  * This script uses an advanced path generation smoothing.
  */
-SMG_ENABLE_PATH_AIM = false
+SMG_ENABLE_PATH_AIM = true
 
 /**
  * Whether or not to account for recoil when aiming
@@ -38,17 +38,17 @@ SMG_AIM_FOV = 60
  *
  * The minimum value is 1
  */
-SMG_AIM_SPEED = 4
+SMG_AIM_SPEED = 12
 
 /**
  * The smoothness of the aimbot
  */
-SMG_AIM_SMOOTHNESS = 1.0
+SMG_AIM_SMOOTHNESS = 2.5
 
 /**
  * The sens multiplier of the aimbot
  */
-SMG_AIM_STRICTNESS = 1.5
+SMG_AIM_STRICTNESS = 3.5
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
