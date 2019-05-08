@@ -22,6 +22,7 @@ import rat.poison.ui.tabs.esptabs.*
 val espTabbedPane = TabbedPane()
 val glowEspTab = GlowEspTab()
 val chamsEspTab = ChamsEspTab()
+val indicatorEspTab = IndicatorEspTab()
 val boxEspTab = BoxEspTab()
 val skeletonEspTab = SkeletonEspTab()
 
@@ -225,6 +226,7 @@ class VisualsTab : Tab(false, false) {
         //Aim Tab
         espTabbedPane.add(glowEspTab)
         espTabbedPane.add(chamsEspTab)
+        espTabbedPane.add(indicatorEspTab)
         espTabbedPane.add(boxEspTab)
         espTabbedPane.add(skeletonEspTab)
 
@@ -259,6 +261,9 @@ class VisualsTab : Tab(false, false) {
                     }
                     chamsEspTab -> {
                         espTabbedPaneContent.add(chamsEspTab.contentTable).colspan(2).growX().row()
+                    }
+                    indicatorEspTab -> {
+                        espTabbedPaneContent.add(indicatorEspTab.contentTable).colspan(2).growX().row()
                     }
                     boxEspTab -> {
                         espTabbedPaneContent.add(boxEspTab.contentTable).colspan(2).growX().row()

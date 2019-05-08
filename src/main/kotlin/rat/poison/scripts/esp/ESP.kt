@@ -7,6 +7,7 @@ fun esp() {
 	if (!curSettings["ENABLE_ESP"]!!.strToBool()) return
 
 	glowEsp()
+	indicatorEsp()
 	boxEsp()
 	skeletonEsp()
 	chamsEsp()

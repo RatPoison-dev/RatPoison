@@ -294,6 +294,20 @@ fun UIUpdate() {
         showEnemies.isChecked = curSettings["CHAMS_SHOW_ENEMIES"]!!.strToBool()
     }
 
+    indicatorEspTab.apply {
+        indicatorEsp.isChecked = curSettings["INDICATOR_ESP"]!!.strToBool()
+        indicatorOnScreen.isChecked = curSettings["INDICATOR_SHOW_ONSCREEN"]!!.strToBool()
+        indicatorOval.isChecked = curSettings["INDICATOR_OVAL"]!!.strToBool()
+        indicatorDistanceLabel.setText("Indicator Distance: "  + curSettings["INDICATOR_DISTANCE"].toString().toDouble())
+        indicatorDistanceSlider.value = curSettings["INDICATOR_DISTANCE"].toString().toDouble().toFloat()
+        showTeam.isChecked = curSettings["INDICATOR_SHOW_TEAM"]!!.strToBool()
+        showEnemies.isChecked = curSettings["INDICATOR_SHOW_ENEMIES"]!!.strToBool()
+        showDormant.isChecked = curSettings["INDICATOR_SHOW_DORMANT"]!!.strToBool()
+        showBomb.isChecked = curSettings["INDICATOR_SHOW_BOMB"]!!.strToBool()
+        showWeapons.isChecked = curSettings["INDICATOR_SHOW_WEAPONS"]!!.strToBool()
+        showGrenades.isChecked = curSettings["INDICATOR_SHOW_GRENADES"]!!.strToBool()
+    }
+
     boxEspTab.apply {
         boxEsp.isChecked = curSettings["BOX_ESP"]!!.strToBool()
         boxEspDetails.isChecked = curSettings["BOX_ESP_DETAILS"]!!.strToBool()

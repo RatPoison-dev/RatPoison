@@ -1,5 +1,9 @@
 package rat.poison.scripts.esp
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.math.Vector3
+import rat.poison.App.haveTarget
+import rat.poison.App.shapeRenderer
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
@@ -11,6 +15,8 @@ import rat.poison.strToBool
 import rat.poison.strToColor
 import rat.poison.utils.every
 import java.util.concurrent.atomic.AtomicLong
+import rat.poison.game.CSGO.gameHeight
+import rat.poison.game.CSGO.gameWidth
 
 val glowTarget = AtomicLong(-1)
 

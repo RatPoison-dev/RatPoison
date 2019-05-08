@@ -68,8 +68,7 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
 	val mousePos = mousePos.get().refresh()
 
 	val target = target.get()
-	val smooth = curSettings["AIM_SMOOTHNESS"].toString().toDouble()
-	target.set((mousePos.x + dx/smooth).toInt(), (mousePos.y + dy/smooth).toInt())
+	target.set((mousePos.x + dx/2).toInt(), (mousePos.y + dy/2).toInt())
 
 	if (target.x <= 0 || target.x >= gameX + gameWidth || target.y <= 0 || target.y >= gameY + gameHeight) return
 

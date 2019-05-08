@@ -48,7 +48,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val aimSmoothnessLabel = VisLabel("Aim Smoothness: " + curSettings["PISTOL_AIM_SMOOTHNESS"].toString().toFloat()) //Aim_Smoothness
     val aimSmoothnessSlider = VisSlider(1F, 10F, 0.1F, false) //Aim_Smoothness
     val aimStrictnessLabel = VisLabel("Aim Strictness: " + curSettings["PISTOL_AIM_STRICTNESS"]) //Aim_Strictness
-    val aimStrictnessSlider = VisSlider(1F, 5F, 0.1F, false) //Aim_Strictness
+    val aimStrictnessSlider = VisSlider(1F, 10F, 0.1F, false) //Aim_Strictness
 
     //Perfect Aim Collapsible
     val perfectAimCheckBox = VisCheckBox("Enable Perfect Aim") //Perfect_Aim
@@ -57,7 +57,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val perfectAimFovLabel = VisLabel("Perfect Aim Fov: " + curSettings["PISTOL_PERFECT_AIM_FOV"].toString().toInt().toString() + when(curSettings["PISTOL_PERFECT_AIM_FOV"].toString().toInt().toString().length) {3->"  " 2->"    " else ->"      "}) //Perfect_Aim_Fov
     val perfectAimFovSlider = VisSlider(1F, 100F, 1F, false) //Perfect_Aim_Fov
     val perfectAimChanceLabel = VisLabel("Perfect Aim Chance: " + curSettings["PISTOL_PERFECT_AIM_CHANCE"].toString().toInt().toString() + when(curSettings["PISTOL_PERFECT_AIM_CHANCE"].toString().toInt().toString().length) {3->"  " 2->"    " else ->"      "}) //Perfect_Aim_Chance
-    val perfectAimChanceSlider = VisSlider(1F, 100F, 1F, false) //Perfect_Aim_Chance
+    val perfectAimChanceSlider = VisSlider(1F, 10F, 1F, false) //Perfect_Aim_Chance
 
 //    //Override Weapons Panel
 //    val overrideTable = VisTable(true) //Container for all items
@@ -441,7 +441,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
         //Create Aim_Strictness Slider
         val aimStrictness = VisTable()
-        Tooltip.Builder("The sens multiplier of the aimbot").target(aimStrictness).build()
+        Tooltip.Builder("How strict moving to the aimbone is, lower = less deviation").target(aimStrictness).build()
         aimStrictnessSlider.value = curSettings["PISTOL_AIM_STRICTNESS"].toString().toFloat()
         aimStrictnessSlider.changed { _, _ ->
             when (categorySelected) {

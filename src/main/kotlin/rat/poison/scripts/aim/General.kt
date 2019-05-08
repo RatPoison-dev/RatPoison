@@ -246,7 +246,9 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		val bonePosition = currentTarget.bones(bone.get())
 
 		val destinationAngle = calculateAngle(me, bonePosition)
-		if (curSettings["AIM_ASSIST_MODE"]!!.strToBool() && !perfect.get()) destinationAngle.finalize(currentAngle, 1.0)
+        if (!perfect.get()) {
+            destinationAngle.finalize(currentAngle, (1.1-curSettings["AIM_SMOOTHNESS"].toString().toDouble()/10))
+        }
 		val aimSpeed = curSettings["AIM_SPEED"].toString().toInt()
 		doAim(destinationAngle, currentAngle, aimSpeed)
 	}

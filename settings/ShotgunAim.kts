@@ -43,7 +43,7 @@ SHOTGUN_AIM_SPEED = 4
 /**
  * The smoothness of the aimbot
  */
-SHOTGUN_AIM_SMOOTHNESS = 3.0
+SHOTGUN_AIM_SMOOTHNESS = 1.0
 
 /**
  * The sens multiplier of the aimbot
