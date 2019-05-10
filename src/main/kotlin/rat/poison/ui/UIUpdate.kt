@@ -1,17 +1,14 @@
 package rat.poison.ui
 
-import rat.poison.opened
+import rat.poison.*
 import rat.poison.settings.*
 import rat.poison.ui.tabs.*
-import rat.poison.curSettings
-import rat.poison.strToBool
-import rat.poison.strToColor
 
 fun UIUpdate() {
     if (!opened) return
 
     //Aim Tab
-    aimTab.apply { //CLEAN THIS BITCH UUUUUPPP
+    aimTab.apply {
         activateFromFireKey.isChecked = curSettings["ACTIVATE_FROM_FIRE_KEY"]!!.strToBool()
         teammatesAreEnemies.isChecked = curSettings["TEAMMATES_ARE_ENEMIES"]!!.strToBool()
         forceAimKeyField.text = curSettings["FORCE_AIM_KEY"].toString()
@@ -20,235 +17,83 @@ fun UIUpdate() {
         maxPunchCheckLabel.setText("Max Punch Check: " + curSettings["MAX_PUNCH_CHECK"].toString() + when(curSettings["MAX_PUNCH_CHECK"].toString().length) {3->"" 2->"  " else ->"    "}) //curSettings["MAX_PUNCH_CHECK"])
         maxPunchCheckSlider.value = curSettings["MAX_PUNCH_CHECK"].toString().toFloat()
 
-        when (categorySelected) {
-            "PISTOL" -> {
-                enableFactorRecoil.isChecked = curSettings["PISTOL_FACTOR_RECOIL"]!!.strToBool()
-                enableFlatAim.isChecked = curSettings["PISTOL_ENABLE_FLAT_AIM"]!!.strToBool()
-                enablePathAim.isChecked = curSettings["PISTOL_ENABLE_PATH_AIM"]!!.strToBool()
-                aimBoneBox.selected = if (curSettings["PISTOL_AIM_BONE"].toString().toInt() == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
-                aimFovLabel.setText("Aim Fov: " + curSettings["PISTOL_AIM_FOV"].toString().toInt() + when (curSettings["PISTOL_AIM_FOV"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                aimFovSlider.value = curSettings["PISTOL_AIM_FOV"].toString().toInt().toFloat()
-                aimSpeedLabel.setText("Aim Speed: " + curSettings["PISTOL_AIM_SPEED"].toString().toInt() + when (curSettings["PISTOL_AIM_SPEED"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                aimSpeedSlider.value = curSettings["PISTOL_AIM_SPEED"].toString().toInt().toFloat()
-                aimSmoothnessLabel.setText("Aim Smoothness: " + curSettings["PISTOL_AIM_SMOOTHNESS"].toString().toFloat())
-                aimSmoothnessSlider.value = curSettings["PISTOL_AIM_SMOOTHNESS"].toString().toFloat()
-                aimStrictnessLabel.setText("Aim Strictness: " + curSettings["PISTOL_AIM_STRICTNESS"])
-                aimStrictnessSlider.value = curSettings["PISTOL_AIM_STRICTNESS"].toString().toFloat()
-                perfectAimCheckBox.isChecked = curSettings["PISTOL_PERFECT_AIM"]!!.strToBool()
-                perfectAimCollapsible.isCollapsed = !curSettings["PISTOL_PERFECT_AIM"]!!.strToBool()
-                perfectAimFovLabel.setText("Perfect Aim Fov: " + curSettings["PISTOL_PERFECT_AIM_FOV"].toString().toInt() + when (curSettings["PISTOL_PERFECT_AIM_FOV"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                perfectAimFovSlider.value = curSettings["PISTOL_PERFECT_AIM_FOV"].toString().toInt().toFloat()
-                perfectAimChanceLabel.setText("Perfect Aim Chance: " + curSettings["PISTOL_PERFECT_AIM_CHANCE"].toString().toInt() + when (curSettings["PISTOL_PERFECT_AIM_CHANCE"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                perfectAimChanceSlider.value = curSettings["PISTOL_PERFECT_AIM_CHANCE"].toString().toInt().toFloat()
-            }
+        val curWep = convStrToArray(curSettings[weaponOverrideSelected].toString())
 
-            "RIFLE" -> {
-                enableFactorRecoil.isChecked = curSettings["RIFLE_FACTOR_RECOIL"]!!.strToBool()
-                enableFlatAim.isChecked = curSettings["RIFLE_ENABLE_FLAT_AIM"]!!.strToBool()
-                enablePathAim.isChecked = curSettings["RIFLE_ENABLE_PATH_AIM"]!!.strToBool()
-                aimBoneBox.selected = if (curSettings["RIFLE_AIM_BONE"].toString().toInt() == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
-                aimFovLabel.setText("Aim Fov: " + curSettings["RIFLE_AIM_FOV"].toString().toInt() + when (curSettings["RIFLE_AIM_FOV"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                aimFovSlider.value = curSettings["RIFLE_AIM_FOV"].toString().toInt().toFloat()
-                aimSpeedLabel.setText("Aim Speed: " + curSettings["RIFLE_AIM_SPEED"].toString().toInt() + when (curSettings["RIFLE_AIM_SPEED"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                aimSpeedSlider.value = curSettings["RIFLE_AIM_SPEED"].toString().toInt().toFloat()
-                aimSmoothnessLabel.setText("Aim Smoothness: " + curSettings["RIFLE_AIM_SMOOTHNESS"].toString().toFloat())
-                aimSmoothnessSlider.value = curSettings["RIFLE_AIM_SMOOTHNESS"].toString().toFloat()
-                aimStrictnessLabel.setText("Aim Strictness: " + curSettings["RIFLE_AIM_STRICTNESS"])
-                aimStrictnessSlider.value = curSettings["RIFLE_AIM_STRICTNESS"].toString().toFloat()
-                perfectAimCheckBox.isChecked = curSettings["RIFLE_PERFECT_AIM"]!!.strToBool()
-                perfectAimCollapsible.isCollapsed = !curSettings["RIFLE_PERFECT_AIM"]!!.strToBool()
-                perfectAimFovLabel.setText("Perfect Aim Fov: " + curSettings["RIFLE_PERFECT_AIM_FOV"].toString().toInt() + when (curSettings["RIFLE_PERFECT_AIM_FOV"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                perfectAimFovSlider.value = curSettings["RIFLE_PERFECT_AIM_FOV"].toString().toInt().toFloat()
-                perfectAimChanceLabel.setText("Perfect Aim Chance: " + curSettings["RIFLE_PERFECT_AIM_CHANCE"].toString().toInt() + when (curSettings["RIFLE_PERFECT_AIM_CHANCE"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                perfectAimChanceSlider.value = curSettings["RIFLE_PERFECT_AIM_CHANCE"].toString().toInt().toFloat()
-            }
-
-            "SMG" -> {
-                enableFactorRecoil.isChecked = curSettings["SMG_FACTOR_RECOIL"]!!.strToBool()
-                enableFlatAim.isChecked = curSettings["SMG_ENABLE_FLAT_AIM"]!!.strToBool()
-                enablePathAim.isChecked = curSettings["SMG_ENABLE_PATH_AIM"]!!.strToBool()
-                aimBoneBox.selected = if (curSettings["SMG_AIM_BONE"].toString().toInt() == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
-                aimFovLabel.setText("Aim Fov: " + curSettings["SMG_AIM_FOV"].toString().toInt() + when (curSettings["SMG_AIM_FOV"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                aimFovSlider.value = curSettings["SMG_AIM_FOV"].toString().toInt().toFloat()
-                aimSpeedLabel.setText("Aim Speed: " + curSettings["SMG_AIM_SPEED"].toString().toInt() + when (curSettings["SMG_AIM_SPEED"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                aimSpeedSlider.value = curSettings["SMG_AIM_SPEED"].toString().toInt().toFloat()
-                aimSmoothnessLabel.setText("Aim Smoothness: " + curSettings["SMG_AIM_SMOOTHNESS"].toString().toFloat())
-                aimSmoothnessSlider.value = curSettings["SMG_AIM_SMOOTHNESS"].toString().toFloat()
-                aimStrictnessLabel.setText("Aim Strictness: " + curSettings["SMG_AIM_STRICTNESS"])
-                aimStrictnessSlider.value = curSettings["SMG_AIM_STRICTNESS"].toString().toFloat()
-                perfectAimCheckBox.isChecked = curSettings["SMG_PERFECT_AIM"]!!.strToBool()
-                perfectAimCollapsible.isCollapsed = !curSettings["SMG_PERFECT_AIM"]!!.strToBool()
-                perfectAimFovLabel.setText("Perfect Aim Fov: " + curSettings["SMG_PERFECT_AIM_FOV"].toString().toInt() + when (curSettings["SMG_PERFECT_AIM_FOV"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                perfectAimFovSlider.value = curSettings["SMG_PERFECT_AIM_FOV"].toString().toInt().toFloat()
-                perfectAimChanceLabel.setText("Perfect Aim Chance: " + curSettings["SMG_PERFECT_AIM_CHANCE"].toString().toInt() + when (curSettings["SMG_PERFECT_AIM_CHANCE"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                perfectAimChanceSlider.value = curSettings["SMG_PERFECT_AIM_CHANCE"].toString().toInt().toFloat()
-            }
-
-            "SNIPER" -> {
-                enableFactorRecoil.isChecked = curSettings["SNIPER_FACTOR_RECOIL"]!!.strToBool()
-                enableFlatAim.isChecked = curSettings["SNIPER_ENABLE_FLAT_AIM"]!!.strToBool()
-                enablePathAim.isChecked = curSettings["SNIPER_ENABLE_PATH_AIM"]!!.strToBool()
-                aimBoneBox.selected = if (curSettings["SNIPER_AIM_BONE"].toString().toInt() == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
-                aimFovLabel.setText("Aim Fov: " + curSettings["SNIPER_AIM_FOV"].toString().toInt() + when (curSettings["SNIPER_AIM_FOV"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                aimFovSlider.value = curSettings["SNIPER_AIM_FOV"].toString().toInt().toFloat()
-                aimSpeedLabel.setText("Aim Speed: " + curSettings["SNIPER_AIM_SPEED"].toString().toInt() + when (curSettings["SNIPER_AIM_SPEED"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                aimSpeedSlider.value = curSettings["SNIPER_AIM_SPEED"].toString().toInt().toFloat()
-                aimSmoothnessLabel.setText("Aim Smoothness: " + curSettings["SNIPER_AIM_SMOOTHNESS"].toString().toFloat())
-                aimSmoothnessSlider.value = curSettings["SNIPER_AIM_SMOOTHNESS"].toString().toFloat()
-                aimStrictnessLabel.setText("Aim Strictness: " + curSettings["SNIPER_AIM_STRICTNESS"])
-                aimStrictnessSlider.value = curSettings["SNIPER_AIM_STRICTNESS"].toString().toFloat()
-                perfectAimCheckBox.isChecked = curSettings["SNIPER_PERFECT_AIM"]!!.strToBool()
-                perfectAimCollapsible.isCollapsed = !curSettings["SNIPER_PERFECT_AIM"]!!.strToBool()
-                perfectAimFovLabel.setText("Perfect Aim Fov: " + curSettings["SNIPER_PERFECT_AIM_FOV"].toString().toInt() + when (curSettings["SNIPER_PERFECT_AIM_FOV"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                perfectAimFovSlider.value = curSettings["SNIPER_PERFECT_AIM_FOV"].toString().toInt().toFloat()
-                perfectAimChanceLabel.setText("Perfect Aim Chance: " + curSettings["SNIPER_PERFECT_AIM_CHANCE"].toString().toInt() + when (curSettings["SNIPER_PERFECT_AIM_CHANCE"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                perfectAimChanceSlider.value = curSettings["SNIPER_PERFECT_AIM_CHANCE"].toString().toInt().toFloat()
-            }
-
-            "SHOTGUN" -> {
-                enableFactorRecoil.isChecked = curSettings["SHOTGUN_FACTOR_RECOIL"]!!.strToBool()
-                enableFlatAim.isChecked = curSettings["SHOTGUN_ENABLE_FLAT_AIM"]!!.strToBool()
-                enablePathAim.isChecked = curSettings["SHOTGUN_ENABLE_PATH_AIM"]!!.strToBool()
-                aimBoneBox.selected = if (curSettings["SHOTGUN_AIM_BONE"].toString().toInt() == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
-                aimFovLabel.setText("Aim Fov: " + curSettings["SHOTGUN_AIM_FOV"].toString().toInt() + when (curSettings["SHOTGUN_AIM_FOV"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                aimFovSlider.value = curSettings["SHOTGUN_AIM_FOV"].toString().toInt().toFloat()
-                aimSpeedLabel.setText("Aim Speed: " + curSettings["SHOTGUN_AIM_SPEED"].toString().toInt() + when (curSettings["SHOTGUN_AIM_SPEED"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                aimSpeedSlider.value = curSettings["SHOTGUN_AIM_SPEED"].toString().toInt().toFloat()
-                aimSmoothnessLabel.setText("Aim Smoothness: " + curSettings["SHOTGUN_AIM_SMOOTHNESS"].toString().toFloat())
-                aimSmoothnessSlider.value = curSettings["SHOTGUN_AIM_SMOOTHNESS"].toString().toFloat()
-                aimStrictnessLabel.setText("Aim Strictness: " + curSettings["SHOTGUN_AIM_STRICTNESS"])
-                aimStrictnessSlider.value = curSettings["SHOTGUN_AIM_STRICTNESS"].toString().toFloat()
-                perfectAimCheckBox.isChecked = curSettings["SHOTGUN_PERFECT_AIM"]!!.strToBool()
-                perfectAimCollapsible.isCollapsed = !curSettings["SHOTGUN_PERFECT_AIM"]!!.strToBool()
-                perfectAimFovLabel.setText("Perfect Aim Fov: " + curSettings["SHOTGUN_PERFECT_AIM_FOV"].toString().toInt() + when (curSettings["SHOTGUN_PERFECT_AIM_FOV"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                perfectAimFovSlider.value = curSettings["SHOTGUN_PERFECT_AIM_FOV"].toString().toInt().toFloat()
-                perfectAimChanceLabel.setText("Perfect Aim Chance: " + curSettings["SHOTGUN_PERFECT_AIM_CHANCE"].toString().toInt() + when (curSettings["SHOTGUN_PERFECT_AIM_CHANCE"].toString().length) {
-                    3 -> "  "
-                    2 -> "    "
-                    else -> "      "
-                })
-                perfectAimChanceSlider.value = curSettings["SHOTGUN_PERFECT_AIM_CHANCE"].toString().toInt().toFloat()
-            }
+        if (weaponOverride) {
+            weaponOverrideEnableCheckBox.isChecked = curWep[0]!!.toBool()
+            enableFactorRecoil.isChecked = curWep[1]!!.toBool()
+            enableFlatAim.isChecked = curWep[2]!!.toBool()
+            enablePathAim.isChecked = curWep[3]!!.toBool()
+            aimBoneBox.selected = if (curWep[4]!!.toInt() == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
+            aimFovLabel.setText("Aim Fov: " + curWep[5]!!.toInt() + when (curWep[5]!!.toInt().toString().length) {
+                3 -> "  "
+                2 -> "    "
+                else -> "      "
+            })
+            aimFovSlider.value = curWep[5]!!.toInt().toFloat()
+            aimSpeedLabel.setText("Aim Speed: " + curWep[6]!!.toInt() + when (curWep[6]!!.toInt().toString().length) {
+                3 -> "  "
+                2 -> "    "
+                else -> "      "
+            })
+            aimSpeedSlider.value = curWep[6]!!.toInt().toFloat()
+            aimSmoothnessLabel.setText("Aim Smoothness: " + curWep[7]!!.toFloat())
+            aimSmoothnessSlider.value = curWep[7]!!.toFloat()
+            aimStrictnessLabel.setText("Aim Strictness: " + curWep[8]!!.toFloat())
+            aimStrictnessSlider.value = curWep[8]!!.toFloat()
+            perfectAimCheckBox.isChecked = curWep[9]!!.toBool()
+            perfectAimCollapsible.isCollapsed = !curWep[9]!!.toBool()
+            perfectAimFovLabel.setText("Perfect Aim Fov: " + curWep[10]!!.toInt() + when (curWep[10]!!.toInt().toString().length) {
+                3 -> "  "
+                2 -> "    "
+                else -> "      "
+            })
+            perfectAimFovSlider.value = curWep[10]!!.toInt().toFloat()
+            perfectAimChanceLabel.setText("Perfect Aim Chance: " + curWep[11]!!.toInt() + when (curWep[11]!!.toInt().toString().length) {
+                3 -> "  "
+                2 -> "    "
+                else -> "      "
+            })
+            perfectAimChanceSlider.value = curWep[11]!!.toFloat()
         }
-        ////Custom Overrides
-//        overrideEnableOverride.isChecked = curOverrideWep[1].toBool()
-//        overrideEnableFactorRecoil.isChecked = curOverrideWep[2].toBool()
-//        overrideEnableFlatAim.isChecked = curOverrideWep[3].toBool()
-//        overrideEnablePathAim.isChecked = curOverrideWep[4].toBool()
-//        overrideAimBoneBox.selected = if (curOverrideWep[5].toInt() == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
-//        overrideAimFovLabel.setText("Aim Fov: " + curOverrideWep[6].toInt() + when (curOverrideWep[6].toInt().toString().length) {
-//            3 -> "  "
-//            2 -> "    "
-//            else -> "      "
-//        })
-//        overrideAimFovSlider.value = curOverrideWep[6].toFloat()
-//        overrideAimSpeedLabel.setText("Aim Speed: " + curOverrideWep[7].toInt() + when (curOverrideWep[7].toInt().toString().length) {
-//            3 -> "  "
-//            2 -> "    "
-//            else -> "      "
-//        })
-//        overrideAimSpeedSlider.value = curOverrideWep[7].toFloat()
-//        overrideAimSmoothnessLabel.setText("Aim Smoothness: " + curOverrideWep[8])
-//        overrideAimSmoothnessSlider.value = curOverrideWep[8].toFloat()
-//        overridePerfectAimCheckBox.isChecked = curOverrideWep[10].toBool()
-//        overridePerfectAimCollapsible.isCollapsed = !curOverrideWep[10].toBool()
-//        overridePerfectAimFovLabel.setText("Perfect Aim Fov: " + curOverrideWep[11].toInt() + when (curOverrideWep[11].toInt().toString().length) {
-//            3 -> "  "
-//            2 -> "    "
-//            else -> "      "
-//        })
-//        overridePerfectAimFovSlider.value = curOverrideWep[11].toFloat()
-//        overridePerfectAimChanceLabel.setText("Perfect Aim Chance: " + curOverrideWep[12].toInt() + when (curOverrideWep[12].toInt().toString().length) {
-//            3 -> "  "
-//            2 -> "    "
-//            else -> "      "
-//        })
-//        overridePerfectAimChanceSlider.value = curOverrideWep[12].toFloat()
-//        overrideAimAssistCheckBox.isChecked = curOverrideWep[13].toBool()
-//        overrideAimAssistCollapsible.isCollapsed = !curOverrideWep[13].toBool()
-//        overrideAimAssistStrictnessLabel.setText("Aim Assist Strictness: " + curOverrideWep[14].toInt() + when (curOverrideWep[14].toInt().toString().length) {
-//            3 -> "  "
-//            2 -> "    "
-//            else -> "      "
-//        })
-//        overrideAimAssistStrictnessSlider.value = curOverrideWep[14].toFloat()
-
+        else
+        {
+            weaponOverrideEnableCheckBox.isChecked = curWep[0]!!.toBool()
+            enableFactorRecoil.isChecked = curSettings[categorySelected + "_FACTOR_RECOIL"]!!.strToBool()
+            enableFlatAim.isChecked = curSettings[categorySelected + "_ENABLE_FLAT_AIM"]!!.strToBool()
+            enablePathAim.isChecked = curSettings[categorySelected + "_ENABLE_PATH_AIM"]!!.strToBool()
+            aimBoneBox.selected = if (curSettings[categorySelected + "_AIM_BONE"].toString().toInt() == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
+            aimFovLabel.setText("Aim Fov: " + curSettings[categorySelected + "_AIM_FOV"].toString().toInt() + when (curSettings[categorySelected + "_AIM_FOV"].toString().length) {
+                3 -> "  "
+                2 -> "    "
+                else -> "      "
+            })
+            aimFovSlider.value = curSettings[categorySelected + "_AIM_FOV"].toString().toInt().toFloat()
+            aimSpeedLabel.setText("Aim Speed: " + curSettings[categorySelected + "_AIM_SPEED"].toString().toInt() + when (curSettings[categorySelected + "_AIM_SPEED"].toString().length) {
+                3 -> "  "
+                2 -> "    "
+                else -> "      "
+            })
+            aimSpeedSlider.value = curSettings[categorySelected + "_AIM_SPEED"].toString().toInt().toFloat()
+            aimSmoothnessLabel.setText("Aim Smoothness: " + curSettings[categorySelected + "_AIM_SMOOTHNESS"].toString().toFloat())
+            aimSmoothnessSlider.value = curSettings[categorySelected + "_AIM_SMOOTHNESS"].toString().toFloat()
+            aimStrictnessLabel.setText("Aim Strictness: " + curSettings[categorySelected + "_AIM_STRICTNESS"])
+            aimStrictnessSlider.value = curSettings[categorySelected + "_AIM_STRICTNESS"].toString().toFloat()
+            perfectAimCheckBox.isChecked = curSettings[categorySelected + "_PERFECT_AIM"]!!.strToBool()
+            perfectAimCollapsible.isCollapsed = !curSettings[categorySelected + "_PERFECT_AIM"]!!.strToBool()
+            perfectAimFovLabel.setText("Perfect Aim Fov: " + curSettings[categorySelected + "_PERFECT_AIM_FOV"].toString().toInt() + when (curSettings[categorySelected + "_PERFECT_AIM_FOV"].toString().length) {
+                3 -> "  "
+                2 -> "    "
+                else -> "      "
+            })
+            perfectAimFovSlider.value = curSettings[categorySelected + "_PERFECT_AIM_FOV"].toString().toInt().toFloat()
+            perfectAimChanceLabel.setText("Perfect Aim Chance: " + curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toString().toInt() + when (curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toString().length) {
+                3 -> "  "
+                2 -> "    "
+                else -> "      "
+            })
+            perfectAimChanceSlider.value = curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toString().toInt().toFloat()
+        }
     }
 
     visualsTab.apply {

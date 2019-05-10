@@ -229,7 +229,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	val currentAngle = clientState.angle()
 	val position = me.position()
 
-	if (currentTarget < 0 || !currentTarget.canShoot()) {
+	if (currentTarget < 0) {
 		currentTarget = findTarget(position, currentAngle, aim)
 		if (currentTarget < 0) {
 			reset()
@@ -238,9 +238,11 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		target.set(currentTarget)
 	}
 
- 	if (currentTarget == me)
+ 	if (currentTarget == me || !currentTarget.canShoot())
 	{
+		Thread.sleep(500)
 		reset()
+		return@every
 	}
 	else {
 		val bonePosition = currentTarget.bones(bone.get())

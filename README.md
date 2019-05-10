@@ -2,11 +2,11 @@ Update 1.3
 
 * Replaced script.eval for improved performance
     * Faster saving (1-5 seconds)
-* Removed override weapons because of possible fps problems, to be implemented later
+* ~~Removed override weapons because of possible fps problems, to be implemented later~~ Reimplemented weapon overrides
 * Removed aim assist mode and aim assist strictness, as the same can be accomplished easier with aim speed, aim smoothness, and aim strictness
 * Removed now useless variables, action log, swap speed min/max
 * Removed variables that from viewable settings shouldn't be configured; max entities, cleanup time, process name, garbage collect on startup, process access flags, client module name, engine module name 
-* Removed indicator esp (possibly reimplemented later)
+* ~~Removed indicator esp (possibly reimplemented later)~~ Reimplemented indicator esp
 * Aimbot will choose closest target (or none) when aiming & bone trigger aiming, will hold target when force aiming
 * Fixed & cleaned up bone trigger issues
 * Fixed find target global var issues

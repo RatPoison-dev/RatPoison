@@ -64,9 +64,9 @@ SNIPER_PERFECT_AIM = false
 /**
  * The FOV, in degrees (0 to 360) to snap for perfect aim.
  */
-SNIPER_PERFECT_AIM_FOV = 40
+SNIPER_PERFECT_AIM_FOV = 1
 
 /**
  * The chance, from 1% to 100% (0 to 100) for perfect aim to activate.
  */
-SNIPER_PERFECT_AIM_CHANCE = 100
+SNIPER_PERFECT_AIM_CHANCE = 1

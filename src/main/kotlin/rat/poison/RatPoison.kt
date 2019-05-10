@@ -1,4 +1,5 @@
 @file:JvmName("RatPoison")
+@file:Suppress("BlockingMethodInNonBlockingContext")
 
 package rat.poison
 
@@ -15,6 +16,8 @@ import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.widget.VisTable
 import com.sun.jna.platform.win32.WinNT
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.jire.arrowhead.keyPressed
 import rat.poison.game.CSGO
 import rat.poison.interfaces.*
@@ -34,6 +37,8 @@ var saving = false
 var settingsLoaded = false
 
 val curSettings = Settings()
+
+//Content to string
 
 fun main() {
     System.setProperty("jna.nosys", "true")
@@ -73,21 +78,23 @@ fun main() {
     if (MENU) {
         App.open()
 
-        Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
-            setTitle("Rat Poison UI")
-            if (CSGO.gameWidth < 1 || CSGO.gameHeight < 1) {
-                setWindowedMode(OVERLAY_WIDTH, OVERLAY_HEIGHT)
-            } else {
-                setWindowedMode(CSGO.gameWidth, CSGO.gameHeight)
-            }
-            useVsync(OPENGL_VSYNC)
-            setBackBufferConfig(8, 8, 8, 8, 16, 0, OPENGL_MSAA_SAMPLES)
-        })
+        GlobalScope.launch {
+            Thread.sleep(2000)
+            Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
+                setTitle("Rat Poison UI")
+                if (CSGO.gameWidth < 1 || CSGO.gameHeight < 1) {
+                    setWindowedMode(OVERLAY_WIDTH, OVERLAY_HEIGHT)
+                } else {
+                    setWindowedMode(CSGO.gameWidth, CSGO.gameHeight)
+                }
+                useVsync(OPENGL_VSYNC)
+                setBackBufferConfig(8, 8, 8, 8, 16, 0, OPENGL_MSAA_SAMPLES)
+            })
+        }
     }
     else {
         scanner()
     }
-
 }
 
 fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
@@ -290,7 +297,9 @@ fun sync(fps : Int) {
 }
 
 fun Any.strToBool() = this == "true" || this == true
+fun Any.boolToDouble() = if (this == "true" || this == true) 1.0 else (0.0)
 fun Any.boolToStr() = this.toString()
+fun Double.toBool() = this == 1.0
 
 fun Any.strToColor() = convStrToColor(this.toString())
 
@@ -298,13 +307,36 @@ fun convStrToColor(input: String): rat.poison.game.Color {
     var line = input
     line = line.replace("Color(", "").replace(")", "").replace(",", "")
 
-    val curLine = line.trim().split(" ".toRegex(), 4)
+    val arrayLine = line.trim().split(" ".toRegex(), 4)
 
 
-    val color = rat.poison.game.Color(curLine[0].replace("red=", "").toInt(),
-            curLine[1].replace("green=", "").toInt(),
-            curLine[2].replace("blue=", "").toInt(),
-            curLine[3].replace("alpha=", "").toDouble())
+    val color = rat.poison.game.Color(arrayLine[0].replace("red=", "").toInt(),
+            arrayLine[1].replace("green=", "").toInt(),
+            arrayLine[2].replace("blue=", "").toInt(),
+            arrayLine[3].replace("alpha=", "").toDouble())
 
     return color
+}
+
+fun convStrToArray(input: String): Array<Double?> {
+    var line = input
+    line = line.replace("doubleArrayOf(", "").replace(")", "").replace(",", "").replace("[", "").replace("]", "")
+
+    val listLine = line.trim().split(" ".toRegex(), 12)
+
+    val arrayLine = arrayOfNulls<Double>(12)
+
+    for (i in 0..listLine.size-1)
+    {
+        arrayLine[i] = listLine[i].toDouble()
+    }
+
+    return arrayLine
+}
+
+fun convArrayToStr(input: String): String {
+    var line = input
+    line = line.replace("[", "doubleArrayOf(").replace("]", ")")
+
+    return line
 }

@@ -1,5 +1,6 @@
 package rat.poison.scripts.aim
 
+import rat.poison.convStrToArray
 import rat.poison.curSettings
 import rat.poison.game.Weapons
 import rat.poison.game.entity.weapon
@@ -9,11 +10,11 @@ import rat.poison.strToBool
 import rat.poison.utils.every
 
 var override = false
-var curWepCheck = Weapons.AK47
+var curWep = Weapons.AK47
 
 fun setAim() = every(128){
 
-    //    if (!saving && settingsLoaded) {
+//        if (!saving && settingsLoaded) {
 //        if (curWepCheck != me.weapon())
 //        {
 //            curWepCheck = me.weapon()
@@ -43,8 +44,31 @@ fun setAim() = every(128){
 //        override = false
 //    }
 
-
     if (settingsLoaded) {
+        curWep = me.weapon()
+        if (curWep.rifle || curWep.smg || curWep.pistol || curWep.sniper || curWep.shotgun) {
+            val curWepSettings = convStrToArray(curSettings[curWep.name].toString())
+
+            if (curWepSettings[0]!!.toBool()) {
+                curSettings["FACTOR_RECOIL"] = curWepSettings[1]!!.toBool()
+                curSettings["ENABLE_FLAT_AIM"] = curWepSettings[2]!!.toBool()
+                curSettings["ENABLE_PATH_AIM"] = curWepSettings[3]!!.toBool()
+                curSettings["AIM_BONE"] = curWepSettings[4]!!.toInt()
+                curSettings["AIM_FOV"] = curWepSettings[5]!!.toInt()
+                curSettings["AIM_SPEED"] = curWepSettings[6]!!.toInt()
+                curSettings["AIM_SMOOTHNESS"] = curWepSettings[7]
+                curSettings["AIM_STRICTNESS"] = curWepSettings[8]
+                curSettings["PERFECT_AIM"] = curWepSettings[9]!!.toBool()
+                curSettings["PERFECT_AIM_FOV"] = curWepSettings[10]!!.toInt()
+                curSettings["PERFECT_AIM_CHANCE"] = curWepSettings[11]!!.toInt()
+                override = true
+            }
+            else { override = false }
+        }
+    } else { override = false }
+
+
+    if (!override) {
         if (me.weapon().rifle) {
             curSettings["FACTOR_RECOIL"] = curSettings["RIFLE_FACTOR_RECOIL"]!!.strToBool()
             curSettings["AIM_BONE"] = curSettings["RIFLE_AIM_BONE"].toString().toInt()
