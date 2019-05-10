@@ -19,6 +19,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.jire.arrowhead.keyPressed
+import org.lwjgl.glfw.GLFW.glfwInit
 import rat.poison.game.CSGO
 import rat.poison.interfaces.*
 import rat.poison.jna.enums.AccentStates
@@ -75,20 +76,21 @@ fun main() {
     automaticWeapon()
 
     //Overlay check, not updated?
-    if (MENU) {
+    if (curSettings["MENU"]!!.strToBool()) {
         App.open()
 
         GlobalScope.launch {
             Thread.sleep(2000)
+            glfwInit()
             Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
                 setTitle("Rat Poison UI")
                 if (CSGO.gameWidth < 1 || CSGO.gameHeight < 1) {
-                    setWindowedMode(OVERLAY_WIDTH, OVERLAY_HEIGHT)
+                    setWindowedMode(curSettings["OVERLAY_WIDTH"].toString().toInt(), curSettings["OVERLAY_HEIGHT"].toString().toInt())
                 } else {
                     setWindowedMode(CSGO.gameWidth, CSGO.gameHeight)
                 }
-                useVsync(OPENGL_VSYNC)
-                setBackBufferConfig(8, 8, 8, 8, 16, 0, OPENGL_MSAA_SAMPLES)
+                useVsync(curSettings["OPENGL_VSYNC"]!!.strToBool())
+                setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings["OPENGL_MSAA_SAMPLES"].toString().toInt())
             })
         }
     }
@@ -190,7 +192,7 @@ object App : ApplicationAdapter() {
                 val bombCamera = bombStage.viewport.camera
                 bombCamera.update()
 
-                if (!overlay.clickThrough) {
+                if (MENUTOG) {
                     val batch = menuStage.batch
                     batch.projectionMatrix = menuCamera.combined //camera to menuCamera
                     batch.begin()
@@ -224,7 +226,7 @@ object App : ApplicationAdapter() {
             overlayMenuKey.update()
             if (overlayMenuKey.justBecomeTrue) {
                 MENUTOG = !MENUTOG
-                overlay.clickThrough = !overlay.clickThrough
+                overlay.clickThrough = !MENUTOG
             }
         }
     }
@@ -245,6 +247,7 @@ object App : ApplicationAdapter() {
 
             override fun onAfterInit(overlay: IOverlay) {
                 overlay.clickThrough = true
+                MENUTOG = false
                 overlay.protectAgainstScreenshots = false
                 App.haveTarget = true
             }
