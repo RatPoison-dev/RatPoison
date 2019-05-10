@@ -35,6 +35,9 @@ fun rcs() = every(1) {
 		finishPunch = true//false
 	}
 	if (forceSet || !finishPunch || shotsFired > 1) { //Fixes aim jumping down
+		if (lastPunch.isZero) {
+			lastPunch.set(p.x.toFloat(), p.y.toFloat())
+		}
 		playerPunch.set(p.x.toFloat(), p.y.toFloat(), p.z.toFloat())
 		newPunch.set(playerPunch.x - lastPunch.x, playerPunch.y - lastPunch.y)
 		newPunch.scl(1F+curSettings["RCS_SMOOTHING"].toString().toFloat(), 1F+curSettings["RCS_SMOOTHING"].toString().toFloat())

@@ -14,7 +14,16 @@ Update 1.3
 
 ---
 
+Hotfixes
+* Fixed RCS jumping down when spraying 2+ bullets in quick succession
+
+---
+
 Base is Charlatano available [here](https://github.com/Jire/Charlatano)
+
+---
+
+Open to pull requests
 
 ---
 
