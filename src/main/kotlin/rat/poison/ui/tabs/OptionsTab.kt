@@ -20,20 +20,21 @@ import java.nio.file.Files
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
-    val loadButton1 = VisTextButton("Load " + curSettings["CFG1_NAME"].toString().replace("\"", ""))
-    val loadButton2 = VisTextButton("Load " + curSettings["CFG2_NAME"].toString().replace("\"", ""))
-    val loadButton3 = VisTextButton("Load " + curSettings["CFG2_NAME"].toString().replace("\"", ""))
+    private val loadButton1 = VisTextButton("Load " + curSettings["CFG1_NAME"].toString().replace("\"", ""))
+    private val loadButton2 = VisTextButton("Load " + curSettings["CFG2_NAME"].toString().replace("\"", ""))
+    private val loadButton3 = VisTextButton("Load " + curSettings["CFG2_NAME"].toString().replace("\"", ""))
 
     init {
         //Create UI_Alpha Slider
         val menuAlpha = VisTable()
         Tooltip.Builder("The alpha of the menu").target(menuAlpha).build()
         val menuAlphaLabel = VisLabel("Menu Alpha: " + 1F) //1F is default
-        val menuAlphaSlider = VisSlider(0.1F, 1F, 0.1F, false)
+        val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, false)
         menuAlphaSlider.value = 1F
         menuAlphaSlider.changed { _, _ ->
-            menuAlpha.parent.parent.parent.parent.color.a = (Math.round(menuAlphaSlider.value * 10F) / 10F) //Set the top level parents alpha (currently .parent.parent.parent.parent is the only way, instead of a way to find top most instantly
-            menuAlphaLabel.setText("Menu Alpha: " + menuAlpha.parent.parent.parent.parent.color.a.toString()) //Same parent situation
+            val alp = (Math.round(menuAlphaSlider.value * 100F) / 100F)
+            menuAlpha.parent.parent.parent.parent.color.a = alp //Set the top level parents alpha (currently .parent.parent.parent.parent is the only way, instead of a way to find top most instantly
+            menuAlphaLabel.setText("Menu Alpha: " + alp.toString() + when(alp.toString().length) {4 -> "" 3->"  " 2->"    " else ->"      "}) //Same parent situation
         }
         menuAlpha.add(menuAlphaLabel).spaceRight(6F)
         menuAlpha.add(menuAlphaSlider)

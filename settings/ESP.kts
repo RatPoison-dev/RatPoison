@@ -58,4 +58,4 @@ GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)
 /**
  * The color to highlight aimed enemies
  */
-HIGHLIGHT_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
+HIGHLIGHT_COLOR = Color(red=0, green=174, blue=255, alpha=1.0)

@@ -14,7 +14,7 @@ fun UIUpdate() {
         forceAimKeyField.text = curSettings["FORCE_AIM_KEY"].toString()
         automaticWeaponsCheckBox.isChecked = curSettings["AUTOMATIC_WEAPONS"]!!.strToBool()
         automaticWeaponsCollapsible.isCollapsed = !curSettings["AUTOMATIC_WEAPONS"]!!.strToBool()
-        maxPunchCheckLabel.setText("Max Punch Check: " + curSettings["MAX_PUNCH_CHECK"].toString() + when(curSettings["MAX_PUNCH_CHECK"].toString().length) {3->"" 2->"  " else ->"    "}) //curSettings["MAX_PUNCH_CHECK"])
+        maxPunchCheckLabel.setText("Max Punch Check: " + curSettings["MAX_PUNCH_CHECK"].toString() + when(curSettings["MAX_PUNCH_CHECK"].toString().length) {3->"" 2->"  " else ->"    "})
         maxPunchCheckSlider.value = curSettings["MAX_PUNCH_CHECK"].toString().toFloat()
 
         val curWep = convStrToArray(curSettings[weaponOverrideSelected].toString())
@@ -98,6 +98,7 @@ fun UIUpdate() {
 
     visualsTab.apply {
         enableEsp.isChecked = curSettings["ENABLE_ESP"]!!.strToBool()
+        radarEsp.isChecked = curSettings["RADAR_ESP"]!!.strToBool()
         visualsToggleKeyField.text = curSettings["VISUALS_TOGGLE_KEY"].toString()
         var col = curSettings["TEAM_COLOR"]!!.strToColor()
         teamColorShow.setColor(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
@@ -109,6 +110,8 @@ fun UIUpdate() {
         weaponColorShow.setColor(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
         col = curSettings["GRENADE_COLOR"]!!.strToColor()
         grenadeColorShow.setColor(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
+        col = curSettings["HIGHLIGHT_COLOR"]!!.strToColor()
+        highlightColorShow.setColor(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
     }
 
     glowEspTab.apply {
@@ -186,7 +189,6 @@ fun UIUpdate() {
     miscTab.apply {
         bunnyHop.isChecked = curSettings["ENABLE_BUNNY_HOP"]!!.strToBool()
         bombTimer.isChecked = curSettings["ENABLE_BOMB_TIMER"]!!.strToBool()
-        radarEsp.isChecked = curSettings["RADAR_ESP"]!!.strToBool()
         fireKeyField.text = curSettings["FIRE_KEY"].toString()
         menuKeyField.text = curSettings["MENU_KEY"].toString()
         enableReducedFlash.isChecked = curSettings["ENABLE_REDUCED_FLASH"]!!.strToBool()

@@ -17,11 +17,12 @@ class UIBombTimer : VisWindow("RatPoison UI") {
         val menuAlpha = VisTable()
         Tooltip.Builder("The alpha of the menu").target(menuAlpha).build()
         val menuAlphaLabel = VisLabel("Menu Alpha: " + 1F) //1F is default
-        val menuAlphaSlider = VisSlider(0.1F, 1F, 0.1F, false)
+        val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, false)
         menuAlphaSlider.value = 1F
         menuAlphaSlider.changed { _, _ ->
-            menuAlpha.parent.color.a = (Math.round(menuAlphaSlider.value * 10F) / 10F) //Set the top level parents alpha (currently .parent.parent.parent.parent is the only way, instead of a way to find top most instantly
-            menuAlphaLabel.setText("Menu Alpha: " + menuAlpha.parent.color.a.toString()) //Same parent situation
+            val alp = (Math.round(menuAlphaSlider.value * 100F) / 100F)
+            menuAlpha.parent.color.a = alp //Set the top level parents alpha (currently .parent.parent.parent.parent is the only way, instead of a way to find top most instantly
+            menuAlphaLabel.setText("Menu Alpha: " + alp.toString() + when(alp.toString().length) {4 -> "" 3->"  " 2->"    " else ->"      "}) //Same parent situation
         }
         menuAlpha.add(menuAlphaLabel).spaceRight(6F)
         menuAlpha.add(menuAlphaSlider)
@@ -31,11 +32,9 @@ class UIBombTimer : VisWindow("RatPoison UI") {
 
         pack()
 
-        setSize(300F, 150F)
+        setSize(325F, 150F)
 
         setPosition(0F, 0F)
         isResizable = false
-
-        //UIUpdate()
     }
 }

@@ -176,7 +176,7 @@ object App : ApplicationAdapter() {
     }
 
     override fun render() {
-        sync(OPENGL_FPS)
+        sync(curSettings["MENU_KEY"].toString().toInt())
 
         if (!Thread.interrupted()) {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
@@ -247,13 +247,12 @@ object App : ApplicationAdapter() {
 
             override fun onAfterInit(overlay: IOverlay) {
                 overlay.clickThrough = true
-                MENUTOG = false
                 overlay.protectAgainstScreenshots = false
                 App.haveTarget = true
             }
 
-            override fun onActive(overlay: IOverlay) {}
-            override fun onPassive(overlay: IOverlay) {}
+            override fun onActive(overlay: IOverlay) {MENUTOG = true}
+            override fun onPassive(overlay: IOverlay) {MENUTOG = false}
             override fun onBackground(overlay: IOverlay) {}
             override fun onForeground(overlay: IOverlay) {}
             override fun onBoundsChange(overlay: IOverlay, x: Int, y: Int, width: Int, height: Int) {}

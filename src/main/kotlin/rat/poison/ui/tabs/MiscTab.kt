@@ -23,7 +23,6 @@ class MiscTab : Tab(false, false) {
     val hitSound = VisCheckBox("Hitsound")
     val hitSoundVolumeLabel = VisLabel("Hitsound Volume: " + curSettings["HITSOUND_VOLUME"].toString().toDouble())
     val hitSoundVolumeSlider = VisSlider(0.1F, 1F, 0.1F, false)
-    val radarEsp = VisCheckBox("Radar Esp")
 
     init {
         //Create curSettings["ENABLE_BUNNY_HOP"]!!.strToBool() Toggle
@@ -109,19 +108,10 @@ class MiscTab : Tab(false, false) {
         hitSoundVolume.add(hitSoundVolumeLabel).spaceRight(6F)
         hitSoundVolume.add(hitSoundVolumeSlider)
 
-        //Create curSettings["RADAR_ESP"]!!.strToBool() Toggle
-        Tooltip.Builder("Whether or not to view the enemy team on the radar").target(radarEsp).build()
-        if (curSettings["RADAR_ESP"]!!.strToBool()) radarEsp.toggle()
-        radarEsp.changed { _, _ ->
-            curSettings["RADAR_ESP"] = radarEsp.isChecked.boolToStr()
-            true
-        }
-
 
         //Add all items to label for tabbed pane content
         table.add(bunnyHop).row()
         table.add(bombTimer).row()
-        table.add(radarEsp).row()
 
         table.addSeparator()
 

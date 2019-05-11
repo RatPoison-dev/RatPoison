@@ -14,8 +14,13 @@ Update 1.3
 
 ---
 
-Hotfixes
+Hotfixes; 1.3.1
 * Fixed RCS jumping down when spraying 2+ bullets in quick succession
+* Color picker initializes to the correct color instead of black
+* Menu alpha cannot go below .5, menu alpha increments by .05 instead of .1
+* Moved Radar Esp to visuals tab
+* Fixed settings not reverting when unchecking Weapon Override
+* Default values changes
 
 ---
 
@@ -66,10 +71,10 @@ The first step is to compile the source code into a usable cheat program.
 * Double click on the "_build_" (_build.bat_) script and wait for it to complete
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.3**.
+directory, and will in a directory called **RatPoison 1.3.1**.
 
-From within the **RatPoison 1.3** directory, you can start the cheat by running
-the _"Start RatPoison 1.3"_ script.
+From within the **RatPoison 1.3.1** directory, you can start the cheat by running
+the _"Start RatPoison 1.3.1"_ script.
 
 Before starting the cheat, you should already be spawned in a game with a weapon in hand!
 

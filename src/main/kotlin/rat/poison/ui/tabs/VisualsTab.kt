@@ -10,12 +10,8 @@ import com.kotcrab.vis.ui.widget.color.ColorPickerAdapter
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
-import rat.poison.App
-import rat.poison.boolToStr
-import rat.poison.curSettings
+import rat.poison.*
 import rat.poison.scripts.esp.disableEsp
-import rat.poison.settings.*
-import rat.poison.strToBool
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.esptabs.*
 
@@ -28,12 +24,15 @@ val skeletonEspTab = SkeletonEspTab()
 
 class VisualsTab : Tab(false, false) {
     private val table = VisTable(true)
+    private var col : rat.poison.game.Color
 
     //Init labels/sliders/boxes that show values here
     val enableEsp = VisCheckBox("Enable Esp") //ESP
 
-    val fireKeyField = VisValidatableTextField(Validators.FLOATS)
+    private val visualsKeyField = VisValidatableTextField(Validators.FLOATS)
     val visualsToggleKeyField = VisValidatableTextField(Validators.FLOATS)
+
+    val radarEsp = VisCheckBox("Radar Esp")
 
     val showTeam = VisCheckBox("Show Team") //Show_Team
     val showEnemies = VisCheckBox("Show Enemies") //Show_Enemies
@@ -53,7 +52,6 @@ class VisualsTab : Tab(false, false) {
 
     init {
         //Create curSettings["ENABLE_ESP"]!!.strToBool() Toggle
-        //val enableEsp = VisTextButton("curSettings["ENABLE_ESP"]!!.strToBool()", "toggle")
         Tooltip.Builder("Whether or not to enable esp").target(enableEsp).build()
         enableEsp.isChecked = curSettings["ENABLE_ESP"]!!.strToBool()
         enableEsp.changed { _, _ ->
@@ -71,7 +69,7 @@ class VisualsTab : Tab(false, false) {
         val visualsToggleKeyLabel = VisLabel("Visuals Toggle Key: ")
         visualsToggleKeyField.text = curSettings["VISUALS_TOGGLE_KEY"].toString()
         visualsToggleKey.changed { _, _ ->
-            if (fireKeyField.text.toIntOrNull() != null) {
+            if (visualsKeyField.text.toIntOrNull() != null) {
                 curSettings["VISUALS_TOGGLE_KEY"] = visualsToggleKeyField.text.toInt().toString()
             }
         }
@@ -79,15 +77,22 @@ class VisualsTab : Tab(false, false) {
         visualsToggleKey.add(visualsToggleKeyField).spaceRight(6F).width(40F)
         visualsToggleKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
 
-        //VisImage(Color) doesnt work??
+        //Create Radar Esp Toggle
+        Tooltip.Builder("Whether or not to view the enemy team on the radar").target(radarEsp).build()
+        if (curSettings["RADAR_ESP"]!!.strToBool()) radarEsp.toggle()
+        radarEsp.changed { _, _ ->
+            curSettings["RADAR_ESP"] = radarEsp.isChecked.boolToStr()
+            true
+        }
+
         //Create Team_Color Picker
         val teamColor = VisTable()
         Tooltip.Builder("The esp color of teammates").target(teamColor).build()
-        //val teamColorShow = VisTextButton("Set Team Color")
-        teamColorShow.setColor(TEAM_COLOR.red.toFloat(), TEAM_COLOR.green.toFloat(), TEAM_COLOR.blue.toFloat(), 1F/*TEAM_COLOR.alpha.toFloat()*/)
+        col = curSettings["TEAM_COLOR"]!!.strToColor()
+        teamColorShow.setColor(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
         val teamColorPicker = ColorPicker("Color Picker", object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
-                TEAM_COLOR = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
+                curSettings["TEAM_COLOR"] = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
                 newCol.a = 1F
                 teamColorShow.color = newCol
                 dispose()
@@ -98,20 +103,21 @@ class VisualsTab : Tab(false, false) {
             }
         })
 
-        teamColorShow.changed { _, _ ->
+        teamColor.changed { _, _ ->
             App.menuStage.addActor(teamColorPicker.fadeIn())
         }
+        teamColorPicker.color = Color(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
 
         teamColor.add(teamColorShow)
 
         //Create Enemy_Color Picker
         val enemyColor = VisTable()
         Tooltip.Builder("The esp color of enemies").target(enemyColor).build()
-        //val enemyColorShow = VisTextButton("Set Enemy Color")
-        enemyColorShow.setColor(ENEMY_COLOR.red.toFloat(), ENEMY_COLOR.green.toFloat(), ENEMY_COLOR.blue.toFloat(), 1F/*ENEMY_COLOR.alpha.toFloat()*/)
+        col = curSettings["ENEMY_COLOR"]!!.strToColor()
+        enemyColorShow.setColor(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
         val enemyColorPicker = ColorPicker("Color Picker", object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
-                ENEMY_COLOR = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
+                curSettings["ENEMY_COLOR"] = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
                 newCol.a = 1F
                 enemyColorShow.color = newCol
                 dispose()
@@ -121,9 +127,10 @@ class VisualsTab : Tab(false, false) {
                 dispose()
             }
         })
+        enemyColorPicker.color = Color(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
 
         //enemyColorPicker
-        enemyColorShow.changed { _, _ ->
+        enemyColor.changed { _, _ ->
             App.menuStage.addActor(enemyColorPicker.fadeIn())
         }
 
@@ -132,11 +139,11 @@ class VisualsTab : Tab(false, false) {
         //Create Bomb_Color Picker
         val bombColor = VisTable()
         Tooltip.Builder("The esp color of the bomb").target(bombColor).build()
-        //val bombColorShow = VisTextButton("Set Bomb Color")
-        bombColorShow.setColor(BOMB_COLOR.red.toFloat(), BOMB_COLOR.green.toFloat(), BOMB_COLOR.blue.toFloat(), 1F/*BOMB_COLOR.alpha.toFloat()*/)
+        col = curSettings["BOMB_COLOR"]!!.strToColor()
+        bombColor.setColor(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
         val bombColorPicker = ColorPicker("Color Picker", object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
-                BOMB_COLOR = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
+                curSettings["BOMB_COLOR"] = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
                 newCol.a = 1F
                 bombColorShow.color = newCol
                 dispose()
@@ -146,8 +153,9 @@ class VisualsTab : Tab(false, false) {
                 dispose()
             }
         })
+        bombColorPicker.color = Color(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
 
-        bombColorShow.changed { _, _ ->
+        bombColor.changed { _, _ ->
             App.menuStage.addActor(bombColorPicker.fadeIn())
         }
 
@@ -156,11 +164,11 @@ class VisualsTab : Tab(false, false) {
         //Create Weapon_Color Picker
         val weaponColor = VisTable()
         Tooltip.Builder("The esp color of weapons").target(weaponColor).build()
-        //val weaponColorShow = VisTextButton("Set Weapon Color")
-        weaponColorShow.setColor(WEAPON_COLOR.red.toFloat(), WEAPON_COLOR.green.toFloat(), WEAPON_COLOR.blue.toFloat(), 1F/*WEAPON_COLOR.alpha.toFloat()*/)
+        col = curSettings["WEAPON_COLOR"]!!.strToColor()
+        weaponColor.setColor(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
         val weaponColorPicker = ColorPicker("Color Picker", object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
-                WEAPON_COLOR = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
+                curSettings["WEAPON_COLOR"] = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
                 newCol.a = 1F
                 weaponColorShow.color = newCol
                 dispose()
@@ -170,8 +178,9 @@ class VisualsTab : Tab(false, false) {
                 dispose()
             }
         })
+        weaponColorPicker.color = Color(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
 
-        weaponColorShow.changed { _, _ ->
+        weaponColor.changed { _, _ ->
             App.menuStage.addActor(weaponColorPicker.fadeIn())
         }
 
@@ -179,13 +188,14 @@ class VisualsTab : Tab(false, false) {
 
         //Create Grenade_Color Picker
         val grenadeColor = VisTable()
-        grenadeColor.setColor(GRENADE_COLOR.red.toFloat(), GRENADE_COLOR.green.toFloat(), GRENADE_COLOR.blue.toFloat(), 1F/*GRENADE_COLOR.alpha.toFloat()*/)
+        col = curSettings["GRENADE_COLOR"]!!.strToColor()
+        grenadeColor.setColor(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
         Tooltip.Builder("The esp color of grenades").target(grenadeColor).build()
         val grenadeColorPicker = ColorPicker("Color Picker", object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
-                GRENADE_COLOR = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
+                curSettings["GRENADE_COLOR"] = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
                 newCol.a = 1F
-                grenadeColor.color = newCol
+                grenadeColorShow.color = newCol
                 dispose()
             }
 
@@ -193,6 +203,7 @@ class VisualsTab : Tab(false, false) {
                 dispose()
             }
         })
+        grenadeColorPicker.color = Color(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
 
         grenadeColor.changed { _, _ ->
             App.menuStage.addActor(grenadeColorPicker.fadeIn())
@@ -202,13 +213,14 @@ class VisualsTab : Tab(false, false) {
 
         //Create Highlight_Color Picker
         val highlightColor = VisTable()
-        highlightColor.setColor(HIGHLIGHT_COLOR.red.toFloat(), HIGHLIGHT_COLOR.green.toFloat(), HIGHLIGHT_COLOR.blue.toFloat(), 1F)
+        col = curSettings["HIGHLIGHT_COLOR"]!!.strToColor()
+        highlightColor.setColor(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
         Tooltip.Builder("The esp color of highlighted entities that aim will target").target(highlightColor).build()
         val highlightColorPicker = ColorPicker("Color Picker", object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
-                HIGHLIGHT_COLOR = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
+                curSettings["HIGHLIGHT_COLOR"] = rat.poison.game.Color((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
                 newCol.a = 1F
-                highlightColor.color = newCol
+                highlightColorShow.color = newCol
                 dispose()
             }
 
@@ -216,6 +228,7 @@ class VisualsTab : Tab(false, false) {
                 dispose()
             }
         })
+        highlightColorPicker.color = Color(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
 
         highlightColor.changed { _, _ ->
             App.menuStage.addActor(highlightColorPicker.fadeIn())
@@ -283,11 +296,10 @@ class VisualsTab : Tab(false, false) {
             }
         })
 
-        //espTabbedPane.disableTab(indicatorEspTab, true)
-
         //Add all items to label for tabbed pane content
         table.add(enableEsp).colspan(2).row()
         table.add(visualsToggleKey).row()
+        table.add(radarEsp).row()
         table.add(espTabbedPane.table).growX().minSize(25F).row()
         table.add(espTabbedPaneContent).growX()
     }

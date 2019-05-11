@@ -129,13 +129,13 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         Tooltip.Builder("Whether or not to factor in recoil when aiming").target(enableFactorRecoil).build()
         enableFactorRecoil.isChecked = curSettings["PISTOL_ENABLE_PATH_AIM"]!!.strToBool()
         enableFactorRecoil.changed { _, _ ->
-            if (weaponOverride && enableOverride) {
+            if (!(weaponOverride && enableOverride)) {
+                curSettings[categorySelected + "_FACTOR_RECOIL"] = enableFactorRecoil.isChecked.boolToStr()
+            }
+            else {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected].toString())
                 curWep[1] = enableFactorRecoil.isChecked.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
-            }
-            else {
-                curSettings[categorySelected + "_FACTOR_RECOIL"] = enableFactorRecoil.isChecked.boolToStr()
             }
             UIUpdate()
             true
@@ -193,6 +193,13 @@ class AimTab : Tab(true, false) { //Aim.kts tab
             weaponOverride = weaponOverrideCheckBox.isChecked
             weaponOverrideSelectionBox.isDisabled = !weaponOverride
             weaponOverrideEnableCheckBox.isDisabled = !weaponOverride
+
+
+            val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected].toString())
+            enableOverride = curWep[0]!!.strToBool()
+            enableOverride = weaponOverrideCheckBox.isChecked
+
+
             UIUpdate()
             true
         }
