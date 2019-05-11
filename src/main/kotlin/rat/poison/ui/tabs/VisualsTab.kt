@@ -108,7 +108,7 @@ class VisualsTab : Tab(false, false) {
         }
         teamColorPicker.color = Color(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
 
-        teamColor.add(teamColorShow)
+        teamColor.add(teamColorShow).growX()
 
         //Create Enemy_Color Picker
         val enemyColor = VisTable()
@@ -134,7 +134,7 @@ class VisualsTab : Tab(false, false) {
             App.menuStage.addActor(enemyColorPicker.fadeIn())
         }
 
-        enemyColor.add(enemyColorShow)
+        enemyColor.add(enemyColorShow).growX()
 
         //Create Bomb_Color Picker
         val bombColor = VisTable()
@@ -159,7 +159,7 @@ class VisualsTab : Tab(false, false) {
             App.menuStage.addActor(bombColorPicker.fadeIn())
         }
 
-        bombColor.add(bombColorShow)
+        bombColor.add(bombColorShow).growX()
 
         //Create Weapon_Color Picker
         val weaponColor = VisTable()
@@ -184,7 +184,7 @@ class VisualsTab : Tab(false, false) {
             App.menuStage.addActor(weaponColorPicker.fadeIn())
         }
 
-        weaponColor.add(weaponColorShow)
+        weaponColor.add(weaponColorShow).growX()
 
         //Create Grenade_Color Picker
         val grenadeColor = VisTable()
@@ -209,7 +209,7 @@ class VisualsTab : Tab(false, false) {
             App.menuStage.addActor(grenadeColorPicker.fadeIn())
         }
 
-        grenadeColor.add(grenadeColorShow)
+        grenadeColor.add(grenadeColorShow).growX()
 
         //Create Highlight_Color Picker
         val highlightColor = VisTable()
@@ -234,7 +234,7 @@ class VisualsTab : Tab(false, false) {
             App.menuStage.addActor(highlightColorPicker.fadeIn())
         }
 
-        highlightColor.add(highlightColorShow)
+        highlightColor.add(highlightColorShow).growX()
 
         //Aim Tab
         espTabbedPane.add(glowEspTab)
@@ -255,12 +255,19 @@ class VisualsTab : Tab(false, false) {
 
         espTabbedPaneContent.addSeparator().colspan(2).growX().row()
 
-        espTabbedPaneContent.add(teamColor).right().pad(5F)
-        espTabbedPaneContent.add(enemyColor).left().pad(5F).row()
-        espTabbedPaneContent.add(bombColor).right().pad(5F)
-        espTabbedPaneContent.add(weaponColor).left().pad(5F).row()
-        espTabbedPaneContent.add(grenadeColor).right().pad(5F)
-        espTabbedPaneContent.add(highlightColor).left().pad(5F).row()
+//        espTabbedPaneContent.add(teamColor).right().pad(5F)
+//        espTabbedPaneContent.add(enemyColor).left().pad(5F).row()
+//        espTabbedPaneContent.add(bombColor).right().pad(5F)
+//        espTabbedPaneContent.add(weaponColor).left().pad(5F).row()
+//        espTabbedPaneContent.add(grenadeColor).right().pad(5F)
+//        espTabbedPaneContent.add(highlightColor).left().pad(5F).row()
+
+        espTabbedPaneContent.add(teamColor).colspan(1).growX().pad(2F)
+        espTabbedPaneContent.add(enemyColor).colspan(1).growX().pad(2F).row()
+        espTabbedPaneContent.add(bombColor).colspan(1).growX().pad(2F)
+        espTabbedPaneContent.add(weaponColor).colspan(1).growX().pad(2F).row()
+        espTabbedPaneContent.add(grenadeColor).colspan(1).growX().pad(2F)
+        espTabbedPaneContent.add(highlightColor).colspan(1).growX().pad(2F).row()
 
         espTabbedPane.addListener(object : TabbedPaneAdapter() {
             override fun switchedTab(tab: Tab?) {
@@ -287,12 +294,12 @@ class VisualsTab : Tab(false, false) {
                 }
 
                 espTabbedPaneContent.addSeparator().colspan(2).row()
-                espTabbedPaneContent.add(teamColor).right().pad(5F)
-                espTabbedPaneContent.add(enemyColor).left().pad(5F).row()
-                espTabbedPaneContent.add(bombColor).right().pad(5F)
-                espTabbedPaneContent.add(weaponColor).left().pad(5F).row()
-                espTabbedPaneContent.add(grenadeColor).right().pad(5F)
-                espTabbedPaneContent.add(highlightColor).left().pad(5F).row()
+                espTabbedPaneContent.add(teamColor).colspan(1).growX().pad(2F)
+                espTabbedPaneContent.add(enemyColor).colspan(1).growX().pad(2F).row()
+                espTabbedPaneContent.add(bombColor).colspan(1).growX().pad(2F)
+                espTabbedPaneContent.add(weaponColor).colspan(1).growX().pad(2F).row()
+                espTabbedPaneContent.add(grenadeColor).colspan(1).growX().pad(2F)
+                espTabbedPaneContent.add(highlightColor).colspan(1).growX().pad(2F).row()
             }
         })
 

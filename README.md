@@ -20,7 +20,7 @@ Hotfixes; 1.3.1
 * Menu alpha cannot go below .5, menu alpha increments by .05 instead of .1
 * Moved Radar Esp to visuals tab
 * Fixed settings not reverting when unchecking Weapon Override
-* Default values changes
+* Default value changes
 
 ---
 

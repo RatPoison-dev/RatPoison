@@ -65,7 +65,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val perfectAimChanceSlider = VisSlider(1F, 100F, 1F, false) //Perfect_Aim_Chance
 
     init {
-        val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.3\nIf you have any problems submit an issue on Github\n\nGitHub: https://github.com/astupidrat/ratpoison")
+        val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.3.1\nIf you have any problems submit an issue on Github\n\nGitHub: https://github.com/astupidrat/ratpoison")
         dialog.setPosition(gameWidth/2F-dialog.width/2F, gameHeight.toFloat())
         menuStage.addActor(dialog)
 
