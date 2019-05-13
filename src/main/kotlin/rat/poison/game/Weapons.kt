@@ -21,7 +21,7 @@ enum class Weapons(val id: Int, val automatic: Boolean = false, val grenade: Boo
 	P90(19, automatic = true, smg = true),
 	MP5(23, automatic = true, smg = true),
 	UMP45(24, automatic = true, smg = true),
-	XM1014(25, shotgun = true),
+	XM1014(25, automatic = true, shotgun = true),
 	PP_BIZON(26, automatic = true, smg = true),
 	MAG7(27, boltAction = true, shotgun = true),
 	NEGEV(28, automatic = true, rifle = true),

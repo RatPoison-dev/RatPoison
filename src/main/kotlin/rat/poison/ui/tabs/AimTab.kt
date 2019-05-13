@@ -32,8 +32,8 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val automaticWeaponsCheckBox = VisCheckBox("Enable Automatic Weapons")
     private val automaticWeaponsTable = VisTable()
     val automaticWeaponsCollapsible = CollapsibleWidget(automaticWeaponsTable)
-    val maxPunchCheckLabel = VisLabel("Max Punch Check: " + curSettings["MAX_PUNCH_CHECK"].toString() + when(curSettings["MAX_PUNCH_CHECK"].toString().length) {3->"" 2->"  " else ->"    "}) //curSettings["MAX_PUNCH_CHECK"]
-    val maxPunchCheckSlider = VisSlider(10F, 500F, 10F, false) //curSettings["MAX_PUNCH_CHECK"]
+    val maxPunchCheckLabel = VisLabel("MS Delay: " + curSettings["AUTO_WEP_DELAY"].toString() + when(curSettings["AUTO_WEP_DELAY"].toString().length) {3->"" 2->"  " else ->"    "}) //curSettings["AUTO_WEP_DELAY"]
+    val maxPunchCheckSlider = VisSlider(10F, 500F, 10F, false) //curSettings["AUTO_WEP_DELAY"]
 
     private val categorySelectionBox = VisSelectBox<String>() //Category
 
@@ -65,8 +65,8 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val perfectAimChanceSlider = VisSlider(1F, 100F, 1F, false) //Perfect_Aim_Chance
 
     init {
-        val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.3.1\nIf you have any problems submit an issue on Github\n\nGitHub: https://github.com/astupidrat/ratpoison")
-        dialog.setPosition(gameWidth/2F-dialog.width/2F, gameHeight.toFloat())
+        val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.3.1\n\nTo override weapon aim settings, check the weapon override checkbox,\nonce you do so you are editing the settings for the weapon selected in\nthe box beside the checkbox whether you are enabling an override or not.\nTo edit the whole group (such as pistols/shotguns) uncheck weapon override\n\nIf you have any problems submit an issue on Github\nGitHub: https://github.com/astupidrat/ratpoison")
+        dialog.setPosition(gameWidth/4F-dialog.width/2F, gameHeight.toFloat()/2F)
         menuStage.addActor(dialog)
 
         //Create curSettings["ACTIVATE_FROM_FIRE_KEY"]!!.strToBool() Toggle
@@ -90,13 +90,13 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         automaticWeaponsCheckBox.isChecked = curSettings["AUTOMATIC_WEAPONS"]!!.strToBool()
         automaticWeaponsCollapsible.isCollapsed = !curSettings["AUTOMATIC_WEAPONS"]!!.strToBool()
 
-        //Create curSettings["MAX_PUNCH_CHECK"] Slider
+        //Create curSettings["AUTO_WEP_DELAY"] Slider
         val maxPunchCheck = VisTable()
         Tooltip.Builder("The ms delay between checking punch to fire a shot using AUTOMATIC WEAPONS, the lower the less accurate but faster firing").target(maxPunchCheck).build()
-        maxPunchCheckSlider.value = curSettings["MAX_PUNCH_CHECK"].toString().toFloat()
+        maxPunchCheckSlider.value = curSettings["AUTO_WEP_DELAY"].toString().toFloat()
         maxPunchCheckSlider.changed { _, _ ->
-            curSettings["MAX_PUNCH_CHECK"] = maxPunchCheckSlider.value.toInt()
-            maxPunchCheckLabel.setText("Max Punch Check: " + curSettings["MAX_PUNCH_CHECK"].toString() + when(curSettings["MAX_PUNCH_CHECK"].toString().length) {3->"" 2->"  " else ->"    "})
+            curSettings["AUTO_WEP_DELAY"] = maxPunchCheckSlider.value.toInt()
+            maxPunchCheckLabel.setText("MS Delay: " + curSettings["AUTO_WEP_DELAY"].toString() + when(curSettings["AUTO_WEP_DELAY"].toString().length) {3->"" 2->"  " else ->"    "})
         }
         maxPunchCheck.add(maxPunchCheckLabel)
         maxPunchCheck.add(maxPunchCheckSlider)

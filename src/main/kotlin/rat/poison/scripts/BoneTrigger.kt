@@ -32,8 +32,10 @@ private val onBoneTriggerTarget = every(4) {
 		val currentAngle = clientState.angle()
 		val position = me.position()
 		if (findTarget(position, currentAngle, false, curSettings["BONE_TRIGGER_FOV"].toString().toInt(), -2) >= 0) {
-			boneTrig = curSettings["AIM_ON_BONE_TRIGGER"]!!.strToBool()
-			boneTrigger()
+			if ((keyReleased(curSettings["FIRE_KEY"].toString().toInt()) && curSettings["BONE_TRIGGER_ENABLE_KEY"]!!.strToBool() && keyPressed(curSettings["BONE_TRIGGER_KEY"].toString().toInt())) || (keyReleased(FIRE_KEY) && !curSettings["BONE_TRIGGER_ENABLE_KEY"]!!.strToBool())) {
+				boneTrig = curSettings["AIM_ON_BONE_TRIGGER"]!!.strToBool()
+				boneTrigger()
+			}
 		} else {
 			boneTrig = false
 		}
@@ -43,10 +45,8 @@ private val onBoneTriggerTarget = every(4) {
 }
 
 fun boneTrigger() {
-	if ((keyReleased(curSettings["FIRE_KEY"].toString().toInt()) && curSettings["BONE_TRIGGER_ENABLE_KEY"]!!.strToBool() && keyPressed(curSettings["BONE_TRIGGER_KEY"].toString().toInt())) || (keyReleased(FIRE_KEY) && !curSettings["BONE_TRIGGER_ENABLE_KEY"]!!.strToBool())) {
-		clientDLL[dwForceAttack] = 5.toByte() //Mouse press
-		Thread.sleep(randLong(16))
-		clientDLL[dwForceAttack] = 4.toByte() //Mouse release
-		//Thread.sleep(BONE_TRIGGER_SHOT_DELAY.toLong() /*+ randLong(16)*/)
-	}
+	clientDLL[dwForceAttack] = 5.toByte() //Mouse press
+	Thread.sleep(randLong(16))
+	clientDLL[dwForceAttack] = 4.toByte() //Mouse release
+	//Thread.sleep(BONE_TRIGGER_SHOT_DELAY.toLong() /*+ randLong(16)*/)
 }

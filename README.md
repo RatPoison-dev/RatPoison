@@ -20,7 +20,11 @@ Hotfixes; 1.3.1
 * Menu alpha cannot go below .5, menu alpha increments by .05 instead of .1
 * Moved Radar Esp to visuals tab
 * Fixed settings not reverting when unchecking Weapon Override
+* Added weapon override info to the warning dialog
+* XM is now labeled an automatic weapon
+* Max punch renamed to wep delay
 * Default value changes
+
 
 ---
 

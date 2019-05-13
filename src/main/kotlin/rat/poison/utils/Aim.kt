@@ -14,7 +14,6 @@ import rat.poison.settings.GAME_YAW
 import rat.poison.utils.extensions.refresh
 import rat.poison.utils.extensions.set
 import com.sun.jna.platform.win32.WinDef.POINT
-import rat.poison.curSettings
 
 private val mousePos = ThreadLocal.withInitial { POINT() }
 private val target = ThreadLocal.withInitial { POINT() }
@@ -56,6 +55,7 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
 	if (!destinationAngle.isValid()) return
 
 	val delta = delta.get()
+
 	delta.set(currentAngle.y - destinationAngle.y, currentAngle.x - destinationAngle.x, 0.0)
 
 	var sens = GAME_SENSITIVITY * sensMultiplier
@@ -68,7 +68,9 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
 	val mousePos = mousePos.get().refresh()
 
 	val target = target.get()
+
 	target.set((mousePos.x + dx/2).toInt(), (mousePos.y + dy/2).toInt())
+
 
 	if (target.x <= 0 || target.x >= gameX + gameWidth || target.y <= 0 || target.y >= gameY + gameHeight) return
 

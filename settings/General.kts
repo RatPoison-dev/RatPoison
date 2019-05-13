@@ -36,7 +36,7 @@ AUTOMATIC_WEAPONS = false
  * This is used to tap while using AUTOMATIC_WEAPONS
  * The lower the less accurate
  */
-MAX_PUNCH_CHECK = 10
+AUTO_WEP_DELAY = 10
 
 /**
  * The key code of the force aim button.
@@ -111,11 +111,11 @@ BODY_BONE = 6
  * Variables used in game, not saved settings, no need to touch
  */
 PERFECT_AIM = true
-PERFECT_AIM_CHANCE = 10
-PERFECT_AIM_FOV = 5
-AIM_BONE = 6
-AIM_SPEED = 16
-AIM_FOV = 80
+PERFECT_AIM_CHANCE = 15
+PERFECT_AIM_FOV = 10
+AIM_BONE = 8
+AIM_SPEED = 12
+AIM_FOV = 30
 AIM_ASSIST_MODE = false
 FACTOR_RECOIL = true
 ENABLE_FLAT_AIM = false

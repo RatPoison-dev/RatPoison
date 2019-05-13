@@ -14,8 +14,8 @@ fun UIUpdate() {
         forceAimKeyField.text = curSettings["FORCE_AIM_KEY"].toString()
         automaticWeaponsCheckBox.isChecked = curSettings["AUTOMATIC_WEAPONS"]!!.strToBool()
         automaticWeaponsCollapsible.isCollapsed = !curSettings["AUTOMATIC_WEAPONS"]!!.strToBool()
-        maxPunchCheckLabel.setText("Max Punch Check: " + curSettings["MAX_PUNCH_CHECK"].toString() + when(curSettings["MAX_PUNCH_CHECK"].toString().length) {3->"" 2->"  " else ->"    "})
-        maxPunchCheckSlider.value = curSettings["MAX_PUNCH_CHECK"].toString().toFloat()
+        maxPunchCheckLabel.setText("MS Delay: " + curSettings["AUTO_WEP_DELAY"].toString() + when(curSettings["AUTO_WEP_DELAY"].toString().length) {3->"" 2->"  " else ->"    "})
+        maxPunchCheckSlider.value = curSettings["AUTO_WEP_DELAY"].toString().toFloat()
 
         val curWep = convStrToArray(curSettings[weaponOverrideSelected].toString())
 

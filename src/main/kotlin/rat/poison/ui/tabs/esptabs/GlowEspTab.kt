@@ -32,9 +32,9 @@ class GlowEspTab : Tab(false, false) {
     init {
         //Create Glow_Esp Toggle
         Tooltip.Builder("Whether or not to enable glow esp").target(glowEsp).build()
-        if (GLOW_ESP) glowEsp.toggle()
+        if (curSettings["GLOW_ESP"]!!.strToBool()) glowEsp.toggle()
         glowEsp.changed { _, _ ->
-            GLOW_ESP = glowEsp.isChecked
+            curSettings["GLOW_ESP"] = glowEsp.isChecked.boolToStr()
             if (!GLOW_ESP) {
                 disableEsp()
             }
