@@ -1,3 +1,26 @@
+1.3.2
+* Fixed RCS tab not updating text/sliders when loading cfgs
+* General file cleanup; removed ScriptsTab
+* Added checkbox to disable all aims
+* Disabling Aim/Esp disables all related items
+* Fixed resizing menu causing issues for the visuals tab
+* Moved aim key from misc tab to aim tab
+
+---
+
+1.3.1
+* Fixed RCS jumping down when spraying 2+ bullets in quick succession
+* Color picker initializes to the correct color instead of black
+* Menu alpha cannot go below .5, menu alpha increments by .05 instead of .1
+* Moved Radar Esp to visuals tab
+* Fixed settings not reverting when unchecking Weapon Override
+* Added weapon override info to the warning dialog
+* XM is now labeled an automatic weapon
+* Max punch renamed to wep delay
+* Default value changes
+
+---
+
 Update 1.3
 
 * Replaced script.eval for improved performance
@@ -11,27 +34,6 @@ Update 1.3
 * Fixed & cleaned up bone trigger issues
 * Fixed find target global var issues
 * Better performance overall
-
----
-
-Hotfixes; 1.3.1
-* Fixed RCS jumping down when spraying 2+ bullets in quick succession
-* Color picker initializes to the correct color instead of black
-* Menu alpha cannot go below .5, menu alpha increments by .05 instead of .1
-* Moved Radar Esp to visuals tab
-* Fixed settings not reverting when unchecking Weapon Override
-* Added weapon override info to the warning dialog
-* XM is now labeled an automatic weapon
-* Max punch renamed to wep delay
-* Default value changes
-
-1.3.2;
-* Fixed RCS tab not updating text/sliders when loading cfgs
-* General file cleanup; removed ScriptsTab
-* Added checkbox to disable all aims
-* Disabling Aim/Esp disables all related items
-* Fixed resizing menu causing issues for the visuals tab
-* Moved aim key from misc tab to aim tab
 
 ---
 
