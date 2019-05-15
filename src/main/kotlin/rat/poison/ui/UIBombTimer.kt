@@ -21,7 +21,7 @@ class UIBombTimer : VisWindow("RatPoison UI") {
         menuAlphaSlider.value = 1F
         menuAlphaSlider.changed { _, _ ->
             val alp = (Math.round(menuAlphaSlider.value * 100F) / 100F)
-            menuAlpha.parent.color.a = alp //Set the top level parents alpha (currently .parent.parent.parent.parent is the only way, instead of a way to find top most instantly
+            menuAlpha.parent.color.a = alp //Set the top level parents alpha
             menuAlphaLabel.setText("Menu Alpha: " + alp.toString() + when(alp.toString().length) {4 -> "" 3->"  " 2->"    " else ->"      "}) //Same parent situation
         }
         menuAlpha.add(menuAlphaLabel).spaceRight(6F)

@@ -1,6 +1,8 @@
 package rat.poison.ui
 
+import com.badlogic.gdx.graphics.Color
 import rat.poison.*
+import rat.poison.scripts.esp.disableEsp
 import rat.poison.settings.*
 import rat.poison.ui.tabs.*
 
@@ -9,13 +11,15 @@ fun UIUpdate() {
 
     //Aim Tab
     aimTab.apply {
+        enableAim.isChecked = curSettings["ENABLE_AIM"]!!.strToBool()
         activateFromFireKey.isChecked = curSettings["ACTIVATE_FROM_FIRE_KEY"]!!.strToBool()
         teammatesAreEnemies.isChecked = curSettings["TEAMMATES_ARE_ENEMIES"]!!.strToBool()
+        aimKeyField.text = curSettings["FIRE_KEY"].toString()
         forceAimKeyField.text = curSettings["FORCE_AIM_KEY"].toString()
         automaticWeaponsCheckBox.isChecked = curSettings["AUTOMATIC_WEAPONS"]!!.strToBool()
         automaticWeaponsCollapsible.isCollapsed = !curSettings["AUTOMATIC_WEAPONS"]!!.strToBool()
-        maxPunchCheckLabel.setText("MS Delay: " + curSettings["AUTO_WEP_DELAY"].toString() + when(curSettings["AUTO_WEP_DELAY"].toString().length) {3->"" 2->"  " else ->"    "})
-        maxPunchCheckSlider.value = curSettings["AUTO_WEP_DELAY"].toString().toFloat()
+        automaticWeaponsLabel.setText("MS Delay: " + curSettings["AUTO_WEP_DELAY"].toString() + when(curSettings["AUTO_WEP_DELAY"].toString().length) {3->"" 2->"  " else ->"    "})
+        automaticWeaponsSlider.value = curSettings["AUTO_WEP_DELAY"].toString().toFloat()
 
         val curWep = convStrToArray(curSettings[weaponOverrideSelected].toString())
 
@@ -94,6 +98,51 @@ fun UIUpdate() {
             })
             perfectAimChanceSlider.value = curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toString().toInt().toFloat()
         }
+
+        //V--Disable/enable entire tab--V\\
+        val bool = !enableAim.isChecked
+        var color = Color(255F, 255F, 255F, 1F)
+        if (bool) {
+            color = Color(105F, 105F, 105F, .2F)
+        }
+        activateFromFireKey.isDisabled = bool
+        teammatesAreEnemies.isDisabled = bool
+        automaticWeaponsCheckBox.isDisabled = bool
+        weaponOverrideCheckBox.isDisabled = bool
+        automaticWeaponsCheckBox.isDisabled = bool
+        automaticWeaponsLabel.color = color
+        automaticWeaponsSlider.isDisabled = bool
+        aimKeyLabel.color = color
+        aimKeyField.isDisabled = bool
+        forceAimKeyLabel.color = color
+        forceAimKeyField.isDisabled = bool
+        categorySelectLabel.color = color
+        categorySelectionBox.isDisabled = bool
+        weaponOverrideSelectionBox.isDisabled = bool
+        if (!weaponOverride) {
+            weaponOverrideEnableCheckBox.isDisabled = true
+        } else {
+            weaponOverrideEnableCheckBox.isDisabled = bool
+        }
+        enableFactorRecoil.isDisabled = bool
+        enableFlatAim.isDisabled = bool
+        enablePathAim.isDisabled = bool
+        aimBoneLabel.color = color
+        aimBoneBox.isDisabled = bool
+        aimFovLabel.color = color
+        aimFovSlider.isDisabled = bool
+        aimSpeedLabel.color = color
+        aimSpeedSlider.isDisabled = bool
+        aimSmoothnessLabel.color = color
+        aimSmoothnessSlider.isDisabled = bool
+        aimStrictnessLabel.color = color
+        aimStrictnessSlider.isDisabled = bool
+        perfectAimCheckBox.isDisabled = bool
+        perfectAimChanceLabel.color = color
+        perfectAimChanceSlider.isDisabled = bool
+        perfectAimFovLabel.color = color
+        perfectAimFovSlider.isDisabled = bool
+        bTrigTab.aimOnBoneTrigger.isDisabled = bool
     }
 
     visualsTab.apply {
@@ -112,6 +161,81 @@ fun UIUpdate() {
         grenadeColorShow.setColor(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
         col = curSettings["HIGHLIGHT_COLOR"]!!.strToColor()
         highlightColorShow.setColor(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
+
+        //V--Disable/enable entire tab--V\\
+        val bool = !enableEsp.isChecked
+        var color = Color(255F, 255F, 255F, 1F)
+        if (bool) {
+            color = Color(105F, 105F, 105F, .2F)
+        }
+
+        visualsToggleKeyLabel.color = color
+        visualsToggleKeyField.isDisabled = bool
+        radarEsp.isDisabled = bool
+
+        val recTab = espTabbedPane.activeTab
+        espTabbedPane.disableTab(glowEspTab, bool)
+        espTabbedPane.disableTab(chamsEspTab, bool)
+        espTabbedPane.disableTab(indicatorEspTab, bool)
+        espTabbedPane.disableTab(boxEspTab, bool)
+        espTabbedPane.disableTab(skeletonEspTab, bool)
+        espTabbedPane.switchTab(recTab)
+
+        glowEspTab.glowEsp.isDisabled = bool
+        glowEspTab.invGlowEsp.isDisabled = bool
+        glowEspTab.modelEsp.isDisabled = bool
+        glowEspTab.modelAndGlow.isDisabled = bool
+
+        glowEspTab.showTeam.isDisabled = bool
+        glowEspTab.showEnemies.isDisabled = bool
+        glowEspTab.showDormant.isDisabled = bool
+        glowEspTab.showBomb.isDisabled = bool
+        glowEspTab.showWeapons.isDisabled = bool
+        glowEspTab.showGrenades.isDisabled = bool
+        glowEspTab.showTarget.isDisabled = bool
+
+        chamsEspTab.chamsEsp.isDisabled = bool
+        chamsEspTab.chamsShowHealth.isDisabled = bool
+        chamsEspTab.chamsBrightnessLabel.color = color
+        chamsEspTab.chamsBrightnessSlider.isDisabled = bool
+
+        chamsEspTab.showTeam.isDisabled = bool
+        chamsEspTab.showEnemies.isDisabled = bool
+
+        indicatorEspTab.indicatorEsp.isDisabled = bool
+        indicatorEspTab.indicatorOnScreen.isDisabled = bool
+        indicatorEspTab.indicatorOval.isDisabled = bool
+        indicatorEspTab.indicatorDistanceLabel.color = color
+        indicatorEspTab.indicatorDistanceSlider.isDisabled = bool
+
+        indicatorEspTab.showTeam.isDisabled = bool
+        indicatorEspTab.showEnemies.isDisabled = bool
+        indicatorEspTab.showDormant.isDisabled = bool
+        indicatorEspTab.showBomb.isDisabled = bool
+        indicatorEspTab.showWeapons.isDisabled = bool
+        indicatorEspTab.showGrenades.isDisabled = bool
+
+        boxEspTab.boxEsp.isDisabled = bool
+        boxEspTab.boxEspDetails.isDisabled = bool
+
+        boxEspTab.showTeam.isDisabled = bool
+        boxEspTab.showEnemies.isDisabled = bool
+
+        skeletonEspTab.skeletonEsp.isDisabled = bool
+        skeletonEspTab.showTeam.isDisabled = bool
+        skeletonEspTab.showEnemies.isDisabled = bool
+
+        teamColorShow.isDisabled = bool
+        enemyColorShow.isDisabled = bool
+        bombColorShow.isDisabled = bool
+        weaponColorShow.isDisabled = bool
+        grenadeColorShow.isDisabled = bool
+        highlightColorShow.isDisabled = bool
+
+        if (!enableEsp.isChecked)
+        {
+            disableEsp()
+        }
     }
 
     glowEspTab.apply {
@@ -189,7 +313,6 @@ fun UIUpdate() {
     miscTab.apply {
         bunnyHop.isChecked = curSettings["ENABLE_BUNNY_HOP"]!!.strToBool()
         bombTimer.isChecked = curSettings["ENABLE_BOMB_TIMER"]!!.strToBool()
-        fireKeyField.text = curSettings["FIRE_KEY"].toString()
         menuKeyField.text = curSettings["MENU_KEY"].toString()
         enableReducedFlash.isChecked = curSettings["ENABLE_REDUCED_FLASH"]!!.strToBool()
         flashMaxAlphaLabel.setText("Flash Max Alpha: " + curSettings["FLASH_MAX_ALPHA"].toString().toFloat() + when (curSettings["FLASH_MAX_ALPHA"].toString().length) {
@@ -203,14 +326,20 @@ fun UIUpdate() {
         hitSoundVolumeSlider.value = curSettings["HITSOUND_VOLUME"].toString().toFloat()
     }
 
-    //Custom disable items
+    //Rcs Tab
     rcsTab.apply {
         enableRCS.isChecked = curSettings["ENABLE_RCS"]!!.strToBool()
         rcsSmoothingSlider.isDisabled = !curSettings["ENABLE_RCS"]!!.strToBool()
         rcsReturnAim.isDisabled = !curSettings["ENABLE_RCS"]!!.strToBool()
         enableRCrosshair.isChecked = curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
+        rCrosshairWidthLabel.setText("RCrosshair Width: " + curSettings["RCROSSHAIR_WIDTH"])
+        rCrosshairWidthSlider.value = curSettings["RCROSSHAIR_WIDTH"].toString().toInt().toFloat()
+        rCrosshairLengthLabel.setText("RCrosshair Length: " + curSettings["RCROSSHAIR_LENGTH]"])
+        rCrosshairLengthSlider.value = curSettings["RCROSSHAIR_LENGTH"].toString().toFloat()
+        rCrosshairAlphaLabel.setText("RCrosshair Alpha: " + curSettings["RCROSSHAIR_ALPHA"])
+        rCrosshairAlphaSlider.value = curSettings["RCROSSHAIR_ALPHA"].toString().toFloat()
         rCrosshairWidthSlider.isDisabled = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
-        rcsCrosshairLengthSlider.isDisabled = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
+        rCrosshairLengthSlider.isDisabled = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
         rCrosshairAlphaSlider.isDisabled = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
         rCrosshairColorShow.isDisabled = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
     }

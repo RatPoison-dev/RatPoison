@@ -51,8 +51,7 @@ object CSGO {
 		}
 
 		val rect = WinDef.RECT()
-		val hwd = CUser32.FindWindowA(null, "Counter-Strike: "
-				+ (if (CLASSIC_OFFENSIVE) "Classic" else "Global") + " Offensive")
+		val hwd = CUser32.FindWindowA(null, "Counter-Strike: Global Offensive")
 
 		//Get initially
 		if (!CUser32.GetClientRect(hwd, rect)) System.exit(2)

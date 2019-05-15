@@ -39,8 +39,6 @@ var settingsLoaded = false
 
 val curSettings = Settings()
 
-//Content to string
-
 fun main() {
     System.setProperty("jna.nosys", "true")
 
@@ -50,7 +48,7 @@ fun main() {
         PROCESS_ACCESS_FLAGS = PROCESS_ACCESS_FLAGS or WinNT.PROCESS_VM_OPERATION
     }
 
-    if (!MENU) {
+    if (!MENU) { //If we arent' using the menu disable everything that uses the menu
         curSettings["BOX_ESP"] = "false"
         curSettings["SKELETON_ESP"] = "false"
         curSettings["ENABLE_RECOIL_CROSSHAIR"] = "false"
@@ -60,8 +58,7 @@ fun main() {
 
     CSGO.initialize()
 
-    Thread.sleep(256)
-
+    //Init all scripts
     bunnyHop()
     rcs()
     rcrosshair()
@@ -71,7 +68,7 @@ fun main() {
     boneTrigger()
     reducedFlash()
     bombTimer()
-    esp()
+    esp() //Contains esp scripts
     espToggle()
     automaticWeapon()
 
@@ -95,7 +92,7 @@ fun main() {
         }
     }
     else {
-        scanner()
+        scanner() //Scanner is currently outdated
     }
 }
 

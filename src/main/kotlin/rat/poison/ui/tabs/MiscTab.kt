@@ -15,7 +15,6 @@ class MiscTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     val bunnyHop = VisCheckBox("Enable Bunny Hop")
     val bombTimer = VisCheckBox("Enable Bomb Timer")
-    val fireKeyField = VisValidatableTextField(Validators.FLOATS)
     val menuKeyField = VisValidatableTextField(Validators.FLOATS)
     val enableReducedFlash = VisCheckBox("Enable Reduced Flash")
     val flashMaxAlphaLabel = VisLabel("Flash Max Alpha: " + curSettings["FLASH_MAX_ALPHA"].toString().toFloat() + when(curSettings["FLASH_MAX_ALPHA"].toString().toFloat().toInt().toString().length) {3->"  " 2->"    " else ->"      "})
@@ -25,7 +24,7 @@ class MiscTab : Tab(false, false) {
     val hitSoundVolumeSlider = VisSlider(0.1F, 1F, 0.1F, false)
 
     init {
-        //Create curSettings["ENABLE_BUNNY_HOP"]!!.strToBool() Toggle
+        //Create Bunny Hop Toggle
         Tooltip.Builder("Whether or not to enable bunny hop").target(bunnyHop).build()
         bunnyHop.isChecked = curSettings["ENABLE_BUNNY_HOP"]!!.strToBool()
         bunnyHop.changed { _, _ ->
@@ -33,7 +32,7 @@ class MiscTab : Tab(false, false) {
             true
         }
 
-        //Create curSettings["ENABLE_BOMB_TIMER"]!!.strToBool() Toggle
+        //Create Bomb Timer Toggle
         Tooltip.Builder("Whether or not to enable bomb timer").target(bombTimer).build()
         bombTimer.isChecked = curSettings["ENABLE_BOMB_TIMER"]!!.strToBool()
         bombTimer.changed { _, _ ->
@@ -41,21 +40,7 @@ class MiscTab : Tab(false, false) {
             true
         }
 
-        //Create Fire_Key Input
-        val fireKey = VisTable()
-        Tooltip.Builder("The key code of your in-game fire key (default m1)").target(fireKey).build()
-        val fireKeyLabel = VisLabel("Fire Key: ")
-        fireKeyField.text = curSettings["FIRE_KEY"].toString()
-        fireKey.changed { _, _ ->
-            if (fireKeyField.text.toIntOrNull() != null) {
-                curSettings["FIRE_KEY"] = fireKeyField.text.toInt().toString()
-            }
-        }
-        fireKey.add(fireKeyLabel)
-        fireKey.add(fireKeyField).spaceRight(6F).width(40F)
-        fireKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
-
-        //Create curSettings["MENU_KEY"] Input
+        //Create Menu Key Input Box
         val menuKey = VisTable()
         Tooltip.Builder("The key code that will toggle the menu on or off").target(menuKey).build()
         val menuKeyLabel = VisLabel("Menu Key: ")
@@ -70,7 +55,7 @@ class MiscTab : Tab(false, false) {
         menuKey.add(menuKeyField).spaceRight(6F).width(40F)
         menuKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
 
-        //Create curSettings["ENABLE_REDUCED_FLASH"]!!.strToBool() Toggle
+        //Create Reduced Flash Toggle
         Tooltip.Builder("Whether or not to enable reduced flash").target(enableReducedFlash).build()
         enableReducedFlash.isChecked = curSettings["ENABLE_REDUCED_FLASH"]!!.strToBool()
         enableReducedFlash.changed { _, _ ->
@@ -78,7 +63,7 @@ class MiscTab : Tab(false, false) {
             true
         }
 
-        //Create curSettings["FLASH_MAX_ALPHA"].toString().toFloat()
+        //Create Flash Max Alpha Slider
         val flashMaxAlpha = VisTable()
         Tooltip.Builder("The maximum alpha of flashes (0 is no effect, 255 is normal)").target(flashMaxAlpha).build()
         flashMaxAlphaSlider.value = curSettings["FLASH_MAX_ALPHA"].toString().toFloat()
@@ -89,7 +74,7 @@ class MiscTab : Tab(false, false) {
         flashMaxAlpha.add(flashMaxAlphaLabel)
         flashMaxAlpha.add(flashMaxAlphaSlider)
 
-        //Create Hit_Sound Toggle
+        //Create Hit Sound Toggle
         Tooltip.Builder("Whether or not to enable a hitsound on hit").target(hitSound).build()
         if (curSettings["ENABLE_HITSOUND"]!!.strToBool()) hitSound.toggle()
         hitSound.changed { _, _ ->
@@ -97,7 +82,7 @@ class MiscTab : Tab(false, false) {
             true
         }
 
-        //Create Hit_Sound_Volume Slider
+        //Create Hit Sound Volume Slider
         val hitSoundVolume = VisTable()
         Tooltip.Builder("The volume of the hitsound if the hitsound is enabled").target(hitSoundVolume).build()
         hitSoundVolumeSlider.value = curSettings["HITSOUND_VOLUME"].toString().toDouble().toFloat()
@@ -115,7 +100,6 @@ class MiscTab : Tab(false, false) {
 
         table.addSeparator()
 
-        table.add(fireKey).row()
         table.add(menuKey).row()
 
         table.addSeparator()
@@ -124,6 +108,7 @@ class MiscTab : Tab(false, false) {
         table.add(flashMaxAlpha).row()
 
         table.addSeparator()
+
         table.add(hitSound).row()
         table.add(hitSoundVolume)
     }

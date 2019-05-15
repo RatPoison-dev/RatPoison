@@ -31,7 +31,7 @@ RIFLE_AIM_BONE = 6
 /**
  * The field of view of the aimbot, in degrees (0 to 360).
  */
-RIFLE_AIM_FOV = 80
+RIFLE_AIM_FOV = 60
 
 /**
  * The aimbot's "playback" speed, the higher the value the slower the playback.

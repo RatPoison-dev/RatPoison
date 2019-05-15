@@ -22,16 +22,18 @@ internal fun glowEsp() = every(4) {
 	val currentAngle = clientState.angle()
 	val position = me.position()
 
-	if (curSettings["GLOW_SHOW_TARGET"]!!.strToBool() && target.get() == -1L) {
-		val curTarg = findTarget(position, currentAngle, false)
-		if (curTarg >= 0) {
-			glowTarget.set(curTarg)
-		} else {
-			glowTarget.set(-1L)
+	if (curSettings["ENABLE_AIM"]!!.strToBool()) {
+		if (curSettings["GLOW_SHOW_TARGET"]!!.strToBool() && target.get() == -1L) {
+			val curTarg = findTarget(position, currentAngle, false)
+			if (curTarg >= 0) {
+				glowTarget.set(curTarg)
+			} else {
+				glowTarget.set(-1L)
+			}
+		} else if (curSettings["GLOW_SHOW_TARGET"]!!.strToBool()) {
+			glowTarget.set(target.get())
 		}
-	} else if (curSettings["GLOW_SHOW_TARGET"]!!.strToBool()) {
-		glowTarget.set(target.get())
-	}
+	} else { glowTarget.set(-1) }
 
 	forEntities body@ {
 		val entity = it.entity

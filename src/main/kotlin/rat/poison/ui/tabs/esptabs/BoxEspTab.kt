@@ -22,7 +22,7 @@ class BoxEspTab : Tab(false, false) {
     val showEnemies = VisCheckBox("Show Enemies")
 
     init {
-        //Create curSettings["BOX_ESP"]!!.strToBool() Toggle
+        //Create Box ESP Toggle
         Tooltip.Builder("Whether or not to enable box esp").target(boxEsp).build()
         if (curSettings["BOX_ESP"]!!.strToBool()) boxEsp.toggle()
         boxEsp.changed { _, _ ->
@@ -30,7 +30,7 @@ class BoxEspTab : Tab(false, false) {
             true
         }
 
-        //Create curSettings["BOX_ESP_DETAILS"]!!.strToBool() Toggle
+        //Create Box ESP Details Toggle
         Tooltip.Builder("Whether or not to enable details with box esp if box esp is enabled").target(boxEspDetails).build()
         if (curSettings["BOX_ESP_DETAILS"]!!.strToBool()) boxEspDetails.toggle()
         boxEspDetails.changed { _, _ ->
@@ -42,7 +42,7 @@ class BoxEspTab : Tab(false, false) {
             true
         }
 
-        //Create Show_Team Toggle
+        //Create Show Team Toggle
         Tooltip.Builder("Whether or not to show team with esp").target(showTeam).build()
         if (curSettings["BOX_SHOW_TEAM"]!!.strToBool()) showTeam.toggle()
         showTeam.changed { _, _ ->
@@ -50,14 +50,13 @@ class BoxEspTab : Tab(false, false) {
             true
         }
 
-        //Create Show_Enemies Toggle
+        //Create Show Enemies Toggle
         Tooltip.Builder("Whether or not to show enemies with esp").target(showEnemies).build()
         if (curSettings["BOX_SHOW_ENEMIES"]!!.strToBool()) showEnemies.toggle()
         showEnemies.changed { _, _ ->
             curSettings["BOX_SHOW_ENEMIES"] = showEnemies.isChecked.boolToStr()
             true
         }
-
 
         table.add(boxEsp).colspan(2).row()
         table.add(boxEspDetails).colspan(2).row()

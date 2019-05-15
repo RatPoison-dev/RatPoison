@@ -20,26 +20,27 @@ class UIMenu : VisWindow("RatPoison UI") {
     init {
         defaults().left()
 
+        //Main ui window settings
+        x = 960F
+        y = 540F
+        align(Align.topLeft)
+        isResizable = true
+
+
+        //Main content pane for all tabs
         val mainTabbedPaneContent = VisTable()
         mainTabbedPaneContent.padTop(10F)
         mainTabbedPaneContent.padBottom(10F)
         mainTabbedPaneContent.align(Align.top)
 
-        val mainScrollPane = ScrollPane(mainTabbedPaneContent)
+
+        //Scroll pane for the content pane, content pane goes inside
+        val mainScrollPane = ScrollPane(mainTabbedPaneContent) //Init scroll pane containing main content pane
         mainScrollPane.setFlickScroll(false)
         mainScrollPane.setSize(1000F, 1000F)
 
-        val aimTabbedPaneContent = VisTable()
-        aimTabbedPaneContent.padTop(10F)
-        aimTabbedPaneContent.padBottom(10F)
-        aimTabbedPaneContent.align(Align.top)
 
-        this.x = 960F
-        this.y = 540F
-        this.align(Align.topLeft)
-
-        this.isResizable = true
-
+        //Add tabs to the tab header
         mainTabbedPane.add(aimTab)
         mainTabbedPane.add(visualsTab)
         mainTabbedPane.add(rcsTab)
@@ -47,17 +48,21 @@ class UIMenu : VisWindow("RatPoison UI") {
         mainTabbedPane.add(miscTab)
         mainTabbedPane.add(settingsTab)
 
-        mainTabbedPane.switchTab(aimTab)
 
+        //Set aim tab as the first (init) tab
+        mainTabbedPane.switchTab(aimTab)
+        //Add aim tab content to the table
         mainTabbedPaneContent.add(aimTab.contentTable).growX()
 
+
+        //Tab switch listener
         mainTabbedPane.addListener(object : TabbedPaneAdapter() {
             override fun switchedTab(tab: Tab?) {
                 if (tab == null) return
 
                 mainTabbedPaneContent.clear()
 
-                when (tab) {
+                when (tab) { //Update table content to tab selected content
                     aimTab -> {
                         mainTabbedPaneContent.add(aimTab.contentTable).growX()
                     }
@@ -80,13 +85,13 @@ class UIMenu : VisWindow("RatPoison UI") {
             }
         })
 
+        //Add tab pane & scroll pane to main ui window
         add(mainTabbedPane.table).growX().minSize(25F).row()
-
-        add(mainScrollPane).minSize(500F, 500F).prefSize(500F, 500F)/*.maxSize(500F, 500F)*/.align(Align.left).growX().growY().row()
-
+        add(mainScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
         pack()
         centerWindow()
 
+        //Update all tab content
         UIUpdate()
     }
 }

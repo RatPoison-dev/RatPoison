@@ -61,7 +61,7 @@ class IndicatorEspTab : Tab(false, false) {
         indicatorDistance.add(indicatorDistanceLabel).spaceRight(6F)
         indicatorDistance.add(indicatorDistanceSlider)
 
-        //Create Show_Team Toggle
+        //Create Show Team Toggle
         Tooltip.Builder("Whether or not to show team with esp").target(showTeam).build()
         if (curSettings["INDICATOR_SHOW_TEAM"]!!.strToBool()) showTeam.toggle()
         showTeam.changed { _, _ ->
@@ -69,7 +69,7 @@ class IndicatorEspTab : Tab(false, false) {
             true
         }
 
-        //Create Show_Enemies Toggle
+        //Create Show Enemies Toggle
         Tooltip.Builder("Whether or not to show enemies with esp").target(showEnemies).build()
         if (curSettings["INDICATOR_SHOW_ENEMIES"]!!.strToBool()) showEnemies.toggle()
         showEnemies.changed { _, _ ->
@@ -77,7 +77,7 @@ class IndicatorEspTab : Tab(false, false) {
             true
         }
 
-        //Create Show_Dormant Toggle
+        //Create Show Dormant Toggle
         Tooltip.Builder("Whether or not to show dormant entities with esp").target(showDormant).build()
         if (curSettings["INDICATOR_SHOW_DORMANT"]!!.strToBool()) showDormant.toggle()
         showDormant.changed { _, _ ->
@@ -85,7 +85,7 @@ class IndicatorEspTab : Tab(false, false) {
             true
         }
 
-        //Create Show_Bomb Toggle
+        //Create Show Bomb Toggle
         Tooltip.Builder("Whether or not to show bomb with esp").target(showBomb).build()
         if (curSettings["INDICATOR_SHOW_BOMB"]!!.strToBool()) showBomb.toggle()
         showBomb.changed { _, _ ->
@@ -93,7 +93,7 @@ class IndicatorEspTab : Tab(false, false) {
             true
         }
 
-        //Create Show_Bomb Toggle
+        //Create Show Weapons Toggle
         Tooltip.Builder("Whether or not to show weapons with esp").target(showWeapons).build()
         if (curSettings["INDICATOR_SHOW_WEAPONS"]!!.strToBool()) showWeapons.toggle()
         showWeapons.changed { _, _ ->
@@ -101,7 +101,7 @@ class IndicatorEspTab : Tab(false, false) {
             true
         }
 
-        //Create Show_Bomb Toggle
+        //Create Show Grenades Toggle
         Tooltip.Builder("Whether or not to show grenades with esp").target(showGrenades).build()
         if (curSettings["INDICATOR_SHOW_GRENADES"]!!.strToBool()) showGrenades.toggle()
         showGrenades.changed { _, _ ->
@@ -115,13 +115,10 @@ class IndicatorEspTab : Tab(false, false) {
         table.add(indicatorOnScreen).colspan(2).row()
         table.add(indicatorOval).colspan(2).row()
         table.add(indicatorDistance).colspan(2).row()
-
         table.add(showTeam)
         table.add(showEnemies).row()
-
         table.add(showDormant)
         table.add(showBomb).row()
-
         table.add(showWeapons)
         table.add(showGrenades).row()
     }

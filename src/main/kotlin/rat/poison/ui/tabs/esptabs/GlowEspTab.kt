@@ -79,7 +79,7 @@ class GlowEspTab : Tab(false, false) {
             true
         }
 
-        //Create curSettings["MODEL_AND_GLOW"]!!.strToBool() Toggle
+        //Create Model And Glow Toggle
         Tooltip.Builder("Whether or not to enable model when visible, glow when not visible esp").target(modelAndGlow).build()
         modelAndGlow.isChecked = curSettings["MODEL_AND_GLOW"]!!.strToBool()
         modelAndGlow.changed { _, _ ->
@@ -101,7 +101,7 @@ class GlowEspTab : Tab(false, false) {
             true
         }
 
-        //Create Show_Team Toggle
+        //Create Show Team Toggle
         Tooltip.Builder("Whether or not to show team with esp").target(showTeam).build()
         if (curSettings["GLOW_SHOW_TEAM"]!!.strToBool()) showTeam.toggle()
         showTeam.changed { _, _ ->
@@ -109,7 +109,7 @@ class GlowEspTab : Tab(false, false) {
             true
         }
 
-        //Create Show_Enemies Toggle
+        //Create Show Enemies Toggle
         Tooltip.Builder("Whether or not to show enemies with esp").target(showEnemies).build()
         if (curSettings["GLOW_SHOW_ENEMIES"]!!.strToBool()) showEnemies.toggle()
         showEnemies.changed { _, _ ->
@@ -117,7 +117,7 @@ class GlowEspTab : Tab(false, false) {
             true
         }
 
-        //Create Show_Dormant Toggle
+        //Create Show Dormant Toggle
         Tooltip.Builder("Whether or not to show dormant entities with esp").target(showDormant).build()
         if (curSettings["GLOW_SHOW_DORMANT"]!!.strToBool()) showDormant.toggle()
         showDormant.changed { _, _ ->
@@ -125,7 +125,7 @@ class GlowEspTab : Tab(false, false) {
             true
         }
 
-        //Create Show_Bomb Toggle
+        //Create Show Bomb Toggle
         Tooltip.Builder("Whether or not to show bomb with esp").target(showBomb).build()
         if (curSettings["GLOW_SHOW_BOMB"]!!.strToBool()) showBomb.toggle()
         showBomb.changed { _, _ ->
@@ -133,7 +133,7 @@ class GlowEspTab : Tab(false, false) {
             true
         }
 
-        //Create Show_Bomb Toggle
+        //Create Show Weapons Toggle
         Tooltip.Builder("Whether or not to show eapons with esp").target(showWeapons).build()
         if (curSettings["GLOW_SHOW_WEAPONS"]!!.strToBool()) showWeapons.toggle()
         showWeapons.changed { _, _ ->
@@ -141,7 +141,7 @@ class GlowEspTab : Tab(false, false) {
             true
         }
 
-        //Create Show_Bomb Toggle
+        //Create Show Grenades Toggle
         Tooltip.Builder("Whether or not to show grenades with esp").target(showGrenades).build()
         if (curSettings["GLOW_SHOW_GRENADES"]!!.strToBool()) showGrenades.toggle()
         showGrenades.changed { _, _ ->
@@ -149,7 +149,7 @@ class GlowEspTab : Tab(false, false) {
             true
         }
 
-        //Create Show_Target Toggle
+        //Create Show Target Toggle
         Tooltip.Builder("Whether or not to show grenades with esp").target(showTarget).build()
         if (curSettings["GLOW_SHOW_TARGET"]!!.strToBool()) showTarget.toggle()
         showTarget.changed { _, _ ->
@@ -161,13 +161,10 @@ class GlowEspTab : Tab(false, false) {
         table.add(invGlowEsp).row()
         table.add(modelEsp)
         table.add(modelAndGlow).row()
-
         table.add(showTeam)
         table.add(showEnemies).row()
-
         table.add(showDormant)
         table.add(showBomb).row()
-
         table.add(showWeapons)
         table.add(showGrenades).row()
 

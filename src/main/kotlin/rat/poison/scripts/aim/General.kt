@@ -84,7 +84,6 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			}
 			else
 			{
-				//calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
 				for (i in 3..8)
 				{
 					//calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
@@ -133,7 +132,6 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			}
 			else
 			{
-				//calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
 				for (i in 3..8)
 				{
 					//calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
@@ -200,6 +198,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 								  crossinline doAim: (destinationAngle: Angle,
 													  currentAngle: Angle, aimSpeed: Int) -> R) = every(duration) {
 	if (!precheck()) return@every
+	if (!curSettings["ENABLE_AIM"]!!.strToBool()) return@every
 
 	if (!me.weaponEntity().canFire()) {
 		reset()

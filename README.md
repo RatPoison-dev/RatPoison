@@ -25,6 +25,13 @@ Hotfixes; 1.3.1
 * Max punch renamed to wep delay
 * Default value changes
 
+1.3.2;
+* Fixed RCS tab not updating text/sliders when loading cfgs
+* General file cleanup; removed ScriptsTab
+* Added checkbox to disable all aims
+* Disabling Aim/Esp disables all related items
+* Fixed resizing menu causing issues for the visuals tab
+* Moved aim key from misc tab to aim tab
 
 ---
 
@@ -75,10 +82,10 @@ The first step is to compile the source code into a usable cheat program.
 * Double click on the "_build_" (_build.bat_) script and wait for it to complete
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.3.1**.
+directory, and will in a directory called **RatPoison 1.3.2**.
 
-From within the **RatPoison 1.3.1** directory, you can start the cheat by running
-the _"Start RatPoison 1.3.1"_ script.
+From within the **RatPoison 1.3.2** directory, you can start the cheat by running
+the _"Start RatPoison 1.3.2"_ script.
 
 Before starting the cheat, you should already be spawned in a game with a weapon in hand!
 

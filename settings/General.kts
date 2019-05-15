@@ -9,6 +9,11 @@ import rat.poison.settings.*
 MENU = true
 
 /**
+ * Whether or not to enable or disable aims
+ */
+ENABLE_AIM = true
+
+/**
  * Default menu size, if game cannot be found and sized on initialize it refers to this
  */
 OVERLAY_WIDTH = 1920
@@ -25,11 +30,6 @@ ACTIVATE_FROM_FIRE_KEY = true
  * This will allow you to shoot teammates with aimbot when turned on.
  */
 TEAMMATES_ARE_ENEMIES = false
-
-/**
- * Whether non-automatic weapons shoot when FIRE_KEY is held down
- */
-AUTOMATIC_WEAPONS = false
 
 /**
  * Punch check delay in ms, if punch has been 0 for this amount of time in ms, shoot
@@ -62,12 +62,7 @@ SHIFT_TO_SHOULDER_SHOTS = 3
 SHIFT_TO_BODY_SHOTS = 4
 
 /**
- * Set this to true if you're playing CS:CO (Counter-Strike: Classic Offensive).
- */
-CLASSIC_OFFENSIVE = false
-
-/**
- * The global fire key, which you use to shoot/fire your weapon.
+ * The global aim key, which you use to shoot/fire your weapon.
  *
  * By default, this is left click (1).
  */
@@ -110,14 +105,14 @@ BODY_BONE = 6
 /**
  * Variables used in game, not saved settings, no need to touch
  */
-PERFECT_AIM = true
-PERFECT_AIM_CHANCE = 15
-PERFECT_AIM_FOV = 10
+PERFECT_AIM = false
+PERFECT_AIM_CHANCE = 1
+PERFECT_AIM_FOV = 1
 AIM_BONE = 8
-AIM_SPEED = 12
-AIM_FOV = 30
+AIM_SPEED = 1
+AIM_FOV = 40
 AIM_ASSIST_MODE = false
-FACTOR_RECOIL = true
-ENABLE_FLAT_AIM = false
-ENABLE_PATH_AIM = true
-AIM_STRICTNESS = 2.0
+FACTOR_RECOIL = false
+ENABLE_FLAT_AIM = true
+ENABLE_PATH_AIM = false
+AIM_STRICTNESS = 1.0

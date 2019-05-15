@@ -32,6 +32,11 @@ ENABLE_ESP = true
 ENABLE_BONE_TRIGGER = false
 
 /**
+ * Whether non-automatic weapons shoot when FIRE_KEY is held down
+ */
+AUTOMATIC_WEAPONS = false
+
+/**
  * Enables the reduced flash script.
  */
 ENABLE_REDUCED_FLASH = false

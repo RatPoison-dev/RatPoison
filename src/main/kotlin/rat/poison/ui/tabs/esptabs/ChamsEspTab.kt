@@ -23,8 +23,7 @@ class ChamsEspTab : Tab(false, false) {
     val showEnemies = VisCheckBox("Show Enemies")
 
     init {
-        //Create curSettings["CHAMS_ESP"]!!.strToBool() Toggle
-        //val chamsEsp = VisTextButton("curSettings["CHAMS_ESP"]!!.strToBool()", "toggle")
+        //Create Chams ESP Toggle
         Tooltip.Builder("Whether or not to enable chams esp").target(chamsEsp).build()
         if (curSettings["CHAMS_ESP"]!!.strToBool()) chamsEsp.toggle()
         chamsEsp.changed { _, _ ->
@@ -36,7 +35,7 @@ class ChamsEspTab : Tab(false, false) {
             true
         }
 
-        //Create curSettings["CHAMS_SHOW_HEALTH"]!!.strToBool() Toggle
+        //Create Chams Show Health Toggle
         Tooltip.Builder("Whether or not to enable chams color to be based on health if chams esp is enabled").target(chamsShowHealth).build()
         if (curSettings["CHAMS_SHOW_HEALTH"]!!.strToBool()) chamsShowHealth.toggle()
         chamsShowHealth.changed { _, _ ->
@@ -44,7 +43,7 @@ class ChamsEspTab : Tab(false, false) {
             true
         }
 
-        //Create curSettings["CHAMS_BRIGHTNESS"].toString().toInt() Slider
+        //Create Chams Brightness Slider
         val chamsBrightness = VisTable()
         Tooltip.Builder("Whether or not to enable chams brightness").target(chamsBrightnessLabel).build()
         Tooltip.Builder("The brightness of chams if chams brightness is enabled").target(chamsBrightnessSlider).build()
@@ -57,7 +56,7 @@ class ChamsEspTab : Tab(false, false) {
         chamsBrightness.add(chamsBrightnessLabel).spaceRight(6F)
         chamsBrightness.add(chamsBrightnessSlider)
 
-        //Create Show_Team Toggle
+        //Create Show Team Toggle
         Tooltip.Builder("Whether or not to show team with esp").target(showTeam).build()
         if (curSettings["CHAMS_SHOW_TEAM"]!!.strToBool()) showTeam.toggle()
         showTeam.changed { _, _ ->
@@ -65,14 +64,13 @@ class ChamsEspTab : Tab(false, false) {
             true
         }
 
-        //Create Show_Enemies Toggle
+        //Create Show Enemies Toggle
         Tooltip.Builder("Whether or not to show enemies with esp").target(showEnemies).build()
         if (curSettings["CHAMS_SHOW_ENEMIES"]!!.strToBool()) showEnemies.toggle()
         showEnemies.changed { _, _ ->
             curSettings["CHAMS_SHOW_ENEMIES"] = showEnemies.isChecked
             true
         }
-
 
         //Add all items to label for tabbed pane content
         table.add(chamsEsp).colspan(2).row()

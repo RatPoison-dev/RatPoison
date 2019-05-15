@@ -25,7 +25,7 @@ class OptionsTab : Tab(false, false) {
     private val loadButton3 = VisTextButton("Load " + curSettings["CFG2_NAME"].toString().replace("\"", ""))
 
     init {
-        //Create UI_Alpha Slider
+        //Create UIAlpha Slider
         val menuAlpha = VisTable()
         Tooltip.Builder("The alpha of the menu").target(menuAlpha).build()
         val menuAlphaLabel = VisLabel("Menu Alpha: " + 1F) //1F is default
@@ -33,7 +33,7 @@ class OptionsTab : Tab(false, false) {
         menuAlphaSlider.value = 1F
         menuAlphaSlider.changed { _, _ ->
             val alp = (Math.round(menuAlphaSlider.value * 100F) / 100F)
-            menuAlpha.parent.parent.parent.parent.color.a = alp //Set the top level parents alpha (currently .parent.parent.parent.parent is the only way, instead of a way to find top most instantly
+            menuAlpha.parent.parent.parent.parent.color.a = alp //Set the top level parents alpha
             menuAlphaLabel.setText("Menu Alpha: " + alp.toString() + when(alp.toString().length) {4 -> "" 3->"  " 2->"    " else ->"      "}) //Same parent situation
         }
         menuAlpha.add(menuAlphaLabel).spaceRight(6F)
@@ -108,7 +108,7 @@ class OptionsTab : Tab(false, false) {
                                 if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
                                     val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
-                                    //Add custom checks for variables that need a type ident ie F
+                                    //Add custom checks
                                     when {
                                         curLine[0] == "CFG1_NAME" || curLine[0] == "CFG2_NAME" || curLine[0] == "CFG3_NAME" -> {
                                             sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
@@ -139,7 +139,8 @@ class OptionsTab : Tab(false, false) {
             true
         }
 
-        table.add(menuAlpha).colspan(2).row() //width 250F
+        table.add(menuAlpha).colspan(2).row()
+
         table.add(saveButton1)
         table.add(loadButton1).row()
 
@@ -190,7 +191,6 @@ class OptionsTab : Tab(false, false) {
                             if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
                                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
-                                //Add custom checks for variables that need a type ident ie F
                                 when {
                                         curLine[0] == "CFG1_NAME" || curLine[0] == "CFG2_NAME" || curLine[0] == "CFG3_NAME" -> {
                                             sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]].toString().replace("\"", "") + "\"\n")
@@ -228,8 +228,6 @@ class OptionsTab : Tab(false, false) {
                 firstLine = false
                 sbLines.lines().forEach {genFile.appendText(if (!firstLine) { firstLine = true; it } else if (!it.isBlank()) "\n" + it else "\n")}
                 sbLines.clear()
-
-                //Dont need to reload settings afaik
 
                 println("\n Saving complete! \n")
                 saving = false

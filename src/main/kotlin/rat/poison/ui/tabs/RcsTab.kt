@@ -20,24 +20,23 @@ class RcsTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     val enableRCS = VisCheckBox("Enable RCS") //RCS
 
-    val rcsSmoothingLabel = VisLabel("RCS Smoothing: " + curSettings["RCS_SMOOTHING"].toString() + when(curSettings["RCS_SMOOTHING"].toString().length) {3->"" 2->"  " else->"    "}) //curSettings["RCS_SMOOTHING"].toString()
-    val rcsSmoothingSlider = VisSlider(0.1F, 1F, .02F, false) //curSettings["RCS_SMOOTHING"].toString()
-    val rcsReturnAim = VisCheckBox("Return Aim") //curSettings["RCS_RETURNAIM"]!!.strToBool()
+    val rcsSmoothingLabel = VisLabel("RCS Smoothing: " + curSettings["RCS_SMOOTHING"].toString() + when(curSettings["RCS_SMOOTHING"].toString().length) {3->"" 2->"  " else->"    "})
+    val rcsSmoothingSlider = VisSlider(0.1F, 1F, .02F, false)
+    val rcsReturnAim = VisCheckBox("Return Aim")
 
 
-    val enableRCrosshair = VisCheckBox("Enable Recoil Crosshair") //Recoil_Crosshair
+    val enableRCrosshair = VisCheckBox("Enable Recoil Crosshair")
 
-    val rCrosshairWidthLabel = VisLabel("RCrosshair Width: " + curSettings["RCROSSHAIR_WIDTH"].toString()) //RCrosshair_Width
-    val rCrosshairWidthSlider = VisSlider(1F, 5F, 1F, false) //RCrosshair_Width
-    val rcsCrosshairLengthLabel = VisLabel("RCrosshair Length: " + curSettings["RCROSSHAIR_LENGTH"].toString() + when(curSettings["RCROSSHAIR_LENGTH"].toString().length) {2->"  " else ->"    "}) //RCrosshair_Length
-    val rcsCrosshairLengthSlider = VisSlider(3F, 30F, 1F, false) //RCrosshair_Length
-    val rCrosshairAlphaLabel = VisLabel("RCrosshair Alpha: " + curSettings["RCROSSHAIR_ALPHA"].toString()) //RCrosshair_Alpha
-    val rCrosshairAlphaSlider = VisSlider(0.1F, 1F, 0.1F, false) //RCrosshair_Alpha
-    val rCrosshairColorShow = VisTextButton("Set RCrosshair Color") //RCrosshair_Color
+    val rCrosshairWidthLabel = VisLabel("RCrosshair Width: " + curSettings["RCROSSHAIR_WIDTH"].toString())
+    val rCrosshairWidthSlider = VisSlider(1F, 5F, 1F, false)
+    val rCrosshairLengthLabel = VisLabel("RCrosshair Length: " + curSettings["RCROSSHAIR_LENGTH"].toString() + when(curSettings["RCROSSHAIR_LENGTH"].toString().length) {2->"  " else ->"    "})
+    val rCrosshairLengthSlider = VisSlider(3F, 30F, 1F, false)
+    val rCrosshairAlphaLabel = VisLabel("RCrosshair Alpha: " + curSettings["RCROSSHAIR_ALPHA"].toString())
+    val rCrosshairAlphaSlider = VisSlider(0.1F, 1F, 0.1F, false)
+    val rCrosshairColorShow = VisTextButton("Set RCrosshair Color")
 
     init {
-        //Create curSettings["ENABLE_RCS"]!!.strToBool() Toggle
-        //val enableRCS = VisCheckBox("Enable RCS")
+        //Create RCS Toggle
         Tooltip.Builder("Whether or not to enable the recoil control system").target(enableRCS).build()
         enableRCS.isChecked = curSettings["ENABLE_RCS"]!!.strToBool()
         enableRCS.changed { _, _ ->
@@ -47,7 +46,7 @@ class RcsTab : Tab(false, false) {
             true
         }
 
-        //Create curSettings["RCS_SMOOTHING"].toString()
+        //Create RCS Smoothing Slider
         val rcsSmoothing = VisTable()
         Tooltip.Builder("The smoothing of the recoil control system").target(rcsSmoothing).build()
         //val rcsSmoothingLabel = VisLabel("RCS Smoothing: " + curSettings["RCS_SMOOTHING"].toString().toString())
@@ -77,7 +76,7 @@ class RcsTab : Tab(false, false) {
             curSettings["ENABLE_RECOIL_CROSSHAIR"] = enableRCrosshair.isChecked.boolToStr()
             rcsTab.apply {
                 rCrosshairWidthSlider.isDisabled = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
-                rcsCrosshairLengthSlider.isDisabled = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
+                rCrosshairLengthSlider.isDisabled = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
                 rCrosshairAlphaSlider.isDisabled = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
                 rCrosshairColorShow.isDisabled = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
             }
@@ -98,15 +97,15 @@ class RcsTab : Tab(false, false) {
         //Create RCrosshair_Length
         val rCrosshairLength = VisTable()
         Tooltip.Builder("The length of the bars of the recoil crosshair, odd number is recommended").target(rCrosshairLength).build()
-        //val rcsCrosshairLengthLabel = VisLabel("RCrosshair Length: $RCROSSHAIR_LENGTH" + when(RCROSSHAIR_LENGTH.toString().length) { 2->"  " else ->"    "})
-        //val rcsCrosshairLengthSlider = VisSlider(3F, 30F, 1F, false)
-        rcsCrosshairLengthSlider.value = RCROSSHAIR_LENGTH.toFloat()
-        rcsCrosshairLengthSlider.changed { _, _ ->
-            curSettings["RCROSSHAIR_LENGTH"] = rcsCrosshairLengthSlider.value.toInt().toString()
-            rcsCrosshairLengthLabel.setText("RCrosshair Length: " + curSettings["RCROSSHAIR_LENGTH"].toString() + when(curSettings["RCROSSHAIR_LENGTH"].toString().length) { 2->"  " else ->"    "})
+        //val rCrosshairLengthLabel = VisLabel("RCrosshair Length: $RCROSSHAIR_LENGTH" + when(RCROSSHAIR_LENGTH.toString().length) { 2->"  " else ->"    "})
+        //val rCrosshairLengthSlider = VisSlider(3F, 30F, 1F, false)
+        rCrosshairLengthSlider.value = RCROSSHAIR_LENGTH.toFloat()
+        rCrosshairLengthSlider.changed { _, _ ->
+            curSettings["RCROSSHAIR_LENGTH"] = rCrosshairLengthSlider.value.toInt().toString()
+            rCrosshairLengthLabel.setText("RCrosshair Length: " + curSettings["RCROSSHAIR_LENGTH"].toString() + when(curSettings["RCROSSHAIR_LENGTH"].toString().length) { 2->"  " else ->"    "})
         }
-        rCrosshairLength.add(rcsCrosshairLengthLabel).spaceRight(6F) //when gets rid of spaceright
-        rCrosshairLength.add(rcsCrosshairLengthSlider)
+        rCrosshairLength.add(rCrosshairLengthLabel).spaceRight(6F) //when gets rid of spaceright
+        rCrosshairLength.add(rCrosshairLengthSlider)
 
         //Create RCrosshair_Alpha
         val rCrosshairAlpha = VisTable()

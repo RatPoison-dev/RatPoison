@@ -31,7 +31,7 @@ SHOTGUN_AIM_BONE = 6
 /**
  * The field of view of the aimbot, in degrees (0 to 360).
  */
-SHOTGUN_AIM_FOV = 70
+SHOTGUN_AIM_FOV = 50
 
 /**
  * The aimbot's "playback" speed, the higher the value the slower the playback.

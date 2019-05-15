@@ -1,6 +1,7 @@
 package rat.poison.ui.tabs
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.util.Validators
@@ -27,27 +28,27 @@ class VisualsTab : Tab(false, false) {
     private var col : rat.poison.game.Color
 
     //Init labels/sliders/boxes that show values here
-    val enableEsp = VisCheckBox("Enable Esp") //ESP
+    val enableEsp = VisCheckBox("Enable Esp")
 
-    private val visualsKeyField = VisValidatableTextField(Validators.FLOATS)
+    val visualsToggleKeyLabel = VisLabel("Visuals Toggle Key: ")
     val visualsToggleKeyField = VisValidatableTextField(Validators.FLOATS)
 
     val radarEsp = VisCheckBox("Radar Esp")
 
-    val showTeam = VisCheckBox("Show Team") //Show_Team
-    val showEnemies = VisCheckBox("Show Enemies") //Show_Enemies
-    val showDormant = VisCheckBox("Show Dormant") //Show_Dormant
-    val showBomb = VisCheckBox("Show Bomb") //Show_Bomb
-    val showWeapons = VisCheckBox("Show Weapons") //Show_Weapons
-    val showGrenades = VisCheckBox("Show Grenades") //Show_Grenades
-    val showTarget = VisCheckBox("Show Target") //Show_Target
+    val showTeam = VisCheckBox("Show Team") //Show Team
+    val showEnemies = VisCheckBox("Show Enemies") //Show Enemies
+    val showDormant = VisCheckBox("Show Dormant") //Show Dormant
+    val showBomb = VisCheckBox("Show Bomb") //Show Bomb
+    val showWeapons = VisCheckBox("Show Weapons") //Show Weapons
+    val showGrenades = VisCheckBox("Show Grenades") //Show Grenades
+    val showTarget = VisCheckBox("Show Target") //Show Target
 
-    val teamColorShow = VisTextButton("Set Team Color") //Team_Color
-    val enemyColorShow = VisTextButton("Set Enemy Color") //Enemy_Color
-    val bombColorShow = VisTextButton("Set Bomb Color") //Bomb_Color
-    val weaponColorShow = VisTextButton("Set Weapon Color") //Weapon_Color
-    val grenadeColorShow = VisTextButton("Set Grenade Color") //Grenade_Color
-    val highlightColorShow = VisTextButton("Set Highlight Color") //Highlight_Color
+    val teamColorShow = VisTextButton("Set Team Color") //Team Color
+    val enemyColorShow = VisTextButton("Set Enemy Color") //Enemy Color
+    val bombColorShow = VisTextButton("Set Bomb Color") //Bomb Color
+    val weaponColorShow = VisTextButton("Set Weapon Color") //Weapon Color
+    val grenadeColorShow = VisTextButton("Set Grenade Color") //Grenade Color
+    val highlightColorShow = VisTextButton("Set Highlight Color") //Highlight Color
 
 
     init {
@@ -56,6 +57,77 @@ class VisualsTab : Tab(false, false) {
         enableEsp.isChecked = curSettings["ENABLE_ESP"]!!.strToBool()
         enableEsp.changed { _, _ ->
             curSettings["ENABLE_ESP"] = enableEsp.isChecked.boolToStr()
+
+            val bool = !enableEsp.isChecked
+            var col = Color(255F, 255F, 255F, 1F)
+            if (bool) {
+                col = Color(105F, 105F, 105F, .2F)
+            }
+
+            visualsToggleKeyLabel.color = col
+            visualsToggleKeyField.isDisabled = bool
+            radarEsp.isDisabled = bool
+
+            val recTab = espTabbedPane.activeTab
+
+            espTabbedPane.disableTab(glowEspTab, bool)
+            espTabbedPane.disableTab(chamsEspTab, bool)
+            espTabbedPane.disableTab(indicatorEspTab, bool)
+            espTabbedPane.disableTab(boxEspTab, bool)
+            espTabbedPane.disableTab(skeletonEspTab, bool)
+
+            espTabbedPane.switchTab(recTab)
+
+            glowEspTab.glowEsp.isDisabled = bool
+            glowEspTab.invGlowEsp.isDisabled = bool
+            glowEspTab.modelEsp.isDisabled = bool
+            glowEspTab.modelAndGlow.isDisabled = bool
+
+            glowEspTab.showTeam.isDisabled = bool
+            glowEspTab.showEnemies.isDisabled = bool
+            glowEspTab.showDormant.isDisabled = bool
+            glowEspTab.showBomb.isDisabled = bool
+            glowEspTab.showWeapons.isDisabled = bool
+            glowEspTab.showGrenades.isDisabled = bool
+            glowEspTab.showTarget.isDisabled = bool
+
+            chamsEspTab.chamsEsp.isDisabled = bool
+            chamsEspTab.chamsShowHealth.isDisabled = bool
+            chamsEspTab.chamsBrightnessLabel.color = col
+            chamsEspTab.chamsBrightnessSlider.isDisabled = bool
+
+            chamsEspTab.showTeam.isDisabled = bool
+            chamsEspTab.showEnemies.isDisabled = bool
+
+            indicatorEspTab.indicatorEsp.isDisabled = bool
+            indicatorEspTab.indicatorOnScreen.isDisabled = bool
+            indicatorEspTab.indicatorOval.isDisabled = bool
+            indicatorEspTab.indicatorDistanceLabel.color = col
+            indicatorEspTab.indicatorDistanceSlider.isDisabled = bool
+
+            indicatorEspTab.showTeam.isDisabled = bool
+            indicatorEspTab.showEnemies.isDisabled = bool
+            indicatorEspTab.showDormant.isDisabled = bool
+            indicatorEspTab.showBomb.isDisabled = bool
+            indicatorEspTab.showWeapons.isDisabled = bool
+            indicatorEspTab.showGrenades.isDisabled = bool
+
+            boxEspTab.boxEsp.isDisabled = bool
+            boxEspTab.boxEspDetails.isDisabled = bool
+
+            boxEspTab.showTeam.isDisabled = bool
+            boxEspTab.showEnemies.isDisabled = bool
+
+            skeletonEspTab.skeletonEsp.isDisabled = bool
+            skeletonEspTab.showTeam.isDisabled = bool
+            skeletonEspTab.showEnemies.isDisabled = bool
+
+            teamColorShow.isDisabled = bool
+            enemyColorShow.isDisabled = bool
+            bombColorShow.isDisabled = bool
+            weaponColorShow.isDisabled = bool
+            grenadeColorShow.isDisabled = bool
+            highlightColorShow.isDisabled = bool
 
             if (!curSettings["ENABLE_ESP"]!!.strToBool()) {
                 disableEsp()
@@ -66,10 +138,9 @@ class VisualsTab : Tab(false, false) {
         //Create Visuals_Toggle_Key Input
         val visualsToggleKey = VisTable()
         Tooltip.Builder("The key code that will toggle all enabled visuals on or off").target(visualsToggleKey).build()
-        val visualsToggleKeyLabel = VisLabel("Visuals Toggle Key: ")
         visualsToggleKeyField.text = curSettings["VISUALS_TOGGLE_KEY"].toString()
         visualsToggleKey.changed { _, _ ->
-            if (visualsKeyField.text.toIntOrNull() != null) {
+            if (visualsToggleKeyField.text.toIntOrNull() != null) {
                 curSettings["VISUALS_TOGGLE_KEY"] = visualsToggleKeyField.text.toInt().toString()
             }
         }
@@ -85,7 +156,7 @@ class VisualsTab : Tab(false, false) {
             true
         }
 
-        //Create Team_Color Picker
+        //Create Team Color Picker
         val teamColor = VisTable()
         Tooltip.Builder("The esp color of teammates").target(teamColor).build()
         col = curSettings["TEAM_COLOR"]!!.strToColor()
@@ -110,7 +181,7 @@ class VisualsTab : Tab(false, false) {
 
         teamColor.add(teamColorShow).growX()
 
-        //Create Enemy_Color Picker
+        //Create Enemy Color Picker
         val enemyColor = VisTable()
         Tooltip.Builder("The esp color of enemies").target(enemyColor).build()
         col = curSettings["ENEMY_COLOR"]!!.strToColor()
@@ -129,14 +200,13 @@ class VisualsTab : Tab(false, false) {
         })
         enemyColorPicker.color = Color(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
 
-        //enemyColorPicker
         enemyColor.changed { _, _ ->
             App.menuStage.addActor(enemyColorPicker.fadeIn())
         }
 
         enemyColor.add(enemyColorShow).growX()
 
-        //Create Bomb_Color Picker
+        //Create Bomb Color Picker
         val bombColor = VisTable()
         Tooltip.Builder("The esp color of the bomb").target(bombColor).build()
         col = curSettings["BOMB_COLOR"]!!.strToColor()
@@ -161,7 +231,7 @@ class VisualsTab : Tab(false, false) {
 
         bombColor.add(bombColorShow).growX()
 
-        //Create Weapon_Color Picker
+        //Create Weapon Color Picker
         val weaponColor = VisTable()
         Tooltip.Builder("The esp color of weapons").target(weaponColor).build()
         col = curSettings["WEAPON_COLOR"]!!.strToColor()
@@ -186,7 +256,7 @@ class VisualsTab : Tab(false, false) {
 
         weaponColor.add(weaponColorShow).growX()
 
-        //Create Grenade_Color Picker
+        //Create Grenade Color Picker
         val grenadeColor = VisTable()
         col = curSettings["GRENADE_COLOR"]!!.strToColor()
         grenadeColor.setColor(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
@@ -211,7 +281,7 @@ class VisualsTab : Tab(false, false) {
 
         grenadeColor.add(grenadeColorShow).growX()
 
-        //Create Highlight_Color Picker
+        //Create Highlight Color Picker
         val highlightColor = VisTable()
         col = curSettings["HIGHLIGHT_COLOR"]!!.strToColor()
         highlightColor.setColor(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
@@ -236,7 +306,7 @@ class VisualsTab : Tab(false, false) {
 
         highlightColor.add(highlightColorShow).growX()
 
-        //Aim Tab
+        //ESP Tab
         espTabbedPane.add(glowEspTab)
         espTabbedPane.add(chamsEspTab)
         espTabbedPane.add(indicatorEspTab)
@@ -249,25 +319,23 @@ class VisualsTab : Tab(false, false) {
         espTabbedPaneContent.padTop(10F)
         espTabbedPaneContent.padBottom(10F)
         espTabbedPaneContent.align(Align.top)
-        espTabbedPaneContent.columnDefaults(2)
+        espTabbedPaneContent.columnDefaults(1)
+        //espTabbedPaneContent.setSize(1000F, 1000F)
 
-        espTabbedPaneContent.add(glowEspTab.contentTable).colspan(2).growX().row()
+        val espScrollPane = ScrollPane(espTabbedPaneContent)
+        espScrollPane.setFlickScroll(false)
+        espScrollPane.setSize(1000F, 1000F)
 
-        espTabbedPaneContent.addSeparator().colspan(2).growX().row()
+        espTabbedPaneContent.add(glowEspTab.contentTable).colspan(2).fillX().row()
 
-//        espTabbedPaneContent.add(teamColor).right().pad(5F)
-//        espTabbedPaneContent.add(enemyColor).left().pad(5F).row()
-//        espTabbedPaneContent.add(bombColor).right().pad(5F)
-//        espTabbedPaneContent.add(weaponColor).left().pad(5F).row()
-//        espTabbedPaneContent.add(grenadeColor).right().pad(5F)
-//        espTabbedPaneContent.add(highlightColor).left().pad(5F).row()
+        espTabbedPaneContent.addSeparator().colspan(2).fillX().row()
 
-        espTabbedPaneContent.add(teamColor).colspan(1).growX().pad(2F)
-        espTabbedPaneContent.add(enemyColor).colspan(1).growX().pad(2F).row()
-        espTabbedPaneContent.add(bombColor).colspan(1).growX().pad(2F)
-        espTabbedPaneContent.add(weaponColor).colspan(1).growX().pad(2F).row()
-        espTabbedPaneContent.add(grenadeColor).colspan(1).growX().pad(2F)
-        espTabbedPaneContent.add(highlightColor).colspan(1).growX().pad(2F).row()
+        espTabbedPaneContent.add(teamColor).colspan(1).fillX().pad(2F)
+        espTabbedPaneContent.add(enemyColor).colspan(1).fillX().pad(2F).row()
+        espTabbedPaneContent.add(bombColor).colspan(1).fillX().pad(2F)
+        espTabbedPaneContent.add(weaponColor).colspan(1).fillX().pad(2F).row()
+        espTabbedPaneContent.add(grenadeColor).colspan(1).fillX().pad(2F)
+        espTabbedPaneContent.add(highlightColor).colspan(1).fillX().pad(2F).row()
 
         espTabbedPane.addListener(object : TabbedPaneAdapter() {
             override fun switchedTab(tab: Tab?) {
@@ -277,38 +345,41 @@ class VisualsTab : Tab(false, false) {
 
                 when (tab) {
                     glowEspTab -> {
-                        espTabbedPaneContent.add(glowEspTab.contentTable).colspan(2).growX().row()
+                        espTabbedPaneContent.add(glowEspTab.contentTable).fillX().colspan(2).row()
                     }
                     chamsEspTab -> {
-                        espTabbedPaneContent.add(chamsEspTab.contentTable).colspan(2).growX().row()
+                        espTabbedPaneContent.add(chamsEspTab.contentTable).fillX().colspan(2).row()
                     }
                     indicatorEspTab -> {
-                        espTabbedPaneContent.add(indicatorEspTab.contentTable).colspan(2).growX().row()
+                        espTabbedPaneContent.add(indicatorEspTab.contentTable).fillX().colspan(2).row()
                     }
                     boxEspTab -> {
-                        espTabbedPaneContent.add(boxEspTab.contentTable).colspan(2).growX().row()
+                        espTabbedPaneContent.add(boxEspTab.contentTable).fillX().colspan(2).row()
                     }
                     skeletonEspTab -> {
-                        espTabbedPaneContent.add(skeletonEspTab.contentTable).colspan(2).growX().row()
+                        espTabbedPaneContent.add(skeletonEspTab.contentTable).fillX().colspan(2).row()
                     }
                 }
 
-                espTabbedPaneContent.addSeparator().colspan(2).row()
-                espTabbedPaneContent.add(teamColor).colspan(1).growX().pad(2F)
-                espTabbedPaneContent.add(enemyColor).colspan(1).growX().pad(2F).row()
-                espTabbedPaneContent.add(bombColor).colspan(1).growX().pad(2F)
-                espTabbedPaneContent.add(weaponColor).colspan(1).growX().pad(2F).row()
-                espTabbedPaneContent.add(grenadeColor).colspan(1).growX().pad(2F)
-                espTabbedPaneContent.add(highlightColor).colspan(1).growX().pad(2F).row()
+                espTabbedPaneContent.addSeparator().colspan(2).fillX().row()
+                espTabbedPaneContent.add(teamColor).colspan(1).fillX().pad(2F)
+                espTabbedPaneContent.add(enemyColor).colspan(1).fillX().pad(2F).row()
+                espTabbedPaneContent.add(bombColor).colspan(1).fillX().pad(2F)
+                espTabbedPaneContent.add(weaponColor).colspan(1).fillX().pad(2F).row()
+                espTabbedPaneContent.add(grenadeColor).colspan(1).fillX().pad(2F)
+                espTabbedPaneContent.add(highlightColor).colspan(1).fillX().pad(2F).row()
             }
         })
 
         //Add all items to label for tabbed pane content
-        table.add(enableEsp).colspan(2).row()
+        table.add(enableEsp).row()
+
+        table.addSeparator()
+
         table.add(visualsToggleKey).row()
         table.add(radarEsp).row()
-        table.add(espTabbedPane.table).growX().minSize(25F).row()
-        table.add(espTabbedPaneContent).growX()
+        table.add(espTabbedPane.table).minSize(25F).minWidth(500F).row()
+        table.add(espScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
     }
 
     override fun getContentTable(): Table? {
