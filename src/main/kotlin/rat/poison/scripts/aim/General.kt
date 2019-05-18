@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicLong
 
 val target = AtomicLong(-1)
 val bone = AtomicInteger(AIM_BONE)
-val perfect = AtomicBoolean() // only applicable for safe aim
+val perfect = AtomicBoolean() //Perfect Aim boolean check, only for path aim
 var boneTrig = false
 
 internal fun reset() {
@@ -40,7 +40,7 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 		{
 			if (curSettings["BONE_TRIGGER_HB"]!!.strToBool() && curSettings["BONE_TRIGGER_BB"]!!.strToBool())
 			{
-				for (i in 3..8)
+				for (i in 3..8) //Check all body bones & head bone
 				{
 					//calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
 					val ePos: Angle = entity.bones(i)
@@ -62,7 +62,7 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			}
 			else if (curSettings["BONE_TRIGGER_BB"]!!.strToBool())
 			{
-				for (i in 3..7)
+				for (i in 3..7) //Check all body bones
 				{
 					//calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
 					val ePos: Angle = entity.bones(i)
@@ -84,7 +84,7 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			}
 			else
 			{
-				for (i in 3..8)
+				for (i in 3..8) //Check all body bones & head bone
 				{
 					//calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
 					val ePos: Angle = entity.bones(HEAD_BONE)
@@ -110,7 +110,7 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			if (BONE == BODY_BONE)
 			{
 				//calcTarget(entity, position, angle, lockFOV, BODY_BONE)
-				for (i in 3..7)
+				for (i in 3..7) //Check all body bones
 				{
 					//calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
 					val ePos: Angle = entity.bones(i)
@@ -130,26 +130,23 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 					}
 				}
 			}
-			else
+			else //If HEAD_BONE
 			{
-				for (i in 3..8)
-				{
-					//calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
-					val ePos: Angle = entity.bones(HEAD_BONE)
-					val distance = position.distanceTo(ePos)
+				//calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
+				val ePos: Angle = entity.bones(HEAD_BONE)
+				val distance = position.distanceTo(ePos)
 
-					val dest = calculateAngle(me, ePos)
+				val dest = calculateAngle(me, ePos)
 
-					val pitchDiff = Math.abs(angle.x - dest.x)
-					val yawDiff = Math.abs(angle.y - dest.y)
-					val fov = Math.abs(Math.sin(Math.toRadians(yawDiff)) * distance)
-					val delta = Math.abs((Math.sin(Math.toRadians(pitchDiff)) + Math.sin(Math.toRadians(yawDiff))) * distance)
+				val pitchDiff = Math.abs(angle.x - dest.x)
+				val yawDiff = Math.abs(angle.y - dest.y)
+				val fov = Math.abs(Math.sin(Math.toRadians(yawDiff)) * distance)
+				val delta = Math.abs((Math.sin(Math.toRadians(pitchDiff)) + Math.sin(Math.toRadians(yawDiff))) * distance)
 
-					if (delta <= lockFOV && delta <= closestDelta) {
-						closestFOV = fov
-						closestDelta = delta
-						closestPlayer = entity
-					}
+				if (delta <= lockFOV && delta <= closestDelta) {
+					closestFOV = fov
+					closestDelta = delta
+					closestPlayer = entity
 				}
 			}
 		}

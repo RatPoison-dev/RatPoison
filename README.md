@@ -6,6 +6,10 @@
 * Fixed resizing menu causing issues for the visuals tab
 * Moved aim key from misc tab to aim tab
 
+Hotfixes
+* Fixed Enable Override checkbox turning on when toggling Enable Aim
+* Small file/comment cleanup
+
 ---
 
 1.3.1

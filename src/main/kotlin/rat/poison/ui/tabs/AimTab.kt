@@ -108,7 +108,11 @@ class AimTab : Tab(true, false) { //Aim.kts tab
             categorySelectLabel.color = col
             categorySelectionBox.isDisabled = bool
             weaponOverrideSelectionBox.isDisabled = bool
-            weaponOverrideEnableCheckBox.isDisabled = bool
+            if (!weaponOverride) {
+                weaponOverrideEnableCheckBox.isDisabled = true
+            } else {
+                weaponOverrideEnableCheckBox.isDisabled = bool
+            }
             enableFactorRecoil.isDisabled = bool
             enableFlatAim.isDisabled = bool
             enablePathAim.isDisabled = bool

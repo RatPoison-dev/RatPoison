@@ -65,7 +65,7 @@ fun main() {
     flatAim()
     pathAim()
     setAim()
-    boneTrigger()
+    boneTrigger() //Called once during startup, causes firing on startup
     reducedFlash()
     bombTimer()
     esp() //Contains esp scripts
@@ -108,8 +108,7 @@ fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
             }
         }
     }
-    else
-        {
+    else {
         File(fileDir).listFiles().forEach { file ->
             if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
                 FileReader(file).readLines().forEach { line ->
@@ -149,14 +148,14 @@ object App : ApplicationAdapter() {
         overlay.start()
 
         //Implement stage for menu
-        menuStage = Stage()
-        bombStage = Stage()
+        menuStage = Stage() //Main Menu Stage
+        bombStage = Stage() //Bomb Timer Stage
         val root = VisTable()
         root.setFillParent(true)
         menuStage.addActor(root)
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
-        val UIWindow = UIMenu()
-        val UIBombWindow = UIBombTimer()
+        val UIWindow = UIMenu() //Main UI Window
+        val UIBombWindow = UIBombTimer() //Bomb Timer UI Window
         menuStage.addActor(UIWindow)
         bombStage.addActor(UIBombWindow)
         val inputMultiplexer = InputMultiplexer()

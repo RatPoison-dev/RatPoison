@@ -59,8 +59,7 @@ class RcsTab : Tab(false, false) {
         rcsSmoothing.add(rcsSmoothingLabel).spaceRight(6F) //when gets rid of spaceright
         rcsSmoothing.add(rcsSmoothingSlider)
 
-        //Create curSettings["RCS_RETURNAIM"]!!.strToBool()
-        //val rcsReturnAim = VisCheckBox("Return Aim")
+        //Create RCS Return Aim Toggle
         Tooltip.Builder("Whether or not to reset your crosshair after spraying").target(rcsReturnAim).build()
         if (curSettings["RCS_RETURNAIM"]!!.strToBool()) rcsReturnAim.toggle()
         rcsReturnAim.changed { _, _ ->
@@ -69,7 +68,7 @@ class RcsTab : Tab(false, false) {
             }
         }
 
-        //Create ENABLE_RECOIL_CROSSHAIR Toggle
+        //Create RCrosshair Toggle
         Tooltip.Builder("Whether or not to enable the recoil crosshair").target(enableRCrosshair).build()
         enableRCrosshair.isChecked = curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
         enableRCrosshair.changed { _, _ ->
@@ -83,7 +82,7 @@ class RcsTab : Tab(false, false) {
             true
         }
 
-        //Create RCrosshair_Width
+        //Create RCrosshair Width
         val rCrosshairWidth = VisTable()
         Tooltip.Builder("The width of the bars of the recoil crosshair, odd number is recommended").target(rCrosshairWidth).build()
         rCrosshairWidthSlider.value = RCROSSHAIR_WIDTH.toFloat()
@@ -94,11 +93,9 @@ class RcsTab : Tab(false, false) {
         rCrosshairWidth.add(rCrosshairWidthLabel).spaceRight(6F) //when gets rid of spaceright
         rCrosshairWidth.add(rCrosshairWidthSlider)
 
-        //Create RCrosshair_Length
+        //Create RCrosshair Length
         val rCrosshairLength = VisTable()
         Tooltip.Builder("The length of the bars of the recoil crosshair, odd number is recommended").target(rCrosshairLength).build()
-        //val rCrosshairLengthLabel = VisLabel("RCrosshair Length: $RCROSSHAIR_LENGTH" + when(RCROSSHAIR_LENGTH.toString().length) { 2->"  " else ->"    "})
-        //val rCrosshairLengthSlider = VisSlider(3F, 30F, 1F, false)
         rCrosshairLengthSlider.value = RCROSSHAIR_LENGTH.toFloat()
         rCrosshairLengthSlider.changed { _, _ ->
             curSettings["RCROSSHAIR_LENGTH"] = rCrosshairLengthSlider.value.toInt().toString()
@@ -107,7 +104,7 @@ class RcsTab : Tab(false, false) {
         rCrosshairLength.add(rCrosshairLengthLabel).spaceRight(6F) //when gets rid of spaceright
         rCrosshairLength.add(rCrosshairLengthSlider)
 
-        //Create RCrosshair_Alpha
+        //Create RCrosshair Alpha
         val rCrosshairAlpha = VisTable()
         Tooltip.Builder("The alpha of the recoil crosshair").target(rCrosshairAlpha).build()
         rCrosshairAlphaSlider.value = curSettings["RCROSSHAIR_ALPHA"].toString().toFloat()
@@ -118,7 +115,7 @@ class RcsTab : Tab(false, false) {
         rCrosshairAlpha.add(rCrosshairAlphaLabel).spaceRight(6F)
         rCrosshairAlpha.add(rCrosshairAlphaSlider)
 
-        //Create RCrosshair_Color Picker
+        //Create RCrosshair Color Picker
         val rCrosshairColor = VisTable()
         Tooltip.Builder("The color of the recoil crosshair").target(rCrosshairColor).build()
         rCrosshairColorShow.setColor(RCROSSHAIR_COLOR.red.toFloat(), RCROSSHAIR_COLOR.green.toFloat(), RCROSSHAIR_COLOR.blue.toFloat(), 1F)
@@ -144,15 +141,15 @@ class RcsTab : Tab(false, false) {
 
 
         //Add all items to label for tabbed pane content
-        table.add(enableRCS).row() //Add curSettings["ENABLE_RCS"]!!.strToBool() Toggle
-        table.add(rcsSmoothing).row() //Add curSettings["RCS_SMOOTHING"].toString() Slider
-        table.add(rcsReturnAim).row() //Add curSettings["RCS_RETURNAIM"]!!.strToBool() Toggle
+        table.add(enableRCS).row()
+        table.add(rcsSmoothing).row()
+        table.add(rcsReturnAim).row()
         table.addSeparator()
-        table.add(enableRCrosshair).row() //Add Enable_RCrosshair Toggle
-        table.add(rCrosshairWidth).row() //Add RCrosshair_Width Slider
-        table.add(rCrosshairLength).row() //Add RCrosshair_Length Slider
-        table.add(rCrosshairAlpha).row() //Add RCrosshair_Alpha Slider
-        table.add(rCrosshairColor).row() //Add RCrosshair_Color Picker + Button
+        table.add(enableRCrosshair).row()
+        table.add(rCrosshairWidth).row()
+        table.add(rCrosshairLength).row()
+        table.add(rCrosshairAlpha).row()
+        table.add(rCrosshairColor).row()
     }
 
     override fun getContentTable(): Table? {
