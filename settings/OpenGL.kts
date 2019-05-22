@@ -10,7 +10,7 @@ OPENGL_VSYNC = false
 /**
  * FPS of the OpenGL overlay
  */
-OPENGL_FPS = 30
+OPENGL_FPS = 60
 
 /**
  * The amount of MSAA antialiasing samples for the OpenGL overlay.

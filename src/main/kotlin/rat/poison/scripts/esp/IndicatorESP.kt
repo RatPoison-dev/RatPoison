@@ -15,11 +15,12 @@ import rat.poison.strToBool
 import rat.poison.curSettings
 import rat.poison.utils.Vector
 import rat.poison.utils.distanceTo
+import rat.poison.utils.notInGame
 
 //Add radius var and oval toggle
 
 internal fun indicatorEsp() = App {
-    if (!curSettings["ENABLE_ESP"]!!.strToBool() || MENUTOG || !curSettings["INDICATOR_ESP"]!!.strToBool()) return@App //Needed menutog/notingame/inbackground or would crash at w2s view matrix
+    if (!curSettings["ENABLE_ESP"]!!.strToBool() || MENUTOG || !curSettings["INDICATOR_ESP"]!!.strToBool() || notInGame) return@App //Needed menutog/notingame/inbackground or would crash at w2s view matrix
 
     forEntities {
         val entity = it.entity

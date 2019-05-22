@@ -1,6 +1,8 @@
 package rat.poison.scripts
 
 import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.loadSettingsFromFiles
+import rat.poison.scripts.esp.disableEsp
 //import rat.poison.loadSettings
 import rat.poison.settings.*
 import java.io.File
@@ -24,8 +26,8 @@ fun scanner() {
                 if (line == "help") {
                     println("\nAvailable commands: help [command], exit, reload, list, read [file name], write [file name] [variable name] = [value]\n")
                 } else {
-                    val helpcommand = line.split(" ".toRegex(), 2)[1]
-                    when (helpcommand) {
+                    val helpCommand = line.split(" ".toRegex(), 2)[1]
+                    when (helpCommand) {
                         "exit" -> println("\nCloses program and cmd\n")
                         "reload" -> println("\nReloads all settings files, is done automatically on write\n")
                         "list" -> println("\nLists all settings files\n")
@@ -37,13 +39,12 @@ fun scanner() {
 
             }
             line.equals("exit", true) -> {
-                //curSettings["CHAMS_BRIGHTNESS"].toString().toInt() = 0
-                //curSettings["CHAMS_SHOW_HEALTH"]!!.strToBool() = false
+                disableEsp()
                 Thread.sleep(1000)
                 System.exit(0)
             }
             line.equals("reload", true) -> {
-                println(); /*loadSettings();*/ println()
+                println(); loadSettingsFromFiles(SETTINGS_DIRECTORY); println()
             }
             line.equals("list", true) -> {
                 println(); File(SETTINGS_DIRECTORY).listFiles().forEach { println(it) }; println()
@@ -64,6 +65,7 @@ fun scanner() {
             line.startsWith("set") -> { //Set variable, instance use only
                 println()
                 try {
+                    println(line.split(" ".toRegex(), 2)[1])
                     //Dojo.script(line.trim().split(" ".toRegex(), 2)[1])
                     println("Set " + line.trim().split(" ".toRegex(), 2)[1])
                 } catch (e: ScriptException) {

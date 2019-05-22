@@ -22,7 +22,7 @@ class OptionsTab : Tab(false, false) {
 
     private val loadButton1 = VisTextButton("Load " + curSettings["CFG1_NAME"].toString().replace("\"", ""))
     private val loadButton2 = VisTextButton("Load " + curSettings["CFG2_NAME"].toString().replace("\"", ""))
-    private val loadButton3 = VisTextButton("Load " + curSettings["CFG2_NAME"].toString().replace("\"", ""))
+    private val loadButton3 = VisTextButton("Load " + curSettings["CFG3_NAME"].toString().replace("\"", ""))
 
     init {
         //Create UIAlpha Slider
@@ -103,7 +103,7 @@ class OptionsTab : Tab(false, false) {
                     println("\n Saving! \n")
                     File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
                         val sbLines = StringBuilder()
-                        if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
+                        if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "hitsound.mp3") {
                             FileReader(file).readLines().forEach { line ->
                                 if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
                                     val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
@@ -186,7 +186,7 @@ class OptionsTab : Tab(false, false) {
                 sbLines.append("import rat.poison.game.Color\n\n")
 
                 File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
-                    if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
+                    if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "hitsound.mp3") {
                         FileReader(file).readLines().forEach { line ->
                             if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
                                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE

@@ -14,9 +14,9 @@ var opened = false
 lateinit var hitSound : Sound
 
 fun hitSoundEsp() = every(4) {
-    val curHits = csgoEXE.int(me + m_totalHitsOnServer)
+    if (!curSettings["ENABLE_HITSOUND"]!!.strToBool()) return@every
 
-    if (!curSettings["ENABLE_HITSOUND"]!!.strToBool()) {totalHits = curHits; return@every}
+    val curHits = csgoEXE.int(me + m_totalHitsOnServer)
 
     if (!opened) {
         try {

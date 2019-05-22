@@ -9,6 +9,9 @@
 Hotfixes
 * Fixed Enable Override checkbox turning on when toggling Enable Aim
 * Small file/comment cleanup
+* Fixed CFG3 using CFG2s name
+* Fixed OPENGL_FPS not being used
+* Other small changes
 
 ---
 

@@ -42,7 +42,11 @@ val curSettings = Settings()
 fun main() {
     System.setProperty("jna.nosys", "true")
 
-    loadSettingsFromFiles(SETTINGS_DIRECTORY)
+    GlobalScope.launch {
+        loadSettingsFromFiles(SETTINGS_DIRECTORY)
+    }
+
+    Thread.sleep(5000)
 
     if (FLICKER_FREE_GLOW) {
         PROCESS_ACCESS_FLAGS = PROCESS_ACCESS_FLAGS or WinNT.PROCESS_VM_OPERATION
@@ -110,7 +114,7 @@ fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
     }
     else {
         File(fileDir).listFiles().forEach { file ->
-            if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "Advanced.kts" && file.name != "hitsound.mp3") {
+            if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "hitsound.mp3") {
                 FileReader(file).readLines().forEach { line ->
                     if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
                         val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
@@ -172,7 +176,7 @@ object App : ApplicationAdapter() {
     }
 
     override fun render() {
-        sync(curSettings["MENU_KEY"].toString().toInt())
+        sync(curSettings["OPENGL_FPS"].toString().toInt())
 
         if (!Thread.interrupted()) {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
@@ -180,17 +184,12 @@ object App : ApplicationAdapter() {
             gl.apply {
                 if (!menuStage.root.isVisible) return
 
-                //Add menuStage
-                menuStage.act(Gdx.graphics.deltaTime)
-                bombStage.act(Gdx.graphics.deltaTime)
-                val menuCamera = menuStage.viewport.camera
-                menuCamera.update()
-                val bombCamera = bombStage.viewport.camera
-                bombCamera.update()
-
                 if (MENUTOG) {
+                    menuStage.act(Gdx.graphics.deltaTime)
                     val batch = menuStage.batch
-                    batch.projectionMatrix = menuCamera.combined //camera to menuCamera
+                    val menuCamera = menuStage.viewport.camera
+                    menuCamera.update()
+                    batch.projectionMatrix = menuCamera.combined
                     batch.begin()
                     batch.enableBlending()
                     menuStage.root.draw(batch, 1F)
@@ -199,6 +198,9 @@ object App : ApplicationAdapter() {
 
                 if (curSettings["ENABLE_BOMB_TIMER"]!!.strToBool())
                 {
+                    bombStage.act(Gdx.graphics.deltaTime)
+                    val bombCamera = bombStage.viewport.camera
+                    bombCamera.update()
                     val bombBatch = bombStage.batch
                     bombBatch.projectionMatrix = bombCamera.combined
                     bombBatch.begin()
@@ -209,14 +211,12 @@ object App : ApplicationAdapter() {
 
                 sb.projectionMatrix = menuStage.camera.combined
 
-                //Extra bits might not be needed, from deprecated overlay
                 glEnable(GL20.GL_BLEND)
-                glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
-                glClearColor(0F, 0F, 0F, 0F)
+                //glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA) //Not needed?
+                //glClearColor(0F, 0F, 0F, 0F)
                 shapeRenderer.projectionMatrix = menuStage.camera.combined
                 for (i in 0 until bodies.size) bodies[i]()
                 glDisable(GL20.GL_BLEND)
-                //Extra bits might not be needed, from deprecated overlay
             }
 
             overlayMenuKey.update()

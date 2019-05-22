@@ -43,7 +43,7 @@ RIFLE_AIM_SPEED = 16
 /**
  * The smoothness of the aimbot
  */
-RIFLE_AIM_SMOOTHNESS = 1.5
+RIFLE_AIM_SMOOTHNESS = 2.0
 
 /**
  * The sens multiplier of the aimbot
