@@ -13,7 +13,6 @@ var override = false
 var curWep = Weapons.AK47
 
 fun setAim() = every(256){
-    println("updated")
     if (curWep != me.weapon()) { //If player switched weapons
         if (settingsLoaded) { //If we have settings to read
             curWep = me.weapon()

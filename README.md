@@ -28,7 +28,7 @@ Hotfixes
 
 ---
 
-Update 1.3
+1.3
 
 * Replaced script.eval for improved performance
     * Faster saving (1-5 seconds)
