@@ -79,7 +79,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val perfectAimChanceSlider = VisSlider(1F, 100F, 1F, false)
 
     init {
-        val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.3.2\n\nTo override weapon aim settings, check the weapon override checkbox,\nonce you do so you are editing the settings for the weapon selected in\nthe box beside the checkbox whether you are enabling an override or not.\nTo edit the whole group (such as pistols/shotguns) uncheck weapon override\n\nIf you have any problems submit an issue on Github\nGitHub: https://github.com/astupidrat/ratpoison")
+        val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.3.2.1\n\nTo override weapon aim settings, check the weapon override checkbox,\nonce you do so you are editing the settings for the weapon selected in\nthe box beside the checkbox whether you are enabling an override or not.\nTo edit the whole group (such as pistols/shotguns) uncheck weapon override\n\nIf you have any problems submit an issue on Github\nGitHub: https://github.com/astupidrat/ratpoison")
         dialog.setPosition(gameWidth/4F-dialog.width/2F, gameHeight.toFloat()/2F)
         menuStage.addActor(dialog)
 
