@@ -1,3 +1,11 @@
+1.3.2.1
+
+Hotfix
+* Fixed issue with trying to modify m4a1s settings causing a crash
+* Fixed issue with chams team check
+
+---
+
 1.3.2
 * Fixed RCS tab not updating text/sliders when loading cfgs
 * General file cleanup; removed ScriptsTab

@@ -59,15 +59,15 @@ internal fun chamsEsp() = every(256) {
             val entityTeam = entity.team()
             val team = !DANGER_ZONE && myTeam == entityTeam
 
-            if (curSettings["CHAMS_SHOW_ENEMIES"]!!.strToBool() && !team) {
+            if (curSettings["CHAMS_SHOW_ENEMIES"]!!.strToBool() && !team) { //Show enemies & is enemy
                 if (curSettings["CHAMS_SHOW_HEALTH"]!!.strToBool()) {
                     entity.chams(Color((255 - 2.55 * entity.health()).toInt(), (2.55 * entity.health()).toInt(), 0, 1.0))
                 } else {
                     entity.chams(curSettings["ENEMY_COLOR"]!!.strToColor())
                 }
-            } else if (!curSettings["CHAMS_SHOW_ENEMIES"]!!.strToBool()) {
+            } else if (!curSettings["CHAMS_SHOW_ENEMIES"]!!.strToBool() && !team) { //Not show enemies
                 entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
-            } else if (curSettings["CHAMS_SHOW_TEAM"]!!.strToBool() && team) {
+            } else if (curSettings["CHAMS_SHOW_TEAM"]!!.strToBool() && team) { //Show team & is team
                 entity.chams(curSettings["TEAM_COLOR"]!!.strToColor())
             }
             else {
