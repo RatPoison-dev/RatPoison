@@ -79,7 +79,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val perfectAimChanceSlider = VisSlider(1F, 100F, 1F, false)
 
     init {
-        val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.3.2.1\n\nTo override weapon aim settings, check the weapon override checkbox,\nonce you do so you are editing the settings for the weapon selected in\nthe box beside the checkbox whether you are enabling an override or not.\nTo edit the whole group (such as pistols/shotguns) uncheck weapon override\n\nIf you have any problems submit an issue on Github\nGitHub: https://github.com/astupidrat/ratpoison")
+        val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.3.2.2\n\nTo override weapon aim settings, check the weapon override checkbox,\nonce you do so you are editing the settings for the weapon selected in\nthe box beside the checkbox whether you are enabling an override or not.\nTo edit the whole group (such as pistols/shotguns) uncheck weapon override\n\nIf you have any problems submit an issue on Github\nGitHub: https://github.com/astupidrat/ratpoison")
         dialog.setPosition(gameWidth/4F-dialog.width/2F, gameHeight.toFloat()/2F)
         menuStage.addActor(dialog)
 
@@ -270,7 +270,10 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected].toString())
                 enableOverride = curWep[0]!!.strToBool()
-                enableOverride = weaponOverrideCheckBox.isChecked
+
+                println(enableOverride)
+                println(weaponOverride)
+                println(weaponOverrideSelected)
 
                 UIUpdate()
                 true
@@ -336,22 +339,21 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         //Create Aim Bone Selector Box
         val aimBone = VisTable()
         Tooltip.Builder("The default aim bone to aim at").target(aimBone).build()
-        aimBoneBox.setItems("HEAD_BONE", "BODY_BONE")
-        aimBoneBox.selected = if (curSettings["PISTOL_AIM_BONE"].toString().toInt() == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
+        aimBoneBox.setItems("HEAD", "NECK", "CHEST", "STOMACH")
+        aimBoneBox.selected = when (curSettings["PISTOL_AIM_BONE"].toString().toInt()) {
+            HEAD_BONE -> "HEAD"
+            NECK_BONE -> "NECK"
+            CHEST_BONE -> "CHEST"
+            else -> "STOMACH"
+        }
         aimBone.add(aimBoneLabel).top().spaceRight(6F)
         aimBone.add(aimBoneBox)
 
         aimBoneBox.changed { _, _ ->
-            var setBone = HEAD_BONE
-
-            if (aimBoneBox.selected.toString() == "HEAD_BONE") {
-                setBone = HEAD_BONE
-            }
-            else if (aimBoneBox.selected.toString() == "BODY_BONE") {
-                setBone = BODY_BONE
-            }
+            val setBone = curSettings[aimBoneBox.selected + "_BONE"].toString().toInt()//curSettings[categorySelected + "_AIM_BONE"].toString().toInt()
 
             if (weaponOverride && enableOverride) {
+                //println("WE ARE OVERRIDING")
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected].toString())
                 curWep[4] = setBone.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())

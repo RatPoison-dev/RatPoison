@@ -28,7 +28,12 @@ fun UIUpdate() {
             enableFactorRecoil.isChecked = curWep[1]!!.toBool()
             enableFlatAim.isChecked = curWep[2]!!.toBool()
             enablePathAim.isChecked = curWep[3]!!.toBool()
-            aimBoneBox.selected = if (curWep[4]!!.toInt() == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
+            aimBoneBox.selected = when (curWep[4]!!.toInt()) {
+                HEAD_BONE -> "HEAD"
+                NECK_BONE -> "NECK"
+                CHEST_BONE -> "CHEST"
+                else -> "STOMACH"
+            }
             aimFovLabel.setText("Aim Fov: " + curWep[5]!!.toInt() + when (curWep[5]!!.toInt().toString().length) {
                 3 -> "  "
                 2 -> "    "
@@ -66,7 +71,12 @@ fun UIUpdate() {
             enableFactorRecoil.isChecked = curSettings[categorySelected + "_FACTOR_RECOIL"]!!.strToBool()
             enableFlatAim.isChecked = curSettings[categorySelected + "_ENABLE_FLAT_AIM"]!!.strToBool()
             enablePathAim.isChecked = curSettings[categorySelected + "_ENABLE_PATH_AIM"]!!.strToBool()
-            aimBoneBox.selected = if (curSettings[categorySelected + "_AIM_BONE"].toString().toInt() == HEAD_BONE) "HEAD_BONE" else "BODY_BONE"
+            aimBoneBox.selected = when (curSettings[categorySelected + "_AIM_BONE"].toString().toInt()) {
+                HEAD_BONE -> "HEAD"
+                NECK_BONE -> "NECK"
+                CHEST_BONE -> "CHEST"
+                else -> "STOMACH"
+            }
             aimFovLabel.setText("Aim Fov: " + curSettings[categorySelected + "_AIM_FOV"].toString().toInt() + when (curSettings[categorySelected + "_AIM_FOV"].toString().length) {
                 3 -> "  "
                 2 -> "    "

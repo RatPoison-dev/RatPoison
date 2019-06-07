@@ -48,9 +48,5 @@ fun rcs() = every(1) {
 		}
 	}
 
-	bone.set(when {
-		shotsFired >= SHIFT_TO_BODY_SHOTS -> BODY_BONE
-		shotsFired >= SHIFT_TO_SHOULDER_SHOTS -> SHOULDER_BONE
-		else -> curSettings["AIM_BONE"].toString().toInt()
-	})
+	bone.set(curSettings["AIM_BONE"].toString().toInt())
 }

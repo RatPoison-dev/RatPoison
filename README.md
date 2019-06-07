@@ -1,3 +1,10 @@
+1.3.2.2
+* Removed shift to body shots & shift to shoulder shots from text files
+* Added neck & stomach to aim bone options
+* Fixed override weapons settings not updating unless you switch weapons first
+
+---
+
 1.3.2.1
 
 Hotfix
@@ -99,10 +106,10 @@ The first step is to compile the source code into a usable cheat program.
 * Double click on the "_build_" (_build.bat_) script and wait for it to complete
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.3.2.1**.
+directory, and will in a directory called **RatPoison 1.3.2.2**.
 
-From within the **RatPoison 1.3.2.1** directory, you can start the cheat by running
-the _"Start RatPoison 1.3.2.1"_ script.
+From within the **RatPoison 1.3.2.2** directory, you can start the cheat by running
+the _"Start RatPoison 1.3.2.2"_ script.
 
 Before starting the cheat, you should already be spawned in a game with a weapon in hand!
 

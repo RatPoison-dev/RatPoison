@@ -52,16 +52,6 @@ FORCE_AIM_KEY = 5
 AIM_DURATION = 1
 
 /**
- * The amount of sprayed shots until the aimbot shifts to aiming at the (SHOULDER_BONE).
- */
-SHIFT_TO_SHOULDER_SHOTS = 3
-
-/**
- * The amount of sprayed shots until the aimbot shifts to aiming at the (BODY_BONE).
- */
-SHIFT_TO_BODY_SHOTS = 4
-
-/**
  * The global aim key, which you use to shoot/fire your weapon.
  *
  * By default, this is left click (1).
@@ -81,7 +71,7 @@ MENU_KEY = 112
 /**
  * Name of config file
  */
-CFG1_NAME = "Null"
+CFG1_NAME = "test"
 
 /**
  * Name of config file
@@ -99,8 +89,9 @@ CFG3_NAME = "Null"
  * The left-side number is for CS:CO, and the right-side number is for CS:GO.
  */
 HEAD_BONE = 8
-SHOULDER_BONE = 7
-BODY_BONE = 6
+NECK_BONE = 7
+CHEST_BONE = 6
+STOMACH_BONE = 5
 
 /**
  * Variables used in game, not saved settings, no need to touch

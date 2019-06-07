@@ -34,9 +34,7 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			return@result false
 		}
 
-		//Need to redo fun
-
-		if (BONE == -2)
+		if (BONE == -2) //Need to cleanup, needs to be switched to calcTarget
 		{
 			if (curSettings["BONE_TRIGGER_HB"]!!.strToBool() && curSettings["BONE_TRIGGER_BB"]!!.strToBool())
 			{
@@ -105,49 +103,13 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 				}
 			}
 		}
-		else
-		{
-			if (BONE == BODY_BONE)
-			{
-				//calcTarget(entity, position, angle, lockFOV, BODY_BONE)
-				for (i in 3..7) //Check all body bones
-				{
-					//calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
-					val ePos: Angle = entity.bones(i)
-					val distance = position.distanceTo(ePos)
+		else { //Heavily cleaned up
+			val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, BONE)
 
-					val dest = calculateAngle(me, ePos)
-
-					val pitchDiff = Math.abs(angle.x - dest.x)
-					val yawDiff = Math.abs(angle.y - dest.y)
-					val fov = Math.abs(Math.sin(Math.toRadians(yawDiff)) * distance)
-					val delta = Math.abs((Math.sin(Math.toRadians(pitchDiff)) + Math.sin(Math.toRadians(yawDiff))) * distance)
-
-					if (delta <= lockFOV && delta <= closestDelta) {
-						closestFOV = fov
-						closestDelta = delta
-						closestPlayer = entity
-					}
-				}
-			}
-			else //If HEAD_BONE
-			{
-				//calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
-				val ePos: Angle = entity.bones(HEAD_BONE)
-				val distance = position.distanceTo(ePos)
-
-				val dest = calculateAngle(me, ePos)
-
-				val pitchDiff = Math.abs(angle.x - dest.x)
-				val yawDiff = Math.abs(angle.y - dest.y)
-				val fov = Math.abs(Math.sin(Math.toRadians(yawDiff)) * distance)
-				val delta = Math.abs((Math.sin(Math.toRadians(pitchDiff)) + Math.sin(Math.toRadians(yawDiff))) * distance)
-
-				if (delta <= lockFOV && delta <= closestDelta) {
-					closestFOV = fov
-					closestDelta = delta
-					closestPlayer = entity
-				}
+			if (arr[0] != -1.0) {
+				closestFOV = arr[0] as Double
+				closestDelta = arr[1] as Double
+				closestPlayer = arr[2] as Long
 			}
 		}
 		return@result false
@@ -161,24 +123,27 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	return closestPlayer
 }
 
-//internal fun calcTarget(entity: Entity, position: Angle, angle: Angle, lockFOV: Int = curSettings["AIM_FOV"].toString().toInt(), BONE: Int) {
-	//Rewrite to call correctly
-//	val ePos: Angle = entity.bones(BONE)
-//	val distance = position.distanceTo(ePos)
-//
-//	val dest = calculateAngle(me, ePos)
-//
-//	val pitchDiff = Math.abs(angle.x - dest.x)
-//	val yawDiff = Math.abs(angle.y - dest.y)
-//	val fov = Math.abs(Math.sin(Math.toRadians(yawDiff)) * distance)
-//	val delta = Math.abs((Math.sin(Math.toRadians(pitchDiff)) + Math.sin(Math.toRadians(yawDiff))) * distance)
-//
-//	if (delta <= lockFOV && delta <= closestDelta) {
-//		closestFOV = fov
-//		closestDelta = delta
-//		closestPlayer = entity
-//	}
-//}
+internal fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, angle: Angle, lockFOV: Int = curSettings["AIM_FOV"].toString().toInt(), BONE: Int): MutableList<Any> {
+	val retList = mutableListOf(-1.0, 0.0, 0)
+
+	val ePos: Angle = entity.bones(BONE)
+	val distance = position.distanceTo(ePos)
+
+	val dest = calculateAngle(me, ePos)
+
+	val pitchDiff = Math.abs(angle.x - dest.x)
+	val yawDiff = Math.abs(angle.y - dest.y)
+	val fov = Math.abs(Math.sin(Math.toRadians(yawDiff)) * distance)
+	val delta = Math.abs((Math.sin(Math.toRadians(pitchDiff)) + Math.sin(Math.toRadians(yawDiff))) * distance)
+
+	if (delta <= lockFOV && delta <= calcClosestDelta) {
+		retList[0] = fov
+		retList[1] = delta
+		retList[2] = entity
+	}
+
+	return retList
+}
 
 internal fun Entity.inMyTeam() =
 		!curSettings["TEAMMATES_ARE_ENEMIES"]!!.strToBool() && if (DANGER_ZONE) {

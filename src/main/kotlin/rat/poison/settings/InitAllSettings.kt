@@ -19,8 +19,9 @@ val GAME_SENSITIVITY by lazy(LazyThreadSafetyMode.NONE) {
     java.lang.Float.intBitsToFloat(value.toInt()).toDouble()
 }
 var HEAD_BONE = 8
-var SHOULDER_BONE = 7
-var BODY_BONE = 6
+var NECK_BONE = 7
+var CHEST_BONE = 6
+var STOMACH_BONE = 5
 var SERVER_TICK_RATE = 64
 var MAX_ENTITIES = 4096
 var CLEANUP_TIME = 10_000
@@ -75,8 +76,6 @@ var AUTOMATIC_WEAPONS = true
 var AUTO_WEP_DELAY = 16
 var FORCE_AIM_KEY = 5
 var AIM_DURATION = 1
-var SHIFT_TO_SHOULDER_SHOTS = 3
-var SHIFT_TO_BODY_SHOTS = 4
 var DANGER_ZONE = false
 var FIRE_KEY = 1
 var VISUALS_TOGGLE_KEY = 71
