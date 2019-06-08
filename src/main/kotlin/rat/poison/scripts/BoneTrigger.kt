@@ -62,7 +62,7 @@ private val onBoneTriggerTarget = every(4) {
                                 val slashDmg = KnifeAttackType.SLASH.getDmg(imBehind, hasArmor)
                                 val stabDmg = KnifeAttackType.STAB.getDmg(imBehind, hasArmor)
 
-                                println("$health, ${target.armor()}, $swingDmg, $slashDmg, $stabDmg")
+                                //println("$health, ${target.armor()}, $swingDmg, $slashDmg, $stabDmg")
 
                                 when {
                                     // IF health lower than swing_dmg, do a swing
@@ -84,7 +84,7 @@ private val onBoneTriggerTarget = every(4) {
                                     KnifeAttackType.SLASH
                                 }
                             }
-                            println("$attackType")
+                            //println("$attackType")
                             attackType.attack()
                         }
                     }
