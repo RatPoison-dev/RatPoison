@@ -34,7 +34,18 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			return@result false
 		}
 
-		if (BONE == -2) //Need to cleanup, needs to be switched to calcTarget
+		if (BONE == -3) { //Knife bot bone
+			for (i in 3..8) {
+				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, i)
+
+				if (arr[0] != -1.0) {
+					closestFOV = arr[0] as Double
+					closestDelta = arr[1] as Double
+					closestPlayer = arr[2] as Long
+				}
+			}
+		}
+		else if (BONE == -2) //Bone trigger bone //Need to cleanup, needs to be switched to calcTarget
 		{
 			if (curSettings["BONE_TRIGGER_HB"]!!.strToBool() && curSettings["BONE_TRIGGER_BB"]!!.strToBool())
 			{

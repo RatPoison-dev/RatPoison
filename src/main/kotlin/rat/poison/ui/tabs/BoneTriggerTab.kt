@@ -16,6 +16,7 @@ class BTrigTab : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
+    val enableAutoKnife = VisCheckBox("Enable Auto Knife")
     val enableBoneTrigger = VisCheckBox("Enable Bone Trigger")
     val boneTriggerFovLabel = VisLabel("Bone Trigger Fov: " + curSettings["BONE_TRIGGER_FOV"].toString() + when(curSettings["BONE_TRIGGER_FOV"].toString().length) {3->"  " 2->"    " else ->"      "})
     val boneTriggerFovSlider = VisSlider(0F, 32F, 1F, false)
@@ -27,6 +28,14 @@ class BTrigTab : Tab(false, false) {
     val boneTriggerKeyField = VisValidatableTextField(Validators.FLOATS)
 
     init {
+        //Create Auto Knife Toggle
+        Tooltip.Builder("Whether or not to auto knife when available").target(enableAutoKnife).build()
+        enableAutoKnife.isChecked = curSettings["ENABLE_AUTO_KNIFE"]!!.strToBool()
+        enableAutoKnife.changed { _, _ ->
+            curSettings["ENABLE_AUTO_KNIFE"] = enableAutoKnife.isChecked.boolToStr()
+            true
+        }
+
         //Create Bone Trigger Toggle
         Tooltip.Builder("Whether or not to enable bone trigger").target(enableBoneTrigger).build()
         enableBoneTrigger.isChecked = curSettings["ENABLE_BONE_TRIGGER"]!!.strToBool()
@@ -94,6 +103,8 @@ class BTrigTab : Tab(false, false) {
         boneTriggerKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
 
         //Add all items to label for tabbed pane content
+        table.add(enableAutoKnife).row()
+        table.addSeparator()
         table.add(enableBoneTrigger).row()
         table.add(boneTriggerFov).row()
         table.add(boneTriggerCheckHead).row()

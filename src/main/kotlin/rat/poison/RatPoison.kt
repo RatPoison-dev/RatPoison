@@ -70,6 +70,7 @@ fun main() {
     pathAim()
     setAim()
     boneTrigger() //Called once during startup, causes firing on startup
+    autoKnife()
     reducedFlash()
     bombTimer()
     esp() //Contains esp scripts

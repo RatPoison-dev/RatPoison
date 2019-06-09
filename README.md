@@ -1,4 +1,6 @@
 1.3.2.2
+
+* Added knife bot (Credit to Mr. Noad)
 * Removed shift to body shots & shift to shoulder shots from text files
 * Added neck & stomach to aim bone options
 * Fixed override weapons settings not updating unless you switch weapons first

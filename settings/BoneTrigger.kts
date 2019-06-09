@@ -1,6 +1,11 @@
 import rat.poison.settings.*
 
 /**
+ * Whether or not to auto knife targets
+ */
+ENABLE_AUTO_KNIFE = false
+
+/**
  * The field of view (in degrees, 0 to 32) for the bone trigger.
  */
 BONE_TRIGGER_FOV = 4

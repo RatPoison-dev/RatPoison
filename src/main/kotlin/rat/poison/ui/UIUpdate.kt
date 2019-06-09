@@ -305,6 +305,7 @@ fun UIUpdate() {
 
     //BTrig Tab
     bTrigTab.apply {
+        enableAutoKnife.isChecked = curSettings["ENABLE_AUTO_KNIFE"]!!.strToBool()
         enableBoneTrigger.isChecked = curSettings["ENABLE_BONE_TRIGGER"]!!.strToBool()
         boneTriggerFovLabel.setText("Bone Trigger Fov: " + curSettings["BONE_TRIGGER_FOV"].toString() + when (curSettings["BONE_TRIGGER_FOV"].toString().length) {
             3 -> "  "

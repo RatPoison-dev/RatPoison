@@ -184,6 +184,7 @@ var INDICATOR_SHOW_DORMANT = false
 var INDICATOR_SHOW_BOMB = true
 var INDICATOR_SHOW_WEAPONS = true
 var INDICATOR_SHOW_GRENADES = false
+var ENABLE_AUTO_KNIFE = false
 //Pistols
 var DESERT_EAGLE = doubleArrayOf(0.0, 1.0, 0.0, 1.0, 8.0, 30.0, 12.0, 2.5, 2.0, 1.0, 10.0, 15.0)
 var DUAL_BERRETA = doubleArrayOf(0.0, 1.0, 0.0, 1.0, 8.0, 30.0, 12.0, 2.5, 2.0, 1.0, 10.0, 15.0)
