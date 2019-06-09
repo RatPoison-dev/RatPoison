@@ -10,7 +10,7 @@ import org.jire.arrowhead.keyPressed
 import rat.poison.strToBool
 
 fun bunnyHop() = onGround {
-    if (curSettings["ENABLE_BUNNY_HOP"]!!.strToBool() && /*!cursorEnable &&*/ keyPressed(BUNNY_HOP_KEY)) {
+    if (curSettings["ENABLE_BUNNY_HOP"]!!.strToBool() && !cursorEnable && keyPressed(BUNNY_HOP_KEY)) {
         CSGO.clientDLL[ClientOffsets.dwForceJump] = 6//if (jump) 5 else 4
     }
 }
