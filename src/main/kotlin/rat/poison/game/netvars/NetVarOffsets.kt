@@ -7,7 +7,8 @@ object NetVarOffsets {
 	val bSpotted by netVar("DT_BaseEntity")
 	val bSpottedByMask by netVar("DT_BaseEntity")
 	val vecOrigin by netVar("DT_BaseEntity")
-	
+	val angEyeAngles by netVar("DT_CSPlayer")
+
 	val iCompetitiveRanking by netVar("DT_CSPlayerResource")
 	
 	val fFlags by netVar("DT_BasePlayer")
@@ -16,11 +17,12 @@ object NetVarOffsets {
 	val aimPunchAngle by netVar("DT_BasePlayer", "m_aimPunchAngle") //vecPunch
 	val szLastPlaceName by netVar("DT_BasePlayer")
 	val iHealth by netVar("DT_BasePlayer")
+	val ArmorValue by netVar("DT_CSPlayer")
 	val vecViewOffset by netVar("DT_BasePlayer", "m_vecViewOffset[0]")
 	val vecVelocity by netVar("DT_BasePlayer", "m_vecVelocity[0]")
 	val hActiveWeapon by netVar("DT_BasePlayer", "m_hActiveWeapon")
 	val nTickBase by netVar("DT_BasePlayer")
-	
+
 	val flFlashMaxAlpha by netVar("DT_CSPlayer")
 	val iCrossHairID by netVar("DT_CSPlayer", "m_bHasDefuser", 0x5C)
 	val iShotsFired by netVar("DT_CSPlayer")
