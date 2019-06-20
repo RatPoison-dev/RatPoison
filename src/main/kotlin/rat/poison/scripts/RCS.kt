@@ -6,7 +6,6 @@ import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.scripts.aim.bone
-import rat.poison.settings.*
 import rat.poison.strToBool
 import rat.poison.utils.*
 
@@ -31,7 +30,7 @@ fun rcs() = every(1) {
 		}
 		playerPunch.set(p.x.toFloat(), p.y.toFloat(), p.z.toFloat())
 		newPunch.set(playerPunch.x - lastPunch.x, playerPunch.y - lastPunch.y)
-		newPunch.scl(1F+curSettings["RCS_SMOOTHING"].toString().toFloat(), 1F+curSettings["RCS_SMOOTHING"].toString().toFloat())
+		newPunch.scl(1F+curSettings["RCS_SMOOTHING"]!!.toFloat(), 1F+curSettings["RCS_SMOOTHING"]!!.toFloat())
 
 		val angle = clientState.angle()
 		angle.apply {
@@ -48,5 +47,5 @@ fun rcs() = every(1) {
 		}
 	}
 
-	bone.set(curSettings["AIM_BONE"].toString().toInt())
+	bone.set(curSettings["AIM_BONE"]!!.toInt())
 }

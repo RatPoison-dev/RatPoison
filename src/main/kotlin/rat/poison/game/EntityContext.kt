@@ -12,5 +12,4 @@ data class EntityContext(var entity: Entity = -1, var glowAddress: Entity = -1,
 		this.glowIndex = glowIndex
 		this.type = type
 	}
-	
 }

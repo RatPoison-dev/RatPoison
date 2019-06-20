@@ -14,14 +14,14 @@ fun UIUpdate() {
         enableAim.isChecked = curSettings["ENABLE_AIM"]!!.strToBool()
         activateFromFireKey.isChecked = curSettings["ACTIVATE_FROM_FIRE_KEY"]!!.strToBool()
         teammatesAreEnemies.isChecked = curSettings["TEAMMATES_ARE_ENEMIES"]!!.strToBool()
-        aimKeyField.text = curSettings["FIRE_KEY"].toString()
-        forceAimKeyField.text = curSettings["FORCE_AIM_KEY"].toString()
+        aimKeyField.text = curSettings["FIRE_KEY"]
+        forceAimKeyField.text = curSettings["FORCE_AIM_KEY"]
         automaticWeaponsCheckBox.isChecked = curSettings["AUTOMATIC_WEAPONS"]!!.strToBool()
         automaticWeaponsCollapsible.isCollapsed = !curSettings["AUTOMATIC_WEAPONS"]!!.strToBool()
-        automaticWeaponsLabel.setText("MS Delay: " + curSettings["AUTO_WEP_DELAY"].toString() + when(curSettings["AUTO_WEP_DELAY"].toString().length) {3->"" 2->"  " else ->"    "})
-        automaticWeaponsSlider.value = curSettings["AUTO_WEP_DELAY"].toString().toFloat()
+        automaticWeaponsLabel.setText("MS Delay: " + curSettings["AUTO_WEP_DELAY"] + when(curSettings["AUTO_WEP_DELAY"]!!.length) {3->"" 2->"  " else ->"    "})
+        automaticWeaponsSlider.value = curSettings["AUTO_WEP_DELAY"]!!.toFloat()
 
-        val curWep = convStrToArray(curSettings[weaponOverrideSelected].toString())
+        val curWep = convStrToArray(curSettings[weaponOverrideSelected])
 
         if (weaponOverride) {
             weaponOverrideEnableCheckBox.isChecked = curWep[0]!!.toBool()
@@ -71,42 +71,42 @@ fun UIUpdate() {
             enableFactorRecoil.isChecked = curSettings[categorySelected + "_FACTOR_RECOIL"]!!.strToBool()
             enableFlatAim.isChecked = curSettings[categorySelected + "_ENABLE_FLAT_AIM"]!!.strToBool()
             enablePathAim.isChecked = curSettings[categorySelected + "_ENABLE_PATH_AIM"]!!.strToBool()
-            aimBoneBox.selected = when (curSettings[categorySelected + "_AIM_BONE"].toString().toInt()) {
+            aimBoneBox.selected = when (curSettings[categorySelected + "_AIM_BONE"]!!.toInt()) {
                 HEAD_BONE -> "HEAD"
                 NECK_BONE -> "NECK"
                 CHEST_BONE -> "CHEST"
                 else -> "STOMACH"
             }
-            aimFovLabel.setText("Aim Fov: " + curSettings[categorySelected + "_AIM_FOV"].toString().toInt() + when (curSettings[categorySelected + "_AIM_FOV"].toString().length) {
+            aimFovLabel.setText("Aim Fov: " + curSettings[categorySelected + "_AIM_FOV"]!!.toInt() + when (curSettings[categorySelected + "_AIM_FOV"]!!.length) {
                 3 -> "  "
                 2 -> "    "
                 else -> "      "
             })
-            aimFovSlider.value = curSettings[categorySelected + "_AIM_FOV"].toString().toInt().toFloat()
-            aimSpeedLabel.setText("Aim Speed: " + curSettings[categorySelected + "_AIM_SPEED"].toString().toInt() + when (curSettings[categorySelected + "_AIM_SPEED"].toString().length) {
+            aimFovSlider.value = curSettings[categorySelected + "_AIM_FOV"]!!.toInt().toFloat()
+            aimSpeedLabel.setText("Aim Speed: " + curSettings[categorySelected + "_AIM_SPEED"]!!.toInt() + when (curSettings[categorySelected + "_AIM_SPEED"]!!.length) {
                 3 -> "  "
                 2 -> "    "
                 else -> "      "
             })
-            aimSpeedSlider.value = curSettings[categorySelected + "_AIM_SPEED"].toString().toInt().toFloat()
-            aimSmoothnessLabel.setText("Aim Smoothness: " + curSettings[categorySelected + "_AIM_SMOOTHNESS"].toString().toFloat())
-            aimSmoothnessSlider.value = curSettings[categorySelected + "_AIM_SMOOTHNESS"].toString().toFloat()
+            aimSpeedSlider.value = curSettings[categorySelected + "_AIM_SPEED"]!!.toInt().toFloat()
+            aimSmoothnessLabel.setText("Aim Smoothness: " + curSettings[categorySelected + "_AIM_SMOOTHNESS"]!!.toFloat())
+            aimSmoothnessSlider.value = curSettings[categorySelected + "_AIM_SMOOTHNESS"]!!.toFloat()
             aimStrictnessLabel.setText("Aim Strictness: " + curSettings[categorySelected + "_AIM_STRICTNESS"])
-            aimStrictnessSlider.value = curSettings[categorySelected + "_AIM_STRICTNESS"].toString().toFloat()
+            aimStrictnessSlider.value = curSettings[categorySelected + "_AIM_STRICTNESS"]!!.toFloat()
             perfectAimCheckBox.isChecked = curSettings[categorySelected + "_PERFECT_AIM"]!!.strToBool()
             perfectAimCollapsible.isCollapsed = !curSettings[categorySelected + "_PERFECT_AIM"]!!.strToBool()
-            perfectAimFovLabel.setText("Perfect Aim Fov: " + curSettings[categorySelected + "_PERFECT_AIM_FOV"].toString().toInt() + when (curSettings[categorySelected + "_PERFECT_AIM_FOV"].toString().length) {
+            perfectAimFovLabel.setText("Perfect Aim Fov: " + curSettings[categorySelected + "_PERFECT_AIM_FOV"]!!.toInt() + when (curSettings[categorySelected + "_PERFECT_AIM_FOV"]!!.length) {
                 3 -> "  "
                 2 -> "    "
                 else -> "      "
             })
-            perfectAimFovSlider.value = curSettings[categorySelected + "_PERFECT_AIM_FOV"].toString().toInt().toFloat()
-            perfectAimChanceLabel.setText("Perfect Aim Chance: " + curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toString().toInt() + when (curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toString().length) {
+            perfectAimFovSlider.value = curSettings[categorySelected + "_PERFECT_AIM_FOV"]!!.toInt().toFloat()
+            perfectAimChanceLabel.setText("Perfect Aim Chance: " + curSettings[categorySelected + "_PERFECT_AIM_CHANCE"]!!.toInt() + when (curSettings[categorySelected + "_PERFECT_AIM_CHANCE"]!!.length) {
                 3 -> "  "
                 2 -> "    "
                 else -> "      "
             })
-            perfectAimChanceSlider.value = curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toString().toInt().toFloat()
+            perfectAimChanceSlider.value = curSettings[categorySelected + "_PERFECT_AIM_CHANCE"]!!.toInt().toFloat()
         }
 
         //V--Disable/enable entire tab--V\\
@@ -158,7 +158,7 @@ fun UIUpdate() {
     visualsTab.apply {
         enableEsp.isChecked = curSettings["ENABLE_ESP"]!!.strToBool()
         radarEsp.isChecked = curSettings["RADAR_ESP"]!!.strToBool()
-        visualsToggleKeyField.text = curSettings["VISUALS_TOGGLE_KEY"].toString()
+        visualsToggleKeyField.text = curSettings["VISUALS_TOGGLE_KEY"]
         var col = curSettings["TEAM_COLOR"]!!.strToColor()
         teamColorShow.setColor(col.red.toFloat(), col.green.toFloat(), col.blue.toFloat(), 1F)
         col = curSettings["ENEMY_COLOR"]!!.strToColor()
@@ -265,13 +265,13 @@ fun UIUpdate() {
     chamsEspTab.apply {
         chamsEsp.isChecked = curSettings["CHAMS_ESP"]!!.strToBool()
         chamsShowHealth.isChecked = curSettings["CHAMS_SHOW_HEALTH"]!!.strToBool()
-        chamsBrightnessLabel.setText("Chams Brightness: " + curSettings["CHAMS_BRIGHTNESS"].toString().toInt() + when (curSettings["CHAMS_BRIGHTNESS"].toString().toInt().toString().length) {
+        chamsBrightnessLabel.setText("Chams Brightness: " + curSettings["CHAMS_BRIGHTNESS"]!!.toInt() + when (curSettings["CHAMS_BRIGHTNESS"]!!.toInt().toString().length) {
             4 -> "  "
             3 -> "    "
             2 -> "      "
             else -> "        "
         })
-        chamsBrightnessSlider.value = curSettings["CHAMS_BRIGHTNESS"].toString().toInt().toFloat()
+        chamsBrightnessSlider.value = curSettings["CHAMS_BRIGHTNESS"]!!.toInt().toFloat()
         showTeam.isChecked = curSettings["CHAMS_SHOW_TEAM"]!!.strToBool()
         showEnemies.isChecked = curSettings["CHAMS_SHOW_ENEMIES"]!!.strToBool()
     }
@@ -280,8 +280,8 @@ fun UIUpdate() {
         indicatorEsp.isChecked = curSettings["INDICATOR_ESP"]!!.strToBool()
         indicatorOnScreen.isChecked = curSettings["INDICATOR_SHOW_ONSCREEN"]!!.strToBool()
         indicatorOval.isChecked = curSettings["INDICATOR_OVAL"]!!.strToBool()
-        indicatorDistanceLabel.setText("Indicator Distance: "  + curSettings["INDICATOR_DISTANCE"].toString().toDouble())
-        indicatorDistanceSlider.value = curSettings["INDICATOR_DISTANCE"].toString().toDouble().toFloat()
+        indicatorDistanceLabel.setText("Indicator Distance: "  + curSettings["INDICATOR_DISTANCE"]!!.toDouble())
+        indicatorDistanceSlider.value = curSettings["INDICATOR_DISTANCE"]!!.toDouble().toFloat()
         showTeam.isChecked = curSettings["INDICATOR_SHOW_TEAM"]!!.strToBool()
         showEnemies.isChecked = curSettings["INDICATOR_SHOW_ENEMIES"]!!.strToBool()
         showDormant.isChecked = curSettings["INDICATOR_SHOW_DORMANT"]!!.strToBool()
@@ -307,34 +307,42 @@ fun UIUpdate() {
     bTrigTab.apply {
         enableAutoKnife.isChecked = curSettings["ENABLE_AUTO_KNIFE"]!!.strToBool()
         enableBoneTrigger.isChecked = curSettings["ENABLE_BONE_TRIGGER"]!!.strToBool()
-        boneTriggerFovLabel.setText("Bone Trigger Fov: " + curSettings["BONE_TRIGGER_FOV"].toString() + when (curSettings["BONE_TRIGGER_FOV"].toString().length) {
+        boneTriggerFovLabel.setText("Bone Trigger Fov: " + curSettings["BONE_TRIGGER_FOV"] + when (curSettings["BONE_TRIGGER_FOV"]!!.length) {
             3 -> "  "
             2 -> "    "
             else -> "      "
         })
-        boneTriggerFovSlider.value = curSettings["BONE_TRIGGER_FOV"].toString().toFloat()
+        boneTriggerFovSlider.value = curSettings["BONE_TRIGGER_FOV"]!!.toFloat()
+        boneTriggerDelayLabel.setText("Bone Trigger Shot Delay: " + curSettings["BONE_TRIGGER_SHOT_DELAY"] + when (curSettings["BONE_TRIGGER_SHOT_DELAY"]!!.length) {
+            3 -> "  "
+            2 -> "    "
+            else -> "      "
+        })
+        boneTriggerDelaySlider.value = curSettings["BONE_TRIGGER_SHOT_DELAY"]!!.toFloat()
         boneTriggerCheckHead.isChecked = curSettings["BONE_TRIGGER_HB"]!!.strToBool()
         boneTriggerCheckBody.isChecked = curSettings["BONE_TRIGGER_BB"]!!.strToBool()
         aimOnBoneTrigger.isChecked = curSettings["AIM_ON_BONE_TRIGGER"]!!.strToBool()
         boneTriggerEnableKey.isChecked = curSettings["BONE_TRIGGER_ENABLE_KEY"]!!.strToBool()
-        boneTriggerKeyField.text = curSettings["BONE_TRIGGER_KEY"].toString()
+        boneTriggerKeyField.text = curSettings["BONE_TRIGGER_KEY"]
     }
 
     //Misc Tab
     miscTab.apply {
         bunnyHop.isChecked = curSettings["ENABLE_BUNNY_HOP"]!!.strToBool()
+        autoStrafe.isChecked = curSettings["AUTO_STRAFE"]!!.strToBool()
         bombTimer.isChecked = curSettings["ENABLE_BOMB_TIMER"]!!.strToBool()
-        menuKeyField.text = curSettings["MENU_KEY"].toString()
+        spectatorList.isChecked = curSettings["SPECTATOR_LIST"]!!.strToBool()
+        menuKeyField.text = curSettings["MENU_KEY"]
         enableReducedFlash.isChecked = curSettings["ENABLE_REDUCED_FLASH"]!!.strToBool()
-        flashMaxAlphaLabel.setText("Flash Max Alpha: " + curSettings["FLASH_MAX_ALPHA"].toString().toFloat() + when (curSettings["FLASH_MAX_ALPHA"].toString().length) {
+        flashMaxAlphaLabel.setText("Flash Max Alpha: " + curSettings["FLASH_MAX_ALPHA"]!!.toFloat() + when (curSettings["FLASH_MAX_ALPHA"]!!.length) {
             3 -> "  "
             2 -> "    "
             else -> "      "
         })
-        flashMaxAlphaSlider.value = curSettings["FLASH_MAX_ALPHA"].toString().toFloat()
+        flashMaxAlphaSlider.value = curSettings["FLASH_MAX_ALPHA"]!!.toFloat()
         hitSound.isChecked = curSettings["ENABLE_HITSOUND"]!!.strToBool()
-        hitSoundVolumeLabel.setText("Hitsound Volume: "  + curSettings["HITSOUND_VOLUME"].toString().toDouble())
-        hitSoundVolumeSlider.value = curSettings["HITSOUND_VOLUME"].toString().toFloat()
+        hitSoundVolumeLabel.setText("Hitsound Volume: "  + curSettings["HITSOUND_VOLUME"]!!.toDouble())
+        hitSoundVolumeSlider.value = curSettings["HITSOUND_VOLUME"]!!.toFloat()
     }
 
     //Rcs Tab
@@ -344,11 +352,11 @@ fun UIUpdate() {
         rcsReturnAim.isDisabled = !curSettings["ENABLE_RCS"]!!.strToBool()
         enableRCrosshair.isChecked = curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
         rCrosshairWidthLabel.setText("RCrosshair Width: " + curSettings["RCROSSHAIR_WIDTH"])
-        rCrosshairWidthSlider.value = curSettings["RCROSSHAIR_WIDTH"].toString().toInt().toFloat()
+        rCrosshairWidthSlider.value = curSettings["RCROSSHAIR_WIDTH"]!!.toInt().toFloat()
         rCrosshairLengthLabel.setText("RCrosshair Length: " + curSettings["RCROSSHAIR_LENGTH]"])
-        rCrosshairLengthSlider.value = curSettings["RCROSSHAIR_LENGTH"].toString().toFloat()
+        rCrosshairLengthSlider.value = curSettings["RCROSSHAIR_LENGTH"]!!.toFloat()
         rCrosshairAlphaLabel.setText("RCrosshair Alpha: " + curSettings["RCROSSHAIR_ALPHA"])
-        rCrosshairAlphaSlider.value = curSettings["RCROSSHAIR_ALPHA"].toString().toFloat()
+        rCrosshairAlphaSlider.value = curSettings["RCROSSHAIR_ALPHA"]!!.toFloat()
         rCrosshairWidthSlider.isDisabled = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
         rCrosshairLengthSlider.isDisabled = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
         rCrosshairAlphaSlider.isDisabled = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()

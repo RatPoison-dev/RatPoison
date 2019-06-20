@@ -1,5 +1,3 @@
-
-
 package rat.poison.utils.extensions
 
 import rat.poison.game.offsets.ModuleScan

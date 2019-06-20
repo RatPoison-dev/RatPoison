@@ -1,5 +1,3 @@
-
-
 package rat.poison.game.offsets
 
 import rat.poison.utils.extensions.uint

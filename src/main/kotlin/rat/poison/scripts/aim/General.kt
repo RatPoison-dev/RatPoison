@@ -23,7 +23,7 @@ internal fun reset() {
 }
 
 internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
-						lockFOV: Int = curSettings["AIM_FOV"].toString().toInt(), BONE: Int = curSettings["AIM_BONE"].toString().toInt()): Player {
+						lockFOV: Int = curSettings["AIM_FOV"]!!.toInt(), BONE: Int = curSettings["AIM_BONE"]!!.toInt()): Player {
 	var closestFOV = Double.MAX_VALUE
 	var closestDelta = Double.MAX_VALUE
 	var closestPlayer = -1L
@@ -45,27 +45,18 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 				}
 			}
 		}
-		else if (BONE == -2) //Bone trigger bone //Need to cleanup, needs to be switched to calcTarget
+		else if (BONE == -2) //Bone trigger bone
 		{
 			if (curSettings["BONE_TRIGGER_HB"]!!.strToBool() && curSettings["BONE_TRIGGER_BB"]!!.strToBool())
 			{
 				for (i in 3..8) //Check all body bones & head bone
 				{
-					//calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
-					val ePos: Angle = entity.bones(i)
-					val distance = position.distanceTo(ePos)
+					val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, i)
 
-					val dest = calculateAngle(me, ePos)
-
-					val pitchDiff = Math.abs(angle.x - dest.x)
-					val yawDiff = Math.abs(angle.y - dest.y)
-					val fov = Math.abs(Math.sin(Math.toRadians(yawDiff)) * distance)
-					val delta = Math.abs((Math.sin(Math.toRadians(pitchDiff)) + Math.sin(Math.toRadians(yawDiff))) * distance)
-
-					if (delta <= lockFOV && delta <= closestDelta) {
-						closestFOV = fov
-						closestDelta = delta
-						closestPlayer = entity
+					if (arr[0] != -1.0) {
+						closestFOV = arr[0] as Double
+						closestDelta = arr[1] as Double
+						closestPlayer = arr[2] as Long
 					}
 				}
 			}
@@ -73,44 +64,23 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			{
 				for (i in 3..7) //Check all body bones
 				{
-					//calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
-					val ePos: Angle = entity.bones(i)
-					val distance = position.distanceTo(ePos)
+					val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, i)
 
-					val dest = calculateAngle(me, ePos)
-
-					val pitchDiff = Math.abs(angle.x - dest.x)
-					val yawDiff = Math.abs(angle.y - dest.y)
-					val fov = Math.abs(Math.sin(Math.toRadians(yawDiff)) * distance)
-					val delta = Math.abs((Math.sin(Math.toRadians(pitchDiff)) + Math.sin(Math.toRadians(yawDiff))) * distance)
-
-					if (delta <= lockFOV && delta <= closestDelta) {
-						closestFOV = fov
-						closestDelta = delta
-						closestPlayer = entity
+					if (arr[0] != -1.0) {
+						closestFOV = arr[0] as Double
+						closestDelta = arr[1] as Double
+						closestPlayer = arr[2] as Long
 					}
 				}
 			}
 			else
 			{
-				for (i in 3..8) //Check all body bones & head bone
-				{
-					//calcTarget(entity, position, angle, lockFOV, HEAD_BONE)
-					val ePos: Angle = entity.bones(HEAD_BONE)
-					val distance = position.distanceTo(ePos)
+				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, HEAD_BONE)
 
-					val dest = calculateAngle(me, ePos)
-
-					val pitchDiff = Math.abs(angle.x - dest.x)
-					val yawDiff = Math.abs(angle.y - dest.y)
-					val fov = Math.abs(Math.sin(Math.toRadians(yawDiff)) * distance)
-					val delta = Math.abs((Math.sin(Math.toRadians(pitchDiff)) + Math.sin(Math.toRadians(yawDiff))) * distance)
-
-					if (delta <= lockFOV && delta <= closestDelta) {
-						closestFOV = fov
-						closestDelta = delta
-						closestPlayer = entity
-					}
+				if (arr[0] != -1.0) {
+					closestFOV = arr[0] as Double
+					closestDelta = arr[1] as Double
+					closestPlayer = arr[2] as Long
 				}
 			}
 		}
@@ -127,14 +97,14 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	}
 
 	if (closestDelta == Double.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return -1
-	if (curSettings["PERFECT_AIM"]!!.strToBool() && allowPerfect && closestFOV <= curSettings["PERFECT_AIM_FOV"].toString().toInt() && randInt(100 + 1) <= curSettings["PERFECT_AIM_CHANCE"].toString().toInt()) {
+	if (curSettings["PERFECT_AIM"]!!.strToBool() && allowPerfect && closestFOV <= curSettings["PERFECT_AIM_FOV"]!!.toInt() && randInt(100 + 1) <= curSettings["PERFECT_AIM_CHANCE"]!!.toInt()) {
 		perfect.set(true)
 	}
 
 	return closestPlayer
 }
 
-internal fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, angle: Angle, lockFOV: Int = curSettings["AIM_FOV"].toString().toInt(), BONE: Int): MutableList<Any> {
+internal fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, angle: Angle, lockFOV: Int = curSettings["AIM_FOV"]!!.toInt(), BONE: Int): MutableList<Any> {
 	val retList = mutableListOf(-1.0, 0.0, 0)
 
 	val ePos: Angle = entity.bones(BONE)
@@ -143,9 +113,24 @@ internal fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angl
 	val dest = calculateAngle(me, ePos)
 
 	val pitchDiff = Math.abs(angle.x - dest.x)
-	val yawDiff = Math.abs(angle.y - dest.y)
+	var yawDiff = Math.abs(angle.y - dest.y)
+
+	if (yawDiff > 180f) {
+		yawDiff = 360f - yawDiff
+	}
+
 	val fov = Math.abs(Math.sin(Math.toRadians(yawDiff)) * distance)
 	val delta = Math.abs((Math.sin(Math.toRadians(pitchDiff)) + Math.sin(Math.toRadians(yawDiff))) * distance)
+
+//	println("pitchDiff: " + pitchDiff)
+//	println("yawDiff: " + yawDiff)
+//	println("fov: " + fov)
+//	println("delta: " + delta)
+//	println("pitchRads: " + Math.sin(Math.toRadians(pitchDiff)) * distance)
+//	println("yawRads: " + Math.sin(Math.toRadians(yawDiff)) * distance)
+//	println("pitchyaw: " + Math.sin(Math.toRadians(pitchDiff)) + "  " + Math.sin(Math.toRadians(yawDiff)))
+//	println()
+//	println()
 
 	if (delta <= lockFOV && delta <= calcClosestDelta) {
 		retList[0] = fov
@@ -178,11 +163,11 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		return@every
 	}
 
-	val aim = curSettings["ACTIVATE_FROM_FIRE_KEY"]!!.strToBool() && keyPressed(curSettings["FIRE_KEY"].toString().toInt())
-	val forceAim = keyPressed(curSettings["FORCE_AIM_KEY"].toString().toInt())
+	val aim = curSettings["ACTIVATE_FROM_FIRE_KEY"]!!.strToBool() && keyPressed(curSettings["FIRE_KEY"]!!.toInt())
+	val forceAim = keyPressed(curSettings["FORCE_AIM_KEY"]!!.toInt())
 	val haveAmmo = me.weaponEntity().bullets() > 0
 
-	bone.set(curSettings["AIM_BONE"].toString().toInt())
+	bone.set(curSettings["AIM_BONE"]!!.toInt())
 
 	val pressed = (aim || forceAim || boneTrig) && !MENUTOG && haveAmmo
 	var currentTarget = target.get()
@@ -219,11 +204,17 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	else {
 		val bonePosition = currentTarget.bones(bone.get())
 
-		val destinationAngle = calculateAngle(me, bonePosition)
+		val destinationAngle = calculateAngle(me, bonePosition) //Rename to current angle
+
         if (!perfect.get()) {
-            destinationAngle.finalize(currentAngle, (1.1-curSettings["AIM_SMOOTHNESS"].toString().toDouble()/10))
+            destinationAngle.finalize(currentAngle, (1.1-curSettings["AIM_SMOOTHNESS"]!!.toDouble()/10))
         }
-		val aimSpeed = curSettings["AIM_SPEED"].toString().toInt()
+
+		if (!clientState.angle().isValid()) {
+			println("Fuck off")
+		}
+
+		val aimSpeed = curSettings["AIM_SPEED"]!!.toInt()
 		doAim(destinationAngle, currentAngle, aimSpeed)
 	}
 }

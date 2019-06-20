@@ -6,11 +6,11 @@ import rat.poison.interfaces.ISettings
 //Remove ISettings
 
 class Settings : ISettings {
-    private val defaultValues = mutableMapOf<String, Any?>()
-    private val currentlySavedValues = mutableMapOf<String, Any?>()
-    private val pendingToSaveValues = mutableMapOf<String, Any?>()
+    private val defaultValues = mutableMapOf<String, String>()
+    private val currentlySavedValues = mutableMapOf<String, String>()
+    private val pendingToSaveValues = mutableMapOf<String, String>()
 
-    override fun get(key: String): Any? {
+    override fun get(key: String): String? {
         if (pendingToSaveValues.containsKey(key)) {
             return pendingToSaveValues[key]
         }
@@ -24,10 +24,10 @@ class Settings : ISettings {
     }
 
     override fun put(key: String, value: Any?): Any? {
-        return pendingToSaveValues.put(key, value)
+        return pendingToSaveValues.put(key, value.toString())
     }
 
-    fun setting(name: String, defaultValue: Any? = null): Settings {
+    fun setting(name: String, defaultValue: String? = null): Settings {
         defaultValue?.apply {
             defaultValues[name] = this
         }

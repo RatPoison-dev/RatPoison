@@ -1,5 +1,6 @@
 package rat.poison.game.entity
 
+import com.sun.jna.Memory
 import rat.poison.game.CSGO.ENTITY_SIZE
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
@@ -24,12 +25,15 @@ import rat.poison.utils.extensions.uint
 import rat.poison.utils.readCached
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
+import org.jire.arrowhead.unsign
 import rat.poison.game.angle
 import rat.poison.game.clientState
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.ArmorValue
 import rat.poison.game.netvars.NetVarOffsets.aimPunchAngle
 import rat.poison.game.netvars.NetVarOffsets.angEyeAngles
+import rat.poison.game.offsets.ClientOffsets.dwIndex
+import rat.poison.game.offsets.EngineOffsets
 import rat.poison.utils.to
 
 typealias Player = Long
@@ -105,3 +109,41 @@ internal fun Player.time(): Double = csgoEXE.int(this + nTickBase) * (1.0 / SERV
 
 internal fun Player.location(): String = csgoEXE.read(this + NetVarOffsets.szLastPlaceName, 32, true)?.getString(0)
 		?: ""
+
+internal fun Player.name(): String {
+	val mem: Memory by lazy {
+		Memory(0x140)
+	}
+
+	val entID = csgoEXE.uint(this + dwIndex) - 1
+
+	val a = csgoEXE.uint(clientState + EngineOffsets.dwClientState_PlayerInfo)
+	val b = csgoEXE.uint(a + 0x40)
+	val c = csgoEXE.uint(b + 0x0C)
+	val d = csgoEXE.uint(c + 0x28 + entID * 0x34)
+
+	csgoEXE.read(d, mem)
+
+	val name = mem.getString(0x10)
+	mem.dump()
+	return name
+}
+
+internal fun Player.hltv(): Boolean {
+	val mem: Memory by lazy {
+		Memory(0x140)
+	}
+
+	val entID = csgoEXE.uint(this + dwIndex) - 1
+
+	val a = csgoEXE.uint(clientState + EngineOffsets.dwClientState_PlayerInfo)
+	val b = csgoEXE.uint(a + 0x40)
+	val c = csgoEXE.uint(b + 0x0C)
+	val d = csgoEXE.uint(c + 0x28 + entID * 0x34)
+
+	csgoEXE.read(d, mem)
+
+	val hltvB = mem.getByte(0x13D).unsign() > 0
+	mem.dump()
+	return hltvB
+}

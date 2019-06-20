@@ -28,8 +28,8 @@ internal fun chamsEsp() = every(256) {
 
     val brightnessCounter : Int
 
-    if (curSettings["CHAMS_BRIGHTNESS"].toString().toInt() > 0) {
-        brightnessCounter = (255F / (curSettings["CHAMS_BRIGHTNESS"].toString().toInt() / 10F)).toInt()
+    if (curSettings["CHAMS_BRIGHTNESS"]!!.toInt() > 0) {
+        brightnessCounter = (255F / (curSettings["CHAMS_BRIGHTNESS"]!!.toInt() / 10F)).toInt()
     } else {
         brightnessCounter = 255
     }
@@ -50,7 +50,7 @@ internal fun chamsEsp() = every(256) {
         if (glowAddress <= 0) return@body false
 
         //Set Cvar
-        engineDLL[dwModelAmbientMin] = floatToIntBits(curSettings["CHAMS_BRIGHTNESS"].toString().toInt().toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
+        engineDLL[dwModelAmbientMin] = floatToIntBits(curSettings["CHAMS_BRIGHTNESS"]!!.toInt().toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
 
         //Not exhaustive @warning
         if (it.type == EntityType.CCSPlayer) {

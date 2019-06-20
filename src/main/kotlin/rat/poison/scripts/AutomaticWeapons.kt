@@ -18,7 +18,7 @@ fun automaticWeapon() = every(4) {
     if (!curSettings["AUTOMATIC_WEAPONS"]!!.strToBool() || MENUTOG) return@every
 
     if (!me.weapon().automatic && !me.weapon().grenade && !me.weapon().bomb && keyPressed(FIRE_KEY)) {
-        if (punchCheck >= curSettings["AUTO_WEP_DELAY"].toString().toInt())
+        if (punchCheck >= curSettings["AUTO_WEP_DELAY"]!!.toInt())
         {
             CSGO.clientDLL[ClientOffsets.dwForceAttack] = 5.toByte() //Mouse press
             Thread.sleep(16)

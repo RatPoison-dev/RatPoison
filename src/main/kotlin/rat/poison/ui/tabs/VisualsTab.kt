@@ -138,7 +138,7 @@ class VisualsTab : Tab(false, false) {
         //Create Visuals_Toggle_Key Input
         val visualsToggleKey = VisTable()
         Tooltip.Builder("The key code that will toggle all enabled visuals on or off").target(visualsToggleKey).build()
-        visualsToggleKeyField.text = curSettings["VISUALS_TOGGLE_KEY"].toString()
+        visualsToggleKeyField.text = curSettings["VISUALS_TOGGLE_KEY"]
         visualsToggleKey.changed { _, _ ->
             if (visualsToggleKeyField.text.toIntOrNull() != null) {
                 curSettings["VISUALS_TOGGLE_KEY"] = visualsToggleKeyField.text.toInt().toString()

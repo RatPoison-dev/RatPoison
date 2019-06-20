@@ -1,5 +1,3 @@
-
-
 package rat.poison.utils
 
 import rat.poison.game.CSGO.gameHeight
@@ -34,29 +32,22 @@ fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: 
 
 fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double) = clientState.setAngle(applyFlatSmoothing(currentAngle, destinationAngle, smoothing))
 
-//fun flatAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double, sensMultiplier: Double = 1.0) { //Currently not used
-//	applyFlatSmoothing(currentAngle, destinationAngle, smoothing)
-//	if (!destinationAngle.isValid()) return
-//
-//	val delta = delta.get()
-//	delta.set(currentAngle.y - destinationAngle.y, currentAngle.x - destinationAngle.x, 0.0)
-//
-//	var sens = GAME_SENSITIVITY * sensMultiplier
-//	if (sens < GAME_SENSITIVITY) sens = GAME_SENSITIVITY
-//
-//	val dx = Math.round(delta.x / (sens * GAME_PITCH))
-//	val dy = Math.round(-delta.y / (sens * GAME_YAW))
-//
-//	mouseMove((dx / 2).toInt(), (dy / 2).toInt())
-//}
-
 fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
 			sensMultiplier: Double = 1.0, perfect: Boolean = false) {
 	if (!destinationAngle.isValid()) return
 
 	val delta = delta.get()
 
-	delta.set(currentAngle.y - destinationAngle.y, currentAngle.x - destinationAngle.x, 0.0)
+	var xFix = currentAngle.y - destinationAngle.y
+
+	//Normalize, fixes flipping to 360/-360 instead of 180/-180 like normal
+	while (xFix > 180) xFix -= 360
+	while (xFix <= -180) xFix += 360
+
+	if (xFix > 180) xFix = 180.0
+	if (xFix < -180F) xFix = -180.0
+
+	delta.set(xFix, currentAngle.x - destinationAngle.x, 0.0)
 
 	var sens = GAME_SENSITIVITY * sensMultiplier
 	if (sens < GAME_SENSITIVITY) sens = GAME_SENSITIVITY

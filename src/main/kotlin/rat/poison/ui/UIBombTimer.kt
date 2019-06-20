@@ -7,7 +7,7 @@ lateinit var bombText : VisLabel
 
 //Needs cleanup
 
-class UIBombTimer : VisWindow("RatPoison UI") {
+class UIBombTimer : VisWindow("Bomb Timer") {
     init {
         defaults().left()
 

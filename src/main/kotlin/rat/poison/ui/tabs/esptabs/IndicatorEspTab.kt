@@ -15,7 +15,7 @@ class IndicatorEspTab : Tab(false, false) {
     val indicatorEsp = VisCheckBox("Entity Indicator")
     val indicatorOnScreen = VisCheckBox("Indicator Show Onscreen")
     val indicatorOval = VisCheckBox("Indicator As Oval")
-    val indicatorDistanceLabel = VisLabel("Indicator Distance: " + curSettings["INDICATOR_DISTANCE"].toString().toDouble())
+    val indicatorDistanceLabel = VisLabel("Indicator Distance: " + curSettings["INDICATOR_DISTANCE"]!!.toDouble())
     val indicatorDistanceSlider = VisSlider(2F, 25F, 0.1F, false)
 
     val showTeam = VisCheckBox("Show Team")
@@ -53,10 +53,10 @@ class IndicatorEspTab : Tab(false, false) {
         //Create Indicator Distance Slider
         val indicatorDistance = VisTable()
         Tooltip.Builder("The radius of the circle/oval of indicators").target(indicatorDistance).build()
-        indicatorDistanceSlider.value = curSettings["INDICATOR_DISTANCE"].toString().toDouble().toFloat()
+        indicatorDistanceSlider.value = curSettings["INDICATOR_DISTANCE"]!!.toDouble().toFloat()
         indicatorDistanceSlider.changed { _, _ ->
             curSettings["INDICATOR_DISTANCE"] = (Math.round(indicatorDistanceSlider.value.toDouble() * 10.0)/10.0).toString() //Round to 1 decimal place
-            indicatorDistanceLabel.setText("Indicator Distance: " + curSettings["INDICATOR_DISTANCE"].toString().toDouble())
+            indicatorDistanceLabel.setText("Indicator Distance: " + curSettings["INDICATOR_DISTANCE"]!!.toDouble())
         }
         indicatorDistance.add(indicatorDistanceLabel).spaceRight(6F)
         indicatorDistance.add(indicatorDistanceSlider)

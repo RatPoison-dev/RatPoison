@@ -20,9 +20,9 @@ import java.nio.file.Files
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
-    private val loadButton1 = VisTextButton("Load " + curSettings["CFG1_NAME"].toString().replace("\"", ""))
-    private val loadButton2 = VisTextButton("Load " + curSettings["CFG2_NAME"].toString().replace("\"", ""))
-    private val loadButton3 = VisTextButton("Load " + curSettings["CFG3_NAME"].toString().replace("\"", ""))
+    private val loadButton1 = VisTextButton("Load " + curSettings["CFG1_NAME"]!!.replace("\"", ""))
+    private val loadButton2 = VisTextButton("Load " + curSettings["CFG2_NAME"]!!.replace("\"", ""))
+    private val loadButton3 = VisTextButton("Load " + curSettings["CFG3_NAME"]!!.replace("\"", ""))
 
     init {
         //Create UIAlpha Slider
@@ -169,9 +169,9 @@ class OptionsTab : Tab(false, false) {
 
                 when (cfgNum)
                 {
-                    1 -> { curSettings["CFG1_NAME"] = cfgName; loadButton1.setText("Load " + curSettings["CFG1_NAME"].toString().replace("\"", "")) }
-                    2 -> { curSettings["CFG2_NAME"] = cfgName; loadButton2.setText("Load " + curSettings["CFG2_NAME"].toString().replace("\"", "")) }
-                    else -> { curSettings["CFG3_NAME"] = cfgName; loadButton3.setText("Load " + curSettings["CFG3_NAME"].toString().replace("\"", "")) }
+                    1 -> { curSettings["CFG1_NAME"] = cfgName; loadButton1.setText("Load " + curSettings["CFG1_NAME"]!!.replace("\"", "")) }
+                    2 -> { curSettings["CFG2_NAME"] = cfgName; loadButton2.setText("Load " + curSettings["CFG2_NAME"]!!.replace("\"", "")) }
+                    else -> { curSettings["CFG3_NAME"] = cfgName; loadButton3.setText("Load " + curSettings["CFG3_NAME"]!!.replace("\"", "")) }
                 }
 
                 val cfgFile = File("settings\\cfg$cfgNum.kts")
@@ -193,7 +193,7 @@ class OptionsTab : Tab(false, false) {
 
                                 when {
                                         curLine[0] == "CFG1_NAME" || curLine[0] == "CFG2_NAME" || curLine[0] == "CFG3_NAME" -> {
-                                            sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]].toString().replace("\"", "") + "\"\n")
+                                            sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]]!!.replace("\"", "") + "\"\n")
                                         }
 
                                         else -> {

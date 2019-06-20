@@ -1,3 +1,15 @@
+1.3.2.3
+
+* Added auto strafe
+* Added spectator list
+* Fixed rifle settings not being used
+* Readded bone trigger delay & added to menu
+* Fixed aimbot fucking up when aiming at targets a certain way due to yawDiff calculation error, shown [here](https://gyazo.com/e297d0e2e07b4a730611e81b8279cc5f)
+    * When the target is highlighted light blue it was seen as being inside the aimbot's fov
+* Fixed aimbot not working in a special case, shown [here](https://gyazo.com/ae8a9d1dde6fcdecb07e29bf64d7054c)
+
+---
+
 1.3.2.2
 
 * Added knife bot (Credit to Mr. Noad)
@@ -108,10 +120,10 @@ The first step is to compile the source code into a usable cheat program.
 * Double click on the "_build_" (_build.bat_) script and wait for it to complete
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.3.2.2**.
+directory, and will in a directory called **RatPoison 1.3.2.3**.
 
-From within the **RatPoison 1.3.2.2** directory, you can start the cheat by running
-the _"Start RatPoison 1.3.2.2"_ script.
+From within the **RatPoison 1.3.2.3** directory, you can start the cheat by running
+the _"Start RatPoison 1.3.2.3"_ script.
 
 Before starting the cheat, you should already be spawned in a game with a weapon in hand!
 

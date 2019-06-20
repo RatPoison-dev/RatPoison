@@ -6,3 +6,8 @@ import rat.poison.settings.*
  * By default, this is the space bar key.
  */
 BUNNY_HOP_KEY = 32
+
+/**
+ * Enable/Disable auto strafe
+ */
+AUTO_STRAFE = false

@@ -13,14 +13,16 @@ class MiscTab : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
-    val bunnyHop = VisCheckBox("Enable Bunny Hop")
-    val bombTimer = VisCheckBox("Enable Bomb Timer")
+    val bunnyHop = VisCheckBox("Bunny Hop")
+    val autoStrafe = VisCheckBox("Auto Strafe")
+    val bombTimer = VisCheckBox("Bomb Timer")
+    val spectatorList = VisCheckBox("Spectator List")
     val menuKeyField = VisValidatableTextField(Validators.FLOATS)
-    val enableReducedFlash = VisCheckBox("Enable Reduced Flash")
-    val flashMaxAlphaLabel = VisLabel("Flash Max Alpha: " + curSettings["FLASH_MAX_ALPHA"].toString().toFloat() + when(curSettings["FLASH_MAX_ALPHA"].toString().toFloat().toInt().toString().length) {3->"  " 2->"    " else ->"      "})
+    val enableReducedFlash = VisCheckBox("Reduced Flash")
+    val flashMaxAlphaLabel = VisLabel("Flash Max Alpha: " + curSettings["FLASH_MAX_ALPHA"]!!.toFloat() + when(curSettings["FLASH_MAX_ALPHA"]!!.toFloat().toInt().toString().length) {3->"  " 2->"    " else ->"      "})
     val flashMaxAlphaSlider = VisSlider(0F, 255F, 1F, false)
     val hitSound = VisCheckBox("Hitsound")
-    val hitSoundVolumeLabel = VisLabel("Hitsound Volume: " + curSettings["HITSOUND_VOLUME"].toString().toDouble())
+    val hitSoundVolumeLabel = VisLabel("Hitsound Volume: " + curSettings["HITSOUND_VOLUME"]!!.toDouble())
     val hitSoundVolumeSlider = VisSlider(0.1F, 1F, 0.1F, false)
 
     init {
@@ -32,6 +34,14 @@ class MiscTab : Tab(false, false) {
             true
         }
 
+        //Create Auto Strafe Toggle
+        Tooltip.Builder("Whether or not to enable auto strafe").target(autoStrafe).build()
+        autoStrafe.isChecked = curSettings["AUTO_STRAFE"]!!.strToBool()
+        autoStrafe.changed { _, _ ->
+            curSettings["AUTO_STRAFE"] = autoStrafe.isChecked.boolToStr()
+            true
+        }
+
         //Create Bomb Timer Toggle
         Tooltip.Builder("Whether or not to enable bomb timer").target(bombTimer).build()
         bombTimer.isChecked = curSettings["ENABLE_BOMB_TIMER"]!!.strToBool()
@@ -40,15 +50,23 @@ class MiscTab : Tab(false, false) {
             true
         }
 
+        //Create Spectator List Toggle
+        Tooltip.Builder("Whether or not to enable spectator list").target(spectatorList).build()
+        spectatorList.isChecked = curSettings["SPECTATOR_LIST"]!!.strToBool()
+        spectatorList.changed { _, _ ->
+            curSettings["SPECTATOR_LIST"] = spectatorList.isChecked.boolToStr()
+            true
+        }
+
         //Create Menu Key Input Box
         val menuKey = VisTable()
         Tooltip.Builder("The key code that will toggle the menu on or off").target(menuKey).build()
         val menuKeyLabel = VisLabel("Menu Key: ")
-        menuKeyField.text = curSettings["MENU_KEY"].toString()
+        menuKeyField.text = curSettings["MENU_KEY"]
         menuKey.changed { _, _ ->
             if (menuKeyField.text.toIntOrNull() != null) {
                 curSettings["MENU_KEY"] = menuKeyField.text.toInt().toString()
-                overlayMenuKey = ObservableBoolean({keyPressed(curSettings["MENU_KEY"].toString().toInt())})
+                overlayMenuKey = ObservableBoolean({keyPressed(curSettings["MENU_KEY"]!!.toInt())})
             }
         }
         menuKey.add(menuKeyLabel)
@@ -66,10 +84,10 @@ class MiscTab : Tab(false, false) {
         //Create Flash Max Alpha Slider
         val flashMaxAlpha = VisTable()
         Tooltip.Builder("The maximum alpha of flashes (0 is no effect, 255 is normal)").target(flashMaxAlpha).build()
-        flashMaxAlphaSlider.value = curSettings["FLASH_MAX_ALPHA"].toString().toFloat()
+        flashMaxAlphaSlider.value = curSettings["FLASH_MAX_ALPHA"]!!.toFloat()
         flashMaxAlphaSlider.changed { _, _ ->
             curSettings["FLASH_MAX_ALPHA"] = flashMaxAlphaSlider.value.toString()
-            flashMaxAlphaLabel.setText("Flash Max Alpha: " + curSettings["FLASH_MAX_ALPHA"].toString().toFloat().toInt().toString() + when(curSettings["FLASH_MAX_ALPHA"].toString().length) {3->"  " 2->"    " else ->"      "})
+            flashMaxAlphaLabel.setText("Flash Max Alpha: " + curSettings["FLASH_MAX_ALPHA"]!!.toFloat().toInt().toString() + when(curSettings["FLASH_MAX_ALPHA"]!!.length) {3->"  " 2->"    " else ->"      "})
         }
         flashMaxAlpha.add(flashMaxAlphaLabel)
         flashMaxAlpha.add(flashMaxAlphaSlider)
@@ -85,10 +103,10 @@ class MiscTab : Tab(false, false) {
         //Create Hit Sound Volume Slider
         val hitSoundVolume = VisTable()
         Tooltip.Builder("The volume of the hitsound if the hitsound is enabled").target(hitSoundVolume).build()
-        hitSoundVolumeSlider.value = curSettings["HITSOUND_VOLUME"].toString().toDouble().toFloat()
+        hitSoundVolumeSlider.value = curSettings["HITSOUND_VOLUME"]!!.toDouble().toFloat()
         hitSoundVolumeSlider.changed { _, _ ->
             curSettings["HITSOUND_VOLUME"] = (Math.round(hitSoundVolumeSlider.value.toDouble() * 10.0)/10.0).toString() //Round to 1 decimal place
-            hitSoundVolumeLabel.setText("Hitsound Volume: " + curSettings["HITSOUND_VOLUME"].toString().toDouble())
+            hitSoundVolumeLabel.setText("Hitsound Volume: " + curSettings["HITSOUND_VOLUME"]!!.toDouble())
         }
         hitSoundVolume.add(hitSoundVolumeLabel).spaceRight(6F)
         hitSoundVolume.add(hitSoundVolumeSlider)
@@ -96,7 +114,9 @@ class MiscTab : Tab(false, false) {
 
         //Add all items to label for tabbed pane content
         table.add(bunnyHop).row()
+        table.add(autoStrafe).row()
         table.add(bombTimer).row()
+        table.add(spectatorList).row()
 
         table.addSeparator()
 

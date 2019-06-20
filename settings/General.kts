@@ -9,6 +9,16 @@ import rat.poison.settings.*
 MENU = true
 
 /**
+ * Whether or not to display warning upon opening menu
+ */
+WARNING = true
+
+/**
+ * Enable/disable the spectator list
+ */
+SPECTATOR_LIST = true
+
+/**
  * Whether or not to enable or disable aims
  */
 ENABLE_AIM = true
@@ -71,7 +81,7 @@ MENU_KEY = 112
 /**
  * Name of config file
  */
-CFG1_NAME = "test"
+CFG1_NAME = "Null"
 
 /**
  * Name of config file
@@ -96,14 +106,14 @@ STOMACH_BONE = 5
 /**
  * Variables used in game, not saved settings, no need to touch
  */
-PERFECT_AIM = false
-PERFECT_AIM_CHANCE = 1
-PERFECT_AIM_FOV = 1
-AIM_BONE = 8
-AIM_SPEED = 1
-AIM_FOV = 40
+PERFECT_AIM = true
+PERFECT_AIM_CHANCE = 10
+PERFECT_AIM_FOV = 5
+AIM_BONE = 6
+AIM_SPEED = 16
+AIM_FOV = 60
 AIM_ASSIST_MODE = false
-FACTOR_RECOIL = false
-ENABLE_FLAT_AIM = true
-ENABLE_PATH_AIM = false
-AIM_STRICTNESS = 1.0
+FACTOR_RECOIL = true
+ENABLE_FLAT_AIM = false
+ENABLE_PATH_AIM = true
+AIM_STRICTNESS = 2.0

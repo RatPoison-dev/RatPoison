@@ -33,6 +33,7 @@ fun calculateAngle(player: Player, dst: Vector): Angle = angles.get().apply {
 		x = toDegrees(atan(dZ / hyp))
 		y = toDegrees(atan(dY / dX))
 	}
+
 	z = 0.0
 	if (dX >= 0.0) y += 180
 

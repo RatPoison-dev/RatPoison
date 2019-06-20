@@ -1,5 +1,3 @@
-
-
 package rat.poison.game.entity
 
 import rat.poison.game.CSGO

@@ -8,7 +8,7 @@ ENABLE_AUTO_KNIFE = false
 /**
  * The field of view (in degrees, 0 to 32) for the bone trigger.
  */
-BONE_TRIGGER_FOV = 4
+BONE_TRIGGER_FOV = 10
 
 /**
  * Whether to trigger on head bone
@@ -38,4 +38,4 @@ BONE_TRIGGER_KEY = 5
 /**
  * Default minimum time in milliseconds to fire shots when requirements met
  */
-BONE_TRIGGER_SHOT_DELAY = 8
+BONE_TRIGGER_SHOT_DELAY = 50

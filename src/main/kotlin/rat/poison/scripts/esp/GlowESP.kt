@@ -57,9 +57,11 @@ internal fun glowEsp() = every(4) {
 					glowAddress.glow(curSettings["TEAM_COLOR"]!!.strToColor(), entity.spotted())
 				}
 			}
+
 			EntityType.CPlantedC4, EntityType.CC4 -> if (curSettings["GLOW_SHOW_BOMB"]!!.strToBool()) {
 				glowAddress.glow(curSettings["BOMB_COLOR"]!!.strToColor(), entity.spotted())
 			}
+
 			else ->
 				if (curSettings["GLOW_SHOW_WEAPONS"]!!.strToBool() && it.type.weapon)
 					glowAddress.glow(curSettings["WEAPON_COLOR"]!!.strToColor(), entity.spotted())

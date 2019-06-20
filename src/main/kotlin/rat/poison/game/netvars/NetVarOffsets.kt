@@ -50,4 +50,7 @@ object NetVarOffsets {
 	val SurvivalGameRuleDecisionTypes by netVar("DT_CSGameRulesProxy")
 
 	val m_totalHitsOnServer by netVar("DT_CSPlayer", "m_totalHitsOnServer")
+
+	val m_hObserverTarget by netVar("DT_BasePlayer", "m_hObserverTarget")
+	val m_iObserverMode by netVar("DT_BasePlayer", "m_iObserverMode")
 }

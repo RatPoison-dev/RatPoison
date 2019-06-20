@@ -18,8 +18,10 @@ class BTrigTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     val enableAutoKnife = VisCheckBox("Enable Auto Knife")
     val enableBoneTrigger = VisCheckBox("Enable Bone Trigger")
-    val boneTriggerFovLabel = VisLabel("Bone Trigger Fov: " + curSettings["BONE_TRIGGER_FOV"].toString() + when(curSettings["BONE_TRIGGER_FOV"].toString().length) {3->"  " 2->"    " else ->"      "})
-    val boneTriggerFovSlider = VisSlider(0F, 32F, 1F, false)
+    val boneTriggerFovLabel = VisLabel("Bone Trigger Fov: " + curSettings["BONE_TRIGGER_FOV"] + when(curSettings["BONE_TRIGGER_FOV"]!!.length) {3->"  " 2->"    " else ->"      "})
+    val boneTriggerFovSlider = VisSlider(0F, 200F, 1F, false)
+    val boneTriggerDelayLabel = VisLabel("Bone Trigger Shot Delay: " + curSettings["BONE_TRIGGER_SHOT_DELAY"] + when(curSettings["BONE_TRIGGER_SHOT_DELAY"]!!.length) {3->"  " 2->"    " else ->"      "})
+    val boneTriggerDelaySlider = VisSlider(0F, 200F, 1F, false)
     val boneTriggerBoneBox = VisSelectBox<String>()
     val boneTriggerCheckHead = VisCheckBox("Head")
     val boneTriggerCheckBody = VisCheckBox("Torso")
@@ -47,14 +49,26 @@ class BTrigTab : Tab(false, false) {
         //Create Bone Trigger FOV Slider
         val boneTriggerFov = VisTable()
         Tooltip.Builder("The bone trigger field of view").target(boneTriggerFov).build()
-        boneTriggerFovSlider.value = curSettings["BONE_TRIGGER_FOV"].toString().toFloat()
+        boneTriggerFovSlider.value = curSettings["BONE_TRIGGER_FOV"]!!.toFloat()
         boneTriggerFovSlider.changed { _, _ ->
             curSettings["BONE_TRIGGER_FOV"] = boneTriggerFovSlider.value.toInt().toString()
-            boneTriggerFovLabel.setText("Bone Trigger Fov: " + curSettings["BONE_TRIGGER_FOV"].toString() + when(curSettings["BONE_TRIGGER_FOV"].toString().length) {3->"  " 2->"    " else ->"      "})
+            boneTriggerFovLabel.setText("Bone Trigger Fov: " + curSettings["BONE_TRIGGER_FOV"] + when(curSettings["BONE_TRIGGER_FOV"]!!.length) {3->"  " 2->"    " else ->"      "})
         }
 
         boneTriggerFov.add(boneTriggerFovLabel).spaceRight(6F)
         boneTriggerFov.add(boneTriggerFovSlider)
+
+        //Create Bone Trigger Shot Delay Slider
+        val boneTriggerDelay = VisTable()
+        Tooltip.Builder("The shot delay of bone trigger").target(boneTriggerDelay).build()
+        boneTriggerDelaySlider.value = curSettings["BONE_TRIGGER_SHOT_DELAY"]!!.toFloat()
+        boneTriggerDelaySlider.changed { _, _ ->
+            curSettings["BONE_TRIGGER_SHOT_DELAY"] = boneTriggerDelaySlider.value.toInt().toString()
+            boneTriggerDelayLabel.setText("Bone Trigger Shot Delay: " + curSettings["BONE_TRIGGER_SHOT_DELAY"] + when(curSettings["BONE_TRIGGER_SHOT_DELAY"]!!.length) {3->"  " 2->"    " else ->"      "})
+        }
+
+        boneTriggerDelay.add(boneTriggerDelayLabel).spaceRight(6F)
+        boneTriggerDelay.add(boneTriggerDelaySlider)
 
         //Create Bone Trigger Head Bone Check Box
         Tooltip.Builder("Whether to trigger on head bone").target(boneTriggerCheckHead).build()
@@ -92,7 +106,7 @@ class BTrigTab : Tab(false, false) {
         val boneTriggerKey = VisTable()
         Tooltip.Builder("The key bone trigger will check is being held down if BONE_TRIGGER_ENABLE_KEY is enabled").target(boneTriggerKey).build()
         val boneTriggerKeyLabel = VisLabel("Bone Trigger Key: ")
-        boneTriggerKeyField.text = curSettings["BONE_TRIGGER_KEY"].toString()
+        boneTriggerKeyField.text = curSettings["BONE_TRIGGER_KEY"]
         boneTriggerKey.changed { _, _ ->
             if (boneTriggerKeyField.text.toIntOrNull() != null) {
                 curSettings["BONE_TRIGGER_KEY"] = boneTriggerKeyField.text.toInt()
@@ -107,6 +121,7 @@ class BTrigTab : Tab(false, false) {
         table.addSeparator()
         table.add(enableBoneTrigger).row()
         table.add(boneTriggerFov).row()
+        table.add(boneTriggerDelay).row()
         table.add(boneTriggerCheckHead).row()
         table.add(boneTriggerCheckBody).row()
         table.add(aimOnBoneTrigger).row()

@@ -62,13 +62,13 @@ fun indicatorPosition(screenPos: Vector3, indicatorPos: Vector3): Float {
     val d = Vector2.dst(screenPos.x, screenPos.y, centerX, centerY)
 
     if (!curSettings["INDICATOR_OVAL"]!!.strToBool()) {
-        val r = CSGO.gameHeight / curSettings["INDICATOR_DISTANCE"].toString().toDouble().toFloat() / d
+        val r = CSGO.gameHeight / curSettings["INDICATOR_DISTANCE"]!!.toDouble().toFloat() / d
 
         indicatorPos.x = r * screenPos.x + (1 - r) * centerX
         indicatorPos.y = r * screenPos.y + (1 - r) * centerY
     } else {
-        val ry = CSGO.gameHeight / curSettings["INDICATOR_DISTANCE"].toString().toDouble().toFloat() / d
-        val rx = CSGO.gameWidth / curSettings["INDICATOR_DISTANCE"].toString().toDouble().toFloat() / d
+        val ry = CSGO.gameHeight / curSettings["INDICATOR_DISTANCE"]!!.toDouble().toFloat() / d
+        val rx = CSGO.gameWidth / curSettings["INDICATOR_DISTANCE"]!!.toDouble().toFloat() / d
 
         indicatorPos.x = rx * screenPos.x + (1 - rx) * centerX
         indicatorPos.y = ry * screenPos.y + (1 - ry) * centerY

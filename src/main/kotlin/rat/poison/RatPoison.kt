@@ -30,6 +30,7 @@ import rat.poison.scripts.esp.*
 import rat.poison.settings.*
 import rat.poison.ui.UIBombTimer
 import rat.poison.ui.UIMenu
+import rat.poison.ui.UISpectatorList
 import rat.poison.utils.*
 import java.io.*
 
@@ -64,6 +65,7 @@ fun main() {
 
     //Init all scripts
     bunnyHop()
+    autoStrafe()
     rcs()
     rcrosshair()
     flatAim()
@@ -72,6 +74,7 @@ fun main() {
     boneTrigger() //Called once during startup, causes firing on startup
     autoKnife()
     reducedFlash()
+    spectatorList()
     bombTimer()
     esp() //Contains esp scripts
     espToggle()
@@ -87,12 +90,12 @@ fun main() {
             Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
                 setTitle("Rat Poison UI")
                 if (CSGO.gameWidth < 1 || CSGO.gameHeight < 1) {
-                    setWindowedMode(curSettings["OVERLAY_WIDTH"].toString().toInt(), curSettings["OVERLAY_HEIGHT"].toString().toInt())
+                    setWindowedMode(curSettings["OVERLAY_WIDTH"]!!.toInt(), curSettings["OVERLAY_HEIGHT"]!!.toInt())
                 } else {
                     setWindowedMode(CSGO.gameWidth, CSGO.gameHeight)
                 }
                 useVsync(curSettings["OPENGL_VSYNC"]!!.strToBool())
-                setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings["OPENGL_MSAA_SAMPLES"].toString().toInt())
+                setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings["OPENGL_MSAA_SAMPLES"]!!.toInt())
             })
         }
     }
@@ -141,12 +144,13 @@ object App : ApplicationAdapter() {
     var haveTarget = false
     lateinit var menuStage: Stage
     lateinit var bombStage: Stage
+    lateinit var specListStage: Stage
     private val glyphLayout = GlyphLayout()
     private val bodies = ObjectArrayList<App.() -> Unit>()
     private lateinit var camera: OrthographicCamera
 
     override fun create() {
-        overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toString().toInt()) })
+        overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"]!!.toInt()) })
         opened = true
         VisUI.load()
         super.create()
@@ -155,17 +159,21 @@ object App : ApplicationAdapter() {
         //Implement stage for menu
         menuStage = Stage() //Main Menu Stage
         bombStage = Stage() //Bomb Timer Stage
+        specListStage = Stage() //Spectator List Stage
         val root = VisTable()
         root.setFillParent(true)
         menuStage.addActor(root)
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
         val UIWindow = UIMenu() //Main UI Window
         val UIBombWindow = UIBombTimer() //Bomb Timer UI Window
+        val UISpecList = UISpectatorList()
         menuStage.addActor(UIWindow)
         bombStage.addActor(UIBombWindow)
+        specListStage.addActor(UISpecList)
         val inputMultiplexer = InputMultiplexer()
         inputMultiplexer.addProcessor(menuStage)
         inputMultiplexer.addProcessor(bombStage)
+        inputMultiplexer.addProcessor(specListStage)
         //End stage implementation
 
         Gdx.input.inputProcessor = inputMultiplexer
@@ -177,7 +185,7 @@ object App : ApplicationAdapter() {
     }
 
     override fun render() {
-        sync(curSettings["OPENGL_FPS"].toString().toInt())
+        sync(curSettings["OPENGL_FPS"]!!.toInt())
 
         if (!Thread.interrupted()) {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
@@ -209,6 +217,19 @@ object App : ApplicationAdapter() {
                     bombStage.root.draw(bombBatch, 1F)
                     bombBatch.end()
                 }
+
+                if (curSettings["SPECTATOR_LIST"]!!.strToBool()) {
+                    specListStage.act(Gdx.graphics.deltaTime)
+                    val specListCamera = specListStage.viewport.camera
+                    specListCamera.update()
+                    val specListBatch = specListStage.batch
+                    specListBatch.projectionMatrix = specListCamera.combined
+                    specListBatch.begin()
+                    specListBatch.enableBlending()
+                    specListStage.root.draw(specListBatch, 1F)
+                    specListBatch.end()
+                }
+
 
                 sb.projectionMatrix = menuStage.camera.combined
 
@@ -299,6 +320,8 @@ fun Any.strToBool() = this == "true" || this == true
 fun Any.boolToDouble() = if (this == "true" || this == true) 1.0 else (0.0)
 fun Any.boolToStr() = this.toString()
 fun Double.toBool() = this == 1.0
+fun Boolean.toFloat() = if (this) 1F else 0F
+fun Boolean.toDouble() = if (this) 1.0 else 0.0
 
 fun Any.strToColor() = convStrToColor(this.toString())
 
@@ -309,17 +332,17 @@ fun convStrToColor(input: String): rat.poison.game.Color {
     val arrayLine = line.trim().split(" ".toRegex(), 4)
 
 
-    val color = rat.poison.game.Color(arrayLine[0].replace("red=", "").toInt(),
+    val cColor = rat.poison.game.Color(arrayLine[0].replace("red=", "").toInt(),
             arrayLine[1].replace("green=", "").toInt(),
             arrayLine[2].replace("blue=", "").toInt(),
             arrayLine[3].replace("alpha=", "").toDouble())
 
-    return color
+    return cColor
 }
 
-fun convStrToArray(input: String): Array<Double?> {
+fun convStrToArray(input: String?): Array<Double?> {
     var line = input
-    line = line.replace("doubleArrayOf(", "").replace(")", "").replace(",", "").replace("[", "").replace("]", "")
+    line = line!!.replace("doubleArrayOf(", "").replace(")", "").replace(",", "").replace("[", "").replace("]", "")
 
     val listLine = line.trim().split(" ".toRegex(), 12)
 

@@ -1,5 +1,3 @@
-
-
 package rat.poison.game
 
 import rat.poison.game.CSGO.csgoEXE

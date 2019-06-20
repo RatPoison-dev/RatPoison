@@ -2,11 +2,9 @@ package rat.poison.ui
 
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Align
-import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.*
 import rat.poison.ui.tabs.*
-import rat.poison.ui.tabs.esptabs.*
 
 val mainTabbedPane = TabbedPane()
     val aimTab = AimTab()

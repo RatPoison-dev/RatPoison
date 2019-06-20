@@ -16,7 +16,7 @@ class ChamsEspTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     val chamsEsp = VisCheckBox("Chams Esp")
     val chamsShowHealth = VisCheckBox("Chams Show Health")
-    val chamsBrightnessLabel = VisLabel("Chams Brightness: " + curSettings["CHAMS_BRIGHTNESS"].toString().toInt() + when(curSettings["CHAMS_BRIGHTNESS"].toString().toInt().toString().length) {4->"" 3->"  " 2->"    " else ->"      "})
+    val chamsBrightnessLabel = VisLabel("Chams Brightness: " + curSettings["CHAMS_BRIGHTNESS"]!!.toInt() + when(curSettings["CHAMS_BRIGHTNESS"]!!.toInt().toString().length) {4->"" 3->"  " 2->"    " else ->"      "})
     val chamsBrightnessSlider = VisSlider(0F, 1000F, 1F, false)
 
     val showTeam = VisCheckBox("Show Team")
@@ -47,10 +47,10 @@ class ChamsEspTab : Tab(false, false) {
         val chamsBrightness = VisTable()
         Tooltip.Builder("Whether or not to enable chams brightness").target(chamsBrightnessLabel).build()
         Tooltip.Builder("The brightness of chams if chams brightness is enabled").target(chamsBrightnessSlider).build()
-        chamsBrightnessSlider.value = curSettings["CHAMS_BRIGHTNESS"].toString().toInt().toFloat()
+        chamsBrightnessSlider.value = curSettings["CHAMS_BRIGHTNESS"]!!.toInt().toFloat()
         chamsBrightnessSlider.changed { _, _ ->
             curSettings.set("CHAMS_BRIGHTNESS", chamsBrightnessSlider.value.toInt().toString())
-            chamsBrightnessLabel.setText("Chams Brightness: " + curSettings["CHAMS_BRIGHTNESS"].toString().toInt() + when(curSettings["CHAMS_BRIGHTNESS"].toString().toInt().toString().length) {4->"" 3->"  " 2->"    " else ->"      "}) //When is used to not make the sliders jitter when you go from 10 to 9, or 100 to 99, as that character space shifts everything, one character is 2 spaces
+            chamsBrightnessLabel.setText("Chams Brightness: " + curSettings["CHAMS_BRIGHTNESS"]!!.toInt() + when(curSettings["CHAMS_BRIGHTNESS"]!!.toInt().toString().length) {4->"" 3->"  " 2->"    " else ->"      "}) //When is used to not make the sliders jitter when you go from 10 to 9, or 100 to 99, as that character space shifts everything, one character is 2 spaces
         }
 
         chamsBrightness.add(chamsBrightnessLabel).spaceRight(6F)

@@ -1,5 +1,3 @@
-
-
 package rat.poison.game.hooks
 
 import rat.poison.game.entity.dead

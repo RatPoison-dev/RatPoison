@@ -30,7 +30,7 @@ fun hitSoundEsp() = every(4) {
     }
     else if (totalHits != curHits)
     {
-        hitSound.play(curSettings["HITSOUND_VOLUME"].toString().toDouble().toFloat())
+        hitSound.play(curSettings["HITSOUND_VOLUME"]!!.toDouble().toFloat())
         totalHits = curHits
     }
 }

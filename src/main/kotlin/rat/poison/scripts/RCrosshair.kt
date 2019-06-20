@@ -20,7 +20,7 @@ internal fun rcrosshair() = App { //Currently not completely centered
 
     //Need offsets because draw is bottom left
     val originOffset = 2F
-    val widthOffset = Math.floor(curSettings["RCROSSHAIR_WIDTH"].toString().toInt()/2.0).toFloat()
+    val widthOffset = Math.floor(curSettings["RCROSSHAIR_WIDTH"]!!.toInt()/2.0).toFloat()
 
     val x = gameWidth/2 - ((gameWidth/95F)*lastpunch.y).toFloat()
     val y = gameHeight/2 - ((gameHeight/95F)*lastpunch.x).toFloat()
@@ -31,9 +31,9 @@ internal fun rcrosshair() = App { //Currently not completely centered
         begin()
         set(ShapeRenderer.ShapeType.Filled)
         val col = curSettings["RCROSSHAIR_COLOR"]!!.strToColor()
-        color = Color(col.red/255F, col.green/255F, col.blue/255F, curSettings["RCROSSHAIR_ALPHA"].toString().toFloat())
-        rect(x+3-curSettings["RCROSSHAIR_LENGTH"].toString().toInt()/2F, y-originOffset-widthOffset, curSettings["RCROSSHAIR_LENGTH"].toString().toFloat(), curSettings["RCROSSHAIR_WIDTH"].toString().toFloat())
-        rect(x+originOffset-widthOffset, y-1-curSettings["RCROSSHAIR_LENGTH"].toString().toInt()/2F, curSettings["RCROSSHAIR_WIDTH"].toString().toFloat(), curSettings["RCROSSHAIR_LENGTH"].toString().toInt().toFloat())
+        color = Color(col.red/255F, col.green/255F, col.blue/255F, curSettings["RCROSSHAIR_ALPHA"]!!.toFloat())
+        rect(x+3-curSettings["RCROSSHAIR_LENGTH"]!!.toInt()/2F, y-originOffset-widthOffset, curSettings["RCROSSHAIR_LENGTH"]!!.toFloat(), curSettings["RCROSSHAIR_WIDTH"]!!.toFloat())
+        rect(x+originOffset-widthOffset, y-1-curSettings["RCROSSHAIR_LENGTH"]!!.toInt()/2F, curSettings["RCROSSHAIR_WIDTH"]!!.toFloat(), curSettings["RCROSSHAIR_LENGTH"]!!.toInt().toFloat())
         set(ShapeRenderer.ShapeType.Line)
         end()
     }

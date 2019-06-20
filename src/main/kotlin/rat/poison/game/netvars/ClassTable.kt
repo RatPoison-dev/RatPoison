@@ -1,5 +1,3 @@
-
-
 package rat.poison.game.netvars
 
 import rat.poison.game.CSGO.csgoEXE
@@ -26,5 +24,4 @@ internal class ClassTable(override val address: Long, val offset: Long = 16) : A
 	fun propForID(id: Int) = csgoEXE.uint(address) + id * 60
 	
 	fun readable() = csgoEXE.read(address, offset.toInt()).readable()
-	
 }
