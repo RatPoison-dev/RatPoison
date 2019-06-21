@@ -15,6 +15,7 @@ class MiscTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     val bunnyHop = VisCheckBox("Bunny Hop")
     val autoStrafe = VisCheckBox("Auto Strafe")
+    val fastStop = VisCheckBox("Fast Stop")
     val bombTimer = VisCheckBox("Bomb Timer")
     val spectatorList = VisCheckBox("Spectator List")
     val menuKeyField = VisValidatableTextField(Validators.FLOATS)
@@ -39,6 +40,14 @@ class MiscTab : Tab(false, false) {
         autoStrafe.isChecked = curSettings["AUTO_STRAFE"]!!.strToBool()
         autoStrafe.changed { _, _ ->
             curSettings["AUTO_STRAFE"] = autoStrafe.isChecked.boolToStr()
+            true
+        }
+
+        //Create Fast Stop Toggle
+        Tooltip.Builder("Whether or not to enable fast stop").target(fastStop).build()
+        fastStop.isChecked = curSettings["FAST_STOP"]!!.strToBool()
+        fastStop.changed { _, _ ->
+            curSettings["FAST_STOP"] = fastStop.isChecked.boolToStr()
             true
         }
 
@@ -115,6 +124,7 @@ class MiscTab : Tab(false, false) {
         //Add all items to label for tabbed pane content
         table.add(bunnyHop).row()
         table.add(autoStrafe).row()
+        table.add(fastStop).row()
         table.add(bombTimer).row()
         table.add(spectatorList).row()
 

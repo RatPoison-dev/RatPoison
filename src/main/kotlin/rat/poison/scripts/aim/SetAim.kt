@@ -15,6 +15,8 @@ var curWep = Weapons.AK47
 fun setAim() = every(256){
     try {
         if (settingsLoaded) { //If we have settings to read
+            curWep = me.weapon()
+
             //V--Update aim settings for current weapons--V\\
             if (curWep.rifle || curWep.smg || curWep.pistol || curWep.sniper || curWep.shotgun) {
                 val curWepSettings = convStrToArray(curSettings[curWep.name])

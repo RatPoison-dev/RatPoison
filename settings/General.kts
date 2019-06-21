@@ -19,6 +19,11 @@ WARNING = true
 SPECTATOR_LIST = true
 
 /**
+ * Enable/disable fast stop
+ */
+FAST_STOP = true
+
+/**
  * Whether or not to enable or disable aims
  */
 ENABLE_AIM = true

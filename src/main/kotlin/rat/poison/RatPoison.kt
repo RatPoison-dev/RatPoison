@@ -79,6 +79,7 @@ fun main() {
     esp() //Contains esp scripts
     espToggle()
     automaticWeapon()
+    fastStop()
 
     //Overlay check, not updated?
     if (curSettings["MENU"]!!.strToBool()) {

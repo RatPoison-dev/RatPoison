@@ -188,6 +188,7 @@ var ENABLE_AUTO_KNIFE = false
 var SPECTATOR_LIST = true
 var WARNING = true
 var AUTO_STRAFE = true
+var FAST_STOP = true
 //Pistols
 var DESERT_EAGLE = doubleArrayOf(0.0, 1.0, 0.0, 1.0, 8.0, 30.0, 12.0, 2.5, 2.0, 1.0, 10.0, 15.0)
 var DUAL_BERRETA = doubleArrayOf(0.0, 1.0, 0.0, 1.0, 8.0, 30.0, 12.0, 2.5, 2.0, 1.0, 10.0, 15.0)

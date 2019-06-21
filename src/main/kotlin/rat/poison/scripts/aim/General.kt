@@ -122,16 +122,6 @@ internal fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angl
 	val fov = Math.abs(Math.sin(Math.toRadians(yawDiff)) * distance)
 	val delta = Math.abs((Math.sin(Math.toRadians(pitchDiff)) + Math.sin(Math.toRadians(yawDiff))) * distance)
 
-//	println("pitchDiff: " + pitchDiff)
-//	println("yawDiff: " + yawDiff)
-//	println("fov: " + fov)
-//	println("delta: " + delta)
-//	println("pitchRads: " + Math.sin(Math.toRadians(pitchDiff)) * distance)
-//	println("yawRads: " + Math.sin(Math.toRadians(yawDiff)) * distance)
-//	println("pitchyaw: " + Math.sin(Math.toRadians(pitchDiff)) + "  " + Math.sin(Math.toRadians(yawDiff)))
-//	println()
-//	println()
-
 	if (delta <= lockFOV && delta <= calcClosestDelta) {
 		retList[0] = fov
 		retList[1] = delta
@@ -209,10 +199,6 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
         if (!perfect.get()) {
             destinationAngle.finalize(currentAngle, (1.1-curSettings["AIM_SMOOTHNESS"]!!.toDouble()/10))
         }
-
-		if (!clientState.angle().isValid()) {
-			println("Fuck off")
-		}
 
 		val aimSpeed = curSettings["AIM_SPEED"]!!.toInt()
 		doAim(destinationAngle, currentAngle, aimSpeed)

@@ -1,13 +1,18 @@
+//Credit to Mr. Noad for help
+
 package rat.poison.scripts
 
+import org.jire.arrowhead.Source
 import rat.poison.App.haveTarget
 import rat.poison.curSettings
 import rat.poison.game.*
+import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.netvars.NetVarOffsets.m_hObserverTarget
 import rat.poison.game.netvars.NetVarOffsets.m_iObserverMode
 import rat.poison.game.offsets.ClientOffsets.dwIndex
+import rat.poison.game.offsets.ClientOffsets.dwLocalPlayer
 import rat.poison.game.offsets.EngineOffsets.dwClientState_State
 import rat.poison.opened
 import rat.poison.settings.MENUTOG
@@ -24,32 +29,30 @@ internal fun spectatorList() = every(1000) {
 
     var spectators = ""
 
-    if (me.isSpectating()) {
-        //playerSpecTarget = csgoEXE.uint(me + m_hObserverTarget) and 0xFFF //Fuck you
-        spectators = "N/A"
+    val playerSpecTarget: Int
+
+    if (me.dead()) {
+        playerSpecTarget = csgoEXE.readIndex(me + m_hObserverTarget)
+    } else {
+        playerSpecTarget = csgoEXE.readIndex(me + dwIndex)
     }
-    else {
-        val playerSpecTarget = csgoEXE.uint(me + dwIndex) //Not -1
 
-        forEntities body@ {
-            val entity = it.entity
+    forEntities body@ {
+        val entity = it.entity
 
-            if (it.type == EntityType.CCSPlayer) {
-                if (entity.isSpectating() && entity != me && !entity.hltv() && !entity.dormant() && entity.dead()) {
+        if (it.type == EntityType.CCSPlayer) {
+            if (entity.isSpectating() && !entity.hltv() && !entity.dormant()) {
+                val entSpecTarget = csgoEXE.readIndex(entity + m_hObserverTarget)
+                val entName = entity.name()
 
-                    val entName = entity.name()
-
-                    val entitySpecTarget = csgoEXE.uint(entity + m_hObserverTarget) and 0xFFF
-
-                    if (entitySpecTarget == playerSpecTarget && entitySpecTarget != 0xFFF.toLong()) {
-                        if (!spectators.contains(entName) && entName != "") {
-                            spectators += entName + "\n"
-                        }
+                if (entSpecTarget > -1 && entSpecTarget == playerSpecTarget) {
+                    if (!spectators.contains(entName)) {
+                        spectators += entName + "\n"
                     }
                 }
             }
-            return@body false
         }
+        return@body false
     }
 
     if (opened && haveTarget) {
@@ -60,3 +63,7 @@ internal fun spectatorList() = every(1000) {
 // Move to normal spot whenever
 internal fun Player.observerMode(): Int = csgoEXE.int(this + m_iObserverMode)
 internal fun Player.isSpectating(): Boolean = observerMode() > 0
+fun Source.readIndex(address: Long) = int(address).toIndex()
+fun Int.toIndex() = ((this and 0xFFF) - 1).run {
+    if (this == 4094) -1 else this
+}

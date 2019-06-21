@@ -330,6 +330,7 @@ fun UIUpdate() {
     miscTab.apply {
         bunnyHop.isChecked = curSettings["ENABLE_BUNNY_HOP"]!!.strToBool()
         autoStrafe.isChecked = curSettings["AUTO_STRAFE"]!!.strToBool()
+        fastStop.isChecked = curSettings["FAST_STOP"]!!.strToBool()
         bombTimer.isChecked = curSettings["ENABLE_BOMB_TIMER"]!!.strToBool()
         spectatorList.isChecked = curSettings["SPECTATOR_LIST"]!!.strToBool()
         menuKeyField.text = curSettings["MENU_KEY"]
