@@ -37,14 +37,14 @@ internal fun glowEsp() = every(4) {
 
 	forEntities body@ {
 		val entity = it.entity
-		if (entity <= 0 || me == entity) return@body false
+		if (entity <= 0 || me == entity || entity.dormant()) return@body false
 
 		val glowAddress = it.glowAddress
 		if (glowAddress <= 0) return@body false
 
 		when (it.type) {
 			EntityType.CCSPlayer -> {
-				if (entity.dead() || (!curSettings["GLOW_SHOW_DORMANT"]!!.strToBool() && entity.dormant())) return@body false
+				if (entity.dead()) return@body false
 
 				val entityTeam = entity.team()
 				val team = !DANGER_ZONE && myTeam == entityTeam

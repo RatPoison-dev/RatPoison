@@ -9,6 +9,7 @@
     * When the target is highlighted light blue it was seen as being inside the aimbot's fov
 * Fixed aimbot not working in a special case, shown [here](https://gyazo.com/ae8a9d1dde6fcdecb07e29bf64d7054c)
 * Fixed override weapons only using AK47's settings (1.3.3)
+* (possibly) Fixed showing dormant entities on esps
 
 ---
 

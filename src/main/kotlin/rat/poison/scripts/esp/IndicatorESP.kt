@@ -24,11 +24,10 @@ internal fun indicatorEsp() = App {
 
     forEntities {
         val entity = it.entity
-        if (entity == me) return@forEntities false
 
         when (it.type) {
             EntityType.CCSPlayer -> {
-                if (entity.dead() || entity.dormant()) return@forEntities false
+                if (entity.dead() || entity == me || entity.dormant()) return@forEntities false
 
                 if (curSettings["INDICATOR_SHOW_ENEMIES"]!!.strToBool() && me.team() != entity.team()) {
                     w2sHandler(entity.position(), me.position().distanceTo(entity.position()), ENEMY_COLOR)

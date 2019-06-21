@@ -198,7 +198,6 @@ fun UIUpdate() {
 
         glowEspTab.showTeam.isDisabled = bool
         glowEspTab.showEnemies.isDisabled = bool
-        glowEspTab.showDormant.isDisabled = bool
         glowEspTab.showBomb.isDisabled = bool
         glowEspTab.showWeapons.isDisabled = bool
         glowEspTab.showGrenades.isDisabled = bool
@@ -220,7 +219,6 @@ fun UIUpdate() {
 
         indicatorEspTab.showTeam.isDisabled = bool
         indicatorEspTab.showEnemies.isDisabled = bool
-        indicatorEspTab.showDormant.isDisabled = bool
         indicatorEspTab.showBomb.isDisabled = bool
         indicatorEspTab.showWeapons.isDisabled = bool
         indicatorEspTab.showGrenades.isDisabled = bool
@@ -255,7 +253,6 @@ fun UIUpdate() {
         modelAndGlow.isChecked = curSettings["MODEL_AND_GLOW"]!!.strToBool()
         showTeam.isChecked = curSettings["GLOW_SHOW_TEAM"]!!.strToBool()
         showEnemies.isChecked = curSettings["GLOW_SHOW_ENEMIES"]!!.strToBool()
-        showDormant.isChecked = curSettings["GLOW_SHOW_DORMANT"]!!.strToBool()
         showBomb.isChecked = curSettings["GLOW_SHOW_BOMB"]!!.strToBool()
         showWeapons.isChecked = curSettings["GLOW_SHOW_WEAPONS"]!!.strToBool()
         showGrenades.isChecked = curSettings["GLOW_SHOW_GRENADES"]!!.strToBool()
@@ -284,7 +281,6 @@ fun UIUpdate() {
         indicatorDistanceSlider.value = curSettings["INDICATOR_DISTANCE"]!!.toDouble().toFloat()
         showTeam.isChecked = curSettings["INDICATOR_SHOW_TEAM"]!!.strToBool()
         showEnemies.isChecked = curSettings["INDICATOR_SHOW_ENEMIES"]!!.strToBool()
-        showDormant.isChecked = curSettings["INDICATOR_SHOW_DORMANT"]!!.strToBool()
         showBomb.isChecked = curSettings["INDICATOR_SHOW_BOMB"]!!.strToBool()
         showWeapons.isChecked = curSettings["INDICATOR_SHOW_WEAPONS"]!!.strToBool()
         showGrenades.isChecked = curSettings["INDICATOR_SHOW_GRENADES"]!!.strToBool()

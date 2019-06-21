@@ -44,7 +44,7 @@ internal fun chamsEsp() = every(256) {
 
     forEntities body@ {
         val entity = it.entity
-        if (entity <= 0 || entity == dwLocalPlayer || me == entity) return@body false
+        if (entity <= 0 || entity == me || entity.dormant()) return@body false
 
         val glowAddress = it.glowAddress
         if (glowAddress <= 0) return@body false

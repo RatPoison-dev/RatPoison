@@ -23,7 +23,6 @@ class GlowEspTab : Tab(false, false) {
 
     val showTeam = VisCheckBox("Show Team")
     val showEnemies = VisCheckBox("Show Enemies")
-    val showDormant = VisCheckBox("Show Dormant")
     val showBomb = VisCheckBox("Show Bomb")
     val showWeapons = VisCheckBox("Show Weapons")
     val showGrenades = VisCheckBox("Show Grenades")
@@ -117,14 +116,6 @@ class GlowEspTab : Tab(false, false) {
             true
         }
 
-        //Create Show Dormant Toggle
-        Tooltip.Builder("Whether or not to show dormant entities with esp").target(showDormant).build()
-        if (curSettings["GLOW_SHOW_DORMANT"]!!.strToBool()) showDormant.toggle()
-        showDormant.changed { _, _ ->
-            curSettings["GLOW_SHOW_DORMANT"] = showDormant.isChecked.boolToStr()
-            true
-        }
-
         //Create Show Bomb Toggle
         Tooltip.Builder("Whether or not to show bomb with esp").target(showBomb).build()
         if (curSettings["GLOW_SHOW_BOMB"]!!.strToBool()) showBomb.toggle()
@@ -163,7 +154,6 @@ class GlowEspTab : Tab(false, false) {
         table.add(modelAndGlow).row()
         table.add(showTeam)
         table.add(showEnemies).row()
-        table.add(showDormant)
         table.add(showBomb).row()
         table.add(showWeapons)
         table.add(showGrenades).row()

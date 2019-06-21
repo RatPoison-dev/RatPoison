@@ -20,7 +20,6 @@ class IndicatorEspTab : Tab(false, false) {
 
     val showTeam = VisCheckBox("Show Team")
     val showEnemies = VisCheckBox("Show Enemies")
-    val showDormant = VisCheckBox("Show Dormant")
     val showBomb = VisCheckBox("Show Bomb")
     val showWeapons = VisCheckBox("Show Weapons")
     val showGrenades = VisCheckBox("Show Grenades")
@@ -77,14 +76,6 @@ class IndicatorEspTab : Tab(false, false) {
             true
         }
 
-        //Create Show Dormant Toggle
-        Tooltip.Builder("Whether or not to show dormant entities with esp").target(showDormant).build()
-        if (curSettings["INDICATOR_SHOW_DORMANT"]!!.strToBool()) showDormant.toggle()
-        showDormant.changed { _, _ ->
-            curSettings["INDICATOR_SHOW_DORMANT"] = showDormant.isChecked.boolToStr()
-            true
-        }
-
         //Create Show Bomb Toggle
         Tooltip.Builder("Whether or not to show bomb with esp").target(showBomb).build()
         if (curSettings["INDICATOR_SHOW_BOMB"]!!.strToBool()) showBomb.toggle()
@@ -117,7 +108,6 @@ class IndicatorEspTab : Tab(false, false) {
         table.add(indicatorDistance).colspan(2).row()
         table.add(showTeam)
         table.add(showEnemies).row()
-        table.add(showDormant)
         table.add(showBomb).row()
         table.add(showWeapons)
         table.add(showGrenades).row()

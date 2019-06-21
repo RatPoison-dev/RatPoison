@@ -34,14 +34,6 @@ GLOW_SHOW_TEAM = false
 GLOW_SHOW_ENEMIES = true
 
 /**
- * Whether or not to highlight "dormant" (unknown-location) players.
- *
- * Enabling this can allow you to see players at a further distance,
- * but you may see some "ghost" players which are really not there.
- */
-GLOW_SHOW_DORMANT = false
-
-/**
  * Whether or not to highlight the bomb.
  */
 GLOW_SHOW_BOMB = true

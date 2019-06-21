@@ -85,7 +85,6 @@ class VisualsTab : Tab(false, false) {
 
             glowEspTab.showTeam.isDisabled = bool
             glowEspTab.showEnemies.isDisabled = bool
-            glowEspTab.showDormant.isDisabled = bool
             glowEspTab.showBomb.isDisabled = bool
             glowEspTab.showWeapons.isDisabled = bool
             glowEspTab.showGrenades.isDisabled = bool
@@ -107,7 +106,6 @@ class VisualsTab : Tab(false, false) {
 
             indicatorEspTab.showTeam.isDisabled = bool
             indicatorEspTab.showEnemies.isDisabled = bool
-            indicatorEspTab.showDormant.isDisabled = bool
             indicatorEspTab.showBomb.isDisabled = bool
             indicatorEspTab.showWeapons.isDisabled = bool
             indicatorEspTab.showGrenades.isDisabled = bool

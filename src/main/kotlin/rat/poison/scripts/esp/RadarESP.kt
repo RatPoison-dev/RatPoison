@@ -8,6 +8,7 @@ import rat.poison.game.offsets.ClientOffsets.bDormant
 import rat.poison.utils.every
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.curSettings
+import rat.poison.game.me
 import rat.poison.strToBool
 
 internal fun radarEsp() = every(1) {
@@ -15,7 +16,8 @@ internal fun radarEsp() = every(1) {
 
     forEntities(ccsPlayer) {
         val entity = it.entity
-        if (entity.dead() || entity.dormant()) return@forEntities false
+
+        if (entity.dead() || entity == me || entity.dormant()) return@forEntities false
         entity.show()
 
         false
@@ -24,5 +26,5 @@ internal fun radarEsp() = every(1) {
 
 private fun Entity.show() {
     csgoEXE[this + bSpotted] = true
-    csgoEXE[this + bDormant] = false
+    //csgoEXE[this + bDormant] = false
 }
