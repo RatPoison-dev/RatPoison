@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector3
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
-import rat.poison.scripts.aim.bone
 import rat.poison.strToBool
 import rat.poison.utils.*
 
@@ -13,18 +12,19 @@ private val lastPunch = Vector2()
 private val newPunch = Vector2()
 private val playerPunch = Vector3()
 
-fun rcs() = every(1) {
+fun rcs() = every(4) {
 	if (me <= 0 || !curSettings["ENABLE_RCS"]!!.strToBool()) return@every
+
 	val weaponEntity = me.weaponEntity()
 	val weapon = me.weapon(weaponEntity)
-	if (!weapon.automatic) return@every
+	if (!weapon.automatic) { lastPunch.set(0F, 0F); return@every }
 	val shotsFired = me.shotsFired()
 	val p = me.punch()
 
 	val forceSet = (shotsFired == 0 && !lastPunch.isZero)
 	val finishPunch = true
 
-	if (forceSet || !finishPunch || shotsFired > 1) { //Fixes aim jumping down
+	if (forceSet || !finishPunch || shotsFired > 1) {
 		if (lastPunch.isZero) {
 			lastPunch.set(p.x.toFloat(), p.y.toFloat())
 		}
@@ -46,6 +46,4 @@ fun rcs() = every(1) {
 			lastPunch.set(0F, 0F)
 		}
 	}
-
-	bone.set(curSettings["AIM_BONE"]!!.toInt())
 }

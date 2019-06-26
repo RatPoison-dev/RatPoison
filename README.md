@@ -3,13 +3,18 @@
 * Added auto strafe
 * Added spectator list (updated to show spectators of entity being spectated by local player (1.3.3))
 * Added fast stop (1.3.3)
+* Added NEAREST to aim bone selection (1.3.3)
+* Added MENU_APP to draw the overlay on an app other than CSGO for fullscreen users (1.3.3)
 * Fixed rifle settings not being used
 * Readded bone trigger delay & added to menu
 * Fixed aimbot fucking up when aiming at targets a certain way due to yawDiff calculation error, shown [here](https://gyazo.com/e297d0e2e07b4a730611e81b8279cc5f)
     * When the target is highlighted light blue it was seen as being inside the aimbot's fov
 * Fixed aimbot not working in a special case, shown [here](https://gyazo.com/ae8a9d1dde6fcdecb07e29bf64d7054c)
 * Fixed override weapons only using AK47's settings (1.3.3)
+* Fixed RCS issue causing jumps in aim, shown [here](https://gyazo.com/d5ae6fb790e19e7aeea6e6e11132f4c2) (1.3.3)
 * (possibly) Fixed showing dormant entities on esps
+
+* Possible Issue: Glow esp might crash on startup, shown [here](https://gyazo.com/fd42b3ffc712f40dd80166578ae5d003)
 
 ---
 

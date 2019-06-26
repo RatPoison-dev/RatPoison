@@ -4,6 +4,7 @@
 package rat.poison.overlay
 
 import com.sun.jna.platform.win32.WinUser
+import rat.poison.curSettings
 import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
 import rat.poison.jna.*
@@ -96,7 +97,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 
 	private fun monitorTargetApp() = with(User32) {
 		if (targetAppHWND == HWND_ZERO) {
-			println("Waiting for CSGO")
+			println("Waiting for App")
 			targetAppHWND = getWindowHWND(targetAppTitle, kotlin.Long.MAX_VALUE)
 			if (targetAppHWND == HWND_ZERO) {
 				return@with
@@ -134,8 +135,10 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 				}
 			} else {
 				if (isMyWindowVisible) {
-					ShowWindow(myHWND, com.sun.jna.platform.win32.WinUser.SW_HIDE)
-					listener?.onBackground(this@Overlay)
+					if (curSettings["MENU_APP"]!!.toString().replace("\"", "") == "Counter-Strike: Global Offensive") {
+						ShowWindow(myHWND, com.sun.jna.platform.win32.WinUser.SW_HIDE)
+						listener?.onBackground(this@Overlay)
+					}
 				}
 			}
 		} else {

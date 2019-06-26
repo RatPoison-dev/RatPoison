@@ -9,6 +9,12 @@ import rat.poison.settings.*
 MENU = true
 
 /**
+ * The title of the app to draw the overlay on
+ * An example for a blank new notepad would be "Untitled - Notepad"
+ */
+MENU_APP = "Counter-Strike: Global Offensive"
+
+/**
  * Whether or not to display warning upon opening menu
  */
 WARNING = true
@@ -21,7 +27,7 @@ SPECTATOR_LIST = true
 /**
  * Enable/disable fast stop
  */
-FAST_STOP = true
+FAST_STOP = false
 
 /**
  * Whether or not to enable or disable aims
@@ -112,11 +118,11 @@ STOMACH_BONE = 5
  * Variables used in game, not saved settings, no need to touch
  */
 PERFECT_AIM = true
-PERFECT_AIM_CHANCE = 10
-PERFECT_AIM_FOV = 5
-AIM_BONE = 6
-AIM_SPEED = 16
-AIM_FOV = 60
+PERFECT_AIM_CHANCE = 15
+PERFECT_AIM_FOV = 10
+AIM_BONE = -1
+AIM_SPEED = 12
+AIM_FOV = 30
 AIM_ASSIST_MODE = false
 FACTOR_RECOIL = true
 ENABLE_FLAT_AIM = false

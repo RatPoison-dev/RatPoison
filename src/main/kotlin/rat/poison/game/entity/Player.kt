@@ -1,10 +1,10 @@
 package rat.poison.game.entity
 
+import com.badlogic.gdx.math.Vector3
 import com.sun.jna.Memory
 import rat.poison.game.CSGO.ENTITY_SIZE
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.Weapons
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.game.netvars.NetVarOffsets.bHasDefuser
 import rat.poison.game.netvars.NetVarOffsets.bIsScoped
@@ -19,22 +19,17 @@ import rat.poison.game.netvars.NetVarOffsets.vecViewOffset
 import rat.poison.game.offsets.ClientOffsets.dwEntityList
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.SERVER_TICK_RATE
-import rat.poison.utils.Angle
-import rat.poison.utils.Vector
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.readCached
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
 import org.jire.arrowhead.unsign
-import rat.poison.game.angle
-import rat.poison.game.clientState
-import rat.poison.game.me
+import rat.poison.game.*
 import rat.poison.game.netvars.NetVarOffsets.ArmorValue
 import rat.poison.game.netvars.NetVarOffsets.aimPunchAngle
 import rat.poison.game.netvars.NetVarOffsets.angEyeAngles
 import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.game.offsets.EngineOffsets
-import rat.poison.utils.to
+import rat.poison.utils.*
 
 typealias Player = Long
 
@@ -110,6 +105,65 @@ internal fun Player.time(): Double = csgoEXE.int(this + nTickBase) * (1.0 / SERV
 internal fun Player.location(): String = csgoEXE.read(this + NetVarOffsets.szLastPlaceName, 32, true)?.getString(0)
 		?: ""
 
+internal fun Player.observerMode(): Int = csgoEXE.int(this + NetVarOffsets.m_iObserverMode)
+
+internal fun Player.isSpectating(): Boolean = observerMode() > 0
+
+internal fun Player.nearestBone(): Int {
+	val studioModel = csgoEXE.uint(studioHdr())
+	val boneOffset = csgoEXE.uint(studioModel + 0xA0)
+	val boneMatrix = boneMatrix()
+	val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
+
+	val w2sRetVec = Vector(0.0, 0.0, 0.0)
+
+	//Get actual size
+	val modelMemory: Memory by lazy {
+		Memory(21116) //4268 //20252
+	}
+	val boneMemory: Memory by lazy {
+		Memory(3984) //672 //3792
+	}
+
+	csgoEXE.read(studioModel + boneOffset, modelMemory)
+	csgoEXE.read(boneMatrix, boneMemory)
+
+	var closestDst2 = Float.MAX_VALUE
+	var nearestBone = -1
+
+	//Change to loop set amount of bones
+	var offset = 0
+	for (idx in 0 until numBones) {
+		val parent = modelMemory.getInt(0x4L + offset)
+
+		if (parent != -1) {
+			val flags = modelMemory.getInt(0xA0L + offset).unsign() and 0x100
+			if (flags != 0L) {
+				//fucking fix w2s vec bs
+				if (worldToScreen(boneMemory.vector(parent * 0x30L, 0x0C, 0x1C, 0x2C), w2sRetVec)) {
+					val tempVec3 = Vector3(w2sRetVec.x.toFloat(), w2sRetVec.y.toFloat(), w2sRetVec.z.toFloat())
+					val dst2 = tempVec3.dst2(CSGO.gameWidth * .5f, CSGO.gameHeight * .5f, 0f)
+					if (dst2 < closestDst2) {
+						closestDst2 = dst2
+						nearestBone = parent
+					}
+				}
+			}
+		}
+		offset += 216
+	}
+
+	return nearestBone
+}
+
+internal fun Memory.vector(addy: Long, xOff: Long, yOff: Long, zOff: Long): Vector {
+	val x = getFloat(addy + xOff).toDouble()
+	val y = getFloat(addy + yOff).toDouble()
+	val z = getFloat(addy + zOff).toDouble()
+
+	return Vector(x, y, z)
+}
+
 internal fun Player.name(): String {
 	val mem: Memory by lazy {
 		Memory(0x140)
@@ -128,6 +182,21 @@ internal fun Player.name(): String {
 	mem.dump()
 	return name
 }
+
+////////Probably not correct, can't test atm
+//internal fun Player.rank(): Int {
+//	val mem: Memory by lazy {
+//		Memory(6848) //Probably not correct
+//	}
+//
+//	csgoEXE.read(clientDLL.address + dwPlayerResource, mem)
+//
+//	val index = csgoEXE.uint(this + dwIndex)
+//
+//	val test = mem.getInt(iCompetitiveRanking + index * 4)
+//
+//	return test
+//}
 
 internal fun Player.hltv(): Boolean {
 	val mem: Memory by lazy {

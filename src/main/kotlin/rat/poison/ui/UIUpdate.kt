@@ -75,7 +75,8 @@ fun UIUpdate() {
                 HEAD_BONE -> "HEAD"
                 NECK_BONE -> "NECK"
                 CHEST_BONE -> "CHEST"
-                else -> "STOMACH"
+                STOMACH_BONE -> "STOMACH"
+                else -> "NEAREST"
             }
             aimFovLabel.setText("Aim Fov: " + curSettings[categorySelected + "_AIM_FOV"]!!.toInt() + when (curSettings[categorySelected + "_AIM_FOV"]!!.length) {
                 3 -> "  "

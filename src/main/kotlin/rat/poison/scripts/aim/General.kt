@@ -44,11 +44,8 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 					closestPlayer = arr[2] as Long
 				}
 			}
-		}
-		else if (BONE == -2) //Bone trigger bone
-		{
-			if (curSettings["BONE_TRIGGER_HB"]!!.strToBool() && curSettings["BONE_TRIGGER_BB"]!!.strToBool())
-			{
+		} else if (BONE == -2) { //Bone trigger bone
+			if (curSettings["BONE_TRIGGER_HB"]!!.strToBool() && curSettings["BONE_TRIGGER_BB"]!!.strToBool()) {
 				for (i in 3..8) //Check all body bones & head bone
 				{
 					val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, i)
@@ -59,11 +56,8 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 						closestPlayer = arr[2] as Long
 					}
 				}
-			}
-			else if (curSettings["BONE_TRIGGER_BB"]!!.strToBool())
-			{
-				for (i in 3..7) //Check all body bones
-				{
+			} else if (curSettings["BONE_TRIGGER_BB"]!!.strToBool()) {
+				for (i in 3..7) { //Check all body bones
 					val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, i)
 
 					if (arr[0] != -1.0) {
@@ -72,9 +66,7 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 						closestPlayer = arr[2] as Long
 					}
 				}
-			}
-			else
-			{
+			} else {
 				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, HEAD_BONE)
 
 				if (arr[0] != -1.0) {
@@ -83,14 +75,23 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 					closestPlayer = arr[2] as Long
 				}
 			}
-		}
-		else { //Heavily cleaned up
-			val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, BONE)
+		} else {
+			if (BONE == -1) { //Nearest bone check
+				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, entity.nearestBone())
 
-			if (arr[0] != -1.0) {
-				closestFOV = arr[0] as Double
-				closestDelta = arr[1] as Double
-				closestPlayer = arr[2] as Long
+				if (arr[0] != -1.0) {
+					closestFOV = arr[0] as Double
+					closestDelta = arr[1] as Double
+					closestPlayer = arr[2] as Long
+				}
+			} else {
+				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, BONE)
+
+				if (arr[0] != -1.0) {
+					closestFOV = arr[0] as Double
+					closestDelta = arr[1] as Double
+					closestPlayer = arr[2] as Long
+				}
 			}
 		}
 		return@result false
@@ -157,8 +158,6 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	val forceAim = keyPressed(curSettings["FORCE_AIM_KEY"]!!.toInt())
 	val haveAmmo = me.weaponEntity().bullets() > 0
 
-	bone.set(curSettings["AIM_BONE"]!!.toInt())
-
 	val pressed = (aim || forceAim || boneTrig) && !MENUTOG && haveAmmo
 	var currentTarget = target.get()
 
@@ -183,6 +182,18 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			return@every
 		}
 		target.set(currentTarget)
+	}
+
+	val aB = curSettings["AIM_BONE"]!!.toInt()
+
+	if (aB == -1) { //Nearest bone check
+		val nearestBone = currentTarget.nearestBone()
+
+		if (nearestBone != -1) {
+			bone.set(nearestBone)
+		}
+	} else {
+		bone.set(aB)
 	}
 
  	if (currentTarget == me || !currentTarget.canShoot())

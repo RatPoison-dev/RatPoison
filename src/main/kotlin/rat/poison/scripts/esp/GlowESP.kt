@@ -50,7 +50,7 @@ internal fun glowEsp() = every(4) {
 				val team = !DANGER_ZONE && myTeam == entityTeam
 				if (curSettings["GLOW_SHOW_TARGET"]!!.strToBool() && it.entity == glowTarget.get() && !me.dead() && glowTarget.get() != -1L)
 				{
-					it.glowAddress.glow(curSettings["HIGHLIGHT_COLOR"]!!.strToColor(), true)
+					glowAddress.glow(curSettings["HIGHLIGHT_COLOR"]!!.strToColor(), entity.spotted())
 				} else if (curSettings["GLOW_SHOW_ENEMIES"]!!.strToBool() && !team) {
 					glowAddress.glow(curSettings["ENEMY_COLOR"]!!.strToColor(), entity.spotted())
 				} else if (curSettings["GLOW_SHOW_TEAM"]!!.strToBool() && team) {

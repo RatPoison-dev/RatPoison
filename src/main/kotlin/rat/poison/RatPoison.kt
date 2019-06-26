@@ -43,11 +43,9 @@ val curSettings = Settings()
 fun main() {
     System.setProperty("jna.nosys", "true")
 
-    GlobalScope.launch {
-        loadSettingsFromFiles(SETTINGS_DIRECTORY)
-    }
+    loadSettingsFromFiles(SETTINGS_DIRECTORY)
 
-    Thread.sleep(5000)
+    Thread.sleep(1000)
 
     if (FLICKER_FREE_GLOW) {
         PROCESS_ACCESS_FLAGS = PROCESS_ACCESS_FLAGS or WinNT.PROCESS_VM_OPERATION
@@ -80,6 +78,9 @@ fun main() {
     espToggle()
     automaticWeapon()
     fastStop()
+    //ranks()
+
+    println("App Title: " + curSettings["MENU_APP"]!!.replace("\"", ""))
 
     //Overlay check, not updated?
     if (curSettings["MENU"]!!.strToBool()) {
@@ -141,7 +142,7 @@ object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
-    private val overlay = Overlay("Counter-Strike: Global Offensive", "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
+    private val overlay = Overlay(curSettings["MENU_APP"]!!.toString().replace("\"", ""), "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     var haveTarget = false
     lateinit var menuStage: Stage
     lateinit var bombStage: Stage
