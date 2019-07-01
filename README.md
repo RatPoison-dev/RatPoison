@@ -1,3 +1,10 @@
+### Support Jire (Charlatano)
+
+**Donate with Bitcoin:** 3GqvcPY4rKcMxKU3jE59A2UHfV3NAyUhA6  
+**Or with PayPal:** thomasgnappo@gmail.com
+
+---
+
 1.3.3 + 1.3.2.3
 
 * Added auto strafe
