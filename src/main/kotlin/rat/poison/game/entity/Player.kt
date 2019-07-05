@@ -27,6 +27,7 @@ import rat.poison.game.*
 import rat.poison.game.netvars.NetVarOffsets.ArmorValue
 import rat.poison.game.netvars.NetVarOffsets.aimPunchAngle
 import rat.poison.game.netvars.NetVarOffsets.angEyeAngles
+import rat.poison.game.netvars.NetVarOffsets.bGunGameImmunity
 import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.utils.*
@@ -216,3 +217,5 @@ internal fun Player.hltv(): Boolean {
 	mem.dump()
 	return hltvB
 }
+
+internal fun Player.isProtected(): Boolean = csgoEXE.boolean(this + bGunGameImmunity)

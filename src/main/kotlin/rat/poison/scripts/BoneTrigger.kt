@@ -15,6 +15,7 @@ import rat.poison.scripts.aim.findTarget
 import rat.poison.settings.*
 import rat.poison.utils.*
 import rat.poison.curSettings
+import rat.poison.game.entity.isProtected
 import rat.poison.game.entity.position
 import rat.poison.game.entity.weapon
 import rat.poison.opened
@@ -37,7 +38,8 @@ private val onBoneTriggerTarget = every(4) {
                 if (curSettings["ENABLE_BONE_TRIGGER"]!!.strToBool()) {
                     val currentAngle = clientState.angle()
                     val position = me.position()
-                    if (findTarget(position, currentAngle, false, curSettings["BONE_TRIGGER_FOV"]!!.toInt(), -2) >= 0) {
+                    val target = findTarget(position, currentAngle, false, curSettings["BONE_TRIGGER_FOV"]!!.toInt(), -2)
+                    if (target >= 0 && !target.isProtected()) {
                         if ((keyReleased(curSettings["FIRE_KEY"]!!.toInt()) && curSettings["BONE_TRIGGER_ENABLE_KEY"]!!.strToBool() && keyPressed(curSettings["BONE_TRIGGER_KEY"]!!.toInt())) || (keyReleased(FIRE_KEY) && !curSettings["BONE_TRIGGER_ENABLE_KEY"]!!.strToBool())) {
                             boneTrig = curSettings["AIM_ON_BONE_TRIGGER"]!!.strToBool()
                             boneTrigger()
