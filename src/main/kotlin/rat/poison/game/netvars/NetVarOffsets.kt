@@ -24,6 +24,7 @@ object NetVarOffsets {
 	val nTickBase by netVar("DT_BasePlayer")
 
 	val flFlashMaxAlpha by netVar("DT_CSPlayer")
+	val bGunGameImmunity by netVar("DT_CSPlayer")
 	val iCrossHairID by netVar("DT_CSPlayer", "m_bHasDefuser", 0x5C)
 	val iShotsFired by netVar("DT_CSPlayer")
 	val bIsScoped by netVar("DT_CSPlayer")
