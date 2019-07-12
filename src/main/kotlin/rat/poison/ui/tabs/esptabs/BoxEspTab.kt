@@ -12,7 +12,7 @@ import rat.poison.strToBool
 import rat.poison.ui.changed
 
 class BoxEspTab : Tab(false, false) {
-    private val table = VisTable(true)
+    private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
     val boxEsp = VisCheckBox("Box Esp")
@@ -58,10 +58,13 @@ class BoxEspTab : Tab(false, false) {
             true
         }
 
-        table.add(boxEsp).colspan(2).row()
-        table.add(boxEspDetails).colspan(2).row()
-        table.add(showTeam)
-        table.add(showEnemies)
+        table.padLeft(25F)
+        table.padRight(25F)
+
+        table.add(boxEsp).left().row()
+        table.add(boxEspDetails).left().row()
+        table.add(showTeam).left()
+        table.add(showEnemies).padLeft(200 - boxEspDetails.width).left().row()
     }
 
     override fun getContentTable(): Table? {

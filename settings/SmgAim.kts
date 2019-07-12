@@ -26,7 +26,7 @@ SMG_FACTOR_RECOIL = true
 /**
  * Default aim bone the aims go to
  */
-SMG_AIM_BONE = 6
+SMG_AIM_BONE = 7
 
 /**
  * The field of view of the aimbot, in degrees (0 to 360).
@@ -38,17 +38,17 @@ SMG_AIM_FOV = 50
  *
  * The minimum value is 1
  */
-SMG_AIM_SPEED = 12
+SMG_AIM_SPEED = 1
 
 /**
  * The smoothness of the aimbot
  */
-SMG_AIM_SMOOTHNESS = 2.5
+SMG_AIM_SMOOTHNESS = 2.0
 
 /**
  * The sens multiplier of the aimbot
  */
-SMG_AIM_STRICTNESS = 3.5
+SMG_AIM_STRICTNESS = 2.0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

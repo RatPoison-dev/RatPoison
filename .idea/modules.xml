@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rat.poison.RatPoison.iml" filepath="$PROJECT_DIR$/.idea/modules/rat.poison.RatPoison.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RatPoison.iml" filepath="$PROJECT_DIR$/RatPoison.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RatPoison.main.iml" filepath="$PROJECT_DIR$/.idea/modules/RatPoison.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RatPoison.test.iml" filepath="$PROJECT_DIR$/.idea/modules/RatPoison.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/rat.poison.RatPoison.main.iml" filepath="$PROJECT_DIR$/.idea/modules/rat.poison.RatPoison.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/rat.poison.RatPoison.test.iml" filepath="$PROJECT_DIR$/.idea/modules/rat.poison.RatPoison.test.iml" />
     </modules>

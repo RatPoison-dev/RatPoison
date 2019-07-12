@@ -33,7 +33,7 @@ internal fun autoKnife() = every(4) {
                 val position = me.position()
                 val target = findTarget(position, currentAngle, false, 32, -2)
                 if (target >= 0) {
-                    if (keyReleased(curSettings["FIRE_KEY"]!!.toInt())) {
+                    if (keyReleased(curSettings["AIM_KEY"]!!.toInt())) {
                         val targetPos = target.absPosition()
                         val mePos = me.absPosition()
                         val dst = mePos.distanceTo(targetPos)

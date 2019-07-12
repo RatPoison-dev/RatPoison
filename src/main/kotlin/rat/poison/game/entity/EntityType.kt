@@ -5,7 +5,7 @@ import org.jire.arrowhead.unsign
 
 enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false) {
 	NULL,
-	CAI_BaseNPC,
+	CAIBaseNPC,
 	CAK47(weapon = true),
 	CBaseAnimating,
 	CBaseAnimatingOverlay,
@@ -85,8 +85,8 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false)
 	CFlashbang(grenade = true),
 	CFogController,
 	CFootstepControl,
-	CFunc_Dust,
-	CFunc_LOD,
+	CFuncDust,
+	CFuncLOD,
 	CFuncAreaPortalWindow,
 	CFuncBrush,
 	CFuncConveyor,
@@ -109,7 +109,7 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false)
 	CInfoLadderDismount,
 	CInfoMapRegion,
 	CInfoOverlayAccessor,
-	CItem_Healthshot(weapon = true),
+	CItemHealthshot(weapon = true),
 	CItemCash,
 	CItemDogtags,
 	CKnife,
@@ -145,7 +145,7 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false)
 	CPrecipitation,
 	CPrecipitationBlocker,
 	CPredictedViewModel,
-	CProp_Hallucination,
+	CPropHallucination,
 	CPropCounter,
 	CPropDoorRotating,
 	CPropJeep,
@@ -227,7 +227,7 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false)
 	CTESparks,
 	CTESprite,
 	CTESpriteSpray,
-	CTest_ProxyToggle_Networkable,
+	CTestProxyToggleNetworkable,
 	CTestTraceline,
 	CTEWorldDecal,
 	CTriggerPlayerMovement,
@@ -306,7 +306,7 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false)
 			return byID(clsid) ?: NULL
 		}
 		
-		val ccsPlayer = arrayOf(EntityType.CCSPlayer)
+		val ccsPlayer = arrayOf(CCSPlayer)
 		
 	}
 	

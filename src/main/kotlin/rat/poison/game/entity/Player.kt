@@ -27,8 +27,10 @@ import rat.poison.game.*
 import rat.poison.game.netvars.NetVarOffsets.ArmorValue
 import rat.poison.game.netvars.NetVarOffsets.aimPunchAngle
 import rat.poison.game.netvars.NetVarOffsets.angEyeAngles
+import rat.poison.game.netvars.NetVarOffsets.iCompetitiveRanking
 import rat.poison.game.netvars.NetVarOffsets.bGunGameImmunity
 import rat.poison.game.offsets.ClientOffsets.dwIndex
+import rat.poison.game.offsets.ClientOffsets.dwPlayerResource
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.utils.*
 
@@ -110,6 +112,8 @@ internal fun Player.observerMode(): Int = csgoEXE.int(this + NetVarOffsets.m_iOb
 
 internal fun Player.isSpectating(): Boolean = observerMode() > 0
 
+internal fun Player.isProtected(): Boolean = csgoEXE.boolean(this + bGunGameImmunity)
+
 internal fun Player.nearestBone(): Int {
 	val studioModel = csgoEXE.uint(studioHdr())
 	val boneOffset = csgoEXE.uint(studioModel + 0xA0)
@@ -184,20 +188,20 @@ internal fun Player.name(): String {
 	return name
 }
 
-////////Probably not correct, can't test atm
-//internal fun Player.rank(): Int {
-//	val mem: Memory by lazy {
-//		Memory(6848) //Probably not correct
-//	}
-//
-//	csgoEXE.read(clientDLL.address + dwPlayerResource, mem)
-//
-//	val index = csgoEXE.uint(this + dwIndex)
-//
-//	val test = mem.getInt(iCompetitiveRanking + index * 4)
-//
-//	return test
-//}
+//////Probably not correct, can't test atm
+internal fun Player.rank(): Int {
+	val mem: Memory by lazy {
+		Memory(6924) //Probably not correct
+	}
+
+	csgoEXE.read(clientDLL.address + dwPlayerResource, mem)
+
+	val index = csgoEXE.uint(this + dwIndex)
+
+	val test = mem.getInt(iCompetitiveRanking + index * 4)
+
+	return test
+}
 
 internal fun Player.hltv(): Boolean {
 	val mem: Memory by lazy {
@@ -217,5 +221,3 @@ internal fun Player.hltv(): Boolean {
 	mem.dump()
 	return hltvB
 }
-
-internal fun Player.isProtected(): Boolean = csgoEXE.boolean(this + bGunGameImmunity)

@@ -26,7 +26,7 @@ SNIPER_FACTOR_RECOIL = false
 /**
  * Default aim bone the aims go to
  */
-SNIPER_AIM_BONE = 6
+SNIPER_AIM_BONE = -1
 
 /**
  * The field of view of the aimbot, in degrees (0 to 360).
@@ -38,7 +38,7 @@ SNIPER_AIM_FOV = 40
  *
  * The minimum value is 1
  */
-SNIPER_AIM_SPEED = 1
+SNIPER_AIM_SPEED = 0
 
 /**
  * The smoothness of the aimbot

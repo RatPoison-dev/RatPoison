@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.*
 import rat.poison.ui.tabs.*
+import kotlin.system.exitProcess
 
 val mainTabbedPane = TabbedPane()
     val aimTab = AimTab()
@@ -14,16 +15,17 @@ val mainTabbedPane = TabbedPane()
     val miscTab = MiscTab()
     val settingsTab = OptionsTab()
 
-class UIMenu : VisWindow("RatPoison UI") {
+class UIMenu : VisWindow("Rat Poison 1.3.4") {
     init {
         defaults().left()
+
+        addCloseButton()
 
         //Main ui window settings
         x = 960F
         y = 540F
         align(Align.topLeft)
-        isResizable = true
-
+        isResizable = false
 
         //Main content pane for all tabs
         val mainTabbedPaneContent = VisTable()
@@ -31,12 +33,10 @@ class UIMenu : VisWindow("RatPoison UI") {
         mainTabbedPaneContent.padBottom(10F)
         mainTabbedPaneContent.align(Align.top)
 
-
         //Scroll pane for the content pane, content pane goes inside
         val mainScrollPane = ScrollPane(mainTabbedPaneContent) //Init scroll pane containing main content pane
         mainScrollPane.setFlickScroll(false)
         mainScrollPane.setSize(1000F, 1000F)
-
 
         //Add tabs to the tab header
         mainTabbedPane.add(aimTab)
@@ -90,7 +90,15 @@ class UIMenu : VisWindow("RatPoison UI") {
         centerWindow()
 
         //Update all tab content
-        UIUpdate()
+        uiUpdate()
+    }
+
+    override fun close() {
+        exitProcess(0)
+    }
+
+    internal fun changeAlpha(alpha: Float) {
+        color.a = alpha
     }
 }
 

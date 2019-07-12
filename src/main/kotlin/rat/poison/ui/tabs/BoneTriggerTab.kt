@@ -6,11 +6,8 @@ import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.boolToStr
 import rat.poison.curSettings
-import rat.poison.settings.*
 import rat.poison.strToBool
-import rat.poison.ui.bTrigTab
 import rat.poison.ui.changed
-import rat.poison.ui.mainTabbedPane
 
 class BTrigTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -18,15 +15,15 @@ class BTrigTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     val enableAutoKnife = VisCheckBox("Enable Auto Knife")
     val enableBoneTrigger = VisCheckBox("Enable Bone Trigger")
-    val boneTriggerFovLabel = VisLabel("Bone Trigger Fov: " + curSettings["BONE_TRIGGER_FOV"] + when(curSettings["BONE_TRIGGER_FOV"]!!.length) {3->"  " 2->"    " else ->"      "})
+    val boneTriggerFovLabel = VisLabel("FOV: " + curSettings["BONE_TRIGGER_FOV"] + when(curSettings["BONE_TRIGGER_FOV"]!!.length) {3->"  " 2->"    " else ->"      "})
     val boneTriggerFovSlider = VisSlider(0F, 200F, 1F, false)
-    val boneTriggerDelayLabel = VisLabel("Bone Trigger Shot Delay: " + curSettings["BONE_TRIGGER_SHOT_DELAY"] + when(curSettings["BONE_TRIGGER_SHOT_DELAY"]!!.length) {3->"  " 2->"    " else ->"      "})
+    val boneTriggerDelayLabel = VisLabel("Shot Delay: " + curSettings["BONE_TRIGGER_SHOT_DELAY"] + when(curSettings["BONE_TRIGGER_SHOT_DELAY"]!!.length) {3->"  " 2->"    " else ->"      "})
     val boneTriggerDelaySlider = VisSlider(0F, 200F, 1F, false)
     val boneTriggerBoneBox = VisSelectBox<String>()
     val boneTriggerCheckHead = VisCheckBox("Head")
     val boneTriggerCheckBody = VisCheckBox("Torso")
-    val aimOnBoneTrigger = VisCheckBox("Enable Aim On Bone Trigger")
-    val boneTriggerEnableKey = VisCheckBox("Enable Bone Trigger On Key")
+    val aimOnBoneTrigger = VisCheckBox("Enable Aimbot")
+    val boneTriggerEnableKey = VisCheckBox("Bone Trigger On Key")
     val boneTriggerKeyField = VisValidatableTextField(Validators.FLOATS)
 
     init {
@@ -52,11 +49,11 @@ class BTrigTab : Tab(false, false) {
         boneTriggerFovSlider.value = curSettings["BONE_TRIGGER_FOV"]!!.toFloat()
         boneTriggerFovSlider.changed { _, _ ->
             curSettings["BONE_TRIGGER_FOV"] = boneTriggerFovSlider.value.toInt().toString()
-            boneTriggerFovLabel.setText("Bone Trigger Fov: " + curSettings["BONE_TRIGGER_FOV"] + when(curSettings["BONE_TRIGGER_FOV"]!!.length) {3->"  " 2->"    " else ->"      "})
+            boneTriggerFovLabel.setText("FOV: " + curSettings["BONE_TRIGGER_FOV"] + when(curSettings["BONE_TRIGGER_FOV"]!!.length) {3->"  " 2->"    " else ->"      "})
         }
 
-        boneTriggerFov.add(boneTriggerFovLabel).spaceRight(6F)
-        boneTriggerFov.add(boneTriggerFovSlider)
+        boneTriggerFov.add(boneTriggerFovLabel).width(200F)
+        boneTriggerFov.add(boneTriggerFovSlider).width(250F)
 
         //Create Bone Trigger Shot Delay Slider
         val boneTriggerDelay = VisTable()
@@ -64,11 +61,11 @@ class BTrigTab : Tab(false, false) {
         boneTriggerDelaySlider.value = curSettings["BONE_TRIGGER_SHOT_DELAY"]!!.toFloat()
         boneTriggerDelaySlider.changed { _, _ ->
             curSettings["BONE_TRIGGER_SHOT_DELAY"] = boneTriggerDelaySlider.value.toInt().toString()
-            boneTriggerDelayLabel.setText("Bone Trigger Shot Delay: " + curSettings["BONE_TRIGGER_SHOT_DELAY"] + when(curSettings["BONE_TRIGGER_SHOT_DELAY"]!!.length) {3->"  " 2->"    " else ->"      "})
+            boneTriggerDelayLabel.setText("Shot Delay: " + curSettings["BONE_TRIGGER_SHOT_DELAY"] + when(curSettings["BONE_TRIGGER_SHOT_DELAY"]!!.length) {3->"  " 2->"    " else ->"      "})
         }
 
-        boneTriggerDelay.add(boneTriggerDelayLabel).spaceRight(6F)
-        boneTriggerDelay.add(boneTriggerDelaySlider)
+        boneTriggerDelay.add(boneTriggerDelayLabel).width(200F)
+        boneTriggerDelay.add(boneTriggerDelaySlider).width(250F)
 
         //Create Bone Trigger Head Bone Check Box
         Tooltip.Builder("Whether to trigger on head bone").target(boneTriggerCheckHead).build()
@@ -116,17 +113,19 @@ class BTrigTab : Tab(false, false) {
         boneTriggerKey.add(boneTriggerKeyField).spaceRight(6F).width(40F)
         boneTriggerKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
 
-        //Add all items to label for tabbed pane content
-        table.add(enableAutoKnife).row()
+        table.padLeft(25F)
+        table.padRight(25F)
+
+        table.add(enableAutoKnife).left().row()
         table.addSeparator()
-        table.add(enableBoneTrigger).row()
-        table.add(boneTriggerFov).row()
-        table.add(boneTriggerDelay).row()
-        table.add(boneTriggerCheckHead).row()
-        table.add(boneTriggerCheckBody).row()
-        table.add(aimOnBoneTrigger).row()
-        table.add(boneTriggerEnableKey).row()
-        table.add(boneTriggerKey).row()
+        table.add(enableBoneTrigger).left().row()
+        table.add(boneTriggerFov).left().row()
+        table.add(boneTriggerDelay).left().row()
+        table.add(boneTriggerCheckHead).left().row()
+        table.add(boneTriggerCheckBody).left().row()
+        table.add(aimOnBoneTrigger).left().row()
+        table.add(boneTriggerEnableKey).left().row()
+        table.add(boneTriggerKey).padLeft(20F).left().row()
     }
 
     override fun getContentTable(): Table? {

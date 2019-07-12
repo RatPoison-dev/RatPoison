@@ -12,6 +12,7 @@ import rat.poison.settings.GAME_YAW
 import rat.poison.utils.extensions.refresh
 import rat.poison.utils.extensions.set
 import com.sun.jna.platform.win32.WinDef.POINT
+import kotlin.math.round
 
 private val mousePos = ThreadLocal.withInitial { POINT() }
 private val target = ThreadLocal.withInitial { POINT() }
@@ -24,8 +25,14 @@ fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: 
 	z = 0.0
 	normalize()
 
-	x = currentAngle.x + x / 100 * (100 / smoothing)
-	y = currentAngle.y + y / 100 * (100 / smoothing)
+	var smooth = smoothing
+
+	if (smooth == 0.0) {
+		smooth = 1.0
+	}
+
+	x = currentAngle.x + x / 100 * (100 / smooth)
+	y = currentAngle.y + y / 100 * (100 / smooth)
 
 	normalize()
 }
@@ -53,8 +60,8 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
 	if (sens < GAME_SENSITIVITY) sens = GAME_SENSITIVITY
 	if (perfect) sens = 1.0
 
-	val dx = Math.round(delta.x / (sens * GAME_PITCH))
-	val dy = Math.round(-delta.y / (sens * GAME_YAW))
+	val dx = round(delta.x / (sens * GAME_PITCH))
+	val dy = round(-delta.y / (sens * GAME_YAW))
 
 	val mousePos = mousePos.get().refresh()
 
@@ -77,6 +84,6 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
 		if (halfIndex == 0) halfIndex = 1
 		mouseMove(tx / halfIndex, ty / halfIndex)
 
-		Thread.sleep((aimSpeed/10.0).toLong())
+		Thread.sleep(aimSpeed.toLong())
 	}
 }

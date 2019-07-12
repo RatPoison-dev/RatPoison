@@ -26,7 +26,7 @@ SHOTGUN_FACTOR_RECOIL = false
 /**
  * Default aim bone the aims go to
  */
-SHOTGUN_AIM_BONE = 6
+SHOTGUN_AIM_BONE = -1
 
 /**
  * The field of view of the aimbot, in degrees (0 to 360).
@@ -38,17 +38,17 @@ SHOTGUN_AIM_FOV = 50
  *
  * The minimum value is 1
  */
-SHOTGUN_AIM_SPEED = 4
+SHOTGUN_AIM_SPEED = 2
 
 /**
  * The smoothness of the aimbot
  */
-SHOTGUN_AIM_SMOOTHNESS = 1.0
+SHOTGUN_AIM_SMOOTHNESS = 1.1
 
 /**
  * The sens multiplier of the aimbot
  */
-SHOTGUN_AIM_STRICTNESS = 1.5
+SHOTGUN_AIM_STRICTNESS = 1.1
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,14 +59,14 @@ SHOTGUN_AIM_STRICTNESS = 1.5
  * Whether or not to use perfect aim, which will instantaneously snap
  * to the aim bone once you are within the (PERFECT_AIM_FOV).
  */
-SHOTGUN_PERFECT_AIM = true
+SHOTGUN_PERFECT_AIM = false
 
 /**
  * The FOV, in degrees (0 to 360) to snap for perfect aim.
  */
-SHOTGUN_PERFECT_AIM_FOV = 20
+SHOTGUN_PERFECT_AIM_FOV = 1
 
 /**
  * The chance, from 1% to 100% (0 to 100) for perfect aim to activate.
  */
-SHOTGUN_PERFECT_AIM_CHANCE = 40
+SHOTGUN_PERFECT_AIM_CHANCE = 1

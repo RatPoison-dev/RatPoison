@@ -11,7 +11,7 @@ import rat.poison.curSettings
 import rat.poison.strToBool
 
 class ChamsEspTab : Tab(false, false) {
-    private val table = VisTable(true)
+    private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
     val chamsEsp = VisCheckBox("Chams Esp")
@@ -27,7 +27,7 @@ class ChamsEspTab : Tab(false, false) {
         Tooltip.Builder("Whether or not to enable chams esp").target(chamsEsp).build()
         if (curSettings["CHAMS_ESP"]!!.strToBool()) chamsEsp.toggle()
         chamsEsp.changed { _, _ ->
-            curSettings.set("CHAMS_ESP", chamsEsp.isChecked.boolToStr())
+            curSettings["CHAMS_ESP"] = chamsEsp.isChecked.boolToStr()
 
             if (!curSettings["CHAMS_ESP"]!!.strToBool()) {
                 disableEsp()
@@ -49,12 +49,12 @@ class ChamsEspTab : Tab(false, false) {
         Tooltip.Builder("The brightness of chams if chams brightness is enabled").target(chamsBrightnessSlider).build()
         chamsBrightnessSlider.value = curSettings["CHAMS_BRIGHTNESS"]!!.toInt().toFloat()
         chamsBrightnessSlider.changed { _, _ ->
-            curSettings.set("CHAMS_BRIGHTNESS", chamsBrightnessSlider.value.toInt().toString())
-            chamsBrightnessLabel.setText("Chams Brightness: " + curSettings["CHAMS_BRIGHTNESS"]!!.toInt() + when(curSettings["CHAMS_BRIGHTNESS"]!!.toInt().toString().length) {4->"" 3->"  " 2->"    " else ->"      "}) //When is used to not make the sliders jitter when you go from 10 to 9, or 100 to 99, as that character space shifts everything, one character is 2 spaces
+            curSettings["CHAMS_BRIGHTNESS"] = chamsBrightnessSlider.value.toInt().toString()
+            chamsBrightnessLabel.setText("Chams Brightness: " + curSettings["CHAMS_BRIGHTNESS"]!!.toInt())
         }
 
-        chamsBrightness.add(chamsBrightnessLabel).spaceRight(6F)
-        chamsBrightness.add(chamsBrightnessSlider)
+        chamsBrightness.add(chamsBrightnessLabel).width(200F)
+        chamsBrightness.add(chamsBrightnessSlider).width(250F)
 
         //Create Show Team Toggle
         Tooltip.Builder("Whether or not to show team with esp").target(showTeam).build()
@@ -72,12 +72,16 @@ class ChamsEspTab : Tab(false, false) {
             true
         }
 
-        //Add all items to label for tabbed pane content
-        table.add(chamsEsp).colspan(2).row()
-        table.add(chamsShowHealth).colspan(2).row()
-        table.add(chamsBrightness).colspan(2).row()
-        table.add(showTeam)
-        table.add(showEnemies)
+        table.padLeft(25F)
+        table.padRight(25F)
+
+        table.add(chamsEsp).left()
+        table.add(chamsShowHealth).padLeft(8F).left().row()
+
+        table.add(chamsBrightness).left().colspan(2).row()
+
+        table.add(showTeam).left()
+        table.add(showEnemies).padLeft(8F).left()
     }
 
     override fun getContentTable(): Table? {

@@ -10,6 +10,8 @@ import rat.poison.strToBool
 import rat.poison.utils.every
 import rat.poison.utils.notInGame
 import java.awt.event.KeyEvent.*
+import kotlin.math.cos
+import kotlin.math.sin
 
 internal fun fastStop() = every(4) {
     if (!curSettings["FAST_STOP"]!!.strToBool() || notInGame) {
@@ -21,8 +23,8 @@ internal fun fastStop() = every(4) {
         val yaw = clientState.angle().y
 
         //Velocity relative to player direction
-        val x = (vel.x * Math.cos(yaw / 180 * Math.PI) + vel.y * Math.sin(yaw / 180 * Math.PI))
-        val y = (vel.y * Math.cos(yaw / 180 * Math.PI) - vel.x * Math.sin(yaw / 180 * Math.PI))
+        val x = (vel.x * cos(yaw / 180 * Math.PI) + vel.y * sin(yaw / 180 * Math.PI))
+        val y = (vel.y * cos(yaw / 180 * Math.PI) - vel.x * sin(yaw / 180 * Math.PI))
 
         //Remove hard codes
         if (!keyPressed(VK_SPACE)) {

@@ -11,8 +11,16 @@ MENU = true
 /**
  * The title of the app to draw the overlay on
  * An example for a blank new notepad would be "Untitled - Notepad"
+ * This requires the application to be the same size as the resolution of
+ * CSGO
  */
 MENU_APP = "Counter-Strike: Global Offensive"
+
+/**
+ * Default menu size, if game cannot be found and sized on initialize it refers to this
+ */
+OVERLAY_WIDTH = 2560
+OVERLAY_HEIGHT = 1440
 
 /**
  * Whether or not to display warning upon opening menu
@@ -35,17 +43,11 @@ FAST_STOP = false
 ENABLE_AIM = true
 
 /**
- * Default menu size, if game cannot be found and sized on initialize it refers to this
- */
-OVERLAY_WIDTH = 1920
-OVERLAY_HEIGHT = 1080
-
-/**
- * Whether or not to aim when using the (FIRE_KEY) (by default left click).
+ * Whether or not to aim when using the (AIM_KEY) (by default left click).
  *
  * You should disable this if you don't want aim to activate when left clicking.
  */
-ACTIVATE_FROM_FIRE_KEY = true
+ACTIVATE_FROM_AIM_KEY = true
 
 /**
  * This will allow you to shoot teammates with aimbot when turned on.
@@ -77,7 +79,7 @@ AIM_DURATION = 1
  *
  * By default, this is left click (1).
  */
-FIRE_KEY = 1
+AIM_KEY = 1
 
 /**
  * Key to disable ESP (say if a friend walks into your room); default G key
@@ -113,18 +115,19 @@ HEAD_BONE = 8
 NECK_BONE = 7
 CHEST_BONE = 6
 STOMACH_BONE = 5
+NEAREST_BONE = -1
 
 /**
  * Variables used in game, not saved settings, no need to touch
  */
-PERFECT_AIM = true
-PERFECT_AIM_CHANCE = 15
-PERFECT_AIM_FOV = 10
+PERFECT_AIM = false
+PERFECT_AIM_CHANCE = 1
+PERFECT_AIM_FOV = 1
 AIM_BONE = -1
-AIM_SPEED = 12
-AIM_FOV = 30
+AIM_SPEED = 0
+AIM_FOV = 40
 AIM_ASSIST_MODE = false
-FACTOR_RECOIL = true
-ENABLE_FLAT_AIM = false
-ENABLE_PATH_AIM = true
-AIM_STRICTNESS = 2.0
+FACTOR_RECOIL = false
+ENABLE_FLAT_AIM = true
+ENABLE_PATH_AIM = false
+AIM_STRICTNESS = 1.0

@@ -7,14 +7,15 @@ import rat.poison.boolToStr
 import rat.poison.curSettings
 import rat.poison.strToBool
 import rat.poison.ui.changed
+import kotlin.math.round
 
 class IndicatorEspTab : Tab(false, false) {
-    private val table = VisTable(true)
+    private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
     val indicatorEsp = VisCheckBox("Entity Indicator")
-    val indicatorOnScreen = VisCheckBox("Indicator Show Onscreen")
-    val indicatorOval = VisCheckBox("Indicator As Oval")
+    val indicatorOnScreen = VisCheckBox("Show Onscreen")
+    val indicatorOval = VisCheckBox("Oval")
     val indicatorDistanceLabel = VisLabel("Indicator Distance: " + curSettings["INDICATOR_DISTANCE"]!!.toDouble())
     val indicatorDistanceSlider = VisSlider(2F, 25F, 0.1F, false)
 
@@ -54,11 +55,11 @@ class IndicatorEspTab : Tab(false, false) {
         Tooltip.Builder("The radius of the circle/oval of indicators").target(indicatorDistance).build()
         indicatorDistanceSlider.value = curSettings["INDICATOR_DISTANCE"]!!.toDouble().toFloat()
         indicatorDistanceSlider.changed { _, _ ->
-            curSettings["INDICATOR_DISTANCE"] = (Math.round(indicatorDistanceSlider.value.toDouble() * 10.0)/10.0).toString() //Round to 1 decimal place
+            curSettings["INDICATOR_DISTANCE"] = (round(indicatorDistanceSlider.value.toDouble() * 10.0)/10.0).toString() //Round to 1 decimal place
             indicatorDistanceLabel.setText("Indicator Distance: " + curSettings["INDICATOR_DISTANCE"]!!.toDouble())
         }
-        indicatorDistance.add(indicatorDistanceLabel).spaceRight(6F)
-        indicatorDistance.add(indicatorDistanceSlider)
+        indicatorDistance.add(indicatorDistanceLabel).width(200F)
+        indicatorDistance.add(indicatorDistanceSlider).width(250F)
 
         //Create Show Team Toggle
         Tooltip.Builder("Whether or not to show team with esp").target(showTeam).build()
@@ -100,17 +101,19 @@ class IndicatorEspTab : Tab(false, false) {
             true
         }
 
+        table.padLeft(25F)
+        table.padRight(25F)
 
         //Add all items to label for tabbed pane content
-        table.add(indicatorEsp).colspan(2).row()
-        table.add(indicatorOnScreen).colspan(2).row()
-        table.add(indicatorOval).colspan(2).row()
-        table.add(indicatorDistance).colspan(2).row()
-        table.add(showTeam)
-        table.add(showEnemies).row()
-        table.add(showBomb).row()
-        table.add(showWeapons)
-        table.add(showGrenades).row()
+        table.add(indicatorEsp).left().row()
+        table.add(indicatorOnScreen).left().row()
+        table.add(indicatorOval).left().row()
+        table.add(indicatorDistance).left().colspan(2).row()
+        table.add(showTeam).left()
+        table.add(showEnemies).padRight(50F).left().row()
+        table.add(showBomb).left()
+        table.add(showWeapons).left().padRight(50F).row()
+        table.add(showGrenades).left()
     }
 
     override fun getContentTable(): Table? {

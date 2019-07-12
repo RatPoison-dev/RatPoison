@@ -13,6 +13,7 @@ import rat.poison.settings.*
 import rat.poison.strToBool
 import rat.poison.strToColor
 import rat.poison.utils.Vector
+import kotlin.math.ceil
 
 private val vHead = Vector()
 private val vFeet = Vector()
@@ -49,7 +50,7 @@ internal fun boxEsp() = App {
 			boxes[currentIdx].apply {
 				x = sx
 				y = sy
-				w = Math.ceil(boxW * 2).toInt()
+				w = ceil(boxW * 2).toInt()
 				h = boxH.toInt()
 				color = c
 				health = entity.health().toFloat()

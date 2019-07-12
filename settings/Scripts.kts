@@ -32,7 +32,7 @@ ENABLE_ESP = true
 ENABLE_BONE_TRIGGER = false
 
 /**
- * Whether non-automatic weapons shoot when FIRE_KEY is held down
+ * Whether non-automatic weapons shoot when AIM_KEY is held down
  */
 AUTOMATIC_WEAPONS = false
 
@@ -45,4 +45,4 @@ ENABLE_REDUCED_FLASH = false
  * Enables the bomb timer script.
  * This requires the overlay which only works when borderless fullscreen or windowed.
  */
-ENABLE_BOMB_TIMER = false
+ENABLE_BOMB_TIMER = true

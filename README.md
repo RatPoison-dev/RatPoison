@@ -5,6 +5,28 @@
 
 ---
 
+1.3.4
+
+* Updated default settings to look more legit
+* Rewrote recoil crosshair for (easier) readability
+* Added rCrosshair x offset, rCrosshair y offset to allow for the recoil crosshair to be adjusted to work on borderless or windowed without issue
+* libGDX 1.9.3 -> 1.9.9
+* VisUI 1.1.1 -> 1.4.2
+* Jdk 1.8 -> 12
+* Added X button to main menu, which closes the program
+* Updated visual of spectator list, and bomb timer
+    * Updated bomb timer layout to match spectator list
+* Fixed issue with override weapons not working with weapon overrides already enabled on launch
+* Fixed issue with override weapons defaulting to STOMACH when NEAREST was selected
+* Fixed bone trigger only working with menu enabled
+* Fixed aim speed snapping when less than 10
+* Aim speed is now between 1 - 5 (aim speed is ms delay per move)
+* Aim strictness & smoothness slider max changed from 10 -> 5
+* Fixed not shooting with bone trigger, within the fov and aim key pressed
+* Cleaned up all menu tabs excluding Options
+
+---
+
 1.3.3 + 1.3.2.3
 
 * Added auto strafe
@@ -116,29 +138,28 @@ Open to pull requests
 
 **Beginner's Guide**
 
-This branch is being updated at [AStupidRat's Github Repository](https://github.com/AStupidRat/RatPoison)
+This branch is being updated at [TheFuckingRat's Github Repository](https://github.com/TheFuckingRat/RatPoison)
 The official branch is located at [Jire's GitHub Repository](https://github.com/Jire/Charlatano)
 
 Before doing anything, make sure you have
-[Java Development Kit (JDK) 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-installed. This is NOT the same thing as the regular Java Runtime (JRE), and you MUST install the JDK
-in order to build Charlatano, as well as any other Java software, and you MUST install JDK 8 (as far as I know)
+[Java Development Kit (JDK) 12](https://www.oracle.com/technetwork/java/javase/downloads/jdk12-downloads-5295953.html)
+installed. [Alternative.](https://jdk.java.net/12/) This is NOT the same thing as the regular Java Runtime (JRE), and you MUST install the JDK
+in order to build Charlatano, as well as any other Java software, and you MUST install JDK 12
 
 The first step is to compile the source code into a usable cheat program.
 
-* Visit this branches [GitHub repository](https://github.com/AStupidRat/Charlatano)
-* Click on the [**Releases**](https://github.com/Rat/Charlatano/releases) tab and download the latest release ZIP archive
-* OR
 * Download the latest updates (which includes the newest features) by downloading directly as a ZIP
 * Extract the contents from the archive to any folder (to your desktop, for example)
-* Make sure you have Java Development Kit 8 or later installed
+* Make sure you have Java Development Kit 12 installed, in Program Files\Java
 * Double click on the "_build_" (_build.bat_) script and wait for it to complete
 
-Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.3.3**.
+To set your JAVA_HOME go [here](https://javatutorial.net/set-java-home-windows-10)
 
-From within the **RatPoison 1.3.3** directory, you can start the cheat by running
-the _"Start RatPoison 1.3.3"_ script.
+Once those steps are complete, the usable cheat program can be found within the _build_
+directory, and will in a directory called **RatPoison 1.3.4**.
+
+From within the **RatPoison 1.3.4** directory, you can start the cheat by running
+the _"Start RatPoison 1.3.4"_ script.
 
 Before starting the cheat, you should already be spawned in a game with a weapon in hand!
 

@@ -2,9 +2,8 @@ package rat.poison.scripts.esp
 
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
-import rat.poison.settings.*
 import rat.poison.strToBool
-import rat.poison.ui.UIUpdate
+import rat.poison.ui.uiUpdate
 import rat.poison.utils.every
 
 fun espToggle() = every(4) {
@@ -16,6 +15,6 @@ fun espToggle() = every(4) {
 
         Thread.sleep(100)
 
-        UIUpdate()
+        uiUpdate()
     }
 }

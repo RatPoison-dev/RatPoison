@@ -1,19 +1,17 @@
-
-
 package rat.poison.utils
 
 import rat.poison.utils.extensions.distance
 import com.sun.jna.platform.win32.WinDef
-import java.lang.Math.*
+import java.lang.Math.toRadians
+import kotlin.math.*
 import java.util.concurrent.ThreadLocalRandom.current as tlr
 
 object HumanMouse {
-	
 	inline fun fastSteps(a: WinDef.POINT, b: WinDef.POINT, action: (Int, Int) -> Unit) {
 		val a2b = a.distance(b)
-		val sq_a2b = sqrt(a2b)
+		val sqa2b = sqrt(a2b)
 		
-		val steps = sq_a2b * 3
+		val steps = sqa2b * 3
 		
 		val totalSteps = steps.toInt() + 2
 		val lastIndex = totalSteps - 1
@@ -23,9 +21,9 @@ object HumanMouse {
 	
 	inline fun steps(a: WinDef.POINT, b: WinDef.POINT, action: (Int, Int, Int, Int) -> Unit) {
 		val a2b = a.distance(b)
-		val sq_a2b = sqrt(a2b)
+		val sqa2b = sqrt(a2b)
 		
-		val steps = sq_a2b * 3
+		val steps = sqa2b * 3
 		val radSteps = toRadians(180 / steps)
 		
 		val xOffset = (b.x - a.x) / steps
@@ -49,8 +47,8 @@ object HumanMouse {
 		val totalSteps = steps.toInt() + 2
 		val lastIndex = totalSteps - 1
 		for (i in 1..totalSteps) {
-			val stepX = a.x + ((xOffset * i).toInt() + multiplier * (offset * Math.sin(x * i)).toInt())
-			val stepY = a.y + ((yOffset * i).toInt() + multiplier * (offset * Math.sin(y * i)).toInt())
+			val stepX = a.x + ((xOffset * i).toInt() + multiplier * (offset * sin(x * i)).toInt())
+			val stepY = a.y + ((yOffset * i).toInt() + multiplier * (offset * sin(y * i)).toInt())
 			action(lastIndex, stepX, stepY, i)
 		}
 		action(lastIndex, b.x, b.y, lastIndex) // final step

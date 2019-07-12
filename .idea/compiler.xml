@@ -2,12 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="Charlatano_main" target="1.8" />
-      <module name="Charlatano_test" target="1.8" />
-      <module name="com.RatPlague.main" target="11" />
-      <module name="com.RatPlague.test" target="11" />
-      <module name="rat.poison.RatPoison.main" target="1.8" />
-      <module name="rat.poison.RatPoison.test" target="1.8" />
+      <module name="rat.poison.RatPoison.main" target="12" />
+      <module name="rat.poison.RatPoison.test" target="12" />
     </bytecodeTargetLevel>
   </component>
 </project>

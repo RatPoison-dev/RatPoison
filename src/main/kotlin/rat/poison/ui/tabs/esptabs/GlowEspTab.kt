@@ -1,6 +1,5 @@
 package rat.poison.ui.tabs.esptabs
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
@@ -9,11 +8,11 @@ import rat.poison.curSettings
 import rat.poison.scripts.esp.disableEsp
 import rat.poison.settings.*
 import rat.poison.strToBool
-import rat.poison.ui.UIUpdate
+import rat.poison.ui.uiUpdate
 import rat.poison.ui.changed
 
 class GlowEspTab : Tab(false, false) {
-    private val table = VisTable(true)
+    private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
     val glowEsp = VisCheckBox("Glow Esp")
@@ -55,7 +54,7 @@ class GlowEspTab : Tab(false, false) {
             {
                 glowEsp.isDisabled = false
             }
-            UIUpdate()
+            uiUpdate()
             true
         }
 
@@ -148,17 +147,25 @@ class GlowEspTab : Tab(false, false) {
             true
         }
 
-        table.add(glowEsp)
-        table.add(invGlowEsp).row()
-        table.add(modelEsp)
-        table.add(modelAndGlow).row()
-        table.add(showTeam)
-        table.add(showEnemies).row()
-        table.add(showBomb).row()
-        table.add(showWeapons)
-        table.add(showGrenades).row()
+        table.padLeft(25F)
+        table.padRight(25F)
 
-        table.add(showTarget).colspan(2).row()
+        val colWidth = 200F - showGrenades.width //The width of the longest item in the first column
+
+        table.add(glowEsp).left()
+        table.add(invGlowEsp).padLeft(colWidth).left().row()
+
+        table.add(modelEsp).left()
+        table.add(modelAndGlow).padLeft(colWidth).left().row()
+
+        table.add(showTeam).left()
+        table.add(showEnemies).padLeft(colWidth).left().row()
+
+        table.add(showBomb).left()
+        table.add(showWeapons).padLeft(colWidth).left().row()
+
+        table.add(showGrenades).left()
+        table.add(showTarget).padLeft(colWidth).left()
     }
 
     override fun getContentTable(): Table? {

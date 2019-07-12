@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="RatPoison:main" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="rat.poison" external.system.module.type="sourceSet" external.system.module.version="1.2.6" type="JAVA_MODULE" version="4">
+<module external.linked.project.id="RatPoison:main" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="rat.poison" external.system.module.type="sourceSet" external.system.module.version="1.3.4" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="kotlin-language" name="Kotlin">
       <configuration version="3" platform="JVM 1.6" useProjectSettings="false">
-        <compilerSettings />
+        <compilerSettings>
+          <option name="additionalArguments" value="-Xallow-no-source-files" />
+        </compilerSettings>
         <compilerArguments>
           <option name="destination" value="$MODULE_DIR$/../../build/classes/kotlin/main" />
-          <option name="classpath" value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jire.arrowhead/arrowhead/1.3.3/be2fabcb5dbadf134b9586ef80b0cfb78c6101b8/arrowhead-1.3.3.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.9.3/924800875b5ce70081021240a1301b60993b62e6/gdx-box2d-1.9.3.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-lwjgl3/1.9.3/9da951ef121b2f031beefcffa84ad6c072564a47/gdx-backend-lwjgl3-1.9.3.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/com.kotcrab.vis/vis-ui/1.1.1/842e46897e09630af3f126f3761e1e0b8cf797a8/vis-ui-1.1.1.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.3/1a3775429980a6c8da0cdefb656ad1dabf91d629/gdx-1.9.3.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-platform/1.9.3/56b040cddca30bd248c8453863f71bad77adb107/gdx-platform-1.9.3-natives-desktop.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d-platform/1.9.3/f8b223142c03314b27fc89c04cb105a8902cf58b/gdx-box2d-platform-1.9.3-natives-desktop.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna-platform/5.2.0/5520c6f3382801576547dd20854225ae2899b649/jna-platform-5.2.0.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna/5.2.0/ed8b772eb077a9cb50e44e90899c66a9a6c00e67/jna-5.2.0.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.3.20/ee2efe0fdd12b607e3ac01dd79da99a168ac85c5/kotlin-compiler-embeddable-1.3.20.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-util/1.3.20/37089aef36b12bfccdc86e6d2fa0c943c6a2eed0/kotlin-script-util-1.3.20.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-jvm/1.3.20/c255180369ac10e4fa6604152dbefab9a4830fc3/kotlin-scripting-jvm-1.3.20.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-common/1.3.20/162eea6f471e9112057f8e2acac82bc93f90f25c/kotlin-scripting-common-1.3.20.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.3.20/cd49eec32cf964333faf59e04b4085eac7008477/kotlin-reflect-1.3.20.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.20/eb2a232734e09fcd1b958a5c7520a93c6de38b32/kotlin-stdlib-1.3.20.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.3.20/312febd3c42137fcc5477e6666d6eec16631b176/kotlin-script-runtime-1.3.20.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/it.unimi.dsi/fastutil/7.1.0/9835253257524c1be7ab50c057aa2d418fb72082/fastutil-7.1.0.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.0.0b/e5753ecf8c2232243c4ddae0a901acf9cb7f5f57/lwjgl-3.0.0b.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-platform/3.0.0b/a64481b1b5262bb74a66ebf88e82e6548194cf48/lwjgl-platform-3.0.0b-natives-windows.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-platform/3.0.0b/b7d71d5bd83ac0c62fccf4b4fc82bcd94c0f887f/lwjgl-platform-3.0.0b-natives-linux.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-platform/3.0.0b/b0c36452c9972f4027f1d9466280dfd5d0888e62/lwjgl-platform-3.0.0b-natives-osx.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/com.badlogicgames.jlayer/jlayer/1.0.1-gdx/7cca83cec5c1b2f011362f4d85aabd71a73b049d/jlayer-1.0.1-gdx.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jcraft/jorbis/0.0.17/8872d22b293e8f5d7d56ff92be966e6dc28ebdc6/jorbis-0.0.17.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.20/7d7934e26ce34da1a0a8d00e38038d7cf3375e89/kotlin-stdlib-common-1.3.20.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.intellij.deps/trove4j/1.0.20181211/216c2e14b070f334479d800987affe4054cd563f/trove4j-1.0.20181211.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.3.20/56178109e499350481c42befa1b49e1df20ed900/kotlin-daemon-client-1.3.20.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core/1.0.1/f33e8dab753f33d1bbb07cca664fd6f13d993d7e/kotlinx-coroutines-core-1.0.1.jar" />
+          <option name="classpath" value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jire.arrowhead/arrowhead/1.3.3/be2fabcb5dbadf134b9586ef80b0cfb78c6101b8/arrowhead-1.3.3.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.9.9/e9a43c50fbe4f1e26dd0af5d2e78d125549e7f6b/gdx-box2d-1.9.9.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-lwjgl3/1.9.9/188720f94ead7ff9c64ccba1347e3431f2d94736/gdx-backend-lwjgl3-1.9.9.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/com.kotcrab.vis/vis-ui/1.4.2/229926609c7150a6d75df79f64320943e8b895a3/vis-ui-1.4.2.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.9/bf26f2f816b3cfe37ac6e66615391c30714b7030/gdx-1.9.9.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-platform/1.9.9/7e644cfafdb436b13b24ac7993ffab17f306b64d/gdx-platform-1.9.9-natives-desktop.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d-platform/1.9.9/72b2916f45f3f948896eda931cd597f7e698340f/gdx-box2d-platform-1.9.9-natives-desktop.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna-platform/5.2.0/5520c6f3382801576547dd20854225ae2899b649/jna-platform-5.2.0.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna/5.2.0/ed8b772eb077a9cb50e44e90899c66a9a6c00e67/jna-5.2.0.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.3.41/6b1d4385d65894e07a0d14a5949f5417a408f0b7/kotlin-compiler-embeddable-1.3.41.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-util/1.3.41/29f60c1bb7e3c8e08a58f7bd2f474f18111837ab/kotlin-script-util-1.3.41.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-jvm/1.3.41/5fe615a9cf0ae74bd99f302c2cdc92556ea960ea/kotlin-scripting-jvm-1.3.41.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-common/1.3.41/f5200923717f821267ed450728e13680b9065f2e/kotlin-scripting-common-1.3.41.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.3.41/8fb58b8954661de666e321478bf4178c18ce8018/kotlin-reflect-1.3.41.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.41/e24bd38de28a326cce8b1f0d61e809e9a92dad6a/kotlin-stdlib-1.3.41.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.3.41/bcc3380041bbba171119c22d7024961b60da69e0/kotlin-script-runtime-1.3.41.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/it.unimi.dsi/fastutil/7.1.0/9835253257524c1be7ab50c057aa2d418fb72082/fastutil-7.1.0.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.2.0/9ff0ed06de0a1d83dd182f2ead48ac4c90865c44/lwjgl-glfw-3.2.0.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.2.0/986cd6b09807ad2d67b5002b6d9dc089e3fc88f8/lwjgl-glfw-3.2.0-natives-windows.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.2.0/2d270a9146ae47e929f5b6295eeb4e51a5ff577b/lwjgl-glfw-3.2.0-natives-linux.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.2.0/47894837e1862625908b7026d16742b9b402707c/lwjgl-glfw-3.2.0-natives-macos.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.2.0/4bdf37d27b1ee9bd9ed789d44c9c7fb022f1c246/lwjgl-jemalloc-3.2.0.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.2.0/d64da4dcdc15b3e7df50af37f1dda1777338d76f/lwjgl-jemalloc-3.2.0-natives-windows.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.2.0/f1c41f3a136237b32993d43d9157a42e017039e3/lwjgl-jemalloc-3.2.0-natives-linux.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.2.0/596ac73ea31eafef00209faddb0c1151c0d98f23/lwjgl-jemalloc-3.2.0-natives-macos.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.2.0/1c64c692473a70af297651d369debc93efa2e49f/lwjgl-opengl-3.2.0.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.2.0/b1f27bce30f8e40b03502a5d86687b30d844ba35/lwjgl-opengl-3.2.0-natives-windows.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.2.0/953ac48def909b1c67fc54299f5c403479ef8ac7/lwjgl-opengl-3.2.0-natives-linux.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.2.0/4b2015f5d180dc707ac47d000acd35d49b5d7463/lwjgl-opengl-3.2.0-natives-macos.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.2.0/28174519523e11c2f3227359f242d48edfa76654/lwjgl-openal-3.2.0.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.2.0/f6017538443bb894faad58a3ccd0d400c4023a1c/lwjgl-openal-3.2.0-natives-windows.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.2.0/7eb647d77d7be270bd494548860befab223687ed/lwjgl-openal-3.2.0-natives-linux.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.2.0/9e313aca50b7cbe65fd6354c18b6c70f66d34363/lwjgl-openal-3.2.0-natives-macos.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.2.0/7723544dc3fc740f0ee59cce9a3a0cecc8681747/lwjgl-3.2.0.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.2.0/86c90ce2abe6129bfd5052a8b82f3dc2394c8dd1/lwjgl-3.2.0-natives-windows.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.2.0/4c23e3f9ae657a52bddfa1c92d1b0ba770259eed/lwjgl-3.2.0-natives-linux.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.2.0/84bf26af17298d47b0ff9765a426279aaa133cad/lwjgl-3.2.0-natives-macos.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/com.badlogicgames.jlayer/jlayer/1.0.1-gdx/7cca83cec5c1b2f011362f4d85aabd71a73b049d/jlayer-1.0.1-gdx.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jcraft/jorbis/0.0.17/8872d22b293e8f5d7d56ff92be966e6dc28ebdc6/jorbis-0.0.17.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.41/2ecf4aa059427d7186312fd1736afedf7972e7f7/kotlin-stdlib-common-1.3.41.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.intellij.deps/trove4j/1.0.20181211/216c2e14b070f334479d800987affe4054cd563f/trove4j-1.0.20181211.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.3.41/33d3c4bc8f6f550d308c7eadee6dda05eb6dafbf/kotlin-daemon-client-1.3.41.jar;C:/Users/Cybertron-2000/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core/1.1.1/3d2b7321cdef9ebf9cb7729ea4f75a6f6457df86/kotlinx-coroutines-core-1.1.1.jar" />
           <option name="noStdlib" value="true" />
           <option name="noReflect" value="true" />
           <option name="moduleName" value="RatPoison" />
-          <option name="addCompilerBuiltIns" value="true" />
-          <option name="loadBuiltInsFromDependencies" value="true" />
           <option name="languageVersion" value="1.3" />
           <option name="apiVersion" value="1.3" />
           <option name="pluginOptions">
             <array />
           </option>
           <option name="pluginClasspaths">
-            <array />
+            <array>
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.3.41/8fb58b8954661de666e321478bf4178c18ce8018/kotlin-reflect-1.3.41.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.3.41/bcc3380041bbba171119c22d7024961b60da69e0/kotlin-script-runtime-1.3.41.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-common/1.3.41/f5200923717f821267ed450728e13680b9065f2e/kotlin-scripting-common-1.3.41.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-jvm/1.3.41/5fe615a9cf0ae74bd99f302c2cdc92556ea960ea/kotlin-scripting-jvm-1.3.41.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.41/2ecf4aa059427d7186312fd1736afedf7972e7f7/kotlin-stdlib-common-1.3.41.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.41/e24bd38de28a326cce8b1f0d61e809e9a92dad6a/kotlin-stdlib-1.3.41.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core/1.1.1/3d2b7321cdef9ebf9cb7729ea4f75a6f6457df86/kotlinx-coroutines-core-1.1.1.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar" />
+            </array>
           </option>
           <option name="errors">
             <ArgumentParseErrors />
@@ -27,7 +36,7 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_12">
     <output url="file://$MODULE_DIR$/../../out/production/classes" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../settings">
@@ -40,32 +49,48 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: org.jire.arrowhead:arrowhead:1.3.3" level="project" />
-    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-box2d:1.9.3" level="project" />
-    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-backend-lwjgl3:1.9.3" level="project" />
-    <orderEntry type="library" name="Gradle: com.kotcrab.vis:vis-ui:1.1.1" level="project" />
-    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx:1.9.3" level="project" />
-    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-platform:natives-desktop:1.9.3" level="project" />
-    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-box2d-platform:natives-desktop:1.9.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-box2d:1.9.9" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-backend-lwjgl3:1.9.9" level="project" />
+    <orderEntry type="library" name="Gradle: com.kotcrab.vis:vis-ui:1.4.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx:1.9.9" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-platform:natives-desktop:1.9.9" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-box2d-platform:natives-desktop:1.9.9" level="project" />
     <orderEntry type="library" name="Gradle: net.java.dev.jna:jna-platform:5.2.0" level="project" />
     <orderEntry type="library" name="Gradle: net.java.dev.jna:jna:5.2.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-compiler-embeddable:1.3.20" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-script-util:1.3.20" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-scripting-jvm:1.3.20" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-scripting-common:1.3.20" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-reflect:1.3.20" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.3.20" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-script-runtime:1.3.20" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-compiler-embeddable:1.3.41" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-script-util:1.3.41" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-scripting-jvm:1.3.41" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-scripting-common:1.3.41" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-reflect:1.3.41" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.3.41" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-script-runtime:1.3.41" level="project" />
     <orderEntry type="library" name="Gradle: it.unimi.dsi:fastutil:7.1.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl:3.0.0b" level="project" />
-    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-platform:natives-windows:3.0.0b" level="project" />
-    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-platform:natives-linux:3.0.0b" level="project" />
-    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-platform:natives-osx:3.0.0b" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-glfw:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-glfw:natives-windows:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-glfw:natives-linux:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-glfw:natives-macos:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-jemalloc:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-windows:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-linux:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-macos:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-opengl:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-opengl:natives-windows:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-opengl:natives-linux:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-opengl:natives-macos:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-openal:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-openal:natives-windows:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-openal:natives-linux:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-openal:natives-macos:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl:natives-windows:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl:natives-linux:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl:natives-macos:3.2.0" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.jlayer:jlayer:1.0.1-gdx" level="project" />
     <orderEntry type="library" name="Gradle: org.jcraft:jorbis:0.0.17" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.3.20" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.3.41" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.intellij.deps:trove4j:1.0.20181211" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-daemon-client:1.3.20" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-daemon-client:1.3.41" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1" level="project" />
   </component>
 </module>

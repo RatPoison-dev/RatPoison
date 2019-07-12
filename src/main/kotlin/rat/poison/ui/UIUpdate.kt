@@ -6,20 +6,19 @@ import rat.poison.scripts.esp.disableEsp
 import rat.poison.settings.*
 import rat.poison.ui.tabs.*
 
-fun UIUpdate() {
+fun uiUpdate() {
     if (!opened) return
 
     //Aim Tab
     aimTab.apply {
         enableAim.isChecked = curSettings["ENABLE_AIM"]!!.strToBool()
-        activateFromFireKey.isChecked = curSettings["ACTIVATE_FROM_FIRE_KEY"]!!.strToBool()
+        activateFromFireKey.isChecked = curSettings["ACTIVATE_FROM_AIM_KEY"]!!.strToBool()
         teammatesAreEnemies.isChecked = curSettings["TEAMMATES_ARE_ENEMIES"]!!.strToBool()
-        aimKeyField.text = curSettings["FIRE_KEY"]
+        aimKeyField.text = curSettings["AIM_KEY"]
         forceAimKeyField.text = curSettings["FORCE_AIM_KEY"]
         automaticWeaponsCheckBox.isChecked = curSettings["AUTOMATIC_WEAPONS"]!!.strToBool()
-        automaticWeaponsCollapsible.isCollapsed = !curSettings["AUTOMATIC_WEAPONS"]!!.strToBool()
-        automaticWeaponsLabel.setText("MS Delay: " + curSettings["AUTO_WEP_DELAY"] + when(curSettings["AUTO_WEP_DELAY"]!!.length) {3->"" 2->"  " else ->"    "})
-        automaticWeaponsSlider.value = curSettings["AUTO_WEP_DELAY"]!!.toFloat()
+        automaticWeaponsLabel.setText("MS Delay: ")
+        automaticWeaponsField.text = curSettings["AUTO_WEP_DELAY"]
 
         val curWep = convStrToArray(curSettings[weaponOverrideSelected])
 
@@ -32,33 +31,34 @@ fun UIUpdate() {
                 HEAD_BONE -> "HEAD"
                 NECK_BONE -> "NECK"
                 CHEST_BONE -> "CHEST"
-                else -> "STOMACH"
+                STOMACH_BONE -> "STOMACH"
+                else -> "NEAREST"
             }
-            aimFovLabel.setText("Aim Fov: " + curWep[5]!!.toInt() + when (curWep[5]!!.toInt().toString().length) {
+            aimFovLabel.setText("FOV: " + curWep[5]!!.toInt() + when (curWep[5]!!.toInt().toString().length) {
                 3 -> "  "
                 2 -> "    "
                 else -> "      "
             })
             aimFovSlider.value = curWep[5]!!.toInt().toFloat()
-            aimSpeedLabel.setText("Aim Speed: " + curWep[6]!!.toInt() + when (curWep[6]!!.toInt().toString().length) {
+            aimSpeedLabel.setText("Speed: " + curWep[6]!!.toInt() + when (curWep[6]!!.toInt().toString().length) {
                 3 -> "  "
                 2 -> "    "
                 else -> "      "
             })
             aimSpeedSlider.value = curWep[6]!!.toInt().toFloat()
-            aimSmoothnessLabel.setText("Aim Smoothness: " + curWep[7]!!.toFloat())
+            aimSmoothnessLabel.setText("Smoothness: " + curWep[7]!!.toFloat())
             aimSmoothnessSlider.value = curWep[7]!!.toFloat()
-            aimStrictnessLabel.setText("Aim Strictness: " + curWep[8]!!.toFloat())
+            aimStrictnessLabel.setText("Strictness: " + curWep[8]!!.toFloat())
             aimStrictnessSlider.value = curWep[8]!!.toFloat()
             perfectAimCheckBox.isChecked = curWep[9]!!.toBool()
             perfectAimCollapsible.isCollapsed = !curWep[9]!!.toBool()
-            perfectAimFovLabel.setText("Perfect Aim Fov: " + curWep[10]!!.toInt() + when (curWep[10]!!.toInt().toString().length) {
+            perfectAimFovLabel.setText("FOV: " + curWep[10]!!.toInt() + when (curWep[10]!!.toInt().toString().length) {
                 3 -> "  "
                 2 -> "    "
                 else -> "      "
             })
             perfectAimFovSlider.value = curWep[10]!!.toInt().toFloat()
-            perfectAimChanceLabel.setText("Perfect Aim Chance: " + curWep[11]!!.toInt() + when (curWep[11]!!.toInt().toString().length) {
+            perfectAimChanceLabel.setText("Chance: " + curWep[11]!!.toInt() + when (curWep[11]!!.toInt().toString().length) {
                 3 -> "  "
                 2 -> "    "
                 else -> "      "
@@ -78,31 +78,31 @@ fun UIUpdate() {
                 STOMACH_BONE -> "STOMACH"
                 else -> "NEAREST"
             }
-            aimFovLabel.setText("Aim Fov: " + curSettings[categorySelected + "_AIM_FOV"]!!.toInt() + when (curSettings[categorySelected + "_AIM_FOV"]!!.length) {
+            aimFovLabel.setText("FOV: " + curSettings[categorySelected + "_AIM_FOV"]!!.toInt() + when (curSettings[categorySelected + "_AIM_FOV"]!!.length) {
                 3 -> "  "
                 2 -> "    "
                 else -> "      "
             })
             aimFovSlider.value = curSettings[categorySelected + "_AIM_FOV"]!!.toInt().toFloat()
-            aimSpeedLabel.setText("Aim Speed: " + curSettings[categorySelected + "_AIM_SPEED"]!!.toInt() + when (curSettings[categorySelected + "_AIM_SPEED"]!!.length) {
+            aimSpeedLabel.setText("Speed: " + curSettings[categorySelected + "_AIM_SPEED"]!!.toInt() + when (curSettings[categorySelected + "_AIM_SPEED"]!!.length) {
                 3 -> "  "
                 2 -> "    "
                 else -> "      "
             })
             aimSpeedSlider.value = curSettings[categorySelected + "_AIM_SPEED"]!!.toInt().toFloat()
-            aimSmoothnessLabel.setText("Aim Smoothness: " + curSettings[categorySelected + "_AIM_SMOOTHNESS"]!!.toFloat())
+            aimSmoothnessLabel.setText("Smoothness: " + curSettings[categorySelected + "_AIM_SMOOTHNESS"]!!.toFloat())
             aimSmoothnessSlider.value = curSettings[categorySelected + "_AIM_SMOOTHNESS"]!!.toFloat()
-            aimStrictnessLabel.setText("Aim Strictness: " + curSettings[categorySelected + "_AIM_STRICTNESS"])
+            aimStrictnessLabel.setText("Strictness: " + curSettings[categorySelected + "_AIM_STRICTNESS"])
             aimStrictnessSlider.value = curSettings[categorySelected + "_AIM_STRICTNESS"]!!.toFloat()
             perfectAimCheckBox.isChecked = curSettings[categorySelected + "_PERFECT_AIM"]!!.strToBool()
             perfectAimCollapsible.isCollapsed = !curSettings[categorySelected + "_PERFECT_AIM"]!!.strToBool()
-            perfectAimFovLabel.setText("Perfect Aim Fov: " + curSettings[categorySelected + "_PERFECT_AIM_FOV"]!!.toInt() + when (curSettings[categorySelected + "_PERFECT_AIM_FOV"]!!.length) {
+            perfectAimFovLabel.setText("FOV: " + curSettings[categorySelected + "_PERFECT_AIM_FOV"]!!.toInt() + when (curSettings[categorySelected + "_PERFECT_AIM_FOV"]!!.length) {
                 3 -> "  "
                 2 -> "    "
                 else -> "      "
             })
             perfectAimFovSlider.value = curSettings[categorySelected + "_PERFECT_AIM_FOV"]!!.toInt().toFloat()
-            perfectAimChanceLabel.setText("Perfect Aim Chance: " + curSettings[categorySelected + "_PERFECT_AIM_CHANCE"]!!.toInt() + when (curSettings[categorySelected + "_PERFECT_AIM_CHANCE"]!!.length) {
+            perfectAimChanceLabel.setText("Chance: " + curSettings[categorySelected + "_PERFECT_AIM_CHANCE"]!!.toInt() + when (curSettings[categorySelected + "_PERFECT_AIM_CHANCE"]!!.length) {
                 3 -> "  "
                 2 -> "    "
                 else -> "      "
@@ -122,7 +122,7 @@ fun UIUpdate() {
         weaponOverrideCheckBox.isDisabled = bool
         automaticWeaponsCheckBox.isDisabled = bool
         automaticWeaponsLabel.color = color
-        automaticWeaponsSlider.isDisabled = bool
+        automaticWeaponsField.isDisabled = bool
         aimKeyLabel.color = color
         aimKeyField.isDisabled = bool
         forceAimKeyLabel.color = color
@@ -258,6 +258,16 @@ fun UIUpdate() {
         showWeapons.isChecked = curSettings["GLOW_SHOW_WEAPONS"]!!.strToBool()
         showGrenades.isChecked = curSettings["GLOW_SHOW_GRENADES"]!!.strToBool()
         showTarget.isChecked = curSettings["GLOW_SHOW_TARGET"]!!.strToBool()
+
+        if (invGlowEsp.isChecked || modelEsp.isChecked) {
+            glowEsp.isChecked = true
+            glowEsp.isDisabled = true
+        }
+
+        if (modelAndGlow.isChecked) {
+            modelEsp.isChecked = true
+            modelEsp.isDisabled = true
+        }
     }
 
     chamsEspTab.apply {
@@ -304,13 +314,13 @@ fun UIUpdate() {
     bTrigTab.apply {
         enableAutoKnife.isChecked = curSettings["ENABLE_AUTO_KNIFE"]!!.strToBool()
         enableBoneTrigger.isChecked = curSettings["ENABLE_BONE_TRIGGER"]!!.strToBool()
-        boneTriggerFovLabel.setText("Bone Trigger Fov: " + curSettings["BONE_TRIGGER_FOV"] + when (curSettings["BONE_TRIGGER_FOV"]!!.length) {
+        boneTriggerFovLabel.setText("FOV: " + curSettings["BONE_TRIGGER_FOV"] + when (curSettings["BONE_TRIGGER_FOV"]!!.length) {
             3 -> "  "
             2 -> "    "
             else -> "      "
         })
         boneTriggerFovSlider.value = curSettings["BONE_TRIGGER_FOV"]!!.toFloat()
-        boneTriggerDelayLabel.setText("Bone Trigger Shot Delay: " + curSettings["BONE_TRIGGER_SHOT_DELAY"] + when (curSettings["BONE_TRIGGER_SHOT_DELAY"]!!.length) {
+        boneTriggerDelayLabel.setText("Shot Delay: " + curSettings["BONE_TRIGGER_SHOT_DELAY"] + when (curSettings["BONE_TRIGGER_SHOT_DELAY"]!!.length) {
             3 -> "  "
             2 -> "    "
             else -> "      "
@@ -346,18 +356,51 @@ fun UIUpdate() {
     //Rcs Tab
     rcsTab.apply {
         enableRCS.isChecked = curSettings["ENABLE_RCS"]!!.strToBool()
+        rcsSmoothingLabel.setText("RCS Smoothing: " + curSettings["RCS_SMOOTHING"] + when(curSettings["RCS_SMOOTHING"]!!.length) {3->"" 2->"  " else->"    "})
         rcsSmoothingSlider.isDisabled = !curSettings["ENABLE_RCS"]!!.strToBool()
         rcsReturnAim.isDisabled = !curSettings["ENABLE_RCS"]!!.strToBool()
         enableRCrosshair.isChecked = curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
         rCrosshairWidthLabel.setText("RCrosshair Width: " + curSettings["RCROSSHAIR_WIDTH"])
         rCrosshairWidthSlider.value = curSettings["RCROSSHAIR_WIDTH"]!!.toInt().toFloat()
-        rCrosshairLengthLabel.setText("RCrosshair Length: " + curSettings["RCROSSHAIR_LENGTH]"])
+        rCrosshairLengthLabel.setText("RCrosshair Length: " + curSettings["RCROSSHAIR_LENGTH"])
         rCrosshairLengthSlider.value = curSettings["RCROSSHAIR_LENGTH"]!!.toFloat()
+        rCrosshairXOffsetLabel.setText("RCrosshair X Offset: " + curSettings["RCROSSHAIR_XOFFSET"])
+        rCrosshairXOffsetSlider.value = curSettings["RCROSSHAIR_XOFFSET"]!!.toFloat()
+        rCrosshairYOffsetLabel.setText("RCrosshair Y Offset: " + curSettings["RCROSSHAIR_YOFFSET"])
+        rCrosshairYOffsetSlider.value = curSettings["RCROSSHAIR_YOFFSET"]!!.toFloat()
         rCrosshairAlphaLabel.setText("RCrosshair Alpha: " + curSettings["RCROSSHAIR_ALPHA"])
         rCrosshairAlphaSlider.value = curSettings["RCROSSHAIR_ALPHA"]!!.toFloat()
-        rCrosshairWidthSlider.isDisabled = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
-        rCrosshairLengthSlider.isDisabled = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
-        rCrosshairAlphaSlider.isDisabled = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
-        rCrosshairColorShow.isDisabled = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
+
+
+
+
+
+        var bool = !curSettings["ENABLE_RCS"]!!.strToBool()
+        var color = Color(255F, 255F, 255F, 1F)
+        if (bool) {
+            color = Color(105F, 105F, 105F, .2F)
+        }
+        rcsSmoothingLabel.color = color
+        rcsSmoothingSlider.isDisabled = bool
+        rcsReturnAim.isDisabled = bool
+
+        bool = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
+        color = Color(255F, 255F, 255F, 1F)
+        if (bool) {
+            color = Color(105F, 105F, 105F, .2F)
+        }
+
+        rCrosshairWidthSlider.isDisabled = bool
+        rCrosshairLengthSlider.isDisabled = bool
+        rCrosshairAlphaSlider.isDisabled = bool
+        rCrosshairXOffsetSlider.isDisabled = bool
+        rCrosshairYOffsetSlider.isDisabled = bool
+        rCrosshairColorShow.isDisabled = bool
+
+        rCrosshairWidthLabel.color = color
+        rCrosshairLengthLabel.color = color
+        rCrosshairAlphaLabel.color = color
+        rCrosshairXOffsetLabel.color = color
+        rCrosshairYOffsetLabel.color = color
     }
 }

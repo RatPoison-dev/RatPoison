@@ -16,6 +16,8 @@ import rat.poison.curSettings
 import rat.poison.utils.Vector
 import rat.poison.utils.distanceTo
 import rat.poison.utils.notInGame
+import kotlin.math.cos
+import kotlin.math.sin
 
 //Add radius var and oval toggle
 
@@ -76,7 +78,7 @@ fun indicatorPosition(screenPos: Vector3, indicatorPos: Vector3): Float {
     return MathUtils.atan2(screenPos.x - centerX, screenPos.y - centerY)
 }
 
-fun w2sHandler(vector: Vector, dist: Double, drawColor: rat.poison.game.Color) {
+fun w2sHandler(vector: Vector, dist: Double, drawColor: Color) {
     if (vector.x == 0.0 && vector.y == 0.0 && vector.z == 0.0) {
         return
     }
@@ -88,7 +90,7 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: rat.poison.game.Color) {
         worldToScreen(Vector(vector.x, vector.y, vector.z), vOut)
         shapeRenderer.apply {
             val indicatorPos = Vector3(vOut.x.toFloat(), vOut.y.toFloat()+25F, 0F)
-            val rot = 3.14//-indicatorPosition(indicatorPos, indicatorPos).toDouble()
+            val rot = 3.14
 
             //Cleaner way?
 
@@ -99,17 +101,16 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: rat.poison.game.Color) {
             val indX = indicatorPos.x.toDouble()
             val indY = indicatorPos.y.toDouble()
 
-            val vert1x = ((indX - p)*Math.cos(rot) - (indY+10 - q)*Math.sin(rot) + p).toFloat()//(indX*Math.cos(rot) - (indY+10)*Math.sin(rot)).toFloat()
-            val vert1y = ((indX - p)*Math.sin(rot) + (indY+10 - q)*Math.cos(rot) + q).toFloat()//(indX*Math.sin(rot) + (indY+10)*Math.cos(rot)).toFloat()
+            val vert1x = ((indX - p)*cos(rot) - (indY+10 - q)*sin(rot) + p).toFloat()
+            val vert1y = ((indX - p)*sin(rot) + (indY+10 - q)*cos(rot) + q).toFloat()
 
-            val vert2x = ((indX-10 - p)*Math.cos(rot) - (indY-10 - q)*Math.sin(rot) + p).toFloat()//((indX-10)*Math.cos(rot) - (indY-10)*Math.sin(rot)).toFloat()
-            val vert2y = ((indX-10 - p)*Math.sin(rot) + (indY-10 - q)*Math.cos(rot) + q).toFloat()//((indX-10)*Math.sin(rot) + (indY-10)*Math.cos(rot)).toFloat()
+            val vert2x = ((indX-10 - p)*cos(rot) - (indY-10 - q)*sin(rot) + p).toFloat()
+            val vert2y = ((indX-10 - p)*sin(rot) + (indY-10 - q)*cos(rot) + q).toFloat()
 
-            val vert3x = ((indX+10 - p)*Math.cos(rot) - (indY-10 - q)*Math.sin(rot) + p).toFloat()//((indX+10)*Math.cos(rot) - (indY+10)*Math.sin(rot)).toFloat()
-            val vert3y = ((indX+10 - p)*Math.sin(rot) + (indY-10 - q)*Math.cos(rot) + q).toFloat()//((indX-10)*Math.sin(rot) + (indY-10)*Math.cos(rot)).toFloat()
+            val vert3x = ((indX+10 - p)*cos(rot) - (indY-10 - q)*sin(rot) + p).toFloat()
+            val vert3y = ((indX+10 - p)*sin(rot) + (indY-10 - q)*cos(rot) + q).toFloat()
 
             begin()
-            //set(ShapeRenderer.ShapeType.Filled)
             set(ShapeRenderer.ShapeType.Filled)
             color = com.badlogic.gdx.graphics.Color(drawColor.red.toFloat(), drawColor.green.toFloat(), drawColor.blue.toFloat(), .5F)
             triangle(vert1x, vert1y, vert2x, vert2y, vert3x, vert3y)
@@ -132,17 +133,16 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: rat.poison.game.Color) {
             val indX = indicatorPos.x.toDouble()
             val indY = indicatorPos.y.toDouble()
 
-            val vert1x = ((indX - p)*Math.cos(rot) - (indY+10 - q)*Math.sin(rot) + p).toFloat()//(indX*Math.cos(rot) - (indY+10)*Math.sin(rot)).toFloat()
-            val vert1y = ((indX - p)*Math.sin(rot) + (indY+10 - q)*Math.cos(rot) + q).toFloat()//(indX*Math.sin(rot) + (indY+10)*Math.cos(rot)).toFloat()
+            val vert1x = ((indX - p)*cos(rot) - (indY+10 - q)*sin(rot) + p).toFloat()
+            val vert1y = ((indX - p)*sin(rot) + (indY+10 - q)*cos(rot) + q).toFloat()
 
-            val vert2x = ((indX-10 - p)*Math.cos(rot) - (indY-10 - q)*Math.sin(rot) + p).toFloat()//((indX-10)*Math.cos(rot) - (indY-10)*Math.sin(rot)).toFloat()
-            val vert2y = ((indX-10 - p)*Math.sin(rot) + (indY-10 - q)*Math.cos(rot) + q).toFloat()//((indX-10)*Math.sin(rot) + (indY-10)*Math.cos(rot)).toFloat()
+            val vert2x = ((indX-10 - p)*cos(rot) - (indY-10 - q)*sin(rot) + p).toFloat()
+            val vert2y = ((indX-10 - p)*sin(rot) + (indY-10 - q)*cos(rot) + q).toFloat()
 
-            val vert3x = ((indX+10 - p)*Math.cos(rot) - (indY-10 - q)*Math.sin(rot) + p).toFloat()//((indX+10)*Math.cos(rot) - (indY+10)*Math.sin(rot)).toFloat()
-            val vert3y = ((indX+10 - p)*Math.sin(rot) + (indY-10 - q)*Math.cos(rot) + q).toFloat()//((indX-10)*Math.sin(rot) + (indY-10)*Math.cos(rot)).toFloat()
+            val vert3x = ((indX+10 - p)*cos(rot) - (indY-10 - q)*sin(rot) + p).toFloat()
+            val vert3y = ((indX+10 - p)*sin(rot) + (indY-10 - q)*cos(rot) + q).toFloat()
 
             begin()
-            //set(ShapeRenderer.ShapeType.Filled)
             set(ShapeRenderer.ShapeType.Filled)
             color = com.badlogic.gdx.graphics.Color(drawColor.red.toFloat(), drawColor.green.toFloat(), drawColor.blue.toFloat(), .5F)
             triangle(vert1x, vert1y, vert2x, vert2y, vert3x, vert3y)
@@ -162,7 +162,7 @@ fun wTest(from: Vector): Double { //Fails at large distances, but still indicate
         for (row in 0..3) for (col in 0..3) {
             val value = buffer.getFloat(offset.toLong())
             viewMatrix[row][col] = value.toDouble()
-            offset += 4 //Changed, error but not compd
+            offset += 4
         }
 
         vOut.x = viewMatrix[0][0] * from.x + viewMatrix[0][1] * from.y + viewMatrix[0][2] * from.z + viewMatrix[0][3]

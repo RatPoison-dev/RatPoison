@@ -8,9 +8,12 @@ import rat.poison.utils.*
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.strToBool
+import java.lang.Math.toRadians
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
+import kotlin.math.abs
+import kotlin.math.sin
 
 val target = AtomicLong(-1)
 val bone = AtomicInteger(AIM_BONE)
@@ -106,22 +109,22 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 }
 
 internal fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, angle: Angle, lockFOV: Int = curSettings["AIM_FOV"]!!.toInt(), BONE: Int): MutableList<Any> {
-	val retList = mutableListOf(-1.0, 0.0, 0)
+	val retList = mutableListOf(-1.0, 0.0, 0L)
 
 	val ePos: Angle = entity.bones(BONE)
 	val distance = position.distanceTo(ePos)
 
 	val dest = calculateAngle(me, ePos)
 
-	val pitchDiff = Math.abs(angle.x - dest.x)
-	var yawDiff = Math.abs(angle.y - dest.y)
+	val pitchDiff = abs(angle.x - dest.x)
+	var yawDiff = abs(angle.y - dest.y)
 
 	if (yawDiff > 180f) {
 		yawDiff = 360f - yawDiff
 	}
 
-	val fov = Math.abs(Math.sin(Math.toRadians(yawDiff)) * distance)
-	val delta = Math.abs((Math.sin(Math.toRadians(pitchDiff)) + Math.sin(Math.toRadians(yawDiff))) * distance)
+	val fov = abs(sin(toRadians(yawDiff)) * distance)
+	val delta = abs((sin(toRadians(pitchDiff)) + sin(toRadians(yawDiff))) * distance)
 
 	if (delta <= lockFOV && delta <= calcClosestDelta) {
 		retList[0] = fov
@@ -129,7 +132,7 @@ internal fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angl
 		retList[2] = entity
 	}
 
-	return retList
+	return retList.toMutableList()
 }
 
 internal fun Entity.inMyTeam() =
@@ -141,77 +144,78 @@ internal fun Entity.canShoot() = (if (DANGER_ZONE) { true } else { spotted() }
 		&& !dormant()
 		&& !dead()
 		&& !inMyTeam()
+		&& !isProtected()
 		&& !me.dead())
 
 internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boolean,
 								  crossinline doAim: (destinationAngle: Angle,
 													  currentAngle: Angle, aimSpeed: Int) -> R) = every(duration) {
-	if (!precheck()) return@every
-	if (!curSettings["ENABLE_AIM"]!!.strToBool()) return@every
+	try {
+		if (!precheck()) return@every
+		if (!curSettings["ENABLE_AIM"]!!.strToBool()) return@every
 
-	if (!me.weaponEntity().canFire()) {
-		reset()
-		return@every
-	}
-
-	val aim = curSettings["ACTIVATE_FROM_FIRE_KEY"]!!.strToBool() && keyPressed(curSettings["FIRE_KEY"]!!.toInt())
-	val forceAim = keyPressed(curSettings["FORCE_AIM_KEY"]!!.toInt())
-	val haveAmmo = me.weaponEntity().bullets() > 0
-
-	val pressed = (aim || forceAim || boneTrig) && !MENUTOG && haveAmmo
-	var currentTarget = target.get()
-
-	if (!pressed) {
-		reset()
-		return@every
-	}
-
-	val weapon = me.weapon()
-	if (!weapon.pistol && !weapon.automatic && !weapon.shotgun && !weapon.sniper) {
-		reset()
-		return@every
-	}
-
-	val currentAngle = clientState.angle()
-	val position = me.position()
-
-	if (currentTarget < 0) {
-		currentTarget = findTarget(position, currentAngle, aim)
-		if (currentTarget < 0) {
+		if (!me.weaponEntity().canFire() && !me.weapon().automatic) { //Aim after shoot
 			reset()
 			return@every
 		}
-		target.set(currentTarget)
-	}
 
-	val aB = curSettings["AIM_BONE"]!!.toInt()
+		val aim = curSettings["ACTIVATE_FROM_AIM_KEY"]!!.strToBool() && keyPressed(curSettings["AIM_KEY"]!!.toInt())
+		val forceAim = keyPressed(curSettings["FORCE_AIM_KEY"]!!.toInt())
+		val haveAmmo = me.weaponEntity().bullets() > 0
 
-	if (aB == -1) { //Nearest bone check
-		val nearestBone = currentTarget.nearestBone()
+		val pressed = (aim || forceAim || boneTrig) && !MENUTOG && haveAmmo
+		var currentTarget = target.get()
 
-		if (nearestBone != -1) {
-			bone.set(nearestBone)
+		if (!pressed) {
+			reset()
+			return@every
 		}
-	} else {
-		bone.set(aB)
-	}
 
- 	if (currentTarget == me || !currentTarget.canShoot())
-	{
-		Thread.sleep(500)
-		reset()
-		return@every
-	}
-	else {
-		val bonePosition = currentTarget.bones(bone.get())
+		val weapon = me.weapon()
+		if (!weapon.pistol && !weapon.automatic && !weapon.shotgun && !weapon.sniper) {
+			reset()
+			return@every
+		}
 
-		val destinationAngle = calculateAngle(me, bonePosition) //Rename to current angle
+		val currentAngle = clientState.angle()
+		val position = me.position()
 
-        if (!perfect.get()) {
-            destinationAngle.finalize(currentAngle, (1.1-curSettings["AIM_SMOOTHNESS"]!!.toDouble()/10))
-        }
+		if (currentTarget < 0) {
+			currentTarget = findTarget(position, currentAngle, aim)
+			if (currentTarget < 0) {
+				reset()
+				return@every
+			}
+			target.set(currentTarget)
+		}
 
-		val aimSpeed = curSettings["AIM_SPEED"]!!.toInt()
-		doAim(destinationAngle, currentAngle, aimSpeed)
-	}
+		val aB = curSettings["AIM_BONE"]!!.toInt()
+
+		if (aB == -1) { //Nearest bone check
+			val nearestBone = currentTarget.nearestBone()
+
+			if (nearestBone != -1) {
+				bone.set(nearestBone)
+			}
+		} else {
+			bone.set(aB)
+		}
+
+		if (currentTarget == me || !currentTarget.canShoot()) {
+			//Thread.sleep(500)
+			reset()
+			return@every
+		} else {
+			val bonePosition = currentTarget.bones(bone.get())
+
+			val destinationAngle = calculateAngle(me, bonePosition) //Rename to current angle
+
+			if (!perfect.get()) {
+				destinationAngle.finalize(currentAngle, (1.1 - curSettings["AIM_SMOOTHNESS"]!!.toDouble() / 10))
+			}
+
+			val aimSpeed = curSettings["AIM_SPEED"]!!.toInt()
+			doAim(destinationAngle, currentAngle, aimSpeed)
+		}
+	} catch (e: Exception) {println(e)}
 }

@@ -25,7 +25,7 @@ internal fun spectatorList() = every(1000) {
 
     val playerSpecTarget: Int
 
-    if (me.dead()) {
+    if (me.dead()) { //Redundant since death cam was fucky??
         playerSpecTarget = csgoEXE.readIndex(me + m_hObserverTarget)
     } else {
         playerSpecTarget = csgoEXE.readIndex(me + dwIndex)

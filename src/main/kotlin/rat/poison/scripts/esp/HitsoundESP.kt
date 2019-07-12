@@ -22,10 +22,10 @@ fun hitSoundEsp() = every(4) {
         try {
             hitSound = Gdx.audio.newSound(Gdx.files.internal("settings\\hitsound.mp3"))
             opened = true
-            totalHits = curHits //Set total hits to cur hits on load, don't play a hitsound on load
+            totalHits = curHits
         } catch (ex: NullPointerException){}
     }
-    else if (curHits == 0) { //Just joined or round reset, don't play a sound
+    else if (curHits == 0) {
         totalHits = 0
     }
     else if (totalHits != curHits)

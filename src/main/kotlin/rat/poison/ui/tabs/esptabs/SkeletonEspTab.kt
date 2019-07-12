@@ -7,12 +7,11 @@ import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.boolToStr
 import rat.poison.curSettings
-import rat.poison.settings.*
 import rat.poison.strToBool
 import rat.poison.ui.changed
 
 class SkeletonEspTab : Tab(false, false) {
-    private val table = VisTable(true)
+    private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
     val skeletonEsp = VisCheckBox("Skeleton Esp")
@@ -45,10 +44,12 @@ class SkeletonEspTab : Tab(false, false) {
             true
         }
 
-        //Add all items to label for tabbed pane content
-        table.add(skeletonEsp).colspan(2).row()
-        table.add(showTeam)
-        table.add(showEnemies)
+        table.padLeft(25F)
+        table.padRight(25F)
+
+        table.add(skeletonEsp).left().row()
+        table.add(showTeam).left()
+        table.add(showEnemies).padLeft(200 - skeletonEsp.width).left()
     }
 
     override fun getContentTable(): Table? {

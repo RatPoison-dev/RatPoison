@@ -3,7 +3,7 @@ package rat.poison.ui
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.kotcrab.vis.ui.widget.VisTable
 
-object tableBuilder {
+object TableBuilder {
     fun build(text: String, labelWidth: Int, actor: Actor): VisTable {
         val table = VisTable(true)
         table.add(text).width(labelWidth.toFloat())

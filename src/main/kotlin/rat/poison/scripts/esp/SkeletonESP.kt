@@ -49,7 +49,7 @@ internal fun skeletonEsp() {
 					entityBones[entity] = this
 				}
 
-				forEach { drawBone(entity, it.first, it.second); false }
+				forEach { et -> drawBone(entity, et.first, et.second); false }
 			}
 
 			false

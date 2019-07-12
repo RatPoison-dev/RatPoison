@@ -4,6 +4,7 @@
 package rat.poison.overlay
 
 import com.sun.jna.platform.win32.WinUser
+import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
@@ -11,6 +12,7 @@ import rat.poison.jna.*
 import rat.poison.jna.enums.AccentStates
 import rat.poison.jna.structures.Rect
 import rat.poison.jna.structures.WindowCompositionAttributeData
+import rat.poison.opened
 import rat.poison.utils.inBackground
 import kotlin.concurrent.thread
 import kotlin.properties.Delegates
@@ -22,8 +24,8 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	private val rcWindow = Rect()
 	private var x: Int = 0
 	private var y: Int = 0
-	private var width: Int = 0
-	private var height: Int = 0
+	var width: Int = 0
+	var height: Int = 0
 	private var initialWidth: Int = 0
 	private var initialHeight: Int = 0
 	private var initialWindowStyle: Int = 0
@@ -98,7 +100,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	private fun monitorTargetApp() = with(User32) {
 		if (targetAppHWND == HWND_ZERO) {
 			println("Waiting for App")
-			targetAppHWND = getWindowHWND(targetAppTitle, kotlin.Long.MAX_VALUE)
+			targetAppHWND = getWindowHWND(targetAppTitle, Long.MAX_VALUE)
 			if (targetAppHWND == HWND_ZERO) {
 				return@with
 			}
@@ -121,22 +123,22 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 
 			if (oldX != x || oldY != y || oldWidth != width || oldHeight != height) {
 				SetWindowPos(
-						myHWND, HWND_TOPPOS, x, y, width, height, com.sun.jna.platform.win32.WinUser.SWP_NOSENDCHANGING or com.sun.jna.platform.win32.WinUser.SWP_NOZORDER
-						or com.sun.jna.platform.win32.WinUser.SWP_DEFERERASE or com.sun.jna.platform.win32.WinUser.SWP_NOREDRAW or com.sun.jna.platform.win32.WinUser.SWP_ASYNCWINDOWPOS or com.sun.jna.platform.win32.WinUser.SWP_FRAMECHANGED
+						myHWND, HWND_TOPPOS, x, y, width, height, WinUser.SWP_NOSENDCHANGING or WinUser.SWP_NOZORDER
+						or WinUser.SWP_DEFERERASE or WinUser.SWP_NOREDRAW or WinUser.SWP_ASYNCWINDOWPOS or WinUser.SWP_FRAMECHANGED
 				)
 				listener?.onBoundsChange(this@Overlay, x, y, width, height)
 			}
 			val isMyWindowVisible = IsWindowVisible(myHWND)
 			if (getActiveWindow() == targetAppHWND) {
 				if (!isMyWindowVisible) {
-					ShowWindow(myHWND, com.sun.jna.platform.win32.WinUser.SW_SHOW)
+					ShowWindow(myHWND, WinUser.SW_SHOW)
 					listener?.onForeground(this@Overlay)
 					if (!clickThrough) beActive()
 				}
 			} else {
 				if (isMyWindowVisible) {
 					if (curSettings["MENU_APP"]!!.toString().replace("\"", "") == "Counter-Strike: Global Offensive") {
-						ShowWindow(myHWND, com.sun.jna.platform.win32.WinUser.SW_HIDE)
+						ShowWindow(myHWND, WinUser.SW_HIDE)
 						listener?.onBackground(this@Overlay)
 					}
 				}
@@ -151,8 +153,8 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	}
 
 	private fun saveStyle() = with(User32) {
-		initialWindowStyle = GetWindowLongA(myHWND, com.sun.jna.platform.win32.WinUser.GWL_STYLE)
-		initialWindowExStyle = GetWindowLongA(myHWND, com.sun.jna.platform.win32.WinUser.GWL_EXSTYLE)
+		initialWindowStyle = GetWindowLongA(myHWND, WinUser.GWL_STYLE)
+		initialWindowExStyle = GetWindowLongA(myHWND, WinUser.GWL_EXSTYLE)
 		GetClientRect(myHWND, rcClient)
 		initialWidth = rcClient.right - rcClient.left
 		initialHeight = rcClient.bottom - rcClient.top
@@ -161,23 +163,24 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	private fun restoreStyle() = with(User32) {
 		protectAgainstScreenshots = false
 		clickThrough = false
-		SetWindowLongA(myHWND, com.sun.jna.platform.win32.WinUser.GWL_STYLE, initialWindowStyle)
-		SetWindowLongA(myHWND, com.sun.jna.platform.win32.WinUser.GWL_EXSTYLE, initialWindowExStyle)
+		SetWindowLongA(myHWND, WinUser.GWL_STYLE, initialWindowStyle)
+		SetWindowLongA(myHWND, WinUser.GWL_EXSTYLE, initialWindowExStyle)
 		val dimension = java.awt.Toolkit.getDefaultToolkit().screenSize
 		val x = ((dimension.getWidth() - initialWidth) / 2).toInt()
 		val y = ((dimension.getHeight() - initialHeight) / 2).toInt()
 		SetWindowPos(
-				myHWND, HWND_ZERO, x, y, initialWidth, initialHeight, com.sun.jna.platform.win32.WinUser.SWP_SHOWWINDOW
+				myHWND, HWND_ZERO, x, y, initialWidth, initialHeight, WinUser.SWP_SHOWWINDOW
 		)
+
 		SetForegroundWindow(myHWND)
 		SetActiveWindow(myHWND)
 		SetFocus(myHWND)
 	}
 
 	private fun makeUndecorated() = with(User32) {
-		var gwl = GetWindowLongA(myHWND, com.sun.jna.platform.win32.WinUser.GWL_STYLE)
+		var gwl = GetWindowLongA(myHWND, WinUser.GWL_STYLE)
 		gwl = gwl and com.sun.jna.platform.win32.WinUser.WS_OVERLAPPEDWINDOW.inv()
-		SetWindowLongA(myHWND, com.sun.jna.platform.win32.WinUser.GWL_STYLE, gwl)
+		SetWindowLongA(myHWND, WinUser.GWL_STYLE, gwl)
 	}
 
 	private fun makeTransparent() = with(User32) {
@@ -204,23 +207,23 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 		SetWindowCompositionAttribute(
 			myHWND,
 			WindowCompositionAttributeData(
-					AccentState = rat.poison.jna.enums.AccentStates.ACCENT_DISABLED,
+					AccentState = AccentStates.ACCENT_DISABLED,
 					AccentFlags = AccentFlag_DrawAllBorders
 			)
 		)
 	}
 
 	private fun getWindowHWND(windowName: String, timeout: Long = 3000L): Long = with(User32) {
-		val start = java.lang.System.currentTimeMillis()
+		val start = System.currentTimeMillis()
 		do {
 			val hwnd = FindWindowA(null, windowName)
 			if (hwnd != HWND_ZERO) {
 				return hwnd
 			}
 			try {
-				java.lang.Thread.sleep(10)
+				Thread.sleep(10)
 			} catch (e: InterruptedException) {}
-		} while (!java.lang.Thread.interrupted() && java.lang.System.currentTimeMillis() - start < timeout)
+		} while (!Thread.interrupted() && System.currentTimeMillis() - start < timeout)
 		return HWND_ZERO
 	}
 
@@ -260,7 +263,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	private fun beActive() = with(User32) {
 		//makeBlurBehind()
 		if (targetAppHWND != HWND_ZERO) {
-			SetWindowLongA(myHWND, com.sun.jna.platform.win32.WinUser.GWL_EXSTYLE, WS_EX_TOOLWINDOW or WS_EX_TOPMOST)
+			SetWindowLongA(myHWND, WinUser.GWL_EXSTYLE, WS_EX_TOOLWINDOW or WS_EX_TOPMOST)
 
 			val dwCurrentThread = GetWindowThreadProcessId(myHWND, null)
 			val dwFGThread = GetWindowThreadProcessId(targetAppHWND, null)
@@ -279,7 +282,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 
 	private fun bePassive() = with(User32) {
 		SetWindowLongA(
-				myHWND, com.sun.jna.platform.win32.WinUser.GWL_EXSTYLE, com.sun.jna.platform.win32.WinUser.WS_EX_LAYERED or com.sun.jna.platform.win32.WinUser.WS_EX_TRANSPARENT or WS_EX_TOOLWINDOW or WS_EX_TOPMOST
+				myHWND, WinUser.GWL_EXSTYLE, WinUser.WS_EX_LAYERED or WinUser.WS_EX_TRANSPARENT or WS_EX_TOOLWINDOW or WS_EX_TOPMOST
 		)
 		makeTransparent()
 		if (targetAppHWND != HWND_ZERO) {

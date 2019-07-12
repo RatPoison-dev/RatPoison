@@ -8,6 +8,7 @@ import org.jire.arrowhead.keyPressed
 import rat.poison.*
 import rat.poison.ui.changed
 import rat.poison.utils.ObservableBoolean
+import kotlin.math.round
 
 class MiscTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -98,8 +99,8 @@ class MiscTab : Tab(false, false) {
             curSettings["FLASH_MAX_ALPHA"] = flashMaxAlphaSlider.value.toString()
             flashMaxAlphaLabel.setText("Flash Max Alpha: " + curSettings["FLASH_MAX_ALPHA"]!!.toFloat().toInt().toString() + when(curSettings["FLASH_MAX_ALPHA"]!!.length) {3->"  " 2->"    " else ->"      "})
         }
-        flashMaxAlpha.add(flashMaxAlphaLabel)
-        flashMaxAlpha.add(flashMaxAlphaSlider)
+        flashMaxAlpha.add(flashMaxAlphaLabel).width(200F)
+        flashMaxAlpha.add(flashMaxAlphaSlider).width(250F)
 
         //Create Hit Sound Toggle
         Tooltip.Builder("Whether or not to enable a hitsound on hit").target(hitSound).build()
@@ -114,33 +115,37 @@ class MiscTab : Tab(false, false) {
         Tooltip.Builder("The volume of the hitsound if the hitsound is enabled").target(hitSoundVolume).build()
         hitSoundVolumeSlider.value = curSettings["HITSOUND_VOLUME"]!!.toDouble().toFloat()
         hitSoundVolumeSlider.changed { _, _ ->
-            curSettings["HITSOUND_VOLUME"] = (Math.round(hitSoundVolumeSlider.value.toDouble() * 10.0)/10.0).toString() //Round to 1 decimal place
+            curSettings["HITSOUND_VOLUME"] = (round(hitSoundVolumeSlider.value.toDouble() * 10.0)/10.0).toString() //Round to 1 decimal place
             hitSoundVolumeLabel.setText("Hitsound Volume: " + curSettings["HITSOUND_VOLUME"]!!.toDouble())
         }
-        hitSoundVolume.add(hitSoundVolumeLabel).spaceRight(6F)
-        hitSoundVolume.add(hitSoundVolumeSlider)
+        hitSoundVolume.add(hitSoundVolumeLabel).width(200F)
+        hitSoundVolume.add(hitSoundVolumeSlider).width(250F)
 
+        table.padLeft(25F)
+        table.padRight(25F)
 
-        //Add all items to label for tabbed pane content
-        table.add(bunnyHop).row()
-        table.add(autoStrafe).row()
-        table.add(fastStop).row()
-        table.add(bombTimer).row()
-        table.add(spectatorList).row()
-
-        table.addSeparator()
-
-        table.add(menuKey).row()
+        table.add(bunnyHop).left().row()
+        table.add(autoStrafe).left().row()
+        table.add(fastStop).left().row()
 
         table.addSeparator()
 
-        table.add(enableReducedFlash).row()
-        table.add(flashMaxAlpha).row()
+        table.add(bombTimer).left().row()
+        table.add(spectatorList).left().row()
 
         table.addSeparator()
 
-        table.add(hitSound).row()
-        table.add(hitSoundVolume)
+        table.add(menuKey).left().row()
+
+        table.addSeparator()
+
+        table.add(enableReducedFlash).left().row()
+        table.add(flashMaxAlpha).left().row()
+
+        table.addSeparator()
+
+        table.add(hitSound).left().row()
+        table.add(hitSoundVolume).left()
     }
 
     override fun getContentTable(): Table? {

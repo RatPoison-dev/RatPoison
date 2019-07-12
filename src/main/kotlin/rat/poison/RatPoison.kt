@@ -31,8 +31,11 @@ import rat.poison.settings.*
 import rat.poison.ui.UIBombTimer
 import rat.poison.ui.UIMenu
 import rat.poison.ui.UISpectatorList
+import rat.poison.ui.uiUpdate
 import rat.poison.utils.*
 import java.io.*
+import kotlin.math.max
+import kotlin.math.min
 
 const val SETTINGS_DIRECTORY = "settings"
 var saving = false
@@ -45,7 +48,8 @@ fun main() {
 
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
 
-    Thread.sleep(1000)
+    Thread.sleep(5000)
+    println("Launching...")
 
     if (FLICKER_FREE_GLOW) {
         PROCESS_ACCESS_FLAGS = PROCESS_ACCESS_FLAGS or WinNT.PROCESS_VM_OPERATION
@@ -91,11 +95,7 @@ fun main() {
             glfwInit()
             Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
                 setTitle("Rat Poison UI")
-                if (CSGO.gameWidth < 1 || CSGO.gameHeight < 1) {
-                    setWindowedMode(curSettings["OVERLAY_WIDTH"]!!.toInt(), curSettings["OVERLAY_HEIGHT"]!!.toInt())
-                } else {
-                    setWindowedMode(CSGO.gameWidth, CSGO.gameHeight)
-                }
+                setWindowedMode(curSettings["OVERLAY_WIDTH"]!!.toInt(), curSettings["OVERLAY_HEIGHT"]!!.toInt())
                 useVsync(curSettings["OPENGL_VSYNC"]!!.strToBool())
                 setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings["OPENGL_MSAA_SAMPLES"]!!.toInt())
             })
@@ -111,7 +111,7 @@ fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
     if (specificFile)
     {
         FileReader(File(fileDir)).readLines().forEach { line ->
-            if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith("\"") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
+            if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith("\"") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
                 curSettings[curLine[0]] = curLine[2]
@@ -119,10 +119,10 @@ fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
         }
     }
     else {
-        File(fileDir).listFiles().forEach { file ->
+        File(fileDir).listFiles()?.forEach { file ->
             if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "hitsound.mp3") {
                 FileReader(file).readLines().forEach { line ->
-                    if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
+                    if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                         val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
                         curSettings[curLine[0]] = curLine[2]
@@ -132,12 +132,12 @@ fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
         }
     }
     settingsLoaded = true
+    println("Finished loading settings")
 }
 
 var opened = false
 var overlayMenuKey = ObservableBoolean({keyPressed(1)})
 
-////Courtesy of Mr. Noad, lmlapp converted to normal
 object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
@@ -145,33 +145,34 @@ object App : ApplicationAdapter() {
     private val overlay = Overlay(curSettings["MENU_APP"]!!.toString().replace("\"", ""), "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     var haveTarget = false
     lateinit var menuStage: Stage
-    lateinit var bombStage: Stage
-    lateinit var specListStage: Stage
+    private lateinit var bombStage: Stage
+    private lateinit var specListStage: Stage
     private val glyphLayout = GlyphLayout()
     private val bodies = ObjectArrayList<App.() -> Unit>()
     private lateinit var camera: OrthographicCamera
 
+    lateinit var uiMenu: UIMenu //= UIMenu() //Main UI Window
+    private lateinit var uiBombWindow: UIBombTimer //= UIBombTimer() //Bomb Timer UI Window
+    private lateinit var uiSpecList: UISpectatorList //= UISpectatorList() //Spectator List UI Window
+
     override fun create() {
         overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"]!!.toInt()) })
-        opened = true
         VisUI.load()
-        super.create()
-        overlay.start()
 
         //Implement stage for menu
         menuStage = Stage() //Main Menu Stage
         bombStage = Stage() //Bomb Timer Stage
         specListStage = Stage() //Spectator List Stage
         val root = VisTable()
-        root.setFillParent(true)
+        //root.setFillParent(true)
         menuStage.addActor(root)
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
-        val UIWindow = UIMenu() //Main UI Window
-        val UIBombWindow = UIBombTimer() //Bomb Timer UI Window
-        val UISpecList = UISpectatorList()
-        menuStage.addActor(UIWindow)
-        bombStage.addActor(UIBombWindow)
-        specListStage.addActor(UISpecList)
+        uiMenu = UIMenu()
+        uiBombWindow = UIBombTimer()
+        uiSpecList = UISpectatorList()
+        menuStage.addActor(uiMenu)
+        bombStage.addActor(uiBombWindow)
+        specListStage.addActor(uiSpecList)
         val inputMultiplexer = InputMultiplexer()
         inputMultiplexer.addProcessor(menuStage)
         inputMultiplexer.addProcessor(bombStage)
@@ -184,6 +185,8 @@ object App : ApplicationAdapter() {
         textRenderer = BitmapFont()
         camera = OrthographicCamera()
         Gdx.gl.glClearColor(0F, 0F, 0F, 0F)
+
+        overlay.start()
     }
 
     override fun render() {
@@ -236,8 +239,8 @@ object App : ApplicationAdapter() {
                 sb.projectionMatrix = menuStage.camera.combined
 
                 glEnable(GL20.GL_BLEND)
-                //glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA) //Not needed?
-                //glClearColor(0F, 0F, 0F, 0F)
+                glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA) //Not needed?
+                glClearColor(0F, 0F, 0F, 0F)
                 shapeRenderer.projectionMatrix = menuStage.camera.combined
                 for (i in 0 until bodies.size) bodies[i]()
                 glDisable(GL20.GL_BLEND)
@@ -247,8 +250,22 @@ object App : ApplicationAdapter() {
             if (overlayMenuKey.justBecomeTrue) {
                 MENUTOG = !MENUTOG
                 overlay.clickThrough = !MENUTOG
+                uiUpdate()
+            }
+
+            val w = overlay.width
+            val h = overlay.height
+
+            if (menuStage.viewport.screenWidth != w || menuStage.viewport.screenHeight != h) {
+                resize(w, h)
+                menuStage.viewport.update(w, h)
+                bombStage.viewport.update(w, h)
+                specListStage.viewport.update(w, h)
+                println("Debug: Updated viewports")
             }
         }
+
+        opened = true
     }
 
     override fun dispose() {
@@ -262,13 +279,13 @@ object App : ApplicationAdapter() {
     fun open() {
         overlay.listener = object : IOverlayListener {
             override fun onTargetAppWindowClosed(overlay: IOverlay) {
-                App.haveTarget = false
+                haveTarget = false
             }
 
             override fun onAfterInit(overlay: IOverlay) {
                 overlay.clickThrough = true
                 overlay.protectAgainstScreenshots = false
-                App.haveTarget = true
+                haveTarget = true
             }
 
             override fun onActive(overlay: IOverlay) {MENUTOG = true}
@@ -288,11 +305,11 @@ fun sync(fps : Int) {
         return
     }
 
-    val NANO_SEC = 1000000000L
+    val nanoSec = 1000000000L
 
     var overSleep = 0.toLong()
-    val sleepTime = NANO_SEC/fps
-    val yieldTime = Math.min(sleepTime, variableYieldTime + sleepTime % (1000000L))
+    val sleepTime = nanoSec/fps
+    val yieldTime = min(sleepTime, variableYieldTime + sleepTime % (1000000L))
 
     try {
         while(true) {
@@ -308,17 +325,17 @@ fun sync(fps : Int) {
             }
         }
     } catch (ex: InterruptedException) { } finally {
-        lastSyncTime = System.nanoTime() - Math.min(overSleep, sleepTime)
+        lastSyncTime = System.nanoTime() - min(overSleep, sleepTime)
 
         if (overSleep > variableYieldTime) {
-            variableYieldTime = Math.min(variableYieldTime + 200 * 1000, sleepTime)
+            variableYieldTime = min(variableYieldTime + 200 * 1000, sleepTime)
         } else if (overSleep < variableYieldTime - 200 * 1000) {
-            variableYieldTime = Math.max(variableYieldTime - 2 * 1000, 0)
+            variableYieldTime = max(variableYieldTime - 2 * 1000, 0)
         }
     }
 }
 
-fun Any.strToBool() = this == "true" || this == true
+fun Any.strToBool() = this == "true" || this == true || this == 1.0
 fun Any.boolToDouble() = if (this == "true" || this == true) 1.0 else (0.0)
 fun Any.boolToStr() = this.toString()
 fun Double.toBool() = this == 1.0
@@ -333,13 +350,10 @@ fun convStrToColor(input: String): rat.poison.game.Color {
 
     val arrayLine = line.trim().split(" ".toRegex(), 4)
 
-
-    val cColor = rat.poison.game.Color(arrayLine[0].replace("red=", "").toInt(),
+    return rat.poison.game.Color(arrayLine[0].replace("red=", "").toInt(),
             arrayLine[1].replace("green=", "").toInt(),
             arrayLine[2].replace("blue=", "").toInt(),
             arrayLine[3].replace("alpha=", "").toDouble())
-
-    return cColor
 }
 
 fun convStrToArray(input: String?): Array<Double?> {
@@ -350,7 +364,7 @@ fun convStrToArray(input: String?): Array<Double?> {
 
     val arrayLine = arrayOfNulls<Double>(12)
 
-    for (i in 0..listLine.size-1)
+    for (i in 0 until listLine.size)
     {
         arrayLine[i] = listLine[i].toDouble()
     }

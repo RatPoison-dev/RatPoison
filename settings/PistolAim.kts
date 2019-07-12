@@ -38,7 +38,7 @@ PISTOL_AIM_FOV = 30
  *
  * The minimum value is 1
  */
-PISTOL_AIM_SPEED = 12
+PISTOL_AIM_SPEED = 1
 
 /**
  * The smoothness of the aimbot
@@ -48,7 +48,7 @@ PISTOL_AIM_SMOOTHNESS = 2.5
 /**
  * The sens multiplier of the aimbot
  */
-PISTOL_AIM_STRICTNESS = 2.0
+PISTOL_AIM_STRICTNESS = 1.5
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

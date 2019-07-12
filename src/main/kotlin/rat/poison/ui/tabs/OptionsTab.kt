@@ -11,11 +11,13 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import rat.poison.*
 import rat.poison.App.menuStage
-import rat.poison.ui.UIUpdate
+import rat.poison.App.uiMenu
+import rat.poison.ui.uiUpdate
 import rat.poison.ui.changed
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
+import kotlin.math.round
 
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -32,9 +34,9 @@ class OptionsTab : Tab(false, false) {
         val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, false)
         menuAlphaSlider.value = 1F
         menuAlphaSlider.changed { _, _ ->
-            val alp = (Math.round(menuAlphaSlider.value * 100F) / 100F)
-            menuAlpha.parent.parent.parent.parent.color.a = alp //Set the top level parents alpha
-            menuAlphaLabel.setText("Menu Alpha: " + alp.toString() + when(alp.toString().length) {4 -> "" 3->"  " 2->"    " else ->"      "}) //Same parent situation
+            val alp = (round(menuAlphaSlider.value * 100F) / 100F)
+            uiMenu.changeAlpha(alp)
+            menuAlphaLabel.setText("Menu Alpha: " + alp.toString() + when(alp.toString().length) {4->"" 3->"  " 2->"    " else ->"      "})
         }
         menuAlpha.add(menuAlphaLabel).spaceRight(6F)
         menuAlpha.add(menuAlphaSlider)
@@ -101,11 +103,11 @@ class OptionsTab : Tab(false, false) {
                 GlobalScope.launch {
                     saving = true
                     println("\n Saving! \n")
-                    File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
+                    File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
                         val sbLines = StringBuilder()
                         if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "hitsound.mp3") {
                             FileReader(file).readLines().forEach { line ->
-                                if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
+                                if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                                     val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
                                     //Add custom checks
@@ -185,10 +187,10 @@ class OptionsTab : Tab(false, false) {
                 sbLines.append("import rat.poison.settings.*\n")
                 sbLines.append("import rat.poison.game.Color\n\n")
 
-                File(SETTINGS_DIRECTORY).listFiles().forEach { file ->
+                File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
                     if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "hitsound.mp3") {
                         FileReader(file).readLines().forEach { line ->
-                            if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && !line.trim().isEmpty()) {
+                            if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
                                 when {
@@ -233,7 +235,7 @@ class OptionsTab : Tab(false, false) {
                 saving = false
             }
         } else {
-            Dialogs.showErrorDialog(App.menuStage, "Error", "Wait for saving to complete first!")
+            Dialogs.showErrorDialog(menuStage, "Error", "Wait for saving to complete first!")
         }
     }
 
@@ -241,17 +243,17 @@ class OptionsTab : Tab(false, false) {
         if (!saving) {
             val cfgFile = File("settings\\cfg$cfgNum.kts")
             if (!cfgFile.exists()) {
-                Dialogs.showErrorDialog(App.menuStage, "Error", "cfg$cfgNum.kts not found, save your configuration first!")
+                Dialogs.showErrorDialog(menuStage, "Error", "cfg$cfgNum.kts not found, save your configuration first!")
             } else {
                 GlobalScope.launch {
                     println("\n Loading! \n")
                     loadSettingsFromFiles("settings\\cfg$cfgNum.kts", true)
-                    UIUpdate()
+                    uiUpdate()
                     println("\n Loading complete! \n")
                 }
             }
         } else {
-            Dialogs.showErrorDialog(App.menuStage, "Error", "Wait for saving to complete first!")
+            Dialogs.showErrorDialog(menuStage, "Error", "Wait for saving to complete first!")
         }
     }
 }

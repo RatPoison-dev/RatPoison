@@ -20,12 +20,10 @@ import rat.poison.game.entity.position
 import rat.poison.game.entity.weapon
 import rat.poison.opened
 import rat.poison.scripts.aim.boneTrig
+import rat.poison.scripts.aim.canShoot
 import rat.poison.strToBool
 import rat.poison.ui.bTrigTab
 import rat.poison.ui.mainTabbedPane
-
-private const val SwingDistance = 96f
-private const val StabDistance = 64f
 
 private val onBoneTriggerTarget = every(4) {
     if (curSettings["MENU"]!!.strToBool() && opened && haveTarget) {
@@ -33,25 +31,26 @@ private val onBoneTriggerTarget = every(4) {
             mainTabbedPane.disableTab(bTrigTab, true)
         } else {
             mainTabbedPane.disableTab(bTrigTab, false)
+        }
+    }
 
-            if (!me.weapon().knife) {
-                if (curSettings["ENABLE_BONE_TRIGGER"]!!.strToBool()) {
-                    val currentAngle = clientState.angle()
-                    val position = me.position()
-                    val target = findTarget(position, currentAngle, false, curSettings["BONE_TRIGGER_FOV"]!!.toInt(), -2)
-                    if (target >= 0 && !target.isProtected()) {
-                        if ((keyReleased(curSettings["FIRE_KEY"]!!.toInt()) && curSettings["BONE_TRIGGER_ENABLE_KEY"]!!.strToBool() && keyPressed(curSettings["BONE_TRIGGER_KEY"]!!.toInt())) || (keyReleased(FIRE_KEY) && !curSettings["BONE_TRIGGER_ENABLE_KEY"]!!.strToBool())) {
-                            boneTrig = curSettings["AIM_ON_BONE_TRIGGER"]!!.strToBool()
-                            boneTrigger()
-                        }
-                    } else {
-                        boneTrig = false
+    boneTrig = false
+
+    if (curSettings["ENABLE_BONE_TRIGGER"]!!.strToBool()) {
+        if (!me.weapon().knife) {
+            if (keyReleased(curSettings["AIM_KEY"]!!.toInt())) {
+                val currentAngle = clientState.angle()
+                val position = me.position()
+                val target = findTarget(position, currentAngle, false, curSettings["BONE_TRIGGER_FOV"]!!.toInt(), -2)
+                if (target >= 0 && target.canShoot()) {
+                    if ((curSettings["BONE_TRIGGER_ENABLE_KEY"]!!.strToBool() && keyPressed(curSettings["BONE_TRIGGER_KEY"]!!.toInt())) || !curSettings["BONE_TRIGGER_ENABLE_KEY"]!!.strToBool()) {
+                        boneTrig = true
+                        boneTrig = curSettings["AIM_ON_BONE_TRIGGER"]!!.strToBool()
+                        boneTrigger()
                     }
-                } else {
-                    boneTrig = false
                 }
-            } else {
-                boneTrig = false
+            } else {//bandaid
+                clientDLL[dwForceAttack] = 6.toByte()
             }
         }
     }
@@ -66,16 +65,11 @@ fun boneTrigger() {
         if (delay > 0) {
             GlobalScope.launch {
                 delay(delay)
-                clientDLL[dwForceAttack] = 5.toByte() //Mouse press
-                delay(24)
-                clientDLL[dwForceAttack] = 4.toByte() //Mouse release
+                clientDLL[dwForceAttack] = 6.toByte() //--Mouse press
                 inShot = false
             }
-        }
-        else {
-            clientDLL[dwForceAttack] = 5.toByte() //Mouse press
-            Thread.sleep(24)
-            clientDLL[dwForceAttack] = 4.toByte() //Mouse release
+        } else {
+            clientDLL[dwForceAttack] = 6.toByte() //--Mouse press
             inShot = false
         }
     }

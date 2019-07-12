@@ -37,7 +37,7 @@ fun worldToScreen(from: Vector, vOut: Vector) = try {
 		y += 0.5 * vOut.y * height + 0.5 //For future, -= was changed to +=, it was flipped
 
 		vOut.x = x
-		vOut.y = y
+		vOut.y = y - 20
 		
 		true
 	} else if (!w.isNaN() && w < 0.01F) { //If behind
