@@ -22,7 +22,6 @@
 * Fixed aim speed snapping when less than 10
 * Aim speed is now between 1 - 5 (aim speed is ms delay per move)
 * Aim strictness & smoothness slider max changed from 10 -> 5
-* Fixed not shooting with bone trigger, within the fov and aim key pressed
 * Cleaned up all menu tabs excluding Options
 
 ---
