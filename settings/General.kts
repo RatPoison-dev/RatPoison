@@ -19,8 +19,8 @@ MENU_APP = "Counter-Strike: Global Offensive"
 /**
  * Default menu size, if game cannot be found and sized on initialize it refers to this
  */
-OVERLAY_WIDTH = 2560
-OVERLAY_HEIGHT = 1440
+OVERLAY_WIDTH = 1920
+OVERLAY_HEIGHT = 1080
 
 /**
  * Whether or not to display warning upon opening menu
