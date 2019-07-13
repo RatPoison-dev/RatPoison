@@ -24,6 +24,9 @@
 * Aim strictness & smoothness slider max changed from 10 -> 5
 * Cleaned up all menu tabs excluding Options
 
+* Hotfixes
+    * Fixed overlay defaulting to OVERLAY_WIDTH/HEIGHT, will use CSGO's W&H if initialized fast enough
+
 ---
 
 1.3.3 + 1.3.2.3

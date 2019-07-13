@@ -93,9 +93,18 @@ fun main() {
         GlobalScope.launch {
             Thread.sleep(2000)
             glfwInit()
+
+            var w = CSGO.gameWidth
+            var h = CSGO.gameHeight
+
+            if (w == 0 || h == 0) {
+                w = curSettings["OVERLAY_WIDTH"]!!.toInt()
+                h = curSettings["OVERLAY_HEIGHT"]!!.toInt()
+            }
+
             Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
                 setTitle("Rat Poison UI")
-                setWindowedMode(curSettings["OVERLAY_WIDTH"]!!.toInt(), curSettings["OVERLAY_HEIGHT"]!!.toInt())
+                setWindowedMode(w, h)
                 useVsync(curSettings["OPENGL_VSYNC"]!!.strToBool())
                 setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings["OPENGL_MSAA_SAMPLES"]!!.toInt())
             })
