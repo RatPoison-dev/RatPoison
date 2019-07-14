@@ -26,6 +26,7 @@
 
 * Hotfixes
     * Fixed overlay defaulting to OVERLAY_WIDTH/HEIGHT, will use CSGO's W&H if initialized fast enough
+    * Fixed issue with not being able to plant bomb, shooting in menu
 
 ---
 

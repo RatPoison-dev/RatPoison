@@ -49,9 +49,10 @@ private val onBoneTriggerTarget = every(4) {
                         boneTrigger()
                     }
                 }
-            } else {//bandaid
-                clientDLL[dwForceAttack] = 6.toByte()
             }
+//            } else {//bandaid
+//                clientDLL[dwForceAttack] = 6.toByte()
+//            }
         }
     }
 }
