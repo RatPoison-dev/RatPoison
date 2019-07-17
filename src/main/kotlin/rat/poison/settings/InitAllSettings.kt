@@ -186,6 +186,7 @@ var INDICATOR_SHOW_GRENADES = false
 var ENABLE_AUTO_KNIFE = false
 var SPECTATOR_LIST = true
 var WARNING = true
+var DEBUG = false
 var AUTO_STRAFE = true
 var FAST_STOP = true
 var MENU_APP = "Counter-Strike: Global Offensive"

@@ -1,10 +1,12 @@
 package rat.poison.scripts
 
 import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.curSettings
 import rat.poison.loadSettingsFromFiles
 import rat.poison.scripts.esp.disableEsp
 //import rat.poison.loadSettings
 import rat.poison.settings.*
+import rat.poison.strToBool
 import java.io.File
 import java.io.FileNotFoundException
 import java.nio.file.Files
@@ -13,6 +15,9 @@ import java.util.*
 import javax.script.ScriptException
 
 fun scanner() {
+    if (curSettings["DEBUG"]!!.strToBool()) {
+        println("[Debug] Scanner initialized")
+    }
     println("Type help for options\n")
 
     //Major optimization, needs to be fixed later, probably move this massive dump elsewhere

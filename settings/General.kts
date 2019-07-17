@@ -28,6 +28,11 @@ OVERLAY_HEIGHT = 1080
 WARNING = true
 
 /**
+ * Whether to output debugs to cmd
+ */
+DEBUG = true
+
+/**
  * Enable/disable the spectator list
  */
 SPECTATOR_LIST = true
@@ -40,7 +45,7 @@ FAST_STOP = false
 /**
  * Whether or not to enable or disable aims
  */
-ENABLE_AIM = true
+ENABLE_AIM = false
 
 /**
  * Whether or not to aim when using the (AIM_KEY) (by default left click).
@@ -120,14 +125,14 @@ NEAREST_BONE = -1
 /**
  * Variables used in game, not saved settings, no need to touch
  */
-PERFECT_AIM = false
-PERFECT_AIM_CHANCE = 1
-PERFECT_AIM_FOV = 1
-AIM_BONE = -1
-AIM_SPEED = 0
-AIM_FOV = 40
+PERFECT_AIM = true
+PERFECT_AIM_CHANCE = 10
+PERFECT_AIM_FOV = 5
+AIM_BONE = 6
+AIM_SPEED = 3
+AIM_FOV = 60
 AIM_ASSIST_MODE = false
-FACTOR_RECOIL = false
-ENABLE_FLAT_AIM = true
-ENABLE_PATH_AIM = false
-AIM_STRICTNESS = 1.0
+FACTOR_RECOIL = true
+ENABLE_FLAT_AIM = false
+ENABLE_PATH_AIM = true
+AIM_STRICTNESS = 2.0

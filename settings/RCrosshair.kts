@@ -4,7 +4,7 @@ import rat.poison.settings.*
 /**
  * Width of bars, recommended 1 or 3
  */
-RCROSSHAIR_WIDTH = 3
+RCROSSHAIR_WIDTH = 4
 
 /**
  * Length of bars, horizontally left to right, vertically top to bottom, recommended 7, 9, 11
@@ -20,12 +20,12 @@ RCROSSHAIR_ALPHA = 0.5
 /**
  * Recoil X Offset
  */
-RCROSSHAIR_XOFFSET = 0
+RCROSSHAIR_XOFFSET = 1
 
 /**
  * Recoil Y Offset
  */
-RCROSSHAIR_YOFFSET = -14
+RCROSSHAIR_YOFFSET = -2
 
 /**
  * The color to make the recoil crosshair

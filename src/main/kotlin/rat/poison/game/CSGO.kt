@@ -5,9 +5,11 @@ import com.sun.jna.platform.win32.WinDef
 import org.jire.arrowhead.Module
 import org.jire.arrowhead.Process
 import org.jire.arrowhead.processByName
+import rat.poison.curSettings
 import rat.poison.game.hooks.constructEntities
 import rat.poison.game.netvars.NetVars
 import rat.poison.settings.*
+import rat.poison.strToBool
 import rat.poison.utils.every
 import rat.poison.utils.inBackground
 import rat.poison.utils.natives.CUser32
@@ -39,6 +41,10 @@ object CSGO {
 		private set
 
 	fun initialize() {
+		val d = curSettings["DEBUG"]!!.strToBool()
+		if (d) {
+			println("[Debug] Looking for and initializing CSGO")
+		}
 
 		retry(128) {
 			csgoEXE = processByName(PROCESS_NAME, PROCESS_ACCESS_FLAGS)!!
@@ -81,6 +87,10 @@ object CSGO {
 		//this was moved to entityIteration. forgot to delete before
 
 		constructEntities()
+
+		if (curSettings["DEBUG"]!!.strToBool()) {
+			println("[Debug] CSGO initialized")
+		}
 	}
 
 }

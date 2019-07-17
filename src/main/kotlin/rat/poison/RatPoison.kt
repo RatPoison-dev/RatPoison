@@ -55,34 +55,72 @@ fun main() {
         PROCESS_ACCESS_FLAGS = PROCESS_ACCESS_FLAGS or WinNT.PROCESS_VM_OPERATION
     }
 
-    if (!MENU) { //If we arent' using the menu disable everything that uses the menu
+    val d = curSettings["DEBUG"]!!.strToBool()
+
+    if (!curSettings["MENU"]!!.strToBool()) { //If we arent' using the menu disable everything that uses the menu
         curSettings["BOX_ESP"] = "false"
         curSettings["SKELETON_ESP"] = "false"
         curSettings["ENABLE_RECOIL_CROSSHAIR"] = "false"
         curSettings["ENABLE_BOMB_TIMER"] = "false"
         curSettings["INDICATOR_ESP"] = "false"
         curSettings["SPECTATOR_LIST"] = "false"
+        if (d) {
+            println("[Debug] Menu is disabled, disabling box esp, skeleton esp, recoil crosshair, bomb timer, indicator esp, spectator list (These scripts will still initialize)")
+        }
     }
 
     CSGO.initialize()
 
     //Init all scripts
+    if (d) { //Placeholders for cleanup
+        println("[Debug] Initializing scripts")
+    }
     bunnyHop()
     autoStrafe()
     rcs()
+
+    if (d) { //Placeholders for cleanup
+        println("[Debug] BHop, AutoStrafe, RCS initialized")
+    }
+
     rcrosshair()
     flatAim()
     pathAim()
+
+    if (d) { //Placeholders for cleanup
+        println("[Debug] Recoil Crosshair, FlatAim, PathAim initialized")
+    }
+
     setAim()
     boneTrigger() //Called once during startup, causes firing on startup
     autoKnife()
+
+    if (d) { //Placeholders for cleanup
+        println("[Debug] SetAim, BoneTrigger, AutoKnife initialized")
+    }
+
     reducedFlash()
     spectatorList()
     bombTimer()
+
+    if (d) { //Placeholders for cleanup
+        println("[Debug] ReducedFlash, SpectatorList, BombTimer initialized")
+    }
+
     esp() //Contains esp scripts
     espToggle()
     automaticWeapon()
+
+    if (d) { //Placeholders for cleanup
+        println("[Debug] ESP, ESPToggle, Automatic Weapons initialized")
+    }
+
     fastStop()
+
+    if (d) { //Placeholders for cleanup
+        println("[Debug] FastStop initialized")
+    }
+
     //ranks()
 
     //Overlay check, not updated?
@@ -272,11 +310,14 @@ object App : ApplicationAdapter() {
             val h = overlay.height
 
             if (menuStage.viewport.screenWidth != w || menuStage.viewport.screenHeight != h) {
-                resize(w, h)
+                //resize(w, h)
                 menuStage.viewport.update(w, h)
                 bombStage.viewport.update(w, h)
                 specListStage.viewport.update(w, h)
-                println("Debug: Updated viewports")
+
+                if (curSettings["DEBUG"]!!.strToBool()) {
+                    println("[Debug] Updated viewports")
+                }
             }
         }
 
