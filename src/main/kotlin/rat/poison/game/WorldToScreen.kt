@@ -29,7 +29,7 @@ fun worldToScreen(from: Vector, vOut: Vector) = try {
 		
 		val width = gameWidth
 		val height = gameHeight
-		
+
 		var x = width / 2.0
 		var y = height / 2.0
 		
@@ -37,7 +37,7 @@ fun worldToScreen(from: Vector, vOut: Vector) = try {
 		y += 0.5 * vOut.y * height + 0.5 //For future, -= was changed to +=, it was flipped
 
 		vOut.x = x
-		vOut.y = y - 20
+		vOut.y = y
 		
 		true
 	} else if (!w.isNaN() && w < 0.01F) { //If behind
@@ -53,7 +53,7 @@ fun worldToScreen(from: Vector, vOut: Vector) = try {
 		var y = height / 2.0
 
 		x += 0.5 * vOut.x * width + 0.5
-		y -= 0.5 * vOut.y * height + 0.5
+		y -= 0.5 * vOut.y * height + 0.5 //-?
 
 		vOut.x = x
 		vOut.y = y

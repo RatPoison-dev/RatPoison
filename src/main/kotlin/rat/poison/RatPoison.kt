@@ -61,6 +61,7 @@ fun main() {
         curSettings["ENABLE_RECOIL_CROSSHAIR"] = "false"
         curSettings["ENABLE_BOMB_TIMER"] = "false"
         curSettings["INDICATOR_ESP"] = "false"
+        curSettings["SPECTATOR_LIST"] = "false"
     }
 
     CSGO.initialize()
@@ -84,10 +85,10 @@ fun main() {
     fastStop()
     //ranks()
 
-    println("App Title: " + curSettings["MENU_APP"]!!.replace("\"", ""))
-
     //Overlay check, not updated?
     if (curSettings["MENU"]!!.strToBool()) {
+        println("App Title: " + curSettings["MENU_APP"]!!.replace("\"", ""))
+
         App.open()
 
         GlobalScope.launch {
@@ -105,6 +106,11 @@ fun main() {
             Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
                 setTitle("Rat Poison UI")
                 setWindowedMode(w, h)
+
+                //Required to fix W2S offset
+                setWindowPosition(CSGO.gameX, CSGO.gameY)
+                setDecorated(false)
+
                 useVsync(curSettings["OPENGL_VSYNC"]!!.strToBool())
                 setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings["OPENGL_MSAA_SAMPLES"]!!.toInt())
             })
@@ -151,7 +157,7 @@ object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
-    private val overlay = Overlay(curSettings["MENU_APP"]!!.toString().replace("\"", ""), "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
+    val overlay = Overlay(curSettings["MENU_APP"]!!.toString().replace("\"", ""), "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     var haveTarget = false
     lateinit var menuStage: Stage
     private lateinit var bombStage: Stage

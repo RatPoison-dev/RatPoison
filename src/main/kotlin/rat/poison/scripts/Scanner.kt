@@ -13,9 +13,7 @@ import java.util.*
 import javax.script.ScriptException
 
 fun scanner() {
-    if (/*ACTION_LOG*/true) {
-        println("Type help for options\n")
-    }
+    println("Type help for options\n")
 
     //Major optimization, needs to be fixed later, probably move this massive dump elsewhere
     val scanner = Scanner(System.`in`)

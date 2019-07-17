@@ -27,6 +27,8 @@
 * Hotfixes
     * Fixed overlay defaulting to OVERLAY_WIDTH/HEIGHT, will use CSGO's W&H if initialized fast enough
     * Fixed issue with not being able to plant bomb, shooting in menu
+    * Fixed W2S being offset due to an issue when initializing overlay
+    * Fixed gradle causing errors with kotlin dependencies in IDE
 
 ---
 
