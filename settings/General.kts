@@ -30,7 +30,7 @@ WARNING = true
 /**
  * Whether to output debugs to cmd
  */
-DEBUG = true
+DEBUG = false
 
 /**
  * Enable/disable the spectator list
