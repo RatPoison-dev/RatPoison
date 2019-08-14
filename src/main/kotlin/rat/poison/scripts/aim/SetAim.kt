@@ -33,6 +33,7 @@ fun setAim() = every(256){
                     curSettings["PERFECT_AIM"] = curWepSettings[9]!!.toBool()
                     curSettings["PERFECT_AIM_FOV"] = curWepSettings[10]!!.toInt()
                     curSettings["PERFECT_AIM_CHANCE"] = curWepSettings[11]!!.toInt()
+                    curSettings["ENABLE_SCOPED_ONLY"] = curWepSettings[12]!!.toBool()
                     override = true
                 } else {
                     override = false
@@ -74,6 +75,7 @@ fun setAim() = every(256){
                 curSettings["PERFECT_AIM_CHANCE"] = curSettings[strPre + "_PERFECT_AIM_CHANCE"]!!.toInt()
                 curSettings["ENABLE_FLAT_AIM"] = curSettings[strPre + "_ENABLE_FLAT_AIM"]!!.strToBool()
                 curSettings["ENABLE_PATH_AIM"] = curSettings[strPre + "_ENABLE_PATH_AIM"]!!.strToBool()
+                curSettings["ENABLE_SCOPED_ONLY"] = curSettings["SNIPER_ENABLE_SCOPED_ONLY"]!!.strToBool()
             }
         }
     } catch (e: Exception) {println("SetAim failure")} //Fix crashing

@@ -39,6 +39,11 @@ GLOW_SHOW_ENEMIES = true
 GLOW_SHOW_BOMB = true
 
 /**
+ * Whether or not to highlight the bomb carrier.
+ */
+GLOW_SHOW_BOMB_CARRIER = true
+
+/**
  * Whether or not to highlight weapons.
  */
 GLOW_SHOW_WEAPONS = true

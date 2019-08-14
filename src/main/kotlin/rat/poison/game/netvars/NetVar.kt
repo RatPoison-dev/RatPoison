@@ -6,7 +6,7 @@ import rat.poison.game.netvars.NetVars.hashClassAndVar
 import rat.poison.game.netvars.NetVars.map
 import kotlin.reflect.KProperty
 
-class NetVar(val className: String, var varName: String?, val offset: Int, val index: Int) {
+class NetVar(private val className: String, private var varName: String?, val offset: Int, private val index: Int) {
 	
 	private var value = -1L
 	

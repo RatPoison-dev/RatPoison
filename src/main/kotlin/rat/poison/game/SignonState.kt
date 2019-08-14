@@ -1,9 +1,8 @@
-
-
 package rat.poison.game
 
 import rat.poison.utils.extensions.EnumLookUpWithDefault
 
+@Suppress("unused")
 enum class SignOnState {
     MAIN_MENU,
     CHALLENGE,

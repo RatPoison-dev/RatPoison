@@ -47,7 +47,7 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 					closestPlayer = arr[2] as Long
 				}
 			}
-		} else if (BONE == -2) { //Bone trigger bone
+		} else if (BONE == -2) { //Trigger bot bone
 			if (curSettings["BONE_TRIGGER_HB"]!!.strToBool() && curSettings["BONE_TRIGGER_BB"]!!.strToBool()) {
 				for (i in 3..8) //Check all body bones & head bone
 				{
@@ -155,6 +155,11 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		if (!curSettings["ENABLE_AIM"]!!.strToBool()) return@every
 
 		if (!me.weaponEntity().canFire() && !me.weapon().automatic) { //Aim after shoot
+			reset()
+			return@every
+		}
+
+		if (me.weapon().sniper && !me.isScoped() && curSettings["ENABLE_SCOPED_ONLY"]!!.strToBool()) {
 			reset()
 			return@every
 		}

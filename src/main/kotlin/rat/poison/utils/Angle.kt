@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.math.Quaternion
 import java.lang.Math.abs
+import kotlin.math.cos
+import kotlin.math.sin
 
 typealias Angle = Vector
 
@@ -51,12 +53,12 @@ internal fun Angle.to(matrix: Matrix4? = null,
     val dy = this.y * MathUtils.degreesToRadians
     val dr = this.z * MathUtils.degreesToRadians
 
-    val sp = Math.sin(dp)
-    val cp = Math.cos(dp)
-    val sy = Math.sin(dy)
-    val cy = Math.cos(dy)
-    val sr = Math.sin(dr)
-    val cr = Math.cos(dr)
+    val sp = sin(dp)
+    val cp = cos(dp)
+    val sy = sin(dy)
+    val cy = cos(dy)
+    val sr = sin(dr)
+    val cr = cos(dr)
 
     //forward
     if (matrix != null || forward != null) {

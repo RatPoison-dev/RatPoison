@@ -1,6 +1,11 @@
 import rat.poison.settings.*
 
 /**
+ * Enables the bone trigger bot script.
+ */
+ENABLE_BONE_TRIGGER = false
+
+/**
  * Whether or not to auto knife targets
  */
 ENABLE_AUTO_KNIFE = false

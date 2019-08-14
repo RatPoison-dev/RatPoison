@@ -1,8 +1,9 @@
 package rat.poison.game
 
+@Suppress("unused")
 enum class Weapons(val id: Int, val automatic: Boolean = false, val grenade: Boolean = false,
                    val knife: Boolean = false, val bomb: Boolean = false, val sniper: Boolean = false, val boltAction: Boolean = false,
-                   val pistol: Boolean = false, val shotgun: Boolean = false, val rifle: Boolean = false, val smg: Boolean = false) {
+                   val pistol: Boolean = false, val shotgun: Boolean = false, val rifle: Boolean = false, val smg: Boolean = false, val scope: Boolean = false) {
 	
 	NONE(0),
 	DESERT_EAGLE(1, pistol = true),
@@ -10,10 +11,10 @@ enum class Weapons(val id: Int, val automatic: Boolean = false, val grenade: Boo
 	FIVE_SEVEN(3, pistol = true),
 	GLOCK(4, pistol = true),
 	AK47(7, automatic = true, rifle = true),
-	AUG(8, automatic = true, rifle = true),
-	AWP(9, sniper = true, boltAction = true),
+	AUG(8, automatic = true, rifle = true, scope = true),
+	AWP(9, sniper = true, boltAction = true, scope = true),
 	FAMAS(10, automatic = true, rifle = true),
-	G3SG1(11, sniper = true),
+	G3SG1(11, sniper = true, scope = true),
 	GALIL(13, automatic = true, rifle = true),
 	M249(14, automatic = true),
 	M4A4(16, automatic = true, rifle = true),
@@ -33,9 +34,9 @@ enum class Weapons(val id: Int, val automatic: Boolean = false, val grenade: Boo
 	MP9(34, automatic = true, smg = true),
 	NOVA(35, boltAction = true, shotgun = true),
 	P250(36, pistol = true),
-	SCAR20(38, sniper = true),
-	SG553(39, automatic = true, rifle = true),
-	SSG08(40, sniper = true, boltAction = true),
+	SCAR20(38, sniper = true, scope = true),
+	SG553(39, automatic = true, rifle = true, scope = true),
+	SSG08(40, sniper = true, boltAction = true, scope = true),
 	KNIFE(42, knife = true),
 	FLASH_GRENADE(43, grenade = true),
 	EXPLOSIVE_GRENADE(44, grenade = true),

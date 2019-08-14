@@ -195,18 +195,17 @@ object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
-    val overlay = Overlay(curSettings["MENU_APP"]!!.toString().replace("\"", ""), "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
+    private val overlay = Overlay(curSettings["MENU_APP"]!!.toString().replace("\"", ""), "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     var haveTarget = false
     lateinit var menuStage: Stage
     private lateinit var bombStage: Stage
     private lateinit var specListStage: Stage
-    private val glyphLayout = GlyphLayout()
     private val bodies = ObjectArrayList<App.() -> Unit>()
     private lateinit var camera: OrthographicCamera
 
-    lateinit var uiMenu: UIMenu //= UIMenu() //Main UI Window
-    private lateinit var uiBombWindow: UIBombTimer //= UIBombTimer() //Bomb Timer UI Window
-    private lateinit var uiSpecList: UISpectatorList //= UISpectatorList() //Spectator List UI Window
+    lateinit var uiMenu: UIMenu
+    lateinit var uiBombWindow: UIBombTimer
+    lateinit var uiSpecList: UISpectatorList
 
     override fun create() {
         overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"]!!.toInt()) })
@@ -263,7 +262,7 @@ object App : ApplicationAdapter() {
                     batch.end()
                 }
 
-                if (curSettings["ENABLE_BOMB_TIMER"]!!.strToBool())
+                if (curSettings["ENABLE_BOMB_TIMER"]!!.strToBool() && curSettings["BOMB_TIMER_MENU"]!!.strToBool())
                 {
                     bombStage.act(Gdx.graphics.deltaTime)
                     val bombCamera = bombStage.viewport.camera
@@ -416,9 +415,9 @@ fun convStrToArray(input: String?): Array<Double?> {
     var line = input
     line = line!!.replace("doubleArrayOf(", "").replace(")", "").replace(",", "").replace("[", "").replace("]", "")
 
-    val listLine = line.trim().split(" ".toRegex(), 12)
+    val listLine = line.trim().split(" ".toRegex(), 13)
 
-    val arrayLine = arrayOfNulls<Double>(12)
+    val arrayLine = arrayOfNulls<Double>(13)
 
     for (i in 0 until listLine.size)
     {

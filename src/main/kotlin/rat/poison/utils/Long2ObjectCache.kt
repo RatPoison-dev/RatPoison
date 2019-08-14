@@ -8,9 +8,9 @@ inline fun <T, R> Long.readCached(cache: Long2ObjectMap<T>, crossinline construc
 			if (cache.containsKey(this))
 				cache.get(this)
 			else {
-				val t_ = construct()
-				cache.put(this, t_)
-				t_
+				val tt = construct()
+				cache[this] = tt
+				tt
 			}
 	t.read(this)
 	return t

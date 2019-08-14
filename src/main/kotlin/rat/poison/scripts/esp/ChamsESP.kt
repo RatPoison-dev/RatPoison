@@ -26,12 +26,10 @@ internal fun chamsEsp() = every(256) {
 
     val myTeam = me.team()
 
-    val brightnessCounter : Int
-
-    if (curSettings["CHAMS_BRIGHTNESS"]!!.toInt() > 0) {
-        brightnessCounter = (255F / (curSettings["CHAMS_BRIGHTNESS"]!!.toInt() / 10F)).toInt()
+    val brightnessCounter = if (curSettings["CHAMS_BRIGHTNESS"]!!.toInt() > 0) {
+        (255F / (curSettings["CHAMS_BRIGHTNESS"]!!.toInt() / 10F)).toInt()
     } else {
-        brightnessCounter = 255
+        255
     }
 
     //Edit playermodel to counter weapon brightness

@@ -27,14 +27,6 @@ class Settings : ISettings {
         return pendingToSaveValues.put(key, value.toString())
     }
 
-    fun setting(name: String, defaultValue: String? = null): Settings {
-        defaultValue?.apply {
-            defaultValues[name] = this
-        }
-        return this
-    }
-
-
     override fun containsValue(value: Any?): Boolean {
         TODO("containsValue")
     }

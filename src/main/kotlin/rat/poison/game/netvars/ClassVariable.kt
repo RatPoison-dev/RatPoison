@@ -1,5 +1,3 @@
-
-
 package rat.poison.game.netvars
 
 import rat.poison.game.CSGO.csgoEXE
@@ -8,9 +6,9 @@ import rat.poison.utils.extensions.uint
 import org.jire.arrowhead.Addressed
 import kotlin.LazyThreadSafetyMode.NONE
 
-internal class ClassVariable(override val address: Long, val addressOffset: Long) : Addressed {
+internal class ClassVariable(override val address: Long, private val addressOffset: Long) : Addressed {
 	
-	val resolvedAddress by lazy(NONE) { csgoEXE.uint(address) }
+	private val resolvedAddress by lazy(NONE) { csgoEXE.uint(address) }
 	
 	val name by lazy(NONE) {
 		val bytes = ByteArray(32)

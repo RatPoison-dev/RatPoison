@@ -5,7 +5,6 @@ import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.boolToStr
 import rat.poison.scripts.esp.disableEsp
-import rat.poison.settings.*
 import rat.poison.ui.changed
 import rat.poison.curSettings
 import rat.poison.strToBool

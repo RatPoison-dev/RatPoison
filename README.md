@@ -5,6 +5,22 @@
 
 ---
 
+1.4
+
+* Nearest Bone is now based off of your recoil instead of the center of your screen
+* Box ESP details now shows player name
+* Resized health bar in Box ESP details
+* Fixed default override settings being out of range
+* Added show bomb carrier settings to glow esp and indicator esp
+* Fixed indicator esp being the wrong color when changed before reinitializing
+* Cleaned up Scripts kts file, renamed to MiscScripts and moved relevant script enables to their own files
+* SpectatorList and BombTimer moved to their own new files
+* Added crosshair option for snipers
+* Small changes to bomb timer bars
+* Bomb timer and spectator list now save position/alpha through saves
+
+---
+
 1.3.4
 
 * Updated default settings to look more legit
@@ -162,10 +178,10 @@ The first step is to compile the source code into a usable cheat program.
 To set your JAVA_HOME go [here](https://javatutorial.net/set-java-home-windows-10)
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.3.4**.
+directory, and will in a directory called **RatPoison 1.4**.
 
-From within the **RatPoison 1.3.4** directory, you can start the cheat by running
-the _"Start RatPoison 1.3.4"_ script.
+From within the **RatPoison 1.4** directory, you can start the cheat by running
+the _"Start RatPoison 1.4"_ script.
 
 Before starting the cheat, you should already be spawned in a game with a weapon in hand!
 

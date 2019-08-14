@@ -18,6 +18,8 @@ class MiscTab : Tab(false, false) {
     val autoStrafe = VisCheckBox("Auto Strafe")
     val fastStop = VisCheckBox("Fast Stop")
     val bombTimer = VisCheckBox("Bomb Timer")
+    val bombTimerEnableBars = VisCheckBox("Timer Bars")
+    val bombTimerEnableMenu = VisCheckBox("Timer Menu")
     val spectatorList = VisCheckBox("Spectator List")
     val menuKeyField = VisValidatableTextField(Validators.FLOATS)
     val enableReducedFlash = VisCheckBox("Reduced Flash")
@@ -57,6 +59,22 @@ class MiscTab : Tab(false, false) {
         bombTimer.isChecked = curSettings["ENABLE_BOMB_TIMER"]!!.strToBool()
         bombTimer.changed { _, _ ->
             curSettings["ENABLE_BOMB_TIMER"] = bombTimer.isChecked.boolToStr()
+            true
+        }
+
+        //Create Bomb Timer Menu Toggle
+        Tooltip.Builder("Whether or not to enable bomb timer menu").target(bombTimerEnableMenu).build()
+        bombTimerEnableMenu.isChecked = curSettings["BOMB_TIMER_MENU"]!!.strToBool()
+        bombTimerEnableMenu.changed { _, _ ->
+            curSettings["BOMB_TIMER_MENU"] = bombTimerEnableMenu.isChecked.boolToStr()
+            true
+        }
+
+        //Create Bomb Timer Bars Toggle
+        Tooltip.Builder("Whether or not to enable bomb timer bars").target(bombTimerEnableBars).build()
+        bombTimerEnableBars.isChecked = curSettings["BOMB_TIMER_BARS"]!!.strToBool()
+        bombTimerEnableBars.changed { _, _ ->
+            curSettings["BOMB_TIMER_BARS"] = bombTimerEnableBars.isChecked.boolToStr()
             true
         }
 
@@ -131,6 +149,8 @@ class MiscTab : Tab(false, false) {
         table.addSeparator()
 
         table.add(bombTimer).left().row()
+        table.add(bombTimerEnableMenu).padLeft(20F).left().row()
+        table.add(bombTimerEnableBars).padLeft(20F).left().row()
         table.add(spectatorList).left().row()
 
         table.addSeparator()

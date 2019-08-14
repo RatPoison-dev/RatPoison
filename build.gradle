@@ -23,7 +23,7 @@ apply plugin: "application"
 apply plugin: "com.github.johnrengelman.shadow"
 
 group "rat.poison"
-version "1.3.4"
+version "1.4"
 
 mainClassName = "rat.poison.RatPoison"
 

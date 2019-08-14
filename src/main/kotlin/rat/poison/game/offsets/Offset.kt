@@ -9,8 +9,8 @@ import org.jire.arrowhead.Module
 import kotlin.LazyThreadSafetyMode.NONE
 import kotlin.reflect.KProperty
 
-class Offset(val module: Module, val patternOffset: Long, val addressOffset: Long,
-             val read: Boolean, val subtract: Boolean, val mask: ByteArray) : Addressed {
+class Offset(val module: Module, private val patternOffset: Long, private val addressOffset: Long,
+             val read: Boolean, private val subtract: Boolean, private val mask: ByteArray) : Addressed {
 	
 	companion object {
 		val memoryByModule = Object2ObjectArrayMap<Module, Memory>()
@@ -19,13 +19,13 @@ class Offset(val module: Module, val patternOffset: Long, val addressOffset: Lon
 			var memory = memoryByModule[module]
 			if (memory == null) {
 				memory = module.read(0, module.size.toInt(), fromCache = false)!!
-				memoryByModule.put(module, memory)
+				memoryByModule[module] = memory
 			}
 			return memory
 		}
 	}
 	
-	val memory = cachedMemory()
+	private val memory = cachedMemory()
 	
 	override val address by lazy(NONE) {
 		val offset = module.size - mask.size

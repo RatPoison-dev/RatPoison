@@ -54,4 +54,5 @@ object NetVarOffsets {
 
 	val m_hObserverTarget by netVar("DT_BasePlayer", "m_hObserverTarget")
 	val m_iObserverMode by netVar("DT_BasePlayer", "m_iObserverMode")
+	val m_hOwnerEntity by netVar("DT_CSPlayer", "m_hOwnerEntity")
 }

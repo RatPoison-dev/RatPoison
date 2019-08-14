@@ -11,7 +11,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import rat.poison.*
 import rat.poison.App.menuStage
+import rat.poison.App.uiBombWindow
 import rat.poison.App.uiMenu
+import rat.poison.App.uiSpecList
 import rat.poison.ui.uiUpdate
 import rat.poison.ui.changed
 import java.io.File
@@ -99,6 +101,14 @@ class OptionsTab : Tab(false, false) {
         val saveCurConfig = VisTextButton("Save Current Config To Default Settings")
         Tooltip.Builder("Save current configuration to the settings files").target(saveCurConfig).build()
         saveCurConfig.changed { _, _ ->
+            curSettings["BOMB_TIMER_X"] = uiBombWindow.x
+            curSettings["BOMB_TIMER_Y"] = uiBombWindow.y
+            curSettings["BOMB_TIMER_ALPHA"] = uiBombWindow.color.a
+
+            curSettings["SPECTATOR_LIST_X"] = uiSpecList.x
+            curSettings["SPECTATOR_LIST_Y"] = uiSpecList.y
+            curSettings["SPECTATOR_LIST_ALPHA"] = uiSpecList.color.a
+
             if (!saving) {
                 GlobalScope.launch {
                     saving = true
@@ -164,6 +174,14 @@ class OptionsTab : Tab(false, false) {
     }
 
     private fun saveCFG(cfgNum: Int, cfgName: String) {
+        curSettings["BOMB_TIMER_X"] = uiBombWindow.x
+        curSettings["BOMB_TIMER_Y"] = uiBombWindow.y
+        curSettings["BOMB_TIMER_ALPHA"] = uiBombWindow.color.a
+
+        curSettings["SPECTATOR_LIST_X"] = uiSpecList.x
+        curSettings["SPECTATOR_LIST_Y"] = uiSpecList.y
+        curSettings["SPECTATOR_LIST_ALPHA"] = uiSpecList.color.a
+
         if (!saving) {
             GlobalScope.launch {
                 saving = true
@@ -193,15 +211,11 @@ class OptionsTab : Tab(false, false) {
                             if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
-                                when {
-                                        curLine[0] == "CFG1_NAME" || curLine[0] == "CFG2_NAME" || curLine[0] == "CFG3_NAME" -> {
-                                            sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]]!!.replace("\"", "") + "\"\n")
-                                        }
-
-                                        else -> {
-                                            sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
-                                        }
-                                    }
+                                if (curLine[0] == "CFG1_NAME" || curLine[0] == "CFG2_NAME" || curLine[0] == "CFG3_NAME") {
+                                    sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]]!!.replace("\"", "") + "\"\n")
+                                } else {
+                                    sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
+                                }
                             }
                         }
                     }
@@ -249,6 +263,10 @@ class OptionsTab : Tab(false, false) {
                     println("\n Loading! \n")
                     loadSettingsFromFiles("settings\\cfg$cfgNum.kts", true)
                     uiUpdate()
+                    uiBombWindow.updatePosition(curSettings["BOMB_TIMER_X"]!!.toFloat(), curSettings["BOMB_TIMER_Y"]!!.toFloat())
+                    uiBombWindow.changeAlpha(curSettings["BOMB_TIMER_ALPHA"]!!.toFloat())
+                    uiSpecList.updatePosition(curSettings["SPECTATOR_LIST_X"]!!.toFloat(), curSettings["SPECTATOR_LIST_Y"]!!.toFloat())
+                    uiSpecList.changeAlpha(curSettings["SPECTATOR_LIST_ALPHA"]!!.toFloat())
                     println("\n Loading complete! \n")
                 }
             }

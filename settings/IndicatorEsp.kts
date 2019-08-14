@@ -37,6 +37,11 @@ INDICATOR_SHOW_ENEMIES = true
 INDICATOR_SHOW_BOMB = true
 
 /**
+ * Whether or not to highlight the bomb carrier.
+ */
+INDICATOR_SHOW_BOMB_CARRIER = true
+
+/**
  * Whether or not to highlight weapons.
  */
 INDICATOR_SHOW_WEAPONS = true

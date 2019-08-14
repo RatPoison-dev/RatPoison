@@ -20,21 +20,24 @@ fun bombTimer() {
 
     App {
         bombText.setText(bombState.toString())
-        if (curSettings["ENABLE_BOMB_TIMER"]!!.strToBool() && bombState.planted) {
-            val cColor : Color
-            if ((me.team() == 3.toLong() && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) {
-                cColor = Color(255F, 220F, 0F, .5F)
-            } else  if ((me.team() == 3.toLong() && bombState.timeLeftToDefuse < bombState.timeLeftToExplode) || (me.team() == 2.toLong() && !bombState.gettingDefused)) {
-                cColor = Color(255F, 220F, 0F, .5F)
+        if (curSettings["ENABLE_BOMB_TIMER"]!!.strToBool() && curSettings["BOMB_TIMER_BARS"]!!.strToBool() && bombState.planted) {
+            val cColor = if ((me.team() == 3.toLong() && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) { //If player has time to defuse
+                Color(0F, 255F, 0F, .25F) //Green
+            } else  if ((me.team() == 3.toLong() && bombState.timeLeftToDefuse < bombState.timeLeftToExplode) || (me.team() == 2.toLong() && !bombState.gettingDefused)) { //If player is defusing with time left, or is terrorist and the bomb isn't being defused
+                Color(0F, 255F, 0F, .25F)
             } else {
-                cColor = Color(1F, 0F, 0F, .25F)
+                Color(255F, 0F, 0F, .25F) //Bomb is being defused/not enough time
             }
 
             shapeRenderer.apply {
                 begin()
                 color = cColor
                 set(ShapeRenderer.ShapeType.Filled)
-                rect(0F, 0F, CSGO.gameWidth.toFloat()*(bombState.timeLeftToExplode/40F), CSGO.gameHeight * .01F)
+                rect(0F, 0F, CSGO.gameWidth.toFloat()*(bombState.timeLeftToExplode/40F), 16F)
+                if (bombState.gettingDefused) {
+                    val defuseLeft = bombState.timeLeftToDefuse/10F
+                    rect((CSGO.gameWidth/2F) - ((CSGO.gameWidth/4F)*defuseLeft)/2F, (CSGO.gameHeight / 3F) * 2, (CSGO.gameWidth/4F)*defuseLeft, 16F)
+                }
                 set(ShapeRenderer.ShapeType.Line)
                 color = Color(1F, 1F, 1F, 1F)
                 end()

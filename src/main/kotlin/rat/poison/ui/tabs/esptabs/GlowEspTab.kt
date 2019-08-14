@@ -23,6 +23,7 @@ class GlowEspTab : Tab(false, false) {
     val showTeam = VisCheckBox("Show Team")
     val showEnemies = VisCheckBox("Show Enemies")
     val showBomb = VisCheckBox("Show Bomb")
+    val showBombCarrier = VisCheckBox("Show Bomb Carrier")
     val showWeapons = VisCheckBox("Show Weapons")
     val showGrenades = VisCheckBox("Show Grenades")
     val showTarget = VisCheckBox("Show Target")
@@ -123,6 +124,14 @@ class GlowEspTab : Tab(false, false) {
             true
         }
 
+        //Create Show Bomb Carrier Toggle
+        Tooltip.Builder("Whether or not to show bomb with esp").target(showBombCarrier).build()
+        if (curSettings["GLOW_SHOW_BOMB_CARRIER"]!!.strToBool()) showBombCarrier.toggle()
+        showBombCarrier.changed { _, _ ->
+            curSettings["GLOW_SHOW_BOMB"] = showBombCarrier.isChecked.boolToStr()
+            true
+        }
+
         //Create Show Weapons Toggle
         Tooltip.Builder("Whether or not to show eapons with esp").target(showWeapons).build()
         if (curSettings["GLOW_SHOW_WEAPONS"]!!.strToBool()) showWeapons.toggle()
@@ -162,10 +171,12 @@ class GlowEspTab : Tab(false, false) {
         table.add(showEnemies).padLeft(colWidth).left().row()
 
         table.add(showBomb).left()
-        table.add(showWeapons).padLeft(colWidth).left().row()
+        table.add(showBombCarrier).padLeft(colWidth).left().row()
 
-        table.add(showGrenades).left()
-        table.add(showTarget).padLeft(colWidth).left()
+        table.add(showWeapons).left()
+        table.add(showGrenades).padLeft(colWidth).left().row()
+
+        table.add(showTarget).left()
     }
 
     override fun getContentTable(): Table? {

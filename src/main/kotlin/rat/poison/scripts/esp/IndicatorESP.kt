@@ -9,49 +9,78 @@ import rat.poison.App.shapeRenderer
 import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.game.offsets.ClientOffsets
-import rat.poison.scripts.bombState
 import rat.poison.settings.*
 import rat.poison.strToBool
 import rat.poison.curSettings
+import rat.poison.strToColor
 import rat.poison.utils.Vector
 import rat.poison.utils.distanceTo
 import rat.poison.utils.notInGame
 import kotlin.math.cos
 import kotlin.math.sin
 
-//Add radius var and oval toggle
-
 internal fun indicatorEsp() = App {
     if (!curSettings["ENABLE_ESP"]!!.strToBool() || MENUTOG || !curSettings["INDICATOR_ESP"]!!.strToBool() || notInGame) return@App //Needed menutog/notingame/inbackground or would crash at w2s view matrix
 
+    val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
+    val bEnt = bomb.carrier()
+
     forEntities {
         val entity = it.entity
+        val myTeam = me.team()
+        val entTeam = entity.team()
+        var color = ""
 
         when (it.type) {
             EntityType.CCSPlayer -> {
                 if (entity.dead() || entity == me || entity.dormant()) return@forEntities false
 
-                if (curSettings["INDICATOR_SHOW_ENEMIES"]!!.strToBool() && me.team() != entity.team()) {
-                    w2sHandler(entity.position(), me.position().distanceTo(entity.position()), ENEMY_COLOR)
-                } else if (curSettings["INDICATOR_SHOW_TEAM"]!!.strToBool() && me.team() == entity.team()) {
-                    w2sHandler(entity.position(), me.position().distanceTo(entity.position()), TEAM_COLOR)
+                if (bEnt >= 0 && bEnt == entity) {
+                    if (curSettings["INDICATOR_SHOW_ENEMIES"]!!.strToBool() && myTeam != entTeam) {
+                        color = when (curSettings["INDICATOR_SHOW_BOMB"]!!.strToBool() && curSettings["INDICATOR_SHOW_BOMB_CARRIER"]!!.strToBool()) {
+                            true -> "BOMB_COLOR"
+                            false -> "ENEMY_COLOR"
+                        }
+                    } else if (curSettings["INDICATOR_SHOW_TEAM"]!!.strToBool() && myTeam == entTeam) {
+                        color = when (curSettings["INDICATOR_SHOW_BOMB"]!!.strToBool() && curSettings["INDICATOR_SHOW_BOMB_CARRIER"]!!.strToBool()) {
+                            true -> "BOMB_COLOR"
+                            false -> "TEAM_COLOR"
+                        }
+                    }
+                } else {
+                    if (myTeam == entTeam && !curSettings["INDICATOR_SHOW_TEAM"]!!.strToBool()) {
+                        return@forEntities false
+                    } else if (!curSettings["INDICATOR_SHOW_ENEMIES"]!!.strToBool()) {
+                        return@forEntities false
+                    } else {
+                        color = when (myTeam != entTeam) {
+                            true -> "ENEMY_COLOR"
+                            false -> "TEAM_COLOR"
+                        }
+                    }
                 }
             }
 
             EntityType.CPlantedC4, EntityType.CC4 -> {
-                if (curSettings["INDICATOR_SHOW_BOMB"]!!.strToBool() && bombState.planted) {
-                    w2sHandler(entity.position(), me.position().distanceTo(entity.position()), BOMB_COLOR)
+                if (curSettings["INDICATOR_SHOW_BOMB"]!!.strToBool()) {
+                    color = "BOMB_COLOR"
                 }
             }
 
             else -> {
                 if (curSettings["INDICATOR_SHOW_WEAPONS"]!!.strToBool() && it.type.weapon) {
-                    w2sHandler(entity.position(), me.position().distanceTo(entity.position()), WEAPON_COLOR)
+                    color = "WEAPON_COLOR"
                 } else if (curSettings["INDICATOR_SHOW_GRENADES"]!!.strToBool() && it.type.grenade) {
-                    w2sHandler(entity.position(), me.position().distanceTo(entity.position()), GRENADE_COLOR)
+                    color = "GRENADE_COLOR"
                 }
             }
         }
+
+        if (color != "") {
+            val entPos = entity.position()
+            w2sHandler(entPos, me.position().distanceTo(entPos), curSettings[color]!!.strToColor())
+        }
+
         false
     }
 }
@@ -92,8 +121,6 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: Color) {
             val indicatorPos = Vector3(vOut.x.toFloat(), vOut.y.toFloat()+25F, 0F)
             val rot = 3.14
 
-            //Cleaner way?
-
             //Middle of triangle
             val p = indicatorPos.x
             val q = indicatorPos.y
@@ -124,8 +151,6 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: Color) {
             val indicatorPos = Vector3(vOut.x.toFloat(), vOut.y.toFloat(), 0F)
             val rot = -indicatorPosition(indicatorPos, indicatorPos).toDouble()
 
-            //Cleaner way?
-
             //Middle of triangle
             val p = indicatorPos.x
             val q = indicatorPos.y
@@ -154,7 +179,7 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: Color) {
 }
 
 private val viewMatrix = Array(4) { DoubleArray(4) }
-fun wTest(from: Vector): Double { //Fails at large distances, but still indicates 'accurately'
+fun wTest(from: Vector): Double { //Fails at large distances, but still indicates 'accurately' on screen
     try {
         val vOut = Vector(0.0, 0.0)
         val buffer = CSGO.clientDLL.read(ClientOffsets.dwViewMatrix, 4 * 4 * 4)!!

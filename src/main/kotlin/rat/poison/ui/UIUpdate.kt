@@ -2,6 +2,8 @@ package rat.poison.ui
 
 import com.badlogic.gdx.graphics.Color
 import rat.poison.*
+import rat.poison.App.uiBombWindow
+import rat.poison.App.uiSpecList
 import rat.poison.scripts.esp.disableEsp
 import rat.poison.settings.*
 import rat.poison.ui.tabs.*
@@ -27,6 +29,14 @@ fun uiUpdate() {
             enableFactorRecoil.isChecked = curWep[1]!!.toBool()
             enableFlatAim.isChecked = curWep[2]!!.toBool()
             enablePathAim.isChecked = curWep[3]!!.toBool()
+            enableScopedOnly.isChecked = curWep[12]!!.toBool()
+            if (categorySelected == "SNIPER") {
+                enableScopedOnly.color = Color(255F, 255F, 255F, 1F)
+                enableScopedOnly.isDisabled = false
+            } else {
+                enableScopedOnly.color = Color(255F, 255F, 255F, 0F)
+                enableScopedOnly.isDisabled = true
+            }
             aimBoneBox.selected = when (curWep[4]!!.toInt()) {
                 HEAD_BONE -> "HEAD"
                 NECK_BONE -> "NECK"
@@ -71,6 +81,14 @@ fun uiUpdate() {
             enableFactorRecoil.isChecked = curSettings[categorySelected + "_FACTOR_RECOIL"]!!.strToBool()
             enableFlatAim.isChecked = curSettings[categorySelected + "_ENABLE_FLAT_AIM"]!!.strToBool()
             enablePathAim.isChecked = curSettings[categorySelected + "_ENABLE_PATH_AIM"]!!.strToBool()
+            enableScopedOnly.isChecked = curSettings["SNIPER_ENABLE_SCOPED_ONLY"]!!.strToBool()
+            if (categorySelected == "SNIPER") {
+                enableScopedOnly.color = Color(255F, 255F, 255F, 1F)
+                enableScopedOnly.isDisabled = false
+            } else {
+                enableScopedOnly.color = Color(255F, 255F, 255F, 0F)
+                enableScopedOnly.isDisabled = true
+            }
             aimBoneBox.selected = when (curSettings[categorySelected + "_AIM_BONE"]!!.toInt()) {
                 HEAD_BONE -> "HEAD"
                 NECK_BONE -> "NECK"
@@ -200,6 +218,7 @@ fun uiUpdate() {
         glowEspTab.showTeam.isDisabled = bool
         glowEspTab.showEnemies.isDisabled = bool
         glowEspTab.showBomb.isDisabled = bool
+        glowEspTab.showBombCarrier.isDisabled = bool
         glowEspTab.showWeapons.isDisabled = bool
         glowEspTab.showGrenades.isDisabled = bool
         glowEspTab.showTarget.isDisabled = bool
@@ -221,6 +240,7 @@ fun uiUpdate() {
         indicatorEspTab.showTeam.isDisabled = bool
         indicatorEspTab.showEnemies.isDisabled = bool
         indicatorEspTab.showBomb.isDisabled = bool
+        indicatorEspTab.showBombCarrier.isDisabled = bool
         indicatorEspTab.showWeapons.isDisabled = bool
         indicatorEspTab.showGrenades.isDisabled = bool
 
@@ -255,6 +275,7 @@ fun uiUpdate() {
         showTeam.isChecked = curSettings["GLOW_SHOW_TEAM"]!!.strToBool()
         showEnemies.isChecked = curSettings["GLOW_SHOW_ENEMIES"]!!.strToBool()
         showBomb.isChecked = curSettings["GLOW_SHOW_BOMB"]!!.strToBool()
+        showBombCarrier.isChecked = curSettings["GLOW_SHOW_BOMB_CARRIER"]!!.strToBool()
         showWeapons.isChecked = curSettings["GLOW_SHOW_WEAPONS"]!!.strToBool()
         showGrenades.isChecked = curSettings["GLOW_SHOW_GRENADES"]!!.strToBool()
         showTarget.isChecked = curSettings["GLOW_SHOW_TARGET"]!!.strToBool()
@@ -293,6 +314,7 @@ fun uiUpdate() {
         showTeam.isChecked = curSettings["INDICATOR_SHOW_TEAM"]!!.strToBool()
         showEnemies.isChecked = curSettings["INDICATOR_SHOW_ENEMIES"]!!.strToBool()
         showBomb.isChecked = curSettings["INDICATOR_SHOW_BOMB"]!!.strToBool()
+        showBombCarrier.isChecked = curSettings["INDICATOR_SHOW_BOMB_CARRIER"]!!.strToBool()
         showWeapons.isChecked = curSettings["INDICATOR_SHOW_WEAPONS"]!!.strToBool()
         showGrenades.isChecked = curSettings["INDICATOR_SHOW_GRENADES"]!!.strToBool()
     }
@@ -339,6 +361,8 @@ fun uiUpdate() {
         autoStrafe.isChecked = curSettings["AUTO_STRAFE"]!!.strToBool()
         fastStop.isChecked = curSettings["FAST_STOP"]!!.strToBool()
         bombTimer.isChecked = curSettings["ENABLE_BOMB_TIMER"]!!.strToBool()
+        bombTimerEnableMenu.isChecked = curSettings["BOMB_TIMER_MENU"]!!.strToBool()
+        bombTimerEnableBars.isChecked = curSettings["BOMB_TIMER_BARS"]!!.strToBool()
         spectatorList.isChecked = curSettings["SPECTATOR_LIST"]!!.strToBool()
         menuKeyField.text = curSettings["MENU_KEY"]
         enableReducedFlash.isChecked = curSettings["ENABLE_REDUCED_FLASH"]!!.strToBool()
@@ -360,6 +384,7 @@ fun uiUpdate() {
         rcsSmoothingSlider.isDisabled = !curSettings["ENABLE_RCS"]!!.strToBool()
         rcsReturnAim.isDisabled = !curSettings["ENABLE_RCS"]!!.strToBool()
         enableRCrosshair.isChecked = curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
+        enableSCrosshair.isChecked = curSettings["ENABLE_SNIPER_CROSSHAIR"]!!.strToBool()
         rCrosshairWidthLabel.setText("RCrosshair Width: " + curSettings["RCROSSHAIR_WIDTH"])
         rCrosshairWidthSlider.value = curSettings["RCROSSHAIR_WIDTH"]!!.toInt().toFloat()
         rCrosshairLengthLabel.setText("RCrosshair Length: " + curSettings["RCROSSHAIR_LENGTH"])
@@ -371,10 +396,6 @@ fun uiUpdate() {
         rCrosshairAlphaLabel.setText("RCrosshair Alpha: " + curSettings["RCROSSHAIR_ALPHA"])
         rCrosshairAlphaSlider.value = curSettings["RCROSSHAIR_ALPHA"]!!.toFloat()
 
-
-
-
-
         var bool = !curSettings["ENABLE_RCS"]!!.strToBool()
         var color = Color(255F, 255F, 255F, 1F)
         if (bool) {
@@ -384,7 +405,7 @@ fun uiUpdate() {
         rcsSmoothingSlider.isDisabled = bool
         rcsReturnAim.isDisabled = bool
 
-        bool = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
+        bool = !(curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool() || curSettings["ENABLE_SNIPER_CROSSHAIR"]!!.strToBool())
         color = Color(255F, 255F, 255F, 1F)
         if (bool) {
             color = Color(105F, 105F, 105F, .2F)

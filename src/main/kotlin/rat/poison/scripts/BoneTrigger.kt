@@ -15,7 +15,6 @@ import rat.poison.scripts.aim.findTarget
 import rat.poison.settings.*
 import rat.poison.utils.*
 import rat.poison.curSettings
-import rat.poison.game.entity.isProtected
 import rat.poison.game.entity.position
 import rat.poison.game.entity.weapon
 import rat.poison.opened

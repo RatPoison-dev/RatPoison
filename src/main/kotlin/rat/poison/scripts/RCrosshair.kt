@@ -8,35 +8,45 @@ import rat.poison.game.*
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.entity.*
-import rat.poison.settings.*
 import rat.poison.strToBool
 import rat.poison.strToColor
 import rat.poison.utils.Vector
 import kotlin.math.floor
 
-private var lastpunch = Vector(0.0, 0.0, 0.0)
+internal fun rcrosshair() = App {
+    val eRC = curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
+    val eSC = curSettings["ENABLE_SNIPER_CROSSHAIR"]!!.strToBool()
 
-//Shoot me, remove constants?
-internal fun rcrosshair() = App { //Currently not completely centered
-    if (!curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()) return@App
+    if (!eRC && !eSC) return@App
 
-    //Crosshair
+    val x: Float
+    val y: Float
+
+    //Crosshair Length/Width
     val cL = curSettings["RCROSSHAIR_LENGTH"]!!.toFloat()
     val cW = curSettings["RCROSSHAIR_WIDTH"]!!.toFloat()
 
-    //Need offsets because draw is bottom left
-    val wO = floor(cW/2.0).toFloat()
-    val lO = floor(cL/2.0).toFloat()
-
-    //General crosshair x/y offset
+    //Crosshair X/Y offset
     val rccXo = curSettings["RCROSSHAIR_XOFFSET"]!!.toFloat()
     val rccYo = curSettings["RCROSSHAIR_YOFFSET"]!!.toFloat()
 
-    //Horizontal Bar
-    val x = gameWidth/2 - ((gameWidth/95F)*lastpunch.y).toFloat() + rccXo
-    val y = gameHeight/2 - ((gameHeight/95F)*lastpunch.x).toFloat() + rccYo
+    //Center based on Length/Width
+    val wO = floor(cW / 2.0).toFloat()
+    val lO = floor(cL / 2.0).toFloat()
 
-    lastpunch = me.punch()
+    if (eRC && !(eSC && me.weapon().sniper)) {
+        val punch = me.punch()
+
+        //Horizontal Bar
+        x = gameWidth / 2 - ((gameWidth / 95F) * punch.y).toFloat() + rccXo
+        //Vertical Bar
+        y = gameHeight / 2 - ((gameHeight / 95F) * punch.x).toFloat() + rccYo
+    } else {
+        //Horizontal Bar
+        x = gameWidth / 2 + rccXo
+        //Vertical Bar
+        y = gameHeight / 2 + rccYo
+    }
 
     shapeRenderer.apply {
         begin()
@@ -44,11 +54,14 @@ internal fun rcrosshair() = App { //Currently not completely centered
         val col = curSettings["RCROSSHAIR_COLOR"]!!.strToColor()
         color = Color(col.red/255F, col.green/255F, col.blue/255F, curSettings["RCROSSHAIR_ALPHA"]!!.toFloat())
 
-        //Horizontal
-        rect(x - lO, y - wO, cL, cW)
+        val hasSniper = me.weapon().scope
 
-        //Vertical
-        rect(x - wO, y - lO, cW, cL)
+        if ((eSC && hasSniper && !me.isScoped()) || !eSC || (eRC && !hasSniper)) {
+            //Horizontal
+            rect(x - lO, y - wO, cL, cW)
+            //Vertical
+            rect(x - wO, y - lO, cW, cL)
+        }
 
         set(ShapeRenderer.ShapeType.Line)
         end()

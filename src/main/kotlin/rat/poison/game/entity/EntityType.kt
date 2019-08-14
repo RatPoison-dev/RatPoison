@@ -296,7 +296,7 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false)
 		
 		val size = cachedValues.size
 		
-		fun byID(id: Long) = cachedValues.firstOrNull { it.id == id }
+		private fun byID(id: Long) = cachedValues.firstOrNull { it.id == id }
 		
 		fun byEntityAddress(address: Long): EntityType {
 			val vt = (csgoEXE.read(address + 0x8, 4) ?: return NULL).getInt(0).unsign()

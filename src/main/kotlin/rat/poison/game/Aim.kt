@@ -1,11 +1,9 @@
 package rat.poison.game
 
-import com.badlogic.gdx.math.Vector2
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.netvars.NetVarOffsets.vecViewOffset
-import rat.poison.settings.FACTOR_RECOIL
 import rat.poison.strToBool
 import rat.poison.utils.Angle
 import rat.poison.utils.Vector
@@ -14,7 +12,6 @@ import java.lang.Math.atan
 import java.lang.Math.toDegrees
 
 private val angles: ThreadLocal<Angle> = ThreadLocal.withInitial { Vector() }
-private val lastPunch = Vector2()
 
 fun calculateAngle(player: Player, dst: Vector): Angle = angles.get().apply {
 	val myPunch = player.punch()

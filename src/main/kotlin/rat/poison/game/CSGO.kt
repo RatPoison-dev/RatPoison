@@ -14,6 +14,7 @@ import rat.poison.utils.every
 import rat.poison.utils.inBackground
 import rat.poison.utils.natives.CUser32
 import rat.poison.utils.retry
+import kotlin.system.exitProcess
 
 object CSGO {
 
@@ -60,20 +61,20 @@ object CSGO {
 		val hwd = CUser32.FindWindowA(null, "Counter-Strike: Global Offensive")
 
 		//Get initially
-		if (!CUser32.GetClientRect(hwd, rect)) System.exit(2)
+		if (!CUser32.GetClientRect(hwd, rect)) exitProcess(2)
 		gameWidth = rect.right - rect.left
 		gameHeight = rect.bottom - rect.top
 
-		if (!CUser32.GetWindowRect(hwd, rect)) System.exit(3)
+		if (!CUser32.GetWindowRect(hwd, rect)) exitProcess(3)
 		gameX = rect.left + (((rect.right - rect.left) - gameWidth) / 2)
 		gameY = rect.top + ((rect.bottom - rect.top) - gameHeight)
 
 		every(1000) {
-			if (!CUser32.GetClientRect(hwd, rect)) System.exit(2)
+			if (!CUser32.GetClientRect(hwd, rect)) exitProcess(2)
 			gameWidth = rect.right - rect.left
 			gameHeight = rect.bottom - rect.top
 
-			if (!CUser32.GetWindowRect(hwd, rect)) System.exit(3)
+			if (!CUser32.GetWindowRect(hwd, rect)) exitProcess(3)
 			gameX = rect.left + (((rect.right - rect.left) - gameWidth) / 2)
 			gameY = rect.top + ((rect.bottom - rect.top) - gameHeight)
 		}

@@ -1,6 +1,7 @@
 package rat.poison.ui
 
 import com.kotcrab.vis.ui.widget.*
+import rat.poison.curSettings
 import kotlin.math.round
 import rat.poison.scripts.bombState
 
@@ -31,12 +32,16 @@ class UIBombTimer : VisWindow("Bomb Timer") {
         pack()
 
         setSize(325F, 150F)
-
-        setPosition(0F, 0F)
+        setPosition(curSettings["BOMB_TIMER_X"]!!.toFloat(), curSettings["BOMB_TIMER_Y"]!!.toFloat())
+        color.a = curSettings["BOMB_TIMER_ALPHA"]!!.toFloat()
         isResizable = false
     }
 
-    private fun changeAlpha(alpha: Float) {
+    fun changeAlpha(alpha: Float) {
         color.a = alpha
+    }
+
+    fun updatePosition(x: Float, y: Float) {
+        setPosition(x, y)
     }
 }

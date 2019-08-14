@@ -1,7 +1,9 @@
 package rat.poison.utils.collections
 
+import kotlin.system.exitProcess
+
 @Suppress("UNCHECKED_CAST")
-class CacheableList<out E>(val capacity: Int, val minIndex: Int = 0) {
+class CacheableList<out E>(private val capacity: Int, private val minIndex: Int = 0) {
 	
 	private val arr = arrayOfNulls<Any>(capacity)
 	
@@ -16,8 +18,7 @@ class CacheableList<out E>(val capacity: Int, val minIndex: Int = 0) {
 	fun add(element: @UnsafeVariance E): Int {
 		if (nextIndex >= capacity) {
 			Thread.dumpStack()
-			System.exit(5)
-			return -1
+			exitProcess(5)
 		}
 		arr[nextIndex] = element
 		size++

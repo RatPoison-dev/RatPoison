@@ -1,4 +1,4 @@
-//package rat.poison.ui.tabs
+package rat.poison.ui.tabs
 //
 //import com.badlogic.gdx.scenes.scene2d.ui.Table
 //import com.kotcrab.vis.ui.util.Validators

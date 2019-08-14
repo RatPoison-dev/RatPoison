@@ -25,6 +25,8 @@ private val boxes = Array(128) { Box() }
 
 private var currentIdx = 0
 
+
+
 internal fun boxEsp() = App {
 	if (!curSettings["BOX_ESP"]!!.strToBool() || !curSettings["ENABLE_ESP"]!!.strToBool() || MENUTOG) return@App
 
@@ -55,6 +57,7 @@ internal fun boxEsp() = App {
 				color = c
 				health = entity.health().toFloat()
 				weapon = entity.weapon().name
+				name = entity.name()
 			}
 
 			currentIdx++
@@ -75,15 +78,22 @@ internal fun boxEsp() = App {
 
 					sb.begin()
 					color = Color.WHITE
-					val text = StringBuilder()
-					text.append(weapon)
-					glyph.setText(textRenderer,text, 0, (text as CharSequence).length, Color.WHITE, 10F, Align.center, false, null)
+
+					val nameText = StringBuilder()
+					nameText.append(name)
+					glyph.setText(textRenderer, nameText, 0, (nameText as CharSequence).length, Color.WHITE, 10F, Align.center, false, null)
+					textRenderer.draw(sb, glyph, (x+(w/2)).toFloat(), (y+16).toFloat())
+
+
+					val weaponText = StringBuilder()
+					weaponText.append(weapon)
+					glyph.setText(textRenderer, weaponText, 0, (weaponText as CharSequence).length, Color.WHITE, 10F, Align.center, false, null)
 					textRenderer.draw(sb, glyph, (x+(w/2)).toFloat(), (y+h-4).toFloat())
 					sb.end()
 
 					set(ShapeRenderer.ShapeType.Filled)
 					this@sr.color = Color(1F - (.01F*health), (.01F*health), 0F, 1F)
-					rect(x+w-4F, (y+h).toFloat(), w*.1F, -(h*(health/100F))) //Something better than ((4F*((x+w)/(x+w)*1.2F)
+					rect(x+w-4F, (y+h).toFloat(), w*.05F, -(h*(health/100F))) //Something better than ((4F*((x+w)/(x+w)*1.2F)
 					set(ShapeRenderer.ShapeType.Line)
 					this@sr.color = Color.WHITE
 				}
@@ -97,4 +107,4 @@ internal fun boxEsp() = App {
 
 private data class Box(var x: Int = -1, var y: Int = -1,
 					   var w: Int = -1, var h: Int = -1,
-					   var color: Color = Color.WHITE, var health: Float = 100F, var weapon: String = "")
+					   var color: Color = Color.WHITE, var health: Float = 100F, var weapon: String = "", var name: String = "")

@@ -33,11 +33,6 @@ WARNING = true
 DEBUG = false
 
 /**
- * Enable/disable the spectator list
- */
-SPECTATOR_LIST = true
-
-/**
  * Enable/disable fast stop
  */
 FAST_STOP = false
@@ -45,7 +40,7 @@ FAST_STOP = false
 /**
  * Whether or not to enable or disable aims
  */
-ENABLE_AIM = false
+ENABLE_AIM = true
 
 /**
  * Whether or not to aim when using the (AIM_KEY) (by default left click).
@@ -126,13 +121,14 @@ NEAREST_BONE = -1
  * Variables used in game, not saved settings, no need to touch
  */
 PERFECT_AIM = true
-PERFECT_AIM_CHANCE = 10
-PERFECT_AIM_FOV = 5
-AIM_BONE = 6
-AIM_SPEED = 3
-AIM_FOV = 60
+PERFECT_AIM_CHANCE = 80
+PERFECT_AIM_FOV = 15
+AIM_BONE = 8
+AIM_SPEED = 1
+AIM_FOV = 30
 AIM_ASSIST_MODE = false
-FACTOR_RECOIL = true
+FACTOR_RECOIL = false
 ENABLE_FLAT_AIM = false
 ENABLE_PATH_AIM = true
-AIM_STRICTNESS = 2.0
+ENABLE_SCOPED_ONLY = false
+AIM_STRICTNESS = 1.5

@@ -36,14 +36,6 @@ class VisualsTab : Tab(false, false) {
 
             val radarEsp = VisCheckBox("Radar Esp")
 
-            val showTeam = VisCheckBox("Show Team") //Show Team
-            val showEnemies = VisCheckBox("Show Enemies") //Show Enemies
-            val showDormant = VisCheckBox("Show Dormant") //Show Dormant
-            val showBomb = VisCheckBox("Show Bomb") //Show Bomb
-            val showWeapons = VisCheckBox("Show Weapons") //Show Weapons
-            val showGrenades = VisCheckBox("Show Grenades") //Show Grenades
-            val showTarget = VisCheckBox("Show Target") //Show Target
-
             val teamColorShow = VisTextButton("Set Team Color") //Team Color
             val enemyColorShow = VisTextButton("Set Enemy Color") //Enemy Color
             val bombColorShow = VisTextButton("Set Bomb Color") //Bomb Color

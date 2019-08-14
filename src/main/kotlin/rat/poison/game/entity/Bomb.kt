@@ -1,6 +1,5 @@
 package rat.poison.game.entity
 
-import rat.poison.game.CSGO
 import rat.poison.game.CSGO.ENTITY_SIZE
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
@@ -8,7 +7,6 @@ import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.game.netvars.NetVarOffsets.bBombDefused
 import rat.poison.game.netvars.NetVarOffsets.flC4Blow
 import rat.poison.game.netvars.NetVarOffsets.flDefuseCountDown
-import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwEntityList
 import rat.poison.utils.extensions.uint
 
@@ -32,7 +30,7 @@ internal fun Bomb.owner() = csgoEXE.uint(this + NetVarOffsets.hOwnerEntity)
 internal fun Bomb.carrier(): Player {
     val owner = owner()
     return if (owner > 0)
-        CSGO.clientDLL.uint(ClientOffsets.dwEntityList + ((owner and 0xFFF) - 1L) * ENTITY_SIZE)
+        clientDLL.uint(dwEntityList + ((owner and 0xFFF) - 1L) * ENTITY_SIZE)
     else 0
 }
 

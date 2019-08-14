@@ -52,6 +52,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val enableFactorRecoil = VisCheckBox("Factor Recoil")
     val enableFlatAim = VisCheckBox("Flat Aim")
     val enablePathAim = VisCheckBox("Path Aim")
+    val enableScopedOnly = VisCheckBox("Scoped Only")
 
     val aimBoneLabel = VisLabel("Bone: ")
     val aimBoneBox = VisSelectBox<String>()
@@ -79,7 +80,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
     init {
         if (curSettings["WARNING"]!!.strToBool()) {
-            val dialog = Dialogs.showOKDialog(menuStage, "Warning", "Current Version: 1.3.4\n\nIf you have any problems submit an issue on Github\nGitHub: https://github.com/TheFuckingRat/RatPoison")
+            val dialog = Dialogs.showOKDialog(menuStage, "Warning", "Current Version: 1.4\n\nIf you have any problems submit an issue on Github\nGitHub: https://github.com/TheFuckingRat/RatPoison")
             dialog.setPosition(gameWidth / 4F - dialog.width / 2F, gameHeight.toFloat() / 2F)
             menuStage.addActor(dialog)
         }
@@ -117,6 +118,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
             enableFactorRecoil.isDisabled = bool
             enableFlatAim.isDisabled = bool
             enablePathAim.isDisabled = bool
+            enableScopedOnly.isDisabled = bool
             aimBoneLabel.color = col
             aimBoneBox.isDisabled = bool
             aimFovLabel.color = col
@@ -236,6 +238,15 @@ class AimTab : Tab(true, false) { //Aim.kts tab
                 "SNIPER" -> { weaponOverrideSelectionBox.clearItems(); weaponOverrideSelectionBox.setItems("AWP", "G3SG1", "SCAR20", "SSG08") }
                 "SHOTGUN" -> { weaponOverrideSelectionBox.clearItems(); weaponOverrideSelectionBox.setItems("XM1014", "MAG7", "SAWED_OFF", "NOVA") }
             }
+
+            if (categorySelected == "SNIPER") {
+                enableScopedOnly.color = Color(255F, 255F, 255F, 1F)
+                enableScopedOnly.isDisabled = false
+            } else {
+                enableScopedOnly.color = Color(255F, 255F, 255F, 0F)
+                enableScopedOnly.isDisabled = true
+            }
+
             weaponOverrideSelectionBox.selected = weaponOverrideSelectionBox.items[0]
             uiUpdate()
             true
@@ -332,6 +343,23 @@ class AimTab : Tab(true, false) { //Aim.kts tab
             true
         }
 
+        //Create Scoped Only Toggle
+        Tooltip.Builder("Whether or not aim when scoped only").target(enableScopedOnly).build()
+        enableScopedOnly.isChecked = curSettings["SNIPER_ENABLE_SCOPED_ONLY"]!!.strToBool()
+        enableScopedOnly.isDisabled = true
+        enableScopedOnly.changed { _, _ ->
+            if (weaponOverride && enableOverride) {
+                val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
+                curWep[12] = enableScopedOnly.isChecked.toDouble()
+                curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
+            }
+            else {
+                curSettings["SNIPER_ENABLE_SCOPED_ONLY"] = enableScopedOnly.isChecked.boolToStr()
+            }
+            uiUpdate()
+            true
+        }
+
         //Create Aim Bone Selector Box
         val aimBone = VisTable()
         Tooltip.Builder("The default aim bone to aim at").target(aimBone).build()
@@ -353,8 +381,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[4] = setBone.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
-            }
-            else {
+            } else {
                 curSettings[categorySelected + "_AIM_BONE"] = setBone.toString()
             }
         }
@@ -517,6 +544,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         table.add(enableFactorRecoil).left().row()
         table.add(enableFlatAim).left().row()
         table.add(enablePathAim).left().row()
+        table.add(enableScopedOnly).left().row()
         table.add(aimBone).left().row()
         table.add(aimSpeed).left().row()
         table.add(aimFov).left().row()

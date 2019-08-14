@@ -1,5 +1,3 @@
-
-
 package rat.poison.utils
 
 import rat.poison.utils.natives.CUser32.mouse_event

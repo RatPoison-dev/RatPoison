@@ -2,6 +2,17 @@ import rat.poison.game.Color
 import rat.poison.settings.*
 
 /**
+ * Enables the recoil crosshair
+ * This requires the overlay which only works when borderless fullscreen or windowed.
+ */
+ENABLE_RECOIL_CROSSHAIR = true
+
+/**
+ * Sniper crosshair
+ */
+ENABLE_SNIPER_CROSSHAIR = true
+
+/**
  * Width of bars, recommended 1 or 3
  */
 RCROSSHAIR_WIDTH = 4

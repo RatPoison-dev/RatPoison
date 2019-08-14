@@ -19,6 +19,11 @@ SNIPER_ENABLE_FLAT_AIM = true
 SNIPER_ENABLE_PATH_AIM = false
 
 /**
+ * Only aim if scoped in
+ */
+SNIPER_ENABLE_SCOPED_ONLY = true
+
+/**
  * Whether or not to account for recoil when aiming
  */
 SNIPER_FACTOR_RECOIL = false

@@ -51,7 +51,7 @@ internal inline fun forEntities(types: Array<EntityType> = EntityType.cachedValu
 		for (type in types) if (type != EntityType.NULL) {
 			val cacheableList = entities[type]!!
 			container.addList(cacheableList)
-			cachedResults.put(hash, container)
+			cachedResults[hash] = container
 		}
 	}
 	

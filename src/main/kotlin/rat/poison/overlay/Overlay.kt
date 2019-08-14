@@ -4,7 +4,6 @@
 package rat.poison.overlay
 
 import com.sun.jna.platform.win32.WinUser
-import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
@@ -12,7 +11,6 @@ import rat.poison.jna.*
 import rat.poison.jna.enums.AccentStates
 import rat.poison.jna.structures.Rect
 import rat.poison.jna.structures.WindowCompositionAttributeData
-import rat.poison.opened
 import rat.poison.utils.inBackground
 import kotlin.concurrent.thread
 import kotlin.properties.Delegates

@@ -13,8 +13,8 @@ class ListContainer<E>(capacity: Int) {
 	
 	internal inline fun forEach(crossinline action: (E) -> Boolean): Boolean {
 		return lists.forEach {
-			it.forEach {
-				action(it)
+			it.forEach { e ->
+				action(e)
 			}
 		}
 	}

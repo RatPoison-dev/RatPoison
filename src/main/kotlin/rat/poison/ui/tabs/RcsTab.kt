@@ -26,7 +26,8 @@ class RcsTab : Tab(false, false) {
     val rcsReturnAim = VisCheckBox("Return Aim")
 
 
-    val enableRCrosshair = VisCheckBox("Enable Recoil Crosshair")
+    val enableRCrosshair = VisCheckBox("Recoil Crosshair")
+    val enableSCrosshair = VisCheckBox("Scope Compatible")
 
     val rCrosshairWidthLabel = VisLabel("RCrosshair Width: " + curSettings["RCROSSHAIR_WIDTH"])
     val rCrosshairWidthSlider = VisSlider(1F, 5F, 1F, false)
@@ -83,7 +84,35 @@ class RcsTab : Tab(false, false) {
         enableRCrosshair.changed { _, _ ->
             curSettings["ENABLE_RECOIL_CROSSHAIR"] = enableRCrosshair.isChecked.boolToStr()
             rcsTab.apply {
-                val bool = !curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool()
+                val bool = !(curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool() || curSettings["ENABLE_SNIPER_CROSSHAIR"]!!.strToBool())
+                var color = Color(255F, 255F, 255F, 1F)
+                if (bool) {
+                    color = Color(105F, 105F, 105F, .2F)
+                }
+
+                rCrosshairWidthSlider.isDisabled = bool
+                rCrosshairLengthSlider.isDisabled = bool
+                rCrosshairAlphaSlider.isDisabled = bool
+                rCrosshairXOffsetSlider.isDisabled = bool
+                rCrosshairYOffsetSlider.isDisabled = bool
+                rCrosshairColorShow.isDisabled = bool
+
+                rCrosshairWidthLabel.color = color
+                rCrosshairLengthLabel.color = color
+                rCrosshairAlphaLabel.color = color
+                rCrosshairXOffsetLabel.color = color
+                rCrosshairYOffsetLabel.color = color
+            }
+            true
+        }
+
+        //Create SCrosshair Toggle
+        Tooltip.Builder("Whether or not to enable the sniper crosshair").target(enableSCrosshair).build()
+        enableSCrosshair.isChecked = curSettings["ENABLE_SNIPER_CROSSHAIR"]!!.strToBool()
+        enableSCrosshair.changed { _, _ ->
+            curSettings["ENABLE_SNIPER_CROSSHAIR"] = enableSCrosshair.isChecked.boolToStr()
+            rcsTab.apply {
+                val bool = !(curSettings["ENABLE_RECOIL_CROSSHAIR"]!!.strToBool() || curSettings["ENABLE_SNIPER_CROSSHAIR"]!!.strToBool())
                 var color = Color(255F, 255F, 255F, 1F)
                 if (bool) {
                     color = Color(105F, 105F, 105F, .2F)
@@ -191,6 +220,7 @@ class RcsTab : Tab(false, false) {
         table.add(rcsReturnAim).left().row()
         table.addSeparator()
         table.add(enableRCrosshair).left().row()
+        table.add(enableSCrosshair).left().row()
         table.add(rCrosshairWidth).left().row()
         table.add(rCrosshairLength).left().row()
         table.add(rCrosshairXOffset).left().row()

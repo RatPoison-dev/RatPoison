@@ -37,6 +37,9 @@ internal fun glowEsp() = every(4) {
 		} else { glowTarget.set(-1) }
 	} else { glowTarget.set(-1) }
 
+	val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
+	val bEnt = bomb.carrier()
+
 	forEntities body@ {
 		val entity = it.entity
 		if (entity <= 0 || me == entity || entity.dormant()) return@body false
@@ -44,32 +47,46 @@ internal fun glowEsp() = every(4) {
 		val glowAddress = it.glowAddress
 		if (glowAddress <= 0) return@body false
 
+		var color = ""
+
 		when (it.type) {
 			EntityType.CCSPlayer -> {
 				if (entity.dead()) return@body false
 
 				val entityTeam = entity.team()
 				val team = !DANGER_ZONE && myTeam == entityTeam
+
 				if (curSettings["GLOW_SHOW_TARGET"]!!.strToBool() && it.entity == glowTarget.get() && !me.dead() && glowTarget.get() != -1L)
 				{
-					glowAddress.glow(curSettings["HIGHLIGHT_COLOR"]!!.strToColor(), entity.spotted())
+					color = "HIGHLIGHT_COLOR"
 				} else if (curSettings["GLOW_SHOW_ENEMIES"]!!.strToBool() && !team) {
-					glowAddress.glow(curSettings["ENEMY_COLOR"]!!.strToColor(), entity.spotted())
+					color = when (bEnt >= 0 && bEnt == entity && curSettings["GLOW_SHOW_BOMB"]!!.strToBool() && curSettings["GLOW_SHOW_BOMB_CARRIER"]!!.strToBool()) {
+						true -> "BOMB_COLOR"
+						false -> "ENEMY_COLOR"
+					}
 				} else if (curSettings["GLOW_SHOW_TEAM"]!!.strToBool() && team) {
-					glowAddress.glow(curSettings["TEAM_COLOR"]!!.strToColor(), entity.spotted())
+					color = when (bEnt >= 0 && bEnt == entity && curSettings["GLOW_SHOW_BOMB"]!!.strToBool() && curSettings["GLOW_SHOW_BOMB_CARRIER"]!!.strToBool()) {
+						true -> "BOMB_COLOR"
+						false -> "TEAM_COLOR"
+					}
 				}
 			}
 
 			EntityType.CPlantedC4, EntityType.CC4 -> if (curSettings["GLOW_SHOW_BOMB"]!!.strToBool()) {
-				glowAddress.glow(curSettings["BOMB_COLOR"]!!.strToColor(), entity.spotted())
+				color = "BOMB_COLOR"
 			}
 
 			else ->
 				if (curSettings["GLOW_SHOW_WEAPONS"]!!.strToBool() && it.type.weapon)
-					glowAddress.glow(curSettings["WEAPON_COLOR"]!!.strToColor(), entity.spotted())
+					color = "WEAPON_COLOR"
 				else if (curSettings["GLOW_SHOW_GRENADES"]!!.strToBool() && it.type.grenade)
-					glowAddress.glow(curSettings["GRENADE_COLOR"]!!.strToColor(), entity.spotted())
+					color = "GRENADE_COLOR"
 		}
+
+		if (color != "") {
+			glowAddress.glow(curSettings[color]!!.strToColor(), entity.spotted())
+		}
+
 		return@body false
 	}
 	if (curSettings["FLICKER_FREE_GLOW"]!!.strToBool()) {Thread.sleep(256)}
@@ -79,7 +96,7 @@ fun Entity.glow(color: Color, model: Boolean) {
 	csgoEXE[this + 0x4] = color.red / 255F
 	csgoEXE[this + 0x8] = color.green / 255F
 	csgoEXE[this + 0xC] = color.blue / 255F
-	csgoEXE[this + 0x10] = color.alpha.toFloat()//color.alpha.toFloat()
+	csgoEXE[this + 0x10] = color.alpha.toFloat()
 	csgoEXE[this + 0x24] = true //Render When Occluded
 	csgoEXE[this + 0x25] = false //Render When Unoccluded
 

@@ -7,7 +7,6 @@ import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.boolToStr
 import rat.poison.curSettings
-import rat.poison.settings.*
 import rat.poison.strToBool
 import rat.poison.ui.changed
 
@@ -26,7 +25,7 @@ class BoxEspTab : Tab(false, false) {
         Tooltip.Builder("Whether or not to enable box esp").target(boxEsp).build()
         if (curSettings["BOX_ESP"]!!.strToBool()) boxEsp.toggle()
         boxEsp.changed { _, _ ->
-            curSettings.set("BOX_ESP", boxEsp.isChecked.boolToStr())
+            curSettings["BOX_ESP"] = boxEsp.isChecked.boolToStr()
             true
         }
 
