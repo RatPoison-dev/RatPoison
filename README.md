@@ -5,6 +5,18 @@
 
 ---
 
+1.4.1
+
+* Made # of hitsounds scalable, add sound files to the hitsounds folder in settings
+* Added skeet, metal, error, oof hitsounds, any hitsounds you want to add yourself must be atleast 300ms long, and for formatting anti-error purposes, export your own .wav in audacity
+* Fixed delay issue with the COD hitsound
+* Added an option to only auto strafe when bhopping (holding the bhop key)
+* Fixed smoothness being out of 10 instead of the updated max of 5, should help with making settings more or less legit looking
+* Default settings updated
+    * Fixed left over default override settings being out of range
+
+---
+
 1.4
 
 * Nearest Bone is now based off of your recoil instead of the center of your screen
@@ -46,89 +58,6 @@
     * Fixed W2S being offset due to an issue when initializing overlay
     * Fixed gradle causing errors with kotlin dependencies in IDE
     * Added DEBUG variable in general.kts to help find initialization issues
-
----
-
-1.3.3 + 1.3.2.3
-
-* Added auto strafe
-* Added spectator list (updated to show spectators of entity being spectated by local player (1.3.3))
-* Added fast stop (1.3.3)
-* Added NEAREST to aim bone selection (1.3.3)
-* Added MENU_APP to draw the overlay on an app other than CSGO for fullscreen users (1.3.3)
-* Fixed rifle settings not being used
-* Readded bone trigger delay & added to menu
-* Fixed aimbot fucking up when aiming at targets a certain way due to yawDiff calculation error, shown [here](https://gyazo.com/e297d0e2e07b4a730611e81b8279cc5f)
-    * When the target is highlighted light blue it was seen as being inside the aimbot's fov
-* Fixed aimbot not working in a special case, shown [here](https://gyazo.com/ae8a9d1dde6fcdecb07e29bf64d7054c)
-* Fixed override weapons only using AK47's settings (1.3.3)
-* Fixed RCS issue causing jumps in aim, shown [here](https://gyazo.com/d5ae6fb790e19e7aeea6e6e11132f4c2) (1.3.3)
-* (possibly) Fixed showing dormant entities on esps
-
-* Possible Issue: Glow esp might crash on startup, shown [here](https://gyazo.com/fd42b3ffc712f40dd80166578ae5d003)
-
----
-
-1.3.2.2
-
-* Added knife bot (Credit to Mr. Noad)
-* Removed shift to body shots & shift to shoulder shots from text files
-* Added neck & stomach to aim bone options
-* Fixed override weapons settings not updating unless you switch weapons first
-
----
-
-1.3.2.1
-
-Hotfix
-* Fixed issue with trying to modify m4a1s settings causing a crash
-* Fixed issue with chams team check
-
----
-
-1.3.2
-* Fixed RCS tab not updating text/sliders when loading cfgs
-* General file cleanup; removed ScriptsTab
-* Added checkbox to disable all aims
-* Disabling Aim/Esp disables all related items
-* Fixed resizing menu causing issues for the visuals tab
-* Moved aim key from misc tab to aim tab
-
-Hotfixes
-* Fixed Enable Override checkbox turning on when toggling Enable Aim
-* Small file/comment cleanup
-* Fixed CFG3 using CFG2s name
-* Fixed OPENGL_FPS not being used
-* Other small changes
-
----
-
-1.3.1
-* Fixed RCS jumping down when spraying 2+ bullets in quick succession
-* Color picker initializes to the correct color instead of black
-* Menu alpha cannot go below .5, menu alpha increments by .05 instead of .1
-* Moved Radar Esp to visuals tab
-* Fixed settings not reverting when unchecking Weapon Override
-* Added weapon override info to the warning dialog
-* XM is now labeled an automatic weapon
-* Max punch renamed to wep delay
-* Default value changes
-
----
-
-1.3
-
-* Replaced script.eval for improved performance
-    * Faster saving (1-5 seconds)
-* ~~Removed override weapons because of possible fps problems, to be implemented later~~ Reimplemented weapon overrides
-* Removed aim assist mode and aim assist strictness, as the same can be accomplished easier with aim speed, aim smoothness, and aim strictness
-* Removed now useless variables, action log, swap speed min/max
-* Removed variables that from viewable settings shouldn't be configured; max entities, cleanup time, process name, garbage collect on startup, process access flags, client module name, engine module name 
-* ~~Removed indicator esp (possibly reimplemented later)~~ Reimplemented indicator esp
-* Aimbot will choose closest target (or none) when aiming & bone trigger aiming, will hold target when force aiming
-* Fixed & cleaned up bone trigger issues
-* Fixed find target global var issues
-* Better performance overall
 
 ---
 
@@ -178,10 +107,10 @@ The first step is to compile the source code into a usable cheat program.
 To set your JAVA_HOME go [here](https://javatutorial.net/set-java-home-windows-10)
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.4**.
+directory, and will in a directory called **RatPoison 1.4.1**.
 
-From within the **RatPoison 1.4** directory, you can start the cheat by running
-the _"Start RatPoison 1.4"_ script.
+From within the **RatPoison 1.4.1** directory, you can start the cheat by running
+the _"Start RatPoison 1.4.1"_ script.
 
 Before starting the cheat, you should already be spawned in a game with a weapon in hand!
 

@@ -1,13 +1,16 @@
 package rat.poison.ui.tabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.util.Validators
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import org.jire.arrowhead.keyPressed
 import rat.poison.*
+import rat.poison.scripts.esp.updateHitsound
 import rat.poison.ui.changed
 import rat.poison.utils.ObservableBoolean
+import java.io.File
 import kotlin.math.round
 
 class MiscTab : Tab(false, false) {
@@ -16,6 +19,7 @@ class MiscTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     val bunnyHop = VisCheckBox("Bunny Hop")
     val autoStrafe = VisCheckBox("Auto Strafe")
+    val autoStrafeBHopOnly = VisCheckBox("BHop Only")
     val fastStop = VisCheckBox("Fast Stop")
     val bombTimer = VisCheckBox("Bomb Timer")
     val bombTimerEnableBars = VisCheckBox("Timer Bars")
@@ -25,7 +29,8 @@ class MiscTab : Tab(false, false) {
     val enableReducedFlash = VisCheckBox("Reduced Flash")
     val flashMaxAlphaLabel = VisLabel("Flash Max Alpha: " + curSettings["FLASH_MAX_ALPHA"]!!.toFloat() + when(curSettings["FLASH_MAX_ALPHA"]!!.toFloat().toInt().toString().length) {3->"  " 2->"    " else ->"      "})
     val flashMaxAlphaSlider = VisSlider(0F, 255F, 1F, false)
-    val hitSound = VisCheckBox("Hitsound")
+    val hitSoundCheckBox = VisCheckBox("Hitsound")
+    val hitSoundBox = VisSelectBox<String>()
     val hitSoundVolumeLabel = VisLabel("Hitsound Volume: " + curSettings["HITSOUND_VOLUME"]!!.toDouble())
     val hitSoundVolumeSlider = VisSlider(0.1F, 1F, 0.1F, false)
 
@@ -43,6 +48,15 @@ class MiscTab : Tab(false, false) {
         autoStrafe.isChecked = curSettings["AUTO_STRAFE"]!!.strToBool()
         autoStrafe.changed { _, _ ->
             curSettings["AUTO_STRAFE"] = autoStrafe.isChecked.boolToStr()
+            autoStrafeBHopOnly.isDisabled = !autoStrafe.isChecked
+            true
+        }
+
+        //Create Auto Strafe BHop Only Toggle
+        Tooltip.Builder("Whether or not to enable auto strafe while bhopping only").target(autoStrafeBHopOnly).build()
+        autoStrafeBHopOnly.isChecked = curSettings["STRAFE_BHOP_ONLY"]!!.strToBool()
+        autoStrafeBHopOnly.changed { _, _ ->
+            curSettings["STRAFE_BHOP_ONLY"] = autoStrafeBHopOnly.isChecked.boolToStr()
             true
         }
 
@@ -121,10 +135,30 @@ class MiscTab : Tab(false, false) {
         flashMaxAlpha.add(flashMaxAlphaSlider).width(250F)
 
         //Create Hit Sound Toggle
-        Tooltip.Builder("Whether or not to enable a hitsound on hit").target(hitSound).build()
-        if (curSettings["ENABLE_HITSOUND"]!!.strToBool()) hitSound.toggle()
-        hitSound.changed { _, _ ->
-            curSettings["ENABLE_HITSOUND"] = hitSound.isChecked.boolToStr()
+        Tooltip.Builder("Whether or not to enable a hitsound on hit").target(hitSoundCheckBox).build()
+        if (curSettings["ENABLE_HITSOUND"]!!.strToBool()) hitSoundCheckBox.toggle()
+        hitSoundCheckBox.changed { _, _ ->
+            curSettings["ENABLE_HITSOUND"] = hitSoundCheckBox.isChecked.boolToStr()
+            true
+        }
+
+        //Create Hit Sound Selector Box
+        val hitSound = VisTable()
+        val hitSoundFiles = Array<String>()
+        File("$SETTINGS_DIRECTORY\\hitsounds").listFiles()?.forEach {
+            hitSoundFiles.add(it.name)
+        }
+
+        hitSoundBox.items = hitSoundFiles
+
+        hitSound.add(hitSoundCheckBox)
+        hitSound.add(hitSoundBox).padLeft(200F-hitSoundCheckBox.width)
+
+        hitSoundBox.selected = curSettings["HITSOUND_FILE_NAME"]?.replace("\"", "")
+
+        hitSoundBox.changed { _, _ ->
+            updateHitsound(hitSoundBox.selected)
+            curSettings["HITSOUND_FILE_NAME"] = hitSoundBox.selected
             true
         }
 
@@ -144,6 +178,7 @@ class MiscTab : Tab(false, false) {
 
         table.add(bunnyHop).left().row()
         table.add(autoStrafe).left().row()
+        table.add(autoStrafeBHopOnly).padLeft(20F).left().row()
         table.add(fastStop).left().row()
 
         table.addSeparator()

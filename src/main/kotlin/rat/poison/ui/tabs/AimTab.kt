@@ -80,7 +80,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
     init {
         if (curSettings["WARNING"]!!.strToBool()) {
-            val dialog = Dialogs.showOKDialog(menuStage, "Warning", "Current Version: 1.4\n\nIf you have any problems submit an issue on Github\nGitHub: https://github.com/TheFuckingRat/RatPoison")
+            val dialog = Dialogs.showOKDialog(menuStage, "Warning", "Current Version: 1.4.1\n\nIf you have any problems submit an issue on Github\nGitHub: https://github.com/TheFuckingRat/RatPoison")
             dialog.setPosition(gameWidth / 4F - dialog.width / 2F, gameHeight.toFloat() / 2F)
             menuStage.addActor(dialog)
         }

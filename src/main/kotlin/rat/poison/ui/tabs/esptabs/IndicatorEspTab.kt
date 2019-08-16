@@ -119,11 +119,11 @@ class IndicatorEspTab : Tab(false, false) {
         table.add(indicatorOval).left().row()
         table.add(indicatorDistance).left().colspan(2).row()
         table.add(showTeam).left()
-        table.add(showEnemies).padRight(50F).left().row()
+        table.add(showEnemies).left().padRight(20F).row()
         table.add(showBomb).left()
-        table.add(showBombCarrier).left().padRight(50F).row()
+        table.add(showBombCarrier).left().padRight(20F).row()
         table.add(showWeapons).left()
-        table.add(showGrenades).left().padRight(50F).row()
+        table.add(showGrenades).left().padRight(20F).row()
     }
 
     override fun getContentTable(): Table? {

@@ -291,7 +291,6 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false)
 	open var id: Long = ordinal - 1L
 	
 	companion object {
-		
 		val cachedValues = values()
 		
 		val size = cachedValues.size

@@ -2,6 +2,7 @@ package rat.poison.scripts.esp
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Sound
+import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
@@ -11,7 +12,7 @@ import rat.poison.strToBool
 
 var totalHits = 0
 var opened = false
-lateinit var hitSound : Sound
+lateinit var hitSound: Sound
 
 fun hitSoundEsp() = every(4) {
     if (!curSettings["ENABLE_HITSOUND"]!!.strToBool()) return@every
@@ -20,7 +21,7 @@ fun hitSoundEsp() = every(4) {
 
     if (!opened) {
         try {
-            hitSound = Gdx.audio.newSound(Gdx.files.internal("settings\\hitsound.mp3"))
+            updateHitsound(curSettings["HITSOUND_FILE_NAME"]!!.toString().replace("\"", ""))
             opened = true
             totalHits = curHits
         } catch (ex: NullPointerException){}
@@ -33,4 +34,11 @@ fun hitSoundEsp() = every(4) {
         hitSound.play(curSettings["HITSOUND_VOLUME"]!!.toDouble().toFloat())
         totalHits = curHits
     }
+}
+
+fun updateHitsound(fileName: String) {
+    if (::hitSound.isInitialized) {
+        hitSound.dispose()
+    }
+    hitSound = Gdx.audio.newSound(Gdx.files.internal("$SETTINGS_DIRECTORY\\hitsounds\\$fileName"))
 }

@@ -359,6 +359,8 @@ fun uiUpdate() {
     miscTab.apply {
         bunnyHop.isChecked = curSettings["ENABLE_BUNNY_HOP"]!!.strToBool()
         autoStrafe.isChecked = curSettings["AUTO_STRAFE"]!!.strToBool()
+        autoStrafeBHopOnly.isChecked = curSettings["STRAFE_BHOP_ONLY"]!!.strToBool()
+        autoStrafeBHopOnly.isDisabled = !curSettings["AUTO_STRAFE"]!!.strToBool()
         fastStop.isChecked = curSettings["FAST_STOP"]!!.strToBool()
         bombTimer.isChecked = curSettings["ENABLE_BOMB_TIMER"]!!.strToBool()
         bombTimerEnableMenu.isChecked = curSettings["BOMB_TIMER_MENU"]!!.strToBool()
@@ -372,7 +374,8 @@ fun uiUpdate() {
             else -> "      "
         })
         flashMaxAlphaSlider.value = curSettings["FLASH_MAX_ALPHA"]!!.toFloat()
-        hitSound.isChecked = curSettings["ENABLE_HITSOUND"]!!.strToBool()
+        hitSoundCheckBox.isChecked = curSettings["ENABLE_HITSOUND"]!!.strToBool()
+        hitSoundBox.selected = curSettings["HITSOUND_FILE_NAME"]?.replace("\"", "")
         hitSoundVolumeLabel.setText("Hitsound Volume: "  + curSettings["HITSOUND_VOLUME"]!!.toDouble())
         hitSoundVolumeSlider.value = curSettings["HITSOUND_VOLUME"]!!.toFloat()
     }

@@ -1,5 +1,3 @@
-
-
 package rat.poison.game
 
 import rat.poison.settings.MAX_ENTITIES
@@ -56,12 +54,4 @@ internal inline fun forEntities(types: Array<EntityType> = EntityType.cachedValu
 	}
 	
 	return container.forEach(body)
-}
-
-val entityToBones: Long2ObjectMap<Angle> = Long2ObjectOpenHashMap()
-
-fun Entity.bones(boneID: Int) = readCached(entityToBones) {
-	x = bone(0xC, boneID)
-	y = bone(0x1C, boneID)
-	z = bone(0x2C, boneID)
 }

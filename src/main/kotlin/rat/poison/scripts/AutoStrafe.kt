@@ -16,17 +16,19 @@ var lastAngY = 0.0
 
 fun autoStrafe() = every(4) {
     if (curSettings["AUTO_STRAFE"]!!.strToBool()) {
-        val curAngY = clientState.angle().y
+        if ((curSettings["STRAFE_BHOP_ONLY"]!!.strToBool() && keyPressed(curSettings["BUNNY_HOP_KEY"]!!.toInt())) || (!curSettings["STRAFE_BHOP_ONLY"]!!.strToBool())) {
+            val curAngY = clientState.angle().y
 
-        if (!me.onGround()) {
-            if (!keyPressed(KeyEvent.VK_A) && !keyPressed(KeyEvent.VK_D)) {
-                if (curAngY > lastAngY) {
-                    CSGO.clientDLL[ClientOffsets.dwForceLeft] = 6
-                } else if (curAngY < lastAngY) {
-                    CSGO.clientDLL[ClientOffsets.dwForceRight] = 6
+            if (!me.onGround()) {
+                if (!keyPressed(KeyEvent.VK_A) && !keyPressed(KeyEvent.VK_D)) {
+                    if (curAngY > lastAngY) {
+                        CSGO.clientDLL[ClientOffsets.dwForceLeft] = 6
+                    } else if (curAngY < lastAngY) {
+                        CSGO.clientDLL[ClientOffsets.dwForceRight] = 6
+                    }
                 }
             }
+            lastAngY = curAngY
         }
-        lastAngY = curAngY
     }
 }

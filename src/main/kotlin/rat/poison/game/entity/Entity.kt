@@ -53,3 +53,11 @@ internal fun Entity.absPosition(): Angle = readCached(entity2Angle) {
 	y = csgoEXE.float(it + vecOrigin + 4).toDouble()
 	z = csgoEXE.float(it + vecOrigin + 8).toDouble()
 }
+
+val entityToBones: Long2ObjectMap<Angle> = Long2ObjectOpenHashMap()
+
+fun Entity.bones(boneID: Int) = readCached(entityToBones) {
+	x = bone(0xC, boneID)
+	y = bone(0x1C, boneID)
+	z = bone(0x2C, boneID)
+}

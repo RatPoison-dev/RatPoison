@@ -21,7 +21,7 @@ SNIPER_ENABLE_PATH_AIM = false
 /**
  * Only aim if scoped in
  */
-SNIPER_ENABLE_SCOPED_ONLY = true
+SNIPER_ENABLE_SCOPED_ONLY = false
 
 /**
  * Whether or not to account for recoil when aiming

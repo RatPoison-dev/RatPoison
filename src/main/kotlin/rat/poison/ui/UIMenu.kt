@@ -15,7 +15,7 @@ val mainTabbedPane = TabbedPane()
     val miscTab = MiscTab()
     val settingsTab = OptionsTab()
 
-class UIMenu : VisWindow("Rat Poison 1.4") {
+class UIMenu : VisWindow("Rat Poison 1.4.1") {
     init {
         defaults().left()
 

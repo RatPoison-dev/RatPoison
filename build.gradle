@@ -23,7 +23,7 @@ apply plugin: "application"
 apply plugin: "com.github.johnrengelman.shadow"
 
 group "rat.poison"
-version "1.4"
+version "1.4.1"
 
 mainClassName = "rat.poison.RatPoison"
 
@@ -91,6 +91,13 @@ task RatPoison {
 		def settings = file("settings")
 		settings.listFiles().each {
 			Files.copy(it.toPath(), (new File(dirSettings, it.getName())).toPath())
+		}
+
+		def dirHitsounds = file(new File(dir, "settings\\hitsounds"))
+		dirHitsounds.mkdirs()
+		def hitsounds = file("settings\\hitsounds")
+		hitsounds.listFiles().each {
+			Files.copy(it.toPath(), (new File(dirHitsounds, it.getName())).toPath())
 		}
 	}
 }

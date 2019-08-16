@@ -76,6 +76,10 @@ internal fun glowEsp() = every(4) {
 				color = "BOMB_COLOR"
 			}
 
+			EntityType.CBaseAnimating -> {
+				println("test")
+			}
+
 			else ->
 				if (curSettings["GLOW_SHOW_WEAPONS"]!!.strToBool() && it.type.weapon)
 					color = "WEAPON_COLOR"

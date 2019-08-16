@@ -48,7 +48,7 @@ PISTOL_AIM_SMOOTHNESS = 2.5
 /**
  * The sens multiplier of the aimbot
  */
-PISTOL_AIM_STRICTNESS = 1.5
+PISTOL_AIM_STRICTNESS = 2.0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

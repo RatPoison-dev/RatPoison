@@ -39,6 +39,11 @@ GLOW_SHOW_ENEMIES = true
 GLOW_SHOW_BOMB = true
 
 /**
+ * Glow defuse kits
+ */
+GLOW_SHOW_DEFUSE_KITS = true
+
+/**
  * Whether or not to highlight the bomb carrier.
  */
 GLOW_SHOW_BOMB_CARRIER = true

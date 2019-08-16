@@ -173,7 +173,7 @@ fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
     }
     else {
         File(fileDir).listFiles()?.forEach { file ->
-            if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "hitsound.mp3") {
+            if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "hitsounds") {
                 FileReader(file).readLines().forEach { line ->
                     if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                         val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE

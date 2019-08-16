@@ -101,13 +101,7 @@ class OptionsTab : Tab(false, false) {
         val saveCurConfig = VisTextButton("Save Current Config To Default Settings")
         Tooltip.Builder("Save current configuration to the settings files").target(saveCurConfig).build()
         saveCurConfig.changed { _, _ ->
-            curSettings["BOMB_TIMER_X"] = uiBombWindow.x
-            curSettings["BOMB_TIMER_Y"] = uiBombWindow.y
-            curSettings["BOMB_TIMER_ALPHA"] = uiBombWindow.color.a
-
-            curSettings["SPECTATOR_LIST_X"] = uiSpecList.x
-            curSettings["SPECTATOR_LIST_Y"] = uiSpecList.y
-            curSettings["SPECTATOR_LIST_ALPHA"] = uiSpecList.color.a
+            saveWindows()
 
             if (!saving) {
                 GlobalScope.launch {
@@ -115,15 +109,15 @@ class OptionsTab : Tab(false, false) {
                     println("\n Saving! \n")
                     File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
                         val sbLines = StringBuilder()
-                        if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "hitsound.mp3") {
+                        if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "hitsounds") {
                             FileReader(file).readLines().forEach { line ->
                                 if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                                     val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
                                     //Add custom checks
                                     when {
-                                        curLine[0] == "CFG1_NAME" || curLine[0] == "CFG2_NAME" || curLine[0] == "CFG3_NAME" -> {
-                                            sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
+                                        curLine[0] == "HITSOUND_FILE_NAME" -> {
+                                            sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]] + "\"\n")
                                         }
 
                                         else -> {
@@ -174,13 +168,7 @@ class OptionsTab : Tab(false, false) {
     }
 
     private fun saveCFG(cfgNum: Int, cfgName: String) {
-        curSettings["BOMB_TIMER_X"] = uiBombWindow.x
-        curSettings["BOMB_TIMER_Y"] = uiBombWindow.y
-        curSettings["BOMB_TIMER_ALPHA"] = uiBombWindow.color.a
-
-        curSettings["SPECTATOR_LIST_X"] = uiSpecList.x
-        curSettings["SPECTATOR_LIST_Y"] = uiSpecList.y
-        curSettings["SPECTATOR_LIST_ALPHA"] = uiSpecList.color.a
+        saveWindows()
 
         if (!saving) {
             GlobalScope.launch {
@@ -206,7 +194,7 @@ class OptionsTab : Tab(false, false) {
                 sbLines.append("import rat.poison.game.Color\n\n")
 
                 File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
-                    if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "hitsound.mp3") {
+                    if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "hitsounds") {
                         FileReader(file).readLines().forEach { line ->
                             if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
@@ -263,15 +251,29 @@ class OptionsTab : Tab(false, false) {
                     println("\n Loading! \n")
                     loadSettingsFromFiles("settings\\cfg$cfgNum.kts", true)
                     uiUpdate()
-                    uiBombWindow.updatePosition(curSettings["BOMB_TIMER_X"]!!.toFloat(), curSettings["BOMB_TIMER_Y"]!!.toFloat())
-                    uiBombWindow.changeAlpha(curSettings["BOMB_TIMER_ALPHA"]!!.toFloat())
-                    uiSpecList.updatePosition(curSettings["SPECTATOR_LIST_X"]!!.toFloat(), curSettings["SPECTATOR_LIST_Y"]!!.toFloat())
-                    uiSpecList.changeAlpha(curSettings["SPECTATOR_LIST_ALPHA"]!!.toFloat())
+                    updateWindows()
                     println("\n Loading complete! \n")
                 }
             }
         } else {
             Dialogs.showErrorDialog(menuStage, "Error", "Wait for saving to complete first!")
         }
+    }
+
+    private fun saveWindows() {
+        curSettings["BOMB_TIMER_X"] = uiBombWindow.x
+        curSettings["BOMB_TIMER_Y"] = uiBombWindow.y
+        curSettings["BOMB_TIMER_ALPHA"] = uiBombWindow.color.a
+
+        curSettings["SPECTATOR_LIST_X"] = uiSpecList.x
+        curSettings["SPECTATOR_LIST_Y"] = uiSpecList.y
+        curSettings["SPECTATOR_LIST_ALPHA"] = uiSpecList.color.a
+    }
+
+    private fun updateWindows() {
+        uiBombWindow.updatePosition(curSettings["BOMB_TIMER_X"]!!.toFloat(), curSettings["BOMB_TIMER_Y"]!!.toFloat())
+        uiBombWindow.changeAlpha(curSettings["BOMB_TIMER_ALPHA"]!!.toFloat())
+        uiSpecList.updatePosition(curSettings["SPECTATOR_LIST_X"]!!.toFloat(), curSettings["SPECTATOR_LIST_Y"]!!.toFloat())
+        uiSpecList.changeAlpha(curSettings["SPECTATOR_LIST_ALPHA"]!!.toFloat())
     }
 }

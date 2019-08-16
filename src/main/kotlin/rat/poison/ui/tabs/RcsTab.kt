@@ -25,7 +25,6 @@ class RcsTab : Tab(false, false) {
     val rcsSmoothingSlider = VisSlider(0.1F, 1F, .02F, false)
     val rcsReturnAim = VisCheckBox("Return Aim")
 
-
     val enableRCrosshair = VisCheckBox("Recoil Crosshair")
     val enableSCrosshair = VisCheckBox("Scope Compatible")
 

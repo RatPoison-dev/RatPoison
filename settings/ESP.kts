@@ -23,14 +23,29 @@ FLICKER_FREE_GLOW = false
 RADAR_ESP = false
 
 /**
+ * Visual hitmarker on enemy hit
+ */
+ENABLE_HITMARKER = false
+
+/**
+ * Name of the hitmarker
+ */
+HITMARKER_TYPE = 1
+
+/**
  * Will play a hitsound on enemy hit
  */
 ENABLE_HITSOUND = false
 
 /**
+ * Name of the hitsound file to play
+ */
+HITSOUND_FILE_NAME = "COD.wav"
+
+/**
  * Volume of the hitsound
  */
-HITSOUND_VOLUME = 0.2
+HITSOUND_VOLUME = 0.1
 
 //////////////////////////////////////////////////////
 //////////////////////  Colors  //////////////////////

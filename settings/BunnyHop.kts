@@ -21,3 +21,8 @@ BUNNY_HOP_KEY = 32
  * Enable/Disable auto strafe
  */
 AUTO_STRAFE = false
+
+/**
+ * Strafe only when bhopping (holding space)
+ */
+STRAFE_BHOP_ONLY = true
