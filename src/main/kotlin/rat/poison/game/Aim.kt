@@ -23,7 +23,7 @@ fun calculateAngle(player: Player, dst: Vector): Angle = angles.get().apply {
 
 	val hyp = Math.sqrt((dX * dX) + (dY * dY))
 
-	if (curSettings["FACTOR_RECOIL"]!!.strToBool()) {
+	if (curSettings["FACTOR_RECOIL"].strToBool()) {
 		x = toDegrees(atan(dZ / hyp)) - myPunch.x * 2.0
 		y = toDegrees(atan(dY / dX)) - myPunch.y * 2.0
 	} else {

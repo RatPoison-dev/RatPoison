@@ -64,18 +64,18 @@ fun setAim() = every(256){
             }
 
             if (strPre != "") {
-                curSettings["FACTOR_RECOIL"] = curSettings[strPre + "_FACTOR_RECOIL"]!!.strToBool()
-                curSettings["AIM_BONE"] = curSettings[strPre + "_AIM_BONE"]!!.toInt()
-                curSettings["AIM_FOV"] = curSettings[strPre + "_AIM_FOV"]!!.toInt()
-                curSettings["AIM_SPEED"] = curSettings[strPre + "_AIM_SPEED"]!!.toInt()
-                curSettings["AIM_SMOOTHNESS"] = curSettings[strPre + "_AIM_SMOOTHNESS"]!!.toDouble()
-                curSettings["AIM_STRICTNESS"] = curSettings[strPre + "_AIM_STRICTNESS"]!!.toDouble()
-                curSettings["PERFECT_AIM"] = curSettings[strPre + "_PERFECT_AIM"]!!.strToBool()
-                curSettings["PERFECT_AIM_FOV"] = curSettings[strPre + "_PERFECT_AIM_FOV"]!!.toInt()
-                curSettings["PERFECT_AIM_CHANCE"] = curSettings[strPre + "_PERFECT_AIM_CHANCE"]!!.toInt()
-                curSettings["ENABLE_FLAT_AIM"] = curSettings[strPre + "_ENABLE_FLAT_AIM"]!!.strToBool()
-                curSettings["ENABLE_PATH_AIM"] = curSettings[strPre + "_ENABLE_PATH_AIM"]!!.strToBool()
-                curSettings["ENABLE_SCOPED_ONLY"] = curSettings["SNIPER_ENABLE_SCOPED_ONLY"]!!.strToBool()
+                curSettings["FACTOR_RECOIL"] = curSettings[strPre + "_FACTOR_RECOIL"].strToBool()
+                curSettings["AIM_BONE"] = curSettings[strPre + "_AIM_BONE"].toInt()
+                curSettings["AIM_FOV"] = curSettings[strPre + "_AIM_FOV"].toInt()
+                curSettings["AIM_SPEED"] = curSettings[strPre + "_AIM_SPEED"].toInt()
+                curSettings["AIM_SMOOTHNESS"] = curSettings[strPre + "_AIM_SMOOTHNESS"].toDouble()
+                curSettings["AIM_STRICTNESS"] = curSettings[strPre + "_AIM_STRICTNESS"].toDouble()
+                curSettings["PERFECT_AIM"] = curSettings[strPre + "_PERFECT_AIM"].strToBool()
+                curSettings["PERFECT_AIM_FOV"] = curSettings[strPre + "_PERFECT_AIM_FOV"].toInt()
+                curSettings["PERFECT_AIM_CHANCE"] = curSettings[strPre + "_PERFECT_AIM_CHANCE"].toInt()
+                curSettings["ENABLE_FLAT_AIM"] = curSettings[strPre + "_ENABLE_FLAT_AIM"].strToBool()
+                curSettings["ENABLE_PATH_AIM"] = curSettings[strPre + "_ENABLE_PATH_AIM"].strToBool()
+                curSettings["ENABLE_SCOPED_ONLY"] = curSettings["SNIPER_ENABLE_SCOPED_ONLY"].strToBool()
             }
         }
     } catch (e: Exception) {println("SetAim failure")} //Fix crashing

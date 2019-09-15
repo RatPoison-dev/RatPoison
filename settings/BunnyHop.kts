@@ -1,28 +1,14 @@
 import rat.poison.settings.*
 
-/**
- * Enables the bunny hop script.
- *
- * To do this, type the following commands into the in-game developer console:
- * unbind "space"
- * bind "mwheelup" "+jump"
- * bind "mwheeldown" "+jump"
- */
+//Enable bunny hop
 ENABLE_BUNNY_HOP = false
 
-/**
- * The hold key which activates bunny hop.
- *
- * By default, this is the space bar key.
- */
+//VK Key Code (http://cherrytree.at/misc/vk.htm), enables bunny hop when held
 BUNNY_HOP_KEY = 32
 
-/**
- * Enable/Disable auto strafe
- */
+//Enable auto strafe when bunny hopping
+//This will auto press left/right synchronizing with your mouse movement
 AUTO_STRAFE = false
 
-/**
- * Strafe only when bhopping (holding space)
- */
+//Enable auto strafing only when holding the bunny hop key
 STRAFE_BHOP_ONLY = true

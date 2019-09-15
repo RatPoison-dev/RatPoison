@@ -7,6 +7,7 @@ import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
+import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.netvars.NetVarOffsets.m_hObserverTarget
 import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.opened
@@ -16,33 +17,25 @@ import rat.poison.utils.every
 import rat.poison.utils.extensions.readIndex
 import rat.poison.utils.notInGame
 
-internal fun spectatorList() = every(1000) {
-    if (!curSettings["SPECTATOR_LIST"]!!.strToBool() || notInGame || !curSettings["MENU"]!!.strToBool()) {
+internal fun spectatorList() = every(2000) {
+    if (!curSettings["SPECTATOR_LIST"].strToBool() || notInGame || !curSettings["MENU"].strToBool()) {
         return@every
     }
 
     var spectators = ""
 
-    val playerSpecTarget: Int
+    val playerSpecTarget = csgoEXE.readIndex(me + dwIndex)
 
-    playerSpecTarget = if (me.dead()) { //Redundant since death cam was fucky??
-        csgoEXE.readIndex(me + m_hObserverTarget)
-    } else {
-        csgoEXE.readIndex(me + dwIndex)
-    }
-
-    forEntities body@ {
+    forEntities(ccsPlayer) body@ {
         val entity = it.entity
 
-        if (it.type == EntityType.CCSPlayer) {
-            if (entity.isSpectating() && !entity.hltv() && !entity.dormant()) {
-                val entSpecTarget = csgoEXE.readIndex(entity + m_hObserverTarget)
-                val entName = entity.name()
+        if (entity.isSpectating() && !entity.hltv() && !entity.dormant()) {
+            val entSpecTarget = csgoEXE.readIndex(entity + m_hObserverTarget)
+            val entName = entity.name()
 
-                if (entSpecTarget > -1 && entSpecTarget == playerSpecTarget) {
-                    if (!spectators.contains(entName)) {
-                        spectators += entName + "\n"
-                    }
+            if (entSpecTarget > -1 && entSpecTarget == playerSpecTarget) {
+                if (!spectators.contains(entName)) {
+                    spectators += "$entName\n"
                 }
             }
         }

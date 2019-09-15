@@ -1,34 +1,40 @@
 package rat.poison.scripts
 
-import rat.poison.game.entity.EntityType
+import rat.poison.App.haveTarget
+import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.entity.name
 import rat.poison.game.entity.rank
+import rat.poison.game.entity.team
 import rat.poison.game.forEntities
+import rat.poison.game.me
+import rat.poison.game.rankName
+import rat.poison.opened
+import rat.poison.ui.tabs.ranksListText
 import rat.poison.utils.every
 import rat.poison.utils.notInGame
 
-//private val players = Array(32){""}
-//private val playerNames = ArrayList<Pair<Int, String>>()
-//private val playerRanks = ArrayList<Pair<Int, String>>()
-
 //Incomplete, can't test
-internal fun ranks() = every(1000) {
+internal fun ranks() = every(1000) { //Rebuild every 30 seconds
     if (notInGame) return@every
 
-    //playerNames.clear()
-    //playerRanks.clear()
+    var ctPlayers = "CT:\n"
+    var tPlayers = "\nT:\n"
 
-    forEntities body@{
+    forEntities(ccsPlayer) body@{
         val entity = it.entity
 
-        if (it.type == EntityType.CCSPlayer) {
-            //val entIndex = csgoEXE.readIndex(entity + dwIndex)
-            val entName = entity.name()
-            val entRank = entity.rank()
+        val entName = entity.name()
+        val entRank = entity.rank().rankName()
 
-            println("$entName: $entRank") //havent tested if accurate yet
+        when (entity.team()) {
+            3L -> ctPlayers += "$entName: $entRank\n"
+            2L -> tPlayers += "$entName: $entRank\n"
         }
 
         return@body false
+    }
+
+    if (opened && haveTarget) {
+        ranksListText.setText("WIP\n\n$ctPlayers$tPlayers")
     }
 }

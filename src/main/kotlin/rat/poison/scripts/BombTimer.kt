@@ -9,6 +9,7 @@ import rat.poison.game.entity.*
 import rat.poison.game.entityByType
 import rat.poison.game.me
 import rat.poison.game.offsets.EngineOffsets
+import rat.poison.settings.DANGER_ZONE
 import rat.poison.strToBool
 import rat.poison.ui.bombText
 import rat.poison.utils.every
@@ -16,40 +17,44 @@ import rat.poison.utils.every
 var bombState = BombState()
 
 fun bombTimer() {
-    bombUpdater()
+    bombUpdater() //Call once
 
     App {
-        bombText.setText(bombState.toString())
-        if (curSettings["ENABLE_BOMB_TIMER"]!!.strToBool() && curSettings["BOMB_TIMER_BARS"]!!.strToBool() && bombState.planted) {
-            val cColor = if ((me.team() == 3.toLong() && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) { //If player has time to defuse
-                Color(0F, 255F, 0F, .25F) //Green
-            } else  if ((me.team() == 3.toLong() && bombState.timeLeftToDefuse < bombState.timeLeftToExplode) || (me.team() == 2.toLong() && !bombState.gettingDefused)) { //If player is defusing with time left, or is terrorist and the bomb isn't being defused
-                Color(0F, 255F, 0F, .25F)
-            } else {
-                Color(255F, 0F, 0F, .25F) //Bomb is being defused/not enough time
-            }
+        if (DANGER_ZONE) return@App
 
-            shapeRenderer.apply {
-                begin()
-                color = cColor
-                set(ShapeRenderer.ShapeType.Filled)
-                rect(0F, 0F, CSGO.gameWidth.toFloat()*(bombState.timeLeftToExplode/40F), 16F)
-                if (bombState.gettingDefused) {
-                    val defuseLeft = bombState.timeLeftToDefuse/10F
-                    rect((CSGO.gameWidth/2F) - ((CSGO.gameWidth/4F)*defuseLeft)/2F, (CSGO.gameHeight / 3F) * 2, (CSGO.gameWidth/4F)*defuseLeft, 16F)
+        if (curSettings["ENABLE_BOMB_TIMER"].strToBool()) {
+            bombText.setText(bombState.toString()) //Update regardless of BOMB_TIMER_MENU
+            if (curSettings["BOMB_TIMER_BARS"].strToBool() && bombState.planted) {
+                val cColor = if ((me.team() == 3.toLong() && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) { //If player has time to defuse
+                    Color(0F, 255F, 0F, .25F) //Green
+                } else if ((me.team() == 3.toLong() && bombState.timeLeftToDefuse < bombState.timeLeftToExplode) || (me.team() == 2.toLong() && !bombState.gettingDefused)) { //If player is defusing with time left, or is terrorist and the bomb isn't being defused
+                    Color(0F, 255F, 0F, .25F) //Red
+                } else {
+                    Color(255F, 0F, 0F, .25F) //Bomb is being defused/not enough time
                 }
-                set(ShapeRenderer.ShapeType.Line)
-                color = Color(1F, 1F, 1F, 1F)
-                end()
+
+                shapeRenderer.apply {
+                    begin()
+                    color = cColor
+                    set(ShapeRenderer.ShapeType.Filled)
+                    rect(0F, 0F, CSGO.gameWidth.toFloat() * (bombState.timeLeftToExplode / 40F), 16F)
+                    if (bombState.gettingDefused) {
+                        val defuseLeft = bombState.timeLeftToDefuse / 10F
+                        rect((CSGO.gameWidth / 2F) - ((CSGO.gameWidth / 4F) * defuseLeft) / 2F, (CSGO.gameHeight / 3F) * 2, (CSGO.gameWidth / 4F) * defuseLeft, 16F)
+                    }
+                    set(ShapeRenderer.ShapeType.Line)
+                    color = Color(1F, 1F, 1F, 1F)
+                    end()
+                }
             }
         }
     }
 }
 
-private fun currentGameTicks(): Float = CSGO.engineDLL.float(EngineOffsets.dwGlobalVars + 16)
+fun currentGameTicks(): Float = CSGO.engineDLL.float(EngineOffsets.dwGlobalVars + 16)
 
-fun bombUpdater() = every(8, true) {
-    if (!curSettings["ENABLE_BOMB_TIMER"]!!.strToBool()) return@every
+fun bombUpdater() = every(25, true) {
+    if (!curSettings["ENABLE_BOMB_TIMER"].strToBool() || DANGER_ZONE) return@every
 
     val time = currentGameTicks()
     val bomb: Entity = entityByType(EntityType.CPlantedC4)?.entity ?: -1L

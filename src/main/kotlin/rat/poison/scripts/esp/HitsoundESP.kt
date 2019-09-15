@@ -10,18 +10,18 @@ import rat.poison.utils.every
 import rat.poison.curSettings
 import rat.poison.strToBool
 
-var totalHits = 0
+private var totalHits = 0
 var opened = false
 lateinit var hitSound: Sound
 
-fun hitSoundEsp() = every(4) {
-    if (!curSettings["ENABLE_HITSOUND"]!!.strToBool()) return@every
+fun hitSoundEsp() = every(50) {
+    if (!curSettings["ENABLE_HITSOUND"].strToBool()) return@every
 
     val curHits = csgoEXE.int(me + m_totalHitsOnServer)
 
     if (!opened) {
         try {
-            updateHitsound(curSettings["HITSOUND_FILE_NAME"]!!.toString().replace("\"", ""))
+            updateHitsound(curSettings["HITSOUND_FILE_NAME"].replace("\"", ""))
             opened = true
             totalHits = curHits
         } catch (ex: NullPointerException){}
@@ -31,7 +31,7 @@ fun hitSoundEsp() = every(4) {
     }
     else if (totalHits != curHits)
     {
-        hitSound.play(curSettings["HITSOUND_VOLUME"]!!.toDouble().toFloat())
+        hitSound.play(curSettings["HITSOUND_VOLUME"].toDouble().toFloat())
         totalHits = curHits
     }
 }

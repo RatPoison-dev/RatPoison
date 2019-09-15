@@ -25,15 +25,15 @@ import java.awt.event.MouseEvent
 private const val SwingDistance = 96f
 private const val StabDistance = 64f
 
-internal fun autoKnife() = every(4) {
-    if (curSettings["MENU"]!!.strToBool() && opened && App.haveTarget && !DANGER_ZONE) {
-        if (curSettings["ENABLE_AUTO_KNIFE"]!!.strToBool()) {
+internal fun autoKnife() = every(10) {
+    if (curSettings["MENU"].strToBool() && opened && App.haveTarget && !DANGER_ZONE) {
+        if (curSettings["ENABLE_AUTO_KNIFE"].strToBool()) {
             if (me.weapon().knife) {
                 val currentAngle = clientState.angle()
                 val position = me.position()
                 val target = findTarget(position, currentAngle, false, 32, -2)
                 if (target >= 0) {
-                    if (keyReleased(curSettings["AIM_KEY"]!!.toInt())) {
+                    if (keyReleased(curSettings["AIM_KEY"].toInt())) {
                         val targetPos = target.absPosition()
                         val mePos = me.absPosition()
                         val dst = mePos.distanceTo(targetPos)

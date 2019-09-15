@@ -11,7 +11,7 @@ import rat.poison.game.offsets.EngineOffsets
 import rat.poison.utils.extensions.uint
 import java.lang.Float.floatToIntBits
 
-internal fun disableEsp() {
+internal fun disableAllEsp() {
     val cWhite = Color(255, 255, 255, 1.0)
 
     val clientVModEnt = CSGO.csgoEXE.uint(CSGO.clientDLL.address + ClientOffsets.dwEntityList + (((CSGO.csgoEXE.uint(CSGO.csgoEXE.uint(CSGO.clientDLL.address + ClientOffsets.dwLocalPlayer)+ NetVarOffsets.m_hViewModel)) and 0xFFF) - 1) * 16)
@@ -22,15 +22,15 @@ internal fun disableEsp() {
 
     forEntities body@ {
         val entity = it.entity
-        if (entity <= 0 || me == entity) return@body false
+        val type = it.type
+        val glowAddress = it.glowAddress
+        if (entity <= 0 || me == entity || glowAddress <= 0) return@body false
 
-        if (it.type == EntityType.CCSPlayer) {
-            val glowAddress = it.glowAddress
-            if (glowAddress <= 0) return@body false
-
+        if (type == EntityType.CCSPlayer || type == EntityType.CPlantedC4 || type == EntityType.CC4 || type.weapon || type.grenade) {
             glowAddress.glow(cWhite)
             entity.chams(cWhite)
         }
+
         return@body false
     }
 }

@@ -2,6 +2,7 @@ package rat.poison.ui
 
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener
+import org.jetbrains.kotlin.com.intellij.util.ui.JBUI
 
 fun Actor.changed(callback: (ChangeListener.ChangeEvent, Actor) -> Any?): ChangeListener {
     val listener = object : ChangeListener() {

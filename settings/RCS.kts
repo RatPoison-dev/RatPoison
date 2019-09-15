@@ -1,16 +1,13 @@
 import rat.poison.settings.*
 
-/**
- * Enables the recoil control system (RCS) script.
- */
+//Enable RCS
 ENABLE_RCS = false
 
-/**
- * Smoothing of RCS, from 0.1 to 1
- */
-RCS_SMOOTHING = 0.5
+//RCS smoothing (0.1 - 1.0)
+//0.1 is the least accurate
+//1.0 is 'perfect' RCS
+RCS_SMOOTHING_X = 0.7
+RCS_SMOOTHING_Y = 0.7
 
-/**
- * Moves crosshair back up after spraying
- */
+//Moves your cursor back to where you started spraying
 RCS_RETURNAIM = false

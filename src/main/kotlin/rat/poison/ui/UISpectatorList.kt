@@ -32,8 +32,8 @@ class UISpectatorList : VisWindow("Spectator List") {
         pack()
 
         setSize(225F, 350F)
-        setPosition(curSettings["SPECTATOR_LIST_X"]!!.toFloat(), curSettings["SPECTATOR_LIST_Y"]!!.toFloat())
-        color.a = curSettings["SPECTATOR_LIST_ALPHA"]!!.toFloat()
+        setPosition(curSettings["SPECTATOR_LIST_X"].toFloat(), curSettings["SPECTATOR_LIST_Y"].toFloat())
+        color.a = curSettings["SPECTATOR_LIST_ALPHA"].toFloat()
         isResizable = false
     }
 

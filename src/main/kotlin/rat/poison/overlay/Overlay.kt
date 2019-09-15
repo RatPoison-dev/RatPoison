@@ -4,6 +4,7 @@
 package rat.poison.overlay
 
 import com.sun.jna.platform.win32.WinUser
+import rat.poison.EXPERIMENTAL
 import rat.poison.curSettings
 import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
@@ -48,10 +49,12 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 		}
 	}
 
-	override var protectAgainstScreenshots: Boolean by Delegates.observable(false) { _, _, /*value*/_ ->
-//		with(User32) { //Warned against by Noad
-//			SetWindowDisplayAffinity(myHWND, if (value) 1 else 0)
-//		}
+	override var protectAgainstScreenshots: Boolean by Delegates.observable(false) { _, _, value ->
+		if (EXPERIMENTAL) {
+			with(User32) {
+				SetWindowDisplayAffinity(myHWND, if (value) 1 else 0)
+			}
+		}
 	}
 
 	fun start() {
@@ -135,7 +138,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 				}
 			} else {
 				if (isMyWindowVisible) {
-					if (curSettings["MENU_APP"]!!.toString().replace("\"", "") == "Counter-Strike: Global Offensive") {
+					if (curSettings["MENU_APP"].replace("\"", "") == "Counter-Strike: Global Offensive") {
 						ShowWindow(myHWND, WinUser.SW_HIDE)
 						listener?.onBackground(this@Overlay)
 					}
@@ -259,7 +262,9 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	}
 
 	private fun beActive() = with(User32) {
-		//makeBlurBehind()
+		if (EXPERIMENTAL) {
+			makeBlurBehind()
+		}
 		if (targetAppHWND != HWND_ZERO) {
 			SetWindowLongA(myHWND, WinUser.GWL_EXSTYLE, WS_EX_TOOLWINDOW or WS_EX_TOPMOST)
 

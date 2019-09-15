@@ -3,7 +3,7 @@ package rat.poison.game.entity
 import rat.poison.game.CSGO.csgoEXE
 import org.jire.arrowhead.unsign
 
-enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false) {
+enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false, val grenadeProjectile: Boolean = false) {
 	NULL,
 	CAIBaseNPC,
 	CAK47(weapon = true),
@@ -14,7 +14,7 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false)
 	CBaseCombatCharacter,
 	CBaseCombatWeapon,
 	CBaseCSGrenade(grenade = true),
-	CBaseCSGrenadeProjectile(grenade = true),
+	CBaseCSGrenadeProjectile(grenade = true, grenadeProjectile = true),
 	CBaseDoor,
 	CBaseEntity,
 	CBaseFlex,
@@ -53,7 +53,7 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false)
 	CDangerZoneController,
 	CDEagle(weapon = true),
 	CDecoyGrenade(grenade = true),
-	CDecoyProjectile(grenade = true),
+	CDecoyProjectile(grenade = true, grenadeProjectile = true),
 	CDrone,
 	CDronegun,
 	CDynamicLight,
@@ -82,7 +82,7 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false)
 	CFireTrail,
 	CFish,
 	CFists,
-	CFlashbang(grenade = true),
+	CFlashbang(grenade = true, grenadeProjectile = true),
 	CFogController,
 	CFootstepControl,
 	CFuncDust,
@@ -118,7 +118,7 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false)
 	CMaterialModifyControl,
 	CMelee,
 	CMolotovGrenade(grenade = true),
-	CMolotovProjectile(grenade = true),
+	CMolotovProjectile(grenade = true, grenadeProjectile = true),
 	CMovieDisplay,
 	CParadropChopper,
 	CParticleFire,
@@ -157,11 +157,11 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false)
 	CSCAR17(weapon = true),
 	CSceneEntity,
 	CSensorGrenade(grenade = true),
-	CSensorGrenadeProjectile(grenade = true),
+	CSensorGrenadeProjectile(grenade = true, grenadeProjectile = true),
 	CShadowControl,
 	CSlideshowDisplay,
 	CSmokeGrenade(grenade = true),
-	CSmokeGrenadeProjectile(grenade = true),
+	CSmokeGrenadeProjectile(grenade = true, grenadeProjectile = true),
 	CSmokeStack,
 	CSnowball,
 	CSnowballPile,
@@ -301,12 +301,11 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false)
 			val vt = (csgoEXE.read(address + 0x8, 4) ?: return NULL).getInt(0).unsign()
 			val fn = (csgoEXE.read(vt + 2 * 0x4, 4) ?: return NULL).getInt(0).unsign()
 			val cls = (csgoEXE.read(fn + 0x1, 4) ?: return NULL).getInt(0).unsign()
-			val clsid = (csgoEXE.read(cls + 20, 4) ?: return NULL).getInt(0).unsign()
+			val clsid = (csgoEXE.read(cls + 0x14, 4) ?: return NULL).getInt(0).unsign()
 			return byID(clsid) ?: NULL
 		}
 		
 		val ccsPlayer = arrayOf(CCSPlayer)
-		
 	}
 	
 }

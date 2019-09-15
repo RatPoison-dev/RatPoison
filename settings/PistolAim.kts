@@ -4,50 +4,36 @@ import rat.poison.settings.*
 /////////////////////////////////////// --- GENERAL --- ///////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-/**
- * Enables the flat aim script.
- *
- * This script uses traditional flat linear-regression smoothing.
- */
+//Enable flat aim
+//Writes to angles ingame
 PISTOL_ENABLE_FLAT_AIM = false
 
-/**
- * Enables the path aim script.
- *
- * This script uses an advanced path generation smoothing.
- */
+//Enable path aim
+//Uses mouse movement to aim
 PISTOL_ENABLE_PATH_AIM = true
 
-/**
- * Whether or not to account for recoil when aiming
- */
+//Factor recoil when shooting
 PISTOL_FACTOR_RECOIL = true
 
-/**
- * Default aim bone the aims go to
- */
+//Aim Bone
+//Default bone to aim at
 PISTOL_AIM_BONE = 8
 
-/**
- * The field of view of the aimbot, in degrees (0 to 360).
- */
+//Aim FOV
+//Aims at entities inside this value
 PISTOL_AIM_FOV = 30
 
-/**
- * The aimbot's "playback" speed, the higher the value the slower the playback.
- *
- * The minimum value is 1
- */
+//Aim speed
+//MS delay between aiming steps
+//Lower is faster
 PISTOL_AIM_SPEED = 1
 
-/**
- * The smoothness of the aimbot
- */
+//Aim smoothness
+//Lower is less smooth (faster snapping)
 PISTOL_AIM_SMOOTHNESS = 2.5
 
-/**
- * The sens multiplier of the aimbot
- */
+//Aim strictness (1.0 - 5.0)
+//Lower is more strict (faster, more accurate snapping)
 PISTOL_AIM_STRICTNESS = 2.0
 
 
@@ -55,18 +41,12 @@ PISTOL_AIM_STRICTNESS = 2.0
 ///////////////////////////////////// --- PERFECT AIM --- /////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-/**
- * Whether or not to use perfect aim, which will instantaneously snap
- * to the aim bone once you are within the (PERFECT_AIM_FOV).
- */
+//Enable perfect aim
+//Will instantly snap to the aimbone
 PISTOL_PERFECT_AIM = true
 
-/**
- * The FOV, in degrees (0 to 360) to snap for perfect aim.
- */
+//Perfect aim fov (0 - 45)
 PISTOL_PERFECT_AIM_FOV = 10
 
-/**
- * The chance, from 1% to 100% (0 to 100) for perfect aim to activate.
- */
+//Perfect aim % chance to activate (1 - 100)
 PISTOL_PERFECT_AIM_CHANCE = 15

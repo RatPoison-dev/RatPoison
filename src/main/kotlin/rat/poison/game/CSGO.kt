@@ -6,6 +6,7 @@ import org.jire.arrowhead.Module
 import org.jire.arrowhead.Process
 import org.jire.arrowhead.processByName
 import rat.poison.curSettings
+import rat.poison.dbg
 import rat.poison.game.hooks.constructEntities
 import rat.poison.game.netvars.NetVars
 import rat.poison.settings.*
@@ -42,10 +43,7 @@ object CSGO {
 		private set
 
 	fun initialize() {
-		val d = curSettings["DEBUG"]!!.strToBool()
-		if (d) {
-			println("[Debug] Looking for and initializing CSGO")
-		}
+		if (dbg) println("[DEBUG] Searching for and initializing CSGO")
 
 		retry(128) {
 			csgoEXE = processByName(PROCESS_NAME, PROCESS_ACCESS_FLAGS)!!
@@ -79,19 +77,14 @@ object CSGO {
 			gameY = rect.top + ((rect.bottom - rect.top) - gameHeight)
 		}
 
-		every(1024, continuous = true) {
+		every(1000, continuous = true) {
 			inBackground = Pointer.nativeValue(hwd.pointer) != CUser32.GetForegroundWindow()
 		}
 
 		NetVars.load()
 
-		//this was moved to entityIteration. forgot to delete before
-
 		constructEntities()
 
-		if (curSettings["DEBUG"]!!.strToBool()) {
-			println("[Debug] CSGO initialized")
-		}
+		if (dbg) println("[DEBUG] CSGO initialized")
 	}
-
 }

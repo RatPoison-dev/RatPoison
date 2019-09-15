@@ -12,6 +12,7 @@ import rat.poison.settings.GAME_YAW
 import rat.poison.utils.extensions.refresh
 import rat.poison.utils.extensions.set
 import com.sun.jna.platform.win32.WinDef.POINT
+import rat.poison.game.worldToScreen
 import kotlin.math.round
 
 private val mousePos = ThreadLocal.withInitial { POINT() }
@@ -37,11 +38,15 @@ fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: 
 	normalize()
 }
 
-fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double) = clientState.setAngle(applyFlatSmoothing(currentAngle, destinationAngle, smoothing))
+fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double) {
+	val dAng = applyFlatSmoothing(currentAngle, destinationAngle, smoothing)
+	clientState.setAngle(dAng)
+
+}
 
 fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
 			sensMultiplier: Double = 1.0, perfect: Boolean = false) {
-	if (!destinationAngle.isValid()) return
+	if (!destinationAngle.isValid()) { return }
 
 	val delta = delta.get()
 
@@ -56,6 +61,7 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
 
 	delta.set(xFix, currentAngle.x - destinationAngle.x, 0.0)
 
+
 	var sens = GAME_SENSITIVITY * sensMultiplier
 	if (sens < GAME_SENSITIVITY) sens = GAME_SENSITIVITY
 	if (perfect) sens = 1.0
@@ -69,7 +75,7 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
 
 	target.set((mousePos.x + dx/2).toInt(), (mousePos.y + dy/2).toInt())
 
-	if (target.x <= 0 || target.x >= gameX + gameWidth || target.y <= 0 || target.y >= gameY + gameHeight) return
+	if (target.x <= 0 || target.x >= gameX + gameWidth || target.y <= 0 || target.y >= gameY + gameHeight) { return }
 
 	if (perfect) {
 		writeAim(currentAngle, destinationAngle, 1.0)

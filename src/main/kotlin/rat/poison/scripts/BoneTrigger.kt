@@ -1,10 +1,8 @@
 package rat.poison.scripts
 
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.jire.arrowhead.keyPressed
 import org.jire.arrowhead.keyReleased
+import rat.poison.App
 import rat.poison.App.haveTarget
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.angle
@@ -13,19 +11,21 @@ import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
 import rat.poison.scripts.aim.findTarget
 import rat.poison.settings.*
-import rat.poison.utils.*
 import rat.poison.curSettings
+import rat.poison.game.Weapons
+import rat.poison.game.entity.*
+import rat.poison.game.entity.bullets
 import rat.poison.game.entity.position
-import rat.poison.game.entity.weapon
 import rat.poison.opened
 import rat.poison.scripts.aim.boneTrig
 import rat.poison.scripts.aim.canShoot
 import rat.poison.strToBool
 import rat.poison.ui.bTrigTab
 import rat.poison.ui.mainTabbedPane
+import rat.poison.utils.every
 
-private val onBoneTriggerTarget = every(4) {
-    if (curSettings["MENU"]!!.strToBool() && opened && haveTarget) {
+fun boneTrigger() = every(4) {
+    if (curSettings["MENU"].strToBool() && opened && haveTarget) {
         if (DANGER_ZONE) {
             mainTabbedPane.disableTab(bTrigTab, true)
         } else {
@@ -33,44 +33,84 @@ private val onBoneTriggerTarget = every(4) {
         }
     }
 
-    boneTrig = false
+    if (DANGER_ZONE) {
+        return@every
+    }
 
-    if (curSettings["ENABLE_BONE_TRIGGER"]!!.strToBool()) {
-        if (!me.weapon().knife) {
-            if (keyReleased(curSettings["AIM_KEY"]!!.toInt())) {
-                val currentAngle = clientState.angle()
-                val position = me.position()
-                val target = findTarget(position, currentAngle, false, curSettings["BONE_TRIGGER_FOV"]!!.toInt(), -2)
-                if (target >= 0 && target.canShoot()) {
-                    if ((curSettings["BONE_TRIGGER_ENABLE_KEY"]!!.strToBool() && keyPressed(curSettings["BONE_TRIGGER_KEY"]!!.toInt())) || !curSettings["BONE_TRIGGER_ENABLE_KEY"]!!.strToBool()) {
-                        boneTrig = true
-                        boneTrig = curSettings["AIM_ON_BONE_TRIGGER"]!!.strToBool()
-                        boneTrigger()
+    boneTrig = false
+    val wep = me.weapon()
+
+    BONE_TRIGGER_PISTOLS_FOV = 15
+    BONE_TRIGGER_RIFLES_FOV = 15
+    BONE_TRIGGER_SHOTGUNS_FOV = 15
+    BONE_TRIGGER_SMGS_FOV = 15
+    BONE_TRIGGER_SNIPERS_FOV = 15
+
+    var bFOV = 0
+    //Change to one val, why have 5?
+    var bTrigPistols = false
+    var bTrigRifles = false
+    var bTrigShotguns = false
+    var bTrigSnipers = false
+    var bTrigSmgs = false
+
+    when {
+        wep.pistol -> { bFOV = curSettings["BONE_TRIGGER_PISTOLS_FOV"].toInt(); if (curSettings["BONE_TRIGGER_PISTOLS"].strToBool()) bTrigPistols = true; }
+        wep.rifle -> { bFOV = curSettings["BONE_TRIGGER_RIFLES_FOV"].toInt(); if (curSettings["BONE_TRIGGER_RIFLES"].strToBool()) bTrigRifles = true; }
+        wep.shotgun -> { bFOV = curSettings["BONE_TRIGGER_SHOTGUNS_FOV"].toInt(); if (curSettings["BONE_TRIGGER_SHOTGUNS"].strToBool()) bTrigShotguns = true; }
+        wep.sniper -> { bFOV = curSettings["BONE_TRIGGER_SNIPERS_FOV"].toInt(); if (curSettings["BONE_TRIGGER_SNIPERS"].strToBool() && ((me.isScoped() && curSettings["ENABLE_SCOPED_ONLY"].strToBool()) || (!curSettings["ENABLE_SCOPED_ONLY"].strToBool()))) bTrigSnipers = true; }
+        wep.smg -> { bFOV = curSettings["BONE_TRIGGER_SMGS_FOV"].toInt(); if (curSettings["BONE_TRIGGER_SMGS"].strToBool()) bTrigSmgs = true; }
+    }
+
+    if (bTrigPistols || bTrigRifles || bTrigShotguns || bTrigSnipers || bTrigSmgs) {
+        if (curSettings["ENABLE_BONE_TRIGGER"].strToBool()) {
+            val wepEnt = me.weaponEntity()
+            if (!me.weapon().knife && wepEnt.bullets() > 0) { //Prevents snap trigger preventing spamming
+                if (wep.automatic || (!wep.automatic && wepEnt.canFire())) {
+                    if (keyReleased(curSettings["AIM_KEY"].toInt())) {
+                        val currentAngle = clientState.angle()
+                        val position = me.position()
+                        val target = findTarget(position, currentAngle, false, bFOV, -2)
+                        if (target >= 0 && target.canShoot()) {
+                            if ((curSettings["BONE_TRIGGER_ENABLE_KEY"].strToBool() && keyPressed(curSettings["BONE_TRIGGER_KEY"].toInt())) || !curSettings["BONE_TRIGGER_ENABLE_KEY"].strToBool()) {
+                                bTrigShoot()
+                                return@every
+                            }
+                        }
                     }
                 }
             }
-//            } else {//bandaid
-//                clientDLL[dwForceAttack] = 6.toByte()
-//            }
+            callingInShot = false
+            inShot = false
         }
     }
 }
 
+var callingInShot = false
 var inShot = false
 
-fun boneTrigger() {
-    if (!inShot) {
-        inShot = true
-        val delay = curSettings["BONE_TRIGGER_SHOT_DELAY"]!!.toLong()
-        if (delay > 0) {
-            GlobalScope.launch {
-                delay(delay)
-                clientDLL[dwForceAttack] = 6.toByte() //--Mouse press
-                inShot = false
-            }
-        } else {
-            clientDLL[dwForceAttack] = 6.toByte() //--Mouse press
-            inShot = false
-        }
+//Initial shot delay
+fun bTrigShoot() {
+    if (!callingInShot) {
+        callingInShot = true
+        Thread(Runnable {//Coroutine is slow to initialize, bad for X delay
+            Thread.sleep(curSettings["BONE_TRIGGER_SHOT_DELAY"].toLong())
+            inShot = true
+        }).start()
     }
+
+    if (inShot) {
+        //Switch me.weapon() categ -> doesn't work
+
+        boneTrig = (me.weapon().pistol && curSettings["BONE_TRIGGER_PISTOLS_AIMBOT"].strToBool()) ||
+                (me.weapon().rifle && curSettings["BONE_TRIGGER_RIFLES_AIMBOT"].strToBool()) ||
+                (me.weapon().shotgun && curSettings["BONE_TRIGGER_SHOTGUNS_AIMBOT"].strToBool()) ||
+                (me.weapon().smg && curSettings["BONE_TRIGGER_SMGS_AIMBOT"].strToBool()) ||
+                (me.weapon().sniper && curSettings["BONE_TRIGGER_SNIPERS_AIMBOT"].strToBool())
+
+
+        clientDLL[dwForceAttack] = 6.toByte() //--Mouse press
+    }
+
+    inShot = false
 }

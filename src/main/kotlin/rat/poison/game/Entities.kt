@@ -1,19 +1,13 @@
 package rat.poison.game
 
-import rat.poison.settings.MAX_ENTITIES
-import rat.poison.game.entity.Entity
-import rat.poison.game.entity.EntityType
-import rat.poison.game.entity.Player
-import rat.poison.game.entity.bone
-import rat.poison.utils.Angle
-import rat.poison.utils.collections.CacheableList
-import rat.poison.utils.collections.ListContainer
-import rat.poison.utils.readCached
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap
-import it.unimi.dsi.fastutil.longs.Long2ObjectMap
-import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap
+import rat.poison.game.entity.EntityType
+import rat.poison.game.entity.Player
+import rat.poison.settings.MAX_ENTITIES
+import rat.poison.utils.collections.CacheableList
+import rat.poison.utils.collections.ListContainer
 import java.util.*
 
 @Volatile
@@ -44,7 +38,7 @@ internal inline fun forEntities(types: Array<EntityType> = EntityType.cachedValu
                                 crossinline body: (EntityContext) -> Boolean): Boolean {
 	val hash = Arrays.hashCode(types)
 	val container = cachedResults.get(hash) ?: EntityContainer(EntityType.size)
-	
+
 	if (container.empty()) {
 		for (type in types) if (type != EntityType.NULL) {
 			val cacheableList = entities[type]!!
@@ -52,6 +46,7 @@ internal inline fun forEntities(types: Array<EntityType> = EntityType.cachedValu
 			cachedResults[hash] = container
 		}
 	}
+
 	
 	return container.forEach(body)
 }

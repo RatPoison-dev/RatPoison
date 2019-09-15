@@ -35,42 +35,80 @@ var FACTOR_RECOIL = true
 var AIM_BONE = HEAD_BONE
 var AIM_FOV = 40
 var AIM_SPEED = 16
-var AIM_SMOOTHNESS = 1.0
 var AIM_STRICTNESS = 1.0
 var PERFECT_AIM = false
 var PERFECT_AIM_FOV = 4
 var PERFECT_AIM_CHANCE = 100
 var AIM_ASSIST_MODE = true
-var BONE_TRIGGER_FOV = 12
+var BONE_TRIGGER_PISTOLS_FOV = 15
+var BONE_TRIGGER_RIFLES_FOV = 15
+var BONE_TRIGGER_SHOTGUNS_FOV = 15
+var BONE_TRIGGER_SMGS_FOV = 15
+var BONE_TRIGGER_SNIPERS_FOV = 15
 var BONE_TRIGGER_HB = true
 var BONE_TRIGGER_BB = true
+var BONE_TRIGGER_PISTOLS = false
+var BONE_TRIGGER_RIFLES = false
+var BONE_TRIGGER_SHOTGUNS = false
+var BONE_TRIGGER_SMGS = false
+var BONE_TRIGGER_SNIPERS = false
+var BONE_TRIGGER_PISTOLS_AIMBOT = true
+var BONE_TRIGGER_RIFLES_AIMBOT = true
+var BONE_TRIGGER_SHOTGUNS_AIMBOT = true
+var BONE_TRIGGER_SMGS_AIMBOT = true
+var BONE_TRIGGER_SNIPERS_AIMBOT = true
 var AIM_ON_BONE_TRIGGER = true
 var BONE_TRIGGER_ENABLE_KEY = false
 var BONE_TRIGGER_KEY = 6
 var BONE_TRIGGER_SHOT_DELAY = 8
-var BOX_ESP = false
+var ENABLE_BOX_ESP = false
 var BOX_ESP_DETAILS = false
+var BOX_ESP_HEALTH = true
+var BOX_ESP_ARMOR = true
+var BOX_ESP_NAME = true
+var BOX_ESP_WEAPON = true
+var BOX_ESP_HEALTH_POS = "L"
+var BOX_ESP_ARMOR_POS = "R"
+var BOX_ESP_NAME_POS = "T"
+var BOX_ESP_WEAPON_POS = "B"
 var BOX_SHOW_TEAM = false
 var BOX_SHOW_ENEMIES = true
+var BOX_SHOW_DEFUSERS = true
+var BOX_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
+var BOX_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
+var BOX_DEFUSER_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)
 var BUNNY_HOP_KEY = KeyEvent.VK_SPACE
 var CHAMS_ESP = false
 var CHAMS_SHOW_HEALTH = false
 var CHAMS_BRIGHTNESS = 0
 var CHAMS_SHOW_TEAM = false
 var CHAMS_SHOW_ENEMIES = true
-var FLICKER_FREE_GLOW = false
+var CHAMS_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
+var CHAMS_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
+var CHAMS_SELF_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
 var RADAR_ESP = true
-var ENABLE_HITMARKER = true
-var HITMARKER_TYPE = 1
+var SNAPLINES = false
+var SNAPLINES_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
 var ENABLE_HITSOUND = true
+var ENABLE_HITMARKER = true
+var ENABLE_ADRENALINE = true
+var ENABLE_NADE_HELPER = true
+var NADE_HELPER_TOGGLE_KEY = 113
+var NADE_TRACER = true
+var NADE_TRACER_UPDATE_TIME = 15
+var NADE_TRACER_TIMEOUT = 1.0
+var HITMARKER_RECOIL_POSITION = true
+var HITMARKER_COMBO = true
+var HITMARKER_OUTLINE = true
+var HITMARKER_SPACING = 0
+var HITMARKER_LENGTH = 20
+var HITMARKER_WIDTH = 3F
+var HITMARKER_COMBO_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
+var HITMARKER_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
+var HITMARKER_OUTLINE_COLOR = Color(red=0, green=0, blue=0, alpha=1.0)
 var HITSOUND_VOLUME = 0.2
 var HITSOUND_FILE_NAME = "COD.wav"
-var TEAM_COLOR = Color(0, 0, 255, 1.0)
-var ENEMY_COLOR = Color(255, 0, 0, 1.0)
-var BOMB_COLOR = Color(255, 255, 0, 1.0)
-var WEAPON_COLOR = Color(0, 255, 0, 0.5)
-var GRENADE_COLOR = Color(0, 255, 0, 1.0)
-var HIGHLIGHT_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
+var DEBUG = false
 var MENU = true
 var OVERLAY_WIDTH = 1920
 var OVERLAY_HEIGHT = 1080
@@ -86,9 +124,6 @@ var VISUALS_TOGGLE_KEY = 71
 var MENU_KEY = 112
 var MENUTOG = false
 var ENABLE_AIM = true
-var CFG1_NAME = "Null"
-var CFG2_NAME = "Null"
-var CFG3_NAME = "Null"
 var GLOW_ESP = false
 var INV_GLOW_ESP = false
 var MODEL_ESP = false
@@ -96,11 +131,17 @@ var MODEL_AND_GLOW = false
 var GLOW_SHOW_TEAM = false
 var GLOW_SHOW_ENEMIES = true
 var GLOW_SHOW_BOMB = true
-var GLOW_SHOW_DEFUSE_KITS = true
 var GLOW_SHOW_BOMB_CARRIER = true
 var GLOW_SHOW_WEAPONS = true
 var GLOW_SHOW_GRENADES = false
 var GLOW_SHOW_TARGET = true
+var GLOW_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
+var GLOW_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
+var GLOW_BOMB_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
+var GLOW_DEFUSER_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)
+var GLOW_WEAPON_COLOR = Color(red=251, green=0, blue=255, alpha=0.5)
+var GLOW_GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)
+var GLOW_HIGHLIGHT_COLOR = Color(red=0, green=174, blue=255, alpha=1.0)
 var OPENGL_VSYNC = false
 var OPENGL_FPS = 60
 var OPENGL_MSAA_SAMPLES = 8
@@ -119,7 +160,8 @@ var RCROSSHAIR_WIDTH = 3
 var RCROSSHAIR_LENGTH = 10
 var RCROSSHAIR_ALPHA = .5
 var RCROSSHAIR_COLOR = Color(255, 255, 255, 1.0)
-var RCS_SMOOTHING = 1.0
+var RCS_SMOOTHING_X = 1.0
+var RCS_SMOOTHING_Y = 1.0
 var RCS_RETURNAIM = true
 var FLASH_MAX_ALPHA = 200F
 var RIFLE_ENABLE_FLAT_AIM = false
@@ -163,7 +205,6 @@ var SHOTGUN_PERFECT_AIM_CHANCE = 100
 var SKELETON_ESP = false
 var SKELETON_SHOW_TEAM = false
 var SKELETON_SHOW_ENEMIES = true
-var SKELETON_SHOW_DORMANT = false
 var SMG_ENABLE_FLAT_AIM = false
 var SMG_ENABLE_PATH_AIM = true
 var SMG_FACTOR_RECOIL = true
@@ -194,19 +235,27 @@ var INDICATOR_OVAL = true
 var INDICATOR_SHOW_TEAM = false
 var INDICATOR_SHOW_ENEMIES = true
 var INDICATOR_SHOW_BOMB = true
+var INDICATOR_SHOW_DEFUSERS = true
 var INDICATOR_SHOW_BOMB_CARRIER = true
 var INDICATOR_SHOW_WEAPONS = true
 var INDICATOR_SHOW_GRENADES = false
+var INDICATOR_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
+var INDICATOR_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
+var INDICATOR_BOMB_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
+var INDICATOR_DEFUSER_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)
+var INDICATOR_WEAPON_COLOR = Color(red=251, green=0, blue=255, alpha=0.5)
+var INDICATOR_GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)
 var ENABLE_AUTO_KNIFE = false
 var SPECTATOR_LIST = true
 var SPECTATOR_LIST_X = 0.0
 var SPECTATOR_LIST_Y = 0.0
 var SPECTATOR_LIST_ALPHA = 1.0
 var WARNING = true
-var DEBUG = false
 var AUTO_STRAFE = true
 var STRAFE_BHOP_ONLY = true
 var FAST_STOP = true
+var HEAD_WALK = false
+var HEAD_WALK_KEY = 81
 var MENU_APP = "Counter-Strike: Global Offensive"
 var RCROSSHAIR_XOFFSET = 0
 var RCROSSHAIR_YOFFSET = 0

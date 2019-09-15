@@ -1,28 +1,27 @@
+import rat.poison.game.Color
 import rat.poison.settings.*
 
-/**
- * Whether or not to use chams ESP, may require a game restart to stop/fix
- * To disable chams & brightness on exit (as models will stay colored normally), you must type exit into the cmd to close the program
- * This modifies a cvar that currently isn't being checked, this can change at anytime, use at your own discretion
- */
+//Enable clrRender chams
+//This modifies a cvar that isn't currently checked, which can change at any time. Use at your own discretion.
 CHAMS_ESP = false
 
-/**
- * When this is and CHAMS_ESP are enabled the enemy models will be colored based on health, and will override CHAMS_ESP_COLOR
- */
+//Color players based on their health, overrides entity color
 CHAMS_SHOW_HEALTH = false
 
-/**
- * Brightness for chams esp (from 0 to 1000)
- */
-CHAMS_BRIGHTNESS = 0
+//clrRender brightness (0 - 1000)
+CHAMS_BRIGHTNESS = 250
 
-/**
- * Whether or not to highlight your team mates.
- */
+//Enable chams esp on teammates
 CHAMS_SHOW_TEAM = false
 
-/**
- * Whether or not to highlight enemies.
- */
+//Enable chams esp on enemies
 CHAMS_SHOW_ENEMIES = true
+
+//Color of your teammates
+CHAMS_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
+
+//Color of your enemies
+CHAMS_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
+
+//Color of your hands/weapon
+CHAMS_SELF_COLOR = Color(red=255, green=55, blue=0, alpha=1.0)

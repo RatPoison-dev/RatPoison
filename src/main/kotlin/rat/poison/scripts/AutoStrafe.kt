@@ -14,9 +14,9 @@ import java.awt.event.KeyEvent
 
 var lastAngY = 0.0
 
-fun autoStrafe() = every(4) {
-    if (curSettings["AUTO_STRAFE"]!!.strToBool()) {
-        if ((curSettings["STRAFE_BHOP_ONLY"]!!.strToBool() && keyPressed(curSettings["BUNNY_HOP_KEY"]!!.toInt())) || (!curSettings["STRAFE_BHOP_ONLY"]!!.strToBool())) {
+fun autoStrafe() = every(5) {
+    if (curSettings["AUTO_STRAFE"].strToBool()) {
+        if ((curSettings["STRAFE_BHOP_ONLY"].strToBool() && keyPressed(curSettings["BUNNY_HOP_KEY"].toInt())) || (!curSettings["STRAFE_BHOP_ONLY"].strToBool())) {
             val curAngY = clientState.angle().y
 
             if (!me.onGround()) {

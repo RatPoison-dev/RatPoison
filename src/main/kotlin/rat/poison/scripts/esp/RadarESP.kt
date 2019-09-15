@@ -8,10 +8,11 @@ import rat.poison.utils.every
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.curSettings
 import rat.poison.game.me
+import rat.poison.settings.DANGER_ZONE
 import rat.poison.strToBool
 
-internal fun radarEsp() = every(1) {
-    if (!curSettings["RADAR_ESP"]!!.strToBool()) return@every
+internal fun radarEsp() = every(25) {
+    if (!curSettings["RADAR_ESP"].strToBool() || DANGER_ZONE) return@every
 
     forEntities(ccsPlayer) {
         val entity = it.entity

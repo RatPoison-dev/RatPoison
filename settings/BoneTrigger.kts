@@ -1,46 +1,47 @@
 import rat.poison.settings.*
 
-/**
- * Enables the bone trigger bot script.
- */
+//Enable bone trigger
 ENABLE_BONE_TRIGGER = false
 
-/**
- * Whether or not to auto knife targets
- */
+//Enable auto knife
 ENABLE_AUTO_KNIFE = false
 
-/**
- * The field of view (in degrees, 0 to 32) for the bone trigger.
- */
-BONE_TRIGGER_FOV = 10
-
-/**
- * Whether to trigger on head bone
- */
+//Enable bone trigger activation if enemy head bone (8) is inside the FOV
 BONE_TRIGGER_HB = true
 
-/**
- * Whether to trigger on body bone
- */
+//Enable bone trigger activation if enemy body bones (3-7) are inside the FOV
 BONE_TRIGGER_BB = true
 
-/**
- * Use aim when bone trigger activates, true by default
- */
-AIM_ON_BONE_TRIGGER = false
+//Enable bone trigger activation when holding the specified weapons
+BONE_TRIGGER_PISTOLS = true
+BONE_TRIGGER_RIFLES = true
+BONE_TRIGGER_SHOTGUNS = true
+BONE_TRIGGER_SMGS = true
+BONE_TRIGGER_SNIPERS = true
 
-/**
- * Enable using a key for bone trigger
- */
+//Enable aimbot settings when bone trigger activates for these specified weapons
+BONE_TRIGGER_PISTOLS_AIMBOT = true
+BONE_TRIGGER_RIFLES_AIMBOT = true
+BONE_TRIGGER_SHOTGUNS_AIMBOT = true
+BONE_TRIGGER_SMGS_AIMBOT = true
+BONE_TRIGGER_SNIPERS_AIMBOT = true
+
+//The bone trigger activation FOV (0 - 90)
+BONE_TRIGGER_PISTOLS_FOV = 15
+BONE_TRIGGER_RIFLES_FOV = 15
+BONE_TRIGGER_SHOTGUNS_FOV = 15
+BONE_TRIGGER_SMGS_FOV = 15
+BONE_TRIGGER_SNIPERS_FOV = 15
+
+//Enable currently held weapons aimbot setting's on bone trigger activation
+AIM_ON_BONE_TRIGGER = true
+
+//Enable bone trigger key that enables bone trigger only when BONE_TRIGGER_KEY is pressed
 BONE_TRIGGER_ENABLE_KEY = false
 
-/**
- * Key to use bone trigger for if bone trigger key is enabled; F by default
- */
-BONE_TRIGGER_KEY = 5
+//VK Key Code (http://cherrytree.at/misc/vk.htm), enables bone trigger when held
+//Default key is F
+BONE_TRIGGER_KEY = 70
 
-/**
- * Default minimum time in milliseconds to fire shots when requirements met
- */
-BONE_TRIGGER_SHOT_DELAY = 50
+//Default initial shot MS delay on bone trigger activation (0 - 1000)
+BONE_TRIGGER_SHOT_DELAY = 250

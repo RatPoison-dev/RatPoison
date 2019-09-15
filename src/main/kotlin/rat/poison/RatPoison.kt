@@ -34,98 +34,80 @@ import rat.poison.ui.UISpectatorList
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.*
 import java.io.*
+import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.pow
+import kotlin.math.sqrt
 
+const val EXPERIMENTAL = false
 const val SETTINGS_DIRECTORY = "settings"
 var saving = false
 var settingsLoaded = false
 
 val curSettings = Settings()
 
+var dbg = false
+
 fun main() {
     System.setProperty("jna.nosys", "true")
 
+    println("Loading settings...")
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
+
+    dbg = curSettings["DEBUG"].strToBool()
+
+    if (dbg) println("DEBUG enabled")
 
     Thread.sleep(5000)
     println("Launching...")
 
-    if (FLICKER_FREE_GLOW) {
-        PROCESS_ACCESS_FLAGS = PROCESS_ACCESS_FLAGS or WinNT.PROCESS_VM_OPERATION
-    }
+    CSGO.initialize()
 
-    val d = curSettings["DEBUG"]!!.strToBool()
+    if (dbg) println("[DEBUG] Initializing scripts...")
+    //Init scripts
+    if (!curSettings["MENU"].strToBool()) { //If we arent' using the menu disable everything that uses the menu
+        if (dbg) println("[DEBUG] Menu disabled, disabling box, skeleton, rcrosshair, btimer, indicator, speclist, hitmarker")
 
-    if (!curSettings["MENU"]!!.strToBool()) { //If we arent' using the menu disable everything that uses the menu
-        curSettings["BOX_ESP"] = "false"
+        curSettings["ENABLE_BOX_ESP"] = "false"
+
         curSettings["SKELETON_ESP"] = "false"
         curSettings["ENABLE_RECOIL_CROSSHAIR"] = "false"
         curSettings["ENABLE_BOMB_TIMER"] = "false"
         curSettings["INDICATOR_ESP"] = "false"
         curSettings["SPECTATOR_LIST"] = "false"
-        if (d) {
-            println("[Debug] Menu is disabled, disabling box esp, skeleton esp, recoil crosshair, bomb timer, indicator esp, spectator list (These scripts will still initialize)")
-        }
+        curSettings["ENABLE_HITMARKER"] = "false"
+        curSettings["SNAPLINES"] = "false"
+        curSettings["ENABLE_NADE_HELPER"] = "false"
+    } else {
+        if (dbg) { println("[DEBUG] Initializing Recoil Crosshair") }; rcrosshair()
+        if (dbg) { println("[DEBUG] Initializing Recoil Spectator List") }; spectatorList()
+        if (dbg) { println("[DEBUG] Initializing Recoil Ranks") }; ranks()
+        if (dbg) { println("[DEBUG] Initializing Recoil Bomb Timer") }; bombTimer()
+        if (dbg) { println("[DEBUG] Initializing Hit Marker") }; hitMarker()
+        if (dbg) { println("[DEBUG] Initializing Nade Helper") }; nadeHelper()
     }
 
-    CSGO.initialize()
-
-    //Init all scripts
-    if (d) { //Placeholders for cleanup
-        println("[Debug] Initializing scripts")
-    }
-    bunnyHop()
-    autoStrafe()
-    rcs()
-
-    if (d) { //Placeholders for cleanup
-        println("[Debug] BHop, AutoStrafe, RCS initialized")
-    }
-
-    rcrosshair()
-    flatAim()
-    pathAim()
-
-    if (d) { //Placeholders for cleanup
-        println("[Debug] Recoil Crosshair, FlatAim, PathAim initialized")
-    }
-
-    setAim()
-    boneTrigger() //Called once during startup, causes firing on startup
-    autoKnife()
-
-    if (d) { //Placeholders for cleanup
-        println("[Debug] SetAim, BoneTrigger, AutoKnife initialized")
-    }
-
-    reducedFlash()
-    spectatorList()
-    bombTimer()
-
-    if (d) { //Placeholders for cleanup
-        println("[Debug] ReducedFlash, SpectatorList, BombTimer initialized")
-    }
-
-    esp() //Contains esp scripts
-    espToggle()
-    automaticWeapon()
-
-    if (d) { //Placeholders for cleanup
-        println("[Debug] ESP, ESPToggle, Automatic Weapons initialized")
-    }
-
-    fastStop()
-
-    if (d) { //Placeholders for cleanup
-        println("[Debug] FastStop initialized")
-    }
-
-    //ranks()
+    if (dbg) { println("[DEBUG] Initializing Bunny Hop") }; bunnyHop()
+    if (dbg) { println("[DEBUG] Initializing Auto Strafe") }; autoStrafe()
+    if (dbg) { println("[DEBUG] Initializing RCS") }; rcs()
+    if (dbg) { println("[DEBUG] Initializing Flat Aim") }; flatAim()
+    if (dbg) { println("[DEBUG] Initializing Path Aim") }; pathAim()
+    if (dbg) { println("[DEBUG] Initializing Set Aim") }; setAim()
+    if (dbg) { println("[DEBUG] Initializing Bone Trigger") }; boneTrigger()
+    if (dbg) { println("[DEBUG] Initializing Auto Knife") }; autoKnife()
+    if (dbg) { println("[DEBUG] Initializing Reduced Flash") }; reducedFlash()
+    if (dbg) { println("[DEBUG] Initializing ESPs") }; esp()
+    if (dbg) { println("[DEBUG] Initializing Esp Toggle") }; espToggle()
+    if (dbg) { println("[DEBUG] Initializing Automatic Weapons") }; automaticWeapon()
+    if (dbg) { println("[DEBUG] Initializing Fast Stop") }; fastStop()
+    if (dbg) { println("[DEBUG] Initializing Head Walk (Currently disabled)") }; headWalk()
+    if (dbg) { println("[DEBUG] Initializing Adrenaline") }; adrenaline()
+    nadeTracer()
 
     //Overlay check, not updated?
-    if (curSettings["MENU"]!!.strToBool()) {
-        println("App Title: " + curSettings["MENU_APP"]!!.replace("\"", ""))
+    if (curSettings["MENU"].strToBool()) {
+        println("App Title: " + curSettings["MENU_APP"].replace("\"", ""))
 
         App.open()
 
@@ -137,8 +119,8 @@ fun main() {
             var h = CSGO.gameHeight
 
             if (w == 0 || h == 0) {
-                w = curSettings["OVERLAY_WIDTH"]!!.toInt()
-                h = curSettings["OVERLAY_HEIGHT"]!!.toInt()
+                w = curSettings["OVERLAY_WIDTH"].toInt()
+                h = curSettings["OVERLAY_HEIGHT"].toInt()
             }
 
             Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
@@ -149,8 +131,8 @@ fun main() {
                 setWindowPosition(CSGO.gameX, CSGO.gameY)
                 setDecorated(false)
 
-                useVsync(curSettings["OPENGL_VSYNC"]!!.strToBool())
-                setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings["OPENGL_MSAA_SAMPLES"]!!.toInt())
+                useVsync(curSettings["OPENGL_VSYNC"].strToBool())
+                setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings["OPENGL_MSAA_SAMPLES"].toInt())
             })
         }
     }
@@ -161,31 +143,37 @@ fun main() {
 
 fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
     settingsLoaded = false
-    if (specificFile)
-    {
+    if (specificFile) {
         FileReader(File(fileDir)).readLines().forEach { line ->
             if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith("\"") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
-                curSettings[curLine[0]] = curLine[2]
+                if (curLine.size == 3) {
+                    curSettings[curLine[0]] = curLine[2]
+                } else {
+                    println("Debug: Setting invalid -- $curLine")
+                }
             }
         }
-    }
-    else {
+    } else {
         File(fileDir).listFiles()?.forEach { file ->
-            if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "hitsounds") {
+            if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper") {
                 FileReader(file).readLines().forEach { line ->
                     if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                         val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
-                        curSettings[curLine[0]] = curLine[2]
+                        if (curLine.size == 3) {
+                            curSettings[curLine[0]] = curLine[2]
+                        } else {
+                            println("Debug: Setting invalid -- $curLine")
+                        }
                     }
                 }
             }
         }
     }
     settingsLoaded = true
-    println("Finished loading settings")
+    println("Settings loaded")
 }
 
 var opened = false
@@ -195,7 +183,7 @@ object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
-    private val overlay = Overlay(curSettings["MENU_APP"]!!.toString().replace("\"", ""), "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
+    val overlay = Overlay(curSettings["MENU_APP"].replace("\"", ""), "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     var haveTarget = false
     lateinit var menuStage: Stage
     private lateinit var bombStage: Stage
@@ -208,8 +196,8 @@ object App : ApplicationAdapter() {
     lateinit var uiSpecList: UISpectatorList
 
     override fun create() {
-        overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"]!!.toInt()) })
-        VisUI.load()
+        overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
+        VisUI.load(Gdx.files.internal("skin\\tinted.json"))
 
         //Implement stage for menu
         menuStage = Stage() //Main Menu Stage
@@ -242,7 +230,7 @@ object App : ApplicationAdapter() {
     }
 
     override fun render() {
-        sync(curSettings["OPENGL_FPS"]!!.toInt())
+        sync(curSettings["OPENGL_FPS"].toInt())
 
         if (!Thread.interrupted()) {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
@@ -262,7 +250,7 @@ object App : ApplicationAdapter() {
                     batch.end()
                 }
 
-                if (curSettings["ENABLE_BOMB_TIMER"]!!.strToBool() && curSettings["BOMB_TIMER_MENU"]!!.strToBool())
+                if (curSettings["ENABLE_BOMB_TIMER"].strToBool() && curSettings["BOMB_TIMER_MENU"].strToBool())
                 {
                     bombStage.act(Gdx.graphics.deltaTime)
                     val bombCamera = bombStage.viewport.camera
@@ -275,7 +263,7 @@ object App : ApplicationAdapter() {
                     bombBatch.end()
                 }
 
-                if (curSettings["SPECTATOR_LIST"]!!.strToBool()) {
+                if (curSettings["SPECTATOR_LIST"].strToBool()) {
                     specListStage.act(Gdx.graphics.deltaTime)
                     val specListCamera = specListStage.viewport.camera
                     specListCamera.update()
@@ -287,12 +275,10 @@ object App : ApplicationAdapter() {
                     specListBatch.end()
                 }
 
-
-                sb.projectionMatrix = menuStage.camera.combined
-
                 glEnable(GL20.GL_BLEND)
-                glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA) //Not needed?
+                glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
                 glClearColor(0F, 0F, 0F, 0F)
+                sb.projectionMatrix = menuStage.camera.combined
                 shapeRenderer.projectionMatrix = menuStage.camera.combined
                 for (i in 0 until bodies.size) bodies[i]()
                 glDisable(GL20.GL_BLEND)
@@ -303,20 +289,19 @@ object App : ApplicationAdapter() {
                 MENUTOG = !MENUTOG
                 overlay.clickThrough = !MENUTOG
                 uiUpdate()
+
+                if (dbg) println("[DEBUG] Menu Toggled")
             }
 
             val w = overlay.width
             val h = overlay.height
 
             if (menuStage.viewport.screenWidth != w || menuStage.viewport.screenHeight != h) {
-                //resize(w, h)
+                resize(w, h)
                 menuStage.viewport.update(w, h)
                 bombStage.viewport.update(w, h)
                 specListStage.viewport.update(w, h)
-
-                if (curSettings["DEBUG"]!!.strToBool()) {
-                    println("[Debug] Updated viewports")
-                }
+                if (dbg) println("[DEBUG] Resized Viewports")
             }
         }
 
@@ -393,11 +378,11 @@ fun sync(fps : Int) {
 fun Any.strToBool() = this == "true" || this == true || this == 1.0
 fun Any.boolToDouble() = if (this == "true" || this == true) 1.0 else (0.0)
 fun Any.boolToStr() = this.toString()
+fun Any.strToColor() = convStrToColor(this.toString())
+fun Any.cToDouble() = this.toString().toDouble()
 fun Double.toBool() = this == 1.0
 fun Boolean.toFloat() = if (this) 1F else 0F
 fun Boolean.toDouble() = if (this) 1.0 else 0.0
-
-fun Any.strToColor() = convStrToColor(this.toString())
 
 fun convStrToColor(input: String): rat.poison.game.Color {
     var line = input
@@ -433,3 +418,5 @@ fun convArrayToStr(input: String): String {
 
     return line
 }
+
+fun Angle.magnitude() : Double = sqrt(x.pow(2) + y.pow(2) + z.pow(2))

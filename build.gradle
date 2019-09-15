@@ -3,8 +3,8 @@ import java.nio.file.Files
 buildscript {
 	ext.kotlin_version = '1.3.40'
 	ext.jnaVersion = '5.2.0'
-	ext.gdxVersion = '1.9.9'
-	ext.visuiVersion = "1.4.2"
+	ext.gdxVersion = '1.9.10'
+	ext.visuiVersion = "1.4.4"
 
 	repositories {
 		jcenter()
@@ -23,7 +23,7 @@ apply plugin: "application"
 apply plugin: "com.github.johnrengelman.shadow"
 
 group "rat.poison"
-version "1.4.1"
+version "1.5"
 
 mainClassName = "rat.poison.RatPoison"
 
@@ -46,7 +46,6 @@ dependencies {
 	compile "com.kotcrab.vis:vis-ui:$visuiVersion"
 
 	compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: kotlin_version
-	compile group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: kotlin_version
 	compile group: 'org.jetbrains.kotlin', name: 'kotlin-script-runtime', version: kotlin_version
 	compile group: 'org.jetbrains.kotlin', name: 'kotlin-script-util', version: kotlin_version
 	compile group: 'org.jetbrains.kotlin', name: 'kotlin-compiler-embeddable', version: kotlin_version
@@ -98,6 +97,27 @@ task RatPoison {
 		def hitsounds = file("settings\\hitsounds")
 		hitsounds.listFiles().each {
 			Files.copy(it.toPath(), (new File(dirHitsounds, it.getName())).toPath())
+		}
+
+		def dirCfgs = file(new File(dir, "settings\\CFGS"))
+		dirCfgs.mkdirs()
+		def cfgs = file("settings\\CFGS")
+		cfgs.listFiles().each {
+			Files.copy(it.toPath(), (new File(dirCfgs, it.getName())).toPath())
+		}
+
+		def dirHelper = file(new File(dir, "settings\\NadeHelper"))
+		dirHelper.mkdirs()
+		def helper = file("settings\\NadeHelper")
+		helper.listFiles().each {
+			Files.copy(it.toPath(), (new File(dirHelper, it.getName())).toPath())
+		}
+
+		def dirSkin = file(new File(dir, "skin"))
+		dirSkin.mkdirs()
+		def skins = file("skin")
+		skins.listFiles().each {
+			Files.copy(it.toPath(), (new File(dirSkin, it.getName())).toPath())
 		}
 	}
 }

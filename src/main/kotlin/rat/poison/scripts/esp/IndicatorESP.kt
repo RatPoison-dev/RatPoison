@@ -20,65 +20,71 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 internal fun indicatorEsp() = App {
-    if (!curSettings["ENABLE_ESP"]!!.strToBool() || MENUTOG || !curSettings["INDICATOR_ESP"]!!.strToBool() || notInGame) return@App //Needed menutog/notingame/inbackground or would crash at w2s view matrix
+    if (!curSettings["ENABLE_ESP"].strToBool() || MENUTOG || !curSettings["INDICATOR_ESP"].strToBool() || notInGame) return@App
 
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()
 
     forEntities {
         val entity = it.entity
-        val myTeam = me.team()
-        val entTeam = entity.team()
+        val onMyTeam = me.team() == entity.team()
+
         var color = ""
 
         when (it.type) {
             EntityType.CCSPlayer -> {
-                if (entity.dead() || entity == me || entity.dormant()) return@forEntities false
+                if (entity.dead() || entity == me || (entity.dormant() && !DANGER_ZONE)) return@forEntities false
 
-                if (bEnt >= 0 && bEnt == entity) {
-                    if (curSettings["INDICATOR_SHOW_ENEMIES"]!!.strToBool() && myTeam != entTeam) {
-                        color = when (curSettings["INDICATOR_SHOW_BOMB"]!!.strToBool() && curSettings["INDICATOR_SHOW_BOMB_CARRIER"]!!.strToBool()) {
-                            true -> "BOMB_COLOR"
-                            false -> "ENEMY_COLOR"
+                if (bEnt >= 0 && bEnt == entity) { //This is the bomb carrier
+                    if (curSettings["INDICATOR_SHOW_ENEMIES"].strToBool() && !onMyTeam) {
+                        color = when (curSettings["INDICATOR_SHOW_BOMB"].strToBool() && curSettings["INDICATOR_SHOW_BOMB_CARRIER"].strToBool()) {
+                            true -> "INDICATOR_BOMB_COLOR"
+                            false -> "INDICATOR_ENEMY_COLOR"
                         }
-                    } else if (curSettings["INDICATOR_SHOW_TEAM"]!!.strToBool() && myTeam == entTeam) {
-                        color = when (curSettings["INDICATOR_SHOW_BOMB"]!!.strToBool() && curSettings["INDICATOR_SHOW_BOMB_CARRIER"]!!.strToBool()) {
-                            true -> "BOMB_COLOR"
-                            false -> "TEAM_COLOR"
+                    } else if (curSettings["INDICATOR_SHOW_TEAM"].strToBool() && onMyTeam) {
+                        color = when (curSettings["INDICATOR_SHOW_BOMB"].strToBool() && curSettings["INDICATOR_SHOW_BOMB_CARRIER"].strToBool()) {
+                            true -> "INDICATOR_BOMB_COLOR"
+                            false -> "INDICATOR_TEAM_COLOR"
                         }
                     }
                 } else {
-                    if (myTeam == entTeam && !curSettings["INDICATOR_SHOW_TEAM"]!!.strToBool()) {
+                    if (!curSettings["INDICATOR_SHOW_TEAM"].strToBool() && onMyTeam) {
                         return@forEntities false
-                    } else if (!curSettings["INDICATOR_SHOW_ENEMIES"]!!.strToBool()) {
+                    } else if (!curSettings["INDICATOR_SHOW_ENEMIES"].strToBool()) {
                         return@forEntities false
                     } else {
-                        color = when (myTeam != entTeam) {
-                            true -> "ENEMY_COLOR"
-                            false -> "TEAM_COLOR"
+                        color = when (!onMyTeam) {
+                            true -> "INDICATOR_ENEMY_COLOR"
+                            false -> "INDICATOR_TEAM_COLOR"
                         }
                     }
                 }
             }
 
             EntityType.CPlantedC4, EntityType.CC4 -> {
-                if (curSettings["INDICATOR_SHOW_BOMB"]!!.strToBool()) {
-                    color = "BOMB_COLOR"
+                if (curSettings["INDICATOR_SHOW_BOMB"].strToBool()) {
+                    color = "INDICATOR_BOMB_COLOR"
+                }
+            }
+
+            EntityType.CEconEntity -> {
+                if (curSettings["INDICATOR_SHOW_DEFUSERS"].strToBool()) {
+                    color = "INDICATOR_DEFUSER_COLOR"
                 }
             }
 
             else -> {
-                if (curSettings["INDICATOR_SHOW_WEAPONS"]!!.strToBool() && it.type.weapon) {
-                    color = "WEAPON_COLOR"
-                } else if (curSettings["INDICATOR_SHOW_GRENADES"]!!.strToBool() && it.type.grenade) {
-                    color = "GRENADE_COLOR"
+                if (curSettings["INDICATOR_SHOW_WEAPONS"].strToBool() && it.type.weapon) {
+                    color = "INDICATOR_WEAPON_COLOR"
+                } else if (curSettings["INDICATOR_SHOW_GRENADES"].strToBool() && it.type.grenade) {
+                    color = "INDICATOR_GRENADE_COLOR"
                 }
             }
         }
 
         if (color != "") {
             val entPos = entity.position()
-            w2sHandler(entPos, me.position().distanceTo(entPos), curSettings[color]!!.strToColor())
+            w2sHandler(entPos, me.position().distanceTo(entPos), curSettings[color].strToColor())
         }
 
         false
@@ -91,14 +97,14 @@ fun indicatorPosition(screenPos: Vector3, indicatorPos: Vector3): Float {
 
     val d = Vector2.dst(screenPos.x, screenPos.y, centerX, centerY)
 
-    if (!curSettings["INDICATOR_OVAL"]!!.strToBool()) {
-        val r = CSGO.gameHeight / curSettings["INDICATOR_DISTANCE"]!!.toDouble().toFloat() / d
+    if (!curSettings["INDICATOR_OVAL"].strToBool()) {
+        val r = CSGO.gameHeight / curSettings["INDICATOR_DISTANCE"].toDouble().toFloat() / d
 
         indicatorPos.x = r * screenPos.x + (1 - r) * centerX
         indicatorPos.y = r * screenPos.y + (1 - r) * centerY
     } else {
-        val ry = CSGO.gameHeight / curSettings["INDICATOR_DISTANCE"]!!.toDouble().toFloat() / d
-        val rx = CSGO.gameWidth / curSettings["INDICATOR_DISTANCE"]!!.toDouble().toFloat() / d
+        val ry = CSGO.gameHeight / curSettings["INDICATOR_DISTANCE"].toDouble().toFloat() / d
+        val rx = CSGO.gameWidth / curSettings["INDICATOR_DISTANCE"].toDouble().toFloat() / d
 
         indicatorPos.x = rx * screenPos.x + (1 - rx) * centerX
         indicatorPos.y = ry * screenPos.y + (1 - ry) * centerY
@@ -115,7 +121,7 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: Color) {
     val vOut = Vector()
     val wTest = wTest(vector)
 
-    if (curSettings["INDICATOR_SHOW_ONSCREEN"]!!.strToBool() && (wTest >= dist/3)) { //On screen
+    if (curSettings["INDICATOR_SHOW_ONSCREEN"].strToBool() && (wTest >= dist/3)) { //On screen
         worldToScreen(Vector(vector.x, vector.y, vector.z), vOut)
         shapeRenderer.apply {
             val indicatorPos = Vector3(vOut.x.toFloat(), vOut.y.toFloat()+25F, 0F)
@@ -139,7 +145,7 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: Color) {
 
             begin()
             set(ShapeRenderer.ShapeType.Filled)
-            color = com.badlogic.gdx.graphics.Color(drawColor.red.toFloat(), drawColor.green.toFloat(), drawColor.blue.toFloat(), .5F)
+            color = com.badlogic.gdx.graphics.Color(drawColor.red/255F, drawColor.green/255F, drawColor.blue/255F, .5F)
             triangle(vert1x, vert1y, vert2x, vert2y, vert3x, vert3y)
             color = com.badlogic.gdx.graphics.Color(255F, 255F, 255F, 1F)
             set(ShapeRenderer.ShapeType.Line)
@@ -169,7 +175,7 @@ fun w2sHandler(vector: Vector, dist: Double, drawColor: Color) {
 
             begin()
             set(ShapeRenderer.ShapeType.Filled)
-            color = com.badlogic.gdx.graphics.Color(drawColor.red.toFloat(), drawColor.green.toFloat(), drawColor.blue.toFloat(), .5F)
+            color = com.badlogic.gdx.graphics.Color(drawColor.red/255F, drawColor.green/255F, drawColor.blue/255F, .5F)
             triangle(vert1x, vert1y, vert2x, vert2y, vert3x, vert3y)
             color = com.badlogic.gdx.graphics.Color(255F, 255F, 255F, 1F)
             set(ShapeRenderer.ShapeType.Line)

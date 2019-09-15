@@ -5,18 +5,27 @@ import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.offsets.ClientOffsets.dwViewMatrix
 import rat.poison.utils.Vector
+import rat.poison.utils.extensions.readable
 
 private val viewMatrix = Array(4) { DoubleArray(4) }
 
 fun worldToScreen(from: Vector, vOut: Vector) = try {
-	if (dwViewMatrix != 0L) {
-		val buffer = clientDLL.read(dwViewMatrix, 4 * 4 * 4)!!
+	if (dwViewMatrix > 0L) {
+		var buffer = clientDLL.read(dwViewMatrix, 4 * 4 * 4)!!
 
-		var offset = 0
-		for (row in 0..3) for (col in 0..3) {
-			val value = buffer.getFloat(offset.toLong())
-			viewMatrix[row][col] = value.toDouble()
-			offset += 4 //Changed, error but not compd
+		while (!buffer.readable()) {
+			buffer = clientDLL.read(dwViewMatrix, 4 * 4 * 4)!!
+			Thread.sleep(1)
+		}
+
+
+		if(buffer.getFloatArray(0,16).all(Float::isFinite)){
+			var offset = 0
+			for (row in 0..3) for (col in 0..3) {
+				val value = buffer.getFloat(offset.toLong())
+				viewMatrix[row][col] = value.toDouble()
+				offset += 4 //Changed, error but not compd
+			}
 		}
 
 		vOut.x = viewMatrix[0][0] * from.x + viewMatrix[0][1] * from.y + viewMatrix[0][2] * from.z + viewMatrix[0][3]
@@ -64,6 +73,9 @@ fun worldToScreen(from: Vector, vOut: Vector) = try {
 		} else false
 	} else false
 } catch (e: Exception) {
+	println(dwViewMatrix)
+	println(clientDLL.read(dwViewMatrix, 4 * 4 * 4))
+
 	e.printStackTrace()
 	false
 }

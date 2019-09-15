@@ -36,5 +36,4 @@ object NetVars {
 	}
 	
 	internal fun hashClassAndVar(className: String, varName: String) = className.hashCode() xor varName.hashCode()
-	
 }

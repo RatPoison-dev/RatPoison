@@ -1,25 +1,15 @@
 import rat.poison.settings.*
 
-/**
- * Enables the bomb timer script.
- * This requires the overlay which only works when borderless fullscreen or windowed.
- */
+//Enable bomb timer
 ENABLE_BOMB_TIMER = true
 
-/**
- * Enable bomb timer menu
- */
+//Enable the menu on the overlay
 BOMB_TIMER_MENU = true
 
-/**
- * Enable visual bars for bomb timer
- */
+//Visual bars at the top middle of your screen, and along the bottom of the screen
 BOMB_TIMER_BARS = true
 
-/**
- * X/Y of the bomb timer menu
- * Alpha of the bomb timer menu
- */
+//X,Y,Alpha of the bomb timer menu
 BOMB_TIMER_X = 0.0
 BOMB_TIMER_Y = 0.0
-BOMB_TIMER_ALPHA = 1.0
+BOMB_TIMER_ALPHA = 0.75

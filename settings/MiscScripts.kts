@@ -1,11 +1,8 @@
 import rat.poison.settings.*
 
-/**
- * Whether non-automatic weapons shoot when AIM_KEY is held down
- */
+//Enable automatic weapons
+//Will attempt to shoot non-automatic weapons based on auto wep delay
 AUTOMATIC_WEAPONS = false
 
-/**
- * Enables the reduced flash script.
- */
-ENABLE_REDUCED_FLASH = false
+//The MS delay between shooting
+AUTO_WEP_DELAY = 10

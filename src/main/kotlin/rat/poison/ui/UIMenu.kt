@@ -13,9 +13,10 @@ val mainTabbedPane = TabbedPane()
     val rcsTab = RcsTab()
     val bTrigTab = BTrigTab()
     val miscTab = MiscTab()
-    val settingsTab = OptionsTab()
+    val ranksTab = RanksTab()
+    val optionsTab = OptionsTab()
 
-class UIMenu : VisWindow("Rat Poison 1.4.1") {
+class UIMenu : VisWindow("Rat Poison 1.5") {
     init {
         defaults().left()
 
@@ -44,7 +45,8 @@ class UIMenu : VisWindow("Rat Poison 1.4.1") {
         mainTabbedPane.add(rcsTab)
         mainTabbedPane.add(bTrigTab)
         mainTabbedPane.add(miscTab)
-        mainTabbedPane.add(settingsTab)
+        mainTabbedPane.add(ranksTab)
+        mainTabbedPane.add(optionsTab)
 
 
         //Set aim tab as the first (init) tab
@@ -64,8 +66,8 @@ class UIMenu : VisWindow("Rat Poison 1.4.1") {
                     aimTab -> {
                         mainTabbedPaneContent.add(aimTab.contentTable).growX()
                     }
-                    settingsTab -> {
-                        mainTabbedPaneContent.add(settingsTab.contentTable).growX()
+                    optionsTab -> {
+                        mainTabbedPaneContent.add(optionsTab.contentTable).growX()
                     }
                     rcsTab -> {
                         mainTabbedPaneContent.add(rcsTab.contentTable).growX()
@@ -78,6 +80,9 @@ class UIMenu : VisWindow("Rat Poison 1.4.1") {
                     }
                     miscTab -> {
                         mainTabbedPaneContent.add(miscTab.contentTable).growX()
+                    }
+                    ranksTab -> {
+                        mainTabbedPaneContent.add(ranksTab.contentTable).growX()
                     }
                 }
             }

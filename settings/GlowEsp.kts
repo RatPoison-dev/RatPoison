@@ -1,64 +1,61 @@
+import rat.poison.game.Color
 import rat.poison.settings.*
 
-/**
- * Whether or not to use the within-game glow ESP.
- *
- * This ESP **CANNOT** be hidden from game capture for streaming.
- */
+//Enable glow esp
 GLOW_ESP = true
 
-/**
- * Whether or not to invert the glow esp and highlight the player model instead of the outline
- * This works through walls, to change how thick/blurry it is adjust the alpha .5 through 1 should work fine
- */
+//Enable inverted glow esp
+//Glows all of the entity like a silhouette
 INV_GLOW_ESP = false
 
-/**
- * Model ESP glow tied to glow_esp, makes the model glow and only when visible, instead of an outline through walls
- */
+//Enable model esp
+//Glows the details of the model
+//Not visible through walls
 MODEL_ESP = false
 
-/**
- * Glow esp will work when enemy is not visible, chams will work when enemy is visible (visibility check is delayed as a netvar)
- */
+//Enable model and glow
+//Will use glow esp (or inv glow esp) when entity is not visible
+//Will use model esp when entity is visible
 MODEL_AND_GLOW = false
 
-/**
- * Whether or not to highlight your team mates.
- */
+//Enable glow esp on teammates
 GLOW_SHOW_TEAM = false
 
-/**
- * Whether or not to highlight enemies.
- */
+//Enable glow esp on enemies
 GLOW_SHOW_ENEMIES = true
 
-/**
- * Whether or not to highlight the bomb.
- */
+//Enable glow esp on bomb
 GLOW_SHOW_BOMB = true
 
-/**
- * Glow defuse kits
- */
-GLOW_SHOW_DEFUSE_KITS = true
-
-/**
- * Whether or not to highlight the bomb carrier.
- */
+//Enable glow esp on bomb carrier
 GLOW_SHOW_BOMB_CARRIER = true
 
-/**
- * Whether or not to highlight weapons.
- */
+//Enable glow esp on dropped weapons
 GLOW_SHOW_WEAPONS = true
 
-/**
- * Whether or not to highlight grenades.
- */
+//Enable glow esp on dropped/thrown grenades
 GLOW_SHOW_GRENADES = false
 
-/**
- * Whether or not to highlight who the aim will aim at
- */
+//Enable glow esp on visible, in aimbot FOV players
 GLOW_SHOW_TARGET = true
+
+//Color of your teammates
+GLOW_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
+
+//Color of your enemies
+GLOW_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
+
+//Color of the bomb, entities carrying the bomb
+GLOW_BOMB_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
+
+//Color of the defuse kit
+GLOW_DEFUSER_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)
+
+//Color of dropped weapons
+GLOW_WEAPON_COLOR = Color(red=251, green=0, blue=255, alpha=0.5)
+
+//Color of thrown grenades
+GLOW_GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)
+
+//Color of visible, in aimbot FOV players
+GLOW_HIGHLIGHT_COLOR = Color(red=0, green=174, blue=255, alpha=1.0)

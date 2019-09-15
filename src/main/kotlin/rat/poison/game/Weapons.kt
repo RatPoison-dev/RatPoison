@@ -56,10 +56,14 @@ enum class Weapons(val id: Int, val automatic: Boolean = false, val grenade: Boo
 	KNIFE_KARAMBIT(507, knife = true),
 	KNIFE_M9_BAYONET(508, knife = true),
 	KNIFE_TACTICAL(509, knife = true),
-	KNIFE_TALCHION(512, knife = true),
+	KNIFE_FALCHION(512, knife = true),
 	KNIFE_BOWIE(514, knife = true),
 	KNIFE_BUTTERFLY(515, knife = true),
 	KNIFE_PUSH(516, knife = true),
+	KNIFE_URSUS(519, knife = true),
+	KNIFE_GYPSY(520, knife = true),
+	KNIFE_STILETTO(522, true),
+	KNIFE_WIDOWMAKER(523, true),
 	FISTS(69, knife = true),
 	MEDISHOT(57, knife = true),
 	TABLET(72, knife = true),
@@ -69,11 +73,7 @@ enum class Weapons(val id: Int, val automatic: Boolean = false, val grenade: Boo
 	HAMMER(76, knife = true);
 	
 	companion object {
-		
 		private val cachedValues = values()
-		
 		operator fun get(id: Int) = cachedValues.firstOrNull { it.id == id } ?: NONE
-		
 	}
-	
 }

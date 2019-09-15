@@ -1,52 +1,55 @@
+import rat.poison.game.Color
 import rat.poison.settings.*
 
-/**
- * Will draw circles around your screen to indicate enemy players location in relation to you
- * This requires the overlay which only works when borderless fullscreen or windowed.
- */
+//Enable indicator esp
+//Draws arrows pointing towards entities on screen
 INDICATOR_ESP = false
 
-/**
- * Whether enemy indicator will indicate on screen entities
- */
+//Enable indicator esp for entities on screen
 INDICATOR_SHOW_ONSCREEN = false
 
-/**
- * The distance from the edge of the screen for the indicator circle/oval
- */
+//Distance from the center of arrows pointing towards entities off screen
 INDICATOR_DISTANCE = 25.0
 
-/**
- * Whether the indicators are in a circle of an oval on screen
- */
+//Enable indicator oval
+//Display arrows of entities off screen in a circle or oval
 INDICATOR_OVAL = false
 
-/**
- * Whether or not to highlight your team mates.
- */
+//Enable indicator esp on teammates
 INDICATOR_SHOW_TEAM = false
 
-/**
- * Whether or not to highlight enemies.
- */
+//Enable indicator esp on enemies
 INDICATOR_SHOW_ENEMIES = true
 
-/**
- * Whether or not to highlight the bomb.
- */
+//Enable indicator esp on bomb
 INDICATOR_SHOW_BOMB = true
 
-/**
- * Whether or not to highlight the bomb carrier.
- */
+//Enable defuser esp on defuse kits
+INDICATOR_SHOW_DEFUSERS = true
+
+//Enable indicator esp on bomb carrier
 INDICATOR_SHOW_BOMB_CARRIER = true
 
-/**
- * Whether or not to highlight weapons.
- */
+//Enable indicator esp on weapons
 INDICATOR_SHOW_WEAPONS = true
 
-/**
- * Whether or not to highlight grenades.
- */
+//Enable indicator esp on grenades
 INDICATOR_SHOW_GRENADES = false
+
+//Color of your teammates
+INDICATOR_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
+
+//Color of your enemies
+INDICATOR_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
+
+//Color of the bomb, entities carrying the bomb
+INDICATOR_BOMB_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
+
+//Color of the defuse kit
+INDICATOR_DEFUSER_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)
+
+//Color of dropped weapons
+INDICATOR_WEAPON_COLOR = Color(red=251, green=0, blue=255, alpha=0.5)
+
+//Color of thrown grenades
+INDICATOR_GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)

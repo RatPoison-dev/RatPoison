@@ -1,30 +1,17 @@
 package rat.poison.utils
 
-import com.badlogic.gdx.files.FileHandle
-import rat.poison.interfaces.ISettings
+class Settings : MutableMap<String, Any?> {
+    private val savedValues = mutableMapOf<String, String>()
 
-//Remove ISettings
-
-class Settings : ISettings {
-    private val defaultValues = mutableMapOf<String, String>()
-    private val currentlySavedValues = mutableMapOf<String, String>()
-    private val pendingToSaveValues = mutableMapOf<String, String>()
-
-    override fun get(key: String): String? {
-        if (pendingToSaveValues.containsKey(key)) {
-            return pendingToSaveValues[key]
+    override fun get(key: String): String {
+        if (savedValues.containsKey(key)) {
+            return savedValues[key].toString()
         }
-        if (currentlySavedValues.containsKey(key)) {
-            return currentlySavedValues[key]
-        }
-        if (defaultValues.containsKey(key)) {
-            return defaultValues[key]
-        }
-        return null
+        return ""
     }
 
     override fun put(key: String, value: Any?): Any? {
-        return pendingToSaveValues.put(key, value.toString())
+        return savedValues.put(key, value.toString())
     }
 
     override fun containsValue(value: Any?): Boolean {
@@ -42,14 +29,5 @@ class Settings : ISettings {
     override fun putAll(from: Map<out String, Any?>) {}
     override fun remove(key: String): Any? {return false}
     override fun isEmpty(): Boolean {return false}
-    override fun addSettingListener(listener: ISettings.ISettingListener) {}
-    override fun removeSettingListener(listener: ISettings.ISettingListener) {}
-    override fun initSetting(name: String, defaultValue: Any?, requireRestart: Boolean): ISettings {return this}
-    override fun loadSettings(fileHandle: FileHandle): ISettings {return this}
-    override fun saveSettings(fileHandle: FileHandle): ISettings {return this}
-    override fun revertSettings(): ISettings {return this}
-    override fun isChangesRequireRestart(): Boolean = false
-    override fun isSettingChangesPending() = false
-    override fun revertSettingsToDefaults(): ISettings {return this}
     override fun containsKey(key: String): Boolean {return false}
 }

@@ -12,9 +12,11 @@ import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.settings.*
 import rat.poison.ui.*
+import rat.poison.ui.uiHelpers.VisCheckBoxCustom
+import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import kotlin.math.round
 
-//Need to change path/aim to a drop down
+//I really couldn't give a shit to update this to the same as the other tabs
 
 class AimTab : Tab(true, false) { //Aim.kts tab
     private val table = VisTable(true)
@@ -25,20 +27,16 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     private var enableOverride = false
 
     //Init labels/sliders/boxes that show values here
-    val enableAim = VisCheckBox("Enable Aim")
-    val activateFromFireKey = VisCheckBox("Activate From Fire Key")
-    val teammatesAreEnemies = VisCheckBox("Teammates Are Enemies")
+    val enableAim = VisCheckBoxCustom("Enable Aim", "ENABLE_AIM")
+    val activateFromFireKey = VisCheckBoxCustom("Activate From Fire Key", "ACTIVATE_FROM_AIM_KEY")
+    val teammatesAreEnemies = VisCheckBoxCustom("Teammates Are Enemies", "TEAMMATES_ARE_ENEMIES")
 
-    val aimKeyLabel = VisLabel("Aim Key: ")
-    val aimKeyField = VisValidatableTextField(Validators.FLOATS)
-
-    val forceAimKeyLabel = VisLabel("Force Aim Key: ")
-    val forceAimKeyField = VisValidatableTextField(Validators.FLOATS)
+    val aimKey = VisInputFieldCustom("Aim Key", "AIM_KEY")
+    val forceAimKey = VisInputFieldCustom("Force Aim Key", "FORCE_AIM_KEY")
 
     //Automatic Weapons Collapsible
-    val automaticWeaponsCheckBox = VisCheckBox("Automatic Weapons")
-    val automaticWeaponsLabel = VisLabel("MS Delay: ")
-    val automaticWeaponsField = VisValidatableTextField(Validators.INTEGERS)
+    val automaticWeaponsCheckBox = VisCheckBoxCustom("Automatic Weapons", "AUTOMATIC_WEAPONS")
+    val automaticWeaponsInput = VisInputFieldCustom("MS Delay", "AUTO_WEP_DELAY", false)
 
     val categorySelectionBox = VisSelectBox<String>()
 
@@ -57,13 +55,13 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val aimBoneLabel = VisLabel("Bone: ")
     val aimBoneBox = VisSelectBox<String>()
 
-    val aimFovLabel = VisLabel("Aim Fov: " + curSettings[categorySelected + "_AIM_FOV"]!!.toInt().toString() + when(curSettings[categorySelected + "_AIM_FOV"]!!.toInt().toString().length) {3->"  " 2->"    " else ->"      "})
+    val aimFovLabel = VisLabel("Aim Fov: " + curSettings[categorySelected + "_AIM_FOV"].toInt().toString() + when(curSettings[categorySelected + "_AIM_FOV"].toInt().toString().length) {3->"  " 2->"    " else ->"      "})
     val aimFovSlider = VisSlider(1F, 180F, 1F, false)
 
-    val aimSpeedLabel = VisLabel("Aim Speed: " + curSettings[categorySelected + "_AIM_SPEED"]!!.toInt().toString() + when(curSettings[categorySelected + "_AIM_SPEED"]!!.toInt().toString().length) {3->"  " 2->"    " else ->"      "})
+    val aimSpeedLabel = VisLabel("Aim Speed: " + curSettings[categorySelected + "_AIM_SPEED"].toInt().toString() + when(curSettings[categorySelected + "_AIM_SPEED"].toInt().toString().length) {3->"  " 2->"    " else ->"      "})
     val aimSpeedSlider = VisSlider(0F, 5F, 1F, false)
 
-    val aimSmoothnessLabel = VisLabel("Smoothness: " + curSettings[categorySelected + "_AIM_SMOOTHNESS"]!!.toFloat())
+    val aimSmoothnessLabel = VisLabel("Smoothness: " + curSettings[categorySelected + "_AIM_SMOOTHNESS"].toFloat())
     val aimSmoothnessSlider = VisSlider(1F, 5F, 0.1F, false)
 
     val aimStrictnessLabel = VisLabel("Strictness: " + curSettings[categorySelected + "_AIM_STRICTNESS"])
@@ -73,142 +71,28 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val perfectAimCheckBox = VisCheckBox("Enable Perfect Aim")
     private val perfectAimTable = VisTable()
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
-    val perfectAimFovLabel = VisLabel("FOV: " + curSettings[categorySelected + "_PERFECT_AIM_FOV"]!!.toInt().toString() + when(curSettings[categorySelected + "_PERFECT_AIM_FOV"]!!.toInt().toString().length) {3->"  " 2->"    " else ->"      "})
+    val perfectAimFovLabel = VisLabel("FOV: " + curSettings[categorySelected + "_PERFECT_AIM_FOV"].toInt().toString() + when(curSettings[categorySelected + "_PERFECT_AIM_FOV"].toInt().toString().length) {3->"  " 2->"    " else ->"      "})
     val perfectAimFovSlider = VisSlider(1F, 45F, 1F, false)
-    val perfectAimChanceLabel = VisLabel("Chance: " + curSettings[categorySelected + "_PERFECT_AIM_CHANCE"]!!.toInt().toString() + when(curSettings[categorySelected + "_PERFECT_AIM_CHANCE"]!!.toInt().toString().length) {3->"  " 2->"    " else ->"      "})
+    val perfectAimChanceLabel = VisLabel("Chance: " + curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toInt().toString() + when(curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toInt().toString().length) {3->"  " 2->"    " else ->"      "})
     val perfectAimChanceSlider = VisSlider(1F, 100F, 1F, false)
 
     init {
-        if (curSettings["WARNING"]!!.strToBool()) {
-            val dialog = Dialogs.showOKDialog(menuStage, "Warning", "Current Version: 1.4.1\n\nIf you have any problems submit an issue on Github\nGitHub: https://github.com/TheFuckingRat/RatPoison")
+        if (curSettings["WARNING"].strToBool()) {
+            val dialog = Dialogs.showOKDialog(menuStage, "Warning", "Current Version: 1.5" +
+                    "\n\nIf you have any problems submit an issue on Github" +
+                    "\nGitHub: https://github.com/TheFuckingRat/RatPoison" +
+                    "\n\nThe ranks tab is a WIP, comp only" +
+                    "\n\nIf you have ideas/suggestions for btrig suggest them in github issues")
             dialog.setPosition(gameWidth / 4F - dialog.width / 2F, gameHeight.toFloat() / 2F)
             menuStage.addActor(dialog)
         }
 
-        //Create Enable Aim Toggle
-        Tooltip.Builder("Whether or not to completely enable or disable aims").target(enableAim).build()
-        if (curSettings["ENABLE_AIM"]!!.strToBool()) enableAim.toggle()
-        enableAim.changed { _, _ ->
-            curSettings["ENABLE_AIM"] = enableAim.isChecked.boolToStr()
-
-            val bool = !enableAim.isChecked
-            var col = Color(255F, 255F, 255F, 1F)
-            if (bool) {
-                col = Color(105F, 105F, 105F, .2F)
-            }
-            activateFromFireKey.isDisabled = bool
-            teammatesAreEnemies.isDisabled = bool
-            automaticWeaponsCheckBox.isDisabled = bool
-            weaponOverrideCheckBox.isDisabled = bool
-            automaticWeaponsCheckBox.isDisabled = bool
-            automaticWeaponsLabel.color = col
-            automaticWeaponsField.isDisabled = bool
-            aimKeyLabel.color = col
-            aimKeyField.isDisabled = bool
-            forceAimKeyLabel.color = col
-            forceAimKeyField.isDisabled = bool
-            categorySelectLabel.color = col
-            categorySelectionBox.isDisabled = bool
-            weaponOverrideSelectionBox.isDisabled = bool
-            if (!weaponOverride) {
-                weaponOverrideEnableCheckBox.isDisabled = true
-            } else {
-                weaponOverrideEnableCheckBox.isDisabled = bool
-            }
-            enableFactorRecoil.isDisabled = bool
-            enableFlatAim.isDisabled = bool
-            enablePathAim.isDisabled = bool
-            enableScopedOnly.isDisabled = bool
-            aimBoneLabel.color = col
-            aimBoneBox.isDisabled = bool
-            aimFovLabel.color = col
-            aimFovSlider.isDisabled = bool
-            aimSpeedLabel.color = col
-            aimSpeedSlider.isDisabled = bool
-            aimSmoothnessLabel.color = col
-            aimSmoothnessSlider.isDisabled = bool
-            aimStrictnessLabel.color = col
-            aimStrictnessSlider.isDisabled = bool
-            perfectAimCheckBox.isDisabled = bool
-            perfectAimChanceLabel.color = col
-            perfectAimChanceSlider.isDisabled = bool
-            perfectAimFovLabel.color = col
-            perfectAimFovSlider.isDisabled = bool
-            bTrigTab.aimOnBoneTrigger.isDisabled = bool
-            true
-        }
-
-        //Create Activate From Fire Key Toggle
-        Tooltip.Builder("Activate aim if pressing predefined aim key").target(activateFromFireKey).build()
-        if (curSettings["ACTIVATE_FROM_AIM_KEY"]!!.strToBool()) activateFromFireKey.toggle()
-        activateFromFireKey.changed { _, _ ->
-            curSettings["ACTIVATE_FROM_AIM_KEY"] = activateFromFireKey.isChecked.boolToStr()
-            true
-        }
-
-        //Create Teammates Are Enemies Toggle
-        Tooltip.Builder("Teammates will be treated as enemies").target(teammatesAreEnemies).build()
-        if (curSettings["TEAMMATES_ARE_ENEMIES"]!!.strToBool()) teammatesAreEnemies.toggle()
-        teammatesAreEnemies.changed { _, _ ->
-            curSettings["TEAMMATES_ARE_ENEMIES"] = teammatesAreEnemies.isChecked.boolToStr()
-            true
-        }
-
-        //Create Automatic Weapons Collapsible Check Box
-            Tooltip.Builder("Non-automatic weapons will auto shoot when there is no punch and the aim key is pressed").target(automaticWeaponsCheckBox).build()
-            automaticWeaponsCheckBox.isChecked = curSettings["AUTOMATIC_WEAPONS"]!!.strToBool()
-
-            automaticWeaponsCheckBox.changed { _, _ ->
-                curSettings["AUTOMATIC_WEAPONS"] = automaticWeaponsCheckBox.isChecked.boolToStr()
-                true
-            }
-
-            //Create Auto Wep Delay Slider
-            val automaticWeapons = VisTable()
-            Tooltip.Builder("The ms delay between checking punch to fire a shot using AUTOMATIC WEAPONS, the lower the less accurate but faster firing").target(automaticWeapons).build()
-
-            automaticWeaponsField.text = curSettings["AUTO_WEP_DELAY"]
-
-            automaticWeapons.changed { _, _ ->
-                if (automaticWeaponsField.text.toIntOrNull() != null) {
-                    curSettings["AUTO_WEP_DELAY"] = automaticWeaponsField.text.toInt().toString()
-                }
-            }
-            automaticWeapons.add(automaticWeaponsLabel).width(180F)
-            automaticWeapons.add(automaticWeaponsField).spaceRight(6F).width(40F)
-        //End Automatic Weapons Collapsible Check Box
-
-        //Create Aim Key Input Box
-        val aimKey = VisTable()
-        Tooltip.Builder("The key code of your in-game aim key (default m1)").target(aimKey).build()
-        aimKeyField.text = curSettings["AIM_KEY"]
-        aimKey.changed { _, _ ->
-            if (aimKeyField.text.toIntOrNull() != null) {
-                curSettings["AIM_KEY"] = aimKeyField.text.toInt().toString()
-            }
-        }
-        aimKey.add(aimKeyLabel).width(200F)
-        aimKey.add(aimKeyField).spaceRight(6F).width(40F)
-        aimKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
-
-        //Create Force Aim Key Input Box
-        val forceAimKey = VisTable()
-        Tooltip.Builder("The key to force lock onto any enemy inside aim fov").target(forceAimKey).build()
-        forceAimKeyField.text = curSettings["FORCE_AIM_KEY"]
-        forceAimKey.changed { _, _ ->
-            if (forceAimKeyField.text.toIntOrNull() != null) {
-                curSettings["FORCE_AIM_KEY"] = forceAimKeyField.text.toInt().toString()
-            }
-        }
-        forceAimKey.add(forceAimKeyLabel).width(200F)
-        forceAimKey.add(forceAimKeyField).spaceRight(6F).width(40F)
-        forceAimKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
-
         //Create Factor Recoil Toggle
         Tooltip.Builder("Whether or not to factor in recoil when aiming").target(enableFactorRecoil).build()
-        enableFactorRecoil.isChecked = curSettings[categorySelected + "_ENABLE_PATH_AIM"]!!.strToBool()
+        enableFactorRecoil.isChecked = curSettings[categorySelected + "_ENABLE_PATH_AIM"].strToBool()
         enableFactorRecoil.changed { _, _ ->
-            if (weaponOverride && enableOverride) {
+            println("factor recoil changed")
+            if (weaponOverride) {
                 val curWep: Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[1] = enableFactorRecoil.isChecked.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
@@ -301,10 +185,9 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         }
 
         //Create Flat Aim Toggle
-        Tooltip.Builder("Whether or not to enable flat aim").target(enableFlatAim).build()
-        enableFlatAim.isChecked = curSettings[categorySelected + "_ENABLE_FLAT_AIM"]!!.strToBool()
+        enableFlatAim.isChecked = curSettings[categorySelected + "_ENABLE_FLAT_AIM"].strToBool()
         enableFlatAim.changed { _, _ ->
-            if (weaponOverride && enableOverride)
+            if (weaponOverride)
             {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[2] = enableFlatAim.isChecked.toDouble()
@@ -316,17 +199,16 @@ class AimTab : Tab(true, false) { //Aim.kts tab
             }
             else {
                 curSettings[categorySelected + "_ENABLE_FLAT_AIM"] = enableFlatAim.isChecked.boolToStr()
-                if (curSettings[categorySelected + "_ENABLE_FLAT_AIM"]!!.strToBool()) {curSettings[categorySelected + "_ENABLE_PATH_AIM"] = "false"}
+                if (curSettings[categorySelected + "_ENABLE_FLAT_AIM"].strToBool()) {curSettings[categorySelected + "_ENABLE_PATH_AIM"] = "false"}
             }
             uiUpdate()
             true
         }
 
         //Create Path Aim Toggle
-        Tooltip.Builder("Whether or not to enable path aim").target(enablePathAim).build()
-        enablePathAim.isChecked = curSettings[categorySelected + "_ENABLE_PATH_AIM"]!!.strToBool()
+        enablePathAim.isChecked = curSettings[categorySelected + "_ENABLE_PATH_AIM"].strToBool()
         enablePathAim.changed { _, _ ->
-            if (weaponOverride && enableOverride) {
+            if (weaponOverride) {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[3] = enablePathAim.isChecked.toDouble()
                 if (enablePathAim.isChecked)
@@ -337,18 +219,17 @@ class AimTab : Tab(true, false) { //Aim.kts tab
             }
             else {
                 curSettings[categorySelected + "_ENABLE_PATH_AIM"] = enablePathAim.isChecked.boolToStr()
-                if (curSettings[categorySelected + "_ENABLE_PATH_AIM"]!!.strToBool()) {curSettings[categorySelected + "_ENABLE_FLAT_AIM"] = "false"}
+                if (curSettings[categorySelected + "_ENABLE_PATH_AIM"].strToBool()) {curSettings[categorySelected + "_ENABLE_FLAT_AIM"] = "false"}
             }
             uiUpdate()
             true
         }
 
         //Create Scoped Only Toggle
-        Tooltip.Builder("Whether or not aim when scoped only").target(enableScopedOnly).build()
-        enableScopedOnly.isChecked = curSettings["SNIPER_ENABLE_SCOPED_ONLY"]!!.strToBool()
+        enableScopedOnly.isChecked = curSettings["SNIPER_ENABLE_SCOPED_ONLY"].strToBool()
         enableScopedOnly.isDisabled = true
         enableScopedOnly.changed { _, _ ->
-            if (weaponOverride && enableOverride) {
+            if (weaponOverride) {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[12] = enableScopedOnly.isChecked.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
@@ -364,7 +245,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         val aimBone = VisTable()
         Tooltip.Builder("The default aim bone to aim at").target(aimBone).build()
         aimBoneBox.setItems("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST")
-        aimBoneBox.selected = when (curSettings[categorySelected + "_AIM_BONE"]!!.toInt()) {
+        aimBoneBox.selected = when (curSettings[categorySelected + "_AIM_BONE"].toInt()) {
             HEAD_BONE -> "HEAD"
             NECK_BONE -> "NECK"
             CHEST_BONE -> "CHEST"
@@ -375,9 +256,9 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         aimBone.add(aimBoneBox)
 
         aimBoneBox.changed { _, _ ->
-            val setBone = curSettings[aimBoneBox.selected + "_BONE"]!!.toInt()
+            val setBone = curSettings[aimBoneBox.selected + "_BONE"].toInt()
 
-            if (weaponOverride && enableOverride) {
+            if (weaponOverride) {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[4] = setBone.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
@@ -389,9 +270,9 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         //Create Aim FOV Slider
         val aimFov = VisTable()
         Tooltip.Builder("The aim field of view").target(aimFov).build()
-        aimFovSlider.value = curSettings[categorySelected + "_AIM_FOV"]!!.toInt().toFloat()
+        aimFovSlider.value = curSettings[categorySelected + "_AIM_FOV"].toInt().toFloat()
         aimFovSlider.changed { _, _ ->
-            if (weaponOverride && enableOverride) {
+            if (weaponOverride) {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[5] = aimFovSlider.value.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
@@ -407,9 +288,9 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         //Create Aim Speed Slider
         val aimSpeed = VisTable()
         Tooltip.Builder("The aim speed delay in milliseconds").target(aimSpeed).build()
-        aimSpeedSlider.value = curSettings[categorySelected + "_AIM_SPEED"]!!.toInt().toFloat()
+        aimSpeedSlider.value = curSettings[categorySelected + "_AIM_SPEED"].toInt().toFloat()
         aimSpeedSlider.changed { _, _ ->
-            if (weaponOverride && enableOverride) {
+            if (weaponOverride) {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[6] = aimSpeedSlider.value.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
@@ -424,9 +305,9 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         //Create Aim Smoothness Slider
         val aimSmoothness = VisTable()
         Tooltip.Builder("The smoothness of the aimbot (path aim only)").target(aimSmoothness).build()
-        aimSmoothnessSlider.value = curSettings[categorySelected + "_AIM_SMOOTHNESS"]!!.toFloat()
+        aimSmoothnessSlider.value = curSettings[categorySelected + "_AIM_SMOOTHNESS"].toFloat()
         aimSmoothnessSlider.changed { _, _ ->
-            if (weaponOverride && enableOverride) {
+            if (weaponOverride) {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[7] = aimSmoothnessSlider.value.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
@@ -442,9 +323,9 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         //Create Aim Strictness Slider
         val aimStrictness = VisTable()
         Tooltip.Builder("How strict moving to the aimbone is, lower = less deviation").target(aimStrictness).build()
-        aimStrictnessSlider.value = curSettings[categorySelected + "_AIM_STRICTNESS"]!!.toFloat()
+        aimStrictnessSlider.value = curSettings[categorySelected + "_AIM_STRICTNESS"].toFloat()
         aimStrictnessSlider.changed { _, _ ->
-            if (weaponOverride && enableOverride) {
+            if (weaponOverride) {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[8] = aimStrictnessSlider.value.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
@@ -459,15 +340,15 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
         //Create Perfect Aim Collapsible Check Box
         Tooltip.Builder("Whether or not to enable perfect aim").target(perfectAimCheckBox).build()
-        perfectAimCheckBox.isChecked = curSettings[categorySelected + "_PERFECT_AIM"]!!.strToBool()
-        perfectAimCollapsible.setCollapsed(!curSettings[categorySelected + "_PERFECT_AIM"]!!.strToBool(), true)
+        perfectAimCheckBox.isChecked = curSettings[categorySelected + "_PERFECT_AIM"].strToBool()
+        perfectAimCollapsible.setCollapsed(!curSettings[categorySelected + "_PERFECT_AIM"].strToBool(), true)
 
         //Create Perfect Aim Fov Slider
         val perfectAimFov = VisTable()
         Tooltip.Builder("The perfect aim field of view").target(perfectAimFov).build()
-        perfectAimFovSlider.value = curSettings[categorySelected + "_PERFECT_AIM_FOV"]!!.toInt().toFloat()
+        perfectAimFovSlider.value = curSettings[categorySelected + "_PERFECT_AIM_FOV"].toInt().toFloat()
         perfectAimFovSlider.changed { _, _ ->
-            if (weaponOverride && enableOverride) {
+            if (weaponOverride) {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[10] = perfectAimFovSlider.value.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
@@ -475,7 +356,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
             else {
                 curSettings[categorySelected + "_PERFECT_AIM_FOV"] = perfectAimFovSlider.value.toInt().toString()
             }
-            perfectAimFovLabel.setText("FOV: " + perfectAimFovSlider.value.toInt()) //+ when (perfectAimFovSlider.value.toInt().toString().length) {3 -> "  "2 -> "    "else -> "      " })
+            perfectAimFovLabel.setText("FOV: " + perfectAimFovSlider.value.toInt())
         }
         perfectAimFov.add(perfectAimFovLabel).width(180F)
         perfectAimFov.add(perfectAimFovSlider).width(250F)
@@ -484,9 +365,9 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         //Create Perfect Aim Chance Slider
         val perfectAimChance = VisTable()
         Tooltip.Builder("The perfect aim chance (per calculation)").target(perfectAimChance).build()
-        perfectAimChanceSlider.value = curSettings[categorySelected + "_PERFECT_AIM_CHANCE"]!!.toInt().toFloat()
+        perfectAimChanceSlider.value = curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toInt().toFloat()
         perfectAimChanceSlider.changed { _, _ ->
-            if (weaponOverride && enableOverride) {
+            if (weaponOverride) {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[11] = perfectAimChanceSlider.value.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
@@ -494,7 +375,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
             else {
                 curSettings[categorySelected + "_PERFECT_AIM_CHANCE"] = perfectAimChanceSlider.value.toInt().toString()
             }
-            perfectAimChanceLabel.setText("Chance: " + perfectAimChanceSlider.value.toInt())// + when (perfectAimChanceSlider.value.toInt().toString().length) { 3 -> "  " 2 -> "    " else-> "      " })
+            perfectAimChanceLabel.setText("Chance: " + perfectAimChanceSlider.value.toInt())
         }
 
         perfectAimChance.add(perfectAimChanceLabel).width(180F)
@@ -505,7 +386,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         perfectAimTable.add(perfectAimChance).padLeft(20F).left().row()
 
         perfectAimCheckBox.changed { _, _ ->
-            if (weaponOverride && enableOverride) {
+            if (weaponOverride) {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[9] = perfectAimCheckBox.isChecked.boolToDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
@@ -530,11 +411,12 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
         table.add(activateFromFireKey).left().row()
         table.add(teammatesAreEnemies).left().row()
-        table.add(automaticWeaponsCheckBox).left().row()
-        table.add(automaticWeapons).padLeft(20F).left().row() //Shifted right
 
         table.add(aimKey).left().row()
         table.add(forceAimKey).left().row()
+
+        table.add(automaticWeaponsCheckBox).left().row()
+        table.add(automaticWeaponsInput).left().row()
 
         table.addSeparator()
 
@@ -562,5 +444,49 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
     override fun getTabTitle(): String? {
         return "Aim"
+    }
+}
+
+fun updateDisableAim() {
+    aimTab.apply {
+        val bool = !enableAim.isChecked
+        var col = Color(255F, 255F, 255F, 1F)
+        if (bool) {
+            col = Color(105F, 105F, 105F, .2F)
+        }
+        activateFromFireKey.disable(bool)
+        teammatesAreEnemies.disable(bool)
+        automaticWeaponsCheckBox.disable(bool)
+        weaponOverrideCheckBox.isDisabled = bool
+        automaticWeaponsInput.disable(bool, col)
+        aimKey.disable(bool, col)
+        forceAimKey.disable(bool, col)
+        categorySelectLabel.color = col
+        categorySelectionBox.isDisabled = bool
+        weaponOverrideSelectionBox.isDisabled = bool
+        if (!weaponOverride) {
+            weaponOverrideEnableCheckBox.isDisabled = true
+        } else {
+            weaponOverrideEnableCheckBox.isDisabled = bool
+        }
+        enableFactorRecoil.isDisabled = bool
+        enableFlatAim.isDisabled = bool
+        enablePathAim.isDisabled = bool
+        enableScopedOnly.isDisabled = bool
+        aimBoneLabel.color = col
+        aimBoneBox.isDisabled = bool
+        aimFovLabel.color = col
+        aimFovSlider.isDisabled = bool
+        aimSpeedLabel.color = col
+        aimSpeedSlider.isDisabled = bool
+        aimSmoothnessLabel.color = col
+        aimSmoothnessSlider.isDisabled = bool
+        aimStrictnessLabel.color = col
+        aimStrictnessSlider.isDisabled = bool
+        perfectAimCheckBox.isDisabled = bool
+        perfectAimChanceLabel.color = col
+        perfectAimChanceSlider.isDisabled = bool
+        perfectAimFovLabel.color = col
+        perfectAimFovSlider.isDisabled = bool
     }
 }

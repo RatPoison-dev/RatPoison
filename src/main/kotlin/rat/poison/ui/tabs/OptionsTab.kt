@@ -2,20 +2,27 @@
 
 package rat.poison.ui.tabs
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.util.dialog.Dialogs
+import com.badlogic.gdx.utils.Array
+import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.jire.arrowhead.keyPressed
 import rat.poison.*
 import rat.poison.App.menuStage
 import rat.poison.App.uiBombWindow
 import rat.poison.App.uiMenu
 import rat.poison.App.uiSpecList
+import rat.poison.scripts.*
 import rat.poison.ui.uiUpdate
 import rat.poison.ui.changed
+import rat.poison.ui.uiHelpers.VisInputFieldCustom
+import rat.poison.utils.ObservableBoolean
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
@@ -24,9 +31,10 @@ import kotlin.math.round
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
-    private val loadButton1 = VisTextButton("Load " + curSettings["CFG1_NAME"]!!.replace("\"", ""))
-    private val loadButton2 = VisTextButton("Load " + curSettings["CFG2_NAME"]!!.replace("\"", ""))
-    private val loadButton3 = VisTextButton("Load " + curSettings["CFG3_NAME"]!!.replace("\"", ""))
+    private val fileSelectBox = VisSelectBox<String>()
+    private val nadeHelperFileSelectBox = VisSelectBox<String>()
+    private val nadeHelperToggle = VisInputFieldCustom("Nade Helper Toggle Key", "NADE_HELPER_TOGGLE_KEY")
+    val nadeHelperToggleText = VisLabel("Toggled: false")
 
     init {
         //Create UIAlpha Slider
@@ -43,120 +51,120 @@ class OptionsTab : Tab(false, false) {
         menuAlpha.add(menuAlphaLabel).spaceRight(6F)
         menuAlpha.add(menuAlphaSlider)
 
-        //Create Save Button 1
-        val saveButton1 = VisTextButton("Save to CFG1")
-        Tooltip.Builder("Save current configuration to the cfg file").target(saveButton1).build()
-        saveButton1.changed { _, _ ->
+        //Create Save Button
+        val saveButton = VisTextButton("Save CFG")
+        Tooltip.Builder("Save current configuration to the cfg file").target(saveButton).build()
+        saveButton.changed { _, _ ->
             Dialogs.showInputDialog(menuStage, "Enter config name: ", "", object : InputDialogAdapter() {
                 override fun finished(input: String) {
-                    saveCFG(1, input)
+                    saveCFG(input)
                 }
             }).setSize(200F, 200F)
             true
         }
 
-        //Create Save Button 2
-        val saveButton2 = VisTextButton("Save to CFG2")
-        Tooltip.Builder("Save current configuration to the cfg file").target(saveButton2).build()
-        saveButton2.changed { _, _ ->
-            Dialogs.showInputDialog(menuStage, "Enter config name: ", "", object : InputDialogAdapter() {
-                override fun finished(input: String) {
-                    saveCFG(2, input)
-                }
-            }).setSize(200F, 200F)
+        //Create Load Button
+        val loadButton = VisTextButton("Load CFG")
+        Tooltip.Builder("Load the currently selected CFG").target(loadButton).build()
+        loadButton.changed { _, _ ->
+            if (fileSelectBox.selected.count() > 0) {
+                loadCFG(fileSelectBox.selected)
+            }
             true
         }
 
-        //Create Save Button 3
-        val saveButton3 = VisTextButton("Save to CFG3")
-        Tooltip.Builder("Save current configuration to the cfg file").target(saveButton3).build()
-        saveButton3.changed { _, _ ->
-            Dialogs.showInputDialog(menuStage, "Enter config name: ", "", object : InputDialogAdapter() {
-                override fun finished(input: String) {
-                    saveCFG(3, input)
-                }
-            }).setSize(200F, 200F)
+        //Create Delete Button
+        val deleteButton = VisTextButton("Delete CFG")
+        Tooltip.Builder("Delete currently selected CFG").target(deleteButton).build()
+        deleteButton.changed { _, _ ->
+            if (fileSelectBox.selected.count() > 0) {
+                deleteCFG(fileSelectBox.selected)
+            }
             true
         }
 
-        //Create Load Button 1
-        Tooltip.Builder("Load the previously saved configuration from the cfg file").target(loadButton1).build()
-        loadButton1.changed { _, _ ->
-            loadCFG(1)
-        }
-
-        //Create Load Button 2
-        Tooltip.Builder("Load the previously saved configuration from the cfg file").target(loadButton2).build()
-        loadButton2.changed { _, _ ->
-            loadCFG(2)
-        }
-
-        //Create Load Button 3
-        Tooltip.Builder("Load the previously saved configuration from the cfg file").target(loadButton3).build()
-        loadButton3.changed { _, _ ->
-            loadCFG(3)
-        }
+        //File Select Box
+        updateCFGList()
 
         //Create Save Current Config To Default
         val saveCurConfig = VisTextButton("Save Current Config To Default Settings")
         Tooltip.Builder("Save current configuration to the settings files").target(saveCurConfig).build()
         saveCurConfig.changed { _, _ ->
             saveWindows()
-
-            if (!saving) {
-                GlobalScope.launch {
-                    saving = true
-                    println("\n Saving! \n")
-                    File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
-                        val sbLines = StringBuilder()
-                        if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "hitsounds") {
-                            FileReader(file).readLines().forEach { line ->
-                                if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
-                                    val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
-
-                                    //Add custom checks
-                                    when {
-                                        curLine[0] == "HITSOUND_FILE_NAME" -> {
-                                            sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]] + "\"\n")
-                                        }
-
-                                        else -> {
-                                            sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
-                                        }
-                                    }
-
-                                }
-                                else
-                                {
-                                    sbLines.append(line + "\n")
-                                }
-                            }
-                            Files.delete(file.toPath())
-                            Files.createFile(file.toPath())
-                            var firstLine = false
-                            sbLines.lines().forEach {file.appendText(if (!firstLine) { firstLine = true; it } else if (!it.isBlank()) "\n" + it else "\n")}
-                            sbLines.clear()
-                        }
-                    }
-                    println("\n Saving complete! \n")
-                    saving = false
-                }
-            }
+            saveDefault()
             true
         }
 
-        table.add(menuAlpha).colspan(2).row()
+        //Nade position create button
+        val addPosition = VisTextButton("Create Grenade Position")
+        addPosition.changed { _, _ ->
+            createPosition()
+        }
 
-        table.add(saveButton1)
-        table.add(loadButton1).row()
+        val saveFileNadeHelper = VisTextButton("Save As File")
+        saveFileNadeHelper.changed { _, _ ->
+            savePositions()
+        }
 
-        table.add(saveButton2)
-        table.add(loadButton2).row()
+        val loadFileNadeHelper = VisTextButton("Load From File")
+        loadFileNadeHelper.changed { _, _ ->
+            if (nadeHelperFileSelectBox.items.count() > 0) {
+                loadPositions(nadeHelperFileSelectBox.selected)
+            }
+        }
 
-        table.add(saveButton3)
-        table.add(loadButton3).row()
+        val deleteFileNadeHelper = VisTextButton("Delete Selected File")
+        deleteFileNadeHelper.changed { _, _ ->
+            if (nadeHelperFileSelectBox.items.count() > 0) {
+                deleteNadeHelperFile(nadeHelperFileSelectBox.selected)
+            }
+        }
 
-        table.add(saveCurConfig).colspan(2).row()
+        val clearNadeHelper = VisTextButton("Clear Currently Loaded")
+        clearNadeHelper.changed { _, _ ->
+            nadeHelperArrayList.clear()
+        }
+
+        nadeHelperToggle.changed { _, _ ->
+            nadeHelperToggleKey = ObservableBoolean({keyPressed(curSettings["NADE_HELPER_TOGGLE_KEY"].toInt())})
+            true
+        }
+
+        val deleteCurrentPositionHelper = VisTextButton("Delete At Current Position")
+        deleteCurrentPositionHelper.changed { _, _ ->
+            deletePosition()
+        }
+
+        updateNadeFileHelperList()
+
+        var sldTable = VisTable()
+        sldTable.add(saveButton).width(100F)
+        sldTable.add(loadButton).padLeft(20F).padRight(20F).width(100F)
+        sldTable.add(deleteButton).width(100F)
+
+        table.add(menuAlpha).row()
+
+        table.add(fileSelectBox).row()
+
+        table.add(sldTable).row()
+
+        table.add(saveCurConfig).width(340F).row()
+
+        table.addSeparator().row()
+
+        sldTable = VisTable()
+        sldTable.add(saveFileNadeHelper).width(150F)
+        sldTable.add(loadFileNadeHelper).padLeft(20F).padRight(20F).width(150F)
+        sldTable.add(deleteFileNadeHelper).width(150F)
+
+        table.add(nadeHelperFileSelectBox).row()
+        table.add(sldTable).row()
+        table.add(clearNadeHelper).width(250F).row()
+
+        table.add(addPosition).width(250F).row()
+        table.add(deleteCurrentPositionHelper).width(250F).row()
+        table.add(nadeHelperToggle).row()
+        table.add(nadeHelperToggleText)
     }
 
     override fun getContentTable(): Table? {
@@ -167,97 +175,149 @@ class OptionsTab : Tab(false, false) {
         return "Options"
     }
 
-    private fun saveCFG(cfgNum: Int, cfgName: String) {
-        saveWindows()
+    private fun updateCFGList() {
+        val cfgFilesArray = Array<String>()
+        File("$SETTINGS_DIRECTORY\\CFGS").listFiles()?.forEach {
+            cfgFilesArray.add(it.name)
+        }
 
+        fileSelectBox.items = cfgFilesArray
+    }
+
+    fun updateNadeFileHelperList() {
+        val nadeHelperArray = Array<String>()
+        File("$SETTINGS_DIRECTORY\\NadeHelper").listFiles()?.forEach {
+            nadeHelperArray.add(it.name)
+        }
+
+        nadeHelperFileSelectBox.items = nadeHelperArray
+    }
+
+    private fun saveDefault() {
         if (!saving) {
             GlobalScope.launch {
                 saving = true
-                println("\n Saving! \n")
-
-                when (cfgNum)
-                {
-                    1 -> { curSettings["CFG1_NAME"] = cfgName; loadButton1.setText("Load " + curSettings["CFG1_NAME"]!!.replace("\"", "")) }
-                    2 -> { curSettings["CFG2_NAME"] = cfgName; loadButton2.setText("Load " + curSettings["CFG2_NAME"]!!.replace("\"", "")) }
-                    else -> { curSettings["CFG3_NAME"] = cfgName; loadButton3.setText("Load " + curSettings["CFG3_NAME"]!!.replace("\"", "")) }
-                }
-
-                val cfgFile = File("settings\\cfg$cfgNum.kts")
-
-                if (!cfgFile.exists()) {
-                    cfgFile.createNewFile()
-                }
-
-                //Add Imports
-                val sbLines = StringBuilder()
-                sbLines.append("import rat.poison.settings.*\n")
-                sbLines.append("import rat.poison.game.Color\n\n")
-
+                println("\nSaving!\n")
                 File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
-                    if (file.name != "cfg1.kts" && file.name != "cfg2.kts" && file.name != "cfg3.kts" && file.name != "hitsounds") {
+                    val sbLines = StringBuilder()
+                    if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper") {
                         FileReader(file).readLines().forEach { line ->
                             if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
-                                if (curLine[0] == "CFG1_NAME" || curLine[0] == "CFG2_NAME" || curLine[0] == "CFG3_NAME") {
-                                    sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]]!!.replace("\"", "") + "\"\n")
-                                } else {
-                                    sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
+                                //Add custom checks
+                                when {
+                                    curLine[0] == "HITSOUND_FILE_NAME" -> {
+                                        sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]] + "\"\n")
+                                    }
+
+                                    else -> {
+                                        sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
+                                    }
                                 }
+
+                            }
+                            else
+                            {
+                                sbLines.append(line + "\n")
+                            }
+                        }
+                        Files.delete(file.toPath())
+                        Files.createFile(file.toPath())
+                        var firstLine = false
+                        sbLines.lines().forEach {file.appendText(if (!firstLine) { firstLine = true; it } else if (!it.isBlank()) "\n" + it else "\n")}
+                        sbLines.clear()
+                    }
+                }
+                println("\nSaving Complete!\n")
+                saving = false
+            }
+        }
+    }
+
+    private fun saveCFG(cfgFileName: String) {
+        saveWindows()
+
+        if (!saving) {
+            saving = true
+            GlobalScope.launch {
+                println("\nSaving!\n")
+
+                val cfgDir = File("$SETTINGS_DIRECTORY\\CFGS")
+                if (!cfgDir.exists()) {
+                    Files.createDirectory(cfgDir.toPath())
+                }
+
+                val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg")
+                if (!cfgFile.exists()) {
+                    cfgFile.createNewFile()
+                }
+
+                val sbLines = StringBuilder()
+                sbLines.append("import rat.poison.settings.$\n")
+                sbLines.append("import rat.poison.game.Color\n\n")
+
+                File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
+                    if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper") {
+                        FileReader(file).readLines().forEach { line ->
+                            if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
+                                val tempCurLine = line.trim().split(" ".toRegex(), 3) //Separate line into 'VARIABLE = VALUE'
+
+                                sbLines.append(tempCurLine[0] + " = " + curSettings[tempCurLine[0]] + "\n")
                             }
                         }
                     }
                 }
 
-                Files.delete(cfgFile.toPath())
+                Files.delete(cfgFile.toPath()) //Replace with cfgFile. ??
                 Files.createFile(cfgFile.toPath())
+
                 var firstLine = false
                 sbLines.lines().forEach {cfgFile.appendText(if (!firstLine) { firstLine = true; it } else if (!it.isBlank()) "\n" + it else "\n")}
                 sbLines.clear()
 
-                //Repeat for General.kts to save cfg name
-                val genFile = File("settings\\General.kts")
-                FileReader(genFile).readLines().forEach { line ->
-                    if (line.startsWith(when (cfgNum) {1 -> "CFG1_NAME" 2 -> "CFG2_NAME" else -> "CFG3_NAME"})) {
-                        val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
-
-                        sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]] + "\"\n")
-
-                    } else {
-                        sbLines.append(line + "\n")
-                    }
-                }
-                Files.delete(genFile.toPath())
-                Files.createFile(genFile.toPath())
-                firstLine = false
-                sbLines.lines().forEach {genFile.appendText(if (!firstLine) { firstLine = true; it } else if (!it.isBlank()) "\n" + it else "\n")}
-                sbLines.clear()
-
-                println("\n Saving complete! \n")
+                println("\nSaving Complete!\n")
+                updateCFGList()
                 saving = false
             }
-        } else {
-            Dialogs.showErrorDialog(menuStage, "Error", "Wait for saving to complete first!")
         }
     }
 
-    private fun loadCFG(cfgNum: Int) {
+    private fun loadCFG(cfgFileName: String) {
         if (!saving) {
-            val cfgFile = File("settings\\cfg$cfgNum.kts")
+            val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName")
             if (!cfgFile.exists()) {
-                Dialogs.showErrorDialog(menuStage, "Error", "cfg$cfgNum.kts not found, save your configuration first!")
+                Dialogs.showErrorDialog(menuStage, "Error", "$cfgFileName not found, save your configuration first!")
             } else {
+                saving = true
                 GlobalScope.launch {
-                    println("\n Loading! \n")
-                    loadSettingsFromFiles("settings\\cfg$cfgNum.kts", true)
+                    println("\nLoading\n")
+                    loadSettingsFromFiles("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName", true)
                     uiUpdate()
                     updateWindows()
-                    println("\n Loading complete! \n")
+                    println("\nLoading Complete!\n")
+                    saving = false
                 }
             }
         } else {
-            Dialogs.showErrorDialog(menuStage, "Error", "Wait for saving to complete first!")
+            Dialogs.showErrorDialog(menuStage, "Error", "Wait for saving to finish first!")
         }
+    }
+
+    private fun deleteCFG(cfgFileName: String) {
+        val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName")
+        if (cfgFile.exists()) {
+            cfgFile.delete()
+        }
+        updateCFGList()
+    }
+
+    private fun deleteNadeHelperFile(fileName: String) {
+        val cfgFile = File("$SETTINGS_DIRECTORY\\NadeHelper\\$fileName")
+        if (cfgFile.exists()) {
+            cfgFile.delete()
+        }
+        updateNadeFileHelperList()
     }
 
     private fun saveWindows() {
@@ -271,9 +331,9 @@ class OptionsTab : Tab(false, false) {
     }
 
     private fun updateWindows() {
-        uiBombWindow.updatePosition(curSettings["BOMB_TIMER_X"]!!.toFloat(), curSettings["BOMB_TIMER_Y"]!!.toFloat())
-        uiBombWindow.changeAlpha(curSettings["BOMB_TIMER_ALPHA"]!!.toFloat())
-        uiSpecList.updatePosition(curSettings["SPECTATOR_LIST_X"]!!.toFloat(), curSettings["SPECTATOR_LIST_Y"]!!.toFloat())
-        uiSpecList.changeAlpha(curSettings["SPECTATOR_LIST_ALPHA"]!!.toFloat())
+        uiBombWindow.updatePosition(curSettings["BOMB_TIMER_X"].toFloat(), curSettings["BOMB_TIMER_Y"].toFloat())
+        uiBombWindow.changeAlpha(curSettings["BOMB_TIMER_ALPHA"].toFloat())
+        uiSpecList.updatePosition(curSettings["SPECTATOR_LIST_X"].toFloat(), curSettings["SPECTATOR_LIST_Y"].toFloat())
+        uiSpecList.changeAlpha(curSettings["SPECTATOR_LIST_ALPHA"].toFloat())
     }
 }

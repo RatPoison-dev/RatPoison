@@ -24,6 +24,6 @@ inline fun every(minDuration: Int, maxDuration: Int,
             }
         }
 
-        Thread.sleep((if (maxDuration > minDuration) ThreadLocalRandom.current().nextInt(maxDuration - minDuration + 1) + minDuration else minDuration).toLong())
+        Thread.sleep(minDuration.toLong())
     }
 }

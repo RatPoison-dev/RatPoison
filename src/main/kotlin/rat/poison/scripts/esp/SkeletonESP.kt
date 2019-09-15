@@ -1,6 +1,7 @@
 package rat.poison.scripts.esp
 
 import com.badlogic.gdx.graphics.Color
+import com.sun.jna.Memory
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.engineDLL
 import rat.poison.game.entity.*
@@ -14,74 +15,70 @@ import rat.poison.utils.Vector
 import rat.poison.utils.collections.CacheableList
 import rat.poison.utils.extensions.uint
 import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap
+import org.jire.arrowhead.unsign
 import rat.poison.App
 import rat.poison.curSettings
+import rat.poison.game.CSGO
 import rat.poison.strToBool
 
 private val bones = Array(2048) { Line() }
 private val entityBones = Long2ObjectArrayMap<CacheableList<Pair<Int, Int>>>()
 private var currentIdx = 0
 
-internal fun skeletonEsp() {
-	App {
-		if (!curSettings["SKELETON_ESP"]!!.strToBool() || !curSettings["ENABLE_ESP"]!!.strToBool() || MENUTOG) return@App
+internal fun skeletonEsp() = App {
+	if (!curSettings["SKELETON_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG) return@App
 
-		forEntities(ccsPlayer) {
-			val entity = it.entity
-			if (entity == me || entity.dead() || (!curSettings["SKELETON_SHOW_DORMANT"]!!.strToBool() && entity.dormant()) || (!curSettings["SKELETON_SHOW_TEAM"]!!.strToBool() && me.team() == entity.team()) || (!curSettings["SKELETON_SHOW_ENEMIES"]!!.strToBool() && me.team() != entity.team())) return@forEntities false
-			(entityBones.get(entity) ?: CacheableList(20)).apply {
-				if (isEmpty()) {
-					val studioModel = csgoEXE.uint(entity.studioHdr())
-					val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
-					val boneIndex = csgoEXE.uint(studioModel + 0xA0)
+	forEntities(ccsPlayer) {
+		val entity = it.entity
 
-					var offset = 0
-					for (idx in 0 until numBones) {
-						val parent = csgoEXE.int(studioModel + boneIndex + 0x4 + offset)
-						if (parent != -1) {
-							val flags = csgoEXE.uint(studioModel + boneIndex + 0xA0 + offset) and 0x100
-							if (flags != 0L) add(parent to idx)
-						}
+		val dormCheck = (entity.dormant() && !DANGER_ZONE)
+		val enemyCheck = ((!curSettings["SKELETON_SHOW_ENEMIES"].strToBool() && me.team() != entity.team()) && !DANGER_ZONE)
+		val teamCheck = ((!curSettings["SKELETON_SHOW_TEAM"].strToBool() && me.team() == entity.team()) && !DANGER_ZONE)
 
-						offset += 216
-					}
+		if (entity == me || entity.dead() || dormCheck || enemyCheck || teamCheck) return@forEntities false
+		(entityBones.get(entity) ?: CacheableList(20)).apply {
+			if (isEmpty()) {
+				val studioModel = csgoEXE.uint(entity.studioHdr())
+				val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
+				val boneOffset = csgoEXE.uint(studioModel + 0xA0)
 
-					entityBones[entity] = this
+				val modelMemory: Memory by lazy {
+					Memory(21332)
 				}
 
-				forEach { et -> drawBone(entity, et.first, et.second); false }
+				csgoEXE.read(studioModel + boneOffset, modelMemory)
+
+				var offset = 0
+				for (idx in 0 until numBones) {
+					val parent = csgoEXE.int(studioModel + boneOffset + 0x4 + offset)
+					if (parent != -1) {
+						val flags = modelMemory.getInt(0xA0L + offset).unsign() and 0x100
+						if (flags != 0L) add(parent to idx)
+					}
+
+					offset += 216
+				}
+
+				entityBones[entity] = this
 			}
 
-			false
+			forEach { et -> drawBone(entity, et.first, et.second); false }
 		}
 
-		shapeRenderer.apply {
-			begin()
-			for (i in 0 until currentIdx) {
-				val bone = bones[i]
-				color = bone.color
-				line(bone.sX.toFloat(), bone.sY.toFloat(), bone.eX.toFloat(), bone.eY.toFloat())
-			}
-			end()
-		}
-
-		currentIdx = 0
+		false
 	}
-}
 
-private fun findStudioModel(pModel: Long): Long {
-	val type = csgoEXE.uint(pModel + 0x0110)
-	if (type != 3L) return 0 // Type is not Studiomodel
+	shapeRenderer.apply {
+		begin()
+		for (i in 0 until currentIdx) {
+			val bone = bones[i]
+			color = bone.color
+			line(bone.sX.toFloat(), bone.sY.toFloat(), bone.eX.toFloat(), bone.eY.toFloat())
+		}
+		end()
+	}
 
-	var handle = csgoEXE.uint(pModel + 0x0138) and 0xFFFF
-	if (handle == 0xFFFFL) return 0 // Handle is not valid
-	handle = handle shl 4
-
-	var studioModel = engineDLL.uint(pStudioModel)
-	studioModel = csgoEXE.uint(studioModel + 0x28)
-	studioModel = csgoEXE.uint(studioModel + handle + 0xC)
-
-	return csgoEXE.uint(studioModel + 0x74)
+	currentIdx = 0
 }
 
 private val colors: Array<Color> = Array(101) {
@@ -98,15 +95,22 @@ private val startDraw = Vector()
 private val endDraw = Vector()
 
 private fun drawBone(target: Player, start: Int, end: Int) {
-	val boneMatrix = target.boneMatrix()
+	//Reduce r/w
+	//Replace later
+	val boneMemory: Memory by lazy {
+		Memory(4032)
+	}
+
+	csgoEXE.read(target.boneMatrix(), boneMemory)
+
 	startBone.set(
-			target.bone(0xC, start, boneMatrix),
-			target.bone(0x1C, start, boneMatrix),
-			target.bone(0x2C, start, boneMatrix))
+			boneMemory.getFloat(((0x30L * start) + 0xC)).toDouble(),
+			boneMemory.getFloat(((0x30L * start) + 0x1C)).toDouble(),
+			boneMemory.getFloat(((0x30L * start) + 0x2C)).toDouble())
 	endBone.set(
-			target.bone(0xC, end, boneMatrix),
-			target.bone(0x1C, end, boneMatrix),
-			target.bone(0x2C, end, boneMatrix))
+			boneMemory.getFloat(((0x30L * end) + 0xC)).toDouble(),
+			boneMemory.getFloat(((0x30L * end) + 0x1C)).toDouble(),
+			boneMemory.getFloat(((0x30L * end) + 0x2C)).toDouble())
 
 	if (worldToScreen(startBone, startDraw) && worldToScreen(endBone, endDraw)) {
 		bones[currentIdx].apply {

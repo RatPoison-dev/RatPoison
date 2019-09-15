@@ -32,8 +32,8 @@ class UIBombTimer : VisWindow("Bomb Timer") {
         pack()
 
         setSize(325F, 150F)
-        setPosition(curSettings["BOMB_TIMER_X"]!!.toFloat(), curSettings["BOMB_TIMER_Y"]!!.toFloat())
-        color.a = curSettings["BOMB_TIMER_ALPHA"]!!.toFloat()
+        setPosition(curSettings["BOMB_TIMER_X"].toFloat(), curSettings["BOMB_TIMER_Y"].toFloat())
+        color.a = curSettings["BOMB_TIMER_ALPHA"].toFloat()
         isResizable = false
     }
 

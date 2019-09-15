@@ -6,11 +6,11 @@ import rat.poison.strToBool
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.every
 
-fun espToggle() = every(4) {
-    if (keyPressed(curSettings["VISUALS_TOGGLE_KEY"]!!.toInt())) {
-        curSettings["ENABLE_ESP"] = !curSettings["ENABLE_ESP"]!!.strToBool()
-        if (!curSettings["ENABLE_ESP"]!!.strToBool()) {
-            disableEsp()
+fun espToggle() = every(50) {
+    if (keyPressed(curSettings["VISUALS_TOGGLE_KEY"].toInt())) {
+        curSettings["ENABLE_ESP"] = !curSettings["ENABLE_ESP"].strToBool()
+        if (!curSettings["ENABLE_ESP"].strToBool()) {
+            disableAllEsp()
         }
 
         Thread.sleep(100)
