@@ -6,8 +6,10 @@ import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.game.entity.absPosition
 import rat.poison.game.worldToScreen
+import rat.poison.settings.MENUTOG
+import rat.poison.strToBool
 import rat.poison.utils.Vector
-import rat.poison.utils.every
+import rat.poison.utils.notInGame
 
 var entsToTrack = mutableListOf<Long>()
 
@@ -18,9 +20,11 @@ var sync = 0
 
 fun nadeTracer() {
     App {
+        if (!curSettings["NADE_TRACER"].strToBool() || MENUTOG || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@App
+
         val alphaUpdate = clamp(.011 - curSettings["NADE_TRACER_TIMEOUT"].toDouble(), .001, .01)
         //Calculate spots
-        if (sync >= (curSettings["NADE_TRACER_UPDATE_TIME"].toInt())) {
+        if (sync >= (curSettings["NADE_TRACER_UPDATE_TIME"].toInt())) { //Change to add a 0 to the end to prevent connecting grenade lines
             entsToTrack.forEachIndexed { i, ent ->
                 val entPos = ent.absPosition()
 
@@ -55,16 +59,13 @@ fun nadeTracer() {
         //Draw everything
         var sizeVar = 0
         for (i in 0 until grenadeList.size - sizeVar) {
-            //println("run")
             if (i == 0) sizeVar = 0 //Reset
 
             if (i >= grenadeList.size) {
-                //println("run stop")
                 continue
             }
 
             val tmpPosList = grenadeList[i]
-
 
             var toRemove = true
             for (j in 0 until tmpPosList.size-2) {
@@ -119,33 +120,3 @@ fun nadeTracer() {
         }
     }
 }
-
-//fun trackEnts() = every(100) {
-//    entsToTrack.forEachIndexed { i, ent ->
-//        val entPos = ent.absPosition()
-//
-//        var idx = -1 //If already in a list
-//        grenadeList.forEachIndexed {j, posList ->
-//            val n = posList[posList.size-1]
-//            val nn = n[4].toLong()
-//
-//            if (nn == ent) {
-//                idx = j
-//            }
-//        }
-//
-//        val tmp = listOf(entPos.x, entPos.y, entPos.z, 1.0, ent.toDouble())
-//        val check = (entPos.x in -2.0..2.0 && entPos.y in -2.0..2.0 && entPos.z in -2.0..2.0)
-//        if (!check) {
-//            if (idx == -1) {
-//                positionsList = mutableListOf()
-//                positionsList.add(tmp)
-//                grenadeList.add(positionsList)
-//            } else {
-//                positionsList = grenadeList[idx]
-//                positionsList.add(positionsList.size-1, tmp) //Add at end
-//                grenadeList[idx] = positionsList
-//            }
-//        }
-//    }
-//}

@@ -38,6 +38,8 @@ fun boneTrigger() = every(4) {
     }
 
     boneTrig = false
+
+    if (curSettings["ENABLE_BONE_TRIGGER"].strToBool()) {
     val wep = me.weapon()
 
     BONE_TRIGGER_PISTOLS_FOV = 15
@@ -62,8 +64,7 @@ fun boneTrigger() = every(4) {
         wep.smg -> { bFOV = curSettings["BONE_TRIGGER_SMGS_FOV"].toInt(); if (curSettings["BONE_TRIGGER_SMGS"].strToBool()) bTrigSmgs = true; }
     }
 
-    if (bTrigPistols || bTrigRifles || bTrigShotguns || bTrigSnipers || bTrigSmgs) {
-        if (curSettings["ENABLE_BONE_TRIGGER"].strToBool()) {
+        if (bTrigPistols || bTrigRifles || bTrigShotguns || bTrigSnipers || bTrigSmgs) {
             val wepEnt = me.weaponEntity()
             if (!me.weapon().knife && wepEnt.bullets() > 0) { //Prevents snap trigger preventing spamming
                 if (wep.automatic || (!wep.automatic && wepEnt.canFire())) {

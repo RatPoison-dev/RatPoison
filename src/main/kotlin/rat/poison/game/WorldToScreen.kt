@@ -10,24 +10,6 @@ import rat.poison.utils.extensions.readable
 private val viewMatrix = Array(4) { DoubleArray(4) }
 
 fun worldToScreen(from: Vector, vOut: Vector) = try {
-	if (dwViewMatrix > 0L) {
-		var buffer = clientDLL.read(dwViewMatrix, 4 * 4 * 4)!!
-
-		while (!buffer.readable()) {
-			buffer = clientDLL.read(dwViewMatrix, 4 * 4 * 4)!!
-			Thread.sleep(1)
-		}
-
-
-		if(buffer.getFloatArray(0,16).all(Float::isFinite)){
-			var offset = 0
-			for (row in 0..3) for (col in 0..3) {
-				val value = buffer.getFloat(offset.toLong())
-				viewMatrix[row][col] = value.toDouble()
-				offset += 4 //Changed, error but not compd
-			}
-		}
-
 		vOut.x = viewMatrix[0][0] * from.x + viewMatrix[0][1] * from.y + viewMatrix[0][2] * from.z + viewMatrix[0][3]
 		vOut.y = viewMatrix[1][0] * from.x + viewMatrix[1][1] * from.y + viewMatrix[1][2] * from.z + viewMatrix[1][3]
 
@@ -71,11 +53,30 @@ fun worldToScreen(from: Vector, vOut: Vector) = try {
 
 			false
 		} else false
-	} else false
 } catch (e: Exception) {
-	println(dwViewMatrix)
-	println(clientDLL.read(dwViewMatrix, 4 * 4 * 4))
+	println("caught 2")
+	//println(dwViewMatrix)
+	//println(clientDLL.read(dwViewMatrix, 4 * 4 * 4))
 
 	e.printStackTrace()
 	false
+}
+
+fun updateViewMatrix() { //Call before using multiple world to screens
+	if (dwViewMatrix > 0L) {
+		val buffer = clientDLL.read(dwViewMatrix, 4 * 4 * 4)
+
+		if (buffer != null) {
+			if (buffer.getFloatArray(0, 16).all(Float::isFinite)) {
+				var offset = 0
+				for (row in 0..3) for (col in 0..3) {
+					val value = buffer.getFloat(offset.toLong())
+					viewMatrix[row][col] = value.toDouble()
+					offset += 4 //Changed, error but not compd
+				}
+			}
+		} else {
+			println("buffer null")
+		}
+	}
 }

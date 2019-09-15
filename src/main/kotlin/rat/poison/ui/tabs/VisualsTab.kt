@@ -39,8 +39,6 @@ class VisualsTab : Tab(false, false) {
     val snaplines = VisCheckBoxCustom(" ", "SNAPLINES")
     val snaplinesColor = VisColorPickerCustom("Enemy Snaplines", "SNAPLINES_COLOR")
 
-
-
     init {
         //ESP Tab
         espTabbedPane.add(glowEspTab)
@@ -147,8 +145,9 @@ fun updateDisableEsp() {
 
         visualsToggleKey.disable(bool, col)
         radarEsp.disable(bool)
-        snaplines.disable(bool)
         visAdrenaline.disable(bool)
+        snaplines.disable(bool)
+        snaplinesColor.disable(bool)
 
         val recTab = espTabbedPane.activeTab
 

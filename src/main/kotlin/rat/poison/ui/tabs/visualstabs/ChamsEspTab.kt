@@ -3,7 +3,9 @@ package rat.poison.ui.tabs.visualstabs
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.curSettings
 import rat.poison.scripts.esp.disableAllEsp
+import rat.poison.strToBool
 import rat.poison.ui.tabs.chamsEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
@@ -65,5 +67,8 @@ fun chamsEspTabUpdate() {
         chamsEnemyColor.update()
         chamsSelfColor.update()
     }
-    disableAllEsp()
+
+    if (!curSettings["CHAMS_ESP"].strToBool()) {
+        disableAllEsp()
+    }
 }

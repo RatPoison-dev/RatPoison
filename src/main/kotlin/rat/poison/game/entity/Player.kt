@@ -140,49 +140,49 @@ internal fun Player.nearestBone(): Int {
 	var closestDst2 = Float.MAX_VALUE
 	var nearestBone = -1
 
-		//Change to loop set amount of bones
-		var offset = 0
-		for (idx in 0 until numBones) {
-			val parent = modelMemory.getInt(0x4L + offset)
+	updateViewMatrix()
+	//Change to loop set amount of bones
+	var offset = 0
+	for (idx in 0 until numBones) {
+		val parent = modelMemory.getInt(0x4L + offset)
 
-			if (parent != -1) {
-				val flags = modelMemory.getInt(0xA0L + offset).unsign() and 0x100
-				if (flags != 0L) {
+		if (parent != -1) {
+			val flags = modelMemory.getInt(0xA0L + offset).unsign() and 0x100
+			if (flags != 0L) {
 
-					val tPunch = me.punch()
+				val tPunch = me.punch()
 
-					if (worldToScreen(boneMemory.vector(parent * 0x30L, 0x0C, 0x1C, 0x2C), w2sRetVec)) {
-						val tempVec3 = Vector3(w2sRetVec.x.toFloat(), w2sRetVec.y.toFloat(), w2sRetVec.z.toFloat())
+				if (worldToScreen(boneMemory.vector(parent * 0x30L, 0x0C, 0x1C, 0x2C), w2sRetVec)) {
+					val tempVec3 = Vector3(w2sRetVec.x.toFloat(), w2sRetVec.y.toFloat(), w2sRetVec.z.toFloat())
 
-						val tX = CSGO.gameWidth / 2 - ((CSGO.gameWidth / 95F) * tPunch.y).toFloat()
-						val tY = CSGO.gameHeight / 2 - ((CSGO.gameHeight / 95F) * tPunch.x).toFloat()
+					val tX = CSGO.gameWidth / 2 - ((CSGO.gameWidth / 95F) * tPunch.y).toFloat()
+					val tY = CSGO.gameHeight / 2 - ((CSGO.gameHeight / 95F) * tPunch.x).toFloat()
 
-						val dst2 = tempVec3.dst2(tX, tY, 0F)
+					val dst2 = tempVec3.dst2(tX, tY, 0F)
 
-						if (dst2 < closestDst2) {
-							closestDst2 = dst2
-							nearestBone = parent
-						}
+					if (dst2 < closestDst2) {
+						closestDst2 = dst2
+						nearestBone = parent
 					}
+				}
 
-					if (worldToScreen(boneMemory.vector(idx * 0x30L, 0x0C, 0x1C, 0x2C), w2sRetVec)) {
-						val tempVec3 = Vector3(w2sRetVec.x.toFloat(), w2sRetVec.y.toFloat(), w2sRetVec.z.toFloat())
+				if (worldToScreen(boneMemory.vector(idx * 0x30L, 0x0C, 0x1C, 0x2C), w2sRetVec)) {
+					val tempVec3 = Vector3(w2sRetVec.x.toFloat(), w2sRetVec.y.toFloat(), w2sRetVec.z.toFloat())
 
-						val tX = CSGO.gameWidth / 2 - ((CSGO.gameWidth / 95F) * tPunch.y).toFloat()
-						val tY = CSGO.gameHeight / 2 - ((CSGO.gameHeight / 95F) * tPunch.x).toFloat()
+					val tX = CSGO.gameWidth / 2 - ((CSGO.gameWidth / 95F) * tPunch.y).toFloat()
+					val tY = CSGO.gameHeight / 2 - ((CSGO.gameHeight / 95F) * tPunch.x).toFloat()
 
-						val dst2 = tempVec3.dst2(tX, tY, 0F)
+					val dst2 = tempVec3.dst2(tX, tY, 0F)
 
-						if (dst2 < closestDst2) {
-							closestDst2 = dst2
-							nearestBone = idx
-						}
+					if (dst2 < closestDst2) {
+						closestDst2 = dst2
+						nearestBone = idx
 					}
 				}
 			}
-			offset += 216
 		}
-
+		offset += 216
+	}
 
 	return nearestBone
 

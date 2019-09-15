@@ -88,6 +88,12 @@ it go back to that spot, aim appropriately and save the position (or save before
 is highlighted blue. The starting head position isn't completely centered on your screen, to line yourself up with the position, look straight down and center your cursor with the
 middle of the circle, then look up and aim at the circle in the air.
 
+**Hotfixes**
+* Hotfix 1
+    * Added settings checks for nade tracer & helper
+    * Updating the viewmatrix for w2s is called once per overlay update instead of multiple times throughout all visual scripts using it
+    * Extra for crash fixes
+
 ---
 
 Base is Charlatano available [here](https://github.com/Jire/Charlatano)

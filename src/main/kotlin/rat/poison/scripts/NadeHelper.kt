@@ -23,6 +23,7 @@ import rat.poison.settings.MENUTOG
 import rat.poison.ui.optionsTab
 import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.Vector
+import rat.poison.utils.notInGame
 import java.awt.event.KeyEvent
 import java.io.File
 import java.io.FileReader
@@ -44,6 +45,8 @@ var nadeHelperToggleKey = ObservableBoolean({keyPressed(curSettings["NADE_HELPER
 
 //I don't like
 fun nadeHelper() = App {
+    if (!curSettings["ENABLE_NADE_HELPER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@App
+
     nadeHelperToggleKey.update()
     if (nadeHelperToggleKey.justBecomeTrue) {
         showHelpers = !showHelpers
@@ -52,9 +55,7 @@ fun nadeHelper() = App {
 
     if (me <= 0L) return@App
 
-    mPos = me.absPosition()
-
-    if (me <= 0L || MENUTOG || !curSettings["ENABLE_NADE_HELPER"].strToBool()) return@App
+    if (MENUTOG) return@App
 
     val mView = me.eyeAngle()
 

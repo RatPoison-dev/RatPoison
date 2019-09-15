@@ -91,7 +91,6 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         Tooltip.Builder("Whether or not to factor in recoil when aiming").target(enableFactorRecoil).build()
         enableFactorRecoil.isChecked = curSettings[categorySelected + "_ENABLE_PATH_AIM"].strToBool()
         enableFactorRecoil.changed { _, _ ->
-            println("factor recoil changed")
             if (weaponOverride) {
                 val curWep: Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[1] = enableFactorRecoil.isChecked.toDouble()

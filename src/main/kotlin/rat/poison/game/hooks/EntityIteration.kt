@@ -92,6 +92,7 @@ fun constructEntities() = every(500) {
                 dzMode = true
             }
 
+            //Fuck this?
             if (type.grenadeProjectile) {
                 val tmpPos = entity.absPosition()
                 val check = (tmpPos.x in -2.0..2.0 && tmpPos.y in -2.0..2.0 && tmpPos.z in -2.0..2.0)

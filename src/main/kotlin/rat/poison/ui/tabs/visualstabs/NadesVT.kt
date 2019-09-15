@@ -13,7 +13,7 @@ class NadesVT : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     val nadeTracer = VisCheckBoxCustom("Tracer", "NADE_TRACER")
-    val nadeTracerUpdateTime = VisSliderCustom("Tracer Update Time", "NADE_TRACER_UPDATE_TIME", 1F, curSettings["OPENGL_FPS"].toInt().toFloat(), 1F, true)
+    val nadeTracerUpdateTime = VisSliderCustom("Tracer Update Time", "NADE_TRACER_UPDATE_TIME", 5F, curSettings["OPENGL_FPS"].toInt().toFloat(), 1F, true)
     val nadeTracerTimeout = VisSliderCustom("Tracer Timeout", "NADE_TRACER_TIMEOUT", .001F, .01F, .001F, false, 3)
 
     init {

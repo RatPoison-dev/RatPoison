@@ -26,9 +26,19 @@ internal fun disableAllEsp() {
         val glowAddress = it.glowAddress
         if (entity <= 0 || me == entity || glowAddress <= 0) return@body false
 
-        if (type == EntityType.CCSPlayer || type == EntityType.CPlantedC4 || type == EntityType.CC4 || type.weapon || type.grenade) {
-            glowAddress.glow(cWhite)
-            entity.chams(cWhite)
+        if (type != EntityType.NULL) {
+            when (type) {
+                EntityType.CCSPlayer -> {
+                    glowAddress.glow(cWhite); entity.chams(cWhite)
+                }
+                EntityType.CPlantedC4 -> glowAddress.glow(cWhite)
+                EntityType.CC4 -> glowAddress.glow(cWhite)
+                else -> {
+                    if (type.weapon || type.grenade) {
+                        glowAddress.glow(cWhite)
+                    }
+                }
+            }
         }
 
         return@body false

@@ -13,7 +13,7 @@ import rat.poison.strToColor
 import rat.poison.utils.every
 
 internal fun glowEspEvery() = every(25) {
-	if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return@every
+	if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG) return@every
 
 	val myTeam = me.team()
 

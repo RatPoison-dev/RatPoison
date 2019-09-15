@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import org.jire.arrowhead.keyPressed
 import org.lwjgl.glfw.GLFW.glfwInit
 import rat.poison.game.CSGO
+import rat.poison.game.updateViewMatrix
 import rat.poison.interfaces.*
 import rat.poison.jna.enums.AccentStates
 import rat.poison.overlay.Overlay
@@ -79,6 +80,7 @@ fun main() {
         curSettings["ENABLE_HITMARKER"] = "false"
         curSettings["SNAPLINES"] = "false"
         curSettings["ENABLE_NADE_HELPER"] = "false"
+        curSettings["NADE_TRACER"] = "false"
     } else {
         if (dbg) { println("[DEBUG] Initializing Recoil Crosshair") }; rcrosshair()
         if (dbg) { println("[DEBUG] Initializing Recoil Spectator List") }; spectatorList()
@@ -86,6 +88,7 @@ fun main() {
         if (dbg) { println("[DEBUG] Initializing Recoil Bomb Timer") }; bombTimer()
         if (dbg) { println("[DEBUG] Initializing Hit Marker") }; hitMarker()
         if (dbg) { println("[DEBUG] Initializing Nade Helper") }; nadeHelper()
+        if (dbg) { println("[DEBUG] Initializing Nade Tracer") }; nadeTracer()
     }
 
     if (dbg) { println("[DEBUG] Initializing Bunny Hop") }; bunnyHop()
@@ -103,7 +106,6 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Fast Stop") }; fastStop()
     if (dbg) { println("[DEBUG] Initializing Head Walk (Currently disabled)") }; headWalk()
     if (dbg) { println("[DEBUG] Initializing Adrenaline") }; adrenaline()
-    nadeTracer()
 
     //Overlay check, not updated?
     if (curSettings["MENU"].strToBool()) {
@@ -280,7 +282,10 @@ object App : ApplicationAdapter() {
                 glClearColor(0F, 0F, 0F, 0F)
                 sb.projectionMatrix = menuStage.camera.combined
                 shapeRenderer.projectionMatrix = menuStage.camera.combined
-                for (i in 0 until bodies.size) bodies[i]()
+                updateViewMatrix()
+                for (i in 0 until bodies.size) {
+                    bodies[i]()
+                }
                 glDisable(GL20.GL_BLEND)
             }
 

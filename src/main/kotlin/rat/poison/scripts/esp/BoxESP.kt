@@ -16,6 +16,7 @@ import rat.poison.settings.*
 import rat.poison.strToBool
 import rat.poison.strToColor
 import rat.poison.utils.Vector
+import rat.poison.utils.notInGame
 import kotlin.math.ceil
 
 private val vHead = Vector()
@@ -29,7 +30,7 @@ private val boxes = Array(128) { Box() }
 private var currentIdx = 0
 
 internal fun boxEsp() = App {
-	if (!curSettings["ENABLE_BOX_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG) return@App
+	if (!curSettings["ENABLE_BOX_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
 
 	forEntities(ccsPlayer) { //Replace positioning with abs...?
 		//Only enemies atm
