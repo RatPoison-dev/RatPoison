@@ -93,6 +93,10 @@ middle of the circle, then look up and aim at the circle in the air.
     * Added settings checks for nade tracer & helper
     * Updating the viewmatrix for w2s is called once per overlay update instead of multiple times throughout all visual scripts using it
     * Extra for crash fixes
+    
+* Hotfix 2
+    * Fixed nade helper not showing spots near position correctly
+    * Combo can be used without having the hitmarker enabled
 
 ---
 

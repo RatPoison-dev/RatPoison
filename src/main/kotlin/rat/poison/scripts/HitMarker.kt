@@ -23,7 +23,7 @@ var hitMarkerCombo = 0
 private var totalHits = 0
 
 fun hitMarker() = App {
-    if (!curSettings["ENABLE_HITMARKER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || me.dead()) return@App
+    if ((!curSettings["ENABLE_HITMARKER"].strToBool() && !curSettings["HITMARKER_COMBO"].strToBool()) ||  !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || me.dead()) return@App
 
     if (me.dead()) return@App
 
@@ -85,10 +85,12 @@ fun hitMarker() = App {
             col = curSettings["HITMARKER_COLOR"].strToColor()
             setColor(col.red / 255F, col.green / 255F, col.blue / 255F, hitMarkerAlpha)
 
-            rectLine(x + hMS, y + hMS, x + hMS + hMLL, y + hMS + hMLL, hMLW) //Top right
-            rectLine(x - hMS, y + hMS, x - hMS - hMLL, y + hMS + hMLL, hMLW + 1F) //Top left
-            rectLine(x + hMS, y - hMS, x + hMS + hMLL, y - hMS - hMLL, hMLW + 1F) //Bottom right
-            rectLine(x - hMS, y - hMS, x - hMS - hMLL, y - hMS - hMLL, hMLW) //Bottom left
+            if (curSettings["ENABLE_HITMARKER"].strToBool()) {
+                rectLine(x + hMS, y + hMS, x + hMS + hMLL, y + hMS + hMLL, hMLW) //Top right
+                rectLine(x - hMS, y + hMS, x - hMS - hMLL, y + hMS + hMLL, hMLW + 1F) //Top left
+                rectLine(x + hMS, y - hMS, x + hMS + hMLL, y - hMS - hMLL, hMLW + 1F) //Bottom right
+                rectLine(x - hMS, y - hMS, x - hMS - hMLL, y - hMS - hMLL, hMLW) //Bottom left
+            }
 
             set(ShapeRenderer.ShapeType.Line)
             end()

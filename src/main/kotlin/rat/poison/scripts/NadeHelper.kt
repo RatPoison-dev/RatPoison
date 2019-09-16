@@ -59,6 +59,8 @@ fun nadeHelper() = App {
 
     val mView = me.eyeAngle()
 
+    mPos = me.absPosition()
+
     if (showHelpers) {
         nadeHelperArrayList.forEach {
             val fSpot = it[0]
