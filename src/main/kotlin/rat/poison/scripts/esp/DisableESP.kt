@@ -11,6 +11,8 @@ import rat.poison.game.offsets.EngineOffsets
 import rat.poison.utils.extensions.uint
 import java.lang.Float.floatToIntBits
 
+//Change to construct entities at call to prevent crashing?
+
 internal fun disableAllEsp() {
     val cWhite = Color(255, 255, 255, 1.0)
 

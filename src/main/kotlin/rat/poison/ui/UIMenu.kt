@@ -4,6 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.*
+import rat.poison.App.uiAimOverridenWeapons
+import rat.poison.opened
 import rat.poison.ui.tabs.*
 import kotlin.system.exitProcess
 
@@ -26,7 +28,7 @@ class UIMenu : VisWindow("Rat Poison 1.5") {
         x = 960F
         y = 540F
         align(Align.topLeft)
-        isResizable = false
+        isResizable = true
 
         //Main content pane for all tabs
         val mainTabbedPaneContent = VisTable()
@@ -96,6 +98,12 @@ class UIMenu : VisWindow("Rat Poison 1.5") {
 
         //Update all tab content
         uiUpdate()
+    }
+
+    override fun positionChanged() {
+        if (opened) {
+            uiAimOverridenWeapons.setPosition(x+width+4F, y)
+        }
     }
 
     override fun close() {

@@ -72,20 +72,23 @@ fun hitMarker() = App {
             begin()
             set(ShapeRenderer.ShapeType.Filled)
 
-            var col = curSettings["HITMARKER_OUTLINE_COLOR"].strToColor()
-            setColor(col.red / 255F, col.green / 255F, col.blue / 255F, hitMarkerAlpha)
-
-            if (curSettings["HITMARKER_OUTLINE"].strToBool()) { //Outline
-                rectLine(x + hMS - 1F, y + hMS - 1F, x + hMS + hMLL + 1F, y + hMS + hMLL + 1F, hMLW + 2F) //Top right
-                rectLine(x - hMS + 1F, y + hMS - 1F, x - hMS - hMLL - 1F, y + hMS + hMLL + 1F, hMLW + 3F) //Top left
-                rectLine(x + hMS - 1F, y - hMS + 1F, x + hMS + hMLL + 1F, y - hMS - hMLL - 1F, hMLW + 3F) //Bottom right
-                rectLine(x - hMS + 1F, y - hMS + 1F, x - hMS - hMLL - 1F, y - hMS - hMLL - 1F, hMLW + 2F) //Bottom left
-            }
-
-            col = curSettings["HITMARKER_COLOR"].strToColor()
-            setColor(col.red / 255F, col.green / 255F, col.blue / 255F, hitMarkerAlpha)
+            var col : rat.poison.game.Color
 
             if (curSettings["ENABLE_HITMARKER"].strToBool()) {
+                if (curSettings["HITMARKER_OUTLINE"].strToBool()) { //Outline
+                    col = curSettings["HITMARKER_OUTLINE_COLOR"].strToColor()
+                    setColor(col.red / 255F, col.green / 255F, col.blue / 255F, hitMarkerAlpha)
+
+                    rectLine(x + hMS - 1F, y + hMS - 1F, x + hMS + hMLL + 1F, y + hMS + hMLL + 1F, hMLW + 2F) //Top right
+                    rectLine(x - hMS + 1F, y + hMS - 1F, x - hMS - hMLL - 1F, y + hMS + hMLL + 1F, hMLW + 3F) //Top left
+                    rectLine(x + hMS - 1F, y - hMS + 1F, x + hMS + hMLL + 1F, y - hMS - hMLL - 1F, hMLW + 3F) //Bottom right
+                    rectLine(x - hMS + 1F, y - hMS + 1F, x - hMS - hMLL - 1F, y - hMS - hMLL - 1F, hMLW + 2F) //Bottom left
+                }
+
+
+                col = curSettings["HITMARKER_COLOR"].strToColor()
+                setColor(col.red / 255F, col.green / 255F, col.blue / 255F, hitMarkerAlpha)
+
                 rectLine(x + hMS, y + hMS, x + hMS + hMLL, y + hMS + hMLL, hMLW) //Top right
                 rectLine(x - hMS, y + hMS, x - hMS - hMLL, y + hMS + hMLL, hMLW + 1F) //Top left
                 rectLine(x + hMS, y - hMS, x + hMS + hMLL, y - hMS - hMLL, hMLW + 1F) //Bottom right

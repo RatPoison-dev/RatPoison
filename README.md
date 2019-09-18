@@ -98,6 +98,11 @@ middle of the circle, then look up and aim at the circle in the air.
     * Fixed nade helper not showing spots near position correctly
     * Combo can be used without having the hitmarker enabled
 
+* Hotfix 3
+    * Made override weapons more intuitive to enable/disable and edit
+    * Hitmarker outline wont draw when hitmarker is disable but combo is enabled
+
+
 ---
 
 Base is Charlatano available [here](https://github.com/Jire/Charlatano)

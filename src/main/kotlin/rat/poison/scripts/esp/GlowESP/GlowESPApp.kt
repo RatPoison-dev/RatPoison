@@ -9,7 +9,7 @@ import rat.poison.scripts.esp.glow
 import rat.poison.scripts.esp.glowTarget
 import rat.poison.settings.*
 
-internal fun glowEspApp() = App { //No reason to call so fast
+internal fun glowEspApp() = App {
 	if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG) return@App
 
 	val myTeam = me.team()

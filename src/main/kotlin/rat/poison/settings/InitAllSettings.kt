@@ -124,6 +124,7 @@ var VISUALS_TOGGLE_KEY = 71
 var MENU_KEY = 112
 var MENUTOG = false
 var ENABLE_AIM = true
+var ENABLE_OVERRIDE = true
 var GLOW_ESP = false
 var INV_GLOW_ESP = false
 var MODEL_ESP = false

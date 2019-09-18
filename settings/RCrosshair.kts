@@ -9,7 +9,7 @@ ENABLE_RECOIL_CROSSHAIR = true
 ENABLE_SNIPER_CROSSHAIR = true
 
 //Width of the crosshair bars
-RCROSSHAIR_WIDTH = 1
+RCROSSHAIR_WIDTH = 2
 
 //Length of the crosshair bars
 RCROSSHAIR_LENGTH = 33

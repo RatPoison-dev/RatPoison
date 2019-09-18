@@ -8,6 +8,7 @@ DEBUG = false
 MENU = true
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles visibility of the menu on the overlay
+//Default key is F1
 MENU_KEY = 112
 
 //The title of the app to draw the overlay on
@@ -33,9 +34,11 @@ HEAD_WALK = false
 //Default key is Q
 HEAD_WALK_KEY = 81
 
-
 //Global enable aim
 ENABLE_AIM = true
+
+//Global enable override
+ENABLE_OVERRIDE = true
 
 //Enable aimbot when aim key is pressed
 ACTIVATE_FROM_AIM_KEY = true
@@ -62,15 +65,15 @@ STOMACH_BONE = 5
 NEAREST_BONE = -1
 
 //Temp variables, irrelevant to edit
-PERFECT_AIM = false
-PERFECT_AIM_CHANCE = 1
-PERFECT_AIM_FOV = 1
-AIM_BONE = -1
+PERFECT_AIM = true
+PERFECT_AIM_CHANCE = 10
+PERFECT_AIM_FOV = 5
+AIM_BONE = 6
 AIM_SPEED = 1
-AIM_FOV = 40
+AIM_FOV = 60
 AIM_ASSIST_MODE = false
-FACTOR_RECOIL = false
-ENABLE_FLAT_AIM = true
-ENABLE_PATH_AIM = false
+FACTOR_RECOIL = true
+ENABLE_FLAT_AIM = false
+ENABLE_PATH_AIM = true
 ENABLE_SCOPED_ONLY = true
-AIM_STRICTNESS = 1.0
+AIM_STRICTNESS = 2.0

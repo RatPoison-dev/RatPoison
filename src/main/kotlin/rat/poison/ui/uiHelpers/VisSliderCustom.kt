@@ -9,11 +9,12 @@ import rat.poison.ui.changed
 import kotlin.math.pow
 import kotlin.math.round
 
-class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2) : VisTable() {
+class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, width: Float = 450F) : VisTable() {
     private val labelText = mainText
     private val variableName = varName
     private val isInt = intVal
     private val rnd = 10.0.pow(dec)
+    private val cWidth = width
 
     private val sliderLabel = VisLabel("$labelText: " + curSettings[variableName])
     private val sliderBar = VisSlider(varMin, varMax, stepSize, false)
@@ -32,8 +33,8 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
             sliderLabel.setText("$labelText: $sliderVal")
         }
 
-        add(sliderLabel).width(225F)
-        add(sliderBar).width(225F)
+        add(sliderLabel).width(cWidth/2F)
+        add(sliderBar).width(cWidth/2F)
     }
 
     fun update() {

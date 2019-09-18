@@ -29,10 +29,7 @@ import rat.poison.scripts.*
 import rat.poison.scripts.aim.*
 import rat.poison.scripts.esp.*
 import rat.poison.settings.*
-import rat.poison.ui.UIBombTimer
-import rat.poison.ui.UIMenu
-import rat.poison.ui.UISpectatorList
-import rat.poison.ui.uiUpdate
+import rat.poison.ui.*
 import rat.poison.utils.*
 import java.io.*
 import java.util.concurrent.atomic.AtomicLong
@@ -188,6 +185,7 @@ object App : ApplicationAdapter() {
     val overlay = Overlay(curSettings["MENU_APP"].replace("\"", ""), "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     var haveTarget = false
     lateinit var menuStage: Stage
+    private lateinit var aimOverrideStage: Stage
     private lateinit var bombStage: Stage
     private lateinit var specListStage: Stage
     private val bodies = ObjectArrayList<App.() -> Unit>()
@@ -196,6 +194,7 @@ object App : ApplicationAdapter() {
     lateinit var uiMenu: UIMenu
     lateinit var uiBombWindow: UIBombTimer
     lateinit var uiSpecList: UISpectatorList
+    lateinit var uiAimOverridenWeapons: UIAimOverridenWeapons
 
     override fun create() {
         overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
@@ -203,20 +202,26 @@ object App : ApplicationAdapter() {
 
         //Implement stage for menu
         menuStage = Stage() //Main Menu Stage
+        aimOverrideStage = Stage() //Aim Override Weapons Stage
         bombStage = Stage() //Bomb Timer Stage
         specListStage = Stage() //Spectator List Stage
         val root = VisTable()
         //root.setFillParent(true)
         menuStage.addActor(root)
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
+
         uiMenu = UIMenu()
         uiBombWindow = UIBombTimer()
         uiSpecList = UISpectatorList()
+        uiAimOverridenWeapons = UIAimOverridenWeapons()
+
         menuStage.addActor(uiMenu)
+        aimOverrideStage.addActor(uiAimOverridenWeapons)
         bombStage.addActor(uiBombWindow)
         specListStage.addActor(uiSpecList)
         val inputMultiplexer = InputMultiplexer()
         inputMultiplexer.addProcessor(menuStage)
+        inputMultiplexer.addProcessor(aimOverrideStage)
         inputMultiplexer.addProcessor(bombStage)
         inputMultiplexer.addProcessor(specListStage)
         //End stage implementation
@@ -250,6 +255,18 @@ object App : ApplicationAdapter() {
                     batch.enableBlending()
                     menuStage.root.draw(batch, 1F)
                     batch.end()
+
+                    if (overridenWeapons.weaponOverride) {
+                        aimOverrideStage.act(Gdx.graphics.deltaTime)
+                        val aimOverrideCamera = aimOverrideStage.viewport.camera
+                        aimOverrideCamera.update()
+                        val aimOverrideBatch = aimOverrideStage.batch
+                        aimOverrideBatch.projectionMatrix = aimOverrideCamera.combined
+                        aimOverrideBatch.begin()
+                        aimOverrideBatch.enableBlending()
+                        aimOverrideStage.root.draw(aimOverrideBatch, 1F)
+                        aimOverrideBatch.end()
+                    }
                 }
 
                 if (curSettings["ENABLE_BOMB_TIMER"].strToBool() && curSettings["BOMB_TIMER_MENU"].strToBool())
@@ -293,7 +310,7 @@ object App : ApplicationAdapter() {
             if (overlayMenuKey.justBecomeTrue) {
                 MENUTOG = !MENUTOG
                 overlay.clickThrough = !MENUTOG
-                uiUpdate()
+                //uiUpdate() Not needed?
 
                 if (dbg) println("[DEBUG] Menu Toggled")
             }
