@@ -19,13 +19,10 @@ class UIAimOverridenWeapons : VisWindow("Override Weapons") {
         pack()
 
         setSize(300F, uiMenu.height)
-        isResizable = true
+        isResizable = false
     }
 
     override fun positionChanged() { //Not draggable
-//        if (opened) {
-//            setPosition(uiMenu.x+uiMenu.width+4F, uiMenu.y)
-//        }
         if (opened) {
             uiMenu.setPosition(x-uiMenu.width-4F, y)
         }

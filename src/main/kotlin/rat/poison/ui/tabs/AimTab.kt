@@ -91,7 +91,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
         //Create Override Weapon Check Box & Collapsible
         Tooltip.Builder("Global enable override").target(weaponOverrideCheckBox).build()
-        weaponOverrideCheckBox.isChecked = overridenWeapons.weaponOverride
+        weaponOverrideCheckBox.isChecked = curSettings["ENABLE_OVERRIDE"].strToBool()
 
         weaponOverrideCheckBox.changed { _, _ ->
             overridenWeapons.weaponOverride = weaponOverrideCheckBox.isChecked
@@ -315,6 +315,7 @@ fun updateDisableAim() {
         if (bool) {
             col = Color(105F, 105F, 105F, .2F)
         }
+        weaponOverrideCheckBox.isChecked = curSettings["ENABLE_OVERRIDE"].strToBool()
         activateFromFireKey.disable(bool)
         teammatesAreEnemies.disable(bool)
         automaticWeaponsCheckBox.disable(bool)

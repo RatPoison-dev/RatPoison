@@ -35,6 +35,6 @@ internal fun ranks() = every(1000) { //Rebuild every 30 seconds
     }
 
     if (opened && haveTarget) {
-        ranksListText.setText("WIP\n\n$ctPlayers$tPlayers")
+        ranksListText.setText("WIP - Comp Only\n\n$ctPlayers$tPlayers")
     }
 }

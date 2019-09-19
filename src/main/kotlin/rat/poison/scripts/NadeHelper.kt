@@ -210,7 +210,6 @@ fun deletePosition() {
             iPos++
         }
         if (removePos != -1) {
-            println(removePos)
             nadeHelperArrayList.removeAt(removePos)
         }
     }

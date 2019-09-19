@@ -102,6 +102,11 @@ middle of the circle, then look up and aim at the circle in the air.
     * Made override weapons more intuitive to enable/disable and edit
     * Hitmarker outline wont draw when hitmarker is disable but combo is enabled
 
+* Hotfix 4
+    * Radar updates slower to help prevent other esp flickering
+    * Cursor enabled should update faster (if typing/in buy menu) to prevent bhopping when chatting/automatic weapons shooting in buy menu
+    * Weapon Override menu will appear/disappear when loading a cfg
+    * Menu isn't resizable again
 
 ---
 

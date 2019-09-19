@@ -5,12 +5,11 @@ import com.sun.jna.platform.win32.WinDef
 import org.jire.arrowhead.Module
 import org.jire.arrowhead.Process
 import org.jire.arrowhead.processByName
-import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.hooks.constructEntities
+import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.netvars.NetVars
 import rat.poison.settings.*
-import rat.poison.strToBool
 import rat.poison.utils.every
 import rat.poison.utils.inBackground
 import rat.poison.utils.natives.CUser32
@@ -84,6 +83,7 @@ object CSGO {
 		NetVars.load()
 
 		constructEntities()
+		updateCursorEnable()
 
 		if (dbg) println("[DEBUG] CSGO initialized")
 	}

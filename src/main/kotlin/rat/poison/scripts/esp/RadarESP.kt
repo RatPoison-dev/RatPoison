@@ -11,7 +11,7 @@ import rat.poison.game.me
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.strToBool
 
-internal fun radarEsp() = every(25) {
+internal fun radarEsp() = every(100) {
     if (!curSettings["RADAR_ESP"].strToBool() || DANGER_ZONE) return@every
 
     forEntities(ccsPlayer) {

@@ -61,9 +61,12 @@ var cursorEnable = false
 private val cursorEnableAddress by lazy(LazyThreadSafetyMode.NONE) { clientDLL.address + ClientOffsets.dwMouseEnable }
 private val cursorEnablePtr by lazy(LazyThreadSafetyMode.NONE) { clientDLL.address + ClientOffsets.dwMouseEnablePtr }
 
+fun updateCursorEnable() = every(100) { //Ree
+    cursorEnable = CSGO.csgoEXE.int(cursorEnableAddress) xor cursorEnablePtr.toInt() != 1
+}
+
 fun constructEntities() = every(500) {
     state = SignOnState[CSGO.csgoEXE.int(clientState + EngineOffsets.dwSignOnState)]
-    cursorEnable = CSGO.csgoEXE.int(cursorEnableAddress) xor cursorEnablePtr.toInt() != 1
 
     me = clientDLL.uint(dwLocalPlayer)
     if (me <= 0) return@every

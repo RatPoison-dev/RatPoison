@@ -28,7 +28,7 @@ class UIMenu : VisWindow("Rat Poison 1.5") {
         x = 960F
         y = 540F
         align(Align.topLeft)
-        isResizable = true
+        isResizable = false
 
         //Main content pane for all tabs
         val mainTabbedPaneContent = VisTable()
@@ -101,6 +101,10 @@ class UIMenu : VisWindow("Rat Poison 1.5") {
     }
 
     override fun positionChanged() {
+        updateChilds()
+    }
+
+    fun updateChilds() {
         if (opened) {
             uiAimOverridenWeapons.setPosition(x+width+4F, y)
         }

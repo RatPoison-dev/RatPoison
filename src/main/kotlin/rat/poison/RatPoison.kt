@@ -256,7 +256,7 @@ object App : ApplicationAdapter() {
                     menuStage.root.draw(batch, 1F)
                     batch.end()
 
-                    if (overridenWeapons.weaponOverride) {
+                    if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
                         aimOverrideStage.act(Gdx.graphics.deltaTime)
                         val aimOverrideCamera = aimOverrideStage.viewport.camera
                         aimOverrideCamera.update()
@@ -310,6 +310,8 @@ object App : ApplicationAdapter() {
             if (overlayMenuKey.justBecomeTrue) {
                 MENUTOG = !MENUTOG
                 overlay.clickThrough = !MENUTOG
+
+                uiMenu.updateChilds()
                 //uiUpdate() Not needed?
 
                 if (dbg) println("[DEBUG] Menu Toggled")
