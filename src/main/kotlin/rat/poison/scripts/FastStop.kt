@@ -5,6 +5,7 @@ import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.dead
+import rat.poison.game.entity.onGround
 import rat.poison.game.entity.velocity
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.strToBool
@@ -29,8 +30,7 @@ internal fun fastStop() = every(4) {
         val x = (vel.x * cos(yaw / 180 * Math.PI) + vel.y * sin(yaw / 180 * Math.PI))
         val y = (vel.y * cos(yaw / 180 * Math.PI) - vel.x * sin(yaw / 180 * Math.PI))
 
-        //Remove hard codes
-        if (!keyPressed(VK_SPACE)) {
+        if (!keyPressed(VK_SPACE) && me.onGround()) {
             if (!keyPressed(VK_W) && !keyPressed(VK_S)) {
                 if (x > 30) {
                     robot.keyPress(VK_S)

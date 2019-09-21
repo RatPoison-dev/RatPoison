@@ -65,6 +65,8 @@ fun updateCursorEnable() = every(100) { //Ree
     cursorEnable = CSGO.csgoEXE.int(cursorEnableAddress) xor cursorEnablePtr.toInt() != 1
 }
 
+var defuseKitEntities = mutableListOf<Long>()
+
 fun constructEntities() = every(500) {
     state = SignOnState[CSGO.csgoEXE.int(clientState + EngineOffsets.dwSignOnState)]
 
@@ -119,6 +121,7 @@ fun constructEntities() = every(500) {
     entsToTrack = tmpEntsToAdd
 
     val maxIndex = clientDLL.int(dwEntityList + 0x24 - 0x10) //Not right?
+    defuseKitEntities.clear()
 
     for (i in 64..maxIndex) {
         val entity = clientDLL.uint(dwEntityList + (i * 0x10) - 0x10)
@@ -126,11 +129,12 @@ fun constructEntities() = every(500) {
             val type = EntityType.byEntityAddress(entity)
 
             if (type == EntityType.CEconEntity) {
-                val context = contexts[i].set(entity, -1, -1, type)
+                //val context = contexts[i].set(entity, -1, -1, type)
 
-                with(entities[type]!!) {
-                    if (!contains(context)) add(context)
-                }
+                //with(entities[type]!!) {
+                //    if (!contains(context)) add(context)
+                //}
+                defuseKitEntities.add(entity)
             }
         }
     }

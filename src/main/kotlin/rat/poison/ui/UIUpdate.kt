@@ -79,7 +79,7 @@ fun uiUpdate() {
     overridenWeapons.apply {
         val curWep = convStrToArray(curSettings[overridenWeapons.weaponOverrideSelected])
 
-        if (weaponOverride) {
+        if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
             overridenWeapons.weaponOverrideEnableCheckBox.isChecked = curWep[0]!!.toBool()
             enableFactorRecoil.isChecked = curWep[1]!!.toBool()
             enableFlatAim.isChecked = curWep[2]!!.toBool()

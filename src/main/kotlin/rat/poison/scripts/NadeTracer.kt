@@ -17,7 +17,7 @@ var entsToTrack = mutableListOf<Long>()
 var positionsList = mutableListOf<List<Double>>()
 var grenadeList = mutableListOf<MutableList<List<Double>>>()
 
-var sync = 0
+private var sync = 0
 
 fun nadeTracer() = App {
     if (!curSettings["NADE_TRACER"].strToBool() || MENUTOG || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@App

@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.utils.Align
+import com.badlogic.gdx.utils.Array
+import com.kotcrab.vis.ui.util.dialog.ConfirmDialogListener
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
 import com.kotcrab.vis.ui.util.dialog.OptionDialogAdapter
@@ -61,68 +63,81 @@ fun nadeHelper() = App {
     mPos = me.absPosition()
 
     if (showHelpers) {
+        val myWep = me.weapon()
+        val nadeToCheck : String
+        nadeToCheck = when (myWep.name) {
+            "FLASH_GRENADE" -> "Flash"
+            "SMOKE_GRENADE" -> "Smoke"
+            "MOLOTOV" -> "Molly"
+            "EXPLOSIVE_GRENADE" -> "Frag"
+            "DECOY_GRENADE" -> "Decoy"
+            else -> ""
+        }
+
         nadeHelperArrayList.forEach {
             val fSpot = it[0]
             val hPos = it[1]
             val hLPos = it[2]
 
-            if ((mPos.x in fSpot[0].cToDouble()-500..fSpot[0].cToDouble()+500) && (mPos.y in fSpot[1].cToDouble()-500..fSpot[1].cToDouble()+500)) {
-                shapeRenderer.apply {
-                    begin()
+            if (fSpot[4] == nadeToCheck || nadeToCheck == "Decoy") {
+                if ((mPos.x in fSpot[0].cToDouble() - 500..fSpot[0].cToDouble() + 500) && (mPos.y in fSpot[1].cToDouble() - 500..fSpot[1].cToDouble() + 500)) {
+                    shapeRenderer.apply {
+                        begin()
 
-                    color = Color(1F, 1F, 1F, 1F)
+                        color = Color(1F, 1F, 1F, 1F)
 
-                    if ((mPos.x in fSpot[0].cToDouble()-5..fSpot[0].cToDouble()+5) && (mPos.y in fSpot[1].cToDouble()-5..fSpot[1].cToDouble()+5)) {
-                        color = Color(1F, 0F, 0F, 1F)
-                    }
-
-                    val vec1 = Vector()
-                    val vec2 = Vector()
-                    val vec3 = Vector()
-
-                    var t1 = false
-                    var t2 = false
-
-                    if (worldToScreen(Vector(fSpot[0].cToDouble(), fSpot[1].cToDouble(), fSpot[2].cToDouble()), vec1)) { //Change to double only
-                        var h = mView.x.toFloat()
-                        h += 10F
-                        h = clamp(h, 10F, 89F)
-
-                        ellipse(vec1.x.toFloat() - 45F, vec1.y.toFloat() - 45F, 90F, h)
-
-                        textRenderer.apply {
-                            val glyph = GlyphLayout()
-
-                            sb.begin()
-                            val sbText = StringBuilder()
-                            sbText.append(fSpot[3].toString())
-
-                            glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
-                            textRenderer.draw(sb, glyph, vec1.x.toFloat(), vec1.y.toFloat())
-
-                            sb.end()
+                        if ((mPos.x in fSpot[0].cToDouble() - 5..fSpot[0].cToDouble() + 5) && (mPos.y in fSpot[1].cToDouble() - 5..fSpot[1].cToDouble() + 5)) {
+                            color = Color(1F, 0F, 0F, 1F)
                         }
-                    }
 
-                    if (worldToScreen(Vector(hPos[0].cToDouble(), hPos[1].cToDouble(), hPos[2].cToDouble()), vec2)) {
-                        //set(ShapeRenderer.ShapeType.Filled)
-                        //circle(vec2.x.toFloat() - 2F, vec2.y.toFloat() - 2F, 4F)
-                        //set(ShapeRenderer.ShapeType.Line)
-                        t1 = true
-                    }
+                        val vec1 = Vector()
+                        val vec2 = Vector()
+                        val vec3 = Vector()
 
-                    if (worldToScreen(Vector(hLPos[0].cToDouble(), hLPos[1].cToDouble(), hLPos[2].cToDouble()), vec3)) {
-                        set(ShapeRenderer.ShapeType.Filled)
-                        circle(vec3.x.toFloat(), vec3.y.toFloat() - 2F, 4F)
-                        set(ShapeRenderer.ShapeType.Line)
-                        t2 = true
-                    }
+                        var t1 = false
+                        var t2 = false
 
-                    if (t1 && t2) {
-                        line(vec2.x.toFloat() - 4F, vec2.y.toFloat() - 4F, vec3.x.toFloat(), vec3.y.toFloat() - 2F)
-                    }
+                        if (worldToScreen(Vector(fSpot[0].cToDouble(), fSpot[1].cToDouble(), fSpot[2].cToDouble()), vec1)) { //Change to double only
+                            var h = mView.x.toFloat()
+                            h += 10F
+                            h = clamp(h, 10F, 89F)
 
-                    end()
+                            ellipse(vec1.x.toFloat() - 45F, vec1.y.toFloat() - 45F, 90F, h)
+
+                            textRenderer.apply {
+                                val glyph = GlyphLayout()
+
+                                sb.begin()
+                                val sbText = StringBuilder()
+                                sbText.append(fSpot[3].toString())
+
+                                glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
+                                textRenderer.draw(sb, glyph, vec1.x.toFloat(), vec1.y.toFloat())
+
+                                sb.end()
+                            }
+                        }
+
+                        if (worldToScreen(Vector(hPos[0].cToDouble(), hPos[1].cToDouble(), hPos[2].cToDouble()), vec2)) {
+                            //set(ShapeRenderer.ShapeType.Filled)
+                            //circle(vec2.x.toFloat() - 2F, vec2.y.toFloat() - 2F, 4F)
+                            //set(ShapeRenderer.ShapeType.Line)
+                            t1 = true
+                        }
+
+                        if (worldToScreen(Vector(hLPos[0].cToDouble(), hLPos[1].cToDouble(), hLPos[2].cToDouble()), vec3)) {
+                            set(ShapeRenderer.ShapeType.Filled)
+                            circle(vec3.x.toFloat(), vec3.y.toFloat() - 2F, 4F)
+                            set(ShapeRenderer.ShapeType.Line)
+                            t2 = true
+                        }
+
+                        if (t1 && t2) {
+                            line(vec2.x.toFloat() - 4F, vec2.y.toFloat() - 4F, vec3.x.toFloat(), vec3.y.toFloat() - 2F)
+                        }
+
+                        end()
+                    }
                 }
             }
         }
@@ -144,16 +159,29 @@ fun createPosition() {
     val hLPy = yOff + 500 * mDir.y
     val hLPz = zOff + 500 * mDir.z
 
-    Dialogs.showInputDialog(menuStage, "Enter Text", "", object : InputDialogAdapter() {
+    Dialogs.showInputDialog(menuStage, "Enter Position Name", "", object : InputDialogAdapter() {
         override fun finished(input: String) {
-            mPos = me.absPosition()
-            feetSpot = listOf(mPos.x, mPos.y, mPos.z, input)
-            headPos = listOf(xOff, yOff, zOff)
-            headLookPos = listOf(hLPx, hLPy, hLPz)
-            LoL = listOf(feetSpot, headPos, headLookPos)
-            nadeHelperArrayList.add(LoL)
+            //Fuck this
+            val chooseNadeArrayString = arrayOf("Flash", "Frag", "Molly", "Smoke")
+            val chooseNadeArrayInt = arrayOf(1, 2, 3, 4)
 
-            nadeHelperTab.updateNadeFileHelperList()
+            Dialogs.showConfirmDialog(menuStage, "Choose Nade Type", "", chooseNadeArrayString, chooseNadeArrayInt) { int ->
+                val chosenNadeType = when (int) {
+                    1 -> "Flash"
+                    2 -> "Frag"
+                    3 -> "Molly"
+                    else -> "Smoke" //4
+                }
+
+                mPos = me.absPosition()
+                feetSpot = listOf(mPos.x, mPos.y, mPos.z, input, chosenNadeType)
+                headPos = listOf(xOff, yOff, zOff)
+                headLookPos = listOf(hLPx, hLPy, hLPz)
+                LoL = listOf(feetSpot, headPos, headLookPos)
+                nadeHelperArrayList.add(LoL)
+
+                nadeHelperTab.updateNadeFileHelperList()
+            }
         }
     }).setSize(200F, 200F)
 }
@@ -163,12 +191,12 @@ fun loadPositions(file: String) {
     nadeHelperArrayList.clear()
     FileReader("$SETTINGS_DIRECTORY\\NadeHelper\\$file").readLines().forEach { line ->
         val lLine = line.trim().replace("\"", "").replace("[", "").replace("]", "").split(", ")
-        val chunks = lLine.chunked(10) //Split arrayList into LoLs, size 10
+        val chunks = lLine.chunked(11) //Split arrayList into LoLs, size 11
         //Chunks [0] = 1 LoL
         chunks.forEach { chunk ->
-            feetSpot = listOf(chunk[0].cToDouble(), chunk[1].cToDouble(), chunk[2].cToDouble(), chunk[3]) //4 for location
-            headPos = listOf(chunk[4].cToDouble(), chunk[5].cToDouble(), chunk[6].cToDouble()) //3
-            headLookPos = listOf(chunk[7].cToDouble(), chunk[8].cToDouble(), chunk[9].cToDouble()) //3
+            feetSpot = listOf(chunk[0].cToDouble(), chunk[1].cToDouble(), chunk[2].cToDouble(), chunk[3], chunk[4]) //5, 3 for location, 1 name, 1 type
+            headPos = listOf(chunk[5].cToDouble(), chunk[6].cToDouble(), chunk[7].cToDouble()) //3
+            headLookPos = listOf(chunk[8].cToDouble(), chunk[9].cToDouble(), chunk[10].cToDouble()) //3
             LoL = listOf(feetSpot, headPos, headLookPos)
             nadeHelperArrayList.add(LoL)
         }

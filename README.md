@@ -88,6 +88,9 @@ it go back to that spot, aim appropriately and save the position (or save before
 is highlighted blue. The starting head position isn't completely centered on your screen, to line yourself up with the position, look straight down and center your cursor with the
 middle of the circle, then look up and aim at the circle in the air.
 
+If you have older versions of saved txt files from before Hotfix 6 these will cause an error when loaded using RP. 
+To fix you need to edit the text file and add the nade type (Flash, Smoke, Molly, Frag) after the position name, see the example Mirage.txt file for an example, case sensitive and must be spelled correctly
+
 **Hotfixes**
 * Hotfix 1
     * Added settings checks for nade tracer & helper
@@ -115,6 +118,15 @@ middle of the circle, then look up and aim at the circle in the air.
     * Nade helper moved from the options tab to it's own tab
     * Combined visuals checkboxes and their associated color
     * Added checkbox for nade helper
+    
+* Hotfix 6
+    * Override Weapons should update values when changing the selected weapon
+    * Possible fix for fast stop 'issuing too many commands to server' with radio spam/scroll jumping
+    * Possible fix for certain entities not glowing
+    * Reduced number of reads in aim script
+    * Nade helper select file in appropriate spot
+    * Nade helper now only shows based on what grenade you are holding (hold a decoy to view all for editing purposes)
+        * Previously created versions will not work, see above under "Grenade Helper" for info
 
 ---
 

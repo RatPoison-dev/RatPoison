@@ -11,6 +11,7 @@ import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
+import rat.poison.game.hooks.defuseKitEntities
 import rat.poison.game.netvars.NetVarOffsets.m_fAccuracyPenalty
 import rat.poison.settings.*
 import rat.poison.strToBool
@@ -100,8 +101,9 @@ internal fun boxEsp() = App {
 	}
 
 	if (curSettings["BOX_SHOW_DEFUSERS"].strToBool()) {
-		forEntities(arrayOf(EntityType.CEconEntity)) {
-			val entity = it.entity
+		//forEntities(arrayOf(EntityType.CEconEntity)) {
+		defuseKitEntities.forEachIndexed { _, it ->
+			val entity = it
 			val entPos = entity.position()
 
 			val vTop = Vector()
@@ -127,9 +129,10 @@ internal fun boxEsp() = App {
 
 				currentIdx++
 			}
-
-			false
 		}
+
+			//false
+		//}
 	}
 
 	shapeRenderer.apply sr@{

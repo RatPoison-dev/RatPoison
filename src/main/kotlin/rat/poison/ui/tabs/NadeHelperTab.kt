@@ -73,7 +73,7 @@ class NadeHelperTab : Tab(false, false) {
         sldTable.add(loadFileNadeHelper).padLeft(20F).padRight(20F).width(150F)
         sldTable.add(deleteFileNadeHelper).width(150F)
 
-        table.add(enableNadeHelper)
+        table.add(enableNadeHelper).row()
 
         table.add(nadeHelperFileSelectBox).row()
         table.add(sldTable).row()

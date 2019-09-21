@@ -154,30 +154,27 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		if (!precheck()) return@every
 		if (!curSettings["ENABLE_AIM"].strToBool()) return@every
 
-		if (!me.weaponEntity().canFire() && !me.weapon().automatic) { //Aim after shoot
+		val meWep = me.weapon()
+		val meWepEnt = me.weaponEntity()
+
+		if (!meWepEnt.canFire() && !meWep.automatic && !meWep.pistol && !meWep.shotgun && !meWep.sniper && !meWep.smg) { //Aim after shoot
 			reset()
 			return@every
 		}
 
-		if (me.weapon().sniper && !me.isScoped() && curSettings["ENABLE_SCOPED_ONLY"].strToBool()) {
+		if (meWep.sniper && !me.isScoped() && curSettings["ENABLE_SCOPED_ONLY"].strToBool()) { //Scoped only
 			reset()
 			return@every
 		}
 
 		val aim = curSettings["ACTIVATE_FROM_AIM_KEY"].strToBool() && keyPressed(curSettings["AIM_KEY"].toInt())
 		val forceAim = keyPressed(curSettings["FORCE_AIM_KEY"].toInt())
-		val haveAmmo = me.weaponEntity().bullets() > 0
+		val haveAmmo = meWepEnt.bullets() > 0
 
 		val pressed = (aim || forceAim || boneTrig) && !MENUTOG && haveAmmo
 		var currentTarget = target.get()
 
 		if (!pressed) {
-			reset()
-			return@every
-		}
-
-		val weapon = me.weapon()
-		if (!weapon.pistol && !weapon.automatic && !weapon.shotgun && !weapon.sniper) {
 			reset()
 			return@every
 		}
