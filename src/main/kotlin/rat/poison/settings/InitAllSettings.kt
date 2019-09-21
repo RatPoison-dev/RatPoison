@@ -83,6 +83,7 @@ var CHAMS_SHOW_HEALTH = false
 var CHAMS_BRIGHTNESS = 0
 var CHAMS_SHOW_TEAM = false
 var CHAMS_SHOW_ENEMIES = true
+var CHAMS_SHOW_SELF = true
 var CHAMS_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
 var CHAMS_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
 var CHAMS_SELF_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
@@ -97,6 +98,7 @@ var NADE_HELPER_TOGGLE_KEY = 113
 var NADE_TRACER = true
 var NADE_TRACER_UPDATE_TIME = 15
 var NADE_TRACER_TIMEOUT = 1.0
+var NADE_TRACER_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
 var HITMARKER_RECOIL_POSITION = true
 var HITMARKER_COMBO = true
 var HITMARKER_OUTLINE = true
@@ -139,6 +141,7 @@ var GLOW_SHOW_TARGET = true
 var GLOW_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
 var GLOW_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
 var GLOW_BOMB_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
+var GLOW_BOMB_CARRIER_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
 var GLOW_DEFUSER_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)
 var GLOW_WEAPON_COLOR = Color(red=251, green=0, blue=255, alpha=0.5)
 var GLOW_GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)
@@ -243,6 +246,7 @@ var INDICATOR_SHOW_GRENADES = false
 var INDICATOR_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
 var INDICATOR_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
 var INDICATOR_BOMB_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
+var INDICATOR_BOMB_CARRIER_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
 var INDICATOR_DEFUSER_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)
 var INDICATOR_WEAPON_COLOR = Color(red=251, green=0, blue=255, alpha=0.5)
 var INDICATOR_GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)

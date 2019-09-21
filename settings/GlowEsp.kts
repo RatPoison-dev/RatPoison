@@ -45,8 +45,11 @@ GLOW_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
 //Color of your enemies
 GLOW_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
 
-//Color of the bomb, entities carrying the bomb
+//Color of the bomb
 GLOW_BOMB_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
+
+//Color of the bomb carrier
+GLOW_BOMB_CARRIER_COLOR = Color(red=255, green=140, blue=0, alpha=1.0)
 
 //Color of the defuse kit
 GLOW_DEFUSER_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)

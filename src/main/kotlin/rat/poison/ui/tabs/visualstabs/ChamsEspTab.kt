@@ -19,31 +19,43 @@ class ChamsEspTab : Tab(false, false) {
     val chamsShowHealth = VisCheckBoxCustom("Chams Show Health", "CHAMS_SHOW_HEALTH")
     val chamsBrightness = VisSliderCustom("Chams Brightness", "CHAMS_BRIGHTNESS", 0F, 5000F, 25F, true)
 
-    val showTeam = VisCheckBoxCustom("Show Team", "CHAMS_SHOW_TEAM")
-    val showEnemies = VisCheckBoxCustom("Show Enemies", "CHAMS_SHOW_ENEMIES")
-
+    val showTeam = VisCheckBoxCustom(" ", "CHAMS_SHOW_TEAM")
     val chamsTeamColor = VisColorPickerCustom("Team Color", "CHAMS_TEAM_COLOR")
+
+    val showEnemies = VisCheckBoxCustom(" ", "CHAMS_SHOW_ENEMIES")
     val chamsEnemyColor = VisColorPickerCustom("Enemy Color", "CHAMS_ENEMY_COLOR")
+
+    val showSelf = VisCheckBoxCustom(" ", "CHAMS_SHOW_SELF")
     val chamsSelfColor = VisColorPickerCustom("Self Color", "CHAMS_SELF_COLOR")
 
     init {
         ////////////////////FORMATTING
-        val colTable = VisTable()
-        val width = 225F
-        colTable.add(chamsTeamColor).width(width).padRight(2F)
-        colTable.add(chamsEnemyColor).width(width).row()
-        colTable.add(chamsSelfColor).width(width).left()
-
         table.padLeft(25F)
         table.padRight(25F)
 
         table.add(chamsEsp).left()
         table.add(chamsShowHealth).left().row()
         table.add(chamsBrightness).left().colspan(2).row()
-        table.add(showTeam).padRight(225F - showTeam.width).left()
-        table.add(showEnemies).padRight(225F - showEnemies.width).left().row()
 
-        table.add(colTable).colspan(2).width(450F).left()
+        var tmpTable = VisTable()
+        tmpTable.add(showTeam)
+        tmpTable.add(chamsTeamColor).width(175F - showTeam.width).padRight(50F)
+
+        table.add(tmpTable).left()
+
+        tmpTable = VisTable()
+        tmpTable.add(showEnemies)
+        tmpTable.add(chamsEnemyColor).width(175F - showEnemies.width).padRight(50F)
+
+        table.add(tmpTable).left().row()
+
+        tmpTable = VisTable()
+        tmpTable.add(showSelf)
+        tmpTable.add(chamsSelfColor).width(175F - showSelf.width).padRight(50F)
+
+        table.add(tmpTable).left()
+
+        //table.add(colTable).colspan(2).width(450F).left()
         ////////////////////FORMATTING
     }
 
@@ -63,6 +75,7 @@ fun chamsEspTabUpdate() {
         chamsBrightness.update()
         showTeam.update()
         showEnemies.update()
+        showSelf.update()
         chamsTeamColor.update()
         chamsEnemyColor.update()
         chamsSelfColor.update()

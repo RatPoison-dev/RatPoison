@@ -16,7 +16,9 @@ val mainTabbedPane = TabbedPane()
     val bTrigTab = BTrigTab()
     val miscTab = MiscTab()
     val ranksTab = RanksTab()
+    val nadeHelperTab = NadeHelperTab()
     val optionsTab = OptionsTab()
+
 
 class UIMenu : VisWindow("Rat Poison 1.5") {
     init {
@@ -48,6 +50,7 @@ class UIMenu : VisWindow("Rat Poison 1.5") {
         mainTabbedPane.add(bTrigTab)
         mainTabbedPane.add(miscTab)
         mainTabbedPane.add(ranksTab)
+        mainTabbedPane.add(nadeHelperTab)
         mainTabbedPane.add(optionsTab)
 
 
@@ -85,6 +88,9 @@ class UIMenu : VisWindow("Rat Poison 1.5") {
                     }
                     ranksTab -> {
                         mainTabbedPaneContent.add(ranksTab.contentTable).growX()
+                    }
+                    nadeHelperTab -> {
+                        mainTabbedPaneContent.add(nadeHelperTab.contentTable).growX()
                     }
                 }
             }

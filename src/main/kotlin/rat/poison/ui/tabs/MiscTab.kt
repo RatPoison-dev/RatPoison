@@ -38,7 +38,7 @@ class MiscTab : Tab(false, false) {
 
     val menuKeyField = VisValidatableTextField(Validators.FLOATS)
     val enableReducedFlash = VisCheckBoxCustom("Reduced Flash", "ENABLE_REDUCED_FLASH")
-    val flashMaxAlpha = VisSliderCustom("Flash Max Alpha", "FLASH_MAX_ALPHA", 0F, 255F, 1F, true)
+    val flashMaxAlpha = VisSliderCustom("Flash Max Alpha", "FLASH_MAX_ALPHA", 1F, 255F, 1F, true)
 
     val hitSoundCheckBox = VisCheckBoxCustom("Hitsound", "ENABLE_HITSOUND")
     val hitSoundBox = VisSelectBox<String>()

@@ -32,9 +32,6 @@ class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
     private val fileSelectBox = VisSelectBox<String>()
-    private val nadeHelperFileSelectBox = VisSelectBox<String>()
-    private val nadeHelperToggle = VisInputFieldCustom("Nade Helper Toggle Key", "NADE_HELPER_TOGGLE_KEY")
-    val nadeHelperToggleText = VisLabel("Toggled: false")
 
     init {
         //Create UIAlpha Slider
@@ -95,49 +92,8 @@ class OptionsTab : Tab(false, false) {
             true
         }
 
-        //Nade position create button
-        val addPosition = VisTextButton("Create Grenade Position")
-        addPosition.changed { _, _ ->
-            createPosition()
-        }
-
-        val saveFileNadeHelper = VisTextButton("Save As File")
-        saveFileNadeHelper.changed { _, _ ->
-            savePositions()
-        }
-
-        val loadFileNadeHelper = VisTextButton("Load From File")
-        loadFileNadeHelper.changed { _, _ ->
-            if (nadeHelperFileSelectBox.items.count() > 0) {
-                loadPositions(nadeHelperFileSelectBox.selected)
-            }
-        }
-
-        val deleteFileNadeHelper = VisTextButton("Delete Selected File")
-        deleteFileNadeHelper.changed { _, _ ->
-            if (nadeHelperFileSelectBox.items.count() > 0) {
-                deleteNadeHelperFile(nadeHelperFileSelectBox.selected)
-            }
-        }
-
-        val clearNadeHelper = VisTextButton("Clear Currently Loaded")
-        clearNadeHelper.changed { _, _ ->
-            nadeHelperArrayList.clear()
-        }
-
-        nadeHelperToggle.changed { _, _ ->
-            nadeHelperToggleKey = ObservableBoolean({keyPressed(curSettings["NADE_HELPER_TOGGLE_KEY"].toInt())})
-            true
-        }
-
-        val deleteCurrentPositionHelper = VisTextButton("Delete At Current Position")
-        deleteCurrentPositionHelper.changed { _, _ ->
-            deletePosition()
-        }
-
-        updateNadeFileHelperList()
-
-        var sldTable = VisTable()
+        //Add everything to table
+        val sldTable = VisTable()
         sldTable.add(saveButton).width(100F)
         sldTable.add(loadButton).padLeft(20F).padRight(20F).width(100F)
         sldTable.add(deleteButton).width(100F)
@@ -149,22 +105,6 @@ class OptionsTab : Tab(false, false) {
         table.add(sldTable).row()
 
         table.add(saveCurConfig).width(340F).row()
-
-        table.addSeparator().row()
-
-        sldTable = VisTable()
-        sldTable.add(saveFileNadeHelper).width(150F)
-        sldTable.add(loadFileNadeHelper).padLeft(20F).padRight(20F).width(150F)
-        sldTable.add(deleteFileNadeHelper).width(150F)
-
-        table.add(nadeHelperFileSelectBox).row()
-        table.add(sldTable).row()
-        table.add(clearNadeHelper).width(250F).row()
-
-        table.add(addPosition).width(250F).row()
-        table.add(deleteCurrentPositionHelper).width(250F).row()
-        table.add(nadeHelperToggle).row()
-        table.add(nadeHelperToggleText)
     }
 
     override fun getContentTable(): Table? {
@@ -184,15 +124,6 @@ class OptionsTab : Tab(false, false) {
         fileSelectBox.items = cfgFilesArray
     }
 
-    fun updateNadeFileHelperList() {
-        val nadeHelperArray = Array<String>()
-        File("$SETTINGS_DIRECTORY\\NadeHelper").listFiles()?.forEach {
-            nadeHelperArray.add(it.name)
-        }
-
-        nadeHelperFileSelectBox.items = nadeHelperArray
-    }
-
     private fun saveDefault() {
         if (!saving) {
             GlobalScope.launch {
@@ -208,7 +139,11 @@ class OptionsTab : Tab(false, false) {
                                 //Add custom checks
                                 when {
                                     curLine[0] == "HITSOUND_FILE_NAME" -> {
-                                        sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]] + "\"\n")
+                                        sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]].replace("\"", "") + "\"\n")
+                                    }
+
+                                    curLine[0] == "FLASH_MAX_ALPHA" -> {
+                                        sbLines.append(curLine[0] + " = " + curSettings[curLine[0]].replace("F", "") + "F\n")
                                     }
 
                                     else -> {
@@ -310,14 +245,6 @@ class OptionsTab : Tab(false, false) {
             cfgFile.delete()
         }
         updateCFGList()
-    }
-
-    private fun deleteNadeHelperFile(fileName: String) {
-        val cfgFile = File("$SETTINGS_DIRECTORY\\NadeHelper\\$fileName")
-        if (cfgFile.exists()) {
-            cfgFile.delete()
-        }
-        updateNadeFileHelperList()
     }
 
     private fun saveWindows() {

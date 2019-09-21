@@ -11,5 +11,7 @@ import rat.poison.strToBool
 fun reducedFlash() = onFlash {
 	if (!curSettings["ENABLE_REDUCED_FLASH"].strToBool()) return@onFlash
 
-	if (me > 0 && !me.dead()) csgoEXE[me + flFlashMaxAlpha] = curSettings["FLASH_MAX_ALPHA"].toFloat()
+	if (me > 0 && !me.dead()) {
+		csgoEXE[me + flFlashMaxAlpha] = curSettings["FLASH_MAX_ALPHA"].toFloat()
+	}
 }

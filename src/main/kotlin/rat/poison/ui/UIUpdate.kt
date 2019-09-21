@@ -143,6 +143,7 @@ fun uiUpdate() {
     bTrigTabUpdate()
     miscTabUpdate()
     rcsTabUpdate()
+    nadeHelperTabUpdate()
 
     //Update windows
     uiAimOverridenWeapons.setPosition(uiMenu.x+uiMenu.width+4F, uiMenu.y)

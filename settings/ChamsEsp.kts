@@ -17,6 +17,9 @@ CHAMS_SHOW_TEAM = false
 //Enable chams esp on enemies
 CHAMS_SHOW_ENEMIES = true
 
+//Enable chams on yourself (guns and hand)
+CHAMS_SHOW_SELF = true
+
 //Color of your teammates
 CHAMS_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
 

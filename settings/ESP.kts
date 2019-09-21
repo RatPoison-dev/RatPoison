@@ -18,7 +18,7 @@ RADAR_ESP = false
 SNAPLINES = false
 
 //Snaplines color
-SNAPLINES_COLOR = Color(red=255, green=102, blue=0, alpha=1.0)
+SNAPLINES_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
 
 //Enable audible hitsound
 //Activates on enemy hit

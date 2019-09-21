@@ -6,13 +6,16 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
 import rat.poison.ui.tabs.nadesTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
+import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 
 class NadesVT : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val nadeTracer = VisCheckBoxCustom("Tracer", "NADE_TRACER")
+    val nadeTracer = VisCheckBoxCustom(" ", "NADE_TRACER")
+    val nadeTracerColor = VisColorPickerCustom("Tracer", "NADE_TRACER_COLOR")
+
     val nadeTracerUpdateTime = VisSliderCustom("Tracer Update Time", "NADE_TRACER_UPDATE_TIME", 5F, curSettings["OPENGL_FPS"].toInt().toFloat(), 1F, true)
     val nadeTracerTimeout = VisSliderCustom("Tracer Timeout", "NADE_TRACER_TIMEOUT", .001F, .01F, .001F, false, 3)
 
@@ -20,7 +23,11 @@ class NadesVT : Tab(false, false) {
         table.padLeft(25F)
         table.padRight(25F)
 
-        table.add(nadeTracer).left().row()
+        val tmpTable = VisTable()
+        tmpTable.add(nadeTracer)
+        tmpTable.add(nadeTracerColor).width(175F - nadeTracer.width).padRight(50F)
+
+        table.add(tmpTable).left().row()
         table.add(nadeTracerUpdateTime).row()
         table.add(nadeTracerTimeout)
     }

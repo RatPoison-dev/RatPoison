@@ -25,12 +25,13 @@ class BoxEspTab : Tab(false, false) {
     val boxEspWeapon = VisCheckBoxCustom("Weapon", "BOX_ESP_WEAPON")
     val boxEspWeaponPos = VisSelectBox<String>()
 
-    val showTeam = VisCheckBoxCustom("Show Team", "BOX_SHOW_TEAM")
-    val showEnemies = VisCheckBoxCustom("Show Enemies", "BOX_SHOW_ENEMIES")
-    val showDefusers = VisCheckBoxCustom("Show Defuse Kits", "BOX_SHOW_DEFUSERS")
-
+    val showTeam = VisCheckBoxCustom(" ", "BOX_SHOW_TEAM")
     val boxTeamColor = VisColorPickerCustom("Team Color", "BOX_TEAM_COLOR")
+
+    val showEnemies = VisCheckBoxCustom(" ", "BOX_SHOW_ENEMIES")
     val boxEnemyColor = VisColorPickerCustom("Enemy Color", "BOX_ENEMY_COLOR")
+
+    val showDefusers = VisCheckBoxCustom(" ", "BOX_SHOW_DEFUSERS")
     val boxDefuserColor = VisColorPickerCustom("Defuser Color", "BOX_DEFUSER_COLOR")
 
     init {
@@ -81,12 +82,6 @@ class BoxEspTab : Tab(false, false) {
         table.padLeft(25F)
         table.padRight(25F)
 
-        val colTable = VisTable()
-        val width = 225F
-        colTable.add(boxTeamColor).width(width).padRight(2F)
-        colTable.add(boxEnemyColor).width(width).row()
-        colTable.add(boxDefuserColor).width(width).left()
-
         table.add(boxEsp).left().row()
         table.add(boxEspDetails).left().row()
         table.add(boxEspHealth).left()
@@ -97,11 +92,24 @@ class BoxEspTab : Tab(false, false) {
         table.add(boxEspNamePos).left().row()
         table.add(boxEspWeapon).left()
         table.add(boxEspWeaponPos).left().row()
-        table.add(showTeam).left()
-        table.add(showEnemies).left().padRight(225F - showEnemies.width).row()
-        table.add(showDefusers).left().padRight(225F - showDefusers.width).row()
 
-        table.add(colTable).colspan(2).width(450F).left()
+        var tmpTable = VisTable()
+        tmpTable.add(showTeam)
+        tmpTable.add(boxTeamColor).width(175F - showTeam.width).padRight(50F)
+
+        table.add(tmpTable).left()
+
+        tmpTable = VisTable()
+        tmpTable.add(showEnemies)
+        tmpTable.add(boxEnemyColor).width(175F - showEnemies.width).padRight(50F)
+
+        table.add(tmpTable).left().row()
+
+        tmpTable = VisTable()
+        tmpTable.add(showDefusers)
+        tmpTable.add(boxDefuserColor).width(175F - showEnemies.width).padRight(50F)
+
+        table.add(tmpTable).left().row()
     }
 
     override fun getContentTable(): Table? {

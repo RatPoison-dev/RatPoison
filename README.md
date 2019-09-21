@@ -107,6 +107,14 @@ middle of the circle, then look up and aim at the circle in the air.
     * Cursor enabled should update faster (if typing/in buy menu) to prevent bhopping when chatting/automatic weapons shooting in buy menu
     * Weapon Override menu will appear/disappear when loading a cfg
     * Menu isn't resizable again
+    
+* Hotfix 5
+    * Flash max alpha slider is from 1-255
+    * Nade tracer has a color option now
+    * Fix saving to default hitsound name + flash max alpha
+    * Nade helper moved from the options tab to it's own tab
+    * Combined visuals checkboxes and their associated color
+    * Added checkbox for nade helper
 
 ---
 

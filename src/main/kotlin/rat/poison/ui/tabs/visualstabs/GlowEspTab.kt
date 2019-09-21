@@ -16,54 +16,89 @@ class GlowEspTab : Tab(false, false) {
     val modelEsp = VisCheckBoxCustom("Model", "MODEL_ESP")
     val modelAndGlow = VisCheckBoxCustom("Model & Glow", "MODEL_AND_GLOW")//VisCheckBox("Model & Glow Esp")
 
-    val showTeam = VisCheckBoxCustom("Show Team", "GLOW_SHOW_TEAM")
-    val showEnemies = VisCheckBoxCustom("Show Enemies", "GLOW_SHOW_ENEMIES")
-    val showBomb = VisCheckBoxCustom("Show Bomb", "GLOW_SHOW_BOMB")
-    val showBombCarrier = VisCheckBoxCustom("Show Bomb Carrier", "GLOW_SHOW_BOMB_CARRIER")
-    val showWeapons = VisCheckBoxCustom("Show Weapons", "GLOW_SHOW_WEAPONS")
-    val showGrenades = VisCheckBoxCustom("Show Grenades", "GLOW_SHOW_WEAPONS")
-    val showTarget = VisCheckBoxCustom("Show Target", "GLOW_SHOW_TARGET")
+    val showTeam = VisCheckBoxCustom(" ", "GLOW_SHOW_TEAM")
+    val glowTeamColor = VisColorPickerCustom("Team", "GLOW_TEAM_COLOR")
 
-    val glowTeamColor = VisColorPickerCustom("Team Color", "GLOW_TEAM_COLOR")
-    val glowEnemyColor = VisColorPickerCustom("Enemy Color", "GLOW_ENEMY_COLOR")
-    val glowBombColor = VisColorPickerCustom("Bomb Color", "GLOW_BOMB_COLOR")
-    val glowDefuserColor = VisColorPickerCustom("Defuser Color", "GLOW_DEFUSER_COLOR")
-    val glowWeaponColor = VisColorPickerCustom("Weapon Color", "GLOW_WEAPON_COLOR")
-    val glowGrenadeColor = VisColorPickerCustom("Grenade Color", "GLOW_GRENADE_COLOR")
-    val glowHighlightColor = VisColorPickerCustom("Highlight Color", "GLOW_HIGHLIGHT_COLOR")
+    val showEnemies = VisCheckBoxCustom(" ", "GLOW_SHOW_ENEMIES")
+    val glowEnemyColor = VisColorPickerCustom("Enemy", "GLOW_ENEMY_COLOR")
+
+    val showBomb = VisCheckBoxCustom(" ", "GLOW_SHOW_BOMB")
+    val glowBombColor = VisColorPickerCustom("Bomb", "GLOW_BOMB_COLOR")
+
+    val showBombCarrier = VisCheckBoxCustom(" ", "GLOW_SHOW_BOMB_CARRIER")
+    val glowBombCarrierColor = VisColorPickerCustom("Bomb Carrier", "GLOW_BOMB_CARRIER_COLOR")
+
+    val showWeapons = VisCheckBoxCustom(" ", "GLOW_SHOW_WEAPONS")
+    val glowWeaponColor = VisColorPickerCustom("Weapon", "GLOW_WEAPON_COLOR")
+
+    val showGrenades = VisCheckBoxCustom(" ", "GLOW_SHOW_WEAPONS")
+    val glowGrenadeColor = VisColorPickerCustom("Grenade", "GLOW_GRENADE_COLOR")
+
+    val showTarget = VisCheckBoxCustom(" ", "GLOW_SHOW_TARGET")
+    val glowHighlightColor = VisColorPickerCustom("Target", "GLOW_HIGHLIGHT_COLOR")
 
     init {
         ////////////////////FORMATTING
         table.padLeft(25F)
         table.padRight(25F)
 
-        val colTable = VisTable()
-        val width = 225F
-        colTable.add(glowTeamColor).width(width).padRight(2F)
-        colTable.add(glowEnemyColor).width(width).row()
-        colTable.add(glowBombColor).width(width).padRight(2F)
-        colTable.add(glowDefuserColor).width(width).row()
-        colTable.add(glowWeaponColor).width(width).padRight(2F)
-        colTable.add(glowGrenadeColor).width(width).row()
-        colTable.add(glowHighlightColor).width(width).left()
+//        val colTable = VisTable()
+//        val width = 225F
+//        colTable.add(glowTeamColor).width(width).padRight(2F)
+//        colTable.add(glowEnemyColor).width(width).row()
+//        colTable.add(glowBombColor).width(width).padRight(2F)
+//        colTable.add(glowDefuserColor).width(width).row()
+//        colTable.add(glowWeaponColor).width(width).padRight(2F)
+//        colTable.add(glowGrenadeColor).width(width).row()
+//        colTable.add(glowHighlightColor).width(width).left()
+
         table.add(glowEsp).left()
         table.add(invGlowEsp).left().row()
 
         table.add(modelEsp).left()
         table.add(modelAndGlow).left().row()
 
-        table.add(showTeam).left()
-        table.add(showEnemies).left().row()
+        var tmpTable = VisTable()
+        tmpTable.add(showTeam)
+        tmpTable.add(glowTeamColor).width(175F - showTeam.width).padRight(50F)
 
-        table.add(showBomb).left()
-        table.add(showBombCarrier).left().row()
+        table.add(tmpTable).left()
 
-        table.add(showWeapons).left()
-        table.add(showGrenades).left().padRight(225F - showGrenades.width).row()
+        tmpTable = VisTable()
+        tmpTable.add(showEnemies)
+        tmpTable.add(glowEnemyColor).width(175F - showEnemies.width).padRight(50F)
 
-        table.add(showTarget).left().padRight(225F - showTarget.width).row()
+        table.add(tmpTable).left().row()
 
-        table.add(colTable).colspan(2).width(450F).left()
+        tmpTable = VisTable()
+        tmpTable.add(showBomb)
+        tmpTable.add(glowBombColor).width(175F - showBomb.width).padRight(50F)
+
+        table.add(tmpTable).left()
+
+        tmpTable = VisTable()
+        tmpTable.add(showBombCarrier)
+        tmpTable.add(glowBombCarrierColor).width(175F - showBombCarrier.width).padRight(50F)
+
+        table.add(tmpTable).left().row()
+
+        tmpTable = VisTable()
+        tmpTable.add(showWeapons)
+        tmpTable.add(glowWeaponColor).width(175F - showWeapons.width).padRight(50F)
+
+        table.add(tmpTable).left()
+
+        tmpTable = VisTable()
+        tmpTable.add(showGrenades)
+        tmpTable.add(glowGrenadeColor).width(175F - showGrenades.width).padRight(50F)
+
+        table.add(tmpTable).left().row()
+
+        tmpTable = VisTable()
+        tmpTable.add(showTarget)
+        tmpTable.add(glowHighlightColor).width(175F - showTarget.width).padRight(50F)
+
+        table.add(tmpTable).left()
         ////////////////////FORMATTING
     }
 
@@ -92,7 +127,7 @@ fun glowEspTabUpdate() {
         glowTeamColor.update()
         glowEnemyColor.update()
         glowBombColor.update()
-        glowDefuserColor.update()
+        glowBombCarrierColor.update()
         glowWeaponColor.update()
         glowGrenadeColor.update()
         glowHighlightColor.update()

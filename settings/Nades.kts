@@ -1,3 +1,4 @@
+import rat.poison.game.Color
 import rat.poison.settings.*
 
 //Enable nade helper
@@ -15,3 +16,6 @@ NADE_TRACER_UPDATE_TIME = 10
 
 //How fast the tracer disappears, higher # is longer, valid from .01 to .001
 NADE_TRACER_TIMEOUT = .5
+
+//Color of the grenade tracer line
+NADE_TRACER_COLOR = Color(red=4, green=255, blue=0, alpha=1.0)

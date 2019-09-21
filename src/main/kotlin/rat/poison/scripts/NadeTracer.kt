@@ -8,6 +8,7 @@ import rat.poison.game.entity.absPosition
 import rat.poison.game.worldToScreen
 import rat.poison.settings.MENUTOG
 import rat.poison.strToBool
+import rat.poison.strToColor
 import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
 
@@ -21,15 +22,16 @@ var sync = 0
 fun nadeTracer() = App {
     if (!curSettings["NADE_TRACER"].strToBool() || MENUTOG || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@App
 
+    val empty = mutableListOf(0.0, 0.0, 0.0, 0.0, 0.0)
     val alphaUpdate = clamp(.011 - curSettings["NADE_TRACER_TIMEOUT"].toDouble(), .001, .01)
     //Calculate spots
     if (sync >= (curSettings["NADE_TRACER_UPDATE_TIME"].toInt())) { //Change to add a 0 to the end to prevent connecting grenade lines
-        entsToTrack.forEachIndexed { i, ent ->
+        entsToTrack.forEachIndexed { _, ent ->
             val entPos = ent.absPosition()
 
-            var idx = -1 //If already in a list
-            grenadeList.forEachIndexed {j, posList ->
-                val n = posList[posList.size-1]
+            var idx = -1 //Not in a list
+            grenadeList.forEachIndexed {j, posList -> //Check if in list, set idx to that list if so
+                val n = posList[0]
                 val nn = n[4].toLong()
 
                 if (nn == ent) {
@@ -43,11 +45,17 @@ fun nadeTracer() = App {
                 if (idx == -1) {
                     positionsList = mutableListOf()
                     positionsList.add(tmp)
+                    positionsList.add(empty)
                     grenadeList.add(positionsList)
                 } else {
                     positionsList = grenadeList[idx]
-                    positionsList.add(positionsList.size-1, tmp) //Add at end
-                    grenadeList[idx] = positionsList
+
+                    if (positionsList[positionsList.size-1] == empty) {
+                        positionsList.removeAt(positionsList.size-1)
+                        positionsList.add(positionsList.size, tmp) //Replace at end
+                        positionsList.add(positionsList.size-0, empty) //Set end to 0
+                        grenadeList[idx] = positionsList
+                    }
                 }
             }
         }
@@ -78,6 +86,10 @@ fun nadeTracer() = App {
             val pPos1 = tmpPosList[j]
             val pPos2 = tmpPosList[j+1]
 
+            if (pPos1 == empty || pPos2 == empty) {
+                continue
+            }
+
             if (pPos1[3] <= 0) {
                 continue
             } else if (pPos2[3] <= 0) {
@@ -93,9 +105,9 @@ fun nadeTracer() = App {
                 shapeRenderer.apply {
                     begin()
 
+                    val c = curSettings["NADE_TRACER_COLOR"].strToColor()
                     val a = ((pPos1[3] + pPos2[3]) / 2F).toFloat()
-
-                    color = Color(1F, 1F, 1F, a)
+                    color = Color(c.red / 255F, c.green / 255F, c.blue / 255F, a)
 
                     line(pPos1Vec.x.toFloat(), pPos1Vec.y.toFloat(), pPos2Vec.x.toFloat(), pPos2Vec.y.toFloat())
 

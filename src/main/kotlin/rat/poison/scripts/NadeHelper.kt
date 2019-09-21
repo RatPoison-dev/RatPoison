@@ -20,6 +20,7 @@ import rat.poison.game.entity.direction
 import rat.poison.game.entity.eyeAngle
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
+import rat.poison.ui.nadeHelperTab
 import rat.poison.ui.optionsTab
 import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.Vector
@@ -50,12 +51,10 @@ fun nadeHelper() = App {
     nadeHelperToggleKey.update()
     if (nadeHelperToggleKey.justBecomeTrue) {
         showHelpers = !showHelpers
-        optionsTab.nadeHelperToggleText.setText("Toggled: $showHelpers")
+        nadeHelperTab.nadeHelperToggleText.setText("Toggled: $showHelpers")
     }
 
-    if (me <= 0L) return@App
-
-    if (MENUTOG) return@App
+    if (me <= 0L || MENUTOG) return@App
 
     val mView = me.eyeAngle()
 
@@ -154,7 +153,7 @@ fun createPosition() {
             LoL = listOf(feetSpot, headPos, headLookPos)
             nadeHelperArrayList.add(LoL)
 
-            optionsTab.updateNadeFileHelperList()
+            nadeHelperTab.updateNadeFileHelperList()
         }
     }).setSize(200F, 200F)
 }
@@ -190,7 +189,7 @@ fun savePositions() {
 
             cfgFile.appendText("\"$nadeHelperArrayList\"")
 
-            optionsTab.updateNadeFileHelperList()
+            nadeHelperTab.updateNadeFileHelperList()
         }
     }).setSize(200F, 200F)
 }
