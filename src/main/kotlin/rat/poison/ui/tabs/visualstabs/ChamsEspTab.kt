@@ -80,8 +80,4 @@ fun chamsEspTabUpdate() {
         chamsEnemyColor.update()
         chamsSelfColor.update()
     }
-
-    if (!curSettings["CHAMS_ESP"].strToBool()) {
-        disableAllEsp()
-    }
 }

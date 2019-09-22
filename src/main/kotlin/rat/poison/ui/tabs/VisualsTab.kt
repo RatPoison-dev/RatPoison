@@ -241,9 +241,7 @@ fun updateDisableEsp() {
 
         if (!curSettings["ENABLE_ESP"].strToBool()) {
             disableAllEsp()
-        }
-
-        if (!curSettings["CHAMS_ESP"].strToBool()) {
+        } else if (!curSettings["CHAMS_ESP"].strToBool()) {
             disableAllEsp()
         }
     }

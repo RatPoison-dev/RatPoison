@@ -33,13 +33,15 @@ private var currentIdx = 0
 internal fun boxEsp() = App {
 	if (!curSettings["ENABLE_BOX_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
 
+	val meTeam = me.team()
 	forEntities(ccsPlayer) { //Replace positioning with abs...?
 		//Only enemies atm
 		val entity = it.entity
+		val entTeam = entity.team()
 
 		val dormCheck = (entity.dormant() && !DANGER_ZONE)
-		val enemyCheck = ((!curSettings["BOX_SHOW_ENEMIES"].strToBool() && me.team() != entity.team()) && !DANGER_ZONE)
-		val teamCheck = ((!curSettings["BOX_SHOW_TEAM"].strToBool() && me.team() == entity.team()) && !DANGER_ZONE)
+		val enemyCheck = ((!curSettings["BOX_SHOW_ENEMIES"].strToBool() && meTeam != entTeam) && !DANGER_ZONE)
+		val teamCheck = ((!curSettings["BOX_SHOW_TEAM"].strToBool() && meTeam == entTeam) && !DANGER_ZONE)
 
 		if (entity == me || entity.dead() || dormCheck || enemyCheck || teamCheck) return@forEntities false
 
@@ -68,7 +70,7 @@ internal fun boxEsp() = App {
 
 			val tCol = curSettings["BOX_TEAM_COLOR"].strToColor()
 			val eCol = curSettings["BOX_ENEMY_COLOR"].strToColor()
-			val c = if (me.team() == entity.team()) Color(tCol.red/255F, tCol.green/255F, tCol.blue/255F, 1F) else Color(eCol.red/255F, eCol.green/255F, eCol.blue/255F, 1F)
+			val c = if (meTeam == entTeam) Color(tCol.red/255F, tCol.green/255F, tCol.blue/255F, 1F) else Color(eCol.red/255F, eCol.green/255F, eCol.blue/255F, 1F)
 
 			val sx = (vTop.x - boxW).toInt()
 			val sy = vTop.y.toInt()
@@ -101,9 +103,8 @@ internal fun boxEsp() = App {
 	}
 
 	if (curSettings["BOX_SHOW_DEFUSERS"].strToBool()) {
-		//forEntities(arrayOf(EntityType.CEconEntity)) {
-		defuseKitEntities.forEachIndexed { _, it ->
-			val entity = it
+		val tmp = defuseKitEntities
+		tmp.forEachIndexed { _, entity ->
 			val entPos = entity.position()
 
 			val vTop = Vector()
@@ -130,9 +131,6 @@ internal fun boxEsp() = App {
 				currentIdx++
 			}
 		}
-
-			//false
-		//}
 	}
 
 	shapeRenderer.apply sr@{

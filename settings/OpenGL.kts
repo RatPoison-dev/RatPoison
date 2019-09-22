@@ -3,7 +3,7 @@ import rat.poison.settings.*
 //Enable or disable vsync on the overlay
 OPENGL_VSYNC = false
 
-//FPS of the overlay
+//FPS of the overlay, set to monitor hz for max smoothness
 OPENGL_FPS = 60
 
 //MSAA antialiasing of the overlay

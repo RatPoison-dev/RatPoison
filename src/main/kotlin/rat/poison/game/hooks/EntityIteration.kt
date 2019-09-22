@@ -106,14 +106,10 @@ fun constructEntities() = every(500) {
                 }
             }
 
-            val entID = (csgoEXE.uint(entity + ClientOffsets.dwIndex) - 1).toInt()
+            val context = contexts[glowIndex].set(entity, glowAddress, glowIndex, type)
 
-            if (entID in 0..4095) { //Store at ent id, so that custom entities can be added as well
-                val context = contexts[entID].set(entity, glowAddress, glowIndex, type)
-
-                with(entities[type]!!) {
-                    if (!contains(context)) add(context)
-                }
+            with(entities[type]!!) {
+                if (!contains(context)) add(context)
             }
         }
     }

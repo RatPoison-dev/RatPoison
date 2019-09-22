@@ -312,7 +312,7 @@ object App : ApplicationAdapter() {
                 overlay.clickThrough = !MENUTOG
 
                 uiMenu.updateChilds()
-                //uiUpdate() Not needed?
+                uiUpdate()
 
                 if (dbg) println("[DEBUG] Menu Toggled")
             }

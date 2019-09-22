@@ -9,7 +9,6 @@ import rat.poison.ui.tabs.updateDisableAim
 import rat.poison.ui.tabs.updateDisableEsp
 import rat.poison.ui.tabs.updateDisableRCrosshair
 import rat.poison.ui.tabs.updateDisableRcsSmoothing
-import rat.poison.ui.uiPanels.updateOverridenWeapons
 
 class VisCheckBoxCustom(mainText: String, varName: String) : VisCheckBox(mainText) {
     private val variableName = varName
@@ -24,7 +23,7 @@ class VisCheckBoxCustom(mainText: String, varName: String) : VisCheckBox(mainTex
             updateDisableRcsSmoothing()
             updateDisableEsp()
             updateDisableAim()
-            updateOverridenWeapons()
+            //updateOverridenWeapons()
             true
         }
     }

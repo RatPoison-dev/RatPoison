@@ -27,12 +27,14 @@ private var currentIdx = 0
 internal fun skeletonEsp() = App {
 	if (!curSettings["SKELETON_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
 
+	val meTeam = me.team()
 	forEntities(ccsPlayer) {
 		val entity = it.entity
+		val entTeam = entity.team()
 
 		val dormCheck = (entity.dormant() && !DANGER_ZONE)
-		val enemyCheck = ((!curSettings["SKELETON_SHOW_ENEMIES"].strToBool() && me.team() != entity.team()) && !DANGER_ZONE)
-		val teamCheck = ((!curSettings["SKELETON_SHOW_TEAM"].strToBool() && me.team() == entity.team()) && !DANGER_ZONE)
+		val enemyCheck = ((!curSettings["SKELETON_SHOW_ENEMIES"].strToBool() && meTeam != entTeam) && !DANGER_ZONE)
+		val teamCheck = ((!curSettings["SKELETON_SHOW_TEAM"].strToBool() && meTeam == entTeam) && !DANGER_ZONE)
 
 		if (entity == me || entity.dead() || dormCheck || enemyCheck || teamCheck) return@forEntities false
 		(entityBones.get(entity) ?: CacheableList(20)).apply {

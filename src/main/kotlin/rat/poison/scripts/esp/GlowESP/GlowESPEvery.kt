@@ -13,9 +13,7 @@ import rat.poison.strToColor
 import rat.poison.utils.every
 
 internal fun glowEspEvery() = every(25) {
-	if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG) return@every
-
-	val myTeam = me.team()
+	if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || me.dead()) return@every
 
 	val currentAngle = clientState.angle()
 	val position = me.position()
@@ -38,6 +36,7 @@ internal fun glowEspEvery() = every(25) {
 	val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
 	val bEnt = bomb.carrier()
 
+	val meTeam = me.team()
 	forEntities body@{
 		val entity = it.entity
 		if (entity <= 0 || me == entity || entity.dormant()) return@body false
@@ -52,9 +51,9 @@ internal fun glowEspEvery() = every(25) {
 				if (entity.dead()) return@body false
 
 				val entityTeam = entity.team()
-				val team = !DANGER_ZONE && myTeam == entityTeam
+				val team = !DANGER_ZONE && meTeam == entityTeam
 
-				if (curSettings["GLOW_SHOW_TARGET"].strToBool() && it.entity == glowTarget.get() && !me.dead() && glowTarget.get() != -1L) {
+				if (curSettings["GLOW_SHOW_TARGET"].strToBool() && it.entity == glowTarget.get() && glowTarget.get() != -1L) {
 					color = "GLOW_HIGHLIGHT_COLOR"
 				} else if (curSettings["GLOW_SHOW_ENEMIES"].strToBool() && !team) {
 					color = when (bEnt >= 0 && bEnt == entity && curSettings["GLOW_SHOW_BOMB"].strToBool() && curSettings["GLOW_SHOW_BOMB_CARRIER"].strToBool()) {

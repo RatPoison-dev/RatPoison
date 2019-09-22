@@ -12,10 +12,12 @@ import rat.poison.game.offsets.ClientOffsets
 import rat.poison.settings.*
 import rat.poison.strToBool
 import rat.poison.curSettings
+import rat.poison.game.hooks.defuseKitEntities
 import rat.poison.strToColor
 import rat.poison.utils.Vector
 import rat.poison.utils.distanceTo
 import rat.poison.utils.notInGame
+import kotlin.math.ceil
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -25,6 +27,7 @@ internal fun indicatorEsp() = App {
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()
 
+    val mePos = me.position()
     forEntities {
         val entity = it.entity
         val onMyTeam = me.team() == entity.team()
@@ -67,12 +70,6 @@ internal fun indicatorEsp() = App {
                 }
             }
 
-            EntityType.CEconEntity -> {
-                if (curSettings["INDICATOR_SHOW_DEFUSERS"].strToBool()) {
-                    color = "INDICATOR_DEFUSER_COLOR"
-                }
-            }
-
             else -> {
                 if (curSettings["INDICATOR_SHOW_WEAPONS"].strToBool() && it.type.weapon) {
                     color = "INDICATOR_WEAPON_COLOR"
@@ -88,6 +85,14 @@ internal fun indicatorEsp() = App {
         }
 
         false
+    }
+
+    if (curSettings["INDICATOR_SHOW_DEFUSERS"].strToBool()) {
+        val tmp = defuseKitEntities
+        tmp.forEachIndexed { _, entity ->
+            val entPos = entity.position()
+            w2sHandler(entPos, mePos.distanceTo(entPos), curSettings["INDICATOR_DEFUSER_COLOR"].strToColor())
+        }
     }
 }
 

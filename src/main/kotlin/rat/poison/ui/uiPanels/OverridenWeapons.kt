@@ -20,12 +20,12 @@ class OverridenWeapons : VisTable(true) {
     var enableOverride = false
     var weaponOverrideSelected = ""
 
-    val categorySelectionBox = VisSelectBox<String>()
+    private val categorySelectionBox = VisSelectBox<String>()
 
     //Override Weapon Checkbox & Selection Box
-    val categorySelectLabel = VisLabel("Category: ")
+    private val categorySelectLabel = VisLabel("Category: ")
 
-    val weaponOverrideSelectionBox = VisSelectBox<String>()
+    private val weaponOverrideSelectionBox = VisSelectBox<String>()
     val weaponOverrideEnableCheckBox = VisCheckBox("Enable Override")
 
     val enableFactorRecoil = VisCheckBox("Factor Recoil")
@@ -33,7 +33,7 @@ class OverridenWeapons : VisTable(true) {
     val enablePathAim = VisCheckBox("Path Aim")
     val enableScopedOnly = VisCheckBox("Scoped Only")
 
-    val aimBoneLabel = VisLabel("Bone: ")
+    private val aimBoneLabel = VisLabel("Bone: ")
     val aimBoneBox = VisSelectBox<String>()
 
     val aimFovLabel = VisLabel("FOV: " + curSettings[categorySelected + "_AIM_FOV"].toInt().toString() + when(curSettings[categorySelected + "_AIM_FOV"].toInt().toString().length) {3->"  " 2->"    " else ->"      "})
@@ -149,10 +149,6 @@ class OverridenWeapons : VisTable(true) {
                 }
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
             }
-            else {
-                curSettings[categorySelected + "_ENABLE_FLAT_AIM"] = enableFlatAim.isChecked.boolToStr()
-                if (curSettings[categorySelected + "_ENABLE_FLAT_AIM"].strToBool()) {curSettings[categorySelected + "_ENABLE_PATH_AIM"] = "false"}
-            }
             uiUpdate()
             true
         }
@@ -169,10 +165,6 @@ class OverridenWeapons : VisTable(true) {
                 }
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
             }
-            else {
-                curSettings[categorySelected + "_ENABLE_PATH_AIM"] = enablePathAim.isChecked.boolToStr()
-                if (curSettings[categorySelected + "_ENABLE_PATH_AIM"].strToBool()) {curSettings[categorySelected + "_ENABLE_FLAT_AIM"] = "false"}
-            }
             uiUpdate()
             true
         }
@@ -185,9 +177,6 @@ class OverridenWeapons : VisTable(true) {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[12] = enableScopedOnly.isChecked.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
-            }
-            else {
-                curSettings["SNIPER_ENABLE_SCOPED_ONLY"] = enableScopedOnly.isChecked.boolToStr()
             }
             uiUpdate()
             true
@@ -214,8 +203,6 @@ class OverridenWeapons : VisTable(true) {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[4] = setBone.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
-            } else {
-                curSettings[categorySelected + "_AIM_BONE"] = setBone.toString()
             }
         }
 
@@ -228,8 +215,6 @@ class OverridenWeapons : VisTable(true) {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[5] = aimFovSlider.value.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
-            } else {
-                curSettings[categorySelected + "_AIM_FOV"] = aimFovSlider.value.toInt().toString()
             }
 
             aimFovLabel.setText("FOV: " + aimFovSlider.value.toInt())
@@ -246,8 +231,6 @@ class OverridenWeapons : VisTable(true) {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[6] = aimSpeedSlider.value.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
-            } else {
-                curSettings[categorySelected + "_AIM_SPEED"] = aimSpeedSlider.value.toInt().toString()
             }
             aimSpeedLabel.setText("Speed: " + aimSpeedSlider.value.toInt())
         }
@@ -264,9 +247,6 @@ class OverridenWeapons : VisTable(true) {
                 curWep[7] = aimSmoothnessSlider.value.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
             }
-            else {
-                curSettings[categorySelected + "_AIM_SMOOTHNESS"] = (round(aimSmoothnessSlider.value.toDouble() * 10.0) / 10.0).toString()
-            }
             aimSmoothnessLabel.setText("Smooth: " + (round(aimSmoothnessSlider.value.toDouble() * 10.0) / 10.0))
         }
         aimSmoothness.add(aimSmoothnessLabel).width(125F)
@@ -281,9 +261,6 @@ class OverridenWeapons : VisTable(true) {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[8] = aimStrictnessSlider.value.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
-            }
-            else {
-                curSettings[categorySelected + "_AIM_STRICTNESS"] = (round(aimStrictnessSlider.value.toDouble() * 10.0) / 10.0).toString()
             }
             aimStrictnessLabel.setText("Strictness: " + (round(aimStrictnessSlider.value.toDouble() * 10.0) / 10.0))
         }
@@ -304,9 +281,6 @@ class OverridenWeapons : VisTable(true) {
                 curWep[10] = perfectAimFovSlider.value.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
             }
-            else {
-                curSettings[categorySelected + "_PERFECT_AIM_FOV"] = perfectAimFovSlider.value.toInt().toString()
-            }
             perfectAimFovLabel.setText("FOV: " + perfectAimFovSlider.value.toInt())
         }
         perfectAimFov.add(perfectAimFovLabel).width(105F)
@@ -323,9 +297,6 @@ class OverridenWeapons : VisTable(true) {
                 curWep[11] = perfectAimChanceSlider.value.toDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
             }
-            else {
-                curSettings[categorySelected + "_PERFECT_AIM_CHANCE"] = perfectAimChanceSlider.value.toInt().toString()
-            }
             perfectAimChanceLabel.setText("Chance: " + perfectAimChanceSlider.value.toInt())
         }
 
@@ -341,9 +312,6 @@ class OverridenWeapons : VisTable(true) {
                 val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
                 curWep[9] = perfectAimCheckBox.isChecked.boolToDouble()
                 curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
-            }
-            else {
-                curSettings[categorySelected + "_PERFECT_AIM"] = perfectAimCheckBox.isChecked.boolToStr()
             }
             perfectAimCollapsible.setCollapsed(!perfectAimCollapsible.isCollapsed, true)
         }
@@ -368,41 +336,45 @@ class OverridenWeapons : VisTable(true) {
     }
 }
 
-fun updateOverridenWeapons() {
-    overridenWeapons.apply {
-        val bool = !aimTab.enableAim.isChecked
-        var col = Color(255F, 255F, 255F, 1F)
-        if (bool) {
-            col = Color(105F, 105F, 105F, .2F)
-        }
-        aimTab.weaponOverrideCheckBox.isDisabled = bool
-        categorySelectLabel.color = col
-        categorySelectionBox.isDisabled = bool
-        weaponOverrideSelectionBox.isDisabled = bool
-        if (!weaponOverride) {
-            weaponOverrideEnableCheckBox.isDisabled = true
-        } else {
-            weaponOverrideEnableCheckBox.isDisabled = bool
-        }
-        enableFactorRecoil.isDisabled = bool
-        enableFlatAim.isDisabled = bool
-        enablePathAim.isDisabled = bool
-        enableScopedOnly.isDisabled = bool
-        aimBoneLabel.color = col
-        aimBoneBox.isDisabled = bool
-        aimFovLabel.color = col
-        aimFovSlider.isDisabled = bool
-        aimSpeedLabel.color = col
-        aimSpeedSlider.isDisabled = bool
-        aimSmoothnessLabel.color = col
-        aimSmoothnessSlider.isDisabled = bool
-        aimStrictnessLabel.color = col
-        aimStrictnessSlider.isDisabled = bool
-        perfectAimCollapsible.isCollapsed = bool
-        perfectAimCheckBox.isDisabled = bool
-        perfectAimChanceLabel.color = col
-        perfectAimChanceSlider.isDisabled = bool
-        perfectAimFovLabel.color = col
-        perfectAimFovSlider.isDisabled = bool
-    }
+fun updateEnable() {
+
 }
+
+//fun updateOverridenWeapons() { //This isn't needed... because the Override Weapons hides it
+//    overridenWeapons.apply {
+//        val bool = !aimTab.enableAim.isChecked
+//        var col = Color(255F, 255F, 255F, 1F)
+//        if (bool) {
+//            col = Color(105F, 105F, 105F, .2F)
+//        }
+//        aimTab.weaponOverrideCheckBox.isDisabled = bool
+//        categorySelectLabel.color = col
+//        categorySelectionBox.isDisabled = bool
+//        weaponOverrideSelectionBox.isDisabled = bool
+//        //if (!weaponOverride) {
+//        //    weaponOverrideEnableCheckBox.isDisabled = true
+//        //} else {
+//        //    weaponOverrideEnableCheckBox.isDisabled = bool
+//        //}
+//        enableFactorRecoil.isDisabled = bool
+//        enableFlatAim.isDisabled = bool
+//        enablePathAim.isDisabled = bool
+//        enableScopedOnly.isDisabled = bool
+//        aimBoneLabel.color = col
+//        aimBoneBox.isDisabled = bool
+//        aimFovLabel.color = col
+//        aimFovSlider.isDisabled = bool
+//        aimSpeedLabel.color = col
+//        aimSpeedSlider.isDisabled = bool
+//        aimSmoothnessLabel.color = col
+//        aimSmoothnessSlider.isDisabled = bool
+//        aimStrictnessLabel.color = col
+//        aimStrictnessSlider.isDisabled = bool
+//        perfectAimCollapsible.isCollapsed = bool
+//        perfectAimCheckBox.isDisabled = bool
+//        perfectAimChanceLabel.color = col
+//        perfectAimChanceSlider.isDisabled = bool
+//        perfectAimFovLabel.color = col
+//        perfectAimFovSlider.isDisabled = bool
+//    }
+//}

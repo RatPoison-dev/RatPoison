@@ -79,7 +79,7 @@ fun uiUpdate() {
     overridenWeapons.apply {
         val curWep = convStrToArray(curSettings[overridenWeapons.weaponOverrideSelected])
 
-        if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
+        //if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
             overridenWeapons.weaponOverrideEnableCheckBox.isChecked = curWep[0]!!.toBool()
             enableFactorRecoil.isChecked = curWep[1]!!.toBool()
             enableFlatAim.isChecked = curWep[2]!!.toBool()
@@ -111,7 +111,7 @@ fun uiUpdate() {
                 else -> "      "
             })
             aimSpeedSlider.value = curWep[6]!!.toInt().toFloat()
-            aimSmoothnessLabel.setText("Smoothness: " + curWep[7]!!.toFloat())
+            aimSmoothnessLabel.setText("Smooth: " + curWep[7]!!.toFloat())
             aimSmoothnessSlider.value = curWep[7]!!.toFloat()
             aimStrictnessLabel.setText("Strictness: " + curWep[8]!!.toFloat())
             aimStrictnessSlider.value = curWep[8]!!.toFloat()
@@ -129,7 +129,7 @@ fun uiUpdate() {
                 else -> "      "
             })
             perfectAimChanceSlider.value = curWep[11]!!.toFloat()
-        }
+        //}
     }
 
     visualsTabUpdate()

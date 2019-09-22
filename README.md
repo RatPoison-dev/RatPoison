@@ -127,6 +127,12 @@ To fix you need to edit the text file and add the nade type (Flash, Smoke, Molly
     * Nade helper select file in appropriate spot
     * Nade helper now only shows based on what grenade you are holding (hold a decoy to view all for editing purposes)
         * Previously created versions will not work, see above under "Grenade Helper" for info
+        
+* Hotfix 7
+    * Perfect Aim Collapsible should collapse correctly now
+    * Overriden Weapons now updates properly
+    * Indicator defuse kits should work again
+    * Small reduction to # of reads
 
 ---
 

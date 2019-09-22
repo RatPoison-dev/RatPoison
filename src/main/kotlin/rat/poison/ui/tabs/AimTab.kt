@@ -92,6 +92,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         //Create Override Weapon Check Box & Collapsible
         Tooltip.Builder("Global enable override").target(weaponOverrideCheckBox).build()
         weaponOverrideCheckBox.isChecked = curSettings["ENABLE_OVERRIDE"].strToBool()
+        overridenWeapons.weaponOverride = weaponOverrideCheckBox.isChecked
 
         weaponOverrideCheckBox.changed { _, _ ->
             overridenWeapons.weaponOverride = weaponOverrideCheckBox.isChecked
@@ -338,7 +339,7 @@ fun updateDisableAim() {
         aimSmoothnessSlider.isDisabled = bool
         aimStrictnessLabel.color = col
         aimStrictnessSlider.isDisabled = bool
-        perfectAimCollapsible.isCollapsed = bool
+        perfectAimCollapsible.isCollapsed = !perfectAimCheckBox.isChecked
         perfectAimCheckBox.isDisabled = bool
         perfectAimChanceLabel.color = col
         perfectAimChanceSlider.isDisabled = bool

@@ -18,16 +18,17 @@ import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
 
 fun snapLines() = App {
-    if (!curSettings["SNAPLINES"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
+    if (!curSettings["SNAPLINES"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame || me.dead()) return@App
 
+    val meTeam = me.team()
     forEntities(ccsPlayer) {
         val entity = it.entity
 
         val dormCheck = (entity.dormant() && !DANGER_ZONE)
         //val enemyCheck = ((!curSettings["BOX_SHOW_ENEMIES"].strToBool() && me.team() != entity.team()) && !DANGER_ZONE)
-        val teamCheck = ((!curSettings["BOX_SHOW_TEAM"].strToBool() && me.team() == entity.team()) && !DANGER_ZONE)
+        val teamCheck = ((!curSettings["BOX_SHOW_TEAM"].strToBool() && meTeam == entity.team()) && !DANGER_ZONE)
 
-        if (me <= 0 || entity == me || dormCheck || teamCheck || entity.dead() || me.dead()) return@forEntities false
+        if (me <= 0 || entity == me || dormCheck || teamCheck || entity.dead()) return@forEntities false
 
         shapeRenderer.apply {
             begin()
