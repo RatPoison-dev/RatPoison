@@ -30,7 +30,7 @@ class MiscTab : Tab(false, false) {
     val aimStrafer = VisCheckBoxCustom("Auto Aim Strafe", "AIM_STRAFER")
     val aimStraferSelectBox = VisSelectBox<String>()
     val aimStraferShift = VisCheckBoxCustom("Shift Walk", "AIM_STRAFER_SHIFT")
-    val aimStraferStrictness = VisSliderCustom("Strictness", "AIM_STRAFER_STRICTNESS", 0F, .5F, .02F, false, 3)
+    val aimStraferStrictness = VisSliderCustom("Strictness", "AIM_STRAFER_STRICTNESS", 0F, .5F, .01F, false, 3)
 
     val bombTimer = VisCheckBoxCustom("Bomb Timer", "ENABLE_BOMB_TIMER")
     val bombTimerEnableBars = VisCheckBoxCustom("Timer Bars", "BOMB_TIMER_BARS")

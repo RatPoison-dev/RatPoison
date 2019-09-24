@@ -31,7 +31,7 @@ private val robot = Robot().apply { this.autoDelay = 0 }
 private var callingInShot = false
 private var inShot = false
 
-fun boneTrigger() = every(4) {
+fun boneTrigger() = every(10) {
     if (curSettings["MENU"].strToBool() && opened && haveTarget) {
         if (DANGER_ZONE) {
             mainTabbedPane.disableTab(bTrigTab, true)

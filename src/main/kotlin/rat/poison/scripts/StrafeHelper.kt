@@ -7,11 +7,15 @@ import rat.poison.game.angle
 import rat.poison.game.clientState
 import rat.poison.game.entity.onGround
 import rat.poison.game.entity.weapon
+import rat.poison.game.hooks.cursorEnable
+import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.scripts.aim.target
+import rat.poison.settings.MENUTOG
 import rat.poison.strToBool
 import rat.poison.utils.every
+import rat.poison.utils.notInGame
 import java.awt.Robot
 import java.awt.event.KeyEvent
 
@@ -19,10 +23,15 @@ private var lastAngY = 0.0
 private val robot = Robot().apply { this.autoDelay = 0 }
 
 fun strafeHelper() = every(2) {
+    if (MENUTOG || notInGame || cursorEnable) return@every
+
     val aStrafe = curSettings["AUTO_STRAFE"].strToBool()
     val aimStrafe = curSettings["AIM_STRAFER"].strToBool()
 
+    if (!aStrafe && !aimStrafe) return@every
+
     if (aStrafe || aimStrafe) {
+        updateCursorEnable()
         val curAngY = clientState.angle().y
 
         if (aStrafe) {

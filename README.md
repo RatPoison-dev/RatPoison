@@ -30,6 +30,12 @@ Credit to Mr. Noad for a lot of help throughout this project
 * Strafe calls every 2ms instead of every 5ms to help accuracy
 * Added aim strafe
 
+**Hotfixes/Version Updates**
+* Hotfix 1
+    * Auto strafer slider interval changes from .2 to .1
+    * Added checks to strafehelper
+    * Bone trigger updates every 10ms instead of every 4ms
+    * CursorEnable called when needed, shouldn't jump when typing/robot movement spam in chat
 ---
 
 1.5
