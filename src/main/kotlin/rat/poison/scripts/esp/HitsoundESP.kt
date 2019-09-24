@@ -24,7 +24,7 @@ fun hitSoundEsp() = every(50) {
             updateHitsound(curSettings["HITSOUND_FILE_NAME"].replace("\"", ""))
             opened = true
             totalHits = curHits
-        } catch (ex: NullPointerException){}
+        } catch (ex: NullPointerException){ }
     }
     else if (curHits == 0) {
         totalHits = 0

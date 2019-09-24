@@ -11,6 +11,27 @@ Credit to Mr. Noad for a lot of help throughout this project
 
 ---
 
+1.5.1
+
+* Bone trigger should be responsive and usable now
+    * Fixed delay issues
+
+* Removed Aim Key setting (perm mouse1)
+* Small changes to nade helper drawing lines
+* The name of the position will be under the circle to throw at instead of position on the ground
+* Small Cleanup
+    * GunAimOverride.kts is readable and less of a mess if you choose to edit via text files instead of the menu, but still a block
+* All guns have their override disabled by default, and use default settings
+* KTS settings files changed to .txts
+* Fixed changing Aim Key not affecting its usages
+* A warning will appear to clear the current positions in nade helper to prevent accidental clears before saving
+* The main menu is now topmost vs the override weapons panel, spectator list, bomb timer
+* Auto strafe moved to keypresses instead of writing to the game
+* Strafe calls every 2ms instead of every 5ms to help accuracy
+* Added aim strafe
+
+---
+
 1.5
 I didn't plan to release this as soon as I have, but I haven't been working on it as much recently, so it was best to push with all the fixes/changes it has.
 Not heavily tested, bugs expected.
@@ -32,17 +53,11 @@ Not heavily tested, bugs expected.
     * Save button prompts for a cfg name, typing the name of a previously saved CFG overwrites that cfg
     
 * Other ESPs shouldn't flicker when using glow
-
 * Added a RANKS tab to the menu, will show ranks when available (Incomplete, semi-viable)
-
 * Added Defuse Kit ESP options (box & indicator only currently)
-
 * Added visual hitmarker (customizable)
-
 * Added 'Adrenaline' option in visuals - on landing a shot/based on bomb time left
-
 * Added a map grenade throw helper (currently Mirage only) - see below for details/usage
-
 * Added enemy snaplines
 
 **Other**
@@ -91,7 +106,7 @@ middle of the circle, then look up and aim at the circle in the air.
 If you have older versions of saved txt files from before Hotfix 6 these will cause an error when loaded using RP. 
 To fix you need to edit the text file and add the nade type (Flash, Smoke, Molly, Frag) after the position name, see the example Mirage.txt file for an example, case sensitive and must be spelled correctly
 
-**Hotfixes**
+**Hotfixes/Version Updates**
 * Hotfix 1
     * Added settings checks for nade tracer & helper
     * Updating the viewmatrix for w2s is called once per overlay update instead of multiple times throughout all visual scripts using it
@@ -133,7 +148,7 @@ To fix you need to edit the text file and add the nade type (Flash, Smoke, Molly
     * Overriden Weapons now updates properly
     * Indicator defuse kits should work again
     * Small reduction to # of reads
-
+    
 ---
 
 Base is Charlatano available [here](https://github.com/Jire/Charlatano)
@@ -207,13 +222,13 @@ The first step is to compile the source code into a usable cheat program.
 * Make sure you have Java Development Kit 12 installed, in Program Files\Java
 * Double click on the "_build_" (_build.bat_) script and wait for it to complete
 
-To set your JAVA_HOME go [here](https://javatutorial.net/set-java-home-windows-10)
+To set your JAVA_HOME read [here](https://javatutorial.net/set-java-home-windows-10)
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.5**.
+directory, and will in a directory called **RatPoison 1.5.1**.
 
-From within the **RatPoison 1.5** directory, you can start the cheat by running
-the _"Start RatPoison 1.5"_ script.
+From within the **RatPoison 1.5.1** directory, you can start the cheat by running
+the _"Start RatPoison 1.5.1"_ script.
 
 Before starting the cheat, you should already be spawned in a game with a weapon in hand!
 

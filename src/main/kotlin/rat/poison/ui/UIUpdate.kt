@@ -19,7 +19,6 @@ fun uiUpdate() {
         enableAim.update()
         activateFromFireKey.update()
         teammatesAreEnemies.update()
-        aimKey.update()
         forceAimKey.update()
         automaticWeaponsCheckBox.update()
         automaticWeaponsInput.update()
@@ -77,14 +76,14 @@ fun uiUpdate() {
     }
 
     overridenWeapons.apply {
-        val curWep = convStrToArray(curSettings[overridenWeapons.weaponOverrideSelected])
+        val curWep = curSettings[overridenWeapons.weaponOverrideSelected].toWeaponClass()
 
         //if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
-            overridenWeapons.weaponOverrideEnableCheckBox.isChecked = curWep[0]!!.toBool()
-            enableFactorRecoil.isChecked = curWep[1]!!.toBool()
-            enableFlatAim.isChecked = curWep[2]!!.toBool()
-            enablePathAim.isChecked = curWep[3]!!.toBool()
-            enableScopedOnly.isChecked = curWep[12]!!.toBool()
+            overridenWeapons.weaponOverrideEnableCheckBox.isChecked = curWep.tOverride
+            enableFactorRecoil.isChecked = curWep.tFRecoil
+            enableFlatAim.isChecked = curWep.tFlatAim
+            enablePathAim.isChecked = curWep.tPathAim
+            enableScopedOnly.isChecked = curWep.tScopedOnly
             if (categorySelected == "SNIPER") {
                 enableScopedOnly.color = Color(255F, 255F, 255F, 1F)
                 enableScopedOnly.isDisabled = false
@@ -92,43 +91,27 @@ fun uiUpdate() {
                 enableScopedOnly.color = Color(255F, 255F, 255F, 0F)
                 enableScopedOnly.isDisabled = true
             }
-            aimBoneBox.selected = when (curWep[4]!!.toInt()) {
+            aimBoneBox.selected = when (curWep.tAimBone) {
                 HEAD_BONE -> "HEAD"
                 NECK_BONE -> "NECK"
                 CHEST_BONE -> "CHEST"
                 STOMACH_BONE -> "STOMACH"
                 else -> "NEAREST"
             }
-            aimFovLabel.setText("FOV: " + curWep[5]!!.toInt() + when (curWep[5]!!.toInt().toString().length) {
-                3 -> "  "
-                2 -> "    "
-                else -> "      "
-            })
-            aimFovSlider.value = curWep[5]!!.toInt().toFloat()
-            aimSpeedLabel.setText("Speed: " + curWep[6]!!.toInt() + when (curWep[6]!!.toInt().toString().length) {
-                3 -> "  "
-                2 -> "    "
-                else -> "      "
-            })
-            aimSpeedSlider.value = curWep[6]!!.toInt().toFloat()
-            aimSmoothnessLabel.setText("Smooth: " + curWep[7]!!.toFloat())
-            aimSmoothnessSlider.value = curWep[7]!!.toFloat()
-            aimStrictnessLabel.setText("Strictness: " + curWep[8]!!.toFloat())
-            aimStrictnessSlider.value = curWep[8]!!.toFloat()
-            perfectAimCheckBox.isChecked = curWep[9]!!.toBool()
-            perfectAimCollapsible.isCollapsed = !curWep[9]!!.toBool()
-            perfectAimFovLabel.setText("FOV: " + curWep[10]!!.toInt() + when (curWep[10]!!.toInt().toString().length) {
-                3 -> "  "
-                2 -> "    "
-                else -> "      "
-            })
-            perfectAimFovSlider.value = curWep[10]!!.toInt().toFloat()
-            perfectAimChanceLabel.setText("Chance: " + curWep[11]!!.toInt() + when (curWep[11]!!.toInt().toString().length) {
-                3 -> "  "
-                2 -> "    "
-                else -> "      "
-            })
-            perfectAimChanceSlider.value = curWep[11]!!.toFloat()
+            aimFovLabel.setText("FOV: " + curWep.tAimFov)
+            aimFovSlider.value = curWep.tAimFov.toFloat()
+            aimSpeedLabel.setText("Speed: " + curWep.tAimSpeed)
+            aimSpeedSlider.value = curWep.tAimSpeed.toFloat()
+            aimSmoothnessLabel.setText("Smooth: " + curWep.tAimSmooth)
+            aimSmoothnessSlider.value = curWep.tAimSmooth.toFloat()
+            aimStrictnessLabel.setText("Strictness: " + curWep.tAimStrict)
+            aimStrictnessSlider.value = curWep.tAimStrict.toFloat()
+            perfectAimCheckBox.isChecked = curWep.tPerfectAim
+            perfectAimCollapsible.isCollapsed = !curWep.tPerfectAim
+            perfectAimFovLabel.setText("FOV: " + curWep.tPAimFov)
+            perfectAimFovSlider.value = curWep.tPAimFov.toFloat()
+            perfectAimChanceLabel.setText("Chance: " + curWep.tPAimChance)
+            perfectAimChanceSlider.value = curWep.tPAimChance.toFloat()
         //}
     }
 

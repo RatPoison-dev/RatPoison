@@ -26,6 +26,12 @@ class MiscTab : Tab(false, false) {
     val autoStrafe = VisCheckBoxCustom("Auto Strafe", "AUTO_STRAFE")
     val autoStrafeBHopOnly = VisCheckBoxCustom("BHop Only", "STRAFE_BHOP_ONLY")
     val fastStop = VisCheckBoxCustom("Fast Stop", "FAST_STOP")
+
+    val aimStrafer = VisCheckBoxCustom("Auto Aim Strafe", "AIM_STRAFER")
+    val aimStraferSelectBox = VisSelectBox<String>()
+    val aimStraferShift = VisCheckBoxCustom("Shift Walk", "AIM_STRAFER_SHIFT")
+    val aimStraferStrictness = VisSliderCustom("Strictness", "AIM_STRAFER_STRICTNESS", 0F, .5F, .02F, false, 3)
+
     val bombTimer = VisCheckBoxCustom("Bomb Timer", "ENABLE_BOMB_TIMER")
     val bombTimerEnableBars = VisCheckBoxCustom("Timer Bars", "BOMB_TIMER_BARS")
     val bombTimerEnableMenu = VisCheckBoxCustom("Timer Menu", "BOMB_TIMER_MENU")
@@ -53,6 +59,19 @@ class MiscTab : Tab(false, false) {
             headWalkKeyField.isDisabled = true
         }
 
+        aimStraferSelectBox.setItems("Same", "Opposite")
+        aimStraferSelectBox.changed { _, _ ->
+            if (aimStraferSelectBox.selected == "Same") {
+                curSettings["AIM_STRAFER_TYPE"] = 1
+            } else {
+                curSettings["AIM_STRAFER_TYPE"] = 0
+            }
+        }
+
+        val aimStraferTable = VisTable()
+        aimStraferTable.add(aimStrafer).left()
+        aimStraferTable.add(aimStraferSelectBox).padLeft(225F - aimStrafer.width).left()
+
         //Create Head Walk Toggle
         val headWalkTable = VisTable()
         Tooltip.Builder("Head walk master switch").target(headWalk).build()
@@ -62,7 +81,7 @@ class MiscTab : Tab(false, false) {
             true
         }
         headWalkTable.add(headWalk).left()
-        headWalkTable.add(headWalkToggleText).padLeft(200F - headWalk.width).left()
+        headWalkTable.add(headWalkToggleText).padLeft(225F - headWalk.width).left()
 
         //Create Head Walk Key Input Box
         val headWalkKey = VisTable()
@@ -111,7 +130,7 @@ class MiscTab : Tab(false, false) {
         hitSoundBox.items = hitSoundFiles
 
         hitSound.add(hitSoundCheckBox)
-        hitSound.add(hitSoundBox).padLeft(200F-hitSoundCheckBox.width)
+        hitSound.add(hitSoundBox).padLeft(225F-hitSoundCheckBox.width)
 
         hitSoundBox.selected = curSettings["HITSOUND_FILE_NAME"].replace("\"", "")
 
@@ -128,6 +147,10 @@ class MiscTab : Tab(false, false) {
         table.add(autoStrafe).left().row()
         table.add(autoStrafeBHopOnly).padLeft(20F).left().row()
         table.add(fastStop).left().row()
+        table.addSeparator()
+        table.add(aimStraferTable).left().row()
+        table.add(aimStraferShift).left().row()
+        table.add(aimStraferStrictness).left().row()
         table.addSeparator()
         table.add(bombTimer).left().row()
         table.add(bombTimerEnableMenu).padLeft(20F).left().row()
@@ -161,6 +184,13 @@ fun miscTabUpdate() {
         autoStrafe.update()
         autoStrafeBHopOnly.update()
         fastStop.update()
+        aimStrafer.update()
+        aimStraferShift.update()
+        aimStraferSelectBox.selected = when(curSettings["AIM_STRAFER_TYPE"].toInt()) {
+            1 -> "Same"
+            else -> "Opposite"
+        }
+        aimStraferStrictness.update()
         bombTimer.update()
         bombTimerEnableMenu.update()
         bombTimerEnableBars.update()

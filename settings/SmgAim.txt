@@ -1,5 +1,3 @@
-import rat.poison.settings.*
-
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////// --- GENERAL --- ///////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -43,10 +41,10 @@ SMG_AIM_STRICTNESS = 2.0
 
 //Enable perfect aim
 //Will instantly snap to the aimbone
-SMG_PERFECT_AIM = false
+SMG_PERFECT_AIM = true
 
 //Perfect aim fov (0 - 45)
-SMG_PERFECT_AIM_FOV = 40
+SMG_PERFECT_AIM_FOV = 15
 
 //Perfect aim % chance to activate (1 - 100)
-SMG_PERFECT_AIM_CHANCE = 100
+SMG_PERFECT_AIM_CHANCE = 10

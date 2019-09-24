@@ -5,11 +5,8 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.utils.Align
-import com.badlogic.gdx.utils.Array
-import com.kotcrab.vis.ui.util.dialog.ConfirmDialogListener
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
-import com.kotcrab.vis.ui.util.dialog.OptionDialogAdapter
 import com.sun.jna.Memory
 import org.jire.arrowhead.keyPressed
 import rat.poison.*
@@ -23,16 +20,12 @@ import rat.poison.game.entity.eyeAngle
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.nadeHelperTab
-import rat.poison.ui.optionsTab
 import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
-import java.awt.event.KeyEvent
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
-import kotlin.math.ceil
-import kotlin.math.sign
 
 //Convert shit to an object {} ?
 //      mapcoords:            x    y    z
@@ -86,8 +79,11 @@ fun nadeHelper() = App {
 
                         color = Color(1F, 1F, 1F, 1F)
 
-                        if ((mPos.x in fSpot[0].cToDouble() - 5..fSpot[0].cToDouble() + 5) && (mPos.y in fSpot[1].cToDouble() - 5..fSpot[1].cToDouble() + 5)) {
+                        var lineUp = false
+
+                        if ((mPos.x in fSpot[0].cToDouble() - 20..fSpot[0].cToDouble() + 20) && (mPos.y in fSpot[1].cToDouble() - 20..fSpot[1].cToDouble() + 20)) {
                             color = Color(1F, 0F, 0F, 1F)
+                            lineUp = true
                         }
 
                         val vec1 = Vector()
@@ -103,19 +99,6 @@ fun nadeHelper() = App {
                             h = clamp(h, 10F, 89F)
 
                             ellipse(vec1.x.toFloat() - 45F, vec1.y.toFloat() - 45F, 90F, h)
-
-                            textRenderer.apply {
-                                val glyph = GlyphLayout()
-
-                                sb.begin()
-                                val sbText = StringBuilder()
-                                sbText.append(fSpot[3].toString())
-
-                                glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
-                                textRenderer.draw(sb, glyph, vec1.x.toFloat(), vec1.y.toFloat())
-
-                                sb.end()
-                            }
                         }
 
                         if (worldToScreen(Vector(hPos[0].cToDouble(), hPos[1].cToDouble(), hPos[2].cToDouble()), vec2)) {
@@ -130,10 +113,29 @@ fun nadeHelper() = App {
                             circle(vec3.x.toFloat(), vec3.y.toFloat() - 2F, 4F)
                             set(ShapeRenderer.ShapeType.Line)
                             t2 = true
+
+                            textRenderer.apply {
+                                val glyph = GlyphLayout()
+
+                                sb.begin()
+                                val sbText = StringBuilder()
+                                sbText.append(fSpot[3].toString())
+
+                                glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
+                                textRenderer.draw(sb, glyph, vec3.x.toFloat(), vec3.y.toFloat()-10F)
+
+                                sb.end()
+                            }
                         }
 
-                        if (t1 && t2) {
-                            line(vec2.x.toFloat() - 4F, vec2.y.toFloat() - 4F, vec3.x.toFloat(), vec3.y.toFloat() - 2F)
+                        if (t2) {
+                            if (!lineUp) {
+                                if (t1) {
+                                    line(vec2.x.toFloat() - 4F, vec2.y.toFloat() - 4F, vec3.x.toFloat(), vec3.y.toFloat() - 2F)
+                                }
+                            } else {
+                                line(CSGO.gameWidth/2F, 0F, vec3.x.toFloat(), vec3.y.toFloat() - 2F)
+                            }
                         }
 
                         end()

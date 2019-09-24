@@ -1,5 +1,3 @@
-import rat.poison.settings.*
-
 //Enabe DEBUG in cmd
 DEBUG = false
 
@@ -22,6 +20,18 @@ OVERLAY_HEIGHT = 1080
 //Enable overlay warning on initialize
 WARNING = true
 
+//Aim Strafer
+AIM_STRAFER = false
+
+//Strafe Type, //0 is opposite, 1 is same
+AIM_STRAFER_TYPE = 0
+
+//Strafer shift move
+AIM_STRAFER_SHIFT = false
+
+//Strictness/deadzone
+AIM_STRAFER_STRICTNESS = 0.3
+
 //Enable fast stop
 //Will attempt to slow your velocity faster than normal if movement keys aren't being pressed
 FAST_STOP = false
@@ -42,10 +52,6 @@ ENABLE_OVERRIDE = true
 
 //Enable aimbot when aim key is pressed
 ACTIVATE_FROM_AIM_KEY = true
-
-//VK Key Code (http://cherrytree.at/misc/vk.htm), ingame key to shoot
-//Default key is MOUSE_1 (left click)
-AIM_KEY = 1
 
 //Enables aimbot against teammates
 TEAMMATES_ARE_ENEMIES = false

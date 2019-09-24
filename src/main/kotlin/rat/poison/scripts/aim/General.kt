@@ -7,6 +7,7 @@ import rat.poison.settings.*
 import rat.poison.utils.*
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
+import rat.poison.game.offsets.ClientOffsets
 import rat.poison.strToBool
 import java.lang.Math.toRadians
 import java.util.concurrent.atomic.AtomicBoolean
@@ -16,7 +17,7 @@ import kotlin.math.abs
 import kotlin.math.sin
 
 val target = AtomicLong(-1)
-val bone = AtomicInteger(AIM_BONE)
+val bone = AtomicInteger(curSettings["AIM_BONE"].toInt())
 val perfect = AtomicBoolean() //Perfect Aim boolean check, only for path aim
 var boneTrig = false
 
@@ -47,7 +48,7 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 					closestPlayer = arr[2] as Long
 				}
 			}
-		} else if (BONE == -2) { //Trigger bot bone
+		} else if (BONE == -2) { //Trigger bot bone //Break if we find a successful bone
 			if (curSettings["BONE_TRIGGER_HB"].strToBool() && curSettings["BONE_TRIGGER_BB"].strToBool()) {
 				for (i in 3..8) //Check all body bones & head bone
 				{
@@ -57,6 +58,7 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 						closestFOV = arr[0] as Double
 						closestDelta = arr[1] as Double
 						closestPlayer = arr[2] as Long
+						break
 					}
 				}
 			} else if (curSettings["BONE_TRIGGER_BB"].strToBool()) {
@@ -67,6 +69,7 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 						closestFOV = arr[0] as Double
 						closestDelta = arr[1] as Double
 						closestPlayer = arr[2] as Long
+						break
 					}
 				}
 			} else {
@@ -79,7 +82,7 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 				}
 			}
 		} else {
-			if (BONE == -1) { //Nearest bone check
+			if (BONE == NEAREST_BONE) { //Nearest bone check
 				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, entity.nearestBone())
 
 				if (arr[0] != -1.0) {
@@ -167,7 +170,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			return@every
 		}
 
-		val aim = curSettings["ACTIVATE_FROM_AIM_KEY"].strToBool() && keyPressed(curSettings["AIM_KEY"].toInt())
+		val aim = curSettings["ACTIVATE_FROM_AIM_KEY"].strToBool() && keyPressed(AIM_KEY)
 		val forceAim = keyPressed(curSettings["FORCE_AIM_KEY"].toInt())
 		val haveAmmo = meWepEnt.bullets() > 0
 
@@ -219,5 +222,5 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			val aimSpeed = curSettings["AIM_SPEED"].toInt()
 			doAim(destinationAngle, currentAngle, aimSpeed)
 		}
-	} catch (e: Exception) {println(e)}
+	} catch (e: Exception) {}
 }

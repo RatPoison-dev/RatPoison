@@ -1,6 +1,3 @@
-import rat.poison.game.Color
-import rat.poison.settings.*
-
 //Enable clrRender chams
 //This modifies a cvar that isn't currently checked, which can change at any time. Use at your own discretion.
 CHAMS_ESP = false

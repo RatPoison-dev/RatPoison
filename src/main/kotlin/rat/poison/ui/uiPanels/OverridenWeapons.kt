@@ -36,10 +36,10 @@ class OverridenWeapons : VisTable(true) {
     private val aimBoneLabel = VisLabel("Bone: ")
     val aimBoneBox = VisSelectBox<String>()
 
-    val aimFovLabel = VisLabel("FOV: " + curSettings[categorySelected + "_AIM_FOV"].toInt().toString() + when(curSettings[categorySelected + "_AIM_FOV"].toInt().toString().length) {3->"  " 2->"    " else ->"      "})
+    val aimFovLabel = VisLabel("FOV: " + curSettings[categorySelected + "_AIM_FOV"].toInt().toString())
     val aimFovSlider = VisSlider(1F, 180F, 1F, false)
 
-    val aimSpeedLabel = VisLabel("Speed: " + curSettings[categorySelected + "_AIM_SPEED"].toInt().toString() + when(curSettings[categorySelected + "_AIM_SPEED"].toInt().toString().length) {3->"  " 2->"    " else ->"      "})
+    val aimSpeedLabel = VisLabel("Speed: " + curSettings[categorySelected + "_AIM_SPEED"].toInt().toString())
     val aimSpeedSlider = VisSlider(0F, 5F, 1F, false)
 
     val aimSmoothnessLabel = VisLabel("Smooth: " + curSettings[categorySelected + "_AIM_SMOOTHNESS"].toFloat())
@@ -52,28 +52,13 @@ class OverridenWeapons : VisTable(true) {
     val perfectAimCheckBox = VisCheckBox("Enable Perfect Aim")
     private val perfectAimTable = VisTable()
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
-    val perfectAimFovLabel = VisLabel("FOV: " + curSettings[categorySelected + "_PERFECT_AIM_FOV"].toInt().toString() + when(curSettings[categorySelected + "_PERFECT_AIM_FOV"].toInt().toString().length) {3->"  " 2->"    " else ->"      "})
+    val perfectAimFovLabel = VisLabel("FOV: " + curSettings[categorySelected + "_PERFECT_AIM_FOV"].toInt().toString())
     val perfectAimFovSlider = VisSlider(1F, 45F, 1F, false)
-    val perfectAimChanceLabel = VisLabel("Chance: " + curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toInt().toString() + when(curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toInt().toString().length) {3->"  " 2->"    " else ->"      "})
+    val perfectAimChanceLabel = VisLabel("Chance: " + curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toInt().toString())
     val perfectAimChanceSlider = VisSlider(1F, 100F, 1F, false)
 
     init {
         align(Align.left)
-
-        //Create Factor Recoil Toggle
-        Tooltip.Builder("Whether or not to factor in recoil when aiming").target(enableFactorRecoil).build()
-        enableFactorRecoil.isChecked = curSettings[categorySelected + "_ENABLE_PATH_AIM"].strToBool()
-        enableFactorRecoil.changed { _, _ ->
-            if (weaponOverride) {
-                val curWep: Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
-                curWep[1] = enableFactorRecoil.isChecked.toDouble()
-                curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
-            } else {
-                curSettings[categorySelected + "_FACTOR_RECOIL"] = enableFactorRecoil.isChecked.boolToStr()
-            }
-            uiUpdate()
-            true
-        }
 
         //Create Category Selector Box
         val categorySelection = VisTable()
@@ -126,11 +111,11 @@ class OverridenWeapons : VisTable(true) {
 
         //Create Enable Override Toggle
         Tooltip.Builder("Whether or not to override aim when this gun is selected").target(weaponOverrideEnableCheckBox).build()
-        weaponOverrideEnableCheckBox.isChecked = convStrToArray(curSettings[weaponOverrideSelected])[0]!!.toBool()
+        weaponOverrideEnableCheckBox.isChecked = curSettings[weaponOverrideSelected].toWeaponClass().tOverride
         weaponOverrideEnableCheckBox.changed { _, _ ->
-            val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
-            curWep[0] = weaponOverrideEnableCheckBox.isChecked.toDouble()
-            curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
+            val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
+            curWep.tOverride = weaponOverrideEnableCheckBox.isChecked
+            curSettings[weaponOverrideSelected] = curWep.toString()
             enableOverride = weaponOverrideEnableCheckBox.isChecked
             uiUpdate()
             true
@@ -141,13 +126,13 @@ class OverridenWeapons : VisTable(true) {
         enableFlatAim.changed { _, _ ->
             if (weaponOverride)
             {
-                val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
-                curWep[2] = enableFlatAim.isChecked.toDouble()
+                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
+                curWep.tFlatAim = enableFlatAim.isChecked
                 if (enableFlatAim.isChecked)
                 {
-                    curWep[3] = 0.0
+                    curWep.tPathAim = false
                 }
-                curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
+                curSettings[weaponOverrideSelected] = curWep.toString()
             }
             uiUpdate()
             true
@@ -157,15 +142,28 @@ class OverridenWeapons : VisTable(true) {
         enablePathAim.isChecked = curSettings[categorySelected + "_ENABLE_PATH_AIM"].strToBool()
         enablePathAim.changed { _, _ ->
             if (weaponOverride) {
-                val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
-                curWep[3] = enablePathAim.isChecked.toDouble()
+                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
+                curWep.tPathAim = enablePathAim.isChecked
                 if (enablePathAim.isChecked)
                 {
-                    curWep[2] = 0.0
+                    curWep.tFlatAim = false
                 }
-                curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
+                curSettings[weaponOverrideSelected] = curWep.toString()
             }
             uiUpdate()
+            true
+        }
+
+        //Create Factor Recoil Toggle
+        Tooltip.Builder("Whether or not to factor in recoil when aiming").target(enableFactorRecoil).build()
+        enableFactorRecoil.isChecked = curSettings[categorySelected + "_ENABLE_PATH_AIM"].strToBool()
+        enableFactorRecoil.changed { _, _ ->
+            if (weaponOverride) {
+                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
+                curWep.tFRecoil = enableFactorRecoil.isChecked
+                curSettings[weaponOverrideSelected] = curWep.toString()
+            }
+            //uiUpdate()
             true
         }
 
@@ -174,11 +172,11 @@ class OverridenWeapons : VisTable(true) {
         enableScopedOnly.isDisabled = true
         enableScopedOnly.changed { _, _ ->
             if (weaponOverride) {
-                val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
-                curWep[12] = enableScopedOnly.isChecked.toDouble()
-                curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
+                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
+                curWep.tScopedOnly = enableScopedOnly.isChecked
+                curSettings[weaponOverrideSelected] = curWep.toString()
             }
-            uiUpdate()
+            //uiUpdate()
             true
         }
 
@@ -200,9 +198,9 @@ class OverridenWeapons : VisTable(true) {
             val setBone = curSettings[aimBoneBox.selected + "_BONE"].toInt()
 
             if (weaponOverride) {
-                val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
-                curWep[4] = setBone.toDouble()
-                curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
+                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
+                curWep.tAimBone = setBone
+                curSettings[weaponOverrideSelected] = curWep.toString()
             }
         }
 
@@ -212,9 +210,9 @@ class OverridenWeapons : VisTable(true) {
         aimFovSlider.value = curSettings[categorySelected + "_AIM_FOV"].toInt().toFloat()
         aimFovSlider.changed { _, _ ->
             if (weaponOverride) {
-                val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
-                curWep[5] = aimFovSlider.value.toDouble()
-                curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
+                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
+                curWep.tAimFov = aimFovSlider.value.toInt()
+                curSettings[weaponOverrideSelected] = curWep.toString()
             }
 
             aimFovLabel.setText("FOV: " + aimFovSlider.value.toInt())
@@ -228,9 +226,9 @@ class OverridenWeapons : VisTable(true) {
         aimSpeedSlider.value = curSettings[categorySelected + "_AIM_SPEED"].toInt().toFloat()
         aimSpeedSlider.changed { _, _ ->
             if (weaponOverride) {
-                val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
-                curWep[6] = aimSpeedSlider.value.toDouble()
-                curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
+                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
+                curWep.tAimSpeed = aimSpeedSlider.value.toInt()
+                curSettings[weaponOverrideSelected] = curWep.toString()
             }
             aimSpeedLabel.setText("Speed: " + aimSpeedSlider.value.toInt())
         }
@@ -243,9 +241,9 @@ class OverridenWeapons : VisTable(true) {
         aimSmoothnessSlider.value = curSettings[categorySelected + "_AIM_SMOOTHNESS"].toFloat()
         aimSmoothnessSlider.changed { _, _ ->
             if (weaponOverride) {
-                val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
-                curWep[7] = aimSmoothnessSlider.value.toDouble()
-                curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
+                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
+                curWep.tAimSmooth = aimSmoothnessSlider.value.toDouble()
+                curSettings[weaponOverrideSelected] = curWep.toString()
             }
             aimSmoothnessLabel.setText("Smooth: " + (round(aimSmoothnessSlider.value.toDouble() * 10.0) / 10.0))
         }
@@ -258,9 +256,9 @@ class OverridenWeapons : VisTable(true) {
         aimStrictnessSlider.value = curSettings[categorySelected + "_AIM_STRICTNESS"].toFloat()
         aimStrictnessSlider.changed { _, _ ->
             if (weaponOverride) {
-                val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
-                curWep[8] = aimStrictnessSlider.value.toDouble()
-                curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
+                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
+                curWep.tAimStrict = aimStrictnessSlider.value.toDouble()
+                curSettings[weaponOverrideSelected] = curWep.toString()
             }
             aimStrictnessLabel.setText("Strictness: " + (round(aimStrictnessSlider.value.toDouble() * 10.0) / 10.0))
         }
@@ -277,9 +275,9 @@ class OverridenWeapons : VisTable(true) {
         perfectAimFovSlider.value = curSettings[categorySelected + "_PERFECT_AIM_FOV"].toInt().toFloat()
         perfectAimFovSlider.changed { _, _ ->
             if (weaponOverride) {
-                val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
-                curWep[10] = perfectAimFovSlider.value.toDouble()
-                curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
+                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
+                curWep.tPAimFov = perfectAimFovSlider.value.toInt()
+                curSettings[weaponOverrideSelected] = curWep.toString()
             }
             perfectAimFovLabel.setText("FOV: " + perfectAimFovSlider.value.toInt())
         }
@@ -293,9 +291,9 @@ class OverridenWeapons : VisTable(true) {
         perfectAimChanceSlider.value = curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toInt().toFloat()
         perfectAimChanceSlider.changed { _, _ ->
             if (weaponOverride) {
-                val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
-                curWep[11] = perfectAimChanceSlider.value.toDouble()
-                curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
+                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
+                curWep.tPAimChance = perfectAimChanceSlider.value.toInt()
+                curSettings[weaponOverrideSelected] = curWep.toString()
             }
             perfectAimChanceLabel.setText("Chance: " + perfectAimChanceSlider.value.toInt())
         }
@@ -309,9 +307,9 @@ class OverridenWeapons : VisTable(true) {
 
         perfectAimCheckBox.changed { _, _ ->
             if (weaponOverride) {
-                val curWep : Array<Double?> = convStrToArray(curSettings[weaponOverrideSelected])
-                curWep[9] = perfectAimCheckBox.isChecked.boolToDouble()
-                curSettings[weaponOverrideSelected] = convArrayToStr(curWep.contentToString())
+                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
+                curWep.tPerfectAim = perfectAimCheckBox.isChecked
+                curSettings[weaponOverrideSelected] = curWep.toString()
             }
             perfectAimCollapsible.setCollapsed(!perfectAimCollapsible.isCollapsed, true)
         }

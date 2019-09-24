@@ -3,10 +3,14 @@ package rat.poison.ui.tabs
 import rat.poison.ui.nadeHelperTab
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
+import com.kotcrab.vis.ui.util.dialog.Dialogs
+import com.kotcrab.vis.ui.util.dialog.OptionDialogAdapter
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import org.jire.arrowhead.keyPressed
 import rat.poison.*
+import rat.poison.game.entity.absPosition
+import rat.poison.game.me
 import rat.poison.scripts.*
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
@@ -52,7 +56,11 @@ class NadeHelperTab : Tab(false, false) {
 
         val clearNadeHelper = VisTextButton("Clear Currently Loaded")
         clearNadeHelper.changed { _, _ ->
-            nadeHelperArrayList.clear()
+            Dialogs.showOptionDialog(App.menuStage, "Warning", "Clear the current positions?", Dialogs.OptionDialogType.YES_NO, object: OptionDialogAdapter() {
+                override fun yes() {
+                    nadeHelperArrayList.clear()
+                }
+            })
         }
 
         nadeHelperToggle.changed { _, _ ->

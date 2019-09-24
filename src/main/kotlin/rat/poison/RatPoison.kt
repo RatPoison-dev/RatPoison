@@ -38,6 +38,8 @@ import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.sqrt
 
+data class oWeapon(var tOverride: Boolean, var tFRecoil: Boolean, var tFlatAim: Boolean, var tPathAim: Boolean, var tAimBone: Int, var tAimFov: Int, var tAimSpeed: Int, var tAimSmooth: Double, var tAimStrict: Double, var tPerfectAim: Boolean, var tPAimFov: Int, var tPAimChance: Int, var tScopedOnly: Boolean)
+
 const val EXPERIMENTAL = false
 const val SETTINGS_DIRECTORY = "settings"
 var saving = false
@@ -65,7 +67,7 @@ fun main() {
     if (dbg) println("[DEBUG] Initializing scripts...")
     //Init scripts
     if (!curSettings["MENU"].strToBool()) { //If we arent' using the menu disable everything that uses the menu
-        if (dbg) println("[DEBUG] Menu disabled, disabling box, skeleton, rcrosshair, btimer, indicator, speclist, hitmarker")
+        if (dbg) println("[DEBUG] Menu disabled, disabling box, skeleton, rcrosshair, btimer, indicator, speclist, hitmarker, nade tracer, nade helper")
 
         curSettings["ENABLE_BOX_ESP"] = "false"
 
@@ -89,9 +91,10 @@ fun main() {
     }
 
     if (dbg) { println("[DEBUG] Initializing Bunny Hop") }; bunnyHop()
-    if (dbg) { println("[DEBUG] Initializing Auto Strafe") }; autoStrafe()
+    if (dbg) { println("[DEBUG] Initializing Auto Strafe") }; strafeHelper()
     if (dbg) { println("[DEBUG] Initializing RCS") }; rcs()
     if (dbg) { println("[DEBUG] Initializing Flat Aim") }; flatAim()
+
     if (dbg) { println("[DEBUG] Initializing Path Aim") }; pathAim()
     if (dbg) { println("[DEBUG] Initializing Set Aim") }; setAim()
     if (dbg) { println("[DEBUG] Initializing Bone Trigger") }; boneTrigger()
@@ -239,93 +242,94 @@ object App : ApplicationAdapter() {
     override fun render() {
         sync(curSettings["OPENGL_FPS"].toInt())
 
-        if (!Thread.interrupted()) {
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
+        if (VisUI.isLoaded()) {
+            if (!Thread.interrupted()) {
+                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
 
-            gl.apply {
-                if (!menuStage.root.isVisible) return
+                gl.apply {
+                    if (!menuStage.root.isVisible) return
 
-                if (MENUTOG) {
-                    menuStage.act(Gdx.graphics.deltaTime)
-                    val batch = menuStage.batch
-                    val menuCamera = menuStage.viewport.camera
-                    menuCamera.update()
-                    batch.projectionMatrix = menuCamera.combined
-                    batch.begin()
-                    batch.enableBlending()
-                    menuStage.root.draw(batch, 1F)
-                    batch.end()
-
-                    if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
-                        aimOverrideStage.act(Gdx.graphics.deltaTime)
-                        val aimOverrideCamera = aimOverrideStage.viewport.camera
-                        aimOverrideCamera.update()
-                        val aimOverrideBatch = aimOverrideStage.batch
-                        aimOverrideBatch.projectionMatrix = aimOverrideCamera.combined
-                        aimOverrideBatch.begin()
-                        aimOverrideBatch.enableBlending()
-                        aimOverrideStage.root.draw(aimOverrideBatch, 1F)
-                        aimOverrideBatch.end()
+                    if (curSettings["ENABLE_BOMB_TIMER"].strToBool() && curSettings["BOMB_TIMER_MENU"].strToBool()) {
+                        bombStage.act(Gdx.graphics.deltaTime)
+                        val bombCamera = bombStage.viewport.camera
+                        bombCamera.update()
+                        val bombBatch = bombStage.batch
+                        bombBatch.projectionMatrix = bombCamera.combined
+                        bombBatch.begin()
+                        bombBatch.enableBlending()
+                        bombStage.root.draw(bombBatch, 1F)
+                        bombBatch.end()
                     }
+
+                    if (curSettings["SPECTATOR_LIST"].strToBool()) {
+                        specListStage.act(Gdx.graphics.deltaTime)
+                        val specListCamera = specListStage.viewport.camera
+                        specListCamera.update()
+                        val specListBatch = specListStage.batch
+                        specListBatch.projectionMatrix = specListCamera.combined
+                        specListBatch.begin()
+                        specListBatch.enableBlending()
+                        specListStage.root.draw(specListBatch, 1F)
+                        specListBatch.end()
+                    }
+
+                    if (MENUTOG) {
+                        if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
+                            aimOverrideStage.act(Gdx.graphics.deltaTime)
+                            val aimOverrideCamera = aimOverrideStage.viewport.camera
+                            aimOverrideCamera.update()
+                            val aimOverrideBatch = aimOverrideStage.batch
+                            aimOverrideBatch.projectionMatrix = aimOverrideCamera.combined
+                            aimOverrideBatch.begin()
+                            aimOverrideBatch.enableBlending()
+                            aimOverrideStage.root.draw(aimOverrideBatch, 1F)
+                            aimOverrideBatch.end()
+                        }
+
+                        menuStage.act(Gdx.graphics.deltaTime)
+                        val batch = menuStage.batch
+                        val menuCamera = menuStage.viewport.camera
+                        menuCamera.update()
+                        batch.projectionMatrix = menuCamera.combined
+                        batch.begin()
+                        batch.enableBlending()
+                        menuStage.root.draw(batch, 1F)
+                        batch.end()
+                    }
+
+                    glEnable(GL20.GL_BLEND)
+                    glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
+                    glClearColor(0F, 0F, 0F, 0F)
+                    sb.projectionMatrix = menuStage.camera.combined
+                    shapeRenderer.projectionMatrix = menuStage.camera.combined
+                    updateViewMatrix()
+                    for (i in 0 until bodies.size) {
+                        bodies[i]()
+                    }
+                    glDisable(GL20.GL_BLEND)
                 }
 
-                if (curSettings["ENABLE_BOMB_TIMER"].strToBool() && curSettings["BOMB_TIMER_MENU"].strToBool())
-                {
-                    bombStage.act(Gdx.graphics.deltaTime)
-                    val bombCamera = bombStage.viewport.camera
-                    bombCamera.update()
-                    val bombBatch = bombStage.batch
-                    bombBatch.projectionMatrix = bombCamera.combined
-                    bombBatch.begin()
-                    bombBatch.enableBlending()
-                    bombStage.root.draw(bombBatch, 1F)
-                    bombBatch.end()
+                overlayMenuKey.update()
+                if (overlayMenuKey.justBecomeTrue) {
+                    MENUTOG = !MENUTOG
+                    overlay.clickThrough = !MENUTOG
+
+                    uiMenu.updateChilds()
+                    uiUpdate()
+
+                    if (dbg) println("[DEBUG] Menu Toggled")
                 }
 
-                if (curSettings["SPECTATOR_LIST"].strToBool()) {
-                    specListStage.act(Gdx.graphics.deltaTime)
-                    val specListCamera = specListStage.viewport.camera
-                    specListCamera.update()
-                    val specListBatch = specListStage.batch
-                    specListBatch.projectionMatrix = specListCamera.combined
-                    specListBatch.begin()
-                    specListBatch.enableBlending()
-                    specListStage.root.draw(specListBatch, 1F)
-                    specListBatch.end()
+                val w = overlay.width
+                val h = overlay.height
+
+                if (menuStage.viewport.screenWidth != w || menuStage.viewport.screenHeight != h) {
+                    resize(w, h)
+                    menuStage.viewport.update(w, h)
+                    bombStage.viewport.update(w, h)
+                    specListStage.viewport.update(w, h)
+                    if (dbg) println("[DEBUG] Resized Viewports")
                 }
-
-                glEnable(GL20.GL_BLEND)
-                glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
-                glClearColor(0F, 0F, 0F, 0F)
-                sb.projectionMatrix = menuStage.camera.combined
-                shapeRenderer.projectionMatrix = menuStage.camera.combined
-                updateViewMatrix()
-                for (i in 0 until bodies.size) {
-                    bodies[i]()
-                }
-                glDisable(GL20.GL_BLEND)
-            }
-
-            overlayMenuKey.update()
-            if (overlayMenuKey.justBecomeTrue) {
-                MENUTOG = !MENUTOG
-                overlay.clickThrough = !MENUTOG
-
-                uiMenu.updateChilds()
-                uiUpdate()
-
-                if (dbg) println("[DEBUG] Menu Toggled")
-            }
-
-            val w = overlay.width
-            val h = overlay.height
-
-            if (menuStage.viewport.screenWidth != w || menuStage.viewport.screenHeight != h) {
-                resize(w, h)
-                menuStage.viewport.update(w, h)
-                bombStage.viewport.update(w, h)
-                specListStage.viewport.update(w, h)
-                if (dbg) println("[DEBUG] Resized Viewports")
             }
         }
 
@@ -420,27 +424,15 @@ fun convStrToColor(input: String): rat.poison.game.Color {
             arrayLine[3].replace("alpha=", "").toDouble())
 }
 
-fun convStrToArray(input: String?): Array<Double?> {
-    var line = input
-    line = line!!.replace("doubleArrayOf(", "").replace(")", "").replace(",", "").replace("[", "").replace("]", "")
-
-    val listLine = line.trim().split(" ".toRegex(), 13)
-
-    val arrayLine = arrayOfNulls<Double>(13)
-
-    for (i in 0 until listLine.size)
-    {
-        arrayLine[i] = listLine[i].toDouble()
-    }
-
-    return arrayLine
+fun String.toWeaponClass(): oWeapon {
+    var tStr = this
+    tStr = tStr.replace("oWeapon(", "").replace(")", "")
+    val tSA = tStr.split(", ") //temp String Array
+    return oWeapon(tOverride = tSA.pull(0).strToBool(), tFRecoil = tSA.pull(1).strToBool(), tFlatAim = tSA.pull(2).strToBool(), tPathAim = tSA.pull(3).strToBool(), tAimBone = tSA.pull(4).toInt(), tAimFov = tSA.pull(5).toInt(), tAimSpeed = tSA.pull(6).toInt(), tAimSmooth = tSA.pull(7).toDouble(), tAimStrict = tSA.pull(8).toDouble(), tPerfectAim = tSA.pull(9).strToBool(), tPAimFov = tSA.pull(10).toInt(), tPAimChance = tSA.pull(11).toInt(), tScopedOnly = tSA.pull(12).strToBool())
 }
 
-fun convArrayToStr(input: String): String {
-    var line = input
-    line = line.replace("[", "doubleArrayOf(").replace("]", ")")
-
-    return line
+private fun List<String>.pull(idx: Int): String {
+    val tStr = this[idx].replace(" ", "") //Remove spaces
+    val split = tStr.split("=")
+    return split[1]
 }
-
-fun Angle.magnitude() : Double = sqrt(x.pow(2) + y.pow(2) + z.pow(2))

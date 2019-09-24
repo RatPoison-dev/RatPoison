@@ -54,11 +54,6 @@ fun worldToScreen(from: Vector, vOut: Vector) = try {
 			false
 		} else false
 } catch (e: Exception) {
-	println("caught 2")
-	//println(dwViewMatrix)
-	//println(clientDLL.read(dwViewMatrix, 4 * 4 * 4))
-
-	e.printStackTrace()
 	false
 }
 

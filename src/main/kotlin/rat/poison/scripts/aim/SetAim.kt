@@ -1,12 +1,9 @@
 package rat.poison.scripts.aim
 
-import rat.poison.convStrToArray
-import rat.poison.curSettings
+import rat.poison.*
 import rat.poison.game.Weapons
 import rat.poison.game.entity.weapon
 import rat.poison.game.me
-import rat.poison.settingsLoaded
-import rat.poison.strToBool
 import rat.poison.utils.every
 
 var override = false
@@ -22,21 +19,21 @@ fun setAim() = every(250){
 
                 //V--Update aim settings for current weapons--V\\
                 if (curWep.rifle || curWep.smg || curWep.pistol || curWep.sniper || curWep.shotgun) {
-                    val curWepSettings = convStrToArray(curSettings[curWep.name])
+                    val curWepSettings = curSettings[curWep.name].toWeaponClass()
 
-                    if (curWepSettings[0]!!.toBool()) {
-                        curSettings["FACTOR_RECOIL"] = curWepSettings[1]!!.toBool()
-                        curSettings["ENABLE_FLAT_AIM"] = curWepSettings[2]!!.toBool()
-                        curSettings["ENABLE_PATH_AIM"] = curWepSettings[3]!!.toBool()
-                        curSettings["AIM_BONE"] = curWepSettings[4]!!.toInt()
-                        curSettings["AIM_FOV"] = curWepSettings[5]!!.toInt()
-                        curSettings["AIM_SPEED"] = curWepSettings[6]!!.toInt()
-                        curSettings["AIM_SMOOTHNESS"] = curWepSettings[7]
-                        curSettings["AIM_STRICTNESS"] = curWepSettings[8]
-                        curSettings["PERFECT_AIM"] = curWepSettings[9]!!.toBool()
-                        curSettings["PERFECT_AIM_FOV"] = curWepSettings[10]!!.toInt()
-                        curSettings["PERFECT_AIM_CHANCE"] = curWepSettings[11]!!.toInt()
-                        curSettings["ENABLE_SCOPED_ONLY"] = curWepSettings[12]!!.toBool()
+                    if (curWepSettings.tOverride) {
+                        curSettings["FACTOR_RECOIL"] = curWepSettings.tFRecoil
+                        curSettings["ENABLE_FLAT_AIM"] = curWepSettings.tFlatAim
+                        curSettings["ENABLE_PATH_AIM"] = curWepSettings.tPathAim
+                        curSettings["AIM_BONE"] = curWepSettings.tAimBone
+                        curSettings["AIM_FOV"] = curWepSettings.tAimFov
+                        curSettings["AIM_SPEED"] = curWepSettings.tAimSpeed
+                        curSettings["AIM_SMOOTHNESS"] = curWepSettings.tAimSpeed
+                        curSettings["AIM_STRICTNESS"] = curWepSettings.tAimStrict
+                        curSettings["PERFECT_AIM"] = curWepSettings.tPerfectAim
+                        curSettings["PERFECT_AIM_FOV"] = curWepSettings.tPAimFov
+                        curSettings["PERFECT_AIM_CHANCE"] = curWepSettings.tPAimChance
+                        curSettings["ENABLE_SCOPED_ONLY"] = curWepSettings.tScopedOnly
                         override = true
                     }
                 }
@@ -69,6 +66,7 @@ fun setAim() = every(250){
                 curSettings["AIM_FOV"] = curSettings[strPre + "_AIM_FOV"].toInt()
                 curSettings["AIM_SPEED"] = curSettings[strPre + "_AIM_SPEED"].toInt()
                 curSettings["AIM_SMOOTHNESS"] = curSettings[strPre + "_AIM_SMOOTHNESS"].toDouble()
+
                 curSettings["AIM_STRICTNESS"] = curSettings[strPre + "_AIM_STRICTNESS"].toDouble()
                 curSettings["PERFECT_AIM"] = curSettings[strPre + "_PERFECT_AIM"].strToBool()
                 curSettings["PERFECT_AIM_FOV"] = curSettings[strPre + "_PERFECT_AIM_FOV"].toInt()

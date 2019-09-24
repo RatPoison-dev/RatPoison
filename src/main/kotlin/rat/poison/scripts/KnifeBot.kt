@@ -17,6 +17,7 @@ import rat.poison.game.entity.*
 import rat.poison.game.entity.position
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack2
 import rat.poison.opened
+import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.strToBool
 import java.awt.Robot
@@ -33,7 +34,7 @@ internal fun autoKnife() = every(10) {
                 val position = me.position()
                 val target = findTarget(position, currentAngle, false, 32, -2)
                 if (target >= 0) {
-                    if (keyReleased(curSettings["AIM_KEY"].toInt())) {
+                    if (keyReleased(AIM_KEY)) {
                         val targetPos = target.absPosition()
                         val mePos = me.absPosition()
                         val dst = mePos.distanceTo(targetPos)

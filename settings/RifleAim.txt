@@ -1,44 +1,38 @@
-import rat.poison.settings.*
-
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////// --- GENERAL --- ///////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 //Enable flat aim
 //Writes to angles ingame
-SNIPER_ENABLE_FLAT_AIM = true
+RIFLE_ENABLE_FLAT_AIM = false
 
 //Enable path aim
 //Uses mouse movement to aim
-SNIPER_ENABLE_PATH_AIM = false
-
-//Enable scoped only
-//Will only aimbot when scoped in
-SNIPER_ENABLE_SCOPED_ONLY = true
+RIFLE_ENABLE_PATH_AIM = true
 
 //Factor recoil when shooting
-SNIPER_FACTOR_RECOIL = false
+RIFLE_FACTOR_RECOIL = true
 
 //Aim Bone
 //Default bone to aim at
-SNIPER_AIM_BONE = -1
+RIFLE_AIM_BONE = 6
 
 //Aim FOV
 //Aims at entities inside this value
-SNIPER_AIM_FOV = 40
+RIFLE_AIM_FOV = 60
 
 //Aim speed
 //MS delay between aiming steps
 //Lower is faster
-SNIPER_AIM_SPEED = 1
+RIFLE_AIM_SPEED = 1
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-SNIPER_AIM_SMOOTHNESS = 1.0
+RIFLE_AIM_SMOOTHNESS = 1.5
 
 //Aim strictness (1.0 - 5.0)
 //Lower is more strict (faster, more accurate snapping)
-SNIPER_AIM_STRICTNESS = 1.0
+RIFLE_AIM_STRICTNESS = 2.0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,10 +41,10 @@ SNIPER_AIM_STRICTNESS = 1.0
 
 //Enable perfect aim
 //Will instantly snap to the aimbone
-SNIPER_PERFECT_AIM = false
+RIFLE_PERFECT_AIM = true
 
 //Perfect aim fov (0 - 45)
-SNIPER_PERFECT_AIM_FOV = 1
+RIFLE_PERFECT_AIM_FOV = 5
 
 //Perfect aim % chance to activate (1 - 100)
-SNIPER_PERFECT_AIM_CHANCE = 1
+RIFLE_PERFECT_AIM_CHANCE = 10

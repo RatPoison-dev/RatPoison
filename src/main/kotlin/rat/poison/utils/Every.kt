@@ -20,10 +20,10 @@ inline fun every(minDuration: Int, maxDuration: Int,
             try {
                 body()
             } catch (e: Exception) {
-                println(e)
+                //println(e)
             }
         }
 
-        Thread.sleep(minDuration.toLong())
+        Thread.sleep(minDuration.toLong() + maxDuration.toLong())
     }
 }

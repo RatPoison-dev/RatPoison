@@ -23,6 +23,13 @@ import rat.poison.strToBool
 import rat.poison.ui.bTrigTab
 import rat.poison.ui.mainTabbedPane
 import rat.poison.utils.every
+import java.awt.Robot
+import java.awt.event.InputEvent
+import java.awt.event.KeyEvent
+
+private val robot = Robot().apply { this.autoDelay = 0 }
+private var callingInShot = false
+private var inShot = false
 
 fun boneTrigger() = every(4) {
     if (curSettings["MENU"].strToBool() && opened && haveTarget) {
@@ -41,12 +48,6 @@ fun boneTrigger() = every(4) {
 
     if (curSettings["ENABLE_BONE_TRIGGER"].strToBool()) {
     val wep = me.weapon()
-
-    BONE_TRIGGER_PISTOLS_FOV = 15
-    BONE_TRIGGER_RIFLES_FOV = 15
-    BONE_TRIGGER_SHOTGUNS_FOV = 15
-    BONE_TRIGGER_SMGS_FOV = 15
-    BONE_TRIGGER_SNIPERS_FOV = 15
 
     var bFOV = 0
     //Change to one val, why have 5?
@@ -68,7 +69,7 @@ fun boneTrigger() = every(4) {
             val wepEnt = me.weaponEntity()
             if (!me.weapon().knife && wepEnt.bullets() > 0) { //Prevents snap trigger preventing spamming
                 if (wep.automatic || (!wep.automatic && wepEnt.canFire())) {
-                    if (keyReleased(curSettings["AIM_KEY"].toInt())) {
+                    if (keyReleased(AIM_KEY)) {
                         val currentAngle = clientState.angle()
                         val position = me.position()
                         val target = findTarget(position, currentAngle, false, bFOV, -2)
@@ -86,9 +87,6 @@ fun boneTrigger() = every(4) {
         }
     }
 }
-
-var callingInShot = false
-var inShot = false
 
 //Initial shot delay
 fun bTrigShoot() {
@@ -109,9 +107,10 @@ fun bTrigShoot() {
                 (me.weapon().smg && curSettings["BONE_TRIGGER_SMGS_AIMBOT"].strToBool()) ||
                 (me.weapon().sniper && curSettings["BONE_TRIGGER_SNIPERS_AIMBOT"].strToBool())
 
-
-        clientDLL[dwForceAttack] = 6.toByte() //--Mouse press
+        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK)
+        Thread.sleep(25)
+        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
     }
 
-    inShot = false
+    //inShot = false
 }

@@ -27,7 +27,6 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val activateFromFireKey = VisCheckBoxCustom("Activate From Fire Key", "ACTIVATE_FROM_AIM_KEY")
     val teammatesAreEnemies = VisCheckBoxCustom("Teammates Are Enemies", "TEAMMATES_ARE_ENEMIES")
 
-    val aimKey = VisInputFieldCustom("Aim Key", "AIM_KEY")
     val forceAimKey = VisInputFieldCustom("Force Aim Key", "FORCE_AIM_KEY")
 
     //Automatic Weapons Collapsible
@@ -71,7 +70,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
     init {
         if (curSettings["WARNING"].strToBool()) {
-            val dialog = Dialogs.showOKDialog(menuStage, "Warning", "Current Version: 1.5" +
+            val dialog = Dialogs.showOKDialog(menuStage, "Warning", "Current Version: 1.5.1" +
                     "\n\nIf you have any problems submit an issue on Github" +
                     "\nGitHub: https://github.com/TheFuckingRat/RatPoison" +
                     "\n\nThe ranks tab is a WIP, comp only" +
@@ -98,8 +97,8 @@ class AimTab : Tab(true, false) { //Aim.kts tab
             overridenWeapons.weaponOverride = weaponOverrideCheckBox.isChecked
             curSettings["ENABLE_OVERRIDE"] = weaponOverrideCheckBox.isChecked.toString()
 
-            val curWep : Array<Double?> = convStrToArray(curSettings[overridenWeapons.weaponOverrideSelected])
-            overridenWeapons.enableOverride = curWep[0]!!.strToBool()
+            val curWep = curSettings[overridenWeapons.weaponOverrideSelected].toWeaponClass()
+            overridenWeapons.enableOverride = curWep.tOverride
 
             uiUpdate()
             true
@@ -275,7 +274,6 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         table.add(activateFromFireKey).left().row()
         table.add(teammatesAreEnemies).left().row()
 
-        table.add(aimKey).left().row()
         table.add(forceAimKey).left().row()
 
         table.add(automaticWeaponsCheckBox).left().row()
@@ -321,7 +319,6 @@ fun updateDisableAim() {
         teammatesAreEnemies.disable(bool)
         automaticWeaponsCheckBox.disable(bool)
         automaticWeaponsInput.disable(bool, col)
-        aimKey.disable(bool, col)
         forceAimKey.disable(bool, col)
         categorySelectLabel.color = col
         categorySelectionBox.isDisabled = bool

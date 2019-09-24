@@ -1,6 +1,3 @@
-import rat.poison.game.Color
-import rat.poison.settings.*
-
 //Global enable esp
 ENABLE_ESP = true
 

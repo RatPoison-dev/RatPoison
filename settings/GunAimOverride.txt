@@ -1,126 +1,16 @@
-ENABLE_BOMB_TIMER = true
-BOMB_TIMER_MENU = true
-BOMB_TIMER_BARS = true
-BOMB_TIMER_X = 0.0
-BOMB_TIMER_Y = 0.0
-BOMB_TIMER_ALPHA = 0.75
-ENABLE_BONE_TRIGGER = false
-ENABLE_AUTO_KNIFE = false
-BONE_TRIGGER_HB = true
-BONE_TRIGGER_BB = true
-BONE_TRIGGER_PISTOLS = true
-BONE_TRIGGER_RIFLES = true
-BONE_TRIGGER_SHOTGUNS = true
-BONE_TRIGGER_SMGS = true
-BONE_TRIGGER_SNIPERS = true
-BONE_TRIGGER_PISTOLS_AIMBOT = true
-BONE_TRIGGER_RIFLES_AIMBOT = true
-BONE_TRIGGER_SHOTGUNS_AIMBOT = true
-BONE_TRIGGER_SMGS_AIMBOT = true
-BONE_TRIGGER_SNIPERS_AIMBOT = true
-BONE_TRIGGER_PISTOLS_FOV = 15
-BONE_TRIGGER_RIFLES_FOV = 15
-BONE_TRIGGER_SHOTGUNS_FOV = 15
-BONE_TRIGGER_SMGS_FOV = 15
-BONE_TRIGGER_SNIPERS_FOV = 15
-AIM_ON_BONE_TRIGGER = true
-BONE_TRIGGER_ENABLE_KEY = false
-BONE_TRIGGER_KEY = 70
-BONE_TRIGGER_SHOT_DELAY = 250
-ENABLE_BOX_ESP = false
-BOX_ESP_DETAILS = false
-BOX_ESP_HEALTH = true
-BOX_ESP_HEALTH_POS = "L"
-BOX_ESP_ARMOR = true
-BOX_ESP_ARMOR_POS = "R"
-BOX_ESP_NAME = true
-BOX_ESP_NAME_POS = "T"
-BOX_ESP_WEAPON = true
-BOX_ESP_WEAPON_POS = "B"
-BOX_SHOW_TEAM = false
-BOX_SHOW_ENEMIES = true
-BOX_SHOW_DEFUSERS = true
-BOX_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
-BOX_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
-BOX_DEFUSER_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)
-ENABLE_BUNNY_HOP = false
-BUNNY_HOP_KEY = 32
-AUTO_STRAFE = false
-STRAFE_BHOP_ONLY = true
-CHAMS_ESP = false
-CHAMS_SHOW_HEALTH = false
-CHAMS_BRIGHTNESS = 250
-CHAMS_SHOW_TEAM = false
-CHAMS_SHOW_ENEMIES = true
-CHAMS_SHOW_SELF = true
-CHAMS_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
-CHAMS_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
-CHAMS_SELF_COLOR = Color(red=255, green=55, blue=0, alpha=1.0)
-ENABLE_ESP = true
-VISUALS_TOGGLE_KEY = 35
-ENABLE_ADRENALINE = true
-RADAR_ESP = false
-SNAPLINES = false
-SNAPLINES_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
-ENABLE_HITSOUND = false
-HITSOUND_FILE_NAME = COD.wav
-HITSOUND_VOLUME = 0.1
-DEBUG = false
-MENU = true
-MENU_KEY = 112
-MENU_APP = "Counter-Strike: Global Offensive"
-OVERLAY_WIDTH = 1920
-OVERLAY_HEIGHT = 1080
-WARNING = true
-AIM_STRAFER = false
-AIM_STRAFER_TYPE = 0
-AIM_STRAFER_SHIFT = false
-AIM_STRAFER_STRICTNESS = 0.3
-FAST_STOP = false
-HEAD_WALK = false
-HEAD_WALK_KEY = 81
-ENABLE_AIM = true
-ENABLE_OVERRIDE = true
-ACTIVATE_FROM_AIM_KEY = true
-TEAMMATES_ARE_ENEMIES = false
-FORCE_AIM_KEY = 5
-AIM_DURATION = 1
-HEAD_BONE = 8
-NECK_BONE = 7
-CHEST_BONE = 6
-STOMACH_BONE = 5
-NEAREST_BONE = -1
-PERFECT_AIM = true
-PERFECT_AIM_CHANCE = 10
-PERFECT_AIM_FOV = 5
-AIM_BONE = 6
-AIM_SPEED = 1
-AIM_FOV = 60
-AIM_ASSIST_MODE = false
-FACTOR_RECOIL = true
-ENABLE_FLAT_AIM = false
-ENABLE_PATH_AIM = true
-ENABLE_SCOPED_ONLY = true
-AIM_STRICTNESS = 2.0
-GLOW_ESP = true
-INV_GLOW_ESP = false
-MODEL_ESP = false
-MODEL_AND_GLOW = false
-GLOW_SHOW_TEAM = false
-GLOW_SHOW_ENEMIES = true
-GLOW_SHOW_BOMB = true
-GLOW_SHOW_BOMB_CARRIER = true
-GLOW_SHOW_WEAPONS = true
-GLOW_SHOW_GRENADES = false
-GLOW_SHOW_TARGET = true
-GLOW_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
-GLOW_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
-GLOW_BOMB_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
-GLOW_BOMB_CARRIER_COLOR = Color(red=255, green=140, blue=0, alpha=1.0)
-GLOW_DEFUSER_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)
-GLOW_WEAPON_COLOR = Color(red=251, green=0, blue=255, alpha=0.5)
-GLOW_GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)
-GLOW_HIGHLIGHT_COLOR = Color(red=0, green=174, blue=255, alpha=1.0)
+//HEAD_BONE = 8
+//NECK_BONE = 7
+//CHEST_BONE = 6
+//STOMACH_BONE = 5
+//NEAREST_BONE = -1
+
+//               1/0                                                               8/6
+//               True/False       True/False     True/False       True/False       Head/Body 1-180    0-5      1-5             1-5             1-45         True/False       1-100               True/False
+//Array Format: [Enable Override, Factor Recoil, Enable Flat Aim, Enable Path Aim, Aim Bone, Aim Fov, Aim Speed, Aim Smoothness, Aim Strictness, Perfect Aim, Perfect Aim FOV, Perfect Aim Chance, Scoped Only]
+
+//I recommend editing these using the menu and saving to default
+
+////Pistols
 DESERT_EAGLE = oWeapon(tOverride=false, tFRecoil=true, tFlatAim=false, tPathAim=true, tAimBone=8, tAimFov=30, tAimSpeed=1, tAimSmooth=2.5, tAimStrict=2.0, tPerfectAim=true, tPAimFov=10, tPAimChance=15, tScopedOnly=false)
 DUAL_BERRETA = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim = true, tAimBone = 8, tAimFov = 30, tAimSpeed = 1, tAimSmooth = 2.5, tAimStrict = 2.0, tPerfectAim = true, tPAimFov = 10, tPAimChance = 15, tScopedOnly = false)
 FIVE_SEVEN = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim = true, tAimBone = 8, tAimFov = 30, tAimSpeed = 1, tAimSmooth = 2.5, tAimStrict = 2.0, tPerfectAim = true, tPAimFov = 10, tPAimChance = 15, tScopedOnly = false)
@@ -131,6 +21,8 @@ R8_REVOLVER = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPat
 P2000 = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim = true, tAimBone = 8, tAimFov = 30, tAimSpeed = 1, tAimSmooth = 2.5, tAimStrict = 2.0, tPerfectAim = true, tPAimFov = 10, tPAimChance = 15, tScopedOnly = false)
 TEC9 = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim = true, tAimBone = 8, tAimFov = 30, tAimSpeed = 1, tAimSmooth = 2.5, tAimStrict = 2.0, tPerfectAim = true, tPAimFov = 10, tPAimChance = 15, tScopedOnly = false)
 P250 = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim = true, tAimBone = 8, tAimFov = 30, tAimSpeed = 1, tAimSmooth = 2.5, tAimStrict = 2.0, tPerfectAim = true, tPAimFov = 10, tPAimChance = 15, tScopedOnly = false)
+
+//Smgs
 MAC10 = oWeapon(tOverride=false, tFRecoil=true, tFlatAim=false, tPathAim=true, tAimBone=6, tAimFov=50, tAimSpeed=1, tAimSmooth=2.0, tAimStrict=2.0, tPerfectAim=true, tPAimFov=15, tPAimChance=10, tScopedOnly=false)
 P90 = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim = true, tAimBone = 6, tAimFov = 50, tAimSpeed = 1, tAimSmooth = 2.0, tAimStrict = 2.0, tPerfectAim = true, tPAimFov = 15, tPAimChance = 10, tScopedOnly = false)
 MP5 = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim = true, tAimBone = 6, tAimFov = 50, tAimSpeed = 1, tAimSmooth = 2.0, tAimStrict = 2.0, tPerfectAim = true, tPAimFov = 15, tPAimChance = 10, tScopedOnly = false)
@@ -138,6 +30,8 @@ UMP45 = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim =
 MP7 = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim = true, tAimBone = 6, tAimFov = 50, tAimSpeed = 1, tAimSmooth = 2.0, tAimStrict = 2.0, tPerfectAim = true, tPAimFov = 15, tPAimChance = 10, tScopedOnly = false)
 MP9 = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim = true, tAimBone = 6, tAimFov = 50, tAimSpeed = 1, tAimSmooth = 2.0, tAimStrict = 2.0, tPerfectAim = true, tPAimFov = 15, tPAimChance = 10, tScopedOnly = false)
 PP_BIZON = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim = true, tAimBone = 6, tAimFov = 50, tAimSpeed = 1, tAimSmooth = 2.0, tAimStrict = 2.0, tPerfectAim = true, tPAimFov = 15, tPAimChance = 10, tScopedOnly = false)
+
+//Rifles
 AK47 = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim = true, tAimBone = 6, tAimFov = 60, tAimSpeed = 1, tAimSmooth = 1.5, tAimStrict = 2.0, tPerfectAim = true, tPAimFov = 5, tPAimChance = 10, tScopedOnly = false)
 AUG = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim = true, tAimBone = 6, tAimFov = 60, tAimSpeed = 1, tAimSmooth = 1.5, tAimStrict = 2.0, tPerfectAim = true, tPAimFov = 5, tPAimChance = 10, tScopedOnly = false)
 FAMAS = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim = true, tAimBone = 6, tAimFov = 60, tAimSpeed = 1, tAimSmooth = 1.5, tAimStrict = 2.0, tPerfectAim = true, tPAimFov = 5, tPAimChance = 10, tScopedOnly = false)
@@ -147,127 +41,15 @@ M4A4 = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim = 
 M4A1_SILENCER = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim = true, tAimBone = 6, tAimFov = 60, tAimSpeed = 1, tAimSmooth = 1.5, tAimStrict = 2.0, tPerfectAim = true, tPAimFov = 5, tPAimChance = 10, tScopedOnly = false)
 NEGEV = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim = true, tAimBone = 6, tAimFov = 60, tAimSpeed = 1, tAimSmooth = 1.5, tAimStrict = 2.0, tPerfectAim = true, tPAimFov = 5, tPAimChance = 10, tScopedOnly = false)
 M249 = oWeapon(tOverride = false, tFRecoil = true, tFlatAim = false, tPathAim = true, tAimBone = 6, tAimFov = 60, tAimSpeed = 1, tAimSmooth = 1.5, tAimStrict = 2.0, tPerfectAim = true, tPAimFov = 5, tPAimChance = 10, tScopedOnly = false)
+
+//Snipers
 AWP = oWeapon(tOverride=false, tFRecoil=false, tFlatAim=true, tPathAim=false, tAimBone=6, tAimFov=40, tAimSpeed=1, tAimSmooth=1.0, tAimStrict=1.0, tPerfectAim=false, tPAimFov=1, tPAimChance=1, tScopedOnly=true)
 G3SG1 = oWeapon(tOverride = false, tFRecoil = false, tFlatAim = true, tPathAim = false, tAimBone = 6, tAimFov = 40, tAimSpeed = 1, tAimSmooth = 1.0, tAimStrict = 1.0, tPerfectAim = false, tPAimFov = 1, tPAimChance = 1, tScopedOnly = true)
 SCAR20 = oWeapon(tOverride = false, tFRecoil = false, tFlatAim = true, tPathAim = false, tAimBone = 6, tAimFov = 40, tAimSpeed = 1, tAimSmooth = 1.0, tAimStrict = 1.0, tPerfectAim = false, tPAimFov = 1, tPAimChance = 1, tScopedOnly = true)
 SSG08 = oWeapon(tOverride = false, tFRecoil = false, tFlatAim = true, tPathAim = false, tAimBone = 6, tAimFov = 40, tAimSpeed = 1, tAimSmooth = 1.0, tAimStrict = 1.0, tPerfectAim = false, tPAimFov = 1, tPAimChance = 1, tScopedOnly = true)
+
+//Shotguns
 XM1014 = oWeapon(tOverride = false, tFRecoil = false, tFlatAim = false, tPathAim = true, tAimBone = 6, tAimFov = 50, tAimSpeed = 1, tAimSmooth = 1.0, tAimStrict = 1.0, tPerfectAim = false, tPAimFov = 1, tPAimChance = 1, tScopedOnly = false)
 MAG7 = oWeapon(tOverride = false, tFRecoil = false, tFlatAim = false, tPathAim = true, tAimBone = 6, tAimFov = 50, tAimSpeed = 1, tAimSmooth = 1.0, tAimStrict = 1.0, tPerfectAim = false, tPAimFov = 1, tPAimChance = 1, tScopedOnly = false)
 SAWED_OFF = oWeapon(tOverride = false, tFRecoil = false, tFlatAim = false, tPathAim = true, tAimBone = 6, tAimFov = 50, tAimSpeed = 1, tAimSmooth = 1.0, tAimStrict = 1.0, tPerfectAim = false, tPAimFov = 1, tPAimChance = 1, tScopedOnly = false)
 NOVA = oWeapon(tOverride = false, tFRecoil = false, tFlatAim = false, tPathAim = true, tAimBone = 6, tAimFov = 50, tAimSpeed = 1, tAimSmooth = 1.0, tAimStrict = 1.0, tPerfectAim = false, tPAimFov = 1, tPAimChance = 1, tScopedOnly = false)
-ENABLE_HITMARKER = true
-HITMARKER_RECOIL_POSITION = false
-HITMARKER_COMBO = true
-HITMARKER_OUTLINE = true
-HITMARKER_SPACING = 5
-HITMARKER_LENGTH = 15
-HITMARKER_WIDTH = 3F
-HITMARKER_COMBO_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
-HITMARKER_COLOR = Color(red=255, green=0, blue=0, alpha=1.0)
-HITMARKER_OUTLINE_COLOR = Color(red=0, green=0, blue=0, alpha=1.0)
-INDICATOR_ESP = false
-INDICATOR_SHOW_ONSCREEN = false
-INDICATOR_DISTANCE = 25.0
-INDICATOR_OVAL = false
-INDICATOR_SHOW_TEAM = false
-INDICATOR_SHOW_ENEMIES = true
-INDICATOR_SHOW_BOMB = true
-INDICATOR_SHOW_DEFUSERS = true
-INDICATOR_SHOW_BOMB_CARRIER = true
-INDICATOR_SHOW_WEAPONS = true
-INDICATOR_SHOW_GRENADES = false
-INDICATOR_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
-INDICATOR_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
-INDICATOR_BOMB_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
-INDICATOR_BOMB_CARRIER_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
-INDICATOR_DEFUSER_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)
-INDICATOR_WEAPON_COLOR = Color(red=251, green=0, blue=255, alpha=0.5)
-INDICATOR_GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)
-AUTOMATIC_WEAPONS = false
-AUTO_WEP_DELAY = 10
-ENABLE_NADE_HELPER = true
-NADE_HELPER_TOGGLE_KEY = 113
-NADE_TRACER = true
-NADE_TRACER_UPDATE_TIME = 10
-NADE_TRACER_TIMEOUT = .5
-NADE_TRACER_COLOR = Color(red=4, green=255, blue=0, alpha=1.0)
-OPENGL_VSYNC = false
-OPENGL_FPS = 60
-OPENGL_MSAA_SAMPLES = 0
-PISTOL_ENABLE_FLAT_AIM = false
-PISTOL_ENABLE_PATH_AIM = true
-PISTOL_FACTOR_RECOIL = true
-PISTOL_AIM_BONE = 8
-PISTOL_AIM_FOV = 30
-PISTOL_AIM_SPEED = 1
-PISTOL_AIM_SMOOTHNESS = 2.5
-PISTOL_AIM_STRICTNESS = 2.0
-PISTOL_PERFECT_AIM = true
-PISTOL_PERFECT_AIM_FOV = 10
-PISTOL_PERFECT_AIM_CHANCE = 15
-ENABLE_RECOIL_CROSSHAIR = true
-ENABLE_SNIPER_CROSSHAIR = true
-RCROSSHAIR_WIDTH = 2
-RCROSSHAIR_LENGTH = 33
-RCROSSHAIR_ALPHA = 0.5
-RCROSSHAIR_XOFFSET = 1
-RCROSSHAIR_YOFFSET = -2
-RCROSSHAIR_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
-ENABLE_RCS = false
-RCS_SMOOTHING_X = 0.7
-RCS_SMOOTHING_Y = 0.7
-RCS_RETURNAIM = false
-ENABLE_REDUCED_FLASH = false
-FLASH_MAX_ALPHA = 200F
-RIFLE_ENABLE_FLAT_AIM = false
-RIFLE_ENABLE_PATH_AIM = true
-RIFLE_FACTOR_RECOIL = true
-RIFLE_AIM_BONE = 6
-RIFLE_AIM_FOV = 60
-RIFLE_AIM_SPEED = 1
-RIFLE_AIM_SMOOTHNESS = 1.5
-RIFLE_AIM_STRICTNESS = 2.0
-RIFLE_PERFECT_AIM = true
-RIFLE_PERFECT_AIM_FOV = 5
-RIFLE_PERFECT_AIM_CHANCE = 10
-SHOTGUN_ENABLE_FLAT_AIM = false
-SHOTGUN_ENABLE_PATH_AIM = true
-SHOTGUN_FACTOR_RECOIL = false
-SHOTGUN_AIM_BONE = -1
-SHOTGUN_AIM_FOV = 50
-SHOTGUN_AIM_SPEED = 1
-SHOTGUN_AIM_SMOOTHNESS = 1.0
-SHOTGUN_AIM_STRICTNESS = 1.0
-SHOTGUN_PERFECT_AIM = false
-SHOTGUN_PERFECT_AIM_FOV = 1
-SHOTGUN_PERFECT_AIM_CHANCE = 1
-SKELETON_ESP = false
-SKELETON_SHOW_TEAM = false
-SKELETON_SHOW_ENEMIES = true
-SMG_ENABLE_FLAT_AIM = false
-SMG_ENABLE_PATH_AIM = true
-SMG_FACTOR_RECOIL = true
-SMG_AIM_BONE = 7
-SMG_AIM_FOV = 50
-SMG_AIM_SPEED = 1
-SMG_AIM_SMOOTHNESS = 2.0
-SMG_AIM_STRICTNESS = 2.0
-SMG_PERFECT_AIM = true
-SMG_PERFECT_AIM_FOV = 15
-SMG_PERFECT_AIM_CHANCE = 10
-SNIPER_ENABLE_FLAT_AIM = true
-SNIPER_ENABLE_PATH_AIM = false
-SNIPER_ENABLE_SCOPED_ONLY = true
-SNIPER_FACTOR_RECOIL = false
-SNIPER_AIM_BONE = -1
-SNIPER_AIM_FOV = 40
-SNIPER_AIM_SPEED = 1
-SNIPER_AIM_SMOOTHNESS = 1.0
-SNIPER_AIM_STRICTNESS = 1.0
-SNIPER_PERFECT_AIM = false
-SNIPER_PERFECT_AIM_FOV = 1
-SNIPER_PERFECT_AIM_CHANCE = 1
-SPECTATOR_LIST = true
-SPECTATOR_LIST_X = 0.0
-SPECTATOR_LIST_Y = 150.0
-SPECTATOR_LIST_ALPHA = 0.75

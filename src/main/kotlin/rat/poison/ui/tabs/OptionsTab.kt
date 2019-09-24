@@ -3,6 +3,8 @@
 package rat.poison.ui.tabs
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.badlogic.gdx.utils.Array
@@ -189,9 +191,6 @@ class OptionsTab : Tab(false, false) {
                 }
 
                 val sbLines = StringBuilder()
-                sbLines.append("import rat.poison.settings.$\n")
-                sbLines.append("import rat.poison.game.Color\n\n")
-
                 File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
                     if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper") {
                         FileReader(file).readLines().forEach { line ->
