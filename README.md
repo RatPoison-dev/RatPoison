@@ -35,6 +35,10 @@ Credit to Mr. Noad for a lot of help throughout this project
     * Bone trigger updates every 10ms instead of every 4ms
     * CursorEnable called when needed, shouldn't jump when typing/robot movement spam in chat
     
+* Hotfix 2
+    * More checks to prevent keypresses while typing
+    * Possible fix to random movement presses
+    
 ---
 1.5
 I didn't plan to release this as soon as I have, but I haven't been working on it as much recently, so it was best to push with all the fixes/changes it has.

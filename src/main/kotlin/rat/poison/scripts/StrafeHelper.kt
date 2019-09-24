@@ -15,6 +15,7 @@ import rat.poison.scripts.aim.target
 import rat.poison.settings.MENUTOG
 import rat.poison.strToBool
 import rat.poison.utils.every
+import rat.poison.utils.inBackground
 import rat.poison.utils.notInGame
 import java.awt.Robot
 import java.awt.event.KeyEvent
@@ -23,7 +24,7 @@ private var lastAngY = 0.0
 private val robot = Robot().apply { this.autoDelay = 0 }
 
 fun strafeHelper() = every(2) {
-    if (MENUTOG || notInGame || cursorEnable) return@every
+    if (MENUTOG || notInGame || inBackground) return@every
 
     val aStrafe = curSettings["AUTO_STRAFE"].strToBool()
     val aimStrafe = curSettings["AIM_STRAFER"].strToBool()
@@ -32,6 +33,7 @@ fun strafeHelper() = every(2) {
 
     if (aStrafe || aimStrafe) {
         updateCursorEnable()
+        if (cursorEnable) return@every
         val curAngY = clientState.angle().y
 
         if (aStrafe) {
