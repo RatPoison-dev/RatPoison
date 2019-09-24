@@ -23,7 +23,6 @@ Credit to Mr. Noad for a lot of help throughout this project
     * GunAimOverride.kts is readable and less of a mess if you choose to edit via text files instead of the menu, but still a block
 * All guns have their override disabled by default, and use default settings
 * KTS settings files changed to .txts
-* Fixed changing Aim Key not affecting its usages
 * A warning will appear to clear the current positions in nade helper to prevent accidental clears before saving
 * The main menu is now topmost vs the override weapons panel, spectator list, bomb timer
 * Auto strafe moved to keypresses instead of writing to the game
