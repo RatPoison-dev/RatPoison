@@ -10,7 +10,6 @@ Open to pull requests
 Credit to Mr. Noad for a lot of help throughout this project
 
 ---
-
 1.5.1
 
 * Bone trigger should be responsive and usable now
@@ -35,8 +34,8 @@ Credit to Mr. Noad for a lot of help throughout this project
     * Added checks to strafehelper
     * Bone trigger updates every 10ms instead of every 4ms
     * CursorEnable called when needed, shouldn't jump when typing/robot movement spam in chat
+    
 ---
-
 1.5
 I didn't plan to release this as soon as I have, but I haven't been working on it as much recently, so it was best to push with all the fixes/changes it has.
 Not heavily tested, bugs expected.
