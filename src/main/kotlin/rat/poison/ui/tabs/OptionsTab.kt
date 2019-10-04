@@ -2,13 +2,10 @@
 
 package rat.poison.ui.tabs
 
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.g2d.TextureAtlas
-import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.badlogic.gdx.utils.Array
-import com.kotcrab.vis.ui.VisUI
+import com.kotcrab.vis.ui.util.Validators
+import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
@@ -20,10 +17,9 @@ import rat.poison.App.menuStage
 import rat.poison.App.uiBombWindow
 import rat.poison.App.uiMenu
 import rat.poison.App.uiSpecList
-import rat.poison.scripts.*
-import rat.poison.ui.uiUpdate
 import rat.poison.ui.changed
-import rat.poison.ui.uiHelpers.VisInputFieldCustom
+import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiUpdate
 import rat.poison.utils.ObservableBoolean
 import java.io.File
 import java.io.FileReader
@@ -35,10 +31,12 @@ class OptionsTab : Tab(false, false) {
 
     private val fileSelectBox = VisSelectBox<String>()
 
+    val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F)
+    val menuKeyField = VisValidatableTextField(Validators.FLOATS)
+
     init {
         //Create UIAlpha Slider
         val menuAlpha = VisTable()
-        Tooltip.Builder("The alpha of the menu").target(menuAlpha).build()
         val menuAlphaLabel = VisLabel("Menu Alpha: " + 1F) //1F is default
         val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, false)
         menuAlphaSlider.value = 1F
@@ -47,12 +45,25 @@ class OptionsTab : Tab(false, false) {
             uiMenu.changeAlpha(alp)
             menuAlphaLabel.setText("Menu Alpha: " + alp.toString() + when(alp.toString().length) {4->"" 3->"  " 2->"    " else ->"      "})
         }
-        menuAlpha.add(menuAlphaLabel).spaceRight(6F)
-        menuAlpha.add(menuAlphaSlider)
+        menuAlpha.add(menuAlphaLabel).width(200F)
+        menuAlpha.add(menuAlphaSlider).width(250F)
+
+        //Create Menu Key Input Box
+        val menuKey = VisTable()
+        val menuKeyLabel = VisLabel("Menu Key: ")
+        menuKeyField.text = curSettings["MENU_KEY"]
+        menuKey.changed { _, _ ->
+            if (menuKeyField.text.toIntOrNull() != null) {
+                curSettings["MENU_KEY"] = menuKeyField.text.toInt().toString()
+                overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
+            }
+        }
+        menuKey.add(menuKeyLabel)
+        menuKey.add(menuKeyField).spaceRight(6F).width(40F)
+        menuKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
 
         //Create Save Button
         val saveButton = VisTextButton("Save CFG")
-        Tooltip.Builder("Save current configuration to the cfg file").target(saveButton).build()
         saveButton.changed { _, _ ->
             Dialogs.showInputDialog(menuStage, "Enter config name: ", "", object : InputDialogAdapter() {
                 override fun finished(input: String) {
@@ -64,7 +75,6 @@ class OptionsTab : Tab(false, false) {
 
         //Create Load Button
         val loadButton = VisTextButton("Load CFG")
-        Tooltip.Builder("Load the currently selected CFG").target(loadButton).build()
         loadButton.changed { _, _ ->
             if (fileSelectBox.selected.count() > 0) {
                 loadCFG(fileSelectBox.selected)
@@ -74,7 +84,6 @@ class OptionsTab : Tab(false, false) {
 
         //Create Delete Button
         val deleteButton = VisTextButton("Delete CFG")
-        Tooltip.Builder("Delete currently selected CFG").target(deleteButton).build()
         deleteButton.changed { _, _ ->
             if (fileSelectBox.selected.count() > 0) {
                 deleteCFG(fileSelectBox.selected)
@@ -87,7 +96,6 @@ class OptionsTab : Tab(false, false) {
 
         //Create Save Current Config To Default
         val saveCurConfig = VisTextButton("Save Current Config To Default Settings")
-        Tooltip.Builder("Save current configuration to the settings files").target(saveCurConfig).build()
         saveCurConfig.changed { _, _ ->
             saveWindows()
             saveDefault()
@@ -100,7 +108,11 @@ class OptionsTab : Tab(false, false) {
         sldTable.add(loadButton).padLeft(20F).padRight(20F).width(100F)
         sldTable.add(deleteButton).width(100F)
 
+        table.add(menuKey).padLeft(25F).left().row()
         table.add(menuAlpha).row()
+        table.add(oglFPS).row()
+
+        table.addSeparator()
 
         table.add(fileSelectBox).row()
 

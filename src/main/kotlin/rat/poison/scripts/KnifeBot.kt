@@ -4,7 +4,7 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.math.Vector3
 import org.jire.arrowhead.keyReleased
-import rat.poison.App
+import rat.poison.*
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.angle
 import rat.poison.game.clientState
@@ -12,14 +12,11 @@ import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
 import rat.poison.scripts.aim.findTarget
 import rat.poison.utils.*
-import rat.poison.curSettings
 import rat.poison.game.entity.*
 import rat.poison.game.entity.position
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack2
-import rat.poison.opened
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.strToBool
 import java.awt.Robot
 import java.awt.event.MouseEvent
 
@@ -96,9 +93,7 @@ private fun canBackStab(position: Vector, direction: Vector): Boolean {
     return delta.dot(direction.x.toFloat(), direction.y.toFloat(), direction.z.toFloat()) > 0.475f
 }
 
-var BONE_TRIGGER_FORCE_VALUES = false
-
-private val robot = Robot().apply { this.autoDelay = 16 }
+var TRIGGER_FORCE_VALUES = false
 
 private enum class KnifeAttackType(private val frontNoArmorDmg: Float = 0f,
                                    private val frontArmorDmg: Float = 0f,
@@ -120,13 +115,13 @@ private enum class KnifeAttackType(private val frontNoArmorDmg: Float = 0f,
             NONE -> return
             STAB -> rightClick()
             //swing or slash
-            else -> boneTrigger()
+            else -> leftClick()
         }
     }
 }
 
 fun leftClick() {
-    if (BONE_TRIGGER_FORCE_VALUES) {
+    if (TRIGGER_FORCE_VALUES) {
         clientDLL[dwForceAttack] = 6
     } else {
         robot.mousePress(MouseEvent.BUTTON1_MASK)
@@ -135,7 +130,7 @@ fun leftClick() {
 }
 
 fun rightClick() {
-    if (BONE_TRIGGER_FORCE_VALUES) {
+    if (TRIGGER_FORCE_VALUES) {
         clientDLL[dwForceAttack2] = 6
     } else {
         robot.mousePress(MouseEvent.BUTTON3_MASK)

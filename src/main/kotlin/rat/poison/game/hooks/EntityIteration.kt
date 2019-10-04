@@ -41,11 +41,11 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
                 val write = 0x74.toByte()
                 try {
                     clientDLL[ClientOffsets.dwGlowUpdate] = write
-                } catch (e: Exception) {}
+                } catch (e: Exception) { e.printStackTrace() }
 
                 try {
                     clientDLL[ClientOffsets.dwGlowUpdate2] = write
-                } catch (e: Exception) {}
+                } catch (e: Exception) { e.printStackTrace() }
             }
 
             if (GARBAGE_COLLECT_ON_MAP_START) {
@@ -83,7 +83,7 @@ fun constructEntities() = every(500) {
 
     if (shouldReset()) reset()
 
-    val tmpEntsToAdd = mutableListOf<Long>()
+    var tmpEntsToAdd = mutableListOf<Long>()
 
     for (glowIndex in 0..glowObjectCount) {
         val glowAddress = glowObject + (glowIndex * GLOW_OBJECT_SIZE)
@@ -118,7 +118,7 @@ fun constructEntities() = every(500) {
     entsToTrack = tmpEntsToAdd
 
     val maxIndex = clientDLL.int(dwEntityList + 0x24 - 0x10) //Not right?
-    defuseKitEntities.clear()
+    tmpEntsToAdd = mutableListOf()
 
     for (i in 64..maxIndex) {
         val entity = clientDLL.uint(dwEntityList + (i * 0x10) - 0x10)
@@ -126,15 +126,11 @@ fun constructEntities() = every(500) {
             val type = EntityType.byEntityAddress(entity)
 
             if (type == EntityType.CEconEntity) {
-                //val context = contexts[i].set(entity, -1, -1, type)
-
-                //with(entities[type]!!) {
-                //    if (!contains(context)) add(context)
-                //}
-                defuseKitEntities.add(entity)
+                tmpEntsToAdd.add(entity)
             }
         }
     }
+    defuseKitEntities = tmpEntsToAdd//entsToTrack
 
     DANGER_ZONE = dzMode
 }

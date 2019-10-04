@@ -55,7 +55,7 @@ fun scanner() {
                             println(it)
                         }
                     }
-                } catch (e: FileNotFoundException) {
+                } catch (e: Exception) {
                     println("File not found, use list to see current files")
                 }
                 println()
@@ -66,7 +66,7 @@ fun scanner() {
                     println(line.split(" ".toRegex(), 2)[1])
                     //Dojo.script(line.trim().split(" ".toRegex(), 2)[1])
                     println("Set " + line.trim().split(" ".toRegex(), 2)[1])
-                } catch (e: ScriptException) {
+                } catch (e: Exception) {
                     println("Invalid variable")
                 }
                 println()

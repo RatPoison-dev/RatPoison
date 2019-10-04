@@ -12,7 +12,7 @@ class SkeletonEspTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     val skeletonEsp = VisCheckBoxCustom("Skeleton", "SKELETON_ESP")
 
-    val showTeam = VisCheckBoxCustom("Team", "SKELETON_SHOW_TEAM")
+    val showTeam = VisCheckBoxCustom("Teammates", "SKELETON_SHOW_TEAM")
     val showEnemies = VisCheckBoxCustom("Enemies", "SKELETON_SHOW_ENEMIES")
 
     init {

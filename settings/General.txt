@@ -30,7 +30,7 @@ AIM_STRAFER_TYPE = 0
 AIM_STRAFER_SHIFT = false
 
 //Strictness/deadzone
-AIM_STRAFER_STRICTNESS = 0.3
+AIM_STRAFER_STRICTNESS = 0.15
 
 //Enable fast stop
 //Will attempt to slow your velocity faster than normal if movement keys aren't being pressed
@@ -47,8 +47,11 @@ HEAD_WALK_KEY = 81
 //Global enable aim
 ENABLE_AIM = true
 
+//Swap delay if target becomes invalid, in ms
+AIM_TARGET_SWAP_DELAY = 150
+
 //Global enable override
-ENABLE_OVERRIDE = true
+ENABLE_OVERRIDE = false
 
 //Enable aimbot when aim key is pressed
 ACTIVATE_FROM_AIM_KEY = true
@@ -71,15 +74,15 @@ STOMACH_BONE = 5
 NEAREST_BONE = -1
 
 //Temp variables, irrelevant to edit
-PERFECT_AIM = true
-PERFECT_AIM_CHANCE = 10
-PERFECT_AIM_FOV = 5
-AIM_BONE = 6
+PERFECT_AIM = false
+PERFECT_AIM_CHANCE = 1
+PERFECT_AIM_FOV = 1
+AIM_BONE = -1
 AIM_SPEED = 1
-AIM_FOV = 60
+AIM_FOV = 40
 AIM_ASSIST_MODE = false
-FACTOR_RECOIL = true
-ENABLE_FLAT_AIM = false
-ENABLE_PATH_AIM = true
+FACTOR_RECOIL = false
+ENABLE_FLAT_AIM = true
+ENABLE_PATH_AIM = false
 ENABLE_SCOPED_ONLY = true
-AIM_STRICTNESS = 2.0
+AIM_STRICTNESS = 1.0

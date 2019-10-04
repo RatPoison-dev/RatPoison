@@ -6,7 +6,7 @@ ENABLE_ESP = true
 VISUALS_TOGGLE_KEY = 35
 
 //Enable full screen visual effect
-ENABLE_ADRENALINE = true
+ENABLE_ADRENALINE = false
 
 //Enable radar esp
 RADAR_ESP = false

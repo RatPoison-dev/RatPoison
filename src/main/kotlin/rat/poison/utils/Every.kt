@@ -16,11 +16,11 @@ inline fun every(minDuration: Int, maxDuration: Int,
                  continuous: Boolean = false,
                  crossinline body: () -> Unit) = thread {
     while (!Thread.interrupted()) {
-        if (continuous || (!MENUTOG && !inBackground)) {
+        if (continuous || (!inBackground)) {
             try {
                 body()
             } catch (e: Exception) {
-                //println(e)
+                e.printStackTrace()
             }
         }
 

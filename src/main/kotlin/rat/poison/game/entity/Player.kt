@@ -64,6 +64,7 @@ internal fun Player.lifeState(): Int = csgoEXE.byte(this + lifeState).toInt()
 internal fun Player.dead() = try {
 	lifeState() != 0 || health() <= 0
 } catch (t: Throwable) {
+	t.printStackTrace()
 	false
 }
 
@@ -138,9 +139,8 @@ internal fun Player.nearestBone(): Int {
 	csgoEXE.read(boneMatrix, boneMemory)
 
 	var closestDst2 = Float.MAX_VALUE
-	var nearestBone = -1
+	var nearestBone = -999
 
-	updateViewMatrix()
 	//Change to loop set amount of bones
 	var offset = 0
 	for (idx in 0 until numBones) {

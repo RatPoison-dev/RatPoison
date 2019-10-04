@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
+import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
@@ -17,15 +18,21 @@ import rat.poison.game.entity.absPosition
 import rat.poison.game.entity.boneMatrix
 import rat.poison.game.entity.direction
 import rat.poison.game.entity.eyeAngle
+import rat.poison.game.hooks.cursorEnable
+import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.nadeHelperTab
 import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
+import java.awt.Robot
+import java.awt.event.KeyEvent
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
+import kotlin.math.cos
+import kotlin.math.sin
 
 //Convert shit to an object {} ?
 //      mapcoords:            x    y    z
@@ -51,8 +58,6 @@ fun nadeHelper() = App {
 
     if (me <= 0L || MENUTOG) return@App
 
-    val mView = me.eyeAngle()
-
     mPos = me.absPosition()
 
     if (showHelpers) {
@@ -72,39 +77,41 @@ fun nadeHelper() = App {
             val hPos = it[1]
             val hLPos = it[2]
 
+            //If valid nade for nade held
             if (fSpot[4] == nadeToCheck || nadeToCheck == "Decoy") {
+                //If within 500 units of position's circle
                 if ((mPos.x in fSpot[0].cToDouble() - 500..fSpot[0].cToDouble() + 500) && (mPos.y in fSpot[1].cToDouble() - 500..fSpot[1].cToDouble() + 500)) {
+
+                    val oldMatrix = Matrix4(shapeRenderer.projectionMatrix.values)
+
                     shapeRenderer.apply {
+                        val gameMatrix = w2sViewMatrix.toMatrix4()
+                        projectionMatrix = gameMatrix
+
                         begin()
-
                         color = Color(1F, 1F, 1F, 1F)
-
                         var lineUp = false
 
+                        //If standing on position's circle
                         if ((mPos.x in fSpot[0].cToDouble() - 20..fSpot[0].cToDouble() + 20) && (mPos.y in fSpot[1].cToDouble() - 20..fSpot[1].cToDouble() + 20)) {
                             color = Color(1F, 0F, 0F, 1F)
                             lineUp = true
                         }
 
-                        val vec1 = Vector()
+                        //Circle at foot's position
+                            gameMatrix.translate(0F, 0F, fSpot[2].cToFloat())
+                            projectionMatrix = gameMatrix
+                        circle(fSpot[0].cToFloat(), fSpot[1].cToFloat(), 10F)
+                            gameMatrix.translate(0F, 0F, -fSpot[2].cToFloat())
+                            projectionMatrix = oldMatrix
+
                         val vec2 = Vector()
                         val vec3 = Vector()
 
                         var t1 = false
                         var t2 = false
 
-                        if (worldToScreen(Vector(fSpot[0].cToDouble(), fSpot[1].cToDouble(), fSpot[2].cToDouble()), vec1)) { //Change to double only
-                            var h = mView.x.toFloat()
-                            h += 10F
-                            h = clamp(h, 10F, 89F)
-
-                            ellipse(vec1.x.toFloat() - 45F, vec1.y.toFloat() - 45F, 90F, h)
-                        }
-
                         if (worldToScreen(Vector(hPos[0].cToDouble(), hPos[1].cToDouble(), hPos[2].cToDouble()), vec2)) {
-                            //set(ShapeRenderer.ShapeType.Filled)
-                            //circle(vec2.x.toFloat() - 2F, vec2.y.toFloat() - 2F, 4F)
-                            //set(ShapeRenderer.ShapeType.Line)
                             t1 = true
                         }
 
@@ -140,6 +147,8 @@ fun nadeHelper() = App {
 
                         end()
                     }
+
+                    shapeRenderer.projectionMatrix = oldMatrix
                 }
             }
         }
@@ -242,4 +251,22 @@ fun deletePosition() {
             nadeHelperArrayList.removeAt(removePos)
         }
     }
+}
+
+//Matrix 4 uses column-major order
+private fun Array<DoubleArray>.toMatrix4(): Matrix4 {
+    val input = this
+    val mat4 = Matrix4()
+    val fArr = FloatArray(16)
+
+    var itr = 0
+    for (row in 0..3) {
+        for (col in 0..3) {
+            fArr[itr] = input[col][row].toFloat()
+            itr++
+        }
+    }
+
+    mat4.set(fArr)
+    return mat4
 }

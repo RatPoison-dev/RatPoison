@@ -7,6 +7,8 @@ import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.entity.absPosition
 import rat.poison.game.entity.dead
 import rat.poison.game.entity.velocity
+import rat.poison.game.hooks.cursorEnable
+import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.ui.miscTab
 import rat.poison.utils.Angle
 import rat.poison.utils.ObservableBoolean
@@ -20,10 +22,7 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 private var onEnt = 0L
-private val robot = Robot().apply { this.autoDelay = 0 }
 var headWalkToggle = ObservableBoolean({onPlayerHead()})
-var toggleStandKey = ObservableBoolean({keyPressed(curSettings["HEAD_WALK_KEY"].toInt())})
-var toggleStand = false
 
 //Currently just a poc
 ////Only moves towards the center of the player
@@ -32,66 +31,46 @@ var toggleStand = false
 
 //Switch velocity to difference in current pos vs prev
 
-internal fun headWalk() = every(5) {
-    if (EXPERIMENTAL) {
-        if (!curSettings["HEAD_WALK"].strToBool()) return@every
+internal fun headWalk() = every(1) {
+    if (!curSettings["HEAD_WALK"].strToBool()) return@every
 
-        toggleStandKey.update()
-        if (toggleStandKey.justBecomeTrue) {
-            toggleStand = !toggleStand
-            miscTab.headWalkToggleText.setText("Toggled: $toggleStand")
-        }
+    if (me.dead()) return@every
 
-        if (me.dead()) return@every
+    if (!keyPressed(KeyEvent.VK_W) && !keyPressed(KeyEvent.VK_A) && !keyPressed(KeyEvent.VK_S) && !keyPressed(KeyEvent.VK_D)) {
+        headWalkToggle.update()
+        if (headWalkToggle.value) {
+            updateCursorEnable()
+            if (cursorEnable) return@every
 
-        if (toggleStand) { //Garbage, needs cleanup
-            headWalkToggle.update()
-            if (headWalkToggle.value) { //Not great
-                val mePos = me.absPosition()
-                val entPos = onEnt.absPosition()
-                val pos = Vector(mePos.x - entPos.x, mePos.y - entPos.y, mePos.z - entPos.z)
-                val yaw = clientState.angle().y
+            val mePos = me.absPosition()
+            val entPos = onEnt.absPosition()
+            val pos = Vector(mePos.x - entPos.x, mePos.y - entPos.y, mePos.z - entPos.z)
+            val yaw = clientState.angle().y
 
-                val distX = (pos.x * cos(yaw / 180 * Math.PI) + pos.y * sin(yaw / 180 * Math.PI)).toInt()
-                val distY = (pos.y * cos(yaw / 180 * Math.PI) - pos.x * sin(yaw / 180 * Math.PI)).toInt()
+            val distX = (pos.x * cos(yaw / 180 * Math.PI) + pos.y * sin(yaw / 180 * Math.PI)).toInt()
+            val distY = (pos.y * cos(yaw / 180 * Math.PI) - pos.x * sin(yaw / 180 * Math.PI)).toInt()
 
-                when {
-                    distX < 2 -> {
-                        robot.keyRelease(KeyEvent.VK_S)
-                        robot.keyPress(KeyEvent.VK_W)
-                    }
-                    distX > 2 -> {
-                        robot.keyRelease(KeyEvent.VK_W)
-                        robot.keyPress(KeyEvent.VK_S)
-                    }
-                    else -> {
-                        robot.keyRelease(KeyEvent.VK_W)
-                        robot.keyRelease(KeyEvent.VK_S)
-                    }
+            when {
+                distX < 2 -> {
+                    robot.keyPress(KeyEvent.VK_W)
+                    robot.keyRelease(KeyEvent.VK_W)
                 }
-
-                when {
-                    distY < 2 -> {
-                        robot.keyRelease(KeyEvent.VK_D)
-                        robot.keyPress(KeyEvent.VK_A)
-                    }
-                    distY > 2 -> {
-                        robot.keyRelease(KeyEvent.VK_A)
-                        robot.keyPress(KeyEvent.VK_D)
-                    }
-                    else -> {
-                        robot.keyRelease(KeyEvent.VK_A)
-                        robot.keyRelease(KeyEvent.VK_D)
-                    }
+                distX > 2 -> {
+                    robot.keyPress(KeyEvent.VK_S)
+                    robot.keyRelease(KeyEvent.VK_S)
                 }
             }
-        }
 
-        if (headWalkToggle.justBecomeFalse) {
-            robot.keyRelease(KeyEvent.VK_W)
-            robot.keyRelease(KeyEvent.VK_A)
-            robot.keyRelease(KeyEvent.VK_S)
-            robot.keyRelease(KeyEvent.VK_D)
+            when {
+                distY < 2 -> {
+                    robot.keyPress(KeyEvent.VK_A)
+                    robot.keyRelease(KeyEvent.VK_A)
+                }
+                distY > 2 -> {
+                    robot.keyPress(KeyEvent.VK_D)
+                    robot.keyRelease(KeyEvent.VK_D)
+                }
+            }
         }
     }
 }

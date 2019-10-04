@@ -10,6 +10,7 @@ import rat.poison.game.entity.velocity
 import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.offsets.ClientOffsets
+import rat.poison.robot
 import rat.poison.strToBool
 import rat.poison.utils.every
 import rat.poison.utils.notInGame
@@ -18,8 +19,6 @@ import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.*
 import kotlin.math.cos
 import kotlin.math.sin
-
-private val robot = Robot().apply { this.autoDelay = 0 }
 
 internal fun fastStop() = every(4) {
     if (!curSettings["FAST_STOP"].strToBool() || notInGame) return@every

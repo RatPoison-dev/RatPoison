@@ -62,7 +62,6 @@ class OverridenWeapons : VisTable(true) {
 
         //Create Category Selector Box
         val categorySelection = VisTable()
-        Tooltip.Builder("The weapon category settings to edit").target(categorySelection).build()
         categorySelectionBox.setItems("PISTOL", "RIFLE", "SMG", "SNIPER", "SHOTGUN")
         categorySelectionBox.selected = "PISTOL"
         categorySelected = categorySelectionBox.selected
@@ -110,7 +109,6 @@ class OverridenWeapons : VisTable(true) {
         //End Override Weapon Selection Box
 
         //Create Enable Override Toggle
-        Tooltip.Builder("Whether or not to override aim when this gun is selected").target(weaponOverrideEnableCheckBox).build()
         weaponOverrideEnableCheckBox.isChecked = curSettings[weaponOverrideSelected].toWeaponClass().tOverride
         weaponOverrideEnableCheckBox.changed { _, _ ->
             val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
@@ -155,7 +153,6 @@ class OverridenWeapons : VisTable(true) {
         }
 
         //Create Factor Recoil Toggle
-        Tooltip.Builder("Whether or not to factor in recoil when aiming").target(enableFactorRecoil).build()
         enableFactorRecoil.isChecked = curSettings[categorySelected + "_ENABLE_PATH_AIM"].strToBool()
         enableFactorRecoil.changed { _, _ ->
             if (weaponOverride) {
@@ -182,7 +179,6 @@ class OverridenWeapons : VisTable(true) {
 
         //Create Aim Bone Selector Box
         val aimBone = VisTable()
-        Tooltip.Builder("The default aim bone to aim at").target(aimBone).build()
         aimBoneBox.setItems("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST")
         aimBoneBox.selected = when (curSettings[categorySelected + "_AIM_BONE"].toInt()) {
             HEAD_BONE -> "HEAD"
@@ -206,7 +202,6 @@ class OverridenWeapons : VisTable(true) {
 
         //Create Aim FOV Slider
         val aimFov = VisTable()
-        Tooltip.Builder("The aim field of view").target(aimFov).build()
         aimFovSlider.value = curSettings[categorySelected + "_AIM_FOV"].toInt().toFloat()
         aimFovSlider.changed { _, _ ->
             if (weaponOverride) {
@@ -222,7 +217,6 @@ class OverridenWeapons : VisTable(true) {
 
         //Create Aim Speed Slider
         val aimSpeed = VisTable()
-        Tooltip.Builder("The aim speed delay in milliseconds").target(aimSpeed).build()
         aimSpeedSlider.value = curSettings[categorySelected + "_AIM_SPEED"].toInt().toFloat()
         aimSpeedSlider.changed { _, _ ->
             if (weaponOverride) {
@@ -237,7 +231,6 @@ class OverridenWeapons : VisTable(true) {
 
         //Create Aim Smoothness Slider
         val aimSmoothness = VisTable()
-        Tooltip.Builder("The smoothness of the aimbot (path aim only)").target(aimSmoothness).build()
         aimSmoothnessSlider.value = curSettings[categorySelected + "_AIM_SMOOTHNESS"].toFloat()
         aimSmoothnessSlider.changed { _, _ ->
             if (weaponOverride) {
@@ -252,7 +245,6 @@ class OverridenWeapons : VisTable(true) {
 
         //Create Aim Strictness Slider
         val aimStrictness = VisTable()
-        Tooltip.Builder("How strict moving to the aimbone is, lower = less deviation").target(aimStrictness).build()
         aimStrictnessSlider.value = curSettings[categorySelected + "_AIM_STRICTNESS"].toFloat()
         aimStrictnessSlider.changed { _, _ ->
             if (weaponOverride) {
@@ -265,13 +257,11 @@ class OverridenWeapons : VisTable(true) {
         aimStrictness.add(aimStrictnessLabel).width(125F)
         aimStrictness.add(aimStrictnessSlider).width(125F)
         //Create Perfect Aim Collapsible Check Box
-        Tooltip.Builder("Whether or not to enable perfect aim").target(perfectAimCheckBox).build()
         perfectAimCheckBox.isChecked = curSettings[categorySelected + "_PERFECT_AIM"].strToBool()
         perfectAimCollapsible.setCollapsed(!curSettings[categorySelected + "_PERFECT_AIM"].strToBool(), true)
 
         //Create Perfect Aim Fov Slider
         val perfectAimFov = VisTable()
-        Tooltip.Builder("The perfect aim field of view").target(perfectAimFov).build()
         perfectAimFovSlider.value = curSettings[categorySelected + "_PERFECT_AIM_FOV"].toInt().toFloat()
         perfectAimFovSlider.changed { _, _ ->
             if (weaponOverride) {
@@ -287,7 +277,6 @@ class OverridenWeapons : VisTable(true) {
 
         //Create Perfect Aim Chance Slider
         val perfectAimChance = VisTable()
-        Tooltip.Builder("The perfect aim chance (per calculation)").target(perfectAimChance).build()
         perfectAimChanceSlider.value = curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toInt().toFloat()
         perfectAimChanceSlider.changed { _, _ ->
             if (weaponOverride) {

@@ -26,13 +26,13 @@ class BoxEspTab : Tab(false, false) {
     val boxEspWeaponPos = VisSelectBox<String>()
 
     val showTeam = VisCheckBoxCustom(" ", "BOX_SHOW_TEAM")
-    val boxTeamColor = VisColorPickerCustom("Team Color", "BOX_TEAM_COLOR")
+    val boxTeamColor = VisColorPickerCustom("Teammates", "BOX_TEAM_COLOR")
 
     val showEnemies = VisCheckBoxCustom(" ", "BOX_SHOW_ENEMIES")
-    val boxEnemyColor = VisColorPickerCustom("Enemy Color", "BOX_ENEMY_COLOR")
+    val boxEnemyColor = VisColorPickerCustom("Enemies", "BOX_ENEMY_COLOR")
 
     val showDefusers = VisCheckBoxCustom(" ", "BOX_SHOW_DEFUSERS")
-    val boxDefuserColor = VisColorPickerCustom("Defuser Color", "BOX_DEFUSER_COLOR")
+    val boxDefuserColor = VisColorPickerCustom("Defusers", "BOX_DEFUSER_COLOR")
 
     init {
         //Create Box ESP Health Pos Selector

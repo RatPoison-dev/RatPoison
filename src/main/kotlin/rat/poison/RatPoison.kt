@@ -9,17 +9,17 @@ import com.badlogic.gdx.Gdx.gl
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.backends.lwjgl3.*
 import com.badlogic.gdx.graphics.*
+import com.badlogic.gdx.graphics.GL20.GL_FALSE
 import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.widget.VisTable
-import com.sun.jna.platform.win32.WinNT
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.jire.arrowhead.keyPressed
-import org.lwjgl.glfw.GLFW.glfwInit
+import org.lwjgl.glfw.GLFW.*
 import rat.poison.game.CSGO
 import rat.poison.game.updateViewMatrix
 import rat.poison.interfaces.*
@@ -31,23 +31,29 @@ import rat.poison.scripts.esp.*
 import rat.poison.settings.*
 import rat.poison.ui.*
 import rat.poison.utils.*
+import java.awt.Robot
 import java.io.*
-import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.max
 import kotlin.math.min
-import kotlin.math.pow
-import kotlin.math.sqrt
 
-data class oWeapon(var tOverride: Boolean, var tFRecoil: Boolean, var tFlatAim: Boolean, var tPathAim: Boolean, var tAimBone: Int, var tAimFov: Int, var tAimSpeed: Int, var tAimSmooth: Double, var tAimStrict: Double, var tPerfectAim: Boolean, var tPAimFov: Int, var tPAimChance: Int, var tScopedOnly: Boolean)
+//Bone trig not set up yet
+data class oWeapon(var tOverride: Boolean,      var tFRecoil: Boolean,  var tFlatAim: Boolean,
+                   var tPathAim: Boolean,       var tAimBone: Int,      var tAimFov: Int,
+                   var tAimSpeed: Int,          var tAimSmooth: Double, var tAimStrict: Double,
+                   var tPerfectAim: Boolean,    var tPAimFov: Int,      var tPAimChance: Int,
+                   var tScopedOnly: Boolean,    var tBoneTrig: Boolean = false, var tBTrigBone: Int = 0,
+                   var tBTrigAim: Boolean = false,      var tBTrigDelay: Int = 0)
 
 const val EXPERIMENTAL = false
-const val SETTINGS_DIRECTORY = "settings"
+const val SETTINGS_DIRECTORY = "settings" //Internal
 var saving = false
 var settingsLoaded = false
 
 val curSettings = Settings()
 
 var dbg = false
+
+val robot = Robot().apply { this.autoDelay = 0 }
 
 fun main() {
     System.setProperty("jna.nosys", "true")
@@ -94,7 +100,6 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Auto Strafe") }; strafeHelper()
     if (dbg) { println("[DEBUG] Initializing RCS") }; rcs()
     if (dbg) { println("[DEBUG] Initializing Flat Aim") }; flatAim()
-
     if (dbg) { println("[DEBUG] Initializing Path Aim") }; pathAim()
     if (dbg) { println("[DEBUG] Initializing Set Aim") }; setAim()
     if (dbg) { println("[DEBUG] Initializing Bone Trigger") }; boneTrigger()
@@ -117,23 +122,16 @@ fun main() {
             Thread.sleep(2000)
             glfwInit()
 
-            var w = CSGO.gameWidth
-            var h = CSGO.gameHeight
-
-            if (w == 0 || h == 0) {
-                w = curSettings["OVERLAY_WIDTH"].toInt()
-                h = curSettings["OVERLAY_HEIGHT"].toInt()
-            }
-
             Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
                 setTitle("Rat Poison UI")
-                setWindowedMode(w, h)
+                setWindowedMode(CSGO.gameWidth, CSGO.gameHeight)
 
                 //Required to fix W2S offset
                 setWindowPosition(CSGO.gameX, CSGO.gameY)
                 setDecorated(false)
-
-                useVsync(curSettings["OPENGL_VSYNC"].strToBool())
+                useVsync(false)
+                glfwSwapInterval(0)
+                glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE)
                 setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings["OPENGL_MSAA_SAMPLES"].toInt())
             })
         }
@@ -185,7 +183,7 @@ object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
-    val overlay = Overlay(curSettings["MENU_APP"].replace("\"", ""), "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
+    private val overlay = Overlay(curSettings["MENU_APP"].replace("\"", ""), "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     var haveTarget = false
     lateinit var menuStage: Stage
     private lateinit var aimOverrideStage: Stage
@@ -243,58 +241,29 @@ object App : ApplicationAdapter() {
         sync(curSettings["OPENGL_FPS"].toInt())
 
         if (VisUI.isLoaded()) {
-            if (!Thread.interrupted()) {
-                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
-
+            //if (!Thread.interrupted()) {
                 gl.apply {
+                    glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
+
                     if (!menuStage.root.isVisible) return
 
                     if (curSettings["ENABLE_BOMB_TIMER"].strToBool() && curSettings["BOMB_TIMER_MENU"].strToBool()) {
                         bombStage.act(Gdx.graphics.deltaTime)
-                        val bombCamera = bombStage.viewport.camera
-                        bombCamera.update()
-                        val bombBatch = bombStage.batch
-                        bombBatch.projectionMatrix = bombCamera.combined
-                        bombBatch.begin()
-                        bombBatch.enableBlending()
-                        bombStage.root.draw(bombBatch, 1F)
-                        bombBatch.end()
+                        bombStage.draw()
                     }
 
                     if (curSettings["SPECTATOR_LIST"].strToBool()) {
                         specListStage.act(Gdx.graphics.deltaTime)
-                        val specListCamera = specListStage.viewport.camera
-                        specListCamera.update()
-                        val specListBatch = specListStage.batch
-                        specListBatch.projectionMatrix = specListCamera.combined
-                        specListBatch.begin()
-                        specListBatch.enableBlending()
-                        specListStage.root.draw(specListBatch, 1F)
-                        specListBatch.end()
+                        specListStage.draw()
                     }
 
                     if (MENUTOG) {
                         if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
                             aimOverrideStage.act(Gdx.graphics.deltaTime)
-                            val aimOverrideCamera = aimOverrideStage.viewport.camera
-                            aimOverrideCamera.update()
-                            val aimOverrideBatch = aimOverrideStage.batch
-                            aimOverrideBatch.projectionMatrix = aimOverrideCamera.combined
-                            aimOverrideBatch.begin()
-                            aimOverrideBatch.enableBlending()
-                            aimOverrideStage.root.draw(aimOverrideBatch, 1F)
-                            aimOverrideBatch.end()
+                            aimOverrideStage.draw()
                         }
-
                         menuStage.act(Gdx.graphics.deltaTime)
-                        val batch = menuStage.batch
-                        val menuCamera = menuStage.viewport.camera
-                        menuCamera.update()
-                        batch.projectionMatrix = menuCamera.combined
-                        batch.begin()
-                        batch.enableBlending()
-                        menuStage.root.draw(batch, 1F)
-                        batch.end()
+                        menuStage.draw()
                     }
 
                     glEnable(GL20.GL_BLEND)
@@ -307,6 +276,7 @@ object App : ApplicationAdapter() {
                         bodies[i]()
                     }
                     glDisable(GL20.GL_BLEND)
+                    glFinish()
                 }
 
                 overlayMenuKey.update()
@@ -330,7 +300,7 @@ object App : ApplicationAdapter() {
                     specListStage.viewport.update(w, h)
                     if (dbg) println("[DEBUG] Resized Viewports")
                 }
-            }
+            //}
         }
 
         opened = true
@@ -392,7 +362,7 @@ fun sync(fps : Int) {
                 break
             }
         }
-    } catch (ex: InterruptedException) { } finally {
+    } catch (ex: InterruptedException) { println("FPS Sync Failure") } finally {
         lastSyncTime = System.nanoTime() - min(overSleep, sleepTime)
 
         if (overSleep > variableYieldTime) {
@@ -404,11 +374,10 @@ fun sync(fps : Int) {
 }
 
 fun Any.strToBool() = this == "true" || this == true || this == 1.0
-fun Any.boolToDouble() = if (this == "true" || this == true) 1.0 else (0.0)
 fun Any.boolToStr() = this.toString()
 fun Any.strToColor() = convStrToColor(this.toString())
 fun Any.cToDouble() = this.toString().toDouble()
-fun Double.toBool() = this == 1.0
+fun Any.cToFloat() = this.toString().toFloat()
 fun Boolean.toFloat() = if (this) 1F else 0F
 fun Boolean.toDouble() = if (this) 1.0 else 0.0
 
@@ -428,7 +397,7 @@ fun String.toWeaponClass(): oWeapon {
     var tStr = this
     tStr = tStr.replace("oWeapon(", "").replace(")", "")
     val tSA = tStr.split(", ") //temp String Array
-    return oWeapon(tOverride = tSA.pull(0).strToBool(), tFRecoil = tSA.pull(1).strToBool(), tFlatAim = tSA.pull(2).strToBool(), tPathAim = tSA.pull(3).strToBool(), tAimBone = tSA.pull(4).toInt(), tAimFov = tSA.pull(5).toInt(), tAimSpeed = tSA.pull(6).toInt(), tAimSmooth = tSA.pull(7).toDouble(), tAimStrict = tSA.pull(8).toDouble(), tPerfectAim = tSA.pull(9).strToBool(), tPAimFov = tSA.pull(10).toInt(), tPAimChance = tSA.pull(11).toInt(), tScopedOnly = tSA.pull(12).strToBool())
+    return oWeapon(tOverride = tSA.pull(0).strToBool(), tFRecoil = tSA.pull(1).strToBool(), tFlatAim = tSA.pull(2).strToBool(), tPathAim = tSA.pull(3).strToBool(), tAimBone = tSA.pull(4).toInt(), tAimFov = tSA.pull(5).toInt(), tAimSpeed = tSA.pull(6).toInt(), tAimSmooth = tSA.pull(7).toDouble(), tAimStrict = tSA.pull(8).toDouble(), tPerfectAim = tSA.pull(9).strToBool(), tPAimFov = tSA.pull(10).toInt(), tPAimChance = tSA.pull(11).toInt(), tScopedOnly = tSA.pull(12).strToBool())//, tBoneTrig = tSA.pull(13).strToBool(), tBTrigBone = tSA.pull(14).toInt(), tBTrigAim = tSA.pull(15).strToBool(), tBTrigDelay = tSA.pull(16).toInt())
 }
 
 private fun List<String>.pull(idx: Int): String {

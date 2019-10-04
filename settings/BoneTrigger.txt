@@ -1,45 +1,57 @@
 //Enable bone trigger
-ENABLE_BONE_TRIGGER = false
+ENABLE_TRIGGER = false
 
 //Enable auto knife
 ENABLE_AUTO_KNIFE = false
 
-//Enable bone trigger activation if enemy head bone (8) is inside the FOV
-BONE_TRIGGER_HB = true
-
-//Enable bone trigger activation if enemy body bones (3-7) are inside the FOV
-BONE_TRIGGER_BB = true
-
 //Enable bone trigger activation when holding the specified weapons
-BONE_TRIGGER_PISTOLS = true
-BONE_TRIGGER_RIFLES = true
-BONE_TRIGGER_SHOTGUNS = true
-BONE_TRIGGER_SMGS = true
-BONE_TRIGGER_SNIPERS = true
-
-//Enable aimbot settings when bone trigger activates for these specified weapons
-BONE_TRIGGER_PISTOLS_AIMBOT = true
-BONE_TRIGGER_RIFLES_AIMBOT = true
-BONE_TRIGGER_SHOTGUNS_AIMBOT = true
-BONE_TRIGGER_SMGS_AIMBOT = true
-BONE_TRIGGER_SNIPERS_AIMBOT = true
+PISTOL_TRIGGER = true
+RIFLE_TRIGGER = true
+SHOTGUN_TRIGGER = true
+SMG_TRIGGER = true
+SNIPER_TRIGGER = true
 
 //The bone trigger activation FOV (0 - 90)
-BONE_TRIGGER_PISTOLS_FOV = 15
-BONE_TRIGGER_RIFLES_FOV = 15
-BONE_TRIGGER_SHOTGUNS_FOV = 15
-BONE_TRIGGER_SMGS_FOV = 15
-BONE_TRIGGER_SNIPERS_FOV = 15
+PISTOL_TRIGGER_FOV = 20
+RIFLE_TRIGGER_FOV = 40
+SHOTGUN_TRIGGER_FOV = 20
+SMG_TRIGGER_FOV = 50
+SNIPER_TRIGGER_FOV = 15
+
+//Activate if incross (recommended for sniper)
+PISTOL_TRIGGER_INCROSS = true
+RIFLE_TRIGGER_INCROSS = false
+SHOTGUN_TRIGGER_INCROSS = true
+SMG_TRIGGER_INCROSS = false
+SNIPER_TRIGGER_INCROSS = true
+
+//Activate If in FOV
+PISTOL_TRIGGER_INFOV = true
+RIFLE_TRIGGER_INFOV = true
+SHOTGUN_TRIGGER_INFOV = false
+SMG_TRIGGER_INFOV = true
+SNIPER_TRIGGER_INFOV = false
+
+//Enable aimbot settings when bone trigger activates for these specified weapons
+PISTOL_TRIGGER_AIMBOT = true
+RIFLE_TRIGGER_AIMBOT = true
+SHOTGUN_TRIGGER_AIMBOT = false
+SMG_TRIGGER_AIMBOT = true
+SNIPER_TRIGGER_AIMBOT = false
+
+//Default initial shot MS delay on bone trigger activation (0 - 1000)
+PISTOL_TRIGGER_SHOT_DELAY = 100
+RIFLE_TRIGGER_SHOT_DELAY = 100
+SHOTGUN_TRIGGER_SHOT_DELAY = 100
+SMG_TRIGGER_SHOT_DELAY = 150
+SNIPER_TRIGGER_SHOT_DELAY = 100
 
 //Enable currently held weapons aimbot setting's on bone trigger activation
-AIM_ON_BONE_TRIGGER = true
+AIM_ON_TRIGGER = true
 
-//Enable bone trigger key that enables bone trigger only when BONE_TRIGGER_KEY is pressed
-BONE_TRIGGER_ENABLE_KEY = false
+//Enable bone trigger key that enables bone trigger only when TRIGGER_KEY is pressed
+TRIGGER_ENABLE_KEY = false
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), enables bone trigger when held
 //Default key is F
-BONE_TRIGGER_KEY = 70
-
-//Default initial shot MS delay on bone trigger activation (0 - 1000)
-BONE_TRIGGER_SHOT_DELAY = 250
+TRIGGER_KEY = 70

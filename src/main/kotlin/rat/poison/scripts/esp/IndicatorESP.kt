@@ -206,6 +206,7 @@ fun wTest(from: Vector): Double { //Fails at large distances, but still indicate
 
         return viewMatrix[3][0] * from.x + viewMatrix[3][1] * from.y + viewMatrix[3][2] * from.z + viewMatrix[3][3]
     } catch (e: Exception) {
+        e.printStackTrace()
         return 0.0
     }
 }

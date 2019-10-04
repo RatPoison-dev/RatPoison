@@ -10,10 +10,11 @@ import rat.poison.utils.Vector
 import rat.poison.utils.normalize
 import java.lang.Math.atan
 import java.lang.Math.toDegrees
+import kotlin.math.sqrt
 
-private val angles: ThreadLocal<Angle> = ThreadLocal.withInitial { Vector() }
+fun getCalculatedAngle(player: Player, dst: Vector): Angle {
+	val ang = Angle()
 
-fun calculateAngle(player: Player, dst: Vector): Angle = angles.get().apply {
 	val myPunch = player.punch()
 	val myPosition = player.position()
 
@@ -21,18 +22,20 @@ fun calculateAngle(player: Player, dst: Vector): Angle = angles.get().apply {
 	val dY = myPosition.y - dst.y
 	val dZ = myPosition.z + csgoEXE.float(player + vecViewOffset) - dst.z
 
-	val hyp = Math.sqrt((dX * dX) + (dY * dY))
+	val hyp = sqrt((dX * dX) + (dY * dY))
 
 	if (curSettings["FACTOR_RECOIL"].strToBool()) {
-		x = toDegrees(atan(dZ / hyp)) - myPunch.x * 2.0
-		y = toDegrees(atan(dY / dX)) - myPunch.y * 2.0
+		ang.x = toDegrees(atan(dZ / hyp)) - myPunch.x * 2.0
+		ang.y = toDegrees(atan(dY / dX)) - myPunch.y * 2.0
 	} else {
-		x = toDegrees(atan(dZ / hyp))
-		y = toDegrees(atan(dY / dX))
+		ang.x = toDegrees(atan(dZ / hyp))
+		ang.y = toDegrees(atan(dY / dX))
 	}
 
-	z = 0.0
-	if (dX >= 0.0) y += 180
+	ang.z = 0.0
+	if (dX >= 0.0) ang.y += 180
 
-	normalize()
+	ang.normalize()
+
+	return ang
 }

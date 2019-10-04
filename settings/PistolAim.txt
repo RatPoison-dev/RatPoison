@@ -28,7 +28,7 @@ PISTOL_AIM_SPEED = 1
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-PISTOL_AIM_SMOOTHNESS = 2.5
+PISTOL_AIM_SMOOTHNESS = 2.0
 
 //Aim strictness (1.0 - 5.0)
 //Lower is more strict (faster, more accurate snapping)

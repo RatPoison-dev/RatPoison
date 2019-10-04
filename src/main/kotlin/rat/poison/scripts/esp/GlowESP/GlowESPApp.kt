@@ -10,7 +10,7 @@ import rat.poison.scripts.esp.glowTarget
 import rat.poison.settings.*
 
 internal fun glowEspApp() = App {
-	if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || me.dead()) return@App
+	if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || me.dead()) return@App
 
 	val currentAngle = clientState.angle()
 	val position = me.position()

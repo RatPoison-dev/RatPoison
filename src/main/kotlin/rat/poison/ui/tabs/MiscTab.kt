@@ -9,8 +9,6 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import org.jire.arrowhead.keyPressed
 import rat.poison.*
 import rat.poison.scripts.esp.updateHitsound
-import rat.poison.scripts.toggleStand
-import rat.poison.scripts.toggleStandKey
 import rat.poison.ui.changed
 import rat.poison.ui.miscTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
@@ -30,7 +28,7 @@ class MiscTab : Tab(false, false) {
     val aimStrafer = VisCheckBoxCustom("Auto Aim Strafe", "AIM_STRAFER")
     val aimStraferSelectBox = VisSelectBox<String>()
     val aimStraferShift = VisCheckBoxCustom("Shift Walk", "AIM_STRAFER_SHIFT")
-    val aimStraferStrictness = VisSliderCustom("Strictness", "AIM_STRAFER_STRICTNESS", 0F, .5F, .01F, false, 3)
+    val aimStraferStrictness = VisSliderCustom("Strictness", "AIM_STRAFER_STRICTNESS", 0F, .5F, .01F, false, 3, width1 = 200F, width2 = 250F)
 
     val bombTimer = VisCheckBoxCustom("Bomb Timer", "ENABLE_BOMB_TIMER")
     val bombTimerEnableBars = VisCheckBoxCustom("Timer Bars", "BOMB_TIMER_BARS")
@@ -38,27 +36,15 @@ class MiscTab : Tab(false, false) {
     val spectatorList = VisCheckBoxCustom("Spectator List", "SPECTATOR_LIST")
 
     val headWalk = VisCheckBox("Head Walk")
-    val headWalkToggleText = VisLabel("Toggled: false")
-    private val headWalkKeyLabel = VisLabel("Head Walk Key: ")
-    val headWalkKeyField = VisValidatableTextField(Validators.FLOATS)
 
-    val menuKeyField = VisValidatableTextField(Validators.FLOATS)
     val enableReducedFlash = VisCheckBoxCustom("Reduced Flash", "ENABLE_REDUCED_FLASH")
-    val flashMaxAlpha = VisSliderCustom("Flash Max Alpha", "FLASH_MAX_ALPHA", 1F, 255F, 1F, true)
+    val flashMaxAlpha = VisSliderCustom("Flash Max Alpha", "FLASH_MAX_ALPHA", 1F, 255F, 1F, true, width1 = 200F, width2 = 250F)
 
     val hitSoundCheckBox = VisCheckBoxCustom("Hitsound", "ENABLE_HITSOUND")
     val hitSoundBox = VisSelectBox<String>()
-    val hitSoundVolume = VisSliderCustom("Hitsound Volume", "HITSOUND_VOLUME", .1F, 1F, .1F, false)
+    val hitSoundVolume = VisSliderCustom("Hitsound Volume", "HITSOUND_VOLUME", .1F, 1F, .1F, false, width1 = 200F, width2 = 250F)
 
     init {
-        //Disable head walk for now
-        if (!EXPERIMENTAL) {
-            headWalk.isDisabled = true
-            headWalkToggleText.color = Color(105F, 105F, 105F, .2F)
-            headWalkKeyLabel.color = Color(105F, 105F, 105F, .2F)
-            headWalkKeyField.isDisabled = true
-        }
-
         aimStraferSelectBox.setItems("Same", "Opposite")
         aimStraferSelectBox.changed { _, _ ->
             if (aimStraferSelectBox.selected == "Same") {
@@ -70,50 +56,18 @@ class MiscTab : Tab(false, false) {
 
         val aimStraferTable = VisTable()
         aimStraferTable.add(aimStrafer).left()
-        aimStraferTable.add(aimStraferSelectBox).padLeft(225F - aimStrafer.width).left()
+        aimStraferTable.add(aimStraferSelectBox).padLeft(200F - aimStrafer.width).left()
 
         //Create Head Walk Toggle
         val headWalkTable = VisTable()
-        Tooltip.Builder("Head walk master switch").target(headWalk).build()
         headWalk.isChecked = curSettings["HEAD_WALK"].strToBool()
         headWalk.changed { _, _ ->
             curSettings["HEAD_WALK"] = headWalk.isChecked.boolToStr()
             true
         }
         headWalkTable.add(headWalk).left()
-        headWalkTable.add(headWalkToggleText).padLeft(225F - headWalk.width).left()
-
-        //Create Head Walk Key Input Box
-        val headWalkKey = VisTable()
-        Tooltip.Builder("The key code that will toggle headwalk on or off").target(headWalkKey).build()
-        headWalkKeyField.text = curSettings["HEAD_WALK_KEY"]
-        headWalkKey.changed { _, _ ->
-            if (headWalkKeyField.text.toIntOrNull() != null) {
-                curSettings["HEAD_WALK_KEY"] = headWalkKeyField.text.toInt().toString()
-                toggleStandKey = ObservableBoolean({keyPressed(curSettings["HEAD_WALK_KEY"].toInt())})
-            }
-        }
-        headWalkKey.add(headWalkKeyLabel)
-        headWalkKey.add(headWalkKeyField).spaceRight(6F).width(40F)
-        headWalkKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
-
-        //Create Menu Key Input Box
-        val menuKey = VisTable()
-        Tooltip.Builder("The key code that will toggle the menu on or off").target(menuKey).build()
-        val menuKeyLabel = VisLabel("Menu Key: ")
-        menuKeyField.text = curSettings["MENU_KEY"]
-        menuKey.changed { _, _ ->
-            if (menuKeyField.text.toIntOrNull() != null) {
-                curSettings["MENU_KEY"] = menuKeyField.text.toInt().toString()
-                overlayMenuKey = ObservableBoolean({keyPressed(curSettings["MENU_KEY"].toInt())})
-            }
-        }
-        menuKey.add(menuKeyLabel)
-        menuKey.add(menuKeyField).spaceRight(6F).width(40F)
-        menuKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
 
         //Create Hit Sound Toggle
-        Tooltip.Builder("Whether or not to enable a hitsound on hit").target(hitSoundCheckBox).build()
         if (curSettings["ENABLE_HITSOUND"].strToBool()) hitSoundCheckBox.toggle()
         hitSoundCheckBox.changed { _, _ ->
             curSettings["ENABLE_HITSOUND"] = hitSoundCheckBox.isChecked.boolToStr()
@@ -130,7 +84,7 @@ class MiscTab : Tab(false, false) {
         hitSoundBox.items = hitSoundFiles
 
         hitSound.add(hitSoundCheckBox)
-        hitSound.add(hitSoundBox).padLeft(225F-hitSoundCheckBox.width)
+        hitSound.add(hitSoundBox).padLeft(200F-hitSoundCheckBox.width)
 
         hitSoundBox.selected = curSettings["HITSOUND_FILE_NAME"].replace("\"", "")
 
@@ -158,9 +112,6 @@ class MiscTab : Tab(false, false) {
         table.add(spectatorList).left().row()
         table.addSeparator()
         table.add(headWalkTable).left().row()
-        table.add(headWalkKey).left().row()
-        table.addSeparator()
-        table.add(menuKey).left().row()
         table.addSeparator()
         table.add(enableReducedFlash).left().row()
         table.add(flashMaxAlpha).left().row()
@@ -196,10 +147,6 @@ fun miscTabUpdate() {
         bombTimerEnableBars.update()
         spectatorList.update()
         headWalk.isChecked = curSettings["HEAD_WALK"].strToBool()
-        headWalkToggleText.setText("Toggled: $toggleStand")
-        headWalkKeyField.text = curSettings["HEAD_WALK_KEY"]
-        toggleStandKey = ObservableBoolean({keyPressed(curSettings["HEAD_WALK_KEY"].toInt())})
-        menuKeyField.text = curSettings["MENU_KEY"]
         enableReducedFlash.update()
         flashMaxAlpha.update()
         hitSoundCheckBox.isChecked = curSettings["ENABLE_HITSOUND"].strToBool()

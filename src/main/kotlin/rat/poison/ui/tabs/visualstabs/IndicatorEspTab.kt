@@ -18,25 +18,25 @@ class IndicatorEspTab : Tab(false, false) {
     val indicatorDistance = VisSliderCustom("Indicator Distance", "INDICATOR_DISTANCE", 2F, 25F, .1F, false)
 
     val showTeam = VisCheckBoxCustom(" ", "INDICATOR_SHOW_TEAM")
-    val indicatorTeamColor = VisColorPickerCustom("Team Color", "GLOW_TEAM_COLOR")
+    val indicatorTeamColor = VisColorPickerCustom("Teammates", "GLOW_TEAM_COLOR")
 
     val showEnemies = VisCheckBoxCustom(" ", "INDICATOR_SHOW_ENEMIES")
-    val indicatorEnemyColor = VisColorPickerCustom("Enemy Color", "INDICATOR_ENEMY_COLOR")
+    val indicatorEnemyColor = VisColorPickerCustom("Enemies", "INDICATOR_ENEMY_COLOR")
 
     val showBomb = VisCheckBoxCustom(" ", "INDICATOR_SHOW_BOMB")
-    val indicatorBombColor = VisColorPickerCustom("Bomb Color", "INDICATOR_BOMB_COLOR")
+    val indicatorBombColor = VisColorPickerCustom("Bomb", "INDICATOR_BOMB_COLOR")
 
     val showBombCarrier = VisCheckBoxCustom(" ", "INDICATOR_SHOW_BOMB_CARRIER")
     val indicatorBombCarrierColor = VisColorPickerCustom("Bomb Carrier", "INDICATOR_BOMB_CARRIER_COLOR")
 
     val showWeapons = VisCheckBoxCustom(" ", "INDICATOR_SHOW_WEAPONS")
-    val indicatorWeaponColor = VisColorPickerCustom("Weapon Color", "INDICATOR_WEAPON_COLOR")
+    val indicatorWeaponColor = VisColorPickerCustom("Weapons", "INDICATOR_WEAPON_COLOR")
 
     val showGrenades = VisCheckBoxCustom(" ", "INDICATOR_SHOW_GRENADES")
-    val indicatorGrenadeColor = VisColorPickerCustom("Grenade Color", "INDICATOR_GRENADE_COLOR")
+    val indicatorGrenadeColor = VisColorPickerCustom("Grenades", "INDICATOR_GRENADE_COLOR")
 
     val showDefusers = VisCheckBoxCustom(" ", "INDICATOR_SHOW_DEFUSERS")
-    val indicatorDefuserColor = VisColorPickerCustom("Defuser Color", "INDICATOR_DEFUSER_COLOR")
+    val indicatorDefuserColor = VisColorPickerCustom("Defusers", "INDICATOR_DEFUSER_COLOR")
 
     init {
         table.padLeft(25F)

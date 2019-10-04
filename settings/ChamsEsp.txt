@@ -21,7 +21,7 @@ CHAMS_SHOW_SELF = true
 CHAMS_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
 
 //Color of your enemies
-CHAMS_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
+CHAMS_ENEMY_COLOR = Color(red=255, green=0, blue=4, alpha=1.0)
 
 //Color of your hands/weapon
-CHAMS_SELF_COLOR = Color(red=255, green=55, blue=0, alpha=1.0)
+CHAMS_SELF_COLOR = Color(red=255, green=94, blue=0, alpha=1.0)

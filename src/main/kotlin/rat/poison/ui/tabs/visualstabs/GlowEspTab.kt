@@ -17,10 +17,10 @@ class GlowEspTab : Tab(false, false) {
     val modelAndGlow = VisCheckBoxCustom("Model & Glow", "MODEL_AND_GLOW")//VisCheckBox("Model & Glow Esp")
 
     val showTeam = VisCheckBoxCustom(" ", "GLOW_SHOW_TEAM")
-    val glowTeamColor = VisColorPickerCustom("Team", "GLOW_TEAM_COLOR")
+    val glowTeamColor = VisColorPickerCustom("Teammates", "GLOW_TEAM_COLOR")
 
     val showEnemies = VisCheckBoxCustom(" ", "GLOW_SHOW_ENEMIES")
-    val glowEnemyColor = VisColorPickerCustom("Enemy", "GLOW_ENEMY_COLOR")
+    val glowEnemyColor = VisColorPickerCustom("Enemies", "GLOW_ENEMY_COLOR")
 
     val showBomb = VisCheckBoxCustom(" ", "GLOW_SHOW_BOMB")
     val glowBombColor = VisColorPickerCustom("Bomb", "GLOW_BOMB_COLOR")
@@ -29,10 +29,10 @@ class GlowEspTab : Tab(false, false) {
     val glowBombCarrierColor = VisColorPickerCustom("Bomb Carrier", "GLOW_BOMB_CARRIER_COLOR")
 
     val showWeapons = VisCheckBoxCustom(" ", "GLOW_SHOW_WEAPONS")
-    val glowWeaponColor = VisColorPickerCustom("Weapon", "GLOW_WEAPON_COLOR")
+    val glowWeaponColor = VisColorPickerCustom("Weapons", "GLOW_WEAPON_COLOR")
 
     val showGrenades = VisCheckBoxCustom(" ", "GLOW_SHOW_WEAPONS")
-    val glowGrenadeColor = VisColorPickerCustom("Grenade", "GLOW_GRENADE_COLOR")
+    val glowGrenadeColor = VisColorPickerCustom("Grenades", "GLOW_GRENADE_COLOR")
 
     val showTarget = VisCheckBoxCustom(" ", "GLOW_SHOW_TARGET")
     val glowHighlightColor = VisColorPickerCustom("Target", "GLOW_HIGHLIGHT_COLOR")

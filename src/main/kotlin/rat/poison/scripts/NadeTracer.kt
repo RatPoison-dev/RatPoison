@@ -26,7 +26,9 @@ fun nadeTracer() = App {
     val alphaUpdate = clamp(.011 - curSettings["NADE_TRACER_TIMEOUT"].toDouble(), .001, .01)
     //Calculate spots
     if (sync >= (curSettings["NADE_TRACER_UPDATE_TIME"].toInt())) { //Change to add a 0 to the end to prevent connecting grenade lines
-        entsToTrack.forEachIndexed { _, ent ->
+        val tmp = entsToTrack
+
+        tmp.forEachIndexed { _, ent ->
             val entPos = ent.absPosition()
 
             var idx = -1 //Not in a list
@@ -39,12 +41,12 @@ fun nadeTracer() = App {
                 }
             }
 
-            val tmp = listOf(entPos.x, entPos.y, entPos.z, 1.0, ent.toDouble())
+            val tmp2 = listOf(entPos.x, entPos.y, entPos.z, 1.0, ent.toDouble())
             val check = (entPos.x in -2.0..2.0 && entPos.y in -2.0..2.0 && entPos.z in -2.0..2.0)
             if (!check) {
                 if (idx == -1) {
                     positionsList = mutableListOf()
-                    positionsList.add(tmp)
+                    positionsList.add(tmp2)
                     positionsList.add(empty)
                     grenadeList.add(positionsList)
                 } else {
@@ -52,7 +54,7 @@ fun nadeTracer() = App {
 
                     if (positionsList[positionsList.size-1] == empty) {
                         positionsList.removeAt(positionsList.size-1)
-                        positionsList.add(positionsList.size, tmp) //Replace at end
+                        positionsList.add(positionsList.size, tmp2) //Replace at end
                         positionsList.add(positionsList.size-0, empty) //Set end to 0
                         grenadeList[idx] = positionsList
                     }

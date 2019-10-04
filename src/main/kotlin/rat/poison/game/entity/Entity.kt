@@ -29,6 +29,7 @@ internal fun Entity.spotted(): Boolean {
 internal fun Entity.dormant(): Boolean = try {
 	csgoEXE.boolean(this + bDormant)
 } catch (t: Throwable) {
+	t.printStackTrace()
 	false
 }
 
@@ -54,10 +55,12 @@ internal fun Entity.absPosition(): Angle = readCached(entity2Angle) {
 	z = csgoEXE.float(it + vecOrigin + 8).toDouble()
 }
 
-val entityToBones: Long2ObjectMap<Angle> = Long2ObjectOpenHashMap()
-
-fun Entity.bones(boneID: Int) = readCached(entityToBones) {
-	x = bone(0xC, boneID)
-	y = bone(0x1C, boneID)
-	z = bone(0x2C, boneID)
+fun Entity.bones(boneID: Int): Angle {
+	val ang = Angle()
+	ang.apply {
+		x = bone(0xC, boneID)
+		y = bone(0x1C, boneID)
+		z = bone(0x2C, boneID)
+	}
+	return ang
 }

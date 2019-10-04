@@ -16,7 +16,6 @@ class UISpectatorList : VisWindow("Spectator List") {
 
         //Create UI_Alpha Slider
         val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, true)
-        Tooltip.Builder("The alpha of the menu").target(menuAlphaSlider).build()
         menuAlphaSlider.value = 1F
         menuAlphaSlider.changed { _, _ ->
             val alp = (round(menuAlphaSlider.value * 100F) / 100F)

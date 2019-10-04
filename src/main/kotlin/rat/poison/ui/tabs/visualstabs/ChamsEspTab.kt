@@ -20,13 +20,13 @@ class ChamsEspTab : Tab(false, false) {
     val chamsBrightness = VisSliderCustom("Chams Brightness", "CHAMS_BRIGHTNESS", 0F, 5000F, 25F, true)
 
     val showTeam = VisCheckBoxCustom(" ", "CHAMS_SHOW_TEAM")
-    val chamsTeamColor = VisColorPickerCustom("Team Color", "CHAMS_TEAM_COLOR")
+    val chamsTeamColor = VisColorPickerCustom("Teammates", "CHAMS_TEAM_COLOR")
 
     val showEnemies = VisCheckBoxCustom(" ", "CHAMS_SHOW_ENEMIES")
-    val chamsEnemyColor = VisColorPickerCustom("Enemy Color", "CHAMS_ENEMY_COLOR")
+    val chamsEnemyColor = VisColorPickerCustom("Enemies", "CHAMS_ENEMY_COLOR")
 
     val showSelf = VisCheckBoxCustom(" ", "CHAMS_SHOW_SELF")
-    val chamsSelfColor = VisColorPickerCustom("Self Color", "CHAMS_SELF_COLOR")
+    val chamsSelfColor = VisColorPickerCustom("Self", "CHAMS_SELF_COLOR")
 
     init {
         ////////////////////FORMATTING

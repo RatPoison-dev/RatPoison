@@ -10,6 +10,46 @@ Open to pull requests
 Credit to Mr. Noad for a lot of help throughout this project
 
 ---
+
+**Updates are paused**
+
+**Only updates will be bug fixes**
+
+---
+1.5.2 
+
+* Names of some settings have changed, I recommend to reconfig from default
+
+* Chams should update faster (every 1/4 second instead of half)
+* Bone Trigger changes
+    * Added incross option
+    * Can choose between incross and infov, or use both 
+    * Removed options to trigger inside FOV for torso bones (3-7) and head (8)
+        * Now always loops through 3-8 and will trigger on the first bone within the fov (starting from 3 to 8)
+    * Now inside the aim tab, not a separate tab
+    * Settings are customizable for each weapon category (pistol, rifle, etc)
+    * Wont shoot immediately after scoping in (assuming scoped only && has a delay)
+* Headwalk changes
+    * Fixed key presses
+    * Will only attempt to stay on players head when not moving around (pressing WASD)
+    * Head walk updates every 2ms instead of 5ms
+    * Removed key toggle, if enabled will auto activate ontop of a players head
+    * Can be enabled/disabled without experimental 
+* Possible fix for box esp crashing the overlay
+* Fixed self chams coloring when disabled
+* Added check to auto strafe for in air only
+* Added OpenGL FPS to menu
+* Added global target swap delay
+* Menu alpha will affect the override weapons menu
+* Small changes to default aim settings
+* Overlay grabs width/height from settings instead of from CSGO
+* Disabled aimbot with knife/grenade out
+* Force aiming with bone trigger enabled shouldn't shuffle between certain bones, only the aimbots selected bone
+* Menu Key moved from Misc tab to Options
+* Removed bunny hop key setting, is now always VK_SPACE
+* Nade helpers foot lineup uses the games matrix instead of w2s-ing an ellipse which wasn't accurate
+
+---
 1.5.1
 
 * Bone trigger should be responsive and usable now
@@ -27,6 +67,7 @@ Credit to Mr. Noad for a lot of help throughout this project
 * Auto strafe moved to keypresses instead of writing to the game
 * Strafe calls every 2ms instead of every 5ms to help accuracy
 * Added aim strafe
+* Updated visual colors on menu for consistency
 
 **Hotfixes/Version Updates**
 * Hotfix 1
@@ -180,6 +221,7 @@ Base is Charlatano available [here](https://github.com/Jire/Charlatano)
 
 * Visuals
     * Radar
+    * Enemy Snaplines
     * Glow
         * Teammates, Enemies, Weapons, Grenades, Bomb, Bomb Carrier, Aimbot Target
     * clrRender chams, brightness
@@ -192,10 +234,11 @@ Base is Charlatano available [here](https://github.com/Jire/Charlatano)
         * Teammates, Enemies
 
 * Bone Trigger
-    * Customizable FOV, Head/Torso selection
-    * Optional for each weapon category (Pistol/Rifle/Sniper/Shotgun/SMG)
-    * Enable aimbot on activation (Magnet)
-    * Activate on trigger key
+    * FOV, InCross
+    * Customizable for each weapon category (Pistol/Rifle/Sniper/Shotgun/SMG)
+    * Aimbot on activation
+    * Optional trigger key
+    * Initial shot delay
 
 * Danger Zone compatible
 
@@ -221,7 +264,7 @@ The official branch is located at [Jire's GitHub Repository](https://github.com/
 Before doing anything, make sure you have
 [Java Development Kit (JDK) 12](https://www.oracle.com/technetwork/java/javase/downloads/jdk12-downloads-5295953.html)
 installed. [Alternative.](https://jdk.java.net/12/) This is NOT the same thing as the regular Java Runtime (JRE), and you MUST install the JDK
-in order to build Charlatano, as well as any other Java software, and you MUST install JDK 12
+in order to build Rat Poison, Charlatano, and any other Java software, and you MUST install JDK 12
 
 The first step is to compile the source code into a usable cheat program.
 
@@ -233,12 +276,12 @@ The first step is to compile the source code into a usable cheat program.
 To set your JAVA_HOME read [here](https://javatutorial.net/set-java-home-windows-10)
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.5.1**.
+directory, and will in a directory called **RatPoison 1.5.2**.
 
-From within the **RatPoison 1.5.1** directory, you can start the cheat by running
-the _"Start RatPoison 1.5.1"_ script.
+From within the **RatPoison 1.5.2** directory, you can start the cheat by running
+the _"Start RatPoison 1.5.2"_ script.
 
-Before starting the cheat, you should already be spawned in a game with a weapon in hand!
+You can launch the cheat any time after launching CSGO.
 
 ---
 
@@ -248,7 +291,7 @@ Before starting the cheat, you should already be spawned in a game with a weapon
 
 ---
 
-Common Issues (Will be updated over time)
+Common Issues
 * Overlay is black/doesn't go transparent/isn't showing up
     * The overlay only works on Windows 10, it doesn't turn transparent on W7
-    * CSGO needs to be borderless/windowed for the overlay to show up ontop of CS, otherwise it's just a app in your taskbar and doesn't attach
+    * CSGO needs to be borderless/windowed for the overlay to show up ontop of CS, otherwise it's just a app in your taskbar

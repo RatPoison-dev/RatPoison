@@ -17,19 +17,19 @@ class RcsTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     val enableRCS = VisCheckBoxCustom("Enable RCS", "ENABLE_RCS")
 
-    val rcsSmoothingX = VisSliderCustom("RCS X Smoothing", "RCS_SMOOTHING_X", .1F, 1F, .02F, false)
-    val rcsSmoothingY = VisSliderCustom("RCS Y Smoothing", "RCS_SMOOTHING_Y", .1F, 1F, .02F, false)
+    val rcsSmoothingX = VisSliderCustom("RCS X Smoothing", "RCS_SMOOTHING_X", .1F, 1F, .02F, false, width1 = 200F, width2 = 250F)
+    val rcsSmoothingY = VisSliderCustom("RCS Y Smoothing", "RCS_SMOOTHING_Y", .1F, 1F, .02F, false, width1 = 200F, width2 = 250F)
 
     val rcsReturnAim = VisCheckBoxCustom("Return Aim", "RCS_RETURNAIM")
 
     val enableRCrosshair = VisCheckBoxCustom("Recoil Crosshair", "ENABLE_RECOIL_CROSSHAIR")
     val enableSCrosshair = VisCheckBoxCustom("Scope Compatible", "ENABLE_SNIPER_CROSSHAIR")
 
-    val rCrosshairWidth = VisSliderCustom("RCrosshair Width", "RCROSSHAIR_WIDTH", 1F, 5F, 1F, true)
-    val rCrosshairLength = VisSliderCustom("RCrosshair Length", "RCROSSHAIR_LENGTH", 3F, 100F, 1F, true)
-    val rCrosshairXOffset = VisSliderCustom("RCrosshair X Offset", "RCROSSHAIR_XOFFSET", -48F, 48F, 1F, true)
-    val rCrosshairYOffset = VisSliderCustom("RCrosshair Y Offset", "RCROSSHAIR_YOFFSET", -48F, 48F, 1F, true)
-    val rCrosshairAlpha = VisSliderCustom("RCrosshair Alpha", "RCROSSHAIR_ALPHA", .1F, 1F, .1F, false)
+    val rCrosshairWidth = VisSliderCustom("RCrosshair Width", "RCROSSHAIR_WIDTH", 1F, 5F, 1F, true, width1 = 200F, width2 = 250F)
+    val rCrosshairLength = VisSliderCustom("RCrosshair Length", "RCROSSHAIR_LENGTH", 3F, 100F, 1F, true, width1 = 200F, width2 = 250F)
+    val rCrosshairXOffset = VisSliderCustom("RCrosshair X Offset", "RCROSSHAIR_XOFFSET", -48F, 48F, 1F, true, width1 = 200F, width2 = 250F)
+    val rCrosshairYOffset = VisSliderCustom("RCrosshair Y Offset", "RCROSSHAIR_YOFFSET", -48F, 48F, 1F, true, width1 = 200F, width2 = 250F)
+    val rCrosshairAlpha = VisSliderCustom("RCrosshair Alpha", "RCROSSHAIR_ALPHA", .1F, 1F, .1F, false, width1 = 200F, width2 = 250F)
 
     val rCrosshairColor = VisColorPickerCustom("Set RCrosshair Color", "RCROSSHAIR_COLOR")
 

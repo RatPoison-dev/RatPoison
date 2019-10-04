@@ -76,7 +76,5 @@ fun setAim() = every(250){
                 curSettings["ENABLE_SCOPED_ONLY"] = curSettings["SNIPER_ENABLE_SCOPED_ONLY"].strToBool()
             }
         }
-    } catch (e: Exception) {println("SetAim failure")} //Fix crashing
+    } catch (e: Exception) { println("SetAim failure") } //Fix crashing
 }
-
-fun Double.toBool() = this == 1.0

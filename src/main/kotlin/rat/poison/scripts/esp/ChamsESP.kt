@@ -22,7 +22,7 @@ import rat.poison.strToColor
 
 //Change for entities to for entities ccsplayer
 
-internal fun chamsEsp() = every(500) {
+fun chamsEsp() = every(250) {
     if ((!curSettings["CHAMS_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool())) return@every
 
     val myTeam = me.team()
@@ -38,7 +38,12 @@ internal fun chamsEsp() = every(500) {
         val clientVModEnt = csgoEXE.uint(clientDLL.address + dwEntityList + (((csgoEXE.uint(csgoEXE.uint(clientDLL.address + dwLocalPlayer) + m_hViewModel)) and 0xFFF) - 1) * 16)
 
         //Set VMod
-        val clientMColor = curSettings["CHAMS_SELF_COLOR"].strToColor()
+        val clientMColor = if (curSettings["CHAMS_SHOW_SELF"].strToBool()) {
+             curSettings["CHAMS_SELF_COLOR"].strToColor()
+        } else {
+            Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0)
+        }
+
         csgoEXE[clientVModEnt + 0x70] = clientMColor.red.toByte()
         csgoEXE[clientVModEnt + 0x71] = clientMColor.green.toByte()
         csgoEXE[clientVModEnt + 0x72] = clientMColor.blue.toByte()
@@ -46,7 +51,6 @@ internal fun chamsEsp() = every(500) {
 
     //Set Cvar
     engineDLL[dwModelAmbientMin] = floatToIntBits(curSettings["CHAMS_BRIGHTNESS"].toInt().toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
-
     forEntities(ccsPlayer) body@ {
         val entity = it.entity
         if (entity <= 0 || entity == me || entity.dormant() || entity.dead()) return@body false

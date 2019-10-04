@@ -223,7 +223,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 			}
 			try {
 				Thread.sleep(10)
-			} catch (e: InterruptedException) {}
+			} catch (e: InterruptedException) { e.printStackTrace() }
 		} while (!Thread.interrupted() && System.currentTimeMillis() - start < timeout)
 		return HWND_ZERO
 	}

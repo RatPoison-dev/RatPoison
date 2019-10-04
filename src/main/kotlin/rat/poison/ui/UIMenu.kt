@@ -13,14 +13,13 @@ val mainTabbedPane = TabbedPane()
     val aimTab = AimTab()
     val visualsTab = VisualsTab()
     val rcsTab = RcsTab()
-    val bTrigTab = BTrigTab()
     val miscTab = MiscTab()
     val ranksTab = RanksTab()
     val nadeHelperTab = NadeHelperTab()
     val optionsTab = OptionsTab()
 
 
-class UIMenu : VisWindow("Rat Poison 1.5.1") {
+class UIMenu : VisWindow("Rat Poison 1.5.2") {
     init {
         defaults().left()
 
@@ -47,7 +46,6 @@ class UIMenu : VisWindow("Rat Poison 1.5.1") {
         mainTabbedPane.add(aimTab)
         mainTabbedPane.add(visualsTab)
         mainTabbedPane.add(rcsTab)
-        mainTabbedPane.add(bTrigTab)
         mainTabbedPane.add(miscTab)
         mainTabbedPane.add(ranksTab)
         mainTabbedPane.add(nadeHelperTab)
@@ -76,9 +74,6 @@ class UIMenu : VisWindow("Rat Poison 1.5.1") {
                     }
                     rcsTab -> {
                         mainTabbedPaneContent.add(rcsTab.contentTable).growX()
-                    }
-                    bTrigTab -> {
-                        mainTabbedPaneContent.add(bTrigTab.contentTable).growX()
                     }
                     visualsTab -> {
                         mainTabbedPaneContent.add(visualsTab.contentTable).growX()
@@ -122,6 +117,7 @@ class UIMenu : VisWindow("Rat Poison 1.5.1") {
 
     internal fun changeAlpha(alpha: Float) {
         color.a = alpha
+        uiAimOverridenWeapons.color.a = alpha
     }
 }
 

@@ -1,5 +1,5 @@
 //Enable nade helper
-ENABLE_NADE_HELPER = true
+ENABLE_NADE_HELPER = false
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles visibility of esp on/off
 //Default key is F2

@@ -14,6 +14,8 @@ object NetVarOffsets {
 	val fFlags by netVar("DT_BasePlayer")
 	val lifeState by netVar("DT_BasePlayer")
 
+	val iFOV by netVar("DT_CSPlayer", "m_iFOV")
+
 	val aimPunchAngle by netVar("DT_BasePlayer", "m_aimPunchAngle")
 	val szLastPlaceName by netVar("DT_BasePlayer")
 	val iHealth by netVar("DT_BasePlayer")

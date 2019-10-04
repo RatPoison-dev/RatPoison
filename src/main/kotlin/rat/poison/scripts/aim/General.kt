@@ -7,26 +7,23 @@ import rat.poison.settings.*
 import rat.poison.utils.*
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
-import rat.poison.game.offsets.ClientOffsets
 import rat.poison.strToBool
 import java.lang.Math.toRadians
 import java.util.concurrent.atomic.AtomicBoolean
-import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.abs
 import kotlin.math.sin
 
 val target = AtomicLong(-1)
-val bone = AtomicInteger(curSettings["AIM_BONE"].toInt())
 val perfect = AtomicBoolean() //Perfect Aim boolean check, only for path aim
 var boneTrig = false
 
-internal fun reset() {
+fun reset() {
 	target.set(-1L)
 	perfect.set(false)
 }
 
-internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
+fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
                         lockFOV: Int = curSettings["AIM_FOV"].toInt(), BONE: Int = curSettings["AIM_BONE"].toInt()): Player {
 	var closestFOV = Double.MAX_VALUE
 	var closestDelta = Double.MAX_VALUE
@@ -40,7 +37,7 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 
 		if (BONE == -3) { //Knife bot bone
 			for (i in 3..8) {
-				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, i)
+				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, entity.nearestBone())
 
 				if (arr[0] != -1.0) {
 					closestFOV = arr[0] as Double
@@ -48,32 +45,9 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 					closestPlayer = arr[2] as Long
 				}
 			}
-		} else if (BONE == -2) { //Trigger bot bone //Break if we find a successful bone
-			if (curSettings["BONE_TRIGGER_HB"].strToBool() && curSettings["BONE_TRIGGER_BB"].strToBool()) {
-				for (i in 3..8) //Check all body bones & head bone
-				{
-					val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, i)
-
-					if (arr[0] != -1.0) {
-						closestFOV = arr[0] as Double
-						closestDelta = arr[1] as Double
-						closestPlayer = arr[2] as Long
-						break
-					}
-				}
-			} else if (curSettings["BONE_TRIGGER_BB"].strToBool()) {
-				for (i in 3..7) { //Check all body bones
-					val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, i)
-
-					if (arr[0] != -1.0) {
-						closestFOV = arr[0] as Double
-						closestDelta = arr[1] as Double
-						closestPlayer = arr[2] as Long
-						break
-					}
-				}
-			} else {
-				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, HEAD_BONE)
+		} else if (BONE == -2) { //Trigger bot bone
+			for (i in 3..8) {
+				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, i)
 
 				if (arr[0] != -1.0) {
 					closestFOV = arr[0] as Double
@@ -83,12 +57,15 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			}
 		} else {
 			if (BONE == NEAREST_BONE) { //Nearest bone check
-				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, entity.nearestBone())
+				val nB = entity.nearestBone()
+				if (nB != -999) {
+					val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, entity.nearestBone())
 
-				if (arr[0] != -1.0) {
-					closestFOV = arr[0] as Double
-					closestDelta = arr[1] as Double
-					closestPlayer = arr[2] as Long
+					if (arr[0] != -1.0) {
+						closestFOV = arr[0] as Double
+						closestDelta = arr[1] as Double
+						closestPlayer = arr[2] as Long
+					}
 				}
 			} else {
 				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, BONE)
@@ -111,13 +88,13 @@ internal fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	return closestPlayer
 }
 
-internal fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, angle: Angle, lockFOV: Int = curSettings["AIM_FOV"].toInt(), BONE: Int): MutableList<Any> {
+fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, angle: Angle, lockFOV: Int = curSettings["AIM_FOV"].toInt(), BONE: Int): MutableList<Any> {
 	val retList = mutableListOf(-1.0, 0.0, 0L)
 
 	val ePos: Angle = entity.bones(BONE)
 	val distance = position.distanceTo(ePos)
 
-	val dest = calculateAngle(me, ePos)
+	val dest = getCalculatedAngle(me, ePos)
 
 	val pitchDiff = abs(angle.x - dest.x)
 	var yawDiff = abs(angle.y - dest.y)
@@ -138,12 +115,12 @@ internal fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angl
 	return retList.toMutableList()
 }
 
-internal fun Entity.inMyTeam() =
+fun Entity.inMyTeam() =
 		!curSettings["TEAMMATES_ARE_ENEMIES"].strToBool() && if (DANGER_ZONE) {
 			me.survivalTeam().let { it > -1 && it == this.survivalTeam() }
 		} else me.team() == team()
 
-internal fun Entity.canShoot() = (if (DANGER_ZONE) { true } else { spotted() }
+fun Entity.canShoot() = (if (DANGER_ZONE) { true } else { spotted() }
 		&& !dormant()
 		&& !dead()
 		&& !inMyTeam()
@@ -166,6 +143,11 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		}
 
 		if (meWep.sniper && !me.isScoped() && curSettings["ENABLE_SCOPED_ONLY"].strToBool()) { //Scoped only
+			reset()
+			return@every
+		}
+
+		if (meWep.grenade || meWep.knife) {
 			reset()
 			return@every
 		}
@@ -196,24 +178,27 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 
 		val aB = curSettings["AIM_BONE"].toInt()
 
+		var destBone = aB
+
 		if (aB == -1) { //Nearest bone check
 			val nearestBone = currentTarget.nearestBone()
 
-			if (nearestBone != -1) {
-				bone.set(nearestBone)
+			if (nearestBone != -999) {
+				destBone = nearestBone
+			} else {
+				reset()
+				return@every
 			}
-		} else {
-			bone.set(aB)
 		}
 
 		if (currentTarget == me || !currentTarget.canShoot()) {
-			//Thread.sleep(500)
 			reset()
+			Thread.sleep(500)
 			return@every
 		} else {
-			val bonePosition = currentTarget.bones(bone.get())
+			val bonePosition = currentTarget.bones(destBone)
 
-			val destinationAngle = calculateAngle(me, bonePosition) //Rename to current angle
+			val destinationAngle = getCalculatedAngle(me, bonePosition) //Rename to current angle
 
 			if (!perfect.get()) {
 				destinationAngle.finalize(currentAngle, (1.1 - curSettings["AIM_SMOOTHNESS"].toDouble() / 5))
@@ -222,5 +207,5 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			val aimSpeed = curSettings["AIM_SPEED"].toInt()
 			doAim(destinationAngle, currentAngle, aimSpeed)
 		}
-	} catch (e: Exception) {}
+	} catch (e: Exception) { e.printStackTrace() }
 }

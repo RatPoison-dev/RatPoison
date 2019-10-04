@@ -12,7 +12,6 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.hooks.defuseKitEntities
-import rat.poison.game.netvars.NetVarOffsets.m_fAccuracyPenalty
 import rat.poison.settings.*
 import rat.poison.strToBool
 import rat.poison.strToColor

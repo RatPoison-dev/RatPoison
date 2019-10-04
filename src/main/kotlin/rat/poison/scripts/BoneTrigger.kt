@@ -2,115 +2,128 @@ package rat.poison.scripts
 
 import org.jire.arrowhead.keyPressed
 import org.jire.arrowhead.keyReleased
-import rat.poison.App
 import rat.poison.App.haveTarget
-import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.angle
 import rat.poison.game.clientState
 import rat.poison.game.me
-import rat.poison.game.offsets.ClientOffsets.dwForceAttack
 import rat.poison.scripts.aim.findTarget
 import rat.poison.settings.*
 import rat.poison.curSettings
-import rat.poison.game.Weapons
+import rat.poison.game.CSGO
+import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.entity.bullets
 import rat.poison.game.entity.position
+import rat.poison.game.netvars.NetVarOffsets.iCrossHairID
+import rat.poison.game.offsets.ClientOffsets
 import rat.poison.opened
+import rat.poison.robot
 import rat.poison.scripts.aim.boneTrig
 import rat.poison.scripts.aim.canShoot
+import rat.poison.scripts.aim.inMyTeam
 import rat.poison.strToBool
-import rat.poison.ui.bTrigTab
-import rat.poison.ui.mainTabbedPane
 import rat.poison.utils.every
+import rat.poison.utils.extensions.uint
 import java.awt.Robot
 import java.awt.event.InputEvent
-import java.awt.event.KeyEvent
+import java.awt.event.InputEvent.BUTTON1_DOWN_MASK
 
-private val robot = Robot().apply { this.autoDelay = 0 }
 private var callingInShot = false
 private var inShot = false
 
 fun boneTrigger() = every(10) {
     if (curSettings["MENU"].strToBool() && opened && haveTarget) {
         if (DANGER_ZONE) {
-            mainTabbedPane.disableTab(bTrigTab, true)
+            //mainTabbedPane.disableTab(bTrigTab, true)
         } else {
-            mainTabbedPane.disableTab(bTrigTab, false)
+            //mainTabbedPane.disableTab(bTrigTab, false)
         }
     }
 
-    if (DANGER_ZONE) {
+    if (DANGER_ZONE || me.dead()) {
         return@every
     }
 
     boneTrig = false
 
-    if (curSettings["ENABLE_BONE_TRIGGER"].strToBool()) {
-    val wep = me.weapon()
+    if (curSettings["ENABLE_TRIGGER"].strToBool()) {
+        val wep = me.weapon()
 
-    var bFOV = 0
-    //Change to one val, why have 5?
-    var bTrigPistols = false
-    var bTrigRifles = false
-    var bTrigShotguns = false
-    var bTrigSnipers = false
-    var bTrigSmgs = false
+        var bFOV = 0
+        var bDELAY = 0
+        var bINCROSS = false
+        var bINFOV = false
+        var bAIMBOT = false
 
-    when {
-        wep.pistol -> { bFOV = curSettings["BONE_TRIGGER_PISTOLS_FOV"].toInt(); if (curSettings["BONE_TRIGGER_PISTOLS"].strToBool()) bTrigPistols = true; }
-        wep.rifle -> { bFOV = curSettings["BONE_TRIGGER_RIFLES_FOV"].toInt(); if (curSettings["BONE_TRIGGER_RIFLES"].strToBool()) bTrigRifles = true; }
-        wep.shotgun -> { bFOV = curSettings["BONE_TRIGGER_SHOTGUNS_FOV"].toInt(); if (curSettings["BONE_TRIGGER_SHOTGUNS"].strToBool()) bTrigShotguns = true; }
-        wep.sniper -> { bFOV = curSettings["BONE_TRIGGER_SNIPERS_FOV"].toInt(); if (curSettings["BONE_TRIGGER_SNIPERS"].strToBool() && ((me.isScoped() && curSettings["ENABLE_SCOPED_ONLY"].strToBool()) || (!curSettings["ENABLE_SCOPED_ONLY"].strToBool()))) bTrigSnipers = true; }
-        wep.smg -> { bFOV = curSettings["BONE_TRIGGER_SMGS_FOV"].toInt(); if (curSettings["BONE_TRIGGER_SMGS"].strToBool()) bTrigSmgs = true; }
-    }
+        //Change to one val, why have 5?
+        var bTrigPistols = false
+        var bTrigRifles = false
+        var bTrigShotguns = false
+        var bTrigSnipers = false
+        var bTrigSmgs = false
+
+        when {
+            wep.pistol -> { bFOV = curSettings["PISTOL_TRIGGER_FOV"].toInt(); bDELAY = curSettings["PISTOL_TRIGGER_SHOT_DELAY"].toInt(); bINCROSS = curSettings["PISTOL_TRIGGER_INCROSS"].strToBool(); bINFOV = curSettings["PISTOL_TRIGGER_INFOV"].strToBool(); bAIMBOT = curSettings["PISTOL_TRIGGER_AIMBOT"].strToBool(); if (curSettings["PISTOL_TRIGGER"].strToBool()) bTrigPistols = true; }
+            wep.rifle -> { bFOV = curSettings["RIFLE_TRIGGER_FOV"].toInt(); bDELAY = curSettings["RIFLE_TRIGGER_SHOT_DELAY"].toInt(); bINCROSS = curSettings["RIFLE_TRIGGER_INCROSS"].strToBool(); bINFOV = curSettings["RIFLE_TRIGGER_INFOV"].strToBool(); bAIMBOT = curSettings["RIFLE_TRIGGER_AIMBOT"].strToBool(); if (curSettings["RIFLE_TRIGGER"].strToBool()) bTrigRifles = true; }
+            wep.shotgun -> { bFOV = curSettings["SHOTGUN_TRIGGER_FOV"].toInt(); bDELAY = curSettings["SHOTGUN_TRIGGER_SHOT_DELAY"].toInt(); bINCROSS = curSettings["SHOTGUN_TRIGGER_INCROSS"].strToBool(); bINFOV = curSettings["SHOTGUN_TRIGGER_INFOV"].strToBool(); bAIMBOT = curSettings["SHOTGUN_TRIGGER_AIMBOT"].strToBool(); if (curSettings["SHOTGUN_TRIGGER"].strToBool()) bTrigShotguns = true; }
+            wep.sniper -> { bFOV = curSettings["SNIPER_TRIGGER_FOV"].toInt(); bDELAY = curSettings["SNIPER_TRIGGER_SHOT_DELAY"].toInt(); bINCROSS = curSettings["SNIPER_TRIGGER_INCROSS"].strToBool(); bINFOV = curSettings["SNIPER_TRIGGER_INFOV"].strToBool(); bAIMBOT = curSettings["SNIPER_TRIGGER_AIMBOT"].strToBool(); if (curSettings["SNIPER_TRIGGER"].strToBool() && ((me.isScoped() && curSettings["ENABLE_SCOPED_ONLY"].strToBool()) || (!curSettings["ENABLE_SCOPED_ONLY"].strToBool()))) bTrigSnipers = true; }
+            wep.smg -> { bFOV = curSettings["SMG_TRIGGER_FOV"].toInt(); bDELAY = curSettings["SMG_TRIGGER_SHOT_DELAY"].toInt(); bINCROSS = curSettings["SMG_TRIGGER_INCROSS"].strToBool(); bINFOV = curSettings["SMG_TRIGGER_INFOV"].strToBool(); bAIMBOT = curSettings["SMG_TRIGGER_AIMBOT"].strToBool(); if (curSettings["SMG_TRIGGER"].strToBool()) bTrigSmgs = true; }
+        }
 
         if (bTrigPistols || bTrigRifles || bTrigShotguns || bTrigSnipers || bTrigSmgs) {
             val wepEnt = me.weaponEntity()
-            if (!me.weapon().knife && wepEnt.bullets() > 0) { //Prevents snap trigger preventing spamming
+            if (!me.weapon().knife && wepEnt.bullets() > 0) {
                 if (wep.automatic || (!wep.automatic && wepEnt.canFire())) {
                     if (keyReleased(AIM_KEY)) {
-                        val currentAngle = clientState.angle()
-                        val position = me.position()
-                        val target = findTarget(position, currentAngle, false, bFOV, -2)
-                        if (target >= 0 && target.canShoot()) {
-                            if ((curSettings["BONE_TRIGGER_ENABLE_KEY"].strToBool() && keyPressed(curSettings["BONE_TRIGGER_KEY"].toInt())) || !curSettings["BONE_TRIGGER_ENABLE_KEY"].strToBool()) {
-                                bTrigShoot()
-                                return@every
+                        if (bINCROSS) {
+                            val inCross = csgoEXE.uint(me + iCrossHairID)
+                            if (inCross > 0) {
+                                val ent = CSGO.clientDLL.uint(ClientOffsets.dwEntityList + (inCross * 0x10) - 0x10)
+                                if (!ent.inMyTeam() && !ent.isProtected()) {
+                                    if ((curSettings["TRIGGER_ENABLE_KEY"].strToBool() && keyPressed(curSettings["TRIGGER_KEY"].toInt())) || !curSettings["TRIGGER_ENABLE_KEY"].strToBool()) {
+                                        bTrigShoot(bDELAY, bAIMBOT)
+                                        return@every
+                                    }
+                                }
+                            }
+                        }
+
+                        if (bINFOV) {
+                            val currentAngle = clientState.angle()
+                            val position = me.position()
+                            val target = findTarget(position, currentAngle, false, bFOV, -2)
+                            if (target >= 0) {
+                                if ((curSettings["TRIGGER_ENABLE_KEY"].strToBool() && keyPressed(curSettings["TRIGGER_KEY"].toInt())) || !curSettings["TRIGGER_ENABLE_KEY"].strToBool()) {
+                                    bTrigShoot(bDELAY, bAIMBOT)
+                                    return@every
+                                }
                             }
                         }
                     }
                 }
             }
-            callingInShot = false
-            inShot = false
         }
+
+        callingInShot = false
+        inShot = false
     }
 }
 
 //Initial shot delay
-fun bTrigShoot() {
+fun bTrigShoot(delay: Int, aimbot: Boolean = false) {
     if (!callingInShot) {
         callingInShot = true
-        Thread(Runnable {//Coroutine is slow to initialize, bad for X delay
-            Thread.sleep(curSettings["BONE_TRIGGER_SHOT_DELAY"].toLong())
+        Thread(Runnable {
+            Thread.sleep(delay.toLong())
             inShot = true
         }).start()
     }
 
     if (inShot) {
         //Switch me.weapon() categ -> doesn't work
+        robot.mousePress(BUTTON1_DOWN_MASK)
+        robot.mouseRelease(BUTTON1_DOWN_MASK)
 
-        boneTrig = (me.weapon().pistol && curSettings["BONE_TRIGGER_PISTOLS_AIMBOT"].strToBool()) ||
-                (me.weapon().rifle && curSettings["BONE_TRIGGER_RIFLES_AIMBOT"].strToBool()) ||
-                (me.weapon().shotgun && curSettings["BONE_TRIGGER_SHOTGUNS_AIMBOT"].strToBool()) ||
-                (me.weapon().smg && curSettings["BONE_TRIGGER_SMGS_AIMBOT"].strToBool()) ||
-                (me.weapon().sniper && curSettings["BONE_TRIGGER_SNIPERS_AIMBOT"].strToBool())
-
-        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK)
-        Thread.sleep(25)
-        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
+        boneTrig = aimbot
     }
-
-    //inShot = false
 }
