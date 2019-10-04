@@ -11,9 +11,9 @@ Credit to Mr. Noad for a lot of help throughout this project
 
 ---
 
-**Updates are paused**
+**Content updates are paused**
 
-**Only updates will be bug fixes**
+**Bug fixes only**
 
 ---
 1.5.2 
