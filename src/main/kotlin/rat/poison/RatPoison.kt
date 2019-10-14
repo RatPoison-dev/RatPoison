@@ -126,6 +126,8 @@ fun main() {
                 setTitle("Rat Poison UI")
                 setWindowedMode(CSGO.gameWidth, CSGO.gameHeight)
 
+                useOpenGL3(true, 3, 2)
+
                 //Required to fix W2S offset
                 setWindowPosition(CSGO.gameX, CSGO.gameY)
                 setDecorated(false)

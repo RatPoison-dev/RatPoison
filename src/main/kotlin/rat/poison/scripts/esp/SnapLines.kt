@@ -31,9 +31,11 @@ fun snapLines() = App {
         if (me <= 0 || entity == me || dormCheck || teamCheck || entity.dead()) return@forEntities false
 
         shapeRenderer.apply {
-            begin()
+            if (shapeRenderer.isDrawing) {
+                end()
+            }
 
-            //projectionMatrix =
+            begin()
 
             val drawColor = curSettings["SNAPLINES_COLOR"].strToColor()
 

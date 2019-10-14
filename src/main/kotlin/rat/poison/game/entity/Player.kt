@@ -129,7 +129,7 @@ internal fun Player.nearestBone(): Int {
 
 	//Get actual size
 	val modelMemory: Memory by lazy {
-		Memory(21116)
+		Memory(25000) //Fuck you
 	}
 	val boneMemory: Memory by lazy {
 		Memory(4032)

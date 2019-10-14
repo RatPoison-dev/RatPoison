@@ -49,6 +49,10 @@ Credit to Mr. Noad for a lot of help throughout this project
 * Removed bunny hop key setting, is now always VK_SPACE
 * Nade helpers foot lineup uses the games matrix instead of w2s-ing an ellipse which wasn't accurate
 
+**Hotfix 1**
+* Possible fix for snapline error
+* Increased nearest bone memory size to prevent crashing
+
 ---
 1.5.1
 
