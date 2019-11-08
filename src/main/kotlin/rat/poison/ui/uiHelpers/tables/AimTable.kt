@@ -63,7 +63,7 @@ class AimTable: VisTable(true) {
 
     init {
         if (curSettings["WARNING"].strToBool()) {
-            val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.5.2" +
+            val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.5.3" +
                     "\n\nIf you have any problems submit an issue on Github" +
                     "\nGitHub: https://github.com/TheFuckingRat/RatPoison" +
                     "\n\nMany names of settings have changed, you should reconfig from default")

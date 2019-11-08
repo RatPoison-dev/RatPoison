@@ -288,10 +288,10 @@ The first step is to compile the source code into a usable cheat program.
 To set your JAVA_HOME read [here](https://javatutorial.net/set-java-home-windows-10)
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.5.2**.
+directory, and will in a directory called **RatPoison 1.5.3**.
 
-From within the **RatPoison 1.5.2** directory, you can start the cheat by running
-the _"Start RatPoison 1.5.2"_ script.
+From within the **RatPoison 1.5.3** directory, you can start the cheat by running
+the _"Start RatPoison 1.5.3"_ script.
 
 You can launch the cheat any time after launching CSGO.
 
