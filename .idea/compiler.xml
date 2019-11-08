@@ -2,9 +2,5 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <option name="BUILD_PROCESS_HEAP_SIZE" value="2024" />
-    <bytecodeTargetLevel>
-      <module name="rat.poison.RatPoison.main" target="12" />
-      <module name="rat.poison.RatPoison.test" target="12" />
-    </bytecodeTargetLevel>
   </component>
 </project>

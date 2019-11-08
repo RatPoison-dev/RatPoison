@@ -68,8 +68,6 @@ fun updateViewMatrix() { //Call before using multiple world to screens
 					offset += 4 //Changed, error but not compd
 				}
 			}
-		} else {
-			println("buffer null")
 		}
 	}
 }

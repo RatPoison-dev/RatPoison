@@ -22,6 +22,7 @@ import rat.poison.scripts.aim.boneTrig
 import rat.poison.scripts.aim.canShoot
 import rat.poison.scripts.aim.inMyTeam
 import rat.poison.strToBool
+import rat.poison.ui.mainTabbedPane
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import java.awt.Robot
@@ -32,14 +33,6 @@ private var callingInShot = false
 private var inShot = false
 
 fun boneTrigger() = every(10) {
-    if (curSettings["MENU"].strToBool() && opened && haveTarget) {
-        if (DANGER_ZONE) {
-            //mainTabbedPane.disableTab(bTrigTab, true)
-        } else {
-            //mainTabbedPane.disableTab(bTrigTab, false)
-        }
-    }
-
     if (DANGER_ZONE || me.dead()) {
         return@every
     }
@@ -79,7 +72,7 @@ fun boneTrigger() = every(10) {
                             val inCross = csgoEXE.uint(me + iCrossHairID)
                             if (inCross > 0) {
                                 val ent = CSGO.clientDLL.uint(ClientOffsets.dwEntityList + (inCross * 0x10) - 0x10)
-                                if (!ent.inMyTeam() && !ent.isProtected()) {
+                                if (!ent.inMyTeam() && !ent.isProtected() && !ent.dead()) {
                                     if ((curSettings["TRIGGER_ENABLE_KEY"].strToBool() && keyPressed(curSettings["TRIGGER_KEY"].toInt())) || !curSettings["TRIGGER_ENABLE_KEY"].strToBool()) {
                                         bTrigShoot(bDELAY, bAIMBOT)
                                         return@every
@@ -93,9 +86,11 @@ fun boneTrigger() = every(10) {
                             val position = me.position()
                             val target = findTarget(position, currentAngle, false, bFOV, -2)
                             if (target >= 0) {
-                                if ((curSettings["TRIGGER_ENABLE_KEY"].strToBool() && keyPressed(curSettings["TRIGGER_KEY"].toInt())) || !curSettings["TRIGGER_ENABLE_KEY"].strToBool()) {
-                                    bTrigShoot(bDELAY, bAIMBOT)
-                                    return@every
+                                if (!target.dead() && !target.isProtected()) {
+                                    if ((curSettings["TRIGGER_ENABLE_KEY"].strToBool() && keyPressed(curSettings["TRIGGER_KEY"].toInt())) || !curSettings["TRIGGER_ENABLE_KEY"].strToBool()) {
+                                        bTrigShoot(bDELAY, bAIMBOT)
+                                        return@every
+                                    }
                                 }
                             }
                         }

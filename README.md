@@ -16,6 +16,14 @@ Credit to Mr. Noad for a lot of help throughout this project
 **Bug fixes only**
 
 ---
+1.5.3
+
+* Overlay default to csgo width/height, fallback on OVERLAY_WIDTH/HEIGHT
+* Changed RCS update speed 10 > 4 to improve it's accuracy
+* Added always force aim checkbox 
+* Added alive check to bone trigger to prevent shooting at entities such as vents
+
+---
 1.5.2 
 
 * Names of some settings have changed, I recommend to reconfig from default
@@ -266,15 +274,15 @@ This branch is being updated at [TheFuckingRat's Github Repository](https://gith
 The official branch is located at [Jire's GitHub Repository](https://github.com/Jire/Charlatano)
 
 Before doing anything, make sure you have
-[Java Development Kit (JDK) 12](https://www.oracle.com/technetwork/java/javase/downloads/jdk12-downloads-5295953.html)
-installed. [Alternative.](https://jdk.java.net/12/) This is NOT the same thing as the regular Java Runtime (JRE), and you MUST install the JDK
-in order to build Rat Poison, Charlatano, and any other Java software, and you MUST install JDK 12
+[Java Development Kit (JDK) 13](https://www.oracle.com/technetwork/java/javase/downloads/jdk13-downloads-5672538.html)
+installed. [Alternative.](https://jdk.java.net/13/) This is NOT the same thing as the regular Java Runtime (JRE), and you MUST install the JDK
+in order to build Rat Poison, Charlatano, and any other Java software, and you MUST install JDK 13
 
 The first step is to compile the source code into a usable cheat program.
 
 * Download the latest updates (which includes the newest features) by downloading directly as a ZIP
 * Extract the contents from the archive to any folder (to your desktop, for example)
-* Make sure you have Java Development Kit 12 installed, in Program Files\Java
+* Make sure you have Java Development Kit 13 installed, in Program Files\Java
 * Double click on the "_build_" (_build.bat_) script and wait for it to complete
 
 To set your JAVA_HOME read [here](https://javatutorial.net/set-java-home-windows-10)
@@ -298,4 +306,4 @@ You can launch the cheat any time after launching CSGO.
 Common Issues
 * Overlay is black/doesn't go transparent/isn't showing up
     * The overlay only works on Windows 10, it doesn't turn transparent on W7
-    * CSGO needs to be borderless/windowed for the overlay to show up ontop of CS, otherwise it's just a app in your taskbar
+    * CSGO needs to be borderless/windowed for the overlay to show up on top of CS, otherwise it's just an app in your taskbar

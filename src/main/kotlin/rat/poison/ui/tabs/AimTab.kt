@@ -56,6 +56,7 @@ fun updateDisableAim() {
         automaticWeaponsInput.disable(bool, col)
         targetSwapDelay.disable(bool, col)
         forceAimKey.disable(bool, col)
+        forceAimAlways.disable(bool)
         categorySelectLabel.color = col
         categorySelectionBox.isDisabled = bool
         enableFactorRecoil.isDisabled = bool
@@ -81,6 +82,7 @@ fun updateAim() {
         activateFromFireKey.update()
         teammatesAreEnemies.update()
         forceAimKey.update()
+        forceAimAlways.update()
         automaticWeaponsCheckBox.update()
         automaticWeaponsInput.update()
         targetSwapDelay.update()

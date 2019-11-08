@@ -13,7 +13,7 @@ private val lastPunch = Vector2()
 private val newPunch = Vector2()
 private val playerPunch = Vector3()
 
-fun rcs() = every(10) {
+fun rcs() = every(4) {
 	if (me <= 0 || !curSettings["ENABLE_RCS"].strToBool()) return@every
 
 	val weaponEntity = me.weaponEntity()
@@ -23,15 +23,15 @@ fun rcs() = every(10) {
 	val p = me.punch()
 
 	val forceSet = (shotsFired == 0 && !lastPunch.isZero)
-	val finishPunch = true
+	//val finishPunch = true
 
-	if (forceSet || !finishPunch || shotsFired > 1) {
+	if (forceSet || /*!finishPunch ||*/ shotsFired > 1) {
 		if (lastPunch.isZero) {
 			lastPunch.set(p.x.toFloat(), p.y.toFloat())
 		}
 		playerPunch.set(p.x.toFloat(), p.y.toFloat(), p.z.toFloat())
 		newPunch.set(playerPunch.x - lastPunch.x, playerPunch.y - lastPunch.y)
-		newPunch.scl(1F+ curSettings["RCS_SMOOTHING_Y"].toFloat(), 1F+ curSettings["RCS_SMOOTHING_X"].toFloat())
+		newPunch.scl(1F + curSettings["RCS_SMOOTHING_Y"].toFloat(), 1F + curSettings["RCS_SMOOTHING_X"].toFloat())
 
 		val angle = clientState.angle()
 		angle.apply {

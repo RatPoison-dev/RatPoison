@@ -29,9 +29,13 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	var closestDelta = Double.MAX_VALUE
 	var closestPlayer = -1L
 
-	forEntities(ccsPlayer) result@{
+	forEntities result@{
 		val entity = it.entity
 		if (entity <= 0 || entity == me || !entity.canShoot()) {
+			return@result false
+		}
+
+		if (it.type != EntityType.CCSPlayer) {
 			return@result false
 		}
 
@@ -153,7 +157,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		}
 
 		val aim = curSettings["ACTIVATE_FROM_AIM_KEY"].strToBool() && keyPressed(AIM_KEY)
-		val forceAim = keyPressed(curSettings["FORCE_AIM_KEY"].toInt())
+		val forceAim = keyPressed(curSettings["FORCE_AIM_KEY"].toInt()) || curSettings["FORCE_AIM_ALWAYS"].strToBool()
 		val haveAmmo = meWepEnt.bullets() > 0
 
 		val pressed = (aim || forceAim || boneTrig) && !MENUTOG && haveAmmo

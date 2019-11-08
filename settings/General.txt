@@ -63,6 +63,9 @@ TEAMMATES_ARE_ENEMIES = false
 //Default key is MOUSE_4
 FORCE_AIM_KEY = 5
 
+//Always force aim if within FOV
+FORCE_AIM_ALWAYS = false
+
 //MS Delay between when aimbot paths are recalculated
 AIM_DURATION = 1
 

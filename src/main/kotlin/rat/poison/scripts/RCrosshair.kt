@@ -52,6 +52,10 @@ internal fun rcrosshair() = App {
 
     if (!MENUTOG || ((eRC || eSC) && mainTabbedPane.activeTab == rcsTab)) {
         shapeRenderer.apply {
+            if (shapeRenderer.isDrawing) {
+                end()
+            }
+
             begin()
             set(ShapeRenderer.ShapeType.Filled)
             val col = curSettings["RCROSSHAIR_COLOR"].strToColor()

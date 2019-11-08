@@ -61,7 +61,6 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
 
 	delta.set(xFix, currentAngle.x - destinationAngle.x, 0.0)
 
-
 	var sens = GAME_SENSITIVITY * sensMultiplier
 	if (sens < GAME_SENSITIVITY) sens = GAME_SENSITIVITY
 	if (perfect) sens = 1.0

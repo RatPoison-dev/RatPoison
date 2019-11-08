@@ -27,6 +27,7 @@ class AimTable: VisTable(true) {
     val teammatesAreEnemies = VisCheckBoxCustom("Teammates Are Enemies", "TEAMMATES_ARE_ENEMIES")
 
     val forceAimKey = VisInputFieldCustom("Force Aim Key", "FORCE_AIM_KEY")
+    val forceAimAlways = VisCheckBoxCustom("Force Aim Always", "FORCE_AIM_ALWAYS")
 
     //Automatic Weapons Collapsible
     val automaticWeaponsCheckBox = VisCheckBoxCustom("Automatic Weapons", "AUTOMATIC_WEAPONS")
@@ -161,6 +162,7 @@ class AimTable: VisTable(true) {
             add(teammatesAreEnemies).left().row()
 
             add(forceAimKey).left().row()
+            add(forceAimAlways).left().row()
 
             add(automaticWeaponsCheckBox).left().row()
             add(automaticWeaponsInput).left().row()

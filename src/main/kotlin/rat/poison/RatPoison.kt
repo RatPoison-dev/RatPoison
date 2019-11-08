@@ -124,7 +124,16 @@ fun main() {
 
             Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
                 setTitle("Rat Poison UI")
-                setWindowedMode(CSGO.gameWidth, CSGO.gameHeight)
+
+                var w = CSGO.gameWidth
+                var h = CSGO.gameHeight
+
+                if (w == 0 || h == 0) {
+                    w = curSettings["OVERLAY_WIDTH"].toInt()
+                    h = curSettings["OVERLAY_HEIGHT"].toInt()
+                }
+
+                setWindowedMode(w, h)
 
                 useOpenGL3(true, 3, 2)
 
@@ -234,7 +243,7 @@ object App : ApplicationAdapter() {
         sb = SpriteBatch()
         textRenderer = BitmapFont()
         camera = OrthographicCamera()
-        Gdx.gl.glClearColor(0F, 0F, 0F, 0F)
+        gl.glClearColor(0F, 0F, 0F, 0F)
 
         overlay.start()
     }
