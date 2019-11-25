@@ -23,6 +23,9 @@ Credit to Mr. Noad for a lot of help throughout this project
 * Added always force aim checkbox 
 * Added alive check to bone trigger to prevent shooting at entities such as vents
 
+**Hotfix 1**
+* (probably) Fixed Box ESP crashing the overlay
+
 ---
 1.5.2 
 

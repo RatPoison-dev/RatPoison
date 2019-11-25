@@ -76,7 +76,6 @@ fun main() {
         if (dbg) println("[DEBUG] Menu disabled, disabling box, skeleton, rcrosshair, btimer, indicator, speclist, hitmarker, nade tracer, nade helper")
 
         curSettings["ENABLE_BOX_ESP"] = "false"
-
         curSettings["SKELETON_ESP"] = "false"
         curSettings["ENABLE_RECOIL_CROSSHAIR"] = "false"
         curSettings["ENABLE_BOMB_TIMER"] = "false"
@@ -195,7 +194,6 @@ object App : ApplicationAdapter() {
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
     private val overlay = Overlay(curSettings["MENU_APP"].replace("\"", ""), "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
-    var haveTarget = false
     lateinit var menuStage: Stage
     private lateinit var aimOverrideStage: Stage
     private lateinit var bombStage: Stage
@@ -207,6 +205,8 @@ object App : ApplicationAdapter() {
     lateinit var uiBombWindow: UIBombTimer
     lateinit var uiSpecList: UISpectatorList
     lateinit var uiAimOverridenWeapons: UIAimOverridenWeapons
+
+    var haveTarget = false
 
     override fun create() {
         overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })

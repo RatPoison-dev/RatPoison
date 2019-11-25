@@ -51,7 +51,7 @@ internal fun boxEsp() = App {
 		}
 
 		val entityMemory: Memory by lazy {
-			Memory(45892)
+			Memory(45932)
 		}
 
 		csgoEXE.read(entity.boneMatrix(), boneMemory)
