@@ -134,7 +134,10 @@ fun main() {
 
                 setWindowedMode(w, h)
 
-                useOpenGL3(true, 3, 2)
+                if (curSettings["OPENGL_3"].strToBool()) {
+                    useOpenGL3(true, 3, 2)
+                    if (dbg) { println("[DEBUG] Using GL3") }
+                }
 
                 //Required to fix W2S offset
                 setWindowPosition(CSGO.gameX, CSGO.gameY)

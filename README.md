@@ -25,6 +25,7 @@ Credit to Mr. Noad for a lot of help throughout this project
 
 **Hotfix 1**
 * (probably) Fixed Box ESP crashing the overlay
+* Added setting option to use GL3/Gles3, might fix shader compatibility issues
 
 ---
 1.5.2 
