@@ -63,10 +63,9 @@ class AimTable: VisTable(true) {
 
     init {
         if (curSettings["WARNING"].strToBool()) {
-            val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.5.3" +
+            val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.5.3.1" +
                     "\n\nIf you have any problems submit an issue on Github" +
-                    "\nGitHub: https://github.com/TheFuckingRat/RatPoison" +
-                    "\n\nMany names of settings have changed, you should reconfig from default")
+                    "\nGitHub: https://github.com/TheFuckingRat/RatPoison")
             dialog.setPosition(CSGO.gameWidth / 4F - dialog.width / 2F, CSGO.gameHeight.toFloat() / 2F)
             App.menuStage.addActor(dialog)
         }

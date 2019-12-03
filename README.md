@@ -5,6 +5,52 @@
 
 ---
 
+**Beginner's Guide**
+
+This branch is being updated at [TheFuckingRat's Github Repository](https://github.com/TheFuckingRat/RatPoison)
+The official branch is located at [Jire's GitHub Repository](https://github.com/Jire/Charlatano)
+
+Before doing anything, make sure you have
+[Java Development Kit (JDK) 13](https://www.oracle.com/technetwork/java/javase/downloads/jdk13-downloads-5672538.html)
+installed. [Alternative.](https://jdk.java.net/13/) This is NOT the same thing as the regular Java Runtime (JRE), and you MUST install the JDK
+in order to build Rat Poison, Charlatano, and any other Java software, and you MUST install JDK 13
+
+The first step is to compile the source code into a usable cheat program.
+
+* Download the latest updates (which includes the newest features) by downloading directly as a ZIP
+* Extract the contents from the archive to any folder (to your desktop, for example)
+* Make sure you have Java Development Kit 13 installed, in Program Files\Java
+* Double click on the "_build_" (_build.bat_) script and wait for it to complete
+
+To set your JAVA_HOME read [here](https://javatutorial.net/set-java-home-windows-10)
+Make sure to update your System Path as well, not just setting JAVA_HOME
+
+Once those steps are complete, the usable cheat program can be found within the _build_
+directory, and will in a directory called **RatPoison 1.5.3.1**.
+
+From within the **RatPoison 1.5.3.1** directory, you can start the cheat by running
+the _"Start RatPoison 1.5.3.1"_ script.
+
+You can launch the cheat any time after launching CSGO.
+
+---
+
+**Beginner's Guide Video**
+
+[![Beginner's Video](http://i.imgur.com/pVLW5Yr.png)](https://www.youtube.com/watch?v=PapjDtR0OMY "Charlatano")
+
+---
+
+Common Issues
+* Overlay is black/doesn't go transparent/isn't showing up
+    * The overlay only works on Windows 10, it doesn't turn transparent on W7
+    * CSGO needs to be borderless/windowed for the overlay to show up on top of CS, otherwise it's just an app in your taskbar
+
+* Game looks framey despite having normal FPS (example 144hz/144fps, but looks like 60)
+    * Lowering opengl fps to 30 helps
+
+---
+
 Open to pull requests
 
 Credit to Mr. Noad for a lot of help throughout this project
@@ -14,6 +60,13 @@ Credit to Mr. Noad for a lot of help throughout this project
 **Content updates are paused**
 
 **Bug fixes only**
+
+---
+1.5.3 Hotfix 1
+
+* Reduced some calls in head walk
+* Fixed crashing when loading/deleting a cfg without a cfg selected/present
+* Improved RCS accuracy
 
 ---
 1.5.3
@@ -269,45 +322,3 @@ Base is Charlatano available [here](https://github.com/Jire/Charlatano)
     * Bunny hop
     * Auto strafe
     * Fast stop
-    
----
-
-**Beginner's Guide**
-
-This branch is being updated at [TheFuckingRat's Github Repository](https://github.com/TheFuckingRat/RatPoison)
-The official branch is located at [Jire's GitHub Repository](https://github.com/Jire/Charlatano)
-
-Before doing anything, make sure you have
-[Java Development Kit (JDK) 13](https://www.oracle.com/technetwork/java/javase/downloads/jdk13-downloads-5672538.html)
-installed. [Alternative.](https://jdk.java.net/13/) This is NOT the same thing as the regular Java Runtime (JRE), and you MUST install the JDK
-in order to build Rat Poison, Charlatano, and any other Java software, and you MUST install JDK 13
-
-The first step is to compile the source code into a usable cheat program.
-
-* Download the latest updates (which includes the newest features) by downloading directly as a ZIP
-* Extract the contents from the archive to any folder (to your desktop, for example)
-* Make sure you have Java Development Kit 13 installed, in Program Files\Java
-* Double click on the "_build_" (_build.bat_) script and wait for it to complete
-
-To set your JAVA_HOME read [here](https://javatutorial.net/set-java-home-windows-10)
-
-Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.5.3**.
-
-From within the **RatPoison 1.5.3** directory, you can start the cheat by running
-the _"Start RatPoison 1.5.3"_ script.
-
-You can launch the cheat any time after launching CSGO.
-
----
-
-**Beginner's Guide Video**
-
-[![Beginner's Video](http://i.imgur.com/pVLW5Yr.png)](https://www.youtube.com/watch?v=PapjDtR0OMY "Charlatano")
-
----
-
-Common Issues
-* Overlay is black/doesn't go transparent/isn't showing up
-    * The overlay only works on Windows 10, it doesn't turn transparent on W7
-    * CSGO needs to be borderless/windowed for the overlay to show up on top of CS, otherwise it's just an app in your taskbar

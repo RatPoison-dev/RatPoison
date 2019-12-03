@@ -11,6 +11,8 @@ import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.jetbrains.kotlin.container.ComponentState
+import org.jetbrains.kotlin.resolve.calls.smartcasts.IdentifierInfo
 import org.jire.arrowhead.keyPressed
 import rat.poison.*
 import rat.poison.App.menuStage
@@ -76,8 +78,10 @@ class OptionsTab : Tab(false, false) {
         //Create Load Button
         val loadButton = VisTextButton("Load CFG")
         loadButton.changed { _, _ ->
-            if (fileSelectBox.selected.count() > 0) {
-                loadCFG(fileSelectBox.selected)
+            if (!fileSelectBox.selected.isNullOrEmpty()) {
+                if (fileSelectBox.selected.count() > 0) {
+                    loadCFG(fileSelectBox.selected)
+                }
             }
             true
         }
@@ -85,8 +89,10 @@ class OptionsTab : Tab(false, false) {
         //Create Delete Button
         val deleteButton = VisTextButton("Delete CFG")
         deleteButton.changed { _, _ ->
-            if (fileSelectBox.selected.count() > 0) {
-                deleteCFG(fileSelectBox.selected)
+            if (!fileSelectBox.selected.isNullOrEmpty()) {
+                if (fileSelectBox.selected.count() > 0) {
+                    deleteCFG(fileSelectBox.selected)
+                }
             }
             true
         }

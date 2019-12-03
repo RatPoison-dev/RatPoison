@@ -31,22 +31,25 @@ var headWalkToggle = ObservableBoolean({onPlayerHead()})
 
 //Switch velocity to difference in current pos vs prev
 
+var mePos = Vector()
+var onEntPos = Vector()
+
 internal fun headWalk() = every(1) {
     if (!curSettings["HEAD_WALK"].strToBool()) return@every
 
     if (me.dead()) return@every
 
     if (!keyPressed(KeyEvent.VK_W) && !keyPressed(KeyEvent.VK_A) && !keyPressed(KeyEvent.VK_S) && !keyPressed(KeyEvent.VK_D)) {
+        mePos = me.absPosition()
         headWalkToggle.update()
         if (headWalkToggle.value) {
             updateCursorEnable()
             if (cursorEnable) return@every
 
-            val mePos = me.absPosition()
-            val entPos = onEnt.absPosition()
-            val pos = Vector(mePos.x - entPos.x, mePos.y - entPos.y, mePos.z - entPos.z)
+            val pos = Vector(mePos.x - onEntPos.x, mePos.y - onEntPos.y, mePos.z - onEntPos.z)
             val yaw = clientState.angle().y
 
+            //Is this even needed?
             val distX = (pos.x * cos(yaw / 180 * Math.PI) + pos.y * sin(yaw / 180 * Math.PI)).toInt()
             val distY = (pos.y * cos(yaw / 180 * Math.PI) - pos.x * sin(yaw / 180 * Math.PI)).toInt()
 
@@ -76,7 +79,6 @@ internal fun headWalk() = every(1) {
 }
 
 internal fun onPlayerHead() : Boolean {
-    val mePos = me.absPosition()
     var entPos : Angle
     onEnt = 0L
 
@@ -92,6 +94,11 @@ internal fun onPlayerHead() : Boolean {
 
         if (xDif in -30.0..30.0 && yDif in -30.0..30.0 && zDif in 50.0..75.0) {
             onEnt = entity
+            onEntPos = entPos
+        }
+
+        if (onEnt != 0L) {
+            return@forEntities false
         }
 
         false

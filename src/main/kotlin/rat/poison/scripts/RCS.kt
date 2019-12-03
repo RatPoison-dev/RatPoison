@@ -29,6 +29,7 @@ fun rcs() = every(4) {
 		if (lastPunch.isZero) {
 			lastPunch.set(p.x.toFloat(), p.y.toFloat())
 		}
+
 		playerPunch.set(p.x.toFloat(), p.y.toFloat(), p.z.toFloat())
 		newPunch.set(playerPunch.x - lastPunch.x, playerPunch.y - lastPunch.y)
 		newPunch.scl(1F + curSettings["RCS_SMOOTHING_Y"].toFloat(), 1F + curSettings["RCS_SMOOTHING_X"].toFloat())
@@ -39,6 +40,7 @@ fun rcs() = every(4) {
 			y -= newPunch.y
 			normalize()
 		}
+
 		clientState.setAngle(angle)
 		lastPunch.x = playerPunch.x
 		lastPunch.y = playerPunch.y

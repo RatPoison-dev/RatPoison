@@ -68,12 +68,13 @@ internal fun Player.dead() = try {
 	false
 }
 
-private val player2Punch: Long2ObjectMap<Angle> = Long2ObjectOpenHashMap(255)
+internal fun Player.punch(): Angle {
+	val tmpAng = Angle()
+	tmpAng.x = csgoEXE.float(this + aimPunchAngle).toDouble()
+	tmpAng.y = csgoEXE.float(this + aimPunchAngle + 4).toDouble()
+	tmpAng.z = 0.0
 
-internal fun Player.punch(): Angle = readCached(player2Punch) {
-	x = csgoEXE.float(it + aimPunchAngle).toDouble()
-	y = csgoEXE.float(it + aimPunchAngle + 4).toDouble()
-	z = 0.0
+	return tmpAng
 }
 
 internal fun Player.shotsFired(): Int = csgoEXE.int(this + NetVarOffsets.iShotsFired)
@@ -149,7 +150,6 @@ internal fun Player.nearestBone(): Int {
 		if (parent != -1) {
 			val flags = modelMemory.getInt(0xA0L + offset).unsign() and 0x100
 			if (flags != 0L) {
-
 				val tPunch = me.punch()
 
 				if (worldToScreen(boneMemory.vector(parent * 0x30L, 0x0C, 0x1C, 0x2C), w2sRetVec)) {

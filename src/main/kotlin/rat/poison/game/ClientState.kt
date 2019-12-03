@@ -9,12 +9,13 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
 
 typealias ClientState = Long
 
-private val clientState2Angle: Long2ObjectMap<Angle> = Long2ObjectOpenHashMap()
+fun ClientState.angle(): Angle {
+	val tmpAng = Angle()
+	tmpAng.x = csgoEXE.float(this + dwViewAngles).toDouble()
+	tmpAng.y = csgoEXE.float(this + dwViewAngles + 4).toDouble()
+	tmpAng.z = csgoEXE.float(this + dwViewAngles + 8).toDouble()
 
-fun ClientState.angle(): Angle = readCached(clientState2Angle) {
-	x = csgoEXE.float(it + dwViewAngles).toDouble()
-	y = csgoEXE.float(it + dwViewAngles + 4).toDouble()
-	z = csgoEXE.float(it + dwViewAngles + 8).toDouble()
+	return tmpAng
 }
 
 fun ClientState.setAngle(angle: Angle) {
