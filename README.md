@@ -62,13 +62,6 @@ Credit to Mr. Noad for a lot of help throughout this project
 **Bug fixes only**
 
 ---
-1.5.3 Hotfix 1
-
-* Reduced some calls in head walk
-* Fixed crashing when loading/deleting a cfg without a cfg selected/present
-* Improved RCS accuracy
-
----
 1.5.3
 
 * Overlay default to csgo width/height, fallback on OVERLAY_WIDTH/HEIGHT
@@ -76,9 +69,12 @@ Credit to Mr. Noad for a lot of help throughout this project
 * Added always force aim checkbox 
 * Added alive check to bone trigger to prevent shooting at entities such as vents
 
-**Hotfix 1**
+**Hotfix 1 (1.5.3.1)**
 * (probably) Fixed Box ESP crashing the overlay
 * Added setting option to use GL3/Gles3, might fix shader compatibility issues
+* Reduced some calls in head walk
+* Fixed crashing when loading/deleting a cfg without a cfg selected/present
+* Improved RCS accuracy
 
 ---
 1.5.2 
