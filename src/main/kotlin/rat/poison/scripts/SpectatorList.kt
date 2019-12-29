@@ -17,7 +17,7 @@ import rat.poison.utils.every
 import rat.poison.utils.extensions.readIndex
 import rat.poison.utils.notInGame
 
-internal fun spectatorList() = every(2000) {
+internal fun spectatorList() = every(100) {
     if (!curSettings["SPECTATOR_LIST"].strToBool() || notInGame || !curSettings["MENU"].strToBool()) {
         return@every
     }
