@@ -79,6 +79,7 @@ fun updateDisableAim() {
 fun updateAim() {
     aimTab.tAim.apply {
         enableAim.update()
+        aimToggleKey.update()
         activateFromFireKey.update()
         teammatesAreEnemies.update()
         forceAimKey.update()

@@ -20,6 +20,10 @@ OVERLAY_HEIGHT = 1080
 //Enable overlay warning on initialize
 WARNING = true
 
+//VK Key Code (http://cherrytree.at/misc/vk.htm), toggles aim on or off
+//Default key is F3
+AIM_TOGGLE_KEY = 114
+
 //Aim Strafer
 AIM_STRAFER = false
 

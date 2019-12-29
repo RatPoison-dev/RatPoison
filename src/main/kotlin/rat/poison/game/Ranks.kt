@@ -1,7 +1,6 @@
 package rat.poison.game
 
 enum class Ranks(val id: Int, val str: String = "") {
-
     NONE(0, "N/A"),
     S1(1, "Silver I"),
     S2(2, "Silver II"),

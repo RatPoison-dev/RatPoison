@@ -26,10 +26,10 @@ To set your JAVA_HOME read [here](https://javatutorial.net/set-java-home-windows
 Make sure to update your System Path as well, not just setting JAVA_HOME
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.5.3.1**.
+directory, and will in a directory called **RatPoison 1.5.3.2**.
 
-From within the **RatPoison 1.5.3.1** directory, you can start the cheat by running
-the _"Start RatPoison 1.5.3.1"_ script.
+From within the **RatPoison 1.5.3.2** directory, you can start the cheat by running
+the _"Start RatPoison 1.5.3.2"_ script.
 
 You can launch the cheat any time after launching CSGO.
 
@@ -75,6 +75,9 @@ Credit to Mr. Noad for a lot of help throughout this project
 * Reduced some calls in head walk
 * Fixed crashing when loading/deleting a cfg without a cfg selected/present
 * Improved RCS accuracy
+
+**1.5.3.2**
+* Added toggle aim completely on/off keybind (Default is F3)
 
 ---
 1.5.2 

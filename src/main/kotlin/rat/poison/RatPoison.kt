@@ -127,7 +127,7 @@ fun main() {
                 var w = CSGO.gameWidth
                 var h = CSGO.gameHeight
 
-                if (w == 0 || h == 0) {
+                if ((w == 0 || h == 0) || curSettings["MENU_APP"] != "\"Counter-Strike: Global Offensive\"") {
                     w = curSettings["OVERLAY_WIDTH"].toInt()
                     h = curSettings["OVERLAY_HEIGHT"].toInt()
                 }
@@ -191,6 +191,7 @@ fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
 
 var opened = false
 var overlayMenuKey = ObservableBoolean({keyPressed(1)})
+var toggleAimKey = ObservableBoolean({keyPressed(1)})
 
 object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
@@ -213,6 +214,7 @@ object App : ApplicationAdapter() {
 
     override fun create() {
         overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
+        toggleAimKey = ObservableBoolean({ keyPressed(curSettings["AIM_TOGGLE_KEY"].toInt()) })
         VisUI.load(Gdx.files.internal("skin\\tinted.json"))
 
         //Implement stage for menu
@@ -293,6 +295,7 @@ object App : ApplicationAdapter() {
                     glFinish()
                 }
 
+                //Menu Key
                 overlayMenuKey.update()
                 if (overlayMenuKey.justBecomeTrue) {
                     MENUTOG = !MENUTOG
@@ -302,6 +305,12 @@ object App : ApplicationAdapter() {
                     uiUpdate()
 
                     if (dbg) println("[DEBUG] Menu Toggled")
+                }
+
+                //Aim Toggle Key
+                toggleAimKey.update()
+                if (toggleAimKey.justBecomeTrue) {
+                    aimTab.tAim.enableAim.isChecked = !aimTab.tAim.enableAim.isChecked
                 }
 
                 val w = overlay.width

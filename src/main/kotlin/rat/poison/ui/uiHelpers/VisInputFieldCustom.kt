@@ -7,10 +7,11 @@ import rat.poison.curSettings
 import rat.poison.ui.changed
 
 class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true) : VisTable() {
+    private val textLabel = mainText
     private val variableName = varName
 
     //val globalTable = VisTable()
-    private val keyLabel = VisLabel("$mainText:")
+    private var keyLabel = VisLabel("$textLabel:")
     private val keyField = VisValidatableTextField(Validators.INTEGERS)
     private val linkLabel = LinkLabel("?", "http://cherrytree.at/misc/vk.htm")
 
@@ -20,7 +21,7 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
             if (keyField.text.toIntOrNull() != null) {
                 curSettings[variableName] = keyField.text.toInt().toString()
             }
-            true
+            false
         }
 
         add(keyLabel).width(200F)
