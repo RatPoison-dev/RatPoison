@@ -67,6 +67,7 @@ fun nadeHelper() = App {
             "FLASH_GRENADE" -> "Flash"
             "SMOKE_GRENADE" -> "Smoke"
             "MOLOTOV" -> "Molly"
+            "INCENDIARY_GRENADE" -> "Molly"
             "EXPLOSIVE_GRENADE" -> "Frag"
             "DECOY_GRENADE" -> "Decoy"
             else -> ""

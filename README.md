@@ -26,10 +26,10 @@ To set your JAVA_HOME read [here](https://javatutorial.net/set-java-home-windows
 Make sure to update your System Path as well, not just setting JAVA_HOME
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.5.3.2**.
+directory, and will in a directory called **RatPoison 1.5.3.3**.
 
-From within the **RatPoison 1.5.3.2** directory, you can start the cheat by running
-the _"Start RatPoison 1.5.3.2"_ script.
+From within the **RatPoison 1.5.3.3** directory, you can start the cheat by running
+the _"Start RatPoison 1.5.3.3"_ script.
 
 You can launch the cheat any time after launching CSGO.
 
@@ -78,6 +78,9 @@ Credit to Mr. Noad for a lot of help throughout this project
 
 **1.5.3.2**
 * Added toggle aim completely on/off keybind (Default is F3)
+
+**1.5.3.3**
+* Incendiaries show up for molotovs for nade helper
 
 ---
 1.5.2 
