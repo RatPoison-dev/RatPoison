@@ -70,9 +70,10 @@ internal fun glowEspApp() = App {
 			}
 
 			else ->
-				if (curSettings["GLOW_SHOW_WEAPONS"].strToBool() && it.type.weapon)
+				if (curSettings["GLOW_SHOW_WEAPONS"].strToBool() && it.type.weapon) {
+					entity.bbox()
 					color = "GLOW_WEAPON_COLOR"
-				else if (curSettings["GLOW_SHOW_GRENADES"].strToBool() && it.type.grenade)
+				} else if (curSettings["GLOW_SHOW_GRENADES"].strToBool() && it.type.grenade)
 					color = "GLOW_GRENADE_COLOR"
 		}
 

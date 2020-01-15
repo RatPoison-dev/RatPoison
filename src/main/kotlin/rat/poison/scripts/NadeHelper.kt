@@ -3,7 +3,6 @@ package rat.poison.scripts
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.util.dialog.Dialogs
@@ -17,22 +16,15 @@ import rat.poison.game.entity.*
 import rat.poison.game.entity.absPosition
 import rat.poison.game.entity.boneMatrix
 import rat.poison.game.entity.direction
-import rat.poison.game.entity.eyeAngle
-import rat.poison.game.hooks.cursorEnable
-import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.nadeHelperTab
 import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
-import java.awt.Robot
-import java.awt.event.KeyEvent
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
-import kotlin.math.cos
-import kotlin.math.sin
 
 //Convert shit to an object {} ?
 //      mapcoords:            x    y    z
@@ -206,11 +198,22 @@ fun loadPositions(file: String) {
         val chunks = lLine.chunked(11) //Split arrayList into LoLs, size 11
         //Chunks [0] = 1 LoL
         chunks.forEach { chunk ->
-            feetSpot = listOf(chunk[0].cToDouble(), chunk[1].cToDouble(), chunk[2].cToDouble(), chunk[3], chunk[4]) //5, 3 for location, 1 name, 1 type
-            headPos = listOf(chunk[5].cToDouble(), chunk[6].cToDouble(), chunk[7].cToDouble()) //3
-            headLookPos = listOf(chunk[8].cToDouble(), chunk[9].cToDouble(), chunk[10].cToDouble()) //3
-            LoL = listOf(feetSpot, headPos, headLookPos)
-            nadeHelperArrayList.add(LoL)
+            var bNotEmpty = true
+            chunk.forEach {
+                if (it.isEmpty()) {
+                    bNotEmpty = false
+                }
+            }
+
+            if (bNotEmpty) {
+                feetSpot = listOf(chunk[0].cToDouble(), chunk[1].cToDouble(), chunk[2].cToDouble(), chunk[3], chunk[4]) //5, 3 for location, 1 name, 1 type
+                headPos = listOf(chunk[5].cToDouble(), chunk[6].cToDouble(), chunk[7].cToDouble()) //3
+                headLookPos = listOf(chunk[8].cToDouble(), chunk[9].cToDouble(), chunk[10].cToDouble()) //3
+                LoL = listOf(feetSpot, headPos, headLookPos)
+                nadeHelperArrayList.add(LoL)
+            } else {
+                println("$file is empty, not loading")
+            }
         }
     }
 }

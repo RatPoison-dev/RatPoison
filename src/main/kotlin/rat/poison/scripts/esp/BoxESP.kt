@@ -12,6 +12,7 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.hooks.defuseKitEntities
+import rat.poison.game.hooks.weaponEntities
 import rat.poison.settings.*
 import rat.poison.strToBool
 import rat.poison.strToColor
@@ -132,6 +133,13 @@ internal fun boxEsp() = App {
 		}
 	}
 
+//	val tmp = weaponEntities
+//	tmp.forEachIndexed { _, entity ->
+//		//val entPos = entity.position()
+//
+//
+//	}
+
 	shapeRenderer.apply sr@{
 		begin()
 
@@ -156,7 +164,6 @@ internal fun boxEsp() = App {
 					textRenderer.apply {
 						val glyph = GlyphLayout()
 						this@sr.color = Color.WHITE
-
 
 						sb.begin()
 						////Top

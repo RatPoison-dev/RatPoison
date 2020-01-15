@@ -47,6 +47,5 @@ internal inline fun forEntities(types: Array<EntityType> = EntityType.cachedValu
 		}
 	}
 
-	
 	return container.forEach(body)
 }

@@ -41,15 +41,21 @@ class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMa
     }
 
     fun update() {
-        sliderBar.value = curSettings[categorySelected + variableExtension].toFloat()
+        val tmp = curSettings[categorySelected + variableExtension]
 
-        val sliderVal : Any = if (isInt) {
-            sliderBar.value.toInt()
+        if (tmp.isNotEmpty()) {
+            sliderBar.value = tmp.toFloat()
+
+            val sliderVal: Any = if (isInt) {
+                sliderBar.value.toInt()
+            } else {
+                round(sliderBar.value * rnd) / rnd
+            }
+
+            sliderLabel.setText("$labelText: $sliderVal")
         } else {
-            round(sliderBar.value * rnd) /rnd
+            println("$categorySelected$variableExtension is empty")
         }
-
-        sliderLabel.setText("$labelText: $sliderVal")
     }
 
     fun disable(bool: Boolean, col: Color) {

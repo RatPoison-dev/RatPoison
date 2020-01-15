@@ -20,6 +20,7 @@ import rat.poison.App.uiBombWindow
 import rat.poison.App.uiMenu
 import rat.poison.App.uiSpecList
 import rat.poison.ui.changed
+import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.ObservableBoolean
@@ -35,6 +36,7 @@ class OptionsTab : Tab(false, false) {
 
     val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F)
     val menuKeyField = VisValidatableTextField(Validators.FLOATS)
+    val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
 
     init {
         //Create UIAlpha Slider
@@ -117,6 +119,7 @@ class OptionsTab : Tab(false, false) {
         table.add(menuKey).padLeft(25F).left().row()
         table.add(menuAlpha).row()
         table.add(oglFPS).row()
+        table.add(stayFocused).padLeft(25F).left().row()
 
         table.addSeparator()
 

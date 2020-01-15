@@ -1,5 +1,3 @@
-
-
 package rat.poison.game.netvars
 
 import rat.poison.game.offsets.ClientOffsets.dwFirstClass

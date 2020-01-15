@@ -29,6 +29,10 @@ import rat.poison.game.netvars.NetVarOffsets.aimPunchAngle
 import rat.poison.game.netvars.NetVarOffsets.angEyeAngles
 import rat.poison.game.netvars.NetVarOffsets.iCompetitiveRanking
 import rat.poison.game.netvars.NetVarOffsets.bGunGameImmunity
+import rat.poison.game.netvars.NetVarOffsets.iDeaths
+import rat.poison.game.netvars.NetVarOffsets.iKills
+import rat.poison.game.netvars.NetVarOffsets.m_Collision
+import rat.poison.game.netvars.NetVarOffsets.m_CollisionGroup
 import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.game.offsets.ClientOffsets.dwPlayerResource
 import rat.poison.game.offsets.EngineOffsets
@@ -218,6 +222,18 @@ internal fun Player.rank(): Int {
 	val index = csgoEXE.uint(this + dwIndex)
 
 	return (csgoEXE.int(clientDLL.uint(dwPlayerResource) + iCompetitiveRanking + index * 4))
+}
+
+internal fun Player.kills(): Int {
+	val index = csgoEXE.uint(this + dwIndex)
+
+	return (csgoEXE.int(clientDLL.uint(dwPlayerResource) + iKills + index * 4))
+}
+
+internal fun Player.deaths(): Int {
+	val index = csgoEXE.uint(this + dwIndex)
+
+	return (csgoEXE.int(clientDLL.uint(dwPlayerResource) + iDeaths + index * 4))
 }
 
 internal fun Player.hltv(): Boolean {

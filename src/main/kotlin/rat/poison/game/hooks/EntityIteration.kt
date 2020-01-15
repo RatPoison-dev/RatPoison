@@ -6,7 +6,7 @@ import rat.poison.game.CSGO.GLOW_OBJECT_SIZE
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.engineDLL
-import rat.poison.game.entity.EntityType
+import rat.poison.game.entity.*
 import rat.poison.game.entity.absPosition
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwEntityList
@@ -62,14 +62,15 @@ private val cursorEnableAddress by lazy(LazyThreadSafetyMode.NONE) { clientDLL.a
 private val cursorEnablePtr by lazy(LazyThreadSafetyMode.NONE) { clientDLL.address + ClientOffsets.dwMouseEnablePtr }
 
 fun updateCursorEnable() { //Call when needed
-    cursorEnable = CSGO.csgoEXE.int(cursorEnableAddress) xor cursorEnablePtr.toInt() != 1
+    cursorEnable = csgoEXE.int(cursorEnableAddress) xor cursorEnablePtr.toInt() != 1
 }
 
 var defuseKitEntities = mutableListOf<Long>()
+var weaponEntities = mutableListOf<Long>()
 
 fun constructEntities() = every(500) {
     updateCursorEnable()
-    state = SignOnState[CSGO.csgoEXE.int(clientState + EngineOffsets.dwSignOnState)]
+    state = SignOnState[csgoEXE.int(clientState + EngineOffsets.dwSignOnState)]
 
     me = clientDLL.uint(dwLocalPlayer)
     if (me <= 0) return@every
@@ -84,6 +85,7 @@ fun constructEntities() = every(500) {
     if (shouldReset()) reset()
 
     var tmpEntsToAdd = mutableListOf<Long>()
+    val tmpWepsToAdd = mutableListOf<Long>()
 
     for (glowIndex in 0..glowObjectCount) {
         val glowAddress = glowObject + (glowIndex * GLOW_OBJECT_SIZE)
@@ -128,9 +130,14 @@ fun constructEntities() = every(500) {
             if (type == EntityType.CEconEntity) {
                 tmpEntsToAdd.add(entity)
             }
+
+            if (entity.type().gun) {
+                tmpWepsToAdd.add(entity)
+            }
         }
     }
     defuseKitEntities = tmpEntsToAdd//entsToTrack
+    weaponEntities = tmpWepsToAdd
 
     DANGER_ZONE = dzMode
 }

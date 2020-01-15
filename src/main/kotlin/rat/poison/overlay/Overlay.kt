@@ -12,6 +12,7 @@ import rat.poison.jna.*
 import rat.poison.jna.enums.AccentStates
 import rat.poison.jna.structures.Rect
 import rat.poison.jna.structures.WindowCompositionAttributeData
+import rat.poison.strToBool
 import rat.poison.utils.inBackground
 import kotlin.concurrent.thread
 import kotlin.properties.Delegates
@@ -139,8 +140,10 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 			} else {
 				if (isMyWindowVisible) {
 					if (curSettings["MENU_APP"].replace("\"", "") == "Counter-Strike: Global Offensive") {
-						ShowWindow(myHWND, WinUser.SW_HIDE)
-						listener?.onBackground(this@Overlay)
+						if (!curSettings["MENU_STAY_FOCUSED"].strToBool()) {
+							ShowWindow(myHWND, WinUser.SW_HIDE)
+							listener?.onBackground(this@Overlay)
+						}
 					}
 				}
 			}
@@ -180,7 +183,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 
 	private fun makeUndecorated() = with(User32) {
 		var gwl = GetWindowLongA(myHWND, WinUser.GWL_STYLE)
-		gwl = gwl and com.sun.jna.platform.win32.WinUser.WS_OVERLAPPEDWINDOW.inv()
+		gwl = gwl and WinUser.WS_OVERLAPPEDWINDOW.inv()
 		SetWindowLongA(myHWND, WinUser.GWL_STYLE, gwl)
 	}
 

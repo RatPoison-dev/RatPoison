@@ -26,10 +26,10 @@ To set your JAVA_HOME read [here](https://javatutorial.net/set-java-home-windows
 Make sure to update your System Path as well, not just setting JAVA_HOME
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.5.3.3**.
+directory, and will in a directory called **RatPoison 1.5.4**.
 
-From within the **RatPoison 1.5.3.3** directory, you can start the cheat by running
-the _"Start RatPoison 1.5.3.3"_ script.
+From within the **RatPoison 1.5.4** directory, you can start the cheat by running
+the _"Start RatPoison 1.5.4"_ script.
 
 You can launch the cheat any time after launching CSGO.
 
@@ -62,95 +62,13 @@ Credit to Mr. Noad for a lot of help throughout this project
 **Bug fixes only**
 
 ---
-1.5.3
+1.5.4
 
-* Overlay default to csgo width/height, fallback on OVERLAY_WIDTH/HEIGHT
-* Changed RCS update speed 10 > 4 to improve it's accuracy
-* Added always force aim checkbox 
-* Added alive check to bone trigger to prevent shooting at entities such as vents
+* Updated ranks tab visually, added K D K/D
+* Added stay focused checkbox to menu, overlay won't disappear when csgo is the target app and is in the background/unfocused
+* Fixed crash when trying to load a nadehelper file without one selected
+* Possibly fixed a crash with blank trigger settings
 
-**Hotfix 1 (1.5.3.1)**
-* (probably) Fixed Box ESP crashing the overlay
-* Added setting option to use GL3/Gles3, might fix shader compatibility issues
-* Reduced some calls in head walk
-* Fixed crashing when loading/deleting a cfg without a cfg selected/present
-* Improved RCS accuracy
-
-**1.5.3.2**
-* Added toggle aim completely on/off keybind (Default is F3)
-
-**1.5.3.3**
-* Incendiaries show up for molotovs for nade helper
-
----
-1.5.2 
-
-* Names of some settings have changed, I recommend to reconfig from default
-
-* Chams should update faster (every 1/4 second instead of half)
-* Bone Trigger changes
-    * Added incross option
-    * Can choose between incross and infov, or use both 
-    * Removed options to trigger inside FOV for torso bones (3-7) and head (8)
-        * Now always loops through 3-8 and will trigger on the first bone within the fov (starting from 3 to 8)
-    * Now inside the aim tab, not a separate tab
-    * Settings are customizable for each weapon category (pistol, rifle, etc)
-    * Wont shoot immediately after scoping in (assuming scoped only && has a delay)
-* Headwalk changes
-    * Fixed key presses
-    * Will only attempt to stay on players head when not moving around (pressing WASD)
-    * Head walk updates every 2ms instead of 5ms
-    * Removed key toggle, if enabled will auto activate ontop of a players head
-    * Can be enabled/disabled without experimental 
-* Possible fix for box esp crashing the overlay
-* Fixed self chams coloring when disabled
-* Added check to auto strafe for in air only
-* Added OpenGL FPS to menu
-* Added global target swap delay
-* Menu alpha will affect the override weapons menu
-* Small changes to default aim settings
-* Overlay grabs width/height from settings instead of from CSGO
-* Disabled aimbot with knife/grenade out
-* Force aiming with bone trigger enabled shouldn't shuffle between certain bones, only the aimbots selected bone
-* Menu Key moved from Misc tab to Options
-* Removed bunny hop key setting, is now always VK_SPACE
-* Nade helpers foot lineup uses the games matrix instead of w2s-ing an ellipse which wasn't accurate
-
-**Hotfix 1**
-* Possible fix for snapline error
-* Increased nearest bone memory size to prevent crashing
-
----
-1.5.1
-
-* Bone trigger should be responsive and usable now
-    * Fixed delay issues
-
-* Removed Aim Key setting (perm mouse1)
-* Small changes to nade helper drawing lines
-* The name of the position will be under the circle to throw at instead of position on the ground
-* Small Cleanup
-    * GunAimOverride.kts is readable and less of a mess if you choose to edit via text files instead of the menu, but still a block
-* All guns have their override disabled by default, and use default settings
-* KTS settings files changed to .txts
-* A warning will appear to clear the current positions in nade helper to prevent accidental clears before saving
-* The main menu is now topmost vs the override weapons panel, spectator list, bomb timer
-* Auto strafe moved to keypresses instead of writing to the game
-* Strafe calls every 2ms instead of every 5ms to help accuracy
-* Added aim strafe
-* Updated visual colors on menu for consistency
-
-**Hotfixes/Version Updates**
-* Hotfix 1
-    * Auto strafer slider interval changes from .2 to .1
-    * Added checks to strafehelper
-    * Bone trigger updates every 10ms instead of every 4ms
-    * CursorEnable called when needed, shouldn't jump when typing/robot movement spam in chat
-    
-* Hotfix 2
-    * More checks to prevent keypresses while typing
-    * Possible fix to random movement presses
-    
 ---
 1.5
 I didn't plan to release this as soon as I have, but I haven't been working on it as much recently, so it was best to push with all the fixes/changes it has.

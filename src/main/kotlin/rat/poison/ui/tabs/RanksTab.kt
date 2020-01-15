@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 
-lateinit var ranksListText : VisLabel
+lateinit var ranksListTable : VisTable
 
 class RanksTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -12,9 +12,9 @@ class RanksTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
 
     init {
-        ranksListText = VisLabel("")
+        ranksListTable = VisTable(true)
         //Add all items to label for tabbed pane content
-        table.add(ranksListText).row()
+        table.add(ranksListTable)
     }
 
     override fun getContentTable(): Table? {

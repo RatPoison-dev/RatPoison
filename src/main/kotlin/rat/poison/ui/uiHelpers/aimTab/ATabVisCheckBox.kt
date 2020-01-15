@@ -33,7 +33,13 @@ class ATabVisCheckBox(mainText: String, varExtension: String) : VisCheckBox(main
     }
 
     fun update() {
-        isChecked = curSettings[categorySelected + variableExtension].strToBool()
+        val tmp = curSettings[categorySelected + variableExtension]
+
+        if (tmp.isNotEmpty()) {
+            isChecked = tmp.strToBool()
+        } else {
+            println("$categorySelected$variableExtension is empty")
+        }
     }
 
     fun disable(bool: Boolean) {
