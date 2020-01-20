@@ -26,10 +26,10 @@ To set your JAVA_HOME read [here](https://javatutorial.net/set-java-home-windows
 Make sure to update your System Path as well, not just setting JAVA_HOME
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.5.4**.
+directory, and will in a directory called **RatPoison 1.5.4.1**.
 
-From within the **RatPoison 1.5.4** directory, you can start the cheat by running
-the _"Start RatPoison 1.5.4"_ script.
+From within the **RatPoison 1.5.4.1** directory, you can start the cheat by running
+the _"Start RatPoison 1.5.4.1"_ script.
 
 You can launch the cheat any time after launching CSGO.
 
@@ -60,6 +60,12 @@ Credit to Mr. Noad for a lot of help throughout this project
 **Content updates are paused**
 
 **Bug fixes only**
+
+---
+1.5.4.1
+
+* Small improvement to set aim reads
+* Small cleanup, possibly fixed crashing issues
 
 ---
 1.5.4

@@ -12,10 +12,10 @@ var curWep = Weapons.AK47
 fun setAim() = every(250){
     try {
         override = false
+        curWep = me.weapon()
 
         if (settingsLoaded) { //If we have settings to read
             if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
-                curWep = me.weapon()
 
                 //V--Update aim settings for current weapons--V\\
                 if (curWep.rifle || curWep.smg || curWep.pistol || curWep.sniper || curWep.shotgun) {
@@ -43,19 +43,19 @@ fun setAim() = every(250){
         if (!override) { //If the current weapon isn't checked to override
             var strPre = "" //Prefix for settings wep
             when { //Set the aim settings to the weapon's category settings
-                me.weapon().rifle -> {
+                curWep.rifle -> {
                     strPre = "RIFLE"
                 }
-                me.weapon().smg -> {
+                curWep.smg -> {
                     strPre = "SMG"
                 }
-                me.weapon().pistol -> {
+                curWep.pistol -> {
                     strPre = "PISTOL"
                 }
-                me.weapon().sniper -> {
+                curWep.sniper -> {
                     strPre = "SNIPER"
                 }
-                me.weapon().shotgun -> {
+                curWep.shotgun -> {
                     strPre = "SHOTGUN"
                 }
             }

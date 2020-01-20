@@ -20,6 +20,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.jire.arrowhead.keyPressed
 import org.lwjgl.glfw.GLFW.*
+import org.lwjgl.opengl.GL
 import rat.poison.game.CSGO
 import rat.poison.game.updateViewMatrix
 import rat.poison.interfaces.*
@@ -137,6 +138,9 @@ fun main() {
                 if (curSettings["OPENGL_3"].strToBool()) {
                     useOpenGL3(true, 3, 2)
                     if (dbg) { println("[DEBUG] Using GL3") }
+                } else {
+                    useOpenGL3(false, 2, 2)
+                    if (dbg) { println("[DEBUG] Using GL2") }
                 }
 
                 //Required to fix W2S offset
@@ -249,6 +253,7 @@ object App : ApplicationAdapter() {
         textRenderer = BitmapFont()
         camera = OrthographicCamera()
         gl.glClearColor(0F, 0F, 0F, 0F)
+        GL.createCapabilities()
 
         overlay.start()
     }

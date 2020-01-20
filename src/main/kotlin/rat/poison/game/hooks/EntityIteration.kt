@@ -66,7 +66,7 @@ fun updateCursorEnable() { //Call when needed
 }
 
 var defuseKitEntities = mutableListOf<Long>()
-var weaponEntities = mutableListOf<Long>()
+//var weaponEntities = mutableListOf<Long>()
 
 fun constructEntities() = every(500) {
     updateCursorEnable()
@@ -85,7 +85,7 @@ fun constructEntities() = every(500) {
     if (shouldReset()) reset()
 
     var tmpEntsToAdd = mutableListOf<Long>()
-    val tmpWepsToAdd = mutableListOf<Long>()
+    //val tmpWepsToAdd = mutableListOf<Long>()
 
     for (glowIndex in 0..glowObjectCount) {
         val glowAddress = glowObject + (glowIndex * GLOW_OBJECT_SIZE)
@@ -131,13 +131,13 @@ fun constructEntities() = every(500) {
                 tmpEntsToAdd.add(entity)
             }
 
-            if (entity.type().gun) {
-                tmpWepsToAdd.add(entity)
-            }
+            //if (entity.type().gun) {
+            //    //tmpWepsToAdd.add(entity)
+            //}
         }
     }
     defuseKitEntities = tmpEntsToAdd//entsToTrack
-    weaponEntities = tmpWepsToAdd
+    //weaponEntities = tmpWepsToAdd
 
     DANGER_ZONE = dzMode
 }
