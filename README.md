@@ -10,10 +10,11 @@
 This branch is being updated at [TheFuckingRat's Github Repository](https://github.com/TheFuckingRat/RatPoison)
 The official branch is located at [Jire's GitHub Repository](https://github.com/Jire/Charlatano)
 
-Before doing anything, make sure you have
+~~Before doing anything, make sure you have
 [Java Development Kit (JDK) 13](https://www.oracle.com/technetwork/java/javase/downloads/jdk13-downloads-5672538.html)
 installed. [Alternative.](https://jdk.java.net/13/) This is NOT the same thing as the regular Java Runtime (JRE), and you MUST install the JDK
-in order to build Rat Poison, Charlatano, and any other Java software, and you MUST install JDK 13
+in order to build Rat Poison, Charlatano, and any other Java software, and you MUST install JDK 13~~
+AdoptOpenJDK is now automatically installed, and the java home variable automatically set!
 
 The first step is to compile the source code into a usable cheat program.
 
@@ -22,8 +23,8 @@ The first step is to compile the source code into a usable cheat program.
 * Make sure you have Java Development Kit 13 installed, in Program Files\Java
 * Double click on the "_build_" (_build.bat_) script and wait for it to complete
 
-To set your JAVA_HOME read [here](https://javatutorial.net/set-java-home-windows-10)
-Make sure to update your System Path as well, not just setting JAVA_HOME
+~~To set your JAVA_HOME read [here](https://javatutorial.net/set-java-home-windows-10)
+Make sure to update your System Path as well, not just setting JAVA_HOME~~
 
 Once those steps are complete, the usable cheat program can be found within the _build_
 directory, and will in a directory called **RatPoison 1.5.4.1**.
