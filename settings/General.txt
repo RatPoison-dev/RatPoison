@@ -46,6 +46,9 @@ FAST_STOP = false
 //Enable head walk
 HEAD_WALK = false
 
+//Enable last second bomb defuse
+LS_BOMB = false
+
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles head walk on/off
 //Needed to know when to stay on a player's head, and when to be able to walk off
 //Default key is Q

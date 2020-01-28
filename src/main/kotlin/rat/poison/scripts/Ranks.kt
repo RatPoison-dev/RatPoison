@@ -98,7 +98,7 @@ internal fun ranks() = every(1000) { //Rebuild every second
 
         //b r u h
         ctPlayers.forEachIndexed { _, ent->
-            ent.forEachIndexed { j, str->
+            ent.forEachIndexed { _, str->
                 ranksListTable.add(VisLabel(str))
             }
             ranksListTable.row()
@@ -106,7 +106,7 @@ internal fun ranks() = every(1000) { //Rebuild every second
         ranksListTable.add(VisLabel()).row()
 
         tPlayers.forEachIndexed { _, ent->
-            ent.forEachIndexed { j, str->
+            ent.forEachIndexed { _, str->
                 ranksListTable.add(VisLabel(str))
             }
             ranksListTable.row()
