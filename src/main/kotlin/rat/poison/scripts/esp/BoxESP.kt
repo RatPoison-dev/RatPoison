@@ -177,7 +177,7 @@ internal fun boxEsp() = App {
 							boxDetailsTextTop.append(weapon)
 							yAdd += 16F
 						}
-						glyph.setText(textRenderer, boxDetailsTextTop, 0, (boxDetailsTextTop as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
+						if (!boxDetailsTextTop.isBlank()) glyph.setText(textRenderer, boxDetailsTextTop, 0, (boxDetailsTextTop as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
 						textRenderer.draw(sb, glyph, x + w / 2F, y + yAdd)
 						////Top
 
@@ -190,7 +190,7 @@ internal fun boxEsp() = App {
 						if (bEspWeapon && bEspWeaponPos == "B") {
 							boxDetailsTextBottom.append(weapon)
 						}
-						glyph.setText(textRenderer, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
+						if (!boxDetailsTextBottom.isBlank()) glyph.setText(textRenderer, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
 						textRenderer.draw(sb, glyph, x + w / 2F, y + h - 4F)
 						////Bottom
 
