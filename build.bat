@@ -10,12 +10,12 @@ goto :choice
 echo Downloading JDK...
 PowerShell.exe -executionpolicy bypass -Command "& './build.ps1'"
 echo Installing JDK...
+msiexec /i adoptopenjdk.msi INSTALLLEVEL=2 /passive
 goto :install
 :e
 echo Okay :)
 goto :install 
 :install
-msiexec /i adoptopenjdk.msi INSTALLLEVEL=2 /passive
-echo JDK installed! Building Ratpoison...
+echo Building Ratpoison...
 call gradlew RatPoison
 pause
