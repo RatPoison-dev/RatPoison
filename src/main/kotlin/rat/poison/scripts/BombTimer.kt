@@ -88,7 +88,6 @@ fun bombUpdater() = every(25, true) {
             b = true
         }
         if (timeLeftToExplode < 0 && b == true) CSGO.clientDLL[dwUse] = 4
-        println(timeLeftToExplode.toString())
     }
 }
 
