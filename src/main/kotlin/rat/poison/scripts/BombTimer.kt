@@ -2,17 +2,20 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import org.jire.arrowhead.get
 import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.entity.*
 import rat.poison.game.entityByType
 import rat.poison.game.me
+import rat.poison.game.offsets.ClientOffsets.dwUse as dwUse
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.strToBool
 import rat.poison.ui.bombText
 import rat.poison.utils.every
+
 
 var bombState = BombState()
 
@@ -52,10 +55,9 @@ fun bombTimer() {
 }
 
 fun currentGameTicks(): Float = CSGO.engineDLL.float(EngineOffsets.dwGlobalVars + 16)
-
+fun Boolean.toInt() = if (this) 0 else 1
 fun bombUpdater() = every(25, true) {
     if (!curSettings["ENABLE_BOMB_TIMER"].strToBool() || DANGER_ZONE) return@every
-
     val time = currentGameTicks()
     val bomb: Entity = entityByType(EntityType.CPlantedC4)?.entity ?: -1L
 
@@ -76,8 +78,21 @@ fun bombUpdater() = every(25, true) {
             canDefuse = false
             gettingDefused = false
         }
+        var b: Boolean? = false
+        if (curSettings["LS_BOMB"].strToBool() && me.team() == 3.toLong() && !me.hasDefuser() && bombState.timeLeftToExplode < 10.2 && b == false)
+            run {
+                CSGO.clientDLL[dwUse] = 5
+                b = true
+            } else if (curSettings["LS_BOMB"].strToBool() && me.team() == 3.toLong() && me.hasDefuser() && bombState.timeLeftToExplode < 5.1 && b == false) {
+            CSGO.clientDLL[dwUse] = 5
+            b = true
+        }
+        if (timeLeftToExplode < 0 && b == true) CSGO.clientDLL[dwUse] = 4
+        println(timeLeftToExplode.toString())
     }
 }
+
+
 
 data class BombState(var hasBomb: Boolean = false,
                      var planted: Boolean = false,
