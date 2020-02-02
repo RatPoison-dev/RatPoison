@@ -36,6 +36,7 @@ class MiscTab : Tab(false, false) {
     val spectatorList = VisCheckBoxCustom("Spectator List", "SPECTATOR_LIST")
 
     val headWalk = VisCheckBox("Head Walk")
+    val lsBomb = VisCheckBox("Perfect Bomb Defuse")
 
     val enableReducedFlash = VisCheckBoxCustom("Reduced Flash", "ENABLE_REDUCED_FLASH")
     val flashMaxAlpha = VisSliderCustom("Flash Max Alpha", "FLASH_MAX_ALPHA", 1F, 255F, 1F, true, width1 = 200F, width2 = 250F)
@@ -66,6 +67,17 @@ class MiscTab : Tab(false, false) {
             true
         }
         headWalkTable.add(headWalk).left()
+
+        //enable last sec bomb defuse
+        val lsBombTable = VisTable()
+        lsBomb.isChecked = curSettings["LS_BOMB"].strToBool()
+        lsBomb.changed { _, _ ->
+            curSettings["LS_BOMB"] = lsBomb.isChecked.boolToStr()
+            true
+        }
+        lsBombTable.add(lsBomb).left()
+
+
 
         //Create Hit Sound Toggle
         if (curSettings["ENABLE_HITSOUND"].strToBool()) hitSoundCheckBox.toggle()
@@ -112,6 +124,7 @@ class MiscTab : Tab(false, false) {
         table.add(spectatorList).left().row()
         table.addSeparator()
         table.add(headWalkTable).left().row()
+        table.add(lsBombTable).left().row()
         table.addSeparator()
         table.add(enableReducedFlash).left().row()
         table.add(flashMaxAlpha).left().row()
@@ -152,5 +165,6 @@ fun miscTabUpdate() {
         hitSoundCheckBox.isChecked = curSettings["ENABLE_HITSOUND"].strToBool()
         hitSoundBox.selected = curSettings["HITSOUND_FILE_NAME"].replace("\"", "")
         hitSoundVolume.update()
+        lsBomb.isChecked = curSettings["LS_BOMB"].strToBool()
     }
 }
