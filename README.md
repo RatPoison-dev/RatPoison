@@ -27,10 +27,10 @@ The first step is to compile the source code into a usable cheat program.
 Make sure to update your System Path as well, not just setting JAVA_HOME~~
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.5.4.1**.
+directory, and will in a directory called **RatPoison 1.5.5**.
 
-From within the **RatPoison 1.5.4.1** directory, you can start the cheat by running
-the _"Start RatPoison 1.5.4.1"_ script.
+From within the **RatPoison 1.5.5** directory, you can start the cheat by running
+the _"Start RatPoison 1.5.5"_ script.
 
 You can launch the cheat any time after launching CSGO.
 
@@ -54,13 +54,26 @@ Common Issues
 
 Open to pull requests
 
-Credit to Mr. Noad for a lot of help throughout this project
+Credit to Mr. Noad & 2772/Matt for a lot of help throughout this project
 
 ---
 
 **Content updates are paused**
 
 **Bug fixes only**
+
+**ROADMAP:**
+* Add bomb in fov check for last second bomb Defuse
+* Door spam
+* Add auto update script (from github)
+
+---
+1.5.5
+
+* Added last second bomb defuse
+* Cleanup
+* Null check for box esp text
+* Now, the JDK automatically installs (AdoptOpenJDK), and the JAVA_HOME variable is set by the build script.
 
 ---
 1.5.4.1
@@ -84,19 +97,19 @@ Not heavily tested, bugs expected.
 **HIGHLIGHTS**
 * Default VisUI skin changed to [tinted](https://github.com/kotcrab/vis-ui-contrib/tree/master/skins/tinted)
 
-* Improvements to box esp 
+* Improvements to box esp
     * Added an armor bar
     * Health and armor bars have black outlines (currently non-customizable)
     * Heath/Armor bar can be moved to either left or right of the box
     * Name/Weapon text can be moved to either top or bottom of the box
-    
+
 * Expanded on the previous cfg save/load system
     * Uses a drop down box to select a CFG to load/delete
     * Can now create as many CFGS as you want
     * Saves to settings\CFGS\
     * Added delete cfg button (deletes selected cfg)
     * Save button prompts for a cfg name, typing the name of a previously saved CFG overwrites that cfg
-    
+
 * Other ESPs shouldn't flicker when using glow
 * Added a RANKS tab to the menu, will show ranks when available (Incomplete, semi-viable)
 * Added Defuse Kit ESP options (box & indicator only currently)
@@ -131,7 +144,7 @@ Not heavily tested, bugs expected.
 * Fixed checking/unchecking "Weapon Override" changing the override settings to the categories settings
 * All ESPs should work in danger zone
 * RCS changed from 1 smoothing bar back to X/Y smoothing
-    
+
 **Overlay Lag**
 
 Overlay lag/fps issues should be heavily reduced
@@ -139,16 +152,16 @@ Overlay lag/fps issues should be heavily reduced
 **Grenade Helper**
 Overlay Only
 Configurable in the Options tab, under the CFG settings. Files hold all positions from when saved in the menu. The template file included is Mirage.txt, load
-into a test/offline Mirage map, make sure it's selected in the drop down and then click the 'Load From File' button. Then press the key corresponding to the 
+into a test/offline Mirage map, make sure it's selected in the drop down and then click the 'Load From File' button. Then press the key corresponding to the
 'Nade Helper Toggle Key' (Default F2) to toggle visibility of the positions around the map. They are only visible when within a certain distance, to make sure you can see them
 the main spots are T spawn, A ramp, and top mid, if you don't see any in these areas press the toggle key a few times to see if they do pop up, if the file is loaded
 (testable in the cmd, should say 'Loading Positions'), and walk around a bit to see if you were not in range before. The 'Clear Currently Loaded' button clears all positions currently loaded. The 'Create Grenade Position'
 button saves your current position, and where you are looking, and asks you to enter a name for the position (ex. 'Smoke Mid'), so go to a position, test the throw and if it's how how you want
-it go back to that spot, aim appropriately and save the position (or save before and delete the position if you have to). The 'Delete At Current Position' button deletes a position if you are standing on top of it, and 
+it go back to that spot, aim appropriately and save the position (or save before and delete the position if you have to). The 'Delete At Current Position' button deletes a position if you are standing on top of it, and
 is highlighted blue. The starting head position isn't completely centered on your screen, to line yourself up with the position, look straight down and center your cursor with the
 middle of the circle, then look up and aim at the circle in the air.
 
-If you have older versions of saved txt files from before Hotfix 6 these will cause an error when loaded using RP. 
+If you have older versions of saved txt files from before Hotfix 6 these will cause an error when loaded using RP.
 To fix you need to edit the text file and add the nade type (Flash, Smoke, Molly, Frag) after the position name, see the example Mirage.txt file for an example, case sensitive and must be spelled correctly
 
 **Hotfixes/Version Updates**
@@ -156,8 +169,8 @@ To fix you need to edit the text file and add the nade type (Flash, Smoke, Molly
     * Added settings checks for nade tracer & helper
     * Updating the viewmatrix for w2s is called once per overlay update instead of multiple times throughout all visual scripts using it
     * Extra for crash fixes
-    
-* Hotfix 2 
+
+* Hotfix 2
     * Fixed nade helper not showing spots near position correctly
     * Combo can be used without having the hitmarker enabled
 
@@ -165,12 +178,12 @@ To fix you need to edit the text file and add the nade type (Flash, Smoke, Molly
     * Made override weapons more intuitive to enable/disable and edit
     * Hitmarker outline wont draw when hitmarker is disable but combo is enabled
 
-* Hotfix 4 
+* Hotfix 4
     * Radar updates slower to help prevent other esp flickering
     * Cursor enabled should update faster (if typing/in buy menu) to prevent bhopping when chatting/automatic weapons shooting in buy menu
     * Weapon Override menu will appear/disappear when loading a cfg
     * Menu isn't resizable again
-    
+
 * Hotfix 5
     * Flash max alpha slider is from 1-255
     * Nade tracer has a color option now
@@ -178,7 +191,7 @@ To fix you need to edit the text file and add the nade type (Flash, Smoke, Molly
     * Nade helper moved from the options tab to it's own tab
     * Combined visuals checkboxes and their associated color
     * Added checkbox for nade helper
-    
+
 * Hotfix 6
     * Override Weapons should update values when changing the selected weapon
     * Possible fix for fast stop 'issuing too many commands to server' with radio spam/scroll jumping
@@ -187,13 +200,13 @@ To fix you need to edit the text file and add the nade type (Flash, Smoke, Molly
     * Nade helper select file in appropriate spot
     * Nade helper now only shows based on what grenade you are holding (hold a decoy to view all for editing purposes)
         * Previously created versions will not work, see above under "Grenade Helper" for info
-        
+
 * Hotfix 7
     * Perfect Aim Collapsible should collapse correctly now
     * Overriden Weapons now updates properly
     * Indicator defuse kits should work again
     * Small reduction to # of reads
-    
+
 ---
 
 Base is Charlatano available [here](https://github.com/Jire/Charlatano)
@@ -210,7 +223,7 @@ Base is Charlatano available [here](https://github.com/Jire/Charlatano)
     * Individual aimbot settings (AK/M4/etc)
     * Aim bone, speed, FOV, strictness, smoothness
     * (non-silent) Perfect aim, customize FOV and % chance to activate
-    
+
 * RCS
     * RCS for all weapons, customizable X & Y smoothing
     * Customizable recoil crosshair, width/length/positioning/color
@@ -249,3 +262,4 @@ Base is Charlatano available [here](https://github.com/Jire/Charlatano)
     * Bunny hop
     * Auto strafe
     * Fast stop
+    * Last second bomb defusal

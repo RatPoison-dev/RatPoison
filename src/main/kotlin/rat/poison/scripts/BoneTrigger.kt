@@ -42,28 +42,31 @@ fun boneTrigger() = every(10) {
     if (curSettings["ENABLE_TRIGGER"].strToBool()) {
         val wep = me.weapon()
 
-        var bFOV = 0
-        var bDELAY = 0
-        var bINCROSS = false
-        var bINFOV = false
-        var bAIMBOT = false
+        val bFOV : Int; val bDELAY : Int; val bINCROSS : Boolean; val bINFOV : Boolean; val bAIMBOT : Boolean
 
-        //Change to one val, why have 5?
-        var bTrigPistols = false
-        var bTrigRifles = false
-        var bTrigShotguns = false
-        var bTrigSnipers = false
-        var bTrigSmgs = false
+        var prefix = ""
 
         when {
-            wep.pistol -> { bFOV = curSettings["PISTOL_TRIGGER_FOV"].toInt(); bDELAY = curSettings["PISTOL_TRIGGER_SHOT_DELAY"].toInt(); bINCROSS = curSettings["PISTOL_TRIGGER_INCROSS"].strToBool(); bINFOV = curSettings["PISTOL_TRIGGER_INFOV"].strToBool(); bAIMBOT = curSettings["PISTOL_TRIGGER_AIMBOT"].strToBool(); if (curSettings["PISTOL_TRIGGER"].strToBool()) bTrigPistols = true; }
-            wep.rifle -> { bFOV = curSettings["RIFLE_TRIGGER_FOV"].toInt(); bDELAY = curSettings["RIFLE_TRIGGER_SHOT_DELAY"].toInt(); bINCROSS = curSettings["RIFLE_TRIGGER_INCROSS"].strToBool(); bINFOV = curSettings["RIFLE_TRIGGER_INFOV"].strToBool(); bAIMBOT = curSettings["RIFLE_TRIGGER_AIMBOT"].strToBool(); if (curSettings["RIFLE_TRIGGER"].strToBool()) bTrigRifles = true; }
-            wep.shotgun -> { bFOV = curSettings["SHOTGUN_TRIGGER_FOV"].toInt(); bDELAY = curSettings["SHOTGUN_TRIGGER_SHOT_DELAY"].toInt(); bINCROSS = curSettings["SHOTGUN_TRIGGER_INCROSS"].strToBool(); bINFOV = curSettings["SHOTGUN_TRIGGER_INFOV"].strToBool(); bAIMBOT = curSettings["SHOTGUN_TRIGGER_AIMBOT"].strToBool(); if (curSettings["SHOTGUN_TRIGGER"].strToBool()) bTrigShotguns = true; }
-            wep.sniper -> { bFOV = curSettings["SNIPER_TRIGGER_FOV"].toInt(); bDELAY = curSettings["SNIPER_TRIGGER_SHOT_DELAY"].toInt(); bINCROSS = curSettings["SNIPER_TRIGGER_INCROSS"].strToBool(); bINFOV = curSettings["SNIPER_TRIGGER_INFOV"].strToBool(); bAIMBOT = curSettings["SNIPER_TRIGGER_AIMBOT"].strToBool(); if (curSettings["SNIPER_TRIGGER"].strToBool() && ((me.isScoped() && curSettings["ENABLE_SCOPED_ONLY"].strToBool()) || (!curSettings["ENABLE_SCOPED_ONLY"].strToBool()))) bTrigSnipers = true; }
-            wep.smg -> { bFOV = curSettings["SMG_TRIGGER_FOV"].toInt(); bDELAY = curSettings["SMG_TRIGGER_SHOT_DELAY"].toInt(); bINCROSS = curSettings["SMG_TRIGGER_INCROSS"].strToBool(); bINFOV = curSettings["SMG_TRIGGER_INFOV"].strToBool(); bAIMBOT = curSettings["SMG_TRIGGER_AIMBOT"].strToBool(); if (curSettings["SMG_TRIGGER"].strToBool()) bTrigSmgs = true; }
+            wep.pistol -> { prefix = "PISTOL_" }
+            wep.rifle -> { prefix = "RIFLE_" }
+            wep.shotgun -> { prefix = "SHOTGUN_" }
+            wep.sniper -> { prefix = "SNIPER_" }
+            wep.smg -> { prefix = "SMG_" }
         }
 
-        if (bTrigPistols || bTrigRifles || bTrigShotguns || bTrigSnipers || bTrigSmgs) {
+        if (wep.gun) { //Not 100% this applies to every 'gun'
+            bFOV = curSettings[prefix + "TRIGGER_FOV"].toInt()
+            bDELAY = curSettings[prefix + "TRIGGER_SHOT_DELAY"].toInt()
+            bINCROSS = curSettings[prefix + "TRIGGER_INCROSS"].strToBool()
+            bINFOV = curSettings[prefix + "TRIGGER_INFOV"].strToBool()
+            bAIMBOT = curSettings[prefix + "TRIGGER_AIMBOT"].strToBool()
+
+            if (wep.sniper) {
+                if (!(curSettings["SNIPER_TRIGGER"].strToBool() && ((me.isScoped() && curSettings["ENABLE_SCOPED_ONLY"].strToBool()) || (!curSettings["ENABLE_SCOPED_ONLY"].strToBool())))) {
+                    return@every
+                }
+            }
+
             val wepEnt = me.weaponEntity()
             if (!me.weapon().knife && wepEnt.bullets() > 0) {
                 if (wep.automatic || (!wep.automatic && wepEnt.canFire())) {
