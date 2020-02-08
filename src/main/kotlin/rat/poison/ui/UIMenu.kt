@@ -96,6 +96,7 @@ class UIMenu : VisWindow("Rat Poison 1.5.5.1") {
         pack()
         centerWindow()
 
+
         //Update all tab content
         uiUpdate()
     }
