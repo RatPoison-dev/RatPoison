@@ -32,39 +32,30 @@ private var feetSpot = listOf(0.0, 0.0, 0.0, "NAME") //Move string out of, remov
 private var headPos = listOf(0.0, 0.0, 0.0)
 private var headLookPos = listOf(0.0, 0.0, 0.0)
 private var LoL: List<List<Any>> = listOf(emptyList(), emptyList(), emptyList())
-private var showHelpers = false
 private var mPos = Vector()
 
 var nadeHelperArrayList = arrayListOf<List<List<Any>>>()
-var nadeHelperToggleKey = ObservableBoolean({keyPressed(curSettings["NADE_HELPER_TOGGLE_KEY"].toInt())})
 
-//I don't like
 fun nadeHelper() = App {
     if (!curSettings["ENABLE_NADE_HELPER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@App
-
-    nadeHelperToggleKey.update()
-    if (nadeHelperToggleKey.justBecomeTrue) {
-        showHelpers = !showHelpers
-        nadeHelperTab.nadeHelperToggleText.setText("Toggled: $showHelpers")
-    }
 
     if (me <= 0L || MENUTOG) return@App
 
     mPos = me.absPosition()
 
-    if (showHelpers) {
-        val myWep = me.weapon()
-        val nadeToCheck : String
-        nadeToCheck = when (myWep.name) {
-            "FLASH_GRENADE" -> "Flash"
-            "SMOKE_GRENADE" -> "Smoke"
-            "MOLOTOV" -> "Molly"
-            "INCENDIARY_GRENADE" -> "Molly"
-            "EXPLOSIVE_GRENADE" -> "Frag"
-            "DECOY_GRENADE" -> "Decoy"
-            else -> ""
-        }
+    val myWep = me.weapon()
+    val nadeToCheck : String
+    nadeToCheck = when (myWep.name) {
+        "FLASH_GRENADE" -> "Flash"
+        "SMOKE_GRENADE" -> "Smoke"
+        "MOLOTOV" -> "Molly"
+        "INCENDIARY_GRENADE" -> "Molly"
+        "EXPLOSIVE_GRENADE" -> "Frag"
+        "DECOY_GRENADE" -> "Decoy"
+        else -> ""
+    }
 
+    if (nadeToCheck != "") {
         nadeHelperArrayList.forEach {
             val fSpot = it[0]
             val hPos = it[1]
@@ -92,11 +83,11 @@ fun nadeHelper() = App {
                         }
 
                         //Circle at foot's position
-                            gameMatrix.translate(0F, 0F, fSpot[2].cToFloat())
-                            projectionMatrix = gameMatrix
+                        gameMatrix.translate(0F, 0F, fSpot[2].cToFloat())
+                        projectionMatrix = gameMatrix
                         circle(fSpot[0].cToFloat(), fSpot[1].cToFloat(), 10F)
-                            gameMatrix.translate(0F, 0F, -fSpot[2].cToFloat())
-                            projectionMatrix = oldMatrix
+                        gameMatrix.translate(0F, 0F, -fSpot[2].cToFloat())
+                        projectionMatrix = oldMatrix
 
                         val vec2 = Vector()
                         val vec3 = Vector()
@@ -122,7 +113,7 @@ fun nadeHelper() = App {
                                 sbText.append(fSpot[3].toString())
 
                                 glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
-                                textRenderer.draw(sb, glyph, vec3.x.toFloat(), vec3.y.toFloat()-10F)
+                                textRenderer.draw(sb, glyph, vec3.x.toFloat(), vec3.y.toFloat() - 10F)
 
                                 sb.end()
                             }
@@ -134,7 +125,7 @@ fun nadeHelper() = App {
                                     line(vec2.x.toFloat() - 4F, vec2.y.toFloat() - 4F, vec3.x.toFloat(), vec3.y.toFloat() - 2F)
                                 }
                             } else {
-                                line(CSGO.gameWidth/2F, 0F, vec3.x.toFloat(), vec3.y.toFloat() - 2F)
+                                line(CSGO.gameWidth / 2F, 0F, vec3.x.toFloat(), vec3.y.toFloat() - 2F)
                             }
                         }
 
@@ -211,8 +202,11 @@ fun loadPositions(file: String) {
                 headLookPos = listOf(chunk[8].cToDouble(), chunk[9].cToDouble(), chunk[10].cToDouble()) //3
                 LoL = listOf(feetSpot, headPos, headLookPos)
                 nadeHelperArrayList.add(LoL)
+
+                nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: $file")
             } else {
                 println("$file is empty, not loading")
+                nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: N/A")
             }
         }
     }
@@ -240,20 +234,19 @@ fun savePositions() {
 fun deletePosition() {
     var iPos = 0
     var removePos = -1
-    if (showHelpers) {
-        nadeHelperArrayList.forEach {
-            val fSpot = it[0]
 
-            if ((mPos.x in fSpot[0].cToDouble()-500..fSpot[0].cToDouble()+500) && (mPos.y in fSpot[1].cToDouble()-500..fSpot[1].cToDouble()+500)) {
-                if ((mPos.x in fSpot[0].cToDouble()-5..fSpot[0].cToDouble()+5) && (mPos.y in fSpot[1].cToDouble()-5..fSpot[1].cToDouble()+5)) {
-                    removePos = iPos
-                }
+    nadeHelperArrayList.forEach {
+        val fSpot = it[0]
+
+        if ((mPos.x in fSpot[0].cToDouble()-500..fSpot[0].cToDouble()+500) && (mPos.y in fSpot[1].cToDouble()-500..fSpot[1].cToDouble()+500)) {
+            if ((mPos.x in fSpot[0].cToDouble()-5..fSpot[0].cToDouble()+5) && (mPos.y in fSpot[1].cToDouble()-5..fSpot[1].cToDouble()+5)) {
+                removePos = iPos
             }
-            iPos++
         }
-        if (removePos != -1) {
-            nadeHelperArrayList.removeAt(removePos)
-        }
+        iPos++
+    }
+    if (removePos != -1) {
+        nadeHelperArrayList.removeAt(removePos)
     }
 }
 

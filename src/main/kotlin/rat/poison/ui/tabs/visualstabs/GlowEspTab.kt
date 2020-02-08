@@ -11,7 +11,7 @@ class GlowEspTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val glowEsp = VisCheckBoxCustom("Glow", "GLOW_ESP")
+    val glowEsp = VisCheckBoxCustom("Enable", "GLOW_ESP")
     val invGlowEsp = VisCheckBoxCustom("Inv Glow", "INV_GLOW_ESP")
     val modelEsp = VisCheckBoxCustom("Model", "MODEL_ESP")
     val modelAndGlow = VisCheckBoxCustom("Model & Glow", "MODEL_AND_GLOW")//VisCheckBox("Model & Glow Esp")

@@ -16,6 +16,6 @@ goto :install
 echo Okay :)
 goto :install 
 :install
-echo Building Ratpoison...
+echo Building RatPoison...
 call gradlew RatPoison
 pause

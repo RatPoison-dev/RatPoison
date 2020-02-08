@@ -12,7 +12,7 @@ class HitMarkerTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val hitMarker = VisCheckBoxCustom("Hitmarker", "ENABLE_HITMARKER")
+    val hitMarker = VisCheckBoxCustom("Enable", "ENABLE_HITMARKER")
     val hitMarkerOutline = VisCheckBoxCustom("Outline", "HITMARKER_OUTLINE")
     val hitMarkerCombo = VisCheckBoxCustom("Combo #", "HITMARKER_COMBO")
     val hitMarkerRecoilPos = VisCheckBoxCustom("Recoil Position", "HITMARKER_RECOIL_POSITION")

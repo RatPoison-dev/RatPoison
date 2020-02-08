@@ -12,7 +12,7 @@ class IndicatorEspTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val indicatorEsp = VisCheckBoxCustom("Entity Indicator", "INDICATOR_ESP")
+    val indicatorEsp = VisCheckBoxCustom("Enable", "INDICATOR_ESP")
     val indicatorOnScreen = VisCheckBoxCustom("Show Onscreen", "INDICATOR_SHOW_ONSCREEN")
     val indicatorOval = VisCheckBoxCustom("Oval", "INDICATOR_OVAL")
     val indicatorDistance = VisSliderCustom("Indicator Distance", "INDICATOR_DISTANCE", 2F, 25F, .1F, false)

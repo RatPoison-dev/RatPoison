@@ -289,8 +289,8 @@ internal fun boxEsp() = App {
 	currentIdx = 0
 }
 
-private data class Box(var x: Int = -1, var y: Int = -1,
-					   var w: Int = -1, var h: Int = -1,
+private data class Box(var x: Int = 0, var y: Int = 0,
+					   var w: Int = 0, var h: Int = 0,
 					   var color: Color = Color.WHITE,
 					   var health: Float = 100F,
 					   var armor: Float = 100F,

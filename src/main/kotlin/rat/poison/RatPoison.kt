@@ -219,6 +219,7 @@ object App : ApplicationAdapter() {
     override fun create() {
         overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
         toggleAimKey = ObservableBoolean({ keyPressed(curSettings["AIM_TOGGLE_KEY"].toInt()) })
+
         VisUI.load(Gdx.files.internal("skin\\tinted.json"))
 
         //Implement stage for menu
@@ -226,9 +227,7 @@ object App : ApplicationAdapter() {
         aimOverrideStage = Stage() //Aim Override Weapons Stage
         bombStage = Stage() //Bomb Timer Stage
         specListStage = Stage() //Spectator List Stage
-        val root = VisTable()
-        //root.setFillParent(true)
-        menuStage.addActor(root)
+
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
 
         uiMenu = UIMenu()
@@ -240,20 +239,18 @@ object App : ApplicationAdapter() {
         aimOverrideStage.addActor(uiAimOverridenWeapons)
         bombStage.addActor(uiBombWindow)
         specListStage.addActor(uiSpecList)
-        val inputMultiplexer = InputMultiplexer()
-        inputMultiplexer.addProcessor(menuStage)
-        inputMultiplexer.addProcessor(aimOverrideStage)
-        inputMultiplexer.addProcessor(bombStage)
-        inputMultiplexer.addProcessor(specListStage)
-        //End stage implementation
 
-        Gdx.input.inputProcessor = inputMultiplexer
+        Gdx.input.inputProcessor = InputMultiplexer().apply {
+            addProcessor(menuStage)
+            addProcessor(aimOverrideStage)
+            addProcessor(bombStage)
+            addProcessor(specListStage)
+        }
 
         sb = SpriteBatch()
         textRenderer = BitmapFont()
         camera = OrthographicCamera()
         gl.glClearColor(0F, 0F, 0F, 0F)
-        GL.createCapabilities()
 
         overlay.start()
     }
@@ -262,7 +259,7 @@ object App : ApplicationAdapter() {
         sync(curSettings["OPENGL_FPS"].toInt())
 
         if (VisUI.isLoaded()) {
-            //if (!Thread.interrupted()) {
+            if (!Thread.interrupted()) {
                 gl.apply {
                     glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
 
@@ -328,7 +325,7 @@ object App : ApplicationAdapter() {
                     specListStage.viewport.update(w, h)
                     if (dbg) println("[DEBUG] Resized Viewports")
                 }
-            //}
+            }
         }
 
         opened = true
@@ -408,6 +405,7 @@ fun Any.cToDouble() = this.toString().toDouble()
 fun Any.cToFloat() = this.toString().toFloat()
 fun Boolean.toFloat() = if (this) 1F else 0F
 fun Boolean.toDouble() = if (this) 1.0 else 0.0
+fun Boolean.toInt() = if (this) 1 else 0
 
 fun convStrToColor(input: String): rat.poison.game.Color {
     var line = input

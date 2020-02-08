@@ -15,7 +15,7 @@ class ChamsEspTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val chamsEsp = VisCheckBoxCustom("Chams", "CHAMS_ESP")
+    val chamsEsp = VisCheckBoxCustom("Enable", "CHAMS_ESP")
     val chamsShowHealth = VisCheckBoxCustom("Chams Show Health", "CHAMS_SHOW_HEALTH")
     val chamsBrightness = VisSliderCustom("Chams Brightness", "CHAMS_BRIGHTNESS", 0F, 5000F, 25F, true)
 

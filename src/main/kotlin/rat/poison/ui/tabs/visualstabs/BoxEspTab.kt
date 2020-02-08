@@ -14,7 +14,7 @@ class BoxEspTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val boxEsp = VisCheckBoxCustom("Box", "ENABLE_BOX_ESP")
+    val boxEsp = VisCheckBoxCustom("Enable", "ENABLE_BOX_ESP")
     val boxEspDetails = VisCheckBoxCustom("Box Details", "BOX_ESP_DETAILS")
     val boxEspHealth = VisCheckBoxCustom("Health", "BOX_ESP_HEALTH")
     val boxEspHealthPos = VisSelectBox<String>()

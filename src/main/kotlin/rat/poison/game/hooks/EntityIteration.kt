@@ -85,7 +85,6 @@ fun constructEntities() = every(500) {
     if (shouldReset()) reset()
 
     var tmpEntsToAdd = mutableListOf<Long>()
-    //val tmpWepsToAdd = mutableListOf<Long>()
 
     for (glowIndex in 0..glowObjectCount) {
         val glowAddress = glowObject + (glowIndex * GLOW_OBJECT_SIZE)

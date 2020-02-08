@@ -13,6 +13,7 @@ import rat.poison.game.offsets.ClientOffsets.dwUse as dwUse
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.strToBool
+import rat.poison.toInt
 import rat.poison.ui.bombText
 import rat.poison.utils.every
 
@@ -77,20 +78,19 @@ fun bombUpdater() = every(15, true) {
             canDefuse = false
             gettingDefused = false
         }
-        var b: Boolean? = false
-        if (curSettings["LS_BOMB"].strToBool() && me.team() == 3.toLong() && !me.hasDefuser() && bombState.timeLeftToExplode < 10.2 && b == false)
-            run {
-                CSGO.clientDLL[dwUse] = 5
-                b = true
-            } else if (curSettings["LS_BOMB"].strToBool() && me.team() == 3.toLong() && me.hasDefuser() && bombState.timeLeftToExplode < 5.1 && b == false) {
-            CSGO.clientDLL[dwUse] = 5
-            b = true
-        }
-        if (timeLeftToExplode < 0 && b == true) CSGO.clientDLL[dwUse] = 4
+    }
+
+    val timeNeeded = 5.3 + ((!me.hasDefuser()).toInt() * 5)
+
+    if (curSettings["LS_BOMB"].strToBool() && me.team() == 3.toLong() && bombState.timeLeftToExplode < timeNeeded && bombState.planted)
+    {
+        CSGO.clientDLL[dwUse] = 5
+        Thread(Runnable {
+            Thread.sleep(bombState.timeLeftToDefuse.toLong() * 1005)
+            CSGO.clientDLL[dwUse] = 4
+        }).start()
     }
 }
-
-
 
 data class BombState(var hasBomb: Boolean = false,
                      var planted: Boolean = false,

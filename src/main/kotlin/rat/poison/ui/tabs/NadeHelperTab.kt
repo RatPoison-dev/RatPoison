@@ -23,10 +23,8 @@ class NadeHelperTab : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     val enableNadeHelper = VisCheckBoxCustom("Nade Helper", "ENABLE_NADE_HELPER")
+    val nadeHelperLoadedFile = VisLabel("Loaded: N/A")
     private val nadeHelperFileSelectBox = VisSelectBox<String>()
-    val nadeHelperToggle = VisInputFieldCustom("Nade Helper Toggle Key", "NADE_HELPER_TOGGLE_KEY")
-    val nadeHelperToggleText = VisLabel("Toggled: false")
-
 
     init {
         //Nade position create button
@@ -59,13 +57,9 @@ class NadeHelperTab : Tab(false, false) {
             Dialogs.showOptionDialog(App.menuStage, "Warning", "Clear the current positions?", Dialogs.OptionDialogType.YES_NO, object: OptionDialogAdapter() {
                 override fun yes() {
                     nadeHelperArrayList.clear()
+                    nadeHelperLoadedFile.setText("Loaded: N/A")
                 }
             })
-        }
-
-        nadeHelperToggle.changed { _, _ ->
-            nadeHelperToggleKey = ObservableBoolean({keyPressed(curSettings["NADE_HELPER_TOGGLE_KEY"].toInt())})
-            true
         }
 
         val deleteCurrentPositionHelper = VisTextButton("Delete At Current Position")
@@ -89,8 +83,8 @@ class NadeHelperTab : Tab(false, false) {
 
         table.add(addPosition).width(250F).row()
         table.add(deleteCurrentPositionHelper).width(250F).row()
-        table.add(nadeHelperToggle).row()
-        table.add(nadeHelperToggleText)
+
+        table.add(nadeHelperLoadedFile).center().row()
     }
 
     fun updateNadeFileHelperList() {
@@ -122,6 +116,5 @@ class NadeHelperTab : Tab(false, false) {
 fun nadeHelperTabUpdate() {
     nadeHelperTab.apply {
         enableNadeHelper.update()
-        nadeHelperToggle.update()
     }
 }
