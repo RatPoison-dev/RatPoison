@@ -86,7 +86,7 @@ fun bombUpdater() = every(15, true) {
     {
         CSGO.clientDLL[dwUse] = 5
         Thread(Runnable {
-            Thread.sleep(bombState.timeLeftToDefuse.toLong() * 1005)
+            Thread.sleep(bombState.timeLeftToDefuse.toLong())
             CSGO.clientDLL[dwUse] = 4
         }).start()
     }
