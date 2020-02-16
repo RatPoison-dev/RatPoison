@@ -18,17 +18,57 @@ import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
 
 fun snapLines() = App {
-    if (!curSettings["SNAPLINES"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame || me.dead()) return@App
+    if (!curSettings["ENABLE_SNAPLINES"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame || me.dead()) return@App
 
-    val meTeam = me.team()
-    forEntities(ccsPlayer) {
+    val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
+    val bEnt = bomb.carrier()
+
+    forEntities {
         val entity = it.entity
+        var colStr = ""
 
-        val dormCheck = (entity.dormant() && !DANGER_ZONE)
-        //val enemyCheck = ((!curSettings["BOX_SHOW_ENEMIES"].strToBool() && me.team() != entity.team()) && !DANGER_ZONE)
-        val teamCheck = ((!curSettings["BOX_SHOW_TEAM"].strToBool() && meTeam == entity.team()) && !DANGER_ZONE)
+        when (it.type) {
+            EntityType.CCSPlayer -> {
 
-        if (me <= 0 || entity == me || dormCheck || teamCheck || entity.dead()) return@forEntities false
+                val dormCheck = (entity.dormant() && !DANGER_ZONE)
+                val onTeam = me.team() == entity.team()
+                val enemyCheck = ((curSettings["SNAPLINES_ENEMIES"].strToBool() && !onTeam) && !DANGER_ZONE)
+                val teamCheck = ((curSettings["SNAPLINES_TEAMMATES"].strToBool() && onTeam) && !DANGER_ZONE)
+
+                if (me <= 0 || entity == me || dormCheck || entity.dead()) return@forEntities false
+
+                if (bEnt >= 0 && bEnt == entity) { //This is the bomb carrier
+                    if (enemyCheck) {
+                        colStr = when(curSettings["SNAPLINES_BOMB_CARRIER"].strToBool()) {
+                            true -> "SNAPLINES_BOMB_CARRIER_COLOR"
+                            false -> "SNAPLINES_ENEMY_COLOR"
+                        }
+                    } else if (teamCheck) {
+                        colStr = when(curSettings["SNAPLINES_BOMB_CARRIER"].strToBool()) {
+                            true -> "SNAPLINES_BOMB_CARRIER_COLOR"
+                            false -> "SNAPLINES_TEAM_COLOR"
+                        }
+                    }
+                } else {
+                    if (enemyCheck) {
+                        colStr = "SNAPLINES_ENEMY_COLOR"
+                    } else if (teamCheck) {
+                        colStr = "SNAPLINES_TEAM_COLOR"
+                    }
+                }
+            }
+
+            EntityType.CPlantedC4, EntityType.CC4 -> if (curSettings["SNAPLINES_BOMB"].strToBool()) {
+                colStr = "SNAPLINES_BOMB_COLOR"
+            }
+
+            else ->
+                if (curSettings["SNAPLINES_WEAPONS"].strToBool() && it.type.weapon) {
+                    colStr = "SNAPLINES_WEAPON_COLOR"
+                }
+        }
+
+        if (colStr.isBlank()) return@forEntities false
 
         shapeRenderer.apply {
             if (shapeRenderer.isDrawing) {
@@ -37,18 +77,17 @@ fun snapLines() = App {
 
             begin()
 
-            val drawColor = curSettings["SNAPLINES_COLOR"].strToColor()
-
+            val drawColor = curSettings[colStr].strToColor()
             color = Color(drawColor.red/255F, drawColor.green/255F, drawColor.blue/255F, .5F)
 
             val entPos = entity.absPosition()
             val vec = Vector()
 
-            if ((entPos.x == 0.0 && entPos.y == 0.0 && entPos.z == 0.0)) return@forEntities false
+            if ((entPos.x == 0.0 && entPos.y == 0.0 && entPos.z == 0.0)) return@forEntities false //Why is this here?
 
-            if (worldToScreen(entPos, vec)) {
+            if (worldToScreen(entPos, vec)) { //Onscreen
                 line(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x.toFloat(), vec.y.toFloat())
-            } else {
+            } else { //Offscreen
                 line(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x.toFloat(), -vec.y.toFloat())
             }
 

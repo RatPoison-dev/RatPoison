@@ -13,9 +13,8 @@ class IndicatorEspTab : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     val indicatorEsp = VisCheckBoxCustom("Enable", "INDICATOR_ESP")
-    val indicatorOnScreen = VisCheckBoxCustom("Show Onscreen", "INDICATOR_SHOW_ONSCREEN")
-    val indicatorOval = VisCheckBoxCustom("Oval", "INDICATOR_OVAL")
-    val indicatorDistance = VisSliderCustom("Indicator Distance", "INDICATOR_DISTANCE", 2F, 25F, .1F, false)
+    val indicatorDistance = VisSliderCustom("Indicator Distance", "INDICATOR_DISTANCE", 2F, 50F, .1F, false)
+    val indicatorSize = VisSliderCustom("Indicator Size", "INDICATOR_SIZE", 5F, 25F, .5F, false)
 
     val showTeam = VisCheckBoxCustom(" ", "INDICATOR_SHOW_TEAM")
     val indicatorTeamColor = VisColorPickerCustom("Teammates", "GLOW_TEAM_COLOR")
@@ -44,9 +43,8 @@ class IndicatorEspTab : Tab(false, false) {
 
         //Add all items to label for tabbed pane content
         table.add(indicatorEsp).left().row()
-        table.add(indicatorOnScreen).left().row()
-        table.add(indicatorOval).left().row()
         table.add(indicatorDistance).left().colspan(2).row()
+        table.add(indicatorSize).left().colspan(2).row()
 
         var tmpTable = VisTable()
         tmpTable.add(showTeam)
@@ -103,9 +101,8 @@ class IndicatorEspTab : Tab(false, false) {
 fun indicatorEspTabUpdate() {
     indicatorEspTab.apply {
         indicatorEsp.update()
-        indicatorOnScreen.update()
-        indicatorOval.update()
         indicatorDistance.update()
+        indicatorSize.update()
         showTeam.update()
         showEnemies.update()
         showBomb.update()

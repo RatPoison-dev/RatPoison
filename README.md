@@ -28,10 +28,10 @@ The first step is to compile the source code into a usable cheat program.
 Make sure to update your System Path as well, not just setting JAVA_HOME~~
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.5.5.1**.
+directory, and will in a directory called **RatPoison 1.6**.
 
-From within the **RatPoison 1.5.5.1** directory, you can start the cheat by running
-the _"Start RatPoison 1.5.5.1"_ script.
+From within the **RatPoison 1.6** directory, you can start the cheat by running
+the _"Start RatPoison 1.6"_ script.
 
 You can launch the cheat any time after launching CSGO.
 
@@ -70,15 +70,49 @@ Credit to Mr. Noad & 2772/Matt for a lot of help throughout this project
 
 **Recent Update**
 
-1.5.5.1
-* Removed nade helper toggle key, load the file and it will auto show with a grenade in hand, hold a decoy to see all spots
+Update 1.6
 
-1.5.5
-* Added last second bomb defuse
-* Cleanup
-* Null check for box esp text
-* Now, the JDK automatically installs (AdoptOpenJDK), and the JAVA_HOME variable is set by the build script.
+* Indicator Visuals
+    * Should now work properly (same as radar)
+    * Heavily cleaned up indicator code, reduced multiple redundancies
+    * Added Indicator Arrow Size option
+    * Removed OnScreen and Oval options for now
+    * Indicator color now uses the selected colors alpha, not just a static 0.5
+    * Now properly colors indicator of entity if they are the bomb carrier
+    
+* Box Esp
+    * Can change box detail text color (instead of just white)
+    * Possible crash fix for box esp
+    
+* Glow Esp
+    * Now properly colors entity if they are the bomb carrier
+    
+* Snaplines Esp
+    * Added team, bomb, bomb carrier, weapons snaplines and colors
+    
+* Possible fix for headwalk activating incorrectly
+* Choosing a target while spraying now activates properly based on your recoil's position rather than crosshair
+* Option to use aim after X shots for rifles and smgs
+* Removed aim strictness
+    * Strictness served as an additional smoothing, which added confusion and redundancy
+    * Smoothness is smoothing applied to the calculated angle towards the target
+    * Speed is the ms delay between mouse movements (path aim) from your current angle to the calculated target angle, or between writing angles (flat aim)
 
+* Added RANDOM aim bone option, picks one of the 4 selectable bones
+    * Will hold selected bone until aim is released or target is invalid
+    
+* Added option to disable a vis check when force aiming, to force aim through walls 
+* Target swap delay now works properly
+* Added FOV Changer (Misc Tab)
+    * Options for normal weapons, awp zoom levels (defaulted for clear scope)
+    
+* Aim Strictness/Aim Sensitivity is now always your ingame sensitivity + .5 to prevent jittery snapping
+
+* Recoil crosshair adjusts correctly based on FOV
+
+* Default settings have been updated to look legit
+
+* Disabled zeus causing bone trigger and aim crashing
 
 ---
 
@@ -126,9 +160,9 @@ Base is Charlatano available [here](https://github.com/Jire/Charlatano)
     * clrRender chams, brightness
         * Teammates, Enemies
     * Arrow indicators
-        * Teammates, Enemies, Weapons, Grenades, Bomb, Bomb Carrier
+        * Teammates, Enemies, Weapons, Grenades, Bomb, Bomb Carrier, Defusers
     * Box (Health, Armor, Name, Weapon)
-        * Teammates, Enemies
+        * Teammates, Enemies, Defusers
     * Skeleton
         * Teammates, Enemies
 

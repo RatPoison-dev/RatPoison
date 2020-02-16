@@ -2,6 +2,7 @@ package rat.poison.scripts.esp
 
 import rat.poison.curSettings
 import rat.poison.dbg
+import rat.poison.game.CSGO
 import rat.poison.game.Color
 import rat.poison.game.entity.Entity
 import rat.poison.scripts.esp.GlowESP.glowEspApp
@@ -28,17 +29,17 @@ fun esp() {
 }
 
 fun Entity.glow(color: Color, model: Boolean) {
-	rat.poison.game.CSGO.csgoEXE[this + 0x4] = color.red / 255F
-	rat.poison.game.CSGO.csgoEXE[this + 0x8] = color.green / 255F
-	rat.poison.game.CSGO.csgoEXE[this + 0xC] = color.blue / 255F
-	rat.poison.game.CSGO.csgoEXE[this + 0x10] = color.alpha.toFloat()
-	rat.poison.game.CSGO.csgoEXE[this + 0x24] = true //Render When Occluded
-	rat.poison.game.CSGO.csgoEXE[this + 0x25] = false //Render When Unoccluded
+	CSGO.csgoEXE[this + 0x4] = color.red / 255F
+	CSGO.csgoEXE[this + 0x8] = color.green / 255F
+	CSGO.csgoEXE[this + 0xC] = color.blue / 255F
+	CSGO.csgoEXE[this + 0x10] = color.alpha.toFloat()
+	CSGO.csgoEXE[this + 0x24] = true //Render When Occluded
+	CSGO.csgoEXE[this + 0x25] = false //Render When Unoccluded
 
-	rat.poison.game.CSGO.csgoEXE[this + 0x26] = curSettings["INV_GLOW_ESP"].strToBool() //Full Bloom Render
+	CSGO.csgoEXE[this + 0x26] = curSettings["INV_GLOW_ESP"].strToBool() //Full Bloom Render
 
 	if (curSettings["MODEL_AND_GLOW"].strToBool())
-		rat.poison.game.CSGO.csgoEXE[this + 0x2C] = model
+		CSGO.csgoEXE[this + 0x2C] = model
 	else
-		rat.poison.game.CSGO.csgoEXE[this + 0x2C] = curSettings["MODEL_ESP"].strToBool()
+		CSGO.csgoEXE[this + 0x2C] = curSettings["MODEL_ESP"].strToBool()
 }

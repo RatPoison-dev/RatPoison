@@ -23,7 +23,6 @@ fun rcs() = every(4) {
 	val p = me.punch()
 
 	val forceSet = (shotsFired == 0 && !lastPunch.isZero)
-	//val finishPunch = true
 
 	if (forceSet || /*!finishPunch ||*/ shotsFired > 1) {
 		if (lastPunch.isZero) {

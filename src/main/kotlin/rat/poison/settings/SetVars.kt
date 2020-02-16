@@ -21,6 +21,7 @@ var NECK_BONE = 7
 var CHEST_BONE = 6
 var STOMACH_BONE = 5
 var NEAREST_BONE = -1
+var RANDOM_BONE = -4
 
 var AIM_KEY = 1
 

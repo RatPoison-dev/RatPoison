@@ -12,6 +12,7 @@ import rat.poison.scripts.esp.updateHitsound
 import rat.poison.ui.changed
 import rat.poison.ui.miscTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
+import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.utils.ObservableBoolean
 import java.io.File
@@ -25,10 +26,19 @@ class MiscTab : Tab(false, false) {
     val autoStrafeBHopOnly = VisCheckBoxCustom("BHop Only", "STRAFE_BHOP_ONLY")
     val fastStop = VisCheckBoxCustom("Fast Stop", "FAST_STOP")
 
+    val knifeBot = VisCheckBoxCustom("Knife Bot", "ENABLE_AUTO_KNIFE")
+
     val aimStrafer = VisCheckBoxCustom("Auto Aim Strafe", "AIM_STRAFER")
     val aimStraferSelectBox = VisSelectBox<String>()
     val aimStraferShift = VisCheckBoxCustom("Shift Walk", "AIM_STRAFER_SHIFT")
     val aimStraferStrictness = VisSliderCustom("Strictness", "AIM_STRAFER_STRICTNESS", 0F, .5F, .01F, false, 3, width1 = 200F, width2 = 250F)
+
+    val fovChanger = VisCheckBoxCustom("Fov Changer", "ENABLE_FOV_CHANGER")
+    val fovDefault = VisSliderCustom("Default FOV", "FOV_DEFAULT", 10F, 150F, 1F, true, width1 = 200F, width2 = 250F)
+    val fovSmoothing = VisCheckBoxCustom("Smooth FOV Changes", "FOV_SMOOTH")
+    val fovSniperDefault = VisSliderCustom("Sniper Default FOV", "FOV_SNIPER_DEFAULT", 10F, 150F, 1F, true, width1 = 200F, width2 = 250F)
+    val fovSniperZoom1 = VisSliderCustom("Sniper Zoom 1 FOV", "FOV_ZOOM_1", 10F, 150F, 1F, true, width1 = 200F, width2 = 250F)
+    val fovSniperZoom2 = VisSliderCustom("Sniper Zoom 2 FOV", "FOV_ZOOM_2", 10F, 150F, 1F, true, width1 = 200F, width2 = 250F)
 
     val bombTimer = VisCheckBoxCustom("Bomb Timer", "ENABLE_BOMB_TIMER")
     val bombTimerEnableBars = VisCheckBoxCustom("Timer Bars", "BOMB_TIMER_BARS")
@@ -37,6 +47,9 @@ class MiscTab : Tab(false, false) {
 
     val headWalk = VisCheckBox("Head Walk")
     val lsBomb = VisCheckBox("Perfect Bomb Defuse")
+
+    val doorspam = VisCheckBox("Door Spam")
+    var doorspamkey = VisInputFieldCustom("Door Spam Key", "D_SPAM_KEY")
 
     val enableReducedFlash = VisCheckBoxCustom("Reduced Flash", "ENABLE_REDUCED_FLASH")
     val flashMaxAlpha = VisSliderCustom("Flash Max Alpha", "FLASH_MAX_ALPHA", 1F, 255F, 1F, true, width1 = 200F, width2 = 250F)
@@ -77,6 +90,14 @@ class MiscTab : Tab(false, false) {
         }
         lsBombTable.add(lsBomb).left()
 
+        val dspamtable = VisTable()
+        doorspam.isChecked = curSettings["D_SPAM"].strToBool()
+        doorspam.changed { _, _ ->
+            curSettings["D_SPAM"] = doorspam.isChecked.boolToStr()
+            true
+        }
+        doorspam.add(doorspam).left()
+        doorspam.add(doorspamkey).left()
 
 
         //Create Hit Sound Toggle
@@ -114,6 +135,15 @@ class MiscTab : Tab(false, false) {
         table.add(autoStrafeBHopOnly).padLeft(20F).left().row()
         table.add(fastStop).left().row()
         table.addSeparator()
+        table.add(knifeBot).left().row()
+        table.addSeparator()
+        table.add(fovChanger).left().row()
+        table.add(fovDefault).left().row()
+        table.add(fovSmoothing).left().row()
+        table.add(fovSniperDefault).left().row()
+        table.add(fovSniperZoom1).left().row()
+        table.add(fovSniperZoom2).left().row()
+        table.addSeparator()
         table.add(aimStraferTable).left().row()
         table.add(aimStraferShift).left().row()
         table.add(aimStraferStrictness).left().row()
@@ -125,6 +155,8 @@ class MiscTab : Tab(false, false) {
         table.addSeparator()
         table.add(headWalkTable).left().row()
         table.add(lsBombTable).left().row()
+        table.addSeparator()
+        table.add(dspamtable).left().row()
         table.addSeparator()
         table.add(enableReducedFlash).left().row()
         table.add(flashMaxAlpha).left().row()
@@ -148,6 +180,13 @@ fun miscTabUpdate() {
         autoStrafe.update()
         autoStrafeBHopOnly.update()
         fastStop.update()
+        knifeBot.update()
+        fovChanger.update()
+        fovDefault.update()
+        fovSmoothing.update()
+        fovSniperDefault.update()
+        fovSniperZoom1.update()
+        fovSniperZoom2.update()
         aimStrafer.update()
         aimStraferShift.update()
         aimStraferSelectBox.selected = when(curSettings["AIM_STRAFER_TYPE"].toInt()) {

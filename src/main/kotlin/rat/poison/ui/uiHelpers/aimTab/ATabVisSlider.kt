@@ -60,6 +60,11 @@ class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMa
 
     fun disable(bool: Boolean, col: Color) {
         sliderBar.isDisabled = bool
+        sliderBar.color = col
         sliderLabel.color = col
+    }
+
+    fun isDisabled(): Boolean {
+        return sliderBar.isDisabled
     }
 }

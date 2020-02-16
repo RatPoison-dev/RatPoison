@@ -30,11 +30,13 @@ BOX_SHOW_ENEMIES = true
 //Enable box esp on defuse kits
 BOX_SHOW_DEFUSERS = true
 
-//Color of your teammates
+BOX_DETAILS_TEXT_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
+
+//Color of your teammates box
 BOX_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
 
-//Color of your enemies
+//Color of your enemies box
 BOX_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
 
-//Color of the defuse kit
+//Color of the defuse kit box
 BOX_DEFUSER_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)

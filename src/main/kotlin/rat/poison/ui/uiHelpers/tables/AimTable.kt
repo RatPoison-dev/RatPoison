@@ -5,10 +5,7 @@ import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.widget.*
 import rat.poison.*
 import rat.poison.game.CSGO
-import rat.poison.settings.CHEST_BONE
-import rat.poison.settings.HEAD_BONE
-import rat.poison.settings.NECK_BONE
-import rat.poison.settings.STOMACH_BONE
+import rat.poison.settings.*
 import rat.poison.ui.aimTab
 import rat.poison.ui.changed
 import rat.poison.ui.overridenWeapons
@@ -29,6 +26,7 @@ class AimTable: VisTable(true) {
 
     val forceAimKey = VisInputFieldCustom("Force Aim Key", "FORCE_AIM_KEY")
     val forceAimAlways = VisCheckBoxCustom("Force Aim Always", "FORCE_AIM_ALWAYS")
+    val forceAimThroughWalls = VisCheckBoxCustom("Force Aim Through Walls", "FORCE_AIM_THROUGH_WALLS")
 
     //Automatic Weapons Collapsible
     val automaticWeaponsCheckBox = VisCheckBoxCustom("Automatic Weapons", "AUTOMATIC_WEAPONS")
@@ -53,20 +51,23 @@ class AimTable: VisTable(true) {
     val aimFov = ATabVisSlider("Aim FOV", "_AIM_FOV", 1F, 180F, 1F, true)
     val aimSpeed = ATabVisSlider("Aim Speed", "_AIM_SPEED", 0F, 5F, 1F, true)
     val aimSmooth = ATabVisSlider("Smoothness", "_AIM_SMOOTHNESS", 1F, 5F, .1F, false)
-    val aimStrict = ATabVisSlider("Strictness", "_AIM_STRICTNESS", 1F, 5F, .1F, false)
+    val aimAfterShots = ATabVisSlider("Aim After #", "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true)
 
     //Perfect Aim Collapsible
     val perfectAimCheckBox = VisCheckBox("Enable Perfect Aim")
     private val perfectAimTable = VisTable()
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
-    val perfectAimFov = ATabVisSlider("FOV", "_PERFECT_AIM_FOV", 1F, 45F, 1F, true)
+    val perfectAimFov = ATabVisSlider("FOV", "_PERFECT_AIM_FOV", 1F, 180F, 1F, true)
     val perfectAimChance = ATabVisSlider("Chance", "_PERFECT_AIM_CHANCE", 1F, 100F, 1F, true)
 
     init {
         if (curSettings["WARNING"].strToBool()) {
-            val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.5.5.1" +
+            val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.6" +
                     "\n\nIf you have any problems submit an issue on Github" +
-                    "\nGitHub: https://github.com/TheFuckingRat/RatPoison")
+                    "\nGitHub: https://github.com/TheFuckingRat/RatPoison" +
+                    "\n\nUpdate 1.6 removes aim strictness from aim settings" +
+                    "\nOlder configs shouldn't break, but your aim settings" +
+                    "\nmight need to be updated.")
             dialog.setPosition(CSGO.gameWidth / 4F - dialog.width / 2F, CSGO.gameHeight.toFloat() / 2F)
             App.menuStage.addActor(dialog)
         }
@@ -105,9 +106,18 @@ class AimTable: VisTable(true) {
                 enableScopedOnly.isDisabled = true
             }
 
+            if (categorySelected == "RIFLE" || categorySelected == "SMG") {
+                aimAfterShots.disable(false, Color(255F, 255F, 255F, 1F))
+            } else {
+                aimAfterShots.disable(true, Color(255F, 255F, 255F, 0F))
+            }
+
             uiUpdate()
             true
         }
+
+        //Disable on start, default is pistol
+        aimAfterShots.disable(true, Color(255F, 255F, 255F, 0F))
 
         //Create Scoped Only Toggle
         enableScopedOnly.isChecked = curSettings["SNIPER_ENABLE_SCOPED_ONLY"].strToBool()
@@ -116,13 +126,14 @@ class AimTable: VisTable(true) {
 
         //Create Aim Bone Selector Box
         val aimBone = VisTable()
-        aimBoneBox.setItems("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST")
+        aimBoneBox.setItems("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
         aimBoneBox.selected = when (curSettings[categorySelected + "_AIM_BONE"].toInt()) {
             HEAD_BONE -> "HEAD"
             NECK_BONE -> "NECK"
             CHEST_BONE -> "CHEST"
             STOMACH_BONE -> "STOMACH"
-            else -> "NEAREST"
+            NEAREST_BONE -> "NEAREST"
+            else -> "RANDOM"
         }
         aimBone.add(aimBoneLabel).width(200F)
         aimBone.add(aimBoneBox)
@@ -161,14 +172,18 @@ class AimTable: VisTable(true) {
 
             add(activateFromFireKey).left().row()
             add(teammatesAreEnemies).left().row()
+            add(targetSwapDelay).left().row()
+
+            addSeparator()
 
             add(forceAimKey).left().row()
             add(forceAimAlways).left().row()
+            add(forceAimThroughWalls).left().row()
+
+            addSeparator()
 
             add(automaticWeaponsCheckBox).left().row()
             add(automaticWeaponsInput).left().row()
-
-            add(targetSwapDelay).left().row()
 
             addSeparator()
 
@@ -182,7 +197,7 @@ class AimTable: VisTable(true) {
             add(aimSpeed).left().row()
             add(aimFov).left().row()
             add(aimSmooth).left().row()
-            add(aimStrict).left().row()
+            add(aimAfterShots).left().row() //RIFLE & SMG selection only
             add(perfectAimCheckBox).left().row()
             add(perfectAimCollapsible).left().row()
 

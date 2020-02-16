@@ -28,7 +28,7 @@ enum class Weapons(val id: Int, val gun: Boolean = false, val automatic: Boolean
 	NEGEV(28, gun = true, automatic = true, rifle = true),
 	SAWED_OFF(29, gun = true, boltAction = true, shotgun = true),
 	TEC9(30, gun = true, pistol = true),
-	ZEUS_X27(31, gun = true),
+	ZEUS_X27(31, pistol = true),
 	P2000(32, gun = true, pistol = true),
 	MP7(33, gun = true, automatic = true, smg = true),
 	MP9(34, gun = true, automatic = true, smg = true),

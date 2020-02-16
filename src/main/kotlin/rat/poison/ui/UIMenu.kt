@@ -18,7 +18,7 @@ val mainTabbedPane = TabbedPane()
     val nadeHelperTab = NadeHelperTab()
     val optionsTab = OptionsTab()
 
-class UIMenu : VisWindow("Rat Poison 1.5.5.1") {
+class UIMenu : VisWindow("Rat Poison 1.6") {
     init {
         defaults().left()
 
@@ -95,7 +95,6 @@ class UIMenu : VisWindow("Rat Poison 1.5.5.1") {
         add(mainScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
         pack()
         centerWindow()
-
 
         //Update all tab content
         uiUpdate()

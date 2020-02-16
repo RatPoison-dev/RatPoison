@@ -22,6 +22,7 @@ val chamsEspTab = ChamsEspTab()
 val indicatorEspTab = IndicatorEspTab()
 val boxEspTab = BoxEspTab()
 val skeletonEspTab = SkeletonEspTab()
+val snaplinesEspTab = SnaplinesEspTab()
 val hitMarkerTab = HitMarkerTab()
 val nadesTab = NadesVT()
 
@@ -36,8 +37,6 @@ class VisualsTab : Tab(false, false) {
 
     val radarEsp = VisCheckBoxCustom("Radar Esp", "RADAR_ESP")
     val visAdrenaline = VisCheckBoxCustom("Adrenaline", "ENABLE_ADRENALINE")
-    val snaplines = VisCheckBoxCustom(" ", "SNAPLINES")
-    val snaplinesColor = VisColorPickerCustom("Enemy Snaplines", "SNAPLINES_COLOR")
 
     init {
         //ESP Tab
@@ -46,6 +45,7 @@ class VisualsTab : Tab(false, false) {
         espTabbedPane.add(indicatorEspTab)
         espTabbedPane.add(boxEspTab)
         espTabbedPane.add(skeletonEspTab)
+        espTabbedPane.add(snaplinesEspTab)
         espTabbedPane.add(hitMarkerTab)
         espTabbedPane.add(nadesTab)
 
@@ -87,6 +87,9 @@ class VisualsTab : Tab(false, false) {
                     skeletonEspTab -> {
                         espTabbedPaneContent.add(skeletonEspTab.contentTable).left().colspan(2).row()
                     }
+                    snaplinesEspTab -> {
+                        espTabbedPaneContent.add(snaplinesEspTab.contentTable).left().colspan(2).row()
+                    }
                     hitMarkerTab -> {
                         espTabbedPaneContent.add(hitMarkerTab.contentTable).left().colspan(2).row()
                     }
@@ -99,17 +102,11 @@ class VisualsTab : Tab(false, false) {
             }
         })
 
-        //Snaplines
-        val snaplinesTable = VisTable()
-        snaplinesTable.add(snaplines)
-        snaplinesTable.add(snaplinesColor)
-
         //Add all items to label for tabbed pane content
         table.add(enableEsp).padLeft(25F).left().row()
         table.add(visualsToggleKey).padLeft(25F).left().row()
         table.add(radarEsp).padLeft(25F).left().row()
         table.add(visAdrenaline).padLeft(25F).left().row()
-        table.add(snaplinesTable).padLeft(25F).left().padBottom(5F).row()
         table.add(espTabbedPane.table).minWidth(500F).left().row()
         table.add(espScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
     }
@@ -146,8 +143,6 @@ fun updateDisableEsp() {
         visualsToggleKey.disable(bool, col)
         radarEsp.disable(bool)
         visAdrenaline.disable(bool)
-        snaplines.disable(bool)
-        snaplinesColor.disable(bool)
 
         val recTab = espTabbedPane.activeTab
 
@@ -156,6 +151,7 @@ fun updateDisableEsp() {
         espTabbedPane.disableTab(indicatorEspTab, bool)
         espTabbedPane.disableTab(boxEspTab, bool)
         espTabbedPane.disableTab(skeletonEspTab, bool)
+        espTabbedPane.disableTab(snaplinesEspTab, bool)
         espTabbedPane.disableTab(hitMarkerTab, bool)
         espTabbedPane.disableTab(nadesTab, bool)
 
@@ -189,9 +185,8 @@ fun updateDisableEsp() {
         chamsEspTab.chamsEnemyColor.disable(bool)
 
         indicatorEspTab.indicatorEsp.disable(bool)
-        indicatorEspTab.indicatorOnScreen.disable(bool)
-        indicatorEspTab.indicatorOval.disable(bool)
         indicatorEspTab.indicatorDistance.disable(bool, col)
+        indicatorEspTab.indicatorSize.disable(bool, col)
         indicatorEspTab.showTeam.disable(bool)
         indicatorEspTab.showEnemies.disable(bool)
         indicatorEspTab.showBomb.disable(bool)
@@ -227,6 +222,18 @@ fun updateDisableEsp() {
         skeletonEspTab.showTeam.disable(bool)
         skeletonEspTab.showEnemies.disable(bool)
 
+        snaplinesEspTab.enableSnaplines.disable(bool)
+        snaplinesEspTab.enemySnaplines.disable(bool)
+        snaplinesEspTab.enemySnaplinesColor.disable(bool)
+        snaplinesEspTab.teamSnaplines.disable(bool)
+        snaplinesEspTab.teamSnaplinesColor.disable(bool)
+        snaplinesEspTab.weaponSnaplines.disable(bool)
+        snaplinesEspTab.weaponSnaplinesColor.disable(bool)
+        snaplinesEspTab.bombSnaplines.disable(bool)
+        snaplinesEspTab.bombSnaplinesColor.disable(bool)
+        snaplinesEspTab.bombCarrierSnaplines.disable(bool)
+        snaplinesEspTab.bombCarrierSnaplinesColor.disable(bool)
+
         hitMarkerTab.hitMarker.disable(bool)
         hitMarkerTab.hitMarkerOutline.disable(bool)
         hitMarkerTab.hitMarkerCombo.disable(bool)
@@ -252,7 +259,6 @@ fun visualsTabUpdate() {
         enableEsp.update()
         visualsToggleKey.update()
         radarEsp.update()
-        snaplines.update()
         visualsToggleKey.update()
     }
 }

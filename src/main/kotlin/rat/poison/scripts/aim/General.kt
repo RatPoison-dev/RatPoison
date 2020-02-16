@@ -2,7 +2,6 @@ package rat.poison.scripts.aim
 
 import rat.poison.game.*
 import rat.poison.game.entity.*
-import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.settings.*
 import rat.poison.utils.*
 import org.jire.arrowhead.keyPressed
@@ -10,34 +9,37 @@ import rat.poison.curSettings
 import rat.poison.strToBool
 import java.lang.Math.toRadians
 import java.util.concurrent.atomic.AtomicBoolean
-import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.abs
 import kotlin.math.sin
 
-val target = AtomicLong(-1)
-val perfect = AtomicBoolean() //Perfect Aim boolean check, only for path aim
+var target = -1L
+var perfect = false
 var boneTrig = false
+var destBone = -1
 
 fun reset() {
-	target.set(-1L)
-	perfect.set(false)
+	destBone = -5
+	target = -1L
+	perfect = false
 }
 
 fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
-                        lockFOV: Int = curSettings["AIM_FOV"].toInt(), BONE: Int = curSettings["AIM_BONE"].toInt()): Player {
+                        lockFOV: Int = curSettings["AIM_FOV"].toInt(), BONE: Int = curSettings["AIM_BONE"].toInt(), visCheck: Boolean = true): Player {
 	var closestFOV = Double.MAX_VALUE
 	var closestDelta = Double.MAX_VALUE
 	var closestPlayer = -1L
 
 	forEntities result@{
 		val entity = it.entity
-		if (entity <= 0 || entity == me || !entity.canShoot()) {
+		if (entity <= 0 || entity == me || !entity.canShoot(visCheck)) {
 			return@result false
 		}
 
 		if (it.type != EntityType.CCSPlayer) {
 			return@result false
 		}
+
+
 
 		if (BONE == -3) { //Knife bot bone
 			for (i in 3..8) {
@@ -85,8 +87,11 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	}
 
 	if (closestDelta == Double.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return -1
-	if (curSettings["PERFECT_AIM"].strToBool() && allowPerfect && closestFOV <= curSettings["PERFECT_AIM_FOV"].toInt() && randInt(100 + 1) <= curSettings["PERFECT_AIM_CHANCE"].toInt()) {
-		perfect.set(true)
+
+	val randInt = randInt(100+1)
+
+	if (curSettings["PERFECT_AIM"].strToBool() && allowPerfect && closestFOV <= curSettings["PERFECT_AIM_FOV"].toInt() && randInt <= curSettings["PERFECT_AIM_CHANCE"].toInt()) {
+		perfect = true
 	}
 
 	return closestPlayer
@@ -124,7 +129,7 @@ fun Entity.inMyTeam() =
 			me.survivalTeam().let { it > -1 && it == this.survivalTeam() }
 		} else me.team() == team()
 
-fun Entity.canShoot() = (if (DANGER_ZONE) { true } else { spotted() }
+fun Entity.canShoot(visCheck: Boolean = true) = ((if (DANGER_ZONE) { true } else if (visCheck) { spotted() } else { true })
 		&& !dormant()
 		&& !dead()
 		&& !inMyTeam()
@@ -141,6 +146,11 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		val meWep = me.weapon()
 		val meWepEnt = me.weaponEntity()
 
+		if (meWep.grenade || meWep.knife || meWep == Weapons.ZEUS_X27) {
+			reset()
+			return@every
+		}
+
 		if (!meWepEnt.canFire() && !meWep.automatic && !meWep.pistol && !meWep.shotgun && !meWep.sniper && !meWep.smg) { //Aim after shoot
 			reset()
 			return@every
@@ -151,17 +161,18 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			return@every
 		}
 
-		if (meWep.grenade || meWep.knife) {
-			reset()
-			return@every
-		}
-
 		val aim = curSettings["ACTIVATE_FROM_AIM_KEY"].strToBool() && keyPressed(AIM_KEY)
-		val forceAim = keyPressed(curSettings["FORCE_AIM_KEY"].toInt()) || curSettings["FORCE_AIM_ALWAYS"].strToBool()
+		val forceAim = (keyPressed(curSettings["FORCE_AIM_KEY"].toInt()) || curSettings["FORCE_AIM_ALWAYS"].strToBool())
 		val haveAmmo = meWepEnt.bullets() > 0
 
-		val pressed = (aim || forceAim || boneTrig) && !MENUTOG && haveAmmo
-		var currentTarget = target.get()
+		val pressed = ((aim || boneTrig) && !MENUTOG && haveAmmo &&
+				(if (meWep.rifle || meWep.smg) {
+					(me.shotsFired() > curSettings["AIM_AFTER_SHOTS"].toInt())
+				} else {
+					true
+				})) || forceAim
+
+		var currentTarget = target
 
 		if (!pressed) {
 			reset()
@@ -170,21 +181,23 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 
 		val currentAngle = clientState.angle()
 		val position = me.position()
-
-		if (currentTarget < 0) {
-			currentTarget = findTarget(position, currentAngle, aim)
-			if (currentTarget < 0) {
-				reset()
-				return@every
-			}
-			target.set(currentTarget)
-		}
+		val shouldVisCheck = !(forceAim && curSettings["FORCE_AIM_THROUGH_WALLS"].strToBool())
 
 		val aB = curSettings["AIM_BONE"].toInt()
 
-		var destBone = aB
+		if (currentTarget < 0) { //If target is invalid from last run
+			currentTarget = findTarget(position, currentAngle, aim,
+					BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 4); destBone } else { destBone = aB; aB },/*if (aB == RANDOM_BONE) destBone else aB,*/
+					visCheck = shouldVisCheck) //Try to find new target
+			if (currentTarget < 0) { //End if we don't, can't loop because of thread blocking
+				reset()
+				return@every
+			}
+			target = currentTarget
+		}
 
-		if (aB == -1) { //Nearest bone check
+		//Set destination bone for calculating aim
+		if (aB == NEAREST_BONE) { //Nearest bone check
 			val nearestBone = currentTarget.nearestBone()
 
 			if (nearestBone != -999) {
@@ -195,16 +208,16 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			}
 		}
 
-		if (currentTarget == me || !currentTarget.canShoot()) {
+		if (currentTarget == me || !currentTarget.canShoot(shouldVisCheck)) {
 			reset()
-			Thread.sleep(500)
+			Thread.sleep(curSettings["AIM_TARGET_SWAP_DELAY"].toInt().toLong())
 			return@every
 		} else {
 			val bonePosition = currentTarget.bones(destBone)
 
 			val destinationAngle = getCalculatedAngle(me, bonePosition) //Rename to current angle
 
-			if (!perfect.get()) {
+			if (!perfect) {
 				destinationAngle.finalize(currentAngle, (1.1 - curSettings["AIM_SMOOTHNESS"].toDouble() / 5))
 			}
 

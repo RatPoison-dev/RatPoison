@@ -15,6 +15,8 @@ object NetVars {
 			if (!prop.name.contains("baseclass")) {
 				val netVar = ClassOffset(name, prop.name, prop.offset)
 				netVars[hashClassAndVar(netVar.className, netVar.variableName)] = netVar
+
+				//println(netVar) //Quick dumper
 			}
 			
 			val child = prop.table

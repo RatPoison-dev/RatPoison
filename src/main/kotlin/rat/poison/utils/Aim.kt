@@ -1,5 +1,6 @@
 package rat.poison.utils
 
+import com.badlogic.gdx.math.MathUtils.random
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.CSGO.gameX
@@ -15,8 +16,7 @@ import com.sun.jna.platform.win32.WinDef.POINT
 import rat.poison.game.worldToScreen
 import kotlin.math.round
 
-private val mousePos = ThreadLocal.withInitial { POINT() }
-private val target = ThreadLocal.withInitial { POINT() }
+private val target = POINT()
 
 private val delta = ThreadLocal.withInitial { Vector() }
 
@@ -41,11 +41,9 @@ fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: 
 fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double) {
 	val dAng = applyFlatSmoothing(currentAngle, destinationAngle, smoothing)
 	clientState.setAngle(dAng)
-
 }
 
-fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
-			sensMultiplier: Double = 1.0, perfect: Boolean = false) {
+fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect: Boolean = false) {
 	if (!destinationAngle.isValid()) { return }
 
 	val delta = delta.get()
@@ -61,32 +59,35 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int,
 
 	delta.set(xFix, currentAngle.x - destinationAngle.x, 0.0)
 
-	var sens = GAME_SENSITIVITY * sensMultiplier
-	if (sens < GAME_SENSITIVITY) sens = GAME_SENSITIVITY
+	var sens = GAME_SENSITIVITY + .5
 	if (perfect) sens = 1.0
+
+	//println(sens)
 
 	val dx = round(delta.x / (sens * GAME_PITCH))
 	val dy = round(-delta.y / (sens * GAME_YAW))
 
-	val mousePos = mousePos.get().refresh()
+	var mousePos = POINT().refresh()
 
-	val target = target.get()
+	val target = target
 
-	target.set((mousePos.x + dx/2).toInt(), (mousePos.y + dy/2).toInt())
+	target.x = (mousePos.x + dx).toInt()
+	target.y = (mousePos.y + dy).toInt()
 
 	if (target.x <= 0 || target.x >= gameX + gameWidth || target.y <= 0 || target.y >= gameY + gameHeight) { return }
 
 	if (perfect) {
 		writeAim(currentAngle, destinationAngle, 1.0)
-		//Thread.sleep(20)
+		Thread.sleep(50)
 	} else HumanMouse.fastSteps(mousePos, target) { steps, _ ->
-		mousePos.refresh()
+		mousePos = mousePos.refresh()
 
 		val tx = target.x - mousePos.x
 		val ty = target.y - mousePos.y
 
 		var halfIndex = steps / 2
 		if (halfIndex == 0) halfIndex = 1
+
 		mouseMove(tx / halfIndex, ty / halfIndex)
 
 		Thread.sleep(aimSpeed.toLong())

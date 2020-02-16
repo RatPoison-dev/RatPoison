@@ -16,13 +16,9 @@ import rat.poison.utils.Vector
 import rat.poison.utils.every
 import java.awt.Robot
 import java.awt.event.KeyEvent
-import kotlin.math.cos
-import kotlin.math.pow
-import kotlin.math.sin
-import kotlin.math.sqrt
+import kotlin.math.*
 
 private var onEnt = 0L
-var headWalkToggle = ObservableBoolean({onPlayerHead()})
 
 //Currently just a poc
 ////Only moves towards the center of the player
@@ -41,8 +37,7 @@ internal fun headWalk() = every(1) {
 
     if (!keyPressed(KeyEvent.VK_W) && !keyPressed(KeyEvent.VK_A) && !keyPressed(KeyEvent.VK_S) && !keyPressed(KeyEvent.VK_D)) {
         mePos = me.absPosition()
-        headWalkToggle.update()
-        if (headWalkToggle.value) {
+        if (onPlayerHead()) {
             updateCursorEnable()
             if (cursorEnable) return@every
 
@@ -50,8 +45,15 @@ internal fun headWalk() = every(1) {
             val yaw = clientState.angle().y
 
             //Is this even needed?
+            //val tmpX = (pos.x * cos(yaw / 180 * Math.PI)).toInt()
+            //val tmpY = (pos.y * cos(yaw / 180 * Math.PI)).toInt()
+            //val distX = tmpX + tmpY
+            //val distY = tmpY - tmpX
             val distX = (pos.x * cos(yaw / 180 * Math.PI) + pos.y * sin(yaw / 180 * Math.PI)).toInt()
             val distY = (pos.y * cos(yaw / 180 * Math.PI) - pos.x * sin(yaw / 180 * Math.PI)).toInt()
+
+            println (distX)
+            println(distY)
 
             when {
                 distX < 2 -> {
@@ -88,11 +90,12 @@ internal fun onPlayerHead() : Boolean {
 
         entPos = entity.absPosition()
 
-        val xDif = mePos.x - entPos.x
-        val yDif = mePos.y - entPos.y
-        val zDif = mePos.z - entPos.z
+        val xDist = abs(mePos.x - entPos.x)
+        val yDist = abs(mePos.y - entPos.y)
+        val zDist = abs(mePos.z - entPos.z)
 
-        if (xDif in -30.0..30.0 && yDif in -30.0..30.0 && zDif in 50.0..75.0) {
+        //Issue here
+        if (xDist <= 30 && yDist <= 30 && zDist <= 30) { //Absolute wont give negative, if within 30
             onEnt = entity
             onEntPos = entPos
         }

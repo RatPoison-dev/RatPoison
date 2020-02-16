@@ -15,7 +15,7 @@ SHOTGUN_FACTOR_RECOIL = false
 
 //Aim Bone
 //Default bone to aim at
-SHOTGUN_AIM_BONE = -1
+SHOTGUN_AIM_BONE = 5
 
 //Aim FOV
 //Aims at entities inside this value
@@ -29,10 +29,6 @@ SHOTGUN_AIM_SPEED = 1
 //Aim smoothness
 //Lower is less smooth (faster snapping)
 SHOTGUN_AIM_SMOOTHNESS = 1.0
-
-//Aim strictness (1.0 - 5.0)
-//Lower is more strict (faster, more accurate snapping)
-SHOTGUN_AIM_STRICTNESS = 1.0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

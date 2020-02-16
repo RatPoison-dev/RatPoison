@@ -29,11 +29,14 @@ fun setAim() = every(250){
                         curSettings["AIM_FOV"] = curWepSettings.tAimFov
                         curSettings["AIM_SPEED"] = curWepSettings.tAimSpeed
                         curSettings["AIM_SMOOTHNESS"] = curWepSettings.tAimSpeed
-                        curSettings["AIM_STRICTNESS"] = curWepSettings.tAimStrict
                         curSettings["PERFECT_AIM"] = curWepSettings.tPerfectAim
                         curSettings["PERFECT_AIM_FOV"] = curWepSettings.tPAimFov
                         curSettings["PERFECT_AIM_CHANCE"] = curWepSettings.tPAimChance
                         curSettings["ENABLE_SCOPED_ONLY"] = curWepSettings.tScopedOnly
+
+                        if (curWep.rifle || curWep.smg) {
+                            curSettings["AIM_AFTER_SHOTS"] = curWepSettings.tAimAfterShots
+                        }
                         override = true
                     }
                 }
@@ -67,13 +70,14 @@ fun setAim() = every(250){
                 curSettings["AIM_SPEED"] = curSettings[strPre + "_AIM_SPEED"].toInt()
                 curSettings["AIM_SMOOTHNESS"] = curSettings[strPre + "_AIM_SMOOTHNESS"].toDouble()
 
-                curSettings["AIM_STRICTNESS"] = curSettings[strPre + "_AIM_STRICTNESS"].toDouble()
                 curSettings["PERFECT_AIM"] = curSettings[strPre + "_PERFECT_AIM"].strToBool()
                 curSettings["PERFECT_AIM_FOV"] = curSettings[strPre + "_PERFECT_AIM_FOV"].toInt()
                 curSettings["PERFECT_AIM_CHANCE"] = curSettings[strPre + "_PERFECT_AIM_CHANCE"].toInt()
                 curSettings["ENABLE_FLAT_AIM"] = curSettings[strPre + "_ENABLE_FLAT_AIM"].strToBool()
                 curSettings["ENABLE_PATH_AIM"] = curSettings[strPre + "_ENABLE_PATH_AIM"].strToBool()
                 curSettings["ENABLE_SCOPED_ONLY"] = curSettings["SNIPER_ENABLE_SCOPED_ONLY"].strToBool()
+
+                curSettings["AIM_AFTER_SHOTS"] = curSettings[strPre + "_AIM_AFTER_SHOTS"].toInt()
             }
         }
     } catch (e: Exception) { println("SetAim failure") } //Fix crashing

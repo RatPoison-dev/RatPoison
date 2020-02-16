@@ -49,6 +49,12 @@ HEAD_WALK = false
 //Enable last second bomb defuse
 LS_BOMB = false
 
+//Enable door spam
+D_SPAM = false
+
+//Door spam key
+D_SPAM_KEY = 80
+
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles head walk on/off
 //Needed to know when to stay on a player's head, and when to be able to walk off
 //Default key is Q
@@ -76,6 +82,9 @@ FORCE_AIM_KEY = 5
 //Always force aim if within FOV
 FORCE_AIM_ALWAYS = false
 
+//If force aim works through walls (no vis check)
+FORCE_AIM_THROUGH_WALLS = false
+
 //MS Delay between when aimbot paths are recalculated
 AIM_DURATION = 1
 
@@ -85,17 +94,22 @@ NECK_BONE = 7
 CHEST_BONE = 6
 STOMACH_BONE = 5
 NEAREST_BONE = -1
+RANDOM_BONE = -4
 
-//Temp variables, irrelevant to edit
+//Temp variables, don't edit
 PERFECT_AIM = false
 PERFECT_AIM_CHANCE = 1
 PERFECT_AIM_FOV = 1
-AIM_BONE = -1
+AIM_BONE = 5
 AIM_SPEED = 1
-AIM_FOV = 40
+AIM_FOV = 50
 AIM_ASSIST_MODE = false
 FACTOR_RECOIL = false
-ENABLE_FLAT_AIM = true
-ENABLE_PATH_AIM = false
+ENABLE_FLAT_AIM = false
+ENABLE_PATH_AIM = true
 ENABLE_SCOPED_ONLY = true
-AIM_STRICTNESS = 1.0
+AIM_AFTER_SHOTS = 0
+//Can't be edited from menu, not guaranteed to work properly
+PISTOL_AIM_AFTER_SHOTS = 0
+SHOTGUN_AIM_AFTER_SHOTS = 0
+SNIPER_AIM_AFTER_SHOTS = 0

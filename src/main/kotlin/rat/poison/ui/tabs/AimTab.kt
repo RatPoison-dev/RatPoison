@@ -6,10 +6,7 @@ import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.*
-import rat.poison.settings.CHEST_BONE
-import rat.poison.settings.HEAD_BONE
-import rat.poison.settings.NECK_BONE
-import rat.poison.settings.STOMACH_BONE
+import rat.poison.settings.*
 import rat.poison.ui.*
 import rat.poison.ui.uiHelpers.tables.AimBTrigTable
 import rat.poison.ui.uiHelpers.tables.AimTable
@@ -57,6 +54,7 @@ fun updateDisableAim() {
         targetSwapDelay.disable(bool, col)
         forceAimKey.disable(bool, col)
         forceAimAlways.disable(bool)
+        forceAimThroughWalls.disable(bool)
         categorySelectLabel.color = col
         categorySelectionBox.isDisabled = bool
         enableFactorRecoil.isDisabled = bool
@@ -68,7 +66,9 @@ fun updateDisableAim() {
         aimFov.disable(bool, col)
         aimSpeed.disable(bool, col)
         aimSmooth.disable(bool, col)
-        aimStrict.disable(bool, col)
+        if (!aimAfterShots.isDisabled()) {
+            aimAfterShots.disable(bool, col)
+        }
         perfectAimCollapsible.isCollapsed = !perfectAimCheckBox.isChecked
         perfectAimCheckBox.isDisabled = bool
         perfectAimChance.disable(bool, col)
@@ -84,6 +84,7 @@ fun updateAim() {
         teammatesAreEnemies.update()
         forceAimKey.update()
         forceAimAlways.update()
+        forceAimThroughWalls.update()
         automaticWeaponsCheckBox.update()
         automaticWeaponsInput.update()
         targetSwapDelay.update()
@@ -100,17 +101,26 @@ fun updateAim() {
             enableScopedOnly.color = Color(255F, 255F, 255F, 0F)
             enableScopedOnly.isDisabled = true
         }
+
+        aimAfterShots.update()
+        if (categorySelected == "RIFLE" || categorySelected == "SMG") {
+            aimAfterShots.disable(false, Color(255F, 255F, 255F, 1F))
+        } else {
+            aimAfterShots.disable(true, Color(0F, 0F, 0F, 0F))
+        }
+
         aimBoneBox.selected = when (curSettings[categorySelected + "_AIM_BONE"].toInt()) {
             HEAD_BONE -> "HEAD"
             NECK_BONE -> "NECK"
             CHEST_BONE -> "CHEST"
             STOMACH_BONE -> "STOMACH"
-            else -> "NEAREST"
+            NEAREST_BONE -> "NEAREST"
+            else -> "RANDOM"
         }
         aimFov.update()
         aimSpeed.update()
         aimSmooth.update()
-        aimStrict.update()
+        aimAfterShots.update()
         perfectAimCheckBox.isChecked = curSettings[categorySelected + "_PERFECT_AIM"].strToBool()
         perfectAimCollapsible.isCollapsed = !curSettings[categorySelected + "_PERFECT_AIM"].strToBool()
         perfectAimFov.update()

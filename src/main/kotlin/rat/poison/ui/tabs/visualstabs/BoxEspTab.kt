@@ -25,6 +25,8 @@ class BoxEspTab : Tab(false, false) {
     val boxEspWeapon = VisCheckBoxCustom("Weapon", "BOX_ESP_WEAPON")
     val boxEspWeaponPos = VisSelectBox<String>()
 
+    val boxDetailColor = VisColorPickerCustom("Detail Text", "BOX_DETAILS_TEXT_COLOR")
+
     val showTeam = VisCheckBoxCustom(" ", "BOX_SHOW_TEAM")
     val boxTeamColor = VisColorPickerCustom("Teammates", "BOX_TEAM_COLOR")
 
@@ -93,6 +95,8 @@ class BoxEspTab : Tab(false, false) {
         table.add(boxEspWeapon).left()
         table.add(boxEspWeaponPos).left().row()
 
+        table.add(boxDetailColor).width(175F - boxDetailColor.width).padRight(50F).row()
+
         var tmpTable = VisTable()
         tmpTable.add(showTeam)
         tmpTable.add(boxTeamColor).width(175F - showTeam.width).padRight(50F)
@@ -129,6 +133,7 @@ fun boxEspTabUpdate() {
         boxEspArmor.update()
         boxEspName.update()
         boxEspWeapon.update()
+        boxDetailColor.update()
         showTeam.update()
         showEnemies.update()
         boxTeamColor.update()

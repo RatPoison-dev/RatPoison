@@ -31,11 +31,8 @@ import rat.poison.game.netvars.NetVarOffsets.iCompetitiveRanking
 import rat.poison.game.netvars.NetVarOffsets.bGunGameImmunity
 import rat.poison.game.netvars.NetVarOffsets.iDeaths
 import rat.poison.game.netvars.NetVarOffsets.iKills
-import rat.poison.game.netvars.NetVarOffsets.m_Collision
-import rat.poison.game.netvars.NetVarOffsets.m_CollisionGroup
 import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.game.offsets.ClientOffsets.dwPlayerResource
-import rat.poison.game.offsets.EngineOffsets
 import rat.poison.game.offsets.EngineOffsets.dwClientState_PlayerInfo
 import rat.poison.utils.*
 

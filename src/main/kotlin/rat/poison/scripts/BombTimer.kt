@@ -82,7 +82,7 @@ fun bombUpdater() = every(15, true) {
 
     val timeNeeded = 5.3 + ((!me.hasDefuser()).toInt() * 5)
 
-    if (curSettings["LS_BOMB"].strToBool() && me.team() == 3.toLong() && bombState.timeLeftToExplode < timeNeeded && bombState.planted)
+    if (curSettings["LS_BOMB"].strToBool() && me.team() == 3L && bombState.timeLeftToExplode < timeNeeded && bombState.planted)
     {
         CSGO.clientDLL[dwUse] = 5
         Thread(Runnable {

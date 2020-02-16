@@ -4,18 +4,24 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import rat.poison.App
 import rat.poison.curSettings
+import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.entity.isScoped
 import rat.poison.game.entity.punch
 import rat.poison.game.entity.weapon
 import rat.poison.game.me
+import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.settings.MENUTOG
 import rat.poison.strToBool
 import rat.poison.strToColor
 import rat.poison.ui.mainTabbedPane
 import rat.poison.ui.rcsTab
+import java.lang.Math.toDegrees
+import java.lang.Math.toRadians
+import kotlin.math.atan
 import kotlin.math.floor
+import kotlin.math.tan
 
 internal fun rcrosshair() = App {
     val eRC = curSettings["ENABLE_RECOIL_CROSSHAIR"].strToBool()
@@ -34,6 +40,11 @@ internal fun rcrosshair() = App {
     val rccXo = curSettings["RCROSSHAIR_XOFFSET"].toFloat()
     val rccYo = curSettings["RCROSSHAIR_YOFFSET"].toFloat()
 
+    //Crosshair FOV modifier
+    val curFov = csgoEXE.int(me + NetVarOffsets.m_iDefaultFov)
+    val rccFov1 = atan((gameWidth.toFloat()/gameHeight.toFloat()) * 0.75 * tan(toRadians(curFov/2.0)))
+    val rccFov2 = (gameWidth/2) / tan(rccFov1).toFloat()
+
     //Center based on Length/Width
     val wO = floor(cW / 2.0).toFloat()
     val lO = floor(cL / 2.0).toFloat()
@@ -42,8 +53,10 @@ internal fun rcrosshair() = App {
         val punch = me.punch()
 
         //Center
-        x = gameWidth / 2 - ((gameWidth / 95F) * punch.y).toFloat() + rccXo
-        y = gameHeight / 2 - ((gameHeight / 95F) * punch.x).toFloat() + rccYo
+        //x = (gameWidth / 2) - ((gameWidth * rccFOV) * punch.y).toFloat() + rccXo
+        //y = (gameHeight / 2) - ((gameHeight * rccFOV) * punch.x).toFloat() + rccYo
+        x = (gameWidth / 2) - tan(toRadians(punch.y)).toFloat() * rccFov2 + rccXo
+        y = (gameHeight / 2) - tan(toRadians(punch.x)).toFloat() * rccFov2 + rccYo
     } else {
         //Center
         x = gameWidth / 2 + rccXo

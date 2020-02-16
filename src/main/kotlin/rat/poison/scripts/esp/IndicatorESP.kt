@@ -16,10 +16,9 @@ import rat.poison.game.hooks.defuseKitEntities
 import rat.poison.strToColor
 import rat.poison.utils.Vector
 import rat.poison.utils.distanceTo
+import rat.poison.utils.normalize
 import rat.poison.utils.notInGame
-import kotlin.math.ceil
-import kotlin.math.cos
-import kotlin.math.sin
+import kotlin.math.*
 
 internal fun indicatorEsp() = App {
     if (!curSettings["ENABLE_ESP"].strToBool() || MENUTOG || !curSettings["INDICATOR_ESP"].strToBool() || notInGame) return@App
@@ -27,7 +26,6 @@ internal fun indicatorEsp() = App {
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()
 
-    val mePos = me.position()
     forEntities {
         val entity = it.entity
         val onMyTeam = me.team() == entity.team()
@@ -40,13 +38,13 @@ internal fun indicatorEsp() = App {
 
                 if (bEnt >= 0 && bEnt == entity) { //This is the bomb carrier
                     if (curSettings["INDICATOR_SHOW_ENEMIES"].strToBool() && !onMyTeam) {
-                        color = when (curSettings["INDICATOR_SHOW_BOMB"].strToBool() && curSettings["INDICATOR_SHOW_BOMB_CARRIER"].strToBool()) {
-                            true -> "INDICATOR_BOMB_COLOR"
+                        color = when (curSettings["INDICATOR_SHOW_BOMB_CARRIER"].strToBool()) {
+                            true -> "INDICATOR_BOMB_CARRIER_COLOR"
                             false -> "INDICATOR_ENEMY_COLOR"
                         }
                     } else if (curSettings["INDICATOR_SHOW_TEAM"].strToBool() && onMyTeam) {
-                        color = when (curSettings["INDICATOR_SHOW_BOMB"].strToBool() && curSettings["INDICATOR_SHOW_BOMB_CARRIER"].strToBool()) {
-                            true -> "INDICATOR_BOMB_COLOR"
+                        color = when (curSettings["INDICATOR_SHOW_BOMB_CARRIER"].strToBool()) {
+                            true -> "INDICATOR_BOMB_CARRIER_COLOR"
                             false -> "INDICATOR_TEAM_COLOR"
                         }
                     }
@@ -80,8 +78,7 @@ internal fun indicatorEsp() = App {
         }
 
         if (color != "") {
-            val entPos = entity.position()
-            w2sHandler(entPos, me.position().distanceTo(entPos), curSettings[color].strToColor())
+            drawIndicator(entity, curSettings[color].strToColor())
         }
 
         false
@@ -90,123 +87,77 @@ internal fun indicatorEsp() = App {
     if (curSettings["INDICATOR_SHOW_DEFUSERS"].strToBool()) {
         val tmp = defuseKitEntities
         tmp.forEachIndexed { _, entity ->
-            val entPos = entity.position()
-            w2sHandler(entPos, mePos.distanceTo(entPos), curSettings["INDICATOR_DEFUSER_COLOR"].strToColor())
+            drawIndicator(entity, curSettings["INDICATOR_DEFUSER_COLOR"].strToColor())
         }
     }
 }
 
-fun indicatorPosition(screenPos: Vector3, indicatorPos: Vector3): Float {
-    val centerX = CSGO.gameWidth / 2F
-    val centerY = CSGO.gameHeight / 2F
+fun calcAngle(src: Vector, dest: Vector, vAng: Vector): Vector {
+    val delta = Vector(dest.x - src.x, dest.y - src.y, dest.z - src.z)
+    val angs =  Vector(Math.toDegrees(atan2(-delta.z, hypot(delta.x, delta.y))) - vAng.x, Math.toDegrees(atan2(delta.y, delta.x)) - vAng.y, 0.0)
+    angs.normalize()
 
-    val d = Vector2.dst(screenPos.x, screenPos.y, centerX, centerY)
-
-    if (!curSettings["INDICATOR_OVAL"].strToBool()) {
-        val r = CSGO.gameHeight / curSettings["INDICATOR_DISTANCE"].toDouble().toFloat() / d
-
-        indicatorPos.x = r * screenPos.x + (1 - r) * centerX
-        indicatorPos.y = r * screenPos.y + (1 - r) * centerY
-    } else {
-        val ry = CSGO.gameHeight / curSettings["INDICATOR_DISTANCE"].toDouble().toFloat() / d
-        val rx = CSGO.gameWidth / curSettings["INDICATOR_DISTANCE"].toDouble().toFloat() / d
-
-        indicatorPos.x = rx * screenPos.x + (1 - rx) * centerX
-        indicatorPos.y = ry * screenPos.y + (1 - ry) * centerY
-    }
-
-    return MathUtils.atan2(screenPos.x - centerX, screenPos.y - centerY)
+    return angs
 }
 
-fun w2sHandler(vector: Vector, dist: Double, drawColor: Color) {
-    if (vector.x == 0.0 && vector.y == 0.0 && vector.z == 0.0) {
-        return
-    }
+fun angVec(ang: Vector): Vector {
+    val sy = sin(ang.y / 180.0 * Math.PI)
+    val cy = cos(ang.y / 180.0 * Math.PI)
+    val sp = sin(ang.x / 180.0 * Math.PI)
+    val cp = cos(ang.x / 180.0 * Math.PI)
 
-    val vOut = Vector()
-    val wTest = wTest(vector)
-
-    if (curSettings["INDICATOR_SHOW_ONSCREEN"].strToBool() && (wTest >= dist/3)) { //On screen
-        worldToScreen(Vector(vector.x, vector.y, vector.z), vOut)
-        shapeRenderer.apply {
-            val indicatorPos = Vector3(vOut.x.toFloat(), vOut.y.toFloat()+25F, 0F)
-            val rot = 3.14
-
-            //Middle of triangle
-            val p = indicatorPos.x
-            val q = indicatorPos.y
-
-            val indX = indicatorPos.x.toDouble()
-            val indY = indicatorPos.y.toDouble()
-
-            val vert1x = ((indX - p)*cos(rot) - (indY+10 - q)*sin(rot) + p).toFloat()
-            val vert1y = ((indX - p)*sin(rot) + (indY+10 - q)*cos(rot) + q).toFloat()
-
-            val vert2x = ((indX-10 - p)*cos(rot) - (indY-10 - q)*sin(rot) + p).toFloat()
-            val vert2y = ((indX-10 - p)*sin(rot) + (indY-10 - q)*cos(rot) + q).toFloat()
-
-            val vert3x = ((indX+10 - p)*cos(rot) - (indY-10 - q)*sin(rot) + p).toFloat()
-            val vert3y = ((indX+10 - p)*sin(rot) + (indY-10 - q)*cos(rot) + q).toFloat()
-
-            begin()
-            set(ShapeRenderer.ShapeType.Filled)
-            color = com.badlogic.gdx.graphics.Color(drawColor.red/255F, drawColor.green/255F, drawColor.blue/255F, .5F)
-            triangle(vert1x, vert1y, vert2x, vert2y, vert3x, vert3y)
-            color = com.badlogic.gdx.graphics.Color(255F, 255F, 255F, 1F)
-            set(ShapeRenderer.ShapeType.Line)
-            end()
-        }
-    } else if (wTest < dist/3) {
-        worldToScreen(Vector(vector.x, vector.y, vector.z), vOut)
-        shapeRenderer.apply {
-            val indicatorPos = Vector3(vOut.x.toFloat(), vOut.y.toFloat(), 0F)
-            val rot = -indicatorPosition(indicatorPos, indicatorPos).toDouble()
-
-            //Middle of triangle
-            val p = indicatorPos.x
-            val q = indicatorPos.y
-
-            val indX = indicatorPos.x.toDouble()
-            val indY = indicatorPos.y.toDouble()
-
-            val vert1x = ((indX - p)*cos(rot) - (indY+10 - q)*sin(rot) + p).toFloat()
-            val vert1y = ((indX - p)*sin(rot) + (indY+10 - q)*cos(rot) + q).toFloat()
-
-            val vert2x = ((indX-10 - p)*cos(rot) - (indY-10 - q)*sin(rot) + p).toFloat()
-            val vert2y = ((indX-10 - p)*sin(rot) + (indY-10 - q)*cos(rot) + q).toFloat()
-
-            val vert3x = ((indX+10 - p)*cos(rot) - (indY-10 - q)*sin(rot) + p).toFloat()
-            val vert3y = ((indX+10 - p)*sin(rot) + (indY-10 - q)*cos(rot) + q).toFloat()
-
-            begin()
-            set(ShapeRenderer.ShapeType.Filled)
-            color = com.badlogic.gdx.graphics.Color(drawColor.red/255F, drawColor.green/255F, drawColor.blue/255F, .5F)
-            triangle(vert1x, vert1y, vert2x, vert2y, vert3x, vert3y)
-            color = com.badlogic.gdx.graphics.Color(255F, 255F, 255F, 1F)
-            set(ShapeRenderer.ShapeType.Line)
-            end()
-        }
-    }
+    return Vector(cp * cy, cp * sy, -sp)
 }
 
-private val viewMatrix = Array(4) { DoubleArray(4) }
-fun wTest(from: Vector): Double { //Fails at large distances, but still indicates 'accurately' on screen
-    try {
-        val vOut = Vector(0.0, 0.0)
-        val buffer = CSGO.clientDLL.read(ClientOffsets.dwViewMatrix, 4 * 4 * 4)!!
-        var offset = 0
-        for (row in 0..3) for (col in 0..3) {
-            val value = buffer.getFloat(offset.toLong())
-            viewMatrix[row][col] = value.toDouble()
-            offset += 4
-        }
+fun drawIndicator(enemyEnt: Long, drawColor: Color)
+{
+    val dist = curSettings["INDICATOR_DISTANCE"].toDouble() * 10
+    val size = curSettings["INDICATOR_SIZE"].toDouble()
 
-        vOut.x = viewMatrix[0][0] * from.x + viewMatrix[0][1] * from.y + viewMatrix[0][2] * from.z + viewMatrix[0][3]
-        vOut.y = viewMatrix[1][0] * from.x + viewMatrix[1][1] * from.y + viewMatrix[1][2] * from.z + viewMatrix[1][3]
+    val meEyeAngle = me.eyeAngle() //Remove readCached?
 
-        return viewMatrix[3][0] * from.x + viewMatrix[3][1] * from.y + viewMatrix[3][2] * from.z + viewMatrix[3][3]
-    } catch (e: Exception) {
-        e.printStackTrace()
-        return 0.0
+    val tWidth = CSGO.gameWidth
+    val tHeight = CSGO.gameHeight
+
+    val meAbs = me.absPosition()
+    val entAbs = enemyEnt.absPosition()
+
+    val src = Vector(meAbs.x, meAbs.y, 0.0)
+    val dest = Vector(entAbs.x, entAbs.y, 0.0)
+
+    var tmpAng = calcAngle(src, dest, Vector(0.0, 0.0, 0.0))
+    tmpAng = angVec(Vector(-tmpAng.x , 90.0 - tmpAng.y + meEyeAngle.y, -tmpAng.z))
+
+    val triangPos = Vector((tWidth / 2.0) + (-tmpAng.x * dist), (tHeight / 2.0) + (tmpAng.y * dist), 0.0 + (tmpAng.z * dist))
+
+    shapeRenderer.apply {
+        begin()
+        set(ShapeRenderer.ShapeType.Filled)
+        color = com.badlogic.gdx.graphics.Color(drawColor.red / 255F, drawColor.green / 255F, drawColor.blue / 255F, drawColor.alpha.toFloat())
+
+        val rot = -atan2(triangPos.x - tWidth/2.0, triangPos.y - tHeight/2.0)
+
+        //Middle of triangle
+        val triangX = triangPos.x
+        val triangY = triangPos.y
+
+        val sin = size*sin(rot)
+        val cos = size*cos(rot)
+
+        //Rotate triangle
+        val vert1x = (-sin + triangX).toFloat()
+        val vert1y = (cos + triangY).toFloat()
+
+        val vert2x = (-cos + sin + triangX).toFloat()
+        val vert2y = (-sin - cos + triangY).toFloat()
+
+        val vert3x = (cos + sin + triangX).toFloat()
+        val vert3y = (sin - cos + triangY).toFloat()
+
+        triangle(vert1x, vert1y, vert2x, vert2y, vert3x, vert3y)
+
+        color = com.badlogic.gdx.graphics.Color(255F, 255F, 255F, 1F)
+        set(ShapeRenderer.ShapeType.Line)
+        end()
     }
 }

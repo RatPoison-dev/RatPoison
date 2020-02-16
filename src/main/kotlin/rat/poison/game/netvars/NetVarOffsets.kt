@@ -9,8 +9,10 @@ object NetVarOffsets {
 	val vecOrigin by netVar("DT_BaseEntity")
 	val angEyeAngles by netVar("DT_CSPlayer")
 
-	val m_Collision by netVar("DT_BasePlayer", "m_Collision")
-	val m_CollisionGroup by netVar("DT_CSPlayer", "m_CollisionGroup", -48)
+	val m_zoomLevel by netVar("DT_WeaponCSBaseGun", "m_zoomLevel")
+
+	val m_iFOV by netVar("DT_CSPlayer", "m_iFOV")
+	val m_iDefaultFov by netVar("DT_BasePlayer", "m_iDefaultFOV")
 
 	val iCompetitiveRanking by netVar("DT_CSPlayerResource")
 	val iKills by netVar("DT_CSPlayerResource")

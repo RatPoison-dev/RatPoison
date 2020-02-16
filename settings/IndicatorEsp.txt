@@ -2,15 +2,11 @@
 //Draws arrows pointing towards entities on screen
 INDICATOR_ESP = false
 
-//Enable indicator esp for entities on screen
-INDICATOR_SHOW_ONSCREEN = false
+//Size of indicator arrows
+INDICATOR_SIZE = 10.0
 
 //Distance from the center of arrows pointing towards entities off screen
 INDICATOR_DISTANCE = 25.0
-
-//Enable indicator oval
-//Display arrows of entities off screen in a circle or oval
-INDICATOR_OVAL = false
 
 //Enable indicator esp on teammates
 INDICATOR_SHOW_TEAM = false

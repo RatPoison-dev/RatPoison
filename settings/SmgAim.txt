@@ -15,7 +15,7 @@ SMG_FACTOR_RECOIL = true
 
 //Aim Bone
 //Default bone to aim at
-SMG_AIM_BONE = 7
+SMG_AIM_BONE = 6
 
 //Aim FOV
 //Aims at entities inside this value
@@ -24,15 +24,14 @@ SMG_AIM_FOV = 50
 //Aim speed
 //MS delay between aiming steps
 //Lower is faster
-SMG_AIM_SPEED = 1
+SMG_AIM_SPEED = 2
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-SMG_AIM_SMOOTHNESS = 2.0
+SMG_AIM_SMOOTHNESS = 3.5
 
-//Aim strictness (1.0 - 5.0)
-//Lower is more strict (faster, more accurate snapping)
-SMG_AIM_STRICTNESS = 2.0
+//Aim after X shots
+SMG_AIM_AFTER_SHOTS = 0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

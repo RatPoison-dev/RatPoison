@@ -12,6 +12,7 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.hooks.defuseKitEntities
+import rat.poison.scripts.hitMarkerAlpha
 import rat.poison.settings.*
 import rat.poison.strToBool
 import rat.poison.strToColor
@@ -132,13 +133,6 @@ internal fun boxEsp() = App {
 		}
 	}
 
-//	val tmp = weaponEntities
-//	tmp.forEachIndexed { _, entity ->
-//		//val entPos = entity.position()
-//
-//
-//	}
-
 	shapeRenderer.apply sr@{
 		begin()
 
@@ -158,6 +152,8 @@ internal fun boxEsp() = App {
 			this@sr.color = color
 			rect(x.toFloat(), y.toFloat(), w.toFloat(), h.toFloat())
 
+			val detailTextColor = curSettings["BOX_DETAILS_TEXT_COLOR"].strToColor()
+
 			if (type == EntityType.CCSPlayer) {
 				if (curSettings["BOX_ESP_DETAILS"].strToBool()) {
 					textRenderer.apply {
@@ -168,6 +164,7 @@ internal fun boxEsp() = App {
 						////Top
 						var yAdd = 0F
 						val boxDetailsTextTop = StringBuilder()
+						boxDetailsTextTop.append("")
 
 						if (bEspName && bEspNamePos == "T") {
 							boxDetailsTextTop.append("$name\n")
@@ -177,12 +174,23 @@ internal fun boxEsp() = App {
 							boxDetailsTextTop.append(weapon)
 							yAdd += 16F
 						}
-						if (!boxDetailsTextTop.isBlank()) glyph.setText(textRenderer, boxDetailsTextTop, 0, (boxDetailsTextTop as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
-						textRenderer.draw(sb, glyph, x + w / 2F, y + yAdd)
+						if (boxDetailsTextTop.isNotBlank() && boxDetailsTextTop.isNotEmpty()) {
+							glyph.setText(textRenderer,
+									boxDetailsTextTop,
+									0,
+									(boxDetailsTextTop as CharSequence).length,
+									Color(detailTextColor.red / 255F, detailTextColor.green / 255F, detailTextColor.blue / 255F, detailTextColor.alpha.toFloat()),
+									1F,
+									Align.center,
+									false,
+									null)
+							textRenderer.draw(sb, glyph, x + w / 2F, y + yAdd)
+						}
 						////Top
 
 						////Bottom
 						val boxDetailsTextBottom = StringBuilder()
+						boxDetailsTextBottom.append("")
 
 						if (bEspName && bEspNamePos == "B") {
 							boxDetailsTextBottom.append("$name\n")
@@ -190,10 +198,11 @@ internal fun boxEsp() = App {
 						if (bEspWeapon && bEspWeaponPos == "B") {
 							boxDetailsTextBottom.append(weapon)
 						}
-						if (!boxDetailsTextBottom.isBlank()) glyph.setText(textRenderer, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
-						textRenderer.draw(sb, glyph, x + w / 2F, y + h - 4F)
+						if (boxDetailsTextBottom.isNotBlank() && boxDetailsTextBottom.isNotEmpty()) {
+							glyph.setText(textRenderer, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, Color(detailTextColor.red / 255F, detailTextColor.green / 255F, detailTextColor.blue / 255F, detailTextColor.alpha.toFloat()), 1F, Align.center, false, null)
+							textRenderer.draw(sb, glyph, x + w / 2F, y + h - 4F)
+						}
 						////Bottom
-
 						sb.end()
 
 						set(ShapeRenderer.ShapeType.Filled)
@@ -262,7 +271,7 @@ internal fun boxEsp() = App {
 							boxDetailsTextTop.append("DEFUSER")
 							yAdd += 16F
 						}
-						glyph.setText(textRenderer, boxDetailsTextTop, 0, (boxDetailsTextTop as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
+						glyph.setText(textRenderer, boxDetailsTextTop, 0, (boxDetailsTextTop as CharSequence).length, Color(detailTextColor.red / 255F, detailTextColor.green / 255F, detailTextColor.blue / 255F, detailTextColor.alpha.toFloat()), 1F, Align.center, false, null)
 						textRenderer.draw(sb, glyph, x + w / 2F, y + yAdd)
 						////Top
 
@@ -272,7 +281,7 @@ internal fun boxEsp() = App {
 						if (bEspName && bEspNamePos == "B") {
 							boxDetailsTextBottom.append("DEFUSER")
 						}
-						glyph.setText(textRenderer, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
+						glyph.setText(textRenderer, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, Color(detailTextColor.red / 255F, detailTextColor.green / 255F, detailTextColor.blue / 255F, detailTextColor.alpha.toFloat()), 1F, Align.center, false, null)
 						textRenderer.draw(sb, glyph, x + w / 2F, y + h - 4F)
 						////Bottom
 

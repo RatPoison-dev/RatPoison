@@ -29,6 +29,7 @@ import rat.poison.overlay.Overlay
 import rat.poison.scripts.*
 import rat.poison.scripts.aim.*
 import rat.poison.scripts.esp.*
+import rat.poison.scripts.esp.GlowESP.fovChanger
 import rat.poison.settings.*
 import rat.poison.ui.*
 import rat.poison.utils.*
@@ -40,10 +41,10 @@ import kotlin.math.min
 //Bone trig not set up yet
 data class oWeapon(var tOverride: Boolean,      var tFRecoil: Boolean,  var tFlatAim: Boolean,
                    var tPathAim: Boolean,       var tAimBone: Int,      var tAimFov: Int,
-                   var tAimSpeed: Int,          var tAimSmooth: Double, var tAimStrict: Double,
-                   var tPerfectAim: Boolean,    var tPAimFov: Int,      var tPAimChance: Int,
-                   var tScopedOnly: Boolean,    var tBoneTrig: Boolean = false, var tBTrigBone: Int = 0,
-                   var tBTrigAim: Boolean = false,      var tBTrigDelay: Int = 0)
+                   var tAimSpeed: Int,          var tAimSmooth: Double, var tPerfectAim: Boolean,
+                   var tPAimFov: Int,      var tPAimChance: Int,        var tScopedOnly: Boolean,
+                   var tBoneTrig: Boolean = false, var tBTrigBone: Int = 0, var tBTrigAim: Boolean = false,
+                   var tBTrigDelay: Int = 0, var tAimAfterShots: Int = 0)
 
 const val EXPERIMENTAL = false
 const val SETTINGS_DIRECTORY = "settings" //Internal
@@ -111,6 +112,8 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Fast Stop") }; fastStop()
     if (dbg) { println("[DEBUG] Initializing Head Walk (Currently disabled)") }; headWalk()
     if (dbg) { println("[DEBUG] Initializing Adrenaline") }; adrenaline()
+    if (dbg) { println("[DEBUG] Initializing FovChanger") }; fovChanger()
+    if (dbg) { println("[DEBUG] Initializing Door Spam") }; spam()
 
     //Overlay check, not updated?
     if (curSettings["MENU"].strToBool()) {
@@ -423,7 +426,7 @@ fun String.toWeaponClass(): oWeapon {
     var tStr = this
     tStr = tStr.replace("oWeapon(", "").replace(")", "")
     val tSA = tStr.split(", ") //temp String Array
-    return oWeapon(tOverride = tSA.pull(0).strToBool(), tFRecoil = tSA.pull(1).strToBool(), tFlatAim = tSA.pull(2).strToBool(), tPathAim = tSA.pull(3).strToBool(), tAimBone = tSA.pull(4).toInt(), tAimFov = tSA.pull(5).toInt(), tAimSpeed = tSA.pull(6).toInt(), tAimSmooth = tSA.pull(7).toDouble(), tAimStrict = tSA.pull(8).toDouble(), tPerfectAim = tSA.pull(9).strToBool(), tPAimFov = tSA.pull(10).toInt(), tPAimChance = tSA.pull(11).toInt(), tScopedOnly = tSA.pull(12).strToBool())//, tBoneTrig = tSA.pull(13).strToBool(), tBTrigBone = tSA.pull(14).toInt(), tBTrigAim = tSA.pull(15).strToBool(), tBTrigDelay = tSA.pull(16).toInt())
+    return oWeapon(tOverride = tSA.pull(0).strToBool(), tFRecoil = tSA.pull(1).strToBool(), tFlatAim = tSA.pull(2).strToBool(), tPathAim = tSA.pull(3).strToBool(), tAimBone = tSA.pull(4).toInt(), tAimFov = tSA.pull(5).toInt(), tAimSpeed = tSA.pull(6).toInt(), tAimSmooth = tSA.pull(7).toDouble(), tPerfectAim = tSA.pull(8).strToBool(), tPAimFov = tSA.pull(9).toInt(), tPAimChance = tSA.pull(10).toInt(), tScopedOnly = tSA.pull(11).strToBool())//, tBoneTrig = tSA.pull(13).strToBool(), tBTrigBone = tSA.pull(14).toInt(), tBTrigAim = tSA.pull(15).strToBool(), tBTrigDelay = tSA.pull(16).toInt())
 }
 
 private fun List<String>.pull(idx: Int): String {
