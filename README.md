@@ -63,7 +63,7 @@ Credit to Mr. Noad & 2772/Matt for a lot of help throughout this project
 
 **ROADMAP:**
 * Add bomb in fov check for last second bomb Defuse
-* Door spam
+* ~Door spam~
 * Add auto update script (from github)
 
 ---
@@ -79,17 +79,17 @@ Update 1.6
     * Removed OnScreen and Oval options for now
     * Indicator color now uses the selected colors alpha, not just a static 0.5
     * Now properly colors indicator of entity if they are the bomb carrier
-    
+
 * Box Esp
     * Can change box detail text color (instead of just white)
     * Possible crash fix for box esp
-    
+
 * Glow Esp
     * Now properly colors entity if they are the bomb carrier
-    
+
 * Snaplines Esp
     * Added team, bomb, bomb carrier, weapons snaplines and colors
-    
+
 * Possible fix for headwalk activating incorrectly
 * Choosing a target while spraying now activates properly based on your recoil's position rather than crosshair
 * Option to use aim after X shots for rifles and smgs
@@ -100,12 +100,12 @@ Update 1.6
 
 * Added RANDOM aim bone option, picks one of the 4 selectable bones
     * Will hold selected bone until aim is released or target is invalid
-    
-* Added option to disable a vis check when force aiming, to force aim through walls 
+
+* Added option to disable a vis check when force aiming, to force aim through walls
 * Target swap delay now works properly
 * Added FOV Changer (Misc Tab)
     * Options for normal weapons, awp zoom levels (defaulted for clear scope)
-    
+
 * Aim Strictness/Aim Sensitivity is now always your ingame sensitivity + .5 to prevent jittery snapping
 
 * Recoil crosshair adjusts correctly based on FOV
@@ -113,6 +113,10 @@ Update 1.6
 * Default settings have been updated to look legit
 
 * Disabled zeus causing bone trigger and aim crashing
+
+* Added weapon spam (famas/glock/scope spam) and door spam
+
+* Added self nade, throws nade in mid air to damage yourself. mostly used for griefing. (hold nade and press "self nade" in menu)
 
 ---
 

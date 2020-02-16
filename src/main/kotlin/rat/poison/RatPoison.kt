@@ -114,7 +114,7 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Adrenaline") }; adrenaline()
     if (dbg) { println("[DEBUG] Initializing FovChanger") }; fovChanger()
     if (dbg) { println("[DEBUG] Initializing Door Spam") }; doorSpam()
-
+    if (dbg) { println("[DEBUG] Initializing Weapon Spam") }; weaponSpam()
     //Overlay check, not updated?
     if (curSettings["MENU"].strToBool()) {
         println("App Title: " + curSettings["MENU_APP"].replace("\"", ""))

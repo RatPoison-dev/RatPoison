@@ -55,6 +55,12 @@ D_SPAM = false
 //Door spam key
 D_SPAM_KEY = 80
 
+//Enable weapon spam
+W_SPAM = true
+
+//weapon spam key
+W_SPAM_KEY = 79
+
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles head walk on/off
 //Needed to know when to stay on a player's head, and when to be able to walk off
 //Default key is Q

@@ -8,7 +8,10 @@ import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import org.jire.arrowhead.keyPressed
 import rat.poison.*
+import rat.poison.scripts.deletePosition
 import rat.poison.scripts.esp.updateHitsound
+import rat.poison.scripts.selfnade
+import rat.poison.scripts.weaponSpam
 import rat.poison.ui.changed
 import rat.poison.ui.miscTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
@@ -51,6 +54,13 @@ class MiscTab : Tab(false, false) {
     val doorSpam = VisCheckBoxCustom("Door Spam", "D_SPAM")
     var doorSpamKey = VisInputFieldCustom("Door Spam Key", "D_SPAM_KEY")
 
+    val selfnade = VisTextButton("Self Nade")
+
+
+
+    val weaponspam = VisCheckBoxCustom("Weapon Spam", "W_SPAM")
+    var weaponSpamKey = VisInputFieldCustom("Weapon Spam Key", "W_SPAM_KEY")
+
     val enableReducedFlash = VisCheckBoxCustom("Reduced Flash", "ENABLE_REDUCED_FLASH")
     val flashMaxAlpha = VisSliderCustom("Flash Max Alpha", "FLASH_MAX_ALPHA", 1F, 255F, 1F, true, width1 = 200F, width2 = 250F)
 
@@ -59,6 +69,9 @@ class MiscTab : Tab(false, false) {
     val hitSoundVolume = VisSliderCustom("Hitsound Volume", "HITSOUND_VOLUME", .1F, 1F, .1F, false, width1 = 200F, width2 = 250F)
 
     init {
+        selfnade.changed { _, _ ->
+            selfnade()
+        }
         aimStraferSelectBox.setItems("Same", "Opposite")
         aimStraferSelectBox.changed { _, _ ->
             if (aimStraferSelectBox.selected == "Same") {
@@ -67,7 +80,6 @@ class MiscTab : Tab(false, false) {
                 curSettings["AIM_STRAFER_TYPE"] = 0
             }
         }
-
         val aimStraferTable = VisTable()
         aimStraferTable.add(aimStrafer).left()
         aimStraferTable.add(aimStraferSelectBox).padLeft(200F - aimStrafer.width).left()
@@ -149,6 +161,11 @@ class MiscTab : Tab(false, false) {
         table.add(doorSpam).left().row()
         table.add(doorSpamKey).left().row()
         table.addSeparator()
+        table.add(weaponspam).left().row()
+        table.add(weaponSpamKey).left().row()
+        table.addSeparator()
+        table.add(selfnade).left().row()
+        table.addSeparator()
         table.add(enableReducedFlash).left().row()
         table.add(flashMaxAlpha).left().row()
         table.addSeparator()
@@ -187,6 +204,8 @@ fun miscTabUpdate() {
         aimStraferStrictness.update()
         doorSpam.update()
         doorSpamKey.update()
+        weaponspam.update()
+        weaponSpamKey.update()
         bombTimer.update()
         bombTimerEnableMenu.update()
         bombTimerEnableBars.update()
