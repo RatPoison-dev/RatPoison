@@ -48,8 +48,8 @@ class MiscTab : Tab(false, false) {
     val headWalk = VisCheckBox("Head Walk")
     val lsBomb = VisCheckBox("Perfect Bomb Defuse")
 
-    val doorspam = VisCheckBox("Door Spam")
-    var doorspamkey = VisInputFieldCustom("Door Spam Key", "D_SPAM_KEY")
+    val doorSpam = VisCheckBoxCustom("Door Spam", "D_SPAM")
+    var doorSpamKey = VisInputFieldCustom("Door Spam Key", "D_SPAM_KEY")
 
     val enableReducedFlash = VisCheckBoxCustom("Reduced Flash", "ENABLE_REDUCED_FLASH")
     val flashMaxAlpha = VisSliderCustom("Flash Max Alpha", "FLASH_MAX_ALPHA", 1F, 255F, 1F, true, width1 = 200F, width2 = 250F)
@@ -89,16 +89,6 @@ class MiscTab : Tab(false, false) {
             true
         }
         lsBombTable.add(lsBomb).left()
-
-        val dspamtable = VisTable()
-        doorspam.isChecked = curSettings["D_SPAM"].strToBool()
-        doorspam.changed { _, _ ->
-            curSettings["D_SPAM"] = doorspam.isChecked.boolToStr()
-            true
-        }
-        doorspam.add(doorspam).left()
-        doorspam.add(doorspamkey).left()
-
 
         //Create Hit Sound Toggle
         if (curSettings["ENABLE_HITSOUND"].strToBool()) hitSoundCheckBox.toggle()
@@ -156,7 +146,8 @@ class MiscTab : Tab(false, false) {
         table.add(headWalkTable).left().row()
         table.add(lsBombTable).left().row()
         table.addSeparator()
-        table.add(dspamtable).left().row()
+        table.add(doorSpam).left().row()
+        table.add(doorSpamKey).left().row()
         table.addSeparator()
         table.add(enableReducedFlash).left().row()
         table.add(flashMaxAlpha).left().row()
@@ -194,6 +185,8 @@ fun miscTabUpdate() {
             else -> "Opposite"
         }
         aimStraferStrictness.update()
+        doorSpam.update()
+        doorSpamKey.update()
         bombTimer.update()
         bombTimerEnableMenu.update()
         bombTimerEnableBars.update()

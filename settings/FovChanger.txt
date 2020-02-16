@@ -2,7 +2,7 @@
 ENABLE_FOV_CHANGER = true
 
 //Default FOV for each gun
-FOV_DEFAULT = 120
+FOV_DEFAULT = 90
 
 //Default FOV for snipers
 FOV_SNIPER_DEFAULT = 90

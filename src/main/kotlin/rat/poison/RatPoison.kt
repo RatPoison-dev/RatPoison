@@ -113,7 +113,7 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Head Walk (Currently disabled)") }; headWalk()
     if (dbg) { println("[DEBUG] Initializing Adrenaline") }; adrenaline()
     if (dbg) { println("[DEBUG] Initializing FovChanger") }; fovChanger()
-    if (dbg) { println("[DEBUG] Initializing Door Spam") }; spam()
+    if (dbg) { println("[DEBUG] Initializing Door Spam") }; doorSpam()
 
     //Overlay check, not updated?
     if (curSettings["MENU"].strToBool()) {
