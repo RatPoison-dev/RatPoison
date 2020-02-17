@@ -2,11 +2,7 @@ package rat.poison.scripts.esp.GlowESP
 
 import rat.poison.*
 import rat.poison.game.*
-import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
-import rat.poison.game.netvars.NetVarOffsets.m_iDefaultFov
-import rat.poison.game.netvars.NetVarOffsets.m_iFOV
-import rat.poison.game.netvars.NetVarOffsets.m_zoomLevel
 import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.target
 import rat.poison.scripts.esp.glow

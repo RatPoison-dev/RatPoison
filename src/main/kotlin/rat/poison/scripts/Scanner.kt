@@ -1,10 +1,8 @@
 package rat.poison.scripts
 
 import rat.poison.SETTINGS_DIRECTORY
-import rat.poison.curSettings
 import rat.poison.loadSettingsFromFiles
 import rat.poison.scripts.esp.disableAllEsp
-import rat.poison.strToBool
 import java.io.File
 import java.io.FileNotFoundException
 import java.nio.file.Files

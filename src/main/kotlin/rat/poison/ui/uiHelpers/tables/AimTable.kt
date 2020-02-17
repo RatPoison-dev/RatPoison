@@ -67,7 +67,8 @@ class AimTable: VisTable(true) {
                     "\nGitHub: https://github.com/TheFuckingRat/RatPoison" +
                     "\n\nUpdate 1.6 removes aim strictness from aim settings" +
                     "\nOlder configs shouldn't break, but your aim settings" +
-                    "\nmight need to be updated.")
+                    "\nmight need to be updated." +
+                    "\n\n Official discord server: https://discord.gg/XWUjZs8")
             dialog.setPosition(CSGO.gameWidth / 4F - dialog.width / 2F, CSGO.gameHeight.toFloat() / 2F)
             App.menuStage.addActor(dialog)
         }

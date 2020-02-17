@@ -1,5 +1,5 @@
 //Enable Fov Changer
-ENABLE_FOV_CHANGER = true
+ENABLE_FOV_CHANGER = false
 
 //Default FOV for each gun
 FOV_DEFAULT = 90

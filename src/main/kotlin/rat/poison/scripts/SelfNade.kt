@@ -1,23 +1,16 @@
 package rat.poison.scripts
 
-import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
-import rat.poison.game.CSGO
 import rat.poison.game.angle
 import rat.poison.game.clientState
-import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.setAngle
-import rat.poison.overlayMenuKey
 import rat.poison.robot
-import rat.poison.strToBool
-import rat.poison.toInt
 
 import rat.poison.utils.normalize
 import java.awt.event.KeyEvent
 import java.awt.event.MouseEvent
 
-
-fun selfnade() {
+fun selfNade() {
     Thread(Runnable {
         val angle = clientState.angle()
         angle.apply {
@@ -36,4 +29,4 @@ fun selfnade() {
         Thread.sleep(2000)
         robot.keyRelease(KeyEvent.VK_CONTROL)
     }).start()
-    }
+}

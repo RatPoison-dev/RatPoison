@@ -118,6 +118,10 @@ Update 1.6
 
 * Added self nade, throws nade in mid air to damage yourself. mostly used for griefing. (hold nade and press "self nade" in menu)
 
+* Misc tab reformatted for testing
+
+* Added discord link to menu
+
 ---
 
 **Grenade Helper**

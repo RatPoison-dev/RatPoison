@@ -37,6 +37,7 @@ class OptionsTab : Tab(false, false) {
     val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F)
     val menuKeyField = VisValidatableTextField(Validators.FLOATS)
     val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
+    val discordLink = LinkLabel("Join Discord", "https://discord.gg/XWUjZs8")
 
     init {
         //Create UIAlpha Slider
@@ -128,6 +129,9 @@ class OptionsTab : Tab(false, false) {
         table.add(sldTable).row()
 
         table.add(saveCurConfig).width(340F).row()
+
+        table.addSeparator()
+        table.add(discordLink)
     }
 
     override fun getContentTable(): Table? {

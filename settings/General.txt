@@ -56,7 +56,7 @@ D_SPAM = false
 D_SPAM_KEY = 80
 
 //Enable weapon spam
-W_SPAM = true
+W_SPAM = false
 
 //weapon spam key
 W_SPAM_KEY = 79
