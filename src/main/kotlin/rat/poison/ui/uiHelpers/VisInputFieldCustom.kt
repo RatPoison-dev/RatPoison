@@ -15,11 +15,14 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
     private val keyField = VisValidatableTextField(Validators.INTEGERS)
     private val linkLabel = LinkLabel("?", "http://cherrytree.at/misc/vk.htm")
 
+    var value = 0
+
     init {
         update()
         changed { _, _ ->
             if (keyField.text.toIntOrNull() != null) {
                 curSettings[variableName] = keyField.text.toInt().toString()
+                value = keyField.text.toInt()
             }
             false
         }
@@ -33,6 +36,7 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
 
     fun update() {
         keyField.text = curSettings[variableName]
+        value = keyField.text.toInt()
     }
 
     fun disable(bool: Boolean, col: Color) {

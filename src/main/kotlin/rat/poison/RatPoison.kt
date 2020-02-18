@@ -374,7 +374,7 @@ object App : ApplicationAdapter() {
 
                 //Menu Key
                 overlayMenuKey.update()
-                if (overlayMenuKey.justBecomeTrue) {
+                if (overlayMenuKey.justBecameTrue) {
                     MENUTOG = !MENUTOG
                     overlay.clickThrough = !MENUTOG
 
@@ -386,7 +386,7 @@ object App : ApplicationAdapter() {
 
                 //Aim Toggle Key
                 toggleAimKey.update()
-                if (toggleAimKey.justBecomeTrue) {
+                if (toggleAimKey.justBecameTrue) {
                     aimTab.tAim.enableAim.isChecked = !aimTab.tAim.enableAim.isChecked
                 }
 

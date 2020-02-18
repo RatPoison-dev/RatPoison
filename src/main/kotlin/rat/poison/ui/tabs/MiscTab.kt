@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import org.jire.arrowhead.keyPressed
 import rat.poison.*
 import rat.poison.scripts.esp.updateHitsound
 import rat.poison.ui.changed
@@ -15,6 +16,8 @@ import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import java.io.File
 import rat.poison.scripts.selfNade
+import rat.poison.scripts.weaponSpamToggleKey
+import rat.poison.utils.ObservableBoolean
 
 class MiscTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -59,6 +62,11 @@ class MiscTab : Tab(false, false) {
     init {
         selfNade.changed { _, _ ->
             selfNade()
+        }
+
+        weaponSpamKey.changed { _, _ ->
+            weaponSpamToggleKey = ObservableBoolean({keyPressed(weaponSpamKey.value)})
+            true
         }
 
         //Aim Strafer Table
