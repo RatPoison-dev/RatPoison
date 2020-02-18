@@ -14,7 +14,7 @@ import rat.poison.utils.every
 import java.awt.event.MouseEvent
 import java.awt.event.KeyEvent
 
-fun weaponSpam() = every (50) {
+fun weaponSpam() = every (20) {
     if (!curSettings["W_SPAM"].strToBool()) return@every
 
     updateCursorEnable()
@@ -29,4 +29,3 @@ fun weaponSpam() = every (50) {
         }).start()
     }
 }
-
