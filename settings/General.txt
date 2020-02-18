@@ -1,4 +1,4 @@
-//Enabe DEBUG in cmd
+//Enabe DEBUG
 DEBUG = false
 
 //Enable the overlay, menu

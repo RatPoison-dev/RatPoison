@@ -13,14 +13,13 @@ import com.badlogic.gdx.graphics.GL20.GL_FALSE
 import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.VisUI
-import com.kotcrab.vis.ui.widget.VisTable
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.jire.arrowhead.keyPressed
 import org.lwjgl.glfw.GLFW.*
-import org.lwjgl.opengl.GL
 import rat.poison.game.CSGO
 import rat.poison.game.updateViewMatrix
 import rat.poison.interfaces.*
@@ -37,6 +36,13 @@ import java.awt.Robot
 import java.io.*
 import kotlin.math.max
 import kotlin.math.min
+import com.sun.management.OperatingSystemMXBean
+import rat.poison.utils.extensions.appendHumanReadableSize
+import rat.poison.utils.extensions.humanReadableSize
+import java.lang.management.ManagementFactory
+import rat.poison.utils.extensions.roundNDecimals
+import java.util.concurrent.TimeUnit
+import kotlin.system.measureNanoTime
 
 //Bone trig not set up yet
 data class oWeapon(var tOverride: Boolean,      var tFRecoil: Boolean,  var tFlatAim: Boolean,
@@ -200,6 +206,11 @@ var opened = false
 var overlayMenuKey = ObservableBoolean({keyPressed(1)})
 var toggleAimKey = ObservableBoolean({keyPressed(1)})
 
+var glowTime = 0L
+var appTime = 0L
+var menuTime = 0L
+var overlayTime = 0L
+
 object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
@@ -216,8 +227,10 @@ object App : ApplicationAdapter() {
     lateinit var uiBombWindow: UIBombTimer
     lateinit var uiSpecList: UISpectatorList
     lateinit var uiAimOverridenWeapons: UIAimOverridenWeapons
+    private val sbText = StringBuilder()
 
     var haveTarget = false
+    var timer = 0
 
     override fun create() {
         overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
@@ -259,6 +272,7 @@ object App : ApplicationAdapter() {
     }
 
     override fun render() {
+        timer++
         sync(curSettings["OPENGL_FPS"].toInt())
 
         if (VisUI.isLoaded()) {
@@ -268,36 +282,89 @@ object App : ApplicationAdapter() {
 
                     if (!menuStage.root.isVisible) return
 
-                    if (curSettings["ENABLE_BOMB_TIMER"].strToBool() && curSettings["BOMB_TIMER_MENU"].strToBool()) {
-                        bombStage.act(Gdx.graphics.deltaTime)
-                        bombStage.draw()
-                    }
+                    overlayTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
+                        menuTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
+                            if (curSettings["ENABLE_BOMB_TIMER"].strToBool() && curSettings["BOMB_TIMER_MENU"].strToBool()) {
+                                bombStage.act(Gdx.graphics.deltaTime)
+                                bombStage.draw()
+                            }
 
-                    if (curSettings["SPECTATOR_LIST"].strToBool()) {
-                        specListStage.act(Gdx.graphics.deltaTime)
-                        specListStage.draw()
-                    }
+                            if (curSettings["SPECTATOR_LIST"].strToBool()) {
+                                specListStage.act(Gdx.graphics.deltaTime)
+                                specListStage.draw()
+                            }
 
-                    if (MENUTOG) {
-                        if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
-                            aimOverrideStage.act(Gdx.graphics.deltaTime)
-                            aimOverrideStage.draw()
+                            if (MENUTOG) {
+                                if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
+                                    aimOverrideStage.act(Gdx.graphics.deltaTime)
+                                    aimOverrideStage.draw()
+                                }
+                                menuStage.act(Gdx.graphics.deltaTime)
+                                menuStage.draw()
+                            }
+                        }, TimeUnit.NANOSECONDS)
+
+                        glEnable(GL20.GL_BLEND)
+                        glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
+                        glClearColor(0F, 0F, 0F, 0F)
+                        sb.projectionMatrix = menuStage.camera.combined
+                        shapeRenderer.projectionMatrix = menuStage.camera.combined
+                        updateViewMatrix()
+                        appTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
+                            for (i in 0 until bodies.size) {
+                                bodies[i]()
+                            }
+                        }, TimeUnit.NANOSECONDS)
+                        glDisable(GL20.GL_BLEND)
+                        glFinish()
+                    }, TimeUnit.NANOSECONDS)
+
+                    if (curSettings["DEBUG"].strToBool()) { //Draw Debug
+                        val osBean = ManagementFactory.getOperatingSystemMXBean() as OperatingSystemMXBean
+                        val runtime = Runtime.getRuntime()
+
+                        val totalMem = runtime.totalMemory()
+                        val freeMem = runtime.freeMemory()
+                        val usedMem = totalMem - freeMem
+
+                        val totalPhysMem = osBean.totalPhysicalMemorySize
+                        val freePhysMem = osBean.freePhysicalMemorySize
+
+                        val processLoad = osBean.processCpuLoad
+                        val systemLoad = osBean.systemCpuLoad
+
+                        //Limit updates
+                        if (timer >= curSettings["OPENGL_FPS"].toInt()/4) {
+                            sbText.clear()
+                            sbText.append("Total physical mem: ").appendHumanReadableSize(totalPhysMem)
+                            sbText.append("\nFree physical mem: ").appendHumanReadableSize(freePhysMem)
+
+                            sbText.append("\nTotal allocated mem: ").appendHumanReadableSize(totalMem)
+                            sbText.append("\nFree allocated mem: ").appendHumanReadableSize(freeMem)
+                            sbText.append("\nUsed allocated mem: ").appendHumanReadableSize(usedMem)
+
+                            sbText.append("\nProcess load: ").append((processLoad.toFloat() * 100F).roundNDecimals(2)).append("%")
+                            sbText.append("\nSystem load: ").append((systemLoad.toFloat() * 100F).roundNDecimals(2)).append("%")
+
+                            sbText.append("\n\nOverlay took: ").append((overlayTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
+                            sbText.append("\n   Menu took: ").append((menuTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
+                            sbText.append("\n   Apps took: ").append((appTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
+                            sbText.append("\n       Glow took: ").append((glowTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
+                            timer = 0
                         }
-                        menuStage.act(Gdx.graphics.deltaTime)
-                        menuStage.draw()
-                    }
 
-                    glEnable(GL20.GL_BLEND)
-                    glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
-                    glClearColor(0F, 0F, 0F, 0F)
-                    sb.projectionMatrix = menuStage.camera.combined
-                    shapeRenderer.projectionMatrix = menuStage.camera.combined
-                    updateViewMatrix()
-                    for (i in 0 until bodies.size) {
-                        bodies[i]()
+
+                        textRenderer.apply {
+                            val glyph = GlyphLayout()
+
+                            sb.begin()
+
+                            glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, Color.YELLOW, 1F, Align.left, false, null)
+                            textRenderer.draw(sb, glyph, CSGO.gameWidth/3F, CSGO.gameHeight-100F)
+
+                            sb.end()
+                        }
                     }
-                    glDisable(GL20.GL_BLEND)
-                    glFinish()
                 }
 
                 //Menu Key

@@ -14,7 +14,7 @@ fun selfNade() {
     Thread(Runnable {
         val angle = clientState.angle()
         angle.apply {
-            x = (-89).toDouble()
+            x = -89.0
             normalize()
         }
         clientState.setAngle(angle)

@@ -66,16 +66,16 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	selection: {name: t-dot, color: t-highlight-dark },
 	select-up: {name: t-select-up, color: t-light },
 	separator: {name: t-dot, color: t-light },
-	separator-menu: {name: t-dot, color: t-medium },
+	separator-menu: {name: t-dot, color: t-light }, //Was t-medium
 	slider: {name: t-hslider, color: t-medium-dark },
 	slider-knob: {name: t-base, color: t-medium },
 	slider-knob-disabled: {name: t-base, color: t-medium-dark },
 	slider-knob-down: {name: t-base, color: t-highlight },
 	slider-knob-over: {name: t-base, color: t-light },
 	slider-vertical: {name: t-vslider, color: t-medium-dark },
-	splitpane: {name: t-vslider, color: t-medium-dark },
+	splitpane: {name: t-vslider, color: t-light }, //Was t-medium-dark
 	splitpane-over: {name: t-vslider, color: t-light },
-	splitpane-vertical: {name: t-hslider, color: t-medium-dark },
+	splitpane-vertical: {name: t-hslider, color: t-light }, //Was t-medium-dark
 	splitpane-vertical-over: {name: t-hslider, color: t-light },
 	sub-menu: {name: t-tree-plus, color: t-light },
 	textfield: {name: t-base, color: t-medium },

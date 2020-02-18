@@ -120,6 +120,8 @@ Update 1.6
 
 * Misc tab reformatted for testing
 
+* Debug now shows misc information on screen
+
 * Added discord link to menu
 
 ---
