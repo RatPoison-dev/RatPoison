@@ -37,6 +37,7 @@ class OptionsTab : Tab(false, false) {
     val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F)
     val menuKeyField = VisValidatableTextField(Validators.FLOATS)
     val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
+    val debug = VisCheckBoxCustom("Debug", "DEBUG")
     val discordLink = LinkLabel("Join Discord", "https://discord.gg/XWUjZs8")
 
     init {
@@ -117,10 +118,16 @@ class OptionsTab : Tab(false, false) {
         sldTable.add(loadButton).padLeft(20F).padRight(20F).width(100F)
         sldTable.add(deleteButton).width(100F)
 
+        debug.changed { _, _ ->
+            dbg = debug.isChecked
+            true
+        }
+
         table.add(menuKey).padLeft(25F).left().row()
         table.add(menuAlpha).row()
         table.add(oglFPS).row()
         table.add(stayFocused).padLeft(25F).left().row()
+        table.add(debug).padLeft(25F).left().row()
 
         table.addSeparator()
 

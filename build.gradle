@@ -82,7 +82,8 @@ task RatPoison {
 		set path="%JAVA_HOME%";%path%
 		cd /d "%~dp0"
 		title $name
-		java -Xmx512m -Xms512m -jar "$jarName" """.getBytes())
+		java -Xmx512m -Xms512m -jar "$jarName" 
+		pause""".getBytes())
 
 		def dirSettings = file(new File(dir, "settings"))
 		dirSettings.mkdirs()

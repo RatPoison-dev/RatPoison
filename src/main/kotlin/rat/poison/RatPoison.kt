@@ -59,7 +59,7 @@ var settingsLoaded = false
 
 val curSettings = Settings()
 
-var dbg = false
+var dbg: Boolean = false
 
 val robot = Robot().apply { this.autoDelay = 0 }
 
@@ -206,6 +206,7 @@ var opened = false
 var overlayMenuKey = ObservableBoolean({keyPressed(1)})
 var toggleAimKey = ObservableBoolean({keyPressed(1)})
 
+var syncTime = 0L
 var glowTime = 0L
 var appTime = 0L
 var menuTime = 0L
@@ -229,6 +230,7 @@ object App : ApplicationAdapter() {
     lateinit var uiAimOverridenWeapons: UIAimOverridenWeapons
     private val sbText = StringBuilder()
 
+    private val osBean = ManagementFactory.getOperatingSystemMXBean() as OperatingSystemMXBean
     var haveTarget = false
     var timer = 0
 
@@ -273,7 +275,10 @@ object App : ApplicationAdapter() {
 
     override fun render() {
         timer++
-        sync(curSettings["OPENGL_FPS"].toInt())
+
+        syncTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
+            sync(curSettings["OPENGL_FPS"].toInt())
+        }, TimeUnit.NANOSECONDS)
 
         if (VisUI.isLoaded()) {
             if (!Thread.interrupted()) {
@@ -320,21 +325,20 @@ object App : ApplicationAdapter() {
                     }, TimeUnit.NANOSECONDS)
 
                     if (curSettings["DEBUG"].strToBool()) { //Draw Debug
-                        val osBean = ManagementFactory.getOperatingSystemMXBean() as OperatingSystemMXBean
-                        val runtime = Runtime.getRuntime()
-
-                        val totalMem = runtime.totalMemory()
-                        val freeMem = runtime.freeMemory()
-                        val usedMem = totalMem - freeMem
-
-                        val totalPhysMem = osBean.totalPhysicalMemorySize
-                        val freePhysMem = osBean.freePhysicalMemorySize
-
-                        val processLoad = osBean.processCpuLoad
-                        val systemLoad = osBean.systemCpuLoad
-
                         //Limit updates
                         if (timer >= curSettings["OPENGL_FPS"].toInt()/4) {
+                            val runtime = Runtime.getRuntime()
+
+                            val totalMem = runtime.totalMemory()
+                            val freeMem = runtime.freeMemory()
+                            val usedMem = totalMem - freeMem
+
+                            val totalPhysMem = osBean.totalPhysicalMemorySize
+                            val freePhysMem = osBean.freePhysicalMemorySize
+
+                            val processLoad = osBean.processCpuLoad
+                            val systemLoad = osBean.systemCpuLoad
+
                             sbText.clear()
                             sbText.append("Total physical mem: ").appendHumanReadableSize(totalPhysMem)
                             sbText.append("\nFree physical mem: ").appendHumanReadableSize(freePhysMem)
@@ -346,7 +350,8 @@ object App : ApplicationAdapter() {
                             sbText.append("\nProcess load: ").append((processLoad.toFloat() * 100F).roundNDecimals(2)).append("%")
                             sbText.append("\nSystem load: ").append((systemLoad.toFloat() * 100F).roundNDecimals(2)).append("%")
 
-                            sbText.append("\n\nOverlay took: ").append((overlayTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
+                            sbText.append("\n\nSync took: ").append((syncTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
+                            sbText.append("\nOverlay took: ").append((overlayTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
                             sbText.append("\n   Menu took: ").append((menuTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
                             sbText.append("\n   Apps took: ").append((appTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
                             sbText.append("\n       Glow took: ").append((glowTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
