@@ -1,0 +1,11 @@
+//Enable footstep visuals
+ENABLE_FOOTSTEPS = false
+
+//Footstep type (1 = text, 2 = circle, anything else = circle)
+FOOTSTEP_TYPE = 1
+
+//Footstep update timer (in relation to overlay fps)
+FOOTSTEP_UPDATE = 30
+
+//Footstep time to live
+FOOTSTEP_TTL = 60

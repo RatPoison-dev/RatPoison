@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.*
 import com.badlogic.gdx.graphics.GL20.GL_FALSE
 import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.VisUI
@@ -505,4 +506,22 @@ private fun List<String>.pull(idx: Int): String {
     val tStr = this[idx].replace(" ", "") //Remove spaces
     val split = tStr.split("=")
     return split[1]
+}
+
+//Matrix 4 uses column-major order
+fun Array<DoubleArray>.toMatrix4(): Matrix4 {
+    val input = this
+    val mat4 = Matrix4()
+    val fArr = FloatArray(16)
+
+    var itr = 0
+    for (row in 0..3) {
+        for (col in 0..3) {
+            fArr[itr] = input[col][row].toFloat()
+            itr++
+        }
+    }
+
+    mat4.set(fArr)
+    return mat4
 }

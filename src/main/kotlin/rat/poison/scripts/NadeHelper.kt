@@ -249,21 +249,3 @@ fun deletePosition() {
         nadeHelperArrayList.removeAt(removePos)
     }
 }
-
-//Matrix 4 uses column-major order
-private fun Array<DoubleArray>.toMatrix4(): Matrix4 {
-    val input = this
-    val mat4 = Matrix4()
-    val fArr = FloatArray(16)
-
-    var itr = 0
-    for (row in 0..3) {
-        for (col in 0..3) {
-            fArr[itr] = input[col][row].toFloat()
-            itr++
-        }
-    }
-
-    mat4.set(fArr)
-    return mat4
-}

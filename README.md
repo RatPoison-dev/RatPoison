@@ -122,6 +122,13 @@ Update 1.6
 
 * Debug now shows misc information on screen
 
+* Skeleton is now lumped in with box visuals
+
+* Added step esp
+    * Update timer
+    * Step TTL (Time to live)
+    * As Text (Step) or a typical circle
+
 * Added discord link to menu
 
 ---

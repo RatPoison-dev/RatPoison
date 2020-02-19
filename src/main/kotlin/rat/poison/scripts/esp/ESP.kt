@@ -19,6 +19,7 @@ fun esp() {
 		if (dbg) { println("[DEBUG] Initializing Box ESP") }; boxEsp()
 		if (dbg) { println("[DEBUG] Initializing Skeleton ESP") }; skeletonEsp()
 		if (dbg) { println("[DEBUG] Initializing Snap Lines") }; snapLines()
+		if (dbg) { println("[DEBUG] Initializing Footstep ESP") }; footStepEsp()
 	} else {
 		if (dbg) { println("[DEBUG] Menu disabled, using alternate glow esp") }; glowEspEvery()
 	}

@@ -21,8 +21,8 @@ val glowEspTab = GlowEspTab()
 val chamsEspTab = ChamsEspTab()
 val indicatorEspTab = IndicatorEspTab()
 val boxEspTab = BoxEspTab()
-val skeletonEspTab = SkeletonEspTab()
 val snaplinesEspTab = SnaplinesEspTab()
+val footStepsEspTab = FootstepsEspTab()
 val hitMarkerTab = HitMarkerTab()
 val nadesTab = NadesVT()
 
@@ -44,8 +44,8 @@ class VisualsTab : Tab(false, false) {
         espTabbedPane.add(chamsEspTab)
         espTabbedPane.add(indicatorEspTab)
         espTabbedPane.add(boxEspTab)
-        espTabbedPane.add(skeletonEspTab)
         espTabbedPane.add(snaplinesEspTab)
+        espTabbedPane.add(footStepsEspTab)
         espTabbedPane.add(hitMarkerTab)
         espTabbedPane.add(nadesTab)
 
@@ -84,11 +84,11 @@ class VisualsTab : Tab(false, false) {
                     boxEspTab -> {
                         espTabbedPaneContent.add(boxEspTab.contentTable).left().colspan(2).row()
                     }
-                    skeletonEspTab -> {
-                        espTabbedPaneContent.add(skeletonEspTab.contentTable).left().colspan(2).row()
-                    }
                     snaplinesEspTab -> {
                         espTabbedPaneContent.add(snaplinesEspTab.contentTable).left().colspan(2).row()
+                    }
+                    footStepsEspTab -> {
+                        espTabbedPaneContent.add(footStepsEspTab.contentTable).left().colspan(2).row()
                     }
                     hitMarkerTab -> {
                         espTabbedPaneContent.add(hitMarkerTab.contentTable).left().colspan(2).row()
@@ -150,8 +150,8 @@ fun updateDisableEsp() {
         espTabbedPane.disableTab(chamsEspTab, bool)
         espTabbedPane.disableTab(indicatorEspTab, bool)
         espTabbedPane.disableTab(boxEspTab, bool)
-        espTabbedPane.disableTab(skeletonEspTab, bool)
         espTabbedPane.disableTab(snaplinesEspTab, bool)
+        espTabbedPane.disableTab(footStepsEspTab, bool)
         espTabbedPane.disableTab(hitMarkerTab, bool)
         espTabbedPane.disableTab(nadesTab, bool)
 
@@ -211,16 +211,15 @@ fun updateDisableEsp() {
         boxEspTab.boxEspNamePos.isDisabled = bool
         boxEspTab.boxEspWeapon.disable(bool)
         boxEspTab.boxEspWeaponPos.isDisabled = bool
-        boxEspTab.showTeam.disable(bool)
-        boxEspTab.showEnemies.disable(bool)
+        boxEspTab.skeletonEsp.disable(bool)
+        boxEspTab.showTeamSkeleton.disable(bool)
+        boxEspTab.showEnemiesSkeleton.disable(bool)
+        boxEspTab.showTeamBox.disable(bool)
+        boxEspTab.showEnemiesBox.disable(bool)
         boxEspTab.showDefusers.disable(bool)
         boxEspTab.boxTeamColor.disable(bool)
         boxEspTab.boxEnemyColor.disable(bool)
         boxEspTab.boxDefuserColor.disable(bool)
-
-        skeletonEspTab.skeletonEsp.disable(bool)
-        skeletonEspTab.showTeam.disable(bool)
-        skeletonEspTab.showEnemies.disable(bool)
 
         snaplinesEspTab.enableSnaplines.disable(bool)
         snaplinesEspTab.enemySnaplines.disable(bool)
@@ -233,6 +232,11 @@ fun updateDisableEsp() {
         snaplinesEspTab.bombSnaplinesColor.disable(bool)
         snaplinesEspTab.bombCarrierSnaplines.disable(bool)
         snaplinesEspTab.bombCarrierSnaplinesColor.disable(bool)
+
+        footStepsEspTab.enableFootSteps.disable(bool)
+        footStepsEspTab.footStepType.isDisabled = bool
+        footStepsEspTab.footStepUpdateTimer.disable(bool, col)
+        footStepsEspTab.footStepTTL.disable(bool, col)
 
         hitMarkerTab.hitMarker.disable(bool)
         hitMarkerTab.hitMarkerOutline.disable(bool)

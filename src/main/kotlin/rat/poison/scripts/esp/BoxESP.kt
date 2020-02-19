@@ -28,9 +28,18 @@ private val vBot = Vector(0.0, 0.0, 0.0)
 
 private val boxes = Array(128) { Box() }
 
+private data class Box(var x: Int = 0, var y: Int = 0,
+					   var w: Int = 0, var h: Int = 0,
+					   var color: Color = Color.WHITE,
+					   var health: Float = 100F,
+					   var armor: Float = 100F,
+					   var weapon: String = "",
+					   var name: String = "",
+					   var type: EntityType = EntityType.NULL)
+
 private var currentIdx = 0
 
-internal fun boxEsp() = App {
+fun boxEsp() = App {
 	if (!curSettings["ENABLE_BOX_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
 
 	val meTeam = me.team()
@@ -297,12 +306,3 @@ internal fun boxEsp() = App {
 
 	currentIdx = 0
 }
-
-private data class Box(var x: Int = 0, var y: Int = 0,
-					   var w: Int = 0, var h: Int = 0,
-					   var color: Color = Color.WHITE,
-					   var health: Float = 100F,
-					   var armor: Float = 100F,
-					   var weapon: String = "",
-					   var name: String = "",
-					   var type: EntityType = EntityType.NULL)
