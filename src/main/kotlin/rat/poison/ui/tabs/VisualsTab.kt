@@ -237,6 +237,10 @@ fun updateDisableEsp() {
         footStepsEspTab.footStepType.isDisabled = bool
         footStepsEspTab.footStepUpdateTimer.disable(bool, col)
         footStepsEspTab.footStepTTL.disable(bool, col)
+        footStepsEspTab.footStepTeamBox.disable(bool)
+        footStepsEspTab.footStepTeamColor.disable(bool)
+        footStepsEspTab.footStepEnemyBox.disable(bool)
+        footStepsEspTab.footStepEnemyColor.disable(bool)
 
         hitMarkerTab.hitMarker.disable(bool)
         hitMarkerTab.hitMarkerOutline.disable(bool)

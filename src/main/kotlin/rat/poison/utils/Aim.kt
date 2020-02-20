@@ -43,7 +43,7 @@ fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double) {
 	clientState.setAngle(dAng)
 }
 
-fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect: Boolean = false) {
+fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect: Boolean = false, checkOnScreen: Boolean = true) {
 	if (!destinationAngle.isValid()) { return }
 
 	val delta = delta.get()
@@ -62,8 +62,6 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 	var sens = GAME_SENSITIVITY + .5
 	if (perfect) sens = 1.0
 
-	//println(sens)
-
 	val dx = round(delta.x / (sens * GAME_PITCH))
 	val dy = round(-delta.y / (sens * GAME_YAW))
 
@@ -74,7 +72,11 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 	target.x = (mousePos.x + dx).toInt()
 	target.y = (mousePos.y + dy).toInt()
 
-	if (target.x <= 0 || target.x >= gameX + gameWidth || target.y <= 0 || target.y >= gameY + gameHeight) { return }
+	if (checkOnScreen) {
+		if (target.x <= 0 || target.x >= gameX + gameWidth || target.y <= 0 || target.y >= gameY + gameHeight) {
+			return
+		}
+	}
 
 	if (perfect) {
 		writeAim(currentAngle, destinationAngle, 1.0)

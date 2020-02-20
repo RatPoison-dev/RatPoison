@@ -6,7 +6,9 @@ import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.Align
 import rat.poison.*
 import rat.poison.game.*
+import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.entity.absPosition
+import rat.poison.game.entity.team
 import rat.poison.game.entity.velocity
 import rat.poison.game.forEntities
 import rat.poison.utils.Vector
@@ -15,63 +17,46 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 private val footSteps = Array(256) { FootStep() }
-
-private data class FootStep(var x: Double = 0.0, var y: Double = 0.0, var z: Double = 0.0, var ttl: Int = curSettings["FOOTSTEP_TTL"].toInt(), var open: Boolean = true)
-
+private data class FootStep(var x: Double = 0.0, var y: Double = 0.0, var z: Double = 0.0,
+                            var ttl: Int = curSettings["FOOTSTEP_TTL"].toInt(),
+                            var open: Boolean = true, var myTeam: Boolean = false)
 private var stepTimer = 0
-
 
 fun footStepEsp() = App {
     if (!curSettings["ENABLE_ESP"].strToBool() || !curSettings["ENABLE_FOOTSTEPS"].strToBool()) return@App
 
     stepTimer++
-
     if (stepTimer >= curSettings["FOOTSTEP_UPDATE"].toInt()) {
-        forEntities {
-            val ent = it.entity
-            if (ent == me) return@forEntities false
-
-            val entVel = ent.velocity()
-            val entMag = sqrt(entVel.x.pow(2.0) + entVel.y.pow(2.0))
-
-            if (entMag >= 150) {
-                val entPos = ent.absPosition()
-
-                val idx = emptySlot()
-                footSteps[idx].apply {
-                    x = entPos.x
-                    y = entPos.y
-                    z = entPos.z
-                    ttl = curSettings["FOOTSTEP_TTL"].toInt()
-                    open = false
-                }
-            }
-
-            false
-        }
+        constructSteps()
 
         stepTimer = 0
     }
 
     for (i in footSteps.indices) {
-        if (footSteps[i].open == false) {
-            val inVec = Vector(footSteps[i].x, footSteps[i].y, footSteps[i].z)
-            val outVec = Vector()
-
-            worldToScreen(inVec, outVec)
+        if (!footSteps[i].open) {
+            val color = if (footSteps[i].myTeam) {
+                curSettings["FOOTSTEP_TEAM_COLOR"].strToColorGDX()
+            } else {
+                curSettings["FOOTSTEP_ENEMY_COLOR"].strToColorGDX()
+            }
+            color.a = footSteps[i].ttl / curSettings["FOOTSTEP_TTL"].toFloat()
 
             if (curSettings["FOOTSTEP_TYPE"].toInt() == 1) {
                 //As text
-                val sbText = StringBuilder("Step")
-                textRenderer.apply {
-                    val glyph = GlyphLayout()
+                val inVec = Vector(footSteps[i].x, footSteps[i].y, footSteps[i].z)
+                val outVec = Vector()
+                if (worldToScreen(inVec, outVec)) {
+                    val sbText = StringBuilder("Step")
+                    textRenderer.apply {
+                        val glyph = GlyphLayout()
 
-                    sb.begin()
+                        sb.begin()
 
-                    glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, Color(1F, 1F, 1F, footSteps[i].ttl / curSettings["FOOTSTEP_TTL"].toFloat()), 1F, Align.left, false, null)
-                    textRenderer.draw(sb, glyph, outVec.x.toFloat(), outVec.y.toFloat())
+                        glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, color, 1F, Align.left, false, null)
+                        textRenderer.draw(sb, glyph, outVec.x.toFloat(), outVec.y.toFloat())
 
-                    sb.end()
+                        sb.end()
+                    }
                 }
             } else {
                 //As circle
@@ -80,7 +65,7 @@ fun footStepEsp() = App {
                     val gameMatrix = w2sViewMatrix.toMatrix4()
 
                     begin()
-                    color = Color(1F, 1F, 1F, 1F)
+                    this.color = color
 
                     //Circle at position
                     gameMatrix.translate(0F, 0F, footSteps[i].z.cToFloat())
@@ -107,32 +92,39 @@ fun footStepEsp() = App {
     }
 }
 
-//fun buildSteps() = every(100) {
-//    forEntities {
-//        val ent = it.entity
-//        if (ent == me) return@forEntities false
-//
-//        val entVel = ent.velocity()
-//        val entMag = sqrt(entVel.x.pow(2.0) + entVel.y.pow(2.0))
-//
-//        if (entMag >= 150) {
-//            val entPos = ent.absPosition()
-//
-//            val idx = emptySlot()
-//            footSteps[idx].apply {
-//                x = entPos.x
-//                y = entPos.y
-//                z = entPos.z
-//                ttl = 60
-//                open = false
-//            }
-//        }
-//
-//        false
-//    }
-//}
+private fun constructSteps() {
+    forEntities(ccsPlayer) {
+        val ent = it.entity
+        if (ent == me) return@forEntities false
 
-fun emptySlot(): Int {
+        val inMyTeam = ent.team() == me.team()
+
+        //Team check
+        if (inMyTeam && !curSettings["FOOTSTEP_TEAM"].strToBool()) return@forEntities false
+        else if (!inMyTeam && !curSettings["FOOTSTEP_ENEMY"].strToBool()) return@forEntities false
+
+        val entVel = ent.velocity()
+        val entMag = sqrt(entVel.x.pow(2.0) + entVel.y.pow(2.0) + entVel.z.pow(2.0))
+
+        if (entMag >= 150) {
+            val entPos = ent.absPosition()
+
+            val idx = emptySlot()
+            footSteps[idx].apply {
+                x = entPos.x
+                y = entPos.y
+                z = entPos.z
+                ttl = curSettings["FOOTSTEP_TTL"].toInt()
+                open = false
+                myTeam = inMyTeam
+            }
+        }
+
+        false
+    }
+}
+
+private fun emptySlot(): Int {
     var idx = -1
 
     for (i in footSteps.indices) {

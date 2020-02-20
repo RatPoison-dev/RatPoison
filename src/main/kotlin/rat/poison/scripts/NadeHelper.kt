@@ -156,7 +156,7 @@ fun createPosition() {
 
     Dialogs.showInputDialog(menuStage, "Enter Position Name", "", object : InputDialogAdapter() {
         override fun finished(input: String) {
-            //Fuck this
+
             val chooseNadeArrayString = arrayOf("Flash", "Frag", "Molly", "Smoke")
             val chooseNadeArrayInt = arrayOf(1, 2, 3, 4)
 

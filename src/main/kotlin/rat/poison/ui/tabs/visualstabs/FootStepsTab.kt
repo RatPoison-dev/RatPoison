@@ -7,8 +7,8 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.footStepsEspTab
-import rat.poison.ui.tabs.snaplinesEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
+import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 
 class FootstepsEspTab : Tab(false, false) {
@@ -18,6 +18,12 @@ class FootstepsEspTab : Tab(false, false) {
     val footStepType = VisSelectBox<String>()
     val footStepUpdateTimer = VisSliderCustom("Update Timer", "FOOTSTEP_UPDATE", 5F, 120F, 1F, true)
     val footStepTTL = VisSliderCustom("TTL", "FOOTSTEP_TTL", 15F, 240F, 1F, true)
+
+    val footStepTeamBox = VisCheckBoxCustom(" ", "FOOTSTEP_TEAM")
+    val footStepTeamColor = VisColorPickerCustom("Teammates","FOOTSTEP_TEAM_COLOR")
+
+    val footStepEnemyBox = VisCheckBoxCustom(" ", "FOOTSTEP_ENEMY")
+    val footStepEnemyColor = VisColorPickerCustom("Enemies", "FOOTSTEP_ENEMY_COLOR")
 
     init {
         footStepType.setItems("Text", "Circle")
@@ -39,6 +45,17 @@ class FootstepsEspTab : Tab(false, false) {
         table.add(footStepUpdateTimer).colspan(2).left().row()
         table.add(footStepTTL).colspan(2).left().row()
 
+        var tmpTable = VisTable()
+        tmpTable.add(footStepTeamBox)
+        tmpTable.add(footStepTeamColor).width(175F - footStepTeamBox.width).padRight(50F)
+
+        table.add(tmpTable).left()
+
+        tmpTable = VisTable()
+        tmpTable.add(footStepEnemyBox)
+        tmpTable.add(footStepEnemyColor).width(175F - footStepEnemyBox.width).padRight(50F)
+
+        table.add(tmpTable).left()
     }
 
     override fun getContentTable(): Table? {
@@ -55,5 +72,9 @@ fun footStepsEspTabUpdate() {
         enableFootSteps.update()
         footStepUpdateTimer.update()
         footStepTTL.update()
+        footStepTeamBox.update()
+        footStepTeamColor.update()
+        footStepEnemyBox.update()
+        footStepEnemyColor.update()
     }
 }

@@ -477,13 +477,14 @@ fun sync(fps : Int) {
 fun Any.strToBool() = this == "true" || this == true || this == 1.0
 fun Any.boolToStr() = this.toString()
 fun Any.strToColor() = convStrToColor(this.toString())
+fun Any.strToColorGDX() = convStrToColorGDX(this.toString())
 fun Any.cToDouble() = this.toString().toDouble()
 fun Any.cToFloat() = this.toString().toFloat()
 fun Boolean.toFloat() = if (this) 1F else 0F
 fun Boolean.toDouble() = if (this) 1.0 else 0.0
 fun Boolean.toInt() = if (this) 1 else 0
 
-fun convStrToColor(input: String): rat.poison.game.Color {
+fun convStrToColor(input: String): rat.poison.game.Color { //Rat poison color
     var line = input
     line = line.replace("Color(", "").replace(")", "").replace(",", "")
 
@@ -493,6 +494,18 @@ fun convStrToColor(input: String): rat.poison.game.Color {
             arrayLine[1].replace("green=", "").toInt(),
             arrayLine[2].replace("blue=", "").toInt(),
             arrayLine[3].replace("alpha=", "").toDouble())
+}
+
+fun convStrToColorGDX(input: String): Color {
+    var line = input
+    line = line.replace("Color(", "").replace(")", "").replace(",", "")
+
+    val arrayLine = line.trim().split(" ".toRegex(), 4)
+
+    return Color(arrayLine[0].replace("red=", "").toFloat()/255F,
+            arrayLine[1].replace("green=", "").toFloat()/255F,
+            arrayLine[2].replace("blue=", "").toFloat()/255F,
+            arrayLine[3].replace("alpha=", "").toFloat())
 }
 
 fun String.toWeaponClass(): oWeapon {

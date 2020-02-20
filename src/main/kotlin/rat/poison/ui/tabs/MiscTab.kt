@@ -1,14 +1,17 @@
 package rat.poison.ui.tabs
 
+import com.badlogic.gdx.graphics.g3d.shaders.BaseShader
 import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Array
+import com.kotcrab.vis.ui.util.Validators
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import org.jire.arrowhead.keyPressed
 import rat.poison.*
 import rat.poison.scripts.esp.updateHitsound
+import rat.poison.scripts.nameChanger
 import rat.poison.ui.changed
 import rat.poison.ui.miscTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
@@ -50,7 +53,6 @@ class MiscTab : Tab(false, false) {
     val lsBomb = VisCheckBox("Perfect Bomb Defuse")
     val doorSpam = VisCheckBoxCustom("Door Spam", "D_SPAM")
     var doorSpamKey = VisInputFieldCustom("Door Spam Key", "D_SPAM_KEY")
-    private val selfNade = VisTextButton("Self Nade")
     val weaponSpam = VisCheckBoxCustom("Weapon Spam", "W_SPAM")
     var weaponSpamKey = VisInputFieldCustom("Weapon Spam Key", "W_SPAM_KEY")
     val enableReducedFlash = VisCheckBoxCustom("Reduced Flash", "ENABLE_REDUCED_FLASH")
@@ -58,10 +60,17 @@ class MiscTab : Tab(false, false) {
     val hitSoundCheckBox = VisCheckBoxCustom("Hitsound", "ENABLE_HITSOUND")
     val hitSoundBox = VisSelectBox<String>()
     val hitSoundVolume = VisSliderCustom("Hitsound Volume", "HITSOUND_VOLUME", .1F, 1F, .1F, false, width1 = 150F, width2 = 90F)
+    private val selfNade = VisTextButton("Self Nade")
+    private val nameChangeInput = VisValidatableTextField()
+    private val nameChange = VisTextButton("Name Change")
 
     init {
         selfNade.changed { _, _ ->
             selfNade()
+        }
+
+        nameChange.changed { _, _ ->
+            nameChanger(nameChangeInput.text)
         }
 
         weaponSpamKey.changed { _, _ ->
@@ -186,7 +195,10 @@ class MiscTab : Tab(false, false) {
         superPaneTable1.add(weaponSpam).left().padLeft(5F).row()
         superPaneTable1.add(weaponSpamKey).left().padLeft(5F).row()
         superPaneTable1.addSeparator().width(250F).left()
-        superPaneTable1.add(selfNade).pad(5F).top().left().width(250F)
+        superPaneTable1.add(selfNade).pad(5F).top().left().width(240F).row()
+        superPaneTable1.addSeparator().width(250F).left()
+        //superPaneTable1.add(nameChangeInput).pad(5F).top().left().width(240F).row()
+        //superPaneTable1.add(nameChange).pad(5F).top().left().width(240F)
 
         table.add(superPane).size(500F, 480F).top()
     }
