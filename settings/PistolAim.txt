@@ -24,7 +24,7 @@ PISTOL_AIM_FOV = 20
 //Aim speed
 //MS delay between aiming steps
 //Lower is faster
-PISTOL_AIM_SPEED = 1
+PISTOL_AIM_SPEED = 2
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)

@@ -128,6 +128,10 @@ Update 1.6
     * Update timer
     * Step TTL (Time to live)
     * As Text (Step) or a typical circle
+    
+* Added snapline width
+
+* Box of box visuals is now much more accurate
 
 * Added discord link to menu
 

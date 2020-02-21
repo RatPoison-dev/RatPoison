@@ -6,12 +6,14 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.ui.tabs.snaplinesEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
+import rat.poison.ui.uiHelpers.VisSliderCustom
 
 class SnaplinesEspTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
     val enableSnaplines = VisCheckBoxCustom("Enable", "ENABLE_SNAPLINES")
+    val snaplinesWidth = VisSliderCustom("Line Width", "SNAPLINES_WIDTH", 1F, 10F, 1F, false)
 
     val enemySnaplines = VisCheckBoxCustom(" ", "SNAPLINES_ENEMIES")
     val enemySnaplinesColor = VisColorPickerCustom("Enemies", "SNAPLINES_ENEMY_COLOR")
@@ -33,6 +35,7 @@ class SnaplinesEspTab : Tab(false, false) {
         table.padRight(25F)
 
         table.add(enableSnaplines).left().row()
+        table.add(snaplinesWidth).left().colspan(2).row()
 
         var tmpTable = VisTable()
         tmpTable.add(enemySnaplines)
@@ -77,6 +80,7 @@ class SnaplinesEspTab : Tab(false, false) {
 fun snaplinesEspTabUpdate() {
     snaplinesEspTab.apply {
         enableSnaplines.update()
+        snaplinesWidth.update()
         enemySnaplines.update()
         enemySnaplinesColor.update()
         teamSnaplines.update()

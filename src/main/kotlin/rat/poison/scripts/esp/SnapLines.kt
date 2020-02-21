@@ -1,6 +1,7 @@
 package rat.poison.scripts.esp
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.game.*
@@ -85,11 +86,13 @@ fun snapLines() = App {
 
             if ((entPos.x == 0.0 && entPos.y == 0.0 && entPos.z == 0.0)) return@forEntities false //Why is this here?
 
+            set(ShapeRenderer.ShapeType.Filled)
             if (worldToScreen(entPos, vec)) { //Onscreen
-                line(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x.toFloat(), vec.y.toFloat())
+                rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x.toFloat(), vec.y.toFloat(), curSettings["SNAPLINES_WIDTH"].toFloat())
             } else { //Offscreen
-                line(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x.toFloat(), -vec.y.toFloat())
+                rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x.toFloat(), -vec.y.toFloat(), curSettings["SNAPLINES_WIDTH"].toFloat())
             }
+            set(ShapeRenderer.ShapeType.Line)
 
             end()
         }

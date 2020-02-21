@@ -1,8 +1,11 @@
 //Enable snaplines
 ENABLE_SNAPLINES = false
 
+//Line width
+SNAPLINES_WIDTH = 3.0
+
 //Enable snap lines for enemies
-SNAPLINES_ENEMIES = false
+SNAPLINES_ENEMIES = true
 
 //Enable snaplines for teammates
 SNAPLINES_TEAMMATES = false
