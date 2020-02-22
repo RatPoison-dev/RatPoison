@@ -115,6 +115,7 @@ ENABLE_FLAT_AIM = false
 ENABLE_PATH_AIM = true
 ENABLE_SCOPED_ONLY = true
 AIM_AFTER_SHOTS = 0
+
 //Can't be edited from menu, not guaranteed to work properly
 PISTOL_AIM_AFTER_SHOTS = 0
 SHOTGUN_AIM_AFTER_SHOTS = 0

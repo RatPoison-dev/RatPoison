@@ -6,8 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.utils.Align
 import com.sun.jna.Memory
-import rat.poison.App
-import rat.poison.curSettings
+import rat.poison.*
 import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
@@ -15,8 +14,6 @@ import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.hooks.defuseKitEntities
 import rat.poison.scripts.hitMarkerAlpha
 import rat.poison.settings.*
-import rat.poison.strToBool
-import rat.poison.strToColor
 import rat.poison.utils.Angle
 import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
@@ -81,7 +78,7 @@ fun boxEsp() = App {
 			val c = if (meTeam == entTeam) Color(tCol.red/255F, tCol.green/255F, tCol.blue/255F, 1F) else Color(eCol.red/255F, eCol.green/255F, eCol.blue/255F, 1F)
 
 			val boxH = vBot.y - vTop.y
-			val sW = ceil((boxH / 5.0) * 3.0) / 2.0
+			val sW = ceil((boxH / 5.0) * 2.0) / 2.0
 			val sH = 4
 
 			val box0x: Float
@@ -171,24 +168,28 @@ fun boxEsp() = App {
 
 		for (i in 0 until currentIdx) boxes[i].apply {
 			this@sr.color = color
-			val w = x1-x0
-			val h = y1-y0
+			val w = x1 - x0
+			val h = y1 - y0
 
 			rect(x0, y0, w, h)
 
-			val detailTextColor = curSettings["BOX_DETAILS_TEXT_COLOR"].strToColor()
+			val detailTextColor = curSettings["BOX_DETAILS_TEXT_COLOR"].strToColorGDX()
 
 			if (type == EntityType.CCSPlayer) {
 				if (curSettings["BOX_ESP_DETAILS"].strToBool()) {
 					textRenderer.apply {
-						val glyph = GlyphLayout()
 						this@sr.color = Color.WHITE
+						val glyph = GlyphLayout()
+
+						if (sb.isDrawing) {
+							sb.end()
+						}
 
 						sb.begin()
 						////Top
 						var yAdd = 0F
 						val boxDetailsTextTop = StringBuilder()
-						boxDetailsTextTop.append("")
+						boxDetailsTextTop.append(" ")
 
 						if (bEspName && bEspNamePos == "T") {
 							boxDetailsTextTop.append("$name\n")
@@ -198,18 +199,10 @@ fun boxEsp() = App {
 							boxDetailsTextTop.append(weapon)
 							yAdd += 16F
 						}
+
 						if (boxDetailsTextTop.isNotBlank() && boxDetailsTextTop.isNotEmpty()) {
-							glyph.setText(
-									textRenderer,
-									boxDetailsTextTop,
-									0,
-									(boxDetailsTextTop as CharSequence).length,
-									Color(detailTextColor.red / 255F, detailTextColor.green / 255F, detailTextColor.blue / 255F, detailTextColor.alpha.toFloat()),
-									1F,
-									Align.center,
-									false,
-									null)
-							textRenderer.draw(sb, glyph, x0 + (x1-x0) / 2F, y0 + yAdd)
+							glyph.setText(textRenderer, boxDetailsTextTop, 0, (boxDetailsTextTop as CharSequence).length, detailTextColor, 1F, Align.center, false, null)
+							draw(sb, glyph, x0 + (x1 - x0) / 2F, y0 + yAdd)
 						}
 						////Top
 
@@ -224,8 +217,8 @@ fun boxEsp() = App {
 							boxDetailsTextBottom.append(weapon)
 						}
 						if (boxDetailsTextBottom.isNotBlank() && boxDetailsTextBottom.isNotEmpty()) {
-							glyph.setText(textRenderer, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, Color(detailTextColor.red / 255F, detailTextColor.green / 255F, detailTextColor.blue / 255F, detailTextColor.alpha.toFloat()), 1F, Align.center, false, null)
-							textRenderer.draw(sb, glyph, x0 + w / 2F, y0 + h - 4F)
+							glyph.setText(this, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, detailTextColor, 1F, Align.center, false, "")
+							draw(sb, glyph, x0 + w / 2F, y0 + h - 4F)
 						}
 						////Bottom
 						sb.end()
@@ -288,6 +281,10 @@ fun boxEsp() = App {
 						val glyph = GlyphLayout()
 						this@sr.color = Color.WHITE
 
+						if (sb.isDrawing) {
+							sb.end()
+						}
+
 						sb.begin()
 						////Top
 						var yAdd = 0F
@@ -297,8 +294,8 @@ fun boxEsp() = App {
 							boxDetailsTextTop.append("DEFUSER")
 							yAdd += 16F
 						}
-						glyph.setText(textRenderer, boxDetailsTextTop, 0, (boxDetailsTextTop as CharSequence).length, Color(detailTextColor.red / 255F, detailTextColor.green / 255F, detailTextColor.blue / 255F, detailTextColor.alpha.toFloat()), 1F, Align.center, false, null)
-						textRenderer.draw(sb, glyph, x0 + w / 2F, y0 + yAdd)
+						glyph.setText(this, boxDetailsTextTop, 0, (boxDetailsTextTop as CharSequence).length, detailTextColor, 1F, Align.center, false, null)
+						draw(sb, glyph, x0 + w / 2F, y0 + yAdd)
 						////Top
 
 						////Bottom
@@ -307,8 +304,8 @@ fun boxEsp() = App {
 						if (bEspName && bEspNamePos == "B") {
 							boxDetailsTextBottom.append("DEFUSER")
 						}
-						glyph.setText(textRenderer, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, Color(detailTextColor.red / 255F, detailTextColor.green / 255F, detailTextColor.blue / 255F, detailTextColor.alpha.toFloat()), 1F, Align.center, false, null)
-						textRenderer.draw(sb, glyph, x0 + w / 2F, y0 + h - 4F)
+						glyph.setText(this, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, detailTextColor, 1F, Align.center, false, null)
+						draw(sb, glyph, x0 + w / 2F, y0 + h - 4F)
 						////Bottom
 
 						sb.end()

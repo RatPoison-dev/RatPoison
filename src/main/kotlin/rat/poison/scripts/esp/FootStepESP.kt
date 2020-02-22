@@ -53,7 +53,7 @@ fun footStepEsp() = App {
                         sb.begin()
 
                         glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, color, 1F, Align.left, false, null)
-                        textRenderer.draw(sb, glyph, outVec.x.toFloat(), outVec.y.toFloat())
+                        draw(sb, glyph, outVec.x.toFloat(), outVec.y.toFloat())
 
                         sb.end()
                     }

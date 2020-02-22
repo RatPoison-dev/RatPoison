@@ -81,23 +81,40 @@ Update 1.6
     * Now properly colors indicator of entity if they are the bomb carrier
 
 * Box Esp
+    * Skeleton is now lumped in with box visuals
     * Can change box detail text color (instead of just white)
-    * Possible crash fix for box esp
+    * Fixed box esp crash caused by ConcurrentModification & libgdx threading issues
+    * Box of box visuals is now much more accurate and dynamic
 
 * Glow Esp
     * Now properly colors entity if they are the bomb carrier
 
 * Snaplines Esp
     * Added team, bomb, bomb carrier, weapons snaplines and colors
-
+    * Added line width
+    
+* Added Step Esp
+    * Update timer
+    * Step TTL (Time to live)
+    * As text or circle
+    
 * Possible fix for headwalk activating incorrectly
 * Choosing a target while spraying now activates properly based on your recoil's position rather than crosshair
 * Option to use aim after X shots for rifles and smgs
+* Disabled zeus causing bone trigger and aim crashing
+* Added weapon spam (famas/glock/scope spam) and door spam
+* Added self nade, throws nade in mid air to damage yourself. mostly used for griefing. (hold nade and press "self nade" in menu)
+* Misc tab reformatted for testing
+* Default settings have been updated to look legit
+* Debug now shows misc information on screen
+* Recoil crosshair adjusts correctly based on FOV
+
 * Removed aim strictness
     * Strictness served as an additional smoothing, which added confusion and redundancy
     * Smoothness is smoothing applied to the calculated angle towards the target
     * Speed is the ms delay between mouse movements (path aim) from your current angle to the calculated target angle, or between writing angles (flat aim)
-
+    * Aim strictness/aim sensitivity is now always your ingame sensitivity + .5 to prevent jittery snapping
+    
 * Added RANDOM aim bone option, picks one of the 4 selectable bones
     * Will hold selected bone until aim is released or target is invalid
 
@@ -105,33 +122,6 @@ Update 1.6
 * Target swap delay now works properly
 * Added FOV Changer (Misc Tab)
     * Options for normal weapons, awp zoom levels (defaulted for clear scope)
-
-* Aim Strictness/Aim Sensitivity is now always your ingame sensitivity + .5 to prevent jittery snapping
-
-* Recoil crosshair adjusts correctly based on FOV
-
-* Default settings have been updated to look legit
-
-* Disabled zeus causing bone trigger and aim crashing
-
-* Added weapon spam (famas/glock/scope spam) and door spam
-
-* Added self nade, throws nade in mid air to damage yourself. mostly used for griefing. (hold nade and press "self nade" in menu)
-
-* Misc tab reformatted for testing
-
-* Debug now shows misc information on screen
-
-* Skeleton is now lumped in with box visuals
-
-* Added step esp
-    * Update timer
-    * Step TTL (Time to live)
-    * As Text (Step) or a typical circle
-    
-* Added snapline width
-
-* Box of box visuals is now much more accurate
 
 * Added discord link to menu
 
@@ -175,10 +165,9 @@ Base is Charlatano available [here](https://github.com/Jire/Charlatano)
 
 * Visuals
     * Radar
-    * Enemy Snaplines
     * Glow
         * Teammates, Enemies, Weapons, Grenades, Bomb, Bomb Carrier, Aimbot Target
-    * clrRender chams, brightness
+    * clrRender chams
         * Teammates, Enemies
     * Arrow indicators
         * Teammates, Enemies, Weapons, Grenades, Bomb, Bomb Carrier, Defusers
@@ -186,6 +175,11 @@ Base is Charlatano available [here](https://github.com/Jire/Charlatano)
         * Teammates, Enemies, Defusers
     * Skeleton
         * Teammates, Enemies
+    * Snaplines
+        * Teammates, Enemies, Weapons, Bomb, Bomb Carrier
+    * Footsteps
+        * Teammates, Enemies
+    * FOV Changer
 
 * Bone Trigger
     * FOV, InCross
@@ -208,3 +202,6 @@ Base is Charlatano available [here](https://github.com/Jire/Charlatano)
     * Auto strafe
     * Fast stop
     * Last second bomb defusal
+    * Door spam
+    * Weapon spam
+    * Self nade

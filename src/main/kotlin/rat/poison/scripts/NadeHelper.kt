@@ -113,7 +113,7 @@ fun nadeHelper() = App {
                                 sbText.append(fSpot[3].toString())
 
                                 glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
-                                textRenderer.draw(sb, glyph, vec3.x.toFloat(), vec3.y.toFloat() - 10F)
+                                draw(sb, glyph, vec3.x.toFloat(), vec3.y.toFloat() - 10F)
 
                                 sb.end()
                             }

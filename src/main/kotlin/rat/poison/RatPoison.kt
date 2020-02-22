@@ -16,6 +16,8 @@ import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.VisUI
+import com.kotcrab.vis.ui.widget.VisLabel
+import com.kotcrab.vis.ui.widget.VisTable
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -39,7 +41,6 @@ import kotlin.math.max
 import kotlin.math.min
 import com.sun.management.OperatingSystemMXBean
 import rat.poison.utils.extensions.appendHumanReadableSize
-import rat.poison.utils.extensions.humanReadableSize
 import java.lang.management.ManagementFactory
 import rat.poison.utils.extensions.roundNDecimals
 import java.util.concurrent.TimeUnit
@@ -95,10 +96,12 @@ fun main() {
         curSettings["ENABLE_NADE_HELPER"] = "false"
         curSettings["NADE_TRACER"] = "false"
     } else {
-        if (dbg) { println("[DEBUG] Initializing Recoil Crosshair") }; rcrosshair()
-        if (dbg) { println("[DEBUG] Initializing Recoil Spectator List") }; spectatorList()
         if (dbg) { println("[DEBUG] Initializing Recoil Ranks") }; ranks()
+
+        if (dbg) { println("[DEBUG] Initializing Recoil Spectator List") }; spectatorList()
         if (dbg) { println("[DEBUG] Initializing Recoil Bomb Timer") }; bombTimer()
+
+        if (dbg) { println("[DEBUG] Initializing Recoil Crosshair") }; rcrosshair()
         if (dbg) { println("[DEBUG] Initializing Hit Marker") }; hitMarker()
         if (dbg) { println("[DEBUG] Initializing Nade Helper") }; nadeHelper()
         if (dbg) { println("[DEBUG] Initializing Nade Tracer") }; nadeTracer()
@@ -233,7 +236,7 @@ object App : ApplicationAdapter() {
 
     private val osBean = ManagementFactory.getOperatingSystemMXBean() as OperatingSystemMXBean
     var haveTarget = false
-    var timer = 0
+    private var timer = 0
 
     override fun create() {
         overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
@@ -267,7 +270,7 @@ object App : ApplicationAdapter() {
         }
 
         sb = SpriteBatch()
-        textRenderer = BitmapFont()
+        textRenderer = BitmapFont(false)
         camera = OrthographicCamera()
         gl.glClearColor(0F, 0F, 0F, 0F)
 
@@ -361,12 +364,9 @@ object App : ApplicationAdapter() {
 
 
                         textRenderer.apply {
-                            val glyph = GlyphLayout()
-
                             sb.begin()
 
-                            glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, Color.YELLOW, 1F, Align.left, false, null)
-                            textRenderer.draw(sb, glyph, CSGO.gameWidth/3F, CSGO.gameHeight-100F)
+                            draw(sb, sbText, CSGO.gameWidth/3F, CSGO.gameHeight-100F)
 
                             sb.end()
                         }

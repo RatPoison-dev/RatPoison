@@ -1,20 +1,11 @@
 package rat.poison.utils
 
-import rat.poison.settings.MENUTOG
-import java.util.concurrent.ThreadLocalRandom
-import kotlin.concurrent.thread
-
 @Volatile
 var inBackground = false
 @Volatile
 var notInGame = false
 
-inline fun every(duration: Int, continuous: Boolean = false,
-                 crossinline body: () -> Unit) = every(duration, duration, continuous, body)
-
-inline fun every(minDuration: Int, maxDuration: Int,
-                 continuous: Boolean = false,
-                 crossinline body: () -> Unit) = thread {
+inline fun every(duration: Int, continuous: Boolean = false, crossinline body: () -> Unit) = Thread(Runnable {
     while (!Thread.interrupted()) {
         if (continuous || (!inBackground)) {
             try {
@@ -24,6 +15,6 @@ inline fun every(minDuration: Int, maxDuration: Int,
             }
         }
 
-        Thread.sleep(minDuration.toLong() + maxDuration.toLong())
+        Thread.sleep(duration.toLong())
     }
-}
+}).start()

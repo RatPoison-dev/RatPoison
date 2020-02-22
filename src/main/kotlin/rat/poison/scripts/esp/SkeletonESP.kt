@@ -70,6 +70,10 @@ internal fun skeletonEsp() = App {
 	}
 
 	shapeRenderer.apply {
+		if (isDrawing) {
+			end()
+		}
+
 		begin()
 		for (i in 0 until currentIdx) {
 			val bone = bones[i]

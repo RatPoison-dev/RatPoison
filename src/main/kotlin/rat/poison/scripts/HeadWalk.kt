@@ -81,21 +81,20 @@ internal fun headWalk() = every(1) {
 }
 
 internal fun onPlayerHead() : Boolean {
-    var entPos : Angle
     onEnt = 0L
 
     forEntities(ccsPlayer) {
         val entity = it.entity
         if (entity == me) return@forEntities false
 
-        entPos = entity.absPosition()
+        val entPos = entity.absPosition()
 
         val xDist = abs(mePos.x - entPos.x)
         val yDist = abs(mePos.y - entPos.y)
-        val zDist = abs(mePos.z - entPos.z)
+        val zDif = mePos.z - entPos.z
 
         //Issue here
-        if (xDist <= 30 && yDist <= 30 && zDist <= 30) { //Absolute wont give negative, if within 30
+        if (xDist <= 30 && yDist <= 30 && zDif in 50.0..75.0) { //Absolute wont give negative, if within 30
             onEnt = entity
             onEntPos = entPos
         }

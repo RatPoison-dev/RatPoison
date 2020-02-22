@@ -1,25 +1,27 @@
 package rat.poison.scripts
 
-import com.kotcrab.vis.ui.widget.VisLabel
 import rat.poison.App.haveTarget
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
 import rat.poison.game.rankName
 import rat.poison.opened
-import rat.poison.ui.tabs.ranksListTable
+import rat.poison.ui.ranksTab
 import rat.poison.utils.every
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.notInGame
 
-internal fun ranks() = every(1000) { //Rebuild every second
-    if (notInGame) return@every
+var ctPlayers = arrayListOf<List<String>>()
+var tPlayers = arrayListOf<List<String>>()
+
+fun ranks() = every(1000) { //Rebuild every second
+    if (notInGame || !opened || !haveTarget) return@every
 
     //Bruh -- fix later
-    val ctPlayers = arrayListOf<List<String>>()
-    val tPlayers = arrayListOf<List<String>>()
+    ctPlayers.clear()
+    tPlayers.clear()
 
-    forEntities(ccsPlayer) body@{
+    forEntities(ccsPlayer) {
         val entity = it.entity
 
         if (entity.onGround()) { //Change later
@@ -50,32 +52,8 @@ internal fun ranks() = every(1000) { //Rebuild every second
                 }
             }
         }
-        return@body false
+        false
     }
 
-    if (opened && haveTarget) {
-        ranksListTable.clear()
-
-        ranksListTable.add(VisLabel("Team"))
-        ranksListTable.add(VisLabel("Name"))
-        ranksListTable.add(VisLabel("Rank"))
-        ranksListTable.add(VisLabel("Kills"))
-        ranksListTable.add(VisLabel("Deaths"))
-        ranksListTable.add(VisLabel("K/D")).row()
-
-        ctPlayers.forEachIndexed { _, ent->
-            ent.forEachIndexed { _, str->
-                ranksListTable.add(VisLabel(str))
-            }
-            ranksListTable.row()
-        }
-        ranksListTable.add(VisLabel()).row()
-
-        tPlayers.forEachIndexed { _, ent->
-            ent.forEachIndexed { _, str->
-                ranksListTable.add(VisLabel(str))
-            }
-            ranksListTable.row()
-        }
-    }
+    ranksTab.updateRanks()
 }

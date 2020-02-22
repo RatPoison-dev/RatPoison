@@ -8,7 +8,6 @@ import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.strToBool
 import java.lang.Math.toRadians
-import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.math.abs
 import kotlin.math.sin
 
@@ -211,7 +210,6 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		if (currentTarget == me || !currentTarget.canShoot(shouldVisCheck)) {
 			reset()
 			Thread.sleep(curSettings["AIM_TARGET_SWAP_DELAY"].toInt().toLong())
-			return@every
 		} else {
 			val bonePosition = currentTarget.bones(destBone)
 
