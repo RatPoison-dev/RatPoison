@@ -6,15 +6,12 @@ import rat.poison.game.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.entity.absPosition
 import rat.poison.game.entity.dead
-import rat.poison.game.entity.velocity
+import rat.poison.game.entity.onGround
 import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
-import rat.poison.ui.miscTab
 import rat.poison.utils.Angle
-import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.Vector
 import rat.poison.utils.every
-import java.awt.Robot
 import java.awt.event.KeyEvent
 import kotlin.math.*
 
@@ -24,8 +21,6 @@ private var onEnt = 0L
 ////Only moves towards the center of the player
 //////Keeps up with crouching just fine, but not normal running
 ////////Doesn't predict, isn't accurate
-
-//Switch velocity to difference in current pos vs prev
 
 var mePos = Vector()
 var onEntPos = Vector()
@@ -43,25 +38,23 @@ internal fun headWalk() = every(1) {
 
             val pos = Vector(mePos.x - onEntPos.x, mePos.y - onEntPos.y, mePos.z - onEntPos.z)
             val yaw = clientState.angle().y
+            val calcYaw = yaw/180*Math.PI
 
             //Is this even needed?
-            //val tmpX = (pos.x * cos(yaw / 180 * Math.PI)).toInt()
-            //val tmpY = (pos.y * cos(yaw / 180 * Math.PI)).toInt()
-            //val distX = tmpX + tmpY
-            //val distY = tmpY - tmpX
-            val distX = (pos.x * cos(yaw / 180 * Math.PI) + pos.y * sin(yaw / 180 * Math.PI)).toInt()
-            val distY = (pos.y * cos(yaw / 180 * Math.PI) - pos.x * sin(yaw / 180 * Math.PI)).toInt()
+            val distX = (pos.x * cos(calcYaw) + pos.y * sin(calcYaw)).toInt()
+            val distY = (pos.y * cos(calcYaw) - pos.x * sin(calcYaw)).toInt()
 
-            println (distX)
-            println(distY)
+            println("we do be head walkin, pos: $pos -- distX: $distX -- distY: $distY ")
 
             when {
                 distX < 2 -> {
                     robot.keyPress(KeyEvent.VK_W)
+                    Thread.sleep(1)
                     robot.keyRelease(KeyEvent.VK_W)
                 }
                 distX > 2 -> {
                     robot.keyPress(KeyEvent.VK_S)
+                    Thread.sleep(1)
                     robot.keyRelease(KeyEvent.VK_S)
                 }
             }
@@ -69,10 +62,12 @@ internal fun headWalk() = every(1) {
             when {
                 distY < 2 -> {
                     robot.keyPress(KeyEvent.VK_A)
+                    Thread.sleep(1)
                     robot.keyRelease(KeyEvent.VK_A)
                 }
                 distY > 2 -> {
                     robot.keyPress(KeyEvent.VK_D)
+                    Thread.sleep(1)
                     robot.keyRelease(KeyEvent.VK_D)
                 }
             }
@@ -81,20 +76,20 @@ internal fun headWalk() = every(1) {
 }
 
 internal fun onPlayerHead() : Boolean {
+    var entPos : Angle
     onEnt = 0L
 
     forEntities(ccsPlayer) {
         val entity = it.entity
-        if (entity == me) return@forEntities false
+        if (entity == me || !entity.onGround()) return@forEntities false
 
-        val entPos = entity.absPosition()
+        entPos = entity.absPosition()
 
         val xDist = abs(mePos.x - entPos.x)
         val yDist = abs(mePos.y - entPos.y)
         val zDif = mePos.z - entPos.z
 
-        //Issue here
-        if (xDist <= 30 && yDist <= 30 && zDif in 50.0..75.0) { //Absolute wont give negative, if within 30
+        if (xDist <= 30 && yDist <= 30 && zDif in 50.0..75.0) {
             onEnt = entity
             onEntPos = entPos
         }
