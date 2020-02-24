@@ -62,6 +62,10 @@ fun footStepEsp() = App {
                 //As circle
                 val oldMatrix = Matrix4(shapeRenderer.projectionMatrix.values)
                 shapeRenderer.apply {
+                    if (isDrawing) {
+                        end()
+                    }
+
                     val gameMatrix = w2sViewMatrix.toMatrix4()
 
                     begin()
