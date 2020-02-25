@@ -50,7 +50,8 @@ object NetVarOffsets {
 	val m_iItemIDHigh by netVar("DT_BaseAttributableItem", "m_iItemIDHigh")
 	val m_nFallbackPaintKit by netVar("DT_BaseAttributableItem", "m_nFallbackPaintKit")
 	val m_flFallbackWear by netVar("DT_BaseAttributableItem", "m_flFallbackWear")
-	val m_iEntityQuality by netVar("DT_BaseAttributableItem", "m_iEntityQuality")
+	val m_szCustomName by netVar("DT_BaseAttributableItem", "m_szCustomName")
+	val m_nFallbackSeed by netVar("DT_BaseAttributableItem", "m_nFallbackSeed")
 	val m_nFallbackStatTrak by netVar("DT_BaseAttributableItem", "m_nFallbackStatTrak")
 	
 	val hOwnerEntity by netVar("DT_BaseEntity")

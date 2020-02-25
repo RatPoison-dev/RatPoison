@@ -2,32 +2,27 @@ package rat.poison.scripts
 
 import com.sun.jna.Memory
 import rat.poison.curSettings
-import rat.poison.game.CSGO
 import rat.poison.game.CSGO.ENTITY_SIZE
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.CSGO.engineDLL
 import rat.poison.game.Weapons
 import rat.poison.game.clientState
+import rat.poison.game.entity.type
 import rat.poison.game.entity.weapon
 import rat.poison.game.entity.weaponEntity
-import rat.poison.game.entity.weaponIndex
 import rat.poison.game.me
-import rat.poison.game.netvars.NetVarOffsets.hActiveWeapon
 import rat.poison.game.netvars.NetVarOffsets.hMyWeapons
 import rat.poison.game.netvars.NetVarOffsets.iItemDefinitionIndex
 import rat.poison.game.netvars.NetVarOffsets.m_flFallbackWear
-import rat.poison.game.netvars.NetVarOffsets.m_hViewModel
-import rat.poison.game.netvars.NetVarOffsets.m_iEntityQuality
 import rat.poison.game.netvars.NetVarOffsets.m_iItemIDHigh
 import rat.poison.game.netvars.NetVarOffsets.m_nFallbackPaintKit
+import rat.poison.game.netvars.NetVarOffsets.m_nFallbackSeed
 import rat.poison.game.netvars.NetVarOffsets.m_nFallbackStatTrak
-import rat.poison.game.netvars.NetVarOffsets.m_nModelIndex
+import rat.poison.game.netvars.NetVarOffsets.m_szCustomName
 import rat.poison.game.offsets.ClientOffsets.dwEntityList
-import rat.poison.game.offsets.ClientOffsets.dwLocalPlayer
-import rat.poison.game.offsets.EngineOffsets.dwClientState
 import rat.poison.game.offsets.EngineOffsets.dwModelPrecache
 import rat.poison.strToBool
+import rat.poison.toSkinWeaponClass
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 
@@ -55,13 +50,23 @@ fun skinChanger() = every(1, continuous = true) {
 
         val weaponIndex = csgoEXE.short(weaponEntity + iItemDefinitionIndex)
 
-        val weaponSkin = getSkinNum(weaponIndex.toInt())
+        //val weaponSkin = getSkinNum(weaponIndex.toInt())
 
-        if (weaponSkin != -1) {
+        if (weaponEntity.type().gun) {
+            val sWep = curSettings["SKIN_" + weaponEntity.type().name].toSkinWeaponClass()
+
+            val curWepPaint = csgoEXE.uint(weaponEntity + m_nFallbackPaintKit)
+            val wantedWepPaint = sWep.tSkinID
+
             csgoEXE[weaponEntity + m_iItemIDHigh] = -1
-            csgoEXE[weaponEntity + m_nFallbackPaintKit] = weaponSkin
-            csgoEXE[weaponEntity + m_flFallbackWear] = 0.00001F
-            csgoEXE[weaponEntity + m_nFallbackStatTrak] = curSettings["STATTRAK_NUM"].toInt()
+            csgoEXE[weaponEntity + m_nFallbackPaintKit] = sWep.tSkinID
+            csgoEXE[weaponEntity + m_flFallbackWear] = sWep.tWear
+            csgoEXE[weaponEntity + m_nFallbackStatTrak] = sWep.tStatTrak
+            //csgoEXE[weaponEntity + m_nFallbackSeed] = sWep.tSeed
+
+            if ((curWepPaint.toInt() != wantedWepPaint) && curSettings["FORCE_UPDATE_AUTO"].strToBool()) {
+                forcedUpdate()
+            }
         }
     }
 
@@ -85,19 +90,19 @@ fun skinChanger() = every(1, continuous = true) {
 
 }
 
-fun getSkinNum(id: Int): Int { //Convert like oWeapons
-    var retID = -1
-    when (id) {
-        Weapons.AWP.id -> retID = curSettings["AWP_SKIN_ID"].toInt()
-        Weapons.SSG08.id -> retID = curSettings["SCOUT_SKIN_ID"].toInt()
-        Weapons.AK47.id -> retID = curSettings["AK_SKIN_ID"].toInt()
-        Weapons.M4A4.id -> retID = curSettings["M4_SKIN_ID"].toInt()
-        Weapons.DESERT_EAGLE.id -> retID = curSettings["DEAGLE_SKIN_ID"].toInt()
-        Weapons.USP_SILENCER.id -> retID = curSettings["USPS_SKIN_ID"].toInt()
-    }
-
-    return retID
-}
+//fun getSkinNum(id: Int): Int { //Convert like oWeapons to parse easy
+//    var retID = -1
+//    when (id) {
+//        Weapons.AWP.id -> retID = curSettings["AWP_SKIN_ID"].toInt()
+//        Weapons.SSG08.id -> retID = curSettings["SCOUT_SKIN_ID"].toInt()
+//        Weapons.AK47.id -> retID = curSettings["AK_SKIN_ID"].toInt()
+//        Weapons.M4A4.id -> retID = curSettings["M4_SKIN_ID"].toInt()
+//        Weapons.DESERT_EAGLE.id -> retID = curSettings["DEAGLE_SKIN_ID"].toInt()
+//        Weapons.USP_SILENCER.id -> retID = curSettings["USPS_SKIN_ID"].toInt()
+//    }
+//
+//    return retID
+//}
 
 fun getModelIndexByName(modelName: String): Int {
     val tmpMem: Memory by lazy {

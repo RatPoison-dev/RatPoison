@@ -46,13 +46,16 @@ import rat.poison.utils.extensions.roundNDecimals
 import java.util.concurrent.TimeUnit
 import kotlin.system.measureNanoTime
 
-//Bone trig not set up yet
+//Override Weapon
 data class oWeapon(var tOverride: Boolean,      var tFRecoil: Boolean,  var tFlatAim: Boolean,
                    var tPathAim: Boolean,       var tAimBone: Int,      var tAimFov: Int,
                    var tAimSpeed: Int,          var tAimSmooth: Double, var tPerfectAim: Boolean,
                    var tPAimFov: Int,      var tPAimChance: Int,        var tScopedOnly: Boolean,
                    var tBoneTrig: Boolean = false, var tBTrigBone: Int = 0, var tBTrigAim: Boolean = false,
                    var tBTrigDelay: Int = 0, var tAimAfterShots: Int = 0)
+
+//Skinned Weapon
+data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var tSeed: Int)
 
 const val EXPERIMENTAL = false
 const val SETTINGS_DIRECTORY = "settings" //Internal
@@ -515,6 +518,13 @@ fun String.toWeaponClass(): oWeapon {
     tStr = tStr.replace("oWeapon(", "").replace(")", "")
     val tSA = tStr.split(", ") //temp String Array
     return oWeapon(tOverride = tSA.pull(0).strToBool(), tFRecoil = tSA.pull(1).strToBool(), tFlatAim = tSA.pull(2).strToBool(), tPathAim = tSA.pull(3).strToBool(), tAimBone = tSA.pull(4).toInt(), tAimFov = tSA.pull(5).toInt(), tAimSpeed = tSA.pull(6).toInt(), tAimSmooth = tSA.pull(7).toDouble(), tPerfectAim = tSA.pull(8).strToBool(), tPAimFov = tSA.pull(9).toInt(), tPAimChance = tSA.pull(10).toInt(), tScopedOnly = tSA.pull(11).strToBool())//, tBoneTrig = tSA.pull(13).strToBool(), tBTrigBone = tSA.pull(14).toInt(), tBTrigAim = tSA.pull(15).strToBool(), tBTrigDelay = tSA.pull(16).toInt())
+}
+
+fun String.toSkinWeaponClass(): sWeapon {
+    var tStr = this
+    tStr = tStr.replace("sWeapon(", "").replace(")", "")
+    val tSA = tStr.split(", ")
+    return sWeapon(tSkinID = tSA.pull(0).toInt(), tStatTrak = tSA.pull(1).toInt(), tWear = tSA.pull(2).toFloat(), tSeed = tSA.pull(3).toInt())
 }
 
 private fun List<String>.pull(idx: Int): String {
