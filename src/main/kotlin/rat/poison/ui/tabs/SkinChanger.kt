@@ -28,6 +28,10 @@ class SkinChangerTab : Tab(false, false) {
     private var categorySelectionBox = VisSelectBox<String>()
     private var weaponSelectionBox = VisSelectBox<String>()
 
+    private var idLabel = VisLabel("Skin ID: ")
+    private var statTrakLabel = VisLabel("StatTrak: ")
+    private var wearLabel = VisLabel("Wear: ")
+
     private var skinIDInput = VisValidatableTextField(Validators.INTEGERS)
     private var skinStatTrak = VisValidatableTextField(Validators.INTEGERS)
     private var skinWear = VisValidatableTextField(Validators.FLOATS)
@@ -106,17 +110,17 @@ class SkinChangerTab : Tab(false, false) {
         table.padLeft(25F)
         table.padRight(25F)
 
-        table.add(warningLabel).row()
-        table.add(enableSkinChanger).row()
-        table.add(categorySelectionBox).row()
-        table.add(weaponSelectionBox).row()
+        table.add(warningLabel).colspan(2).row()
+        table.add(enableSkinChanger).colspan(2).row()
+        table.add(categorySelectionBox).colspan(2).row()
+        table.add(weaponSelectionBox).colspan(2).row()
 
-        table.add(skinIDInput).row()
-        table.add(skinStatTrak).row()
-        table.add(skinWear).row()
+        table.add(idLabel); table.add(skinIDInput).row()
+        table.add(statTrakLabel); table.add(skinStatTrak).row()
+        table.add(wearLabel); table.add(skinWear).row()
 
-        table.add(forceUpdate).row()
-        table.add(autoForceUpdate)
+        table.add(forceUpdate).colspan(2).row()
+        table.add(autoForceUpdate).colspan(2)
 
         ////////////////////FORMATTING
     }
