@@ -16,6 +16,7 @@ val mainTabbedPane = TabbedPane()
     val miscTab = MiscTab()
     val ranksTab = RanksTab()
     val nadeHelperTab = NadeHelperTab()
+    val skinChangerTab = SkinChangerTab()
     val optionsTab = OptionsTab()
 
 class UIMenu : VisWindow("Rat Poison 1.6") {
@@ -48,6 +49,7 @@ class UIMenu : VisWindow("Rat Poison 1.6") {
         mainTabbedPane.add(miscTab)
         mainTabbedPane.add(ranksTab)
         mainTabbedPane.add(nadeHelperTab)
+        mainTabbedPane.add(skinChangerTab)
         mainTabbedPane.add(optionsTab)
 
 
@@ -85,6 +87,9 @@ class UIMenu : VisWindow("Rat Poison 1.6") {
                     }
                     nadeHelperTab -> {
                         mainTabbedPaneContent.add(nadeHelperTab.contentTable).growX()
+                    }
+                    skinChangerTab -> {
+                        mainTabbedPaneContent.add(skinChangerTab.contentTable).growX()
                     }
                 }
             }

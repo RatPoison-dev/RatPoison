@@ -19,7 +19,7 @@ private var onEnt = 0L
 
 //Currently just a poc
 ////Only moves towards the center of the player
-//////Keeps up with crouching just fine, but not normal running
+//////Keeps up with crouching just fine, but not normal running usually
 ////////Doesn't predict, isn't accurate
 
 var mePos = Vector()
@@ -44,32 +44,45 @@ internal fun headWalk() = every(1) {
             val distX = (pos.x * cos(calcYaw) + pos.y * sin(calcYaw)).toInt()
             val distY = (pos.y * cos(calcYaw) - pos.x * sin(calcYaw)).toInt()
 
-            println("we do be head walkin, pos: $pos -- distX: $distX -- distY: $distY ")
-
+            //Gotta be a simpler way
+            var wRelease = false
+            var aRelease = false
+            var sRelease = false
+            var dRelease = false
             when {
                 distX < 2 -> {
                     robot.keyPress(KeyEvent.VK_W)
-                    Thread.sleep(1)
-                    robot.keyRelease(KeyEvent.VK_W)
+                    wRelease = true
                 }
                 distX > 2 -> {
                     robot.keyPress(KeyEvent.VK_S)
-                    Thread.sleep(1)
-                    robot.keyRelease(KeyEvent.VK_S)
+                    sRelease = true
                 }
             }
 
             when {
                 distY < 2 -> {
                     robot.keyPress(KeyEvent.VK_A)
-                    Thread.sleep(1)
-                    robot.keyRelease(KeyEvent.VK_A)
+                    aRelease = true
                 }
                 distY > 2 -> {
                     robot.keyPress(KeyEvent.VK_D)
-                    Thread.sleep(1)
-                    robot.keyRelease(KeyEvent.VK_D)
+                    dRelease = true
                 }
+            }
+            //Sleep once instead of up to twice
+            Thread.sleep(1)
+            if (wRelease) {
+                robot.keyRelease(KeyEvent.VK_W)
+            }
+            if (aRelease) {
+                robot.keyRelease(KeyEvent.VK_A)
+            }
+            if (sRelease) {
+                robot.keyRelease(KeyEvent.VK_S)
+            }
+            if (dRelease) {
+                robot.keyRelease(KeyEvent.VK_D)
             }
         }
     }

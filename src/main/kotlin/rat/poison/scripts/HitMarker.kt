@@ -25,8 +25,6 @@ private var totalHits = 0
 fun hitMarker() = App {
     if ((!curSettings["ENABLE_HITMARKER"].strToBool() && !curSettings["HITMARKER_COMBO"].strToBool()) ||  !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || me.dead()) return@App
 
-    if (me.dead()) return@App
-
     val curHits = csgoEXE.int(me + m_totalHitsOnServer)
 
     if (curHits == 0) {
@@ -69,6 +67,10 @@ fun hitMarker() = App {
         val hMLW = curSettings["HITMARKER_WIDTH"].toFloat()
 
         shapeRenderer.apply {
+            if (isDrawing) {
+                end()
+            }
+
             begin()
             set(ShapeRenderer.ShapeType.Filled)
 

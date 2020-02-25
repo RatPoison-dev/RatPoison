@@ -19,6 +19,7 @@ import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import java.io.File
 import rat.poison.scripts.selfNade
+
 import rat.poison.scripts.weaponSpamToggleKey
 import rat.poison.utils.ObservableBoolean
 

@@ -46,6 +46,12 @@ object NetVarOffsets {
 	val bBombDefused by netVar("DT_PlantedC4")
 	val hBombDefuser by netVar("DT_PlantedC4")
 	val flDefuseCountDown by netVar("DT_PlantedC4")
+
+	val m_iItemIDHigh by netVar("DT_BaseAttributableItem", "m_iItemIDHigh")
+	val m_nFallbackPaintKit by netVar("DT_BaseAttributableItem", "m_nFallbackPaintKit")
+	val m_flFallbackWear by netVar("DT_BaseAttributableItem", "m_flFallbackWear")
+	val m_iEntityQuality by netVar("DT_BaseAttributableItem", "m_iEntityQuality")
+	val m_nFallbackStatTrak by netVar("DT_BaseAttributableItem", "m_nFallbackStatTrak")
 	
 	val hOwnerEntity by netVar("DT_BaseEntity")
 	
@@ -69,5 +75,4 @@ object NetVarOffsets {
 	val m_fAccuracyPenalty by netVar("DT_WeaponCSBase", "m_fAccuracyPenalty")
 	val m_nModelIndex by netVar("DT_BaseViewModel", "m_nModelIndex")
 	val m_iViewModelIndex by netVar("DT_BaseCombatWeapon", "m_iViewModelIndex")
-	val m_iEntityQuality by netVar("DT_BaseAttributableItem", "m_iEntityQuality")
 }
