@@ -26,3 +26,5 @@ internal fun Weapon.type(): Weapons {
 
 	return Weapons[id]
 }
+
+internal fun Weapon.index(): Int = csgoEXE.short(this + NetVarOffsets.iItemDefinitionIndex).toInt()

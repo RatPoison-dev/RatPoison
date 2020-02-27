@@ -1,17 +1,11 @@
-package rat.poison.scripts.esp.GlowESP
+package rat.poison.scripts
 
 import rat.poison.*
 import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.netvars.NetVarOffsets.m_iDefaultFov
-import rat.poison.game.netvars.NetVarOffsets.m_iFOV
 import rat.poison.game.netvars.NetVarOffsets.m_zoomLevel
-import rat.poison.scripts.aim.findTarget
-import rat.poison.scripts.aim.target
-import rat.poison.scripts.esp.glow
-import rat.poison.scripts.esp.glowTarget
-import rat.poison.settings.*
 
 internal fun fovChanger() = App {
     if (!curSettings["ENABLE_FOV_CHANGER"].strToBool() || me.dead()) return@App

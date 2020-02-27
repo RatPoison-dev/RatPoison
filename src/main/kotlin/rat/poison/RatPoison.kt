@@ -14,10 +14,7 @@ import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.VisUI
-import com.kotcrab.vis.ui.widget.VisLabel
-import com.kotcrab.vis.ui.widget.VisTable
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -31,7 +28,7 @@ import rat.poison.overlay.Overlay
 import rat.poison.scripts.*
 import rat.poison.scripts.aim.*
 import rat.poison.scripts.esp.*
-import rat.poison.scripts.esp.GlowESP.fovChanger
+import rat.poison.scripts.fovChanger
 import rat.poison.settings.*
 import rat.poison.ui.*
 import rat.poison.utils.*
@@ -192,7 +189,7 @@ fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
         }
     } else {
         File(fileDir).listFiles()?.forEach { file ->
-            if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper") {
+            if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo") {
                 FileReader(file).readLines().forEach { line ->
                     if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                         val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE

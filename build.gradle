@@ -113,6 +113,13 @@ task RatPoison {
 			Files.copy(it.toPath(), (new File(dirHelper, it.getName())).toPath())
 		}
 
+		def dirSkinInfo = file(new File(dir, "settings\\SkinInfo"))
+		dirSkinInfo.mkdirs()
+		def skinfo = file("settings\\SkinInfo")
+		skinfo.listFiles().each {
+			Files.copy(it.toPath(), (new File(dirSkinInfo, it.getName())).toPath())
+		}
+
 		def dirSkin = file(new File(dir, "skin"))
 		dirSkin.mkdirs()
 		def skins = file("skin")

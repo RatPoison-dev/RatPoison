@@ -180,6 +180,8 @@ Base is Charlatano available [here](https://github.com/Jire/Charlatano)
     * Footsteps
         * Teammates, Enemies
     * FOV Changer
+    * Skin Changer
+    * Knife Changer (Models Only)
 
 * Bone Trigger
     * FOV, InCross

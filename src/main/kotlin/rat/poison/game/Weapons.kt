@@ -45,18 +45,18 @@ enum class Weapons(val id: Int, val gun: Boolean = false, val automatic: Boolean
 	DECOY_GRENADE(47, grenade = true),
 	INCENDIARY_GRENADE(48, grenade = true),
 	C4(49, bomb = true),
-	MEDISHOT(57, knife = true),
+	MEDISHOT(57),
 	KNIFE_T(59, knife = true),
 	M4A1_SILENCER(60, gun = true, automatic = true, rifle = true),
 	USP_SILENCER(61, gun = true, pistol = true),
 	CZ75A(63, gun = true, automatic = true, pistol = true),
 	R8_REVOLVER(64, gun = true, boltAction = true, pistol = true, automatic = true),
-	FISTS(69, knife = true),
-	CHARGE(70, knife = true),
-	TABLET(72, knife = true),
-	HAMMER(76, knife = true),
-	FIRE_BOMB(81, knife = true),
-	DIVERSION_DEVICE(82, knife = true),
+	FISTS(69),
+	CHARGE(70),
+	TABLET(72),
+	HAMMER(76),
+	FIRE_BOMB(81),
+	DIVERSION_DEVICE(82),
 	KNIFE_BAYONET(500, knife = true),
 	KNIFE_CSS(503, knife = true),
 	KNIFE_FLIP(505, knife = true),
@@ -73,9 +73,9 @@ enum class Weapons(val id: Int, val gun: Boolean = false, val automatic: Boolean
 	KNIFE_URSUS(519, knife = true),
 	KNIFE_GYPSY(520, knife = true),
 	KNIFE_OUTDOOR(521, knife = true),
-	KNIFE_STILETTO(522, true),
-	KNIFE_WIDOWMAKER(523, true),
-	KNIFE_SKELETON(525, true);
+	KNIFE_STILETTO(522, knife = true),
+	KNIFE_WIDOWMAKER(523, knife = true),
+	KNIFE_SKELETON(525, knife = true);
 	
 	companion object {
 		private val cachedValues = values()

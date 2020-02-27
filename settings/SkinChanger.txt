@@ -1,14 +1,14 @@
 SKINCHANGER = false
+KNIFECHANGER = false
 
 FORCE_UPDATE_AUTO = false
 
-STATTRAK_NUM = 1337
+KNIFE_IDX = 0
 
-sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var tSeed: Int)
+//Knife
+SKIN_KNIFE = sWeapon(tSkinID = 560, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)
 
-sWeapon(tSkinID = 0, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)
-
-////Pistols
+//Pistols
 SKIN_DESERT_EAGLE = sWeapon(tSkinID = 711, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)
 SKIN_DUAL_BERRETA = sWeapon(tSkinID = 625, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)
 SKIN_FIVE_SEVEN = sWeapon(tSkinID = 660, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)

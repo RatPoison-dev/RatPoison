@@ -66,13 +66,3 @@ fun Entity.bones(boneID: Int): Angle {
 	}
 	return ang
 }
-
-//fun Entity.bbox() {
-	//val memCol: Memory by lazy {
-	//	Memory(804)
-	//}
-
-	//csgoEXE.read(this + NetVarOffsets.m_Collision, memCol)
-
-	//println(memCol.getFloat(0x320))
-//}
