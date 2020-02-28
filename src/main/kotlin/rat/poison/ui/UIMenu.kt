@@ -5,16 +5,9 @@ import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.*
 import rat.poison.App.uiAimOverridenWeapons
-import rat.poison.curSettings
 import rat.poison.game.CSGO
-import rat.poison.game.angle
-import rat.poison.game.clientState
 import rat.poison.opened
-import rat.poison.robot
 import rat.poison.ui.tabs.*
-import rat.poison.utils.pathAim
-import java.awt.event.KeyEvent
-import java.awt.event.MouseEvent
 import kotlin.math.sign
 import kotlin.system.exitProcess
 

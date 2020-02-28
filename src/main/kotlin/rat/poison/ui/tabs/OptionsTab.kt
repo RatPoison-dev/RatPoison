@@ -165,7 +165,7 @@ class OptionsTab : Tab(false, false) {
                 println("\nSaving!\n")
                 File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
                     val sbLines = StringBuilder()
-                    if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper") {
+                    if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo") {
                         FileReader(file).readLines().forEach { line ->
                             if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
@@ -224,7 +224,7 @@ class OptionsTab : Tab(false, false) {
 
                 val sbLines = StringBuilder()
                 File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
-                    if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper") {
+                    if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo") {
                         FileReader(file).readLines().forEach { line ->
                             if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                                 val tempCurLine = line.trim().split(" ".toRegex(), 3) //Separate line into 'VARIABLE = VALUE'
