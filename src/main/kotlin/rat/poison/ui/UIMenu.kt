@@ -6,6 +6,7 @@ import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.*
 import rat.poison.App.uiAimOverridenWeapons
 import rat.poison.curSettings
+import rat.poison.game.CSGO
 import rat.poison.game.angle
 import rat.poison.game.clientState
 import rat.poison.opened
@@ -116,7 +117,11 @@ class UIMenu : VisWindow("Rat Poison 1.6") {
                         mainTabbedPaneContent.add(nadeHelperTab.contentTable).growX()
                     }
                     skinChangerTab -> {
-                        wantedHeight = 1000F
+                        if (CSGO.gameHeight < 1000F) {
+                            wantedHeight = CSGO.gameHeight.toFloat() - 100F
+                        } else {
+                            wantedHeight = 1000F
+                        }
                         changeHeight()
                         mainTabbedPaneContent.add(skinChangerTab.contentTable).growX()
                     }
