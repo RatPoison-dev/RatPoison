@@ -9,7 +9,10 @@ import rat.poison.dbg
 import rat.poison.game.hooks.constructEntities
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.netvars.NetVars
-import rat.poison.settings.*
+import rat.poison.settings.CLIENT_MODULE_NAME
+import rat.poison.settings.ENGINE_MODULE_NAME
+import rat.poison.settings.PROCESS_ACCESS_FLAGS
+import rat.poison.settings.PROCESS_NAME
 import rat.poison.utils.every
 import rat.poison.utils.inBackground
 import rat.poison.utils.natives.CUser32

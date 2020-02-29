@@ -49,7 +49,7 @@ class AimTable: VisTable(true) {
     val aimBoneBox = VisSelectBox<String>()
 
     val aimFov = ATabVisSlider("Aim FOV", "_AIM_FOV", 1F, 180F, 1F, true)
-    val aimSpeed = ATabVisSlider("Aim Speed", "_AIM_SPEED", 0F, 5F, 1F, true)
+    val aimSpeed = ATabVisSlider("Aim Speed", "_AIM_SPEED", 0F, 10F, 1F, true)
     val aimSmooth = ATabVisSlider("Smoothness", "_AIM_SMOOTHNESS", 1F, 5F, .1F, false)
     val aimAfterShots = ATabVisSlider("Aim After #", "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true)
 
@@ -59,6 +59,18 @@ class AimTable: VisTable(true) {
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
     val perfectAimFov = ATabVisSlider("FOV", "_PERFECT_AIM_FOV", 1F, 180F, 1F, true)
     val perfectAimChance = ATabVisSlider("Chance", "_PERFECT_AIM_CHANCE", 1F, 100F, 1F, true)
+
+    //Advanced Settings Collapsible
+    val advancedSettingsCheckBox = VisCheckBox("Advanced Settings")
+    private val advancedSettingsTable = VisTable()
+    val advancedSettingsCollapsible = CollapsibleWidget(advancedSettingsTable)
+    val randomizeX = ATabVisSlider("Variation", "_RANDOM_X_VARIATION", 0F, 50F, 1F, true)
+    val randomizeY = ATabVisSlider("Y Variation", "_RANDOM_Y_VARIATION", 0F, 50F, 1F, true)
+    val randomizeDZ = ATabVisSlider("Variation Deadzone", "_VARIATION_DEADZONE", 0F, 100F, 5F, true)
+    val advancedRcsX = ATabVisSlider("RCS X", "_AIM_RCS_X", 0.05F, 1F, 0.05F, false)
+    val advancedRcsY = ATabVisSlider("RCS Y", "_AIM_RCS_Y", 0.05F, 1F, 0.05F, false)
+    val advancedRcsVariation = ATabVisSlider("RCS Variation", "_AIM_RCS_VARIATION", 0F, 1F, 0.05F, false)
+    val advancedSpeedDivisor = ATabVisSlider("Speed Divisor", "_AIM_SPEED_DIVISOR", 1F, 10F, 1F, true)
 
     init {
         if (curSettings["WARNING"].strToBool()) {
@@ -147,16 +159,34 @@ class AimTable: VisTable(true) {
 
         //Create Perfect Aim Collapsible Check Box
         perfectAimCheckBox.isChecked = curSettings[categorySelected + "_PERFECT_AIM"].strToBool()
-        perfectAimCollapsible.setCollapsed(!curSettings[categorySelected + "_PERFECT_AIM"].strToBool(), true)
-
-        perfectAimTable.add(perfectAimFov).left().row()
-        perfectAimTable.add(perfectAimChance).left().row()
-
         perfectAimCheckBox.changed { _, _ ->
             curSettings[categorySelected + "_PERFECT_AIM"] = perfectAimCheckBox.isChecked.boolToStr()
             perfectAimCollapsible.setCollapsed(!perfectAimCollapsible.isCollapsed, true)
         }
+
+        perfectAimCollapsible.setCollapsed(!curSettings[categorySelected + "_PERFECT_AIM"].strToBool(), true)
+        perfectAimTable.add(perfectAimFov).left().row()
+        perfectAimTable.add(perfectAimChance).left().row()
+
         //End Perfect Aim Collapsible Check Box
+
+        //Create Advanced Aim Settings Collapsible
+        advancedSettingsCheckBox.isChecked = curSettings[categorySelected + "_ADVANCED_SETTINGS"].strToBool()
+        advancedSettingsCheckBox.changed { _, _ ->
+            curSettings[categorySelected + "_ADVANCED_SETTINGS"] = advancedSettingsCheckBox.isChecked.boolToStr()
+            advancedSettingsCollapsible.setCollapsed(!advancedSettingsCollapsible.isCollapsed, true)
+        }
+
+        advancedSettingsCollapsible.setCollapsed(!curSettings[categorySelected + "_ADVANCED_SETTINGS"].strToBool(), true)
+
+        advancedSettingsTable.add(randomizeX).left().row()
+        advancedSettingsTable.add(randomizeY).left().row()
+        advancedSettingsTable.add(randomizeDZ).left().row()
+        advancedSettingsTable.add(advancedRcsX).left().row()
+        advancedSettingsTable.add(advancedRcsY).left().row()
+        advancedSettingsTable.add(advancedRcsVariation).left().row()
+        advancedSettingsTable.add(advancedSpeedDivisor).left().row()
+        //End
 
         //Default menu size is 500
         //Texts are 200
@@ -201,6 +231,8 @@ class AimTable: VisTable(true) {
             add(aimAfterShots).left().row() //RIFLE & SMG selection only
             add(perfectAimCheckBox).left().row()
             add(perfectAimCollapsible).left().row()
+            add(advancedSettingsCheckBox).left().row()
+            add(advancedSettingsCollapsible).left().row()
 
             addSeparator()
         }

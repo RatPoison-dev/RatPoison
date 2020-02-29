@@ -1,8 +1,8 @@
 package rat.poison.utils.extensions
 
+import org.jire.arrowhead.Module
 import rat.poison.game.offsets.ModuleScan
 import rat.poison.game.offsets.Offset
-import org.jire.arrowhead.Module
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 

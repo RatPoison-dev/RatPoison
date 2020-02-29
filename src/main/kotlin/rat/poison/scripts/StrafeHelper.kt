@@ -2,7 +2,6 @@ package rat.poison.scripts
 
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
-import rat.poison.game.CSGO
 import rat.poison.game.angle
 import rat.poison.game.clientState
 import rat.poison.game.entity.onGround
@@ -10,15 +9,12 @@ import rat.poison.game.entity.weapon
 import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
-import rat.poison.game.offsets.ClientOffsets
 import rat.poison.robot
-import rat.poison.scripts.aim.target
 import rat.poison.settings.MENUTOG
 import rat.poison.strToBool
 import rat.poison.utils.every
 import rat.poison.utils.inBackground
 import rat.poison.utils.notInGame
-import java.awt.Robot
 import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.VK_SPACE
 

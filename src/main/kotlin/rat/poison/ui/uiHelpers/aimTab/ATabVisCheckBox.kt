@@ -4,7 +4,6 @@ import com.kotcrab.vis.ui.widget.VisCheckBox
 import rat.poison.boolToStr
 import rat.poison.curSettings
 import rat.poison.strToBool
-import rat.poison.ui.aimTab
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.updateDisableAim
@@ -38,7 +37,7 @@ class ATabVisCheckBox(mainText: String, varExtension: String) : VisCheckBox(main
         if (tmp.isNotEmpty()) {
             isChecked = tmp.strToBool()
         } else {
-            println("$categorySelected$variableExtension is empty")
+            println("[Error] $categorySelected$variableExtension is empty")
         }
     }
 

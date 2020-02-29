@@ -2,14 +2,13 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import org.jire.arrowhead.get
 import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.entity.*
 import rat.poison.game.entityByType
 import rat.poison.game.me
-import rat.poison.game.offsets.ClientOffsets.dwUse as dwUse
+import rat.poison.game.offsets.ClientOffsets.dwUse
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.strToBool

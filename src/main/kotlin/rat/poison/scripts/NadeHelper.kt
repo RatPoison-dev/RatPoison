@@ -8,18 +8,19 @@ import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
 import com.sun.jna.Memory
-import org.jire.arrowhead.keyPressed
 import rat.poison.*
 import rat.poison.App.menuStage
-import rat.poison.game.*
-import rat.poison.game.entity.*
+import rat.poison.game.CSGO
 import rat.poison.game.entity.absPosition
 import rat.poison.game.entity.boneMatrix
 import rat.poison.game.entity.direction
+import rat.poison.game.entity.weapon
+import rat.poison.game.me
+import rat.poison.game.w2sViewMatrix
+import rat.poison.game.worldToScreen
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.nadeHelperTab
-import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
 import java.io.File
@@ -205,7 +206,7 @@ fun loadPositions(file: String) {
 
                 nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: $file")
             } else {
-                println("$file is empty, not loading")
+                println("[Error] $file is empty, not loading")
                 nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: N/A")
             }
         }

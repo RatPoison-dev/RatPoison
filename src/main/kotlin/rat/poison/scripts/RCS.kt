@@ -2,12 +2,18 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
-import rat.poison.App
 import rat.poison.curSettings
-import rat.poison.game.*
-import rat.poison.game.entity.*
+import rat.poison.game.angle
+import rat.poison.game.clientState
+import rat.poison.game.entity.punch
+import rat.poison.game.entity.shotsFired
+import rat.poison.game.entity.weapon
+import rat.poison.game.entity.weaponEntity
+import rat.poison.game.me
+import rat.poison.game.setAngle
 import rat.poison.strToBool
-import rat.poison.utils.*
+import rat.poison.utils.every
+import rat.poison.utils.normalize
 
 private val lastPunch = Vector2()
 private val newPunch = Vector2()

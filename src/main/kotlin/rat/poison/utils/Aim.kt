@@ -1,6 +1,7 @@
 package rat.poison.utils
 
-import com.badlogic.gdx.math.MathUtils.random
+import com.sun.jna.platform.win32.WinDef.POINT
+import rat.poison.curSettings
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.CSGO.gameX
@@ -10,13 +11,9 @@ import rat.poison.game.setAngle
 import rat.poison.settings.GAME_PITCH
 import rat.poison.settings.GAME_SENSITIVITY
 import rat.poison.settings.GAME_YAW
+import rat.poison.toInt
 import rat.poison.utils.extensions.refresh
-import rat.poison.utils.extensions.set
-import com.sun.jna.platform.win32.WinDef.POINT
-import rat.poison.game.worldToScreen
 import kotlin.math.round
-
-private val target = POINT()
 
 private val delta = ThreadLocal.withInitial { Vector() }
 
@@ -43,7 +40,7 @@ fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double) {
 	clientState.setAngle(dAng)
 }
 
-fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect: Boolean = false, checkOnScreen: Boolean = true) {
+fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect: Boolean = false, checkOnScreen: Boolean = true, divisor: Int = 1) {
 	if (!destinationAngle.isValid()) { return }
 
 	val delta = delta.get()
@@ -67,10 +64,22 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 
 	var mousePos = POINT().refresh()
 
-	val target = target
+	val target = POINT()
 
-	target.x = (mousePos.x + dx).toInt()
-	target.y = (mousePos.y + dy).toInt()
+	var randX = if (curSettings["AIM_RANDOM_X_VARIATION"].toInt() > 0) randInt(0, curSettings["AIM_RANDOM_X_VARIATION"].toInt()) * randSign() else 0
+	var randY = if (curSettings["AIM_RANDOM_Y_VARIATION"].toInt() > 0) randInt(0, curSettings["AIM_RANDOM_Y_VARIATION"].toInt()) * randSign() else 0
+	val randDZ = curSettings["AIM_VARIATION_DEADZONE"].toInt()
+
+	if (dx.toInt() in -randDZ..randDZ) {
+		randX = 0
+	}
+
+	if (dy.toInt() in -randDZ..randDZ) {
+		randY = 0
+	}
+
+	target.x = (mousePos.x + dx / divisor).toInt() + randX //You do be testing some licks
+	target.y = (mousePos.y + dy / divisor).toInt() + randY
 
 	if (checkOnScreen) {
 		if (target.x <= 0 || target.x >= gameX + gameWidth || target.y <= 0 || target.y >= gameY + gameHeight) {

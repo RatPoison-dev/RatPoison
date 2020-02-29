@@ -1,12 +1,11 @@
 package rat.poison.ui.tabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.badlogic.gdx.utils.Align
-import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.widget.VisLabel
+import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.scripts.ctPlayers
 import rat.poison.scripts.tPlayers
-import rat.poison.ui.ranksTab
 
 class RanksTab : Tab(false, false) {
     private val table = VisTable(true)

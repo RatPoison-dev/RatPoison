@@ -4,10 +4,14 @@ package rat.poison.scripts
 
 import rat.poison.App.haveTarget
 import rat.poison.curSettings
-import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
+import rat.poison.game.entity.dormant
+import rat.poison.game.entity.hltv
+import rat.poison.game.entity.isSpectating
+import rat.poison.game.entity.name
+import rat.poison.game.forEntities
+import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_hObserverTarget
 import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.opened

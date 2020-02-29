@@ -1,9 +1,9 @@
 package rat.poison.game.netvars
 
+import org.jire.arrowhead.Addressed
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.utils.extensions.readable
 import rat.poison.utils.extensions.uint
-import org.jire.arrowhead.Addressed
 import kotlin.LazyThreadSafetyMode.NONE
 
 internal class Class(override val address: Long) : Addressed {

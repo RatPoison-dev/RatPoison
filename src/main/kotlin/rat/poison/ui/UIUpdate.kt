@@ -1,10 +1,12 @@
 package rat.poison.ui
 
 import com.badlogic.gdx.graphics.Color
-import rat.poison.*
 import rat.poison.App.uiAimOverridenWeapons
 import rat.poison.App.uiMenu
+import rat.poison.curSettings
+import rat.poison.opened
 import rat.poison.settings.*
+import rat.poison.toWeaponClass
 import rat.poison.ui.tabs.*
 import rat.poison.ui.tabs.visualstabs.*
 

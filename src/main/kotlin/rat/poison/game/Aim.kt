@@ -1,15 +1,19 @@
 package rat.poison.game
 
+import com.badlogic.gdx.math.MathUtils.clamp
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.entity.*
+import rat.poison.game.entity.Player
+import rat.poison.game.entity.position
+import rat.poison.game.entity.punch
 import rat.poison.game.netvars.NetVarOffsets.vecViewOffset
 import rat.poison.strToBool
-import rat.poison.utils.Angle
-import rat.poison.utils.Vector
-import rat.poison.utils.normalize
-import java.lang.Math.atan
+import rat.poison.toInt
+import rat.poison.utils.*
+import java.lang.Math.random
 import java.lang.Math.toDegrees
+import java.util.concurrent.ThreadLocalRandom
+import kotlin.math.atan
 import kotlin.math.sqrt
 
 fun getCalculatedAngle(player: Player, dst: Vector): Angle {
@@ -25,10 +29,20 @@ fun getCalculatedAngle(player: Player, dst: Vector): Angle {
 	val hyp = sqrt((dX * dX) + (dY * dY))
 
 	if (curSettings["FACTOR_RECOIL"].strToBool()) {
-		ang.x = toDegrees(atan(dZ / hyp)) - myPunch.x * 2.0
-		ang.y = toDegrees(atan(dY / dX)) - myPunch.y * 2.0
+		if (curSettings["AIM_ADVANCED"].strToBool()) {
+			val randX = randDouble(0.0, curSettings["AIM_RCS_VARIATION"].toDouble()) * randBoolean().toInt()
+			val randY = randDouble(0.0, curSettings["AIM_RCS_VARIATION"].toDouble()) * randBoolean().toInt()
+			val calcX = toDegrees(atan(dZ / hyp)) - myPunch.x * clamp(1.0 + curSettings["AIM_RCS_Y"].toDouble() + randX, 1.0, 2.0)
+			val calcY = toDegrees(atan(dY / dX)) - myPunch.y * clamp(1.0 + curSettings["AIM_RCS_X"].toDouble() + randY, 1.0, 2.0)
+			ang.x = calcX
+			ang.y = calcY
+
+		} else {
+			ang.x = toDegrees(atan(dZ / hyp)) - myPunch.x * 2.0 //Move these above IFs
+			ang.y = toDegrees(atan(dY / dX)) - myPunch.y * 2.0
+		}
 	} else {
-		ang.x = toDegrees(atan(dZ / hyp))
+		ang.x = toDegrees(atan(dZ / hyp))//Move these above IFs
 		ang.y = toDegrees(atan(dY / dX))
 	}
 

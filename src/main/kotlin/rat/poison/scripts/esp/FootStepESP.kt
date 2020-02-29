@@ -1,18 +1,18 @@
 package rat.poison.scripts.esp
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.Align
 import rat.poison.*
-import rat.poison.game.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.entity.absPosition
 import rat.poison.game.entity.team
 import rat.poison.game.entity.velocity
 import rat.poison.game.forEntities
+import rat.poison.game.me
+import rat.poison.game.w2sViewMatrix
+import rat.poison.game.worldToScreen
 import rat.poison.utils.Vector
-import rat.poison.utils.every
 import kotlin.math.pow
 import kotlin.math.sqrt
 

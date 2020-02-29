@@ -3,9 +3,6 @@ package rat.poison.game
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.offsets.EngineOffsets.dwViewAngles
 import rat.poison.utils.Angle
-import rat.poison.utils.readCached
-import it.unimi.dsi.fastutil.longs.Long2ObjectMap
-import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
 
 typealias ClientState = Long
 

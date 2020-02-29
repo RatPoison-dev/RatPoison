@@ -1,7 +1,7 @@
 package rat.poison.game.netvars
 
-import rat.poison.game.offsets.ClientOffsets.dwFirstClass
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap
+import rat.poison.game.offsets.ClientOffsets.dwFirstClass
 
 object NetVars {
 	

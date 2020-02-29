@@ -30,6 +30,16 @@ PISTOL_AIM_SPEED = 2
 //Lower is less smooth (faster snapping)
 PISTOL_AIM_SMOOTHNESS = 2.5
 
+//Advanced aim settings
+PISTOL_ADVANCED_SETTINGS = false
+PISTOL_AIM_RCS_X = 2.0
+PISTOL_AIM_RCS_Y = 2.0
+PISTOL_AIM_RCS_VARIATION = 0.0
+PISTOL_AIM_SPEED_DIVISOR = 1
+PISTOL_RANDOM_X_VARIATION = 0
+PISTOL_RANDOM_Y_VARIATION = 0
+PISTOL_VARIATION_DEADZONE = 0
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////// --- PERFECT AIM --- /////////////////////////////////////

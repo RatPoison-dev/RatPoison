@@ -1,21 +1,20 @@
 package rat.poison.ui.tabs
 
-import rat.poison.ui.nadeHelperTab
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.OptionDialogAdapter
-import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.widget.VisLabel
+import com.kotcrab.vis.ui.widget.VisSelectBox
+import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import org.jire.arrowhead.keyPressed
-import rat.poison.*
-import rat.poison.game.entity.absPosition
-import rat.poison.game.me
+import rat.poison.App
+import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.scripts.*
 import rat.poison.ui.changed
+import rat.poison.ui.nadeHelperTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
-import rat.poison.ui.uiHelpers.VisInputFieldCustom
-import rat.poison.utils.ObservableBoolean
 import java.io.File
 
 class NadeHelperTab : Tab(false, false) {

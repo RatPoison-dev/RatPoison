@@ -54,7 +54,7 @@ class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMa
 
             sliderLabel.setText("$labelText: $sliderVal")
         } else {
-            println("$categorySelected$variableExtension is empty")
+            println("[Error] $categorySelected$variableExtension is empty")
         }
     }
 

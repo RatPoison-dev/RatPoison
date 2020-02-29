@@ -1,6 +1,8 @@
 package rat.poison.ui.uiHelpers.tables
 
-import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.widget.VisLabel
+import com.kotcrab.vis.ui.widget.VisSelectBox
+import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.ui.aimTab
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected

@@ -1,12 +1,12 @@
 package rat.poison.scripts.aim
 
+import org.jire.arrowhead.keyPressed
+import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.settings.*
-import rat.poison.utils.*
-import org.jire.arrowhead.keyPressed
-import rat.poison.curSettings
 import rat.poison.strToBool
+import rat.poison.utils.*
 import java.lang.Math.toRadians
 import kotlin.math.abs
 import kotlin.math.sin
@@ -137,7 +137,7 @@ fun Entity.canShoot(visCheck: Boolean = true) = ((if (DANGER_ZONE) { true } else
 
 internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boolean,
 								  crossinline doAim: (destinationAngle: Angle,
-													  currentAngle: Angle, aimSpeed: Int) -> R) = every(duration) {
+													  currentAngle: Angle, aimSpeed: Int, aimSpeedDivisor: Int) -> R) = every(duration) {
 	try {
 		if (!precheck()) return@every
 		if (!curSettings["ENABLE_AIM"].strToBool()) return@every
@@ -216,11 +216,12 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			val destinationAngle = getCalculatedAngle(me, bonePosition) //Rename to current angle
 
 			if (!perfect) {
-				destinationAngle.finalize(currentAngle, (1.1 - curSettings["AIM_SMOOTHNESS"].toDouble() / 5))
+				destinationAngle.finalize(currentAngle, (1.1 - curSettings["AIM_SMOOTHNESS"].toDouble() / 5.0)) //10.0 is max smooth value
 			}
 
 			val aimSpeed = curSettings["AIM_SPEED"].toInt()
-			doAim(destinationAngle, currentAngle, aimSpeed)
+			val aimSpeedDivisor = if (curSettings["AIM_ADVANCED"].strToBool()) curSettings["AIM_SPEED_DIVISOR"].toInt() else 1
+			doAim(destinationAngle, currentAngle, aimSpeed, aimSpeedDivisor)
 		}
 	} catch (e: Exception) { e.printStackTrace() }
 }

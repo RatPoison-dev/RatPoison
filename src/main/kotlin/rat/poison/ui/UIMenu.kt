@@ -2,8 +2,11 @@ package rat.poison.ui
 
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Align
-import com.kotcrab.vis.ui.widget.*
-import com.kotcrab.vis.ui.widget.tabbedpane.*
+import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisWindow
+import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
+import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
 import rat.poison.App.uiAimOverridenWeapons
 import rat.poison.game.CSGO
 import rat.poison.opened

@@ -94,6 +94,7 @@ FORCE_AIM_THROUGH_WALLS = false
 //MS Delay between when aimbot paths are recalculated
 AIM_DURATION = 1
 
+
 //Bone IDs of bones used
 HEAD_BONE = 8
 NECK_BONE = 7
@@ -105,16 +106,23 @@ RANDOM_BONE = -4
 //Temp variables, don't edit
 PERFECT_AIM = true
 PERFECT_AIM_CHANCE = 10
-PERFECT_AIM_FOV = 5
+PERFECT_AIM_FOV = 10
 AIM_BONE = 6
-AIM_SPEED = 3
-AIM_FOV = 60
-AIM_ASSIST_MODE = false
+AIM_SPEED = 4
+AIM_FOV = 65
 FACTOR_RECOIL = true
 ENABLE_FLAT_AIM = false
 ENABLE_PATH_AIM = true
 ENABLE_SCOPED_ONLY = true
 AIM_AFTER_SHOTS = 0
+AIM_ADVANCED = true
+AIM_RCS_X = 0.55
+AIM_RCS_Y = 0.65
+AIM_RCS_VARIATION = 0.25
+AIM_SPEED_DIVISOR = 1
+AIM_RANDOM_X_VARIATION = 20
+AIM_RANDOM_Y_VARIATION = 20
+AIM_VARIATION_DEADZONE = 10
 
 //Can't be edited from menu, not guaranteed to work properly
 PISTOL_AIM_AFTER_SHOTS = 0

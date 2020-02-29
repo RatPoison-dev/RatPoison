@@ -7,13 +7,13 @@ import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.target
 import rat.poison.scripts.esp.glow
 import rat.poison.scripts.esp.glowTarget
-import rat.poison.settings.*
+import rat.poison.settings.DANGER_ZONE
 import rat.poison.strToBool
 import rat.poison.strToColor
 import rat.poison.utils.every
 
 internal fun glowEspEvery() = every(25) {
-	if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || me.dead()) return@every
+	if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return@every
 
 	val currentAngle = clientState.angle()
 	val position = me.position()

@@ -2,14 +2,13 @@ package rat.poison.ui.uiPanels
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Align
-import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.widget.*
-import rat.poison.*
-import rat.poison.App.menuStage
-import rat.poison.game.CSGO.gameHeight
-import rat.poison.game.CSGO.gameWidth
+import rat.poison.curSettings
 import rat.poison.settings.*
-import rat.poison.ui.*
+import rat.poison.strToBool
+import rat.poison.toWeaponClass
+import rat.poison.ui.changed
+import rat.poison.ui.uiUpdate
 import kotlin.math.round
 
 class OverridenWeapons : VisTable(true) {

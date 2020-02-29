@@ -7,13 +7,13 @@ import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.target
 import rat.poison.scripts.esp.glow
 import rat.poison.scripts.esp.glowTarget
-import rat.poison.settings.*
+import rat.poison.settings.DANGER_ZONE
 import java.util.concurrent.TimeUnit
 import kotlin.system.measureNanoTime
 
 internal fun glowEspApp() = App {
 	glowTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
-		if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || me.dead()) return@App
+		if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return@App
 
 		val currentAngle = clientState.angle()
 		val position = me.position()

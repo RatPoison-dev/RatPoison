@@ -1,9 +1,12 @@
 package rat.poison.scripts.aim
 
-import rat.poison.*
+import rat.poison.curSettings
 import rat.poison.game.Weapons
 import rat.poison.game.entity.weapon
 import rat.poison.game.me
+import rat.poison.settingsLoaded
+import rat.poison.strToBool
+import rat.poison.toWeaponClass
 import rat.poison.utils.every
 
 var override = false
@@ -37,6 +40,9 @@ fun setAim() = every(250){
                         if (curWep.rifle || curWep.smg) {
                             curSettings["AIM_AFTER_SHOTS"] = curWepSettings.tAimAfterShots
                         }
+
+                        //Advanced advanced aim settings
+
                         override = true
                     }
                 }
@@ -78,6 +84,15 @@ fun setAim() = every(250){
                 curSettings["ENABLE_SCOPED_ONLY"] = curSettings["SNIPER_ENABLE_SCOPED_ONLY"].strToBool()
 
                 curSettings["AIM_AFTER_SHOTS"] = curSettings[strPre + "_AIM_AFTER_SHOTS"].toInt()
+
+                curSettings["AIM_ADVANCED"] = curSettings[strPre + "_ADVANCED_SETTINGS"].strToBool()
+                curSettings["AIM_RCS_X"] = curSettings[strPre + "_AIM_RCS_X"].toDouble()
+                curSettings["AIM_RCS_Y"] = curSettings[strPre + "_AIM_RCS_Y"].toDouble()
+                curSettings["AIM_RCS_VARIATION"] = curSettings[strPre + "_AIM_RCS_VARIATION"].toDouble()
+                curSettings["AIM_SPEED_DIVISOR"] = curSettings[strPre + "_AIM_SPEED_DIVISOR"].toInt()
+                curSettings["AIM_RANDOM_X_VARIATION"] = curSettings[strPre + "_RANDOM_X_VARIATION"].toInt()
+                curSettings["AIM_RANDOM_Y_VARIATION"] = curSettings[strPre + "_RANDOM_Y_VARIATION"].toInt()
+                curSettings["AIM_VARIATION_DEADZONE"] = curSettings[strPre + "_VARIATION_DEADZONE"].toInt()
             }
         }
     } catch (e: Exception) { println("SetAim failure") } //Fix crashing

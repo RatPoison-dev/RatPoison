@@ -1,11 +1,16 @@
 package rat.poison.scripts
 
-import rat.poison.*
-import rat.poison.game.*
+import rat.poison.App
+import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.entity.*
+import rat.poison.game.entity.dead
+import rat.poison.game.entity.isScoped
+import rat.poison.game.entity.weapon
+import rat.poison.game.entity.weaponEntity
+import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_iDefaultFov
 import rat.poison.game.netvars.NetVarOffsets.m_zoomLevel
+import rat.poison.strToBool
 
 internal fun fovChanger() = App {
     if (!curSettings["ENABLE_FOV_CHANGER"].strToBool() || me.dead()) return@App

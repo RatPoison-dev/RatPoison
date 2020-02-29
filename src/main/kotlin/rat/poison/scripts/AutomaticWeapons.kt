@@ -10,7 +10,7 @@ import rat.poison.game.offsets.ClientOffsets
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.MENUTOG
 import rat.poison.strToBool
-import rat.poison.utils.*
+import rat.poison.utils.every
 
 var punchCheck = 0
 

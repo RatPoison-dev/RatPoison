@@ -1,27 +1,20 @@
 package rat.poison.ui.tabs
 
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.util.Validators
-import com.kotcrab.vis.ui.util.adapter.ArrayAdapter
 import com.kotcrab.vis.ui.util.adapter.ArrayListAdapter
-import com.kotcrab.vis.ui.util.adapter.ListAdapter
-import com.kotcrab.vis.ui.util.adapter.SimpleListAdapter
 import com.kotcrab.vis.ui.widget.*
-import com.kotcrab.vis.ui.widget.color.ColorPickerAdapter
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
 import rat.poison.scripts.forcedUpdate
 import rat.poison.scripts.skinChanger
 import rat.poison.toSkinWeaponClass
-import rat.poison.ui.*
+import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
-import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import java.io.File
 
 class SkinChangerTab : Tab(false, false) {

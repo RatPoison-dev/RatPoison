@@ -12,10 +12,10 @@ import rat.poison.strToBool
 import rat.poison.utils.every
 
 fun doorSpam() = every(20) {
-    if (!curSettings["D_SPAM"].strToBool()) return@every
+    if (!curSettings["D_SPAM"].strToBool() || me.dead()) return@every
 
     updateCursorEnable()
-    if (cursorEnable || me.dead()) return@every
+    if (cursorEnable) return@every
 
     if (keyPressed(curSettings["D_SPAM_KEY"].toInt())) {
         Thread(Runnable {

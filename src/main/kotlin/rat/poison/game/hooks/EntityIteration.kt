@@ -6,7 +6,7 @@ import rat.poison.game.CSGO.GLOW_OBJECT_SIZE
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.engineDLL
-import rat.poison.game.entity.*
+import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.absPosition
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwEntityList

@@ -114,6 +114,11 @@ Update 1.6
     * Smoothness is smoothing applied to the calculated angle towards the target
     * Speed is the ms delay between mouse movements (path aim) from your current angle to the calculated target angle, or between writing angles (flat aim)
     * Aim strictness/aim sensitivity is now always your ingame sensitivity + .5 to prevent jittery snapping
+    * Aim Speed is now maxed at 10 instead of 5
+    * Added multiple more aim settings for randomization (will be added to override weapons eventually)
+        * Aim X/Y Variation per mouse movement, and a deadzone where it wont activate (path aim only)
+        * Configurable X/Y RCS for the aimbot instead of max constantly, and a variation amount
+        * Speed Divisor which divides the target mouse movement by that #
     
 * Added RANDOM aim bone option, picks one of the 4 selectable bones
     * Will hold selected bone until aim is released or target is invalid

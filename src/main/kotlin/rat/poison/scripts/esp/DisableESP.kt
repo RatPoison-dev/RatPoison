@@ -2,7 +2,8 @@ package rat.poison.scripts.esp
 
 import rat.poison.game.CSGO
 import rat.poison.game.Color
-import rat.poison.game.entity.*
+import rat.poison.game.entity.Entity
+import rat.poison.game.entity.EntityType
 import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets

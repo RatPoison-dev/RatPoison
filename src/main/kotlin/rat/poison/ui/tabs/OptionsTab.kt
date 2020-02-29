@@ -11,8 +11,6 @@ import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.jetbrains.kotlin.container.ComponentState
-import org.jetbrains.kotlin.resolve.calls.smartcasts.IdentifierInfo
 import org.jire.arrowhead.keyPressed
 import rat.poison.*
 import rat.poison.App.menuStage

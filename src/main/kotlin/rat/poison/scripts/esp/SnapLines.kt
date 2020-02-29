@@ -6,11 +6,6 @@ import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
-import rat.poison.game.entity.EntityType.Companion.ccsPlayer
-import rat.poison.game.entity.absPosition
-import rat.poison.game.entity.dormant
-import rat.poison.game.entity.team
-import rat.poison.game.forEntities
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
 import rat.poison.strToBool
@@ -19,7 +14,7 @@ import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
 
 fun snapLines() = App {
-    if (!curSettings["ENABLE_SNAPLINES"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame || me.dead()) return@App
+    if (!curSettings["ENABLE_SNAPLINES"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
 
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()

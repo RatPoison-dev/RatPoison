@@ -1,27 +1,27 @@
 package rat.poison.ui.tabs
 
-import com.badlogic.gdx.graphics.g3d.shaders.BaseShader
 import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Array
-import com.kotcrab.vis.ui.util.Validators
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import org.jire.arrowhead.keyPressed
-import rat.poison.*
+import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.boolToStr
+import rat.poison.curSettings
 import rat.poison.scripts.esp.updateHitsound
 import rat.poison.scripts.nameChanger
+import rat.poison.scripts.selfNade
+import rat.poison.scripts.weaponSpamToggleKey
+import rat.poison.strToBool
 import rat.poison.ui.changed
 import rat.poison.ui.miscTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
-import java.io.File
-import rat.poison.scripts.selfNade
-
-import rat.poison.scripts.weaponSpamToggleKey
 import rat.poison.utils.ObservableBoolean
+import java.io.File
 
 class MiscTab : Tab(false, false) {
     private val table = VisTable(true)

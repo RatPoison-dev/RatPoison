@@ -1,26 +1,26 @@
 package rat.poison.scripts.esp
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.badlogic.gdx.math.MathUtils
-import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.math.Vector3
 import rat.poison.App
 import rat.poison.App.shapeRenderer
+import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
-import rat.poison.game.offsets.ClientOffsets
-import rat.poison.settings.*
-import rat.poison.strToBool
-import rat.poison.curSettings
 import rat.poison.game.hooks.defuseKitEntities
+import rat.poison.settings.DANGER_ZONE
+import rat.poison.settings.MENUTOG
+import rat.poison.strToBool
 import rat.poison.strToColor
 import rat.poison.utils.Vector
-import rat.poison.utils.distanceTo
 import rat.poison.utils.normalize
 import rat.poison.utils.notInGame
-import kotlin.math.*
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.hypot
+import kotlin.math.sin
 
-internal fun indicatorEsp() = App {
+//Whole lotta math shit here
+fun indicatorEsp() = App {
     if (!curSettings["ENABLE_ESP"].strToBool() || MENUTOG || !curSettings["INDICATOR_ESP"].strToBool() || notInGame) return@App
 
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L

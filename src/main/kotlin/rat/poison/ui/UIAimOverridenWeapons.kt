@@ -3,7 +3,6 @@ package rat.poison.ui
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.App.uiMenu
-import rat.poison.curSettings
 import rat.poison.opened
 import rat.poison.ui.uiPanels.OverridenWeapons
 

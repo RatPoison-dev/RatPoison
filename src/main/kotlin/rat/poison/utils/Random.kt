@@ -1,5 +1,6 @@
 package rat.poison.utils
 
+import rat.poison.toInt
 import java.util.concurrent.ThreadLocalRandom.current as tlr
 
 fun randDouble(min: Double, max: Double) = tlr().nextDouble(min, max)
@@ -14,3 +15,11 @@ fun randLong(min: Long) = tlr().nextLong(min)
 fun randLong() = tlr().nextLong()
 
 fun randBoolean() = tlr().nextBoolean()
+
+fun randSign(): Int {
+    var tmp = tlr().nextBoolean().toInt()
+    if (tmp == 0) {
+        tmp = -1
+    }
+    return tmp
+}

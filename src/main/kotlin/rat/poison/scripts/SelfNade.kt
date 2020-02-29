@@ -3,11 +3,8 @@ package rat.poison.scripts
 import rat.poison.curSettings
 import rat.poison.game.angle
 import rat.poison.game.clientState
-import rat.poison.game.getCalculatedAngle
-import rat.poison.game.me
 import rat.poison.robot
 import rat.poison.utils.Angle
-import rat.poison.utils.normalize
 import rat.poison.utils.pathAim
 import java.awt.event.KeyEvent
 import java.awt.event.MouseEvent

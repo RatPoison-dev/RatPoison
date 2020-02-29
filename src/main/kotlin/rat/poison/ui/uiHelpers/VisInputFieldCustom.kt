@@ -1,8 +1,11 @@
 package rat.poison.ui.uiHelpers
 
-import com.kotcrab.vis.ui.util.Validators
 import com.badlogic.gdx.graphics.Color
-import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.util.Validators
+import com.kotcrab.vis.ui.widget.LinkLabel
+import com.kotcrab.vis.ui.widget.VisLabel
+import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisValidatableTextField
 import rat.poison.curSettings
 import rat.poison.ui.changed
 
