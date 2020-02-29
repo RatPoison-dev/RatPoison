@@ -64,7 +64,7 @@ class AimTable: VisTable(true) {
     val advancedSettingsCheckBox = VisCheckBox("Advanced Settings")
     private val advancedSettingsTable = VisTable()
     val advancedSettingsCollapsible = CollapsibleWidget(advancedSettingsTable)
-    val randomizeX = ATabVisSlider("Variation", "_RANDOM_X_VARIATION", 0F, 50F, 1F, true)
+    val randomizeX = ATabVisSlider("X Variation", "_RANDOM_X_VARIATION", 0F, 50F, 1F, true)
     val randomizeY = ATabVisSlider("Y Variation", "_RANDOM_Y_VARIATION", 0F, 50F, 1F, true)
     val randomizeDZ = ATabVisSlider("Variation Deadzone", "_VARIATION_DEADZONE", 0F, 100F, 5F, true)
     val advancedRcsX = ATabVisSlider("RCS X", "_AIM_RCS_X", 0.05F, 1F, 0.05F, false)
