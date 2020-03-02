@@ -145,7 +145,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		val meWep = me.weapon()
 		val meWepEnt = me.weaponEntity()
 
-		if (meWep.grenade || meWep.knife || meWep == Weapons.ZEUS_X27) {
+		if (meWep.grenade || meWep.knife || meWep.miscEnt || meWep == Weapons.ZEUS_X27) {
 			reset()
 			return@every
 		}
