@@ -70,7 +70,7 @@ class AimTable: VisTable(true) {
     val advancedRcsX = ATabVisSlider("RCS X", "_AIM_RCS_X", 0.05F, 1F, 0.05F, false)
     val advancedRcsY = ATabVisSlider("RCS Y", "_AIM_RCS_Y", 0.05F, 1F, 0.05F, false)
     val advancedRcsVariation = ATabVisSlider("RCS Variation", "_AIM_RCS_VARIATION", 0F, 1F, 0.05F, false)
-    val advancedSpeedDivisor = ATabVisSlider("Speed Divisor", "_AIM_SPEED_DIVISOR", 1F, 10F, 1F, true)
+    val advancedSpeedDivisor = ATabVisSlider("Mouse Move Divisor", "_AIM_SPEED_DIVISOR", 1F, 10F, 1F, true)
 
     init {
         if (curSettings["WARNING"].strToBool()) {

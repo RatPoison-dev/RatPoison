@@ -31,7 +31,7 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
         }
 
         add(keyLabel).width(200F)
-        add(keyField).spaceRight(6F).width(100F)
+        add(keyField).spaceRight(6F).width(50F)
         if (addLink) {
             add(linkLabel)
         }

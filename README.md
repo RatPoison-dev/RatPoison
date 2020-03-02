@@ -72,6 +72,10 @@ Credit to Mr. Noad & 2772/Matt for a lot of help throughout this project
 
 Update 1.6
 
+* Skin Changer
+    * Skin Changer for all weapons, with skins per weapon options
+    * Knife Changer, some have broken animations, and no skin selection
+
 * Indicator Visuals
     * Should now work properly (same as radar)
     * Heavily cleaned up indicator code, reduced multiple redundancies

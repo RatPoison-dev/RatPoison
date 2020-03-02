@@ -61,6 +61,7 @@ fun skinChanger() = every(1, continuous = true) {
                 if (curSettings["SKINCHANGER"].strToBool()) {
                     val sWep = curSettings["SKIN_" + weaponEntity.type().name].toSkinWeaponClass()
 
+                    //Change these to read weaponEntity kit to a mem and read from it
                     val accountID = csgoEXE.int(weaponEntity + m_OriginalOwnerXuidLow)
                     val curWepPaint = csgoEXE.int(weaponEntity + m_nFallbackPaintKit)
                     val curStatTrak = csgoEXE.int(weaponEntity + m_nFallbackStatTrak)

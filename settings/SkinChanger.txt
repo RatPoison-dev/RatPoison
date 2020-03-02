@@ -1,9 +1,9 @@
-SKINCHANGER = false
-KNIFECHANGER = false
+SKINCHANGER = true
+KNIFECHANGER = true
 
 FORCE_UPDATE_AUTO = true
 
-KNIFE_IDX = 0
+KNIFE_IDX = 17
 
 //Knife
 SKIN_KNIFE = sWeapon(tSkinID = 560, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)
@@ -41,7 +41,7 @@ SKIN_NEGEV = sWeapon(tSkinID = 763, tStatTrak = 1337, tWear = 0.0001F, tSeed = -
 SKIN_M249 = sWeapon(tSkinID = 496, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)
 
 //Snipers
-SKIN_AWP = sWeapon(tSkinID=756, tStatTrak=1337, tWear=1.0E-4, tSeed=-1)
+SKIN_AWP = sWeapon(tSkinID=917, tStatTrak=1337, tWear=0.01, tSeed=-1)
 SKIN_G3SG1 = sWeapon(tSkinID = 511, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)
 SKIN_SCAR20 = sWeapon(tSkinID = 391, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)
 SKIN_SSG08 = sWeapon(tSkinID = 624, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)
