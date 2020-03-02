@@ -1,5 +1,5 @@
-SKINCHANGER = true
-KNIFECHANGER = true
+SKINCHANGER = false
+KNIFECHANGER = false
 
 FORCE_UPDATE_AUTO = true
 
