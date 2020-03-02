@@ -36,7 +36,7 @@ class OptionsTab : Tab(false, false) {
     val menuKeyField = VisValidatableTextField(Validators.FLOATS)
     val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
     val debug = VisCheckBoxCustom("Debug", "DEBUG")
-    val discordLink = LinkLabel("Join Discord", "https://discord.gg/XWUjZs8")
+    val discordLink = LinkLabel("Join Discord", "https://discord.gg/J2uHTJ2")
 
     init {
         //Create UIAlpha Slider
