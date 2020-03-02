@@ -8,16 +8,16 @@ import rat.poison.*
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.angle
 import rat.poison.game.clientState
+import rat.poison.game.entity.*
 import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
-import rat.poison.scripts.aim.findTarget
-import rat.poison.utils.*
-import rat.poison.game.entity.*
-import rat.poison.game.entity.position
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack2
+import rat.poison.scripts.aim.findTarget
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
-import java.awt.Robot
+import rat.poison.utils.Vector
+import rat.poison.utils.distanceTo
+import rat.poison.utils.every
 import java.awt.event.MouseEvent
 
 private const val SwingDistance = 96f

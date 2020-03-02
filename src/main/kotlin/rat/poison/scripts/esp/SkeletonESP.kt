@@ -2,22 +2,22 @@ package rat.poison.scripts.esp
 
 import com.badlogic.gdx.graphics.Color
 import com.sun.jna.Memory
-import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.CSGO.engineDLL
-import rat.poison.game.entity.*
-import rat.poison.game.entity.EntityType.Companion.ccsPlayer
-import rat.poison.game.offsets.EngineOffsets.pStudioModel
-import rat.poison.settings.*
-import rat.poison.utils.Vector
-import rat.poison.utils.collections.CacheableList
-import rat.poison.utils.extensions.uint
 import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap
 import org.jire.arrowhead.unsign
 import rat.poison.App
 import rat.poison.curSettings
-import rat.poison.game.*
+import rat.poison.game.CSGO.csgoEXE
+import rat.poison.game.entity.*
+import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
+import rat.poison.game.me
+import rat.poison.game.worldToScreen
+import rat.poison.settings.DANGER_ZONE
+import rat.poison.settings.MENUTOG
 import rat.poison.strToBool
+import rat.poison.utils.Vector
+import rat.poison.utils.collections.CacheableList
+import rat.poison.utils.extensions.uint
 import rat.poison.utils.notInGame
 
 private val bones = Array(2048) { Line() }
@@ -70,6 +70,10 @@ internal fun skeletonEsp() = App {
 	}
 
 	shapeRenderer.apply {
+		if (isDrawing) {
+			end()
+		}
+
 		begin()
 		for (i in 0 until currentIdx) {
 			val bone = bones[i]

@@ -1,8 +1,11 @@
 package rat.poison.ui.uiHelpers
 
-import com.kotcrab.vis.ui.util.Validators
 import com.badlogic.gdx.graphics.Color
-import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.util.Validators
+import com.kotcrab.vis.ui.widget.LinkLabel
+import com.kotcrab.vis.ui.widget.VisLabel
+import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisValidatableTextField
 import rat.poison.curSettings
 import rat.poison.ui.changed
 
@@ -15,17 +18,20 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
     private val keyField = VisValidatableTextField(Validators.INTEGERS)
     private val linkLabel = LinkLabel("?", "http://cherrytree.at/misc/vk.htm")
 
+    var value = 0
+
     init {
         update()
         changed { _, _ ->
             if (keyField.text.toIntOrNull() != null) {
                 curSettings[variableName] = keyField.text.toInt().toString()
+                value = keyField.text.toInt()
             }
             false
         }
 
         add(keyLabel).width(200F)
-        add(keyField).spaceRight(6F).width(40F)
+        add(keyField).spaceRight(6F).width(50F)
         if (addLink) {
             add(linkLabel)
         }
@@ -33,6 +39,7 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
 
     fun update() {
         keyField.text = curSettings[variableName]
+        value = keyField.text.toInt()
     }
 
     fun disable(bool: Boolean, col: Color) {

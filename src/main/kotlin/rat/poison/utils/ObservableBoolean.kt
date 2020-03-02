@@ -19,9 +19,9 @@ open class ObservableBoolean (
         value = updateState()
     }
 
-    val justBecomeTrue: Boolean
+    val justBecameTrue: Boolean
         get() = !wasTrue && value
 
-    val justBecomeFalse: Boolean
+    val justBecameFalse: Boolean
         get() = wasTrue && !value
 }

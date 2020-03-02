@@ -2,15 +2,12 @@ package rat.poison.ui.tabs
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.kotcrab.vis.ui.util.dialog.Dialogs
-import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.*
-import rat.poison.settings.CHEST_BONE
-import rat.poison.settings.HEAD_BONE
-import rat.poison.settings.NECK_BONE
-import rat.poison.settings.STOMACH_BONE
-import rat.poison.ui.*
+import rat.poison.curSettings
+import rat.poison.settings.*
+import rat.poison.strToBool
+import rat.poison.ui.aimTab
 import rat.poison.ui.uiHelpers.tables.AimBTrigTable
 import rat.poison.ui.uiHelpers.tables.AimTable
 
@@ -57,6 +54,7 @@ fun updateDisableAim() {
         targetSwapDelay.disable(bool, col)
         forceAimKey.disable(bool, col)
         forceAimAlways.disable(bool)
+        forceAimThroughWalls.disable(bool)
         categorySelectLabel.color = col
         categorySelectionBox.isDisabled = bool
         enableFactorRecoil.isDisabled = bool
@@ -68,11 +66,23 @@ fun updateDisableAim() {
         aimFov.disable(bool, col)
         aimSpeed.disable(bool, col)
         aimSmooth.disable(bool, col)
-        aimStrict.disable(bool, col)
+        if (!aimAfterShots.isDisabled()) {
+            aimAfterShots.disable(bool, col)
+        }
         perfectAimCollapsible.isCollapsed = !perfectAimCheckBox.isChecked
         perfectAimCheckBox.isDisabled = bool
         perfectAimChance.disable(bool, col)
         perfectAimFov.disable(bool, col)
+
+        randomizeX.disable(bool, col)
+        randomizeY.disable(bool, col)
+        randomizeDZ.disable(bool, col)
+        advancedSettingsCollapsible.isCollapsed = !advancedSettingsCheckBox.isChecked
+        advancedSettingsCheckBox.isDisabled = bool
+        advancedRcsX.disable(bool, col)
+        advancedRcsY.disable(bool, col)
+        advancedRcsVariation.disable(bool, col)
+        advancedSpeedDivisor.disable(bool, col)
     }
 }
 
@@ -84,6 +94,7 @@ fun updateAim() {
         teammatesAreEnemies.update()
         forceAimKey.update()
         forceAimAlways.update()
+        forceAimThroughWalls.update()
         automaticWeaponsCheckBox.update()
         automaticWeaponsInput.update()
         targetSwapDelay.update()
@@ -100,21 +111,40 @@ fun updateAim() {
             enableScopedOnly.color = Color(255F, 255F, 255F, 0F)
             enableScopedOnly.isDisabled = true
         }
+
+        aimAfterShots.update()
+        if (categorySelected == "RIFLE" || categorySelected == "SMG") {
+            aimAfterShots.disable(false, Color(255F, 255F, 255F, 1F))
+        } else {
+            aimAfterShots.disable(true, Color(0F, 0F, 0F, 0F))
+        }
+
         aimBoneBox.selected = when (curSettings[categorySelected + "_AIM_BONE"].toInt()) {
             HEAD_BONE -> "HEAD"
             NECK_BONE -> "NECK"
             CHEST_BONE -> "CHEST"
             STOMACH_BONE -> "STOMACH"
-            else -> "NEAREST"
+            NEAREST_BONE -> "NEAREST"
+            else -> "RANDOM"
         }
         aimFov.update()
         aimSpeed.update()
         aimSmooth.update()
-        aimStrict.update()
+        aimAfterShots.update()
         perfectAimCheckBox.isChecked = curSettings[categorySelected + "_PERFECT_AIM"].strToBool()
         perfectAimCollapsible.isCollapsed = !curSettings[categorySelected + "_PERFECT_AIM"].strToBool()
         perfectAimFov.update()
         perfectAimChance.update()
+
+        randomizeX.update()
+        randomizeY.update()
+        randomizeDZ.update()
+        advancedSettingsCheckBox.isChecked = curSettings[categorySelected + "_ADVANCED_SETTINGS"].strToBool()
+        advancedSettingsCollapsible.isCollapsed = !curSettings[categorySelected + "_ADVANCED_SETTINGS"].strToBool()
+        advancedRcsX.update()
+        advancedRcsY.update()
+        advancedRcsVariation.update()
+        advancedSpeedDivisor.update()
 
         updateDisableAim()
     }

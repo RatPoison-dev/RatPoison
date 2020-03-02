@@ -34,9 +34,15 @@ SNIPER_AIM_SPEED = 1
 //Lower is less smooth (faster snapping)
 SNIPER_AIM_SMOOTHNESS = 1.0
 
-//Aim strictness (1.0 - 5.0)
-//Lower is more strict (faster, more accurate snapping)
-SNIPER_AIM_STRICTNESS = 1.0
+//Advanced aim settings
+SNIPER_ADVANCED_SETTINGS = false
+SNIPER_AIM_RCS_X = 2.0
+SNIPER_AIM_RCS_Y = 2.0
+SNIPER_AIM_RCS_VARIATION = 0.0
+SNIPER_AIM_SPEED_DIVISOR = 1
+SNIPER_RANDOM_X_VARIATION = 0
+SNIPER_RANDOM_Y_VARIATION = 0
+SNIPER_VARIATION_DEADZONE = 0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

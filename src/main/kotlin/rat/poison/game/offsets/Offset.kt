@@ -1,11 +1,11 @@
 package rat.poison.game.offsets
 
-import rat.poison.utils.extensions.uint
 import com.sun.jna.Memory
 import com.sun.jna.Pointer
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
 import org.jire.arrowhead.Addressed
 import org.jire.arrowhead.Module
+import rat.poison.utils.extensions.uint
 import kotlin.LazyThreadSafetyMode.NONE
 import kotlin.reflect.KProperty
 

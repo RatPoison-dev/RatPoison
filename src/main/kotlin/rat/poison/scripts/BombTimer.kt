@@ -2,14 +2,13 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import org.jire.arrowhead.get
 import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.entity.*
 import rat.poison.game.entityByType
 import rat.poison.game.me
-import rat.poison.game.offsets.ClientOffsets.dwUse as dwUse
+import rat.poison.game.offsets.ClientOffsets.dwUse
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.strToBool
@@ -17,8 +16,11 @@ import rat.poison.toInt
 import rat.poison.ui.bombText
 import rat.poison.utils.every
 
+//ent_create planted_c4_training
+//ent_fire planted_c4_training ActivateSetTimerLength 20
 
 var bombState = BombState()
+private var lastSecDefusing = false
 
 fun bombTimer() {
     bombUpdater() //Call once
@@ -56,7 +58,8 @@ fun bombTimer() {
 }
 
 fun currentGameTicks(): Float = CSGO.engineDLL.float(EngineOffsets.dwGlobalVars + 16)
-fun bombUpdater() = every(15, true) {
+
+fun bombUpdater() = every(15) {
     if (!curSettings["ENABLE_BOMB_TIMER"].strToBool() || DANGER_ZONE) return@every
     val time = currentGameTicks()
     val bomb: Entity = entityByType(EntityType.CPlantedC4)?.entity ?: -1L
@@ -80,15 +83,25 @@ fun bombUpdater() = every(15, true) {
         }
     }
 
-    val timeNeeded = 5.3 + ((!me.hasDefuser()).toInt() * 5)
+    val timeNeeded = 5.2 + ((!me.hasDefuser()).toInt() * 5)
 
-    if (curSettings["LS_BOMB"].strToBool() && me.team() == 3.toLong() && bombState.timeLeftToExplode < timeNeeded && bombState.planted)
-    {
-        CSGO.clientDLL[dwUse] = 5
-        Thread(Runnable {
-            Thread.sleep(bombState.timeLeftToDefuse.toLong() * 1005)
-            CSGO.clientDLL[dwUse] = 4
-        }).start()
+    if (bombState.planted) { //If bomb is planted
+        if (curSettings["LS_BOMB"].strToBool()) { //If last second bomb defuse is enabled
+            if (me.team() == 3L && bombState.timeLeftToExplode <= timeNeeded) { //If we are CT & should defuse
+                if (!lastSecDefusing) {
+                    println(bombState.timeLeftToExplode)
+                    CSGO.clientDLL[dwUse] = 5
+                    Thread(Runnable {
+                        if (bombState.timeLeftToExplode.toLong() > 0) {
+                            Thread.sleep(timeNeeded.toLong() * 1000) //In milliseconds
+                        }
+                        CSGO.clientDLL[dwUse] = 4
+                        lastSecDefusing = false
+                    }).start()
+                    lastSecDefusing = true
+                }
+            }
+        }
     }
 }
 
@@ -111,12 +124,13 @@ data class BombState(var hasBomb: Boolean = false,
             sb.append("TimeToExplode : ${formatFloat(timeLeftToExplode)} \n")
 
             if (location.isNotBlank())
-                sb.append("Location : $location \n")
+                sb.append("Location : $location\n")
             if (gettingDefused) {
-//            sb.append("GettingDefused : $gettingDefused \n")
-                sb.append("CanDefuse : $canDefuse \n")
+                sb.append("Can Defuse: $canDefuse\n")
                 // Redundant as the UI already shows this, but may have a use case I'm missing
-                sb.append("TimeToDefuse : ${formatFloat(timeLeftToDefuse)} ")
+                sb.append("Time To Defuse: ${formatFloat(timeLeftToDefuse)}\n")
+
+                sb.append("Time Left After: ${timeLeftToExplode - timeLeftToDefuse}")
             }
         } else {
             sb.append("Bomb Not Planted!\n")

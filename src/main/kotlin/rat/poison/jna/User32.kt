@@ -2,11 +2,11 @@
 
 package rat.poison.jna
 
-import rat.poison.jna.structures.Rect
-import rat.poison.jna.structures.WindowCompositionAttributeData
 import com.sun.jna.Native
 import com.sun.jna.ptr.IntByReference
 import com.sun.jna.win32.StdCallLibrary
+import rat.poison.jna.structures.Rect
+import rat.poison.jna.structures.WindowCompositionAttributeData
 
 //TODO:convert to enum ffs
 const val AccentFlag_DrawLeftBorder = 0x20

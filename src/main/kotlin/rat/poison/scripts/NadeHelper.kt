@@ -8,18 +8,19 @@ import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
 import com.sun.jna.Memory
-import org.jire.arrowhead.keyPressed
 import rat.poison.*
 import rat.poison.App.menuStage
-import rat.poison.game.*
-import rat.poison.game.entity.*
+import rat.poison.game.CSGO
 import rat.poison.game.entity.absPosition
 import rat.poison.game.entity.boneMatrix
 import rat.poison.game.entity.direction
+import rat.poison.game.entity.weapon
+import rat.poison.game.me
+import rat.poison.game.w2sViewMatrix
+import rat.poison.game.worldToScreen
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.nadeHelperTab
-import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
 import java.io.File
@@ -113,7 +114,7 @@ fun nadeHelper() = App {
                                 sbText.append(fSpot[3].toString())
 
                                 glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
-                                textRenderer.draw(sb, glyph, vec3.x.toFloat(), vec3.y.toFloat() - 10F)
+                                draw(sb, glyph, vec3.x.toFloat(), vec3.y.toFloat() - 10F)
 
                                 sb.end()
                             }
@@ -156,7 +157,7 @@ fun createPosition() {
 
     Dialogs.showInputDialog(menuStage, "Enter Position Name", "", object : InputDialogAdapter() {
         override fun finished(input: String) {
-            //Fuck this
+
             val chooseNadeArrayString = arrayOf("Flash", "Frag", "Molly", "Smoke")
             val chooseNadeArrayInt = arrayOf(1, 2, 3, 4)
 
@@ -205,7 +206,7 @@ fun loadPositions(file: String) {
 
                 nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: $file")
             } else {
-                println("$file is empty, not loading")
+                println("[Error] $file is empty, not loading")
                 nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: N/A")
             }
         }
@@ -248,22 +249,4 @@ fun deletePosition() {
     if (removePos != -1) {
         nadeHelperArrayList.removeAt(removePos)
     }
-}
-
-//Matrix 4 uses column-major order
-private fun Array<DoubleArray>.toMatrix4(): Matrix4 {
-    val input = this
-    val mat4 = Matrix4()
-    val fArr = FloatArray(16)
-
-    var itr = 0
-    for (row in 0..3) {
-        for (col in 0..3) {
-            fArr[itr] = input[col][row].toFloat()
-            itr++
-        }
-    }
-
-    mat4.set(fArr)
-    return mat4
 }

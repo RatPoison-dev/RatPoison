@@ -1,6 +1,8 @@
 package rat.poison.ui
 
-import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.widget.VisLabel
+import com.kotcrab.vis.ui.widget.VisSlider
+import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.curSettings
 import kotlin.math.round
 

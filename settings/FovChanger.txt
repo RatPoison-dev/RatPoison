@@ -1,0 +1,18 @@
+//Enable Fov Changer
+ENABLE_FOV_CHANGER = false
+
+//Default FOV for each gun
+FOV_DEFAULT = 90
+
+//Default FOV for snipers
+FOV_SNIPER_DEFAULT = 90
+
+//Enable smooth FOV transitioning (where possible)
+FOV_SMOOTH = true
+
+//These are defaulted for invisible scope blur
+//Default FOV for zoom lvl 1 (snipers only)
+FOV_ZOOM_1 = 40
+
+//Default FOV for zoom lvl 2 (snipers only)
+FOV_ZOOM_2 = 25

@@ -1,24 +1,24 @@
 package rat.poison.scripts.esp
 
+import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.engineDLL
 import rat.poison.game.Color
 import rat.poison.game.entity.*
+import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_hViewModel
 import rat.poison.game.offsets.ClientOffsets.dwEntityList
 import rat.poison.game.offsets.ClientOffsets.dwLocalPlayer
 import rat.poison.game.offsets.EngineOffsets.dwModelAmbientMin
-import rat.poison.settings.*
+import rat.poison.settings.DANGER_ZONE
+import rat.poison.strToBool
+import rat.poison.strToColor
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import java.lang.Float.floatToIntBits
-import rat.poison.curSettings
-import rat.poison.game.entity.EntityType.Companion.ccsPlayer
-import rat.poison.strToBool
-import rat.poison.strToColor
 
 //Change for entities to for entities ccsplayer
 

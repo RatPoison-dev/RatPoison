@@ -1,11 +1,11 @@
 package rat.poison.scripts
 
+import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.game.CSGO
-import rat.poison.game.hooks.cursorEnable
-import org.jire.arrowhead.keyPressed
 import rat.poison.game.entity.dead
 import rat.poison.game.entity.onGround
+import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets.dwForceJump

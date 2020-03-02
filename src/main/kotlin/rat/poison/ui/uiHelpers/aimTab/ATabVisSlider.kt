@@ -54,12 +54,17 @@ class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMa
 
             sliderLabel.setText("$labelText: $sliderVal")
         } else {
-            println("$categorySelected$variableExtension is empty")
+            println("[Error] $categorySelected$variableExtension is empty")
         }
     }
 
     fun disable(bool: Boolean, col: Color) {
         sliderBar.isDisabled = bool
+        sliderBar.color = col
         sliderLabel.color = col
+    }
+
+    fun isDisabled(): Boolean {
+        return sliderBar.isDisabled
     }
 }

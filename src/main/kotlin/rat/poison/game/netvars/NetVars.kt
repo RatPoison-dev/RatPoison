@@ -1,7 +1,7 @@
 package rat.poison.game.netvars
 
-import rat.poison.game.offsets.ClientOffsets.dwFirstClass
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap
+import rat.poison.game.offsets.ClientOffsets.dwFirstClass
 
 object NetVars {
 	
@@ -15,6 +15,8 @@ object NetVars {
 			if (!prop.name.contains("baseclass")) {
 				val netVar = ClassOffset(name, prop.name, prop.offset)
 				netVars[hashClassAndVar(netVar.className, netVar.variableName)] = netVar
+
+				//println(netVar) //Quick dumper
 			}
 			
 			val child = prop.table

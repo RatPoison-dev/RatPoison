@@ -6,7 +6,7 @@ import rat.poison.game.CSGO.GLOW_OBJECT_SIZE
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.engineDLL
-import rat.poison.game.entity.*
+import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.absPosition
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwEntityList
@@ -66,7 +66,7 @@ fun updateCursorEnable() { //Call when needed
 }
 
 var defuseKitEntities = mutableListOf<Long>()
-//var weaponEntities = mutableListOf<Long>()
+var toneMapController = 0L
 
 fun constructEntities() = every(500) {
     updateCursorEnable()
@@ -130,13 +130,12 @@ fun constructEntities() = every(500) {
                 tmpEntsToAdd.add(entity)
             }
 
-            //if (entity.type().gun) {
-            //    //tmpWepsToAdd.add(entity)
-            //}
+            if (type == EntityType.CEnvTonemapController) {
+                toneMapController = entity
+            }
         }
     }
-    defuseKitEntities = tmpEntsToAdd//entsToTrack
-    //weaponEntities = tmpWepsToAdd
+    defuseKitEntities = tmpEntsToAdd
 
     DANGER_ZONE = dzMode
 }

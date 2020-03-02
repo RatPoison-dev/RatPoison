@@ -2,9 +2,9 @@
 
 package rat.poison.jna.structures
 
-import rat.poison.jna.enums.AccentStates
 import com.sun.jna.Structure
 import org.jire.arrowhead.Struct
+import rat.poison.jna.enums.AccentStates
 
 class AccentPolicy : Struct(), Structure.ByReference {
     @JvmField

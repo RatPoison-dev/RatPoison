@@ -1,0 +1,35 @@
+//Enable snaplines
+ENABLE_SNAPLINES = false
+
+//Line width
+SNAPLINES_WIDTH = 3.0
+
+//Enable snap lines for enemies
+SNAPLINES_ENEMIES = true
+
+//Enable snaplines for teammates
+SNAPLINES_TEAMMATES = false
+
+//Enable snapline for bomb
+SNAPLINES_BOMB = false
+
+//Enable snapline for bomb carrier
+SNAPLINES_BOMB_CARRIER = false
+
+//Enable snaplines for weapons
+SNAPLINES_WEAPONS = false
+
+//Snaplines enemy color
+SNAPLINES_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=1.0)
+
+//Snaplines teammates color
+SNAPLINES_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
+
+//Snaplines bomb color
+SNAPLINES_BOMB_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
+
+//Snaplines enemy color
+SNAPLINES_BOMB_CARRIER_COLOR = Color(red=255, green=140, blue=0, alpha=1.0)
+
+//Snaplines weapon color
+SNAPLINES_WEAPON_COLOR = Color(red=251, green=0, blue=255, alpha=1.0)

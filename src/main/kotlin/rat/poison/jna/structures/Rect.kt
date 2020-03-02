@@ -2,8 +2,8 @@
 
 package rat.poison.jna.structures
 
-import rat.poison.utils.DisposableMemory
 import com.sun.jna.Structure
+import rat.poison.utils.DisposableMemory
 
 class Rect : DisposableMemory(16), Structure.ByReference {
     /** The left.  */

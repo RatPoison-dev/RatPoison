@@ -1,12 +1,10 @@
 package rat.poison.settings
 
+import com.sun.jna.platform.win32.WinNT
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.offsets.ClientOffsets.dwSensitivity
 import rat.poison.game.offsets.ClientOffsets.dwSensitivityPtr
 import rat.poison.utils.extensions.uint
-import com.sun.jna.platform.win32.WinNT
-import rat.poison.game.Color
-import java.awt.event.KeyEvent
 
 var GAME_PITCH = 0.022 // m_pitch
 var GAME_YAW = 0.022 // m_yaw
@@ -21,6 +19,7 @@ var NECK_BONE = 7
 var CHEST_BONE = 6
 var STOMACH_BONE = 5
 var NEAREST_BONE = -1
+var RANDOM_BONE = -4
 
 var AIM_KEY = 1
 

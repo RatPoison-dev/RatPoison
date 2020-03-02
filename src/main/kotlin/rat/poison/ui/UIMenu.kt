@@ -2,11 +2,16 @@ package rat.poison.ui
 
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Align
-import com.kotcrab.vis.ui.widget.*
-import com.kotcrab.vis.ui.widget.tabbedpane.*
+import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisWindow
+import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
+import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
 import rat.poison.App.uiAimOverridenWeapons
+import rat.poison.game.CSGO
 import rat.poison.opened
 import rat.poison.ui.tabs.*
+import kotlin.math.sign
 import kotlin.system.exitProcess
 
 val mainTabbedPane = TabbedPane()
@@ -16,9 +21,13 @@ val mainTabbedPane = TabbedPane()
     val miscTab = MiscTab()
     val ranksTab = RanksTab()
     val nadeHelperTab = NadeHelperTab()
+    val skinChangerTab = SkinChangerTab()
     val optionsTab = OptionsTab()
 
-class UIMenu : VisWindow("Rat Poison 1.5.5.1") {
+private var wantedHeight = 550F
+private var isResizing = false
+
+class UIMenu : VisWindow("Rat Poison 1.6") {
     init {
         defaults().left()
 
@@ -39,7 +48,7 @@ class UIMenu : VisWindow("Rat Poison 1.5.5.1") {
         //Scroll pane for the content pane, content pane goes inside
         val mainScrollPane = ScrollPane(mainTabbedPaneContent) //Init scroll pane containing main content pane
         mainScrollPane.setFlickScroll(false)
-        mainScrollPane.setSize(1000F, 1000F)
+        mainScrollPane.setSize(500F, 500F)
 
         //Add tabs to the tab header
         mainTabbedPane.add(aimTab)
@@ -48,6 +57,7 @@ class UIMenu : VisWindow("Rat Poison 1.5.5.1") {
         mainTabbedPane.add(miscTab)
         mainTabbedPane.add(ranksTab)
         mainTabbedPane.add(nadeHelperTab)
+        mainTabbedPane.add(skinChangerTab)
         mainTabbedPane.add(optionsTab)
 
 
@@ -64,27 +74,52 @@ class UIMenu : VisWindow("Rat Poison 1.5.5.1") {
 
                 mainTabbedPaneContent.clear()
 
+                var normHeight = 565F //Fuck you too
+
                 when (tab) { //Update table content to tab selected content
                     aimTab -> {
+                        wantedHeight = normHeight
+                        changeHeight()
                         mainTabbedPaneContent.add(aimTab.contentTable).growX()
                     }
                     optionsTab -> {
+                        wantedHeight = normHeight
+                        changeHeight()
                         mainTabbedPaneContent.add(optionsTab.contentTable).growX()
                     }
                     rcsTab -> {
+                        wantedHeight = normHeight
+                        changeHeight()
                         mainTabbedPaneContent.add(rcsTab.contentTable).growX()
                     }
                     visualsTab -> {
+                        wantedHeight = normHeight
+                        changeHeight()
                         mainTabbedPaneContent.add(visualsTab.contentTable).growX()
                     }
                     miscTab -> {
+                        wantedHeight = normHeight
+                        changeHeight()
                         mainTabbedPaneContent.add(miscTab.contentTable).growX()
                     }
                     ranksTab -> {
+                        wantedHeight = normHeight
+                        changeHeight()
                         mainTabbedPaneContent.add(ranksTab.contentTable).growX()
                     }
                     nadeHelperTab -> {
+                        wantedHeight = normHeight
+                        changeHeight()
                         mainTabbedPaneContent.add(nadeHelperTab.contentTable).growX()
+                    }
+                    skinChangerTab -> {
+                        if (CSGO.gameHeight < 1000F) {
+                            wantedHeight = CSGO.gameHeight.toFloat() - 100F
+                        } else {
+                            wantedHeight = 1000F
+                        }
+                        changeHeight()
+                        mainTabbedPaneContent.add(skinChangerTab.contentTable).growX()
                     }
                 }
             }
@@ -95,7 +130,6 @@ class UIMenu : VisWindow("Rat Poison 1.5.5.1") {
         add(mainScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
         pack()
         centerWindow()
-
 
         //Update all tab content
         uiUpdate()
@@ -118,6 +152,27 @@ class UIMenu : VisWindow("Rat Poison 1.5.5.1") {
     internal fun changeAlpha(alpha: Float) {
         color.a = alpha
         uiAimOverridenWeapons.color.a = alpha
+    }
+
+    private fun changeHeight() {
+        if (!isResizing) {
+            isResizing = true
+            Thread(Runnable {
+                while (true) {
+                    val difHeight = wantedHeight - height
+                    val dChange = sign(difHeight)
+
+                    if (height in wantedHeight - 4..wantedHeight + 4) {
+                        isResizing = false
+                        break
+                    }
+
+                    height += dChange
+                    y -= dChange
+                    Thread.sleep(1)
+                }
+            }).start()
+        }
     }
 }
 

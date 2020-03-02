@@ -11,8 +11,6 @@ import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.jetbrains.kotlin.container.ComponentState
-import org.jetbrains.kotlin.resolve.calls.smartcasts.IdentifierInfo
 import org.jire.arrowhead.keyPressed
 import rat.poison.*
 import rat.poison.App.menuStage
@@ -37,6 +35,8 @@ class OptionsTab : Tab(false, false) {
     val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F)
     val menuKeyField = VisValidatableTextField(Validators.FLOATS)
     val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
+    val debug = VisCheckBoxCustom("Debug", "DEBUG")
+    val discordLink = LinkLabel("Join Discord", "https://discord.gg/XWUjZs8")
 
     init {
         //Create UIAlpha Slider
@@ -116,10 +116,16 @@ class OptionsTab : Tab(false, false) {
         sldTable.add(loadButton).padLeft(20F).padRight(20F).width(100F)
         sldTable.add(deleteButton).width(100F)
 
+        debug.changed { _, _ ->
+            dbg = debug.isChecked
+            true
+        }
+
         table.add(menuKey).padLeft(25F).left().row()
         table.add(menuAlpha).row()
         table.add(oglFPS).row()
         table.add(stayFocused).padLeft(25F).left().row()
+        table.add(debug).padLeft(25F).left().row()
 
         table.addSeparator()
 
@@ -128,6 +134,9 @@ class OptionsTab : Tab(false, false) {
         table.add(sldTable).row()
 
         table.add(saveCurConfig).width(340F).row()
+
+        table.addSeparator()
+        table.add(discordLink)
     }
 
     override fun getContentTable(): Table? {
@@ -154,7 +163,7 @@ class OptionsTab : Tab(false, false) {
                 println("\nSaving!\n")
                 File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
                     val sbLines = StringBuilder()
-                    if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper") {
+                    if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo") {
                         FileReader(file).readLines().forEach { line ->
                             if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
@@ -213,7 +222,7 @@ class OptionsTab : Tab(false, false) {
 
                 val sbLines = StringBuilder()
                 File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
-                    if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper") {
+                    if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo") {
                         FileReader(file).readLines().forEach { line ->
                             if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                                 val tempCurLine = line.trim().split(" ".toRegex(), 3) //Separate line into 'VARIABLE = VALUE'

@@ -2,7 +2,8 @@ package rat.poison.scripts.esp
 
 import rat.poison.game.CSGO
 import rat.poison.game.Color
-import rat.poison.game.entity.*
+import rat.poison.game.entity.Entity
+import rat.poison.game.entity.EntityType
 import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets
@@ -16,7 +17,7 @@ import java.lang.Float.floatToIntBits
 internal fun disableAllEsp() {
     val cWhite = Color(255, 255, 255, 1.0)
 
-    val clientVModEnt = CSGO.csgoEXE.uint(CSGO.clientDLL.address + ClientOffsets.dwEntityList + (((CSGO.csgoEXE.uint(CSGO.csgoEXE.uint(CSGO.clientDLL.address + ClientOffsets.dwLocalPlayer)+ NetVarOffsets.m_hViewModel)) and 0xFFF) - 1) * 16)
+    val clientVModEnt = CSGO.csgoEXE.uint(CSGO.clientDLL.address + ClientOffsets.dwEntityList + (((CSGO.csgoEXE.uint(CSGO.csgoEXE.uint(CSGO.clientDLL.address + ClientOffsets.dwLocalPlayer) + NetVarOffsets.m_hViewModel)) and 0xFFF) - 1) * 16)
     CSGO.csgoEXE[clientVModEnt + 0x70] = 255.toByte()
     CSGO.csgoEXE[clientVModEnt + 0x71] = 255.toByte()
     CSGO.csgoEXE[clientVModEnt + 0x72] = 255.toByte()

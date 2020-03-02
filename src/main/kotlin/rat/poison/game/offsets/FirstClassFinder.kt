@@ -2,8 +2,8 @@
 
 package rat.poison.game.offsets
 
-import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.clientDLL
+import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.offsets.ClientOffsets.decalname
 import rat.poison.utils.extensions.uint
 

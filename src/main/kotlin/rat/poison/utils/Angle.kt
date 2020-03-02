@@ -32,14 +32,14 @@ internal fun Angle.isValid() = !(z != 0.0
         || y < -180 || y > 180
         || x.isNaN() || y.isNaN() || z.isNaN())
 
-internal fun Angle.finalize(orig: Angle, strictness: Double) {
+internal fun Angle.finalize(orig: Angle, smoothness: Double) {
     x -= orig.x
     y -= orig.y
     z = 0.0
     normalize()
 
-    x = orig.x + x * strictness
-    y = orig.y + y * strictness
+    x = orig.x + x * smoothness
+    y = orig.y + y * smoothness
     normalize()
 }
 

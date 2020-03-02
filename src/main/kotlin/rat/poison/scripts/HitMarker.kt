@@ -25,9 +25,7 @@ private var totalHits = 0
 fun hitMarker() = App {
     if ((!curSettings["ENABLE_HITMARKER"].strToBool() && !curSettings["HITMARKER_COMBO"].strToBool()) ||  !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || me.dead()) return@App
 
-    if (me.dead()) return@App
-
-    val curHits = CSGO.csgoEXE.int(me + m_totalHitsOnServer)
+    val curHits = csgoEXE.int(me + m_totalHitsOnServer)
 
     if (curHits == 0) {
         totalHits = 0
@@ -69,6 +67,10 @@ fun hitMarker() = App {
         val hMLW = curSettings["HITMARKER_WIDTH"].toFloat()
 
         shapeRenderer.apply {
+            if (isDrawing) {
+                end()
+            }
+
             begin()
             set(ShapeRenderer.ShapeType.Filled)
 
@@ -102,6 +104,10 @@ fun hitMarker() = App {
         if (curSettings["HITMARKER_COMBO"].strToBool()) {
             if (hitMarkerCombo >= 2) {
                 textRenderer.apply {
+                    if (sb.isDrawing) {
+                        sb.end()
+                    }
+
                     val glyph = GlyphLayout()
                     sb.begin()
 
@@ -112,7 +118,7 @@ fun hitMarker() = App {
                     val col = curSettings["HITMARKER_COMBO_COLOR"].strToColor()
 
                     glyph.setText(textRenderer, hitMarkerComboSB, 0, (hitMarkerComboSB as CharSequence).length, Color(col.red / 255F, col.green / 255F, col.blue / 255F, hitMarkerAlpha), 1F, Align.center, false, null)
-                    textRenderer.draw(sb, glyph, x + hMS + hMLL, y - hMS - hMLL)
+                    draw(sb, glyph, x + hMS + hMLL, y - hMS - hMLL)
 
                     sb.end()
                 }

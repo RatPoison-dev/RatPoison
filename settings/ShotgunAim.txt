@@ -30,9 +30,15 @@ SHOTGUN_AIM_SPEED = 1
 //Lower is less smooth (faster snapping)
 SHOTGUN_AIM_SMOOTHNESS = 1.0
 
-//Aim strictness (1.0 - 5.0)
-//Lower is more strict (faster, more accurate snapping)
-SHOTGUN_AIM_STRICTNESS = 1.0
+//Advanced aim settings
+SHOTGUN_ADVANCED_SETTINGS = false
+SHOTGUN_AIM_RCS_X = 2.0
+SHOTGUN_AIM_RCS_Y = 2.0
+SHOTGUN_AIM_RCS_VARIATION = 0.0
+SHOTGUN_AIM_SPEED_DIVISOR = 1
+SHOTGUN_RANDOM_X_VARIATION = 0
+SHOTGUN_RANDOM_Y_VARIATION = 0
+SHOTGUN_VARIATION_DEADZONE = 0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

@@ -11,28 +11,34 @@ PISTOL_ENABLE_FLAT_AIM = false
 PISTOL_ENABLE_PATH_AIM = true
 
 //Factor recoil when shooting
-PISTOL_FACTOR_RECOIL = true
+PISTOL_FACTOR_RECOIL = false
 
 //Aim Bone
 //Default bone to aim at
-PISTOL_AIM_BONE = 8
+PISTOL_AIM_BONE = 7
 
 //Aim FOV
 //Aims at entities inside this value
-PISTOL_AIM_FOV = 30
+PISTOL_AIM_FOV = 20
 
 //Aim speed
 //MS delay between aiming steps
 //Lower is faster
-PISTOL_AIM_SPEED = 1
+PISTOL_AIM_SPEED = 2
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-PISTOL_AIM_SMOOTHNESS = 2.0
+PISTOL_AIM_SMOOTHNESS = 2.5
 
-//Aim strictness (1.0 - 5.0)
-//Lower is more strict (faster, more accurate snapping)
-PISTOL_AIM_STRICTNESS = 2.0
+//Advanced aim settings
+PISTOL_ADVANCED_SETTINGS = false
+PISTOL_AIM_RCS_X = 2.0
+PISTOL_AIM_RCS_Y = 2.0
+PISTOL_AIM_RCS_VARIATION = 0.0
+PISTOL_AIM_SPEED_DIVISOR = 1
+PISTOL_RANDOM_X_VARIATION = 0
+PISTOL_RANDOM_Y_VARIATION = 0
+PISTOL_VARIATION_DEADZONE = 0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

@@ -4,24 +4,25 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
-import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
-import rat.poison.*
+import rat.poison.curSettings
 import rat.poison.scripts.esp.disableAllEsp
-import rat.poison.ui.*
+import rat.poison.strToBool
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
-import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
+import rat.poison.ui.visualsTab
 
 val espTabbedPane = TabbedPane()
 val glowEspTab = GlowEspTab()
 val chamsEspTab = ChamsEspTab()
 val indicatorEspTab = IndicatorEspTab()
 val boxEspTab = BoxEspTab()
-val skeletonEspTab = SkeletonEspTab()
+val snaplinesEspTab = SnaplinesEspTab()
+val footStepsEspTab = FootstepsEspTab()
 val hitMarkerTab = HitMarkerTab()
 val nadesTab = NadesVT()
 
@@ -36,8 +37,6 @@ class VisualsTab : Tab(false, false) {
 
     val radarEsp = VisCheckBoxCustom("Radar Esp", "RADAR_ESP")
     val visAdrenaline = VisCheckBoxCustom("Adrenaline", "ENABLE_ADRENALINE")
-    val snaplines = VisCheckBoxCustom(" ", "SNAPLINES")
-    val snaplinesColor = VisColorPickerCustom("Enemy Snaplines", "SNAPLINES_COLOR")
 
     init {
         //ESP Tab
@@ -45,7 +44,8 @@ class VisualsTab : Tab(false, false) {
         espTabbedPane.add(chamsEspTab)
         espTabbedPane.add(indicatorEspTab)
         espTabbedPane.add(boxEspTab)
-        espTabbedPane.add(skeletonEspTab)
+        espTabbedPane.add(snaplinesEspTab)
+        espTabbedPane.add(footStepsEspTab)
         espTabbedPane.add(hitMarkerTab)
         espTabbedPane.add(nadesTab)
 
@@ -84,8 +84,11 @@ class VisualsTab : Tab(false, false) {
                     boxEspTab -> {
                         espTabbedPaneContent.add(boxEspTab.contentTable).left().colspan(2).row()
                     }
-                    skeletonEspTab -> {
-                        espTabbedPaneContent.add(skeletonEspTab.contentTable).left().colspan(2).row()
+                    snaplinesEspTab -> {
+                        espTabbedPaneContent.add(snaplinesEspTab.contentTable).left().colspan(2).row()
+                    }
+                    footStepsEspTab -> {
+                        espTabbedPaneContent.add(footStepsEspTab.contentTable).left().colspan(2).row()
                     }
                     hitMarkerTab -> {
                         espTabbedPaneContent.add(hitMarkerTab.contentTable).left().colspan(2).row()
@@ -99,17 +102,11 @@ class VisualsTab : Tab(false, false) {
             }
         })
 
-        //Snaplines
-        val snaplinesTable = VisTable()
-        snaplinesTable.add(snaplines)
-        snaplinesTable.add(snaplinesColor)
-
         //Add all items to label for tabbed pane content
         table.add(enableEsp).padLeft(25F).left().row()
         table.add(visualsToggleKey).padLeft(25F).left().row()
         table.add(radarEsp).padLeft(25F).left().row()
         table.add(visAdrenaline).padLeft(25F).left().row()
-        table.add(snaplinesTable).padLeft(25F).left().padBottom(5F).row()
         table.add(espTabbedPane.table).minWidth(500F).left().row()
         table.add(espScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
     }
@@ -146,8 +143,6 @@ fun updateDisableEsp() {
         visualsToggleKey.disable(bool, col)
         radarEsp.disable(bool)
         visAdrenaline.disable(bool)
-        snaplines.disable(bool)
-        snaplinesColor.disable(bool)
 
         val recTab = espTabbedPane.activeTab
 
@@ -155,7 +150,8 @@ fun updateDisableEsp() {
         espTabbedPane.disableTab(chamsEspTab, bool)
         espTabbedPane.disableTab(indicatorEspTab, bool)
         espTabbedPane.disableTab(boxEspTab, bool)
-        espTabbedPane.disableTab(skeletonEspTab, bool)
+        espTabbedPane.disableTab(snaplinesEspTab, bool)
+        espTabbedPane.disableTab(footStepsEspTab, bool)
         espTabbedPane.disableTab(hitMarkerTab, bool)
         espTabbedPane.disableTab(nadesTab, bool)
 
@@ -189,9 +185,8 @@ fun updateDisableEsp() {
         chamsEspTab.chamsEnemyColor.disable(bool)
 
         indicatorEspTab.indicatorEsp.disable(bool)
-        indicatorEspTab.indicatorOnScreen.disable(bool)
-        indicatorEspTab.indicatorOval.disable(bool)
         indicatorEspTab.indicatorDistance.disable(bool, col)
+        indicatorEspTab.indicatorSize.disable(bool, col)
         indicatorEspTab.showTeam.disable(bool)
         indicatorEspTab.showEnemies.disable(bool)
         indicatorEspTab.showBomb.disable(bool)
@@ -216,16 +211,36 @@ fun updateDisableEsp() {
         boxEspTab.boxEspNamePos.isDisabled = bool
         boxEspTab.boxEspWeapon.disable(bool)
         boxEspTab.boxEspWeaponPos.isDisabled = bool
-        boxEspTab.showTeam.disable(bool)
-        boxEspTab.showEnemies.disable(bool)
+        boxEspTab.skeletonEsp.disable(bool)
+        boxEspTab.showTeamSkeleton.disable(bool)
+        boxEspTab.showEnemiesSkeleton.disable(bool)
+        boxEspTab.showTeamBox.disable(bool)
+        boxEspTab.showEnemiesBox.disable(bool)
         boxEspTab.showDefusers.disable(bool)
         boxEspTab.boxTeamColor.disable(bool)
         boxEspTab.boxEnemyColor.disable(bool)
         boxEspTab.boxDefuserColor.disable(bool)
 
-        skeletonEspTab.skeletonEsp.disable(bool)
-        skeletonEspTab.showTeam.disable(bool)
-        skeletonEspTab.showEnemies.disable(bool)
+        snaplinesEspTab.enableSnaplines.disable(bool)
+        snaplinesEspTab.enemySnaplines.disable(bool)
+        snaplinesEspTab.enemySnaplinesColor.disable(bool)
+        snaplinesEspTab.teamSnaplines.disable(bool)
+        snaplinesEspTab.teamSnaplinesColor.disable(bool)
+        snaplinesEspTab.weaponSnaplines.disable(bool)
+        snaplinesEspTab.weaponSnaplinesColor.disable(bool)
+        snaplinesEspTab.bombSnaplines.disable(bool)
+        snaplinesEspTab.bombSnaplinesColor.disable(bool)
+        snaplinesEspTab.bombCarrierSnaplines.disable(bool)
+        snaplinesEspTab.bombCarrierSnaplinesColor.disable(bool)
+
+        footStepsEspTab.enableFootSteps.disable(bool)
+        footStepsEspTab.footStepType.isDisabled = bool
+        footStepsEspTab.footStepUpdateTimer.disable(bool, col)
+        footStepsEspTab.footStepTTL.disable(bool, col)
+        footStepsEspTab.footStepTeamBox.disable(bool)
+        footStepsEspTab.footStepTeamColor.disable(bool)
+        footStepsEspTab.footStepEnemyBox.disable(bool)
+        footStepsEspTab.footStepEnemyColor.disable(bool)
 
         hitMarkerTab.hitMarker.disable(bool)
         hitMarkerTab.hitMarkerOutline.disable(bool)
@@ -252,7 +267,6 @@ fun visualsTabUpdate() {
         enableEsp.update()
         visualsToggleKey.update()
         radarEsp.update()
-        snaplines.update()
         visualsToggleKey.update()
     }
 }

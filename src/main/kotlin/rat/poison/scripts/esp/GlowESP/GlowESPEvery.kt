@@ -7,28 +7,29 @@ import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.target
 import rat.poison.scripts.esp.glow
 import rat.poison.scripts.esp.glowTarget
-import rat.poison.settings.*
+import rat.poison.settings.DANGER_ZONE
 import rat.poison.strToBool
 import rat.poison.strToColor
 import rat.poison.utils.every
 
 internal fun glowEspEvery() = every(25) {
-	if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || me.dead()) return@every
+	if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return@every
 
 	val currentAngle = clientState.angle()
 	val position = me.position()
+	val meWep = me.weapon()
 
 	glowTarget.set(-1L)
 
-	if (!me.weapon().knife) {
+	if (!meWep.knife && meWep != Weapons.ZEUS_X27) {
 		if (curSettings["ENABLE_AIM"].strToBool()) {
-			if (curSettings["GLOW_SHOW_TARGET"].strToBool() && target.get() == -1L) {
-				val curTarg = findTarget(position, currentAngle, false)
+			if (curSettings["GLOW_SHOW_TARGET"].strToBool() && target == -1L) {
+				val curTarg = findTarget(position, currentAngle, false, visCheck = !curSettings["FORCE_AIM_THROUGH_WALLS"].strToBool())
 				if (curTarg >= 0) {
 					glowTarget.set(curTarg)
 				}
 			} else if (curSettings["GLOW_SHOW_TARGET"].strToBool()) {
-				glowTarget.set(target.get())
+				glowTarget.set(target)
 			}
 		}
 	}
@@ -56,13 +57,13 @@ internal fun glowEspEvery() = every(25) {
 				if (curSettings["GLOW_SHOW_TARGET"].strToBool() && it.entity == glowTarget.get() && glowTarget.get() != -1L) {
 					color = "GLOW_HIGHLIGHT_COLOR"
 				} else if (curSettings["GLOW_SHOW_ENEMIES"].strToBool() && !team) {
-					color = when (bEnt >= 0 && bEnt == entity && curSettings["GLOW_SHOW_BOMB"].strToBool() && curSettings["GLOW_SHOW_BOMB_CARRIER"].strToBool()) {
-						true -> "GLOW_BOMB_COLOR"
+					color = when (bEnt >= 0 && bEnt == entity && curSettings["GLOW_SHOW_BOMB_CARRIER"].strToBool()) {
+						true -> "GLOW_BOMB_CARRIER_COLOR"
 						false -> "GLOW_ENEMY_COLOR"
 					}
 				} else if (curSettings["GLOW_SHOW_TEAM"].strToBool() && team) {
-					color = when (bEnt >= 0 && bEnt == entity && curSettings["GLOW_SHOW_BOMB"].strToBool() && curSettings["GLOW_SHOW_BOMB_CARRIER"].strToBool()) {
-						true -> "GLOW_BOMB_COLOR"
+					color = when (bEnt >= 0 && bEnt == entity && curSettings["GLOW_SHOW_BOMB_CARRIER"].strToBool()) {
+						true -> "GLOW_BOMB_CARRIER_COLOR"
 						false -> "GLOW_TEAM_COLOR"
 					}
 				}

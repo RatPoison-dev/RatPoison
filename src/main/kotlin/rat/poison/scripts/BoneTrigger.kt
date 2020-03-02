@@ -2,31 +2,24 @@ package rat.poison.scripts
 
 import org.jire.arrowhead.keyPressed
 import org.jire.arrowhead.keyReleased
-import rat.poison.App.haveTarget
-import rat.poison.game.angle
-import rat.poison.game.clientState
-import rat.poison.game.me
-import rat.poison.scripts.aim.findTarget
-import rat.poison.settings.*
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.CSGO.csgoEXE
+import rat.poison.game.angle
+import rat.poison.game.clientState
 import rat.poison.game.entity.*
-import rat.poison.game.entity.bullets
-import rat.poison.game.entity.position
+import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.iCrossHairID
 import rat.poison.game.offsets.ClientOffsets
-import rat.poison.opened
 import rat.poison.robot
 import rat.poison.scripts.aim.boneTrig
-import rat.poison.scripts.aim.canShoot
+import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.inMyTeam
+import rat.poison.settings.AIM_KEY
+import rat.poison.settings.DANGER_ZONE
 import rat.poison.strToBool
-import rat.poison.ui.mainTabbedPane
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
-import java.awt.Robot
-import java.awt.event.InputEvent
 import java.awt.event.InputEvent.BUTTON1_DOWN_MASK
 
 private var callingInShot = false

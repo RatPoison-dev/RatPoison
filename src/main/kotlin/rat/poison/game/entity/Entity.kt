@@ -1,6 +1,7 @@
 package rat.poison.game.entity
 
-import com.sun.jna.Memory
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.bSpottedByMask
@@ -15,9 +16,6 @@ import rat.poison.game.offsets.ClientOffsets.pStudioHdr
 import rat.poison.utils.Angle
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.readCached
-import it.unimi.dsi.fastutil.longs.Long2ObjectMap
-import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
-import rat.poison.game.netvars.NetVarOffsets
 
 typealias Entity = Long
 
@@ -66,13 +64,3 @@ fun Entity.bones(boneID: Int): Angle {
 	}
 	return ang
 }
-
-//fun Entity.bbox() {
-	//val memCol: Memory by lazy {
-	//	Memory(804)
-	//}
-
-	//csgoEXE.read(this + NetVarOffsets.m_Collision, memCol)
-
-	//println(memCol.getFloat(0x320))
-//}

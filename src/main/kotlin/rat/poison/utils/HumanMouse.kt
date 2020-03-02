@@ -1,9 +1,11 @@
 package rat.poison.utils
 
-import rat.poison.utils.extensions.distance
 import com.sun.jna.platform.win32.WinDef
+import rat.poison.utils.extensions.distance
 import java.lang.Math.toRadians
-import kotlin.math.*
+import kotlin.math.floor
+import kotlin.math.sin
+import kotlin.math.sqrt
 import java.util.concurrent.ThreadLocalRandom.current as tlr
 
 object HumanMouse {

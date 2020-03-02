@@ -1,13 +1,12 @@
 package rat.poison.ui
 
 import com.badlogic.gdx.graphics.Color
-import rat.poison.*
 import rat.poison.App.uiAimOverridenWeapons
 import rat.poison.App.uiMenu
-import rat.poison.settings.CHEST_BONE
-import rat.poison.settings.HEAD_BONE
-import rat.poison.settings.NECK_BONE
-import rat.poison.settings.STOMACH_BONE
+import rat.poison.curSettings
+import rat.poison.opened
+import rat.poison.settings.*
+import rat.poison.toWeaponClass
 import rat.poison.ui.tabs.*
 import rat.poison.ui.tabs.visualstabs.*
 
@@ -84,12 +83,25 @@ fun uiUpdate() {
             enableScopedOnly.color = Color(255F, 255F, 255F, 0F)
             enableScopedOnly.isDisabled = true
         }
+
+        aimAfterShotsSlider.value = curWep.tAimAfterShots.toFloat()
+        if (categorySelected == "RIFLE" || categorySelected == "SMG") {
+            aimAfterShotsLabel.color = Color(255F, 255F, 255F, 1F)
+            aimAfterShotsSlider.color = Color(255F, 255F, 255F, 1F)
+            aimAfterShotsSlider.isDisabled = false
+        } else {
+            aimAfterShotsLabel.color = Color(255F, 255F, 255F, 0F)
+            aimAfterShotsSlider.color = Color(255F, 255F, 255F, 0F)
+            aimAfterShotsSlider.isDisabled = true
+        }
+
         aimBoneBox.selected = when (curWep.tAimBone) {
             HEAD_BONE -> "HEAD"
             NECK_BONE -> "NECK"
             CHEST_BONE -> "CHEST"
             STOMACH_BONE -> "STOMACH"
-            else -> "NEAREST"
+            NEAREST_BONE -> "NEAREST"
+            else -> "RANDOM"
         }
         aimFovLabel.setText("FOV: " + curWep.tAimFov)
         aimFovSlider.value = curWep.tAimFov.toFloat()
@@ -97,8 +109,8 @@ fun uiUpdate() {
         aimSpeedSlider.value = curWep.tAimSpeed.toFloat()
         aimSmoothnessLabel.setText("Smooth: " + curWep.tAimSmooth)
         aimSmoothnessSlider.value = curWep.tAimSmooth.toFloat()
-        aimStrictnessLabel.setText("Strictness: " + curWep.tAimStrict)
-        aimStrictnessSlider.value = curWep.tAimStrict.toFloat()
+        aimAfterShotsLabel.setText("Aim After #: " + curWep.tAimAfterShots)
+        aimAfterShotsSlider.value = curWep.tAimAfterShots.toFloat()
         perfectAimCheckBox.isChecked = curWep.tPerfectAim
         perfectAimCollapsible.isCollapsed = !curWep.tPerfectAim
         perfectAimFovLabel.setText("FOV: " + curWep.tPAimFov)
@@ -112,9 +124,10 @@ fun uiUpdate() {
     chamsEspTabUpdate()
     indicatorEspTabUpdate()
     boxEspTabUpdate()
-    skeletonEspTabUpdate()
     hitMarkerTabUpdate()
     nadesVTUpdate()
+    snaplinesEspTabUpdate()
+    footStepsEspTabUpdate()
     miscTabUpdate()
     rcsTabUpdate()
     nadeHelperTabUpdate()

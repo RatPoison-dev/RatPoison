@@ -1,7 +1,7 @@
 package rat.poison.game.entity
 
-import rat.poison.game.CSGO.csgoEXE
 import org.jire.arrowhead.unsign
+import rat.poison.game.CSGO.csgoEXE
 
 enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false, val grenadeProjectile: Boolean = false) {
 	NULL,

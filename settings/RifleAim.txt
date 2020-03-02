@@ -19,20 +19,29 @@ RIFLE_AIM_BONE = 6
 
 //Aim FOV
 //Aims at entities inside this value
-RIFLE_AIM_FOV = 60
+RIFLE_AIM_FOV = 80
 
 //Aim speed
 //MS delay between aiming steps
 //Lower is faster
-RIFLE_AIM_SPEED = 1
+RIFLE_AIM_SPEED = 3
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-RIFLE_AIM_SMOOTHNESS = 2.5
+RIFLE_AIM_SMOOTHNESS = 3.0
 
-//Aim strictness (1.0 - 5.0)
-//Lower is more strict (faster, more accurate snapping)
-RIFLE_AIM_STRICTNESS = 2.0
+//Aim after X shots
+RIFLE_AIM_AFTER_SHOTS = 0
+
+//Advanced aim settings
+RIFLE_ADVANCED_SETTINGS = true
+RIFLE_AIM_RCS_X = 0.75
+RIFLE_AIM_RCS_Y = 0.85
+RIFLE_AIM_RCS_VARIATION = 0.15
+RIFLE_AIM_SPEED_DIVISOR = 2
+RIFLE_RANDOM_X_VARIATION = 15
+RIFLE_RANDOM_Y_VARIATION = 15
+RIFLE_VARIATION_DEADZONE = 15
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,35 +1,33 @@
 package rat.poison.scripts
 
 import org.jire.arrowhead.keyPressed
-import rat.poison.*
-import rat.poison.game.*
+import rat.poison.curSettings
+import rat.poison.game.angle
+import rat.poison.game.clientState
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.entity.absPosition
 import rat.poison.game.entity.dead
-import rat.poison.game.entity.velocity
+import rat.poison.game.entity.onGround
+import rat.poison.game.forEntities
 import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
-import rat.poison.ui.miscTab
+import rat.poison.game.me
+import rat.poison.robot
+import rat.poison.strToBool
 import rat.poison.utils.Angle
-import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.Vector
 import rat.poison.utils.every
-import java.awt.Robot
 import java.awt.event.KeyEvent
+import kotlin.math.abs
 import kotlin.math.cos
-import kotlin.math.pow
 import kotlin.math.sin
-import kotlin.math.sqrt
 
 private var onEnt = 0L
-var headWalkToggle = ObservableBoolean({onPlayerHead()})
 
 //Currently just a poc
 ////Only moves towards the center of the player
-//////Keeps up with crouching just fine, but not normal running
+//////Keeps up with crouching just fine, but not normal running usually
 ////////Doesn't predict, isn't accurate
-
-//Switch velocity to difference in current pos vs prev
 
 var mePos = Vector()
 var onEntPos = Vector()
@@ -41,38 +39,57 @@ internal fun headWalk() = every(1) {
 
     if (!keyPressed(KeyEvent.VK_W) && !keyPressed(KeyEvent.VK_A) && !keyPressed(KeyEvent.VK_S) && !keyPressed(KeyEvent.VK_D)) {
         mePos = me.absPosition()
-        headWalkToggle.update()
-        if (headWalkToggle.value) {
+        if (onPlayerHead()) {
             updateCursorEnable()
             if (cursorEnable) return@every
 
             val pos = Vector(mePos.x - onEntPos.x, mePos.y - onEntPos.y, mePos.z - onEntPos.z)
             val yaw = clientState.angle().y
+            val calcYaw = yaw/180*Math.PI
 
             //Is this even needed?
-            val distX = (pos.x * cos(yaw / 180 * Math.PI) + pos.y * sin(yaw / 180 * Math.PI)).toInt()
-            val distY = (pos.y * cos(yaw / 180 * Math.PI) - pos.x * sin(yaw / 180 * Math.PI)).toInt()
+            val distX = (pos.x * cos(calcYaw) + pos.y * sin(calcYaw)).toInt()
+            val distY = (pos.y * cos(calcYaw) - pos.x * sin(calcYaw)).toInt()
 
+            //Gotta be a simpler way
+            var wRelease = false
+            var aRelease = false
+            var sRelease = false
+            var dRelease = false
             when {
                 distX < 2 -> {
                     robot.keyPress(KeyEvent.VK_W)
-                    robot.keyRelease(KeyEvent.VK_W)
+                    wRelease = true
                 }
                 distX > 2 -> {
                     robot.keyPress(KeyEvent.VK_S)
-                    robot.keyRelease(KeyEvent.VK_S)
+                    sRelease = true
                 }
             }
 
             when {
                 distY < 2 -> {
                     robot.keyPress(KeyEvent.VK_A)
-                    robot.keyRelease(KeyEvent.VK_A)
+                    aRelease = true
                 }
                 distY > 2 -> {
                     robot.keyPress(KeyEvent.VK_D)
-                    robot.keyRelease(KeyEvent.VK_D)
+                    dRelease = true
                 }
+            }
+            //Sleep once instead of up to twice
+            Thread.sleep(1)
+            if (wRelease) {
+                robot.keyRelease(KeyEvent.VK_W)
+            }
+            if (aRelease) {
+                robot.keyRelease(KeyEvent.VK_A)
+            }
+            if (sRelease) {
+                robot.keyRelease(KeyEvent.VK_S)
+            }
+            if (dRelease) {
+                robot.keyRelease(KeyEvent.VK_D)
             }
         }
     }
@@ -84,15 +101,15 @@ internal fun onPlayerHead() : Boolean {
 
     forEntities(ccsPlayer) {
         val entity = it.entity
-        if (entity == me) return@forEntities false
+        if (entity == me || !entity.onGround()) return@forEntities false
 
         entPos = entity.absPosition()
 
-        val xDif = mePos.x - entPos.x
-        val yDif = mePos.y - entPos.y
+        val xDist = abs(mePos.x - entPos.x)
+        val yDist = abs(mePos.y - entPos.y)
         val zDif = mePos.z - entPos.z
 
-        if (xDif in -30.0..30.0 && yDif in -30.0..30.0 && zDif in 50.0..75.0) {
+        if (xDist <= 30 && yDist <= 30 && zDif in 50.0..75.0) {
             onEnt = entity
             onEntPos = entPos
         }

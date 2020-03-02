@@ -23,7 +23,7 @@ apply plugin: "application"
 apply plugin: "com.github.johnrengelman.shadow"
 
 group "rat.poison"
-version "1.5.5.1"
+version "1.6"
 
 mainClassName = "rat.poison.RatPoison"
 
@@ -82,7 +82,8 @@ task RatPoison {
 		set path="%JAVA_HOME%";%path%
 		cd /d "%~dp0"
 		title $name
-		java -Xmx512m -Xms512m -jar "$jarName" """.getBytes())
+		java -Xmx512m -Xms512m -jar "$jarName" 
+		pause""".getBytes())
 
 		def dirSettings = file(new File(dir, "settings"))
 		dirSettings.mkdirs()
@@ -110,6 +111,13 @@ task RatPoison {
 		def helper = file("settings\\NadeHelper")
 		helper.listFiles().each {
 			Files.copy(it.toPath(), (new File(dirHelper, it.getName())).toPath())
+		}
+
+		def dirSkinInfo = file(new File(dir, "settings\\SkinInfo"))
+		dirSkinInfo.mkdirs()
+		def skinfo = file("settings\\SkinInfo")
+		skinfo.listFiles().each {
+			Files.copy(it.toPath(), (new File(dirSkinInfo, it.getName())).toPath())
 		}
 
 		def dirSkin = file(new File(dir, "skin"))

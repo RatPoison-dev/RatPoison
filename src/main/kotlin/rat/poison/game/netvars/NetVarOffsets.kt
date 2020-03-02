@@ -9,8 +9,10 @@ object NetVarOffsets {
 	val vecOrigin by netVar("DT_BaseEntity")
 	val angEyeAngles by netVar("DT_CSPlayer")
 
-	val m_Collision by netVar("DT_BasePlayer", "m_Collision")
-	val m_CollisionGroup by netVar("DT_CSPlayer", "m_CollisionGroup", -48)
+	val m_zoomLevel by netVar("DT_WeaponCSBaseGun", "m_zoomLevel")
+
+	val m_iFOV by netVar("DT_CSPlayer", "m_iFOV")
+	val m_iDefaultFov by netVar("DT_BasePlayer", "m_iDefaultFOV")
 
 	val iCompetitiveRanking by netVar("DT_CSPlayerResource")
 	val iKills by netVar("DT_CSPlayerResource")
@@ -44,6 +46,18 @@ object NetVarOffsets {
 	val bBombDefused by netVar("DT_PlantedC4")
 	val hBombDefuser by netVar("DT_PlantedC4")
 	val flDefuseCountDown by netVar("DT_PlantedC4")
+
+	val m_iAccountID by netVar("DT_BaseAttributableItem", "m_iAccountID")
+	val m_OriginalOwnerXuidLow by netVar("DT_BaseAttributableItem", "m_OriginalOwnerXuidLow")
+	val m_iItemIDHigh by netVar("DT_BaseAttributableItem", "m_iItemIDHigh")
+	val m_nFallbackPaintKit by netVar("DT_BaseAttributableItem", "m_nFallbackPaintKit")
+	val m_flFallbackWear by netVar("DT_BaseAttributableItem", "m_flFallbackWear")
+	val m_szCustomName by netVar("DT_BaseAttributableItem", "m_szCustomName")
+	val m_nFallbackSeed by netVar("DT_BaseAttributableItem", "m_nFallbackSeed")
+	val m_nFallbackStatTrak by netVar("DT_BaseAttributableItem", "m_nFallbackStatTrak")
+	val m_iEntityQuality by netVar("DT_BaseAttributableItem", "m_iEntityQuality")
+	val m_nModelIndex by netVar("DT_BaseViewModel", "m_nModelIndex")
+	val m_hWeaponWorldModel by netVar("")
 	
 	val hOwnerEntity by netVar("DT_BaseEntity")
 	
@@ -65,7 +79,5 @@ object NetVarOffsets {
 	val m_hOwnerEntity by netVar("DT_CSPlayer", "m_hOwnerEntity")
 	val m_bShouldGlow by netVar("DT_DynamicProp", "m_bShouldGlow")
 	val m_fAccuracyPenalty by netVar("DT_WeaponCSBase", "m_fAccuracyPenalty")
-	val m_nModelIndex by netVar("DT_BaseViewModel", "m_nModelIndex")
 	val m_iViewModelIndex by netVar("DT_BaseCombatWeapon", "m_iViewModelIndex")
-	val m_iEntityQuality by netVar("DT_BaseAttributableItem", "m_iEntityQuality")
 }

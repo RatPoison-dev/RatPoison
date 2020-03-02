@@ -11,12 +11,6 @@ ENABLE_ADRENALINE = false
 //Enable radar esp
 RADAR_ESP = false
 
-//Enable snap lines for enemies
-SNAPLINES = false
-
-//Snaplines color
-SNAPLINES_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
-
 //Enable audible hitsound
 //Activates on enemy hit
 ENABLE_HITSOUND = false

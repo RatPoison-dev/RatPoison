@@ -2,11 +2,11 @@
 
 package rat.poison.jna.structures
 
-import rat.poison.jna.enums.AccentStates
-import rat.poison.jna.enums.WindowCompositionAttributes
 import com.sun.jna.Pointer
 import com.sun.jna.Structure
 import org.jire.arrowhead.Struct
+import rat.poison.jna.enums.AccentStates
+import rat.poison.jna.enums.WindowCompositionAttributes
 
 class WindowCompositionAttributeData() : Struct(), Structure.ByReference {
     @JvmField
