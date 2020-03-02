@@ -34,7 +34,7 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			return@result false
 		}
 
-		if (it.type != EntityType.CCSPlayer) {
+        if (it.type != EntityType.CCSPlayer && it.type != EntityType.CDrone) {
 			return@result false
 		}
 
