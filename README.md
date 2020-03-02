@@ -63,7 +63,6 @@ Credit to Mr. Noad & 2772/Matt for a lot of help throughout this project
 
 **ROADMAP:**
 * Add bomb in fov check for last second bomb Defuse
-* ~Door spam~
 * Add auto update script (from github)
 
 ---
