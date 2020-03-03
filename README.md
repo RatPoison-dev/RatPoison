@@ -39,7 +39,7 @@ You can launch the cheat any time after launching CSGO.
 
 **Beginner's Guide Video**
 
-[![Beginner's Video](http://i.imgur.com/pVLW5Yr.png)](https://www.youtube.com/watch?v=PapjDtR0OMY "Charlatano")
+[![Beginner's Video](https://i.imgur.com/0MGWXMn.jpg)](https://www.youtube.com/watch?v=BnvuJJCyF9Y "Rat Poison")
 
 ---
 
