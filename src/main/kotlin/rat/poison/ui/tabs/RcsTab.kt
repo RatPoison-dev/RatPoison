@@ -6,13 +6,13 @@ import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
 import rat.poison.strToBool
-import rat.poison.ui.rcsTab
+import rat.poison.ui.uiPanels.rcsTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 
 class RcsTab : Tab(false, false) {
-    private val table = VisTable(true)
+    private val table = VisTable(false)
 
     //Init labels/sliders/boxes that show values here
     val enableRCS = VisCheckBoxCustom("Enable RCS", "ENABLE_RCS")

@@ -1,10 +1,10 @@
-package rat.poison.ui
+package rat.poison.ui.uiPanels
 
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.App.uiMenu
 import rat.poison.opened
-import rat.poison.ui.uiPanels.OverridenWeapons
+import rat.poison.ui.uiPanelTables.OverridenWeapons
 
 val overridenWeapons = OverridenWeapons()
 

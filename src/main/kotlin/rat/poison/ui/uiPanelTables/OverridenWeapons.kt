@@ -1,4 +1,4 @@
-package rat.poison.ui.uiPanels
+package rat.poison.ui.uiPanelTables
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Align
@@ -8,6 +8,7 @@ import rat.poison.settings.*
 import rat.poison.strToBool
 import rat.poison.toWeaponClass
 import rat.poison.ui.changed
+import rat.poison.ui.uiPanels.overridenWeapons
 import rat.poison.ui.uiUpdate
 import kotlin.math.round
 
@@ -28,8 +29,8 @@ class OverridenWeapons : VisTable(true) {
     val weaponOverrideEnableCheckBox = VisCheckBox("Enable Override")
 
     val enableFactorRecoil = VisCheckBox("Factor Recoil")
-    val enableFlatAim = VisCheckBox("Flat Aim")
-    val enablePathAim = VisCheckBox("Path Aim")
+    val enableFlatAim = VisCheckBox("Write Angles")
+    val enablePathAim = VisCheckBox("Mouse Movement")
     val enableScopedOnly = VisCheckBox("Scoped Only")
 
     private val aimBoneLabel = VisLabel("Bone: ")
@@ -336,45 +337,55 @@ class OverridenWeapons : VisTable(true) {
     }
 }
 
-fun updateEnable() {
+fun overridenWeaponsUpdate() { //This isn't needed... because the Override Weapons hides it
+    overridenWeapons.apply {
+        val curWep = curSettings[overridenWeapons.weaponOverrideSelected].toWeaponClass()
 
+        overridenWeapons.weaponOverrideEnableCheckBox.isChecked = curWep.tOverride
+        enableFactorRecoil.isChecked = curWep.tFRecoil
+        enableFlatAim.isChecked = curWep.tFlatAim
+        enablePathAim.isChecked = curWep.tPathAim
+        enableScopedOnly.isChecked = curWep.tScopedOnly
+        if (categorySelected == "SNIPER") {
+            enableScopedOnly.color = Color(255F, 255F, 255F, 1F)
+            enableScopedOnly.isDisabled = false
+        } else {
+            enableScopedOnly.color = Color(255F, 255F, 255F, 0F)
+            enableScopedOnly.isDisabled = true
+        }
+
+        aimAfterShotsSlider.value = curWep.tAimAfterShots.toFloat()
+        if (categorySelected == "RIFLE" || categorySelected == "SMG") {
+            aimAfterShotsLabel.color = Color(255F, 255F, 255F, 1F)
+            aimAfterShotsSlider.color = Color(255F, 255F, 255F, 1F)
+            aimAfterShotsSlider.isDisabled = false
+        } else {
+            aimAfterShotsLabel.color = Color(255F, 255F, 255F, 0F)
+            aimAfterShotsSlider.color = Color(255F, 255F, 255F, 0F)
+            aimAfterShotsSlider.isDisabled = true
+        }
+
+        aimBoneBox.selected = when (curWep.tAimBone) {
+            HEAD_BONE -> "HEAD"
+            NECK_BONE -> "NECK"
+            CHEST_BONE -> "CHEST"
+            STOMACH_BONE -> "STOMACH"
+            NEAREST_BONE -> "NEAREST"
+            else -> "RANDOM"
+        }
+        aimFovLabel.setText("FOV: " + curWep.tAimFov)
+        aimFovSlider.value = curWep.tAimFov.toFloat()
+        aimSpeedLabel.setText("Speed: " + curWep.tAimSpeed)
+        aimSpeedSlider.value = curWep.tAimSpeed.toFloat()
+        aimSmoothnessLabel.setText("Smooth: " + curWep.tAimSmooth)
+        aimSmoothnessSlider.value = curWep.tAimSmooth.toFloat()
+        aimAfterShotsLabel.setText("Aim After #: " + curWep.tAimAfterShots)
+        aimAfterShotsSlider.value = curWep.tAimAfterShots.toFloat()
+        perfectAimCheckBox.isChecked = curWep.tPerfectAim
+        perfectAimCollapsible.isCollapsed = !curWep.tPerfectAim
+        perfectAimFovLabel.setText("FOV: " + curWep.tPAimFov)
+        perfectAimFovSlider.value = curWep.tPAimFov.toFloat()
+        perfectAimChanceLabel.setText("Chance: " + curWep.tPAimChance)
+        perfectAimChanceSlider.value = curWep.tPAimChance.toFloat()
+    }
 }
-
-//fun updateOverridenWeapons() { //This isn't needed... because the Override Weapons hides it
-//    overridenWeapons.apply {
-//        val bool = !aimTab.enableAim.isChecked
-//        var col = Color(255F, 255F, 255F, 1F)
-//        if (bool) {
-//            col = Color(105F, 105F, 105F, .2F)
-//        }
-//        aimTab.weaponOverrideCheckBox.isDisabled = bool
-//        categorySelectLabel.color = col
-//        categorySelectionBox.isDisabled = bool
-//        weaponOverrideSelectionBox.isDisabled = bool
-//        //if (!weaponOverride) {
-//        //    weaponOverrideEnableCheckBox.isDisabled = true
-//        //} else {
-//        //    weaponOverrideEnableCheckBox.isDisabled = bool
-//        //}
-//        enableFactorRecoil.isDisabled = bool
-//        enableFlatAim.isDisabled = bool
-//        enablePathAim.isDisabled = bool
-//        enableScopedOnly.isDisabled = bool
-//        aimBoneLabel.color = col
-//        aimBoneBox.isDisabled = bool
-//        aimFovLabel.color = col
-//        aimFovSlider.isDisabled = bool
-//        aimSpeedLabel.color = col
-//        aimSpeedSlider.isDisabled = bool
-//        aimSmoothnessLabel.color = col
-//        aimSmoothnessSlider.isDisabled = bool
-//        aimStrictnessLabel.color = col
-//        aimStrictnessSlider.isDisabled = bool
-//        perfectAimCollapsible.isCollapsed = bool
-//        perfectAimCheckBox.isDisabled = bool
-//        perfectAimChanceLabel.color = col
-//        perfectAimChanceSlider.isDisabled = bool
-//        perfectAimFovLabel.color = col
-//        perfectAimFovSlider.isDisabled = bool
-//    }
-//}

@@ -1,4 +1,4 @@
-package rat.poison.ui
+package rat.poison.ui.uiPanels
 
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Align
@@ -11,6 +11,7 @@ import rat.poison.App.uiAimOverridenWeapons
 import rat.poison.game.CSGO
 import rat.poison.opened
 import rat.poison.ui.tabs.*
+import rat.poison.ui.uiUpdate
 import kotlin.math.sign
 import kotlin.system.exitProcess
 
@@ -24,8 +25,8 @@ val mainTabbedPane = TabbedPane()
     val skinChangerTab = SkinChangerTab()
     val optionsTab = OptionsTab()
 
-private var wantedHeight = 550F
-private var wantedWidth = 500F
+private var wantedHeight = 565F
+private var wantedWidth = 535F
 private var isResizingHeight = false
 private var isResizingWidth = false
 
@@ -49,8 +50,8 @@ class UIMenu : VisWindow("Rat Poison 1.6") {
 
         //Scroll pane for the content pane, content pane goes inside
         val mainScrollPane = ScrollPane(mainTabbedPaneContent) //Init scroll pane containing main content pane
-        mainScrollPane.setFlickScroll(false)
-        mainScrollPane.setSize(500F, 500F)
+        mainScrollPane.setFlickScroll(true)
+        mainScrollPane.setSize(565F, 535F)
 
         //Add tabs to the tab header
         mainTabbedPane.add(aimTab)
@@ -156,6 +157,8 @@ class UIMenu : VisWindow("Rat Poison 1.6") {
 
         //Update all tab content
         uiUpdate()
+        changeWidth()
+        changeHeight()
     }
 
     override fun positionChanged() {

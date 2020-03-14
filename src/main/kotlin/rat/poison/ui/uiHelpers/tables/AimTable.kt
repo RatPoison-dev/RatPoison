@@ -6,9 +6,9 @@ import com.kotcrab.vis.ui.widget.*
 import rat.poison.*
 import rat.poison.game.CSGO
 import rat.poison.settings.*
-import rat.poison.ui.aimTab
+import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.changed
-import rat.poison.ui.overridenWeapons
+import rat.poison.ui.uiPanels.overridenWeapons
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
@@ -17,7 +17,7 @@ import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
 import rat.poison.ui.uiUpdate
 
-class AimTable: VisTable(true) {
+class AimTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
     val enableAim = VisCheckBoxCustom("Enable Aim", "ENABLE_AIM")
     val aimToggleKey = VisInputFieldCustom("Toggle Aim Key", "AIM_TOGGLE_KEY")
@@ -41,8 +41,8 @@ class AimTable: VisTable(true) {
     val weaponOverrideCheckBox = VisCheckBox("Override Weapons")
 
     val enableFactorRecoil = ATabVisCheckBox("Factor Recoil", "_FACTOR_RECOIL")
-    val enableFlatAim = ATabVisCheckBox("Flat Aim", "_ENABLE_FLAT_AIM")
-    val enablePathAim = ATabVisCheckBox("Path Aim", "_ENABLE_PATH_AIM")
+    val enableFlatAim = ATabVisCheckBox("Write Angles", "_ENABLE_FLAT_AIM")
+    val enablePathAim = ATabVisCheckBox("Mouse Movement", "_ENABLE_PATH_AIM")
     val enableScopedOnly = VisCheckBoxCustom("Scoped Only", "SNIPER_ENABLE_SCOPED_ONLY")
 
     val aimBoneLabel = VisLabel("Bone: ")
@@ -192,49 +192,47 @@ class AimTable: VisTable(true) {
         //Texts are 200
         //Sliders are 250
         //Leaves 25 for left and right side to center
-        apply {
-            padLeft(25F)
-            padRight(25F)
+        padLeft(25F)
+        padRight(25F)
 
-            //Add all items to label for tabbed pane content
+        //Add all items to label for tabbed pane content
 
-            add(enableAim).left().row()
-            add(aimToggleKey).left().row()
+        add(enableAim).left().row()
+        add(aimToggleKey).left().row()
 
-            add(activateFromFireKey).left().row()
-            add(teammatesAreEnemies).left().row()
-            add(targetSwapDelay).left().row()
+        add(activateFromFireKey).left().row()
+        add(teammatesAreEnemies).left().row()
+        add(targetSwapDelay).left().row()
 
-            addSeparator()
+        addSeparator()
 
-            add(forceAimKey).left().row()
-            add(forceAimAlways).left().row()
-            add(forceAimThroughWalls).left().row()
+        add(forceAimKey).left().row()
+        add(forceAimAlways).left().row()
+        add(forceAimThroughWalls).left().row()
 
-            addSeparator()
+        addSeparator()
 
-            add(automaticWeaponsCheckBox).left().row()
-            add(automaticWeaponsInput).left().row()
+        add(automaticWeaponsCheckBox).left().row()
+        add(automaticWeaponsInput).left().row()
 
-            addSeparator()
+        addSeparator()
 
-            add(weaponOverrideCheckBox).left().row()
-            add(categorySelection).left().row()
-            add(enableFactorRecoil).left().row()
-            add(enableFlatAim).left().row()
-            add(enablePathAim).left().row()
-            add(enableScopedOnly).left().row() //SNIPER selection only
-            add(aimBone).left().row()
-            add(aimSpeed).left().row()
-            add(aimFov).left().row()
-            add(aimSmooth).left().row()
-            add(aimAfterShots).left().row() //RIFLE & SMG selection only
-            add(perfectAimCheckBox).left().row()
-            add(perfectAimCollapsible).left().row()
-            add(advancedSettingsCheckBox).left().row()
-            add(advancedSettingsCollapsible).left().row()
+        add(weaponOverrideCheckBox).left().row()
+        add(categorySelection).left().row()
+        add(enableFactorRecoil).left().row()
+        add(enableFlatAim).left().row()
+        add(enablePathAim).left().row()
+        add(enableScopedOnly).left().row() //SNIPER selection only
+        add(aimBone).left().row()
+        add(aimSpeed).left().row()
+        add(aimFov).left().row()
+        add(aimSmooth).left().row()
+        add(aimAfterShots).left().row() //RIFLE & SMG selection only
+        add(perfectAimCheckBox).left().row()
+        add(perfectAimCollapsible).left().row()
+        add(advancedSettingsCheckBox).left().row()
+        add(advancedSettingsCollapsible).left().row()
 
-            addSeparator()
-        }
+        addSeparator()
     }
 }

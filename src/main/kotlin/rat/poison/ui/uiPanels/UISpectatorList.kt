@@ -1,40 +1,41 @@
-package rat.poison.ui
+package rat.poison.ui.uiPanels
 
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.curSettings
-import rat.poison.scripts.bombState
+import rat.poison.ui.changed
 import kotlin.math.round
 
-lateinit var bombText : VisLabel
+lateinit var specListText : VisLabel
 
 //Needs cleanup
 
-class UIBombTimer : VisWindow("Bomb Timer") {
+class UISpectatorList : VisWindow("Spectator List") {
     init {
         defaults().left()
 
-        bombText = VisLabel(bombState.toString())
+        specListText = VisLabel()
 
         //Create UI_Alpha Slider
-        val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, false)
+        val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, true)
         menuAlphaSlider.value = 1F
         menuAlphaSlider.changed { _, _ ->
             val alp = (round(menuAlphaSlider.value * 100F) / 100F)
             changeAlpha(alp)
-
             true
         }
 
-        add(bombText).growX().fillX().expandX().expandY().center().top().colspan(1).row()
-        add(menuAlphaSlider).growX()
+        columnDefaults(2)
+
+        add(specListText).growX().fillX().expandX().expandY().center().top().colspan(1)
+        add(menuAlphaSlider).colspan(1).growY()
 
         pack()
 
-        setSize(325F, 150F)
-        setPosition(curSettings["BOMB_TIMER_X"].toFloat(), curSettings["BOMB_TIMER_Y"].toFloat())
-        color.a = curSettings["BOMB_TIMER_ALPHA"].toFloat()
+        setSize(225F, 350F)
+        setPosition(curSettings["SPECTATOR_LIST_X"].toFloat(), curSettings["SPECTATOR_LIST_Y"].toFloat())
+        color.a = curSettings["SPECTATOR_LIST_ALPHA"].toFloat()
         isResizable = false
     }
 

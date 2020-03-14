@@ -29,6 +29,7 @@ mainClassName = "rat.poison.RatPoison"
 
 repositories {
 	jcenter()
+	maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -49,6 +50,10 @@ dependencies {
 	compile group: 'org.jetbrains.kotlin', name: 'kotlin-script-runtime', version: kotlin_version
 	compile group: 'org.jetbrains.kotlin', name: 'kotlin-script-util', version: kotlin_version
 	compile group: 'org.jetbrains.kotlin', name: 'kotlin-compiler-embeddable', version: kotlin_version
+
+	compile group: 'commons-io', name: 'commons-io', version: 2.6
+	compile 'com.github.ata4:ioutils:b1f26588b5'
+	implementation 'com.github.ata4:bspsrc:v1.3.24'
 }
 
 jar {

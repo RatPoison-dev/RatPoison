@@ -13,7 +13,7 @@ import rat.poison.App
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.scripts.*
 import rat.poison.ui.changed
-import rat.poison.ui.nadeHelperTab
+import rat.poison.ui.uiPanels.nadeHelperTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import java.io.File
 

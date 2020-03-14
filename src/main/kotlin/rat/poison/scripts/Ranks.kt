@@ -6,7 +6,7 @@ import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
 import rat.poison.game.rankName
 import rat.poison.opened
-import rat.poison.ui.ranksTab
+import rat.poison.ui.uiPanels.ranksTab
 import rat.poison.utils.every
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.notInGame

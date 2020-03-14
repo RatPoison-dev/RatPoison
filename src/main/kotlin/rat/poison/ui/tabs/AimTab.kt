@@ -7,7 +7,7 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
 import rat.poison.settings.*
 import rat.poison.strToBool
-import rat.poison.ui.aimTab
+import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiHelpers.tables.AimBTrigTable
 import rat.poison.ui.uiHelpers.tables.AimTable
 
@@ -16,13 +16,13 @@ import rat.poison.ui.uiHelpers.tables.AimTable
 var categorySelected = "PISTOL"
 
 class AimTab : Tab(true, false) { //Aim.kts tab
-    private val table = VisTable(true)
+    private val table = VisTable(false)
     val tAim = AimTable()
     val tTrig = AimBTrigTable()
 
     init {
-        table.add(tAim).row()
-        table.add(tTrig)
+        table.add(tAim).growX().row()
+        table.add(tTrig).growX()
     }
 
     override fun getContentTable(): Table? {

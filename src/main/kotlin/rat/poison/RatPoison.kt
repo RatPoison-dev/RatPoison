@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Matrix4
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.kotcrab.vis.ui.VisUI
 import com.sun.management.OperatingSystemMXBean
@@ -35,13 +36,14 @@ import rat.poison.scripts.*
 import rat.poison.scripts.aim.flatAim
 import rat.poison.scripts.aim.pathAim
 import rat.poison.scripts.aim.setAim
+import rat.poison.scripts.bspHandling.rayTraceTest
 import rat.poison.scripts.esp.adrenaline
 import rat.poison.scripts.esp.esp
 import rat.poison.scripts.esp.espToggle
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.*
-import rat.poison.utils.ObservableBoolean
-import rat.poison.utils.Settings
+import rat.poison.ui.uiPanels.*
+import rat.poison.utils.*
 import rat.poison.utils.extensions.appendHumanReadableSize
 import rat.poison.utils.extensions.roundNDecimals
 import java.awt.Robot
@@ -140,6 +142,8 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Weapon Spam") }; weaponSpam()
     if (dbg) { println("[DEBUG] Initializing Weapon Changer") }; skinChanger()
 
+    rayTraceTest()
+
     //Overlay check, not updated?
     if (curSettings["MENU"].strToBool()) {
         println("App Title: " + curSettings["MENU_APP"].replace("\"", ""))
@@ -164,7 +168,7 @@ fun main() {
                 setWindowedMode(w, h)
 
                 if (curSettings["OPENGL_3"].strToBool()) {
-                    useOpenGL3(true, 3, 2)
+                    useOpenGL3(true, 4, 2)
                     if (dbg) { println("[DEBUG] Using GL3") }
                 } else {
                     useOpenGL3(false, 2, 2)
@@ -178,6 +182,7 @@ fun main() {
                 glfwSwapInterval(0)
                 glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE)
                 setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings["OPENGL_MSAA_SAMPLES"].toInt())
+
             })
         }
     }
@@ -230,6 +235,7 @@ var glowTime = 0L
 var appTime = 0L
 var menuTime = 0L
 var overlayTime = 0L
+var bspVisTime = 0L
 
 object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
@@ -237,9 +243,6 @@ object App : ApplicationAdapter() {
     lateinit var shapeRenderer: ShapeRenderer
     private val overlay = Overlay(curSettings["MENU_APP"].replace("\"", ""), "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     lateinit var menuStage: Stage
-    private lateinit var aimOverrideStage: Stage
-    private lateinit var bombStage: Stage
-    private lateinit var specListStage: Stage
     private val bodies = ObjectArrayList<App.() -> Unit>()
     private lateinit var camera: OrthographicCamera
 
@@ -247,6 +250,7 @@ object App : ApplicationAdapter() {
     lateinit var uiBombWindow: UIBombTimer
     lateinit var uiSpecList: UISpectatorList
     lateinit var uiAimOverridenWeapons: UIAimOverridenWeapons
+    lateinit var uiKeybinds: UIKeybinds
     private val sbText = StringBuilder()
 
     private val osBean = ManagementFactory.getOperatingSystemMXBean() as OperatingSystemMXBean
@@ -261,9 +265,6 @@ object App : ApplicationAdapter() {
 
         //Implement stage for menu
         menuStage = Stage() //Main Menu Stage
-        aimOverrideStage = Stage() //Aim Override Weapons Stage
-        bombStage = Stage() //Bomb Timer Stage
-        specListStage = Stage() //Spectator List Stage
 
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
 
@@ -271,17 +272,12 @@ object App : ApplicationAdapter() {
         uiBombWindow = UIBombTimer()
         uiSpecList = UISpectatorList()
         uiAimOverridenWeapons = UIAimOverridenWeapons()
+        uiKeybinds = UIKeybinds()
 
         menuStage.addActor(uiMenu)
-        aimOverrideStage.addActor(uiAimOverridenWeapons)
-        bombStage.addActor(uiBombWindow)
-        specListStage.addActor(uiSpecList)
 
         Gdx.input.inputProcessor = InputMultiplexer().apply {
             addProcessor(menuStage)
-            addProcessor(aimOverrideStage)
-            addProcessor(bombStage)
-            addProcessor(specListStage)
         }
 
         sb = SpriteBatch()
@@ -308,24 +304,48 @@ object App : ApplicationAdapter() {
 
                     overlayTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
                         menuTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
+                            if (MENUTOG) {
+                                if (curSettings["KEYBINDS"].strToBool()) {
+                                    if (!menuStage.actors.contains(uiKeybinds)) {
+                                        menuStage.addActor(uiKeybinds)
+                                    }
+                                } else if (menuStage.actors.contains(uiKeybinds)) {
+                                    menuStage.clear() //actors.remove at index doesnt work after 1 loop?
+                                }
+
+                                if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
+                                    if (!menuStage.actors.contains(uiAimOverridenWeapons)) {
+                                        menuStage.addActor(uiAimOverridenWeapons)
+                                    }
+                                } else if (menuStage.actors.contains(uiAimOverridenWeapons)) {
+                                    menuStage.clear() //actors.remove at index doesnt work after 1 loop?
+                                }
+
+                                if (!menuStage.actors.contains(uiMenu)) {
+                                    menuStage.addActor(uiMenu)
+                                }
+                            } else if (menuStage.actors.contains(uiMenu) || menuStage.actors.contains(uiAimOverridenWeapons) || menuStage.actors.contains(uiKeybinds)) {
+                                menuStage.clear()
+                            }
+
                             if (curSettings["ENABLE_BOMB_TIMER"].strToBool() && curSettings["BOMB_TIMER_MENU"].strToBool()) {
-                                bombStage.act(Gdx.graphics.deltaTime)
-                                bombStage.draw()
+                                if (!menuStage.actors.contains(uiBombWindow)) {
+                                    menuStage.addActor(uiBombWindow)
+                                }
+                            } else if (menuStage.actors.contains(uiBombWindow)) {
+                                menuStage.clear() //actors.remove at index doesnt work after 1 loop?
                             }
 
                             if (curSettings["SPECTATOR_LIST"].strToBool()) {
-                                specListStage.act(Gdx.graphics.deltaTime)
-                                specListStage.draw()
+                                if (!menuStage.actors.contains(uiSpecList)) {
+                                    menuStage.addActor(uiSpecList)
+                                }
+                            } else if (menuStage.actors.contains(uiSpecList)) {
+                                menuStage.clear() //actors.remove at index doesnt work after 1 loop?
                             }
 
-                            if (MENUTOG) {
-                                if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
-                                    aimOverrideStage.act(Gdx.graphics.deltaTime)
-                                    aimOverrideStage.draw()
-                                }
-                                menuStage.act(Gdx.graphics.deltaTime)
-                                menuStage.draw()
-                            }
+                            menuStage.act(Gdx.graphics.deltaTime)
+                            menuStage.draw()
                         }, TimeUnit.NANOSECONDS)
 
                         glEnable(GL20.GL_BLEND)
@@ -373,7 +393,8 @@ object App : ApplicationAdapter() {
                             sbText.append("\nOverlay took: ").append((overlayTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
                             sbText.append("\n   Menu took: ").append((menuTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
                             sbText.append("\n   Apps took: ").append((appTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
-                            sbText.append("\n       Glow took: ").append((glowTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
+                            sbText.append("\n      Glow took: ").append((glowTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
+                            sbText.append("\n      Bsp Vis Check took: ").append((bspVisTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
                             timer = 0
                         }
 
@@ -412,8 +433,6 @@ object App : ApplicationAdapter() {
                 if (menuStage.viewport.screenWidth != w || menuStage.viewport.screenHeight != h) {
                     resize(w, h)
                     menuStage.viewport.update(w, h)
-                    bombStage.viewport.update(w, h)
-                    specListStage.viewport.update(w, h)
                     if (dbg) println("[DEBUG] Resized Viewports")
                 }
             }
@@ -489,7 +508,7 @@ fun sync(fps : Int) {
     }
 }
 
-fun Any.strToBool() = this == "true" || this == true || this == 1.0
+fun Any.strToBool() = this == "true" || this == true || this == 1.0 || this == 1 || this == 1F
 fun Any.boolToStr() = this.toString()
 fun Any.strToColor() = convStrToColor(this.toString())
 fun Any.strToColorGDX() = convStrToColorGDX(this.toString())
@@ -559,4 +578,47 @@ fun Array<DoubleArray>.toMatrix4(): Matrix4 {
 
     mat4.set(fArr)
     return mat4
+}
+
+operator fun Vector3.minus(v: Vector3): Vector3 {
+    x - v.x
+    y - v.y
+    z - v.z
+    return this
+}
+
+operator fun Vector3.plus(v: Vector3): Vector3 {
+    x + v.x
+    y + v.y
+    z + v.z
+    return this
+}
+
+operator fun Vector3.times(f: Float): Vector3 {
+    x * f
+    y * f
+    z * f
+    return this
+}
+
+operator fun Vector3.divAssign(f: Float) {
+    x /= f
+    y /= f
+    z /= f
+}
+
+//internal fun Entity.position(): Angle = readCached(rat.poison.game.entity.entity2Angle) {
+//    x = rat.poison.game.CSGO.csgoEXE.float(it + rat.poison.game.netvars.NetVarOffsets.vecOrigin).toDouble()
+//    y = rat.poison.game.CSGO.csgoEXE.float(it + rat.poison.game.netvars.NetVarOffsets.vecOrigin + 4).toDouble()
+//    z = rat.poison.game.CSGO.csgoEXE.float(it + rat.poison.game.netvars.NetVarOffsets.vecOrigin + 8).toDouble() + rat.poison.game.CSGO.csgoEXE.float(it + rat.poison.game.netvars.NetVarOffsets.vecViewOffset + 8)
+//}
+
+fun Angle.toVector3(): Vector3 {
+    val vec = Vector3()
+    vec.x = x.toFloat(); vec.y = y.toFloat(); vec.z = z.toFloat()
+    return vec
+}
+
+fun Vector3.toVector(): Vector {
+    return Vector(x.toDouble(), y.toDouble(), z.toDouble())
 }

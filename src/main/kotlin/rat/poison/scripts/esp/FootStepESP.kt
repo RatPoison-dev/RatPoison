@@ -4,8 +4,9 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.Align
 import rat.poison.*
+import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
-import rat.poison.game.entity.absPosition
+import rat.poison.game.entity.dead
 import rat.poison.game.entity.team
 import rat.poison.game.entity.velocity
 import rat.poison.game.forEntities
@@ -99,7 +100,7 @@ fun footStepEsp() = App {
 private fun constructSteps() {
     forEntities(ccsPlayer) {
         val ent = it.entity
-        if (ent == me) return@forEntities false
+        if (ent == me || ent.dead() || ent.dormant()) return@forEntities false
 
         val inMyTeam = ent.team() == me.team()
 

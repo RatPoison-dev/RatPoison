@@ -14,7 +14,7 @@ import rat.poison.strToBool
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
-import rat.poison.ui.visualsTab
+import rat.poison.ui.uiPanels.visualsTab
 
 val espTabbedPane = TabbedPane()
 val glowEspTab = GlowEspTab()
@@ -107,7 +107,7 @@ class VisualsTab : Tab(false, false) {
         table.add(visualsToggleKey).padLeft(25F).left().row()
         table.add(radarEsp).padLeft(25F).left().row()
         table.add(visAdrenaline).padLeft(25F).left().row()
-        table.add(espTabbedPane.table).minWidth(500F).left().row()
+        table.add(espTabbedPane.table).minWidth(500F).left().growX().row()
         table.add(espScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
     }
 

@@ -7,16 +7,13 @@ import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import org.jire.arrowhead.keyPressed
-import rat.poison.SETTINGS_DIRECTORY
-import rat.poison.boolToStr
-import rat.poison.curSettings
+import rat.poison.*
 import rat.poison.scripts.esp.updateHitsound
 import rat.poison.scripts.nameChanger
 import rat.poison.scripts.selfNade
 import rat.poison.scripts.weaponSpamToggleKey
-import rat.poison.strToBool
 import rat.poison.ui.changed
-import rat.poison.ui.miscTab
+import rat.poison.ui.uiPanels.miscTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
@@ -40,11 +37,11 @@ class MiscTab : Tab(false, false) {
 
     //Fov + bomb timer + spectator list
     val fovChanger = VisCheckBoxCustom("Fov Changer", "ENABLE_FOV_CHANGER")
-    val fovDefault = VisSliderCustom("Default FOV", "FOV_DEFAULT", 10F, 150F, 1F, true, width1 = 150F, width2 = 90F)
+    val fovDefault = VisSliderCustom("Default FOV", "FOV_DEFAULT", 10F, 150F, 1F, true, width1 = 142F, width2 = 90F)
     val fovSmoothing = VisCheckBoxCustom("Smooth FOV Changes", "FOV_SMOOTH")
-    val fovSniperDefault = VisSliderCustom("Default FOV", "FOV_SNIPER_DEFAULT", 10F, 150F, 1F, true, width1 = 150F, width2 = 90F)
-    val fovSniperZoom1 = VisSliderCustom("Zoom 1 FOV", "FOV_ZOOM_1", 10F, 150F, 1F, true, width1 = 150F, width2 = 90F)
-    val fovSniperZoom2 = VisSliderCustom("Zoom 2 FOV", "FOV_ZOOM_2", 10F, 150F, 1F, true, width1 = 150F, width2 = 90F)
+    val fovSniperDefault = VisSliderCustom("Default FOV", "FOV_SNIPER_DEFAULT", 10F, 150F, 1F, true, width1 = 142F, width2 = 90F)
+    val fovSniperZoom1 = VisSliderCustom("Zoom 1 FOV", "FOV_ZOOM_1", 10F, 150F, 1F, true, width1 = 142F, width2 = 90F)
+    val fovSniperZoom2 = VisSliderCustom("Zoom 2 FOV", "FOV_ZOOM_2", 10F, 150F, 1F, true, width1 = 142F, width2 = 90F)
     val bombTimer = VisCheckBoxCustom("Bomb Timer", "ENABLE_BOMB_TIMER")
     val bombTimerEnableBars = VisCheckBoxCustom("Timer Bars", "BOMB_TIMER_BARS")
     val bombTimerEnableMenu = VisCheckBoxCustom("Timer Menu", "BOMB_TIMER_MENU")
@@ -57,10 +54,10 @@ class MiscTab : Tab(false, false) {
     val weaponSpam = VisCheckBoxCustom("Weapon Spam", "W_SPAM")
     var weaponSpamKey = VisInputFieldCustom("Weapon Spam Key", "W_SPAM_KEY")
     val enableReducedFlash = VisCheckBoxCustom("Reduced Flash", "ENABLE_REDUCED_FLASH")
-    val flashMaxAlpha = VisSliderCustom("Flash Max Alpha", "FLASH_MAX_ALPHA", 1F, 255F, 1F, true, width1 = 150F, width2 = 90F)
+    val flashMaxAlpha = VisSliderCustom("Max Alpha", "FLASH_MAX_ALPHA", 1F, 255F, 1F, true, width1 = 150F, width2 = 90F)
     val hitSoundCheckBox = VisCheckBoxCustom("Hitsound", "ENABLE_HITSOUND")
     val hitSoundBox = VisSelectBox<String>()
-    val hitSoundVolume = VisSliderCustom("Hitsound Volume", "HITSOUND_VOLUME", .1F, 1F, .1F, false, width1 = 150F, width2 = 90F)
+    val hitSoundVolume = VisSliderCustom("Volume", "HITSOUND_VOLUME", .1F, 1F, .1F, false, width1 = 150F, width2 = 90F)
     private val selfNade = VisTextButton("Self Nade")
     private val nameChangeInput = VisValidatableTextField()
     private val nameChange = VisTextButton("Name Change")
@@ -90,7 +87,7 @@ class MiscTab : Tab(false, false) {
         }
         val aimStraferTable = VisTable()
         aimStraferTable.add(aimStrafer).left()
-        aimStraferTable.add(aimStraferSelectBox).padLeft(150F - aimStrafer.width).left()
+        aimStraferTable.add(aimStraferSelectBox).padLeft(142F - aimStrafer.width).left()
 
         //Create Head Walk Toggle
         val headWalkTable = VisTable()
@@ -156,29 +153,29 @@ class MiscTab : Tab(false, false) {
         superPane.touchable = Touchable.childrenOnly
 
         //Top left pane (movement)
-        subPaneTable1.add(bunnyHop).left().padLeft(5F).row()
-        subPaneTable1.add(autoStrafe).left().padLeft(15F).row()
-        subPaneTable1.add(autoStrafeBHopOnly).left().padLeft(15F).row()
+        subPaneTable1.add(bunnyHop).left().padLeft(14F).row()
+        subPaneTable1.add(autoStrafe).left().padLeft(24F).row()
+        subPaneTable1.add(autoStrafeBHopOnly).left().padLeft(24F).row()
         subPaneTable1.addSeparator().width(250F).left()
-        subPaneTable1.add(fastStop).left().padLeft(5F).row()
+        subPaneTable1.add(fastStop).left().padLeft(14F).row()
         subPaneTable1.addSeparator().width(250F).left()
-        subPaneTable1.add(aimStraferTable).left().padLeft(5F).row()
-        subPaneTable1.add(aimStraferShift).left().padLeft(5F).row()
-        subPaneTable1.add(aimStraferStrictness).left().padLeft(5F).row()
+        subPaneTable1.add(aimStraferTable).left().padLeft(14F).row()
+        subPaneTable1.add(aimStraferShift).left().padLeft(14F).row()
+        subPaneTable1.add(aimStraferStrictness).left().padLeft(14F).row()
         subPaneTable1.addSeparator().width(250F).left()
-        subPaneTable1.add(headWalkTable).left().padLeft(5F).row()
+        subPaneTable1.add(headWalkTable).left().padLeft(14F).row()
         //Bottom left pane (fov + bomb timer + spectator list)
-        subPaneTable2.add(fovChanger).left().padLeft(5F).row()
-        subPaneTable2.add(fovDefault).left().padLeft(5F).row()
-        subPaneTable2.add(fovSmoothing).left().padLeft(5F).row()
-        subPaneTable2.add(fovSniperDefault).left().padLeft(5F).row()
-        subPaneTable2.add(fovSniperZoom1).left().padLeft(5F).row()
-        subPaneTable2.add(fovSniperZoom2).left().padLeft(5F).row()
+        subPaneTable2.add(fovChanger).left().padLeft(14F).row()
+        subPaneTable2.add(fovDefault).left().padLeft(14F).row()
+        subPaneTable2.add(fovSmoothing).left().padLeft(14F).row()
+        subPaneTable2.add(fovSniperDefault).left().padLeft(14F).row()
+        subPaneTable2.add(fovSniperZoom1).left().padLeft(14F).row()
+        subPaneTable2.add(fovSniperZoom2).left().padLeft(14F).row()
         subPaneTable2.addSeparator().width(250F).left()
-        subPaneTable2.add(spectatorList).left().padLeft(5F).row()
-        subPaneTable2.add(bombTimer).left().padLeft(5F).row()
-        subPaneTable2.add(bombTimerEnableMenu).left().padLeft(15F).row()
-        subPaneTable2.add(bombTimerEnableBars).left().padLeft(15F).row()
+        subPaneTable2.add(spectatorList).left().padLeft(14F).row()
+        subPaneTable2.add(bombTimer).left().padLeft(14F).row()
+        subPaneTable2.add(bombTimerEnableMenu).left().padLeft(24F).row()
+        subPaneTable2.add(bombTimerEnableBars).left().padLeft(24F).row()
         //Right pane (misc?)
         superPaneTable1.add(hitSound).left().padLeft(5F).row()
         superPaneTable1.add(hitSoundVolume).left().padLeft(5F).row()
@@ -201,7 +198,7 @@ class MiscTab : Tab(false, false) {
         //superPaneTable1.add(nameChangeInput).pad(5F).top().left().width(240F).row()
         //superPaneTable1.add(nameChange).pad(5F).top().left().width(240F)
 
-        table.add(superPane).size(500F, 480F).top()
+        table.add(superPane).size(500F, 480F).top().growX()
     }
 
     override fun getContentTable(): Table? {

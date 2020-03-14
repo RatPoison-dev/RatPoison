@@ -69,69 +69,20 @@ Credit to Mr. Noad & 2772/Matt for a lot of help throughout this project
 
 **Recent Update**
 
-Update 1.6
+Update 1.7 (in beta)
 
-* Skin Changer
-    * Skin Changer for all weapons, with skins per weapon options
-    * Knife Changer, some have broken animations, and no skin selection
-
-* Indicator Visuals
-    * Should now work properly (same as radar)
-    * Heavily cleaned up indicator code, reduced multiple redundancies
-    * Added Indicator Arrow Size option
-    * Removed OnScreen and Oval options for now
-    * Indicator color now uses the selected colors alpha, not just a static 0.5
-    * Now properly colors indicator of entity if they are the bomb carrier
-
-* Box Esp
-    * Skeleton is now lumped in with box visuals
-    * Can change box detail text color (instead of just white)
-    * Fixed box esp crash caused by ConcurrentModification & libgdx threading issues
-    * Box of box visuals is now much more accurate and dynamic
-
-* Glow Esp
-    * Now properly colors entity if they are the bomb carrier
-
-* Snaplines Esp
-    * Added team, bomb, bomb carrier, weapons snaplines and colors
-    * Added line width
-    
-* Added Step Esp
-    * Update timer
-    * Step TTL (Time to live)
-    * As text or circle
-    
-* Possible fix for headwalk activating incorrectly
-* Choosing a target while spraying now activates properly based on your recoil's position rather than crosshair
-* Option to use aim after X shots for rifles and smgs
-* Disabled zeus causing bone trigger and aim crashing
-* Added weapon spam (famas/glock/scope spam) and door spam
-* Added self nade, throws nade in mid air to damage yourself. mostly used for griefing. (hold nade and press "self nade" in menu)
-* Misc tab reformatted for testing
-* Default settings have been updated to look legit
-* Debug now shows misc information on screen
-* Recoil crosshair adjusts correctly based on FOV
-
-* Removed aim strictness
-    * Strictness served as an additional smoothing, which added confusion and redundancy
-    * Smoothness is smoothing applied to the calculated angle towards the target
-    * Speed is the ms delay between mouse movements (path aim) from your current angle to the calculated target angle, or between writing angles (flat aim)
-    * Aim strictness/aim sensitivity is now always your ingame sensitivity + .5 to prevent jittery snapping
-    * Aim Speed is now maxed at 10 instead of 5
-    * Added multiple more aim settings for randomization (will be added to override weapons eventually)
-        * Aim X/Y Variation per mouse movement, and a deadzone where it wont activate (path aim only)
-        * Configurable X/Y RCS for the aimbot instead of max constantly, and a variation amount
-        * Speed Divisor which divides the target mouse movement by that #
-    
-* Added RANDOM aim bone option, picks one of the 4 selectable bones
-    * Will hold selected bone until aim is released or target is invalid
-
-* Added option to disable a vis check when force aiming, to force aim through walls
-* Target swap delay now works properly
-* Added FOV Changer (Misc Tab)
-    * Options for normal weapons, awp zoom levels (defaulted for clear scope)
-
-* Added discord link to menu
+* Changed Flat Aim name to Write Angles on menu
+* Changed Path Aim name to Mouse Movement on menu
+* All ui elements are drawn on 1 stage using 1 input processor instead of 4
+* Added initial bsp parser/vis check
+    * Can't be used for a visual check currently as it's too inaccurate
+    * Does not check map models atm
+    * Can be viewed by enabling debug in the options tab
+* Added keybinds window under options tab to display all keybinds, set to -1 to disable
+* Fixed automatic weapons shooting with cursor enabled (during buy menu)
+* Added entity dead and dormant check to prevent ghost footsteps
+* Enabled flick scroll on menu, you can scroll when needed by clicking and dragging on a blank part of the menu
+* Cleaned up menu for better consistency across tabs
 
 ---
 

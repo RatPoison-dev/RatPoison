@@ -20,7 +20,7 @@ import rat.poison.game.w2sViewMatrix
 import rat.poison.game.worldToScreen
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
-import rat.poison.ui.nadeHelperTab
+import rat.poison.ui.uiPanels.nadeHelperTab
 import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
 import java.io.File

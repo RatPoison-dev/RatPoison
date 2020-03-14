@@ -1,6 +1,8 @@
 package rat.poison.game.hooks
 
+import com.sun.jna.Memory
 import com.sun.jna.platform.win32.WinNT
+import rat.poison.dbg
 import rat.poison.game.*
 import rat.poison.game.CSGO.GLOW_OBJECT_SIZE
 import rat.poison.game.CSGO.clientDLL
@@ -14,6 +16,10 @@ import rat.poison.game.offsets.ClientOffsets.dwGlowObject
 import rat.poison.game.offsets.ClientOffsets.dwLocalPlayer
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.game.offsets.EngineOffsets.dwClientState
+import rat.poison.game.offsets.EngineOffsets.dwClientState_MapDirectory
+import rat.poison.game.offsets.EngineOffsets.dwGameDir
+import rat.poison.scripts.bspHandling.bspData
+import rat.poison.scripts.bspHandling.loadBsp
 import rat.poison.scripts.entsToTrack
 import rat.poison.settings.*
 import rat.poison.utils.every
@@ -36,6 +42,24 @@ private fun reset() {
 
 private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
     if (old != new) {
+        val strBuf: Memory by lazy {
+            Memory(128) //128 str?
+        }
+
+        csgoEXE.read(clientState + dwClientState_MapDirectory, strBuf)
+        val mapName = strBuf.getString(0)
+
+        engineDLL.read(dwGameDir, strBuf)
+        val gameDir = strBuf.getString(0)
+
+        if (mapName.isNotBlank() && gameDir.isNotBlank()) {
+            if (dbg) {
+                println("[DEBUG] Loading BSP at -- $gameDir\\$mapName")
+            }
+
+            loadBsp("$gameDir\\$mapName")
+        }
+
         notInGame = if (new == SignOnState.IN_GAME) {
             if (PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0) {
                 val write = 0x74.toByte()

@@ -15,10 +15,12 @@ import org.jire.arrowhead.keyPressed
 import rat.poison.*
 import rat.poison.App.menuStage
 import rat.poison.App.uiBombWindow
+import rat.poison.App.uiKeybinds
 import rat.poison.App.uiMenu
 import rat.poison.App.uiSpecList
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
+import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.ObservableBoolean
@@ -32,10 +34,11 @@ class OptionsTab : Tab(false, false) {
 
     private val fileSelectBox = VisSelectBox<String>()
 
+    val menuKey = VisInputFieldCustom("Menu Key", "MENU_KEY")
     val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F)
-    val menuKeyField = VisValidatableTextField(Validators.FLOATS)
     val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
     val debug = VisCheckBoxCustom("Debug", "DEBUG")
+    val keybinds = VisCheckBoxCustom("Keybinds", "KEYBINDS")
     val discordLink = LinkLabel("Join Discord", "https://discord.gg/J2uHTJ2")
 
     init {
@@ -52,19 +55,6 @@ class OptionsTab : Tab(false, false) {
         menuAlpha.add(menuAlphaLabel).width(200F)
         menuAlpha.add(menuAlphaSlider).width(250F)
 
-        //Create Menu Key Input Box
-        val menuKey = VisTable()
-        val menuKeyLabel = VisLabel("Menu Key: ")
-        menuKeyField.text = curSettings["MENU_KEY"]
-        menuKey.changed { _, _ ->
-            if (menuKeyField.text.toIntOrNull() != null) {
-                curSettings["MENU_KEY"] = menuKeyField.text.toInt().toString()
-                overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
-            }
-        }
-        menuKey.add(menuKeyLabel)
-        menuKey.add(menuKeyField).spaceRight(6F).width(40F)
-        menuKey.add(LinkLabel("?", "http://cherrytree.at/misc/vk.htm"))
 
         //Create Save Button
         val saveButton = VisTextButton("Save CFG")
@@ -126,6 +116,7 @@ class OptionsTab : Tab(false, false) {
         table.add(oglFPS).row()
         table.add(stayFocused).padLeft(25F).left().row()
         table.add(debug).padLeft(25F).left().row()
+        table.add(keybinds).padLeft(25F).left().row()
 
         table.addSeparator()
 
@@ -284,6 +275,10 @@ class OptionsTab : Tab(false, false) {
         curSettings["SPECTATOR_LIST_X"] = uiSpecList.x
         curSettings["SPECTATOR_LIST_Y"] = uiSpecList.y
         curSettings["SPECTATOR_LIST_ALPHA"] = uiSpecList.color.a
+
+        curSettings["KEYBINDS_X"] = uiKeybinds.x
+        curSettings["KEYBINDS_Y"] = uiKeybinds.y
+        curSettings["KEYBINDS_ALPHA"] = uiKeybinds.color.a
     }
 
     private fun updateWindows() {

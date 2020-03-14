@@ -43,16 +43,26 @@ internal fun Entity.studioHdr(): Long = csgoEXE.uint(this + pStudioHdr)
 
 private val entity2Angle: Long2ObjectMap<Angle> = Long2ObjectOpenHashMap(255)
 
-internal fun Entity.position(): Angle = readCached(entity2Angle) {
-	x = csgoEXE.float(it + vecOrigin).toDouble()
-	y = csgoEXE.float(it + vecOrigin + 4).toDouble()
-	z = csgoEXE.float(it + vecOrigin + 8).toDouble() + csgoEXE.float(it + vecViewOffset + 8)
+internal fun Entity.position(): Angle {
+	val ent = this
+	val ang = Angle()
+	ang.apply {
+		x = csgoEXE.float(ent + vecOrigin).toDouble()
+		y = csgoEXE.float(ent + vecOrigin + 4).toDouble()
+		z = csgoEXE.float(ent + vecOrigin + 8).toDouble() + csgoEXE.float(ent + vecViewOffset + 8)
+	}
+	return ang
 }
 
-internal fun Entity.absPosition(): Angle = readCached(entity2Angle) {
-	x = csgoEXE.float(it + vecOrigin).toDouble()
-	y = csgoEXE.float(it + vecOrigin + 4).toDouble()
-	z = csgoEXE.float(it + vecOrigin + 8).toDouble()
+fun Entity.absPosition(): Angle {
+	val ent = this
+	val ang = Angle()
+	ang.apply {
+		x = csgoEXE.float(ent + vecOrigin).toDouble()
+		y = csgoEXE.float(ent + vecOrigin + 4).toDouble()
+		z = csgoEXE.float(ent + vecOrigin + 8).toDouble()
+	}
+	return ang
 }
 
 fun Entity.bones(boneID: Int): Angle {

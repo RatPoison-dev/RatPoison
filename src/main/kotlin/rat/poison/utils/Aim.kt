@@ -2,12 +2,21 @@ package rat.poison.utils
 
 import com.sun.jna.platform.win32.WinDef.POINT
 import rat.poison.curSettings
+import rat.poison.game.CSGO.clientDLL
+import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.CSGO.gameX
 import rat.poison.game.CSGO.gameY
 import rat.poison.game.clientState
+import rat.poison.game.entity.EntityType.Companion.size
+import rat.poison.game.offsets.ClientOffsets.dwInput
+import rat.poison.game.offsets.EngineOffsets.dwClientState_LastOutgoingCommand
 import rat.poison.game.setAngle
+import rat.poison.scripts.Input
+import rat.poison.scripts.MULTIPLAYER_BACKUP
+import rat.poison.scripts.UserCmd
+import rat.poison.scripts.sendPacket
 import rat.poison.settings.GAME_PITCH
 import rat.poison.settings.GAME_SENSITIVITY
 import rat.poison.settings.GAME_YAW
@@ -35,9 +44,41 @@ fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: 
 	normalize()
 }
 
-fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double) {
-	val dAng = applyFlatSmoothing(currentAngle, destinationAngle, smoothing)
-	clientState.setAngle(dAng)
+fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double, silent: Boolean = false) {
+	if (!silent) {
+		val dAng = applyFlatSmoothing(currentAngle, destinationAngle, smoothing)
+		clientState.setAngle(dAng)
+	} else { //Silent Aim
+//		sendPacket(false)
+//
+//		//Probably not correct
+//		val pCommands = csgoEXE.int(clientDLL.address + dwInput + 0xEC)
+//
+//		val iDesiredNumber = csgoEXE.int(clientState + dwClientState_LastOutgoingCommand) + 2
+//
+//		val pUserCmd = pCommands + (iDesiredNumber % MULTIPLAYER_BACKUP) * 0x64
+//		val pOldUserCmd = pCommands + ((iDesiredNumber-1) % MULTIPLAYER_BACKUP) * 0x64
+//		val pVerifiedOldUserCmd = pCommands + ((iDesiredNumber-1) % MULTIPLAYER_BACKUP) * 0x68
+//
+//		println("dwInput: $dwInput      desirednum: $iDesiredNumber    commands:${pCommands}     puserCmd: $pUserCmd         num " + csgoEXE.int(pUserCmd + 0x4))
+//		//while (csgoEXE.int(pUserCmd + 0x4) < iDesiredNumber) {
+//		//	Thread.sleep(1)
+//		//}
+//
+//		val oldUserCmd = UserCmd()
+//		csgoEXE.read(pOldUserCmd, oldUserCmd)
+//		println(oldUserCmd.size())
+//
+//		val IN_ATTACK = 1 shl 0
+//
+//		oldUserCmd.vecViewAnglesX = destinationAngle.x
+//
+//		oldUserCmd.iButtons = oldUserCmd.iButtons or IN_ATTACK
+//
+//		csgoEXE.write(pOldUserCmd, oldUserCmd)
+//		csgoEXE.write(pVerifiedOldUserCmd, oldUserCmd)
+//		sendPacket(true)
+	}
 }
 
 fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect: Boolean = false, checkOnScreen: Boolean = true, divisor: Int = 1) {

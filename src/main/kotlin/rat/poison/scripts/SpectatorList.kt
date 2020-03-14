@@ -16,7 +16,7 @@ import rat.poison.game.netvars.NetVarOffsets.m_hObserverTarget
 import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.opened
 import rat.poison.strToBool
-import rat.poison.ui.specListText
+import rat.poison.ui.uiPanels.specListText
 import rat.poison.utils.every
 import rat.poison.utils.extensions.readIndex
 import rat.poison.utils.notInGame

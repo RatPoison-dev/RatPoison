@@ -13,7 +13,7 @@ import rat.poison.game.offsets.EngineOffsets
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.strToBool
 import rat.poison.toInt
-import rat.poison.ui.bombText
+import rat.poison.ui.uiPanels.bombText
 import rat.poison.utils.every
 
 //ent_create planted_c4_training

@@ -1,6 +1,7 @@
 package rat.poison.ui.uiHelpers
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.scenes.scene2d.Actor
 import com.kotcrab.vis.ui.util.Validators
 import com.kotcrab.vis.ui.widget.LinkLabel
 import com.kotcrab.vis.ui.widget.VisLabel
@@ -8,6 +9,8 @@ import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.VisValidatableTextField
 import rat.poison.curSettings
 import rat.poison.ui.changed
+import rat.poison.ui.uiPanels.keybindsUpdate
+import rat.poison.ui.uiUpdate
 
 class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true) : VisTable() {
     private val textLabel = mainText
@@ -24,9 +27,13 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
         update()
         changed { _, _ ->
             if (keyField.text.toIntOrNull() != null) {
-                curSettings[variableName] = keyField.text.toInt().toString()
-                value = keyField.text.toInt()
+                if (keyField.text != curSettings[variableName]) {
+                    curSettings[variableName] = keyField.text.toInt().toString()
+                    value = keyField.text.toInt()
+                    keybindsUpdate(this)
+                }
             }
+
             false
         }
 
@@ -37,9 +44,11 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
         }
     }
 
-    fun update() {
-        keyField.text = curSettings[variableName]
-        value = keyField.text.toInt()
+    fun update(neglect: Actor? = null) {
+        if (neglect != this) {
+            keyField.text = curSettings[variableName]
+            value = keyField.text.toInt()
+        }
     }
 
     fun disable(bool: Boolean, col: Color) {

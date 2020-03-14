@@ -24,6 +24,7 @@ import rat.poison.game.netvars.NetVarOffsets.iDeaths
 import rat.poison.game.netvars.NetVarOffsets.iHealth
 import rat.poison.game.netvars.NetVarOffsets.iKills
 import rat.poison.game.netvars.NetVarOffsets.lifeState
+import rat.poison.game.netvars.NetVarOffsets.m_Local
 import rat.poison.game.netvars.NetVarOffsets.nTickBase
 import rat.poison.game.netvars.NetVarOffsets.vecVelocity
 import rat.poison.game.netvars.NetVarOffsets.vecViewOffset

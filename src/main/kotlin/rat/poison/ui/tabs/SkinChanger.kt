@@ -23,13 +23,8 @@ class SkinChangerTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     private var enableSkinChanger = VisCheckBoxCustom("Enable Skinchanger", "SKINCHANGER")
     private var enableKnifeChanger = VisCheckBoxCustom("Enable Knifechanger", "KNIFECHANGER")
-    private var warningLabel = VisLabel("This is experimental and is not what the completed\n" +
-            " version will look like just a temporary version to show\n" +
-            "it works, updates are in progress, and to report any issues.\n" +
-            "To find the correct ID use csgostash.com and use the\n" +
-            "'Finish Catalog' number.\n\n" +
-            "May be cpu intensive. When enabled, press force update\n" +
-            "to apply skins.")
+    private var warningLabel = VisLabel("May be CPU intensive. Can cause game stuttering while applying skins.\n" +
+            "Can cause vac auth errors (not vac bans).")
 
     private var categorySelectionBox = VisSelectBox<String>()
     private var weaponSelectionBox = VisSelectBox<String>()
@@ -228,10 +223,10 @@ private class ListAdapter(array: ArrayList<String>?) : ArrayListAdapter<String, 
     }
 
     override fun createView(item: String): VisTable? {
-        var label = VisLabel(item)
+        val label = VisLabel(item)
         label.setColor(1F, 1F, 1F, 1F)
 
-        var table = VisTable()
+        val table = VisTable()
         table.left()
         table.add(label)
         return table

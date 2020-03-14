@@ -49,7 +49,7 @@ internal fun glowEspApp() = App {
 
 			when (it.type) {
 				EntityType.CCSPlayer -> {
-					if (entity.dead()) return@body false
+					if (entity.dead() || entity.dormant()) return@body false
 
 					val entityTeam = entity.team()
 					val team = !DANGER_ZONE && meTeam == entityTeam

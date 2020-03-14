@@ -3,7 +3,7 @@ package rat.poison.ui.uiHelpers.tables
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.ui.aimTab
+import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
@@ -12,7 +12,7 @@ import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
 import rat.poison.ui.uiUpdate
 
-class AimBTrigTable: VisTable(true) {
+class AimBTrigTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
     val enableTrig = VisCheckBoxCustom("Enable Trigger", "ENABLE_TRIGGER")
 
@@ -45,8 +45,8 @@ class AimBTrigTable: VisTable(true) {
             true
         }
 
-        //Default menu size is 500
-        //Default menu size is 500
+        //Default menu size width is 565
+        //Default menu size heght is 535
         //Texts are 200
         //Sliders are 250
         //Leaves 25 for left and right side to center

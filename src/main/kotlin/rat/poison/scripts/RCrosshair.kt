@@ -15,8 +15,8 @@ import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.settings.MENUTOG
 import rat.poison.strToBool
 import rat.poison.strToColor
-import rat.poison.ui.mainTabbedPane
-import rat.poison.ui.rcsTab
+import rat.poison.ui.uiPanels.mainTabbedPane
+import rat.poison.ui.uiPanels.rcsTab
 import java.lang.Math.toRadians
 import kotlin.math.atan
 import kotlin.math.floor
