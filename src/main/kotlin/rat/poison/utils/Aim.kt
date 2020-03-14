@@ -2,25 +2,15 @@ package rat.poison.utils
 
 import com.sun.jna.platform.win32.WinDef.POINT
 import rat.poison.curSettings
-import rat.poison.game.CSGO.clientDLL
-import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.CSGO.gameX
 import rat.poison.game.CSGO.gameY
 import rat.poison.game.clientState
-import rat.poison.game.entity.EntityType.Companion.size
-import rat.poison.game.offsets.ClientOffsets.dwInput
-import rat.poison.game.offsets.EngineOffsets.dwClientState_LastOutgoingCommand
 import rat.poison.game.setAngle
-import rat.poison.scripts.Input
-import rat.poison.scripts.MULTIPLAYER_BACKUP
-import rat.poison.scripts.UserCmd
-import rat.poison.scripts.sendPacket
 import rat.poison.settings.GAME_PITCH
 import rat.poison.settings.GAME_SENSITIVITY
 import rat.poison.settings.GAME_YAW
-import rat.poison.toInt
 import rat.poison.utils.extensions.refresh
 import kotlin.math.round
 
