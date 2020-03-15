@@ -74,7 +74,7 @@ class AimTable: VisTable(false) {
 
     init {
         if (curSettings["WARNING"].strToBool()) {
-            val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.6" +
+            val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.7" +
                     "\n\nIf you have any problems submit an issue on Github" +
                     "\nGitHub: https://github.com/TheFuckingRat/RatPoison" +
                     "\n\nUpdate 1.6 removes aim strictness from aim settings" +
