@@ -72,6 +72,7 @@ fun setAim() = every(250){
             if (strPre != "") {
                 curSettings["FACTOR_RECOIL"] = curSettings[strPre + "_FACTOR_RECOIL"].strToBool()
                 curSettings["AIM_BONE"] = curSettings[strPre + "_AIM_BONE"].toInt()
+                curSettings["FORCE_AIM_BONE"] = curSettings[strPre + "_AIM_FORCE_BONE"].toInt()
                 curSettings["AIM_FOV"] = curSettings[strPre + "_AIM_FOV"].toInt()
                 curSettings["AIM_SPEED"] = curSettings[strPre + "_AIM_SPEED"].toInt()
                 curSettings["AIM_SMOOTHNESS"] = curSettings[strPre + "_AIM_SMOOTHNESS"].toDouble()

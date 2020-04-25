@@ -84,6 +84,14 @@ Update 1.7 (in beta)
 * Enabled flick scroll on menu, you can scroll when needed by clicking and dragging on a blank part of the menu
 * Cleaned up menu for better consistency across tabs
 
+*1.7 Update 4/25/2020*
+
+* Updated list of skins for skinchanger
+* Box details can be used without having the bounding box enabled
+* Added force bone key + selector (to categories only)
+* Removed flick scroll for now
+* M249 is now considered a rifle (bug)
+
 ---
 
 **Grenade Helper**

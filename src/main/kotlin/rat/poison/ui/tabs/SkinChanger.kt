@@ -241,7 +241,6 @@ private class ListAdapter(array: ArrayList<String>?) : ArrayListAdapter<String, 
     }
 }
 
-
 fun getSkinArray(wep: String): Array<String> {
     val wepSkinArray = Array<String>()
     var readingLines = false

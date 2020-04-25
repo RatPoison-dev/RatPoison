@@ -30,6 +30,9 @@ SNIPER_AIM_FOV = 40
 //Lower is faster
 SNIPER_AIM_SPEED = 1
 
+//Force Bone
+SNIPER_AIM_FORCE_BONE = 8
+
 //Aim smoothness
 //Lower is less smooth (faster snapping)
 SNIPER_AIM_SMOOTHNESS = 1.0

@@ -41,7 +41,7 @@ private data class Box(var x0: Float = 0F, var y0: Float = 0F,
 private var currentIdx = 0
 
 fun boxEsp() = App {
-	if (!curSettings["ENABLE_BOX_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
+	if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !curSettings["BOX_ESP_DETAILS"].strToBool())|| !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
 
 	val meTeam = me.team()
 	forEntities(ccsPlayer) { //Replace positioning with abs...?
@@ -173,7 +173,9 @@ fun boxEsp() = App {
 			val w = x1 - x0
 			val h = y1 - y0
 
-			rect(x0, y0, w, h)
+			if (curSettings["ENABLE_BOX_ESP"].strToBool()) {
+				rect(x0, y0, w, h)
+			}
 
 			val detailTextColor = curSettings["BOX_DETAILS_TEXT_COLOR"].strToColorGDX()
 

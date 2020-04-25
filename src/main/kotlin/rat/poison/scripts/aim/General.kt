@@ -182,7 +182,11 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		val position = me.position()
 		val shouldVisCheck = !(forceAim && curSettings["FORCE_AIM_THROUGH_WALLS"].strToBool())
 
-		val aB = curSettings["AIM_BONE"].toInt()
+		var aB = curSettings["AIM_BONE"].toInt()
+
+		if (keyPressed(curSettings["FORCE_AIM_BONE_KEY"].toInt())) {
+			aB = curSettings["FORCE_AIM_BONE"].toInt()
+		}
 
 		if (currentTarget < 0) { //If target is invalid from last run
 			currentTarget = findTarget(position, currentAngle, aim,

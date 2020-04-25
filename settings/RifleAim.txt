@@ -30,6 +30,9 @@ RIFLE_AIM_SPEED = 3
 //Lower is less smooth (faster snapping)
 RIFLE_AIM_SMOOTHNESS = 3.0
 
+//Force Bone
+RIFLE_AIM_FORCE_BONE = 8
+
 //Aim after X shots
 RIFLE_AIM_AFTER_SHOTS = 0
 

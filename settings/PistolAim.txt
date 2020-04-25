@@ -30,6 +30,9 @@ PISTOL_AIM_SPEED = 2
 //Lower is less smooth (faster snapping)
 PISTOL_AIM_SMOOTHNESS = 2.5
 
+//Force Bone
+PISTOL_AIM_FORCE_BONE = 8
+
 //Advanced aim settings
 PISTOL_ADVANCED_SETTINGS = false
 PISTOL_AIM_RCS_X = 2.0

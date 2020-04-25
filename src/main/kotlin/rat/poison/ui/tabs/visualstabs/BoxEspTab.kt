@@ -17,7 +17,7 @@ class BoxEspTab : Tab(false, false) {
     val skeletonEsp = VisCheckBoxCustom("Enable Skeleton", "SKELETON_ESP")
     val showTeamSkeleton = VisCheckBoxCustom("Teammates", "SKELETON_SHOW_TEAM")
     val showEnemiesSkeleton = VisCheckBoxCustom("Enemies", "SKELETON_SHOW_ENEMIES")
-    val boxEsp = VisCheckBoxCustom("Enable Box", "ENABLE_BOX_ESP")
+    val boxEsp = VisCheckBoxCustom("Bounding Box", "ENABLE_BOX_ESP")
     val boxEspDetails = VisCheckBoxCustom("Box Details", "BOX_ESP_DETAILS")
     val boxEspHealth = VisCheckBoxCustom("Health", "BOX_ESP_HEALTH")
     val boxEspHealthPos = VisSelectBox<String>()

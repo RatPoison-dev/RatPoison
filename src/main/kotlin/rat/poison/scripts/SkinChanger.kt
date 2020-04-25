@@ -70,6 +70,8 @@ fun skinChanger() = every(1, continuous = true) {
                     val wantedStatTrak = sWep.tStatTrak
                     val wantedWear = sWep.tWear
 
+                    println(csgoEXE.int(weaponEntity + m_iAccountID))
+
                     csgoEXE[weaponEntity + m_iItemIDHigh] = -1
                     csgoEXE[weaponEntity + m_nFallbackPaintKit] = sWep.tSkinID
                     csgoEXE[weaponEntity + m_flFallbackWear] = sWep.tWear

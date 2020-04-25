@@ -16,7 +16,7 @@ enum class Weapons(val id: Int, val gun: Boolean = false, val automatic: Boolean
 	FAMAS(10, gun = true, automatic = true, rifle = true),
 	G3SG1(11, gun = true, sniper = true, scope = true),
 	GALIL(13, gun = true, automatic = true, rifle = true),
-	M249(14, gun = true, automatic = true),
+	M249(14, gun = true, automatic = true, rifle = true),
 	M4A4(16, gun = true, automatic = true, rifle = true),
 	MAC10(17, gun = true, automatic = true, smg = true),
 	P90(19, gun = true, automatic = true, smg = true),

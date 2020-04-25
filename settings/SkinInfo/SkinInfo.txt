@@ -1,4 +1,5 @@
 CZ75A {
+    Distressed : 944 : 0.00 : 1.00
     Victoria : 270 : 0.00 : 0.75
     Xiangliu : 643 : 0.00 : 0.56
     Yellow Jacket : 476 : 0.00 : 1.00
@@ -26,6 +27,7 @@ CZ75A {
 }
 
 DESERT_EAGLE {
+    Blue Ply : 945 : 0.00 : 1.00
     Code Red : 711 : 0.00 : 1.00
     Golden Koi : 185 : 0.00 : 0.12
     Mecha Industries : 805 : 0.00 : 0.60
@@ -116,6 +118,7 @@ FIVE_SEVEN {
 }
 
 GLOCK {
+    Bullet Queen : 957 : 0.00 : 1.00
     Wasteland Rebel : 586 : 0.00 : 0.54
     Water Elemental : 353 : 0.00 : 0.70
     Twilight Galaxy : 437 : 0.00 : 0.20
@@ -148,6 +151,7 @@ GLOCK {
 }
 
 P2000 {
+    Acid Etched : 951 : 0.00 : 1.00
     Fire Elemental : 389 : 0.00 : 0.60
     Imperial Dragon : 591 : 0.00 : 0.63
     Corticera : 184 : 0.06 : 0.30
@@ -213,6 +217,7 @@ P250 {
 }
 
 R8_REVOLVER {
+    Bone Forged : 952 : 0.00 : 0.60
     Fade : 522 : 0.00 : 0.40
     Skull Crusher : 843 : 0.25 : 0.80
     Llama Cannon : 683 : 0.03 : 0.70
@@ -290,6 +295,7 @@ USP_SILENCER {
 }
 
 MAC10 {
+    Disco Tech : 947 : 0.00 : 1.00
     Stalker : 898 : 0.00 : 1.00
     Neon Rider : 433 : 0.00 : 0.45
     Pipe Down : 812 : 0.00 : 0.90
@@ -324,6 +330,7 @@ MAC10 {
 }
 
 MP5 {
+    Desert Strike : 949 : 0.00 : 1.00
     Phosphor : 810 : 0.00 : 0.80
     Agent : 915 : 0.00 : 1.00
     Gauss : 846 : 0.00 : 1.00
@@ -487,6 +494,7 @@ UMP45 {
 }
 
 AK47 {
+    Phantom Disruptor : 941 : 0.00 : 0.65
     Asiimov : 801 : 0.05 : 0.70
     Neon Rider : 707 : 0.00 : 0.80
     The Empress : 675 : 0.00 : 1.00
@@ -523,6 +531,7 @@ AK47 {
 }
 
 AUG {
+    Tom Cat : 942 : 0.00 : 0.80
     Chameleon : 280 : 0.00 : 0.50
     Akihabara Accept : 455 : 0.00 : 1.00
     Death by Puppy : 913 : 0.00 : 0.40
@@ -555,6 +564,7 @@ AUG {
 }
 
 AWP {
+    Capillary : 943 : 0.05 : 0.70
     Containment Breach : 887 : 0.00 : 1.00
     Wildfire : 917 : 0.01 : 0.70
     Neo-Noir : 803 : 0.00 : 0.50
@@ -669,6 +679,7 @@ GALIL {
 }
 
 M4A1_SILENCER {
+    Player Two : 946 : 0.00 : 0.84
     Mecha Industries : 587 : 0.00 : 0.80
     Chantico's Fire : 548 : 0.00 : 0.99
     Golden Coil : 497 : 0.00 : 1.00
@@ -729,6 +740,7 @@ M4A4 {
 }
 
 SCAR20 {
+    Enforcer : 954 : 0.00 : 1.00
     Bloodsport : 597 : 0.00 : 0.45
     Cardiac : 391 : 0.00 : 1.00
     Cyrex : 312 : 0.00 : 0.50
@@ -754,6 +766,7 @@ SCAR20 {
 }
 
 SG553 {
+    Darkwing : 955 : 0.00 : 1.00
     Colony IV : 897 : 0.00 : 1.00
     Cyrex : 487 : 0.00 : 1.00
     Integrale : 750 : 0.00 : 1.00
@@ -781,6 +794,7 @@ SG553 {
 }
 
 SSG08 {
+    Fever Dream : 956 : 0.00 : 0.72
     Dragonfire : 624 : 0.00 : 0.50
     Blood in the Water : 222 : 0.06 : 0.20
     Bloodshot : 899 : 0.14 : 0.60
@@ -805,6 +819,7 @@ SSG08 {
 }
 
 MAG7  {
+    Justice : 948 : 0.00 : 1.00
     Cinquedea : 737 : 0.00 : 1.00
     SWAG-7 : 703 : 0.00 : 0.92
     Petroglyph : 608 : 0.00 : 0.44
@@ -863,6 +878,7 @@ NOVA {
 }
 
 SAWED_OFF {
+    Apocalypto : 953 : 0.00 : 1.00
     The Kraken : 256 : 0.00 : 0.40
     Devourer : 720 : 0.00 : 0.80
     Wasteland Princess : 638 : 0.00 : 0.70
@@ -937,6 +953,7 @@ M249 {
 }
 
 NEGEV {
+    Prototype : 950 : 0.00 : 0.70
     Mjolnir : 763 : 0.00 : 0.60
     Lionfish : 698 : 0.00 : 0.55
     Power Loader : 514 : 0.00 : 1.00

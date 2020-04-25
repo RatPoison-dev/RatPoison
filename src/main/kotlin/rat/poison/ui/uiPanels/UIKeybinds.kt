@@ -15,6 +15,7 @@ import kotlin.math.round
 class UIKeybinds : VisWindow("Keybinds") {
     val aimToggleKey = VisInputFieldCustom("Toggle Aim Key", "AIM_TOGGLE_KEY")
     val forceAimKey = VisInputFieldCustom("Force Aim Key", "FORCE_AIM_KEY")
+    val forceAimBoneKey = VisInputFieldCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
     val boneTriggerKey = VisInputFieldCustom("Trigger Key", "TRIGGER_KEY")
     val visualsToggleKey = VisInputFieldCustom("Visuals Toggle Key", "VISUALS_TOGGLE_KEY")
     val doorSpamKey = VisInputFieldCustom("Door Spam Key", "D_SPAM_KEY")
@@ -41,6 +42,7 @@ class UIKeybinds : VisWindow("Keybinds") {
 
         add(aimToggleKey).left().row()
         add(forceAimKey).left().row()
+        add(forceAimBoneKey).left().row()
         add(boneTriggerKey).left().row()
         add(visualsToggleKey).left().row()
         add(doorSpamKey).left().row()
@@ -67,6 +69,7 @@ fun keybindsUpdate(neglect: Actor) {
     uiKeybinds.apply {
         aimToggleKey.update(neglect)
         forceAimKey.update(neglect)
+        forceAimBoneKey.update(neglect)
         boneTriggerKey.update(neglect)
         visualsToggleKey.update(neglect)
         doorSpamKey.update(neglect)
@@ -76,6 +79,7 @@ fun keybindsUpdate(neglect: Actor) {
 
     aimTab.tAim.aimToggleKey.update(neglect)
     aimTab.tAim.forceAimKey.update(neglect)
+    aimTab.tAim.forceAimBoneKey.update(neglect)
     aimTab.tTrig.boneTriggerKey.update(neglect)
     visualsTab.visualsToggleKey.update(neglect)
     miscTab.doorSpamKey.update(neglect)

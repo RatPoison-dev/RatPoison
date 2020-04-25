@@ -38,36 +38,6 @@ fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double, si
 	if (!silent) {
 		val dAng = applyFlatSmoothing(currentAngle, destinationAngle, smoothing)
 		clientState.setAngle(dAng)
-	} else { //Silent Aim
-//		sendPacket(false)
-//
-//		//Probably not correct
-//		val pCommands = csgoEXE.int(clientDLL.address + dwInput + 0xEC)
-//
-//		val iDesiredNumber = csgoEXE.int(clientState + dwClientState_LastOutgoingCommand) + 2
-//
-//		val pUserCmd = pCommands + (iDesiredNumber % MULTIPLAYER_BACKUP) * 0x64
-//		val pOldUserCmd = pCommands + ((iDesiredNumber-1) % MULTIPLAYER_BACKUP) * 0x64
-//		val pVerifiedOldUserCmd = pCommands + ((iDesiredNumber-1) % MULTIPLAYER_BACKUP) * 0x68
-//
-//		println("dwInput: $dwInput      desirednum: $iDesiredNumber    commands:${pCommands}     puserCmd: $pUserCmd         num " + csgoEXE.int(pUserCmd + 0x4))
-//		//while (csgoEXE.int(pUserCmd + 0x4) < iDesiredNumber) {
-//		//	Thread.sleep(1)
-//		//}
-//
-//		val oldUserCmd = UserCmd()
-//		csgoEXE.read(pOldUserCmd, oldUserCmd)
-//		println(oldUserCmd.size())
-//
-//		val IN_ATTACK = 1 shl 0
-//
-//		oldUserCmd.vecViewAnglesX = destinationAngle.x
-//
-//		oldUserCmd.iButtons = oldUserCmd.iButtons or IN_ATTACK
-//
-//		csgoEXE.write(pOldUserCmd, oldUserCmd)
-//		csgoEXE.write(pVerifiedOldUserCmd, oldUserCmd)
-//		sendPacket(true)
 	}
 }
 

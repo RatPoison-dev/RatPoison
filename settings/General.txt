@@ -85,6 +85,9 @@ TEAMMATES_ARE_ENEMIES = false
 //Default key is MOUSE_4
 FORCE_AIM_KEY = 5
 
+//Enables specific bone when held
+FORCE_AIM_BONE_KEY = 5
+
 //Always force aim if within FOV
 FORCE_AIM_ALWAYS = false
 
@@ -108,6 +111,7 @@ PERFECT_AIM = false
 PERFECT_AIM_CHANCE = 1
 PERFECT_AIM_FOV = 1
 AIM_BONE = -1
+FORCE_AIM_BONE = -1
 AIM_SPEED = 1
 AIM_FOV = 40
 FACTOR_RECOIL = false

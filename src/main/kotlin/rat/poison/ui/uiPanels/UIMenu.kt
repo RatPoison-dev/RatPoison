@@ -50,7 +50,8 @@ class UIMenu : VisWindow("Rat Poison 1.7") {
 
         //Scroll pane for the content pane, content pane goes inside
         val mainScrollPane = ScrollPane(mainTabbedPaneContent) //Init scroll pane containing main content pane
-        mainScrollPane.setFlickScroll(true)
+        mainScrollPane.setFlickScroll(false)
+        mainScrollPane.setScrollbarsVisible(true)
         mainScrollPane.setSize(565F, 535F)
 
         //Add tabs to the tab header
@@ -68,7 +69,6 @@ class UIMenu : VisWindow("Rat Poison 1.7") {
         mainTabbedPane.switchTab(aimTab)
         //Add aim tab content to the table
         mainTabbedPaneContent.add(aimTab.contentTable).growX()
-
 
         //Tab switch listener
         mainTabbedPane.addListener(object : TabbedPaneAdapter() {

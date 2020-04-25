@@ -24,6 +24,7 @@ class AimTable: VisTable(false) {
     val activateFromFireKey = VisCheckBoxCustom("Activate From Fire Key", "ACTIVATE_FROM_AIM_KEY")
     val teammatesAreEnemies = VisCheckBoxCustom("Teammates Are Enemies", "TEAMMATES_ARE_ENEMIES")
 
+    val forceAimBoneKey = VisInputFieldCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
     val forceAimKey = VisInputFieldCustom("Force Aim Key", "FORCE_AIM_KEY")
     val forceAimAlways = VisCheckBoxCustom("Force Aim Always", "FORCE_AIM_ALWAYS")
     val forceAimThroughWalls = VisCheckBoxCustom("Force Aim Through Walls", "FORCE_AIM_THROUGH_WALLS")
@@ -47,6 +48,9 @@ class AimTable: VisTable(false) {
 
     val aimBoneLabel = VisLabel("Bone: ")
     val aimBoneBox = VisSelectBox<String>()
+
+    val forceAimBoneLabel = VisLabel("Force Bone: ")
+    val forceAimBoneBox = VisSelectBox<String>()
 
     val aimFov = ATabVisSlider("Aim FOV", "_AIM_FOV", 1F, 180F, 1F, true)
     val aimSpeed = ATabVisSlider("Aim Speed", "_AIM_SPEED", 0F, 10F, 1F, true)
@@ -157,6 +161,26 @@ class AimTable: VisTable(false) {
             true
         }
 
+        //Create Force Aim Bone Selector Box
+        val forceAimBone = VisTable()
+        forceAimBoneBox.setItems("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
+        forceAimBoneBox.selected = when (curSettings[categorySelected + "_AIM_FORCE_BONE"].toInt()) {
+            HEAD_BONE -> "HEAD"
+            NECK_BONE -> "NECK"
+            CHEST_BONE -> "CHEST"
+            STOMACH_BONE -> "STOMACH"
+            NEAREST_BONE -> "NEAREST"
+            else -> "RANDOM"
+        }
+        forceAimBone.add(forceAimBoneLabel).width(200F)
+        forceAimBone.add(forceAimBoneBox)
+
+        forceAimBoneBox.changed { _, _ ->
+            val setBone = curSettings[forceAimBoneBox.selected + "_BONE"].toInt()
+            curSettings[categorySelected + "_AIM_FORCE_BONE"] = setBone.toString()
+            true
+        }
+
         //Create Perfect Aim Collapsible Check Box
         perfectAimCheckBox.isChecked = curSettings[categorySelected + "_PERFECT_AIM"].strToBool()
         perfectAimCheckBox.changed { _, _ ->
@@ -206,6 +230,7 @@ class AimTable: VisTable(false) {
 
         addSeparator()
 
+        add(forceAimBoneKey).left().row()
         add(forceAimKey).left().row()
         add(forceAimAlways).left().row()
         add(forceAimThroughWalls).left().row()
@@ -224,6 +249,7 @@ class AimTable: VisTable(false) {
         add(enablePathAim).left().row()
         add(enableScopedOnly).left().row() //SNIPER selection only
         add(aimBone).left().row()
+        add(forceAimBone).left().row()
         add(aimSpeed).left().row()
         add(aimFov).left().row()
         add(aimSmooth).left().row()

@@ -30,6 +30,9 @@ SHOTGUN_AIM_SPEED = 1
 //Lower is less smooth (faster snapping)
 SHOTGUN_AIM_SMOOTHNESS = 1.0
 
+//Force Bone
+SHOTGUN_AIM_FORCE_BONE = 8
+
 //Advanced aim settings
 SHOTGUN_ADVANCED_SETTINGS = false
 SHOTGUN_AIM_RCS_X = 2.0
