@@ -5,45 +5,42 @@
 
 ---
 
-**Beginner's Guide**
-
 This branch is being updated at [TheFuckingRat's Github Repository](https://github.com/TheFuckingRat/RatPoison)
-The official branch is located at [Jire's GitHub Repository](https://github.com/Jire/Charlatano)
-
-~~Before doing anything, make sure you have
-[Java Development Kit (JDK) 13](https://www.oracle.com/technetwork/java/javase/downloads/jdk13-downloads-5672538.html)
-installed. [Alternative.](https://jdk.java.net/13/) This is NOT the same thing as the regular Java Runtime (JRE), and you MUST install the JDK
-in order to build Rat Poison, Charlatano, and any other Java software, and you MUST install JDK 13~~
-AdoptOpenJDK is now automatically installed, and the java home variable automatically set!
-
-The first step is to compile the source code into a usable cheat program.
-
-* Download the latest updates (which includes the newest features) by downloading directly as a ZIP
-* Extract the contents from the archive to any folder (to your desktop, for example)
-* (OPTIONAL) Make sure you have Java Development Kit 13 installed, in Program Files\Java
-* Double click on the "_build_" (_build.bat_) script and wait for it to complete
-* If you don't have the JDK you will have the option to install it through the build.bat file
-
-~~To set your JAVA_HOME read [here](https://javatutorial.net/set-java-home-windows-10)
-Make sure to update your System Path as well, not just setting JAVA_HOME~~
-
-Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will in a directory called **RatPoison 1.6**.
-
-From within the **RatPoison 1.6** directory, you can start the cheat by running
-the _"Start RatPoison 1.6"_ script.
-
-You can launch the cheat any time after launching CSGO.
+The official branch is located at [Jire's GitHub Repository](https://github.com/Jire/Charlatano).
 
 ---
 
 **Beginner's Guide Video**
 
-[Beginner's Video](https://www.youtube.com/watch?v=BnvuJJCyF9Y "Rat Poison")
+--> **[Beginner's Video](https://www.youtube.com/watch?v=BnvuJJCyF9Y "Rat Poison")** <-- Recommended to watch before continuing.
 
 ---
 
-Common Issues
+**Beginner's Guide**
+
+
+*Note: AdoptOpenJDK is now automatically installed, and the java home variable automatically set!
+This means you won't _need_ Java Development Kit 13. If the hack isn't working, make sure to uninstall any installed JDK first!*
+
+The first step is to compile the source code into a usable cheat program.
+
+* Download the latest updates (which includes the newest features) by downloading directly as a ZIP.
+* Extract the contents from the archive to any folder (to your desktop, for example).
+* Double click on the "_build_" (_build.bat_) script and wait for it to complete.
+* If you don't have the JDK you will have the option to install it through the build.bat file, this is recommended.
+
+Once those steps are complete, the usable cheat program can be found within the _build_
+directory, and will be in a directory called **RatPoison 1.6**.
+
+From within the **RatPoison 1.6** directory, you can start the cheat by running
+the _"Start RatPoison 1.6"_ script.
+If you have chosen to randomize the cheat name, you should open the file ending in .bat which should show ![BatFile](https://i.imgur.com/JZAhmtr.png) as an icon.
+
+You can launch the cheat at any time after launching CSGO.
+
+---
+
+**Common Issues**
 * Overlay is black/doesn't go transparent/isn't showing up
     * The overlay only works on Windows 10, it doesn't turn transparent on W7
     * CSGO needs to be borderless/windowed for the overlay to show up on top of CS, otherwise it's just an app in your taskbar
