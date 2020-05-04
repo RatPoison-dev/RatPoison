@@ -83,6 +83,7 @@ Update 1.7 (in beta)
 * Added entity dead and dormant check to prevent ghost footsteps
 * Enabled flick scroll on menu, you can scroll when needed by clicking and dragging on a blank part of the menu
 * Cleaned up menu for better consistency across tabs
+* Skinchanger will only update the local players bought weapons, not dropped weapons
 
 *1.7 Update 4/25/2020*
 
