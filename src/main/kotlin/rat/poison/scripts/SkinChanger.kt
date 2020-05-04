@@ -6,14 +6,15 @@ import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.Weapons
 import rat.poison.game.clientState
+import rat.poison.game.entity.*
 import rat.poison.game.entity.team
 import rat.poison.game.entity.type
-import rat.poison.game.entity.weapon
-import rat.poison.game.entity.weaponEntity
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.hMyWeapons
+import rat.poison.game.netvars.NetVarOffsets.m_OriginalOwnerXuidHigh
 import rat.poison.game.netvars.NetVarOffsets.m_OriginalOwnerXuidLow
 import rat.poison.game.netvars.NetVarOffsets.m_flFallbackWear
+import rat.poison.game.netvars.NetVarOffsets.m_hOwnerEntity
 import rat.poison.game.netvars.NetVarOffsets.m_hViewModel
 import rat.poison.game.netvars.NetVarOffsets.m_iAccountID
 import rat.poison.game.netvars.NetVarOffsets.m_iEntityQuality
@@ -54,15 +55,24 @@ fun skinChanger() = every(1, continuous = true) {
     }
 
     for (i in 0..8) {
-            val myWeapon = csgoEXE.uint(me + hMyWeapons + i * 0x4) and 0xFFF
-            val weaponEntity = clientDLL.uint(dwEntityList + (myWeapon - 1) * ENTITY_SIZE)
+        val myWeapon = csgoEXE.uint(me + hMyWeapons + i * 0x4) and 0xFFF
+        val weaponEntity = clientDLL.uint(dwEntityList + (myWeapon - 1) * ENTITY_SIZE)
 
-            if (weaponEntity.type().gun) {
-                if (curSettings["SKINCHANGER"].strToBool()) {
-                    val sWep = curSettings["SKIN_" + weaponEntity.type().name].toSkinWeaponClass()
+        val sID = me.steamID()
+        val split = sID.split(":")
+        if (split.size < 3) {
+            return@every
+        }
+        val pID = (split[2].toInt()*2) + split[1].toInt()
 
-                    //Change these to read weaponEntity kit to a mem and read from it
-                    val accountID = csgoEXE.int(weaponEntity + m_OriginalOwnerXuidLow)
+        if (weaponEntity.type().gun) {
+            if (curSettings["SKINCHANGER"].strToBool()) {
+                val sWep = curSettings["SKIN_" + weaponEntity.type().name].toSkinWeaponClass()
+
+                //Change these to read weaponEntity kit to a mem and read from it
+                val accountID = csgoEXE.int(weaponEntity + m_OriginalOwnerXuidLow)
+
+                if (pID == accountID) {
                     val curWepPaint = csgoEXE.int(weaponEntity + m_nFallbackPaintKit)
                     val curStatTrak = csgoEXE.int(weaponEntity + m_nFallbackStatTrak)
                     val curWear = csgoEXE.float(weaponEntity + m_flFallbackWear)
@@ -70,24 +80,22 @@ fun skinChanger() = every(1, continuous = true) {
                     val wantedStatTrak = sWep.tStatTrak
                     val wantedWear = sWep.tWear
 
-                    //println(csgoEXE.int(weaponEntity + m_iAccountID))
-
                     csgoEXE[weaponEntity + m_iItemIDHigh] = -1
                     csgoEXE[weaponEntity + m_nFallbackPaintKit] = sWep.tSkinID
                     csgoEXE[weaponEntity + m_flFallbackWear] = sWep.tWear
                     csgoEXE[weaponEntity + m_nFallbackStatTrak] = sWep.tStatTrak
-                    csgoEXE[weaponEntity + m_iAccountID] = accountID
 
                     if (((curWepPaint != wantedWepPaint) || (curStatTrak != wantedStatTrak) || (curWear != wantedWear)) && curSettings["FORCE_UPDATE_AUTO"].strToBool()) {
                         forcedUpdate()
                     }
                 }
-            } else if (weaponEntity.type().knife) {
-                if (curSettings["KNIFE_IDX"].toInt() != -1 && curSettings["KNIFECHANGER"].strToBool()) {
-                //csgoEXE[weaponEntity + iItemDefinitionIndex] = Weapons.KNIFE_GUT.id //?
-                //csgoEXE[weaponEntity + m_nModelIndex] = calcModelIndex
-                //csgoEXE[weaponEntity + m_iViewModelIndex] = calcModelIndex
-                csgoEXE[weaponEntity + m_iEntityQuality] = 3
+            }
+        } else if (weaponEntity.type().knife) {
+            if (curSettings["KNIFE_IDX"].toInt() != -1 && curSettings["KNIFECHANGER"].strToBool()) {
+            //csgoEXE[weaponEntity + iItemDefinitionIndex] = Weapons.KNIFE_GUT.id //?
+            //csgoEXE[weaponEntity + m_nModelIndex] = calcModelIndex
+            //csgoEXE[weaponEntity + m_iViewModelIndex] = calcModelIndex
+            csgoEXE[weaponEntity + m_iEntityQuality] = 3
 
 //                val sWep = curSettings["SKIN_KNIFE"].toSkinWeaponClass()
 //

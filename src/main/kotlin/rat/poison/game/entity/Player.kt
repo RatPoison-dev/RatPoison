@@ -219,6 +219,25 @@ internal fun Player.name(): String {
 	return name
 }
 
+internal fun Player.steamID(): String {
+	val mem: Memory by lazy {
+		Memory(0x140)
+	}
+
+	val entID = csgoEXE.uint(this + dwIndex) - 1
+
+	val a = csgoEXE.uint(clientState + dwClientState_PlayerInfo)
+	val b = csgoEXE.uint(a + 0x40)
+	val c = csgoEXE.uint(b + 0x0C)
+	val d = csgoEXE.uint(c + 0x28 + entID * 0x34)
+
+	csgoEXE.read(d, mem)
+
+	val sID = mem.getString(0x94) //0x90 is int of steamID
+	mem.clear()
+	return sID
+}
+
 internal fun Player.rank(): Int {
 	val index = csgoEXE.uint(this + dwIndex)
 

@@ -52,6 +52,7 @@ object NetVarOffsets {
 
 	val m_iAccountID by netVar("DT_BaseAttributableItem", "m_iAccountID")
 	val m_OriginalOwnerXuidLow by netVar("DT_BaseAttributableItem", "m_OriginalOwnerXuidLow")
+	val m_OriginalOwnerXuidHigh by netVar("DT_BaseAttributableItem", "m_OriginalOwnerXuidHigh")
 	val m_iItemIDHigh by netVar("DT_BaseAttributableItem", "m_iItemIDHigh")
 	val m_nFallbackPaintKit by netVar("DT_BaseAttributableItem", "m_nFallbackPaintKit")
 	val m_flFallbackWear by netVar("DT_BaseAttributableItem", "m_flFallbackWear")
