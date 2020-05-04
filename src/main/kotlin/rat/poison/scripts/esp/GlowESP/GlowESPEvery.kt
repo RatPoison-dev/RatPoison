@@ -12,7 +12,7 @@ import rat.poison.strToBool
 import rat.poison.strToColor
 import rat.poison.utils.every
 
-internal fun glowEspEvery() = every(25) {
+internal fun glowEspEvery() = every(25, true) {
 	if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return@every
 
 	val currentAngle = clientState.angle()

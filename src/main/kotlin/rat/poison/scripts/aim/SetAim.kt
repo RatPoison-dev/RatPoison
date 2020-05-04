@@ -12,7 +12,7 @@ import rat.poison.utils.every
 var override = false
 var curWep = Weapons.AK47
 
-fun setAim() = every(250){
+fun setAim() = every(250) {
     try {
         override = false
         curWep = me.weapon()

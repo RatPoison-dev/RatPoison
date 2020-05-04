@@ -38,8 +38,6 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			return@result false
 		}
 
-
-
 		if (BONE == -3) { //Knife bot bone
 			for (i in 3..8) {
 				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, entity.nearestBone())

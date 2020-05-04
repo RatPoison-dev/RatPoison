@@ -59,3 +59,5 @@ GLOW_GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)
 
 //Color of visible, in aimbot FOV players
 GLOW_HIGHLIGHT_COLOR = Color(red=0, green=174, blue=255, alpha=1.0)
+
+

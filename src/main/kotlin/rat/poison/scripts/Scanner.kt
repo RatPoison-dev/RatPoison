@@ -43,12 +43,12 @@ fun scanner() {
                 println(); loadSettingsFromFiles(SETTINGS_DIRECTORY); println()
             }
             line.equals("list", true) -> {
-                println(); File(SETTINGS_DIRECTORY).listFiles().forEach { println(it) }; println()
+                println(); File(SETTINGS_DIRECTORY).listFiles()?.forEach { println(it) }; println()
             }
             line.startsWith("read") -> { //Read file's variables
                 println()
                 try {
-                    File(SETTINGS_DIRECTORY + "\\" + line.trim().split(" ".toRegex())[1] + ".kts").readLines().forEach {
+                    File(SETTINGS_DIRECTORY + "\\" + line.trim().split(" ".toRegex())[1] + ".txt").readLines().forEach {
                         if (!it.startsWith("/") && !it.startsWith("*") && !it.startsWith(" ") && it.trim().isNotEmpty() && !it.startsWith("import")) {
                             println(it)
                         }
@@ -70,7 +70,7 @@ fun scanner() {
                 println()
             }
             line.startsWith("write") -> {
-                val fileDir = SETTINGS_DIRECTORY + "\\" + line.trim().split(" ".toRegex())[1] + ".kts"
+                val fileDir = SETTINGS_DIRECTORY + "\\" + line.trim().split(" ".toRegex())[1] + ".txt"
                 val command = line.trim().split(" ".toRegex(), 3)[2]
                 var prevFile = ""
                 println()
@@ -88,6 +88,7 @@ fun scanner() {
                         println("Set $command")
                         Files.write(File(fileDir).toPath(), prevFile.toByteArray(), StandardOpenOption.WRITE)
                         println("Reloading settings")
+                        loadSettingsFromFiles(SETTINGS_DIRECTORY)
                         println()
                     } catch (e: FileNotFoundException) {
                         println("File not found, use list to see current files")

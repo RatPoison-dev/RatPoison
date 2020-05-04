@@ -1,14 +1,19 @@
 package rat.poison.game
 
+import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.offsets.ClientOffsets.dwViewMatrix
+import rat.poison.strToBool
 import rat.poison.utils.Vector
 
 val w2sViewMatrix = Array(4) { DoubleArray(4) }
 
 fun worldToScreen(from: Vector, vOut: Vector) = try {
+	if (!curSettings["MENU"].strToBool()) {
+		updateViewMatrix()
+	}
 	vOut.x = w2sViewMatrix[0][0] * from.x + w2sViewMatrix[0][1] * from.y + w2sViewMatrix[0][2] * from.z + w2sViewMatrix[0][3]
 	vOut.y = w2sViewMatrix[1][0] * from.x + w2sViewMatrix[1][1] * from.y + w2sViewMatrix[1][2] * from.z + w2sViewMatrix[1][3]
 

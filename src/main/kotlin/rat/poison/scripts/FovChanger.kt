@@ -24,8 +24,6 @@ internal fun fovChanger() = App {
 
     val curFov = csgoEXE.int(me + m_iDefaultFov)
 
-    //for full clean smothing set variable for when weve scoped, if we just unscoped smooth until we get to default then unset variable
-
     if (me.weapon().sniper) {
         if (me.isScoped()) {
             targetFov = when (zLevel) {

@@ -85,6 +85,9 @@ Update 1.7 (in beta)
 * Cleaned up menu for better consistency across tabs
 * Skinchanger will only update the local players bought weapons, not dropped weapons
 
+* Fixed nearest bone not working with menu disabled
+* Fixed cmd read/write files when menu is disabled
+
 *1.7 Update 4/25/2020*
 
 * Updated list of skins for skinchanger

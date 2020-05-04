@@ -3,7 +3,7 @@ DEBUG = false
 
 //Enable the overlay, menu
 //Any settings/scripts reliant on drawing on the overlay won't enable
-MENU = true
+MENU = false
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles visibility of the menu on the overlay
 //Default key is F1
@@ -86,7 +86,7 @@ TEAMMATES_ARE_ENEMIES = false
 FORCE_AIM_KEY = 5
 
 //Enables specific bone when held
-FORCE_AIM_BONE_KEY = 5
+FORCE_AIM_BONE_KEY = 6
 
 //Always force aim if within FOV
 FORCE_AIM_ALWAYS = false
@@ -111,7 +111,7 @@ PERFECT_AIM = false
 PERFECT_AIM_CHANCE = 1
 PERFECT_AIM_FOV = 1
 AIM_BONE = -1
-FORCE_AIM_BONE = -1
+FORCE_AIM_BONE = 8
 AIM_SPEED = 1
 AIM_FOV = 40
 FACTOR_RECOIL = false
@@ -128,9 +128,9 @@ AIM_RANDOM_X_VARIATION = 0
 AIM_RANDOM_Y_VARIATION = 0
 AIM_VARIATION_DEADZONE = 0
 KEYBINDS = false
-KEYBINDS_X = 400
-KEYBINDS_Y = 400
-KEYBINDS_ALPHA = 1
+KEYBINDS_X = 400.0
+KEYBINDS_Y = 400.0
+KEYBINDS_ALPHA = 1.0
 
 //Can't be edited from menu, not guaranteed to work properly
 PISTOL_AIM_AFTER_SHOTS = 0
