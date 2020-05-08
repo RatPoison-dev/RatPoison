@@ -3,7 +3,7 @@ DEBUG = false
 
 //Enable the overlay, menu
 //Any settings/scripts reliant on drawing on the overlay won't enable
-MENU = false
+MENU = true
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles visibility of the menu on the overlay
 //Default key is F1
