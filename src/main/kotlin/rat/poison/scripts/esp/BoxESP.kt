@@ -220,8 +220,9 @@ fun boxEsp() = App {
 						if (bEspWeapon && bEspWeaponPos == "B") {
 							boxDetailsTextBottom.append(weapon)
 						}
+
 						if (boxDetailsTextBottom.isNotBlank() && boxDetailsTextBottom.isNotEmpty()) {
-							glyph.setText(this, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, detailTextColor, 1F, Align.center, false, "")
+							glyph.setText(textRenderer, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, detailTextColor, 1F, Align.center, false, null)
 							draw(sb, glyph, x0 + w / 2F, y0 + h - 4F)
 						}
 						////Bottom
