@@ -9,6 +9,9 @@ MENU = true
 //Default key is F1
 MENU_KEY = 112
 
+//If the menu has a blur behind it
+GAUSSIAN_BLUR = false
+
 //The title of the app to draw the overlay on
 //Ex "Untitled - Notepad"
 MENU_APP = "Counter-Strike: Global Offensive"
@@ -69,6 +72,9 @@ HEAD_WALK_KEY = 81
 //Global enable aim
 ENABLE_AIM = true
 
+//Hold target - If the aimbot should lock on a target as long as the aim key is pressed and the target is alive
+HOLD_TARGET = false
+
 //Swap delay if target becomes invalid, in ms
 AIM_TARGET_SWAP_DELAY = 150
 
@@ -96,7 +102,6 @@ FORCE_AIM_THROUGH_WALLS = false
 
 //MS Delay between when aimbot paths are recalculated
 AIM_DURATION = 1
-
 
 //Bone IDs of bones used
 HEAD_BONE = 8

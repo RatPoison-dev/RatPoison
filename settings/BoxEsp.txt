@@ -1,9 +1,9 @@
 //Enable box esp
-ENABLE_BOX_ESP = false
+ENABLE_BOX_ESP = true
 
 //Enable box esp details
 //Shows optional extra details (Health/Armor bar, Name/Weapon text) for each enemy, configurable below
-BOX_ESP_DETAILS = false
+BOX_ESP_DETAILS = true
 
 //Enable box esp health bar; Bar position (L)eft / (R)ight
 BOX_ESP_HEALTH = true

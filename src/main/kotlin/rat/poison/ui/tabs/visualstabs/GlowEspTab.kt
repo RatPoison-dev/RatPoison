@@ -1,6 +1,9 @@
 package rat.poison.ui.tabs.visualstabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.kotcrab.vis.ui.VisUI
+import com.kotcrab.vis.ui.widget.VisImage
+import com.kotcrab.vis.ui.widget.VisImageTextButton
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.ui.tabs.glowEspTab
@@ -41,16 +44,6 @@ class GlowEspTab : Tab(false, false) {
         ////////////////////FORMATTING
         table.padLeft(25F)
         table.padRight(25F)
-
-//        val colTable = VisTable()
-//        val width = 225F
-//        colTable.add(glowTeamColor).width(width).padRight(2F)
-//        colTable.add(glowEnemyColor).width(width).row()
-//        colTable.add(glowBombColor).width(width).padRight(2F)
-//        colTable.add(glowDefuserColor).width(width).row()
-//        colTable.add(glowWeaponColor).width(width).padRight(2F)
-//        colTable.add(glowGrenadeColor).width(width).row()
-//        colTable.add(glowHighlightColor).width(width).left()
 
         table.add(glowEsp).left()
         table.add(invGlowEsp).left().row()
@@ -98,7 +91,7 @@ class GlowEspTab : Tab(false, false) {
         tmpTable.add(showTarget)
         tmpTable.add(glowHighlightColor).width(175F - showTarget.width).padRight(50F)
 
-        table.add(tmpTable).left()
+        table.add(tmpTable).left().row()
         ////////////////////FORMATTING
     }
 

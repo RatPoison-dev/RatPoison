@@ -15,20 +15,19 @@ import rat.poison.scripts.skinChanger
 import rat.poison.toSkinWeaponClass
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
+import rat.poison.ui.uiPanels.skinChangerTab
 import java.io.File
 
 class SkinChangerTab : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
-    private var enableSkinChanger = VisCheckBoxCustom("Enable Skinchanger", "SKINCHANGER")
-    private var enableKnifeChanger = VisCheckBoxCustom("Enable Knifechanger", "KNIFECHANGER")
-    private var warningLabel = VisLabel("May be CPU intensive. Can cause game stuttering while applying skins.\n" +
-            "Can cause vac auth errors (not vac bans).")
+    var enableSkinChanger = VisCheckBoxCustom("Enable Skinchanger", "SKINCHANGER")
+    //var enableKnifeChanger = VisCheckBoxCustom("Enable Knifechanger", "KNIFECHANGER")
 
     private var categorySelectionBox = VisSelectBox<String>()
     private var weaponSelectionBox = VisSelectBox<String>()
-    private var knifeSelectionBox = VisSelectBox<String>()
+    //private var knifeSelectionBox = VisSelectBox<String>()
 
     //This is so FUCKING dumb
     private var strArray = ArrayList<String>()
@@ -45,7 +44,7 @@ class SkinChangerTab : Tab(false, false) {
     //private var skinWear = VisValidatableTextField(Validators.FLOATS)
 
     private var forceUpdate = VisTextButton("Manual Force Update")
-    private var autoForceUpdate = VisCheckBoxCustom("Auto Force Update", "FORCE_UPDATE_AUTO")
+    var autoForceUpdate = VisCheckBoxCustom("Auto Force Update", "FORCE_UPDATE_AUTO")
 
     private var weaponSelected = "DESERT_EAGLE"
     private var minValue = 0.0F
@@ -120,11 +119,11 @@ class SkinChangerTab : Tab(false, false) {
             }
         }
 
-        knifeSelectionBox.setItems("Bayonet", "Classic", "Flip", "Gut", "Karambit", "M9 Bayonet", "Huntsman", "Falchion", "Bowie", "Butterfly", "Shadow Daggers", "Paracord", "Survival", "Ursus", "Navaja", "Nomad", "Stiletto", "Talon", "Skeleton")
-        knifeSelectionBox.changed { _, _ ->
-            curSettings["KNIFE_IDX"] = knifeSelectionBox.selectedIndex
-            true
-        }
+        //knifeSelectionBox.setItems("Bayonet", "Classic", "Flip", "Gut", "Karambit", "M9 Bayonet", "Huntsman", "Falchion", "Bowie", "Butterfly", "Shadow Daggers", "Paracord", "Survival", "Ursus", "Navaja", "Nomad", "Stiletto", "Talon", "Skeleton")
+        //knifeSelectionBox.changed { _, _ ->
+        //    curSettings["KNIFE_IDX"] = knifeSelectionBox.selectedIndex
+        //    true
+        //}
 
         skinIDInput.changed { _, _ ->
             val skinWep = curSettings["SKIN_$weaponSelected"].toSkinWeaponClass()
@@ -180,7 +179,6 @@ class SkinChangerTab : Tab(false, false) {
 
         val leftTable = VisTable(true)
 
-        table.add(warningLabel).colspan(2).row()
         leftTable.add(enableSkinChanger).left().colspan(1).row()
         leftTable.add(categorySelectionBox).left().colspan(1).row()
         leftTable.add(weaponSelectionBox).left().colspan(1).row()
@@ -195,8 +193,8 @@ class SkinChangerTab : Tab(false, false) {
 
         leftTable.add(forceUpdate).left().row()
         leftTable.add(autoForceUpdate).left().row()
-        leftTable.add(enableKnifeChanger).left().row()
-        leftTable.add(knifeSelectionBox).left().row()
+        //leftTable.add(enableKnifeChanger).left().row()
+        //leftTable.add(knifeSelectionBox).left().row()
 
         table.add(leftTable).width(220F).align(Align.topLeft)
         table.add(skinSelectionList.mainTable).right().colspan(1).width(220F)
@@ -341,5 +339,9 @@ fun getMaxValueFromID(ID: Int): Float {
 }
 
 fun skinChangerTabUpdate() {
-
+    skinChangerTab.apply {
+        enableSkinChanger.update()
+        autoForceUpdate.update()
+        //enableKnifeChanger.update()
+    }
 }

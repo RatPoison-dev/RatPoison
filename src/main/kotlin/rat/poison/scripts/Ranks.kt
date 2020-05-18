@@ -1,5 +1,6 @@
 package rat.poison.scripts
 
+import com.kotcrab.vis.ui.widget.VisLabel
 import rat.poison.App.haveTarget
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
@@ -11,15 +12,29 @@ import rat.poison.utils.every
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.notInGame
 
-var ctPlayers = arrayListOf<List<String>>()
-var tPlayers = arrayListOf<List<String>>()
+//var ctPlayers = arrayListOf<List<String>>()
+//var tPlayers = arrayListOf<List<String>>()
+var teamList = mutableListOf<String>()
+var nameList = mutableListOf<String>()
+var rankList = mutableListOf<String>()
+var killsList = mutableListOf<String>()
+var deathsList = mutableListOf<String>()
+var KDList = mutableListOf<String>()
+var winsList = mutableListOf<String>()
 
 fun ranks() = every(1000) { //Rebuild every second
     if (notInGame || !opened || !haveTarget) return@every
 
     //Bruh -- fix later
-    ctPlayers.clear()
-    tPlayers.clear()
+    teamList.clear()
+    nameList.clear()
+    rankList.clear()
+    killsList.clear()
+    deathsList.clear()
+    KDList.clear()
+    winsList.clear()
+    //ctPlayers.clear()
+    //tPlayers.clear()
 
     forEntities(ccsPlayer) {
         val entity = it.entity
@@ -39,18 +54,24 @@ fun ranks() = every(1000) { //Rebuild every second
                 "0" -> "N/A"
                 else -> (entKills.toFloat() / entDeaths.toFloat()).roundNDecimals(2).toString()
             }
-
-            val player = listOf(entTeam, entName, entRank, entKills, entDeaths, entKD)
+            val entWins = entity.wins().toString()
 
             when (entTeam) { //Bruh
                 "CT" -> {
-                    ctPlayers.add(player)
+                    teamList.add("CT")
                 }
 
                 "T" -> {
-                    tPlayers.add(player)
+                    teamList.add("T")
                 }
             }
+
+            nameList.add(entName)
+            rankList.add(entRank)
+            killsList.add(entKills)
+            deathsList.add(entDeaths)
+            KDList.add(entKD)
+            winsList.add(entWins)
         }
         false
     }

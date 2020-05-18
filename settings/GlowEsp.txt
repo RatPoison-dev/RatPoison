@@ -1,5 +1,5 @@
 //Enable glow esp
-GLOW_ESP = true
+GLOW_ESP = false
 
 //Enable inverted glow esp
 //Glows all of the entity like a silhouette

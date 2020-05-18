@@ -39,6 +39,7 @@ class OptionsTab : Tab(false, false) {
     val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
     val debug = VisCheckBoxCustom("Debug", "DEBUG")
     val keybinds = VisCheckBoxCustom("Keybinds", "KEYBINDS")
+    val blur = VisCheckBoxCustom("Gaussian Blur", "GAUSSIAN_BLUR")
     val discordLink = LinkLabel("Join Discord", "https://discord.gg/J2uHTJ2")
 
     init {
@@ -117,6 +118,7 @@ class OptionsTab : Tab(false, false) {
         table.add(stayFocused).padLeft(25F).left().row()
         table.add(debug).padLeft(25F).left().row()
         table.add(keybinds).padLeft(25F).left().row()
+        table.add(blur).padLeft(25F).left().row()
 
         table.addSeparator()
 

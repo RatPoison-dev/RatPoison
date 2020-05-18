@@ -2,6 +2,7 @@ package rat.poison.ui.tabs
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
@@ -49,6 +50,7 @@ fun updateDisableAim() {
         weaponOverrideCheckBox.isDisabled = bool
         activateFromFireKey.disable(bool)
         teammatesAreEnemies.disable(bool)
+        holdAim.disable(bool)
         automaticWeaponsCheckBox.disable(bool)
         automaticWeaponsInput.disable(bool, col)
         targetSwapDelay.disable(bool, col)
@@ -64,6 +66,8 @@ fun updateDisableAim() {
         enableScopedOnly.isDisabled = bool
         aimBoneLabel.color = col
         aimBoneBox.isDisabled = bool
+        forceAimBoneLabel.color = col
+        forceAimBoneBox.isDisabled = bool
         aimFov.disable(bool, col)
         aimSpeed.disable(bool, col)
         aimSmooth.disable(bool, col)
@@ -93,6 +97,7 @@ fun updateAim() {
         aimToggleKey.update()
         activateFromFireKey.update()
         teammatesAreEnemies.update()
+        holdAim.update()
         forceAimBoneKey.update()
         forceAimKey.update()
         forceAimAlways.update()
@@ -129,6 +134,16 @@ fun updateAim() {
             NEAREST_BONE -> "NEAREST"
             else -> "RANDOM"
         }
+
+        forceAimBoneBox.selected = when (curSettings[categorySelected + "_AIM_FORCE_BONE"].toInt()) {
+            HEAD_BONE -> "HEAD"
+            NECK_BONE -> "NECK"
+            CHEST_BONE -> "CHEST"
+            STOMACH_BONE -> "STOMACH"
+            NEAREST_BONE -> "NEAREST"
+            else -> "RANDOM"
+        }
+
         aimFov.update()
         aimSpeed.update()
         aimSmooth.update()

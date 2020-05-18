@@ -19,7 +19,9 @@ import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
+import kotlin.math.abs
 import kotlin.math.ceil
+import kotlin.math.sign
 
 private val vHead = Vector()
 private val vFeet = Vector()
@@ -75,25 +77,32 @@ fun boxEsp() = App {
 		vFeet.set(vHead.x, vHead.y, vHead.z - 75)
 
 		if (worldToScreen(vHead, vTop) && worldToScreen(vFeet, vBot)) {
+			val vMid = Vector((vTop.x + vBot.x)/2, (vTop.y + vBot.y)/2, (vTop.z + vBot.z)/2)
 			val tCol = curSettings["BOX_TEAM_COLOR"].strToColor()
 			val eCol = curSettings["BOX_ENEMY_COLOR"].strToColor()
 			val c = if (meTeam == entTeam) Color(tCol.red/255F, tCol.green/255F, tCol.blue/255F, 1F) else Color(eCol.red/255F, eCol.green/255F, eCol.blue/255F, 1F)
 
-			val boxH = vBot.y - vTop.y
-			val sW = ceil((boxH / 5.0) * 2.0) / 2.0
-			val sH = 4
+			var boxH = vBot.y - vTop.y
+			val sW = abs(ceil((boxH / 5.0) * 2.0) / 2.0)
+			val sH = 2
+
+			val midX = abs(abs(vTop.x) - abs(vBot.x))
+			if (abs(boxH) < sW + midX) {
+				boxH = (sW + midX) * sign(boxH)
+			}
 
 			val box0x: Float
 			val box1x: Float
 			if (vBot.x > vTop.x) {
-				box0x = (vBot.x - sW).toFloat()
-				box1x = (vTop.x + sW).toFloat()
+				box0x = (vBot.x + (sW * sign(vBot.x))).toFloat()
+				box1x = (vTop.x - (sW * sign(vTop.x))).toFloat()
 			} else {
-				box0x = (vTop.x - sW).toFloat()
-				box1x = (vBot.x + sW).toFloat()
+				box0x = (vTop.x + (sW * sign(vTop.x))).toFloat()
+				box1x = (vBot.x - (sW * sign(vBot.x))).toFloat()
 			}
-			val box0y = (vTop.y + sH).toFloat()
-			val box1y = (vTop.y + boxH - sH).toFloat()
+
+			val box0y = (vMid.y - boxH/2 + sH).toFloat()
+			val box1y = (vMid.y + boxH/2 - sH).toFloat()
 
 			boxes[currentIdx].apply {
 				x0 = box0x

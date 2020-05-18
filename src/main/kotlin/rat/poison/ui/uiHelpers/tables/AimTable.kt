@@ -22,6 +22,7 @@ class AimTable: VisTable(false) {
     val enableAim = VisCheckBoxCustom("Enable Aim", "ENABLE_AIM")
     val aimToggleKey = VisInputFieldCustom("Toggle Aim Key", "AIM_TOGGLE_KEY")
     val activateFromFireKey = VisCheckBoxCustom("Activate From Fire Key", "ACTIVATE_FROM_AIM_KEY")
+    val holdAim = VisCheckBoxCustom("Hold Aim", "HOLD_AIM")
     val teammatesAreEnemies = VisCheckBoxCustom("Teammates Are Enemies", "TEAMMATES_ARE_ENEMIES")
 
     val forceAimBoneKey = VisInputFieldCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
@@ -226,6 +227,7 @@ class AimTable: VisTable(false) {
 
         add(activateFromFireKey).left().row()
         add(teammatesAreEnemies).left().row()
+        add(holdAim).left().row()
         add(targetSwapDelay).left().row()
 
         addSeparator()

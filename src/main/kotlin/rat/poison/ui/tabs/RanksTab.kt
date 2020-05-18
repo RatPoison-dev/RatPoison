@@ -4,30 +4,31 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.scripts.ctPlayers
-import rat.poison.scripts.tPlayers
+import rat.poison.scripts.*
 
 class RanksTab : Tab(false, false) {
     private val table = VisTable(true)
 
     var ranksListTable = VisTable()
-    var ctList = VisLabel()
-    var tList = VisLabel()
-    //Init labels/sliders/boxes that show values here
+
+    var teamsLabel = VisLabel()
+    var namesLabel = VisLabel()
+    var ranksLabel = VisLabel()
+    var killsLabel = VisLabel()
+    var deathsLabel = VisLabel()
+    var KDsLabel = VisLabel()
+    var winsLabel = VisLabel()
 
     init {
-        ranksListTable.add(VisLabel("Team"))
-        ranksListTable.add(VisLabel("Name"))
-        ranksListTable.add(VisLabel("Rank"))
-        ranksListTable.add(VisLabel("Kills"))
-        ranksListTable.add(VisLabel("Deaths"))
-        ranksListTable.add(VisLabel("K/D")).row()
+        ranksListTable.add(teamsLabel)
+        ranksListTable.add(namesLabel)
+        ranksListTable.add(ranksLabel)
+        ranksListTable.add(killsLabel)
+        ranksListTable.add(deathsLabel)
+        ranksListTable.add(KDsLabel)
+        ranksListTable.add(winsLabel)
 
-        ranksListTable.add(ctList).uniform(true).colspan(6)
-        ranksListTable.row()
-        ranksListTable.add(tList).colspan(6).center()
-        //Add all items to label for tabbed pane content
-        table.add(ranksListTable)
+        table.add(ranksListTable).maxWidth(500F)
     }
 
     override fun getContentTable(): Table? {
@@ -39,33 +40,49 @@ class RanksTab : Tab(false, false) {
     }
 
     fun updateRanks() {
-        val sb = StringBuilder()
-        ctPlayers.forEachIndexed { _, ent->
-            ent.forEachIndexed { idx, str->
-                sb.append(str)
+        teamsLabel.setText("Team  \n")
+        namesLabel.setText("Name  \n")
+        ranksLabel.setText("Rank  \n")
+        killsLabel.setText("Kills  \n")
+        deathsLabel.setText("Deaths  \n")
+        KDsLabel.setText("K/D  \n")
+        winsLabel.setText("Wins  \n")
 
-                if ((idx != ent.size-1)) {
-                    //for (i in 0 until 15 - str.length) {
-                        sb.append("          ")
-                    //}
-                }
-            }
-            sb.appendln()
+        for (i in 0 until teamList.size-1) {
+            teamsLabel.setText(teamsLabel.text.toString() + teamList[i] + "  \n")
+            namesLabel.setText(namesLabel.text.toString() + nameList[i] + "  \n")
+            ranksLabel.setText(ranksLabel.text.toString() + rankList[i] + "  \n")
+            killsLabel.setText(killsLabel.text.toString() + killsList[i] + "  \n")
+            deathsLabel.setText(deathsLabel.text.toString() + deathsList[i] + "  \n")
+            KDsLabel.setText(KDsLabel.text.toString() + KDList[i] + "  \n")
+            winsLabel.setText(winsLabel.text.toString() + winsList[i] + "  \n")
         }
-        ctList.setText(sb)
-        sb.clear()
-        tPlayers.forEachIndexed { _, ent->
-            ent.forEachIndexed { idx, str->
-                sb.append(str)
-
-                if ((idx != ent.size-1)) {
-                    //for (i in 0 until 15 - str.length) {
-                        sb.append("          ")
-                    //}
-                }
-            }
-            sb.appendln()
-        }
-        tList.setText(sb)
     }
 }
+
+//        ctPlayers.forEachIndexed { _, ent->
+//            ent.forEachIndexed { idx, str->
+//                sb.append(str)
+//
+//                if ((idx != ent.size-1)) {
+//                    //for (i in 0 until 15 - str.length) {
+//                        sb.append("          ")
+//                    //}
+//                }
+//            }
+//            sb.appendln()
+//        }
+//        ctList.setText(sb)
+//        sb.clear()
+//        tPlayers.forEachIndexed { _, ent->
+//            ent.forEachIndexed { idx, str->
+//                sb.append(str)
+//
+//                if ((idx != ent.size-1)) {
+//                    //for (i in 0 until 15 - str.length) {
+//                        sb.append("          ")
+//                    //}
+//                }
+//            }
+//            sb.appendln()
+//        }

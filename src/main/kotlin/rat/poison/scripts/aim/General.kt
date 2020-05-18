@@ -186,9 +186,13 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			aB = curSettings["FORCE_AIM_BONE"].toInt()
 		}
 
+		val bestTarget = findTarget(position, currentAngle, aim,
+				BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 4); destBone } else { destBone = aB; aB },
+				visCheck = shouldVisCheck) //Try to find new target
+
 		if (currentTarget < 0) { //If target is invalid from last run
 			currentTarget = findTarget(position, currentAngle, aim,
-					BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 4); destBone } else { destBone = aB; aB },/*if (aB == RANDOM_BONE) destBone else aB,*/
+					BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 4); destBone } else { destBone = aB; aB },
 					visCheck = shouldVisCheck) //Try to find new target
 			if (currentTarget < 0) { //End if we don't, can't loop because of thread blocking
 				reset()
@@ -209,7 +213,14 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			}
 		}
 
-		if (currentTarget == me || !currentTarget.canShoot(shouldVisCheck)) {
+		if (bestTarget < 0) {
+			reset()
+			return@every
+		}
+
+		val swapTarget = bestTarget > 0 && currentTarget != bestTarget && !curSettings["HOLD_AIM"].strToBool() && meWep.automatic
+
+		if (currentTarget == me || !currentTarget.canShoot(shouldVisCheck) || swapTarget) {
 			reset()
 			Thread.sleep(curSettings["AIM_TARGET_SWAP_DELAY"].toInt().toLong())
 		} else {

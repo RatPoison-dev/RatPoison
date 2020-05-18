@@ -20,6 +20,7 @@ import rat.poison.game.netvars.NetVarOffsets.dwBoneMatrix
 import rat.poison.game.netvars.NetVarOffsets.fFlags
 import rat.poison.game.netvars.NetVarOffsets.hActiveWeapon
 import rat.poison.game.netvars.NetVarOffsets.iCompetitiveRanking
+import rat.poison.game.netvars.NetVarOffsets.iCompetitiveWins
 import rat.poison.game.netvars.NetVarOffsets.iDeaths
 import rat.poison.game.netvars.NetVarOffsets.iHealth
 import rat.poison.game.netvars.NetVarOffsets.iKills
@@ -254,6 +255,12 @@ internal fun Player.deaths(): Int {
 	val index = csgoEXE.uint(this + dwIndex)
 
 	return (csgoEXE.int(clientDLL.uint(dwPlayerResource) + iDeaths + index * 4))
+}
+
+internal fun Player.wins(): Int {
+	val index = csgoEXE.uint(this + dwIndex)
+
+	return (csgoEXE.int(clientDLL.uint(dwPlayerResource) + iCompetitiveWins + index * 4))
 }
 
 internal fun Player.hltv(): Boolean {

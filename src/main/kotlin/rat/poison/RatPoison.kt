@@ -26,6 +26,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.jire.arrowhead.keyPressed
 import org.lwjgl.glfw.GLFW.*
+import org.lwjgl.glfw.GLFWErrorCallback
+import org.lwjgl.opengl.GL
 import rat.poison.game.CSGO
 import rat.poison.game.updateViewMatrix
 import rat.poison.interfaces.IOverlay
@@ -152,6 +154,7 @@ fun main() {
 
         GlobalScope.launch {
             Thread.sleep(2000)
+
             glfwInit()
 
             Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
@@ -182,8 +185,8 @@ fun main() {
                 glfwSwapInterval(0)
                 glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE)
                 setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings["OPENGL_MSAA_SAMPLES"].toInt())
-
             })
+            GL.createCapabilities()
         }
     }
     else {

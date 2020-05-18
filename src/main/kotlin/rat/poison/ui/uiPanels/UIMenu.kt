@@ -30,7 +30,7 @@ private var wantedWidth = 535F
 private var isResizingHeight = false
 private var isResizingWidth = false
 
-class UIMenu : VisWindow("Rat Poison 1.7") {
+class UIMenu : VisWindow("Rat Poison 1.7.1") {
     init {
         defaults().left()
 
@@ -63,7 +63,6 @@ class UIMenu : VisWindow("Rat Poison 1.7") {
         mainTabbedPane.add(nadeHelperTab)
         mainTabbedPane.add(skinChangerTab)
         mainTabbedPane.add(optionsTab)
-
 
         //Set aim tab as the first (init) tab
         mainTabbedPane.switchTab(aimTab)
@@ -118,11 +117,7 @@ class UIMenu : VisWindow("Rat Poison 1.7") {
                     }
                     ranksTab -> {
                         wantedHeight = normHeight
-                        wantedWidth = if (CSGO.gameWidth < 750F) {
-                            CSGO.gameWidth.toFloat() - 100F
-                        } else {
-                            750F
-                        }
+                        wantedWidth = normWidth
                         changeWidth()
                         changeHeight()
                         mainTabbedPaneContent.add(ranksTab.contentTable).growX()

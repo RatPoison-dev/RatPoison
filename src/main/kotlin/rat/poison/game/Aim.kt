@@ -28,10 +28,13 @@ fun getCalculatedAngle(player: Player, dst: Vector): Angle {
 
 	val hyp = sqrt((dX * dX) + (dY * dY))
 
+	val rcsXVariation = curSettings["AIM_RCS_VARIATION"].toDouble()
+	val rcsYVariation = curSettings["AIM_RCS_VARIATION"].toDouble()
+
 	if (curSettings["FACTOR_RECOIL"].strToBool()) {
 		if (curSettings["AIM_ADVANCED"].strToBool()) {
-			val randX = randDouble(0.0, curSettings["AIM_RCS_VARIATION"].toDouble()) * randBoolean().toInt()
-			val randY = randDouble(0.0, curSettings["AIM_RCS_VARIATION"].toDouble()) * randBoolean().toInt()
+			val randX = if (rcsXVariation > 0.0) randDouble(0.0, rcsXVariation) * randBoolean().toInt() else 0.0
+			val randY = if (rcsYVariation > 0.0) randDouble(0.0, rcsYVariation) * randBoolean().toInt() else 0.0
 			val calcX = toDegrees(atan(dZ / hyp)) - myPunch.x * clamp(1.0 + curSettings["AIM_RCS_Y"].toDouble() + randX, 1.0, 2.0)
 			val calcY = toDegrees(atan(dY / dX)) - myPunch.y * clamp(1.0 + curSettings["AIM_RCS_X"].toDouble() + randY, 1.0, 2.0)
 			ang.x = calcX

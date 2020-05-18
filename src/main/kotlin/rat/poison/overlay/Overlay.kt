@@ -267,9 +267,10 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	}
 
 	private fun beActive() = with(User32) {
-		if (EXPERIMENTAL) {
+		if (curSettings["GAUSSIAN_BLUR"].strToBool()) {
 			makeBlurBehind()
 		}
+
 		if (targetAppHWND != HWND_ZERO) {
 			SetWindowLongA(myHWND, WinUser.GWL_EXSTYLE, WS_EX_TOOLWINDOW or WS_EX_TOPMOST)
 

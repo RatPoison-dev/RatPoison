@@ -18,6 +18,7 @@ fun uiUpdate() {
     indicatorEspTabUpdate()
     boxEspTabUpdate()
     hitMarkerTabUpdate()
+    skinChangerTabUpdate()
     nadesVTUpdate()
     snaplinesEspTabUpdate()
     footStepsEspTabUpdate()
