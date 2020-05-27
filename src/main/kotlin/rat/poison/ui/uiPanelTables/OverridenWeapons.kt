@@ -162,7 +162,6 @@ class OverridenWeapons : VisTable(true) {
             true
         }
 
-
         //Create Factor Recoil Toggle
         enableFactorRecoil.isChecked = curSettings[categorySelected + "_ENABLE_PATH_AIM"].strToBool()
         enableFactorRecoil.changed { _, _ ->

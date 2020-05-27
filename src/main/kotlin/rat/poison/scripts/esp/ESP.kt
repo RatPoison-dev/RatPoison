@@ -1,5 +1,6 @@
 package rat.poison.scripts.esp
 
+import com.sun.jna.Memory
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.CSGO
@@ -8,6 +9,7 @@ import rat.poison.game.entity.Entity
 import rat.poison.scripts.esp.GlowESP.glowEspApp
 import rat.poison.scripts.esp.GlowESP.glowEspEvery
 import rat.poison.strToBool
+import rat.poison.toInt
 import java.util.concurrent.atomic.AtomicLong
 
 val glowTarget = AtomicLong(-1)
@@ -30,17 +32,27 @@ fun esp() {
 }
 
 fun Entity.glow(color: Color, model: Boolean) {
-	CSGO.csgoEXE[this + 0x4] = color.red / 255F
-	CSGO.csgoEXE[this + 0x8] = color.green / 255F
-	CSGO.csgoEXE[this + 0xC] = color.blue / 255F
-	CSGO.csgoEXE[this + 0x10] = color.alpha.toFloat()
-	CSGO.csgoEXE[this + 0x24] = true //Render When Occluded
-	CSGO.csgoEXE[this + 0x25] = false //Render When Unoccluded
+	val glowMemory: Memory by lazy {
+		Memory(60)
+	}
 
-	CSGO.csgoEXE[this + 0x26] = curSettings["INV_GLOW_ESP"].strToBool() //Full Bloom Render
+	CSGO.csgoEXE.read(this, glowMemory)
 
-	if (curSettings["MODEL_AND_GLOW"].strToBool())
-		CSGO.csgoEXE[this + 0x2C] = model
-	else
-		CSGO.csgoEXE[this + 0x2C] = curSettings["MODEL_ESP"].strToBool()
+	if (glowMemory.getPointer(0) != null) {
+		glowMemory.setFloat(0x4, color.red/255F)
+		glowMemory.setFloat(0x8, color.green/255F)
+		glowMemory.setFloat(0xC, color.blue/255F)
+		glowMemory.setFloat(0x10, color.alpha.toFloat())
+		glowMemory.setByte(0x24, 1)
+		glowMemory.setByte(0x25, 0)
+
+		glowMemory.setByte(0x26, curSettings["INV_GLOW_ESP"].toBoolean().toInt().toByte())
+
+		if (curSettings["MODEL_AND_GLOW"].strToBool())
+			glowMemory.setByte(0x2C, model.toInt().toByte())
+		else
+			glowMemory.setByte(0x2C, curSettings["MODEL_ESP"].toBoolean().toInt().toByte())
+
+		CSGO.csgoEXE.write(this, glowMemory)
+	}
 }

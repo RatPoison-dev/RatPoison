@@ -23,6 +23,9 @@ import kotlin.math.floor
 import kotlin.math.tan
 
 internal fun rcrosshair() = App {
+    if (!curSettings["ENABLE_ESP"].strToBool())
+        return@App
+
     val eRC = curSettings["ENABLE_RECOIL_CROSSHAIR"].strToBool()
     val eSC = curSettings["ENABLE_SNIPER_CROSSHAIR"].strToBool()
 

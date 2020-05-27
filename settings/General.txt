@@ -9,6 +9,12 @@ MENU = true
 //Default key is F1
 MENU_KEY = 112
 
+//FOV Type : DISTANCE or STATIC
+FOV_TYPE = DISTANCE
+
+//Color of Aimbot FOV circle
+AIM_FOV_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
+
 //If the menu has a blur behind it
 GAUSSIAN_BLUR = false
 
@@ -113,15 +119,15 @@ RANDOM_BONE = -4
 
 //Temp variables, don't edit
 PERFECT_AIM = false
-PERFECT_AIM_CHANCE = 1
-PERFECT_AIM_FOV = 1
-AIM_BONE = -1
+PERFECT_AIM_CHANCE = 15
+PERFECT_AIM_FOV = 10
+AIM_BONE = 7
 FORCE_AIM_BONE = 8
-AIM_SPEED = 1
-AIM_FOV = 40
+AIM_SPEED = 2
+AIM_FOV = 20
 FACTOR_RECOIL = false
-ENABLE_FLAT_AIM = true
-ENABLE_PATH_AIM = false
+ENABLE_FLAT_AIM = false
+ENABLE_PATH_AIM = true
 ENABLE_SCOPED_ONLY = true
 AIM_AFTER_SHOTS = 0
 AIM_ADVANCED = false
@@ -136,6 +142,7 @@ KEYBINDS = false
 KEYBINDS_X = 400.0
 KEYBINDS_Y = 400.0
 KEYBINDS_ALPHA = 1.0
+AIM_ONLY_ON_SHOT = true
 
 //Can't be edited from menu, not guaranteed to work properly
 PISTOL_AIM_AFTER_SHOTS = 0

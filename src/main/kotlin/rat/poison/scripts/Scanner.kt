@@ -1,8 +1,16 @@
 package rat.poison.scripts
 
 import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.game.entity.*
+import rat.poison.game.forEntities
+import rat.poison.game.rankName
 import rat.poison.loadSettingsFromFiles
 import rat.poison.scripts.esp.disableAllEsp
+import rat.poison.ui.tabs.deleteCFG
+import rat.poison.ui.tabs.loadCFG
+import rat.poison.ui.tabs.saveCFG
+import rat.poison.ui.tabs.saveDefault
+import rat.poison.utils.extensions.roundNDecimals
 import java.io.File
 import java.io.FileNotFoundException
 import java.nio.file.Files
@@ -21,18 +29,20 @@ fun scanner() {
         when {
             line.startsWith("help") -> {
                 if (line == "help") {
-                    println("\nAvailable commands: help [command], exit, reload, list, read [file name], write [file name] [variable name] = [value]\n")
+                    println("\nAvailable commands: help [command], exit, ranks, reload, list, read [file name], write [file name] [variable name] = [value], save [default/cfgname], load [cfgname], delete [cfgname]\n")
                 } else {
                     when (line.split(" ".toRegex(), 2)[1]) {
                         "exit" -> println("\nCloses program and cmd\n")
+                        "ranks" -> println("\nShows players, ranks, kills, deaths, kd, and wins")
                         "reload" -> println("\nReloads all settings files, is done automatically on write\n")
                         "list" -> println("\nLists all settings files\n")
-                        "read" -> println("\n Syntax: read [file name] ; Replace [file name] with the file name, viewable from the list command, excluding .kts. Example: read General")
-                        "write" -> println("\n Syntax: write [file name] [variable name] = [value] ; Replace [file name] with the file name, replace [variable name] with the name of the variable inside of the file from [file name], and replace [value] with the value for the variable")
-                        "help" -> println("\n Standalone or Syntax: help [command] ; Replace [command] with the command listed in list")
+                        "read" -> println("\nSyntax: read [file name] ; Replace [file name] with the file name, viewable from the list command, excluding .kts. Example: read General\n")
+                        "write" -> println("\nSyntax: write [file name] [variable name] = [value] ; Replace [file name] with the file name, replace [variable name] with the name of the variable inside of the file from [file name], and replace [value] with the value for the variable\n")
+                        "help" -> println("\nStandalone or Syntax: help [command] ; Replace [command] with the command listed in list\n")
+                        "save" -> println("\nSave to default settings or to a config\n")
+                        "load" -> println("\nLoad config\n")
                     }
                 }
-
             }
             line.equals("exit", true) -> {
                 disableAllEsp()
@@ -40,10 +50,19 @@ fun scanner() {
                 exitProcess(0)
             }
             line.equals("reload", true) -> {
-                println(); loadSettingsFromFiles(SETTINGS_DIRECTORY); println()
+                println(); loadSettingsFromFiles(SETTINGS_DIRECTORY)
             }
             line.equals("list", true) -> {
-                println(); File(SETTINGS_DIRECTORY).listFiles()?.forEach { println(it) }; println()
+                print("\n----Settings Files----\n")
+                File(SETTINGS_DIRECTORY).listFiles()?.forEach {
+                    if (it.name.contains(".txt")) {
+                        println(it)
+                    }
+                }
+                print("\n----CFGS----\n")
+                File("$SETTINGS_DIRECTORY\\CFGS").listFiles()?.forEach {
+                    println(it)
+                }
             }
             line.startsWith("read") -> { //Read file's variables
                 println()
@@ -56,18 +75,15 @@ fun scanner() {
                 } catch (e: Exception) {
                     println("File not found, use list to see current files")
                 }
-                println()
             }
             line.startsWith("set") -> { //Set variable, instance use only
                 println()
                 try {
                     println(line.split(" ".toRegex(), 2)[1])
-                    //Dojo.script(line.trim().split(" ".toRegex(), 2)[1])
                     println("Set " + line.trim().split(" ".toRegex(), 2)[1])
                 } catch (e: Exception) {
                     println("Invalid variable")
                 }
-                println()
             }
             line.startsWith("write") -> {
                 val fileDir = SETTINGS_DIRECTORY + "\\" + line.trim().split(" ".toRegex())[1] + ".txt"
@@ -96,6 +112,96 @@ fun scanner() {
 
                 } catch (e: ScriptException) {
                     println("Invalid variable/value")
+                }
+            }
+            line.startsWith("save") -> {
+                println()
+                try {
+                    val name = line.trim().split(" ".toRegex(), 2)[1]
+
+                    if (name == "default") {
+                        saveDefault()
+                    } else {
+                        saveCFG(name)
+                    }
+                } catch (e: Exception) {
+                    println("Invalid variable/value")
+                }
+            }
+            line.startsWith("load") -> {
+                println()
+                try {
+                    val name = line.trim().split(" ".toRegex(), 2)[1]
+
+                    loadCFG(name)
+                } catch (e: Exception) {
+                    println("Invalid variable/value")
+                }
+            }
+            line.startsWith("delete") -> {
+                println()
+                try {
+                    val name = line.trim().split(" ".toRegex(), 2)[1]
+
+                    deleteCFG(name)
+                } catch (e: Exception) {
+                    println("Invalid variable/value")
+                }
+            }
+            line.startsWith("ranks") -> {
+                println()
+                println("Team   Name                             Rank  Kills Deaths K/D  Wins")
+                println("====== ================================ ===== ===== ====== ==== =====")
+                try {
+                    forEntities(EntityType.ccsPlayer) {
+                        val entity = it.entity
+
+                        if (entity.onGround()) { //Change later
+                            var entTeam = when (entity.team()) {
+                                3L -> "CT"
+                                2L -> "T"
+                                else -> "N/A"
+                            }
+
+                            var entName = entity.name()
+                            var entRank = entity.rank().rankName()
+                            var entKills = entity.kills().toString()
+                            var entDeaths = entity.deaths().toString()
+                            var entKD = when (entDeaths) {
+                                "0" -> "N/A"
+                                else -> (entKills.toFloat() / entDeaths.toFloat()).roundNDecimals(2).toString()
+                            }
+                            var entWins = entity.wins().toString()
+
+                            for (i in entTeam.length..5) {
+                                entTeam += " "
+                            }
+                            for (i in entName.length..31) {
+                                entName += " "
+                            }
+                            for (i in entRank.length..4) {
+                                entRank += " "
+                            }
+                            for (i in entKills.length..4) {
+                                entKills += " "
+                            }
+                            for (i in entDeaths.length..5) {
+                                entDeaths += " "
+                            }
+                            for (i in entKD.length..3) {
+                                entKD += " "
+                            }
+                            for (i in entWins.length..4) {
+                                entWins += " "
+                            }
+
+                            println("$entTeam $entName $entRank $entKills $entDeaths $entKD $entWins")
+                        }
+                        false
+                    }
+                    println()
+                } catch (e: Exception) {
+                    println("Exception")
                 }
             }
         }

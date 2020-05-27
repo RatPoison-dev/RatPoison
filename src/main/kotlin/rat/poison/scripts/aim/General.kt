@@ -9,17 +9,19 @@ import rat.poison.strToBool
 import rat.poison.utils.*
 import java.lang.Math.toRadians
 import kotlin.math.abs
+import kotlin.math.pow
 import kotlin.math.sin
+import kotlin.math.sqrt
 
 var target = -1L
-var perfect = false
+var canPerfect = false
 var boneTrig = false
 var destBone = -1
 
 fun reset() {
 	destBone = -5
 	target = -1L
-	perfect = false
+	canPerfect = false
 }
 
 fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
@@ -88,7 +90,7 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	val randInt = randInt(100+1)
 
 	if (curSettings["PERFECT_AIM"].strToBool() && allowPerfect && closestFOV <= curSettings["PERFECT_AIM_FOV"].toInt() && randInt <= curSettings["PERFECT_AIM_CHANCE"].toInt()) {
-		perfect = true
+		canPerfect = true
 	}
 
 	return closestPlayer
@@ -98,24 +100,44 @@ fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, angle:
 	val retList = mutableListOf(-1.0, 0.0, 0L)
 
 	val ePos: Angle = entity.bones(BONE)
-	val distance = position.distanceTo(ePos)
 
-	val dest = getCalculatedAngle(me, ePos)
+	if (curSettings["FOV_TYPE"].replace("\"", "") == "DISTANCE") {
+		val distance = position.distanceTo(ePos)
 
-	val pitchDiff = abs(angle.x - dest.x)
-	var yawDiff = abs(angle.y - dest.y)
+		val dest = getCalculatedAngle(me, ePos)
 
-	if (yawDiff > 180f) {
-		yawDiff = 360f - yawDiff
-	}
+		val pitchDiff = abs(angle.x - dest.x)
+		var yawDiff = abs(angle.y - dest.y)
 
-	val fov = abs(sin(toRadians(yawDiff)) * distance)
-	val delta = abs((sin(toRadians(pitchDiff)) + sin(toRadians(yawDiff))) * distance)
+		if (yawDiff > 180f) {
+			yawDiff = 360f - yawDiff
+		}
 
-	if (delta <= lockFOV && delta <= calcClosestDelta) {
-		retList[0] = fov
-		retList[1] = delta
-		retList[2] = entity
+		val fov = abs(sin(toRadians(yawDiff)) * distance)
+		val delta = abs((sin(toRadians(pitchDiff)) + sin(toRadians(yawDiff))) * distance)
+
+		if (delta <= lockFOV && delta <= calcClosestDelta) {
+			retList[0] = fov
+			retList[1] = delta
+			retList[2] = entity
+		}
+	} else {
+		val camAng = clientState.angle()
+		val calcAng = realCalcAngle(me, ePos)
+		val punch = me.punch()
+		camAng.x += punch.x*2
+		camAng.y += punch.y*2
+
+		val delta = Angle(camAng.x - calcAng.x, camAng.y - calcAng.y, 0.0)
+		delta.normalize()
+
+		val fov = sqrt(delta.x.pow(2) + delta.y.pow(2))
+
+		if (fov <= lockFOV && fov <= calcClosestDelta) {
+			retList[0] = fov
+			retList[1] = fov
+			retList[2] = entity
+		}
 	}
 
 	return retList.toMutableList()
@@ -142,13 +164,19 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 
 		val meWep = me.weapon()
 		val meWepEnt = me.weaponEntity()
+		val canFire = meWepEnt.canFire()
 
 		if (meWep.grenade || meWep.knife || meWep.miscEnt || meWep == Weapons.ZEUS_X27) {
 			reset()
 			return@every
 		}
 
-		if (!meWepEnt.canFire() && !meWep.automatic && !meWep.pistol && !meWep.shotgun && !meWep.sniper && !meWep.smg) { //Aim after shoot
+		//if (!canFire && !meWep.automatic && !meWep.pistol && !meWep.shotgun && !meWep.sniper && !meWep.smg) { //Aim after shot
+		//	reset()
+		//	return@every
+		//}
+
+		if (curSettings["AIM_ONLY_ON_SHOT"].strToBool() && !canFire) {
 			reset()
 			return@every
 		}
@@ -216,6 +244,13 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		if (bestTarget < 0) {
 			reset()
 			return@every
+		}
+
+		var perfect = false
+		if (canPerfect) {
+			if (randInt(100+1) <= curSettings["PERFECT_AIM_CHANCE"].toInt()) {
+				perfect = true
+			}
 		}
 
 		val swapTarget = bestTarget > 0 && currentTarget != bestTarget && !curSettings["HOLD_AIM"].strToBool() && meWep.automatic

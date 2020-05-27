@@ -10,6 +10,7 @@ import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.overridenWeapons
 import rat.poison.ui.tabs.categorySelected
+import rat.poison.ui.tabs.updateDisableEsp
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
@@ -24,6 +25,9 @@ class AimTable: VisTable(false) {
     val activateFromFireKey = VisCheckBoxCustom("Activate From Fire Key", "ACTIVATE_FROM_AIM_KEY")
     val holdAim = VisCheckBoxCustom("Hold Aim", "HOLD_AIM")
     val teammatesAreEnemies = VisCheckBoxCustom("Teammates Are Enemies", "TEAMMATES_ARE_ENEMIES")
+
+    val fovTypeLabel = VisLabel("Fov Type: ")
+    val fovTypeBox = VisSelectBox<String>()
 
     val forceAimBoneKey = VisInputFieldCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
     val forceAimKey = VisInputFieldCustom("Force Aim Key", "FORCE_AIM_KEY")
@@ -42,6 +46,7 @@ class AimTable: VisTable(false) {
     val categorySelectLabel = VisLabel("Weapon Category: ")
     val weaponOverrideCheckBox = VisCheckBox("Override Weapons")
 
+    val enableAimOnShot = ATabVisCheckBox("Aim On Shot", "_AIM_ONLY_ON_SHOT")
     val enableFactorRecoil = ATabVisCheckBox("Factor Recoil", "_FACTOR_RECOIL")
     val enableFlatAim = ATabVisCheckBox("Write Angles", "_ENABLE_FLAT_AIM")
     val enablePathAim = ATabVisCheckBox("Mouse Movement", "_ENABLE_PATH_AIM")
@@ -89,6 +94,20 @@ class AimTable: VisTable(false) {
             dialog.setPosition(CSGO.gameWidth / 4F - dialog.width / 2F, CSGO.gameHeight.toFloat() / 2F)
             App.menuStage.addActor(dialog)
         }
+
+        //Fov Type
+        val fovType = VisTable()
+        fovTypeBox.setItems("DISTANCE", "STATIC")
+        fovTypeBox.selected = curSettings["FOV_TYPE"].replace("\"", "")
+
+        fovTypeBox.changed { _, _ ->
+            curSettings["FOV_TYPE"] = fovTypeBox.selected
+            updateDisableEsp()
+            true
+        }
+
+        fovType.add(fovTypeLabel).width(200F)
+        fovType.add(fovTypeBox)
 
         //Create Override Weapon Check Box & Collapsible
         weaponOverrideCheckBox.isChecked = curSettings["ENABLE_OVERRIDE"].strToBool()
@@ -229,6 +248,7 @@ class AimTable: VisTable(false) {
         add(teammatesAreEnemies).left().row()
         add(holdAim).left().row()
         add(targetSwapDelay).left().row()
+        add(fovType).left().row()
 
         addSeparator()
 
@@ -247,6 +267,7 @@ class AimTable: VisTable(false) {
         add(weaponOverrideCheckBox).left().row()
         add(categorySelection).left().row()
         add(enableFactorRecoil).left().row()
+        add(enableAimOnShot).left().row()
         add(enableFlatAim).left().row()
         add(enablePathAim).left().row()
         add(enableScopedOnly).left().row() //SNIPER selection only

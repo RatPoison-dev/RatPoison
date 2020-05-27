@@ -37,6 +37,14 @@ internal fun glowEspApp() = App {
 		val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
 		val bEnt = bomb.carrier()
 
+		val showTarget = curSettings["GLOW_SHOW_TARGET"].strToBool()
+		val showEnemies = curSettings["GLOW_SHOW_ENEMIES"].strToBool()
+		val showTeam = curSettings["GLOW_SHOW_TEAM"].strToBool()
+		val showBomb = curSettings["GLOW_SHOW_BOMB"].strToBool()
+		val showBombCarrier = curSettings["GLOW_SHOW_BOMB_CARRIER"].strToBool()
+		val showWeapons = curSettings["GLOW_SHOW_WEAPONS"].strToBool()
+		val showGrenades = curSettings["GLOW_SHOW_GRENADES"].strToBool()
+
 		val meTeam = me.team()
 		forEntities body@{
 			val entity = it.entity
@@ -49,34 +57,34 @@ internal fun glowEspApp() = App {
 
 			when (it.type) {
 				EntityType.CCSPlayer -> {
-					if (entity.dead() || entity.dormant()) return@body false
+					if (entity.dead()) return@body false
 
 					val entityTeam = entity.team()
 					val team = !DANGER_ZONE && meTeam == entityTeam
 
-					if (curSettings["GLOW_SHOW_TARGET"].strToBool() && it.entity == glowTarget.get() && glowTarget.get() != -1L) {
+					if (showTarget && it.entity == glowTarget.get() && glowTarget.get() != -1L) {
 						color = "GLOW_HIGHLIGHT_COLOR"
-					} else if (curSettings["GLOW_SHOW_ENEMIES"].strToBool() && !team) {
-						color = when (bEnt >= 0 && bEnt == entity && curSettings["GLOW_SHOW_BOMB_CARRIER"].strToBool()) {
+					} else if (showEnemies && !team) {
+						color = when (bEnt >= 0 && bEnt == entity && showBombCarrier) {
 							true -> "GLOW_BOMB_CARRIER_COLOR"
 							false -> "GLOW_ENEMY_COLOR"
 						}
-					} else if (curSettings["GLOW_SHOW_TEAM"].strToBool() && team) {
-						color = when (bEnt >= 0 && bEnt == entity && curSettings["GLOW_SHOW_BOMB_CARRIER"].strToBool()) {
+					} else if (showTeam && team) {
+						color = when (bEnt >= 0 && bEnt == entity && showBombCarrier) {
 							true -> "GLOW_BOMB_CARRIER_COLOR"
 							false -> "GLOW_TEAM_COLOR"
 						}
 					}
 				}
 
-				EntityType.CPlantedC4, EntityType.CC4 -> if (curSettings["GLOW_SHOW_BOMB"].strToBool()) {
+				EntityType.CPlantedC4, EntityType.CC4 -> if (showBomb) {
 					color = "GLOW_BOMB_COLOR"
 				}
 
 				else ->
-					if (curSettings["GLOW_SHOW_WEAPONS"].strToBool() && it.type.weapon) {
+					if (showWeapons && it.type.weapon) {
 						color = "GLOW_WEAPON_COLOR"
-					} else if (curSettings["GLOW_SHOW_GRENADES"].strToBool() && it.type.grenade)
+					} else if (showGrenades && it.type.grenade)
 						color = "GLOW_GRENADE_COLOR"
 			}
 

@@ -36,11 +36,13 @@ SMG_AIM_FORCE_BONE = 8
 //Aim after X shots
 SMG_AIM_AFTER_SHOTS = 0
 
+//If the aimbot should only aim when you can shoot
+SMG_AIM_ONLY_ON_SHOT = false
 
 //Advanced aim settings
 SMG_ADVANCED_SETTINGS = true
-SMG_AIM_RCS_X = 0.55
-SMG_AIM_RCS_Y = 0.65
+SMG_AIM_RCS_X = 0.8
+SMG_AIM_RCS_Y = 0.9
 SMG_AIM_RCS_VARIATION = 0.25
 SMG_AIM_SPEED_DIVISOR = 1
 SMG_RANDOM_X_VARIATION = 15
@@ -54,7 +56,7 @@ SMG_VARIATION_DEADZONE = 10
 
 //Enable perfect aim
 //Will instantly snap to the aimbone
-SMG_PERFECT_AIM = true
+SMG_PERFECT_AIM = false
 
 //Perfect aim fov (0 - 45)
 SMG_PERFECT_AIM_FOV = 10

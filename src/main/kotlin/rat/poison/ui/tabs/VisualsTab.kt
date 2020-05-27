@@ -13,7 +13,9 @@ import rat.poison.scripts.esp.disableAllEsp
 import rat.poison.strToBool
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
+import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
+import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiPanels.visualsTab
 
 val espTabbedPane = TabbedPane()
@@ -36,7 +38,17 @@ class VisualsTab : Tab(false, false) {
     val visualsToggleKey = VisInputFieldCustom("Visuals Toggle Key", "VISUALS_TOGGLE_KEY")
 
     val radarEsp = VisCheckBoxCustom("Radar Esp", "RADAR_ESP")
+
+    val nightMode = VisCheckBoxCustom("Nightmode/Fullbright", "ENABLE_NIGHTMODE")
+    val nightModeSlider = VisSliderCustom("%", "NIGHTMODE_VALUE", 0.05F, 5F, .05F, false)
+
     val visAdrenaline = VisCheckBoxCustom("Adrenaline", "ENABLE_ADRENALINE")
+
+    val showAimFov = VisCheckBoxCustom(" ", "DRAW_AIM_FOV")
+    val showAimFovColor = VisColorPickerCustom("Draw Aim FOV", "DRAW_AIM_FOV_COLOR")
+
+    val showTriggerFov = VisCheckBoxCustom(" ", "DRAW_TRIGGER_FOV")
+    val showTriggerFovColor = VisColorPickerCustom("Draw Trigger FOV", "DRAW_TRIGGER_FOV_COLOR")
 
     init {
         //ESP Tab
@@ -102,11 +114,23 @@ class VisualsTab : Tab(false, false) {
             }
         })
 
+        val aimFov = VisTable()
+        aimFov.add(showAimFov).left()
+        aimFov.add(showAimFovColor).width(175F-showAimFov.width).left()
+
+        val triggerFov = VisTable()
+        triggerFov.add(showTriggerFov).left()
+        triggerFov.add(showTriggerFovColor).width(175F-showTriggerFov.width).left()
+
         //Add all items to label for tabbed pane content
         table.add(enableEsp).padLeft(25F).left().row()
         table.add(visualsToggleKey).padLeft(25F).left().row()
         table.add(radarEsp).padLeft(25F).left().row()
+        table.add(nightMode).padLeft(25F).left().row()
+        table.add(nightModeSlider).padLeft(25F).left().row()
         table.add(visAdrenaline).padLeft(25F).left().row()
+        table.add(aimFov).padLeft(25F).left().row()
+        table.add(triggerFov).padLeft(25F).left().row()
         table.add(espTabbedPane.table).minWidth(500F).left().growX().row()
         table.add(espScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
     }
@@ -143,6 +167,22 @@ fun updateDisableEsp() {
         visualsToggleKey.disable(bool, col)
         radarEsp.disable(bool)
         visAdrenaline.disable(bool)
+        nightMode.disable(bool)
+        nightModeSlider.disable(bool, col)
+
+        if (curSettings["FOV_TYPE"].replace("\"", "") == "DISTANCE") {
+            showAimFov.disable(true)
+            showAimFovColor.disable(true)
+
+            showTriggerFov.disable(true)
+            showTriggerFovColor.disable(true)
+        } else {
+            showAimFov.disable(bool)
+            showAimFovColor.disable(bool)
+
+            showTriggerFov.disable(bool)
+            showTriggerFovColor.disable(bool)
+        }
 
         val recTab = espTabbedPane.activeTab
 
@@ -268,5 +308,11 @@ fun visualsTabUpdate() {
         visualsToggleKey.update()
         radarEsp.update()
         visualsToggleKey.update()
+        nightMode.update()
+        nightModeSlider.update()
+        showAimFov.update()
+        showAimFovColor.update()
+        showTriggerFov.update()
+        showTriggerFovColor.update()
     }
 }

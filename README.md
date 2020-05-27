@@ -1,4 +1,4 @@
-### Support Jire (Charlatano)
+### Support
 **Donate with Bitcoin:** 3GqvcPY4rKcMxKU3jE59A2UHfV3NAyUhA6  
 **Or with PayPal:** thomasgnappo@gmail.com
 
@@ -28,10 +28,10 @@ The first step is to compile the source code into a usable cheat program.
 * If you don't have the JDK you will have the option to install it through the build.bat file, this is recommended.
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will be in a directory called **RatPoison 1.7.1**.
+directory, and will be in a directory called **RatPoison 1.7.1.1**.
 
-From within the **RatPoison 1.7.1** directory, you can start the cheat by running
-the _"Start RatPoison 1.7.1"_ script.
+From within the **RatPoison 1.7.1.1** directory, you can start the cheat by running
+the _"Start RatPoison 1.7.1.1"_ script.
 If you have chosen to randomize the cheat name, you should open the file ending in .bat which should show ![BatFile](https://i.imgur.com/JZAhmtr.png) as an icon.
 
 You can launch the cheat at any time after launching CSGO.
@@ -45,6 +45,7 @@ You can launch the cheat at any time after launching CSGO.
 
 * Game looks framey despite having normal FPS (example 144hz/144fps, but looks like 60)
     * Lowering opengl fps to 30 helps
+    * Enabling gsync & disabling vsync if supported
 
 ---
 
@@ -56,6 +57,20 @@ Credit to Mr. Noad & 2772/Matt for a lot of help throughout this project
 
 **Recent Update**
 
+1.7.1.1 Update 5/27/2020
+* Glow esp is now one write per entity instead of multiple
+* Added static fov option
+* Added draw aim fov, draw trigger fov, for static fov only
+* Added nightmode/fullbright option
+* Changed RANK names to abbreviations to prevent hiding elements
+* Perfect aim is now calculated per aim move rather than per target
+* Added aim on shot option, aimbot will only aim when your gun can shoot
+* Loading settings/configs should only load .txt or .cfg files respectively
+* Scanner can now save/load/delete configs, and display ranks/kills/deaths/wins
+* Changed default settings to look more legit
+* Fully disabled knife changer
+
+
 1.7.1 Update 5/18/2020
 * Fixed ranks tab layout
 * Skinchanger tab should now update with configs
@@ -64,6 +79,9 @@ Credit to Mr. Noad & 2772/Matt for a lot of help throughout this project
 * Fixed advanced aim settings error when using 0 X/Y Variation
 * Color Picker is now similar to most mainstream cheats, less ugly
 * Added gaussian blur option when menu is open
+* Added hold target aimbot option
+* Visuals toggle key should now disable bomb timer, spectator list, recoil crosshair
+    * Bomb timer, spectator list, recoil crosshair require 'Enable ESP' to be checked in the visuals tab to work
 
 
 1.7 Update 4/25/2020

@@ -4,14 +4,13 @@ package rat.poison.ui.tabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
-import com.kotcrab.vis.ui.util.Validators
+import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.jire.arrowhead.keyPressed
 import rat.poison.*
 import rat.poison.App.menuStage
 import rat.poison.App.uiBombWindow
@@ -22,8 +21,8 @@ import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiPanels.optionsTab
 import rat.poison.ui.uiUpdate
-import rat.poison.utils.ObservableBoolean
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
@@ -32,17 +31,19 @@ import kotlin.math.round
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
-    private val fileSelectBox = VisSelectBox<String>()
+    var fileSelectBox: VisSelectBox<String>
 
     val menuKey = VisInputFieldCustom("Menu Key", "MENU_KEY")
-    val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F)
-    val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
-    val debug = VisCheckBoxCustom("Debug", "DEBUG")
-    val keybinds = VisCheckBoxCustom("Keybinds", "KEYBINDS")
-    val blur = VisCheckBoxCustom("Gaussian Blur", "GAUSSIAN_BLUR")
-    val discordLink = LinkLabel("Join Discord", "https://discord.gg/J2uHTJ2")
+    private val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F)
+    private val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
+    private val debug = VisCheckBoxCustom("Debug", "DEBUG")
+    private val keybinds = VisCheckBoxCustom("Keybinds", "KEYBINDS")
+    private val blur = VisCheckBoxCustom("Gaussian Blur", "GAUSSIAN_BLUR")
+    private val discordLink = LinkLabel("Join Discord", "https://discord.gg/J2uHTJ2")
 
     init {
+        fileSelectBox = VisSelectBox()
+
         //Create UIAlpha Slider
         val menuAlpha = VisTable()
         val menuAlphaLabel = VisLabel("Menu Alpha: " + 1F) //1F is default
@@ -140,136 +141,158 @@ class OptionsTab : Tab(false, false) {
         return "Options"
     }
 
-    private fun updateCFGList() {
-        val cfgFilesArray = Array<String>()
-        File("$SETTINGS_DIRECTORY\\CFGS").listFiles()?.forEach {
-            cfgFilesArray.add(it.name)
+    fun updateCFGList() {
+        if (VisUI.isLoaded()) {
+            val cfgFilesArray = Array<String>()
+            var items = 0
+            File("$SETTINGS_DIRECTORY\\CFGS").listFiles()?.forEach {
+                cfgFilesArray.add(it.name.replace(".cfg", ""))
+                items++
+            }
+
+            if (items > 0) {
+                fileSelectBox.items = cfgFilesArray
+            } else {
+                fileSelectBox.clearItems()
+            }
         }
-
-        fileSelectBox.items = cfgFilesArray
     }
+}
 
-    private fun saveDefault() {
-        if (!saving) {
-            GlobalScope.launch {
-                saving = true
-                println("\nSaving!\n")
-                File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
-                    val sbLines = StringBuilder()
-                    if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo") {
-                        FileReader(file).readLines().forEach { line ->
-                            if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
-                                val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
+fun saveDefault() {
+    if (!saving) {
+        GlobalScope.launch {
+            saving = true
+            println("\nSaving!\n")
+            File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
+                val sbLines = StringBuilder()
+                if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo") {
+                    FileReader(file).readLines().forEach { line ->
+                        if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
+                            val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
-                                //Add custom checks
-                                when {
-                                    curLine[0] == "HITSOUND_FILE_NAME" -> {
-                                        sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]].replace("\"", "") + "\"\n")
-                                    }
-
-                                    curLine[0] == "FLASH_MAX_ALPHA" -> {
-                                        sbLines.append(curLine[0] + " = " + curSettings[curLine[0]].replace("F", "") + "F\n")
-                                    }
-
-                                    else -> {
-                                        sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
-                                    }
+                            //Add custom checks
+                            when {
+                                curLine[0] == "HITSOUND_FILE_NAME" -> {
+                                    sbLines.append(curLine[0] + " = \"" + curSettings[curLine[0]].replace("\"", "") + "\"\n")
                                 }
 
+                                curLine[0] == "FLASH_MAX_ALPHA" -> {
+                                    sbLines.append(curLine[0] + " = " + curSettings[curLine[0]].replace("F", "") + "F\n")
+                                }
+
+                                else -> {
+                                    sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
+                                }
                             }
-                            else
-                            {
-                                sbLines.append(line + "\n")
-                            }
+
                         }
-                        Files.delete(file.toPath())
-                        Files.createFile(file.toPath())
-                        var firstLine = false
-                        sbLines.lines().forEach {file.appendText(if (!firstLine) { firstLine = true; it } else if (!it.isBlank()) "\n" + it else "\n")}
-                        sbLines.clear()
+                        else
+                        {
+                            sbLines.append(line + "\n")
+                        }
                     }
+                    Files.delete(file.toPath())
+                    Files.createFile(file.toPath())
+                    var firstLine = false
+                    sbLines.lines().forEach {file.appendText(if (!firstLine) { firstLine = true; it } else if (!it.isBlank()) "\n" + it else "\n")}
+                    sbLines.clear()
                 }
-                println("\nSaving Complete!\n")
-                saving = false
             }
+            println("\nSaving Complete!\n")
+            saving = false
         }
     }
+}
 
-    private fun saveCFG(cfgFileName: String) {
-        saveWindows()
+fun saveCFG(cfgFileName: String) {
+    saveWindows()
 
-        if (!saving) {
+    if (!saving) {
+        saving = true
+        GlobalScope.launch {
+            println("Saving!")
+
+            val cfgDir = File("$SETTINGS_DIRECTORY\\CFGS")
+            if (!cfgDir.exists()) {
+                Files.createDirectory(cfgDir.toPath())
+            }
+
+            cfgFileName.replace(".cfg", "")
+
+            val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg")
+            if (!cfgFile.exists()) {
+                cfgFile.createNewFile()
+            }
+
+            val sbLines = StringBuilder()
+            File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
+                if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo") {
+                    FileReader(file).readLines().forEach { line ->
+                        if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
+                            val tempCurLine = line.trim().split(" ".toRegex(), 3) //Separate line into 'VARIABLE = VALUE'
+
+                            sbLines.append(tempCurLine[0] + " = " + curSettings[tempCurLine[0]] + "\n")
+                        }
+                    }
+                }
+            }
+
+            Files.delete(cfgFile.toPath()) //Replace with cfgFile. ??
+            Files.createFile(cfgFile.toPath())
+
+            var firstLine = false
+            sbLines.lines().forEach {cfgFile.appendText(if (!firstLine) { firstLine = true; it } else if (!it.isBlank()) "\n" + it else "\n")}
+            sbLines.clear()
+
+            println("\nSaving Complete!\n")
+            if (VisUI.isLoaded()) {
+                optionsTab.updateCFGList()
+            }
+            saving = false
+        }
+    }
+}
+
+fun loadCFG(cfgFileName: String) {
+    if (!saving) {
+
+        cfgFileName.replace(".cfg", "")
+
+        val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg")
+        if (!cfgFile.exists()) {
+            Dialogs.showErrorDialog(menuStage, "Error", "$cfgFileName not found, save your configuration first!")
+        } else {
             saving = true
             GlobalScope.launch {
-                println("\nSaving!\n")
-
-                val cfgDir = File("$SETTINGS_DIRECTORY\\CFGS")
-                if (!cfgDir.exists()) {
-                    Files.createDirectory(cfgDir.toPath())
-                }
-
-                val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg")
-                if (!cfgFile.exists()) {
-                    cfgFile.createNewFile()
-                }
-
-                val sbLines = StringBuilder()
-                File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
-                    if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo") {
-                        FileReader(file).readLines().forEach { line ->
-                            if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
-                                val tempCurLine = line.trim().split(" ".toRegex(), 3) //Separate line into 'VARIABLE = VALUE'
-
-                                sbLines.append(tempCurLine[0] + " = " + curSettings[tempCurLine[0]] + "\n")
-                            }
-                        }
-                    }
-                }
-
-                Files.delete(cfgFile.toPath()) //Replace with cfgFile. ??
-                Files.createFile(cfgFile.toPath())
-
-                var firstLine = false
-                sbLines.lines().forEach {cfgFile.appendText(if (!firstLine) { firstLine = true; it } else if (!it.isBlank()) "\n" + it else "\n")}
-                sbLines.clear()
-
-                println("\nSaving Complete!\n")
-                updateCFGList()
+                println("Loading\n")
+                loadSettingsFromFiles("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg", true)
+                uiUpdate()
+                updateWindows()
+                println("\nLoading Complete!\n")
                 saving = false
             }
         }
+    } else {
+        Dialogs.showErrorDialog(menuStage, "Error", "Wait for saving to finish first!")
     }
+}
 
-    private fun loadCFG(cfgFileName: String) {
-        if (!saving) {
-            val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName")
-            if (!cfgFile.exists()) {
-                Dialogs.showErrorDialog(menuStage, "Error", "$cfgFileName not found, save your configuration first!")
-            } else {
-                saving = true
-                GlobalScope.launch {
-                    println("\nLoading\n")
-                    loadSettingsFromFiles("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName", true)
-                    uiUpdate()
-                    updateWindows()
-                    println("\nLoading Complete!\n")
-                    saving = false
-                }
-            }
-        } else {
-            Dialogs.showErrorDialog(menuStage, "Error", "Wait for saving to finish first!")
-        }
+fun deleteCFG(cfgFileName: String) {
+    cfgFileName.replace(".cfg", "")
+
+    val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg")
+    if (cfgFile.exists()) {
+        cfgFile.delete()
     }
-
-    private fun deleteCFG(cfgFileName: String) {
-        val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName")
-        if (cfgFile.exists()) {
-            cfgFile.delete()
-        }
-        updateCFGList()
+    if (VisUI.isLoaded()) {
+        optionsTab.updateCFGList()
     }
+    println("Deleted $cfgFileName\n")
+}
 
-    private fun saveWindows() {
+fun saveWindows() {
+    if (VisUI.isLoaded()) {
         curSettings["BOMB_TIMER_X"] = uiBombWindow.x
         curSettings["BOMB_TIMER_Y"] = uiBombWindow.y
         curSettings["BOMB_TIMER_ALPHA"] = uiBombWindow.color.a
@@ -282,8 +305,10 @@ class OptionsTab : Tab(false, false) {
         curSettings["KEYBINDS_Y"] = uiKeybinds.y
         curSettings["KEYBINDS_ALPHA"] = uiKeybinds.color.a
     }
+}
 
-    private fun updateWindows() {
+fun updateWindows() {
+    if (VisUI.isLoaded()) {
         uiBombWindow.updatePosition(curSettings["BOMB_TIMER_X"].toFloat(), curSettings["BOMB_TIMER_Y"].toFloat())
         uiBombWindow.changeAlpha(curSettings["BOMB_TIMER_ALPHA"].toFloat())
         uiSpecList.updatePosition(curSettings["SPECTATOR_LIST_X"].toFloat(), curSettings["SPECTATOR_LIST_Y"].toFloat())

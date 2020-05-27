@@ -113,29 +113,29 @@ fun constructEntities() = every(500) {
     for (glowIndex in 0..glowObjectCount) {
         val glowAddress = glowObject + (glowIndex * GLOW_OBJECT_SIZE)
         val entity = csgoEXE.uint(glowAddress)
+        val tmpPos = entity.absPosition()
+        val check = (tmpPos.x in -2.0..2.0 && tmpPos.y in -2.0..2.0 && tmpPos.z in -2.0..2.0)
 
-        if (entity != 0L) {
-            val type = EntityType.byEntityAddress(entity)
+        if (!check) {
+            if (entity != 0L) {
+                val type = EntityType.byEntityAddress(entity)
 
-            if (type == EntityType.CFists) {
-                //sometimes it takes a while for game to initialize gameRulesProxy
-                //so our dz mode detection wasn't working perfectly.
-                dzMode = true
-            }
+                if (type == EntityType.CFists) {
+                    //sometimes it takes a while for game to initialize gameRulesProxy
+                    //so our dz mode detection wasn't working perfectly.
+                    dzMode = true
+                }
 
-            //Fuck this?
-            if (type.grenadeProjectile) {
-                val tmpPos = entity.absPosition()
-                val check = (tmpPos.x in -2.0..2.0 && tmpPos.y in -2.0..2.0 && tmpPos.z in -2.0..2.0)
-                if (!check) {
+                //Fuck this?
+                if (type.grenadeProjectile) {
                     tmpEntsToAdd.add(entity)
                 }
-            }
 
-            val context = contexts[glowIndex].set(entity, glowAddress, glowIndex, type)
+                val context = contexts[glowIndex].set(entity, glowAddress, glowIndex, type)
 
-            with(entities[type]!!) {
-                if (!contains(context)) add(context)
+                with(entities[type]!!) {
+                    if (!contains(context)) add(context)
+                }
             }
         }
     }

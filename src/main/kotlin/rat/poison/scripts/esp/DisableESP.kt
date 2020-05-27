@@ -1,14 +1,17 @@
 package rat.poison.scripts.esp
 
+import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.Color
 import rat.poison.game.entity.Entity
 import rat.poison.game.entity.EntityType
 import rat.poison.game.forEntities
+import rat.poison.game.hooks.toneMapController
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.EngineOffsets
+import rat.poison.strToBool
 import rat.poison.utils.extensions.uint
 import java.lang.Float.floatToIntBits
 

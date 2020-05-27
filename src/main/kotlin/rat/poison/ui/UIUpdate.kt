@@ -27,6 +27,7 @@ fun uiUpdate() {
     nadeHelperTabUpdate()
     updateTrig()
     updateAim()
+    updateDisableEsp()
 
     //Update windows
     uiAimOverridenWeapons.setPosition(uiMenu.x+uiMenu.width+4F, uiMenu.y)

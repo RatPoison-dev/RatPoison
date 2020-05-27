@@ -40,19 +40,19 @@ private var preBayonetT = 64
 fun skinChanger() = every(1, continuous = true) {
     if ((!curSettings["SKINCHANGER"].strToBool() && !curSettings["KNIFECHANGER"].strToBool()) || notInGame) return@every
 
-    val modelIndex = curSettings["KNIFE_IDX"].toInt() //For knife
-    val indexOffset = if (modelIndex < 11) 1 else 2
+    //val modelIndex = curSettings["KNIFE_IDX"].toInt() //For knife
+    //val indexOffset = if (modelIndex < 11) 1 else 2
 
-    val activeWeaponEntID = csgoEXE.int(me.weaponEntity() + m_iViewModelIndex)
-    val activeWeapon = me.weapon().id
+    //val activeWeaponEntID = csgoEXE.int(me.weaponEntity() + m_iViewModelIndex)
+    //val activeWeapon = me.weapon().id
 
-    val calcModelIndex: Int
+    //val calcModelIndex: Int
 
-    calcModelIndex = if (me.team() == 3L) { //Cant read from sv_precache correctly cause im dumb //stfu loser bitch gg
-        activeWeaponEntID + preBayonetCT + 3 * modelIndex + indexOffset
-    } else {
-        activeWeaponEntID + preBayonetT + 3 * modelIndex + indexOffset
-    }
+    //calcModelIndex = if (me.team() == 3L) { //Cant read from sv_precache correctly cause im dumb //stfu loser bitch gg
+    //    activeWeaponEntID + preBayonetCT + 3 * modelIndex + indexOffset
+    //} else {
+    //    activeWeaponEntID + preBayonetT + 3 * modelIndex + indexOffset
+    //}
 
     for (i in 0..8) {
         val myWeapon = csgoEXE.uint(me + hMyWeapons + i * 0x4) and 0xFFF
@@ -113,16 +113,16 @@ fun skinChanger() = every(1, continuous = true) {
         }
     }
 
-    if (curSettings["KNIFE_IDX"].toInt() != -1 && curSettings["KNIFECHANGER"].strToBool()) {
-        var knifeVMod = csgoEXE.uint(me + m_hViewModel) and 0xFFF
-        knifeVMod = clientDLL.uint(dwEntityList + (knifeVMod - 1) * ENTITY_SIZE)
+    //if (curSettings["KNIFE_IDX"].toInt() != -1 && curSettings["KNIFECHANGER"].strToBool()) {
+    //    var knifeVMod = csgoEXE.uint(me + m_hViewModel) and 0xFFF
+    //    knifeVMod = clientDLL.uint(dwEntityList + (knifeVMod - 1) * ENTITY_SIZE)
 
-        if (((activeWeapon == 42 || activeWeapon == 59) && activeWeaponEntID > 0) || activeWeapon == Weapons.KNIFE_SKELETON.id) {
-            if (csgoEXE.int(knifeVMod + m_nModelIndex) != calcModelIndex) {
-                csgoEXE[knifeVMod + m_nModelIndex] = calcModelIndex
-            }
-        }
-    }
+    //    if (((activeWeapon == 42 || activeWeapon == 59) && activeWeaponEntID > 0) || activeWeapon == Weapons.KNIFE_SKELETON.id) {
+    //        if (csgoEXE.int(knifeVMod + m_nModelIndex) != calcModelIndex) {
+    //            csgoEXE[knifeVMod + m_nModelIndex] = calcModelIndex
+    //        }
+    //    }
+    //}
 }
 
 fun forcedUpdate() {

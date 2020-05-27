@@ -12,7 +12,7 @@ import rat.poison.utils.every
 var override = false
 var curWep = Weapons.AK47
 
-fun setAim() = every(250) {
+fun setAim() = every(100, true) {
     try {
         override = false
         curWep = me.weapon()
@@ -84,6 +84,7 @@ fun setAim() = every(250) {
                 curSettings["ENABLE_PATH_AIM"] = curSettings[strPre + "_ENABLE_PATH_AIM"].strToBool()
                 curSettings["ENABLE_SCOPED_ONLY"] = curSettings["SNIPER_ENABLE_SCOPED_ONLY"].strToBool()
 
+                curSettings["AIM_ONLY_ON_SHOT"] = curSettings[strPre + "_AIM_ONLY_ON_SHOT"].strToBool()
                 curSettings["AIM_AFTER_SHOTS"] = curSettings[strPre + "_AIM_AFTER_SHOTS"].toInt()
 
                 curSettings["AIM_ADVANCED"] = curSettings[strPre + "_ADVANCED_SETTINGS"].strToBool()

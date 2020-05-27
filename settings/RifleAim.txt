@@ -34,7 +34,10 @@ RIFLE_AIM_SMOOTHNESS = 3.0
 RIFLE_AIM_FORCE_BONE = 8
 
 //Aim after X shots
-RIFLE_AIM_AFTER_SHOTS = 0
+RIFLE_AIM_AFTER_SHOTS = 1
+
+//If the aimbot should only aim when you can shoot
+RIFLE_AIM_ONLY_ON_SHOT = false
 
 //Advanced aim settings
 RIFLE_ADVANCED_SETTINGS = false
@@ -53,7 +56,7 @@ RIFLE_VARIATION_DEADZONE = 0
 
 //Enable perfect aim
 //Will instantly snap to the aimbone
-RIFLE_PERFECT_AIM = true
+RIFLE_PERFECT_AIM = false
 
 //Perfect aim fov (0 - 45)
 RIFLE_PERFECT_AIM_FOV = 5

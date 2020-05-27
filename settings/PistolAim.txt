@@ -33,6 +33,9 @@ PISTOL_AIM_SMOOTHNESS = 2.5
 //Force Bone
 PISTOL_AIM_FORCE_BONE = 8
 
+//If the aimbot should only aim when you can shoot
+PISTOL_AIM_ONLY_ON_SHOT = true
+
 //Advanced aim settings
 PISTOL_ADVANCED_SETTINGS = false
 PISTOL_AIM_RCS_X = 2.0
@@ -50,7 +53,7 @@ PISTOL_VARIATION_DEADZONE = 0
 
 //Enable perfect aim
 //Will instantly snap to the aimbone
-PISTOL_PERFECT_AIM = true
+PISTOL_PERFECT_AIM = false
 
 //Perfect aim fov (0 - 45)
 PISTOL_PERFECT_AIM_FOV = 10

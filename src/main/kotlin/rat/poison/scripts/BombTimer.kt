@@ -26,7 +26,7 @@ fun bombTimer() {
     bombUpdater() //Call once
 
     App {
-        if (DANGER_ZONE) return@App
+        if (DANGER_ZONE || !curSettings["ENABLE_ESP"].strToBool()) return@App
 
         if (curSettings["ENABLE_BOMB_TIMER"].strToBool()) {
             bombText.setText(bombState.toString()) //Update regardless of BOMB_TIMER_MENU

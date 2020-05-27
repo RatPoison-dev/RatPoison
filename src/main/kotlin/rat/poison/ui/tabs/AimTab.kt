@@ -54,12 +54,17 @@ fun updateDisableAim() {
         automaticWeaponsCheckBox.disable(bool)
         automaticWeaponsInput.disable(bool, col)
         targetSwapDelay.disable(bool, col)
+
+        fovTypeLabel.color = col
+        fovTypeBox.isDisabled = bool
+
         forceAimBoneKey.disable(bool, col)
         forceAimKey.disable(bool, col)
         forceAimAlways.disable(bool)
         forceAimThroughWalls.disable(bool)
         categorySelectLabel.color = col
         categorySelectionBox.isDisabled = bool
+        enableAimOnShot.isDisabled = bool
         enableFactorRecoil.isDisabled = bool
         enableFlatAim.isDisabled = bool
         enablePathAim.isDisabled = bool
@@ -106,6 +111,9 @@ fun updateAim() {
         automaticWeaponsInput.update()
         targetSwapDelay.update()
 
+        fovTypeBox.selected = curSettings["FOV_TYPE"].replace("\"", "")
+
+        enableAimOnShot.update()
         enableFactorRecoil.update()
         enableFlatAim.update()
         enablePathAim.update()

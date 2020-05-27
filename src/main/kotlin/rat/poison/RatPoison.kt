@@ -100,7 +100,7 @@ fun main() {
     if (dbg) println("[DEBUG] Initializing scripts...")
     //Init scripts
     if (!curSettings["MENU"].strToBool()) { //If we arent' using the menu disable everything that uses the menu
-        if (dbg) println("[DEBUG] Menu disabled, disabling box, skeleton, rcrosshair, btimer, indicator, speclist, hitmarker, nade tracer, nade helper")
+        if (dbg) println("[DEBUG] Menu disabled, disabling box, skeleton, rcrosshair, btimer, indicator, speclist, hitmarker, nade helper, nade tracer, draw fov")
 
         curSettings["ENABLE_BOX_ESP"] = "false"
         curSettings["SKELETON_ESP"] = "false"
@@ -112,6 +112,7 @@ fun main() {
         curSettings["SNAPLINES"] = "false"
         curSettings["ENABLE_NADE_HELPER"] = "false"
         curSettings["NADE_TRACER"] = "false"
+        curSettings["DRAW_AIM_FOV"] = "false"
     } else {
         if (dbg) { println("[DEBUG] Initializing Recoil Ranks") }; ranks()
 
@@ -122,6 +123,7 @@ fun main() {
         if (dbg) { println("[DEBUG] Initializing Hit Marker") }; hitMarker()
         if (dbg) { println("[DEBUG] Initializing Nade Helper") }; nadeHelper()
         if (dbg) { println("[DEBUG] Initializing Nade Tracer") }; nadeTracer()
+        if (dbg) { println("[DEBUG] Initializing Draw Fov") }; drawFov()
     }
 
     if (dbg) { println("[DEBUG] Initializing Bunny Hop") }; bunnyHop()
@@ -143,8 +145,11 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Door Spam") }; doorSpam()
     if (dbg) { println("[DEBUG] Initializing Weapon Spam") }; weaponSpam()
     if (dbg) { println("[DEBUG] Initializing Weapon Changer") }; skinChanger()
+    if (dbg) { println("[DEBUG] Initializing NightMode/FullBright") }; nightMode()
 
-    rayTraceTest()
+    if (EXPERIMENTAL) {
+        rayTraceTest()
+    }
 
     //Overlay check, not updated?
     if (curSettings["MENU"].strToBool()) {
@@ -186,7 +191,6 @@ fun main() {
                 glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE)
                 setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings["OPENGL_MSAA_SAMPLES"].toInt())
             })
-            GL.createCapabilities()
         }
     }
     else {
@@ -210,7 +214,7 @@ fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
         }
     } else {
         File(fileDir).listFiles()?.forEach { file ->
-            if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo") {
+            if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo" && file.name.contains(".txt")) {
                 FileReader(file).readLines().forEach { line ->
                     if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                         val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
@@ -331,7 +335,7 @@ object App : ApplicationAdapter() {
                                 menuStage.clear()
                             }
 
-                            if (curSettings["ENABLE_BOMB_TIMER"].strToBool() && curSettings["BOMB_TIMER_MENU"].strToBool()) {
+                            if (curSettings["ENABLE_BOMB_TIMER"].strToBool() && curSettings["BOMB_TIMER_MENU"].strToBool() && curSettings["ENABLE_ESP"].strToBool()) {
                                 if (!menuStage.actors.contains(uiBombWindow)) {
                                     menuStage.addActor(uiBombWindow)
                                 }
@@ -339,7 +343,7 @@ object App : ApplicationAdapter() {
                                 menuStage.clear() //actors.remove at index doesnt work after 1 loop?
                             }
 
-                            if (curSettings["SPECTATOR_LIST"].strToBool()) {
+                            if (curSettings["SPECTATOR_LIST"].strToBool() && curSettings["ENABLE_ESP"].strToBool()) {
                                 if (!menuStage.actors.contains(uiSpecList)) {
                                     menuStage.addActor(uiSpecList)
                                 }
@@ -511,7 +515,7 @@ fun sync(fps : Int) {
     }
 }
 
-fun Any.strToBool() = this == "true" || this == true || this == 1.0 || this == 1 || this == 1F
+fun Any.strToBool() = this.toString().toLowerCase() == "true" || this == true || this == 1.0 || this == 1 || this == 1F
 fun Any.boolToStr() = this.toString()
 fun Any.strToColor() = convStrToColor(this.toString())
 fun Any.strToColorGDX() = convStrToColorGDX(this.toString())
@@ -609,12 +613,6 @@ operator fun Vector3.divAssign(f: Float) {
     y /= f
     z /= f
 }
-
-//internal fun Entity.position(): Angle = readCached(rat.poison.game.entity.entity2Angle) {
-//    x = rat.poison.game.CSGO.csgoEXE.float(it + rat.poison.game.netvars.NetVarOffsets.vecOrigin).toDouble()
-//    y = rat.poison.game.CSGO.csgoEXE.float(it + rat.poison.game.netvars.NetVarOffsets.vecOrigin + 4).toDouble()
-//    z = rat.poison.game.CSGO.csgoEXE.float(it + rat.poison.game.netvars.NetVarOffsets.vecOrigin + 8).toDouble() + rat.poison.game.CSGO.csgoEXE.float(it + rat.poison.game.netvars.NetVarOffsets.vecViewOffset + 8)
-//}
 
 fun Angle.toVector3(): Vector3 {
     val vec = Vector3()

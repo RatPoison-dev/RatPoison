@@ -14,6 +14,7 @@ import java.lang.Math.random
 import java.lang.Math.toDegrees
 import java.util.concurrent.ThreadLocalRandom
 import kotlin.math.atan
+import kotlin.math.atan2
 import kotlin.math.sqrt
 
 fun getCalculatedAngle(player: Player, dst: Vector): Angle {
@@ -52,6 +53,19 @@ fun getCalculatedAngle(player: Player, dst: Vector): Angle {
 	ang.z = 0.0
 	if (dX >= 0.0) ang.y += 180
 
+	ang.normalize()
+
+	return ang
+}
+
+fun realCalcAngle(player: Player, dst: Vector): Angle {
+	val playerPos = player.position()
+	val delta = Vector(dst.x - playerPos.x, dst.y - playerPos.y, dst.z - playerPos.z + csgoEXE.float(player + vecViewOffset))
+
+	val aX = toDegrees(atan2(-delta.z, sqrt(delta.x*delta.x + delta.y*delta.y)))
+	val aY = toDegrees(atan2(delta.y, delta.x))
+
+	val ang = Angle(aX, aY, 0.0)
 	ang.normalize()
 
 	return ang

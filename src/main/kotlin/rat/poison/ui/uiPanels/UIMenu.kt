@@ -30,7 +30,7 @@ private var wantedWidth = 535F
 private var isResizingHeight = false
 private var isResizingWidth = false
 
-class UIMenu : VisWindow("Rat Poison 1.7.1") {
+class UIMenu : VisWindow("Rat Poison 1.7.1.1") {
     init {
         defaults().left()
 
