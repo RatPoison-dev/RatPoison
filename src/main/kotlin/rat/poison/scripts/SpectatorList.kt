@@ -39,7 +39,7 @@ internal fun spectatorList() = every(100) {
 
             if (entSpecTarget > -1 && entSpecTarget == playerSpecTarget) {
                 if (!spectators.contains(entName)) {
-                    spectators += "$entName\n"
+                    spectators += "name: $entName\n"
                 }
             }
         }
