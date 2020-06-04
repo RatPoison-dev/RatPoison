@@ -27,9 +27,6 @@ fun selfNade() {
         }
         destAng.normalize()
 
-        println(curAng)
-        println(destAng)
-
         pathAim(curAng, destAng, 10, false, checkOnScreen = false)
         Thread.sleep(50)
         robot.keyPress(KeyEvent.VK_CONTROL)
