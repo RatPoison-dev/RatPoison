@@ -11,6 +11,8 @@ import java.awt.event.KeyEvent
 import java.awt.event.MouseEvent
 import rat.poison.game.CSGO
 import rat.poison.game.offsets.ClientOffsets.dwForceJump
+import rat.poison.utils.normalize
+import kotlin.math.abs
 
 fun selfNade() {
     Thread(Runnable {
@@ -23,17 +25,13 @@ fun selfNade() {
         destAng.apply {
             x = -89.0
         }
+        destAng.normalize()
+
+        println(curAng)
+        println(destAng)
+
         pathAim(curAng, destAng, 10, false, checkOnScreen = false)
         Thread.sleep(50)
-        robot.keyPress(KeyEvent.VK_Z)
-        Thread.sleep(50)
-        robot.keyRelease(KeyEvent.VK_Z)
-        Thread.sleep(50)
-        robot.keyPress(KeyEvent.VK_1)
-        Thread.sleep(50)
-        robot.keyRelease(KeyEvent.VK_1)
-        Thread.sleep(50)
-        CSGO.clientDLL[dwForceJump] = 6
         robot.keyPress(KeyEvent.VK_CONTROL)
         Thread.sleep(50)
         robot.mousePress(MouseEvent.BUTTON3_DOWN_MASK)
@@ -41,6 +39,5 @@ fun selfNade() {
         robot.mouseRelease(MouseEvent.BUTTON3_DOWN_MASK)
         Thread.sleep(2000)
         robot.keyRelease(KeyEvent.VK_CONTROL)
-        pathAim(clientState.angle(), curAng, 10, false, checkOnScreen = false )
     }).start()
 }

@@ -12,9 +12,6 @@ MENU_KEY = 112
 //FOV Type : DISTANCE or STATIC
 FOV_TYPE = DISTANCE
 
-//Color of Aimbot FOV circle
-AIM_FOV_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
-
 //If the menu has a blur behind it
 GAUSSIAN_BLUR = false
 

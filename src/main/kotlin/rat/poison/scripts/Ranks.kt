@@ -22,7 +22,7 @@ var deathsList = mutableListOf<String>()
 var KDList = mutableListOf<String>()
 var winsList = mutableListOf<String>()
 
-fun ranks() = every(1000) { //Rebuild every second
+fun ranks() = every(1000, true) { //Rebuild every second
     if (notInGame || !opened || !haveTarget) return@every
 
     //Bruh -- fix later

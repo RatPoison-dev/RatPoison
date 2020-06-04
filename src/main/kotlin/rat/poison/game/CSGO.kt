@@ -48,13 +48,15 @@ object CSGO {
 		if (dbg) println("[DEBUG] Searching for and initializing CSGO")
 
 		retry(128) {
+			println("retrying")
 			csgoEXE = processByName(PROCESS_NAME, PROCESS_ACCESS_FLAGS)!!
 		}
 
 		retry(128) {
+			println("loading")
 			csgoEXE.loadModules()
-			clientDLL = csgoEXE.modules[CLIENT_MODULE_NAME]!!
 			engineDLL = csgoEXE.modules[ENGINE_MODULE_NAME]!!
+			clientDLL = csgoEXE.modules[CLIENT_MODULE_NAME]!!
 		}
 
 		val rect = WinDef.RECT()
