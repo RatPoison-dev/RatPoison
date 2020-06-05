@@ -10,10 +10,12 @@ import rat.poison.ui.changed
 import rat.poison.ui.tabs.boxEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
+import rat.poison.visualsMap
 
 class BoxEspTab : Tab(false, false) {
     private val table = VisTable()
 
+    val map = visualsMap()
     //Init labels/sliders/boxes that show values here
     val skeletonEsp = VisCheckBoxCustom(curLocalization["ENABLE_SKELETON_ESP"], "SKELETON_ESP")
     val showTeamSkeleton = VisCheckBoxCustom(curLocalization["TEAMMATES"], "SKELETON_SHOW_TEAM")
@@ -42,46 +44,47 @@ class BoxEspTab : Tab(false, false) {
 
     init {
         //Create Box ESP Health Pos Selector
-        boxEspHealthPos.setItems("Left", "Right")
+        boxEspHealthPos.setItems(curLocalization["LEFT"], curLocalization["RIGHT"])
         boxEspHealthPos.selected = when (curSettings["BOX_ESP_HEALTH_POS"].replace("\"", "")) {
             "L" -> "Left"
             else -> "Right"
         }
         boxEspHealthPos.changed { _, _ ->
-            curSettings["BOX_ESP_HEALTH_POS"] = boxEspHealthPos.selected.first()
+            println(map[boxEspHealthPos.selected])
+            curSettings["BOX_ESP_HEALTH_POS"] = map[boxEspHealthPos.selected].first()
             true
         }
 
         //Create Box ESP Armor Pos Selector
-        boxEspArmorPos.setItems("Left", "Right")
+        boxEspArmorPos.setItems(curLocalization["LEFT"], curLocalization["RIGHT"])
         boxEspArmorPos.selected = when (curSettings["BOX_ESP_ARMOR_POS"].replace("\"", "")) {
             "L" -> "Left"
             else -> "Right"
         }
         boxEspArmorPos.changed { _, _ ->
-            curSettings["BOX_ESP_ARMOR_POS"] = boxEspArmorPos.selected.first()
+            curSettings["BOX_ESP_ARMOR_POS"] = map[boxEspArmorPos.selected].first()
             true
         }
 
         //Create Box ESP Name Pos Selector
-        boxEspNamePos.setItems("Top", "Bottom")
+        boxEspNamePos.setItems(curLocalization["TOP"], curLocalization["BOTTOM"])
         boxEspNamePos.selected = when (curSettings["BOX_ESP_NAME_POS"].replace("\"", "")) {
             "T" -> "Top"
             else -> "Bottom"
         }
         boxEspNamePos.changed { _, _ ->
-            curSettings["BOX_ESP_NAME_POS"] = boxEspNamePos.selected.first()
+            curSettings["BOX_ESP_NAME_POS"] = map[boxEspNamePos.selected].first()
             true
         }
 
         //Create Box ESP Weapon Pos Selector
-        boxEspWeaponPos.setItems("Top", "Bottom")
+        boxEspWeaponPos.setItems(curLocalization["TOP"], curLocalization["BOTTOM"])
         boxEspWeaponPos.selected = when (curSettings["BOX_ESP_WEAPON_POS"].replace("\"", "")) {
             "T" -> "Top"
             else -> "Bottom"
         }
         boxEspWeaponPos.changed { _, _ ->
-            curSettings["BOX_ESP_WEAPON_POS"] = boxEspWeaponPos.selected.first()
+            curSettings["BOX_ESP_WEAPON_POS"] = map[boxEspWeaponPos.selected].first()
             true
         }
 

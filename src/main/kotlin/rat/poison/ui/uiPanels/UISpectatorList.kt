@@ -3,6 +3,7 @@ package rat.poison.ui.uiPanels
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisWindow
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.ui.changed
 import kotlin.math.round
@@ -11,7 +12,7 @@ lateinit var specListText : VisLabel
 
 //Needs cleanup
 
-class UISpectatorList : VisWindow("Spectator List") {
+class UISpectatorList : VisWindow(curLocalization["SPECTATOR_LIST_WINDOW_NAME"]) {
     init {
         defaults().left()
 

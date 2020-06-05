@@ -83,6 +83,32 @@ var dbg: Boolean = false
 
 val robot = Robot().apply { this.autoDelay = 0 }
 
+// Junk code
+fun visualsMap (): Settings {
+    val map = Settings()
+    map[curLocalization["LEFT"]] = "LEFT"
+    map[curLocalization["RIGHT"]] = "RIGHT"
+    map[curLocalization["TOP"]] = "TOP"
+    map[curLocalization["BOTTOM"]] = "BOTTOM"
+    return map
+}
+fun aimingMap () : Settings {
+    val map = Settings()
+    // KOCTJ
+    map[curLocalization["HEAD"]] = "HEAD"
+    map[curLocalization["NECK"]] = "NECK"
+    map[curLocalization["CHEST"]] = "CHEST"
+    map[curLocalization["STOMACH"]] = "STOMACH"
+    map[curLocalization["NEAREST"]] = "NEAREST"
+    map[curLocalization["RANDOM"]] = "RANDOM"
+    // Weapon categories
+    map[curLocalization["PISTOL"]] = "PISTOL"
+    map[curLocalization["SHOTGUN"]] = "SHOTGUN"
+    map[curLocalization["RIFLE"]] = "RIFLE"
+    map[curLocalization["SNIPER"]] = "SNIPER"
+    map[curLocalization["SMG"]] = "SMG"
+    return map
+}
 fun main() {
     System.setProperty("jna.nosys", "true")
 

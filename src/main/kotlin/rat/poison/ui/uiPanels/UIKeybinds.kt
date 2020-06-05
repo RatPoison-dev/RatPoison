@@ -7,20 +7,21 @@ import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisValidatableTextField
 import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.App.uiKeybinds
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import kotlin.math.round
 
 class UIKeybinds : VisWindow("Keybinds") {
-    val aimToggleKey = VisInputFieldCustom("Toggle Aim Key", "AIM_TOGGLE_KEY")
-    val forceAimKey = VisInputFieldCustom("Force Aim Key", "FORCE_AIM_KEY")
+    val aimToggleKey = VisInputFieldCustom(curLocalization["AIM_TOGGLE_KEY"], "AIM_TOGGLE_KEY")
+    val forceAimKey = VisInputFieldCustom(curLocalization["FORCE_AIM_KEY"], "FORCE_AIM_KEY")
     val forceAimBoneKey = VisInputFieldCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
-    val boneTriggerKey = VisInputFieldCustom("Trigger Key", "TRIGGER_KEY")
-    val visualsToggleKey = VisInputFieldCustom("Visuals Toggle Key", "VISUALS_TOGGLE_KEY")
-    val doorSpamKey = VisInputFieldCustom("Door Spam Key", "D_SPAM_KEY")
-    val weaponSpamKey = VisInputFieldCustom("Weapon Spam Key", "W_SPAM_KEY")
-    val menuKeyField = VisInputFieldCustom("Menu Key", "MENU_KEY")
+    val boneTriggerKey = VisInputFieldCustom(curLocalization["FORCE_AIM_BONE_KEY"], "TRIGGER_KEY")
+    val visualsToggleKey = VisInputFieldCustom(curLocalization["VISUALS_TOGGLE_KEY"], "VISUALS_TOGGLE_KEY")
+    val doorSpamKey = VisInputFieldCustom(curLocalization["DOOR_SPAM_KEY"], "D_SPAM_KEY")
+    val weaponSpamKey = VisInputFieldCustom(curLocalization["WEAPON_SPAM_KEY"], "W_SPAM_KEY")
+    val menuKeyField = VisInputFieldCustom(curLocalization["MENU_KEY"], "MENU_KEY")
 
     init {
         defaults().left()

@@ -11,7 +11,9 @@ MENU_KEY = 112
 
 //FOV Type : DISTANCE or STATIC
 FOV_TYPE = DISTANCE
+
 DEFAULT_LOCALE = locale_EN
+DEFAULT_CATEGORY_SELECTED = PISTOL
 
 //If the menu has a blur behind it
 GAUSSIAN_BLUR = false
