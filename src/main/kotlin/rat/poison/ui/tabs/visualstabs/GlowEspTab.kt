@@ -6,6 +6,7 @@ import com.kotcrab.vis.ui.widget.VisImage
 import com.kotcrab.vis.ui.widget.VisImageTextButton
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.curLocalization
 import rat.poison.ui.tabs.glowEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
@@ -14,31 +15,31 @@ class GlowEspTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val glowEsp = VisCheckBoxCustom("Enable", "GLOW_ESP")
-    val invGlowEsp = VisCheckBoxCustom("Inv Glow", "INV_GLOW_ESP")
-    val modelEsp = VisCheckBoxCustom("Model", "MODEL_ESP")
-    val modelAndGlow = VisCheckBoxCustom("Model & Glow", "MODEL_AND_GLOW")//VisCheckBox("Model & Glow Esp")
+    val glowEsp = VisCheckBoxCustom(curLocalization["ENABLE"], "GLOW_ESP")
+    val invGlowEsp = VisCheckBoxCustom(curLocalization["INV_GLOW_ESP"], "INV_GLOW_ESP")
+    val modelEsp = VisCheckBoxCustom(curLocalization["MODEL_ESP"], "MODEL_ESP")
+    val modelAndGlow = VisCheckBoxCustom(curLocalization["MODEL_AND_GLOW"], "MODEL_AND_GLOW")//VisCheckBox("Model & Glow Esp")
 
     val showTeam = VisCheckBoxCustom(" ", "GLOW_SHOW_TEAM")
-    val glowTeamColor = VisColorPickerCustom("Teammates", "GLOW_TEAM_COLOR")
+    val glowTeamColor = VisColorPickerCustom(curLocalization["TEAMMATES"], "GLOW_TEAM_COLOR")
 
     val showEnemies = VisCheckBoxCustom(" ", "GLOW_SHOW_ENEMIES")
-    val glowEnemyColor = VisColorPickerCustom("Enemies", "GLOW_ENEMY_COLOR")
+    val glowEnemyColor = VisColorPickerCustom(curLocalization["ENEMIES"], "GLOW_ENEMY_COLOR")
 
     val showBomb = VisCheckBoxCustom(" ", "GLOW_SHOW_BOMB")
-    val glowBombColor = VisColorPickerCustom("Bomb", "GLOW_BOMB_COLOR")
+    val glowBombColor = VisColorPickerCustom(curLocalization["BOMB"], "GLOW_BOMB_COLOR")
 
     val showBombCarrier = VisCheckBoxCustom(" ", "GLOW_SHOW_BOMB_CARRIER")
-    val glowBombCarrierColor = VisColorPickerCustom("Bomb Carrier", "GLOW_BOMB_CARRIER_COLOR")
+    val glowBombCarrierColor = VisColorPickerCustom(curLocalization["BOMB_CARRIER"], "GLOW_BOMB_CARRIER_COLOR")
 
     val showWeapons = VisCheckBoxCustom(" ", "GLOW_SHOW_WEAPONS")
-    val glowWeaponColor = VisColorPickerCustom("Weapons", "GLOW_WEAPON_COLOR")
+    val glowWeaponColor = VisColorPickerCustom(curLocalization["WEAPONS"], "GLOW_WEAPON_COLOR")
 
     val showGrenades = VisCheckBoxCustom(" ", "GLOW_SHOW_WEAPONS")
-    val glowGrenadeColor = VisColorPickerCustom("Grenades", "GLOW_GRENADE_COLOR")
+    val glowGrenadeColor = VisColorPickerCustom(curLocalization["GRENADES"], "GLOW_GRENADE_COLOR")
 
     val showTarget = VisCheckBoxCustom(" ", "GLOW_SHOW_TARGET")
-    val glowHighlightColor = VisColorPickerCustom("Target", "GLOW_HIGHLIGHT_COLOR")
+    val glowHighlightColor = VisColorPickerCustom(curLocalization["TARGET"], "GLOW_HIGHLIGHT_COLOR")
 
     init {
         ////////////////////FORMATTING

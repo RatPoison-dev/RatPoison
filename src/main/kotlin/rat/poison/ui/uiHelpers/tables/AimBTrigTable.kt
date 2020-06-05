@@ -3,6 +3,7 @@ package rat.poison.ui.uiHelpers.tables
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
+import rat.poison.curLocalization
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
@@ -14,21 +15,21 @@ import rat.poison.ui.uiUpdate
 
 class AimBTrigTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
-    val enableTrig = VisCheckBoxCustom("Enable Trigger", "ENABLE_TRIGGER")
+    val enableTrig = VisCheckBoxCustom(curLocalization["ENABLE_TRIGGER"], "ENABLE_TRIGGER")
 
-    val boneTriggerEnableKey = VisCheckBoxCustom("Trigger On Key", "TRIGGER_ENABLE_KEY")
-    val boneTriggerKey = VisInputFieldCustom("Trigger Key", "TRIGGER_KEY")
+    val boneTriggerEnableKey = VisCheckBoxCustom(curLocalization["TRIGGER_ENABLE_KEY"], "TRIGGER_ENABLE_KEY")
+    val boneTriggerKey = VisInputFieldCustom(curLocalization["TRIGGER_KEY"], "TRIGGER_KEY")
 
-    val trigAimbot = ATabVisCheckBox("Aimbot", "_TRIGGER_AIMBOT")
-    val trigInCross = ATabVisCheckBox("InCross", "_TRIGGER_INCROSS")
-    val trigInFov = ATabVisCheckBox("InFov", "_TRIGGER_INFOV")
-    val trigFov = ATabVisSlider("FOV", "_TRIGGER_FOV", 1F, 90F, 1F, true)
-    val trigDelay = ATabVisSlider("Delay", "_TRIGGER_SHOT_DELAY", 0F, 500F, 10F, true)
+    val trigAimbot = ATabVisCheckBox(curLocalization["TRIGGER_AIMBOT"], "_TRIGGER_AIMBOT")
+    val trigInCross = ATabVisCheckBox(curLocalization["TRIGGER_IS_IN_CROSS"], "_TRIGGER_INCROSS")
+    val trigInFov = ATabVisCheckBox(curLocalization["TRIGGER_IS_IN_FOV"], "_TRIGGER_INFOV")
+    val trigFov = ATabVisSlider(curLocalization["FOV"], "_TRIGGER_FOV", 1F, 90F, 1F, true)
+    val trigDelay = ATabVisSlider(curLocalization["TRIGGER_DELAY"], "_TRIGGER_SHOT_DELAY", 0F, 500F, 10F, true)
 
     //Override Weapon Checkbox & Selection Box
     private val categorySelection = VisTable()
     val categorySelectionBox = VisSelectBox<String>()
-    val categorySelectLabel = VisLabel("Weapon Category: ")
+    val categorySelectLabel = VisLabel(curLocalization["WEAPON_CATEGORY"])
 
     init {
         //Create Category Selector Box

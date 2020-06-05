@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.footStepsEspTab
@@ -14,16 +15,16 @@ import rat.poison.ui.uiHelpers.VisSliderCustom
 class FootstepsEspTab : Tab(false, false) {
     private val table = VisTable()
 
-    val enableFootSteps = VisCheckBoxCustom("Enable", "ENABLE_FOOTSTEPS")
+    val enableFootSteps = VisCheckBoxCustom(curLocalization["ENABLE"], "ENABLE_FOOTSTEPS")
     val footStepType = VisSelectBox<String>()
-    val footStepUpdateTimer = VisSliderCustom("Update Timer", "FOOTSTEP_UPDATE", 5F, 120F, 1F, true)
-    val footStepTTL = VisSliderCustom("TTL", "FOOTSTEP_TTL", 15F, 240F, 1F, true)
+    val footStepUpdateTimer = VisSliderCustom(curLocalization["FOOTSTEP_UPDATE"], "FOOTSTEP_UPDATE", 5F, 120F, 1F, true)
+    val footStepTTL = VisSliderCustom(curLocalization["FOOTSTEP_TTL"], "FOOTSTEP_TTL", 15F, 240F, 1F, true)
 
     val footStepTeamBox = VisCheckBoxCustom(" ", "FOOTSTEP_TEAM")
-    val footStepTeamColor = VisColorPickerCustom("Teammates","FOOTSTEP_TEAM_COLOR")
+    val footStepTeamColor = VisColorPickerCustom(curLocalization["TEAMMATES"],"FOOTSTEP_TEAM_COLOR")
 
     val footStepEnemyBox = VisCheckBoxCustom(" ", "FOOTSTEP_ENEMY")
-    val footStepEnemyColor = VisColorPickerCustom("Enemies", "FOOTSTEP_ENEMY_COLOR")
+    val footStepEnemyColor = VisColorPickerCustom(curLocalization["ENEMIES"], "FOOTSTEP_ENEMY_COLOR")
 
     init {
         footStepType.setItems("Text", "Circle")
@@ -63,7 +64,7 @@ class FootstepsEspTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "FootSteps"
+        return curLocalization["FOOTSTEPS_TAB_NAME"]
     }
 }
 

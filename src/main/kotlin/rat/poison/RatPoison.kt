@@ -77,17 +77,47 @@ var saving = false
 var settingsLoaded = false
 
 val curSettings = Settings()
+val curLocalization = Settings()
 
 var dbg: Boolean = false
 
 val robot = Robot().apply { this.autoDelay = 0 }
 
+// Junk code
+fun visualsMap (): Settings {
+    val map = Settings()
+    map[curLocalization["LEFT"]] = "LEFT"
+    map[curLocalization["RIGHT"]] = "RIGHT"
+    map[curLocalization["TOP"]] = "TOP"
+    map[curLocalization["BOTTOM"]] = "BOTTOM"
+    return map
+}
+fun aimingMap () : Settings {
+    val map = Settings()
+    // FOV Types
+    map[curLocalization["STATIC"]] = "STATIC"
+    map[curLocalization["DISTANCE"]] = "DISTANCE"
+    // Bones
+    map[curLocalization["HEAD"]] = "HEAD"
+    map[curLocalization["NECK"]] = "NECK"
+    map[curLocalization["CHEST"]] = "CHEST"
+    map[curLocalization["STOMACH"]] = "STOMACH"
+    map[curLocalization["NEAREST"]] = "NEAREST"
+    map[curLocalization["RANDOM"]] = "RANDOM"
+    // Weapon categories
+    map[curLocalization["PISTOL"]] = "PISTOL"
+    map[curLocalization["SHOTGUN"]] = "SHOTGUN"
+    map[curLocalization["RIFLE"]] = "RIFLE"
+    map[curLocalization["SNIPER"]] = "SNIPER"
+    map[curLocalization["SMG"]] = "SMG"
+    return map
+}
 fun main() {
     System.setProperty("jna.nosys", "true")
 
     println("Loading settings...")
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
-
+    loadLocalizationFromFile(curSettings["DEFAULT_LOCALE"])
     dbg = curSettings["DEBUG"].strToBool()
 
     if (dbg) println("DEBUG enabled")
@@ -198,6 +228,17 @@ fun main() {
     }
 }
 
+fun loadLocalizationFromFile(localizationName: String) {
+    val filePath = "$SETTINGS_DIRECTORY\\Localizations\\$localizationName.locale"
+    File(filePath).readLines(Charsets.UTF_8).forEach { line ->
+        val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
+        if (curLine.size == 3) {
+            curLocalization[curLine[0]] = curLine[2]
+        }
+    }
+    curSettings["DEFAULT_LOCALE"] = localizationName
+}
+
 fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
     settingsLoaded = false
     if (specificFile) {
@@ -214,7 +255,7 @@ fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
         }
     } else {
         File(fileDir).listFiles()?.forEach { file ->
-            if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo" && file.name.contains(".txt")) {
+            if (file.name != "CFGS" && file.name != "Localizations" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo" && file.name.contains(".txt")) {
                 FileReader(file).readLines().forEach { line ->
                     if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                         val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE

@@ -11,6 +11,7 @@ import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.App
 import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.curLocalization
 import rat.poison.scripts.*
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.nadeHelperTab
@@ -21,47 +22,47 @@ class NadeHelperTab : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
-    val enableNadeHelper = VisCheckBoxCustom("Nade Helper", "ENABLE_NADE_HELPER")
-    val nadeHelperLoadedFile = VisLabel("Loaded: N/A")
+    val enableNadeHelper = VisCheckBoxCustom(curLocalization["ENABLE_NADE_HELPER"], "ENABLE_NADE_HELPER")
+    val nadeHelperLoadedFile = VisLabel(curLocalization["LOADED_NOTHING"])
     private val nadeHelperFileSelectBox = VisSelectBox<String>()
 
     init {
         //Nade position create button
-        val addPosition = VisTextButton("Create Grenade Position")
+        val addPosition = VisTextButton(curLocalization["CREATE_GRENADE_POSITION"])
         addPosition.changed { _, _ ->
             createPosition()
         }
 
-        val saveFileNadeHelper = VisTextButton("Save As File")
+        val saveFileNadeHelper = VisTextButton(curLocalization["SAVE_AS_FILE"])
         saveFileNadeHelper.changed { _, _ ->
             savePositions()
         }
 
-        val loadFileNadeHelper = VisTextButton("Load From File")
+        val loadFileNadeHelper = VisTextButton(curLocalization["LOAD_FROM_FILE"])
         loadFileNadeHelper.changed { _, _ ->
             if (nadeHelperFileSelectBox.items.count() > 0) {
                 loadPositions(nadeHelperFileSelectBox.selected)
             }
         }
 
-        val deleteFileNadeHelper = VisTextButton("Delete Selected File")
+        val deleteFileNadeHelper = VisTextButton(curLocalization["DELETE_SELECTED_FILE"])
         deleteFileNadeHelper.changed { _, _ ->
             if (nadeHelperFileSelectBox.items.count() > 0) {
                 deleteNadeHelperFile(nadeHelperFileSelectBox.selected)
             }
         }
 
-        val clearNadeHelper = VisTextButton("Clear Currently Loaded")
+        val clearNadeHelper = VisTextButton(curLocalization["CLEAR_CURRENTLY_LOADED"])
         clearNadeHelper.changed { _, _ ->
-            Dialogs.showOptionDialog(App.menuStage, "Warning", "Clear the current positions?", Dialogs.OptionDialogType.YES_NO, object: OptionDialogAdapter() {
+            Dialogs.showOptionDialog(App.menuStage, "Warning", curLocalization["CLEAR_CURRENTLY_LOADED_WARNING"], Dialogs.OptionDialogType.YES_NO, object: OptionDialogAdapter() {
                 override fun yes() {
                     nadeHelperArrayList.clear()
-                    nadeHelperLoadedFile.setText("Loaded: N/A")
+                    nadeHelperLoadedFile.setText(curLocalization["LOADED_NOTHING"])
                 }
             })
         }
 
-        val deleteCurrentPositionHelper = VisTextButton("Delete At Current Position")
+        val deleteCurrentPositionHelper = VisTextButton(curLocalization["DELETE_AT_CURRENT_POSITION"])
         deleteCurrentPositionHelper.changed { _, _ ->
             deletePosition()
         }
@@ -108,7 +109,7 @@ class NadeHelperTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Nade Helper"
+        return curLocalization["NADE_HELPER_TAB_NAME"]
     }
 }
 

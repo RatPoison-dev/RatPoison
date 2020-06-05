@@ -4,83 +4,86 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.boxEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
+import rat.poison.visualsMap
 
 class BoxEspTab : Tab(false, false) {
     private val table = VisTable()
 
+    val map = visualsMap()
     //Init labels/sliders/boxes that show values here
-    val skeletonEsp = VisCheckBoxCustom("Enable Skeleton", "SKELETON_ESP")
-    val showTeamSkeleton = VisCheckBoxCustom("Teammates", "SKELETON_SHOW_TEAM")
-    val showEnemiesSkeleton = VisCheckBoxCustom("Enemies", "SKELETON_SHOW_ENEMIES")
-    val boxEsp = VisCheckBoxCustom("Bounding Box", "ENABLE_BOX_ESP")
-    val boxEspDetails = VisCheckBoxCustom("Box Details", "BOX_ESP_DETAILS")
-    val boxEspHealth = VisCheckBoxCustom("Health", "BOX_ESP_HEALTH")
+    val skeletonEsp = VisCheckBoxCustom(curLocalization["ENABLE_SKELETON_ESP"], "SKELETON_ESP")
+    val showTeamSkeleton = VisCheckBoxCustom(curLocalization["TEAMMATES"], "SKELETON_SHOW_TEAM")
+    val showEnemiesSkeleton = VisCheckBoxCustom(curLocalization["ENEMIES"], "SKELETON_SHOW_ENEMIES")
+    val boxEsp = VisCheckBoxCustom(curLocalization["ENABLE_BOX_ESP"], "ENABLE_BOX_ESP")
+    val boxEspDetails = VisCheckBoxCustom(curLocalization["ENABLE_BOX_ESP_DETAILS"], "BOX_ESP_DETAILS")
+    val boxEspHealth = VisCheckBoxCustom(curLocalization["HEALTH"], "BOX_ESP_HEALTH")
     val boxEspHealthPos = VisSelectBox<String>()
-    val boxEspArmor = VisCheckBoxCustom("Armor", "BOX_ESP_ARMOR")
+    val boxEspArmor = VisCheckBoxCustom(curLocalization["ARMOR"], "BOX_ESP_ARMOR")
     val boxEspArmorPos = VisSelectBox<String>()
-    val boxEspName = VisCheckBoxCustom("Name", "BOX_ESP_NAME")
+    val boxEspName = VisCheckBoxCustom(curLocalization["NAME"], "BOX_ESP_NAME")
     val boxEspNamePos = VisSelectBox<String>()
-    val boxEspWeapon = VisCheckBoxCustom("Weapon", "BOX_ESP_WEAPON")
+    val boxEspWeapon = VisCheckBoxCustom(curLocalization["WEAPON"], "BOX_ESP_WEAPON")
     val boxEspWeaponPos = VisSelectBox<String>()
 
-    val boxDetailColor = VisColorPickerCustom("Detail Text", "BOX_DETAILS_TEXT_COLOR")
+    val boxDetailColor = VisColorPickerCustom(curLocalization["BOX_DETAILS_TEXT_COLOR"], "BOX_DETAILS_TEXT_COLOR")
 
     val showTeamBox = VisCheckBoxCustom(" ", "BOX_SHOW_TEAM")
-    val boxTeamColor = VisColorPickerCustom("Teammates", "BOX_TEAM_COLOR")
+    val boxTeamColor = VisColorPickerCustom(curLocalization["TEAMMATES"], "BOX_TEAM_COLOR")
 
     val showEnemiesBox = VisCheckBoxCustom(" ", "BOX_SHOW_ENEMIES")
-    val boxEnemyColor = VisColorPickerCustom("Enemies", "BOX_ENEMY_COLOR")
+    val boxEnemyColor = VisColorPickerCustom(curLocalization["ENEMIES"], "BOX_ENEMY_COLOR")
 
     val showDefusers = VisCheckBoxCustom(" ", "BOX_SHOW_DEFUSERS")
-    val boxDefuserColor = VisColorPickerCustom("Defusers", "BOX_DEFUSER_COLOR")
+    val boxDefuserColor = VisColorPickerCustom(curLocalization["DEFUSERS"], "BOX_DEFUSER_COLOR")
 
     init {
         //Create Box ESP Health Pos Selector
-        boxEspHealthPos.setItems("Left", "Right")
+        boxEspHealthPos.setItems(curLocalization["LEFT"], curLocalization["RIGHT"])
         boxEspHealthPos.selected = when (curSettings["BOX_ESP_HEALTH_POS"].replace("\"", "")) {
-            "L" -> "Left"
-            else -> "Right"
+            "L" -> curLocalization["LEFT"]
+            else -> curLocalization["RIGHT"]
         }
         boxEspHealthPos.changed { _, _ ->
-            curSettings["BOX_ESP_HEALTH_POS"] = boxEspHealthPos.selected.first()
+            curSettings["BOX_ESP_HEALTH_POS"] = map[boxEspHealthPos.selected].first()
             true
         }
 
         //Create Box ESP Armor Pos Selector
-        boxEspArmorPos.setItems("Left", "Right")
+        boxEspArmorPos.setItems(curLocalization["LEFT"], curLocalization["RIGHT"])
         boxEspArmorPos.selected = when (curSettings["BOX_ESP_ARMOR_POS"].replace("\"", "")) {
             "L" -> "Left"
             else -> "Right"
         }
         boxEspArmorPos.changed { _, _ ->
-            curSettings["BOX_ESP_ARMOR_POS"] = boxEspArmorPos.selected.first()
+            curSettings["BOX_ESP_ARMOR_POS"] = map[boxEspArmorPos.selected].first()
             true
         }
 
         //Create Box ESP Name Pos Selector
-        boxEspNamePos.setItems("Top", "Bottom")
+        boxEspNamePos.setItems(curLocalization["TOP"], curLocalization["BOTTOM"])
         boxEspNamePos.selected = when (curSettings["BOX_ESP_NAME_POS"].replace("\"", "")) {
             "T" -> "Top"
             else -> "Bottom"
         }
         boxEspNamePos.changed { _, _ ->
-            curSettings["BOX_ESP_NAME_POS"] = boxEspNamePos.selected.first()
+            curSettings["BOX_ESP_NAME_POS"] = map[boxEspNamePos.selected].first()
             true
         }
 
         //Create Box ESP Weapon Pos Selector
-        boxEspWeaponPos.setItems("Top", "Bottom")
+        boxEspWeaponPos.setItems(curLocalization["TOP"], curLocalization["BOTTOM"])
         boxEspWeaponPos.selected = when (curSettings["BOX_ESP_WEAPON_POS"].replace("\"", "")) {
             "T" -> "Top"
             else -> "Bottom"
         }
         boxEspWeaponPos.changed { _, _ ->
-            curSettings["BOX_ESP_WEAPON_POS"] = boxEspWeaponPos.selected.first()
+            curSettings["BOX_ESP_WEAPON_POS"] = map[boxEspWeaponPos.selected].first()
             true
         }
 
@@ -128,7 +131,7 @@ class BoxEspTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Box"
+        return curLocalization["BOX_ESP_TAB_NAME"]
     }
 }
 

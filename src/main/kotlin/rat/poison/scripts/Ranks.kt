@@ -38,7 +38,6 @@ fun ranks() = every(1000, true) { //Rebuild every second
 
     forEntities(ccsPlayer) {
         val entity = it.entity
-
         if (entity.onGround()) { //Change later
             val entTeam = when (entity.team()) {
                 3L -> "CT"
