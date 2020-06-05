@@ -37,7 +37,7 @@ class RanksTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Ranks"
+        return curLocalization["RANKS_TAB_NAME"]
     }
 
     fun updateRanks() {
