@@ -28,6 +28,8 @@ MISC_TAB_NAME = Misc
 RCS_TAB_NAME = RCS
 VISUALS_TAB_NAME = Visuals
 FOOTSTEPS_TAB_NAME = FootSteps
+OVERRIDE_WEAPONS_PANEL_NAME = Override Weapons
+KEYBINDS_PANEL_NAME = Keybinds
 INDICATORS_TAB_NAME = Indicator
 NADES_TAB_NAME = Nades
 BOX_ESP_TAB_NAME = Box
@@ -238,3 +240,10 @@ INDICATOR_SIZE = Indicator Size
 NADE_TRACER_COLOR = Tracer
 NADE_TRACER_UPDATE_TIME = Tracer Update Time
 NADE_TRACER_TIMEOUT = Tracer Timeout
+
+
+// Override weapons panel
+CATEGORY = Category:
+ENABLE_OVERRIDE = Enable Override
+OVERRIDE_AIM_SPEED = Speed:
+OVERRIDE_SMOOTH = Smooth:

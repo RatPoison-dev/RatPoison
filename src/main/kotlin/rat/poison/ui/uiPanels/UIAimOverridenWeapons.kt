@@ -3,12 +3,13 @@ package rat.poison.ui.uiPanels
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.App.uiMenu
+import rat.poison.curLocalization
 import rat.poison.opened
 import rat.poison.ui.uiPanelTables.OverridenWeapons
 
 val overridenWeapons = OverridenWeapons()
 
-class UIAimOverridenWeapons : VisWindow("Override Weapons") {
+class UIAimOverridenWeapons : VisWindow(curLocalization["OVERRIDE_WEAPONS_PANEL_NAME"]) {
     init {
         defaults().left()
         align(Align.topLeft)

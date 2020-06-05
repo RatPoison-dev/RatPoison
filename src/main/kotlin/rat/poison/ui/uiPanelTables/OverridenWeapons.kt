@@ -3,6 +3,7 @@ package rat.poison.ui.uiPanelTables
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.widget.*
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.settings.*
 import rat.poison.strToBool
@@ -23,38 +24,38 @@ class OverridenWeapons : VisTable(true) {
     private val categorySelectionBox = VisSelectBox<String>()
 
     //Override Weapon Checkbox & Selection Box
-    private val categorySelectLabel = VisLabel("Category: ")
+    private val categorySelectLabel = VisLabel(curLocalization["CATEGORY"])
 
     private val weaponOverrideSelectionBox = VisSelectBox<String>()
-    val weaponOverrideEnableCheckBox = VisCheckBox("Enable Override")
+    val weaponOverrideEnableCheckBox = VisCheckBox(curLocalization["ENABLE_OVERRIDE"])
 
-    val enableFactorRecoil = VisCheckBox("Factor Recoil")
-    val enableFlatAim = VisCheckBox("Write Angles")
-    val enablePathAim = VisCheckBox("Mouse Movement")
-    val enableScopedOnly = VisCheckBox("Scoped Only")
+    val enableFactorRecoil = VisCheckBox(curLocalization["FACTOR_RECOIL"])
+    val enableFlatAim = VisCheckBox(curLocalization["ENABLE_FLAT_AIM"])
+    val enablePathAim = VisCheckBox(curLocalization["ENABLE_PATH_AIM"])
+    val enableScopedOnly = VisCheckBox(curLocalization["SNIPER_ENABLE_SCOPED_ONLY"])
 
-    private val aimBoneLabel = VisLabel("Bone: ")
+    private val aimBoneLabel = VisLabel(curLocalization["AIM_BONE"])
     val aimBoneBox = VisSelectBox<String>()
 
-    val aimFovLabel = VisLabel("FOV: " + curSettings[categorySelected + "_AIM_FOV"].toInt().toString())
+    val aimFovLabel = VisLabel("${curLocalization["FOV"]}: "  + curSettings[categorySelected + "_AIM_FOV"].toInt().toString())
     val aimFovSlider = VisSlider(1F, 180F, 1F, false)
 
-    val aimSpeedLabel = VisLabel("Speed: " + curSettings[categorySelected + "_AIM_SPEED"].toInt().toString())
+    val aimSpeedLabel = VisLabel("${curLocalization["OVERRIDE_AIM_SPEED"]} " + curSettings[categorySelected + "_AIM_SPEED"].toInt().toString())
     val aimSpeedSlider = VisSlider(0F, 5F, 1F, false)
 
-    val aimSmoothnessLabel = VisLabel("Smooth: " + curSettings[categorySelected + "_AIM_SMOOTHNESS"].toFloat())
+    val aimSmoothnessLabel = VisLabel("${curLocalization["OVERRIDE_SMOOTH"]} " + curSettings[categorySelected + "_AIM_SMOOTHNESS"].toFloat())
     val aimSmoothnessSlider = VisSlider(1F, 5F, 0.1F, false)
 
-    val aimAfterShotsLabel = VisLabel("Aim After #: " + curSettings[categorySelected + "AIM_AFTER_SHOTS"])
+    val aimAfterShotsLabel = VisLabel("${curLocalization["AIM_AFTER_SHOTS"]} :" + curSettings[categorySelected + "AIM_AFTER_SHOTS"])
     val aimAfterShotsSlider = VisSlider(1F, 10F, 1F, false)
 
     //Perfect Aim Collapsible
-    val perfectAimCheckBox = VisCheckBox("Enable Perfect Aim")
+    val perfectAimCheckBox = VisCheckBox(curLocalization["ENABLE_PERFECT_AIM"])
     private val perfectAimTable = VisTable()
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
-    val perfectAimFovLabel = VisLabel("FOV: " + curSettings[categorySelected + "_PERFECT_AIM_FOV"].toInt().toString())
+    val perfectAimFovLabel = VisLabel("${curLocalization["FOV"]}: " + curSettings[categorySelected + "_PERFECT_AIM_FOV"].toInt().toString())
     val perfectAimFovSlider = VisSlider(1F, 180F, 1F, false)
-    val perfectAimChanceLabel = VisLabel("Chance: " + curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toInt().toString())
+    val perfectAimChanceLabel = VisLabel("${curLocalization["PERFECT_AIM_CHANCE"]}: " + curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toInt().toString())
     val perfectAimChanceSlider = VisSlider(1F, 100F, 1F, false)
 
     init {
@@ -221,7 +222,7 @@ class OverridenWeapons : VisTable(true) {
                 curSettings[weaponOverrideSelected] = curWep.toString()
             }
 
-            aimFovLabel.setText("FOV: " + aimFovSlider.value.toInt())
+            aimFovLabel.setText("${curLocalization["FOV"]}: " + aimFovSlider.value.toInt())
         }
         aimFov.add(aimFovLabel).width(125F)
         aimFov.add(aimFovSlider).width(125F)
@@ -235,7 +236,7 @@ class OverridenWeapons : VisTable(true) {
                 curWep.tAimSpeed = aimSpeedSlider.value.toInt()
                 curSettings[weaponOverrideSelected] = curWep.toString()
             }
-            aimSpeedLabel.setText("Speed: " + aimSpeedSlider.value.toInt())
+            aimSpeedLabel.setText("${curLocalization["OVERRIDE_AIM_SPEED"]} " + aimSpeedSlider.value.toInt())
         }
         aimSpeed.add(aimSpeedLabel).width(125F)
         aimSpeed.add(aimSpeedSlider).width(125F)
@@ -249,7 +250,7 @@ class OverridenWeapons : VisTable(true) {
                 curWep.tAimSmooth = aimSmoothnessSlider.value.toDouble()
                 curSettings[weaponOverrideSelected] = curWep.toString()
             }
-            aimSmoothnessLabel.setText("Smooth: " + (round(aimSmoothnessSlider.value.toDouble() * 10.0) / 10.0))
+            aimSmoothnessLabel.setText("${curLocalization["OVERRIDE_SMOOTH"]} " + (round(aimSmoothnessSlider.value.toDouble() * 10.0) / 10.0))
         }
         aimSmoothness.add(aimSmoothnessLabel).width(125F)
         aimSmoothness.add(aimSmoothnessSlider).width(125F)
@@ -268,7 +269,7 @@ class OverridenWeapons : VisTable(true) {
                 curSettings[weaponOverrideSelected] = curWep.toString()
             }
 
-            aimAfterShotsLabel.setText("Aim After #: " + aimAfterShotsSlider.value.toInt())
+            aimAfterShotsLabel.setText("${curLocalization["AIM_AFTER_SHOTS"]} :" + aimAfterShotsSlider.value.toInt())
         }
         aimAfterShots.add(aimAfterShotsLabel).width(125F)
         aimAfterShots.add(aimAfterShotsSlider).width(125F)
@@ -282,7 +283,7 @@ class OverridenWeapons : VisTable(true) {
                 curWep.tPAimFov = perfectAimFovSlider.value.toInt()
                 curSettings[weaponOverrideSelected] = curWep.toString()
             }
-            perfectAimFovLabel.setText("FOV: " + perfectAimFovSlider.value.toInt())
+            perfectAimFovLabel.setText("${curLocalization["FOV"]}: " + perfectAimFovSlider.value.toInt())
         }
         perfectAimFov.add(perfectAimFovLabel).width(105F)
         perfectAimFov.add(perfectAimFovSlider).width(125F)
@@ -297,7 +298,7 @@ class OverridenWeapons : VisTable(true) {
                 curWep.tPAimChance = perfectAimChanceSlider.value.toInt()
                 curSettings[weaponOverrideSelected] = curWep.toString()
             }
-            perfectAimChanceLabel.setText("Chance: " + perfectAimChanceSlider.value.toInt())
+            perfectAimChanceLabel.setText("${curLocalization["PERFECT_AIM_CHANCE"]}: " + perfectAimChanceSlider.value.toInt())
         }
 
         perfectAimChance.add(perfectAimChanceLabel).width(105F)
@@ -372,19 +373,19 @@ fun overridenWeaponsUpdate() { //This isn't needed... because the Override Weapo
             NEAREST_BONE -> "NEAREST"
             else -> "RANDOM"
         }
-        aimFovLabel.setText("FOV: " + curWep.tAimFov)
+        aimFovLabel.setText("${curLocalization["FOV"]}: " + curWep.tAimFov)
         aimFovSlider.value = curWep.tAimFov.toFloat()
-        aimSpeedLabel.setText("Speed: " + curWep.tAimSpeed)
+        aimSpeedLabel.setText("${curLocalization["OVERRIDE_AIM_SPEED"]} " + curWep.tAimSpeed)
         aimSpeedSlider.value = curWep.tAimSpeed.toFloat()
-        aimSmoothnessLabel.setText("Smooth: " + curWep.tAimSmooth)
+        aimSmoothnessLabel.setText("${curLocalization["OVERRIDE_SMOOTH"]} " + curWep.tAimSmooth)
         aimSmoothnessSlider.value = curWep.tAimSmooth.toFloat()
-        aimAfterShotsLabel.setText("Aim After #: " + curWep.tAimAfterShots)
+        aimAfterShotsLabel.setText("${curLocalization["AIM_AFTER_SHOTS"]} :" + curWep.tAimAfterShots)
         aimAfterShotsSlider.value = curWep.tAimAfterShots.toFloat()
         perfectAimCheckBox.isChecked = curWep.tPerfectAim
         perfectAimCollapsible.isCollapsed = !curWep.tPerfectAim
-        perfectAimFovLabel.setText("FOV: " + curWep.tPAimFov)
+        perfectAimFovLabel.setText("${curLocalization["FOV"]}: " + curWep.tPAimFov)
         perfectAimFovSlider.value = curWep.tPAimFov.toFloat()
-        perfectAimChanceLabel.setText("Chance: " + curWep.tPAimChance)
+        perfectAimChanceLabel.setText("${curLocalization["PERFECT_AIM_CHANCE"]}: " + curWep.tPAimChance)
         perfectAimChanceSlider.value = curWep.tPAimChance.toFloat()
     }
 }

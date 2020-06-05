@@ -236,6 +236,7 @@ fun loadLocalizationFromFile(localizationName: String) {
             curLocalization[curLine[0]] = curLine[2]
         }
     }
+    curSettings["DEFAULT_LOCALE"] = localizationName
 }
 
 fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {

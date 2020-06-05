@@ -13,7 +13,7 @@ import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import kotlin.math.round
 
-class UIKeybinds : VisWindow("Keybinds") {
+class UIKeybinds : VisWindow(curLocalization["KEYBINDS_PANEL_NAME"]) {
     val aimToggleKey = VisInputFieldCustom(curLocalization["AIM_TOGGLE_KEY"], "AIM_TOGGLE_KEY")
     val forceAimKey = VisInputFieldCustom(curLocalization["FORCE_AIM_KEY"], "FORCE_AIM_KEY")
     val forceAimBoneKey = VisInputFieldCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")

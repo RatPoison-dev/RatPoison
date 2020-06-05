@@ -86,6 +86,8 @@ class OptionsTab : Tab(false, false) {
             if (!localizationSelectBox.selected.isNullOrEmpty()) {
                 if (localizationSelectBox.selected.count() > 0) {
                     loadLocalizationFromFile(localizationSelectBox.selected)
+                    uiUpdate()
+                    updateWindows()
                 }
             }
             true

@@ -79,7 +79,7 @@ class MiscTab : Tab(false, false) {
         //Aim Strafer Table
         aimStraferSelectBox.setItems(curLocalization["AIM_STRAFER_SAME"], curLocalization["AIM_STRAFER_OPPOSITE"])
         aimStraferSelectBox.changed { _, _ ->
-            if (aimStraferSelectBox.selected == "Same") {
+            if (aimStraferSelectBox.selected == curLocalization["AIM_STRAFER_SAME"]) {
                 curSettings["AIM_STRAFER_TYPE"] = 1
             } else {
                 curSettings["AIM_STRAFER_TYPE"] = 0
@@ -226,8 +226,8 @@ fun miscTabUpdate() {
         aimStrafer.update()
         aimStraferShift.update()
         aimStraferSelectBox.selected = when(curSettings["AIM_STRAFER_TYPE"].toInt()) {
-            1 -> "Same"
-            else -> "Opposite"
+            1 -> curLocalization["AIM_STRAFER_SAME"]
+            else -> curLocalization["AIM_STRAFER_OPPOSITE"]
         }
         aimStraferStrictness.update()
         doorSpam.update()

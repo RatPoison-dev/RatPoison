@@ -109,7 +109,7 @@ class NadeHelperTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Nade Helper"
+        return curLocalization["NADE_HELPER_TAB_NAME"]
     }
 }
 
