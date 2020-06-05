@@ -121,8 +121,8 @@ class OptionsTab : Tab(false, false) {
         sldTable.add(deleteButton).width(100F)
 
         val localizationTab = VisTable()
-        localizationTab.add(localizationSelectBox).padLeft(20F).padRight(20F).width(100F).row()
-        localizationTab.add(loadLocalizationButton).row()
+        localizationTab.add(localizationSelectBox).padBottom(8F).padTop(2.5F).row()
+        localizationTab.add(loadLocalizationButton)
         debug.changed { _, _ ->
             dbg = debug.isChecked
             true
@@ -155,7 +155,7 @@ class OptionsTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Options"
+        return curLocalization["OPTIONS_TAB_NAME"]
     }
     fun updateLocalizationsList() {
         if (VisUI.isLoaded()) {
