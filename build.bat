@@ -18,6 +18,8 @@ goto :install
 :install
 echo Building RatPoison...
 call gradlew RatPoison
+copy settings\Localizations\locale_ES.locale "build\RatPoison 1.7\settings\Localizations"
+copy settings\Localizations\locale_EN.locale "build\RatPoison 1.7\settings\Localizations"
 echo.
 echo If there is an error message, close this window, try rebuilding a few times, then make a github issue if it continues. 
 echo.
