@@ -1,0 +1,230 @@
+// Global
+TEAMMATES = Teammates
+ENEMIES = Enemies
+HEALTH = Health
+ARMOR = Armor
+NAME = Name
+GRENADES = Grenades
+TARGET = Target
+WEAPON = Weapon
+WEAPONS = Weapons
+BOMB = Bomb
+BOMB_CARRIER = Bomb Carrier
+DEFUSERS = Defusers
+SELF = Self
+ENABLE = Enable
+LINE_WIDTH = Line Width
+FOV = FOV
+
+// Tabs name
+AIM_TAB_NAME = Aim
+HITMARKER_TAB_NAME = Hitmarker
+SNAPLINES_TAB_NAME = Snaplines
+MISC_TAB_NAME = Misc
+RCS_TAB_NAME = RCS
+VISUALS_TAB_NAME = Visuals
+FOOTSTEPS_TAB_NAME = FootSteps
+INDICATORS_TAB_NAME = Indicator
+NADES_TAB_NAME = Nades
+BOX_ESP_TAB_NAME = Box
+CHAMS_TAB_NAME = Chams
+SKIN_CHANGER_TAB_NAME = Skin Changer
+NADE_HELPER_TAB_NAME = Nade Helper
+RANKS_TAB_NAME = Ranks
+OPTIONS_TAB_NAME = Options
+
+// Aim tab
+DEFAULT_CATEGORY_SELECTED = PISTOL
+CATEGORY_PISTOL = PISTOL
+CATEGORY_SHOTGUN = SHOTGUN
+CATEGORY_RIFLE = RIFLE
+CATEGORY_SNIPER = SNIPER
+CATEGORY_SMG = SMG
+BONE_HEAD = HEAD
+BONE_NECK = NECK
+BONE_CHEST = CHEST
+BONE_STOMACH = STOMACH
+BONE_NEAREST = NEAREST
+BONE_RANDOM = RANDOM
+WEAPON_CATEGORY = Weapon Category:
+// Triggerbot
+ENABLE_TRIGGER = Enable Trigger
+TRIGGER_ENABLE_KEY = Trigger On Key
+TRIGGER_KEY = Trigger Key
+TRIGGER_AIMBOT = Aimbot
+TRIGGER_IS_IN_CROSS = InCross
+TRIGGER_IS_IN_FOV = InFov
+TRIGGER_DELAY = Delay
+// Aimbot
+ENABLE_AIM = Enable Aim
+AIM_TOGGLE_KEY = Toggle Aim Key
+ACTIVATE_FROM_AIM_KEY = Activate From Fire Key
+HOLD_AIM = Hold Aim
+TEAMMATES_ARE_ENEMIES = Teammates Are Enemies
+FOV_TYPE = Fov Type:
+FORCE_AIM_BONE_KEY = Force Aim Bone Key
+FORCE_AIM_KEY = Force Aim Key
+FORCE_AIM_ALWAYS = Force Aim Always
+FORCE_AIM_THROUGH_WALLS = Force Aim Through Walls
+AUTOMATIC_WEAPONS = Automatic Weapons
+AUTO_WEP_DELAY = MS Delay
+AIM_TARGET_SWAP_DELAY = Target Swap Delay
+OVERRIDE_WEAPONS_CHECKBOX = Override Weapons
+AIM_ONLY_ON_SHOT = Aim On Shot
+FACTOR_RECOIL = Factor Recoil
+ENABLE_FLAT_AIM = Write Angles
+ENABLE_PATH_AIM = Mouse Movement
+SNIPER_ENABLE_SCOPED_ONLY = Scoped Only
+AIM_BONE = Bone:
+AIM_FORCE_BONE = Force Bone:
+AIM_FOV = Aim FOV
+AIM_SPEED = Aim Speed
+AIM_SMOOTHNESS = Smoothness
+AIM_AFTER_SHOTS = Aim After #
+ENABLE_PERFECT_AIM = Enable Perfect Aim
+PERFECT_AIM_CHANCE = Chance
+ADVANCED_SETTINGS = Advanced Settings
+RANDOM_X_VARIATION = X Variation
+RANDOM_Y_VARIATION = Y Variation
+VARIATION_DEADZONE = Variation Deadzone
+AIM_RCS_X = RCS X
+AIM_RCS_Y = RCS Y
+AIM_RCS_VARIATION = RCS Variation
+AIM_SPEED_DIVISOR = Mouse Move Divisor
+
+// Misc tab
+ENABLE_BUNNY_HOP = Bunny Hop
+AUTO_STRAFE = Auto Strafe
+STRAFE_BHOP_ONLY = BHop Only
+FAST_STOP = Fast Stop
+AIM_STRAFER = Auto Aim Strafe
+AIM_STRAFER_SAME = Same
+AIM_STRAFER_OPPOSITE = Opposite
+AIM_STRAFER_SHIFT = Shift Walk
+AIM_STRAFER_STRICTNESS = Strictness
+HEAD_WALK = Head Walk
+
+ENABLE_FOV_CHANGER = Fov Changer
+FOV_DEFAULT = Default FOV
+FOV_SMOOTH = Smooth FOV Changes
+FOV_SNIPER_DEFAULT = Default FOV
+FOV_ZOOM_1 = Zoom 1 FOV
+FOV_ZOOM_2 = Zoom 2 FOV
+ENABLE_BOMB_TIMER = Bomb Timer
+BOMB_TIMER_BARS = Timer Bars
+BOMB_TIMER_MENU = Timer Menu
+ENABLE_SPECTATOR_LIST = Spectator List
+
+ENABLE_AUTO_KNIFE = Knife Bot
+ENABLE_PERFECT_BOMB_DEFUSE = Perfect Bomb Defuse
+ENABLE_DOOR_SPAM = Door Spam
+DOOR_SPAM_KEY = Door Spam Key
+ENABLE_WEAPON_SPAM = Weapon Spam
+WEAPON_SPAM_KEY = Weapon Spam Key
+ENABLE_REDUCED_FLASH = Reduced Flash
+FLASH_MAX_ALPHA = Max Alpha
+ENABLE_HITSOUND = Hitsound
+HITSOUND_VOLUME = Volume
+THROW_SELF_NADE = Self Nade
+ENABLE_NAME_CHANGER = Name Change
+
+
+// Nade helper tab
+ENABLE_NADE_HELPER = Nade Helper
+LOADED_NOTHING = Loaded: N/A
+CREATE_GRENADE_POSITION = Create Grenade Position
+SAVE_AS_FILE = Save As File
+LOAD_FROM_FILE = Load From File
+DELETE_SELECTED_FILE = Delete Selected File
+CLEAR_CURRENTLY_LOADED = Clear Currently Loaded
+CLEAR_CURRENTLY_LOADED_WARNING = Clear the current positions?
+DELETE_AT_CURRENT_POSITION = Delete At Current Position
+
+// Options tab
+MENU_KEY = Menu Key
+OPENGL_FPS = OpenGL FPS
+MENU_STAY_FOCUSED = Stay Focused
+ENABLE_DEBUG = Debug
+KEYBINDS = Keybinds
+GAUSSIAN_BLUR = Gaussian Blur
+JOIN_DISCORD = Join Discord
+MENU_ALPHA_SLIDER = Menu Alpha:
+SAVE_CONFIG = Save CFG
+ENTER_CONFIG_NAME = Enter config name:
+LOAD_CONFIG = Load CFG
+DELETE_CONFIG = Delete CFG
+SAVE_CONFIG_TO_DEFAULT = Save Current Config To Default Settings
+LOAD_LOCALIZATION = Load Localization
+
+// Ranks tab
+RANKS_TEAM = Team
+RANKS_NAME = Name
+RANKS_RANK = Rank
+RANKS_KILLS = Kills
+RANKS_DEATHS = Deaths
+RANKS_KD = K/D
+RANKS_WINS = Wins
+
+// RCS Tab
+ENABLE_RCS = Enable RCS
+RCS_SMOOTHING_X = RCS X Smoothing
+RCS_SMOOTHING_Y = RCS Y Smoothing
+RCS_RETURNAIM = Return Aim
+ENABLE_RECOIL_CROSSHAIR = Recoil Crosshair
+ENABLE_SNIPER_CROSSHAIR = Scope Compatible
+RCROSSHAIR_WIDTH = RCrosshair Width
+RCROSSHAIR_LENGTH = RCrosshair Length
+RCROSSHAIR_XOFFSET = RCrosshair X Offset
+RCROSSHAIR_YOFFSET = RCrosshair Y Offset
+RCROSSHAIR_ALPHA = RCrosshair Alpha
+RCROSSHAIR_COLOR = Set RCrosshair Color
+
+// Skin changer tab
+ENABLE_SKIN_CHANGER = Enable Skinchanger
+ENABLE_KNIFE_CHANGER = Enable Knifechanger
+SKIN_ID = Skin ID:
+STATTRACK = StatTrak:
+WEAR = Wear:
+MANUAL_FORCE_UPDATE = Manual Force Update
+AUTO_FORCE_UPDATE = Auto Force Update
+
+// Visuals tab
+ENABLE_ESP = Enable ESP
+VISUALS_TOGGLE_KEY = Visuals Toggle Key
+ENABLE_RADAR_ESP = Radar Esp
+ENABLE_NIGHTMODE = Nightmode/Fullbright
+NIGHTMODE_VALUE = %
+ENABLE_ADRENALINE = Adrenaline
+DRAW_AIM_FOV_COLOR = Draw Aim FOV
+DRAW_TRIGGER_FOV_COLOR = Draw Trigger FOV
+// Box Esp tab
+ENABLE_SKELETON_ESP = Enable Skeleton
+ENABLE_BOX_ESP = Bounding Box
+ENABLE_BOX_ESP_DETAILS = Box Details
+BOX_DETAILS_TEXT_COLOR = Detail Text
+// Chams tab
+CHAMS_ESP = Enable
+CHAMS_SHOW_HEALTH = Chams Show Health
+CHAMS_BRIGHTNESS = Chams Brightness
+// Footsteps tab
+FOOTSTEP_UPDATE = Update Timer
+FOOTSTEP_TTL = TTL
+// Glow Esp tab
+INV_GLOW_ESP = Inv Glow
+MODEL_ESP = Model
+MODEL_AND_GLOW = Model & Glow
+// HitMarkers tab
+HITMARKER_OUTLINE = Outline
+HITMARKER_COMBO = Combo #
+HITMARKER_RECOIL_POSITION = Recoil Position
+HITMARKER_SPACING = Spacing
+HITMARKER_LENGTH = Line Length
+HITMARKER_COLOR = Hitmarker
+HITMARKER_COMBO_COLOR = Combo
+// Indicators tab
+INDICATOR_DISTANCE = Indicator Distance
+INDICATOR_SIZE = Indicator Size
+// Nades tab
+NADE_TRACER_COLOR = Tracer
+NADE_TRACER_UPDATE_TIME = Tracer Update Time
+NADE_TRACER_TIMEOUT = Tracer Timeout

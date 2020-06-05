@@ -11,6 +11,7 @@ MENU_KEY = 112
 
 //FOV Type : DISTANCE or STATIC
 FOV_TYPE = DISTANCE
+DEFAULT_LOCALE = locale_EN
 
 //If the menu has a blur behind it
 GAUSSIAN_BLUR = false
