@@ -3,6 +3,8 @@ package rat.poison.ui.tabs.visualstabs
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import com.sun.jna.platform.win32.OaIdl
+import rat.poison.curLocalization
 import rat.poison.ui.tabs.snaplinesEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
@@ -12,23 +14,23 @@ class SnaplinesEspTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val enableSnaplines = VisCheckBoxCustom("Enable", "ENABLE_SNAPLINES")
-    val snaplinesWidth = VisSliderCustom("Line Width", "SNAPLINES_WIDTH", 1F, 10F, 1F, false)
+    val enableSnaplines = VisCheckBoxCustom(curLocalization["ENABLE"], "ENABLE_SNAPLINES")
+    val snaplinesWidth = VisSliderCustom(curLocalization["LINE_WIDTH"], "SNAPLINES_WIDTH", 1F, 10F, 1F, false)
 
     val enemySnaplines = VisCheckBoxCustom(" ", "SNAPLINES_ENEMIES")
-    val enemySnaplinesColor = VisColorPickerCustom("Enemies", "SNAPLINES_ENEMY_COLOR")
+    val enemySnaplinesColor = VisColorPickerCustom(curLocalization["ENEMIES"], "SNAPLINES_ENEMY_COLOR")
 
     val teamSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_TEAMMATES")
-    val teamSnaplinesColor = VisColorPickerCustom("Teammates", "SNAPLINES_TEAM_COLOR")
+    val teamSnaplinesColor = VisColorPickerCustom(curLocalization["TEAMMATES"], "SNAPLINES_TEAM_COLOR")
 
     val weaponSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_WEAPONS")
-    val weaponSnaplinesColor = VisColorPickerCustom("Weapons", "SNAPLINES_WEAPON_COLOR")
+    val weaponSnaplinesColor = VisColorPickerCustom(curLocalization["WEAPONS"], "SNAPLINES_WEAPON_COLOR")
 
     val bombSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_BOMB")
-    val bombSnaplinesColor = VisColorPickerCustom("Bomb", "SNAPLINES_BOMB_COLOR")
+    val bombSnaplinesColor = VisColorPickerCustom(curLocalization["BOMB"], "SNAPLINES_BOMB_COLOR")
 
     val bombCarrierSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_BOMB_CARRIER")
-    val bombCarrierSnaplinesColor = VisColorPickerCustom("Bomb Carrier", "SNAPLINES_BOMB_CARRIER_COLOR")
+    val bombCarrierSnaplinesColor = VisColorPickerCustom(curLocalization["BOMB_CARRIER"], "SNAPLINES_BOMB_CARRIER_COLOR")
 
     init {
         table.padLeft(25F)
@@ -73,7 +75,7 @@ class SnaplinesEspTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Snaplines"
+        return curLocalization["SNAPLINES_TAB_NAME"]
     }
 }
 

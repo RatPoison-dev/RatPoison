@@ -9,6 +9,7 @@ import com.kotcrab.vis.ui.util.adapter.ArrayListAdapter
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.scripts.forcedUpdate
 import rat.poison.scripts.skinChanger
@@ -22,8 +23,8 @@ class SkinChangerTab : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
-    var enableSkinChanger = VisCheckBoxCustom("Enable Skinchanger", "SKINCHANGER")
-    //var enableKnifeChanger = VisCheckBoxCustom("Enable Knifechanger", "KNIFECHANGER")
+    var enableSkinChanger = VisCheckBoxCustom(curLocalization["ENABLE_SKIN_CHANGER"], "SKINCHANGER")
+    //var enableKnifeChanger = VisCheckBoxCustom(curLocalization["ENABLE_KNIFE_CHANGER"], "KNIFECHANGER")
 
     private var categorySelectionBox = VisSelectBox<String>()
     private var weaponSelectionBox = VisSelectBox<String>()
@@ -34,17 +35,17 @@ class SkinChangerTab : Tab(false, false) {
     private var listAdapter = ListAdapter(strArray)
     private var skinSelectionList = ListView(listAdapter)
 
-    private var idLabel = VisLabel("Skin ID: ")
-    private var statTrakLabel = VisLabel("StatTrak: ")
-    private var wearLabel = VisLabel("Wear: ")
+    private var idLabel = VisLabel(curLocalization["SKIN_ID"])
+    private var statTrakLabel = VisLabel(curLocalization["STATTRACK"])
+    private var wearLabel = VisLabel(curLocalization["WEAR"])
 
     private var skinIDInput = VisValidatableTextField(Validators.INTEGERS)
     private var skinStatTrak = VisValidatableTextField(Validators.INTEGERS)
     private var skinWear = VisSlider(0.0F, 1.0F, .01F, false)
     //private var skinWear = VisValidatableTextField(Validators.FLOATS)
 
-    private var forceUpdate = VisTextButton("Manual Force Update")
-    var autoForceUpdate = VisCheckBoxCustom("Auto Force Update", "FORCE_UPDATE_AUTO")
+    private var forceUpdate = VisTextButton(curLocalization["MANUAL_FORCE_UPDATE"])
+    var autoForceUpdate = VisCheckBoxCustom(curLocalization["AUTO_FORCE_UPDATE"], "FORCE_UPDATE_AUTO")
 
     private var weaponSelected = "DESERT_EAGLE"
     private var minValue = 0.0F
@@ -207,7 +208,7 @@ class SkinChangerTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Skin Changer"
+        return curLocalization["SKIN_CHANGER_TAB_NAME"]
     }
 }
 

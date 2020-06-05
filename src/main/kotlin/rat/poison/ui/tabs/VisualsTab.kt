@@ -8,6 +8,7 @@ import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.scripts.esp.disableAllEsp
 import rat.poison.strToBool
@@ -33,22 +34,22 @@ class VisualsTab : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     //Static Visuals Tab Items
-    val enableEsp = VisCheckBoxCustom("Enable ESP", "ENABLE_ESP")
+    val enableEsp = VisCheckBoxCustom(curLocalization["ENABLE_ESP"], "ENABLE_ESP")
 
-    val visualsToggleKey = VisInputFieldCustom("Visuals Toggle Key", "VISUALS_TOGGLE_KEY")
+    val visualsToggleKey = VisInputFieldCustom(curLocalization["VISUALS_TOGGLE_KEY"], "VISUALS_TOGGLE_KEY")
 
-    val radarEsp = VisCheckBoxCustom("Radar Esp", "RADAR_ESP")
+    val radarEsp = VisCheckBoxCustom(curLocalization["ENABLE_RADAR_ESP"], "RADAR_ESP")
 
-    val nightMode = VisCheckBoxCustom("Nightmode/Fullbright", "ENABLE_NIGHTMODE")
-    val nightModeSlider = VisSliderCustom("%", "NIGHTMODE_VALUE", 0.05F, 5F, .05F, false)
+    val nightMode = VisCheckBoxCustom(curLocalization["ENABLE_NIGHTMODE"], "ENABLE_NIGHTMODE")
+    val nightModeSlider = VisSliderCustom(curLocalization["NIGHTMODE_VALUE"], "NIGHTMODE_VALUE", 0.05F, 5F, .05F, false)
 
-    val visAdrenaline = VisCheckBoxCustom("Adrenaline", "ENABLE_ADRENALINE")
+    val visAdrenaline = VisCheckBoxCustom(curLocalization["ENABLE_ADRENALINE"], "ENABLE_ADRENALINE")
 
     val showAimFov = VisCheckBoxCustom(" ", "DRAW_AIM_FOV")
-    val showAimFovColor = VisColorPickerCustom("Draw Aim FOV", "DRAW_AIM_FOV_COLOR")
+    val showAimFovColor = VisColorPickerCustom( curLocalization["DRAW_AIM_FOV_COLOR"], "DRAW_AIM_FOV_COLOR")
 
     val showTriggerFov = VisCheckBoxCustom(" ", "DRAW_TRIGGER_FOV")
-    val showTriggerFovColor = VisColorPickerCustom("Draw Trigger FOV", "DRAW_TRIGGER_FOV_COLOR")
+    val showTriggerFovColor = VisColorPickerCustom(curLocalization["DRAW_TRIGGER_FOV_COLOR"], "DRAW_TRIGGER_FOV_COLOR")
 
     init {
         //ESP Tab
@@ -140,7 +141,7 @@ class VisualsTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Visuals"
+        return curLocalization["VISUALS_TAB_NAME"]
     }
 }
 

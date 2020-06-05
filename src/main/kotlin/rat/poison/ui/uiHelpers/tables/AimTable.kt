@@ -3,6 +3,7 @@ package rat.poison.ui.uiHelpers.tables
 import com.badlogic.gdx.graphics.Color
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.widget.*
+import com.sun.jna.platform.win32.OaIdl
 import rat.poison.*
 import rat.poison.game.CSGO
 import rat.poison.settings.*
@@ -20,67 +21,67 @@ import rat.poison.ui.uiUpdate
 
 class AimTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
-    val enableAim = VisCheckBoxCustom("Enable Aim", "ENABLE_AIM")
-    val aimToggleKey = VisInputFieldCustom("Toggle Aim Key", "AIM_TOGGLE_KEY")
-    val activateFromFireKey = VisCheckBoxCustom("Activate From Fire Key", "ACTIVATE_FROM_AIM_KEY")
-    val holdAim = VisCheckBoxCustom("Hold Aim", "HOLD_AIM")
-    val teammatesAreEnemies = VisCheckBoxCustom("Teammates Are Enemies", "TEAMMATES_ARE_ENEMIES")
+    val enableAim = VisCheckBoxCustom(curLocalization["ENABLE_AIM"], "ENABLE_AIM")
+    val aimToggleKey = VisInputFieldCustom(curLocalization["AIM_TOGGLE_KEY"], "AIM_TOGGLE_KEY")
+    val activateFromFireKey = VisCheckBoxCustom(curLocalization["ACTIVATE_FROM_AIM_KEY"], "ACTIVATE_FROM_AIM_KEY")
+    val holdAim = VisCheckBoxCustom(curLocalization["HOLD_AIM"], "HOLD_AIM")
+    val teammatesAreEnemies = VisCheckBoxCustom(curLocalization["TEAMMATES_ARE_ENEMIES"], "TEAMMATES_ARE_ENEMIES")
 
-    val fovTypeLabel = VisLabel("Fov Type: ")
+    val fovTypeLabel = VisLabel(curLocalization["FOV_TYPE"])
     val fovTypeBox = VisSelectBox<String>()
 
-    val forceAimBoneKey = VisInputFieldCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
-    val forceAimKey = VisInputFieldCustom("Force Aim Key", "FORCE_AIM_KEY")
-    val forceAimAlways = VisCheckBoxCustom("Force Aim Always", "FORCE_AIM_ALWAYS")
-    val forceAimThroughWalls = VisCheckBoxCustom("Force Aim Through Walls", "FORCE_AIM_THROUGH_WALLS")
+    val forceAimBoneKey = VisInputFieldCustom(curLocalization["FORCE_AIM_BONE_KEY"], "FORCE_AIM_BONE_KEY")
+    val forceAimKey = VisInputFieldCustom(curLocalization["FORCE_AIM_KEY"], "FORCE_AIM_KEY")
+    val forceAimAlways = VisCheckBoxCustom(curLocalization["FORCE_AIM_ALWAYS"], "FORCE_AIM_ALWAYS")
+    val forceAimThroughWalls = VisCheckBoxCustom(curLocalization["FORCE_AIM_THROUGH_WALLS"], "FORCE_AIM_THROUGH_WALLS")
 
     //Automatic Weapons Collapsible
-    val automaticWeaponsCheckBox = VisCheckBoxCustom("Automatic Weapons", "AUTOMATIC_WEAPONS")
-    val automaticWeaponsInput = VisInputFieldCustom("MS Delay", "AUTO_WEP_DELAY", false)
+    val automaticWeaponsCheckBox = VisCheckBoxCustom(curLocalization["AUTOMATIC_WEAPONS"], "AUTOMATIC_WEAPONS")
+    val automaticWeaponsInput = VisInputFieldCustom(curLocalization["AUTO_WEP_DELAY"], "AUTO_WEP_DELAY", false)
 
-    val targetSwapDelay = VisSliderCustom("Target Swap Delay", "AIM_TARGET_SWAP_DELAY", 0F, 500F, 10F, true, width1 = 200F, width2 = 250F)
+    val targetSwapDelay = VisSliderCustom(curLocalization["AIM_TARGET_SWAP_DELAY"], "AIM_TARGET_SWAP_DELAY", 0F, 500F, 10F, true, width1 = 200F, width2 = 250F)
 
     //Override Weapon Checkbox & Selection Box
     private val categorySelection = VisTable()
     val categorySelectionBox = VisSelectBox<String>()
-    val categorySelectLabel = VisLabel("Weapon Category: ")
-    val weaponOverrideCheckBox = VisCheckBox("Override Weapons")
+    val categorySelectLabel = VisLabel(curLocalization["WEAPON_CATEGORY"])
+    val weaponOverrideCheckBox = VisCheckBox(curLocalization["OVERRIDE_WEAPONS_CHECKBOX"])
 
-    val enableAimOnShot = ATabVisCheckBox("Aim On Shot", "_AIM_ONLY_ON_SHOT")
-    val enableFactorRecoil = ATabVisCheckBox("Factor Recoil", "_FACTOR_RECOIL")
-    val enableFlatAim = ATabVisCheckBox("Write Angles", "_ENABLE_FLAT_AIM")
-    val enablePathAim = ATabVisCheckBox("Mouse Movement", "_ENABLE_PATH_AIM")
-    val enableScopedOnly = VisCheckBoxCustom("Scoped Only", "SNIPER_ENABLE_SCOPED_ONLY")
+    val enableAimOnShot = ATabVisCheckBox(curLocalization["AIM_ONLY_ON_SHOT"], "_AIM_ONLY_ON_SHOT")
+    val enableFactorRecoil = ATabVisCheckBox(curLocalization["FACTOR_RECOIL"], "_FACTOR_RECOIL")
+    val enableFlatAim = ATabVisCheckBox(curLocalization["ENABLE_FLAT_AIM"], "_ENABLE_FLAT_AIM")
+    val enablePathAim = ATabVisCheckBox(curLocalization["ENABLE_PATH_AIM"], "_ENABLE_PATH_AIM")
+    val enableScopedOnly = VisCheckBoxCustom(curLocalization["SNIPER_ENABLE_SCOPED_ONLY"], "SNIPER_ENABLE_SCOPED_ONLY")
 
-    val aimBoneLabel = VisLabel("Bone: ")
+    val aimBoneLabel = VisLabel(curLocalization["AIM_BONE"])
     val aimBoneBox = VisSelectBox<String>()
 
-    val forceAimBoneLabel = VisLabel("Force Bone: ")
+    val forceAimBoneLabel = VisLabel(curLocalization["AIM_FORCE_BONE"])
     val forceAimBoneBox = VisSelectBox<String>()
 
-    val aimFov = ATabVisSlider("Aim FOV", "_AIM_FOV", 1F, 180F, 1F, true)
-    val aimSpeed = ATabVisSlider("Aim Speed", "_AIM_SPEED", 0F, 10F, 1F, true)
-    val aimSmooth = ATabVisSlider("Smoothness", "_AIM_SMOOTHNESS", 1F, 5F, .1F, false)
-    val aimAfterShots = ATabVisSlider("Aim After #", "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true)
+    val aimFov = ATabVisSlider(curLocalization["AIM_FOV"], "_AIM_FOV", 1F, 180F, 1F, true)
+    val aimSpeed = ATabVisSlider(curLocalization["AIM_SPEED"], "_AIM_SPEED", 0F, 10F, 1F, true)
+    val aimSmooth = ATabVisSlider(curLocalization["AIM_SMOOTHNESS"], "_AIM_SMOOTHNESS", 1F, 5F, .1F, false)
+    val aimAfterShots = ATabVisSlider(curLocalization["AIM_AFTER_SHOTS"], "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true)
 
     //Perfect Aim Collapsible
-    val perfectAimCheckBox = VisCheckBox("Enable Perfect Aim")
+    val perfectAimCheckBox = VisCheckBox(curLocalization["ENABLE_PERFECT_AIM"])
     private val perfectAimTable = VisTable()
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
-    val perfectAimFov = ATabVisSlider("FOV", "_PERFECT_AIM_FOV", 1F, 180F, 1F, true)
-    val perfectAimChance = ATabVisSlider("Chance", "_PERFECT_AIM_CHANCE", 1F, 100F, 1F, true)
+    val perfectAimFov = ATabVisSlider(curLocalization["FOV"], "_PERFECT_AIM_FOV", 1F, 180F, 1F, true)
+    val perfectAimChance = ATabVisSlider(curLocalization["PERFECT_AIM_CHANCE"], "_PERFECT_AIM_CHANCE", 1F, 100F, 1F, true)
 
     //Advanced Settings Collapsible
-    val advancedSettingsCheckBox = VisCheckBox("Advanced Settings")
+    val advancedSettingsCheckBox = VisCheckBox(curLocalization["ADVANCED_SETTINGS"])
     private val advancedSettingsTable = VisTable()
     val advancedSettingsCollapsible = CollapsibleWidget(advancedSettingsTable)
-    val randomizeX = ATabVisSlider("X Variation", "_RANDOM_X_VARIATION", 0F, 50F, 1F, true)
-    val randomizeY = ATabVisSlider("Y Variation", "_RANDOM_Y_VARIATION", 0F, 50F, 1F, true)
-    val randomizeDZ = ATabVisSlider("Variation Deadzone", "_VARIATION_DEADZONE", 0F, 100F, 5F, true)
-    val advancedRcsX = ATabVisSlider("RCS X", "_AIM_RCS_X", 0.05F, 1F, 0.05F, false)
-    val advancedRcsY = ATabVisSlider("RCS Y", "_AIM_RCS_Y", 0.05F, 1F, 0.05F, false)
-    val advancedRcsVariation = ATabVisSlider("RCS Variation", "_AIM_RCS_VARIATION", 0F, 1F, 0.05F, false)
-    val advancedSpeedDivisor = ATabVisSlider("Mouse Move Divisor", "_AIM_SPEED_DIVISOR", 1F, 10F, 1F, true)
+    val randomizeX = ATabVisSlider(curLocalization["RANDOM_X_VARIATION"], "_RANDOM_X_VARIATION", 0F, 50F, 1F, true)
+    val randomizeY = ATabVisSlider(curLocalization["RANDOM_Y_VARIATION"], "_RANDOM_Y_VARIATION", 0F, 50F, 1F, true)
+    val randomizeDZ = ATabVisSlider(curLocalization["VARIATION_DEADZONE"], "_VARIATION_DEADZONE", 0F, 100F, 5F, true)
+    val advancedRcsX = ATabVisSlider(curLocalization["AIM_RCS_X"], "_AIM_RCS_X", 0.05F, 1F, 0.05F, false)
+    val advancedRcsY = ATabVisSlider(curLocalization["AIM_RCS_Y"], "_AIM_RCS_Y", 0.05F, 1F, 0.05F, false)
+    val advancedRcsVariation = ATabVisSlider(curLocalization["AIM_RCS_VARIATION"], "_AIM_RCS_VARIATION", 0F, 1F, 0.05F, false)
+    val advancedSpeedDivisor = ATabVisSlider(curLocalization["AIM_SPEED_DIVISOR"], "_AIM_SPEED_DIVISOR", 1F, 10F, 1F, true)
 
     init {
         if (curSettings["WARNING"].strToBool()) {

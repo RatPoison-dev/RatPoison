@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.settings.*
 import rat.poison.strToBool
@@ -31,7 +32,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     }
 
     override fun getTabTitle(): String? {
-        return "Aim"
+        return curLocalization["AIM_TAB_NAME"]
     }
 }
 
