@@ -15,7 +15,7 @@ import rat.poison.ui.uiHelpers.tables.AimTable
 
 //I really couldn't give a shit to update this to the same as the other tabs
 
-var categorySelected = "PISTOL"
+var categorySelected = curSettings["DEFAULT_CATEGORY_SELECTED"]
 
 class AimTab : Tab(true, false) { //Aim.kts tab
     private val table = VisTable(false)

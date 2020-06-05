@@ -46,11 +46,10 @@ class BoxEspTab : Tab(false, false) {
         //Create Box ESP Health Pos Selector
         boxEspHealthPos.setItems(curLocalization["LEFT"], curLocalization["RIGHT"])
         boxEspHealthPos.selected = when (curSettings["BOX_ESP_HEALTH_POS"].replace("\"", "")) {
-            "L" -> "Left"
-            else -> "Right"
+            "L" -> curLocalization["LEFT"]
+            else -> curLocalization["RIGHT"]
         }
         boxEspHealthPos.changed { _, _ ->
-            println(map[boxEspHealthPos.selected])
             curSettings["BOX_ESP_HEALTH_POS"] = map[boxEspHealthPos.selected].first()
             true
         }

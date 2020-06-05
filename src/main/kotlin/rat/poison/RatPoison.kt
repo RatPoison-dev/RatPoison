@@ -94,7 +94,10 @@ fun visualsMap (): Settings {
 }
 fun aimingMap () : Settings {
     val map = Settings()
-    // KOCTJ
+    // FOV Types
+    map[curLocalization["STATIC"]] = "STATIC"
+    map[curLocalization["DISTANCE"]] = "DISTANCE"
+    // Bones
     map[curLocalization["HEAD"]] = "HEAD"
     map[curLocalization["NECK"]] = "NECK"
     map[curLocalization["CHEST"]] = "CHEST"

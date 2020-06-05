@@ -84,6 +84,7 @@ class AimTable: VisTable(false) {
     val advancedSpeedDivisor = ATabVisSlider(curLocalization["AIM_SPEED_DIVISOR"], "_AIM_SPEED_DIVISOR", 1F, 10F, 1F, true)
 
     init {
+        val map = aimingMap()
         if (curSettings["WARNING"].strToBool()) {
             val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.7" +
                     "\n\nIf you have any problems submit an issue on Github" +
@@ -98,15 +99,14 @@ class AimTable: VisTable(false) {
 
         //Fov Type
         val fovType = VisTable()
-        fovTypeBox.setItems("DISTANCE", "STATIC")
-        fovTypeBox.selected = curSettings["FOV_TYPE"].replace("\"", "")
+        fovTypeBox.setItems(curLocalization["STATIC"], curLocalization["DISTANCE"])
+        fovTypeBox.selected = curLocalization[(curSettings["FOV_TYPE"].replace("\"", ""))]
 
         fovTypeBox.changed { _, _ ->
-            curSettings["FOV_TYPE"] = fovTypeBox.selected
+            curSettings["FOV_TYPE"] = map[fovTypeBox.selected]
             updateDisableEsp()
             true
         }
-
         fovType.add(fovTypeLabel).width(200F)
         fovType.add(fovTypeBox)
 
