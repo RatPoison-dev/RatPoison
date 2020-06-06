@@ -26,8 +26,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.jire.arrowhead.keyPressed
 import org.lwjgl.glfw.GLFW.*
-import org.lwjgl.glfw.GLFWErrorCallback
-import org.lwjgl.opengl.GL
 import rat.poison.game.CSGO
 import rat.poison.game.updateViewMatrix
 import rat.poison.interfaces.IOverlay
@@ -44,6 +42,7 @@ import rat.poison.scripts.esp.esp
 import rat.poison.scripts.esp.espToggle
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.*
+import rat.poison.ui.tabs.saveDefault
 import rat.poison.ui.uiPanels.*
 import rat.poison.utils.*
 import rat.poison.utils.extensions.appendHumanReadableSize
@@ -52,6 +51,8 @@ import java.awt.Robot
 import java.io.File
 import java.io.FileReader
 import java.lang.management.ManagementFactory
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.util.concurrent.TimeUnit
 import kotlin.collections.List
 import kotlin.collections.forEach
@@ -59,6 +60,7 @@ import kotlin.collections.set
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.system.measureNanoTime
+import java.util.Locale
 
 //Override Weapon
 data class oWeapon(var tOverride: Boolean,      var tFRecoil: Boolean,  var tFlatAim: Boolean,
@@ -117,7 +119,16 @@ fun main() {
 
     println("Loading settings...")
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
-    loadLocalizationFromFile(curSettings["DEFAULT_LOCALE"])
+    val locale = getSystemLocale()
+    if (curSettings["DEFAULT_LOCALE"] == "NONE" && (locale == null || !Files.exists(Paths.get("settings/Localizations/locale_${locale}.locale")))) {
+        println("Locale file for your language doesn't exsist. Loading english locale.")
+        curSettings["DEFAULT_LOCALE"] = "locale_en_US"
+        loadLocalizationFromFile(curSettings["DEFAULT_LOCALE"])
+        saveDefault()
+    }
+    else {
+        loadLocalizationFromFile(curSettings["DEFAULT_LOCALE"])
+    }
     dbg = curSettings["DEBUG"].strToBool()
 
     if (dbg) println("DEBUG enabled")
@@ -126,7 +137,6 @@ fun main() {
     println("Launching...")
 
     CSGO.initialize()
-
     if (dbg) println("[DEBUG] Initializing scripts...")
     //Init scripts
     if (!curSettings["MENU"].strToBool()) { //If we arent' using the menu disable everything that uses the menu
@@ -554,6 +564,10 @@ fun sync(fps : Int) {
             variableYieldTime = max(variableYieldTime - 2 * 1000, 0)
         }
     }
+}
+
+fun getSystemLocale(): Locale? {
+    return Locale.getDefault()
 }
 
 fun Any.strToBool() = this.toString().toLowerCase() == "true" || this == true || this == 1.0 || this == 1 || this == 1F

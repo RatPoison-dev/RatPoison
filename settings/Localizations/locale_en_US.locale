@@ -280,7 +280,7 @@ FILE_NOT_FOUND_ERROR = File not found, use list to see current files
 INVALID_VARIABLE_OR_VALUE = Invalid variable/value
 DEFAULT_CONFIG_NAME = default
 // Commnands
-HELP_MESSAGE = Available commands: help [command], exit, ranks, reload, list, read [file name], write [file name] [variable name] = [value], save [default/cfgname], load [cfgname], delete [cfgname]
+SCANNER_HELP_MESSAGE = Available commands: help [command], exit, ranks, reload, list, read [file name], write [file name] [variable name] = [value], save [default/cfgname], load [cfgname], delete [cfgname]
 HELP_COMMAND = help
 EXIT_COMMAND = exit
 RANKS_COMMAND = ranks
