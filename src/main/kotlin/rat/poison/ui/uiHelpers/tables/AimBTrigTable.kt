@@ -3,7 +3,9 @@ package rat.poison.ui.uiHelpers.tables
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
+import rat.poison.aimingMap
 import rat.poison.curLocalization
+import rat.poison.curSettings
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
@@ -32,10 +34,11 @@ class AimBTrigTable: VisTable(false) {
     val categorySelectLabel = VisLabel(curLocalization["WEAPON_CATEGORY"])
 
     init {
+        val map = aimingMap()
         //Create Category Selector Box
-        categorySelectionBox.setItems("PISTOL", "RIFLE", "SMG", "SNIPER", "SHOTGUN")
-        categorySelectionBox.selected = "PISTOL"
-        categorySelected = categorySelectionBox.selected
+        categorySelectionBox.setItems(curLocalization["PISTOL"], curLocalization["RIFLE"], curLocalization["SMG"], curLocalization["SNIPER"], curLocalization["SHOTGUN"])
+        categorySelectionBox.selected = curLocalization[curSettings["DEFAULT_CATEGORY_SELECTED"]]
+        categorySelected = map[categorySelectionBox.selected]
         categorySelection.add(categorySelectLabel).padRight(200F-categorySelectLabel.width)
         categorySelection.add(categorySelectionBox)
 

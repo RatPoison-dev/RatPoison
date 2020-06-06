@@ -3,11 +3,8 @@ package rat.poison.ui.uiPanelTables
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.widget.*
-import rat.poison.curLocalization
-import rat.poison.curSettings
+import rat.poison.*
 import rat.poison.settings.*
-import rat.poison.strToBool
-import rat.poison.toWeaponClass
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.overridenWeapons
 import rat.poison.ui.uiUpdate
@@ -60,17 +57,17 @@ class OverridenWeapons : VisTable(true) {
 
     init {
         align(Align.left)
-
+        val map = aimingMap()
         //Create Category Selector Box
         val categorySelection = VisTable()
-        categorySelectionBox.setItems("PISTOL", "RIFLE", "SMG", "SNIPER", "SHOTGUN")
-        categorySelectionBox.selected = "PISTOL"
-        categorySelected = categorySelectionBox.selected
+        categorySelectionBox.setItems(curLocalization["PISTOL"], curLocalization["RIFLE"], curLocalization["SMG"], curLocalization["SNIPER"], curLocalization["SHOTGUN"])
+        categorySelectionBox.selected = curLocalization[curSettings["DEFAULT_CATEGORY_SELECTED"]]
+        categorySelected = map[categorySelectionBox.selected]
         categorySelection.add(categorySelectLabel).padRight(125F-categorySelectLabel.width)
         categorySelection.add(categorySelectionBox).width(125F)
 
         categorySelectionBox.changed { _, _ ->
-            categorySelected = categorySelectionBox.selected
+            categorySelected = map[categorySelectionBox.selected]
             when (categorySelected)
             {
                 "PISTOL" -> { weaponOverrideSelectionBox.clearItems(); weaponOverrideSelectionBox.setItems("DESERT_EAGLE", "DUAL_BERRETA", "FIVE_SEVEN", "GLOCK", "USP_SILENCER", "CZ75A", "R8_REVOLVER", "P2000", "TEC9", "P250") }
@@ -190,20 +187,20 @@ class OverridenWeapons : VisTable(true) {
 
         //Create Aim Bone Selector Box
         val aimBone = VisTable()
-        aimBoneBox.setItems("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
+        aimBoneBox.setItems(curLocalization["HEAD"], curLocalization["NECK"], curLocalization["CHEST"], curLocalization["STOMACH"], curLocalization["NEAREST"], curLocalization["RANDOM"])
         aimBoneBox.selected = when (curSettings[categorySelected + "_AIM_BONE"].toInt()) {
-            HEAD_BONE -> "HEAD"
-            NECK_BONE -> "NECK"
-            CHEST_BONE -> "CHEST"
-            STOMACH_BONE -> "STOMACH"
-            NEAREST_BONE -> "NEAREST"
-            else -> "RANDOM"
+            HEAD_BONE -> curLocalization["HEAD"]
+            NECK_BONE -> curLocalization["NECK"]
+            CHEST_BONE -> curLocalization["CHEST"]
+            STOMACH_BONE -> curLocalization["STOMACH"]
+            NEAREST_BONE -> curLocalization["NEAREST"]
+            else -> curLocalization["RANDOM"]
         }
         aimBone.add(aimBoneLabel).width(125F)
         aimBone.add(aimBoneBox).width(125F)
 
         aimBoneBox.changed { _, _ ->
-            val setBone = curSettings[aimBoneBox.selected + "_BONE"].toInt()
+            val setBone = curSettings[map[aimBoneBox.selected] + "_BONE"].toInt()
 
             if (weaponOverride) {
                 val curWep = curSettings[weaponOverrideSelected].toWeaponClass()

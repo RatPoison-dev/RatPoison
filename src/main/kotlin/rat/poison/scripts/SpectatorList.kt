@@ -40,7 +40,7 @@ internal fun spectatorList() = every(100) {
 
             if (entSpecTarget > -1 && entSpecTarget == playerSpecTarget) {
                 if (!spectators.contains(entName)) {
-                    spectators += "${curLocalization["NAME_PREFFIX"]} $entName\n"
+                    spectators += "${curLocalization["NAME_PREFIX"]} $entName\n"
                 }
             }
         }

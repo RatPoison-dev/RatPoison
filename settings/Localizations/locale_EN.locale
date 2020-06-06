@@ -263,7 +263,7 @@ OVERRIDE_AIM_SPEED = Speed:
 OVERRIDE_SMOOTH = Smooth:
 
 // Spectator list
-NAME_PREFFIX = name:
+NAME_PREFIX = name:
 
 // Bomb Timer
 BOMB_IS_PLANTED = Bomb Planted!
