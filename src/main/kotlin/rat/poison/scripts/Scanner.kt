@@ -1,6 +1,8 @@
 package rat.poison.scripts
 
+import com.sun.jna.platform.win32.OaIdl
 import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.curLocalization
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.rankName
@@ -20,51 +22,44 @@ import javax.script.ScriptException
 import kotlin.system.exitProcess
 
 fun scanner() {
-    println("Type help for options\n")
+    println("${curLocalization["TYPE_HELP"]}\n")
 
     //Major optimization, needs to be fixed later, probably move this massive dump elsewhere
     val scanner = Scanner(System.`in`)
     while (!Thread.interrupted()) {
         val line = scanner.nextLine().trim()
         when {
-            line.startsWith("help") -> {
-                if (line == "help") {
-                    println("\nAvailable commands: help [command], exit, ranks, reload, list, read [file name], write [file name] [variable name] = [value], save [default/cfgname], load [cfgname], delete [cfgname]\n")
+            line.startsWith(curLocalization["HELP_COMMAND"]) -> {
+                if (line == curLocalization["HELP_COMMAND"]) {
+                    println("\n${curLocalization["SCANNER_HELP_MESSAGE"]}\n")
                 } else {
-                    when (line.split(" ".toRegex(), 2)[1]) {
-                        "exit" -> println("\nCloses program and cmd\n")
-                        "ranks" -> println("\nShows players, ranks, kills, deaths, kd, and wins")
-                        "reload" -> println("\nReloads all settings files, is done automatically on write\n")
-                        "list" -> println("\nLists all settings files\n")
-                        "read" -> println("\nSyntax: read [file name] ; Replace [file name] with the file name, viewable from the list command, excluding .kts. Example: read General\n")
-                        "write" -> println("\nSyntax: write [file name] [variable name] = [value] ; Replace [file name] with the file name, replace [variable name] with the name of the variable inside of the file from [file name], and replace [value] with the value for the variable\n")
-                        "help" -> println("\nStandalone or Syntax: help [command] ; Replace [command] with the command listed in list\n")
-                        "save" -> println("\nSave to default settings or to a config\n")
-                        "load" -> println("\nLoad config\n")
+                    val key = "${line.split(" ".toRegex(), 2)[1].toUpperCase()}_COMMAND_HELP_MESSAGE"
+                    if (curLocalization[key] != "") {
+                        println("\n${curLocalization[key]}\n")
                     }
                 }
             }
-            line.equals("exit", true) -> {
+            line.equals(curLocalization["EXIT_COMMAND"], true) -> {
                 disableAllEsp()
                 Thread.sleep(1000)
                 exitProcess(0)
             }
-            line.equals("reload", true) -> {
+            line.equals(curLocalization["RELOAD_COMMAND"], true) -> {
                 println(); loadSettingsFromFiles(SETTINGS_DIRECTORY)
             }
-            line.equals("list", true) -> {
-                print("\n----Settings Files----\n")
+            line.equals(curLocalization["LIST_COMMAND"], true) -> {
+                print("\n----${curLocalization["SETTINGS_FILES"]}----\n")
                 File(SETTINGS_DIRECTORY).listFiles()?.forEach {
                     if (it.name.contains(".txt")) {
                         println(it)
                     }
                 }
-                print("\n----CFGS----\n")
+                print("\n----${curLocalization["CFGS"]}----\n")
                 File("$SETTINGS_DIRECTORY\\CFGS").listFiles()?.forEach {
                     println(it)
                 }
             }
-            line.startsWith("read") -> { //Read file's variables
+            line.startsWith(curLocalization["READ_COMMAND"]) -> { //Read file's variables
                 println()
                 try {
                     File(SETTINGS_DIRECTORY + "\\" + line.trim().split(" ".toRegex())[1] + ".txt").readLines().forEach {
@@ -73,7 +68,7 @@ fun scanner() {
                         }
                     }
                 } catch (e: Exception) {
-                    println("File not found, use list to see current files")
+                    println(curLocalization["FILE_NOT_FOUND_ERROR"])
                 }
             }
             line.startsWith("set") -> { //Set variable, instance use only
@@ -85,7 +80,7 @@ fun scanner() {
                     println("Invalid variable")
                 }
             }
-            line.startsWith("write") -> {
+            line.startsWith(curLocalization["WRITE_COMMAND"]) -> {
                 val fileDir = SETTINGS_DIRECTORY + "\\" + line.trim().split(" ".toRegex())[1] + ".txt"
                 val command = line.trim().split(" ".toRegex(), 3)[2]
                 var prevFile = ""
@@ -100,57 +95,57 @@ fun scanner() {
                             }
                         }
 
-                        println("Writing to $fileDir")
-                        println("Set $command")
+                        println("${curLocalization["WRITING_TO"]} $fileDir")
+                        println("${curLocalization["SET"]} $command")
                         Files.write(File(fileDir).toPath(), prevFile.toByteArray(), StandardOpenOption.WRITE)
-                        println("Reloading settings")
+                        println(curLocalization["RELOADING_SETTINGS"])
                         loadSettingsFromFiles(SETTINGS_DIRECTORY)
                         println()
                     } catch (e: FileNotFoundException) {
-                        println("File not found, use list to see current files")
+                        println(curLocalization["FILE_NOT_FOUND_ERROR"])
                     }
 
                 } catch (e: ScriptException) {
-                    println("Invalid variable/value")
+                    println(curLocalization["INVALID_VARIABLE_OR_VALUE"])
                 }
             }
-            line.startsWith("save") -> {
+            line.startsWith(curLocalization["SAVE_COMMAND"]) -> {
                 println()
                 try {
                     val name = line.trim().split(" ".toRegex(), 2)[1]
 
-                    if (name == "default") {
+                    if (name == curLocalization["DEFAULT_CONFIG_NAME"]) {
                         saveDefault()
                     } else {
                         saveCFG(name)
                     }
                 } catch (e: Exception) {
-                    println("Invalid variable/value")
+                    println(curLocalization["INVALID_VARIABLE_OR_VALUE"])
                 }
             }
-            line.startsWith("load") -> {
+            line.startsWith(curLocalization["LOAD_COMMAND"]) -> {
                 println()
                 try {
                     val name = line.trim().split(" ".toRegex(), 2)[1]
 
                     loadCFG(name)
                 } catch (e: Exception) {
-                    println("Invalid variable/value")
+                    println(curLocalization["INVALID_VARIABLE_OR_VALUE"])
                 }
             }
-            line.startsWith("delete") -> {
+            line.startsWith(curLocalization["DELETE_COMMAND"]) -> {
                 println()
                 try {
                     val name = line.trim().split(" ".toRegex(), 2)[1]
 
                     deleteCFG(name)
                 } catch (e: Exception) {
-                    println("Invalid variable/value")
+                    println(curLocalization["INVALID_VARIABLE_OR_VALUE"])
                 }
             }
-            line.startsWith("ranks") -> {
+            line.startsWith(curLocalization["RANKS_COMMAND"]) -> {
                 println()
-                println("Team   Name                             Rank  Kills Deaths K/D  Wins")
+                println("${curLocalization["RANKS_TEAM"]}   ${curLocalization["RANKS_NAME"]}                             ${curLocalization["RANKS_RANK"]}  ${curLocalization["RANKS_KILLS"]} ${curLocalization["RANKS_DEATHS"]} ${curLocalization["RANKS_KD"]}  ${curLocalization["RANKS_WINS"]}")
                 println("====== ================================ ===== ===== ====== ==== =====")
                 try {
                     forEntities(EntityType.ccsPlayer) {
@@ -158,9 +153,9 @@ fun scanner() {
 
                         if (entity.onGround()) { //Change later
                             var entTeam = when (entity.team()) {
-                                3L -> "CT"
-                                2L -> "T"
-                                else -> "N/A"
+                                3L -> curLocalization["CT"]
+                                2L -> curLocalization["T"]
+                                else -> curLocalization["UNDEFINED"]
                             }
 
                             var entName = entity.name()
@@ -168,7 +163,7 @@ fun scanner() {
                             var entKills = entity.kills().toString()
                             var entDeaths = entity.deaths().toString()
                             var entKD = when (entDeaths) {
-                                "0" -> "N/A"
+                                "0" -> curLocalization["UNDEFINED"]
                                 else -> (entKills.toFloat() / entDeaths.toFloat()).roundNDecimals(2).toString()
                             }
                             var entWins = entity.wins().toString()

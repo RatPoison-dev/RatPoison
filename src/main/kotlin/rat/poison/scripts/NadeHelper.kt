@@ -155,13 +155,13 @@ fun createPosition() {
     val hLPy = yOff + 500 * mDir.y
     val hLPz = zOff + 500 * mDir.z
 
-    Dialogs.showInputDialog(menuStage, "Enter Position Name", "", object : InputDialogAdapter() {
+    Dialogs.showInputDialog(menuStage, curLocalization["ENTER_POSITION_NAME"], "", object : InputDialogAdapter() {
         override fun finished(input: String) {
 
-            val chooseNadeArrayString = arrayOf("Flash", "Frag", "Molly", "Smoke")
+            val chooseNadeArrayString = arrayOf(curLocalization["NADE_FLASH"], curLocalization["NADE_FRAG"], curLocalization["NADE_MOLLY"], curLocalization["NADE_SMOKE"])
             val chooseNadeArrayInt = arrayOf(1, 2, 3, 4)
 
-            Dialogs.showConfirmDialog(menuStage, "Choose Nade Type", "", chooseNadeArrayString, chooseNadeArrayInt) { int ->
+            Dialogs.showConfirmDialog(menuStage, curLocalization["CHOOSE_NADE_TYPE"], "", chooseNadeArrayString, chooseNadeArrayInt) { int ->
                 val chosenNadeType = when (int) {
                     1 -> "Flash"
                     2 -> "Frag"
@@ -204,10 +204,10 @@ fun loadPositions(file: String) {
                 LoL = listOf(feetSpot, headPos, headLookPos)
                 nadeHelperArrayList.add(LoL)
 
-                nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: $file")
+                nadeHelperTab.nadeHelperLoadedFile.setText("${curLocalization["LOADED"]} $file")
             } else {
                 println("[Error] $file is empty, not loading")
-                nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: N/A")
+                nadeHelperTab.nadeHelperLoadedFile.setText(curLocalization["LOADED_NOTHING"])
             }
         }
     }
@@ -215,7 +215,7 @@ fun loadPositions(file: String) {
 
 fun savePositions() {
     println("Saving Positions")
-    Dialogs.showInputDialog(menuStage, "Enter File Name", "", object : InputDialogAdapter() {
+    Dialogs.showInputDialog(menuStage, curLocalization["ENTER_FILE_NAME"], "", object : InputDialogAdapter() {
         override fun finished(input: String) {
             val cfgFile = File("$SETTINGS_DIRECTORY\\NadeHelper\\$input.txt")
             if (!cfgFile.exists()) {

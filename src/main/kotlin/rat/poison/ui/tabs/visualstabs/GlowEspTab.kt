@@ -101,7 +101,7 @@ class GlowEspTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Glow"
+        return curLocalization["GLOW_TAB_NAME"]
     }
 }
 

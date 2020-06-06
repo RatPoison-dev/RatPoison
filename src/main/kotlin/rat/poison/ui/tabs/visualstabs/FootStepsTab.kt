@@ -27,13 +27,16 @@ class FootstepsEspTab : Tab(false, false) {
     val footStepEnemyColor = VisColorPickerCustom(curLocalization["ENEMIES"], "FOOTSTEP_ENEMY_COLOR")
 
     init {
-        footStepType.setItems("Text", "Circle")
+        footStepType.setItems(curLocalization["FOOTSTEPS_TEXT"], curLocalization["FOOTSTEPS_CIRCLE"])
         footStepType.selected = when (curSettings["FOOTSTEP_TYPE"].toInt()) {
-            1 -> "Text"
-            else -> "Circle"
+            1 -> curLocalization["FOOTSTEPS_TEXT"]
+            else -> curLocalization["FOOTSTEPS_CIRCLE"]
         }
         footStepType.changed { _, _ ->
-            curSettings["FOOTSTEP_TYPE"] = when (footStepType.selected) { "Text" -> 1; else -> 2}
+            curSettings["FOOTSTEP_TYPE"] = when (footStepType.selected) {
+                curLocalization["FOOTSTEPS_TEXT"] -> 1;
+                else -> 2
+            }
             true
         }
 
