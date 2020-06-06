@@ -122,7 +122,7 @@ fun main() {
     val locale = getSystemLocale()
     if (curSettings["DEFAULT_LOCALE"] == "NONE" && (locale == null || !Files.exists(Paths.get("settings/Localizations/locale_${locale}.locale")))) {
         println("Detected default locale: $locale")
-        println("Locale file for your language doesn't exsist. Loading english locale.")
+        println("Locale file for your language doesn't exist. Loading english locale.")
         curSettings["DEFAULT_LOCALE"] = "locale_en_US"
         loadLocalizationFromFile(curSettings["DEFAULT_LOCALE"])
         saveDefault()
