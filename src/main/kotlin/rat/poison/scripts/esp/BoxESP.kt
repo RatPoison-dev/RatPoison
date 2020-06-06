@@ -17,7 +17,6 @@ import rat.poison.game.worldToScreen
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.GetWeaponsMap
 import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
 import kotlin.math.abs
@@ -31,8 +30,6 @@ private val vTop = Vector(0.0, 0.0, 0.0)
 private val vBot = Vector(0.0, 0.0, 0.0)
 
 private val boxes = Array(128) { Box() }
-
-val WeaponsMap = GetWeaponsMap()
 
 private data class Box(var x0: Float = 0F, var y0: Float = 0F,
 					   var x1: Float = 0F, var y1: Float = 0F,
@@ -120,7 +117,7 @@ fun boxEsp() = App {
 
 				health = entityMemory.health().toFloat()
 				armor = entityMemory.armor().toFloat()
-				weapon = WeaponsMap[entity.weapon().name]
+				weapon = curLocalization[entity.weapon().name]
 				name = entity.name()
 
 				type = EntityType.CCSPlayer

@@ -8,12 +8,12 @@ import rat.poison.settings.*
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.overridenWeapons
 import rat.poison.ui.uiUpdate
+import rat.poison.utils.GetWeaponsMap
 import kotlin.math.round
 
 class OverridenWeapons : VisTable(true) {
     //private val table = VisTable(true)
-
-    var categorySelected = "PISTOL"
+    var categorySelected = curLocalization[curSettings["DEFAULT_CATEGORY_SELECTED"]]
     var weaponOverride = false
     var enableOverride = false
     var weaponOverrideSelected = ""
@@ -56,6 +56,7 @@ class OverridenWeapons : VisTable(true) {
     val perfectAimChanceSlider = VisSlider(1F, 100F, 1F, false)
 
     init {
+        val WeaponsMap = GetWeaponsMap()
         align(Align.left)
         val map = aimingMap()
         //Create Category Selector Box
@@ -70,11 +71,11 @@ class OverridenWeapons : VisTable(true) {
             categorySelected = map[categorySelectionBox.selected]
             when (categorySelected)
             {
-                "PISTOL" -> { weaponOverrideSelectionBox.clearItems(); weaponOverrideSelectionBox.setItems("DESERT_EAGLE", "DUAL_BERRETA", "FIVE_SEVEN", "GLOCK", "USP_SILENCER", "CZ75A", "R8_REVOLVER", "P2000", "TEC9", "P250") }
-                "SMG" -> { weaponOverrideSelectionBox.clearItems(); weaponOverrideSelectionBox.setItems("MAC10", "P90", "MP5", "UMP45", "MP7", "MP9", "PP_BIZON") }
-                "RIFLE" -> { weaponOverrideSelectionBox.clearItems(); weaponOverrideSelectionBox.setItems("AK47", "AUG", "FAMAS", "SG553", "GALIL", "M4A4", "M4A1_SILENCER", "NEGEV", "M249") }
-                "SNIPER" -> { weaponOverrideSelectionBox.clearItems(); weaponOverrideSelectionBox.setItems("AWP", "G3SG1", "SCAR20", "SSG08") }
-                "SHOTGUN" -> { weaponOverrideSelectionBox.clearItems(); weaponOverrideSelectionBox.setItems("XM1014", "MAG7", "SAWED_OFF", "NOVA") }
+                "PISTOL" -> { weaponOverrideSelectionBox.clearItems(); weaponOverrideSelectionBox.setItems(curLocalization["DESERT_EAGLE"], curLocalization["DUAL_BERRETA"], curLocalization["FIVE_SEVEN"], curLocalization["GLOCK"], curLocalization["USP_SILENCER"], curLocalization["CZ75A"], curLocalization["R8_REVOLVER"], curLocalization["P2000"], curLocalization["TEC9"], curLocalization["P250"]) }
+                "SMG" -> { weaponOverrideSelectionBox.clearItems(); weaponOverrideSelectionBox.setItems(curLocalization["MAC10"], curLocalization["P90"], curLocalization["MP5"], curLocalization["UMP45"], curLocalization["MP7"], curLocalization["MP9"], curLocalization["PP_BIZON"]) }
+                "RIFLE" -> { weaponOverrideSelectionBox.clearItems(); weaponOverrideSelectionBox.setItems(curLocalization["AK47"], curLocalization["AUG"], curLocalization["FAMAS"], curLocalization["SG553"], curLocalization["GALIL"], curLocalization["M4A4"], curLocalization["M4A1_SILENCER"], curLocalization["NEGEV"], curLocalization["M249"]) }
+                "SNIPER" -> { weaponOverrideSelectionBox.clearItems(); weaponOverrideSelectionBox.setItems(curLocalization["AWP"], curLocalization["G3SG1"], curLocalization["SCAR20"], curLocalization["SSG08"]) }
+                "SHOTGUN" -> { weaponOverrideSelectionBox.clearItems(); weaponOverrideSelectionBox.setItems(curLocalization["XM1014"], curLocalization["MAG7"], curLocalization["SAWED_OFF"], curLocalization["NOVA"]) }
             }
 
             if (categorySelected == "SNIPER") {
@@ -102,14 +103,14 @@ class OverridenWeapons : VisTable(true) {
 
         //Create Override Weapon Selector
         val weaponOverrideSelection = VisTable()
-        weaponOverrideSelectionBox.setItems("DESERT_EAGLE", "DUAL_BERRETA", "FIVE_SEVEN", "GLOCK", "USP_SILENCER", "CZ75A", "R8_REVOLVER", "P2000", "TEC9", "P250")
-        weaponOverrideSelectionBox.selected = "DESERT_EAGLE"
-        weaponOverrideSelected = weaponOverrideSelectionBox.selected
+        weaponOverrideSelectionBox.setItems(curLocalization["DESERT_EAGLE"], curLocalization["DUAL_BERRETA"], curLocalization["FIVE_SEVEN"], curLocalization["GLOCK"], curLocalization["USP_SILENCER"], curLocalization["CZ75A"], curLocalization["R8_REVOLVER"], curLocalization["P2000"], curLocalization["TEC9"], curLocalization["P250"])
+        weaponOverrideSelectionBox.selected = curLocalization["DESERT_EAGLE"]
+        weaponOverrideSelected = WeaponsMap[weaponOverrideSelectionBox.selected]
         weaponOverrideSelection.add(weaponOverrideSelectionBox).width(125F).padLeft(125F)
 
         weaponOverrideSelectionBox.changed { _, _ ->
             if (!weaponOverrideSelectionBox.selected.isNullOrEmpty()) {
-                weaponOverrideSelected = weaponOverrideSelectionBox.selected
+                weaponOverrideSelected = WeaponsMap[weaponOverrideSelectionBox.selected]
             }
             uiUpdate()
             true
