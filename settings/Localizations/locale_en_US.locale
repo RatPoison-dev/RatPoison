@@ -7,6 +7,7 @@ NAME = Name
 GRENADES = Grenades
 TARGET = Target
 WEAPON = Weapon
+SCOPE = Scope
 WEAPONS = Weapons
 UNDEFINED = N/A
 T = T

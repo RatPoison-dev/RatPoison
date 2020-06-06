@@ -252,6 +252,8 @@ fun updateDisableEsp() {
         boxEspTab.boxEspNamePos.isDisabled = bool
         boxEspTab.boxEspWeapon.disable(bool)
         boxEspTab.boxEspWeaponPos.isDisabled = bool
+        boxEspTab.boxEspScope.disable(bool)
+        boxEspTab.boxEspScopePos.isDisabled = bool
         boxEspTab.skeletonEsp.disable(bool)
         boxEspTab.showTeamSkeleton.disable(bool)
         boxEspTab.showEnemiesSkeleton.disable(bool)
