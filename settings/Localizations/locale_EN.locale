@@ -8,6 +8,9 @@ GRENADES = Grenades
 TARGET = Target
 WEAPON = Weapon
 WEAPONS = Weapons
+UNDEFINED = N/A
+T = T
+CT = CT
 BOMB = Bomb
 BOMB_CARRIER = Bomb Carrier
 DEFUSERS = Defusers
@@ -32,6 +35,7 @@ OVERRIDE_WEAPONS_PANEL_NAME = Override Weapons
 KEYBINDS_PANEL_NAME = Keybinds
 INDICATORS_TAB_NAME = Indicator
 NADES_TAB_NAME = Nades
+GLOW_TAB_NAME = Glow
 BOX_ESP_TAB_NAME = Box
 CHAMS_TAB_NAME = Chams
 SKIN_CHANGER_TAB_NAME = Skin Changer
@@ -143,6 +147,7 @@ ENABLE_NAME_CHANGER = Name Change
 
 // Nade helper tab
 ENABLE_NADE_HELPER = Nade Helper
+LOADED = Loaded:
 LOADED_NOTHING = Loaded: N/A
 CREATE_GRENADE_POSITION = Create Grenade Position
 SAVE_AS_FILE = Save As File
@@ -151,6 +156,13 @@ DELETE_SELECTED_FILE = Delete Selected File
 CLEAR_CURRENTLY_LOADED = Clear Currently Loaded
 CLEAR_CURRENTLY_LOADED_WARNING = Clear the current positions?
 DELETE_AT_CURRENT_POSITION = Delete At Current Position
+ENTER_POSITION_NAME = Enter Position Name
+CHOOSE_NADE_TYPE = Choose Nade Type
+NADE_FLASH = Flash
+NADE_FRAG = Frag
+NADE_MOLLY = Molly
+NADE_SMOKE = Smoke
+ENTER_FILE_NAME = Enter File Name
 
 // Options tab
 MENU_KEY = Menu Key
@@ -221,6 +233,8 @@ CHAMS_BRIGHTNESS = Chams Brightness
 // Footsteps tab
 FOOTSTEP_UPDATE = Update Timer
 FOOTSTEP_TTL = TTL
+FOOTSTEPS_TEXT = Text
+FOOTSTEPS_CIRCLE = Circle
 // Glow Esp tab
 INV_GLOW_ESP = Inv Glow
 MODEL_ESP = Model
@@ -247,3 +261,49 @@ CATEGORY = Category:
 ENABLE_OVERRIDE = Enable Override
 OVERRIDE_AIM_SPEED = Speed:
 OVERRIDE_SMOOTH = Smooth:
+
+// Spectator list
+NAME_PREFFIX = name:
+
+// Bomb Timer
+BOMB_IS_PLANTED = Bomb Planted!
+BOMB_IS_NOT_PLANTED = Bomb Not Planted!
+TIME_TO_EXPLODE = TimeToExplode:
+LOCATION = Location:
+CAN_DEFUSE = Can Defuse:
+TIME_TO_DEFUSE = Time To Defuse:
+TIME_LEFT_AFTER = Time Left After:
+
+/// Scanner
+TYPE_HELP = Type help for options
+FILE_NOT_FOUND_ERROR = File not found, use list to see current files
+INVALID_VARIABLE_OR_VALUE = Invalid variable/value
+DEFAULT_CONFIG_NAME = default
+// Commnands
+HELP_MESSAGE = Available commands: help [command], exit, ranks, reload, list, read [file name], write [file name] [variable name] = [value], save [default/cfgname], load [cfgname], delete [cfgname]
+HELP_COMMAND = help
+EXIT_COMMAND = exit
+RANKS_COMMAND = ranks
+RELOAD_COMMAND = reload
+LIST_COMMAND = list
+READ_COMMAND = read
+WRITE_COMMAND = write
+LOAD_COMMAND = load
+DELETE_COMMAND = delete
+SAVE_COMMAND = save
+// Help messages
+EXIT_HELP_MESSAGE = Closes program and cmd
+RANKS_COMMAND_HELP_MESSAGE = Shows players, ranks, kills, deaths, kd, and wins
+RELOAD_COMMAND_HELP_MESSAGE = Reloads all settings files, is done automatically on write
+LIST_COMMAND_HELP_MESSAGE = Lists all settings files
+READ_COMMAND_HELP_MESSAGE = Syntax: read [file name] ; Replace [file name] with the file name, viewable from the list command, excluding .kts. Example: read General
+WRITE_COMMAND_HELP_MESSAGE = Syntax: write [file name] [variable name] = [value] ; Replace [file name] with the file name, replace [variable name] with the name of the variable inside of the file from [file name], and replace [value] with the value for the variable
+SAVE_COMMAND_HELP_MESSAGE = Save to default settings or to a config
+LOAD_COMMAND_HELP_MESSAGE = Load config
+// List command
+SETTINGS_FILES = Settings Files
+CFGS = CFGS
+// Write command
+WRITING_TO = Writing to
+SET = Set
+RELOADING_SETTINGS = Reloading settings

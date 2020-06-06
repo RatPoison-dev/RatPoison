@@ -3,6 +3,7 @@
 package rat.poison.scripts
 
 import rat.poison.App.haveTarget
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
@@ -39,7 +40,7 @@ internal fun spectatorList() = every(100) {
 
             if (entSpecTarget > -1 && entSpecTarget == playerSpecTarget) {
                 if (!spectators.contains(entName)) {
-                    spectators += "name: $entName\n"
+                    spectators += "${curLocalization["NAME_PREFFIX"]} $entName\n"
                 }
             }
         }

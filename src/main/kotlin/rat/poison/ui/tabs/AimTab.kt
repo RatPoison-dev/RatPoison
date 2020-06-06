@@ -99,6 +99,7 @@ fun updateDisableAim() {
 }
 
 fun updateAim() {
+    val map = aimingMap()
     aimTab.tAim.apply {
         enableAim.update()
         aimToggleKey.update()
@@ -113,7 +114,7 @@ fun updateAim() {
         automaticWeaponsInput.update()
         targetSwapDelay.update()
 
-        fovTypeBox.selected = curSettings["FOV_TYPE"].replace("\"", "")
+        fovTypeBox.selected = curLocalization[curSettings["FOV_TYPE"].replace("\"", "")]
 
         enableAimOnShot.update()
         enableFactorRecoil.update()

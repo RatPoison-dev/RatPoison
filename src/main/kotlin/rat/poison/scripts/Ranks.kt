@@ -2,6 +2,7 @@ package rat.poison.scripts
 
 import com.kotcrab.vis.ui.widget.VisLabel
 import rat.poison.App.haveTarget
+import rat.poison.curLocalization
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
@@ -40,9 +41,9 @@ fun ranks() = every(1000, true) { //Rebuild every second
         val entity = it.entity
         if (entity.onGround()) { //Change later
             val entTeam = when (entity.team()) {
-                3L -> "CT"
-                2L -> "T"
-                else -> "N/A"
+                3L -> curLocalization["CT"]
+                2L -> curLocalization["T"]
+                else -> curLocalization["UNDEFINED"]
             }
 
             val entName = entity.name()
@@ -50,18 +51,18 @@ fun ranks() = every(1000, true) { //Rebuild every second
             val entKills = entity.kills().toString()
             val entDeaths = entity.deaths().toString()
             val entKD = when (entDeaths) {
-                "0" -> "N/A"
+                "0" -> curLocalization["UNDEFINED"]
                 else -> (entKills.toFloat() / entDeaths.toFloat()).roundNDecimals(2).toString()
             }
             val entWins = entity.wins().toString()
 
             when (entTeam) { //Bruh
-                "CT" -> {
-                    teamList.add("CT")
+                curLocalization["CT"] -> {
+                    teamList.add(curLocalization["CT"])
                 }
 
-                "T" -> {
-                    teamList.add("T")
+                curLocalization["T"] -> {
+                    teamList.add(curLocalization["T"])
                 }
             }
 
