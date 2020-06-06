@@ -17,6 +17,7 @@ import rat.poison.game.worldToScreen
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
+import rat.poison.utils.GetWeaponsMap
 import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
 import kotlin.math.abs
@@ -30,6 +31,8 @@ private val vTop = Vector(0.0, 0.0, 0.0)
 private val vBot = Vector(0.0, 0.0, 0.0)
 
 private val boxes = Array(128) { Box() }
+
+val WeaponsMap = GetWeaponsMap()
 
 private data class Box(var x0: Float = 0F, var y0: Float = 0F,
 					   var x1: Float = 0F, var y1: Float = 0F,
@@ -117,7 +120,7 @@ fun boxEsp() = App {
 
 				health = entityMemory.health().toFloat()
 				armor = entityMemory.armor().toFloat()
-				weapon = entity.weapon().name
+				weapon = WeaponsMap[entity.weapon().name]
 				name = entity.name()
 
 				type = EntityType.CCSPlayer
@@ -305,7 +308,7 @@ fun boxEsp() = App {
 						val boxDetailsTextTop = StringBuilder()
 
 						if (bEspName && bEspNamePos == "T") {
-							boxDetailsTextTop.append("DEFUSER")
+							boxDetailsTextTop.append(curLocalization["DEFUSER"])
 							yAdd += 16F
 						}
 						glyph.setText(this, boxDetailsTextTop, 0, (boxDetailsTextTop as CharSequence).length, detailTextColor, 1F, Align.center, false, null)
@@ -316,7 +319,7 @@ fun boxEsp() = App {
 						val boxDetailsTextBottom = StringBuilder()
 
 						if (bEspName && bEspNamePos == "B") {
-							boxDetailsTextBottom.append("DEFUSER")
+							boxDetailsTextBottom.append(curLocalization["DEFUSER"])
 						}
 						glyph.setText(this, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, detailTextColor, 1F, Align.center, false, null)
 						draw(sb, glyph, x0 + w / 2F, y0 + h - 4F)
