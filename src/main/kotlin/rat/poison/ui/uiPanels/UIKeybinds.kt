@@ -1,4 +1,4 @@
-package rat.poison.ui.uiPanels
+﻿package rat.poison.ui.uiPanels
 
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Align
@@ -14,14 +14,14 @@ import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import kotlin.math.round
 
 class UIKeybinds : VisWindow(curLocalization["KEYBINDS_PANEL_NAME"]) {
-    val aimToggleKey = VisInputFieldCustom(curLocalization["AIM_TOGGLE_KEY"], "AIM_TOGGLE_KEY")
-    val forceAimKey = VisInputFieldCustom(curLocalization["FORCE_AIM_KEY"], "FORCE_AIM_KEY")
+    val aimToggleKey = VisInputFieldCustom(curLocalization["AIM_TOGGLE_KEY"], "AIM_TOGGLE_KEY", nameInLocalization = "AIM_TOGGLE_KEY")
+    val forceAimKey = VisInputFieldCustom(curLocalization["FORCE_AIM_KEY"], "FORCE_AIM_KEY", nameInLocalization = "FORCE_AIM_KEY")
     val forceAimBoneKey = VisInputFieldCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
-    val boneTriggerKey = VisInputFieldCustom(curLocalization["FORCE_AIM_BONE_KEY"], "TRIGGER_KEY")
-    val visualsToggleKey = VisInputFieldCustom(curLocalization["VISUALS_TOGGLE_KEY"], "VISUALS_TOGGLE_KEY")
-    val doorSpamKey = VisInputFieldCustom(curLocalization["DOOR_SPAM_KEY"], "D_SPAM_KEY")
-    val weaponSpamKey = VisInputFieldCustom(curLocalization["WEAPON_SPAM_KEY"], "W_SPAM_KEY")
-    val menuKeyField = VisInputFieldCustom(curLocalization["MENU_KEY"], "MENU_KEY")
+    val boneTriggerKey = VisInputFieldCustom(curLocalization["FORCE_AIM_BONE_KEY"], "TRIGGER_KEY", nameInLocalization = "FORCE_AIM_BONE_KEY")
+    val visualsToggleKey = VisInputFieldCustom(curLocalization["VISUALS_TOGGLE_KEY"], "VISUALS_TOGGLE_KEY", nameInLocalization = "VISUALS_TOGGLE_KEY")
+    val doorSpamKey = VisInputFieldCustom(curLocalization["DOOR_SPAM_KEY"], "D_SPAM_KEY", nameInLocalization = "DOOR_SPAM_KEY")
+    val weaponSpamKey = VisInputFieldCustom(curLocalization["WEAPON_SPAM_KEY"], "W_SPAM_KEY", nameInLocalization = "WEAPON_SPAM_KEY")
+    val menuKeyField = VisInputFieldCustom(curLocalization["MENU_KEY"], "MENU_KEY", nameInLocalization = "MENU_KEY")
 
     init {
         defaults().left()

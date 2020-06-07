@@ -1,4 +1,4 @@
-package rat.poison.ui.tabs.visualstabs
+﻿package rat.poison.ui.tabs.visualstabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
@@ -14,18 +14,18 @@ class ChamsEspTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val chamsEsp = VisCheckBoxCustom(curLocalization["ENABLE"], "CHAMS_ESP")
-    val chamsShowHealth = VisCheckBoxCustom(curLocalization["CHAMS_SHOW_HEALTH"], "CHAMS_SHOW_HEALTH")
-    val chamsBrightness = VisSliderCustom(curLocalization["CHAMS_BRIGHTNESS"], "CHAMS_BRIGHTNESS", 0F, 5000F, 25F, true)
+    val chamsEsp = VisCheckBoxCustom(curLocalization["ENABLE"], "CHAMS_ESP", nameInLocalization = "ENABLE")
+    val chamsShowHealth = VisCheckBoxCustom(curLocalization["CHAMS_SHOW_HEALTH"], "CHAMS_SHOW_HEALTH", nameInLocalization = "CHAMS_SHOW_HEALTH")
+    val chamsBrightness = VisSliderCustom(curLocalization["CHAMS_BRIGHTNESS"], "CHAMS_BRIGHTNESS", 0F, 5000F, 25F, true, nameInLocalization = "CHAMS_BRIGHTNESS")
 
     val showTeam = VisCheckBoxCustom(" ", "CHAMS_SHOW_TEAM")
-    val chamsTeamColor = VisColorPickerCustom(curLocalization["TEAMMATES"], "CHAMS_TEAM_COLOR")
+    val chamsTeamColor = VisColorPickerCustom(curLocalization["TEAMMATES"], "CHAMS_TEAM_COLOR", nameInLocalization = "TEAMMATES")
 
     val showEnemies = VisCheckBoxCustom(" ", "CHAMS_SHOW_ENEMIES")
-    val chamsEnemyColor = VisColorPickerCustom(curLocalization["ENEMIES"], "CHAMS_ENEMY_COLOR")
+    val chamsEnemyColor = VisColorPickerCustom(curLocalization["ENEMIES"], "CHAMS_ENEMY_COLOR", nameInLocalization = "ENEMIES")
 
     val showSelf = VisCheckBoxCustom(" ", "CHAMS_SHOW_SELF")
-    val chamsSelfColor = VisColorPickerCustom(curLocalization["SELF"], "CHAMS_SELF_COLOR")
+    val chamsSelfColor = VisColorPickerCustom(curLocalization["SELF"], "CHAMS_SELF_COLOR", nameInLocalization = "SELF")
 
     init {
         ////////////////////FORMATTING

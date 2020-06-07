@@ -1,4 +1,4 @@
-package rat.poison.ui.uiHelpers.tables
+﻿package rat.poison.ui.uiHelpers.tables
 
 import com.badlogic.gdx.graphics.Color
 import com.kotcrab.vis.ui.util.dialog.Dialogs
@@ -14,6 +14,7 @@ import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.updateDisableEsp
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
+import rat.poison.ui.uiHelpers.VisLabelCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
@@ -21,67 +22,67 @@ import rat.poison.ui.uiUpdate
 
 class AimTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
-    val enableAim = VisCheckBoxCustom(curLocalization["ENABLE_AIM"], "ENABLE_AIM")
-    val aimToggleKey = VisInputFieldCustom(curLocalization["AIM_TOGGLE_KEY"], "AIM_TOGGLE_KEY")
-    val activateFromFireKey = VisCheckBoxCustom(curLocalization["ACTIVATE_FROM_AIM_KEY"], "ACTIVATE_FROM_AIM_KEY")
-    val holdAim = VisCheckBoxCustom(curLocalization["HOLD_AIM"], "HOLD_AIM")
-    val teammatesAreEnemies = VisCheckBoxCustom(curLocalization["TEAMMATES_ARE_ENEMIES"], "TEAMMATES_ARE_ENEMIES")
+    val enableAim = VisCheckBoxCustom(curLocalization["ENABLE_AIM"], "ENABLE_AIM", nameInLocalization = "ENABLE_AIM")
+    val aimToggleKey = VisInputFieldCustom(curLocalization["AIM_TOGGLE_KEY"], "AIM_TOGGLE_KEY", nameInLocalization = "AIM_TOGGLE_KEY")
+    val activateFromFireKey = VisCheckBoxCustom(curLocalization["ACTIVATE_FROM_AIM_KEY"], "ACTIVATE_FROM_AIM_KEY", nameInLocalization = "ACTIVATE_FROM_AIM_KEY")
+    val holdAim = VisCheckBoxCustom(curLocalization["HOLD_AIM"], "HOLD_AIM", nameInLocalization = "HOLD_AIM")
+    val teammatesAreEnemies = VisCheckBoxCustom(curLocalization["TEAMMATES_ARE_ENEMIES"], "TEAMMATES_ARE_ENEMIES", nameInLocalization = "TEAMMATES_ARE_ENEMIES")
 
-    val fovTypeLabel = VisLabel(curLocalization["FOV_TYPE"])
+    val fovTypeLabel = VisLabelCustom(curLocalization["FOV_TYPE"], nameInLocalization = "FOV_TYPE")
     val fovTypeBox = VisSelectBox<String>()
 
-    val forceAimBoneKey = VisInputFieldCustom(curLocalization["FORCE_AIM_BONE_KEY"], "FORCE_AIM_BONE_KEY")
-    val forceAimKey = VisInputFieldCustom(curLocalization["FORCE_AIM_KEY"], "FORCE_AIM_KEY")
-    val forceAimAlways = VisCheckBoxCustom(curLocalization["FORCE_AIM_ALWAYS"], "FORCE_AIM_ALWAYS")
-    val forceAimThroughWalls = VisCheckBoxCustom(curLocalization["FORCE_AIM_THROUGH_WALLS"], "FORCE_AIM_THROUGH_WALLS")
+    val forceAimBoneKey = VisInputFieldCustom(curLocalization["FORCE_AIM_BONE_KEY"], "FORCE_AIM_BONE_KEY", nameInLocalization = "FORCE_AIM_BONE_KEY")
+    val forceAimKey = VisInputFieldCustom(curLocalization["FORCE_AIM_KEY"], "FORCE_AIM_KEY", nameInLocalization = "FORCE_AIM_KEY")
+    val forceAimAlways = VisCheckBoxCustom(curLocalization["FORCE_AIM_ALWAYS"], "FORCE_AIM_ALWAYS", nameInLocalization = "FORCE_AIM_ALWAYS")
+    val forceAimThroughWalls = VisCheckBoxCustom(curLocalization["FORCE_AIM_THROUGH_WALLS"], "FORCE_AIM_THROUGH_WALLS", nameInLocalization = "FORCE_AIM_THROUGH_WALLS")
 
     //Automatic Weapons Collapsible
-    val automaticWeaponsCheckBox = VisCheckBoxCustom(curLocalization["AUTOMATIC_WEAPONS"], "AUTOMATIC_WEAPONS")
-    val automaticWeaponsInput = VisInputFieldCustom(curLocalization["AUTO_WEP_DELAY"], "AUTO_WEP_DELAY", false)
+    val automaticWeaponsCheckBox = VisCheckBoxCustom(curLocalization["AUTOMATIC_WEAPONS"], "AUTOMATIC_WEAPONS", nameInLocalization = "AUTOMATIC_WEAPONS")
+    val automaticWeaponsInput = VisInputFieldCustom(curLocalization["AUTO_WEP_DELAY"], "AUTO_WEP_DELAY", false, nameInLocalization = "AUTO_WEP_DELAY")
 
-    val targetSwapDelay = VisSliderCustom(curLocalization["AIM_TARGET_SWAP_DELAY"], "AIM_TARGET_SWAP_DELAY", 0F, 500F, 10F, true, width1 = 200F, width2 = 250F)
+    val targetSwapDelay = VisSliderCustom(curLocalization["AIM_TARGET_SWAP_DELAY"], "AIM_TARGET_SWAP_DELAY", 0F, 500F, 10F, true, width1 = 200F, width2 = 250F, nameInLocalization = "AIM_TARGET_SWAP_DELAY")
 
     //Override Weapon Checkbox & Selection Box
     private val categorySelection = VisTable()
     val categorySelectionBox = VisSelectBox<String>()
-    val categorySelectLabel = VisLabel(curLocalization["WEAPON_CATEGORY"])
-    val weaponOverrideCheckBox = VisCheckBox(curLocalization["OVERRIDE_WEAPONS_CHECKBOX"])
+    val categorySelectLabel = VisLabelCustom(curLocalization["WEAPON_CATEGORY"], nameInLocalization = "WEAPON_CATEGORY")
+    val weaponOverrideCheckBox = VisCheckBoxCustom(curLocalization["OVERRIDE_WEAPONS_CHECKBOX"], "", "OVERRIDE_WEAPONS_CHECKBOX")
 
-    val enableAimOnShot = ATabVisCheckBox(curLocalization["AIM_ONLY_ON_SHOT"], "_AIM_ONLY_ON_SHOT")
-    val enableFactorRecoil = ATabVisCheckBox(curLocalization["FACTOR_RECOIL"], "_FACTOR_RECOIL")
-    val enableFlatAim = ATabVisCheckBox(curLocalization["ENABLE_FLAT_AIM"], "_ENABLE_FLAT_AIM")
-    val enablePathAim = ATabVisCheckBox(curLocalization["ENABLE_PATH_AIM"], "_ENABLE_PATH_AIM")
-    val enableScopedOnly = VisCheckBoxCustom(curLocalization["SNIPER_ENABLE_SCOPED_ONLY"], "SNIPER_ENABLE_SCOPED_ONLY")
+    val enableAimOnShot = ATabVisCheckBox(curLocalization["AIM_ONLY_ON_SHOT"], "_AIM_ONLY_ON_SHOT", nameInLocalization = "AIM_ONLY_ON_SHOT")
+    val enableFactorRecoil = ATabVisCheckBox(curLocalization["FACTOR_RECOIL"], "_FACTOR_RECOIL", nameInLocalization = "FACTOR_RECOIL")
+    val enableFlatAim = ATabVisCheckBox(curLocalization["ENABLE_FLAT_AIM"], "_ENABLE_FLAT_AIM", nameInLocalization = "ENABLE_FLAT_AIM")
+    val enablePathAim = ATabVisCheckBox(curLocalization["ENABLE_PATH_AIM"], "_ENABLE_PATH_AIM", nameInLocalization = "ENABLE_PATH_AIM")
+    val enableScopedOnly = VisCheckBoxCustom(curLocalization["SNIPER_ENABLE_SCOPED_ONLY"], "SNIPER_ENABLE_SCOPED_ONLY", nameInLocalization = "SNIPER_ENABLE_SCOPED_ONLY")
 
-    val aimBoneLabel = VisLabel(curLocalization["AIM_BONE"])
+    val aimBoneLabel = VisLabelCustom(curLocalization["AIM_BONE"], nameInLocalization = "AIM_BONE")
     val aimBoneBox = VisSelectBox<String>()
 
-    val forceAimBoneLabel = VisLabel(curLocalization["AIM_FORCE_BONE"])
+    val forceAimBoneLabel = VisLabelCustom(curLocalization["AIM_FORCE_BONE"], nameInLocalization = "AIM_FORCE_BONE")
     val forceAimBoneBox = VisSelectBox<String>()
 
-    val aimFov = ATabVisSlider(curLocalization["AIM_FOV"], "_AIM_FOV", 1F, 180F, 1F, true)
-    val aimSpeed = ATabVisSlider(curLocalization["AIM_SPEED"], "_AIM_SPEED", 0F, 10F, 1F, true)
-    val aimSmooth = ATabVisSlider(curLocalization["AIM_SMOOTHNESS"], "_AIM_SMOOTHNESS", 1F, 5F, .1F, false)
-    val aimAfterShots = ATabVisSlider(curLocalization["AIM_AFTER_SHOTS"], "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true)
+    val aimFov = ATabVisSlider(curLocalization["AIM_FOV"], "_AIM_FOV", 1F, 180F, 1F, true, nameInLocalization = "AIM_FOV")
+    val aimSpeed = ATabVisSlider(curLocalization["AIM_SPEED"], "_AIM_SPEED", 0F, 10F, 1F, true, nameInLocalization = "AIM_SPEED")
+    val aimSmooth = ATabVisSlider(curLocalization["AIM_SMOOTHNESS"], "_AIM_SMOOTHNESS", 1F, 5F, .1F, false, nameInLocalization = "AIM_SMOOTHNESS")
+    val aimAfterShots = ATabVisSlider(curLocalization["AIM_AFTER_SHOTS"], "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true, nameInLocalization = "AIM_AFTER_SHOTS")
 
     //Perfect Aim Collapsible
     val perfectAimCheckBox = VisCheckBox(curLocalization["ENABLE_PERFECT_AIM"])
     private val perfectAimTable = VisTable()
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
-    val perfectAimFov = ATabVisSlider(curLocalization["FOV"], "_PERFECT_AIM_FOV", 1F, 180F, 1F, true)
-    val perfectAimChance = ATabVisSlider(curLocalization["PERFECT_AIM_CHANCE"], "_PERFECT_AIM_CHANCE", 1F, 100F, 1F, true)
+    val perfectAimFov = ATabVisSlider(curLocalization["FOV"], "_PERFECT_AIM_FOV", 1F, 180F, 1F, true, nameInLocalization = "FOV")
+    val perfectAimChance = ATabVisSlider(curLocalization["PERFECT_AIM_CHANCE"], "_PERFECT_AIM_CHANCE", 1F, 100F, 1F, true, nameInLocalization = "PERFECT_AIM_CHANCE")
 
     //Advanced Settings Collapsible
     val advancedSettingsCheckBox = VisCheckBox(curLocalization["ADVANCED_SETTINGS"])
     private val advancedSettingsTable = VisTable()
     val advancedSettingsCollapsible = CollapsibleWidget(advancedSettingsTable)
-    val randomizeX = ATabVisSlider(curLocalization["RANDOM_X_VARIATION"], "_RANDOM_X_VARIATION", 0F, 50F, 1F, true)
-    val randomizeY = ATabVisSlider(curLocalization["RANDOM_Y_VARIATION"], "_RANDOM_Y_VARIATION", 0F, 50F, 1F, true)
-    val randomizeDZ = ATabVisSlider(curLocalization["VARIATION_DEADZONE"], "_VARIATION_DEADZONE", 0F, 100F, 5F, true)
-    val advancedRcsX = ATabVisSlider(curLocalization["AIM_RCS_X"], "_AIM_RCS_X", 0.05F, 1F, 0.05F, false)
-    val advancedRcsY = ATabVisSlider(curLocalization["AIM_RCS_Y"], "_AIM_RCS_Y", 0.05F, 1F, 0.05F, false)
-    val advancedRcsVariation = ATabVisSlider(curLocalization["AIM_RCS_VARIATION"], "_AIM_RCS_VARIATION", 0F, 1F, 0.05F, false)
-    val advancedSpeedDivisor = ATabVisSlider(curLocalization["AIM_SPEED_DIVISOR"], "_AIM_SPEED_DIVISOR", 1F, 10F, 1F, true)
+    val randomizeX = ATabVisSlider(curLocalization["RANDOM_X_VARIATION"], "_RANDOM_X_VARIATION", 0F, 50F, 1F, true, nameInLocalization = "RANDOM_X_VARIATION")
+    val randomizeY = ATabVisSlider(curLocalization["RANDOM_Y_VARIATION"], "_RANDOM_Y_VARIATION", 0F, 50F, 1F, true, nameInLocalization = "RANDOM_Y_VARIATION")
+    val randomizeDZ = ATabVisSlider(curLocalization["VARIATION_DEADZONE"], "_VARIATION_DEADZONE", 0F, 100F, 5F, true, nameInLocalization = "VARIATION_DEADZONE")
+    val advancedRcsX = ATabVisSlider(curLocalization["AIM_RCS_X"], "_AIM_RCS_X", 0.05F, 1F, 0.05F, false, nameInLocalization = "AIM_RCS_X")
+    val advancedRcsY = ATabVisSlider(curLocalization["AIM_RCS_Y"], "_AIM_RCS_Y", 0.05F, 1F, 0.05F, false, nameInLocalization = "AIM_RCS_Y")
+    val advancedRcsVariation = ATabVisSlider(curLocalization["AIM_RCS_VARIATION"], "_AIM_RCS_VARIATION", 0F, 1F, 0.05F, false, nameInLocalization = "AIM_RCS_VARIATION")
+    val advancedSpeedDivisor = ATabVisSlider(curLocalization["AIM_SPEED_DIVISOR"], "_AIM_SPEED_DIVISOR", 1F, 10F, 1F, true, nameInLocalization = "AIM_SPEED_DIVISOR")
 
     init {
         val map = aimingMap()

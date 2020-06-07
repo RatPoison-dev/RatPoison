@@ -1,4 +1,4 @@
-@file:Suppress("BlockingMethodInNonBlockingContext")
+﻿@file:Suppress("BlockingMethodInNonBlockingContext")
 
 package rat.poison.ui.tabs
 
@@ -18,9 +18,7 @@ import rat.poison.App.uiKeybinds
 import rat.poison.App.uiMenu
 import rat.poison.App.uiSpecList
 import rat.poison.ui.changed
-import rat.poison.ui.uiHelpers.VisCheckBoxCustom
-import rat.poison.ui.uiHelpers.VisInputFieldCustom
-import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiHelpers.*
 import rat.poison.ui.uiPanels.optionsTab
 import rat.poison.ui.uiUpdate
 import java.io.File
@@ -34,12 +32,12 @@ class OptionsTab : Tab(false, false) {
     var fileSelectBox: VisSelectBox<String>
     var localizationSelectBox: VisSelectBox<String>
 
-    val menuKey = VisInputFieldCustom(curLocalization["MENU_KEY"], "MENU_KEY")
-    private val oglFPS = VisSliderCustom(curLocalization["OPENGL_FPS"], "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F)
-    private val stayFocused = VisCheckBoxCustom(curLocalization["MENU_STAY_FOCUSED"], "MENU_STAY_FOCUSED")
-    private val debug = VisCheckBoxCustom(curLocalization["ENABLE_DEBUG"], "DEBUG")
-    private val keybinds = VisCheckBoxCustom(curLocalization["KEYBINDS"], "KEYBINDS")
-    private val blur = VisCheckBoxCustom(curLocalization["GAUSSIAN_BLUR"], "GAUSSIAN_BLUR")
+    val menuKey = VisInputFieldCustom(curLocalization["MENU_KEY"], "MENU_KEY", nameInLocalization = "MENU_KEY")
+    private val oglFPS = VisSliderCustom(curLocalization["OPENGL_FPS"], "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F, nameInLocalization = "OPENGL_FPS")
+    private val stayFocused = VisCheckBoxCustom(curLocalization["MENU_STAY_FOCUSED"], "MENU_STAY_FOCUSED", nameInLocalization = "MENU_STAY_FOCUSED")
+    private val debug = VisCheckBoxCustom(curLocalization["ENABLE_DEBUG"], "DEBUG", nameInLocalization = "ENABLE_DEBUG")
+    private val keybinds = VisCheckBoxCustom(curLocalization["KEYBINDS"], "KEYBINDS", nameInLocalization = "KEYBINDS")
+    private val blur = VisCheckBoxCustom(curLocalization["GAUSSIAN_BLUR"], "GAUSSIAN_BLUR", nameInLocalization = "GAUSSIAN_BLUR")
     private val discordLink = LinkLabel(curLocalization["JOIN_DISCORD"], "https://discord.gg/J2uHTJ2")
 
     init {
@@ -48,7 +46,7 @@ class OptionsTab : Tab(false, false) {
 
         //Create UIAlpha Slider
         val menuAlpha = VisTable()
-        val menuAlphaLabel = VisLabel(curLocalization["MENU_ALPHA_SLIDER"] + 1F) //1F is default
+        val menuAlphaLabel = VisLabelCustom(curLocalization["MENU_ALPHA_SLIDER"] + 1F, nameInLocalization = "MENU_ALPHA_SLIDER") //1F is default
         val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, false)
         menuAlphaSlider.value = 1F
         menuAlphaSlider.changed { _, _ ->
@@ -61,7 +59,7 @@ class OptionsTab : Tab(false, false) {
 
 
         //Create Save Button
-        val saveButton = VisTextButton(curLocalization["SAVE_CONFIG"])
+        val saveButton = VisTextButtonCustom(curLocalization["SAVE_CONFIG"], nameInLocalization = "SAVE_CONFIG")
         saveButton.changed { _, _ ->
             Dialogs.showInputDialog(menuStage, curLocalization["ENTER_CONFIG_NAME"], "", object : InputDialogAdapter() {
                 override fun finished(input: String) {
@@ -72,7 +70,7 @@ class OptionsTab : Tab(false, false) {
         }
 
         //Create Load Button
-        val loadButton = VisTextButton(curLocalization["LOAD_CONFIG"])
+        val loadButton = VisTextButtonCustom(curLocalization["LOAD_CONFIG"], nameInLocalization = "LOAD_CONFIG")
         loadButton.changed { _, _ ->
             if (!fileSelectBox.selected.isNullOrEmpty()) {
                 if (fileSelectBox.selected.count() > 0) {
@@ -81,7 +79,7 @@ class OptionsTab : Tab(false, false) {
             }
             true
         }
-        val loadLocalizationButton = VisTextButton(curLocalization["LOAD_LOCALIZATION"])
+        val loadLocalizationButton = VisTextButtonCustom(curLocalization["LOAD_LOCALIZATION"], nameInLocalization = "LOAD_LOCALIZATION")
         loadLocalizationButton.changed { _, _ ->
             if (!localizationSelectBox.selected.isNullOrEmpty()) {
                 if (localizationSelectBox.selected.count() > 0) {
@@ -93,7 +91,7 @@ class OptionsTab : Tab(false, false) {
             true
         }
         //Create Delete Button
-        val deleteButton = VisTextButton(curLocalization["DELETE_CONFIG"])
+        val deleteButton = VisTextButtonCustom(curLocalization["DELETE_CONFIG"], nameInLocalization = "DELETE_CONFIG")
         deleteButton.changed { _, _ ->
             if (!fileSelectBox.selected.isNullOrEmpty()) {
                 if (fileSelectBox.selected.count() > 0) {
@@ -109,7 +107,7 @@ class OptionsTab : Tab(false, false) {
         updateLocalizationsList()
 
         //Create Save Current Config To Default
-        val saveCurConfig = VisTextButton(curLocalization["SAVE_CONFIG_TO_DEFAULT"])
+        val saveCurConfig = VisTextButtonCustom(curLocalization["SAVE_CONFIG_TO_DEFAULT"], nameInLocalization = "SAVE_CONFIG_TO_DEFAULT")
         saveCurConfig.changed { _, _ ->
             saveWindows()
             saveDefault()

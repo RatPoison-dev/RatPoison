@@ -1,4 +1,4 @@
-package rat.poison.ui.tabs
+﻿package rat.poison.ui.tabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
@@ -16,43 +16,45 @@ import rat.poison.scripts.*
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.nadeHelperTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
+import rat.poison.ui.uiHelpers.VisLabelCustom
+import rat.poison.ui.uiHelpers.VisTextButtonCustom
 import java.io.File
 
 class NadeHelperTab : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
-    val enableNadeHelper = VisCheckBoxCustom(curLocalization["ENABLE_NADE_HELPER"], "ENABLE_NADE_HELPER")
-    val nadeHelperLoadedFile = VisLabel(curLocalization["LOADED_NOTHING"])
+    val enableNadeHelper = VisCheckBoxCustom(curLocalization["ENABLE_NADE_HELPER"], "ENABLE_NADE_HELPER", nameInLocalization = "ENABLE_NADE_HELPER")
+    val nadeHelperLoadedFile = VisLabelCustom(curLocalization["LOADED_NOTHING"], "LOADED_NOTHING")
+    val addPosition = VisTextButtonCustom(curLocalization["CREATE_GRENADE_POSITION"], "CREATE_GRENADE_POSITION")
+    val saveFileNadeHelper = VisTextButtonCustom(curLocalization["SAVE_AS_FILE"], "SAVE_AS_FILE")
+    val loadFileNadeHelper = VisTextButtonCustom(curLocalization["LOAD_FROM_FILE"], "LOAD_FROM_FILE")
+    val deleteFileNadeHelper = VisTextButtonCustom(curLocalization["DELETE_SELECTED_FILE"], "DELETE_SELECTED_FILE")
+    val clearNadeHelper = VisTextButtonCustom(curLocalization["CLEAR_CURRENTLY_LOADED"], "CLEAR_CURRENTLY_LOADED")
+    val deleteCurrentPositionHelper = VisTextButtonCustom(curLocalization["DELETE_AT_CURRENT_POSITION"], "DELETE_AT_CURRENT_POSITION")
     private val nadeHelperFileSelectBox = VisSelectBox<String>()
 
     init {
         //Nade position create button
-        val addPosition = VisTextButton(curLocalization["CREATE_GRENADE_POSITION"])
         addPosition.changed { _, _ ->
             createPosition()
         }
-
-        val saveFileNadeHelper = VisTextButton(curLocalization["SAVE_AS_FILE"])
         saveFileNadeHelper.changed { _, _ ->
             savePositions()
         }
 
-        val loadFileNadeHelper = VisTextButton(curLocalization["LOAD_FROM_FILE"])
         loadFileNadeHelper.changed { _, _ ->
             if (nadeHelperFileSelectBox.items.count() > 0) {
                 loadPositions(nadeHelperFileSelectBox.selected)
             }
         }
 
-        val deleteFileNadeHelper = VisTextButton(curLocalization["DELETE_SELECTED_FILE"])
         deleteFileNadeHelper.changed { _, _ ->
             if (nadeHelperFileSelectBox.items.count() > 0) {
                 deleteNadeHelperFile(nadeHelperFileSelectBox.selected)
             }
         }
 
-        val clearNadeHelper = VisTextButton(curLocalization["CLEAR_CURRENTLY_LOADED"])
         clearNadeHelper.changed { _, _ ->
             Dialogs.showOptionDialog(App.menuStage, "Warning", curLocalization["CLEAR_CURRENTLY_LOADED_WARNING"], Dialogs.OptionDialogType.YES_NO, object: OptionDialogAdapter() {
                 override fun yes() {
@@ -62,7 +64,6 @@ class NadeHelperTab : Tab(false, false) {
             })
         }
 
-        val deleteCurrentPositionHelper = VisTextButton(curLocalization["DELETE_AT_CURRENT_POSITION"])
         deleteCurrentPositionHelper.changed { _, _ ->
             deletePosition()
         }
@@ -116,5 +117,12 @@ class NadeHelperTab : Tab(false, false) {
 fun nadeHelperTabUpdate() {
     nadeHelperTab.apply {
         enableNadeHelper.update()
+        addPosition.update()
+        saveFileNadeHelper.update()
+        loadFileNadeHelper.update()
+        deleteFileNadeHelper.update()
+        clearNadeHelper.update()
+        nadeHelperLoadedFile.update()
+        deleteCurrentPositionHelper.update()
     }
 }

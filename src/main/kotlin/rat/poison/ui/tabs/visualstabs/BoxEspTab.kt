@@ -1,4 +1,4 @@
-package rat.poison.ui.tabs.visualstabs
+﻿package rat.poison.ui.tabs.visualstabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisSelectBox
@@ -17,31 +17,31 @@ class BoxEspTab : Tab(false, false) {
 
     val map = visualsMap()
     //Init labels/sliders/boxes that show values here
-    val skeletonEsp = VisCheckBoxCustom(curLocalization["ENABLE_SKELETON_ESP"], "SKELETON_ESP")
-    val showTeamSkeleton = VisCheckBoxCustom(curLocalization["TEAMMATES"], "SKELETON_SHOW_TEAM")
-    val showEnemiesSkeleton = VisCheckBoxCustom(curLocalization["ENEMIES"], "SKELETON_SHOW_ENEMIES")
-    val boxEsp = VisCheckBoxCustom(curLocalization["ENABLE_BOX_ESP"], "ENABLE_BOX_ESP")
-    val boxEspDetails = VisCheckBoxCustom(curLocalization["ENABLE_BOX_ESP_DETAILS"], "BOX_ESP_DETAILS")
-    val boxEspHealth = VisCheckBoxCustom(curLocalization["HEALTH"], "BOX_ESP_HEALTH")
+    val skeletonEsp = VisCheckBoxCustom(curLocalization["ENABLE_SKELETON_ESP"], "SKELETON_ESP", nameInLocalization = "ENABLE_SKELETON_ESP")
+    val showTeamSkeleton = VisCheckBoxCustom(curLocalization["TEAMMATES"], "SKELETON_SHOW_TEAM", nameInLocalization = "TEAMMATES")
+    val showEnemiesSkeleton = VisCheckBoxCustom(curLocalization["ENEMIES"], "SKELETON_SHOW_ENEMIES", nameInLocalization = "ENEMIES")
+    val boxEsp = VisCheckBoxCustom(curLocalization["ENABLE_BOX_ESP"], "ENABLE_BOX_ESP", nameInLocalization = "ENABLE_BOX_ESP")
+    val boxEspDetails = VisCheckBoxCustom(curLocalization["ENABLE_BOX_ESP_DETAILS"], "BOX_ESP_DETAILS", nameInLocalization = "ENABLE_BOX_ESP_DETAILS")
+    val boxEspHealth = VisCheckBoxCustom(curLocalization["HEALTH"], "BOX_ESP_HEALTH", nameInLocalization = "HEALTH")
     val boxEspHealthPos = VisSelectBox<String>()
-    val boxEspArmor = VisCheckBoxCustom(curLocalization["ARMOR"], "BOX_ESP_ARMOR")
+    val boxEspArmor = VisCheckBoxCustom(curLocalization["ARMOR"], "BOX_ESP_ARMOR", nameInLocalization = "ARMOR")
     val boxEspArmorPos = VisSelectBox<String>()
-    val boxEspName = VisCheckBoxCustom(curLocalization["NAME"], "BOX_ESP_NAME")
+    val boxEspName = VisCheckBoxCustom(curLocalization["NAME"], "BOX_ESP_NAME", nameInLocalization = "NAME")
     val boxEspNamePos = VisSelectBox<String>()
-    val boxEspWeapon = VisCheckBoxCustom(curLocalization["WEAPON"], "BOX_ESP_WEAPON")
+    val boxEspWeapon = VisCheckBoxCustom(curLocalization["WEAPON"], "BOX_ESP_WEAPON", nameInLocalization = "WEAPON")
     val boxEspWeaponPos = VisSelectBox<String>()
-    val boxEspScope = VisCheckBoxCustom(curLocalization["SCOPE"], "BOX_ESP_SCOPE")
+    val boxEspScope = VisCheckBoxCustom(curLocalization["SCOPE"], "BOX_ESP_SCOPE", nameInLocalization = "SCOPE")
     val boxEspScopePos = VisSelectBox<String>()
-    val boxDetailColor = VisColorPickerCustom(curLocalization["BOX_DETAILS_TEXT_COLOR"], "BOX_DETAILS_TEXT_COLOR")
+    val boxDetailColor = VisColorPickerCustom(curLocalization["BOX_DETAILS_TEXT_COLOR"], "BOX_DETAILS_TEXT_COLOR", nameInLocalization = "BOX_DETAILS_TEXT_COLOR")
 
     val showTeamBox = VisCheckBoxCustom(" ", "BOX_SHOW_TEAM")
-    val boxTeamColor = VisColorPickerCustom(curLocalization["TEAMMATES"], "BOX_TEAM_COLOR")
+    val boxTeamColor = VisColorPickerCustom(curLocalization["TEAMMATES"], "BOX_TEAM_COLOR", nameInLocalization = "TEAMMATES")
 
     val showEnemiesBox = VisCheckBoxCustom(" ", "BOX_SHOW_ENEMIES")
-    val boxEnemyColor = VisColorPickerCustom(curLocalization["ENEMIES"], "BOX_ENEMY_COLOR")
+    val boxEnemyColor = VisColorPickerCustom(curLocalization["ENEMIES"], "BOX_ENEMY_COLOR", nameInLocalization = "ENEMIES")
 
     val showDefusers = VisCheckBoxCustom(" ", "BOX_SHOW_DEFUSERS")
-    val boxDefuserColor = VisColorPickerCustom(curLocalization["DEFUSERS"], "BOX_DEFUSER_COLOR")
+    val boxDefuserColor = VisColorPickerCustom(curLocalization["DEFUSERS"], "BOX_DEFUSER_COLOR", nameInLocalization = "DEFUSERS")
 
     init {
         //Create Box ESP Health Pos Selector

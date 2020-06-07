@@ -1,4 +1,4 @@
-package rat.poison.ui.uiPanelTables
+﻿package rat.poison.ui.uiPanelTables
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Align
@@ -6,6 +6,7 @@ import com.kotcrab.vis.ui.widget.*
 import rat.poison.*
 import rat.poison.settings.*
 import rat.poison.ui.changed
+import rat.poison.ui.uiHelpers.VisLabelCustom
 import rat.poison.ui.uiPanels.overridenWeapons
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.GetWeaponsMap
@@ -21,7 +22,7 @@ class OverridenWeapons : VisTable(true) {
     private val categorySelectionBox = VisSelectBox<String>()
 
     //Override Weapon Checkbox & Selection Box
-    private val categorySelectLabel = VisLabel(curLocalization["CATEGORY"])
+    private val categorySelectLabel = VisLabelCustom(curLocalization["CATEGORY"], nameInLocalization = "CATEGORY")
 
     private val weaponOverrideSelectionBox = VisSelectBox<String>()
     val weaponOverrideEnableCheckBox = VisCheckBox(curLocalization["ENABLE_OVERRIDE"])
@@ -31,28 +32,28 @@ class OverridenWeapons : VisTable(true) {
     val enablePathAim = VisCheckBox(curLocalization["ENABLE_PATH_AIM"])
     val enableScopedOnly = VisCheckBox(curLocalization["SNIPER_ENABLE_SCOPED_ONLY"])
 
-    private val aimBoneLabel = VisLabel(curLocalization["AIM_BONE"])
+    private val aimBoneLabel = VisLabelCustom(curLocalization["AIM_BONE"], nameInLocalization = "AIM_BONE")
     val aimBoneBox = VisSelectBox<String>()
 
-    val aimFovLabel = VisLabel("${curLocalization["FOV"]}: "  + curSettings[categorySelected + "_AIM_FOV"].toInt().toString())
+    val aimFovLabel = VisLabelCustom("${curLocalization["FOV"]}: "  + curSettings[categorySelected + "_AIM_FOV"].toInt().toString(), nameInLocalization = "FOV")
     val aimFovSlider = VisSlider(1F, 180F, 1F, false)
 
-    val aimSpeedLabel = VisLabel("${curLocalization["OVERRIDE_AIM_SPEED"]} " + curSettings[categorySelected + "_AIM_SPEED"].toInt().toString())
+    val aimSpeedLabel = VisLabelCustom("${curLocalization["OVERRIDE_AIM_SPEED"]} " + curSettings[categorySelected + "_AIM_SPEED"].toInt().toString(), nameInLocalization = "OVERRIDE_AIM_SPEED")
     val aimSpeedSlider = VisSlider(0F, 5F, 1F, false)
 
-    val aimSmoothnessLabel = VisLabel("${curLocalization["OVERRIDE_SMOOTH"]} " + curSettings[categorySelected + "_AIM_SMOOTHNESS"].toFloat())
+    val aimSmoothnessLabel = VisLabelCustom("${curLocalization["OVERRIDE_SMOOTH"]} " + curSettings[categorySelected + "_AIM_SMOOTHNESS"].toFloat(), nameInLocalization = "OVERRIDE_SMOOTH")
     val aimSmoothnessSlider = VisSlider(1F, 5F, 0.1F, false)
 
-    val aimAfterShotsLabel = VisLabel("${curLocalization["AIM_AFTER_SHOTS"]} :" + curSettings[categorySelected + "AIM_AFTER_SHOTS"])
+    val aimAfterShotsLabel = VisLabelCustom("${curLocalization["AIM_AFTER_SHOTS"]} :" + curSettings[categorySelected + "AIM_AFTER_SHOTS"], nameInLocalization = "AIM_AFTER_SHOTS")
     val aimAfterShotsSlider = VisSlider(1F, 10F, 1F, false)
 
     //Perfect Aim Collapsible
     val perfectAimCheckBox = VisCheckBox(curLocalization["ENABLE_PERFECT_AIM"])
     private val perfectAimTable = VisTable()
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
-    val perfectAimFovLabel = VisLabel("${curLocalization["FOV"]}: " + curSettings[categorySelected + "_PERFECT_AIM_FOV"].toInt().toString())
+    val perfectAimFovLabel = VisLabelCustom("${curLocalization["FOV"]}: " + curSettings[categorySelected + "_PERFECT_AIM_FOV"].toInt().toString(), nameInLocalization = "FOV")
     val perfectAimFovSlider = VisSlider(1F, 180F, 1F, false)
-    val perfectAimChanceLabel = VisLabel("${curLocalization["PERFECT_AIM_CHANCE"]}: " + curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toInt().toString())
+    val perfectAimChanceLabel = VisLabelCustom("${curLocalization["PERFECT_AIM_CHANCE"]}: " + curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toInt().toString(), nameInLocalization = "PERFECT_AIM_CHANCE")
     val perfectAimChanceSlider = VisSlider(1F, 100F, 1F, false)
 
     init {

@@ -1,15 +1,16 @@
-package rat.poison.ui.uiHelpers
+﻿package rat.poison.ui.uiHelpers
 
 import com.kotcrab.vis.ui.widget.VisCheckBox
 import rat.poison.boolToStr
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.strToBool
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
 
-class VisCheckBoxCustom(mainText: String, varName: String) : VisCheckBox(mainText) {
+class VisCheckBoxCustom(mainText: String, varName: String, nameInLocalization: String = "") : VisCheckBox(mainText) {
     private val variableName = varName
-
+    private val nameInLocalization = nameInLocalization
     init {
         update()
         changed { _, _ ->
@@ -26,6 +27,7 @@ class VisCheckBoxCustom(mainText: String, varName: String) : VisCheckBox(mainTex
     }
 
     fun update() {
+        this.setText(curLocalization[nameInLocalization])
         isChecked = curSettings[variableName].strToBool()
     }
 

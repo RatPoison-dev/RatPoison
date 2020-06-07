@@ -2,6 +2,7 @@ package rat.poison.ui.uiHelpers.aimTab
 
 import com.kotcrab.vis.ui.widget.VisCheckBox
 import rat.poison.boolToStr
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.strToBool
 import rat.poison.ui.changed
@@ -9,9 +10,9 @@ import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.updateDisableAim
 import rat.poison.ui.uiUpdate
 
-class ATabVisCheckBox(mainText: String, varExtension: String) : VisCheckBox(mainText) {
+class ATabVisCheckBox(mainText: String, varExtension: String, nameInLocalization: String = "") : VisCheckBox(mainText) {
     private val variableExtension = varExtension
-
+    val nameInLocalization = nameInLocalization
     init {
         update()
         changed { _, _ ->
@@ -39,6 +40,7 @@ class ATabVisCheckBox(mainText: String, varExtension: String) : VisCheckBox(main
         } else {
             println("[Error] $categorySelected$variableExtension is empty")
         }
+        this.setText(curLocalization[nameInLocalization])
     }
 
     fun disable(bool: Boolean) {

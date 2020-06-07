@@ -1,4 +1,4 @@
-package rat.poison.ui.tabs
+﻿package rat.poison.ui.tabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
@@ -16,6 +16,8 @@ import rat.poison.scripts.skinChanger
 import rat.poison.toSkinWeaponClass
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
+import rat.poison.ui.uiHelpers.VisLabelCustom
+import rat.poison.ui.uiHelpers.VisTextButtonCustom
 import rat.poison.ui.uiPanels.skinChangerTab
 import java.io.File
 
@@ -23,8 +25,8 @@ class SkinChangerTab : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
-    var enableSkinChanger = VisCheckBoxCustom(curLocalization["ENABLE_SKIN_CHANGER"], "SKINCHANGER")
-    //var enableKnifeChanger = VisCheckBoxCustom(curLocalization["ENABLE_KNIFE_CHANGER"], "KNIFECHANGER")
+    var enableSkinChanger = VisCheckBoxCustom(curLocalization["ENABLE_SKIN_CHANGER"], "SKINCHANGER", nameInLocalization = "ENABLE_SKIN_CHANGER")
+    //var enableKnifeChanger = VisCheckBoxCustom(curLocalization["ENABLE_KNIFE_CHANGER"], "KNIFECHANGER", nameInLocalization = "ENABLE_KNIFE_CHANGER")
 
     private var categorySelectionBox = VisSelectBox<String>()
     private var weaponSelectionBox = VisSelectBox<String>()
@@ -35,17 +37,17 @@ class SkinChangerTab : Tab(false, false) {
     private var listAdapter = ListAdapter(strArray)
     private var skinSelectionList = ListView(listAdapter)
 
-    private var idLabel = VisLabel(curLocalization["SKIN_ID"])
-    private var statTrakLabel = VisLabel(curLocalization["STATTRACK"])
-    private var wearLabel = VisLabel(curLocalization["WEAR"])
+    private var idLabel = VisLabelCustom(curLocalization["SKIN_ID"], nameInLocalization = "SKIN_ID")
+    private var statTrakLabel = VisLabelCustom(curLocalization["STATTRACK"], nameInLocalization = "STATTRACK")
+    private var wearLabel = VisLabelCustom(curLocalization["WEAR"], nameInLocalization = "WEAR")
 
     private var skinIDInput = VisValidatableTextField(Validators.INTEGERS)
     private var skinStatTrak = VisValidatableTextField(Validators.INTEGERS)
     private var skinWear = VisSlider(0.0F, 1.0F, .01F, false)
     //private var skinWear = VisValidatableTextField(Validators.FLOATS)
 
-    private var forceUpdate = VisTextButton(curLocalization["MANUAL_FORCE_UPDATE"])
-    var autoForceUpdate = VisCheckBoxCustom(curLocalization["AUTO_FORCE_UPDATE"], "FORCE_UPDATE_AUTO")
+    private var forceUpdate = VisTextButtonCustom(curLocalization["MANUAL_FORCE_UPDATE"], nameInLocalization = "MANUAL_FORCE_UPDATE")
+    var autoForceUpdate = VisCheckBoxCustom(curLocalization["AUTO_FORCE_UPDATE"], "FORCE_UPDATE_AUTO", nameInLocalization = "AUTO_FORCE_UPDATE")
 
     private var weaponSelected = "DESERT_EAGLE"
     private var minValue = 0.0F

@@ -4,13 +4,14 @@ import com.badlogic.gdx.graphics.Color
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisTable
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
 import kotlin.math.pow
 import kotlin.math.round
 
-class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, width1: Float = 200F, width2: Float = 250F) : VisTable() {
+class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, width1: Float = 200F, width2: Float = 250F, nameInLocalization: String = "") : VisTable() {
     private val labelText = mainText
     private val variableExtension = varExtension
     private val isInt = intVal
@@ -19,6 +20,7 @@ class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMa
     private val w1 = width1
     private val w2 = width2
 
+    val nameInLocalization = nameInLocalization
     private val sliderLabel = VisLabel("$labelText: " + curSettings[categorySelected + variableExtension])
     private val sliderBar = VisSlider(varMin, varMax, stepSize, false)
 
@@ -52,7 +54,7 @@ class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMa
                 round(sliderBar.value * rnd) / rnd
             }
 
-            sliderLabel.setText("$labelText: $sliderVal")
+            sliderLabel.setText("${curLocalization[nameInLocalization]}: $sliderVal")
         } else {
             println("[Error] $categorySelected$variableExtension is empty")
         }

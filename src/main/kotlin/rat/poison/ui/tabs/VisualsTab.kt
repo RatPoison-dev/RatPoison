@@ -1,4 +1,4 @@
-package rat.poison.ui.tabs
+﻿package rat.poison.ui.tabs
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
@@ -34,22 +34,22 @@ class VisualsTab : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     //Static Visuals Tab Items
-    val enableEsp = VisCheckBoxCustom(curLocalization["ENABLE_ESP"], "ENABLE_ESP")
+    val enableEsp = VisCheckBoxCustom(curLocalization["ENABLE_ESP"], "ENABLE_ESP", nameInLocalization = "ENABLE_ESP")
 
-    val visualsToggleKey = VisInputFieldCustom(curLocalization["VISUALS_TOGGLE_KEY"], "VISUALS_TOGGLE_KEY")
+    val visualsToggleKey = VisInputFieldCustom(curLocalization["VISUALS_TOGGLE_KEY"], "VISUALS_TOGGLE_KEY", nameInLocalization = "VISUALS_TOGGLE_KEY")
 
-    val radarEsp = VisCheckBoxCustom(curLocalization["ENABLE_RADAR_ESP"], "RADAR_ESP")
+    val radarEsp = VisCheckBoxCustom(curLocalization["ENABLE_RADAR_ESP"], "RADAR_ESP", nameInLocalization = "ENABLE_RADAR_ESP")
 
-    val nightMode = VisCheckBoxCustom(curLocalization["ENABLE_NIGHTMODE"], "ENABLE_NIGHTMODE")
-    val nightModeSlider = VisSliderCustom(curLocalization["NIGHTMODE_VALUE"], "NIGHTMODE_VALUE", 0.05F, 5F, .05F, false)
+    val nightMode = VisCheckBoxCustom(curLocalization["ENABLE_NIGHTMODE"], "ENABLE_NIGHTMODE", nameInLocalization = "ENABLE_NIGHTMODE")
+    val nightModeSlider = VisSliderCustom(curLocalization["NIGHTMODE_VALUE"], "NIGHTMODE_VALUE", 0.05F, 5F, .05F, false, nameInLocalization = "NIGHTMODE_VALUE")
 
-    val visAdrenaline = VisCheckBoxCustom(curLocalization["ENABLE_ADRENALINE"], "ENABLE_ADRENALINE")
+    val visAdrenaline = VisCheckBoxCustom(curLocalization["ENABLE_ADRENALINE"], "ENABLE_ADRENALINE", nameInLocalization = "ENABLE_ADRENALINE")
 
     val showAimFov = VisCheckBoxCustom(" ", "DRAW_AIM_FOV")
-    val showAimFovColor = VisColorPickerCustom( curLocalization["DRAW_AIM_FOV_COLOR"], "DRAW_AIM_FOV_COLOR")
+    val showAimFovColor = VisColorPickerCustom( curLocalization["DRAW_AIM_FOV_COLOR"], "DRAW_AIM_FOV_COLOR", nameInLocalization = "DRAW_AIM_FOV_COLOR")
 
     val showTriggerFov = VisCheckBoxCustom(" ", "DRAW_TRIGGER_FOV")
-    val showTriggerFovColor = VisColorPickerCustom(curLocalization["DRAW_TRIGGER_FOV_COLOR"], "DRAW_TRIGGER_FOV_COLOR")
+    val showTriggerFovColor = VisColorPickerCustom(curLocalization["DRAW_TRIGGER_FOV_COLOR"], "DRAW_TRIGGER_FOV_COLOR", nameInLocalization = "DRAW_TRIGGER_FOV_COLOR")
 
     init {
         //ESP Tab

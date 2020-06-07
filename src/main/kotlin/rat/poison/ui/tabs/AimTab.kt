@@ -106,6 +106,7 @@ fun updateAim() {
         activateFromFireKey.update()
         teammatesAreEnemies.update()
         holdAim.update()
+        fovTypeLabel.update()
         forceAimBoneKey.update()
         forceAimKey.update()
         forceAimAlways.update()
