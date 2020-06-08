@@ -43,7 +43,6 @@ class UISpectatorList : VisWindow(curLocalization["SPECTATOR_LIST_WINDOW_NAME"])
     fun changeAlpha(alpha: Float) {
         color.a = alpha
     }
-
     fun updatePosition(x: Float, y: Float) {
         setPosition(x, y)
     }

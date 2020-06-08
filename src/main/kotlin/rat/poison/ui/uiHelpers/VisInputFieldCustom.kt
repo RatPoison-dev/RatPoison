@@ -3,10 +3,7 @@
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.kotcrab.vis.ui.util.Validators
-import com.kotcrab.vis.ui.widget.LinkLabel
-import com.kotcrab.vis.ui.widget.VisLabel
-import com.kotcrab.vis.ui.widget.VisTable
-import com.kotcrab.vis.ui.widget.VisValidatableTextField
+import com.kotcrab.vis.ui.widget.*
 import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.ui.changed
@@ -26,6 +23,9 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
 
     init {
         update()
+        if (curLocalization[nameInLocalization+"_TOOLTIP"] != "") {
+            Tooltip.Builder(curLocalization[nameInLocalization+"_TOOLTIP"]).target(this).build()
+        }
         changed { _, _ ->
             if (keyField.text.toIntOrNull() != null) {
                 if (keyField.text != curSettings[variableName]) {

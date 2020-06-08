@@ -1,5 +1,6 @@
 ﻿package rat.poison.ui.uiHelpers
 
+import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisCheckBox
 import rat.poison.boolToStr
 import rat.poison.curLocalization
@@ -12,6 +13,9 @@ class VisCheckBoxCustom(mainText: String, varName: String, nameInLocalization: S
     private val variableName = varName
     private val nameInLocalization = nameInLocalization
     init {
+        if (curLocalization[nameInLocalization+"_TOOLTIP"] != "") {
+            Tooltip.Builder(curLocalization[nameInLocalization+"_TOOLTIP"]).target(this).build()
+        }
         update()
         changed { _, _ ->
             curSettings[variableName] = isChecked.boolToStr()

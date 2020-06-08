@@ -1,5 +1,6 @@
 package rat.poison.ui.uiHelpers.aimTab
 
+import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisCheckBox
 import rat.poison.boolToStr
 import rat.poison.curLocalization
@@ -15,6 +16,9 @@ class ATabVisCheckBox(mainText: String, varExtension: String, nameInLocalization
     val nameInLocalization = nameInLocalization
     init {
         update()
+        if (curLocalization[nameInLocalization+"_TOOLTIP"] != "") {
+            Tooltip.Builder(curLocalization[nameInLocalization+"_TOOLTIP"]).target(this).build()
+        }
         changed { _, _ ->
             curSettings[categorySelected + variableExtension] = isChecked.boolToStr()
 
