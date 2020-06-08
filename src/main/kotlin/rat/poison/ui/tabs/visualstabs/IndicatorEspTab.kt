@@ -1,4 +1,4 @@
-package rat.poison.ui.tabs.visualstabs
+﻿package rat.poison.ui.tabs.visualstabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
@@ -13,30 +13,30 @@ class IndicatorEspTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val indicatorEsp = VisCheckBoxCustom(curLocalization["ENABLE"], "INDICATOR_ESP")
-    val indicatorDistance = VisSliderCustom(curLocalization["INDICATOR_DISTANCE"], "INDICATOR_DISTANCE", 2F, 50F, .1F, false)
-    val indicatorSize = VisSliderCustom(curLocalization["INDICATOR_SIZE"], "INDICATOR_SIZE", 5F, 25F, .5F, false)
+    val indicatorEsp = VisCheckBoxCustom(curLocalization["ENABLE"], "INDICATOR_ESP", nameInLocalization = "ENABLE")
+    val indicatorDistance = VisSliderCustom(curLocalization["INDICATOR_DISTANCE"], "INDICATOR_DISTANCE", 2F, 50F, .1F, false, nameInLocalization = "INDICATOR_DISTANCE")
+    val indicatorSize = VisSliderCustom(curLocalization["INDICATOR_SIZE"], "INDICATOR_SIZE", 5F, 25F, .5F, false, nameInLocalization = "INDICATOR_SIZE")
 
     val showTeam = VisCheckBoxCustom(" ", "INDICATOR_SHOW_TEAM")
-    val indicatorTeamColor = VisColorPickerCustom(curLocalization["TEAMMATES"], "GLOW_TEAM_COLOR")
+    val indicatorTeamColor = VisColorPickerCustom(curLocalization["TEAMMATES"], "GLOW_TEAM_COLOR", nameInLocalization = "TEAMMATES")
 
     val showEnemies = VisCheckBoxCustom(" ", "INDICATOR_SHOW_ENEMIES")
-    val indicatorEnemyColor = VisColorPickerCustom(curLocalization["ENEMIES"], "INDICATOR_ENEMY_COLOR")
+    val indicatorEnemyColor = VisColorPickerCustom(curLocalization["ENEMIES"], "INDICATOR_ENEMY_COLOR", nameInLocalization = "ENEMIES")
 
     val showBomb = VisCheckBoxCustom(" ", "INDICATOR_SHOW_BOMB")
-    val indicatorBombColor = VisColorPickerCustom(curLocalization["BOMB"], "INDICATOR_BOMB_COLOR")
+    val indicatorBombColor = VisColorPickerCustom(curLocalization["BOMB"], "INDICATOR_BOMB_COLOR", nameInLocalization = "BOMB")
 
     val showBombCarrier = VisCheckBoxCustom(" ", "INDICATOR_SHOW_BOMB_CARRIER")
-    val indicatorBombCarrierColor = VisColorPickerCustom(curLocalization["BOMB_CARRIER"], "INDICATOR_BOMB_CARRIER_COLOR")
+    val indicatorBombCarrierColor = VisColorPickerCustom(curLocalization["BOMB_CARRIER"], "INDICATOR_BOMB_CARRIER_COLOR", nameInLocalization = "BOMB_CARRIER")
 
     val showWeapons = VisCheckBoxCustom(" ", "INDICATOR_SHOW_WEAPONS")
-    val indicatorWeaponColor = VisColorPickerCustom(curLocalization["WEAPONS"], "INDICATOR_WEAPON_COLOR")
+    val indicatorWeaponColor = VisColorPickerCustom(curLocalization["WEAPONS"], "INDICATOR_WEAPON_COLOR", nameInLocalization = "WEAPONS")
 
     val showGrenades = VisCheckBoxCustom(" ", "INDICATOR_SHOW_GRENADES")
-    val indicatorGrenadeColor = VisColorPickerCustom(curLocalization["GRENADES"], "INDICATOR_GRENADE_COLOR")
+    val indicatorGrenadeColor = VisColorPickerCustom(curLocalization["GRENADES"], "INDICATOR_GRENADE_COLOR", nameInLocalization = "GRENADES")
 
     val showDefusers = VisCheckBoxCustom(" ", "INDICATOR_SHOW_DEFUSERS")
-    val indicatorDefuserColor = VisColorPickerCustom(curLocalization["DEFUSERS"], "INDICATOR_DEFUSER_COLOR")
+    val indicatorDefuserColor = VisColorPickerCustom(curLocalization["DEFUSERS"], "INDICATOR_DEFUSER_COLOR", nameInLocalization = "DEFUSERS")
 
     init {
         table.padLeft(25F)

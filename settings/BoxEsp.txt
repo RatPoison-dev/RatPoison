@@ -21,6 +21,10 @@ BOX_ESP_NAME_POS = "T"
 BOX_ESP_WEAPON = true
 BOX_ESP_WEAPON_POS = "B"
 
+//Enable box esp scope text; Text position (T)op / (B)ottom
+BOX_ESP_SCOPE = true
+BOX_ESP_SCOPE_POS = "T"
+
 //Enable box esp on teammates
 BOX_SHOW_TEAM = false
 

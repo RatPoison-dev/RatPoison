@@ -1,4 +1,4 @@
-package rat.poison.ui.uiHelpers
+﻿package rat.poison.ui.uiHelpers
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.Actor
@@ -7,15 +7,16 @@ import com.kotcrab.vis.ui.widget.LinkLabel
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.VisValidatableTextField
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.keybindsUpdate
 import rat.poison.ui.uiUpdate
 
-class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true) : VisTable() {
+class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true, nameInLocalization: String = "") : VisTable() {
     private val textLabel = mainText
     private val variableName = varName
-
+    private val nameInLocalization = nameInLocalization
     //val globalTable = VisTable()
     private var keyLabel = VisLabel("$textLabel:")
     private val keyField = VisValidatableTextField(Validators.INTEGERS)
@@ -46,6 +47,7 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
 
     fun update(neglect: Actor? = null) {
         if (neglect != this) {
+            this.keyLabel.setText(curLocalization[nameInLocalization])
             keyField.text = curSettings[variableName]
             value = keyField.text.toInt()
         }

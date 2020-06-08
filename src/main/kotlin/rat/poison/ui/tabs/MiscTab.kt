@@ -1,4 +1,4 @@
-package rat.poison.ui.tabs
+﻿package rat.poison.ui.tabs
 
 import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.scenes.scene2d.ui.Table
@@ -13,10 +13,8 @@ import rat.poison.scripts.nameChanger
 import rat.poison.scripts.selfNade
 import rat.poison.scripts.weaponSpamToggleKey
 import rat.poison.ui.changed
+import rat.poison.ui.uiHelpers.*
 import rat.poison.ui.uiPanels.miscTab
-import rat.poison.ui.uiHelpers.VisCheckBoxCustom
-import rat.poison.ui.uiHelpers.VisInputFieldCustom
-import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.utils.ObservableBoolean
 import java.io.File
 
@@ -25,42 +23,42 @@ class MiscTab : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     //Movement
-    val bunnyHop = VisCheckBoxCustom(curLocalization["ENABLE_BUNNY_HOP"], "ENABLE_BUNNY_HOP")
-    val autoStrafe = VisCheckBoxCustom(curLocalization["AUTO_STRAFE"], "AUTO_STRAFE")
-    val autoStrafeBHopOnly = VisCheckBoxCustom(curLocalization["STRAFE_BHOP_ONLY"], "STRAFE_BHOP_ONLY")
-    val fastStop = VisCheckBoxCustom(curLocalization["FAST_STOP"], "FAST_STOP")
-    val aimStrafer = VisCheckBoxCustom(curLocalization["AIM_STRAFER"], "AIM_STRAFER")
+    val bunnyHop = VisCheckBoxCustom(curLocalization["ENABLE_BUNNY_HOP"], "ENABLE_BUNNY_HOP", nameInLocalization = "ENABLE_BUNNY_HOP")
+    val autoStrafe = VisCheckBoxCustom(curLocalization["AUTO_STRAFE"], "AUTO_STRAFE", nameInLocalization = "AUTO_STRAFE")
+    val autoStrafeBHopOnly = VisCheckBoxCustom(curLocalization["STRAFE_BHOP_ONLY"], "STRAFE_BHOP_ONLY", nameInLocalization = "STRAFE_BHOP_ONLY")
+    val fastStop = VisCheckBoxCustom(curLocalization["FAST_STOP"], "FAST_STOP", nameInLocalization = "FAST_STOP")
+    val aimStrafer = VisCheckBoxCustom(curLocalization["AIM_STRAFER"], "AIM_STRAFER", nameInLocalization = "AIM_STRAFER")
     val aimStraferSelectBox = VisSelectBox<String>()
-    val aimStraferShift = VisCheckBoxCustom(curLocalization["AIM_STRAFER_SHIFT"], "AIM_STRAFER_SHIFT")
-    val aimStraferStrictness = VisSliderCustom(curLocalization["AIM_STRAFER_STRICTNESS"], "AIM_STRAFER_STRICTNESS", 0F, .5F, .01F, false, 3, width1 = 150F, width2 = 90F)
-    val headWalk = VisCheckBox(curLocalization["HEAD_WALK"])
+    val aimStraferShift = VisCheckBoxCustom(curLocalization["AIM_STRAFER_SHIFT"], "AIM_STRAFER_SHIFT", nameInLocalization = "AIM_STRAFER_SHIFT")
+    val aimStraferStrictness = VisSliderCustom(curLocalization["AIM_STRAFER_STRICTNESS"], "AIM_STRAFER_STRICTNESS", 0F, .5F, .01F, false, 3, width1 = 150F, width2 = 90F, nameInLocalization = "AIM_STRAFER_STRICTNESS")
+    val headWalk = VisCheckBoxCustomWithoutVar(curLocalization["HEAD_WALK"], "HEAD_WALK")
 
     //Fov + bomb timer + spectator list
-    val fovChanger = VisCheckBoxCustom(curLocalization["ENABLE_FOV_CHANGER"], "ENABLE_FOV_CHANGER")
-    val fovDefault = VisSliderCustom(curLocalization["FOV_DEFAULT"], "FOV_DEFAULT", 10F, 150F, 1F, true, width1 = 142F, width2 = 90F)
-    val fovSmoothing = VisCheckBoxCustom(curLocalization["FOV_SMOOTH"], "FOV_SMOOTH")
-    val fovSniperDefault = VisSliderCustom(curLocalization["FOV_SNIPER_DEFAULT"], "FOV_SNIPER_DEFAULT", 10F, 150F, 1F, true, width1 = 142F, width2 = 90F)
-    val fovSniperZoom1 = VisSliderCustom(curLocalization["FOV_ZOOM_1"], "FOV_ZOOM_1", 10F, 150F, 1F, true, width1 = 142F, width2 = 90F)
-    val fovSniperZoom2 = VisSliderCustom(curLocalization["FOV_ZOOM_2"], "FOV_ZOOM_2", 10F, 150F, 1F, true, width1 = 142F, width2 = 90F)
-    val bombTimer = VisCheckBoxCustom(curLocalization["ENABLE_BOMB_TIMER"], "ENABLE_BOMB_TIMER")
-    val bombTimerEnableBars = VisCheckBoxCustom(curLocalization["BOMB_TIMER_BARS"], "BOMB_TIMER_BARS")
-    val bombTimerEnableMenu = VisCheckBoxCustom(curLocalization["BOMB_TIMER_MENU"], "BOMB_TIMER_MENU")
-    val spectatorList = VisCheckBoxCustom(curLocalization["ENABLE_SPECTATOR_LIST"], "SPECTATOR_LIST")
+    val fovChanger = VisCheckBoxCustom(curLocalization["ENABLE_FOV_CHANGER"], "ENABLE_FOV_CHANGER", nameInLocalization = "ENABLE_FOV_CHANGER")
+    val fovDefault = VisSliderCustom(curLocalization["FOV_DEFAULT"], "FOV_DEFAULT", 10F, 150F, 1F, true, width1 = 142F, width2 = 90F, nameInLocalization = "FOV_DEFAULT")
+    val fovSmoothing = VisCheckBoxCustom(curLocalization["FOV_SMOOTH"], "FOV_SMOOTH", nameInLocalization = "FOV_SMOOTH")
+    val fovSniperDefault = VisSliderCustom(curLocalization["FOV_SNIPER_DEFAULT"], "FOV_SNIPER_DEFAULT", 10F, 150F, 1F, true, width1 = 142F, width2 = 90F, nameInLocalization = "FOV_SNIPER_DEFAULT")
+    val fovSniperZoom1 = VisSliderCustom(curLocalization["FOV_ZOOM_1"], "FOV_ZOOM_1", 10F, 150F, 1F, true, width1 = 142F, width2 = 90F, nameInLocalization = "FOV_ZOOM_1")
+    val fovSniperZoom2 = VisSliderCustom(curLocalization["FOV_ZOOM_2"], "FOV_ZOOM_2", 10F, 150F, 1F, true, width1 = 142F, width2 = 90F, nameInLocalization = "FOV_ZOOM_2")
+    val bombTimer = VisCheckBoxCustom(curLocalization["ENABLE_BOMB_TIMER"], "ENABLE_BOMB_TIMER", nameInLocalization = "ENABLE_BOMB_TIMER")
+    val bombTimerEnableBars = VisCheckBoxCustom(curLocalization["BOMB_TIMER_BARS"], "BOMB_TIMER_BARS", nameInLocalization = "BOMB_TIMER_BARS")
+    val bombTimerEnableMenu = VisCheckBoxCustom(curLocalization["BOMB_TIMER_MENU"], "BOMB_TIMER_MENU", nameInLocalization = "BOMB_TIMER_MENU")
+    val spectatorList = VisCheckBoxCustom(curLocalization["ENABLE_SPECTATOR_LIST"], "SPECTATOR_LIST", nameInLocalization = "ENABLE_SPECTATOR_LIST")
 
-    val knifeBot = VisCheckBoxCustom(curLocalization["ENABLE_AUTO_KNIFE"], "ENABLE_AUTO_KNIFE")
+    val knifeBot = VisCheckBoxCustom(curLocalization["ENABLE_AUTO_KNIFE"], "ENABLE_AUTO_KNIFE", nameInLocalization = "ENABLE_AUTO_KNIFE")
     val lsBomb = VisCheckBox(curLocalization["ENABLE_PERFECT_BOMB_DEFUSE"])
-    val doorSpam = VisCheckBoxCustom(curLocalization["ENABLE_DOOR_SPAM"], "D_SPAM")
-    var doorSpamKey = VisInputFieldCustom(curLocalization["DOOR_SPAM_KEY"], "D_SPAM_KEY")
-    val weaponSpam = VisCheckBoxCustom(curLocalization["ENABLE_WEAPON_SPAM"], "W_SPAM")
-    var weaponSpamKey = VisInputFieldCustom(curLocalization["WEAPON_SPAM_KEY"], "W_SPAM_KEY")
-    val enableReducedFlash = VisCheckBoxCustom(curLocalization["ENABLE_REDUCED_FLASH"], "ENABLE_REDUCED_FLASH")
-    val flashMaxAlpha = VisSliderCustom(curLocalization["FLASH_MAX_ALPHA"], "FLASH_MAX_ALPHA", 1F, 255F, 1F, true, width1 = 150F, width2 = 90F)
-    val hitSoundCheckBox = VisCheckBoxCustom(curLocalization["ENABLE_HITSOUND"], "ENABLE_HITSOUND")
+    val doorSpam = VisCheckBoxCustom(curLocalization["ENABLE_DOOR_SPAM"], "D_SPAM", nameInLocalization = "ENABLE_DOOR_SPAM")
+    var doorSpamKey = VisInputFieldCustom(curLocalization["DOOR_SPAM_KEY"], "D_SPAM_KEY", nameInLocalization = "DOOR_SPAM_KEY")
+    val weaponSpam = VisCheckBoxCustom(curLocalization["ENABLE_WEAPON_SPAM"], "W_SPAM", nameInLocalization = "ENABLE_WEAPON_SPAM")
+    var weaponSpamKey = VisInputFieldCustom(curLocalization["WEAPON_SPAM_KEY"], "W_SPAM_KEY", nameInLocalization = "WEAPON_SPAM_KEY")
+    val enableReducedFlash = VisCheckBoxCustom(curLocalization["ENABLE_REDUCED_FLASH"], "ENABLE_REDUCED_FLASH", nameInLocalization = "ENABLE_REDUCED_FLASH")
+    val flashMaxAlpha = VisSliderCustom(curLocalization["FLASH_MAX_ALPHA"], "FLASH_MAX_ALPHA", 1F, 255F, 1F, true, width1 = 150F, width2 = 90F, nameInLocalization = "FLASH_MAX_ALPHA")
+    val hitSoundCheckBox = VisCheckBoxCustom(curLocalization["ENABLE_HITSOUND"], "ENABLE_HITSOUND", nameInLocalization = "ENABLE_HITSOUND")
     val hitSoundBox = VisSelectBox<String>()
-    val hitSoundVolume = VisSliderCustom(curLocalization["HITSOUND_VOLUME"], "HITSOUND_VOLUME", .1F, 1F, .1F, false, width1 = 150F, width2 = 90F)
-    private val selfNade = VisTextButton(curLocalization["THROW_SELF_NADE"])
+    val hitSoundVolume = VisSliderCustom(curLocalization["HITSOUND_VOLUME"], "HITSOUND_VOLUME", .1F, 1F, .1F, false, width1 = 150F, width2 = 90F, nameInLocalization = "HITSOUND_VOLUME")
+    val selfNade = VisTextButtonCustom(curLocalization["THROW_SELF_NADE"], nameInLocalization = "THROW_SELF_NADE")
     private val nameChangeInput = VisValidatableTextField()
-    private val nameChange = VisTextButton(curLocalization["ENABLE_NAME_CHANGER"])
+    private val nameChange = VisTextButtonCustom(curLocalization["ENABLE_NAME_CHANGER"], nameInLocalization = "ENABLE_NAME_CHANGER")
 
     init {
         selfNade.changed { _, _ ->
@@ -244,6 +242,9 @@ fun miscTabUpdate() {
         hitSoundCheckBox.isChecked = curSettings["ENABLE_HITSOUND"].strToBool()
         hitSoundBox.selected = curSettings["HITSOUND_FILE_NAME"].replace("\"", "")
         hitSoundVolume.update()
+        hitSoundCheckBox.update()
+        selfNade.update()
+        headWalk.update()
         lsBomb.isChecked = curSettings["LS_BOMB"].strToBool()
     }
 }

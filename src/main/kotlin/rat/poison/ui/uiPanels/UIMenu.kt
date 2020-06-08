@@ -16,14 +16,14 @@ import kotlin.math.sign
 import kotlin.system.exitProcess
 
 val mainTabbedPane = TabbedPane()
-    val aimTab = AimTab()
-    val visualsTab = VisualsTab()
-    val rcsTab = RcsTab()
-    val miscTab = MiscTab()
-    val ranksTab = RanksTab()
-    val nadeHelperTab = NadeHelperTab()
-    val skinChangerTab = SkinChangerTab()
-    val optionsTab = OptionsTab()
+    var aimTab = AimTab()
+    var visualsTab = VisualsTab()
+    var rcsTab = RcsTab()
+    var miscTab = MiscTab()
+    var ranksTab = RanksTab()
+    var nadeHelperTab = NadeHelperTab()
+    var skinChangerTab = SkinChangerTab()
+    var optionsTab = OptionsTab()
 
 private var wantedHeight = 565F
 private var wantedWidth = 535F
@@ -159,6 +159,37 @@ class UIMenu : VisWindow("Rat Poison 1.7.1.1") {
     override fun positionChanged() {
         updateChilds()
     }
+
+    // That's a sin
+    fun updateTabs() {
+        mainTabbedPane.remove(aimTab)
+        mainTabbedPane.remove(visualsTab)
+        mainTabbedPane.remove(rcsTab)
+        mainTabbedPane.remove(miscTab)
+        mainTabbedPane.remove(ranksTab)
+        mainTabbedPane.remove(nadeHelperTab)
+        mainTabbedPane.remove(skinChangerTab)
+        mainTabbedPane.remove(optionsTab)
+        aimTab = AimTab()
+        visualsTab = VisualsTab()
+        rcsTab = RcsTab()
+        miscTab = MiscTab()
+        ranksTab = RanksTab()
+        nadeHelperTab = NadeHelperTab()
+        skinChangerTab = SkinChangerTab()
+        optionsTab = OptionsTab()
+        mainTabbedPane.add(aimTab)
+        mainTabbedPane.add(visualsTab)
+        mainTabbedPane.add(rcsTab)
+        mainTabbedPane.add(miscTab)
+        mainTabbedPane.add(ranksTab)
+        mainTabbedPane.add(nadeHelperTab)
+        mainTabbedPane.add(skinChangerTab)
+        mainTabbedPane.add(optionsTab)
+        mainTabbedPane.switchTab(optionsTab)
+        visualsTab.updateESPTabs()
+    }
+
 
     fun updateChilds() {
         if (opened) {

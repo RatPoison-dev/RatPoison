@@ -19,7 +19,6 @@ fun uiUpdate() {
     boxEspTabUpdate()
     hitMarkerTabUpdate()
     skinChangerTabUpdate()
-    nadesVTUpdate()
     snaplinesEspTabUpdate()
     footStepsEspTabUpdate()
     miscTabUpdate()
@@ -28,6 +27,8 @@ fun uiUpdate() {
     updateTrig()
     updateAim()
     updateDisableEsp()
+    updateOptionsTab()
+    nadesVTUpdate()
 
     //Update windows
     uiAimOverridenWeapons.setPosition(uiMenu.x+uiMenu.width+4F, uiMenu.y)
