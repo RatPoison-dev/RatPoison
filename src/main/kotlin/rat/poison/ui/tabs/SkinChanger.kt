@@ -37,9 +37,9 @@ class SkinChangerTab : Tab(false, false) {
     private var listAdapter = ListAdapter(strArray)
     private var skinSelectionList = ListView(listAdapter)
 
-    private var idLabel = VisLabelCustom(curLocalization["SKIN_ID"], nameInLocalization = "SKIN_ID")
-    private var statTrakLabel = VisLabelCustom(curLocalization["STATTRACK"], nameInLocalization = "STATTRACK")
-    private var wearLabel = VisLabelCustom(curLocalization["WEAR"], nameInLocalization = "WEAR")
+    var idLabel = VisLabelCustom(curLocalization["SKIN_ID"], nameInLocalization = "SKIN_ID")
+    var statTrakLabel = VisLabelCustom(curLocalization["STATTRACK"], nameInLocalization = "STATTRACK")
+    var wearLabel = VisLabelCustom(curLocalization["WEAR"], nameInLocalization = "WEAR")
 
     private var skinIDInput = VisValidatableTextField(Validators.INTEGERS)
     private var skinStatTrak = VisValidatableTextField(Validators.INTEGERS)
@@ -345,6 +345,9 @@ fun skinChangerTabUpdate() {
     skinChangerTab.apply {
         enableSkinChanger.update()
         autoForceUpdate.update()
+        idLabel.update()
+        wearLabel.update()
+        statTrakLabel.update()
         //enableKnifeChanger.update()
     }
 }

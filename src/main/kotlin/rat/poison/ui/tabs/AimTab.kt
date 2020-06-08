@@ -102,11 +102,23 @@ fun updateAim() {
     val map = aimingMap()
     aimTab.tAim.apply {
         enableAim.update()
+        updateMap()
         aimToggleKey.update()
         activateFromFireKey.update()
         teammatesAreEnemies.update()
         holdAim.update()
         fovTypeLabel.update()
+        aimBoneLabel.update()
+        perfectAimFov.update()
+        weaponOverrideCheckBox.update()
+        forceAimBoneLabel.update()
+        perfectAimChance.update()
+        perfectAimCheckBox.update()
+        advancedSettingsCheckBox.update()
+        aimBoneBox.setItems(curLocalization["HEAD"], curLocalization["NECK"], curLocalization["CHEST"], curLocalization["STOMACH"], curLocalization["NEAREST"], curLocalization["RANDOM"])
+        //fovTypeBox.setItems(curLocalization["STATIC"], curLocalization["DISTANCE"])
+        forceAimBoneBox.setItems(curLocalization["HEAD"], curLocalization["NECK"], curLocalization["CHEST"], curLocalization["STOMACH"], curLocalization["NEAREST"], curLocalization["RANDOM"])
+        categorySelectionBox.setItems(curLocalization["PISTOL"], curLocalization["RIFLE"], curLocalization["SMG"], curLocalization["SNIPER"], curLocalization["SHOTGUN"])
         forceAimBoneKey.update()
         forceAimKey.update()
         forceAimAlways.update()
@@ -114,8 +126,6 @@ fun updateAim() {
         automaticWeaponsCheckBox.update()
         automaticWeaponsInput.update()
         targetSwapDelay.update()
-
-        fovTypeBox.selected = curLocalization[curSettings["FOV_TYPE"].replace("\"", "")]
 
         enableAimOnShot.update()
         enableFactorRecoil.update()
@@ -139,21 +149,21 @@ fun updateAim() {
         }
 
         aimBoneBox.selected = when (curSettings[categorySelected + "_AIM_BONE"].toInt()) {
-            HEAD_BONE -> "HEAD"
-            NECK_BONE -> "NECK"
-            CHEST_BONE -> "CHEST"
-            STOMACH_BONE -> "STOMACH"
-            NEAREST_BONE -> "NEAREST"
-            else -> "RANDOM"
+            HEAD_BONE -> curLocalization["HEAD"]
+            NECK_BONE -> curLocalization["NECK"]
+            CHEST_BONE -> curLocalization["CHEST"]
+            STOMACH_BONE -> curLocalization["STOMACH"]
+            NEAREST_BONE -> curLocalization["NEAREST"]
+            else -> curLocalization["RANDOM"]
         }
 
         forceAimBoneBox.selected = when (curSettings[categorySelected + "_AIM_FORCE_BONE"].toInt()) {
-            HEAD_BONE -> "HEAD"
-            NECK_BONE -> "NECK"
-            CHEST_BONE -> "CHEST"
-            STOMACH_BONE -> "STOMACH"
-            NEAREST_BONE -> "NEAREST"
-            else -> "RANDOM"
+            HEAD_BONE -> curLocalization["HEAD"]
+            NECK_BONE -> curLocalization["NECK"]
+            CHEST_BONE -> curLocalization["CHEST"]
+            STOMACH_BONE -> curLocalization["STOMACH"]
+            NEAREST_BONE -> curLocalization["NEAREST"]
+            else -> curLocalization["RANDOM"]
         }
 
         aimFov.update()

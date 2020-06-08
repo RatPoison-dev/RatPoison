@@ -12,10 +12,7 @@ import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.overridenWeapons
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.updateDisableEsp
-import rat.poison.ui.uiHelpers.VisCheckBoxCustom
-import rat.poison.ui.uiHelpers.VisInputFieldCustom
-import rat.poison.ui.uiHelpers.VisLabelCustom
-import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiHelpers.*
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
 import rat.poison.ui.uiUpdate
@@ -46,7 +43,7 @@ class AimTable: VisTable(false) {
     private val categorySelection = VisTable()
     val categorySelectionBox = VisSelectBox<String>()
     val categorySelectLabel = VisLabelCustom(curLocalization["WEAPON_CATEGORY"], nameInLocalization = "WEAPON_CATEGORY")
-    val weaponOverrideCheckBox = VisCheckBoxCustom(curLocalization["OVERRIDE_WEAPONS_CHECKBOX"], "", "OVERRIDE_WEAPONS_CHECKBOX")
+    val weaponOverrideCheckBox = VisCheckBoxCustomWithoutVar(curLocalization["OVERRIDE_WEAPONS_CHECKBOX"], "OVERRIDE_WEAPONS_CHECKBOX")
 
     val enableAimOnShot = ATabVisCheckBox(curLocalization["AIM_ONLY_ON_SHOT"], "_AIM_ONLY_ON_SHOT", nameInLocalization = "AIM_ONLY_ON_SHOT")
     val enableFactorRecoil = ATabVisCheckBox(curLocalization["FACTOR_RECOIL"], "_FACTOR_RECOIL", nameInLocalization = "FACTOR_RECOIL")
@@ -66,14 +63,14 @@ class AimTable: VisTable(false) {
     val aimAfterShots = ATabVisSlider(curLocalization["AIM_AFTER_SHOTS"], "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true, nameInLocalization = "AIM_AFTER_SHOTS")
 
     //Perfect Aim Collapsible
-    val perfectAimCheckBox = VisCheckBox(curLocalization["ENABLE_PERFECT_AIM"])
+    val perfectAimCheckBox = VisCheckBoxCustomWithoutVar(curLocalization["ENABLE_PERFECT_AIM"], "ENABLE_PERFECT_AIM")
     private val perfectAimTable = VisTable()
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
     val perfectAimFov = ATabVisSlider(curLocalization["FOV"], "_PERFECT_AIM_FOV", 1F, 180F, 1F, true, nameInLocalization = "FOV")
     val perfectAimChance = ATabVisSlider(curLocalization["PERFECT_AIM_CHANCE"], "_PERFECT_AIM_CHANCE", 1F, 100F, 1F, true, nameInLocalization = "PERFECT_AIM_CHANCE")
 
     //Advanced Settings Collapsible
-    val advancedSettingsCheckBox = VisCheckBox(curLocalization["ADVANCED_SETTINGS"])
+    val advancedSettingsCheckBox = VisCheckBoxCustomWithoutVar(curLocalization["ADVANCED_SETTINGS"], "ADVANCED_SETTINGS")
     private val advancedSettingsTable = VisTable()
     val advancedSettingsCollapsible = CollapsibleWidget(advancedSettingsTable)
     val randomizeX = ATabVisSlider(curLocalization["RANDOM_X_VARIATION"], "_RANDOM_X_VARIATION", 0F, 50F, 1F, true, nameInLocalization = "RANDOM_X_VARIATION")
@@ -83,9 +80,13 @@ class AimTable: VisTable(false) {
     val advancedRcsY = ATabVisSlider(curLocalization["AIM_RCS_Y"], "_AIM_RCS_Y", 0.05F, 1F, 0.05F, false, nameInLocalization = "AIM_RCS_Y")
     val advancedRcsVariation = ATabVisSlider(curLocalization["AIM_RCS_VARIATION"], "_AIM_RCS_VARIATION", 0F, 1F, 0.05F, false, nameInLocalization = "AIM_RCS_VARIATION")
     val advancedSpeedDivisor = ATabVisSlider(curLocalization["AIM_SPEED_DIVISOR"], "_AIM_SPEED_DIVISOR", 1F, 10F, 1F, true, nameInLocalization = "AIM_SPEED_DIVISOR")
+    var map = aimingMap()
+
+    fun updateMap () {
+        map = aimingMap()
+    }
 
     init {
-        val map = aimingMap()
         if (curSettings["WARNING"].strToBool()) {
             val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.7" +
                     "\n\nIf you have any problems submit an issue on Github" +
@@ -101,7 +102,7 @@ class AimTable: VisTable(false) {
         //Fov Type
         val fovType = VisTable()
         fovTypeBox.setItems(curLocalization["STATIC"], curLocalization["DISTANCE"])
-        fovTypeBox.selected = curLocalization[(curSettings["FOV_TYPE"].replace("\"", ""))]
+        fovTypeBox.selected = curLocalization[curSettings["FOV_TYPE"].replace("\"", "")]
 
         fovTypeBox.changed { _, _ ->
             curSettings["FOV_TYPE"] = map[fovTypeBox.selected]

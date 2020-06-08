@@ -45,6 +45,7 @@ class NadesVT : Tab(false, false) {
 fun nadesVTUpdate() {
     nadesTab.apply {
         nadeTracer.update()
+        nadeTracerColor.update()
         nadeTracerUpdateTime.update()
         nadeTracerTimeout.update()
     }

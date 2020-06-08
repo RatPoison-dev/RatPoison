@@ -13,11 +13,8 @@ import rat.poison.scripts.nameChanger
 import rat.poison.scripts.selfNade
 import rat.poison.scripts.weaponSpamToggleKey
 import rat.poison.ui.changed
+import rat.poison.ui.uiHelpers.*
 import rat.poison.ui.uiPanels.miscTab
-import rat.poison.ui.uiHelpers.VisCheckBoxCustom
-import rat.poison.ui.uiHelpers.VisInputFieldCustom
-import rat.poison.ui.uiHelpers.VisSliderCustom
-import rat.poison.ui.uiHelpers.VisTextButtonCustom
 import rat.poison.utils.ObservableBoolean
 import java.io.File
 
@@ -34,7 +31,7 @@ class MiscTab : Tab(false, false) {
     val aimStraferSelectBox = VisSelectBox<String>()
     val aimStraferShift = VisCheckBoxCustom(curLocalization["AIM_STRAFER_SHIFT"], "AIM_STRAFER_SHIFT", nameInLocalization = "AIM_STRAFER_SHIFT")
     val aimStraferStrictness = VisSliderCustom(curLocalization["AIM_STRAFER_STRICTNESS"], "AIM_STRAFER_STRICTNESS", 0F, .5F, .01F, false, 3, width1 = 150F, width2 = 90F, nameInLocalization = "AIM_STRAFER_STRICTNESS")
-    val headWalk = VisCheckBox(curLocalization["HEAD_WALK"])
+    val headWalk = VisCheckBoxCustomWithoutVar(curLocalization["HEAD_WALK"], "HEAD_WALK")
 
     //Fov + bomb timer + spectator list
     val fovChanger = VisCheckBoxCustom(curLocalization["ENABLE_FOV_CHANGER"], "ENABLE_FOV_CHANGER", nameInLocalization = "ENABLE_FOV_CHANGER")
@@ -59,7 +56,7 @@ class MiscTab : Tab(false, false) {
     val hitSoundCheckBox = VisCheckBoxCustom(curLocalization["ENABLE_HITSOUND"], "ENABLE_HITSOUND", nameInLocalization = "ENABLE_HITSOUND")
     val hitSoundBox = VisSelectBox<String>()
     val hitSoundVolume = VisSliderCustom(curLocalization["HITSOUND_VOLUME"], "HITSOUND_VOLUME", .1F, 1F, .1F, false, width1 = 150F, width2 = 90F, nameInLocalization = "HITSOUND_VOLUME")
-    private val selfNade = VisTextButtonCustom(curLocalization["THROW_SELF_NADE"], nameInLocalization = "THROW_SELF_NADE")
+    val selfNade = VisTextButtonCustom(curLocalization["THROW_SELF_NADE"], nameInLocalization = "THROW_SELF_NADE")
     private val nameChangeInput = VisValidatableTextField()
     private val nameChange = VisTextButtonCustom(curLocalization["ENABLE_NAME_CHANGER"], nameInLocalization = "ENABLE_NAME_CHANGER")
 
@@ -245,6 +242,9 @@ fun miscTabUpdate() {
         hitSoundCheckBox.isChecked = curSettings["ENABLE_HITSOUND"].strToBool()
         hitSoundBox.selected = curSettings["HITSOUND_FILE_NAME"].replace("\"", "")
         hitSoundVolume.update()
+        hitSoundCheckBox.update()
+        selfNade.update()
+        headWalk.update()
         lsBomb.isChecked = curSettings["LS_BOMB"].strToBool()
     }
 }

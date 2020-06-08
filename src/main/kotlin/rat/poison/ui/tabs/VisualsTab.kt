@@ -19,15 +19,15 @@ import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiPanels.visualsTab
 
-val espTabbedPane = TabbedPane()
-val glowEspTab = GlowEspTab()
-val chamsEspTab = ChamsEspTab()
-val indicatorEspTab = IndicatorEspTab()
-val boxEspTab = BoxEspTab()
-val snaplinesEspTab = SnaplinesEspTab()
-val footStepsEspTab = FootstepsEspTab()
-val hitMarkerTab = HitMarkerTab()
-val nadesTab = NadesVT()
+var espTabbedPane = TabbedPane()
+var glowEspTab = GlowEspTab()
+var chamsEspTab = ChamsEspTab()
+var indicatorEspTab = IndicatorEspTab()
+var boxEspTab = BoxEspTab()
+var snaplinesEspTab = SnaplinesEspTab()
+var footStepsEspTab = FootstepsEspTab()
+var hitMarkerTab = HitMarkerTab()
+var nadesTab = NadesVT()
 
 class VisualsTab : Tab(false, false) {
     private val table = VisTable()
@@ -134,6 +134,32 @@ class VisualsTab : Tab(false, false) {
         table.add(triggerFov).padLeft(25F).left().row()
         table.add(espTabbedPane.table).minWidth(500F).left().growX().row()
         table.add(espScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
+    }
+
+    fun updateESPTabs () {
+        espTabbedPane.remove(glowEspTab)
+        espTabbedPane.remove(chamsEspTab)
+        espTabbedPane.remove(indicatorEspTab)
+        espTabbedPane.remove(boxEspTab)
+        espTabbedPane.remove(snaplinesEspTab)
+        espTabbedPane.remove(footStepsEspTab)
+        espTabbedPane.remove(hitMarkerTab)
+        espTabbedPane.updateTabTitle(nadesTab)
+        glowEspTab = GlowEspTab()
+        chamsEspTab = ChamsEspTab()
+        indicatorEspTab = IndicatorEspTab()
+        boxEspTab = BoxEspTab()
+        snaplinesEspTab = SnaplinesEspTab()
+        footStepsEspTab = FootstepsEspTab()
+        hitMarkerTab = HitMarkerTab()
+        espTabbedPane.add(glowEspTab)
+        espTabbedPane.add(chamsEspTab)
+        espTabbedPane.add(indicatorEspTab)
+        espTabbedPane.add(boxEspTab)
+        espTabbedPane.add(snaplinesEspTab)
+        espTabbedPane.add(footStepsEspTab)
+        espTabbedPane.add(hitMarkerTab)
+        espTabbedPane.switchTab(glowEspTab)
     }
 
     override fun getContentTable(): Table? {
@@ -311,6 +337,7 @@ fun visualsTabUpdate() {
         visualsToggleKey.update()
         radarEsp.update()
         visualsToggleKey.update()
+        visAdrenaline.update()
         nightMode.update()
         nightModeSlider.update()
         showAimFov.update()
