@@ -381,3 +381,23 @@ KNIFE_OUTDOOR = KNIFE_OUTDOOR
 KNIFE_STILETTO = KNIFE_STILETTO
 KNIFE_WIDOWMAKER = KNIFE_WIDOWMAKER
 KNIFE_SKELETON = KNIFE_SKELETON
+
+// Tooltips
+ENABLE_BUNNY_HOP_TOOLTIP = Enable bunny hop
+ENABLE_PATH_AIM_TOOLTIP = Uses mouse movement to aim
+ENABLE_FLAT_AIM_TOOLTIP = Writes to game
+AIM_BONE_TOOLTIP = Default bone to aim at
+AIM_FORCE_BONE_TOOLTIP = Force Bone
+FORCE_AIM_BONE_KEY_TOOLTIP = Enables specific bone when held
+AUTOMATIC_WEAPONS_TOOLTIP = Non-automatic weapons will auto shoot when there is no punch and the aim key is pressed
+AIM_ONLY_ON_SHOT_TOOLTIP = If the aimbot should only aim when you can shoot
+FACTOR_RECOIL_TOOLTIP = Factor recoil when shooting
+ENABLE_AIM_TOOLTIP = Whether or not to completely enable or disable aims
+SNIPER_ENABLE_SCOPED_ONLY_TOOLTIP = Will only aimbot when scoped in
+ACTIVATE_FROM_AIM_KEY_TOOLTIP = Enable aimbot when aim key is pressed
+AIM_FOV_TOOLTIP = Aim FOV
+FOV_TYPE_TOOLTIP = FOV Type : DISTANCE or STATIC
+AIM_SPEED_TOOLTIP = Lower is faster
+AIM_SMOOTHNESS_TOOLTIP = Lower is less smooth (faster snapping)
+AIM_AFTER_SHOTS_TOOLTIP = Aim after X shots
+TEAMMATES_ARE_ENEMIES_TOOLTIP = Enables aimbot against teammates

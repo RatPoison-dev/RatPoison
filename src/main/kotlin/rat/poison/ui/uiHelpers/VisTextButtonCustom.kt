@@ -1,5 +1,6 @@
 package rat.poison.ui.uiHelpers
 
+import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisCheckBox
 import com.kotcrab.vis.ui.widget.VisTextButton
 import rat.poison.boolToStr
@@ -13,6 +14,9 @@ class VisTextButtonCustom(mainText: String, nameInLocalization: String = "") : V
     private val nameInLocalization = nameInLocalization
     init {
         update()
+        if (curLocalization[nameInLocalization+"_TOOLTIP"] != "") {
+            Tooltip.Builder(curLocalization[nameInLocalization+"_TOOLTIP"]).target(this).build()
+        }
         changed { _, _ ->
             update()
             true

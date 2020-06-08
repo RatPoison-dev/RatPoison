@@ -1,6 +1,7 @@
 ﻿package rat.poison.ui.uiHelpers
 
 import com.badlogic.gdx.graphics.Color
+import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisTable
@@ -24,7 +25,9 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
 
     init {
         update()
-
+        if (curLocalization[nameInLocalization+"_TOOLTIP"] != "") {
+            Tooltip.Builder(curLocalization[nameInLocalization+"_TOOLTIP"]).target(this).build()
+        }
         sliderBar.changed { _, _ ->
             val sliderVal : Any = if (isInt) {
                 sliderBar.value.toInt()
