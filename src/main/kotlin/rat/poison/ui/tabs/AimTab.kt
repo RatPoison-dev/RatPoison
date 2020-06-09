@@ -99,7 +99,6 @@ fun updateDisableAim() {
 }
 
 fun updateAim() {
-    val map = aimingMap()
     aimTab.tAim.apply {
         enableAim.update()
         updateMap()

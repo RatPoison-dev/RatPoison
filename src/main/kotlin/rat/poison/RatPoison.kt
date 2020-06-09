@@ -42,6 +42,7 @@ import rat.poison.scripts.esp.esp
 import rat.poison.scripts.esp.espToggle
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.*
+import rat.poison.ui.tabs.RcsTab
 import rat.poison.ui.tabs.saveDefault
 import rat.poison.ui.uiPanels.*
 import rat.poison.utils.*
@@ -288,6 +289,7 @@ fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
 var opened = false
 var overlayMenuKey = ObservableBoolean({keyPressed(1)})
 var toggleAimKey = ObservableBoolean({keyPressed(1)})
+var toggleRCSKey = ObservableBoolean({keyPressed(1)})
 
 var syncTime = 0L
 var glowTime = 0L
@@ -319,7 +321,7 @@ object App : ApplicationAdapter() {
     override fun create() {
         overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
         toggleAimKey = ObservableBoolean({ keyPressed(curSettings["AIM_TOGGLE_KEY"].toInt()) })
-
+        toggleRCSKey = ObservableBoolean({ keyPressed(curSettings["RCS_TOGGLE_KEY"].toInt()) })
         VisUI.load(Gdx.files.internal("skin\\tinted.json"))
 
         //Implement stage for menu
@@ -484,6 +486,12 @@ object App : ApplicationAdapter() {
                 toggleAimKey.update()
                 if (toggleAimKey.justBecameTrue) {
                     aimTab.tAim.enableAim.isChecked = !aimTab.tAim.enableAim.isChecked
+                }
+
+                // RCS Toggle Key
+                toggleRCSKey.update()
+                if (toggleRCSKey.justBecameTrue) {
+                    rcsTab.enableRCS.isChecked = !rcsTab.enableRCS.isChecked
                 }
 
                 val w = overlay.width
