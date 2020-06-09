@@ -21,6 +21,7 @@ class BoxEspTab : Tab(false, false) {
     val showTeamSkeleton = VisCheckBoxCustom(curLocalization["TEAMMATES"], "SKELETON_SHOW_TEAM", nameInLocalization = "TEAMMATES")
     val showEnemiesSkeleton = VisCheckBoxCustom(curLocalization["ENEMIES"], "SKELETON_SHOW_ENEMIES", nameInLocalization = "ENEMIES")
     val boxEsp = VisCheckBoxCustom(curLocalization["ENABLE_BOX_ESP"], "ENABLE_BOX_ESP", nameInLocalization = "ENABLE_BOX_ESP")
+    val boxShowHealth = VisCheckBoxCustom(curLocalization["HEALTH_BASED"], "BOX_SHOW_HEALTH", "HEALTH_BASED")
     val boxEspDetails = VisCheckBoxCustom(curLocalization["ENABLE_BOX_ESP_DETAILS"], "BOX_ESP_DETAILS", nameInLocalization = "ENABLE_BOX_ESP_DETAILS")
     val boxEspHealth = VisCheckBoxCustom(curLocalization["HEALTH"], "BOX_ESP_HEALTH", nameInLocalization = "HEALTH")
     val boxEspHealthPos = VisSelectBox<String>()
@@ -107,6 +108,7 @@ class BoxEspTab : Tab(false, false) {
         table.addSeparator().colspan(2)
         table.add(boxEsp).left().row()
         table.add(boxEspDetails).left().row()
+        table.add(boxShowHealth).left().row()
         table.add(boxEspHealth).left()
         table.add(boxEspHealthPos).left().row()
         table.add(boxEspArmor).left()
@@ -152,6 +154,7 @@ fun boxEspTabUpdate() {
     boxEspTab.apply {
         boxEsp.update()
         boxEspDetails.update()
+        boxShowHealth.update()
         boxEspHealth.update()
         boxEspArmor.update()
         boxEspName.update()

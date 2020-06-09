@@ -227,6 +227,7 @@ fun updateDisableEsp() {
         glowEspTab.glowEsp.disable(bool)
         glowEspTab.invGlowEsp.disable(bool)
         glowEspTab.modelEsp.disable(bool)
+        glowEspTab.glowShowHealth.disable(bool)
         glowEspTab.modelAndGlow.disable(bool)
         glowEspTab.showTeam.disable(bool)
         glowEspTab.showEnemies.disable(bool)
@@ -270,6 +271,7 @@ fun updateDisableEsp() {
 
         boxEspTab.boxEsp.disable(bool)
         boxEspTab.boxEspDetails.disable(bool)
+        boxEspTab.boxShowHealth.disable(bool)
         boxEspTab.boxEspHealth.disable(bool)
         boxEspTab.boxEspHealthPos.isDisabled = bool
         boxEspTab.boxEspArmor.disable(bool)
