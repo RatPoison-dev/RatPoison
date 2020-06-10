@@ -17,6 +17,7 @@ BOMB_CARRIER = Bomb Carrier
 DEFUSERS = Defusers
 DEFUSER = DEFUSER
 SELF = Self
+HEALTH_BASED = Health Based
 ENABLE = Enable
 LEFT = Left
 RIGHT = Right

@@ -19,6 +19,7 @@ class GlowEspTab : Tab(false, false) {
     val invGlowEsp = VisCheckBoxCustom(curLocalization["INV_GLOW_ESP"], "INV_GLOW_ESP", nameInLocalization = "INV_GLOW_ESP")
     val modelEsp = VisCheckBoxCustom(curLocalization["MODEL_ESP"], "MODEL_ESP", nameInLocalization = "MODEL_ESP")
     val modelAndGlow = VisCheckBoxCustom(curLocalization["MODEL_AND_GLOW"], "MODEL_AND_GLOW", nameInLocalization = "MODEL_AND_GLOW")//VisCheckBox("Model & Glow Esp", nameInLocalization = "MODEL_AND_GLOW")
+    val glowShowHealth = VisCheckBoxCustom(curLocalization["HEALTH_BASED"], "GLOW_SHOW_HEALTH", "HEALTH_BASED")
 
     val showTeam = VisCheckBoxCustom(" ", "GLOW_SHOW_TEAM")
     val glowTeamColor = VisColorPickerCustom(curLocalization["TEAMMATES"], "GLOW_TEAM_COLOR", nameInLocalization = "TEAMMATES")
@@ -51,6 +52,7 @@ class GlowEspTab : Tab(false, false) {
 
         table.add(modelEsp).left()
         table.add(modelAndGlow).left().row()
+        table.add(glowShowHealth).left().row()
 
         var tmpTable = VisTable()
         tmpTable.add(showTeam)
@@ -110,6 +112,7 @@ fun glowEspTabUpdate() {
         glowEsp.update()
         invGlowEsp.update()
         modelEsp.update()
+        glowShowHealth.update()
         modelAndGlow.update()
         showTeam.update()
         showEnemies.update()

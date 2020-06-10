@@ -53,7 +53,7 @@ internal fun glowEspApp() = App {
 			val glowAddress = it.glowAddress
 			if (glowAddress <= 0) return@body false
 
-			var color = ""
+			var color = Color(0, 0, 0)
 
 			when (it.type) {
 				EntityType.CCSPlayer -> {
@@ -63,33 +63,39 @@ internal fun glowEspApp() = App {
 					val team = !DANGER_ZONE && meTeam == entityTeam
 
 					if (showTarget && it.entity == glowTarget.get() && glowTarget.get() != -1L) {
-						color = "GLOW_HIGHLIGHT_COLOR"
+						color = curSettings["GLOW_HIGHLIGHT_COLOR"].strToColor()
 					} else if (showEnemies && !team) {
 						color = when (bEnt >= 0 && bEnt == entity && showBombCarrier) {
-							true -> "GLOW_BOMB_CARRIER_COLOR"
-							false -> "GLOW_ENEMY_COLOR"
+							true -> curSettings["GLOW_BOMB_CARRIER_COLOR"].strToColor()
+							false -> when (curSettings["GLOW_SHOW_HEALTH"].strToBool()) {
+								true -> Color((255 - 2.55 * entity.health()).toInt(), (2.55 * entity.health()).toInt(), 0, 1.0)
+								else -> curSettings["GLOW_ENEMY_COLOR"].strToColor()
+							}
 						}
 					} else if (showTeam && team) {
 						color = when (bEnt >= 0 && bEnt == entity && showBombCarrier) {
-							true -> "GLOW_BOMB_CARRIER_COLOR"
-							false -> "GLOW_TEAM_COLOR"
+							true -> curSettings["GLOW_BOMB_CARRIER_COLOR"].strToColor()
+							false -> when (curSettings["GLOW_SHOW_HEALTH"].strToBool()) {
+								true -> Color((255 - 2.55 * entity.health()).toInt(), (2.55 * entity.health()).toInt(), 0, 1.0)
+								else -> curSettings["GLOW_TEAM_COLOR"].strToColor()
+							}
 						}
 					}
 				}
 
 				EntityType.CPlantedC4, EntityType.CC4 -> if (showBomb) {
-					color = "GLOW_BOMB_COLOR"
+					color = curSettings["GLOW_BOMB_COLOR"].strToColor()
 				}
 
 				else ->
 					if (showWeapons && it.type.weapon) {
-						color = "GLOW_WEAPON_COLOR"
+						color = curSettings["GLOW_WEAPON_COLOR"].strToColor()
 					} else if (showGrenades && it.type.grenade)
-						color = "GLOW_GRENADE_COLOR"
+						color = curSettings["GLOW_GRENADE_COLOR"].strToColor()
 			}
 
-			if (color != "") {
-				glowAddress.glow(curSettings[color].strToColor(), entity.spotted())
+			if (color != Color(0,0,0)) {
+				glowAddress.glow(color, entity.spotted())
 			}
 
 			return@body false
