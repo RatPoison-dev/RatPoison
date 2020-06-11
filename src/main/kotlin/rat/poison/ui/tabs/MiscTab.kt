@@ -72,7 +72,7 @@ class MiscTab : Tab(false, false) {
         }
 
         weaponSpamKey.changed { _, _ ->
-            weaponSpamToggleKey = ObservableBoolean({keyPressed(weaponSpamKey.value)})
+            weaponSpamToggleKey = ObservableBoolean({keyPressed(weaponSpamKey.value.toString().toInt())})
             true
         }
 
