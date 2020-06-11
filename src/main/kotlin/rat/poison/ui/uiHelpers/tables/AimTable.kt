@@ -21,6 +21,7 @@ import rat.poison.ui.uiUpdate
 class AimTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
     val enableAim = VisCheckBoxCustom("Enable Aim", "ENABLE_AIM")
+    val ingameSens = VisInputFieldCustom("Game Sensitivity", "GAME_SENSITIVITY", false, false)
     val aimToggleKey = VisInputFieldCustom("Toggle Aim Key", "AIM_TOGGLE_KEY")
     val activateFromFireKey = VisCheckBoxCustom("Activate From Fire Key", "ACTIVATE_FROM_AIM_KEY")
     val holdAim = VisCheckBoxCustom("Hold Aim", "HOLD_AIM")
@@ -28,6 +29,9 @@ class AimTable: VisTable(false) {
 
     val fovTypeLabel = VisLabel("Fov Type: ")
     val fovTypeBox = VisSelectBox<String>()
+
+    //var smokeCheckUI: UISmokeCheck
+    //val smokeCheckButton = VisTextButton("Customize")
 
     val forceAimBoneKey = VisInputFieldCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
     val forceAimKey = VisInputFieldCustom("Force Aim Key", "FORCE_AIM_KEY")
@@ -83,18 +87,6 @@ class AimTable: VisTable(false) {
     val advancedSpeedDivisor = ATabVisSlider("Mouse Move Divisor", "_AIM_SPEED_DIVISOR", 1F, 10F, 1F, true)
 
     init {
-        if (curSettings["WARNING"].strToBool()) {
-            val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.7" +
-                    "\n\nIf you have any problems submit an issue on Github" +
-                    "\nGitHub: https://github.com/TheFuckingRat/RatPoison" +
-                    "\n\nUpdate 1.6 removes aim strictness from aim settings" +
-                    "\nOlder configs shouldn't break, but your aim settings" +
-                    "\nmight need to be updated." +
-                    "\n\n Official discord server: https://discord.gg/J2uHTJ2")
-            dialog.setPosition(CSGO.gameWidth / 4F - dialog.width / 2F, CSGO.gameHeight.toFloat() / 2F)
-            App.menuStage.addActor(dialog)
-        }
-
         //Fov Type
         val fovType = VisTable()
         fovTypeBox.setItems("DISTANCE", "STATIC")
@@ -108,6 +100,14 @@ class AimTable: VisTable(false) {
 
         fovType.add(fovTypeLabel).width(200F)
         fovType.add(fovTypeBox)
+
+        //Smoke Check Customization
+        //smokeCheckUI = UISmokeCheck()
+        //smokeCheckButton.changed { _, _ ->
+         //   if (!App.menuStage.actors.contains(smokeCheckUI)) {
+        //        App.menuStage.addActor(smokeCheckUI)
+        //    }
+        //}
 
         //Create Override Weapon Check Box & Collapsible
         weaponOverrideCheckBox.isChecked = curSettings["ENABLE_OVERRIDE"].strToBool()
@@ -244,11 +244,17 @@ class AimTable: VisTable(false) {
         add(enableAim).left().row()
         add(aimToggleKey).left().row()
 
+        add(ingameSens).left().row()
+
         add(activateFromFireKey).left().row()
         add(teammatesAreEnemies).left().row()
         add(holdAim).left().row()
         add(targetSwapDelay).left().row()
         add(fovType).left().row()
+
+        //addSeparator()
+
+        //add(smokeCheckButton).left().row()
 
         addSeparator()
 
