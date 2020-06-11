@@ -38,7 +38,6 @@ private data class Box(var x0: Float = 0F, var y0: Float = 0F,
 					   var armor: Float = 100F,
 					   var weapon: String = "",
 					   var name: String = "",
-					   var IsScoped: String = "",
 					   var type: EntityType = EntityType.NULL)
 
 private var currentIdx = 0
@@ -65,7 +64,7 @@ fun boxEsp() = App {
 		}
 
 		val entityMemory: Memory by lazy {
-			Memory(45932)
+			Memory(45948)
 		}
 
 		csgoEXE.read(entity.boneMatrix(), boneMemory)
@@ -126,10 +125,6 @@ fun boxEsp() = App {
 				armor = entityMemory.armor().toFloat()
 				weapon = curLocalization[entity.weapon().name]
 				name = entity.name()
-				IsScoped = when (entity.isScoped()) {
-					true -> "SCOPED"
-					false -> ""
-				}
 
 				type = EntityType.CCSPlayer
 			}
@@ -217,10 +212,6 @@ fun boxEsp() = App {
 						val boxDetailsTextTop = StringBuilder()
 						boxDetailsTextTop.append(" ")
 
-						if (bEspScope && bEspScopePos == "T") {
-							boxDetailsTextTop.append(IsScoped+"\n")
-							yAdd += 16F
-						}
 						if (bEspName && bEspNamePos == "T") {
 							boxDetailsTextTop.append("$name\n")
 							yAdd += 16F
@@ -244,9 +235,6 @@ fun boxEsp() = App {
 						}
 						if (bEspWeapon && bEspWeaponPos == "B") {
 							boxDetailsTextBottom.append(weapon+"\n")
-						}
-						if (bEspScope && bEspScopePos == "B") {
-							boxDetailsTextBottom.append(IsScoped)
 						}
 						if (boxDetailsTextBottom.isNotBlank() && boxDetailsTextBottom.isNotEmpty()) {
 							glyph.setText(textRenderer, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, detailTextColor, 1F, Align.center, false, null)
