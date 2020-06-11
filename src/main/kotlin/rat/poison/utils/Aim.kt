@@ -9,8 +9,8 @@ import rat.poison.game.CSGO.gameY
 import rat.poison.game.clientState
 import rat.poison.game.setAngle
 import rat.poison.settings.GAME_PITCH
-import rat.poison.settings.GAME_SENSITIVITY
 import rat.poison.settings.GAME_YAW
+import rat.poison.strToBool
 import rat.poison.utils.extensions.refresh
 import kotlin.math.round
 
@@ -57,8 +57,10 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 
 	delta.set(xFix, currentAngle.x - destinationAngle.x, 0.0)
 
-	var sens = GAME_SENSITIVITY + .5
+	var sens = curSettings["GAME_SENSITIVITY"].toDouble() + .5
 	if (perfect) sens = 1.0
+
+	//set ingame sens
 
 	val dx = round(delta.x / (sens * GAME_PITCH))
 	val dy = round(-delta.y / (sens * GAME_YAW))
@@ -67,19 +69,24 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 
 	val target = POINT()
 
-	var randX = if (curSettings["AIM_RANDOM_X_VARIATION"].toInt() > 0) randInt(0, curSettings["AIM_RANDOM_X_VARIATION"].toInt()) * randSign() else 0
-	var randY = if (curSettings["AIM_RANDOM_Y_VARIATION"].toInt() > 0) randInt(0, curSettings["AIM_RANDOM_Y_VARIATION"].toInt()) * randSign() else 0
-	val randDZ = curSettings["AIM_VARIATION_DEADZONE"].toInt()
+	var randX = 0
+	var randY = 0
 
-	if (dx.toInt() in -randDZ..randDZ) {
-		randX = 0
+	if (curSettings["AIM_ADVANCED"].strToBool()) {
+		randX = if (curSettings["AIM_RANDOM_X_VARIATION"].toInt() > 0) randInt(0, curSettings["AIM_RANDOM_X_VARIATION"].toInt()) * randSign() else 0
+		randY = if (curSettings["AIM_RANDOM_Y_VARIATION"].toInt() > 0) randInt(0, curSettings["AIM_RANDOM_Y_VARIATION"].toInt()) * randSign() else 0
+		val randDZ = curSettings["AIM_VARIATION_DEADZONE"].toInt()
+
+		if (dx.toInt() in -randDZ..randDZ) {
+			randX = 0
+		}
+
+		if (dy.toInt() in -randDZ..randDZ) {
+			randY = 0
+		}
 	}
 
-	if (dy.toInt() in -randDZ..randDZ) {
-		randY = 0
-	}
-
-	target.x = (mousePos.x + dx / divisor).toInt() + randX //You do be testing some licks
+	target.x = (mousePos.x + dx / divisor).toInt() + randX
 	target.y = (mousePos.y + dy / divisor).toInt() + randY
 
 	if (checkOnScreen) {

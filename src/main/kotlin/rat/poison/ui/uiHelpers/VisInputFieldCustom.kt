@@ -12,24 +12,30 @@ import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.keybindsUpdate
 import rat.poison.ui.uiUpdate
 
-class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true) : VisTable() {
+class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true, isInt: Boolean = true) : VisTable() {
     private val textLabel = mainText
     private val variableName = varName
+    private val intVal = isInt
 
     //val globalTable = VisTable()
     private var keyLabel = VisLabel("$textLabel:")
-    private val keyField = VisValidatableTextField(Validators.INTEGERS)
+    private val keyField = if (isInt) { VisValidatableTextField(Validators.INTEGERS) } else { VisValidatableTextField(Validators.FLOATS) }
     private val linkLabel = LinkLabel("?", "http://cherrytree.at/misc/vk.htm")
 
-    var value = 0
+    var value: Any = 0
 
     init {
         update()
         changed { _, _ ->
             if (keyField.text.toIntOrNull() != null) {
                 if (keyField.text != curSettings[variableName]) {
-                    curSettings[variableName] = keyField.text.toInt().toString()
-                    value = keyField.text.toInt()
+                    if (intVal) {
+                        curSettings[variableName] = keyField.text.toInt().toString()
+                        value = keyField.text.toInt()
+                    } else {
+                        curSettings[variableName] = keyField.text.toDouble().toString()
+                        value = keyField.text.toDouble()
+                    }
                     keybindsUpdate(this)
                 }
             }
@@ -47,7 +53,11 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
     fun update(neglect: Actor? = null) {
         if (neglect != this) {
             keyField.text = curSettings[variableName]
-            value = keyField.text.toInt()
+            if (intVal) {
+                value = keyField.text.toInt()
+            } else {
+                value = keyField.text.toDouble()
+            }
         }
     }
 
