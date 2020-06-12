@@ -1,0 +1,398 @@
+// Global
+TEAMMATES = Союзники
+ENEMIES = Противники
+HEALTH = Здоровье
+ARMOR = Броня
+NAME = Имя
+GRENADES = Гранаты
+TARGET = Цель
+WEAPON = Оружие
+WARNING = Предупреждение
+SCOPE = Скоуп
+WEAPONS = Оружия
+UNDEFINED = N/A
+T = Т
+CT = КТ
+BOMB = Bomb
+BOMB_CARRIER = Носитель Бомбы
+DEFUSERS = Дефуза
+DEFUSER = DEFUSER
+SELF = Self
+HEALTH_BASED = На основании здоровья
+ENABLE = Включено
+LEFT = Лево
+RIGHT = Право
+TOP = Вверху
+BOTTOM = Внизу
+LINE_WIDTH = Длина линии
+FOV = ФОВ
+
+// Tabs name
+AIM_TAB_NAME = Наводка
+HITMARKER_TAB_NAME = Хитмаркеры
+SNAPLINES_TAB_NAME = Линии к противникам
+MISC_TAB_NAME = Миск
+RCS_TAB_NAME = РКС
+VISUALS_TAB_NAME = Визуалы
+FOOTSTEPS_TAB_NAME = Шаги
+OVERRIDE_WEAPONS_PANEL_NAME = Переопределение оружий
+KEYBINDS_PANEL_NAME = Бинды
+INDICATORS_TAB_NAME = Индикаторы
+NADES_TAB_NAME = Трейсеры гранат
+GLOW_TAB_NAME = Подсветка
+BOX_ESP_TAB_NAME = Боксы
+CHAMS_TAB_NAME = Чамсы
+SKIN_CHANGER_TAB_NAME = Скины
+NADE_HELPER_TAB_NAME = Раскид
+RANKS_TAB_NAME = Ранки
+OPTIONS_TAB_NAME = КФГ
+
+BOMB_TIMER_WINDOW_NAME = Таймер бомбы
+SPECTATOR_LIST_WINDOW_NAME = Наблюдатели
+
+// Aim tab
+PISTOL = Пистолеты
+SHOTGUN = Дробовики
+RIFLE = Винтовки
+SNIPER = Снайперки
+SMG = СМГ
+
+STATIC = Статический
+DISTANCE = Динамический
+
+HEAD = Голова
+NECK = Шея
+CHEST = Грудь
+STOMACH = Желудок
+NEAREST = Ближайшая
+RANDOM = Рандом
+WEAPON_CATEGORY = Категория Оружий:
+// Triggerbot
+ENABLE_TRIGGER = Включить триггер
+TRIGGER_ENABLE_KEY = Триггер на кнопку
+TRIGGER_KEY = Кнопка триггера
+TRIGGER_AIMBOT = Помощь в прицеливании
+TRIGGER_IS_IN_CROSS = По пересечению
+TRIGGER_IS_IN_FOV = По ФОВу
+TRIGGER_DELAY = Delay
+// Aimbot
+ENABLE_AIM = Включить Аим
+AIM_TOGGLE_KEY = Кнопка переключения аима
+ACTIVATE_FROM_AIM_KEY = Активировать аим во время стрельбы
+HOLD_AIM = Продолжать аим
+TEAMMATES_ARE_ENEMIES = Союзники это противники
+FOV_TYPE = Тип ФОВа:
+FORCE_AIM_BONE_KEY = Кнопка форса кости аима
+FORCE_AIM_KEY = Кнопка форса аима
+FORCE_AIM_ALWAYS = Аим работает всегда
+FORCE_AIM_THROUGH_WALLS = Аим работает через стены
+AUTOMATIC_WEAPONS = Автоматические оружия
+AUTO_WEP_DELAY = Задержка
+AIM_TARGET_SWAP_DELAY = Переключение цели
+OVERRIDE_WEAPONS_CHECKBOX = Переопределение оружий
+AIM_ONLY_ON_SHOT = Аимиться только когда можно стрелять
+FACTOR_RECOIL = Контролировать разброс
+ENABLE_FLAT_AIM = Запись в игру
+ENABLE_PATH_AIM = Движения мышью
+SNIPER_ENABLE_SCOPED_ONLY = Только при скоупе
+AIM_BONE = Кость:
+AIM_FORCE_BONE = Форсированная Кость:
+AIM_FOV = ФОВ Аима
+AIM_SPEED = Скорость аима
+AIM_SMOOTHNESS = Смуч
+AIM_AFTER_SHOTS = Аим после #
+ENABLE_PERFECT_AIM = Включить аимлок
+PERFECT_AIM_CHANCE = Шанс
+ADVANCED_SETTINGS = Продвинутые настройки
+RANDOM_X_VARIATION = Вариация по X
+RANDOM_Y_VARIATION = Вариация по Y
+VARIATION_DEADZONE = Вариация смертельной зоны
+AIM_RCS_X = РКС по X
+AIM_RCS_Y = РКС по Y
+AIM_RCS_VARIATION = Вариация РКСа
+AIM_SPEED_DIVISOR = Делитель движения мыши
+
+// Misc tab
+ENABLE_BUNNY_HOP = Банни Хоп
+AUTO_STRAFE = Автострейфы
+STRAFE_BHOP_ONLY = Только при бхопе
+FAST_STOP = Быстрая остановка
+AIM_STRAFER = Стрейфы
+AIM_STRAFER_SAME = Тот-же
+AIM_STRAFER_OPPOSITE = Опозит
+AIM_STRAFER_SHIFT = Шифт Волк
+AIM_STRAFER_STRICTNESS = Сила
+HEAD_WALK = Хождение по головам
+
+ENABLE_FOV_CHANGER = Изменить ФОВ
+FOV_DEFAULT = ФОВ
+FOV_SMOOTH = Плавное изменение ФОВа
+FOV_SNIPER_DEFAULT = ФОВ
+FOV_ZOOM_1 = ФОВ 1 зума
+FOV_ZOOM_2 = ФОВ 2 зума
+ENABLE_BOMB_TIMER = Таймеры бомбы
+BOMB_TIMER_BARS = Полоска
+BOMB_TIMER_MENU = Меню
+ENABLE_SPECTATOR_LIST = Список наблюдателей
+
+ENABLE_AUTO_KNIFE = Автонож
+ENABLE_PERFECT_BOMB_DEFUSE = Идеальный дефуз бомбы
+ENABLE_DOOR_SPAM = Спам дверью
+DOOR_SPAM_KEY = Кнопка спама
+ENABLE_WEAPON_SPAM = Спам оружием
+WEAPON_SPAM_KEY = Кнопка спама
+ENABLE_REDUCED_FLASH = Уменьшенный флеш
+FLASH_MAX_ALPHA = Максимум флеша
+ENABLE_HITSOUND = Звук попадания
+HITSOUND_VOLUME = Громкость
+THROW_SELF_NADE = Бросить гранату
+ENABLE_NAME_CHANGER = Изменение никнейма
+
+
+// Nade helper tab
+ENABLE_NADE_HELPER = Включить помощник раскида
+LOADED = Загружено:
+LOADED_NOTHING = Загружено: N/A
+CREATE_GRENADE_POSITION = Создать позицию кидания гранаты
+SAVE_AS_FILE = Сохранить
+LOAD_FROM_FILE = Загрузить
+DELETE_SELECTED_FILE = Удалить
+CLEAR_CURRENTLY_LOADED = Отчистить загруженный файл
+CLEAR_CURRENTLY_LOADED_WARNING = Вы действительно хотите отчистить все позиции кидания гранат?
+DELETE_AT_CURRENT_POSITION = Удалить позицию кидания гранаты
+ENTER_POSITION_NAME = Введите имя позиции
+CHOOSE_NADE_TYPE = Выберите тип гранаты
+NADE_FLASH = Флэшка
+NADE_FRAG = Взрывоопасная
+NADE_MOLLY = Молотов
+NADE_SMOKE = Дым
+ENTER_FILE_NAME = Введите имя файла
+
+// Options tab
+MENU_KEY = Кнопка открытия меню
+OPENGL_FPS = ФПС ОпенГЛ
+MENU_STAY_FOCUSED = Оставаться в фокусе
+ENABLE_DEBUG = Отладка
+KEYBINDS = Бинды
+GAUSSIAN_BLUR = Размытие по Гауссу
+JOIN_DISCORD = Дискорд
+MENU_ALPHA_SLIDER = Прозрачность:
+SAVE_CONFIG = Сохранить КФГ
+ENTER_CONFIG_NAME = Введите имя КФГ:
+LOAD_CONFIG = Загрузить КФГ
+DELETE_CONFIG = Удалить КФГ
+SAVE_CONFIG_TO_DEFAULT = Сделать КФГ загружаемым по умолчанию
+LOAD_LOCALIZATION = Загрузить локализацию
+
+// Ranks tab
+RANKS_TEAM = Команда
+RANKS_NAME = Имя
+RANKS_RANK = Ранк
+RANKS_KILLS = Убийства
+RANKS_DEATHS = Смерти
+RANKS_KD = К/Д
+RANKS_WINS = Победы
+
+// RCS Tab
+ENABLE_RCS = Включить РКС
+RCS_TOGGLE_KEY = Кнопка переключения РКСа
+RCS_SMOOTHING_X = Сила РКС по X
+RCS_SMOOTHING_Y = Сила РКС по Y
+RCS_RETURNAIM = Возвращать аим
+ENABLE_RECOIL_CROSSHAIR = Прицел отдачи
+ENABLE_SNIPER_CROSSHAIR = Включен без скоупа
+RCROSSHAIR_WIDTH = Ширина прицела
+RCROSSHAIR_LENGTH = Длина прицела
+RCROSSHAIR_XOFFSET = Смещение по X
+RCROSSHAIR_YOFFSET = Смещение по Y
+RCROSSHAIR_ALPHA = Прозрачтность
+RCROSSHAIR_COLOR = Установить цвет
+
+// Skin changer tab
+ENABLE_SKIN_CHANGER = Включить подмену скинов
+ENABLE_KNIFE_CHANGER = Включить подмену ножа
+SKIN_ID = Айди скина:
+STATTRACK = Количество убийств:
+WEAR = Качество:
+MANUAL_FORCE_UPDATE = Записать скины
+AUTO_FORCE_UPDATE = Автоматическая запись
+
+// Visuals tab
+ENABLE_ESP = Включить визуалы
+VISUALS_TOGGLE_KEY = Кнопка переключения визуалов
+ENABLE_RADAR_ESP = Раадр хак
+ENABLE_NIGHTMODE = Ночной режим/Полная яркость
+NIGHTMODE_VALUE = %
+ENABLE_ADRENALINE = Адреналин
+DRAW_AIM_FOV_COLOR = Рисовать ФОВ аима
+DRAW_TRIGGER_FOV_COLOR = Рисовать ФОВ триггера
+// Box Esp tab
+ENABLE_SKELETON_ESP = Включить скелет
+ENABLE_BOX_ESP = Закрепленный бокс
+ENABLE_BOX_ESP_DETAILS = Детали бокса
+BOX_DETAILS_TEXT_COLOR = Цвет деталей бокса
+// Chams tab
+CHAMS_ESP = Включить чамсы
+CHAMS_SHOW_HEALTH = На основании здоровья
+CHAMS_BRIGHTNESS = Яркость чамсов
+// Footsteps tab
+FOOTSTEP_UPDATE = Обновление таймера
+FOOTSTEP_TTL = Время жизни
+FOOTSTEPS_TEXT = Текст
+FOOTSTEPS_CIRCLE = Кружок
+// Glow Esp tab
+INV_GLOW_ESP = Вся модель
+MODEL_ESP = Части модели
+MODEL_AND_GLOW = Модель & Подсветка
+// HitMarkers tab
+HITMARKER_OUTLINE = Контур
+HITMARKER_COMBO = Комбо #
+HITMARKER_RECOIL_POSITION = Показывать отдачу
+HITMARKER_SPACING = Расстояние
+HITMARKER_LENGTH = Длина линии
+HITMARKER_COLOR = Цвет
+HITMARKER_COMBO_COLOR = Комбо
+// Indicators tab
+INDICATOR_DISTANCE = Дистанция индикатора
+INDICATOR_SIZE = Размер индикатора
+// Nades tab
+NADE_TRACER_COLOR = Включить трейсер
+NADE_TRACER_UPDATE_TIME = Время обновления
+NADE_TRACER_TIMEOUT = Таймаут трейсера
+
+
+// Override weapons panel
+CATEGORY = Категория:
+ENABLE_OVERRIDE = Включить Переопределение
+OVERRIDE_AIM_SPEED = Скорость:
+OVERRIDE_SMOOTH = Смуч:
+
+// Spectator list
+NAME_PREFIX = Имя:
+
+// Bomb Timer
+BOMB_IS_PLANTED = Бомба Заложена!
+BOMB_IS_NOT_PLANTED = Бомба не заложена!
+TIME_TO_EXPLODE = Время до взрыва:
+LOCATION = Локация:
+CAN_DEFUSE = Возможность дефуза:
+TIME_TO_DEFUSE = Время дефуза:
+TIME_LEFT_AFTER = Время остается после:
+
+/// Scanner
+TYPE_HELP = Type help for options
+FILE_NOT_FOUND_ERROR = File not found, use list to see current files
+INVALID_VARIABLE_OR_VALUE = Invalid variable/value
+DEFAULT_CONFIG_NAME = default
+// Commnands
+HELP_MESSAGE = Available commands: help [command], exit, ranks, reload, list, read [file name], write [file name] [variable name] = [value], save [default/cfgname], load [cfgname], delete [cfgname]
+HELP_COMMAND = help
+EXIT_COMMAND = exit
+RANKS_COMMAND = ranks
+RELOAD_COMMAND = reload
+LIST_COMMAND = list
+READ_COMMAND = read
+WRITE_COMMAND = write
+LOAD_COMMAND = load
+DELETE_COMMAND = delete
+SAVE_COMMAND = save
+// Help messages
+EXIT_HELP_MESSAGE = Closes program and cmd
+RANKS_COMMAND_HELP_MESSAGE = Shows players, ranks, kills, deaths, kd, and wins
+RELOAD_COMMAND_HELP_MESSAGE = Reloads all settings files, is done automatically on write
+LIST_COMMAND_HELP_MESSAGE = Lists all settings files
+READ_COMMAND_HELP_MESSAGE = Syntax: read [file name] ; Replace [file name] with the file name, viewable from the list command, excluding .kts. Example: read General
+WRITE_COMMAND_HELP_MESSAGE = Syntax: write [file name] [variable name] = [value] ; Replace [file name] with the file name, replace [variable name] with the name of the variable inside of the file from [file name], and replace [value] with the value for the variable
+SAVE_COMMAND_HELP_MESSAGE = Save to default settings or to a config
+LOAD_COMMAND_HELP_MESSAGE = Load config
+// List command
+SETTINGS_FILES = Settings Files
+CFGS = CFGS
+// Write command
+WRITING_TO = Writing to
+SET = Set
+RELOADING_SETTINGS = Reloading settings
+
+// Weapons
+DESERT_EAGLE = DESERT_EAGLE
+DUAL_BERRETA = DUAL_BERRETA
+FIVE_SEVEN = FIVE_SEVEN
+GLOCK = GLOCK
+AK47 = AK47
+AUG = AUG
+AWP = AWP
+FAMAS = FAMAS
+G3SG1 = G3SG1
+GALIL = GALIL
+M249 = M249
+M4A4 = M4A4
+MAC10 = MAC10
+P90 = P90
+MP5 = MP5
+UMP45 = UMP45
+XM1014 = XM1014
+PP_BIZON = PP_BIZON
+MAG7 = MAG7
+NEGEV = NEGEV
+SAWED_OFF = SAWED_OFF
+TEC9 = TEC9
+ZEUS_X27 = ZEUS_X27
+P2000 = P2000
+MP7 = MP7
+MP9 = MP9
+NOVA = NOVA
+P250 = P250
+SCAR20 = SCAR20
+SG553 = SG553
+SSG08 = SSG08
+KNIFE = KNIFE
+FLASH_GRENADE = FLASH_GRENADE
+EXPLOSIVE_GRENADE = EXPLOSIVE_GRENADE
+SMOKE_GRENADE = SMOKE_GRENADE
+MOLOTOV = MOLOTOV
+DECOY_GRENADE = DECOY_GRENADE
+INCENDIARY_GRENADE = INCENDIARY_GRENADE
+C4 = C4
+MEDISHOT = MEDISHOT
+KNIFE_T = KNIFE_T
+M4A1_SILENCER = M4A1_SILENCER
+USP_SILENCER = USP_SILENCER
+CZ75A = CZ75A
+R8_REVOLVER = R8_REVOLVER
+FISTS = FISTS
+CHARGE = CHARGE
+TABLET = TABLET
+HAMMER = HAMMER
+FIRE_BOMB = FIRE_BOMB
+DIVERSION_DEVICE = DIVERSION_DEVICE
+KNIFE_BAYONET = KNIFE_BAYONET
+KNIFE_CSS = KNIFE_CSS
+KNIFE_FLIP = KNIFE_FLIP
+KNIFE_GUT = KNIFE_GUT
+KNIFE_KARAMBIT = KNIFE_KARAMBIT
+KNIFE_M9_BAYONET = KNIFE_M9_BAYONET
+KNIFE_TACTICAL = KNIFE_TACTICAL
+KNIFE_FALCHION = KNIFE_FALCHION
+KNIFE_BOWIE = KNIFE_BOWIE
+KNIFE_BUTTERFLY = KNIFE_BUTTERFLY
+KNIFE_PUSH = KNIFE_PUSH
+KNIFE_CORD = KNIFE_CORD
+KNIFE_CANIS = KNIFE_CANIS
+KNIFE_URSUS = KNIFE_URSUS
+KNIFE_GYPSY = KNIFE_GYPSY
+KNIFE_OUTDOOR = KNIFE_OUTDOOR
+KNIFE_STILETTO = KNIFE_STILETTO
+KNIFE_WIDOWMAKER = KNIFE_WIDOWMAKER
+KNIFE_SKELETON = KNIFE_SKELETON
+
+// Tooltips
+ENABLE_BUNNY_HOP_TOOLTIP = Включение бхопа
+ENABLE_PATH_AIM_TOOLTIP = Использует движения мыши для аима
+ENABLE_FLAT_AIM_TOOLTIP = Пишет в игру
+AIM_BONE_TOOLTIP = Кость, в которую происходит аим
+FOV_TYPE_TOOLTIP = Тип фова : Динамический или статический
+ENABLE_PERFECT_BOMB_DEFUSE_TOOLTIP = Завершить дефуз бомбы в 0.00 до ее взрыва
+ENABLE_HITSOUND_TOOLTIP = Проигрывания звука, когда вы в кого-то попали
+THROW_SELF_NADE_TOOLTIP = Подпрыгнуть и нанести себе 98 урона гранатой
+INDICATOR_SIZE_TOOLTIP = Размер индикатора
+HOLD_AIM_TOOLTIP = Аим в цель, даже когда она находится вне ФОВа

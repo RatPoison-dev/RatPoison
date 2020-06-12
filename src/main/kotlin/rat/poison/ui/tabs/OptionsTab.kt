@@ -21,6 +21,7 @@ import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.*
 import rat.poison.ui.uiPanels.keybindsUpdate
 import rat.poison.ui.uiPanels.optionsTab
+import rat.poison.ui.uiPanels.updateVisWindowsNames
 import rat.poison.ui.uiUpdate
 import java.io.File
 import java.io.FileReader
@@ -87,6 +88,7 @@ class OptionsTab : Tab(false, false) {
                 if (localizationSelectBox.selected.count() > 0) {
                     loadLocalizationFromFile(localizationSelectBox.selected)
                     uiMenu.updateTabs()
+                    updateVisWindowsNames()
                     updateWindows()
                     uiUpdate()
                 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Array
+import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import org.jire.arrowhead.keyPressed
@@ -114,12 +115,7 @@ class MiscTab : Tab(false, false) {
 
         //Create Hit Sound Selector Box
         val hitSound = VisTable()
-        val hitSoundFiles = Array<String>()
-        File("$SETTINGS_DIRECTORY\\hitsounds").listFiles()?.forEach {
-            hitSoundFiles.add(it.name)
-        }
-
-        hitSoundBox.items = hitSoundFiles
+        updateHitSoundList()
 
         hitSound.add(hitSoundCheckBox)
         hitSound.add(hitSoundBox).padLeft(150F-hitSoundCheckBox.width).width(90F)
@@ -205,6 +201,22 @@ class MiscTab : Tab(false, false) {
 
     override fun getTabTitle(): String? {
         return curLocalization["MISC_TAB_NAME"]
+    }
+    fun updateHitSoundList() {
+        if (VisUI.isLoaded()) {
+            val hitsoundList = Array<String>()
+            var items = 0
+            File("$SETTINGS_DIRECTORY\\hitsounds").listFiles()?.forEach {
+                hitsoundList.add(it.name)
+                items++
+            }
+
+            if (items > 0) {
+                hitSoundBox.items = hitsoundList
+            } else {
+                hitSoundBox.clearItems()
+            }
+        }
     }
 }
 

@@ -66,6 +66,25 @@ class UIKeybinds : VisWindow(curLocalization["KEYBINDS_PANEL_NAME"]) {
     fun updatePosition(x: Float, y: Float) {
         setPosition(x, y)
     }
+    fun update() {
+        this.titleLabel.setText(curLocalization["KEYBINDS_PANEL_NAME"])
+    }
+}
+
+// This is retarted
+fun updateKeybinds() {
+    uiKeybinds.apply {
+        update()
+        aimToggleKey.update()
+        forceAimKey.update()
+        forceAimBoneKey.update()
+        rcsToggleKey.update()
+        boneTriggerKey.update()
+        visualsToggleKey.update()
+        doorSpamKey.update()
+        weaponSpamKey.update()
+        menuKeyField.update()
+    }
 }
 
 fun keybindsUpdate(neglect: Actor) {

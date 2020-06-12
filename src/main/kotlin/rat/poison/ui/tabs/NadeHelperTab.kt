@@ -56,7 +56,7 @@ class NadeHelperTab : Tab(false, false) {
         }
 
         clearNadeHelper.changed { _, _ ->
-            Dialogs.showOptionDialog(App.menuStage, "Warning", curLocalization["CLEAR_CURRENTLY_LOADED_WARNING"], Dialogs.OptionDialogType.YES_NO, object: OptionDialogAdapter() {
+            Dialogs.showOptionDialog(App.menuStage, curLocalization["WARNING"], curLocalization["CLEAR_CURRENTLY_LOADED_WARNING"], Dialogs.OptionDialogType.YES_NO, object: OptionDialogAdapter() {
                 override fun yes() {
                     nadeHelperArrayList.clear()
                     nadeHelperLoadedFile.setText(curLocalization["LOADED_NOTHING"])

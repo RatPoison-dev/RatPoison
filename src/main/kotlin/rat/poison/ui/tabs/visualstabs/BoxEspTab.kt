@@ -31,8 +31,6 @@ class BoxEspTab : Tab(false, false) {
     val boxEspNamePos = VisSelectBox<String>()
     val boxEspWeapon = VisCheckBoxCustom(curLocalization["WEAPON"], "BOX_ESP_WEAPON", nameInLocalization = "WEAPON")
     val boxEspWeaponPos = VisSelectBox<String>()
-    val boxEspScope = VisCheckBoxCustom(curLocalization["SCOPE"], "BOX_ESP_SCOPE", nameInLocalization = "SCOPE")
-    val boxEspScopePos = VisSelectBox<String>()
     val boxDetailColor = VisColorPickerCustom(curLocalization["BOX_DETAILS_TEXT_COLOR"], "BOX_DETAILS_TEXT_COLOR", nameInLocalization = "BOX_DETAILS_TEXT_COLOR")
 
     val showTeamBox = VisCheckBoxCustom(" ", "BOX_SHOW_TEAM")
@@ -89,16 +87,6 @@ class BoxEspTab : Tab(false, false) {
             true
         }
 
-        boxEspScopePos.changed { _, _ ->
-            curSettings["BOX_ESP_SCOPE_POS"] = map[boxEspScopePos.selected].first()
-            true
-        }
-        boxEspScopePos.setItems(curLocalization["TOP"], curLocalization["BOTTOM"])
-        boxEspScopePos.selected = when (curSettings["BOX_ESP_SCOPE_POS"].replace("\"", "")) {
-            "T" -> "Top"
-            else -> "Bottom"
-        }
-
         table.padLeft(25F)
         table.padRight(25F)
 
@@ -117,8 +105,6 @@ class BoxEspTab : Tab(false, false) {
         table.add(boxEspNamePos).left().row()
         table.add(boxEspWeapon).left()
         table.add(boxEspWeaponPos).left().row()
-        table.add(boxEspScope).left()
-        table.add(boxEspScopePos).left().row()
 
         table.add(boxDetailColor).width(175F - boxDetailColor.width).padRight(50F).row()
 
