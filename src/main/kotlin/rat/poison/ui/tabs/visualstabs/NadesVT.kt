@@ -47,6 +47,7 @@ fun nadesVTUpdate() {
         nadeTracer.update()
         nadeTracerColor.update()
         nadeTracerUpdateTime.update()
+        nadeTracerColor.updateTitle()
         nadeTracerTimeout.update()
     }
 }

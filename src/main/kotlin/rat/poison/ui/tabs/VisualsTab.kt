@@ -139,7 +139,9 @@ class VisualsTab : Tab(false, false) {
     fun updateESPTabs () {
         espTabbedPane.updateTabTitle(glowEspTab)
         espTabbedPane.updateTabTitle(chamsEspTab)
-        espTabbedPane.updateTabTitle(boxEspTab)
+        espTabbedPane.remove(boxEspTab)
+        boxEspTab = BoxEspTab()
+        espTabbedPane.insert(3, boxEspTab)
         espTabbedPane.updateTabTitle(indicatorEspTab)
         espTabbedPane.updateTabTitle(snaplinesEspTab)
         espTabbedPane.updateTabTitle(footStepsEspTab)
@@ -327,7 +329,9 @@ fun visualsTabUpdate() {
         nightModeSlider.update()
         showAimFov.update()
         showAimFovColor.update()
+        showAimFovColor.updateTitle()
         showTriggerFov.update()
         showTriggerFovColor.update()
+        showTriggerFovColor.updateTitle()
     }
 }

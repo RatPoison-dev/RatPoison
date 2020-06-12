@@ -112,6 +112,7 @@ fun rcsTabUpdate() {
         rCrosshairYOffset.update()
         rCrosshairAlpha.update()
         rCrosshairColor.update()
+        rCrosshairColor.updateTitle()
     }
 
     updateDisableRcsSmoothing()

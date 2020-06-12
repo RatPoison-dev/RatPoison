@@ -143,26 +143,6 @@ class BoxEspTab : Tab(false, false) {
 fun boxEspTabUpdate() {
     boxEspTab.apply {
         updateMap()
-        boxEspHealthPos.setItems(curLocalization["LEFT"], curLocalization["RIGHT"])
-        boxEspHealthPos.selected = when (curSettings["BOX_ESP_HEALTH_POS"].replace("\"", "")) {
-            "L" -> curLocalization["LEFT"]
-            else -> curLocalization["RIGHT"]
-        }
-        boxEspArmorPos.setItems(curLocalization["LEFT"], curLocalization["RIGHT"])
-        boxEspArmorPos.selected = when (curSettings["BOX_ESP_ARMOR_POS"].replace("\"", "")) {
-            "L" -> curLocalization["LEFT"]
-            else -> curLocalization["RIGHT"]
-        }
-        boxEspNamePos.setItems(curLocalization["TOP"], curLocalization["BOTTOM"])
-        boxEspNamePos.selected = when (curSettings["BOX_ESP_NAME_POS"].replace("\"", "")) {
-            "T" -> curLocalization["TOP"]
-            else -> curLocalization["BOTTOM"]
-        }
-        boxEspWeaponPos.setItems(curLocalization["TOP"], curLocalization["BOTTOM"])
-        boxEspWeaponPos.selected = when (curSettings["BOX_ESP_WEAPON_POS"].replace("\"", "")) {
-            "T" -> curLocalization["TOP"]
-            else -> curLocalization["BOTTOM"]
-        }
 
         boxEsp.update()
         boxEspDetails.update()
@@ -180,5 +160,9 @@ fun boxEspTabUpdate() {
         boxTeamColor.update()
         boxEnemyColor.update()
         boxDefuserColor.update()
+        boxDefuserColor.updateTitle()
+        boxDetailColor.updateTitle()
+        boxEnemyColor.updateTitle()
+        boxTeamColor.updateTitle()
     }
 }

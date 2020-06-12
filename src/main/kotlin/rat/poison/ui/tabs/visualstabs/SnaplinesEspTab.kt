@@ -93,5 +93,10 @@ fun snaplinesEspTabUpdate() {
         bombSnaplinesColor.update()
         bombCarrierSnaplines.update()
         bombCarrierSnaplinesColor.update()
+        bombCarrierSnaplinesColor.updateTitle()
+        bombSnaplinesColor.updateTitle()
+        enemySnaplinesColor.updateTitle()
+        teamSnaplinesColor.updateTitle()
+        weaponSnaplinesColor.updateTitle()
     }
 }
