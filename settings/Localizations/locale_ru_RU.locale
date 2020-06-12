@@ -195,7 +195,7 @@ RANKS_WINS = Победы
 
 // RCS Tab
 ENABLE_RCS = Включить РКС
-RCS_TOGGLE_KEY = Кнопка переключения РКСа
+RCS_TOGGLE_KEY = Кнопка переключения
 RCS_SMOOTHING_X = Сила РКС по X
 RCS_SMOOTHING_Y = Сила РКС по Y
 RCS_RETURNAIM = Возвращать аим
@@ -220,7 +220,7 @@ AUTO_FORCE_UPDATE = Автоматическая запись
 // Visuals tab
 ENABLE_ESP = Включить визуалы
 VISUALS_TOGGLE_KEY = Кнопка переключения визуалов
-ENABLE_RADAR_ESP = Раадр хак
+ENABLE_RADAR_ESP = Радар хак
 ENABLE_NIGHTMODE = Ночной режим/Полная яркость
 NIGHTMODE_VALUE = %
 ENABLE_ADRENALINE = Адреналин
