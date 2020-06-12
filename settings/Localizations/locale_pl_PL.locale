@@ -7,6 +7,7 @@ NAME = Nazwa
 GRENADES = Granaty
 TARGET = Cel
 WEAPON = Broń
+WARNING = Uwaga
 SCOPE = Luneta
 WEAPONS = Bronie
 UNDEFINED = nd.
@@ -76,7 +77,7 @@ TRIGGER_IS_IN_FOV = W polu widzenia
 TRIGGER_DELAY = Opóźnienie
 // Aimbot
 ENABLE_AIM = Włącz aimbota
-AIM_TOGGLE_KEY = Przycisk przełączenia
+AIM_TOGGLE_KEY = Przycisk przełączenia aimbota
 ACTIVATE_FROM_AIM_KEY = Aktywuj przez przycisk strzelania
 HOLD_AIM = Celowanie w przeciwnika przy wyjściu z pola widzenia
 TEAMMATES_ARE_ENEMIES = Członkowie drużyny są przeciwnikami
@@ -137,9 +138,9 @@ ENABLE_SPECTATOR_LIST = Lista widzów
 ENABLE_AUTO_KNIFE = Automatyczny nóż
 ENABLE_PERFECT_BOMB_DEFUSE = Perfekcyjne rozbrajanie bomby
 ENABLE_DOOR_SPAM = Spamowanie drzwiami
-DOOR_SPAM_KEY = Przycisk
+DOOR_SPAM_KEY = Przycisk spamu drzwiami
 ENABLE_WEAPON_SPAM = Spamowanie bronią
-WEAPON_SPAM_KEY = Przycisk
+WEAPON_SPAM_KEY = Przycisk spamu bronią
 ENABLE_REDUCED_FLASH = Redukcja oślepienia
 FLASH_MAX_ALPHA = Intensywność
 ENABLE_HITSOUND = Dźwięk trafienia
@@ -194,7 +195,7 @@ RANKS_WINS = Wygrane
 
 // RCS Tab
 ENABLE_RCS = Włącz kontrolę rozrzutu
-RCS_TOGGLE_KEY = Przycisk przełączenia
+RCS_TOGGLE_KEY = Przycisk przełączenia RCS
 RCS_SMOOTHING_X = Płynność horyzontalna
 RCS_SMOOTHING_Y = Płynność wertykalna
 RCS_RETURNAIM = Powrót celownika
@@ -218,7 +219,7 @@ AUTO_FORCE_UPDATE = Automatycznie aktualizuj skiny
 
 // Visuals tab
 ENABLE_ESP = Włącz efekty
-VISUALS_TOGGLE_KEY = Przycisk przełączenia
+VISUALS_TOGGLE_KEY = Przycisk przełączenia efektów
 ENABLE_RADAR_ESP = Radar
 ENABLE_NIGHTMODE = Jasność
 NIGHTMODE_VALUE = %
@@ -467,4 +468,5 @@ MANUAL_FORCE_UPDATE_TOOLTIP = Naciśnij aby zaaktualizować skiny
 HITMARKER_OUTLINE_TOOLTIP = Kontur hitmarkera
 HITMARKER_RECOIL_POSITION_TOOLTIP = Hitmarker wyświetla się na pozycji celownika rozrzutu
 INDICATOR_SIZE_TOOLTIP = Wielkość wskaźnika
-HOLD_AIM_TOOLTIP = Celuje w przeciwnika mimo tego, że opuścił pole widzenia aimbota
+HOLD_AIM_TOOLTIP = Nadal celuje w przeciwnika mimo tego, że opuścił pole widzenia aimbota
+VARIATION_DEADZONE_TOOLTIP = Pole widzenia gdzie wariacja aimbota nie występuje

@@ -182,8 +182,6 @@ fun boxEsp() = App {
 		val bEspHealthPos = curSettings["BOX_ESP_HEALTH_POS"].replace("\"", "")
 		val bEspArmor = curSettings["BOX_ESP_ARMOR"].strToBool()
 		val bEspArmorPos = curSettings["BOX_ESP_ARMOR_POS"].replace("\"", "")
-		val bEspScope = curSettings["BOX_ESP_SCOPE"].strToBool()
-		val bEspScopePos = curSettings["BOX_ESP_SCOPE_POS"].replace("\"", "")
 
 		for (i in 0 until currentIdx) boxes[i].apply {
 			this@sr.color = color

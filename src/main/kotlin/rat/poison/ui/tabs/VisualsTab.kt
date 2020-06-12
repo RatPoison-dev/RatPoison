@@ -139,6 +139,7 @@ class VisualsTab : Tab(false, false) {
     fun updateESPTabs () {
         espTabbedPane.updateTabTitle(glowEspTab)
         espTabbedPane.updateTabTitle(chamsEspTab)
+        espTabbedPane.updateTabTitle(boxEspTab)
         espTabbedPane.updateTabTitle(indicatorEspTab)
         espTabbedPane.updateTabTitle(snaplinesEspTab)
         espTabbedPane.updateTabTitle(footStepsEspTab)
