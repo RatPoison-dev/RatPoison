@@ -20,6 +20,7 @@ import rat.poison.ui.uiUpdate
 class AimTable: VisTable(true) {
     //Init labels/sliders/boxes that show values here
     val enableAim = VisCheckBoxCustom("Enable Aim", "ENABLE_AIM")
+    val ingameSens = VisInputFieldCustom("Game Sensitivity", "GAME_SENSITIVITY", false, false)
     val aimToggleKey = VisInputFieldCustom("Toggle Aim Key", "AIM_TOGGLE_KEY")
     val activateFromFireKey = VisCheckBoxCustom("Activate From Fire Key", "ACTIVATE_FROM_AIM_KEY")
     val teammatesAreEnemies = VisCheckBoxCustom("Teammates Are Enemies", "TEAMMATES_ARE_ENEMIES")
@@ -200,6 +201,8 @@ class AimTable: VisTable(true) {
 
             add(enableAim).left().row()
             add(aimToggleKey).left().row()
+
+            add(ingameSens).left().row()
 
             add(activateFromFireKey).left().row()
             add(teammatesAreEnemies).left().row()

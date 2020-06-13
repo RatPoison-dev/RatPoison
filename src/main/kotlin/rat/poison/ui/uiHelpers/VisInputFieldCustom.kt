@@ -9,23 +9,29 @@ import com.kotcrab.vis.ui.widget.VisValidatableTextField
 import rat.poison.curSettings
 import rat.poison.ui.changed
 
-class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true) : VisTable() {
+class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true, isInt: Boolean = true) : VisTable() {
     private val textLabel = mainText
     private val variableName = varName
+    private val intVal = isInt
 
     //val globalTable = VisTable()
     private var keyLabel = VisLabel("$textLabel:")
-    private val keyField = VisValidatableTextField(Validators.INTEGERS)
+    private val keyField = if (isInt) { VisValidatableTextField(Validators.INTEGERS) } else { VisValidatableTextField(Validators.FLOATS) }
     private val linkLabel = LinkLabel("?", "http://cherrytree.at/misc/vk.htm")
 
-    var value = 0
+    var value: Any = 0
 
     init {
         update()
         changed { _, _ ->
             if (keyField.text.toIntOrNull() != null) {
-                curSettings[variableName] = keyField.text.toInt().toString()
-                value = keyField.text.toInt()
+                if (intVal) {
+                    curSettings[variableName] = keyField.text.toInt().toString()
+                    value = keyField.text.toInt()
+                } else {
+                    curSettings[variableName] = keyField.text.toDouble().toString()
+                    value = keyField.text.toDouble()
+                }
             }
             false
         }
@@ -39,7 +45,11 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
 
     fun update() {
         keyField.text = curSettings[variableName]
-        value = keyField.text.toInt()
+        value = if (intVal) {
+            keyField.text.toInt()
+        } else {
+            keyField.text.toDouble()
+        }
     }
 
     fun disable(bool: Boolean, col: Color) {

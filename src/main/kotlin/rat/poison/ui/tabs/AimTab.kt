@@ -46,6 +46,7 @@ fun updateDisableAim() {
         } else {
             weaponOverrideCheckBox.isChecked = curSettings["ENABLE_OVERRIDE"].strToBool()
         }
+        ingameSens.disable(bool, col)
         weaponOverrideCheckBox.isDisabled = bool
         activateFromFireKey.disable(bool)
         teammatesAreEnemies.disable(bool)
@@ -90,6 +91,7 @@ fun updateAim() {
     aimTab.tAim.apply {
         enableAim.update()
         aimToggleKey.update()
+        ingameSens.update()
         activateFromFireKey.update()
         teammatesAreEnemies.update()
         forceAimKey.update()

@@ -30,6 +30,9 @@ AIM_TOGGLE_KEY = 114
 //Aim Strafer
 AIM_STRAFER = false
 
+//Your ingame mouse sensitivity
+GAME_SENSITIVITY = 1.00
+
 //Strafe Type, //0 is opposite, 1 is same
 AIM_STRAFER_TYPE = 0
 

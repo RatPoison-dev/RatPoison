@@ -8,12 +8,12 @@ import rat.poison.utils.extensions.uint
 
 var GAME_PITCH = 0.022 // m_pitch
 var GAME_YAW = 0.022 // m_yaw
-val GAME_SENSITIVITY by lazy(LazyThreadSafetyMode.NONE) {
-    val pointer = clientDLL.address + dwSensitivityPtr
-    val value = clientDLL.uint(dwSensitivity) xor pointer
-
-    java.lang.Float.intBitsToFloat(value.toInt()).toDouble()
-}
+//val GAME_SENSITIVITY by lazy(LazyThreadSafetyMode.NONE) {
+//    val pointer = clientDLL.address + dwSensitivityPtr
+//    val value = clientDLL.uint(dwSensitivity) xor pointer
+//
+//    java.lang.Float.intBitsToFloat(value.toInt()).toDouble()
+//}
 var HEAD_BONE = 8
 var NECK_BONE = 7
 var CHEST_BONE = 6
