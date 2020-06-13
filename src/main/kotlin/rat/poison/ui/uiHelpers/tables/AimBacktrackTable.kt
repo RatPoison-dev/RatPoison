@@ -24,7 +24,7 @@ class AimBacktrackTable: VisTable(false) {
     val backtrackVisualize = VisCheckBoxCustom(curLocalization["BACKTRACK_VISUALIZE"], "BACKTRACK_VISUALIZE")
     val backtrackEnableKey = VisCheckBoxCustom(curLocalization["ENABLE_BACKTRACK_ON_KEY"], "ENABLE_BACKTRACK_ON_KEY")
     val backtrackKey = VisInputFieldCustom(curLocalization["BACKTRACK_KEY"], "BACKTRACK_KEY")
-    val backtrackFOV = VisSliderCustom(curLocalization["BACKTRACK_FOV"], "BACKTRACK_FOV", 0.1f, 2f, .1f, false)
+    val backtrackFOV = VisSliderCustom(curLocalization["FOV"], "BACKTRACK_FOV", 0.1f, 2f, .1f, false, nameInLocalization = "FOV")
     val backtrackMS = VisSliderCustom(curLocalization["BACKTRACK_MS"], "BACKTRACK_MS", 20f, 200f, 5f, true)
     val backtrackPreferAccurate = VisCheckBoxCustom(curLocalization["BACKTRACK_PREFER_ACCURATE"], "BACKTRACK_PREFER_ACCURATE")
     val backtrackSpotted = VisCheckBoxCustom(curLocalization["BACKTRACK_SPOTTED"], "BACKTRACK_SPOTTED")

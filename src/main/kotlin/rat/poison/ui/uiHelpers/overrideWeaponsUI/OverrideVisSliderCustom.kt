@@ -58,6 +58,7 @@ class OverrideVisSliderCustom(mainText: String, varName: String, varMin: Float, 
             round(sliderBar.value * rnd)/rnd
         }
         val tmpText = curLocalization[localeName]
+        curSettings[variableName] = sliderVal.toString()
         sliderLabel.setText(if (tmpText.isBlank()) defaultText else tmpText )
     }
 
