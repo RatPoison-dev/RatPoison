@@ -8,6 +8,9 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
 import rat.poison.App.uiAimOverridenWeapons
+import rat.poison.App.uiBombWindow
+import rat.poison.App.uiKeybinds
+import rat.poison.App.uiSpecList
 import rat.poison.game.CSGO
 import rat.poison.opened
 import rat.poison.ui.tabs.*
@@ -29,6 +32,13 @@ private var wantedHeight = 565F
 private var wantedWidth = 535F
 private var isResizingHeight = false
 private var isResizingWidth = false
+
+fun updateVisWindowsNames() {
+    updateKeybinds()
+    uiSpecList.update()
+    uiBombWindow.update()
+    uiAimOverridenWeapons.update()
+}
 
 class UIMenu : VisWindow("Rat Poison 1.7.1.1") {
     init {
@@ -92,6 +102,8 @@ class UIMenu : VisWindow("Rat Poison 1.7.1.1") {
                         wantedWidth = normWidth
                         changeWidth()
                         changeHeight()
+                        optionsTab.updateCFGList()
+                        optionsTab.updateLocalizationsList()
                         mainTabbedPaneContent.add(optionsTab.contentTable).growX()
                     }
                     rcsTab -> {
@@ -113,6 +125,7 @@ class UIMenu : VisWindow("Rat Poison 1.7.1.1") {
                         wantedWidth = normWidth
                         changeWidth()
                         changeHeight()
+                        miscTab.updateHitSoundList()
                         mainTabbedPaneContent.add(miscTab.contentTable).growX()
                     }
                     ranksTab -> {
@@ -127,6 +140,7 @@ class UIMenu : VisWindow("Rat Poison 1.7.1.1") {
                         wantedWidth = normWidth
                         changeWidth()
                         changeHeight()
+                        nadeHelperTab.updateNadeFileHelperList()
                         mainTabbedPaneContent.add(nadeHelperTab.contentTable).growX()
                     }
                     skinChangerTab -> {

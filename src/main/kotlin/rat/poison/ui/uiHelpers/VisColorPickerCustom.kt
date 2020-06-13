@@ -18,7 +18,7 @@ class VisColorPickerCustom(mainText: String, varName: String, nameInLocalization
     private val labelText = mainText
     private val variableName = varName
 
-    private val pickerButton = VisLabel(labelText)
+    private val pickerButton = VisLabelCustom(labelText, nameInLocalization)
     private val pickerImage = VisImageButton(white)
 
     private var colorPicker : ColorPicker
@@ -27,7 +27,7 @@ class VisColorPickerCustom(mainText: String, varName: String, nameInLocalization
     init {
         update()
 
-        colorPicker = ColorPicker(labelText, object : ColorPickerAdapter() {
+        colorPicker = ColorPicker(curLocalization[nameInLocalization], object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
                 curSettings[variableName] = rColor((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), 1.0).toString()
                 newCol.a = 1F
@@ -45,9 +45,12 @@ class VisColorPickerCustom(mainText: String, varName: String, nameInLocalization
     }
 
     fun update() {
-        this.pickerButton.setText(curLocalization[this.nameInLocalization])
+        this.pickerButton.update()
         val col = curSettings[variableName].strToColor()
         pickerImage.setColor(col.red/255F, col.green/255F, col.blue/255F, 1F)
+    }
+    fun updateTitle() {
+        this.colorPicker.titleLabel.setText(curLocalization[this.nameInLocalization])
     }
 
     fun disable(bool: Boolean) {

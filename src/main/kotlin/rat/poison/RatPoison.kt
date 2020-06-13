@@ -121,12 +121,17 @@ fun main() {
     println("Loading settings...")
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
     val locale = getSystemLocale()
-    if (curSettings["DEFAULT_LOCALE"] == "NONE" && (locale == null || !Files.exists(Paths.get("settings/Localizations/locale_${locale}.locale")))) {
-        println("Detected default locale: $locale")
-        println("Locale file for your language doesn't exist. Loading english locale.")
-        curSettings["DEFAULT_LOCALE"] = "locale_en_US"
-        loadLocalizationFromFile(curSettings["DEFAULT_LOCALE"])
-        saveDefault()
+    if (curSettings["DEFAULT_LOCALE"] == "NONE") {
+        if (locale != null && Files.exists(Paths.get("settings/Localizations/locale_${locale}.locale"))) {
+            loadLocalizationFromFile("locale_${locale}")
+        }
+        else {
+            println("Detected default locale: $locale")
+            println("Locale file for your language doesn't exist. Loading english locale.")
+            curSettings["DEFAULT_LOCALE"] = "locale_en_US"
+            loadLocalizationFromFile(curSettings["DEFAULT_LOCALE"])
+            saveDefault()
+        }
     }
     else {
         loadLocalizationFromFile(curSettings["DEFAULT_LOCALE"])
@@ -155,6 +160,7 @@ fun main() {
         curSettings["ENABLE_NADE_HELPER"] = "false"
         curSettings["NADE_TRACER"] = "false"
         curSettings["DRAW_AIM_FOV"] = "false"
+        curSettings["ENABLE_HITSOUND"] = "false"
     } else {
         if (dbg) { println("[DEBUG] Initializing Recoil Ranks") }; ranks()
 

@@ -73,6 +73,11 @@ class FootstepsEspTab : Tab(false, false) {
 
 fun footStepsEspTabUpdate() {
     footStepsEspTab.apply {
+        footStepType.setItems(curLocalization["FOOTSTEPS_TEXT"], curLocalization["FOOTSTEPS_CIRCLE"])
+        footStepType.selected = when (curSettings["FOOTSTEP_TYPE"].toInt()) {
+            1 -> curLocalization["FOOTSTEPS_TEXT"]
+            else -> curLocalization["FOOTSTEPS_CIRCLE"]
+        }
         enableFootSteps.update()
         footStepUpdateTimer.update()
         footStepTTL.update()
@@ -80,5 +85,7 @@ fun footStepsEspTabUpdate() {
         footStepTeamColor.update()
         footStepEnemyBox.update()
         footStepEnemyColor.update()
+        footStepEnemyColor.updateTitle()
+        footStepTeamColor.updateTitle()
     }
 }

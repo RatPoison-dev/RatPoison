@@ -31,4 +31,7 @@ class UIAimOverridenWeapons : VisWindow(curLocalization["OVERRIDE_WEAPONS_PANEL_
     fun changeAlpha(alpha: Float) {
         color.a = alpha
     }
+    fun update() {
+        this.titleLabel.setText(curLocalization["OVERRIDE_WEAPONS_PANEL_NAME"])
+    }
 }

@@ -64,7 +64,10 @@ fun hitMarkerTabUpdate() {
         hitMarkerLength.update()
         hitMarkerWidth.update()
         hitMarkerColor.update()
+        hitMarkerColor.updateTitle()
         hitMarkerOutlineColor.update()
         hitMarkerComboColor.update()
+        hitMarkerComboColor.updateTitle()
+        hitMarkerOutlineColor.updateTitle()
     }
 }

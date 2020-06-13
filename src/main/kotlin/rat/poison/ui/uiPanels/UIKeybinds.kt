@@ -17,8 +17,8 @@ class UIKeybinds : VisWindow(curLocalization["KEYBINDS_PANEL_NAME"]) {
     val aimToggleKey = VisInputFieldCustom(curLocalization["AIM_TOGGLE_KEY"], "AIM_TOGGLE_KEY", nameInLocalization = "AIM_TOGGLE_KEY")
     val forceAimKey = VisInputFieldCustom(curLocalization["FORCE_AIM_KEY"], "FORCE_AIM_KEY", nameInLocalization = "FORCE_AIM_KEY")
     val rcsToggleKey = VisInputFieldCustom(curLocalization["RCS_TOGGLE_KEY"], "RCS_TOGGLE_KEY", nameInLocalization = "RCS_TOGGLE_KEY")
-    val forceAimBoneKey = VisInputFieldCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
-    val boneTriggerKey = VisInputFieldCustom(curLocalization["FORCE_AIM_BONE_KEY"], "TRIGGER_KEY", nameInLocalization = "FORCE_AIM_BONE_KEY")
+    val forceAimBoneKey = VisInputFieldCustom(curLocalization["FORCE_AIM_BONE_KEY"], "FORCE_AIM_BONE_KEY", nameInLocalization = "FORCE_AIM_BONE_KEY" )
+    val boneTriggerKey = VisInputFieldCustom(curLocalization["TRIGGER_KEY"], "TRIGGER_KEY", nameInLocalization = "TRIGGER_KEY")
     val visualsToggleKey = VisInputFieldCustom(curLocalization["VISUALS_TOGGLE_KEY"], "VISUALS_TOGGLE_KEY", nameInLocalization = "VISUALS_TOGGLE_KEY")
     val doorSpamKey = VisInputFieldCustom(curLocalization["DOOR_SPAM_KEY"], "D_SPAM_KEY", nameInLocalization = "DOOR_SPAM_KEY")
     val weaponSpamKey = VisInputFieldCustom(curLocalization["WEAPON_SPAM_KEY"], "W_SPAM_KEY", nameInLocalization = "WEAPON_SPAM_KEY")
@@ -65,6 +65,25 @@ class UIKeybinds : VisWindow(curLocalization["KEYBINDS_PANEL_NAME"]) {
 
     fun updatePosition(x: Float, y: Float) {
         setPosition(x, y)
+    }
+    fun update() {
+        this.titleLabel.setText(curLocalization["KEYBINDS_PANEL_NAME"])
+    }
+}
+
+// This is retarted
+fun updateKeybinds() {
+    uiKeybinds.apply {
+        update()
+        aimToggleKey.update()
+        forceAimKey.update()
+        forceAimBoneKey.update()
+        rcsToggleKey.update()
+        boneTriggerKey.update()
+        visualsToggleKey.update()
+        doorSpamKey.update()
+        weaponSpamKey.update()
+        menuKeyField.update()
     }
 }
 

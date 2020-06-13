@@ -77,6 +77,9 @@ fun chamsEspTabUpdate() {
         showSelf.update()
         chamsTeamColor.update()
         chamsEnemyColor.update()
+        chamsEnemyColor.updateTitle()
+        chamsTeamColor.updateTitle()
+        chamsSelfColor.updateTitle()
         chamsSelfColor.update()
     }
 }

@@ -46,4 +46,7 @@ class UISpectatorList : VisWindow(curLocalization["SPECTATOR_LIST_WINDOW_NAME"])
     fun updatePosition(x: Float, y: Float) {
         setPosition(x, y)
     }
+    fun update() {
+        this.titleLabel.setText(curLocalization["SPECTATOR_LIST_WINDOW_NAME"])
+    }
 }

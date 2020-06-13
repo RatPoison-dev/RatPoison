@@ -125,10 +125,16 @@ fun glowEspTabUpdate() {
         glowEnemyColor.update()
         glowBombColor.update()
         glowBombCarrierColor.update()
+        glowBombCarrierColor.updateTitle()
+        glowBombColor.updateTitle()
+        glowEnemyColor.updateTitle()
         glowWeaponColor.update()
         glowGrenadeColor.update()
+        glowGrenadeColor.updateTitle()
         glowHighlightColor.update()
-
+        glowTeamColor.updateTitle()
+        glowHighlightColor.updateTitle()
+        glowWeaponColor.updateTitle()
         if (invGlowEsp.isChecked || modelEsp.isChecked) {
             glowEsp.isChecked = true
             glowEsp.isDisabled = true

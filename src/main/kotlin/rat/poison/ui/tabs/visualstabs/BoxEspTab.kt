@@ -15,7 +15,7 @@ import rat.poison.visualsMap
 class BoxEspTab : Tab(false, false) {
     private val table = VisTable()
 
-    val map = visualsMap()
+    var map = visualsMap()
     //Init labels/sliders/boxes that show values here
     val skeletonEsp = VisCheckBoxCustom(curLocalization["ENABLE_SKELETON_ESP"], "SKELETON_ESP", nameInLocalization = "ENABLE_SKELETON_ESP")
     val showTeamSkeleton = VisCheckBoxCustom(curLocalization["TEAMMATES"], "SKELETON_SHOW_TEAM", nameInLocalization = "TEAMMATES")
@@ -31,8 +31,6 @@ class BoxEspTab : Tab(false, false) {
     val boxEspNamePos = VisSelectBox<String>()
     val boxEspWeapon = VisCheckBoxCustom(curLocalization["WEAPON"], "BOX_ESP_WEAPON", nameInLocalization = "WEAPON")
     val boxEspWeaponPos = VisSelectBox<String>()
-    val boxEspScope = VisCheckBoxCustom(curLocalization["SCOPE"], "BOX_ESP_SCOPE", nameInLocalization = "SCOPE")
-    val boxEspScopePos = VisSelectBox<String>()
     val boxDetailColor = VisColorPickerCustom(curLocalization["BOX_DETAILS_TEXT_COLOR"], "BOX_DETAILS_TEXT_COLOR", nameInLocalization = "BOX_DETAILS_TEXT_COLOR")
 
     val showTeamBox = VisCheckBoxCustom(" ", "BOX_SHOW_TEAM")
@@ -43,6 +41,10 @@ class BoxEspTab : Tab(false, false) {
 
     val showDefusers = VisCheckBoxCustom(" ", "BOX_SHOW_DEFUSERS")
     val boxDefuserColor = VisColorPickerCustom(curLocalization["DEFUSERS"], "BOX_DEFUSER_COLOR", nameInLocalization = "DEFUSERS")
+
+    fun updateMap() {
+        map = visualsMap()
+    }
 
     init {
         //Create Box ESP Health Pos Selector
@@ -59,8 +61,8 @@ class BoxEspTab : Tab(false, false) {
         //Create Box ESP Armor Pos Selector
         boxEspArmorPos.setItems(curLocalization["LEFT"], curLocalization["RIGHT"])
         boxEspArmorPos.selected = when (curSettings["BOX_ESP_ARMOR_POS"].replace("\"", "")) {
-            "L" -> "Left"
-            else -> "Right"
+            "L" -> curLocalization["LEFT"]
+            else -> curLocalization["RIGHT"]
         }
         boxEspArmorPos.changed { _, _ ->
             curSettings["BOX_ESP_ARMOR_POS"] = map[boxEspArmorPos.selected].first()
@@ -70,8 +72,8 @@ class BoxEspTab : Tab(false, false) {
         //Create Box ESP Name Pos Selector
         boxEspNamePos.setItems(curLocalization["TOP"], curLocalization["BOTTOM"])
         boxEspNamePos.selected = when (curSettings["BOX_ESP_NAME_POS"].replace("\"", "")) {
-            "T" -> "Top"
-            else -> "Bottom"
+            "T" -> curLocalization["TOP"]
+            else -> curLocalization["BOTTOM"]
         }
         boxEspNamePos.changed { _, _ ->
             curSettings["BOX_ESP_NAME_POS"] = map[boxEspNamePos.selected].first()
@@ -81,22 +83,12 @@ class BoxEspTab : Tab(false, false) {
         //Create Box ESP Weapon Pos Selector
         boxEspWeaponPos.setItems(curLocalization["TOP"], curLocalization["BOTTOM"])
         boxEspWeaponPos.selected = when (curSettings["BOX_ESP_WEAPON_POS"].replace("\"", "")) {
-            "T" -> "Top"
-            else -> "Bottom"
+            "T" -> curLocalization["TOP"]
+            else -> curLocalization["BOTTOM"]
         }
         boxEspWeaponPos.changed { _, _ ->
             curSettings["BOX_ESP_WEAPON_POS"] = map[boxEspWeaponPos.selected].first()
             true
-        }
-
-        boxEspScopePos.changed { _, _ ->
-            curSettings["BOX_ESP_SCOPE_POS"] = map[boxEspScopePos.selected].first()
-            true
-        }
-        boxEspScopePos.setItems(curLocalization["TOP"], curLocalization["BOTTOM"])
-        boxEspScopePos.selected = when (curSettings["BOX_ESP_SCOPE_POS"].replace("\"", "")) {
-            "T" -> "Top"
-            else -> "Bottom"
         }
 
         table.padLeft(25F)
@@ -117,8 +109,6 @@ class BoxEspTab : Tab(false, false) {
         table.add(boxEspNamePos).left().row()
         table.add(boxEspWeapon).left()
         table.add(boxEspWeaponPos).left().row()
-        table.add(boxEspScope).left()
-        table.add(boxEspScopePos).left().row()
 
         table.add(boxDetailColor).width(175F - boxDetailColor.width).padRight(50F).row()
 
@@ -152,6 +142,8 @@ class BoxEspTab : Tab(false, false) {
 
 fun boxEspTabUpdate() {
     boxEspTab.apply {
+        updateMap()
+
         boxEsp.update()
         boxEspDetails.update()
         boxShowHealth.update()
@@ -168,5 +160,9 @@ fun boxEspTabUpdate() {
         boxTeamColor.update()
         boxEnemyColor.update()
         boxDefuserColor.update()
+        boxDefuserColor.updateTitle()
+        boxDetailColor.updateTitle()
+        boxEnemyColor.updateTitle()
+        boxTeamColor.updateTitle()
     }
 }

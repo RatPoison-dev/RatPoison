@@ -21,6 +21,7 @@ import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.*
 import rat.poison.ui.uiPanels.keybindsUpdate
 import rat.poison.ui.uiPanels.optionsTab
+import rat.poison.ui.uiPanels.updateVisWindowsNames
 import rat.poison.ui.uiUpdate
 import java.io.File
 import java.io.FileReader
@@ -44,20 +45,19 @@ class OptionsTab : Tab(false, false) {
     val blur = VisCheckBoxCustom(curLocalization["GAUSSIAN_BLUR"], "GAUSSIAN_BLUR", nameInLocalization = "GAUSSIAN_BLUR")
     val saveCurConfig = VisTextButtonCustom(curLocalization["SAVE_CONFIG_TO_DEFAULT"], nameInLocalization = "SAVE_CONFIG_TO_DEFAULT")
     private val discordLink = LinkLabel(curLocalization["JOIN_DISCORD"], "https://discord.gg/J2uHTJ2")
-
+    val menuAlphaLabel = VisLabelCustom(curLocalization["MENU_ALPHA_SLIDER"] + 1F, nameInLocalization = "MENU_ALPHA_SLIDER") //1F is default
+    val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, false)
     init {
         fileSelectBox = VisSelectBox()
         localizationSelectBox = VisSelectBox()
 
         //Create UIAlpha Slider
         val menuAlpha = VisTable()
-        val menuAlphaLabel = VisLabelCustom(curLocalization["MENU_ALPHA_SLIDER"] + 1F, nameInLocalization = "MENU_ALPHA_SLIDER") //1F is default
-        val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, false)
         menuAlphaSlider.value = 1F
         menuAlphaSlider.changed { _, _ ->
             val alp = (round(menuAlphaSlider.value * 100F) / 100F)
             uiMenu.changeAlpha(alp)
-            menuAlphaLabel.setText("Menu Alpha: " + alp.toString() + when(alp.toString().length) {4->"" 3->"  " 2->"    " else ->"      "})
+            menuAlphaLabel.setText(curLocalization["MENU_ALPHA_SLIDER"] + alp.toString() + when(alp.toString().length) {4->"" 3->"  " 2->"    " else ->"      "})
         }
         menuAlpha.add(menuAlphaLabel).width(200F)
         menuAlpha.add(menuAlphaSlider).width(250F)
@@ -87,6 +87,7 @@ class OptionsTab : Tab(false, false) {
                 if (localizationSelectBox.selected.count() > 0) {
                     loadLocalizationFromFile(localizationSelectBox.selected)
                     uiMenu.updateTabs()
+                    updateVisWindowsNames()
                     updateWindows()
                     uiUpdate()
                 }
@@ -327,6 +328,7 @@ fun deleteCFG(cfgFileName: String) {
 fun updateOptionsTab() {
     optionsTab.apply {
         menuKey.update()
+        menuAlphaLabel.update()
         oglFPS.update()
         stayFocused.update()
         debug.update()

@@ -47,4 +47,7 @@ class UIBombTimer : VisWindow(curLocalization["BOMB_TIMER_WINDOW_NAME"]) {
     fun updatePosition(x: Float, y: Float) {
         setPosition(x, y)
     }
+    fun update() {
+        this.titleLabel.setText(curLocalization["BOMB_TIMER_WINDOW_NAME"])
+    }
 }

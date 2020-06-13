@@ -137,29 +137,16 @@ class VisualsTab : Tab(false, false) {
     }
 
     fun updateESPTabs () {
-        espTabbedPane.remove(glowEspTab)
-        espTabbedPane.remove(chamsEspTab)
-        espTabbedPane.remove(indicatorEspTab)
+        espTabbedPane.updateTabTitle(glowEspTab)
+        espTabbedPane.updateTabTitle(chamsEspTab)
         espTabbedPane.remove(boxEspTab)
-        espTabbedPane.remove(snaplinesEspTab)
-        espTabbedPane.remove(footStepsEspTab)
-        espTabbedPane.remove(hitMarkerTab)
-        espTabbedPane.updateTabTitle(nadesTab)
-        glowEspTab = GlowEspTab()
-        chamsEspTab = ChamsEspTab()
-        indicatorEspTab = IndicatorEspTab()
         boxEspTab = BoxEspTab()
-        snaplinesEspTab = SnaplinesEspTab()
-        footStepsEspTab = FootstepsEspTab()
-        hitMarkerTab = HitMarkerTab()
-        espTabbedPane.add(glowEspTab)
-        espTabbedPane.add(chamsEspTab)
-        espTabbedPane.add(indicatorEspTab)
-        espTabbedPane.add(boxEspTab)
-        espTabbedPane.add(snaplinesEspTab)
-        espTabbedPane.add(footStepsEspTab)
-        espTabbedPane.add(hitMarkerTab)
-        espTabbedPane.switchTab(glowEspTab)
+        espTabbedPane.insert(3, boxEspTab)
+        espTabbedPane.updateTabTitle(indicatorEspTab)
+        espTabbedPane.updateTabTitle(snaplinesEspTab)
+        espTabbedPane.updateTabTitle(footStepsEspTab)
+        espTabbedPane.updateTabTitle(hitMarkerTab)
+        espTabbedPane.updateTabTitle(nadesTab)
     }
 
     override fun getContentTable(): Table? {
@@ -280,8 +267,6 @@ fun updateDisableEsp() {
         boxEspTab.boxEspNamePos.isDisabled = bool
         boxEspTab.boxEspWeapon.disable(bool)
         boxEspTab.boxEspWeaponPos.isDisabled = bool
-        boxEspTab.boxEspScope.disable(bool)
-        boxEspTab.boxEspScopePos.isDisabled = bool
         boxEspTab.skeletonEsp.disable(bool)
         boxEspTab.showTeamSkeleton.disable(bool)
         boxEspTab.showEnemiesSkeleton.disable(bool)
@@ -344,7 +329,9 @@ fun visualsTabUpdate() {
         nightModeSlider.update()
         showAimFov.update()
         showAimFovColor.update()
+        showAimFovColor.updateTitle()
         showTriggerFov.update()
         showTriggerFovColor.update()
+        showTriggerFovColor.updateTitle()
     }
 }
