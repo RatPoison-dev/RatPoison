@@ -67,6 +67,9 @@ Credit to Mr. Noad & 2772/Matt for a lot of help throughout this project
 * Added ingame sensitivity input box since dwSensitivity doesn't work currently
 * Readded flicker free glow
 * Fixed hitsound error when menu disabled, hitsound only available when using the menu
+* Added locale options in menu, you can change menu language with premade localization files
+* Added glow and box health based options
+* Added toggle RCS
 
 
 1.7 Update 5/27/2020
