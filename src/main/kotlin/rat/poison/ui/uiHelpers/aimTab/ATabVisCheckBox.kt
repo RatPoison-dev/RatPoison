@@ -12,8 +12,10 @@ import rat.poison.ui.tabs.updateDisableAim
 import rat.poison.ui.uiUpdate
 
 class ATabVisCheckBox(mainText: String, varExtension: String, nameInLocalization: String = "") : VisCheckBox(mainText) {
+    private val defaultText = mainText
     private val variableExtension = varExtension
-    val nameInLocalization = nameInLocalization
+    private val localeName = nameInLocalization
+
     init {
         update()
         if (curLocalization[nameInLocalization+"_TOOLTIP"] != "") {
@@ -37,14 +39,16 @@ class ATabVisCheckBox(mainText: String, varExtension: String, nameInLocalization
     }
 
     fun update() {
-        val tmp = curSettings[categorySelected + variableExtension]
+        var tmpText = curSettings[categorySelected + variableExtension]
 
-        if (tmp.isNotEmpty()) {
-            isChecked = tmp.strToBool()
+        if (tmpText.isNotEmpty()) {
+            isChecked = tmpText.strToBool()
         } else {
             println("[Error] $categorySelected$variableExtension is empty")
         }
-        this.setText(curLocalization[nameInLocalization])
+
+        tmpText = curLocalization[localeName]
+        this.setText(if (tmpText.isBlank()) defaultText else tmpText )
     }
 
     fun disable(bool: Boolean) {

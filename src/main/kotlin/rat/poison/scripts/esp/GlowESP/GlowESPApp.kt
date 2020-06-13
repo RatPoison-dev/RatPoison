@@ -43,7 +43,7 @@ internal fun glowEspApp() = App {
 		val showTarget = curSettings["GLOW_SHOW_TARGET"].strToBool()
 		val showEnemies = curSettings["GLOW_SHOW_ENEMIES"].strToBool()
 		val showTeam = curSettings["GLOW_SHOW_TEAM"].strToBool()
-		val glowHealth = curSettings("GLOW_SHOW_HEALTH").strToBool()
+		val glowHealth = curSettings["GLOW_SHOW_HEALTH"].strToBool()
 		val showBomb = curSettings["GLOW_SHOW_BOMB"].strToBool()
 		val showBombCarrier = curSettings["GLOW_SHOW_BOMB_CARRIER"].strToBool()
 		val showWeapons = curSettings["GLOW_SHOW_WEAPONS"].strToBool()
@@ -73,7 +73,7 @@ internal fun glowEspApp() = App {
 					} else if (showEnemies && !team) {
 						color = when (bEnt >= 0 && bEnt == entity && showBombCarrier) {
 							true -> "GLOW_BOMB_CARRIER_COLOR"
-							false -> when (showHealth) {
+							false -> when (glowHealth) {
 								true -> "GLOW_HEALTH"
 								false -> "GLOW_ENEMY_COLOR"
 							}
@@ -81,7 +81,7 @@ internal fun glowEspApp() = App {
 					} else if (showTeam && team) {
 						color = when (bEnt >= 0 && bEnt == entity && showBombCarrier) {
 							true -> "GLOW_BOMB_CARRIER_COLOR"
-							false -> when (showHealth) {
+							false -> when (glowHealth) {
 								true -> "GLOW_HEALTH"
 								false -> "GLOW_TEAM_COLOR"
 							}
@@ -90,20 +90,20 @@ internal fun glowEspApp() = App {
 				}
 
 				EntityType.CPlantedC4, EntityType.CC4 -> if (showBomb) {
-					color = curSettings["GLOW_BOMB_COLOR"].strToColor()
+					color = "GLOW_BOMB_COLOR"
 				}
 
 				else ->
 					if (showWeapons && it.type.weapon) {
-						color = curSettings["GLOW_WEAPON_COLOR"].strToColor()
-					} else if (showGrenades && it.type.grenade)
-						color = curSettings["GLOW_GRENADE_COLOR"].strToColor()
+						color = "GLOW_WEAPON_COLOR"
+					} else if (showGrenades && it.type.grenade) {
+						color = "GLOW_GRENADE_COLOR"
 					}
 			}
 
 			if (color != "") {
-				if (color == "GLOW_HEALHT") {
-					glowAddress.glow(Color((255 - 2.55 * health).toInt(), (2.55 * health).toInt(), 0, 1.0))
+				if (color == "GLOW_HEALTH") {
+					glowAddress.glow(Color((255 - 2.55 * health).toInt(), (2.55 * health).toInt(), 0, 1.0), entity.spotted())
 				} else {
 					glowAddress.glow(curSettings[color].strToColor(), entity.spotted())
 				}

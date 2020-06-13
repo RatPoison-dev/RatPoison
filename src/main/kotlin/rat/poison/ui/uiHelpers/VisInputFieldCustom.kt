@@ -8,16 +8,15 @@ import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.keybindsUpdate
-import rat.poison.ui.uiUpdate
 
-class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true, isInt: Boolean = true,  nameInLocalization: String = "") : VisTable() {
-    private val textLabel = mainText
+class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true, isInt: Boolean = true,  nameInLocalization: String = varName) : VisTable() {
+    private val defaultText = mainText
     private val variableName = varName
-    private val nameInLocalization = nameInLocalization
+    private val localeName = nameInLocalization
     private val intVal = isInt
 
     //val globalTable = VisTable()
-    private var keyLabel = VisLabel("$textLabel:")
+    private var keyLabel = VisLabel("$defaultText:")
     private val keyField = if (isInt) { VisValidatableTextField(Validators.INTEGERS) } else { VisValidatableTextField(Validators.FLOATS) }
     private val linkLabel = LinkLabel("?", "http://cherrytree.at/misc/vk.htm")
 
@@ -55,12 +54,13 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
 
     fun update(neglect: Actor? = null) {
         if (neglect != this) {
-            this.keyLabel.setText(curLocalization[nameInLocalization])
+            val tmpText = curLocalization[localeName]
+            this.keyLabel.setText(if (tmpText.isBlank()) defaultText else tmpText)
             keyField.text = curSettings[variableName]
-            if (intVal) {
-                value = keyField.text.toInt()
+            value = if (intVal) {
+                keyField.text.toInt()
             } else {
-                value = keyField.text.toDouble()
+                keyField.text.toDouble()
             }
         }
     }

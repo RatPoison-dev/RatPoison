@@ -43,9 +43,6 @@ class BoxEspTab : Tab(false, false) {
     val boxEspFlashed = VisCheckBoxCustom("Flashed", "BOX_ESP_FLASHED")
     val boxEspFlashedPos = VisSelectBox<String>()
 
-
-    val boxDetailColor = VisColorPickerCustom("Detail Text", "BOX_DETAILS_TEXT_COLOR")
-
     val showTeamBox = VisCheckBoxCustom(" ", "BOX_SHOW_TEAM")
     val boxTeamColor = VisColorPickerCustom(curLocalization["TEAMMATES"], "BOX_TEAM_COLOR", nameInLocalization = "TEAMMATES")
 

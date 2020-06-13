@@ -98,7 +98,7 @@ TEAMMATES_ARE_ENEMIES = false
 FORCE_AIM_KEY = 5
 
 //Enables specific bone when held
-FORCE_AIM_BONE_KEY = 6
+FORCE_AIM_BONE_KEY = 4
 
 //Always force aim if within FOV
 FORCE_AIM_ALWAYS = false

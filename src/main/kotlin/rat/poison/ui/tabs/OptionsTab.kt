@@ -31,22 +31,27 @@ import kotlin.math.round
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
-    var fileSelectBox: VisSelectBox<String> = VisSelectBox()
-    var localizationSelectBox: VisSelectBox<String> = VisSelectBox()
-    val saveButton = VisTextButtonCustom(curLocalization["SAVE_CONFIG"], nameInLocalization = "SAVE_CONFIG")
-    val loadButton = VisTextButtonCustom(curLocalization["LOAD_CONFIG"], nameInLocalization = "LOAD_CONFIG")
-    val deleteButton = VisTextButtonCustom(curLocalization["DELETE_CONFIG"], nameInLocalization = "DELETE_CONFIG")
-    val loadLocalizationButton = VisTextButtonCustom(curLocalization["LOAD_LOCALIZATION"], nameInLocalization = "LOAD_LOCALIZATION")
     val menuKey = VisInputFieldCustom(curLocalization["MENU_KEY"], "MENU_KEY", nameInLocalization = "MENU_KEY")
+    val menuAlphaLabel = VisLabelCustom(curLocalization["MENU_ALPHA_SLIDER"] + 1F, nameInLocalization = "MENU_ALPHA_SLIDER") //1F is default
+    val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, false)
     val oglFPS = VisSliderCustom(curLocalization["OPENGL_FPS"], "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F, nameInLocalization = "OPENGL_FPS")
+
     val stayFocused = VisCheckBoxCustom(curLocalization["MENU_STAY_FOCUSED"], "MENU_STAY_FOCUSED", nameInLocalization = "MENU_STAY_FOCUSED")
     val debug = VisCheckBoxCustom(curLocalization["ENABLE_DEBUG"], "DEBUG", nameInLocalization = "ENABLE_DEBUG")
     val keybinds = VisCheckBoxCustom(curLocalization["KEYBINDS"], "KEYBINDS", nameInLocalization = "KEYBINDS")
     val blur = VisCheckBoxCustom(curLocalization["GAUSSIAN_BLUR"], "GAUSSIAN_BLUR", nameInLocalization = "GAUSSIAN_BLUR")
+
     val saveCurConfig = VisTextButtonCustom(curLocalization["SAVE_CONFIG_TO_DEFAULT"], nameInLocalization = "SAVE_CONFIG_TO_DEFAULT")
+    val saveButton = VisTextButtonCustom(curLocalization["SAVE_CONFIG"], nameInLocalization = "SAVE_CONFIG")
+    val loadButton = VisTextButtonCustom(curLocalization["LOAD_CONFIG"], nameInLocalization = "LOAD_CONFIG")
+    val deleteButton = VisTextButtonCustom(curLocalization["DELETE_CONFIG"], nameInLocalization = "DELETE_CONFIG")
+
     private val discordLink = LinkLabel(curLocalization["JOIN_DISCORD"], "https://discord.gg/J2uHTJ2")
-    val menuAlphaLabel = VisLabelCustom(curLocalization["MENU_ALPHA_SLIDER"] + 1F, nameInLocalization = "MENU_ALPHA_SLIDER") //1F is default
-    val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, false)
+
+    var fileSelectBox: VisSelectBox<String> = VisSelectBox()
+    var localizationSelectBox: VisSelectBox<String> = VisSelectBox()
+    val loadLocalizationButton = VisTextButtonCustom(curLocalization["LOAD_LOCALIZATION"], nameInLocalization = "LOAD_LOCALIZATION")
+
     init {
 
         //Create UIAlpha Slider

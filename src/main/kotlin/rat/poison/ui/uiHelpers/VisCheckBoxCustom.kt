@@ -9,9 +9,11 @@ import rat.poison.strToBool
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
 
-class VisCheckBoxCustom(mainText: String, varName: String, nameInLocalization: String = "") : VisCheckBox(mainText) {
+class VisCheckBoxCustom(mainText: String, varName: String, nameInLocalization: String = varName) : VisCheckBox(mainText) {
+    private val defaultText = mainText
     private val variableName = varName
-    private val nameInLocalization = nameInLocalization
+    private val localeName = nameInLocalization
+
     init {
         if (curLocalization[nameInLocalization+"_TOOLTIP"] != "") {
             Tooltip.Builder(curLocalization[nameInLocalization+"_TOOLTIP"]).target(this).build()
@@ -32,7 +34,8 @@ class VisCheckBoxCustom(mainText: String, varName: String, nameInLocalization: S
     }
 
     fun update() {
-        this.setText(curLocalization[nameInLocalization])
+        val tmpText = curLocalization[localeName]
+        this.setText(if (tmpText.isBlank()) defaultText else tmpText )
         isChecked = curSettings[variableName].strToBool()
     }
 

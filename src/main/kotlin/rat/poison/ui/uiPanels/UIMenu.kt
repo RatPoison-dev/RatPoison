@@ -40,7 +40,7 @@ fun updateVisWindowsNames() {
     uiAimOverridenWeapons.update()
 }
 
-class UIMenu : VisWindow("Rat Poison 1.7.1.1") {
+class UIMenu : VisWindow("Rat Poison 1.7") {
     init {
         defaults().left()
 

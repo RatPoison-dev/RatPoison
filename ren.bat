@@ -10,8 +10,8 @@ SET /A rnd_num=!RANDOM! * 62 / 32768 + 1
 for /F %%c in ('echo %%alfanum:~!rnd_num!^,1%%') do set pwd=!pwd!%%c
 )
 cd build
-cd RatPoison 1.7.1.1
-ren "RatPoison 1.7.1.1.jar" "%pwd%.jar"
-powershell -Command "(Get-Content -path 'Start RatPoison 1.7.1.1.bat') -replace 'RatPoison 1.7.1.1', '%pwd%' | Set-Content -Path 'Start RatPoison 1.7.1.1.bat'"
-ren "Start RatPoison 1.7.1.1.bat" "%pwd%.bat"
+cd RatPoison 1.7
+ren "RatPoison 1.7.jar" "%pwd%.jar"
+powershell -Command "(Get-Content -path 'Start RatPoison 1.7.bat') -replace 'RatPoison 1.7', '%pwd%' | Set-Content -Path 'Start RatPoison 1.7.bat'"
+ren "Start RatPoison 1.7.bat" "%pwd%.bat"
 exit

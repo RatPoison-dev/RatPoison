@@ -11,17 +11,17 @@ import rat.poison.ui.changed
 import kotlin.math.pow
 import kotlin.math.round
 
-class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, width1: Float = 225F, width2: Float = 225F, nameInLocalization: String = "") : VisTable() {
-    private val labelText = mainText
+class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, width1: Float = 225F, width2: Float = 225F, nameInLocalization: String = varName) : VisTable() {
+    private val defaultText = mainText
     private val variableName = varName
     private val isInt = intVal
     private val rnd = 10.0.pow(dec)
     private val w1 = width1
     private val w2 = width2
 
-    private val sliderLabel = VisLabel("$labelText: " + curSettings[variableName])
+    private val sliderLabel = VisLabel("$defaultText: " + curSettings[variableName])
     private val sliderBar = VisSlider(varMin, varMax, stepSize, false)
-    private val nameInLocalization = nameInLocalization
+    private val localeName = nameInLocalization
 
     init {
         update()
@@ -35,8 +35,11 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
                 round(sliderBar.value * rnd)/rnd
             }
 
-            curSettings[variableName] = sliderVal.toString()
-            sliderLabel.setText("${curLocalization[nameInLocalization]}: $sliderVal")
+            //curSettings[variableName] = sliderVal.toString()
+            val tmpText = curLocalization[localeName]
+            if (tmpText.isBlank()) "$defaultText: $sliderVal"
+            sliderLabel.setText(if (tmpText.isBlank()) "$defaultText: $sliderVal" else "${curLocalization[localeName]}: $sliderVal")
+            //sliderLabel.setText("${curLocalization[nameInLocalization]}: $sliderVal")
         }
 
         add(sliderLabel).width(w1)
@@ -52,7 +55,9 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
             round(sliderBar.value * rnd)/rnd
         }
 
-        sliderLabel.setText("${curLocalization[nameInLocalization]}: $sliderVal")
+        val tmpText = curLocalization[localeName]
+        if (tmpText.isBlank()) "$defaultText: $sliderVal"
+        sliderLabel.setText(if (tmpText.isBlank()) "$defaultText: $sliderVal" else "${curLocalization[localeName]}: $sliderVal")
     }
 
     fun disable(bool: Boolean, col: Color) {
