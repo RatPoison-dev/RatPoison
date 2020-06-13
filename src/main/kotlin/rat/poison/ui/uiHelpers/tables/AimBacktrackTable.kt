@@ -3,11 +3,15 @@ package rat.poison.ui.uiHelpers.tables
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
+import rat.poison.aimingMap
+import rat.poison.curLocalization
+import rat.poison.curSettings
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
+import rat.poison.ui.uiHelpers.VisLabelCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
@@ -16,30 +20,33 @@ import rat.poison.ui.uiUpdate
 class AimBacktrackTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
 
-    val enableBacktrack = VisCheckBoxCustom("Master Backtrack Switch", "ENABLE_BACKTRACK")
-    val backtrackVisualize = VisCheckBoxCustom("Visualize", "BACKTRACK_VISUALIZE")
-    val backtrackEnableKey = VisCheckBoxCustom("Backtrack On Key", "ENABLE_BACKTRACK_ON_KEY")
-    val backtrackKey = VisInputFieldCustom("Backtrack Key", "BACKTRACK_KEY")
-    val backtrackFOV = VisSliderCustom("Activation FOV", "BACKTRACK_FOV", 0.1f, 2f, .1f, false)
-    val backtrackMS = VisSliderCustom("Max MS", "BACKTRACK_MS", 20f, 200f, 5f, true)
-    val backtrackPreferAccurate = VisCheckBoxCustom("Prefer Accurate Records", "BACKTRACK_PREFER_ACCURATE")
-    val backtrackSpotted = VisCheckBoxCustom("Check Visible", "BACKTRACK_SPOTTED")
-    val backtrackWeaponEnabled = ATabVisCheckBox("Enable Weapon Backtrack", "_BACKTRACK")
-    val backtrackWeaponNeck = ATabVisCheckBox("Neck", "_BACKTRACK_NECK")
-    val backtrackWeaponChest = ATabVisCheckBox("Chest", "_BACKTRACK_CHEST")
-    val backtrackWeaponStomach = ATabVisCheckBox("Stomach", "_BACKTRACK_STOMACH")
-    val backtrackWeaponPelvis = ATabVisCheckBox("Pelvis", "_BACKTRACK_PELVIS")
-
+    val enableBacktrack = VisCheckBoxCustom(curLocalization["ENABLE_BACKTRACK"], "ENABLE_BACKTRACK")
+    val backtrackVisualize = VisCheckBoxCustom(curLocalization["BACKTRACK_VISUALIZE"], "BACKTRACK_VISUALIZE")
+    val backtrackEnableKey = VisCheckBoxCustom(curLocalization["ENABLE_BACKTRACK_ON_KEY"], "ENABLE_BACKTRACK_ON_KEY")
+    val backtrackKey = VisInputFieldCustom(curLocalization["BACKTRACK_KEY"], "BACKTRACK_KEY")
+    val backtrackFOV = VisSliderCustom(curLocalization["BACKTRACK_FOV"], "BACKTRACK_FOV", 0.1f, 2f, .1f, false)
+    val backtrackMS = VisSliderCustom(curLocalization["BACKTRACK_MS"], "BACKTRACK_MS", 20f, 200f, 5f, true)
+    val backtrackPreferAccurate = VisCheckBoxCustom(curLocalization["BACKTRACK_PREFER_ACCURATE"], "BACKTRACK_PREFER_ACCURATE")
+    val backtrackSpotted = VisCheckBoxCustom(curLocalization["BACKTRACK_SPOTTED"], "BACKTRACK_SPOTTED")
+    val backtrackWeaponEnabled = ATabVisCheckBox("Enable Weapon Backtrack", "_BACKTRACK", nameInLocalization = "ENABLE_WEAPON_BACKTRACK")
+    val backtrackWeaponNeck = ATabVisCheckBox(curLocalization["NECK"], "_BACKTRACK_NECK", "NECK")
+    val backtrackWeaponChest = ATabVisCheckBox(curLocalization["CHEST"], "_BACKTRACK_CHEST", "CHEST")
+    val backtrackWeaponStomach = ATabVisCheckBox(curLocalization["STOMACH"], "_BACKTRACK_STOMACH" ,"STOMACH")
+    val backtrackWeaponPelvis = ATabVisCheckBox(curLocalization["PELVIS"], "_BACKTRACK_PELVIS", "PELVIS")
+    val bonesVisLabel = VisLabelCustom(curLocalization["BONES"], "BONES")
     //Override Weapon Checkbox & Selection Box
     private val categorySelection = VisTable()
     val categorySelectionBox = VisSelectBox<String>()
-    val categorySelectLabel = VisLabel("Weapon Category: ")
-
+    val categorySelectLabel = VisLabel(curLocalization["WEAPON_CATEGORY"])
+    var map = aimingMap()
+    fun updateMap() {
+        map = aimingMap()
+    }
     init {
         //Create Category Selector Box
-        categorySelectionBox.setItems("PISTOL", "RIFLE", "SMG", "SNIPER", "SHOTGUN")
-        categorySelectionBox.selected = "PISTOL"
-        categorySelected = categorySelectionBox.selected
+        categorySelectionBox.setItems(curLocalization["PISTOL"], curLocalization["RIFLE"], curLocalization["SMG"], curLocalization["SNIPER"], curLocalization["SHOTGUN"])
+        categorySelectionBox.selected = curLocalization[curSettings["DEFAULT_CATEGORY_SELECTED"]]
+        categorySelected = map[categorySelectionBox.selected]
         categorySelection.add(categorySelectLabel).padRight(200F-categorySelectLabel.width)
         categorySelection.add(categorySelectionBox)
 
@@ -58,7 +65,6 @@ class AimBacktrackTable: VisTable(false) {
         apply {
             padLeft(25F)
             padRight(25F)
-
             //Add all items to label for tabbed pane content
             add(enableBacktrack).left().row()
             add(backtrackVisualize).left().row()
@@ -73,7 +79,7 @@ class AimBacktrackTable: VisTable(false) {
             add(categorySelection).left().row()
             add(backtrackWeaponEnabled).left().row()
 
-            add(VisLabel("Bones")).left().row()
+            add(bonesVisLabel).left().row()
             add(backtrackWeaponNeck).left().row()
             add(backtrackWeaponChest).left().row()
             add(backtrackWeaponStomach).left().row()

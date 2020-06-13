@@ -32,15 +32,15 @@ class BoxEspTab : Tab(false, false) {
     val boxEspWeapon = VisCheckBoxCustom(curLocalization["WEAPON"], "BOX_ESP_WEAPON", nameInLocalization = "WEAPON")
     val boxEspWeaponPos = VisSelectBox<String>()
     val boxDetailColor = VisColorPickerCustom(curLocalization["BOX_DETAILS_TEXT_COLOR"], "BOX_DETAILS_TEXT_COLOR", nameInLocalization = "BOX_DETAILS_TEXT_COLOR")
-    val boxEspAmmo = VisCheckBoxCustom("Ammo", "BOX_ESP_AMMO")
+    val boxEspAmmo = VisCheckBoxCustom(curLocalization["AMMO"], "BOX_ESP_AMMO", "AMMO")
     val boxEspAmmoPos = VisSelectBox<String>()
-    val boxEspHelmet = VisCheckBoxCustom("Helmet", "BOX_ESP_HELMET")
+    val boxEspHelmet = VisCheckBoxCustom(curLocalization["HELMET"], "BOX_ESP_HELMET", "HELMET")
     val boxEspHelmetPos = VisSelectBox<String>()
-    val boxEspKevlar = VisCheckBoxCustom("Kevlar", "BOX_ESP_KEVLAR")
+    val boxEspKevlar = VisCheckBoxCustom(curLocalization["KEVLAR"], "BOX_ESP_KEVLAR", "KEVLAR")
     val boxEspKevlarPos = VisSelectBox<String>()
-    val boxEspScoped = VisCheckBoxCustom("Scoped", "BOX_ESP_SCOPED")
+    val boxEspScoped = VisCheckBoxCustom(curLocalization["SCOPED"], "BOX_ESP_SCOPED", "SCOPED")
     val boxEspScopedPos = VisSelectBox<String>()
-    val boxEspFlashed = VisCheckBoxCustom("Flashed", "BOX_ESP_FLASHED")
+    val boxEspFlashed = VisCheckBoxCustom(curLocalization["FLASHED"], "BOX_ESP_FLASHED", "FLASHED")
     val boxEspFlashedPos = VisSelectBox<String>()
 
     val showTeamBox = VisCheckBoxCustom(" ", "BOX_SHOW_TEAM")
@@ -102,57 +102,57 @@ class BoxEspTab : Tab(false, false) {
         }
 
         //Create Box ESP Weapon Pos Selector
-        boxEspHelmetPos.setItems("Left", "Right")
+        boxEspHelmetPos.setItems(curLocalization["LEFT"], curLocalization["RIGHT"])
         boxEspHelmetPos.selected = when (curSettings["BOX_ESP_HELMET_POS"].replace("\"", "")) {
-            "L" -> "Left"
-            else -> "Right"
+            "L" -> curLocalization["LEFT"]
+            else -> curLocalization["RIGHT"]
         }
         boxEspHelmetPos.changed { _, _ ->
-            curSettings["BOX_ESP_HELMET_POS"] = boxEspHelmetPos.selected.first()
+            curSettings["BOX_ESP_HELMET_POS"] = map[boxEspHelmetPos.selected].first()
             true
         }
 
         //Create Box ESP Weapon Pos Selector
-        boxEspKevlarPos.setItems("Left", "Right")
+        boxEspKevlarPos.setItems(curLocalization["LEFT"], curLocalization["RIGHT"])
         boxEspKevlarPos.selected = when (curSettings["BOX_ESP_KEVLAR_POS"].replace("\"", "")) {
-            "L" -> "Left"
-            else -> "Right"
+            "L" -> curLocalization["LEFT"]
+            else -> curLocalization["RIGHT"]
         }
         boxEspKevlarPos.changed { _, _ ->
-            curSettings["BOX_ESP_KEVLAR_POS"] = boxEspKevlarPos.selected.first()
+            curSettings["BOX_ESP_KEVLAR_POS"] = map[boxEspKevlarPos.selected].first()
             true
         }
 
         //Create Box ESP Weapon Pos Selector
-        boxEspAmmoPos.setItems("Top", "Bottom")
+        boxEspAmmoPos.setItems(curLocalization["TOP"], curLocalization["BOTTOM"])
         boxEspAmmoPos.selected = when (curSettings["BOX_ESP_AMMO_POS"].replace("\"", "")) {
-            "T" -> "Top"
-            else -> "Bottom"
+            "T" -> curLocalization["TOP"]
+            else -> curLocalization["BOTTOM"]
         }
         boxEspAmmoPos.changed { _, _ ->
-            curSettings["BOX_ESP_AMMO_POS"] = boxEspAmmoPos.selected.first()
+            curSettings["BOX_ESP_AMMO_POS"] = map[boxEspAmmoPos.selected].first()
             true
         }
 
         //Create Box ESP Weapon Pos Selector
-        boxEspScopedPos.setItems("Left", "Right")
+        boxEspScopedPos.setItems(curLocalization["LEFT"], curLocalization["RIGHT"])
         boxEspScopedPos.selected = when (curSettings["BOX_ESP_SCOPED_POS"].replace("\"", "")) {
-            "L" -> "Left"
-            else -> "Right"
+            "L" -> curLocalization["LEFT"]
+            else -> curLocalization["RIGHT"]
         }
         boxEspScopedPos.changed { _, _ ->
-            curSettings["BOX_ESP_SCOPED_POS"] = boxEspScopedPos.selected.first()
+            curSettings["BOX_ESP_SCOPED_POS"] = map[boxEspScopedPos.selected].first()
             true
         }
 
         //Create Box ESP Weapon Pos Selector
-        boxEspFlashedPos.setItems("Left", "Right")
+        boxEspFlashedPos.setItems(curLocalization["LEFT"], curLocalization["RIGHT"])
         boxEspFlashedPos.selected = when (curSettings["BOX_ESP_FLASHED_POS"].replace("\"", "")) {
-            "L" -> "Left"
-            else -> "Right"
+            "L" -> curLocalization["LEFT"]
+            else -> curLocalization["RIGHT"]
         }
         boxEspFlashedPos.changed { _, _ ->
-            curSettings["BOX_ESP_FLASHED_POS"] = boxEspFlashedPos.selected.first()
+            curSettings["BOX_ESP_FLASHED_POS"] = map[boxEspFlashedPos.selected].first()
             true
         }
 

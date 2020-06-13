@@ -9,6 +9,12 @@ TARGET = Target
 WEAPON = Weapon
 WARNING = Warning
 SCOPE = Scope
+BONES = Bones
+AMMO = Ammo
+HELMET = Helmet
+KEVLAR = Kevlar
+SCOPED = Scoped
+FLASHED = Flashed
 WEAPONS = Weapons
 UNDEFINED = N/A
 T = T
@@ -52,6 +58,7 @@ SPECTATOR_LIST_WINDOW_NAME = Spectator List
 
 // Aim tab
 PISTOL = PISTOL
+GAME_SENSITIVITY = Game Sensitivity
 SHOTGUN = SHOTGUN
 RIFLE = RIFLE
 SNIPER = SNIPER
@@ -64,6 +71,7 @@ HEAD = HEAD
 NECK = NECK
 CHEST = CHEST
 STOMACH = STOMACH
+PELVIS = PELVIS
 NEAREST = NEAREST
 RANDOM = RANDOM
 WEAPON_CATEGORY = Weapon Category:
@@ -231,6 +239,11 @@ ENABLE_SKELETON_ESP = Enable Skeleton
 ENABLE_BOX_ESP = Bounding Box
 ENABLE_BOX_ESP_DETAILS = Box Details
 BOX_DETAILS_TEXT_COLOR = Detail Text
+BOX_ESP_AMMO = Ammo
+BOX_ESP_HELMET = Helmet
+BOX_ESP_KEVLAR = Kevlar
+BOX_ESP_SCOPED = Scoped
+BOX_ESP_FLASHED = Flashed
 // Chams tab
 CHAMS_ESP = Enable
 CHAMS_SHOW_HEALTH = Chams Show Health
@@ -285,7 +298,7 @@ FILE_NOT_FOUND_ERROR = File not found, use list to see current files
 INVALID_VARIABLE_OR_VALUE = Invalid variable/value
 DEFAULT_CONFIG_NAME = default
 // Commnands
-HELP_MESSAGE = Available commands: help [command], exit, ranks, reload, list, read [file name], write [file name] [variable name] = [value], save [default/cfgname], load [cfgname], delete [cfgname]
+SCANNER_HELP_MESSAGE = Available commands: help [command], exit, ranks, reload, list, read [file name], write [file name] [variable name] = [value], save [default/cfgname], load [cfgname], delete [cfgname]
 HELP_COMMAND = help
 EXIT_COMMAND = exit
 RANKS_COMMAND = ranks
@@ -470,3 +483,13 @@ HITMARKER_RECOIL_POSITION_TOOLTIP = Whether or not hitmarket show recoil positio
 INDICATOR_SIZE_TOOLTIP = Size of the indicator
 HOLD_AIM_TOOLTIP = Aims at the enemy even after he left the FOV of the aimbot
 VARIATION_DEADZONE_TOOLTIP = Variation of area where variation doesnt occur
+
+// Backtrack
+ENABLE_BACKTRACK = Master Backtrack Switch
+BACKTRACK_VISUALIZE = Visualize
+ENABLE_BACKTRACK_ON_KEY = Backtrack On Key
+BACKTRACK_KEY = Backtrack Key
+BACKTRACK_MS = Max MS
+BACKTRACK_PREFER_ACCURATE = Prefer Accurate Records
+BACKTRACK_SPOTTED = Check Visible
+ENABLE_WEAPON_BACKTRACK = Enable Weapon Backtrack

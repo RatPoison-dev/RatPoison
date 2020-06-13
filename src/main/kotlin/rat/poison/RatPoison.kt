@@ -108,6 +108,7 @@ fun aimingMap () : Settings {
     map[curLocalization["NECK"]] = "NECK"
     map[curLocalization["CHEST"]] = "CHEST"
     map[curLocalization["STOMACH"]] = "STOMACH"
+    map[curLocalization["PELVIS"]] = "PELVIS"
     map[curLocalization["NEAREST"]] = "NEAREST"
     map[curLocalization["RANDOM"]] = "RANDOM"
     // Weapon categories
