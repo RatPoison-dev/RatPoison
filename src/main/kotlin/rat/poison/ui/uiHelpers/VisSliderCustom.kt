@@ -35,7 +35,7 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
                 round(sliderBar.value * rnd)/rnd
             }
 
-            //curSettings[variableName] = sliderVal.toString()
+            curSettings[variableName] = sliderVal.toString()
             val tmpText = curLocalization[localeName]
             if (tmpText.isBlank()) "$defaultText: $sliderVal"
             sliderLabel.setText(if (tmpText.isBlank()) "$defaultText: $sliderVal" else "${curLocalization[localeName]}: $sliderVal")
