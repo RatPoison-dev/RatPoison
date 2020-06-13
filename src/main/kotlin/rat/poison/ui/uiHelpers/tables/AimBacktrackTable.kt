@@ -51,7 +51,7 @@ class AimBacktrackTable: VisTable(false) {
         categorySelection.add(categorySelectionBox)
 
         categorySelectionBox.changed { _, _ ->
-            categorySelected = categorySelectionBox.selected
+            categorySelected = map[categorySelectionBox.selected]
             aimTab.tAim.categorySelectionBox.selected = categorySelected
             uiUpdate()
             true
