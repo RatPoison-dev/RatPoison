@@ -272,7 +272,9 @@ fun updateDisableBacktrack() {
 
 fun updateBacktrack() {
     aimTab.tBacktrack.apply {
+        updateMap()
         enableBacktrack.update()
+        bonesVisLabel.update()
         backtrackVisualize.update()
         backtrackEnableKey.update()
         backtrackKey.update()
