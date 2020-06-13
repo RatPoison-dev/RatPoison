@@ -1,8 +1,10 @@
-package rat.poison.ui.tabs.visualstabs
+﻿package rat.poison.ui.tabs.visualstabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import com.sun.jna.platform.win32.OaIdl
+import rat.poison.curLocalization
 import rat.poison.ui.tabs.chamsEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
@@ -12,18 +14,18 @@ class ChamsEspTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val chamsEsp = VisCheckBoxCustom("Enable", "CHAMS_ESP")
-    val chamsShowHealth = VisCheckBoxCustom("Chams Show Health", "CHAMS_SHOW_HEALTH")
-    val chamsBrightness = VisSliderCustom("Chams Brightness", "CHAMS_BRIGHTNESS", 0F, 5000F, 25F, true)
+    val chamsEsp = VisCheckBoxCustom(curLocalization["ENABLE"], "CHAMS_ESP", nameInLocalization = "ENABLE")
+    val chamsShowHealth = VisCheckBoxCustom(curLocalization["CHAMS_SHOW_HEALTH"], "CHAMS_SHOW_HEALTH", nameInLocalization = "CHAMS_SHOW_HEALTH")
+    val chamsBrightness = VisSliderCustom(curLocalization["CHAMS_BRIGHTNESS"], "CHAMS_BRIGHTNESS", 0F, 5000F, 25F, true, nameInLocalization = "CHAMS_BRIGHTNESS")
 
     val showTeam = VisCheckBoxCustom(" ", "CHAMS_SHOW_TEAM")
-    val chamsTeamColor = VisColorPickerCustom("Teammates", "CHAMS_TEAM_COLOR")
+    val chamsTeamColor = VisColorPickerCustom(curLocalization["TEAMMATES"], "CHAMS_TEAM_COLOR", nameInLocalization = "TEAMMATES")
 
     val showEnemies = VisCheckBoxCustom(" ", "CHAMS_SHOW_ENEMIES")
-    val chamsEnemyColor = VisColorPickerCustom("Enemies", "CHAMS_ENEMY_COLOR")
+    val chamsEnemyColor = VisColorPickerCustom(curLocalization["ENEMIES"], "CHAMS_ENEMY_COLOR", nameInLocalization = "ENEMIES")
 
     val showSelf = VisCheckBoxCustom(" ", "CHAMS_SHOW_SELF")
-    val chamsSelfColor = VisColorPickerCustom("Self", "CHAMS_SELF_COLOR")
+    val chamsSelfColor = VisColorPickerCustom(curLocalization["SELF"], "CHAMS_SELF_COLOR", nameInLocalization = "SELF")
 
     init {
         ////////////////////FORMATTING
@@ -61,7 +63,7 @@ class ChamsEspTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Chams"
+        return curLocalization["CHAMS_TAB_NAME"]
     }
 }
 
@@ -75,6 +77,9 @@ fun chamsEspTabUpdate() {
         showSelf.update()
         chamsTeamColor.update()
         chamsEnemyColor.update()
+        chamsEnemyColor.updateTitle()
+        chamsTeamColor.updateTitle()
+        chamsSelfColor.updateTitle()
         chamsSelfColor.update()
     }
 }

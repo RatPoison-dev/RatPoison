@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.aimingMap
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.settings.*
 import rat.poison.strToBool
@@ -14,7 +16,7 @@ import rat.poison.ui.uiHelpers.tables.AimTable
 
 //I really couldn't give a shit to update this to the same as the other tabs
 
-var categorySelected = "PISTOL"
+var categorySelected = curSettings["DEFAULT_CATEGORY_SELECTED"]
 
 class AimTab : Tab(true, false) { //Aim.kts tab
     private val table = VisTable(false)
@@ -33,7 +35,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     }
 
     override fun getTabTitle(): String? {
-        return "Aim"
+        return curLocalization["AIM_TAB_NAME"]
     }
 }
 
@@ -102,11 +104,24 @@ fun updateDisableAim() {
 fun updateAim() {
     aimTab.tAim.apply {
         enableAim.update()
+        updateMap()
         aimToggleKey.update()
         ingameSens.update()
         activateFromFireKey.update()
         teammatesAreEnemies.update()
         holdAim.update()
+        fovTypeLabel.update()
+        aimBoneLabel.update()
+        perfectAimFov.update()
+        weaponOverrideCheckBox.update()
+        forceAimBoneLabel.update()
+        perfectAimChance.update()
+        perfectAimCheckBox.update()
+        advancedSettingsCheckBox.update()
+        aimBoneBox.setItems(curLocalization["HEAD"], curLocalization["NECK"], curLocalization["CHEST"], curLocalization["STOMACH"], curLocalization["NEAREST"], curLocalization["RANDOM"])
+        //fovTypeBox.setItems(curLocalization["STATIC"], curLocalization["DISTANCE"])
+        forceAimBoneBox.setItems(curLocalization["HEAD"], curLocalization["NECK"], curLocalization["CHEST"], curLocalization["STOMACH"], curLocalization["NEAREST"], curLocalization["RANDOM"])
+        categorySelectionBox.setItems(curLocalization["PISTOL"], curLocalization["RIFLE"], curLocalization["SMG"], curLocalization["SNIPER"], curLocalization["SHOTGUN"])
         forceAimBoneKey.update()
         forceAimKey.update()
         forceAimAlways.update()
@@ -114,8 +129,6 @@ fun updateAim() {
         automaticWeaponsCheckBox.update()
         automaticWeaponsInput.update()
         targetSwapDelay.update()
-
-        fovTypeBox.selected = curSettings["FOV_TYPE"].replace("\"", "")
 
         enableAimOnShot.update()
         enableFactorRecoil.update()
@@ -139,21 +152,21 @@ fun updateAim() {
         }
 
         aimBoneBox.selected = when (curSettings[categorySelected + "_AIM_BONE"].toInt()) {
-            HEAD_BONE -> "HEAD"
-            NECK_BONE -> "NECK"
-            CHEST_BONE -> "CHEST"
-            STOMACH_BONE -> "STOMACH"
-            NEAREST_BONE -> "NEAREST"
-            else -> "RANDOM"
+            HEAD_BONE -> curLocalization["HEAD"]
+            NECK_BONE -> curLocalization["NECK"]
+            CHEST_BONE -> curLocalization["CHEST"]
+            STOMACH_BONE -> curLocalization["STOMACH"]
+            NEAREST_BONE -> curLocalization["NEAREST"]
+            else -> curLocalization["RANDOM"]
         }
 
         forceAimBoneBox.selected = when (curSettings[categorySelected + "_AIM_FORCE_BONE"].toInt()) {
-            HEAD_BONE -> "HEAD"
-            NECK_BONE -> "NECK"
-            CHEST_BONE -> "CHEST"
-            STOMACH_BONE -> "STOMACH"
-            NEAREST_BONE -> "NEAREST"
-            else -> "RANDOM"
+            HEAD_BONE -> curLocalization["HEAD"]
+            NECK_BONE -> curLocalization["NECK"]
+            CHEST_BONE -> curLocalization["CHEST"]
+            STOMACH_BONE -> curLocalization["STOMACH"]
+            NEAREST_BONE -> curLocalization["NEAREST"]
+            else -> curLocalization["RANDOM"]
         }
 
         aimFov.update()

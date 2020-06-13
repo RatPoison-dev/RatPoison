@@ -1,4 +1,4 @@
-package rat.poison.ui.tabs
+﻿package rat.poison.ui.tabs
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
@@ -8,6 +8,7 @@ import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.scripts.esp.disableAllEsp
 import rat.poison.strToBool
@@ -18,37 +19,37 @@ import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiPanels.visualsTab
 
-val espTabbedPane = TabbedPane()
-val glowEspTab = GlowEspTab()
-val chamsEspTab = ChamsEspTab()
-val indicatorEspTab = IndicatorEspTab()
-val boxEspTab = BoxEspTab()
-val snaplinesEspTab = SnaplinesEspTab()
-val footStepsEspTab = FootstepsEspTab()
-val hitMarkerTab = HitMarkerTab()
-val nadesTab = NadesVT()
+var espTabbedPane = TabbedPane()
+var glowEspTab = GlowEspTab()
+var chamsEspTab = ChamsEspTab()
+var indicatorEspTab = IndicatorEspTab()
+var boxEspTab = BoxEspTab()
+var snaplinesEspTab = SnaplinesEspTab()
+var footStepsEspTab = FootstepsEspTab()
+var hitMarkerTab = HitMarkerTab()
+var nadesTab = NadesVT()
 
 class VisualsTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
     //Static Visuals Tab Items
-    val enableEsp = VisCheckBoxCustom("Enable ESP", "ENABLE_ESP")
+    val enableEsp = VisCheckBoxCustom(curLocalization["ENABLE_ESP"], "ENABLE_ESP", nameInLocalization = "ENABLE_ESP")
 
-    val visualsToggleKey = VisInputFieldCustom("Visuals Toggle Key", "VISUALS_TOGGLE_KEY")
+    val visualsToggleKey = VisInputFieldCustom(curLocalization["VISUALS_TOGGLE_KEY"], "VISUALS_TOGGLE_KEY", nameInLocalization = "VISUALS_TOGGLE_KEY")
 
-    val radarEsp = VisCheckBoxCustom("Radar Esp", "RADAR_ESP")
+    val radarEsp = VisCheckBoxCustom(curLocalization["ENABLE_RADAR_ESP"], "RADAR_ESP", nameInLocalization = "ENABLE_RADAR_ESP")
 
-    val nightMode = VisCheckBoxCustom("Nightmode/Fullbright", "ENABLE_NIGHTMODE")
-    val nightModeSlider = VisSliderCustom("%", "NIGHTMODE_VALUE", 0.05F, 5F, .05F, false)
+    val nightMode = VisCheckBoxCustom(curLocalization["ENABLE_NIGHTMODE"], "ENABLE_NIGHTMODE", nameInLocalization = "ENABLE_NIGHTMODE")
+    val nightModeSlider = VisSliderCustom(curLocalization["NIGHTMODE_VALUE"], "NIGHTMODE_VALUE", 0.05F, 5F, .05F, false, nameInLocalization = "NIGHTMODE_VALUE")
 
-    val visAdrenaline = VisCheckBoxCustom("Adrenaline", "ENABLE_ADRENALINE")
+    val visAdrenaline = VisCheckBoxCustom(curLocalization["ENABLE_ADRENALINE"], "ENABLE_ADRENALINE", nameInLocalization = "ENABLE_ADRENALINE")
 
     val showAimFov = VisCheckBoxCustom(" ", "DRAW_AIM_FOV")
-    val showAimFovColor = VisColorPickerCustom("Draw Aim FOV", "DRAW_AIM_FOV_COLOR")
+    val showAimFovColor = VisColorPickerCustom( curLocalization["DRAW_AIM_FOV_COLOR"], "DRAW_AIM_FOV_COLOR", nameInLocalization = "DRAW_AIM_FOV_COLOR")
 
     val showTriggerFov = VisCheckBoxCustom(" ", "DRAW_TRIGGER_FOV")
-    val showTriggerFovColor = VisColorPickerCustom("Draw Trigger FOV", "DRAW_TRIGGER_FOV_COLOR")
+    val showTriggerFovColor = VisColorPickerCustom(curLocalization["DRAW_TRIGGER_FOV_COLOR"], "DRAW_TRIGGER_FOV_COLOR", nameInLocalization = "DRAW_TRIGGER_FOV_COLOR")
 
     init {
         //ESP Tab
@@ -135,12 +136,25 @@ class VisualsTab : Tab(false, false) {
         table.add(espScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
     }
 
+    fun updateESPTabs () {
+        espTabbedPane.updateTabTitle(glowEspTab)
+        espTabbedPane.updateTabTitle(chamsEspTab)
+        espTabbedPane.remove(boxEspTab)
+        boxEspTab = BoxEspTab()
+        espTabbedPane.insert(3, boxEspTab)
+        espTabbedPane.updateTabTitle(indicatorEspTab)
+        espTabbedPane.updateTabTitle(snaplinesEspTab)
+        espTabbedPane.updateTabTitle(footStepsEspTab)
+        espTabbedPane.updateTabTitle(hitMarkerTab)
+        espTabbedPane.updateTabTitle(nadesTab)
+    }
+
     override fun getContentTable(): Table? {
         return table
     }
 
     override fun getTabTitle(): String? {
-        return "Visuals"
+        return curLocalization["VISUALS_TAB_NAME"]
     }
 }
 
@@ -200,6 +214,7 @@ fun updateDisableEsp() {
         glowEspTab.glowEsp.disable(bool)
         glowEspTab.invGlowEsp.disable(bool)
         glowEspTab.modelEsp.disable(bool)
+        glowEspTab.glowShowHealth.disable(bool)
         glowEspTab.modelAndGlow.disable(bool)
         glowEspTab.showTeam.disable(bool)
         glowEspTab.showEnemies.disable(bool)
@@ -243,6 +258,7 @@ fun updateDisableEsp() {
 
         boxEspTab.boxEsp.disable(bool)
         boxEspTab.boxEspDetails.disable(bool)
+        boxEspTab.boxShowHealth.disable(bool)
         boxEspTab.boxEspHealth.disable(bool)
         boxEspTab.boxEspHealthPos.isDisabled = bool
         boxEspTab.boxEspArmor.disable(bool)
@@ -320,11 +336,14 @@ fun visualsTabUpdate() {
         visualsToggleKey.update()
         radarEsp.update()
         visualsToggleKey.update()
+        visAdrenaline.update()
         nightMode.update()
         nightModeSlider.update()
         showAimFov.update()
         showAimFovColor.update()
+        showAimFovColor.updateTitle()
         showTriggerFov.update()
         showTriggerFovColor.update()
+        showTriggerFovColor.updateTitle()
     }
 }

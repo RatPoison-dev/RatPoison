@@ -1,4 +1,4 @@
-@file:Suppress("BlockingMethodInNonBlockingContext")
+﻿@file:Suppress("BlockingMethodInNonBlockingContext")
 
 package rat.poison.ui.tabs
 
@@ -18,10 +18,10 @@ import rat.poison.App.uiKeybinds
 import rat.poison.App.uiMenu
 import rat.poison.App.uiSpecList
 import rat.poison.ui.changed
-import rat.poison.ui.uiHelpers.VisCheckBoxCustom
-import rat.poison.ui.uiHelpers.VisInputFieldCustom
-import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiHelpers.*
+import rat.poison.ui.uiPanels.keybindsUpdate
 import rat.poison.ui.uiPanels.optionsTab
+import rat.poison.ui.uiPanels.updateVisWindowsNames
 import rat.poison.ui.uiUpdate
 import java.io.File
 import java.io.FileReader
@@ -31,36 +31,39 @@ import kotlin.math.round
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
-    private var fileSelectBox: VisSelectBox<String> = VisSelectBox()
-
-    val menuKey = VisInputFieldCustom("Menu Key", "MENU_KEY")
-    private val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F)
-    private val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
-    private val debug = VisCheckBoxCustom("Debug", "DEBUG")
-    private val keybinds = VisCheckBoxCustom("Keybinds", "KEYBINDS")
-    private val blur = VisCheckBoxCustom("Gaussian Blur", "GAUSSIAN_BLUR")
-    private val discordLink = LinkLabel("Join Discord", "https://discord.gg/J2uHTJ2")
-
+    var fileSelectBox: VisSelectBox<String> = VisSelectBox()
+    var localizationSelectBox: VisSelectBox<String> = VisSelectBox()
+    val saveButton = VisTextButtonCustom(curLocalization["SAVE_CONFIG"], nameInLocalization = "SAVE_CONFIG")
+    val loadButton = VisTextButtonCustom(curLocalization["LOAD_CONFIG"], nameInLocalization = "LOAD_CONFIG")
+    val deleteButton = VisTextButtonCustom(curLocalization["DELETE_CONFIG"], nameInLocalization = "DELETE_CONFIG")
+    val loadLocalizationButton = VisTextButtonCustom(curLocalization["LOAD_LOCALIZATION"], nameInLocalization = "LOAD_LOCALIZATION")
+    val menuKey = VisInputFieldCustom(curLocalization["MENU_KEY"], "MENU_KEY", nameInLocalization = "MENU_KEY")
+    val oglFPS = VisSliderCustom(curLocalization["OPENGL_FPS"], "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F, nameInLocalization = "OPENGL_FPS")
+    val stayFocused = VisCheckBoxCustom(curLocalization["MENU_STAY_FOCUSED"], "MENU_STAY_FOCUSED", nameInLocalization = "MENU_STAY_FOCUSED")
+    val debug = VisCheckBoxCustom(curLocalization["ENABLE_DEBUG"], "DEBUG", nameInLocalization = "ENABLE_DEBUG")
+    val keybinds = VisCheckBoxCustom(curLocalization["KEYBINDS"], "KEYBINDS", nameInLocalization = "KEYBINDS")
+    val blur = VisCheckBoxCustom(curLocalization["GAUSSIAN_BLUR"], "GAUSSIAN_BLUR", nameInLocalization = "GAUSSIAN_BLUR")
+    val saveCurConfig = VisTextButtonCustom(curLocalization["SAVE_CONFIG_TO_DEFAULT"], nameInLocalization = "SAVE_CONFIG_TO_DEFAULT")
+    private val discordLink = LinkLabel(curLocalization["JOIN_DISCORD"], "https://discord.gg/J2uHTJ2")
+    val menuAlphaLabel = VisLabelCustom(curLocalization["MENU_ALPHA_SLIDER"] + 1F, nameInLocalization = "MENU_ALPHA_SLIDER") //1F is default
+    val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, false)
     init {
 
         //Create UIAlpha Slider
         val menuAlpha = VisTable()
-        val menuAlphaLabel = VisLabel("Menu Alpha: " + 1F) //1F is default
-        val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, false)
         menuAlphaSlider.value = 1F
         menuAlphaSlider.changed { _, _ ->
             val alp = (round(menuAlphaSlider.value * 100F) / 100F)
             uiMenu.changeAlpha(alp)
-            menuAlphaLabel.setText("Menu Alpha: " + alp.toString() + when(alp.toString().length) {4->"" 3->"  " 2->"    " else ->"      "})
+            menuAlphaLabel.setText(curLocalization["MENU_ALPHA_SLIDER"] + alp.toString() + when(alp.toString().length) {4->"" 3->"  " 2->"    " else ->"      "})
         }
         menuAlpha.add(menuAlphaLabel).width(200F)
         menuAlpha.add(menuAlphaSlider).width(250F)
 
 
         //Create Save Button
-        val saveButton = VisTextButton("Save CFG")
         saveButton.changed { _, _ ->
-            Dialogs.showInputDialog(menuStage, "Enter config name: ", "", object : InputDialogAdapter() {
+            Dialogs.showInputDialog(menuStage, curLocalization["ENTER_CONFIG_NAME"], "", object : InputDialogAdapter() {
                 override fun finished(input: String) {
                     saveCFG(input)
                 }
@@ -69,7 +72,6 @@ class OptionsTab : Tab(false, false) {
         }
 
         //Create Load Button
-        val loadButton = VisTextButton("Load CFG")
         loadButton.changed { _, _ ->
             if (!fileSelectBox.selected.isNullOrEmpty()) {
                 if (fileSelectBox.selected.count() > 0) {
@@ -78,9 +80,19 @@ class OptionsTab : Tab(false, false) {
             }
             true
         }
-
+        loadLocalizationButton.changed { _, _ ->
+            if (!localizationSelectBox.selected.isNullOrEmpty()) {
+                if (localizationSelectBox.selected.count() > 0) {
+                    loadLocalizationFromFile(localizationSelectBox.selected)
+                    uiMenu.updateTabs()
+                    updateVisWindowsNames()
+                    updateWindows()
+                    uiUpdate()
+                }
+            }
+            true
+        }
         //Create Delete Button
-        val deleteButton = VisTextButton("Delete CFG")
         deleteButton.changed { _, _ ->
             if (!fileSelectBox.selected.isNullOrEmpty()) {
                 if (fileSelectBox.selected.count() > 0) {
@@ -90,11 +102,12 @@ class OptionsTab : Tab(false, false) {
             true
         }
 
+
         //File Select Box
         updateCFGList()
+        updateLocalizationsList()
 
         //Create Save Current Config To Default
-        val saveCurConfig = VisTextButton("Save Current Config To Default Settings")
         saveCurConfig.changed { _, _ ->
             saveWindows()
             saveDefault()
@@ -107,6 +120,9 @@ class OptionsTab : Tab(false, false) {
         sldTable.add(loadButton).padLeft(20F).padRight(20F).width(100F)
         sldTable.add(deleteButton).width(100F)
 
+        val localizationTab = VisTable()
+        localizationTab.add(localizationSelectBox).padBottom(8F).padTop(2.5F).row()
+        localizationTab.add(loadLocalizationButton)
         debug.changed { _, _ ->
             dbg = debug.isChecked
             true
@@ -129,6 +145,8 @@ class OptionsTab : Tab(false, false) {
         table.add(saveCurConfig).width(340F).row()
 
         table.addSeparator()
+        table.add(localizationTab).row()
+        table.addSeparator()
         table.add(discordLink)
     }
 
@@ -137,7 +155,24 @@ class OptionsTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Options"
+        return curLocalization["OPTIONS_TAB_NAME"]
+    }
+
+    fun updateLocalizationsList() {
+        if (VisUI.isLoaded()) {
+            val localizationsList = Array<String>()
+            var items = 0
+            File("$SETTINGS_DIRECTORY\\Localizations").listFiles()?.forEach {
+                localizationsList.add(it.name.replace(".locale", ""))
+                items++
+            }
+
+            if (items > 0) {
+                localizationSelectBox.items = localizationsList
+            } else {
+                localizationSelectBox.clearItems()
+            }
+        }
     }
 
     fun updateCFGList() {
@@ -165,7 +200,7 @@ fun saveDefault() {
             println("\nSaving!\n")
             File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
                 val sbLines = StringBuilder()
-                if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo") {
+                if (file.name != "CFGS" && file.name != "Localizations" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo") {
                     FileReader(file).readLines().forEach { line ->
                         if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                             val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
@@ -226,7 +261,7 @@ fun saveCFG(cfgFileName: String) {
 
             val sbLines = StringBuilder()
             File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
-                if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo") {
+                if (file.name != "CFGS" && file.name != "Localizations" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo") {
                     FileReader(file).readLines().forEach { line ->
                         if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                             val tempCurLine = line.trim().split(" ".toRegex(), 3) //Separate line into 'VARIABLE = VALUE'
@@ -288,6 +323,23 @@ fun deleteCFG(cfgFileName: String) {
         optionsTab.updateCFGList()
     }
     println("Deleted $cfgFileName\n")
+}
+
+fun updateOptionsTab() {
+    optionsTab.apply {
+        menuKey.update()
+        menuAlphaLabel.update()
+        oglFPS.update()
+        stayFocused.update()
+        debug.update()
+        keybinds.update()
+        blur.update()
+        saveButton.update()
+        loadButton.update()
+        deleteButton.update()
+        loadLocalizationButton.update()
+        saveCurConfig.update()
+    }
 }
 
 fun saveWindows() {

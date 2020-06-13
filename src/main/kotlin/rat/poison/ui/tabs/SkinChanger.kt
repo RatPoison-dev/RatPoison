@@ -1,4 +1,4 @@
-package rat.poison.ui.tabs
+﻿package rat.poison.ui.tabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
@@ -9,21 +9,27 @@ import com.kotcrab.vis.ui.util.adapter.ArrayListAdapter
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.scripts.forcedUpdate
 import rat.poison.scripts.skinChanger
 import rat.poison.toSkinWeaponClass
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
+import rat.poison.ui.uiHelpers.VisLabelCustom
+import rat.poison.ui.uiHelpers.VisTextButtonCustom
 import rat.poison.ui.uiPanels.skinChangerTab
+import rat.poison.utils.GetWeaponsMap
 import java.io.File
 
 class SkinChangerTab : Tab(false, false) {
     private val table = VisTable(true)
 
+    var weaponsMap = GetWeaponsMap()
+
     //Init labels/sliders/boxes that show values here
-    var enableSkinChanger = VisCheckBoxCustom("Enable Skinchanger", "SKINCHANGER")
-    //var enableKnifeChanger = VisCheckBoxCustom("Enable Knifechanger", "KNIFECHANGER")
+    var enableSkinChanger = VisCheckBoxCustom(curLocalization["ENABLE_SKIN_CHANGER"], "SKINCHANGER", nameInLocalization = "ENABLE_SKIN_CHANGER")
+    //var enableKnifeChanger = VisCheckBoxCustom(curLocalization["ENABLE_KNIFE_CHANGER"], "KNIFECHANGER", nameInLocalization = "ENABLE_KNIFE_CHANGER")
 
     private var categorySelectionBox = VisSelectBox<String>()
     private var weaponSelectionBox = VisSelectBox<String>()
@@ -34,21 +40,25 @@ class SkinChangerTab : Tab(false, false) {
     private var listAdapter = ListAdapter(strArray)
     private var skinSelectionList = ListView(listAdapter)
 
-    private var idLabel = VisLabel("Skin ID: ")
-    private var statTrakLabel = VisLabel("StatTrak: ")
-    private var wearLabel = VisLabel("Wear: ")
+    var idLabel = VisLabelCustom(curLocalization["SKIN_ID"], nameInLocalization = "SKIN_ID")
+    var statTrakLabel = VisLabelCustom(curLocalization["STATTRACK"], nameInLocalization = "STATTRACK")
+    var wearLabel = VisLabelCustom(curLocalization["WEAR"], nameInLocalization = "WEAR")
 
     private var skinIDInput = VisValidatableTextField(Validators.INTEGERS)
     private var skinStatTrak = VisValidatableTextField(Validators.INTEGERS)
     private var skinWear = VisSlider(0.0F, 1.0F, .01F, false)
     //private var skinWear = VisValidatableTextField(Validators.FLOATS)
 
-    private var forceUpdate = VisTextButton("Manual Force Update")
-    var autoForceUpdate = VisCheckBoxCustom("Auto Force Update", "FORCE_UPDATE_AUTO")
+    private var forceUpdate = VisTextButtonCustom(curLocalization["MANUAL_FORCE_UPDATE"], nameInLocalization = "MANUAL_FORCE_UPDATE")
+    var autoForceUpdate = VisCheckBoxCustom(curLocalization["AUTO_FORCE_UPDATE"], "FORCE_UPDATE_AUTO", nameInLocalization = "AUTO_FORCE_UPDATE")
 
     private var weaponSelected = "DESERT_EAGLE"
     private var minValue = 0.0F
     private var maxValue = 1.0F
+
+    fun updateWeaponsMap() {
+        weaponsMap = GetWeaponsMap()
+    }
 
     init {
         skinSelectionList.updatePolicy = ListView.UpdatePolicy.ON_DRAW
@@ -57,16 +67,16 @@ class SkinChangerTab : Tab(false, false) {
             listAdapter.add(tmpStartArray[i])
         }
 
-        categorySelectionBox.setItems("PISTOL", "RIFLE", "SMG", "SNIPER", "SHOTGUN")
-        categorySelectionBox.selected = "PISTOL"
+        categorySelectionBox.setItems(curLocalization["PISTOL"], curLocalization["RIFLE"], curLocalization["SMG"], curLocalization["SNIPER"], curLocalization["SHOTGUN"])
+        categorySelectionBox.selected = curLocalization[curSettings["DEFAULT_CATEGORY_SELECTED"]]
 
         categorySelectionBox.changed { _, _ ->
             when (categorySelectionBox.selected) {
-                "PISTOL" -> { weaponSelectionBox.clearItems(); weaponSelectionBox.setItems("DESERT_EAGLE", "DUAL_BERRETA", "FIVE_SEVEN", "GLOCK", "USP_SILENCER", "CZ75A", "R8_REVOLVER", "P2000", "TEC9", "P250") }
-                "SMG" -> { weaponSelectionBox.clearItems(); weaponSelectionBox.setItems("MAC10", "P90", "MP5", "UMP45", "MP7", "MP9", "PP_BIZON") }
-                "RIFLE" -> { weaponSelectionBox.clearItems(); weaponSelectionBox.setItems("AK47", "AUG", "FAMAS", "SG553", "GALIL", "M4A4", "M4A1_SILENCER", "NEGEV", "M249") }
-                "SNIPER" -> { weaponSelectionBox.clearItems(); weaponSelectionBox.setItems("AWP", "G3SG1", "SCAR20", "SSG08") }
-                "SHOTGUN" -> { weaponSelectionBox.clearItems(); weaponSelectionBox.setItems("XM1014", "MAG7", "SAWED_OFF", "NOVA") }
+                curLocalization["PISTOL"] -> { weaponSelectionBox.clearItems(); weaponSelectionBox.setItems(curLocalization["DESERT_EAGLE"], curLocalization["DUAL_BERRETA"], curLocalization["FIVE_SEVEN"], curLocalization["GLOCK"], curLocalization["USP_SILENCER"], curLocalization["CZ75A"], curLocalization["R8_REVOLVER"], curLocalization["P2000"], curLocalization["TEC9"], curLocalization["P250"]) }
+                curLocalization["SMG"] -> { weaponSelectionBox.clearItems(); weaponSelectionBox.setItems(curLocalization["MAC10"], curLocalization["P90"], curLocalization["MP5"], curLocalization["UMP45"], curLocalization["MP7"], curLocalization["MP9"], curLocalization["PP_BIZON"]) }
+                curLocalization["RIFLE"] -> { weaponSelectionBox.clearItems(); weaponSelectionBox.setItems(curLocalization["AK47"], curLocalization["AUG"], curLocalization["FAMAS"], curLocalization["SG553"], curLocalization["GALIL"], curLocalization["M4A4"], curLocalization["M4A1_SILENCER"], curLocalization["NEGEV"], curLocalization["M249"]) }
+                curLocalization["SNIPER"] -> { weaponSelectionBox.clearItems(); weaponSelectionBox.setItems(curLocalization["AWP"], curLocalization["G3SG1"], curLocalization["SCAR20"], curLocalization["SSG08"]) }
+                curLocalization["SHOTGUN"] -> { weaponSelectionBox.clearItems(); weaponSelectionBox.setItems(curLocalization["XM1014"], curLocalization["MAG7"], curLocalization["SAWED_OFF"], curLocalization["NOVA"]) }
             }
 
             if (!weaponSelectionBox.items[0].isNullOrEmpty()) {
@@ -75,11 +85,11 @@ class SkinChangerTab : Tab(false, false) {
             true
         }
 
-        weaponSelectionBox.setItems("DESERT_EAGLE", "DUAL_BERRETA", "FIVE_SEVEN", "GLOCK", "USP_SILENCER", "CZ75A", "R8_REVOLVER", "P2000", "TEC9", "P250")
-        weaponSelectionBox.selected = "DESERT_EAGLE"
+        weaponSelectionBox.setItems(curLocalization["DESERT_EAGLE"], curLocalization["DUAL_BERRETA"], curLocalization["FIVE_SEVEN"], curLocalization["GLOCK"], curLocalization["USP_SILENCER"], curLocalization["CZ75A"], curLocalization["R8_REVOLVER"], curLocalization["P2000"], curLocalization["TEC9"], curLocalization["P250"])
+        weaponSelectionBox.selected = curLocalization["DESERT_EAGLE"]
         weaponSelectionBox.changed { _, _ ->
             if (!weaponSelectionBox.selected.isNullOrEmpty()) {
-                weaponSelected = weaponSelectionBox.selected
+                weaponSelected = weaponsMap[weaponSelectionBox.selected]
 
                 val skinWep = curSettings["SKIN_$weaponSelected"].toSkinWeaponClass()
 
@@ -207,7 +217,7 @@ class SkinChangerTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Skin Changer"
+        return curLocalization["SKIN_CHANGER_TAB_NAME"]
     }
 }
 
@@ -340,8 +350,12 @@ fun getMaxValueFromID(ID: Int): Float {
 
 fun skinChangerTabUpdate() {
     skinChangerTab.apply {
+        updateWeaponsMap()
         enableSkinChanger.update()
         autoForceUpdate.update()
+        idLabel.update()
+        wearLabel.update()
+        statTrakLabel.update()
         //enableKnifeChanger.update()
     }
 }

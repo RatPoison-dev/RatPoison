@@ -2,6 +2,7 @@ package rat.poison.ui
 
 import rat.poison.App.uiAimOverridenWeapons
 import rat.poison.App.uiMenu
+import rat.poison.App.uiSpecList
 import rat.poison.opened
 import rat.poison.ui.tabs.*
 import rat.poison.ui.tabs.visualstabs.*
@@ -18,7 +19,6 @@ fun uiUpdate() {
     boxEspTabUpdate()
     hitMarkerTabUpdate()
     skinChangerTabUpdate()
-    nadesVTUpdate()
     snaplinesEspTabUpdate()
     footStepsEspTabUpdate()
     miscTabUpdate()
@@ -28,6 +28,8 @@ fun uiUpdate() {
     updateAim()
     updateBacktrack()
     updateDisableEsp()
+    updateOptionsTab()
+    nadesVTUpdate()
 
     //Update windows
     uiAimOverridenWeapons.setPosition(uiMenu.x+uiMenu.width+4F, uiMenu.y)

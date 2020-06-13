@@ -9,3 +9,4 @@ RCS_SMOOTHING_Y = 0.7
 
 //Moves your cursor back to where you started spraying
 RCS_RETURNAIM = false
+RCS_TOGGLE_KEY = 22

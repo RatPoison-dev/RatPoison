@@ -1,0 +1,326 @@
+// Global
+TEAMMATES = Compañeros
+ENEMIES = Enemigos
+HEALTH = Salud
+ARMOR = armadura
+NAME = Nombre
+GRENADES = Granadas
+TARGET = Objetivo
+WEAPON = Arma
+WEAPONS = Armas
+BOMB = Bomba
+BOMB_CARRIER = Portador de bomba
+DEFUSERS = Defusors
+SELF = Yo
+ENABLE = Habilitar
+LEFT = Izquierda
+RIGHT = Derecha
+TOP = Parte superior
+BOTTOM = Abajo
+LINE_WIDTH = Ancho de línea
+FOV = Campo de visión
+
+// Tabs name
+AIM_TAB_NAME = apuntar
+HITMARKER_TAB_NAME = Indicador de daño
+SNAPLINES_TAB_NAME = Líneas
+MISC_TAB_NAME = Varios
+RCS_TAB_NAME = Control de retroceso
+GLOW_TAB_NAME = Glow
+VISUALS_TAB_NAME = Imágenes
+FOOTSTEPS_TAB_NAME = Pasos de pie
+OVERRIDE_WEAPONS_PANEL_NAME = Anular armas
+KEYBINDS_PANEL_NAME = Atajos de teclado
+INDICATORS_TAB_NAME = Indicador
+NADES_TAB_NAME = Granadas
+BOX_ESP_TAB_NAME = Caja
+CHAMS_TAB_NAME = Chams
+SKIN_CHANGER_TAB_NAME = Cambiador de piel
+NADE_HELPER_TAB_NAME = Ayudante de granada
+RANKS_TAB_NAME = Rangos
+OPTIONS_TAB_NAME = Opciones
+
+BOMB_TIMER_WINDOW_NAME = Temporizador de bomba
+SPECTATOR_LIST_WINDOW_NAME = Lista de espectadores
+
+// Aim tab
+PISTOL = PISTOLA
+SHOTGUN = ESCOPETA
+RIFLE = RIFLE
+SNIPER = FRANCOTIRADOR
+SMG = La metralleta
+
+STATIC = ESTÁTICA
+DISTANCE = DISTANCIA
+
+HEAD = CABEZA
+NECK = CUELLO
+CHEST = PECHO
+STOMACH = ESTOMAGO
+NEAREST = MÁS CERCANO
+RANDOM = ALEATORIO
+WEAPON_CATEGORY = Categoría de arma:
+// Triggerbot
+ENABLE_TRIGGER = Habilitar disparador
+TRIGGER_ENABLE_KEY = Activar en clave
+TRIGGER_KEY = Clave de disparo
+TRIGGER_AIMBOT = Apuntar bot
+TRIGGER_IS_IN_CROSS = En cruz
+TRIGGER_IS_IN_FOV = En el campo de visión
+TRIGGER_DELAY = Retraso
+// Aimbot
+ENABLE_AIM =  Habilitar apuntar bot
+AIM_TOGGLE_KEY = Alternar clave de apuntar
+ACTIVATE_FROM_AIM_KEY = Activar desde la tecla de disparo
+HOLD_AIM = Mantener apuntar
+TEAMMATES_ARE_ENEMIES = Los compañeros de equipo son enemigos
+FOV_TYPE = Tipo de campo de visión:
+FORCE_AIM_BONE_KEY = Forzar clave de hueso de objetivo
+FORCE_AIM_KEY = Forzar clave de apuntado
+FORCE_AIM_ALWAYS = Fuerza apuntando siempre
+FORCE_AIM_THROUGH_WALLS = Fuerza apuntando a través de las paredes
+AUTOMATIC_WEAPONS = Armas automáticas
+AUTO_WEP_DELAY = Retraso de MS
+AIM_TARGET_SWAP_DELAY = Retardo de intercambio objetivo
+OVERRIDE_WEAPONS_CHECKBOX = Anular armas
+AIM_ONLY_ON_SHOT = Apuntar al disparo
+FACTOR_RECOIL = Factor de retroceso
+ENABLE_FLAT_AIM = Escribir ángulos
+ENABLE_PATH_AIM = Movimiento del mouse
+SNIPER_ENABLE_SCOPED_ONLY = Solo con alcance
+AIM_BONE = Hueso:
+AIM_FORCE_BONE = Forzar hueso:
+AIM_FOV = Apuntar campo de visión
+AIM_SPEED = Velocidad de apuntado
+AIM_SMOOTHNESS = Suavidad de apuntado
+AIM_AFTER_SHOTS = Apuntar después de #
+ENABLE_PERFECT_AIM = Habilitar apuntar perfecto
+PERFECT_AIM_CHANCE = Probabilidad
+ADVANCED_SETTINGS = Configuración avanzada
+RANDOM_X_VARIATION = Variación X
+RANDOM_Y_VARIATION = Variación Y
+VARIATION_DEADZONE = Zona muerta de variación
+AIM_RCS_X = Control de retroceso X
+AIM_RCS_Y = Control de retroceso Y
+AIM_RCS_VARIATION = Variación del control de retroceso
+AIM_SPEED_DIVISOR = Divisor de movimiento del mouse
+
+// Misc tab
+ENABLE_BUNNY_HOP = Salto automático
+AUTO_STRAFE = Strafe automático
+STRAFE_BHOP_ONLY = Strafe solo durante el salto automático
+FAST_STOP = Parada rápida
+AIM_STRAFER = Ataque automático
+AIM_STRAFER_SAME = Mismo
+AIM_STRAFER_OPPOSITE = Opuesto
+AIM_STRAFER_SHIFT = Caminata de cambio
+AIM_STRAFER_STRICTNESS = Estricción
+HEAD_WALK = Paseo de la cabeza
+
+ENABLE_FOV_CHANGER = Cambiador de campo de visión
+FOV_DEFAULT = Campo de visión predeterminado
+FOV_SMOOTH = Cambios suaves en el campo de visión
+FOV_SNIPER_DEFAULT = Campo de visión predeterminado
+FOV_ZOOM_1 = Primer campo de visión del alcance
+FOV_ZOOM_2 = Segundo campo de visión del alcance
+ENABLE_BOMB_TIMER = Temporizador de bomba
+BOMB_TIMER_BARS = Barras de temporizador
+BOMB_TIMER_MENU = Menú del temporizador
+ENABLE_SPECTATOR_LIST = Lista de espectadores
+
+ENABLE_AUTO_KNIFE = Cuchillo Bot
+ENABLE_PERFECT_BOMB_DEFUSE = Desactivar bomba perfecta
+ENABLE_DOOR_SPAM = Spammer de puerta
+DOOR_SPAM_KEY = Llave de spam de puerta
+ENABLE_WEAPON_SPAM = Spam de armas
+WEAPON_SPAM_KEY = Clave de spam de armas
+ENABLE_REDUCED_FLASH = Flash reducido
+FLASH_MAX_ALPHA = Max Alpha
+ENABLE_HITSOUND = sonido dañado
+HITSOUND_VOLUME = Volumen
+THROW_SELF_NADE = granada a ti mismo
+ENABLE_NAME_CHANGER = Cambio de nombre
+
+
+// Nade helper tab
+ENABLE_NADE_HELPER = Ayudante de granada
+LOADED_NOTHING = Loaded: N/A
+CREATE_GRENADE_POSITION = Crear posición de granada
+SAVE_AS_FILE = Guardar como archivo
+LOAD_FROM_FILE = Cargar desde archivo
+DELETE_SELECTED_FILE = Eliminar archivo seleccionado
+CLEAR_CURRENTLY_LOADED = Borrar actualmente cargado
+CLEAR_CURRENTLY_LOADED_WARNING =  ¿Borrar las posiciones actuales?
+DELETE_AT_CURRENT_POSITION = Eliminar en la posición actual
+
+// Options tab
+MENU_KEY = tecla de menú
+OPENGL_FPS = Marcos OpenGL por segundo
+MENU_STAY_FOCUSED = Mantenerse enfocado
+ENABLE_DEBUG = Depurar
+KEYBINDS = Teclas vinculadas
+GAUSSIAN_BLUR = Desenfoque gaussiano
+JOIN_DISCORD = Unirse a Discord
+MENU_ALPHA_SLIDER = Menú alfa:
+SAVE_CONFIG = Guardar configuración
+ENTER_CONFIG_NAME = Ingrese el nombre de la configuración:
+LOAD_CONFIG = Cargar config
+DELETE_CONFIG = Eliminar configuración
+SAVE_CONFIG_TO_DEFAULT = Guardar configuración actual a la configuración predeterminada
+LOAD_LOCALIZATION = Localización de carga
+
+// Ranks tab
+RANKS_TEAM = Equipo
+RANKS_NAME = Nombre
+RANKS_RANK = Rango
+RANKS_KILLS = Mata
+RANKS_DEATHS = Muertes
+RANKS_KD = K / D
+RANKS_WINS = Victorias
+
+// RCS Tab
+ENABLE_RCS = Habilitar el control de retroceso
+RCS_SMOOTHING_X = retroceso X Suavizado
+RCS_SMOOTHING_Y = retroceso Y Suavizado
+RCS_RETURNAIM = Retorno con el apuntando
+ENABLE_RECOIL_CROSSHAIR = Retroceso de la mira
+ENABLE_SNIPER_CROSSHAIR = Compatible con el alcance
+RCROSSHAIR_WIDTH = Retroceso del ancho de la mira
+RCROSSHAIR_LENGTH = Longitud del retículo en retroceso
+RCROSSHAIR_XOFFSET = Retroceso de retícula X desplazamiento
+RCROSSHAIR_YOFFSET = Retroceso de retícula Y desplazamiento
+RCROSSHAIR_ALPHA = Retroceso de retícula alfa
+RCROSSHAIR_COLOR = Color de retícula en retroceso
+
+// Skin changer tab
+ENABLE_SKIN_CHANGER = Habilitar Skinchanger
+ENABLE_KNIFE_CHANGER = Habilitar cambiador de cuchillas
+SKIN_ID = ID de máscara:
+STATTRACK = StatTrak:
+WEAR = Desgaste:
+MANUAL_FORCE_UPDATE = Actualización manual forzada
+AUTO_FORCE_UPDATE = Actualización automática de fuerza
+
+// Visuals tab
+ENABLE_ESP = Habilitar ESP
+VISUALS_TOGGLE_KEY = Clave de alternancia visual
+ENABLE_RADAR_ESP = Radar Esp
+ENABLE_NIGHTMODE = Modo nocturno / brillante
+NIGHTMODE_VALUE = %
+ENABLE_ADRENALINE = Adrenalina
+DRAW_AIM_FOV_COLOR = Dibujar Apuntando FOV
+DRAW_TRIGGER_FOV_COLOR = Dibujar disparador FOV
+// Box Esp tab
+ENABLE_SKELETON_ESP = Habilitar esqueleto
+ENABLE_BOX_ESP = Cuadro delimitador
+ENABLE_BOX_ESP_DETAILS = Detalles del cuadro
+BOX_DETAILS_TEXT_COLOR = Texto detallado
+// Chams tab
+CHAMS_ESP = Habilitar
+CHAMS_SHOW_HEALTH = Chams muestran salud
+CHAMS_BRIGHTNESS = Brillo de Chams
+// Footsteps tab
+FOOTSTEP_UPDATE = Actualizar temporizador
+FOOTSTEP_TTL = TTL
+// Glow Esp tab
+INV_GLOW_ESP = Inv Glow
+MODEL_ESP = Modelo
+MODEL_AND_GLOW = Modelo y Resplandor
+// HitMarkers tab
+HITMARKER_OUTLINE = Esquema
+HITMARKER_COMBO = Combinación #
+HITMARKER_RECOIL_POSITION = Posición de retroceso
+HITMARKER_SPACING = Espaciado
+HITMARKER_LENGTH = Longitud de línea
+HITMARKER_COLOR = Hitmarker
+HITMARKER_COMBO_COLOR = Combinación
+// Indicators tab
+INDICATOR_DISTANCE = Distancia del indicador
+INDICATOR_SIZE = Tamaño del indicador
+// Nades tab
+NADE_TRACER_COLOR = Trazador
+NADE_TRACER_UPDATE_TIME = Tiempo de actualización del trazador
+NADE_TRACER_TIMEOUT = Tiempo de espera del trazador
+
+
+// Override weapons panel
+CATEGORY = Categoría:
+ENABLE_OVERRIDE = Habilitar anulación
+OVERRIDE_AIM_SPEED = Velocidad:
+OVERRIDE_SMOOTH = Suave:
+
+// Weapons
+DESERT_EAGLE = DESERT_EAGLE
+DUAL_BERRETA = DUAL_BERRETA
+FIVE_SEVEN = FIVE_SEVEN
+GLOCK = GLOCK
+AK47 = AK47
+AUG = AUG
+AWP = AWP
+FAMAS = FAMAS
+G3SG1 = G3SG1
+GALIL = GALIL
+M249 = M249
+M4A4 = M4A4
+MAC10 = MAC10
+P90 = P90
+MP5 = MP5
+UMP45 = UMP45
+XM1014 = XM1014
+PP_BIZON = PP_BIZON
+MAG7 = MAG7
+NEGEV = NEGEV
+SAWED_OFF = SAWED_OFF
+TEC9 = TEC9
+ZEUS_X27 = ZEUS_X27
+P2000 = P2000
+MP7 = MP7
+MP9 = MP9
+NOVA = NOVA
+P250 = P250
+SCAR20 = SCAR20
+SG553 = SG553
+SSG08 = SSG08
+KNIFE = KNIFE
+FLASH_GRENADE = FLASH_GRENADE
+EXPLOSIVE_GRENADE = EXPLOSIVE_GRENADE
+SMOKE_GRENADE = SMOKE_GRENADE
+MOLOTOV = MOLOTOV
+DECOY_GRENADE = DECOY_GRENADE
+INCENDIARY_GRENADE = INCENDIARY_GRENADE
+C4 = C4
+MEDISHOT = MEDISHOT
+KNIFE_T = KNIFE_T
+M4A1_SILENCER = M4A1_SILENCER
+USP_SILENCER = USP_SILENCER
+CZ75A = CZ75A
+R8_REVOLVER = R8_REVOLVER
+FISTS = FISTS
+CHARGE = CHARGE
+TABLET = TABLET
+HAMMER = HAMMER
+FIRE_BOMB = FIRE_BOMB
+DIVERSION_DEVICE = DIVERSION_DEVICE
+KNIFE_BAYONET = KNIFE_BAYONET
+KNIFE_CSS = KNIFE_CSS
+KNIFE_FLIP = KNIFE_FLIP
+KNIFE_GUT = KNIFE_GUT
+KNIFE_KARAMBIT = KNIFE_KARAMBIT
+KNIFE_M9_BAYONET = KNIFE_M9_BAYONET
+KNIFE_TACTICAL = KNIFE_TACTICAL
+KNIFE_FALCHION = KNIFE_FALCHION
+KNIFE_BOWIE = KNIFE_BOWIE
+KNIFE_BUTTERFLY = KNIFE_BUTTERFLY
+KNIFE_PUSH = KNIFE_PUSH
+KNIFE_CORD = KNIFE_CORD
+KNIFE_CANIS = KNIFE_CANIS
+KNIFE_URSUS = KNIFE_URSUS
+KNIFE_GYPSY = KNIFE_GYPSY
+KNIFE_OUTDOOR = KNIFE_OUTDOOR
+KNIFE_STILETTO = KNIFE_STILETTO
+KNIFE_WIDOWMAKER = KNIFE_WIDOWMAKER
+KNIFE_SKELETON = KNIFE_SKELETON
+
+// Tooltips
+ENABLE_BUNNY_HOP_TOOLTIP = Enable bhop
+SNIPER_ENABLE_SCOPED_ONLY =

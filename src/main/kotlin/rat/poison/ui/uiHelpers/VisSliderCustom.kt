@@ -1,15 +1,17 @@
-package rat.poison.ui.uiHelpers
+﻿package rat.poison.ui.uiHelpers
 
 import com.badlogic.gdx.graphics.Color
+import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisTable
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.ui.changed
 import kotlin.math.pow
 import kotlin.math.round
 
-class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, width1: Float = 225F, width2: Float = 225F) : VisTable() {
+class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, width1: Float = 225F, width2: Float = 225F, nameInLocalization: String = "") : VisTable() {
     private val labelText = mainText
     private val variableName = varName
     private val isInt = intVal
@@ -19,10 +21,13 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
 
     private val sliderLabel = VisLabel("$labelText: " + curSettings[variableName])
     private val sliderBar = VisSlider(varMin, varMax, stepSize, false)
+    private val nameInLocalization = nameInLocalization
 
     init {
         update()
-
+        if (curLocalization[nameInLocalization+"_TOOLTIP"] != "") {
+            Tooltip.Builder(curLocalization[nameInLocalization+"_TOOLTIP"]).target(this).build()
+        }
         sliderBar.changed { _, _ ->
             val sliderVal : Any = if (isInt) {
                 sliderBar.value.toInt()
@@ -31,7 +36,7 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
             }
 
             curSettings[variableName] = sliderVal.toString()
-            sliderLabel.setText("$labelText: $sliderVal")
+            sliderLabel.setText("${curLocalization[nameInLocalization]}: $sliderVal")
         }
 
         add(sliderLabel).width(w1)
@@ -47,7 +52,7 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
             round(sliderBar.value * rnd)/rnd
         }
 
-        sliderLabel.setText("$labelText: $sliderVal")
+        sliderLabel.setText("${curLocalization[nameInLocalization]}: $sliderVal")
     }
 
     fun disable(bool: Boolean, col: Color) {

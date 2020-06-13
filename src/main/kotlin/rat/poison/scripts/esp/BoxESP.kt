@@ -92,8 +92,14 @@ fun boxEsp() = App {
 
 		if (worldToScreen(vHead, vTop) && worldToScreen(vFeet, vBot)) {
 			val vMid = Vector((vTop.x + vBot.x)/2, (vTop.y + vBot.y)/2, (vTop.z + vBot.z)/2)
-			val tCol = curSettings["BOX_TEAM_COLOR"].strToColor()
-			val eCol = curSettings["BOX_ENEMY_COLOR"].strToColor()
+			val tCol = when (curSettings["BOX_SHOW_HEALTH"].strToBool()) {
+				true -> rat.poison.game.Color((255 - 2.55 * entity.health()).toInt(), (2.55 * entity.health()).toInt(), 0, 1.0)
+				false -> curSettings["BOX_TEAM_COLOR"].strToColor()
+			}
+			val eCol = when (curSettings["BOX_SHOW_HEALTH"].strToBool()) {
+				true -> rat.poison.game.Color((255 - 2.55 * entity.health()).toInt(), (2.55 * entity.health()).toInt(), 0, 1.0)
+				false -> curSettings["BOX_ENEMY_COLOR"].strToColor()
+			}
 			val c = if (meTeam == entTeam) Color(tCol.red/255F, tCol.green/255F, tCol.blue/255F, 1F) else Color(eCol.red/255F, eCol.green/255F, eCol.blue/255F, 1F)
 
 			var boxH = vBot.y - vTop.y
@@ -132,7 +138,7 @@ fun boxEsp() = App {
 				health = entityMemory.health().toFloat()
 				armor = entityMemory.armor().toFloat()
 
-				weapon = entity.weapon().name
+				weapon = curLocalization[entity.weapon().name]
 				name = entity.name()
 
 				val wepEnt = entity.weaponEntity()
@@ -273,7 +279,6 @@ fun boxEsp() = App {
 						////Bottom
 						val boxDetailsTextBottom = StringBuilder()
 						boxDetailsTextBottom.append("")
-
 						if (bEspName && bEspNamePos == "B") {
 							boxDetailsTextBottom.append("$name\n")
 						}
@@ -428,7 +433,7 @@ fun boxEsp() = App {
 						val boxDetailsTextTop = StringBuilder()
 
 						if (bEspName && bEspNamePos == "T") {
-							boxDetailsTextTop.append("DEFUSER")
+							boxDetailsTextTop.append(curLocalization["DEFUSER"])
 							yAdd += 16F
 						}
 						glyph.setText(this, boxDetailsTextTop, 0, (boxDetailsTextTop as CharSequence).length, detailTextColor, 1F, Align.center, false, null)
@@ -439,7 +444,7 @@ fun boxEsp() = App {
 						val boxDetailsTextBottom = StringBuilder()
 
 						if (bEspName && bEspNamePos == "B") {
-							boxDetailsTextBottom.append("DEFUSER")
+							boxDetailsTextBottom.append(curLocalization["DEFUSER"])
 						}
 						glyph.setText(this, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, detailTextColor, 1F, Align.center, false, null)
 						draw(sb, glyph, x0 + w / 2F, y0 + h - 4F)

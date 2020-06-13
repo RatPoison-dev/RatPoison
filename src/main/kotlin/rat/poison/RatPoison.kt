@@ -42,6 +42,9 @@ import rat.poison.scripts.esp.drawBacktrack
 import rat.poison.scripts.esp.esp
 import rat.poison.scripts.esp.espToggle
 import rat.poison.settings.MENUTOG
+import rat.poison.ui.*
+import rat.poison.ui.tabs.RcsTab
+import rat.poison.ui.tabs.saveDefault
 import rat.poison.ui.uiPanels.*
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.Angle
@@ -54,11 +57,14 @@ import java.awt.Robot
 import java.io.File
 import java.io.FileReader
 import java.lang.management.ManagementFactory
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.util.concurrent.TimeUnit
 import kotlin.collections.set
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.system.measureNanoTime
+import java.util.Locale
 
 //Override Weapon
 data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = false,      var tFlatAim: Boolean = false,
@@ -77,17 +83,62 @@ var saving = false
 var settingsLoaded = false
 
 val curSettings = Settings()
+val curLocalization = Settings()
 
 var dbg: Boolean = false
 
 val robot = Robot().apply { this.autoDelay = 0 }
 
+// Junk code
+fun visualsMap (): Settings {
+    val map = Settings()
+    map[curLocalization["LEFT"]] = "LEFT"
+    map[curLocalization["RIGHT"]] = "RIGHT"
+    map[curLocalization["TOP"]] = "TOP"
+    map[curLocalization["BOTTOM"]] = "BOTTOM"
+    return map
+}
+fun aimingMap () : Settings {
+    val map = Settings()
+    // FOV Types
+    map[curLocalization["STATIC"]] = "STATIC"
+    map[curLocalization["DISTANCE"]] = "DISTANCE"
+    // Bones
+    map[curLocalization["HEAD"]] = "HEAD"
+    map[curLocalization["NECK"]] = "NECK"
+    map[curLocalization["CHEST"]] = "CHEST"
+    map[curLocalization["STOMACH"]] = "STOMACH"
+    map[curLocalization["NEAREST"]] = "NEAREST"
+    map[curLocalization["RANDOM"]] = "RANDOM"
+    // Weapon categories
+    map[curLocalization["PISTOL"]] = "PISTOL"
+    map[curLocalization["SHOTGUN"]] = "SHOTGUN"
+    map[curLocalization["RIFLE"]] = "RIFLE"
+    map[curLocalization["SNIPER"]] = "SNIPER"
+    map[curLocalization["SMG"]] = "SMG"
+    return map
+}
 fun main() {
     System.setProperty("jna.nosys", "true")
 
     println("Loading settings...")
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
-
+    val locale = getSystemLocale()
+    if (curSettings["DEFAULT_LOCALE"] == "NONE") {
+        if (locale != null && Files.exists(Paths.get("settings/Localizations/locale_${locale}.locale"))) {
+            loadLocalizationFromFile("locale_${locale}")
+        }
+        else {
+            println("Detected default locale: $locale")
+            println("Locale file for your language doesn't exist. Loading english locale.")
+            curSettings["DEFAULT_LOCALE"] = "locale_en_US"
+            loadLocalizationFromFile(curSettings["DEFAULT_LOCALE"])
+            saveDefault()
+        }
+    }
+    else {
+        loadLocalizationFromFile(curSettings["DEFAULT_LOCALE"])
+    }
     dbg = curSettings["DEBUG"].strToBool()
 
     if (dbg) println("DEBUG enabled")
@@ -96,7 +147,6 @@ fun main() {
     println("Launching...")
 
     CSGO.initialize()
-
     if (dbg) println("[DEBUG] Initializing scripts...")
     //Init scripts
     if (!curSettings["MENU"].strToBool()) { //If we arent' using the menu disable everything that uses the menu
@@ -202,6 +252,17 @@ fun main() {
     }
 }
 
+fun loadLocalizationFromFile(localizationName: String) {
+    val filePath = "$SETTINGS_DIRECTORY\\Localizations\\$localizationName.locale"
+    File(filePath).readLines(Charsets.UTF_8).forEach { line ->
+        val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
+        if (curLine.size == 3) {
+            curLocalization[curLine[0]] = curLine[2]
+        }
+    }
+    curSettings["DEFAULT_LOCALE"] = localizationName
+}
+
 fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
     settingsLoaded = false
     if (specificFile) {
@@ -218,7 +279,7 @@ fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
         }
     } else {
         File(fileDir).listFiles()?.forEach { file ->
-            if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo" && file.name.contains(".txt")) {
+            if (file.name != "CFGS" && file.name != "Localizations" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo" && file.name.contains(".txt")) {
                 FileReader(file).readLines().forEach { line ->
                     if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                         val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
@@ -240,6 +301,7 @@ fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
 var opened = false
 var overlayMenuKey = ObservableBoolean({keyPressed(1)})
 var toggleAimKey = ObservableBoolean({keyPressed(1)})
+var toggleRCSKey = ObservableBoolean({keyPressed(1)})
 
 var syncTime = 0L
 var glowTime = 0L
@@ -271,7 +333,7 @@ object App : ApplicationAdapter() {
     override fun create() {
         overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
         toggleAimKey = ObservableBoolean({ keyPressed(curSettings["AIM_TOGGLE_KEY"].toInt()) })
-
+        toggleRCSKey = ObservableBoolean({ keyPressed(curSettings["RCS_TOGGLE_KEY"].toInt()) })
         VisUI.load(Gdx.files.internal("skin\\tinted.json"))
 
         //Implement stage for menu
@@ -321,7 +383,6 @@ object App : ApplicationAdapter() {
                                         menuStage.addActor(uiKeybinds)
                                     }
                                 } else if (menuStage.actors.contains(uiKeybinds)) {
-                                    //menuStage.clear() //actors.remove at index doesnt work after 1 loop?
                                     menuStage.actors.removeValue(uiKeybinds, true)
                                 }
 
@@ -439,6 +500,12 @@ object App : ApplicationAdapter() {
                     aimTab.tAim.enableAim.isChecked = !aimTab.tAim.enableAim.isChecked
                 }
 
+                // RCS Toggle Key
+                toggleRCSKey.update()
+                if (toggleRCSKey.justBecameTrue) {
+                    rcsTab.enableRCS.isChecked = !rcsTab.enableRCS.isChecked
+                }
+
                 val w = overlay.width
                 val h = overlay.height
 
@@ -518,6 +585,10 @@ fun sync(fps : Int) {
             variableYieldTime = max(variableYieldTime - 2 * 1000, 0)
         }
     }
+}
+
+fun getSystemLocale(): Locale? {
+    return Locale.getDefault()
 }
 
 fun Any.strToBool() = this.toString().toLowerCase() == "true" || this == true || this == 1.0 || this == 1 || this == 1F

@@ -18,6 +18,9 @@ MODEL_AND_GLOW = false
 //Enable glow esp on teammates
 GLOW_SHOW_TEAM = false
 
+//Glow color will depends on player health
+GLOW_SHOW_HEALTH = false
+
 //Enable glow esp on enemies
 GLOW_SHOW_ENEMIES = true
 

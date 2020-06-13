@@ -3,6 +3,7 @@ package rat.poison.ui.uiPanels
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisWindow
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.scripts.bombState
 import rat.poison.ui.changed
@@ -12,7 +13,7 @@ lateinit var bombText : VisLabel
 
 //Needs cleanup
 
-class UIBombTimer : VisWindow("Bomb Timer") {
+class UIBombTimer : VisWindow(curLocalization["BOMB_TIMER_WINDOW_NAME"]) {
     init {
         defaults().left()
 
@@ -45,5 +46,8 @@ class UIBombTimer : VisWindow("Bomb Timer") {
 
     fun updatePosition(x: Float, y: Float) {
         setPosition(x, y)
+    }
+    fun update() {
+        this.titleLabel.setText(curLocalization["BOMB_TIMER_WINDOW_NAME"])
     }
 }

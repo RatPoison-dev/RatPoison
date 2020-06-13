@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.curLocalization
 import rat.poison.scripts.*
 
 class RanksTab : Tab(false, false) {
@@ -36,17 +37,17 @@ class RanksTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Ranks"
+        return curLocalization["RANKS_TAB_NAME"]
     }
 
     fun updateRanks() {
-        teamsLabel.setText("Team  \n")
-        namesLabel.setText("Name  \n")
-        ranksLabel.setText("Rank  \n")
-        killsLabel.setText("Kills  \n")
-        deathsLabel.setText("Deaths  \n")
-        KDsLabel.setText("K/D  \n")
-        winsLabel.setText("Wins  \n")
+        teamsLabel.setText(curLocalization["RANKS_TEAM"] + " \n")
+        namesLabel.setText(curLocalization["RANKS_NAME"] + " \n")
+        ranksLabel.setText(curLocalization["RANKS_RANK"] + " \n")
+        killsLabel.setText(curLocalization["RANKS_KILLS"] + " \n")
+        deathsLabel.setText(curLocalization["RANKS_DEATHS"] + " \n")
+        KDsLabel.setText(curLocalization["RANKS_KD"] + " \n")
+        winsLabel.setText(curLocalization["RANKS_WINS"] + " \n")
 
         for (i in 0 until teamList.size) {
             teamsLabel.setText(teamsLabel.text.toString() + teamList[i] + "  \n")

@@ -3,6 +3,7 @@
 package rat.poison.scripts
 
 import rat.poison.App.haveTarget
+import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer

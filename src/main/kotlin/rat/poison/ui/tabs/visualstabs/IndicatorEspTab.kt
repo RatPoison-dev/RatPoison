@@ -1,8 +1,9 @@
-package rat.poison.ui.tabs.visualstabs
+﻿package rat.poison.ui.tabs.visualstabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.curLocalization
 import rat.poison.ui.tabs.indicatorEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
@@ -12,30 +13,30 @@ class IndicatorEspTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val indicatorEsp = VisCheckBoxCustom("Enable", "INDICATOR_ESP")
-    val indicatorDistance = VisSliderCustom("Indicator Distance", "INDICATOR_DISTANCE", 2F, 50F, .1F, false)
-    val indicatorSize = VisSliderCustom("Indicator Size", "INDICATOR_SIZE", 5F, 25F, .5F, false)
+    val indicatorEsp = VisCheckBoxCustom(curLocalization["ENABLE"], "INDICATOR_ESP", nameInLocalization = "ENABLE")
+    val indicatorDistance = VisSliderCustom(curLocalization["INDICATOR_DISTANCE"], "INDICATOR_DISTANCE", 2F, 50F, .1F, false, nameInLocalization = "INDICATOR_DISTANCE")
+    val indicatorSize = VisSliderCustom(curLocalization["INDICATOR_SIZE"], "INDICATOR_SIZE", 5F, 25F, .5F, false, nameInLocalization = "INDICATOR_SIZE")
 
     val showTeam = VisCheckBoxCustom(" ", "INDICATOR_SHOW_TEAM")
-    val indicatorTeamColor = VisColorPickerCustom("Teammates", "GLOW_TEAM_COLOR")
+    val indicatorTeamColor = VisColorPickerCustom(curLocalization["TEAMMATES"], "GLOW_TEAM_COLOR", nameInLocalization = "TEAMMATES")
 
     val showEnemies = VisCheckBoxCustom(" ", "INDICATOR_SHOW_ENEMIES")
-    val indicatorEnemyColor = VisColorPickerCustom("Enemies", "INDICATOR_ENEMY_COLOR")
+    val indicatorEnemyColor = VisColorPickerCustom(curLocalization["ENEMIES"], "INDICATOR_ENEMY_COLOR", nameInLocalization = "ENEMIES")
 
     val showBomb = VisCheckBoxCustom(" ", "INDICATOR_SHOW_BOMB")
-    val indicatorBombColor = VisColorPickerCustom("Bomb", "INDICATOR_BOMB_COLOR")
+    val indicatorBombColor = VisColorPickerCustom(curLocalization["BOMB"], "INDICATOR_BOMB_COLOR", nameInLocalization = "BOMB")
 
     val showBombCarrier = VisCheckBoxCustom(" ", "INDICATOR_SHOW_BOMB_CARRIER")
-    val indicatorBombCarrierColor = VisColorPickerCustom("Bomb Carrier", "INDICATOR_BOMB_CARRIER_COLOR")
+    val indicatorBombCarrierColor = VisColorPickerCustom(curLocalization["BOMB_CARRIER"], "INDICATOR_BOMB_CARRIER_COLOR", nameInLocalization = "BOMB_CARRIER")
 
     val showWeapons = VisCheckBoxCustom(" ", "INDICATOR_SHOW_WEAPONS")
-    val indicatorWeaponColor = VisColorPickerCustom("Weapons", "INDICATOR_WEAPON_COLOR")
+    val indicatorWeaponColor = VisColorPickerCustom(curLocalization["WEAPONS"], "INDICATOR_WEAPON_COLOR", nameInLocalization = "WEAPONS")
 
     val showGrenades = VisCheckBoxCustom(" ", "INDICATOR_SHOW_GRENADES")
-    val indicatorGrenadeColor = VisColorPickerCustom("Grenades", "INDICATOR_GRENADE_COLOR")
+    val indicatorGrenadeColor = VisColorPickerCustom(curLocalization["GRENADES"], "INDICATOR_GRENADE_COLOR", nameInLocalization = "GRENADES")
 
     val showDefusers = VisCheckBoxCustom(" ", "INDICATOR_SHOW_DEFUSERS")
-    val indicatorDefuserColor = VisColorPickerCustom("Defusers", "INDICATOR_DEFUSER_COLOR")
+    val indicatorDefuserColor = VisColorPickerCustom(curLocalization["DEFUSERS"], "INDICATOR_DEFUSER_COLOR", nameInLocalization = "DEFUSERS")
 
     init {
         table.padLeft(25F)
@@ -94,7 +95,7 @@ class IndicatorEspTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Indicator"
+        return curLocalization["INDICATORS_TAB_NAME"]
     }
 }
 
@@ -114,7 +115,14 @@ fun indicatorEspTabUpdate() {
         indicatorEnemyColor.update()
         indicatorBombColor.update()
         indicatorBombCarrierColor.update()
+        indicatorBombCarrierColor.updateTitle()
+        indicatorBombColor.updateTitle()
         indicatorDefuserColor.update()
+        indicatorEnemyColor.updateTitle()
+        indicatorGrenadeColor.updateTitle()
+        indicatorDefuserColor.updateTitle()
+        indicatorTeamColor.updateTitle()
+        indicatorWeaponColor.updateTitle()
         indicatorWeaponColor.update()
         indicatorGrenadeColor.update()
     }

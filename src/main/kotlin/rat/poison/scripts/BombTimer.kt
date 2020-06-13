@@ -2,8 +2,7 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import rat.poison.App
-import rat.poison.curSettings
+import rat.poison.*
 import rat.poison.game.CSGO
 import rat.poison.game.entity.*
 import rat.poison.game.entityByType
@@ -11,8 +10,6 @@ import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets.dwUse
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.strToBool
-import rat.poison.toInt
 import rat.poison.ui.uiPanels.bombText
 import rat.poison.utils.every
 
@@ -118,21 +115,21 @@ data class BombState(var hasBomb: Boolean = false,
         sb.setLength(0)
 
         if (planted) {
-            sb.append("Bomb Planted!\n")
+            sb.append("${curLocalization["BOMB_IS_PLANTED"]}\n")
 
-            sb.append("TimeToExplode : ${formatFloat(timeLeftToExplode)} \n")
+            sb.append("${curLocalization["TIME_TO_EXPLODE"]} ${formatFloat(timeLeftToExplode)} \n")
 
             if (location.isNotBlank())
-                sb.append("Location : $location\n")
+                sb.append("${curLocalization["LOCATION"]} $location\n")
             if (gettingDefused) {
-                sb.append("Can Defuse: $canDefuse\n")
+                sb.append("${curLocalization["CAN_DEFUSE"]} $canDefuse\n")
                 // Redundant as the UI already shows this, but may have a use case I'm missing
-                sb.append("Time To Defuse: ${formatFloat(timeLeftToDefuse)}\n")
+                sb.append("${curLocalization["TIME_TO_DEFUSE"]} ${formatFloat(timeLeftToDefuse)}\n")
 
-                sb.append("Time Left After: ${timeLeftToExplode - timeLeftToDefuse}")
+                sb.append("${curLocalization["TIME_LEFT_AFTER"]} ${timeLeftToExplode - timeLeftToDefuse}")
             }
         } else {
-            sb.append("Bomb Not Planted!\n")
+            sb.append("${curLocalization["BOMB_IS_NOT_PLANTED"]}\n")
         }
         return sb.toString()
     }

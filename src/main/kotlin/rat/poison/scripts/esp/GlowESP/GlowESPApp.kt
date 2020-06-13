@@ -43,6 +43,7 @@ internal fun glowEspApp() = App {
 		val showTarget = curSettings["GLOW_SHOW_TARGET"].strToBool()
 		val showEnemies = curSettings["GLOW_SHOW_ENEMIES"].strToBool()
 		val showTeam = curSettings["GLOW_SHOW_TEAM"].strToBool()
+		val glowHealth = curSettings("GLOW_SHOW_HEALTH").strToBool()
 		val showBomb = curSettings["GLOW_SHOW_BOMB"].strToBool()
 		val showBombCarrier = curSettings["GLOW_SHOW_BOMB_CARRIER"].strToBool()
 		val showWeapons = curSettings["GLOW_SHOW_WEAPONS"].strToBool()
@@ -56,6 +57,7 @@ internal fun glowEspApp() = App {
 			val glowAddress = it.glowAddress
 			if (glowAddress <= 0) return@body false
 
+			var health = 0
 			var color = ""
 
 			when (it.type) {
@@ -64,36 +66,47 @@ internal fun glowEspApp() = App {
 
 					val entityTeam = entity.team()
 					val team = !DANGER_ZONE && meTeam == entityTeam
+					health = entity.health()
 
 					if (showTarget && it.entity == glowTarget && glowTarget != -1L) {
 						color = "GLOW_HIGHLIGHT_COLOR"
 					} else if (showEnemies && !team) {
 						color = when (bEnt >= 0 && bEnt == entity && showBombCarrier) {
 							true -> "GLOW_BOMB_CARRIER_COLOR"
-							false -> "GLOW_ENEMY_COLOR"
+							false -> when (showHealth) {
+								true -> "GLOW_HEALTH"
+								false -> "GLOW_ENEMY_COLOR"
+							}
 						}
 					} else if (showTeam && team) {
 						color = when (bEnt >= 0 && bEnt == entity && showBombCarrier) {
 							true -> "GLOW_BOMB_CARRIER_COLOR"
-							false -> "GLOW_TEAM_COLOR"
+							false -> when (showHealth) {
+								true -> "GLOW_HEALTH"
+								false -> "GLOW_TEAM_COLOR"
+							}
 						}
 					}
 				}
 
 				EntityType.CPlantedC4, EntityType.CC4 -> if (showBomb) {
-					color = "GLOW_BOMB_COLOR"
+					color = curSettings["GLOW_BOMB_COLOR"].strToColor()
 				}
 
 				else ->
 					if (showWeapons && it.type.weapon) {
-						color = "GLOW_WEAPON_COLOR"
-					} else if (showGrenades && it.type.grenade) {
-						color = "GLOW_GRENADE_COLOR"
+						color = curSettings["GLOW_WEAPON_COLOR"].strToColor()
+					} else if (showGrenades && it.type.grenade)
+						color = curSettings["GLOW_GRENADE_COLOR"].strToColor()
 					}
 			}
 
 			if (color != "") {
-				glowAddress.glow(curSettings[color].strToColor(), entity.spotted())
+				if (color == "GLOW_HEALHT") {
+					glowAddress.glow(Color((255 - 2.55 * health).toInt(), (2.55 * health).toInt(), 0, 1.0))
+				} else {
+					glowAddress.glow(curSettings[color].strToColor(), entity.spotted())
+				}
 			}
 
 			return@body false

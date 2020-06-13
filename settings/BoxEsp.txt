@@ -41,8 +41,15 @@ BOX_ESP_WEAPON_POS = B
 BOX_ESP_AMMO = true
 BOX_ESP_AMMO_POS = B
 
+//Enable box esp scope text; Text position (T)op / (B)ottom
+BOX_ESP_SCOPE = true
+BOX_ESP_SCOPE_POS = "T"
+
 //Enable box esp on teammates
 BOX_SHOW_TEAM = false
+
+//Box color will depends on player health
+BOX_SHOW_HEALTH = false
 
 //Enable box esp on enemies
 BOX_SHOW_ENEMIES = true
