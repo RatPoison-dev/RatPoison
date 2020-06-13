@@ -1,6 +1,9 @@
 package rat.poison.scripts
 
+import com.kotcrab.vis.ui.VisUI
 import org.jire.arrowhead.keyPressed
+import rat.poison.App
+import rat.poison.App.uiMenu
 import rat.poison.curSettings
 import rat.poison.game.angle
 import rat.poison.game.clientState
@@ -101,15 +104,16 @@ internal fun onPlayerHead() : Boolean {
 
     forEntities(ccsPlayer) {
         val entity = it.entity
-        if (entity == me || !entity.onGround()) return@forEntities false
+        if (entity == me || !entity.onGround() || entity.dead()) return@forEntities false
 
         entPos = entity.absPosition()
 
         val xDist = abs(mePos.x - entPos.x)
         val yDist = abs(mePos.y - entPos.y)
-        val zDif = mePos.z - entPos.z
+        //val zDif = mePos.z - entPos.z
+        //zDiv in 50.0..75.0
 
-        if (xDist <= 30 && yDist <= 30 && zDif in 50.0..75.0) {
+        if (xDist <= 30 && yDist <= 30 && mePos.z > entPos.z) {
             onEnt = entity
             onEntPos = entPos
         }

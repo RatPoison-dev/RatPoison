@@ -89,7 +89,6 @@ fun bombUpdater() = every(15) {
         if (curSettings["LS_BOMB"].strToBool()) { //If last second bomb defuse is enabled
             if (me.team() == 3L && bombState.timeLeftToExplode <= timeNeeded) { //If we are CT & should defuse
                 if (!lastSecDefusing) {
-                    println(bombState.timeLeftToExplode)
                     CSGO.clientDLL[dwUse] = 5
                     Thread(Runnable {
                         if (bombState.timeLeftToExplode.toLong() > 0) {

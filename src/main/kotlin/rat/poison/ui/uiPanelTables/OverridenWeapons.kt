@@ -8,9 +8,13 @@ import rat.poison.settings.*
 import rat.poison.strToBool
 import rat.poison.toWeaponClass
 import rat.poison.ui.changed
+import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisCheckBoxCustom
+import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisSliderCustom
 import rat.poison.ui.uiPanels.overridenWeapons
 import rat.poison.ui.uiUpdate
 import kotlin.math.round
+
+var weaponOverrideSelected = "DESERT_EAGLE"
 
 class OverridenWeapons : VisTable(true) {
     //private val table = VisTable(true)
@@ -18,7 +22,6 @@ class OverridenWeapons : VisTable(true) {
     var categorySelected = "PISTOL"
     var weaponOverride = false
     var enableOverride = false
-    var weaponOverrideSelected = ""
 
     private val categorySelectionBox = VisSelectBox<String>()
 
@@ -28,34 +31,25 @@ class OverridenWeapons : VisTable(true) {
     private val weaponOverrideSelectionBox = VisSelectBox<String>()
     val weaponOverrideEnableCheckBox = VisCheckBox("Enable Override")
 
-    val enableFactorRecoil = VisCheckBox("Factor Recoil")
-    val enableFlatAim = VisCheckBox("Write Angles")
-    val enablePathAim = VisCheckBox("Mouse Movement")
-    val enableScopedOnly = VisCheckBox("Scoped Only")
+    val enableFactorRecoil = OverrideVisCheckBoxCustom("Factor Recoil", "tFRecoil")
+    val enableFlatAim = OverrideVisCheckBoxCustom("Write Angles", "tFlatAim")
+    val enablePathAim = OverrideVisCheckBoxCustom("Mouse Movement", "tPathAim")
+    val enableScopedOnly = OverrideVisCheckBoxCustom("Scoped Only", "tScopedOnly")
 
     private val aimBoneLabel = VisLabel("Bone: ")
     val aimBoneBox = VisSelectBox<String>()
 
-    val aimFovLabel = VisLabel("FOV: " + curSettings[categorySelected + "_AIM_FOV"].toInt().toString())
-    val aimFovSlider = VisSlider(1F, 180F, 1F, false)
-
-    val aimSpeedLabel = VisLabel("Speed: " + curSettings[categorySelected + "_AIM_SPEED"].toInt().toString())
-    val aimSpeedSlider = VisSlider(0F, 5F, 1F, false)
-
-    val aimSmoothnessLabel = VisLabel("Smooth: " + curSettings[categorySelected + "_AIM_SMOOTHNESS"].toFloat())
-    val aimSmoothnessSlider = VisSlider(1F, 5F, 0.1F, false)
-
-    val aimAfterShotsLabel = VisLabel("Aim After #: " + curSettings[categorySelected + "AIM_AFTER_SHOTS"])
-    val aimAfterShotsSlider = VisSlider(1F, 10F, 1F, false)
+    val aimFov = OverrideVisSliderCustom("FOV", "tAimFov", 1F, 180F, 1F, true, width1 = 125F, width2 = 125F)
+    val aimSpeed = OverrideVisSliderCustom("Speed", "tAimSpeed", 0F, 10F, 1F, true, width1 = 125F, width2 = 125F)
+    val aimSmoothness = OverrideVisSliderCustom("Smooth", "tAimSmooth", 1F, 5F, .1F, false, width1 = 125F, width2 = 125F)
+    val aimAfterShots = OverrideVisSliderCustom("Aim After #", "tAimAfterShots", 0F, 10F, 1F, true, width1 = 125F, width2 = 125F)
 
     //Perfect Aim Collapsible
-    val perfectAimCheckBox = VisCheckBox("Enable Perfect Aim")
+    val perfectAimCheckBox = OverrideVisCheckBoxCustom("Perfect Aim", "tPerfectAim")
     private val perfectAimTable = VisTable()
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
-    val perfectAimFovLabel = VisLabel("FOV: " + curSettings[categorySelected + "_PERFECT_AIM_FOV"].toInt().toString())
-    val perfectAimFovSlider = VisSlider(1F, 180F, 1F, false)
-    val perfectAimChanceLabel = VisLabel("Chance: " + curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toInt().toString())
-    val perfectAimChanceSlider = VisSlider(1F, 100F, 1F, false)
+    val perfectAimFov = OverrideVisSliderCustom("FOV", "tPAimFov", 1F, 180F, 1F, true, width1 = 125F, width2 = 125F)
+    val perfectAimChance = OverrideVisSliderCustom("Chance", "tPAimChance", 1F, 100F, 1F, true, width1 = 125F, width2 = 125F)
 
     init {
         align(Align.left)
@@ -80,21 +74,15 @@ class OverridenWeapons : VisTable(true) {
             }
 
             if (categorySelected == "SNIPER") {
-                enableScopedOnly.color = Color(255F, 255F, 255F, 1F)
-                enableScopedOnly.isDisabled = false
+                enableScopedOnly.disable(false)
             } else {
-                enableScopedOnly.color = Color(255F, 255F, 255F, 0F)
-                enableScopedOnly.isDisabled = true
+                enableScopedOnly.disable(true)
             }
 
             if (categorySelected == "RIFLE" || categorySelected == "SMG") {
-                aimAfterShotsLabel.color = Color(255F, 255F, 255F, 1F)
-                aimAfterShotsSlider.color = Color(255F, 255F, 255F, 1F)
-                aimAfterShotsSlider.isDisabled = false
+                aimAfterShots.disable(false, Color(255F, 255F, 255F, 1F))
             } else {
-                aimAfterShotsLabel.color = Color(255F, 255F, 255F, 0F)
-                aimAfterShotsSlider.color = Color(255F, 255F, 255F, 0F)
-                aimAfterShotsSlider.isDisabled = true
+                aimAfterShots.disable(true, Color(105F, 105F, 105F, .2F))
             }
 
             weaponOverrideSelectionBox.selected = weaponOverrideSelectionBox.items[0]
@@ -129,64 +117,6 @@ class OverridenWeapons : VisTable(true) {
             true
         }
 
-        //Create Flat Aim Toggle
-        enableFlatAim.isChecked = curSettings[categorySelected + "_ENABLE_FLAT_AIM"].strToBool()
-        enableFlatAim.changed { _, _ ->
-            if (weaponOverride)
-            {
-                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-                curWep.tFlatAim = enableFlatAim.isChecked
-                if (enableFlatAim.isChecked)
-                {
-                    curWep.tPathAim = false
-                }
-                curSettings[weaponOverrideSelected] = curWep.toString()
-            }
-            uiUpdate()
-            true
-        }
-
-        //Create Path Aim Toggle
-        enablePathAim.isChecked = curSettings[categorySelected + "_ENABLE_PATH_AIM"].strToBool()
-        enablePathAim.changed { _, _ ->
-            if (weaponOverride) {
-                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-                curWep.tPathAim = enablePathAim.isChecked
-                if (enablePathAim.isChecked)
-                {
-                    curWep.tFlatAim = false
-                }
-                curSettings[weaponOverrideSelected] = curWep.toString()
-            }
-            uiUpdate()
-            true
-        }
-
-        //Create Factor Recoil Toggle
-        enableFactorRecoil.isChecked = curSettings[categorySelected + "_ENABLE_PATH_AIM"].strToBool()
-        enableFactorRecoil.changed { _, _ ->
-            if (weaponOverride) {
-                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-                curWep.tFRecoil = enableFactorRecoil.isChecked
-                curSettings[weaponOverrideSelected] = curWep.toString()
-            }
-            //uiUpdate()
-            true
-        }
-
-        //Create Scoped Only Toggle
-        enableScopedOnly.isChecked = curSettings["SNIPER_ENABLE_SCOPED_ONLY"].strToBool()
-        enableScopedOnly.isDisabled = true
-        enableScopedOnly.changed { _, _ ->
-            if (weaponOverride) {
-                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-                curWep.tScopedOnly = enableScopedOnly.isChecked
-                curSettings[weaponOverrideSelected] = curWep.toString()
-            }
-            //uiUpdate()
-            true
-        }
-
         //Create Aim Bone Selector Box
         val aimBone = VisTable()
         aimBoneBox.setItems("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
@@ -211,108 +141,13 @@ class OverridenWeapons : VisTable(true) {
             }
         }
 
-        //Create Aim FOV Slider
-        val aimFov = VisTable()
-        aimFovSlider.value = curSettings[categorySelected + "_AIM_FOV"].toInt().toFloat()
-        aimFovSlider.changed { _, _ ->
-            if (weaponOverride) {
-                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-                curWep.tAimFov = aimFovSlider.value.toInt()
-                curSettings[weaponOverrideSelected] = curWep.toString()
-            }
-
-            aimFovLabel.setText("FOV: " + aimFovSlider.value.toInt())
-        }
-        aimFov.add(aimFovLabel).width(125F)
-        aimFov.add(aimFovSlider).width(125F)
-
-        //Create Aim Speed Slider
-        val aimSpeed = VisTable()
-        aimSpeedSlider.value = curSettings[categorySelected + "_AIM_SPEED"].toInt().toFloat()
-        aimSpeedSlider.changed { _, _ ->
-            if (weaponOverride) {
-                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-                curWep.tAimSpeed = aimSpeedSlider.value.toInt()
-                curSettings[weaponOverrideSelected] = curWep.toString()
-            }
-            aimSpeedLabel.setText("Speed: " + aimSpeedSlider.value.toInt())
-        }
-        aimSpeed.add(aimSpeedLabel).width(125F)
-        aimSpeed.add(aimSpeedSlider).width(125F)
-
-        //Create Aim Smoothness Slider
-        val aimSmoothness = VisTable()
-        aimSmoothnessSlider.value = curSettings[categorySelected + "_AIM_SMOOTHNESS"].toFloat()
-        aimSmoothnessSlider.changed { _, _ ->
-            if (weaponOverride) {
-                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-                curWep.tAimSmooth = aimSmoothnessSlider.value.toDouble()
-                curSettings[weaponOverrideSelected] = curWep.toString()
-            }
-            aimSmoothnessLabel.setText("Smooth: " + (round(aimSmoothnessSlider.value.toDouble() * 10.0) / 10.0))
-        }
-        aimSmoothness.add(aimSmoothnessLabel).width(125F)
-        aimSmoothness.add(aimSmoothnessSlider).width(125F)
-
         //Create Perfect Aim Collapsible Check Box
-        perfectAimCheckBox.isChecked = curSettings[categorySelected + "_PERFECT_AIM"].strToBool()
         perfectAimCollapsible.setCollapsed(!curSettings[categorySelected + "_PERFECT_AIM"].strToBool(), true)
-
-        //Create Aim After Shot Slider
-        val aimAfterShots = VisTable()
-        aimAfterShotsSlider.value = curSettings[categorySelected + "_AIM_FOV"].toInt().toFloat()
-        aimAfterShotsSlider.changed { _, _ ->
-            if (weaponOverride) {
-                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-                curWep.tAimAfterShots = aimAfterShotsSlider.value.toInt()
-                curSettings[weaponOverrideSelected] = curWep.toString()
-            }
-
-            aimAfterShotsLabel.setText("Aim After #: " + aimAfterShotsSlider.value.toInt())
-        }
-        aimAfterShots.add(aimAfterShotsLabel).width(125F)
-        aimAfterShots.add(aimAfterShotsSlider).width(125F)
-
-        //Create Perfect Aim Fov Slider
-        val perfectAimFov = VisTable()
-        perfectAimFovSlider.value = curSettings[categorySelected + "_PERFECT_AIM_FOV"].toInt().toFloat()
-        perfectAimFovSlider.changed { _, _ ->
-            if (weaponOverride) {
-                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-                curWep.tPAimFov = perfectAimFovSlider.value.toInt()
-                curSettings[weaponOverrideSelected] = curWep.toString()
-            }
-            perfectAimFovLabel.setText("FOV: " + perfectAimFovSlider.value.toInt())
-        }
-        perfectAimFov.add(perfectAimFovLabel).width(105F)
-        perfectAimFov.add(perfectAimFovSlider).width(125F)
-        //End Perfect Aim Fov Slider
-
-        //Create Perfect Aim Chance Slider
-        val perfectAimChance = VisTable()
-        perfectAimChanceSlider.value = curSettings[categorySelected + "_PERFECT_AIM_CHANCE"].toInt().toFloat()
-        perfectAimChanceSlider.changed { _, _ ->
-            if (weaponOverride) {
-                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-                curWep.tPAimChance = perfectAimChanceSlider.value.toInt()
-                curSettings[weaponOverrideSelected] = curWep.toString()
-            }
-            perfectAimChanceLabel.setText("Chance: " + perfectAimChanceSlider.value.toInt())
-        }
-
-        perfectAimChance.add(perfectAimChanceLabel).width(105F)
-        perfectAimChance.add(perfectAimChanceSlider).width(125F)
-        //End Perfect Aim Chance Slider
 
         perfectAimTable.add(perfectAimFov).padLeft(20F).left().row()
         perfectAimTable.add(perfectAimChance).padLeft(20F).left().row()
 
         perfectAimCheckBox.changed { _, _ ->
-            if (weaponOverride) {
-                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-                curWep.tPerfectAim = perfectAimCheckBox.isChecked
-                curSettings[weaponOverrideSelected] = curWep.toString()
-            }
             perfectAimCollapsible.setCollapsed(!perfectAimCollapsible.isCollapsed, true)
         }
         //End Perfect Aim Collapsible Check Box
@@ -338,30 +173,25 @@ class OverridenWeapons : VisTable(true) {
 
 fun overridenWeaponsUpdate() { //This isn't needed... because the Override Weapons hides it
     overridenWeapons.apply {
-        val curWep = curSettings[overridenWeapons.weaponOverrideSelected].toWeaponClass()
+        val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
 
         overridenWeapons.weaponOverrideEnableCheckBox.isChecked = curWep.tOverride
-        enableFactorRecoil.isChecked = curWep.tFRecoil
-        enableFlatAim.isChecked = curWep.tFlatAim
-        enablePathAim.isChecked = curWep.tPathAim
-        enableScopedOnly.isChecked = curWep.tScopedOnly
+
         if (categorySelected == "SNIPER") {
-            enableScopedOnly.color = Color(255F, 255F, 255F, 1F)
-            enableScopedOnly.isDisabled = false
+            enableScopedOnly.disable(false)
         } else {
-            enableScopedOnly.color = Color(255F, 255F, 255F, 0F)
-            enableScopedOnly.isDisabled = true
+            enableScopedOnly.disable(true)
         }
 
-        aimAfterShotsSlider.value = curWep.tAimAfterShots.toFloat()
+        enableFactorRecoil.update()
+        enableFlatAim.update()
+        enablePathAim.update()
+        enableScopedOnly.update()
+
         if (categorySelected == "RIFLE" || categorySelected == "SMG") {
-            aimAfterShotsLabel.color = Color(255F, 255F, 255F, 1F)
-            aimAfterShotsSlider.color = Color(255F, 255F, 255F, 1F)
-            aimAfterShotsSlider.isDisabled = false
+            aimAfterShots.disable(false, Color(255F, 255F, 255F, 1F))
         } else {
-            aimAfterShotsLabel.color = Color(255F, 255F, 255F, 0F)
-            aimAfterShotsSlider.color = Color(255F, 255F, 255F, 0F)
-            aimAfterShotsSlider.isDisabled = true
+            aimAfterShots.disable(true, Color(105F, 105F, 105F, .2F))
         }
 
         aimBoneBox.selected = when (curWep.tAimBone) {
@@ -372,19 +202,14 @@ fun overridenWeaponsUpdate() { //This isn't needed... because the Override Weapo
             NEAREST_BONE -> "NEAREST"
             else -> "RANDOM"
         }
-        aimFovLabel.setText("FOV: " + curWep.tAimFov)
-        aimFovSlider.value = curWep.tAimFov.toFloat()
-        aimSpeedLabel.setText("Speed: " + curWep.tAimSpeed)
-        aimSpeedSlider.value = curWep.tAimSpeed.toFloat()
-        aimSmoothnessLabel.setText("Smooth: " + curWep.tAimSmooth)
-        aimSmoothnessSlider.value = curWep.tAimSmooth.toFloat()
-        aimAfterShotsLabel.setText("Aim After #: " + curWep.tAimAfterShots)
-        aimAfterShotsSlider.value = curWep.tAimAfterShots.toFloat()
+        aimFov.update()
+        aimSpeed.update()
+        aimSmoothness.update()
+        aimAfterShots.update()
+
         perfectAimCheckBox.isChecked = curWep.tPerfectAim
         perfectAimCollapsible.isCollapsed = !curWep.tPerfectAim
-        perfectAimFovLabel.setText("FOV: " + curWep.tPAimFov)
-        perfectAimFovSlider.value = curWep.tPAimFov.toFloat()
-        perfectAimChanceLabel.setText("Chance: " + curWep.tPAimChance)
-        perfectAimChanceSlider.value = curWep.tPAimChance.toFloat()
+        perfectAimFov.update()
+        perfectAimChance.update()
     }
 }

@@ -16,6 +16,7 @@ import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
+import rat.poison.ui.uiPanelTables.weaponOverrideSelected
 import rat.poison.ui.uiUpdate
 
 class AimTable: VisTable(false) {
@@ -29,9 +30,6 @@ class AimTable: VisTable(false) {
 
     val fovTypeLabel = VisLabel("Fov Type: ")
     val fovTypeBox = VisSelectBox<String>()
-
-    //var smokeCheckUI: UISmokeCheck
-    //val smokeCheckButton = VisTextButton("Customize")
 
     val forceAimBoneKey = VisInputFieldCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
     val forceAimKey = VisInputFieldCustom("Force Aim Key", "FORCE_AIM_KEY")
@@ -101,14 +99,6 @@ class AimTable: VisTable(false) {
         fovType.add(fovTypeLabel).width(200F)
         fovType.add(fovTypeBox)
 
-        //Smoke Check Customization
-        //smokeCheckUI = UISmokeCheck()
-        //smokeCheckButton.changed { _, _ ->
-         //   if (!App.menuStage.actors.contains(smokeCheckUI)) {
-        //        App.menuStage.addActor(smokeCheckUI)
-        //    }
-        //}
-
         //Create Override Weapon Check Box & Collapsible
         weaponOverrideCheckBox.isChecked = curSettings["ENABLE_OVERRIDE"].strToBool()
         overridenWeapons.weaponOverride = weaponOverrideCheckBox.isChecked
@@ -117,7 +107,7 @@ class AimTable: VisTable(false) {
             overridenWeapons.weaponOverride = weaponOverrideCheckBox.isChecked
             curSettings["ENABLE_OVERRIDE"] = weaponOverrideCheckBox.isChecked.toString()
 
-            val curWep = curSettings[overridenWeapons.weaponOverrideSelected].toWeaponClass()
+            val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
             overridenWeapons.enableOverride = curWep.tOverride
 
             uiUpdate()
@@ -253,8 +243,6 @@ class AimTable: VisTable(false) {
         add(fovType).left().row()
 
         //addSeparator()
-
-        //add(smokeCheckButton).left().row()
 
         addSeparator()
 

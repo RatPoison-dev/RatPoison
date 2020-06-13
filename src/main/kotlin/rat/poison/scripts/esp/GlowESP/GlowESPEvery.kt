@@ -19,17 +19,17 @@ internal fun glowEspEvery() = every(25, true) {
 	val position = me.position()
 	val meWep = me.weapon()
 
-	glowTarget.set(-1L)
+	glowTarget = -1L
 
 	if (!meWep.knife && meWep != Weapons.ZEUS_X27) {
 		if (curSettings["ENABLE_AIM"].strToBool()) {
 			if (curSettings["GLOW_SHOW_TARGET"].strToBool() && target == -1L) {
 				val curTarg = findTarget(position, currentAngle, false, visCheck = !curSettings["FORCE_AIM_THROUGH_WALLS"].strToBool())
 				if (curTarg >= 0) {
-					glowTarget.set(curTarg)
+					glowTarget = curTarg
 				}
 			} else if (curSettings["GLOW_SHOW_TARGET"].strToBool()) {
-				glowTarget.set(target)
+				glowTarget = target
 			}
 		}
 	}
@@ -62,7 +62,7 @@ internal fun glowEspEvery() = every(25, true) {
 				val entityTeam = entity.team()
 				val team = !DANGER_ZONE && meTeam == entityTeam
 
-				if (showTarget && it.entity == glowTarget.get() && glowTarget.get() != -1L) {
+				if (showTarget && it.entity == glowTarget && glowTarget != -1L) {
 					color = "GLOW_HIGHLIGHT_COLOR"
 				} else if (showEnemies && !team) {
 					color = when (bEnt >= 0 && bEnt == entity && showBombCarrier) {

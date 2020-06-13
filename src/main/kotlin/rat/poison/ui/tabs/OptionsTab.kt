@@ -31,7 +31,7 @@ import kotlin.math.round
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
-    var fileSelectBox: VisSelectBox<String>
+    private var fileSelectBox: VisSelectBox<String> = VisSelectBox()
 
     val menuKey = VisInputFieldCustom("Menu Key", "MENU_KEY")
     private val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F)
@@ -42,7 +42,6 @@ class OptionsTab : Tab(false, false) {
     private val discordLink = LinkLabel("Join Discord", "https://discord.gg/J2uHTJ2")
 
     init {
-        fileSelectBox = VisSelectBox()
 
         //Create UIAlpha Slider
         val menuAlpha = VisTable()

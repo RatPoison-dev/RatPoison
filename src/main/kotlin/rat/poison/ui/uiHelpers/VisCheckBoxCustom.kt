@@ -21,6 +21,7 @@ class VisCheckBoxCustom(mainText: String, varName: String) : VisCheckBox(mainTex
             updateDisableEsp()
             updateDisableAim()
             updateDisableTrig()
+            updateDisableBacktrack()
             true
         }
     }

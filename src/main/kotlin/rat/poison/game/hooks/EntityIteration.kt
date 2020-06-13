@@ -2,6 +2,7 @@ package rat.poison.game.hooks
 
 import com.sun.jna.Memory
 import com.sun.jna.platform.win32.WinNT
+import rat.poison.EXPERIMENTAL
 import rat.poison.dbg
 import rat.poison.game.*
 import rat.poison.game.CSGO.GLOW_OBJECT_SIZE
@@ -21,6 +22,8 @@ import rat.poison.game.offsets.EngineOffsets.dwGameDir
 import rat.poison.scripts.bspHandling.bspData
 import rat.poison.scripts.bspHandling.loadBsp
 import rat.poison.scripts.entsToTrack
+import rat.poison.scripts.sendPacket
+//import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
@@ -53,30 +56,39 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
         val gameDir = strBuf.getString(0)
 
         if (mapName.isNotBlank() && gameDir.isNotBlank()) {
-            if (dbg) {
-                println("[DEBUG] Loading BSP at -- $gameDir\\$mapName")
-            }
+            if (EXPERIMENTAL) {
+                if (dbg) {
+                    println("[DEBUG] Loading BSP at -- $gameDir\\$mapName")
+                }
 
-            loadBsp("$gameDir\\$mapName")
+                //loadBsp("$gameDir\\$mapName") //Dont bother rn
+            }
         }
 
         notInGame = if (new == SignOnState.IN_GAME) {
             if (PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0) {
-                val write = 0x74.toByte()
+                val write = 0xEB.toByte()
                 try {
                     clientDLL[ClientOffsets.dwGlowUpdate] = write
-                } catch (e: Exception) { e.printStackTrace() }
+                } catch (e: Exception) {
+                    //nah
+                }
 
                 try {
                     clientDLL[ClientOffsets.dwGlowUpdate2] = write
-                } catch (e: Exception) { e.printStackTrace() }
+                } catch (e: Exception) {
+                    //nah
+                }
             }
 
             if (GARBAGE_COLLECT_ON_MAP_START) {
                 System.gc()
             }
+
+            sendPacket(true)
             false
         } else {
+            sendPacket(true)
             true
         }
     }
@@ -92,12 +104,12 @@ fun updateCursorEnable() { //Call when needed
 var defuseKitEntities = mutableListOf<Long>()
 var toneMapController = 0L
 
-fun constructEntities() = every(500) {
+fun constructEntities() = every(1000, true) {
     updateCursorEnable()
     state = SignOnState[csgoEXE.int(clientState + EngineOffsets.dwSignOnState)]
 
     me = clientDLL.uint(dwLocalPlayer)
-    if (me <= 0) return@every
+    if (me < 0) return@every
 
     clientState = engineDLL.uint(dwClientState)
 
@@ -117,7 +129,7 @@ fun constructEntities() = every(500) {
         val check = (tmpPos.x in -2.0..2.0 && tmpPos.y in -2.0..2.0 && tmpPos.z in -2.0..2.0)
 
         if (!check) {
-            if (entity != 0L) {
+            if (entity > 0L) {
                 val type = EntityType.byEntityAddress(entity)
 
                 if (type == EntityType.CFists) {
@@ -147,7 +159,7 @@ fun constructEntities() = every(500) {
 
     for (i in 64..maxIndex) {
         val entity = clientDLL.uint(dwEntityList + (i * 0x10) - 0x10)
-        if (entity != 0L) {
+        if (entity > 0L) {
             val type = EntityType.byEntityAddress(entity)
 
             if (type == EntityType.CEconEntity) {

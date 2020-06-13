@@ -34,7 +34,7 @@ class GlowEspTab : Tab(false, false) {
     val showWeapons = VisCheckBoxCustom(" ", "GLOW_SHOW_WEAPONS")
     val glowWeaponColor = VisColorPickerCustom("Weapons", "GLOW_WEAPON_COLOR")
 
-    val showGrenades = VisCheckBoxCustom(" ", "GLOW_SHOW_WEAPONS")
+    val showGrenades = VisCheckBoxCustom(" ", "GLOW_SHOW_GRENADES")
     val glowGrenadeColor = VisColorPickerCustom("Grenades", "GLOW_GRENADE_COLOR")
 
     val showTarget = VisCheckBoxCustom(" ", "GLOW_SHOW_TARGET")

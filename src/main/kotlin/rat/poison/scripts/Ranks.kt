@@ -1,10 +1,11 @@
 package rat.poison.scripts
 
-import com.kotcrab.vis.ui.widget.VisLabel
 import rat.poison.App.haveTarget
+import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
+import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.game.rankName
 import rat.poison.opened
 import rat.poison.ui.uiPanels.ranksTab
@@ -12,8 +13,6 @@ import rat.poison.utils.every
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.notInGame
 
-//var ctPlayers = arrayListOf<List<String>>()
-//var tPlayers = arrayListOf<List<String>>()
 var teamList = mutableListOf<String>()
 var nameList = mutableListOf<String>()
 var rankList = mutableListOf<String>()
@@ -25,7 +24,6 @@ var winsList = mutableListOf<String>()
 fun ranks() = every(1000, true) { //Rebuild every second
     if (notInGame || !opened || !haveTarget) return@every
 
-    //Bruh -- fix later
     teamList.clear()
     nameList.clear()
     rankList.clear()
@@ -33,13 +31,13 @@ fun ranks() = every(1000, true) { //Rebuild every second
     deathsList.clear()
     KDList.clear()
     winsList.clear()
-    //ctPlayers.clear()
-    //tPlayers.clear()
 
     forEntities(ccsPlayer) {
         val entity = it.entity
 
-        if (entity.onGround()) { //Change later
+        if (entity.hltv()) return@forEntities false
+
+        //if (entity.onGround()) { //Change later
             val entTeam = when (entity.team()) {
                 3L -> "CT"
                 2L -> "T"
@@ -64,6 +62,10 @@ fun ranks() = every(1000, true) { //Rebuild every second
                 "T" -> {
                     teamList.add("T")
                 }
+
+                else -> {
+                    teamList.add("N/A")
+                }
             }
 
             nameList.add(entName)
@@ -72,7 +74,7 @@ fun ranks() = every(1000, true) { //Rebuild every second
             deathsList.add(entDeaths)
             KDList.add(entKD)
             winsList.add(entWins)
-        }
+        //}
         false
     }
 

@@ -23,6 +23,7 @@ internal fun Entity.spotted(): Boolean {
 	val meID = csgoEXE.int(me + dwIndex) - 1
 	val spottedByMask = csgoEXE.uint(this + bSpottedByMask)
 	val result = spottedByMask and (1 shl meID).toLong()
+
 	return result != 0L
 }
 

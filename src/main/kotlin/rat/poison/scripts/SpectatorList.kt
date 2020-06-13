@@ -39,7 +39,11 @@ internal fun spectatorList() = every(100) {
 
             if (entSpecTarget > -1 && entSpecTarget == playerSpecTarget) {
                 if (!spectators.contains(entName)) {
-                    spectators += "name: $entName\n"
+                    if (entName.length <= 3) {
+                        spectators += "Name: $entName\n"
+                    } else {
+                        spectators += "$entName\n"
+                    }
                 }
             }
         }

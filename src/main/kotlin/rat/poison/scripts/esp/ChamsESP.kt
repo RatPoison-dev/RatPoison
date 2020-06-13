@@ -1,6 +1,7 @@
 package rat.poison.scripts.esp
 
 import rat.poison.curSettings
+import rat.poison.game.CSGO
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.engineDLL
@@ -54,9 +55,6 @@ fun chamsEsp() = every(250) {
     forEntities(ccsPlayer) body@ {
         val entity = it.entity
         if (entity <= 0 || entity == me || entity.dormant() || entity.dead()) return@body false
-
-        val glowAddress = it.glowAddress
-        if (glowAddress <= 0) return@body false
 
         val entityTeam = entity.team()
         val team = !DANGER_ZONE && myTeam == entityTeam

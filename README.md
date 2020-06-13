@@ -57,6 +57,18 @@ Credit to Mr. Noad & 2772/Matt for a lot of help throughout this project
 
 **Recent Update**
 
+-whenever this shit pushed
+* Skinchanger should forceupdate properly, should see less lag & faster activation when equipping new weapons
+* Added Helmet, Kevlar, Flashed, Scoped, and Ammo settings to Box ESP
+* Updated ranks tab, should work better & show all players
+* Added backtrack
+* Reworked override settings
+* Minor adjustments to headwalk and spectatorlist
+* Added ingame sensitivity input box since dwSensitivity doesn't work currently
+* Readded flicker free glow
+* Fixed hitsound error when menu disabled, hitsound only available when using the menu
+
+
 1.7.1.1 Update 5/27/2020
 * Glow esp is now one write per entity instead of multiple
 * Added static fov option

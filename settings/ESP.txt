@@ -13,7 +13,7 @@ RADAR_ESP = false
 
 //Enable audible hitsound
 //Activates on enemy hit
-ENABLE_HITSOUND = false
+ENABLE_HITSOUND = true
 
 //The file name of the hitsound
 HITSOUND_FILE_NAME = "COD.wav"

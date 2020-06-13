@@ -180,7 +180,6 @@ fun getLeafFromPoint(point: Vector3): DLeaf {
 
     while (nodeNum >= 0) {
         if (pNode == null || pPlane == null) { //Shouldnt be null
-            println("shnull we continuing")
             continue
         }
 

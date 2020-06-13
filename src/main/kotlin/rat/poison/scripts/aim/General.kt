@@ -96,12 +96,16 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	return closestPlayer
 }
 
-fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, angle: Angle, lockFOV: Int = curSettings["AIM_FOV"].toInt(), BONE: Int): MutableList<Any> {
+fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, angle: Angle, lockFOV: Int = curSettings["AIM_FOV"].toInt(), BONE: Int, ovrStatic: Boolean = false): MutableList<Any> {
 	val retList = mutableListOf(-1.0, 0.0, 0L)
 
-	val ePos: Angle = entity.bones(BONE)
+	var ePos: Angle = entity.bones(BONE)
 
-	if (curSettings["FOV_TYPE"].replace("\"", "") == "DISTANCE") {
+	if (ovrStatic) {
+		ePos = position
+	}
+
+	if (curSettings["FOV_TYPE"].replace("\"", "") == "DISTANCE" && !ovrStatic) {
 		val distance = position.distanceTo(ePos)
 
 		val dest = getCalculatedAngle(me, ePos)
@@ -122,7 +126,7 @@ fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, angle:
 			retList[2] = entity
 		}
 	} else {
-		val camAng = clientState.angle()
+		val camAng = angle//clientState.angle()
 		val calcAng = realCalcAngle(me, ePos)
 		val punch = me.punch()
 		camAng.x += punch.x*2
@@ -154,6 +158,7 @@ fun Entity.canShoot(visCheck: Boolean = true) = ((if (DANGER_ZONE) { true } else
 		&& !inMyTeam()
 		&& !isProtected()
 		&& !me.dead())
+		//&& isThroughSmoke(this))
 
 internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boolean,
 								  crossinline doAim: (destinationAngle: Angle,
@@ -268,6 +273,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			}
 
 			val aimSpeed = curSettings["AIM_SPEED"].toInt()
+
 			val aimSpeedDivisor = if (curSettings["AIM_ADVANCED"].strToBool()) curSettings["AIM_SPEED_DIVISOR"].toInt() else 1
 			doAim(destinationAngle, currentAngle, aimSpeed, aimSpeedDivisor)
 		}

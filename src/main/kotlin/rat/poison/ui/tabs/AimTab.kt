@@ -2,7 +2,6 @@ package rat.poison.ui.tabs
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
@@ -10,6 +9,7 @@ import rat.poison.settings.*
 import rat.poison.strToBool
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiHelpers.tables.AimBTrigTable
+import rat.poison.ui.uiHelpers.tables.AimBacktrackTable
 import rat.poison.ui.uiHelpers.tables.AimTable
 
 //I really couldn't give a shit to update this to the same as the other tabs
@@ -20,10 +20,12 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     private val table = VisTable(false)
     val tAim = AimTable()
     val tTrig = AimBTrigTable()
+    val tBacktrack = AimBacktrackTable()
 
     init {
         table.add(tAim).growX().row()
-        table.add(tTrig).growX()
+        table.add(tTrig).growX().row()
+        table.add(tBacktrack).growX()
     }
 
     override fun getContentTable(): Table? {
@@ -47,6 +49,7 @@ fun updateDisableAim() {
         } else {
             weaponOverrideCheckBox.isChecked = curSettings["ENABLE_OVERRIDE"].strToBool()
         }
+        ingameSens.disable(bool, col)
         weaponOverrideCheckBox.isDisabled = bool
         activateFromFireKey.disable(bool)
         teammatesAreEnemies.disable(bool)
@@ -100,6 +103,7 @@ fun updateAim() {
     aimTab.tAim.apply {
         enableAim.update()
         aimToggleKey.update()
+        ingameSens.update()
         activateFromFireKey.update()
         teammatesAreEnemies.update()
         holdAim.update()
@@ -175,12 +179,11 @@ fun updateAim() {
     }
 }
 
+//Triggerbot
 fun updateDisableTrig() {
     aimTab.tTrig.apply {
-        val bool = if (!aimTab.tAim.enableAim.isChecked) {
-            //enableTrig.disable(true)
-            //true
-            enableTrig.disable(false)
+        val bool = if (!aimTab.tAim.enableAim.isChecked) { //Issue?
+            enableTrig.disable(true)
             !enableTrig.isChecked
         } else {
             enableTrig.disable(false)
@@ -224,4 +227,52 @@ fun updateTrig() {
     }
 
     updateDisableTrig()
+}
+
+//Backtrack
+fun updateDisableBacktrack() {
+    aimTab.tBacktrack.apply {
+        val bool = !aimTab.tBacktrack.enableBacktrack.isChecked
+
+        var col = Color(255F, 255F, 255F, 1F)
+        if (bool) {
+            col = Color(105F, 105F, 105F, .2F)
+        }
+
+        //enableBacktrack.disable(bool)
+        backtrackVisualize.disable(bool)
+        backtrackEnableKey.disable(bool)
+        backtrackKey.disable(bool, col)
+        backtrackFOV.disable(bool, col)
+        backtrackMS.disable(bool, col)
+        backtrackSpotted.disable(bool)
+        backtrackPreferAccurate.disable(bool)
+        categorySelectLabel.color = col
+        categorySelectionBox.isDisabled = bool
+        backtrackWeaponEnabled.disable(bool)
+        backtrackWeaponNeck.disable(bool)
+        backtrackWeaponChest.disable(bool)
+        backtrackWeaponStomach.disable(bool)
+        backtrackWeaponPelvis.disable(bool)
+    }
+}
+
+fun updateBacktrack() {
+    aimTab.tBacktrack.apply {
+        enableBacktrack.update()
+        backtrackVisualize.update()
+        backtrackEnableKey.update()
+        backtrackKey.update()
+        backtrackFOV.update()
+        backtrackMS.update()
+        backtrackPreferAccurate.update()
+        backtrackSpotted.update()
+        backtrackWeaponEnabled.update()
+        backtrackWeaponNeck.update()
+        backtrackWeaponChest.update()
+        backtrackWeaponStomach.update()
+        backtrackWeaponPelvis.update()
+    }
+
+    updateDisableBacktrack()
 }

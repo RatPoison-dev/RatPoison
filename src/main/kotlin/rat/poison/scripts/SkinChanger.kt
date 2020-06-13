@@ -35,10 +35,9 @@ import rat.poison.utils.notInGame
 private var preBayonetCT = 89
 private var preBayonetT = 64
 
-
 //fuck
-fun skinChanger() = every(1, continuous = true) {
-    if ((!curSettings["SKINCHANGER"].strToBool() && !curSettings["KNIFECHANGER"].strToBool()) || notInGame) return@every
+fun skinChanger() = every(2) {
+    if (!curSettings["SKINCHANGER"].strToBool() || notInGame) return@every
 
     //val modelIndex = curSettings["KNIFE_IDX"].toInt() //For knife
     //val indexOffset = if (modelIndex < 11) 1 else 2
@@ -54,48 +53,54 @@ fun skinChanger() = every(1, continuous = true) {
     //    activeWeaponEntID + preBayonetT + 3 * modelIndex + indexOffset
     //}
 
+    var invalid = false
+
     for (i in 0..8) {
         val myWeapon = csgoEXE.uint(me + hMyWeapons + i * 0x4) and 0xFFF
         val weaponEntity = clientDLL.uint(dwEntityList + (myWeapon - 1) * ENTITY_SIZE)
 
-        val sID = me.steamID()
-        val split = sID.split(":")
-        if (split.size < 3) {
-            return@every
-        }
-        val pID = (split[2].toInt()*2) + split[1].toInt()
+        if (weaponEntity > 0) {
+            val sID = me.steamID()
+            val split = sID.split(":")
+            if (split.size < 3) {
+                return@every
+            }
+            val pID = (split[2].toInt() * 2) + split[1].toInt()
 
-        if (weaponEntity.type().gun) {
-            if (curSettings["SKINCHANGER"].strToBool()) {
-                val sWep = curSettings["SKIN_" + weaponEntity.type().name].toSkinWeaponClass()
+            if (weaponEntity.type().gun) {
+                if (curSettings["SKINCHANGER"].strToBool()) {
+                    val sWep = curSettings["SKIN_" + weaponEntity.type().name].toSkinWeaponClass()
 
-                //Change these to read weaponEntity kit to a mem and read from it
-                val accountID = csgoEXE.int(weaponEntity + m_OriginalOwnerXuidLow)
+                    //Change these to read weaponEntity kit to a mem and read from it
+                    val accountID = csgoEXE.int(weaponEntity + m_OriginalOwnerXuidLow)
 
-                if (pID == accountID) {
-                    val curWepPaint = csgoEXE.int(weaponEntity + m_nFallbackPaintKit)
-                    val curStatTrak = csgoEXE.int(weaponEntity + m_nFallbackStatTrak)
-                    val curWear = csgoEXE.float(weaponEntity + m_flFallbackWear)
-                    val wantedWepPaint = sWep.tSkinID
-                    val wantedStatTrak = sWep.tStatTrak
-                    val wantedWear = sWep.tWear
+                    if (pID == accountID) {
+                        val curWepPaint = csgoEXE.int(weaponEntity + m_nFallbackPaintKit)
+                        val curStatTrak = csgoEXE.int(weaponEntity + m_nFallbackStatTrak)
+                        val curWear = csgoEXE.float(weaponEntity + m_flFallbackWear)
+                        val wantedWepPaint = sWep.tSkinID
+                        val wantedStatTrak = sWep.tStatTrak
+                        val wantedWear = sWep.tWear
 
-                    csgoEXE[weaponEntity + m_iItemIDHigh] = -1
-                    csgoEXE[weaponEntity + m_nFallbackPaintKit] = sWep.tSkinID
-                    csgoEXE[weaponEntity + m_flFallbackWear] = sWep.tWear
-                    csgoEXE[weaponEntity + m_nFallbackStatTrak] = sWep.tStatTrak
+                        csgoEXE[weaponEntity + m_iItemIDHigh] = -1
+                        csgoEXE[weaponEntity + m_nFallbackPaintKit] = sWep.tSkinID
+                        csgoEXE[weaponEntity + m_flFallbackWear] = sWep.tWear
+                        csgoEXE[weaponEntity + m_nFallbackStatTrak] = sWep.tStatTrak
 
-                    if (((curWepPaint != wantedWepPaint) || (curStatTrak != wantedStatTrak) || (curWear != wantedWear)) && curSettings["FORCE_UPDATE_AUTO"].strToBool()) {
-                        forcedUpdate()
+                        //Fuck stattrak fuck wear and fuck 12 you another bitch ass causing issues
+                        if (((curWepPaint != wantedWepPaint) || (curStatTrak != wantedStatTrak) || (curWear != wantedWear)) && curSettings["FORCE_UPDATE_AUTO"].strToBool()) {
+                            invalid = true
+                        }
                     }
                 }
             }
-        } else if (weaponEntity.type().knife) {
-            if (curSettings["KNIFE_IDX"].toInt() != -1 && curSettings["KNIFECHANGER"].strToBool()) {
+        }
+        //else if (weaponEntity.type().knife) {
+        //    if (curSettings["KNIFE_IDX"].toInt() != -1 && curSettings["KNIFECHANGER"].strToBool()) {
             //csgoEXE[weaponEntity + iItemDefinitionIndex] = Weapons.KNIFE_GUT.id //?
             //csgoEXE[weaponEntity + m_nModelIndex] = calcModelIndex
             //csgoEXE[weaponEntity + m_iViewModelIndex] = calcModelIndex
-            csgoEXE[weaponEntity + m_iEntityQuality] = 3
+        //    csgoEXE[weaponEntity + m_iEntityQuality] = 3
 
 //                val sWep = curSettings["SKIN_KNIFE"].toSkinWeaponClass()
 //
@@ -109,8 +114,12 @@ fun skinChanger() = every(1, continuous = true) {
 //                    //println("cur: $curWepPaint wanted: $wantedWepPaintKit")
 //                    //forcedUpdate() //Cant without fucking up el knifoskin, try starting a thread and loop setting paintKit an call forceUpdate here in the middle?
 //                }
-            }
-        }
+         //   }
+        //}
+    }
+
+    if (invalid) {
+        forcedUpdate()
     }
 
     //if (curSettings["KNIFE_IDX"].toInt() != -1 && curSettings["KNIFECHANGER"].strToBool()) {

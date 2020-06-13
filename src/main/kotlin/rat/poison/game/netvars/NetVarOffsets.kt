@@ -5,7 +5,7 @@ object NetVarOffsets {
 	const val dwModel = 0x6C
 	val iTeamNum by netVar("DT_BaseEntity")
 	val bSpotted by netVar("DT_BaseEntity")
-	val bSpottedByMask by netVar("DT_BaseEntity")
+	val bSpottedByMask by netVar("DT_BaseEntity", "m_bSpottedByMask")
 	val vecOrigin by netVar("DT_BaseEntity")
 	val angEyeAngles by netVar("DT_CSPlayer")
 
@@ -18,6 +18,8 @@ object NetVarOffsets {
 	val iKills by netVar("DT_CSPlayerResource")
 	val iDeaths by netVar("DT_CSPlayerResource")
 	val iCompetitiveWins by netVar("DT_CSPlayerResource")
+
+	val bDidSmokeEffect by netVar("DT_SmokeGrenadeProjectile", "m_bDidSmokeEffect")
 	
 	val fFlags by netVar("DT_BasePlayer")
 	val lifeState by netVar("DT_BasePlayer")
@@ -38,6 +40,7 @@ object NetVarOffsets {
 	val nTickBase by netVar("DT_BasePlayer")
 
 	val flFlashMaxAlpha by netVar("DT_CSPlayer")
+	val flFlashDuration by netVar("DT_CSPlayer", "m_flFlashDuration")
 	val bGunGameImmunity by netVar("DT_CSPlayer")
 	val iCrossHairID by netVar("DT_CSPlayer", "m_bHasDefuser", 0x5C)
 	val iShotsFired by netVar("DT_CSPlayer")
@@ -69,7 +72,10 @@ object NetVarOffsets {
 	val dwBoneMatrix by netVar("DT_BaseAnimating", "m_nForceBone", 0x1C)
 	
 	val flNextPrimaryAttack by netVar("DT_BaseCombatWeapon")
-	val iClip1 by netVar("DT_BaseCombatWeapon")
+	val iClip1 by netVar("DT_BaseCombatWeapon", "m_iClip1")
+	val iPrimaryReserveAmmoCount by netVar("DT_BaseCombatWeapon", "m_iPrimaryReserveAmmoCount")
+
+	var bHasHelmet by netVar("DT_CSPlayer", "m_bHasHelmet")
 	
 	val iItemDefinitionIndex by netVar("DT_BaseCombatWeapon")
 

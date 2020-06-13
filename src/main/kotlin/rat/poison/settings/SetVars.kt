@@ -1,19 +1,21 @@
 package rat.poison.settings
 
 import com.sun.jna.platform.win32.WinNT
+import rat.poison.game.CSGO.clientDLL
+import rat.poison.game.offsets.ClientOffsets.dwSensitivity
+import rat.poison.game.offsets.ClientOffsets.dwSensitivityPtr
+import rat.poison.utils.extensions.uint
 
-var GAME_PITCH = 0.022 // m_pitch
+var GAME_PITCH = 0.022 // m_pitc
 var GAME_YAW = 0.022 // m_yaw
-//val GAME_SENSITIVITY by lazy {//by lazy(LazyThreadSafetyMode.NONE) { //Currently broken
-//
-//    val pointer = clientDLL.address + dwSensitivityPtr
-//    val sens = clientDLL.uint(dwSensitivity)
-//    val value = sens xor pointer
-//
-//    println("pointer: $pointer sens uint: $sens xored value: $value sensptr: " + dwSensitivityPtr + " dwsens: " + dwSensitivity + " actual sens: " + Float.intBitsToFloat(value.toInt()).toDouble())
-//
-//    Float.intBitsToFloat(value.toInt()).toDouble()
-//}
+val GAME_SENSITIVITY by lazy {//by lazy(LazyThreadSafetyMode.NONE) { //Currently broken
+
+    val pointer = clientDLL.address + dwSensitivityPtr
+    val sens = clientDLL.uint(dwSensitivity)
+    val value = sens xor pointer
+
+    java.lang.Float.intBitsToFloat(value.toInt()).toDouble()
+}
 var HEAD_BONE = 8
 var NECK_BONE = 7
 var CHEST_BONE = 6

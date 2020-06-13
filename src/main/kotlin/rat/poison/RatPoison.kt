@@ -26,8 +26,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.jire.arrowhead.keyPressed
 import org.lwjgl.glfw.GLFW.*
-import org.lwjgl.glfw.GLFWErrorCallback
-import org.lwjgl.opengl.GL
 import rat.poison.game.CSGO
 import rat.poison.game.updateViewMatrix
 import rat.poison.interfaces.IOverlay
@@ -40,12 +38,16 @@ import rat.poison.scripts.aim.pathAim
 import rat.poison.scripts.aim.setAim
 import rat.poison.scripts.bspHandling.rayTraceTest
 import rat.poison.scripts.esp.adrenaline
+import rat.poison.scripts.esp.drawBacktrack
 import rat.poison.scripts.esp.esp
 import rat.poison.scripts.esp.espToggle
 import rat.poison.settings.MENUTOG
-import rat.poison.ui.*
 import rat.poison.ui.uiPanels.*
-import rat.poison.utils.*
+import rat.poison.ui.uiUpdate
+import rat.poison.utils.Angle
+import rat.poison.utils.ObservableBoolean
+import rat.poison.utils.Settings
+import rat.poison.utils.Vector
 import rat.poison.utils.extensions.appendHumanReadableSize
 import rat.poison.utils.extensions.roundNDecimals
 import java.awt.Robot
@@ -53,25 +55,23 @@ import java.io.File
 import java.io.FileReader
 import java.lang.management.ManagementFactory
 import java.util.concurrent.TimeUnit
-import kotlin.collections.List
-import kotlin.collections.forEach
 import kotlin.collections.set
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.system.measureNanoTime
 
 //Override Weapon
-data class oWeapon(var tOverride: Boolean,      var tFRecoil: Boolean,  var tFlatAim: Boolean,
-                   var tPathAim: Boolean,       var tAimBone: Int,      var tAimFov: Int,
-                   var tAimSpeed: Int,          var tAimSmooth: Double, var tPerfectAim: Boolean,
-                   var tPAimFov: Int,      var tPAimChance: Int,        var tScopedOnly: Boolean,
-                   var tBoneTrig: Boolean = false, var tBTrigBone: Int = 0, var tBTrigAim: Boolean = false,
-                   var tBTrigDelay: Int = 0, var tAimAfterShots: Int = 0)
+data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = false,      var tFlatAim: Boolean = false,
+                   var tPathAim: Boolean = false,       var tAimBone: Int = 0,              var tAimFov: Int = 0,
+                   var tAimSpeed: Int = 0,              var tAimSmooth: Double = 0.0,       var tPerfectAim: Boolean = false,
+                   var tPAimFov: Int = 1,               var tPAimChance: Int = 1,           var tScopedOnly: Boolean = false,
+                   var tBoneTrig: Boolean = false,      var tBTrigBone: Int = 0,            var tBTrigAim: Boolean = false,
+                   var tBTrigDelay: Int = 0,            var tAimAfterShots: Int = 0)
 
 //Skinned Weapon
 data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var tSeed: Int)
 
-const val EXPERIMENTAL = false
+const val EXPERIMENTAL = true
 const val SETTINGS_DIRECTORY = "settings" //Internal
 var saving = false
 var settingsLoaded = false
@@ -113,8 +113,9 @@ fun main() {
         curSettings["ENABLE_NADE_HELPER"] = "false"
         curSettings["NADE_TRACER"] = "false"
         curSettings["DRAW_AIM_FOV"] = "false"
+        curSettings["ENABLE_HITSOUND"] = "false"
     } else {
-        if (dbg) { println("[DEBUG] Initializing Recoil Ranks") }; ranks()
+        if (dbg) { println("[DEBUG] Initializing Ranks") }; ranks()
 
         if (dbg) { println("[DEBUG] Initializing Recoil Spectator List") }; spectatorList()
         if (dbg) { println("[DEBUG] Initializing Recoil Bomb Timer") }; bombTimer()
@@ -147,8 +148,11 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Weapon Changer") }; skinChanger()
     if (dbg) { println("[DEBUG] Initializing NightMode/FullBright") }; nightMode()
 
+    backtrack()
+    drawBacktrack()
+
     if (EXPERIMENTAL) {
-        rayTraceTest()
+        rayTraceTest() //Dont bother rn
     }
 
     //Overlay check, not updated?
@@ -317,7 +321,8 @@ object App : ApplicationAdapter() {
                                         menuStage.addActor(uiKeybinds)
                                     }
                                 } else if (menuStage.actors.contains(uiKeybinds)) {
-                                    menuStage.clear() //actors.remove at index doesnt work after 1 loop?
+                                    //menuStage.clear() //actors.remove at index doesnt work after 1 loop?
+                                    menuStage.actors.removeValue(uiKeybinds, true)
                                 }
 
                                 if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
@@ -553,7 +558,7 @@ fun String.toWeaponClass(): oWeapon {
     var tStr = this
     tStr = tStr.replace("oWeapon(", "").replace(")", "")
     val tSA = tStr.split(", ") //temp String Array
-    return oWeapon(tOverride = tSA.pull(0).strToBool(), tFRecoil = tSA.pull(1).strToBool(), tFlatAim = tSA.pull(2).strToBool(), tPathAim = tSA.pull(3).strToBool(), tAimBone = tSA.pull(4).toInt(), tAimFov = tSA.pull(5).toInt(), tAimSpeed = tSA.pull(6).toInt(), tAimSmooth = tSA.pull(7).toDouble(), tPerfectAim = tSA.pull(8).strToBool(), tPAimFov = tSA.pull(9).toInt(), tPAimChance = tSA.pull(10).toInt(), tScopedOnly = tSA.pull(11).strToBool())//, tBoneTrig = tSA.pull(13).strToBool(), tBTrigBone = tSA.pull(14).toInt(), tBTrigAim = tSA.pull(15).strToBool(), tBTrigDelay = tSA.pull(16).toInt())
+    return oWeapon(tOverride = tSA.pull(0).strToBool(), tFRecoil = tSA.pull(1).strToBool(), tFlatAim = tSA.pull(2).strToBool(), tPathAim = tSA.pull(3).strToBool(), tAimBone = tSA.pull(4).toInt(), tAimFov = tSA.pull(5).toInt(), tAimSpeed = tSA.pull(6).toInt(), tAimSmooth = tSA.pull(7).toDouble(), tPerfectAim = tSA.pull(8).strToBool(), tPAimFov = tSA.pull(9).toInt(), tPAimChance = tSA.pull(10).toInt(), tScopedOnly = tSA.pull(11).strToBool(), tBoneTrig = tSA.pull(12).strToBool(), tBTrigBone = tSA.pull(13).toInt(), tBTrigAim = tSA.pull(14).strToBool(), tBTrigDelay = tSA.pull(15).toInt(), tAimAfterShots = tSA.pull(16).toInt())
 }
 
 fun String.toSkinWeaponClass(): sWeapon {
@@ -563,7 +568,7 @@ fun String.toSkinWeaponClass(): sWeapon {
     return sWeapon(tSkinID = tSA.pull(0).toInt(), tStatTrak = tSA.pull(1).toInt(), tWear = tSA.pull(2).toFloat(), tSeed = tSA.pull(3).toInt())
 }
 
-private fun List<String>.pull(idx: Int): String {
+fun List<String>.pull(idx: Int): String {
     val tStr = this[idx].replace(" ", "") //Remove spaces
     val split = tStr.split("=")
     return split[1]

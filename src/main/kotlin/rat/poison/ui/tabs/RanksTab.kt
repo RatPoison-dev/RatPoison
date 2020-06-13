@@ -48,7 +48,7 @@ class RanksTab : Tab(false, false) {
         KDsLabel.setText("K/D  \n")
         winsLabel.setText("Wins  \n")
 
-        for (i in 0 until teamList.size-1) {
+        for (i in 0 until teamList.size) {
             teamsLabel.setText(teamsLabel.text.toString() + teamList[i] + "  \n")
             namesLabel.setText(namesLabel.text.toString() + nameList[i] + "  \n")
             ranksLabel.setText(ranksLabel.text.toString() + rankList[i] + "  \n")

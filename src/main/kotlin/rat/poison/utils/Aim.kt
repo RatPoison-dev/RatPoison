@@ -9,6 +9,7 @@ import rat.poison.game.CSGO.gameY
 import rat.poison.game.clientState
 import rat.poison.game.setAngle
 import rat.poison.settings.GAME_PITCH
+import rat.poison.settings.GAME_SENSITIVITY
 import rat.poison.settings.GAME_YAW
 import rat.poison.strToBool
 import rat.poison.utils.extensions.refresh
@@ -59,8 +60,6 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 
 	var sens = curSettings["GAME_SENSITIVITY"].toDouble() + .5
 	if (perfect) sens = 1.0
-
-	//set ingame sens
 
 	val dx = round(delta.x / (sens * GAME_PITCH))
 	val dy = round(-delta.y / (sens * GAME_YAW))

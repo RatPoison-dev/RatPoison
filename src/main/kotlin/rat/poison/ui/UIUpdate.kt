@@ -6,7 +6,6 @@ import rat.poison.opened
 import rat.poison.ui.tabs.*
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiPanelTables.overridenWeaponsUpdate
-import rat.poison.ui.uiPanels.keybindsUpdate
 
 fun uiUpdate() {
     if (!opened) return
@@ -27,6 +26,7 @@ fun uiUpdate() {
     nadeHelperTabUpdate()
     updateTrig()
     updateAim()
+    updateBacktrack()
     updateDisableEsp()
 
     //Update windows

@@ -31,7 +31,7 @@ echo File name has been randomized.
 goto :n
 :n
 cd build
-cd RatPoison 1.7
+cd RatPoison 1.7.1.1
 echo.
 set /P c=Would you like to open the cheat folder? [Y/N] 
 if /I "%c%" EQU "Y" goto :y1
