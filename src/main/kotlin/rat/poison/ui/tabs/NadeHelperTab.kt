@@ -12,6 +12,8 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.App
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curLocalization
+import rat.poison.game.entity.absPosition
+import rat.poison.game.me
 import rat.poison.scripts.*
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.nadeHelperTab
@@ -54,14 +56,15 @@ class NadeHelperTab : Tab(false, false) {
                 deleteNadeHelperFile(nadeHelperFileSelectBox.selected)
             }
         }
-
         clearNadeHelper.changed { _, _ ->
-            Dialogs.showOptionDialog(App.menuStage, curLocalization["WARNING"], curLocalization["CLEAR_CURRENTLY_LOADED_WARNING"], Dialogs.OptionDialogType.YES_NO, object: OptionDialogAdapter() {
-                override fun yes() {
-                    nadeHelperArrayList.clear()
-                    nadeHelperLoadedFile.setText(curLocalization["LOADED_NOTHING"])
+            Dialogs.showConfirmDialog(App.menuStage, curLocalization["WARNING"], curLocalization["CLEAR_CURRENTLY_LOADED_WARNING"], arrayOf("YES", "NO"), arrayOf(1, 2)) { it ->
+                when (it) {
+                    1 -> {
+                        nadeHelperArrayList.clear()
+                        nadeHelperLoadedFile.setText(curLocalization["LOADED_NOTHING"])
+                    }
                 }
-            })
+            }
         }
 
         deleteCurrentPositionHelper.changed { _, _ ->
