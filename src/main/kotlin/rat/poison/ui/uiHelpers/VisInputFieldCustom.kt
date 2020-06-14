@@ -59,10 +59,8 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
             keyField.text = curSettings[variableName]
             value = if (intVal) {
                 keyField.text.toInt()
-                //println("is int " + keyField.text.toString())
             } else {
                 keyField.text.toDouble()
-                //println("is double " + keyField.text.toString())
             }
         }
     }

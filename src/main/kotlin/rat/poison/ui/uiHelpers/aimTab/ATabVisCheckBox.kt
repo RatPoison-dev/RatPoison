@@ -2,14 +2,14 @@ package rat.poison.ui.uiHelpers.aimTab
 
 import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisCheckBox
-import rat.poison.boolToStr
 import rat.poison.curLocalization
 import rat.poison.curSettings
-import rat.poison.strToBool
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.updateDisableAim
 import rat.poison.ui.uiUpdate
+import rat.poison.utils.varUtil.boolToStr
+import rat.poison.utils.varUtil.strToBool
 
 class ATabVisCheckBox(mainText: String, varExtension: String, nameInLocalization: String = "") : VisCheckBox(mainText) {
     private val defaultText = mainText

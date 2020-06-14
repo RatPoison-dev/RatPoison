@@ -9,10 +9,9 @@ import rat.poison.game.entity.Entity
 import rat.poison.game.entity.EntityType
 import rat.poison.scripts.esp.GlowESP.glowEspApp
 import rat.poison.scripts.esp.GlowESP.glowEspEvery
-import rat.poison.strToBool
-import rat.poison.toInt
 import rat.poison.utils.extensions.uint
-import java.util.concurrent.atomic.AtomicLong
+import rat.poison.utils.varUtil.strToBool
+import rat.poison.utils.varUtil.toInt
 
 var glowTarget = -1L
 

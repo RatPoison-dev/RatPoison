@@ -8,7 +8,9 @@ import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import org.jire.arrowhead.keyPressed
-import rat.poison.*
+import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.curLocalization
+import rat.poison.curSettings
 import rat.poison.scripts.esp.updateHitsound
 import rat.poison.scripts.nameChanger
 import rat.poison.scripts.selfNade
@@ -17,6 +19,8 @@ import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.*
 import rat.poison.ui.uiPanels.miscTab
 import rat.poison.utils.ObservableBoolean
+import rat.poison.utils.varUtil.boolToStr
+import rat.poison.utils.varUtil.strToBool
 import java.io.File
 
 class MiscTab : Tab(false, false) {

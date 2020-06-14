@@ -4,15 +4,14 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.aimingMap
 import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.settings.*
-import rat.poison.strToBool
-import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiHelpers.tables.AimBTrigTable
 import rat.poison.ui.uiHelpers.tables.AimBacktrackTable
 import rat.poison.ui.uiHelpers.tables.AimTable
+import rat.poison.ui.uiPanels.aimTab
+import rat.poison.utils.varUtil.strToBool
 
 //I really couldn't give a shit to update this to the same as the other tabs
 
@@ -57,7 +56,6 @@ fun updateDisableAim() {
         teammatesAreEnemies.disable(bool)
         holdAim.disable(bool)
         automaticWeaponsCheckBox.disable(bool)
-        automaticWeaponsInput.disable(bool, col)
         targetSwapDelay.disable(bool, col)
 
         fovTypeLabel.color = col
@@ -127,7 +125,6 @@ fun updateAim() {
         forceAimAlways.update()
         forceAimThroughWalls.update()
         automaticWeaponsCheckBox.update()
-        automaticWeaponsInput.update()
         targetSwapDelay.update()
 
         enableAimOnShot.update()

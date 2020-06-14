@@ -10,8 +10,8 @@ import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.bSpotted
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.strToBool
 import rat.poison.utils.every
+import rat.poison.utils.varUtil.strToBool
 
 internal fun radarEsp() = every(100) {
     if (!curSettings["RADAR_ESP"].strToBool() || DANGER_ZONE) return@every

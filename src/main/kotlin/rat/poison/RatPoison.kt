@@ -17,7 +17,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Matrix4
-import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.kotcrab.vis.ui.VisUI
 import com.sun.management.OperatingSystemMXBean
@@ -34,6 +33,7 @@ import rat.poison.jna.enums.AccentStates
 import rat.poison.overlay.Overlay
 import rat.poison.scripts.*
 import rat.poison.scripts.aim.flatAim
+import rat.poison.scripts.aim.handleFireKey
 import rat.poison.scripts.aim.pathAim
 import rat.poison.scripts.aim.setAim
 import rat.poison.scripts.bspHandling.rayTraceTest
@@ -42,29 +42,26 @@ import rat.poison.scripts.esp.drawBacktrack
 import rat.poison.scripts.esp.esp
 import rat.poison.scripts.esp.espToggle
 import rat.poison.settings.MENUTOG
-import rat.poison.ui.*
-import rat.poison.ui.tabs.RcsTab
 import rat.poison.ui.tabs.saveDefault
 import rat.poison.ui.uiPanels.*
 import rat.poison.ui.uiUpdate
-import rat.poison.utils.Angle
 import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.Settings
-import rat.poison.utils.Vector
 import rat.poison.utils.extensions.appendHumanReadableSize
 import rat.poison.utils.extensions.roundNDecimals
+import rat.poison.utils.varUtil.strToBool
 import java.awt.Robot
 import java.io.File
 import java.io.FileReader
 import java.lang.management.ManagementFactory
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.set
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.system.measureNanoTime
-import java.util.Locale
 
 //Override Weapon
 data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = false,      var tFlatAim: Boolean = false,
@@ -189,7 +186,6 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Reduced Flash") }; reducedFlash()
     if (dbg) { println("[DEBUG] Initializing ESPs") }; esp()
     if (dbg) { println("[DEBUG] Initializing Esp Toggle") }; espToggle()
-    if (dbg) { println("[DEBUG] Initializing Automatic Weapons") }; automaticWeapon()
     if (dbg) { println("[DEBUG] Initializing Fast Stop") }; fastStop()
     if (dbg) { println("[DEBUG] Initializing Head Walk (Currently disabled)") }; headWalk()
     if (dbg) { println("[DEBUG] Initializing Adrenaline") }; adrenaline()
@@ -199,8 +195,9 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Weapon Changer") }; skinChanger()
     if (dbg) { println("[DEBUG] Initializing NightMode/FullBright") }; nightMode()
 
-    backtrack()
-    drawBacktrack()
+    if (dbg) { println("[DEBUG] Initializing Backtrack") }; setupBacktrack()
+    if (dbg) { println("[DEBUG] Initializing Draw Backtrack") }; drawBacktrack()
+    if (dbg) { println("[DEBUG] Initializing Handle Fire Key") }; handleFireKey()
 
     if (EXPERIMENTAL) {
         rayTraceTest() //Dont bother rn
@@ -592,16 +589,6 @@ fun getSystemLocale(): Locale? {
     return Locale.getDefault()
 }
 
-fun Any.strToBool() = this.toString().toLowerCase() == "true" || this == true || this == 1.0 || this == 1 || this == 1F
-fun Any.boolToStr() = this.toString()
-fun Any.strToColor() = convStrToColor(this.toString())
-fun Any.strToColorGDX() = convStrToColorGDX(this.toString())
-fun Any.cToDouble() = this.toString().toDouble()
-fun Any.cToFloat() = this.toString().toFloat()
-fun Boolean.toFloat() = if (this) 1F else 0F
-fun Boolean.toDouble() = if (this) 1.0 else 0.0
-fun Boolean.toInt() = if (this) 1 else 0
-
 fun convStrToColor(input: String): rat.poison.game.Color { //Rat poison color
     var line = input
     line = line.replace("Color(", "").replace(")", "").replace(",", "")
@@ -662,41 +649,4 @@ fun Array<DoubleArray>.toMatrix4(): Matrix4 {
 
     mat4.set(fArr)
     return mat4
-}
-
-operator fun Vector3.minus(v: Vector3): Vector3 {
-    x - v.x
-    y - v.y
-    z - v.z
-    return this
-}
-
-operator fun Vector3.plus(v: Vector3): Vector3 {
-    x + v.x
-    y + v.y
-    z + v.z
-    return this
-}
-
-operator fun Vector3.times(f: Float): Vector3 {
-    x * f
-    y * f
-    z * f
-    return this
-}
-
-operator fun Vector3.divAssign(f: Float) {
-    x /= f
-    y /= f
-    z /= f
-}
-
-fun Angle.toVector3(): Vector3 {
-    val vec = Vector3()
-    vec.x = x.toFloat(); vec.y = y.toFloat(); vec.z = z.toFloat()
-    return vec
-}
-
-fun Vector3.toVector(): Vector {
-    return Vector(x.toDouble(), y.toDouble(), z.toDouble())
 }

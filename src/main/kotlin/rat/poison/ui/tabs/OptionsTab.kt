@@ -7,7 +7,10 @@ import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
-import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.widget.LinkLabel
+import com.kotcrab.vis.ui.widget.VisSelectBox
+import com.kotcrab.vis.ui.widget.VisSlider
+import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -19,7 +22,6 @@ import rat.poison.App.uiMenu
 import rat.poison.App.uiSpecList
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.*
-import rat.poison.ui.uiPanels.keybindsUpdate
 import rat.poison.ui.uiPanels.optionsTab
 import rat.poison.ui.uiPanels.updateVisWindowsNames
 import rat.poison.ui.uiUpdate

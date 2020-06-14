@@ -7,12 +7,10 @@ import rat.poison.game.entity.Player
 import rat.poison.game.entity.position
 import rat.poison.game.entity.punch
 import rat.poison.game.netvars.NetVarOffsets.vecViewOffset
-import rat.poison.strToBool
-import rat.poison.toInt
 import rat.poison.utils.*
-import java.lang.Math.random
+import rat.poison.utils.varUtil.strToBool
+import rat.poison.utils.varUtil.toInt
 import java.lang.Math.toDegrees
-import java.util.concurrent.ThreadLocalRandom
 import kotlin.math.atan
 import kotlin.math.atan2
 import kotlin.math.sqrt
@@ -62,8 +60,10 @@ fun realCalcAngle(player: Player, dst: Vector): Angle {
 	val playerPos = player.position()
 	val delta = Vector(dst.x - playerPos.x, dst.y - playerPos.y, dst.z - playerPos.z + csgoEXE.float(player + vecViewOffset))
 
-	val aX = toDegrees(atan2(-delta.z, sqrt(delta.x*delta.x + delta.y*delta.y)))
-	val aY = toDegrees(atan2(delta.y, delta.x))
+	val myPunch = me.punch()
+
+	val aX = toDegrees(atan2(-delta.z, sqrt(delta.x*delta.x + delta.y*delta.y))) - myPunch.x * 2.0
+	val aY = toDegrees(atan2(delta.y, delta.x)) - myPunch.y * 2.0
 
 	val ang = Angle(aX, aY, 0.0)
 	ang.normalize()

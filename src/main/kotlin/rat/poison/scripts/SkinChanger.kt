@@ -4,31 +4,22 @@ import rat.poison.curSettings
 import rat.poison.game.CSGO.ENTITY_SIZE
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.Weapons
 import rat.poison.game.clientState
-import rat.poison.game.entity.*
-import rat.poison.game.entity.team
+import rat.poison.game.entity.steamID
 import rat.poison.game.entity.type
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.hMyWeapons
-import rat.poison.game.netvars.NetVarOffsets.m_OriginalOwnerXuidHigh
 import rat.poison.game.netvars.NetVarOffsets.m_OriginalOwnerXuidLow
 import rat.poison.game.netvars.NetVarOffsets.m_flFallbackWear
-import rat.poison.game.netvars.NetVarOffsets.m_hOwnerEntity
-import rat.poison.game.netvars.NetVarOffsets.m_hViewModel
-import rat.poison.game.netvars.NetVarOffsets.m_iAccountID
-import rat.poison.game.netvars.NetVarOffsets.m_iEntityQuality
 import rat.poison.game.netvars.NetVarOffsets.m_iItemIDHigh
-import rat.poison.game.netvars.NetVarOffsets.m_iViewModelIndex
 import rat.poison.game.netvars.NetVarOffsets.m_nFallbackPaintKit
 import rat.poison.game.netvars.NetVarOffsets.m_nFallbackStatTrak
-import rat.poison.game.netvars.NetVarOffsets.m_nModelIndex
 import rat.poison.game.offsets.ClientOffsets.dwEntityList
-import rat.poison.strToBool
 import rat.poison.toSkinWeaponClass
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.notInGame
+import rat.poison.utils.varUtil.strToBool
 
 //https://github.com/0xf1a/xSkins
 

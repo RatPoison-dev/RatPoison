@@ -23,6 +23,9 @@ import rat.poison.settings.MENUTOG
 import rat.poison.ui.uiPanels.nadeHelperTab
 import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
+import rat.poison.utils.varUtil.cToDouble
+import rat.poison.utils.varUtil.cToFloat
+import rat.poison.utils.varUtil.strToBool
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files

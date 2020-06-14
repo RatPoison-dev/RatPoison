@@ -36,7 +36,7 @@ fun entityByType(type: EntityType): EntityContext? = entities[type]?.firstOrNull
 
 internal inline fun forEntities(types: Array<EntityType> = EntityType.cachedValues,
                                 crossinline body: (EntityContext) -> Boolean): Boolean {
-	val hash = Arrays.hashCode(types)
+	val hash = types.contentHashCode()
 	val container = cachedResults.get(hash) ?: EntityContainer(EntityType.size)
 
 	if (container.empty()) {

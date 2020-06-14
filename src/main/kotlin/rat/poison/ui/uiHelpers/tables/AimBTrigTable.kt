@@ -1,12 +1,10 @@
 ﻿package rat.poison.ui.uiHelpers.tables
 
-import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.aimingMap
 import rat.poison.curLocalization
 import rat.poison.curSettings
-import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
@@ -14,6 +12,7 @@ import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisLabelCustom
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
+import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiUpdate
 
 class AimBTrigTable: VisTable(false) {

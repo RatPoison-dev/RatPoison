@@ -11,13 +11,13 @@ import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
 import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.scripts.esp.disableAllEsp
-import rat.poison.strToBool
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiPanels.visualsTab
+import rat.poison.utils.varUtil.strToBool
 
 var espTabbedPane = TabbedPane()
 var glowEspTab = GlowEspTab()

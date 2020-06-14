@@ -95,7 +95,6 @@ FORCE_AIM_KEY = Force Aim Key
 FORCE_AIM_ALWAYS = Force Aim Always
 FORCE_AIM_THROUGH_WALLS = Force Aim Through Walls
 AUTOMATIC_WEAPONS = Automatic Weapons
-AUTO_WEP_DELAY = MS Delay
 AIM_TARGET_SWAP_DELAY = Target Swap Delay
 OVERRIDE_WEAPONS_CHECKBOX = Override Weapons
 AIM_ONLY_ON_SHOT = Aim On Shot

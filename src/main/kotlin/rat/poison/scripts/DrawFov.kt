@@ -11,12 +11,14 @@ import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_iDefaultFov
 import rat.poison.game.netvars.NetVarOffsets.m_iFOV
 import rat.poison.settings.MENUTOG
-import rat.poison.strToBool
-import rat.poison.strToColor
-import java.lang.Math.*
+import rat.poison.utils.notInGame
+import rat.poison.utils.varUtil.strToBool
+import rat.poison.utils.varUtil.strToColor
+import java.lang.Math.toDegrees
+import java.lang.Math.toRadians
 
 fun drawFov() = App {
-    if (!curSettings["ENABLE_ESP"].strToBool() || MENUTOG)
+    if (!curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame || me <= 0)
         return@App
 
     if (!curSettings["DRAW_AIM_FOV"].strToBool() && !curSettings["DRAW_TRIGGER_FOV"].strToBool())

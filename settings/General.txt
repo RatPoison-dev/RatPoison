@@ -10,9 +10,9 @@ MENU = true
 MENU_KEY = 112
 
 //FOV Type : DISTANCE or STATIC
-FOV_TYPE = DISTANCE
+FOV_TYPE = STATIC
 
-DEFAULT_LOCALE = NONE
+DEFAULT_LOCALE = locale_en_US
 DEFAULT_CATEGORY_SELECTED = PISTOL
 
 //If the menu has a blur behind it
@@ -30,7 +30,7 @@ OVERLAY_WIDTH = 1920
 OVERLAY_HEIGHT = 1080
 
 //Your ingame mouse sensitivity
-GAME_SENSITIVITY = 1.00
+GAME_SENSITIVITY = 2.5
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles aim on or off
 //Default key is F3
@@ -119,20 +119,20 @@ RANDOM_BONE = -4
 
 //Temp variables, don't edit
 PERFECT_AIM = false
-PERFECT_AIM_CHANCE = 15
-PERFECT_AIM_FOV = 10
-AIM_BONE = 7
+PERFECT_AIM_CHANCE = 10
+PERFECT_AIM_FOV = 5
+AIM_BONE = 6
 FORCE_AIM_BONE = 8
-AIM_SPEED = 2
-AIM_FOV = 20
-FACTOR_RECOIL = false
+AIM_SPEED = 4
+AIM_FOV = 7
+FACTOR_RECOIL = true
 ENABLE_FLAT_AIM = false
 ENABLE_PATH_AIM = true
 ENABLE_SCOPED_ONLY = true
-AIM_AFTER_SHOTS = 0
+AIM_AFTER_SHOTS = 1
 AIM_ADVANCED = false
-AIM_RCS_X = 2.0
-AIM_RCS_Y = 2.0
+AIM_RCS_X = 1.0
+AIM_RCS_Y = 1.0
 AIM_RCS_VARIATION = 0.0
 AIM_SPEED_DIVISOR = 1
 AIM_RANDOM_X_VARIATION = 0
@@ -142,7 +142,7 @@ KEYBINDS = false
 KEYBINDS_X = 400.0
 KEYBINDS_Y = 400.0
 KEYBINDS_ALPHA = 1.0
-AIM_ONLY_ON_SHOT = true
+AIM_ONLY_ON_SHOT = false
 
 //Can't be edited from menu, not guaranteed to work properly
 PISTOL_AIM_AFTER_SHOTS = 0

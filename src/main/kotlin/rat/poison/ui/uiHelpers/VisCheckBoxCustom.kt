@@ -2,12 +2,12 @@
 
 import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisCheckBox
-import rat.poison.boolToStr
 import rat.poison.curLocalization
 import rat.poison.curSettings
-import rat.poison.strToBool
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
+import rat.poison.utils.varUtil.boolToStr
+import rat.poison.utils.varUtil.strToBool
 
 class VisCheckBoxCustom(mainText: String, varName: String, nameInLocalization: String = varName) : VisCheckBox(mainText) {
     private val defaultText = mainText

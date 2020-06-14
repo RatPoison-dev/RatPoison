@@ -2,18 +2,23 @@
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Align
-import com.kotcrab.vis.ui.widget.*
-import rat.poison.*
+import com.kotcrab.vis.ui.widget.CollapsibleWidget
+import com.kotcrab.vis.ui.widget.VisSelectBox
+import com.kotcrab.vis.ui.widget.VisTable
+import rat.poison.aimingMap
+import rat.poison.curLocalization
+import rat.poison.curSettings
 import rat.poison.settings.*
+import rat.poison.toWeaponClass
 import rat.poison.ui.changed
-import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisCheckBoxCustom
-import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisSliderCustom
 import rat.poison.ui.uiHelpers.VisCheckBoxCustomWithoutVar
 import rat.poison.ui.uiHelpers.VisLabelCustom
+import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisCheckBoxCustom
+import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisSliderCustom
 import rat.poison.ui.uiPanels.overridenWeapons
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.GetWeaponsMap
-import kotlin.math.round
+import rat.poison.utils.varUtil.strToBool
 
 var weaponOverrideSelected = "DESERT_EAGLE"
 

@@ -8,9 +8,9 @@ import rat.poison.scripts.aim.target
 import rat.poison.scripts.esp.glow
 import rat.poison.scripts.esp.glowTarget
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.strToBool
-import rat.poison.strToColor
 import rat.poison.utils.every
+import rat.poison.utils.varUtil.strToBool
+import rat.poison.utils.varUtil.strToColor
 
 internal fun glowEspEvery() = every(25, true) {
 	if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return@every
@@ -40,6 +40,7 @@ internal fun glowEspEvery() = every(25, true) {
 	val showTarget = curSettings["GLOW_SHOW_TARGET"].strToBool()
 	val showEnemies = curSettings["GLOW_SHOW_ENEMIES"].strToBool()
 	val showTeam = curSettings["GLOW_SHOW_TEAM"].strToBool()
+	val glowHealth = curSettings["GLOW_SHOW_HEALTH"].strToBool()
 	val showBomb = curSettings["GLOW_SHOW_BOMB"].strToBool()
 	val showBombCarrier = curSettings["GLOW_SHOW_BOMB_CARRIER"].strToBool()
 	val showWeapons = curSettings["GLOW_SHOW_WEAPONS"].strToBool()
@@ -67,12 +68,18 @@ internal fun glowEspEvery() = every(25, true) {
 				} else if (showEnemies && !team) {
 					color = when (bEnt >= 0 && bEnt == entity && showBombCarrier) {
 						true -> "GLOW_BOMB_CARRIER_COLOR"
-						false -> "GLOW_ENEMY_COLOR"
+						else -> when (glowHealth) {
+							true -> "GLOW_HEALTH"
+							else -> "GLOW_ENEMY_COLOR"
+						}
 					}
 				} else if (showTeam && team) {
 					color = when (bEnt >= 0 && bEnt == entity && showBombCarrier) {
 						true -> "GLOW_BOMB_CARRIER_COLOR"
-						false -> "GLOW_TEAM_COLOR"
+						else -> when (glowHealth) {
+							true -> "GLOW_HEALTH"
+							else -> "GLOW_TEAM_COLOR"
+						}
 					}
 				}
 			}

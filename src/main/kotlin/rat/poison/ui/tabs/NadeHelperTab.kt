@@ -4,20 +4,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.OptionDialogAdapter
-import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
-import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.App
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curLocalization
 import rat.poison.scripts.*
 import rat.poison.ui.changed
-import rat.poison.ui.uiPanels.nadeHelperTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisLabelCustom
 import rat.poison.ui.uiHelpers.VisTextButtonCustom
+import rat.poison.ui.uiPanels.nadeHelperTab
 import java.io.File
 
 class NadeHelperTab : Tab(false, false) {

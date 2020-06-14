@@ -1,16 +1,17 @@
 package rat.poison.scripts.esp.GlowESP
 
-import rat.poison.*
+import rat.poison.App
+import rat.poison.curSettings
 import rat.poison.game.*
-import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
-import rat.poison.game.netvars.NetVarOffsets.iClip1
-import rat.poison.game.netvars.NetVarOffsets.iPrimaryReserveAmmoCount
+import rat.poison.glowTime
 import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.target
 import rat.poison.scripts.esp.glow
 import rat.poison.scripts.esp.glowTarget
 import rat.poison.settings.DANGER_ZONE
+import rat.poison.utils.varUtil.strToBool
+import rat.poison.utils.varUtil.strToColor
 import java.util.concurrent.TimeUnit
 import kotlin.system.measureNanoTime
 
@@ -73,17 +74,17 @@ internal fun glowEspApp() = App {
 					} else if (showEnemies && !team) {
 						color = when (bEnt >= 0 && bEnt == entity && showBombCarrier) {
 							true -> "GLOW_BOMB_CARRIER_COLOR"
-							false -> when (glowHealth) {
+							else -> when (glowHealth) {
 								true -> "GLOW_HEALTH"
-								false -> "GLOW_ENEMY_COLOR"
+								else -> "GLOW_ENEMY_COLOR"
 							}
 						}
 					} else if (showTeam && team) {
 						color = when (bEnt >= 0 && bEnt == entity && showBombCarrier) {
 							true -> "GLOW_BOMB_CARRIER_COLOR"
-							false -> when (glowHealth) {
+							else -> when (glowHealth) {
 								true -> "GLOW_HEALTH"
-								false -> "GLOW_TEAM_COLOR"
+								else -> "GLOW_TEAM_COLOR"
 							}
 						}
 					}

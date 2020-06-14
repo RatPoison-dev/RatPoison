@@ -9,10 +9,9 @@ import rat.poison.game.CSGO.gameY
 import rat.poison.game.clientState
 import rat.poison.game.setAngle
 import rat.poison.settings.GAME_PITCH
-import rat.poison.settings.GAME_SENSITIVITY
 import rat.poison.settings.GAME_YAW
-import rat.poison.strToBool
 import rat.poison.utils.extensions.refresh
+import rat.poison.utils.varUtil.strToBool
 import kotlin.math.round
 
 private val delta = ThreadLocal.withInitial { Vector() }

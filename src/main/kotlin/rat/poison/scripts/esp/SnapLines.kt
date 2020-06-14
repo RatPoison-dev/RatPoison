@@ -8,10 +8,10 @@ import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
-import rat.poison.strToBool
-import rat.poison.strToColor
 import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
+import rat.poison.utils.varUtil.strToBool
+import rat.poison.utils.varUtil.strToColor
 
 fun snapLines() = App {
     if (!curSettings["ENABLE_SNAPLINES"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
@@ -37,12 +37,12 @@ fun snapLines() = App {
                     if (enemyCheck) {
                         colStr = when(curSettings["SNAPLINES_BOMB_CARRIER"].strToBool()) {
                             true -> "SNAPLINES_BOMB_CARRIER_COLOR"
-                            false -> "SNAPLINES_ENEMY_COLOR"
+                            else -> "SNAPLINES_ENEMY_COLOR"
                         }
                     } else if (teamCheck) {
                         colStr = when(curSettings["SNAPLINES_BOMB_CARRIER"].strToBool()) {
                             true -> "SNAPLINES_BOMB_CARRIER_COLOR"
-                            false -> "SNAPLINES_TEAM_COLOR"
+                            else -> "SNAPLINES_TEAM_COLOR"
                         }
                     }
                 } else {

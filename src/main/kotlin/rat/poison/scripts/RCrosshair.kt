@@ -13,10 +13,10 @@ import rat.poison.game.entity.weapon
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.settings.MENUTOG
-import rat.poison.strToBool
-import rat.poison.strToColor
 import rat.poison.ui.uiPanels.mainTabbedPane
 import rat.poison.ui.uiPanels.rcsTab
+import rat.poison.utils.varUtil.strToBool
+import rat.poison.utils.varUtil.strToColor
 import java.lang.Math.toRadians
 import kotlin.math.atan
 import kotlin.math.floor
@@ -55,8 +55,6 @@ internal fun rcrosshair() = App {
         val punch = me.punch()
 
         //Center
-        //x = (gameWidth / 2) - ((gameWidth * rccFOV) * punch.y).toFloat() + rccXo
-        //y = (gameHeight / 2) - ((gameHeight * rccFOV) * punch.x).toFloat() + rccYo
         x = (gameWidth / 2) - tan(toRadians(punch.y)).toFloat() * rccFov2 + rccXo
         y = (gameHeight / 2) - tan(toRadians(punch.x)).toFloat() * rccFov2 + rccYo
     } else {

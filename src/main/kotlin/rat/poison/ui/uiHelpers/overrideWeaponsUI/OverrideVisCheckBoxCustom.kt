@@ -2,11 +2,11 @@ package rat.poison.ui.uiHelpers.overrideWeaponsUI
 
 import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisCheckBox
-import rat.poison.*
-import rat.poison.game.Weapons
+import rat.poison.curLocalization
+import rat.poison.oWeapon
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanelTables.weaponOverrideSelected
-import rat.poison.ui.uiPanels.overridenWeapons
+import rat.poison.utils.varUtil.strToBool
 
 class OverrideVisCheckBoxCustom(mainText: String, varName: String, nameInLocalization: String = varName) : VisCheckBox(mainText) {
     private val variableName = varName

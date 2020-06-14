@@ -11,9 +11,9 @@ import rat.poison.game.entity.weapon
 import rat.poison.game.entity.weaponEntity
 import rat.poison.game.me
 import rat.poison.game.setAngle
-import rat.poison.strToBool
 import rat.poison.utils.every
 import rat.poison.utils.normalize
+import rat.poison.utils.varUtil.strToBool
 
 private val lastPunch = Vector2()
 private val newPunch = Vector2()

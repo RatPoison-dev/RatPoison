@@ -6,7 +6,7 @@ import rat.poison.game.entity.dead
 import rat.poison.game.hooks.onFlash
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.flFlashMaxAlpha
-import rat.poison.strToBool
+import rat.poison.utils.varUtil.strToBool
 
 fun reducedFlash() = onFlash {
 	if (!curSettings["ENABLE_REDUCED_FLASH"].strToBool()) return@onFlash

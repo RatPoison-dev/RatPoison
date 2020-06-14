@@ -8,9 +8,9 @@ import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
-import rat.poison.strToBool
 import rat.poison.utils.every
 import rat.poison.utils.notInGame
+import rat.poison.utils.varUtil.strToBool
 
 private var totalHits = 0
 var opened = false

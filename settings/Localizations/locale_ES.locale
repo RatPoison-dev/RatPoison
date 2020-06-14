@@ -80,7 +80,6 @@ FORCE_AIM_KEY = Forzar clave de apuntado
 FORCE_AIM_ALWAYS = Fuerza apuntando siempre
 FORCE_AIM_THROUGH_WALLS = Fuerza apuntando a través de las paredes
 AUTOMATIC_WEAPONS = Armas automáticas
-AUTO_WEP_DELAY = Retraso de MS
 AIM_TARGET_SWAP_DELAY = Retardo de intercambio objetivo
 OVERRIDE_WEAPONS_CHECKBOX = Anular armas
 AIM_ONLY_ON_SHOT = Apuntar al disparo

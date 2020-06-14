@@ -17,13 +17,13 @@ import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.inMyTeam
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.strToBool
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
+import rat.poison.utils.varUtil.strToBool
 import java.awt.event.InputEvent.BUTTON1_DOWN_MASK
 
 private var callingInShot = false
-private var inShot = false
+var triggerInShot = false
 
 fun boneTrigger() = every(10) {
     if (DANGER_ZONE || me.dead()) {
@@ -96,7 +96,9 @@ fun boneTrigger() = every(10) {
         }
 
         callingInShot = false
-        inShot = false
+        triggerInShot = false
+    } else {
+        triggerInShot = false
     }
 }
 
@@ -106,14 +108,18 @@ fun bTrigShoot(delay: Int, aimbot: Boolean = false) {
         callingInShot = true
         Thread(Runnable {
             Thread.sleep(delay.toLong())
-            inShot = true
+            triggerInShot = true
         }).start()
     }
 
-    if (inShot) {
-        //Switch me.weapon() categ -> doesn't work
-        robot.mousePress(BUTTON1_DOWN_MASK)
-        robot.mouseRelease(BUTTON1_DOWN_MASK)
+    if (triggerInShot) {
+        if (CSGO.clientDLL.int(ClientOffsets.dwForceAttack) == 4) { //Dont bother?
+            CSGO.clientDLL[ClientOffsets.dwForceAttack] = 5
+        }
+        Thread.sleep(1)
+        if (CSGO.clientDLL.int(ClientOffsets.dwForceAttack) == 5) {
+            CSGO.clientDLL[ClientOffsets.dwForceAttack] = 4
+        }
 
         boneTrig = aimbot
     }

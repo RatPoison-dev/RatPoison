@@ -1,9 +1,6 @@
 package rat.poison.scripts
 
-import com.kotcrab.vis.ui.VisUI
 import org.jire.arrowhead.keyPressed
-import rat.poison.App
-import rat.poison.App.uiMenu
 import rat.poison.curSettings
 import rat.poison.game.angle
 import rat.poison.game.clientState
@@ -16,10 +13,10 @@ import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.robot
-import rat.poison.strToBool
 import rat.poison.utils.Angle
 import rat.poison.utils.Vector
 import rat.poison.utils.every
+import rat.poison.utils.varUtil.strToBool
 import java.awt.event.KeyEvent
 import kotlin.math.abs
 import kotlin.math.cos

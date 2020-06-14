@@ -1,6 +1,5 @@
 package rat.poison.scripts
 
-import com.sun.jna.platform.win32.OaIdl
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curLocalization
 import rat.poison.game.entity.*

@@ -1,23 +1,30 @@
 package rat.poison.scripts.esp
 
 import com.badlogic.gdx.graphics.Color
+import org.jire.arrowhead.keyPressed
 import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.game.entity.dead
 import rat.poison.game.entity.weapon
 import rat.poison.game.me
 import rat.poison.game.worldToScreen
-import rat.poison.scripts.*
+import rat.poison.scripts.attemptBacktrack
+import rat.poison.scripts.btRecords
 import rat.poison.settings.MENUTOG
-import rat.poison.strToBool
 import rat.poison.utils.Angle
 import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
+import rat.poison.utils.varUtil.strToBool
 
 fun drawBacktrack() = App {
     if (MENUTOG) return@App
     if (me.dead()) return@App
-    if (notInGame || !curSettings["BACKTRACK_VISUALIZE"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return@App
+    if (notInGame || !curSettings["BACKTRACK_VISUALIZE"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["ENABLE_BACKTRACK"].strToBool()) return@App
+
+    val backtrackOnKey = curSettings["ENABLE_BACKTRACK_ON_KEY"].strToBool()
+    val backtrackKeyPressed = keyPressed(curSettings["BACKTRACK_KEY"].toInt())
+
+    if (backtrackOnKey && !backtrackKeyPressed) return@App
 
     val meWep = me.weapon()
     var prefix = ""
@@ -50,6 +57,10 @@ fun drawBacktrack() = App {
                 val w2s = Vector()
 
                 shapeRenderer.apply {
+                    if (shapeRenderer.isDrawing) {
+                        end()
+                    }
+
                     begin()
 
                     color = Color(1f, 1f, 1f, alpha / 100f)
