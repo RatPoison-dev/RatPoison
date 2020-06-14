@@ -19,7 +19,7 @@ import rat.poison.App.uiMenu
 import rat.poison.App.uiSpecList
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.*
-import rat.poison.ui.uiPanels.keybindsUpdate
+import rat.poison.ui.uiHelpers.optionsTab.MenuSliderCustom
 import rat.poison.ui.uiPanels.optionsTab
 import rat.poison.ui.uiPanels.updateVisWindowsNames
 import rat.poison.ui.uiUpdate
@@ -32,10 +32,8 @@ class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
     val menuKey = VisInputFieldCustom(curLocalization["MENU_KEY"], "MENU_KEY", nameInLocalization = "MENU_KEY")
-    val menuAlphaLabel = VisLabelCustom(curLocalization["MENU_ALPHA_SLIDER"] + 1F, nameInLocalization = "MENU_ALPHA_SLIDER") //1F is default
-    val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, false)
+    val menuAlphaSliderCustom = MenuSliderCustom(curLocalization["MENU_ALPHA_SLIDER"], "MENU_ALPHA", 0.5F, 1F, 0.05F, false)
     val oglFPS = VisSliderCustom(curLocalization["OPENGL_FPS"], "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F, nameInLocalization = "OPENGL_FPS")
-
     val stayFocused = VisCheckBoxCustom(curLocalization["MENU_STAY_FOCUSED"], "MENU_STAY_FOCUSED", nameInLocalization = "MENU_STAY_FOCUSED")
     val debug = VisCheckBoxCustom(curLocalization["ENABLE_DEBUG"], "DEBUG", nameInLocalization = "ENABLE_DEBUG")
     val keybinds = VisCheckBoxCustom(curLocalization["KEYBINDS"], "KEYBINDS", nameInLocalization = "KEYBINDS")
@@ -51,19 +49,15 @@ class OptionsTab : Tab(false, false) {
     var fileSelectBox: VisSelectBox<String> = VisSelectBox()
     var localizationSelectBox: VisSelectBox<String> = VisSelectBox()
     val loadLocalizationButton = VisTextButtonCustom(curLocalization["LOAD_LOCALIZATION"], nameInLocalization = "LOAD_LOCALIZATION")
-
     init {
-
         //Create UIAlpha Slider
         val menuAlpha = VisTable()
-        menuAlphaSlider.value = 1F
-        menuAlphaSlider.changed { _, _ ->
-            val alp = (round(menuAlphaSlider.value * 100F) / 100F)
+        menuAlphaSliderCustom.changed { _, _ ->
+            val alp = (round(menuAlphaSliderCustom.sliderBar.value * 100F) / 100F)
             uiMenu.changeAlpha(alp)
-            menuAlphaLabel.setText(curLocalization["MENU_ALPHA_SLIDER"] + alp.toString() + when(alp.toString().length) {4->"" 3->"  " 2->"    " else ->"      "})
+            menuAlphaSliderCustom.sliderLabel.setText(curLocalization["MENU_ALPHA_SLIDER"] + ": " + alp.toString() + when(alp.toString().length) {4->"" 3->"  " 2->"    " else ->"      "})
         }
-        menuAlpha.add(menuAlphaLabel).width(200F)
-        menuAlpha.add(menuAlphaSlider).width(250F)
+        menuAlpha.add(menuAlphaSliderCustom).width(200F)
 
 
         //Create Save Button
@@ -154,7 +148,10 @@ class OptionsTab : Tab(false, false) {
         table.addSeparator()
         table.add(discordLink)
     }
-
+    fun changeAlpha() {
+        val alp = (round(menuAlphaSliderCustom.sliderBar.value * 100F) / 100F)
+        uiMenu.changeAlpha(alp)
+    }
     override fun getContentTable(): Table? {
         return table
     }
@@ -333,7 +330,8 @@ fun deleteCFG(cfgFileName: String) {
 fun updateOptionsTab() {
     optionsTab.apply {
         menuKey.update()
-        menuAlphaLabel.update()
+        changeAlpha()
+        menuAlphaSliderCustom.update()
         oglFPS.update()
         stayFocused.update()
         debug.update()

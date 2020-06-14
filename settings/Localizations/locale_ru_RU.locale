@@ -184,7 +184,7 @@ ENABLE_DEBUG = Отладка
 KEYBINDS = Бинды
 GAUSSIAN_BLUR = Размытие по Гауссу
 JOIN_DISCORD = Дискорд
-MENU_ALPHA_SLIDER = Прозрачность:
+MENU_ALPHA_SLIDER = Прозрачность
 SAVE_CONFIG = Сохранить КФГ
 ENTER_CONFIG_NAME = Введите имя КФГ:
 LOAD_CONFIG = Загрузить КФГ
@@ -272,8 +272,8 @@ NADE_TRACER_TIMEOUT = Таймаут трейсера
 // Override weapons panel
 CATEGORY = Категория:
 ENABLE_OVERRIDE = Включить Переопределение
-OVERRIDE_AIM_SPEED = Скорость:
-OVERRIDE_SMOOTH = Смуч:
+OVERRIDE_AIM_SPEED = Скорость
+OVERRIDE_SMOOTH = Смуч
 
 // Spectator list
 NAME_PREFIX = Имя:

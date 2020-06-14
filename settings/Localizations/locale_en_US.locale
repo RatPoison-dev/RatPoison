@@ -184,7 +184,7 @@ ENABLE_DEBUG = Debug
 KEYBINDS = Keybinds
 GAUSSIAN_BLUR = Gaussian Blur
 JOIN_DISCORD = Join Discord
-MENU_ALPHA_SLIDER = Menu Alpha:
+MENU_ALPHA_SLIDER = Menu Alpha
 SAVE_CONFIG = Save CFG
 ENTER_CONFIG_NAME = Enter config name:
 LOAD_CONFIG = Load CFG
@@ -277,8 +277,8 @@ NADE_TRACER_TIMEOUT = Tracer Timeout
 // Override weapons panel
 CATEGORY = Category:
 ENABLE_OVERRIDE = Enable Override
-OVERRIDE_AIM_SPEED = Speed:
-OVERRIDE_SMOOTH = Smooth:
+OVERRIDE_AIM_SPEED = Speed
+OVERRIDE_SMOOTH = Smooth
 
 // Spectator list
 NAME_PREFIX = name:

@@ -161,7 +161,7 @@ ENABLE_DEBUG = Depurar
 KEYBINDS = Teclas vinculadas
 GAUSSIAN_BLUR = Desenfoque gaussiano
 JOIN_DISCORD = Unirse a Discord
-MENU_ALPHA_SLIDER = Menú alfa:
+MENU_ALPHA_SLIDER = Menú alfa
 SAVE_CONFIG = Guardar configuración
 ENTER_CONFIG_NAME = Ingrese el nombre de la configuración:
 LOAD_CONFIG = Cargar config
@@ -246,8 +246,8 @@ NADE_TRACER_TIMEOUT = Tiempo de espera del trazador
 // Override weapons panel
 CATEGORY = Categoría:
 ENABLE_OVERRIDE = Habilitar anulación
-OVERRIDE_AIM_SPEED = Velocidad:
-OVERRIDE_SMOOTH = Suave:
+OVERRIDE_AIM_SPEED = Velocidad
+OVERRIDE_SMOOTH = Suave
 
 // Weapons
 DESERT_EAGLE = DESERT_EAGLE

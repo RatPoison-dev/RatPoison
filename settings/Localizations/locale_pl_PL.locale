@@ -184,7 +184,7 @@ ENABLE_DEBUG = Debugowanie
 KEYBINDS = Klawisze
 GAUSSIAN_BLUR = Rozmycie Gaussowe
 JOIN_DISCORD = Dołącz do Discorda [angielski]
-MENU_ALPHA_SLIDER = Przezroczystość:
+MENU_ALPHA_SLIDER = Przezroczystość
 SAVE_CONFIG = Zapisz CFG
 ENTER_CONFIG_NAME = Nazwa konfiguracji:
 LOAD_CONFIG = Wczytaj CFG
@@ -277,8 +277,8 @@ NADE_TRACER_TIMEOUT = Czas wygaszania
 // Override weapons panel
 CATEGORY = Kategoria:
 ENABLE_OVERRIDE = Zastąp
-OVERRIDE_AIM_SPEED = Prędkość:
-OVERRIDE_SMOOTH = Płynność:
+OVERRIDE_AIM_SPEED = Prędkość
+OVERRIDE_SMOOTH = Płynność
 
 // Spectator list
 NAME_PREFIX = nick:
