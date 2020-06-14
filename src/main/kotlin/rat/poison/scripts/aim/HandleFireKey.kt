@@ -15,11 +15,19 @@ import rat.poison.scripts.bestBacktrackTarget
 import rat.poison.scripts.triggerInShot
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
+import rat.poison.utils.inBackground
 import rat.poison.utils.notInGame
 import rat.poison.utils.varUtil.strToBool
 
 fun handleFireKey() = every(1) {
-    if (MENUTOG || (me <= 0L && !notInGame) || (me > 0L && me.dead()) || notInGame) return@every //Brain blast to the past
+    if (MENUTOG || (me <= 0L && !notInGame) || (me > 0L && me.dead())) return@every //Brain blast to the past
+
+    if (notInGame || inBackground) {
+        if (clientDLL.int(dwForceAttack) == 5) {
+            clientDLL[dwForceAttack] = 4
+        }
+        return@every
+    }
 
     if (keyPressed(1)) {
         fireWeapon()
