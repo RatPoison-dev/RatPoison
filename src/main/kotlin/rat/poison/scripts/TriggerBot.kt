@@ -91,6 +91,8 @@ fun boneTrigger() = every(10) {
                             } else {
                                 boneTrig = false
                             }
+                        } else {
+                            boneTrig = false //that shit handled at end
                         }
                     }
                 }
