@@ -61,7 +61,7 @@ fun fireWeapon() {
         }
     }
 
-    if (curSettings["AUTOMATIC_WEAPONS"].strToBool() && !meWep.automatic) {
+    if (curSettings["AUTOMATIC_WEAPONS"].strToBool() && !meWep.automatic && !meWep.grenade) {
         if (clientDLL.int(dwForceAttack) == 4) { //Dont bother?
             clientDLL[dwForceAttack] = 5
         }
