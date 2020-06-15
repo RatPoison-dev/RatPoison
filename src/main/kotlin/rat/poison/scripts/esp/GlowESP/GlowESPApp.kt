@@ -23,7 +23,7 @@ internal fun glowEspApp() = App {
 
 	sync++
 
-	if (sync >= 25) { //Limit calls with flicker free glow (forced on)
+	if (sync >= 10) { //Limit calls with flicker free glow (forced on)
 		sync = 0
 
 		glowTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
