@@ -381,7 +381,7 @@ object App : ApplicationAdapter() {
                                         menuStage.addActor(uiKeybinds)
                                     }
                                 } else if (menuStage.actors.contains(uiKeybinds)) {
-                                    menuStage.actors.removeValue(uiKeybinds, true)
+                                    menuStage.clear()
                                 }
 
                                 if (curSettings["ENABLE_OVERRIDE"].strToBool()) {

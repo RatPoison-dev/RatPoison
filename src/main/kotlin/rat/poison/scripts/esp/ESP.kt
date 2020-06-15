@@ -32,7 +32,7 @@ fun esp() {
 	if (dbg) { println("[DEBUG] Initializing Radar ESP") }; radarEsp()
 }
 
-fun Entity.glow(color: Color, model: Boolean) {
+fun Entity.glow(color: Color, glowType: Int) {
 	val glowMemory: Memory by lazy {
 		Memory(60)
 	}
@@ -54,12 +54,18 @@ fun Entity.glow(color: Color, model: Boolean) {
 
 			glowMemory.setByte(0x26, curSettings["INV_GLOW_ESP"].toBoolean().toInt().toByte())
 
-			if (curSettings["MODEL_AND_GLOW"].strToBool())
-				glowMemory.setByte(0x2C, model.toInt().toByte())
-			else
-				glowMemory.setByte(0x2C, curSettings["MODEL_ESP"].toBoolean().toInt().toByte())
+			glowMemory.setByte(0x2C, glowType.toByte())
 
 			CSGO.csgoEXE.write(this, glowMemory)
 		}
+	}
+}
+
+fun String.toGlowNum(): Int {
+	return when(this) {
+		"Normal" -> 0
+		"Model" -> 1
+		"Visible" -> 2
+		else -> 3
 	}
 }

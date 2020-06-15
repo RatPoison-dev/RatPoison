@@ -15,11 +15,11 @@ import rat.poison.game.Color as rColor
 
 private val white = VisUI.getSkin().getDrawable("white")
 
-class VisColorPickerCustom(mainText: String, varName: String, nameInLocalization: String = "") : VisTable() {
-    private val labelText = mainText
+class VisColorPickerCustom(mainText: String, varName: String, nameInLocalization: String = varName) : VisTable() {
+    private val defaultText = mainText
     private val variableName = varName
 
-    private val pickerButton = VisLabelCustom(labelText, nameInLocalization)
+    private val pickerButton = VisLabelCustom(defaultText, nameInLocalization)
     private val pickerImage = VisImageButton(white)
 
     private var colorPicker : ColorPicker
@@ -27,6 +27,9 @@ class VisColorPickerCustom(mainText: String, varName: String, nameInLocalization
 
     init {
         update()
+
+        val tmpText = curLocalization[localeName]
+        pickerButton.setText(if (tmpText.isBlank()) defaultText else tmpText )
 
         colorPicker = ColorPicker(curLocalization[nameInLocalization], object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {

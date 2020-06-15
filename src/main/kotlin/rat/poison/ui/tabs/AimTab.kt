@@ -117,7 +117,7 @@ fun updateAim() {
         perfectAimCheckBox.update()
         advancedSettingsCheckBox.update()
         aimBoneBox.setItems(curLocalization["HEAD"], curLocalization["NECK"], curLocalization["CHEST"], curLocalization["STOMACH"], curLocalization["NEAREST"], curLocalization["RANDOM"])
-        //fovTypeBox.setItems(curLocalization["STATIC"], curLocalization["DISTANCE"])
+        fovTypeBox.setItems(curLocalization["STATIC"], curLocalization["DISTANCE"])
         forceAimBoneBox.setItems(curLocalization["HEAD"], curLocalization["NECK"], curLocalization["CHEST"], curLocalization["STOMACH"], curLocalization["NEAREST"], curLocalization["RANDOM"])
         categorySelectionBox.setItems(curLocalization["PISTOL"], curLocalization["RIFLE"], curLocalization["SMG"], curLocalization["SNIPER"], curLocalization["SHOTGUN"])
         forceAimBoneKey.update()
@@ -146,6 +146,11 @@ fun updateAim() {
             aimAfterShots.disable(false, Color(255F, 255F, 255F, 1F))
         } else {
             aimAfterShots.disable(true, Color(0F, 0F, 0F, 0F))
+        }
+
+        fovTypeBox.selected = when(curSettings["FOV_TYPE"]) {
+            "DISTANCE" -> curLocalization["DISTANCE"]
+            else -> curLocalization["STATIC"]
         }
 
         aimBoneBox.selected = when (curSettings[categorySelected + "_AIM_BONE"].toInt()) {

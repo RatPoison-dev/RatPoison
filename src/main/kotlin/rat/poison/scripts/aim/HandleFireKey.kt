@@ -25,13 +25,17 @@ fun handleFireKey() = every(1) {
     if (notInGame || inBackground) {
         if (clientDLL.int(dwForceAttack) == 5) {
             clientDLL[dwForceAttack] = 4
+            Thread.sleep(1)
         }
         return@every
     }
 
-    if (keyPressed(1)) {
+    if (triggerInShot) {
+        //Let that bih handle shots
+        return@every
+    } else if (keyPressed(1)) {
         fireWeapon()
-    } else if (!triggerInShot) {
+    } else {
         if (clientDLL.int(dwForceAttack) == 5) {
             clientDLL[dwForceAttack] = 4
         }
@@ -43,7 +47,10 @@ fun fireWeapon() {
 
     updateCursorEnable()
     if (cursorEnable || me.dead()) return
-    if (me.weapon().sniper && curSettings["ENABLE_SCOPED_ONLY"].strToBool() && !me.isScoped()) return
+
+    val meWep = me.weapon()
+
+    if (meWep.sniper && curSettings["ENABLE_SCOPED_ONLY"].strToBool() && !me.isScoped()) return
 
     val backtrackOnKey = curSettings["ENABLE_BACKTRACK_ON_KEY"].strToBool()
     val backtrackKeyPressed = keyPressed(curSettings["BACKTRACK_KEY"].toInt())
@@ -54,7 +61,7 @@ fun fireWeapon() {
         }
     }
 
-    if (curSettings["AUTOMATIC_WEAPONS"].strToBool()) {
+    if (curSettings["AUTOMATIC_WEAPONS"].strToBool() && !meWep.automatic) {
         if (clientDLL.int(dwForceAttack) == 4) { //Dont bother?
             clientDLL[dwForceAttack] = 5
         }

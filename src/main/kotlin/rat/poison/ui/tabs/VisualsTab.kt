@@ -159,18 +159,6 @@ class VisualsTab : Tab(false, false) {
 }
 
 fun updateDisableEsp() {
-    glowEspTab.apply {
-        if (invGlowEsp.isChecked || modelEsp.isChecked) {
-            glowEsp.isChecked = true
-            glowEsp.isDisabled = true
-        }
-
-        if (modelAndGlow.isChecked) {
-            modelEsp.isChecked = true
-            modelEsp.isDisabled = true
-        }
-    }
-
     visualsTab.apply {
         val bool = !enableEsp.isChecked
         var col = Color(255F, 255F, 255F, 1F)
@@ -212,10 +200,7 @@ fun updateDisableEsp() {
         espTabbedPane.switchTab(recTab)
 
         glowEspTab.glowEsp.disable(bool)
-        glowEspTab.invGlowEsp.disable(bool)
-        glowEspTab.modelEsp.disable(bool)
         glowEspTab.glowShowHealth.disable(bool)
-        glowEspTab.modelAndGlow.disable(bool)
         glowEspTab.showTeam.disable(bool)
         glowEspTab.showEnemies.disable(bool)
         glowEspTab.showBomb.disable(bool)

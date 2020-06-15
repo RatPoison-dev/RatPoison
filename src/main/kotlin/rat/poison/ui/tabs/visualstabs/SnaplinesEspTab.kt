@@ -31,6 +31,9 @@ class SnaplinesEspTab : Tab(false, false) {
     val bombCarrierSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_BOMB_CARRIER")
     val bombCarrierSnaplinesColor = VisColorPickerCustom(curLocalization["BOMB_CARRIER"], "SNAPLINES_BOMB_CARRIER_COLOR", nameInLocalization = "BOMB_CARRIER")
 
+    val defuseKitSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_DEFUSE_KITS")
+    val defuseKitSnaplinesColor = VisColorPickerCustom("Defuse Kits", "SNAPLINES_DEFUSE_KIT_COLOR") //needs localization
+
     init {
         table.padLeft(25F)
         table.padRight(25F)
@@ -64,7 +67,13 @@ class SnaplinesEspTab : Tab(false, false) {
 
         tmpTable = VisTable()
         tmpTable.add(bombCarrierSnaplines)
-        tmpTable.add(bombCarrierSnaplinesColor).width(175F - bombCarrierSnaplines.width).padRight(50F)
+        tmpTable.add(bombCarrierSnaplinesColor).width(175F - bombCarrierSnaplines.width).padRight(50F).row()
+
+        table.add(tmpTable)
+
+        tmpTable = VisTable()
+        tmpTable.add(defuseKitSnaplines)
+        tmpTable.add(defuseKitSnaplinesColor).width(175F - defuseKitSnaplines.width).padRight(50F)
 
         table.add(tmpTable)
     }

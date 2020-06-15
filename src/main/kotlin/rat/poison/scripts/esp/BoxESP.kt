@@ -91,13 +91,14 @@ fun boxEsp() = App {
 		vFeet.set(vHead.x, vHead.y, vHead.z - 75)
 
 		if (worldToScreen(vHead, vTop) && worldToScreen(vFeet, vBot)) {
-			val vMid = Vector((vTop.x + vBot.x)/2, (vTop.y + vBot.y)/2, (vTop.z + vBot.z)/2)
+			val vMid = Vector((vTop.x + vBot.x)/2f, (vTop.y + vBot.y)/2f, (vTop.z + vBot.z)/2f)
+			val entHealth = entity.health()
 			val tCol = when (curSettings["BOX_SHOW_HEALTH"].strToBool()) {
-				true -> rat.poison.game.Color((255 - 2.55 * entity.health()).toInt(), (2.55 * entity.health()).toInt(), 0, 1.0)
+				true -> rat.poison.game.Color((255 - 2.55 * entHealth).toInt(), (2.55 * entHealth).toInt(), 0, 1.0)
 				false -> curSettings["BOX_TEAM_COLOR"].strToColor()
 			}
 			val eCol = when (curSettings["BOX_SHOW_HEALTH"].strToBool()) {
-				true -> rat.poison.game.Color((255 - 2.55 * entity.health()).toInt(), (2.55 * entity.health()).toInt(), 0, 1.0)
+				true -> rat.poison.game.Color((255 - 2.55 * entHealth).toInt(), (2.55 * entHealth).toInt(), 0, 1.0)
 				false -> curSettings["BOX_ENEMY_COLOR"].strToColor()
 			}
 			val c = if (meTeam == entTeam) Color(tCol.red/255F, tCol.green/255F, tCol.blue/255F, 1F) else Color(eCol.red/255F, eCol.green/255F, eCol.blue/255F, 1F)
