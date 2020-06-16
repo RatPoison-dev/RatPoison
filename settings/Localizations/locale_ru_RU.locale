@@ -58,7 +58,6 @@ SPECTATOR_LIST_WINDOW_NAME = Наблюдатели
 
 // Aim tab
 PISTOL = Пистолеты
-GAME_SENSITIVITY = Чувствительность мыши
 SHOTGUN = Дробовики
 RIFLE = Винтовки
 SNIPER = Снайперки

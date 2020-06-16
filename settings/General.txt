@@ -29,9 +29,6 @@ MENU_STAY_FOCUSED = true
 OVERLAY_WIDTH = 1920
 OVERLAY_HEIGHT = 1080
 
-//Your ingame mouse sensitivity
-GAME_SENSITIVITY = 2.5
-
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles aim on or off
 //Default key is F3
 AIM_TOGGLE_KEY = 114

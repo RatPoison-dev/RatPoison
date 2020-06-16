@@ -9,7 +9,6 @@ import rat.poison.utils.extensions.uint
 var GAME_PITCH = 0.022 // m_pitc
 var GAME_YAW = 0.022 // m_yaw
 val GAME_SENSITIVITY by lazy {//by lazy(LazyThreadSafetyMode.NONE) { //Currently broken
-
     val pointer = clientDLL.address + dwSensitivityPtr
     val sens = clientDLL.uint(dwSensitivity)
     val value = sens xor pointer
