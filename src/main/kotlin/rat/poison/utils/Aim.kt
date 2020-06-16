@@ -60,8 +60,6 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 
 	var sens = GAME_SENSITIVITY + .5
 
-	println(sens)
-
 	if (perfect) sens = 1.0
 
 	val dx = round(delta.x / (sens * GAME_PITCH))
