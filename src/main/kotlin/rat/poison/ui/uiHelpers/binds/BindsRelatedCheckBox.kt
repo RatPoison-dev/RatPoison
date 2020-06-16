@@ -25,7 +25,6 @@ class BindsRelatedCheckBox(mainText: String, varName: String, nameInLocalization
         update()
         pack()
         add(checkBox).height(18F).left()
-        add(im)
         if (!isFixedPad) {
             add(configureButton).height(22F).padLeft(padLeft - checkBox.width).padRight(10F)
         }
