@@ -47,10 +47,7 @@ import rat.poison.ui.tabs.RcsTab
 import rat.poison.ui.tabs.saveDefault
 import rat.poison.ui.uiPanels.*
 import rat.poison.ui.uiUpdate
-import rat.poison.utils.Angle
-import rat.poison.utils.ObservableBoolean
-import rat.poison.utils.Settings
-import rat.poison.utils.Vector
+import rat.poison.utils.*
 import rat.poison.utils.extensions.appendHumanReadableSize
 import rat.poison.utils.extensions.roundNDecimals
 import java.awt.Robot
@@ -325,6 +322,7 @@ object App : ApplicationAdapter() {
     lateinit var uiSpecList: UISpectatorList
     lateinit var uiAimOverridenWeapons: UIAimOverridenWeapons
     lateinit var uiKeybinds: UIKeybinds
+    lateinit var uiBinds: UIBinds
     private val sbText = StringBuilder()
 
     private val osBean = ManagementFactory.getOperatingSystemMXBean() as OperatingSystemMXBean
@@ -335,6 +333,7 @@ object App : ApplicationAdapter() {
         overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
         toggleAimKey = ObservableBoolean({ keyPressed(curSettings["AIM_TOGGLE_KEY"].toInt()) })
         toggleRCSKey = ObservableBoolean({ keyPressed(curSettings["RCS_TOGGLE_KEY"].toInt()) })
+        constructVars()
         VisUI.load(Gdx.files.internal("skin\\tinted.json"))
 
         //Implement stage for menu
@@ -347,6 +346,7 @@ object App : ApplicationAdapter() {
         uiSpecList = UISpectatorList()
         uiAimOverridenWeapons = UIAimOverridenWeapons()
         uiKeybinds = UIKeybinds()
+        uiBinds = UIBinds()
 
         menuStage.addActor(uiMenu)
 
@@ -380,11 +380,20 @@ object App : ApplicationAdapter() {
                         menuTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
                             if (MENUTOG) {
                                 if (curSettings["KEYBINDS"].strToBool()) {
+                                    //println(menuStage.actors.contains(uiKeybinds))
                                     if (!menuStage.actors.contains(uiKeybinds)) {
                                         menuStage.addActor(uiKeybinds)
                                     }
                                 } else if (menuStage.actors.contains(uiKeybinds)) {
-                                    menuStage.actors.removeValue(uiKeybinds, true)
+                                    menuStage.clear()
+                                }
+
+                                if (curSettings["BINDS"].strToBool()) {
+                                    if (!menuStage.actors.contains(uiBinds)) {
+                                        menuStage.addActor(uiBinds)
+                                    }
+                                } else if (menuStage.actors.contains(uiBinds)) {
+                                    menuStage.clear()
                                 }
 
                                 if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
@@ -506,7 +515,7 @@ object App : ApplicationAdapter() {
                 if (toggleRCSKey.justBecameTrue) {
                     rcsTab.enableRCS.isChecked = !rcsTab.enableRCS.isChecked
                 }
-
+                addListeners()
                 val w = overlay.width
                 val h = overlay.height
 

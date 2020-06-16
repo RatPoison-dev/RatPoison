@@ -19,7 +19,6 @@ import rat.poison.App.uiMenu
 import rat.poison.App.uiSpecList
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.*
-import rat.poison.ui.uiHelpers.optionsTab.MenuSliderCustom
 import rat.poison.ui.uiPanels.optionsTab
 import rat.poison.ui.uiPanels.updateVisWindowsNames
 import rat.poison.ui.uiUpdate
@@ -32,7 +31,7 @@ class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
     val menuKey = VisInputFieldCustom(curLocalization["MENU_KEY"], "MENU_KEY", nameInLocalization = "MENU_KEY")
-    val menuAlphaSliderCustom = MenuSliderCustom(curLocalization["MENU_ALPHA_SLIDER"], "MENU_ALPHA", 0.5F, 1F, 0.05F, false)
+    val menuAlphaSliderCustom = VisSliderCustom(curLocalization["MENU_ALPHA_SLIDER"], "MENU_ALPHA", 0.5F, 1F, 0.05F, false)
     val oglFPS = VisSliderCustom(curLocalization["OPENGL_FPS"], "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F, nameInLocalization = "OPENGL_FPS")
     val stayFocused = VisCheckBoxCustom(curLocalization["MENU_STAY_FOCUSED"], "MENU_STAY_FOCUSED", nameInLocalization = "MENU_STAY_FOCUSED")
     val debug = VisCheckBoxCustom(curLocalization["ENABLE_DEBUG"], "DEBUG", nameInLocalization = "ENABLE_DEBUG")
@@ -53,9 +52,8 @@ class OptionsTab : Tab(false, false) {
         //Create UIAlpha Slider
         val menuAlpha = VisTable()
         menuAlphaSliderCustom.changed { _, _ ->
-            val alp = (round(menuAlphaSliderCustom.sliderBar.value * 100F) / 100F)
+            val alp = curSettings["MENU_ALPHA"].toFloat()
             uiMenu.changeAlpha(alp)
-            menuAlphaSliderCustom.sliderLabel.setText(curLocalization["MENU_ALPHA_SLIDER"] + ": " + alp.toString() + when(alp.toString().length) {4->"" 3->"  " 2->"    " else ->"      "})
         }
         menuAlpha.add(menuAlphaSliderCustom).width(200F)
 
@@ -149,7 +147,7 @@ class OptionsTab : Tab(false, false) {
         table.add(discordLink)
     }
     fun changeAlpha() {
-        val alp = (round(menuAlphaSliderCustom.sliderBar.value * 100F) / 100F)
+        val alp = curSettings["MENU_ALPHA"].toFloat()
         uiMenu.changeAlpha(alp)
     }
     override fun getContentTable(): Table? {

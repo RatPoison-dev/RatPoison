@@ -15,6 +15,8 @@ import rat.poison.scripts.selfNade
 import rat.poison.scripts.weaponSpamToggleKey
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.*
+import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
+import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiPanels.miscTab
 import rat.poison.utils.ObservableBoolean
 import java.io.File
@@ -24,7 +26,7 @@ class MiscTab : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     //Movement
-    val bunnyHop = VisCheckBoxCustom(curLocalization["ENABLE_BUNNY_HOP"], "ENABLE_BUNNY_HOP", nameInLocalization = "ENABLE_BUNNY_HOP")
+    val bunnyHop = BindsRelatedCheckBox(curLocalization["ENABLE_BUNNY_HOP"], "ENABLE_BUNNY_HOP", nameInLocalization = "ENABLE_BUNNY_HOP")
     val autoStrafe = VisCheckBoxCustom(curLocalization["AUTO_STRAFE"], "AUTO_STRAFE", nameInLocalization = "AUTO_STRAFE")
     val autoStrafeBHopOnly = VisCheckBoxCustom(curLocalization["STRAFE_BHOP_ONLY"], "STRAFE_BHOP_ONLY", nameInLocalization = "STRAFE_BHOP_ONLY")
     val fastStop = VisCheckBoxCustom(curLocalization["FAST_STOP"], "FAST_STOP", nameInLocalization = "FAST_STOP")

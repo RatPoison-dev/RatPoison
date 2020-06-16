@@ -92,7 +92,7 @@ fun keybindsUpdate(neglect: Actor) {
         aimToggleKey.update(neglect)
         forceAimKey.update(neglect)
         forceAimBoneKey.update(neglect)
-        rcsToggleKey.update()
+        rcsToggleKey.update(neglect)
         boneTriggerKey.update(neglect)
         visualsToggleKey.update(neglect)
         doorSpamKey.update(neglect)
