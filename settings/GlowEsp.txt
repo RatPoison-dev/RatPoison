@@ -1,4 +1,4 @@
-//Enable glow esp
+﻿//Enable glow esp
 GLOW_ESP = false
 
 //Type of glow on entities (enemies & teammates)
@@ -65,3 +65,9 @@ GLOW_GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)
 GLOW_HIGHLIGHT_COLOR = Color(red=0, green=174, blue=255, alpha=1.0)
 
 
+
+GLOW_ESP_ON_KEY = false
+
+GLOW_ESP_KEY = 22
+
+GLOW_ESP_SWITCH_KEY = 22

@@ -1,6 +1,7 @@
-package rat.poison.scripts
+﻿package rat.poison.scripts
 
 import org.jire.arrowhead.keyPressed
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.entity.dead
@@ -12,7 +13,7 @@ import rat.poison.utils.every
 import rat.poison.utils.varUtil.strToBool
 
 fun doorSpam() = every(20) {
-    if (!curSettings["D_SPAM"].strToBool() || me.dead()) return@every
+    if (!curSettings["D_SPAM"].strToBool()  || !checkFlags("D_SPAM") || me.dead()) return@every
 
     updateCursorEnable()
     if (cursorEnable) return@every

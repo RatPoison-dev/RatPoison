@@ -9,6 +9,7 @@ NO = Нет
 ON_KEY = На Кнопку
 _KEY = Кнопка
 _SWITCH_KEY = Кнопка переключения
+CONFIGURE = Бинды
 GRENADES = Гранаты
 TARGET = Цель
 BONES = Кости
@@ -129,6 +130,7 @@ AUTO_STRAFE = Автострейфы
 STRAFE_BHOP_ONLY = Только при бхопе
 FAST_STOP = Быстрая остановка
 AIM_STRAFER = Стрейфы
+AIM_STRAFER_TYPE = Тип
 AIM_STRAFER_SAME = Тот-же
 AIM_STRAFER_OPPOSITE = Опозит
 AIM_STRAFER_SHIFT = Шифт Волк
@@ -144,7 +146,7 @@ FOV_ZOOM_2 = ФОВ 2 зума
 ENABLE_BOMB_TIMER = Таймеры бомбы
 BOMB_TIMER_BARS = Полоска
 BOMB_TIMER_MENU = Меню
-ENABLE_SPECTATOR_LIST = Список наблюдателей
+ENABLE_SPECTATOR_LIST = Наблюдатели
 
 ENABLE_AUTO_KNIFE = Автонож
 ENABLE_PERFECT_BOMB_DEFUSE = Идеальный дефуз бомбы
@@ -230,7 +232,7 @@ AUTO_FORCE_UPDATE = Автоматическая запись
 
 // Visuals tab
 ENABLE_ESP = Включить визуалы
-VISUALS_TOGGLE_KEY = Кнопка переключения визуалов
+VISUALS_TOGGLE_KEY = Кнопка переключения ЕСП
 ENABLE_RADAR_ESP = Радар хак
 ENABLE_NIGHTMODE = Ночной режим/Полная яркость
 NIGHTMODE_VALUE = %
@@ -253,6 +255,10 @@ FOOTSTEPS_TEXT = Текст
 FOOTSTEPS_CIRCLE = Кружок
 // Glow Esp tab
 INV_GLOW_ESP = Вся модель
+NORMAL = Обычный
+MODEL = Модель
+VISIBLE = Видимый
+VISIBLE_FLICKER = Фликер
 MODEL_ESP = Части модели
 MODEL_AND_GLOW = Модель & Подсветка
 // HitMarkers tab

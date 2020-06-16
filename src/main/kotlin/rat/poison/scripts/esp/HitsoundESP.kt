@@ -1,9 +1,10 @@
-package rat.poison.scripts.esp
+﻿package rat.poison.scripts.esp
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Sound
 import com.kotcrab.vis.ui.VisUI
 import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.me
@@ -17,7 +18,7 @@ var opened = false
 lateinit var hitSound: Sound
 
 fun hitSoundEsp() = every(50) {
-    if (!curSettings["MENU"].strToBool() || !curSettings["ENABLE_HITSOUND"].strToBool() || notInGame || me <= 0) return@every
+    if (!curSettings["MENU"].strToBool() || !curSettings["ENABLE_HITSOUND"].strToBool() || !checkFlags("ENABLE_HITSOUND") || notInGame || me <= 0) return@every
 
     if (VisUI.isLoaded()) {
         val curHits = csgoEXE.int(me + m_totalHitsOnServer)

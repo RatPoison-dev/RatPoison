@@ -1,4 +1,4 @@
-package rat.poison.scripts
+﻿package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.utils.Align
 import rat.poison.App
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.CSGO.csgoEXE
@@ -36,7 +37,7 @@ fun hitMarker() = App {
         hitMarkerCombo++
         totalHits = curHits
 
-        if (curSettings["ENABLE_ADRENALINE"].strToBool()) {
+        if (curSettings["ENABLE_ADRENALINE"].strToBool() && checkFlags("ENABLE_ADRENALINE")) {
             val cGT = currentGameTicks()
             csgoEXE[me + m_flHealthShotBoostExpirationTime] = cGT + clamp((hitMarkerCombo * .5F), 0F, 2.5F)
         }

@@ -10,13 +10,15 @@ import rat.poison.ui.changed
 import rat.poison.ui.tabs.glowEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
+import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
+import rat.poison.visualsMap
 
 class GlowEspTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val glowEsp = VisCheckBoxCustom(curLocalization["ENABLE"], "GLOW_ESP", nameInLocalization = "ENABLE")
-
+    val glowEsp = BindsRelatedCheckBox(curLocalization["ENABLE"], "GLOW_ESP", nameInLocalization = "ENABLE", padLeft = 50F, isFixedPad = true)
+    var map = visualsMap()
     var enemyGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
     var teammateGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
     var weaponGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
@@ -48,6 +50,10 @@ class GlowEspTab : Tab(false, false) {
     val showTarget = VisCheckBoxCustom(" ", "GLOW_SHOW_TARGET")
     val glowHighlightColor = VisColorPickerCustom(curLocalization["TARGET"], "GLOW_HIGHLIGHT_COLOR", nameInLocalization = "TARGET")
 
+    fun updateMap() {
+        map = visualsMap()
+    }
+
     init {
         //weaponGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
         //var grenadeGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
@@ -55,58 +61,58 @@ class GlowEspTab : Tab(false, false) {
         //var bombCarrierGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
         //var bombGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
 
-        enemyGlowType.setItems("Normal", "Model", "Visible", "Visible Flicker")
-        enemyGlowType.selected = "Normal"
+        enemyGlowType.setItems(curLocalization["NORMAL"], curLocalization["MODEL"], curLocalization["VISIBLE"], curLocalization["VISIBLE_FLICKER"])
+        enemyGlowType.selected = map[curLocalization["VISIBLE"]]
         enemyGlowType.changed { _, _ ->
-            curSettings["GLOW_ENEMY_TYPE"] = enemyGlowType.selected
+            curSettings["GLOW_ENEMY_TYPE"] = map[enemyGlowType.selected]
             //uiUpdate() ?
             true
         }
 
-        teammateGlowType.setItems("Normal", "Model", "Visible", "Visible Flicker")
-        teammateGlowType.selected = "Normal"
+        teammateGlowType.setItems(curLocalization["NORMAL"], curLocalization["MODEL"], curLocalization["VISIBLE"], curLocalization["VISIBLE_FLICKER"])
+        teammateGlowType.selected = map[curLocalization["NORMAL"]]
         teammateGlowType.changed { _, _ ->
-            curSettings["GLOW_TEAMMATE_TYPE"] = teammateGlowType.selected
+            curSettings["GLOW_TEAMMATE_TYPE"] = map[teammateGlowType.selected]
             //uiUpdate() ?
             true
         }
 
-        grenadeGlowType.setItems("Normal", "Model", "Visible", "Visible Flicker")
-        grenadeGlowType.selected = "Normal"
+        grenadeGlowType.setItems(curLocalization["NORMAL"], curLocalization["MODEL"], curLocalization["VISIBLE"], curLocalization["VISIBLE_FLICKER"])
+        grenadeGlowType.selected = map[curLocalization["NORMAL"]]
         grenadeGlowType.changed { _, _ ->
-            curSettings["GLOW_GRENADE_TYPE"] = grenadeGlowType.selected
+            curSettings["GLOW_GRENADE_TYPE"] = map[grenadeGlowType.selected]
             //uiUpdate() ?
             true
         }
 
-        weaponGlowType.setItems("Normal", "Model", "Visible", "Visible Flicker")
-        weaponGlowType.selected = "Normal"
+        weaponGlowType.setItems(curLocalization["NORMAL"], curLocalization["MODEL"], curLocalization["VISIBLE"], curLocalization["VISIBLE_FLICKER"])
+        weaponGlowType.selected = map[curLocalization["NORMAL"]]
         weaponGlowType.changed { _, _ ->
-            curSettings["GLOW_WEAPON_TYPE"] = weaponGlowType.selected
+            curSettings["GLOW_WEAPON_TYPE"] = map[weaponGlowType.selected]
             //uiUpdate() ?
             true
         }
 
-        targetGlowType.setItems("Normal", "Model", "Visible", "Visible Flicker")
-        targetGlowType.selected = "Normal"
+        targetGlowType.setItems(curLocalization["NORMAL"], curLocalization["MODEL"], curLocalization["VISIBLE"], curLocalization["VISIBLE_FLICKER"])
+        targetGlowType.selected = map[curLocalization["NORMAL"]]
         targetGlowType.changed { _, _ ->
-            curSettings["GLOW_TARGET_TYPE"] = targetGlowType.selected
+            curSettings["GLOW_TARGET_TYPE"] = map[targetGlowType.selected]
             //uiUpdate() ?
             true
         }
 
-        bombCarrierGlowType.setItems("Normal", "Model", "Visible", "Visible Flicker")
-        bombCarrierGlowType.selected = "Normal"
+        bombCarrierGlowType.setItems(curLocalization["NORMAL"], curLocalization["MODEL"], curLocalization["VISIBLE"], curLocalization["VISIBLE_FLICKER"])
+        bombCarrierGlowType.selected = map[curLocalization["NORMAL"]]
         bombCarrierGlowType.changed { _, _ ->
-            curSettings["GLOW_BOMB_CARRIER_TYPE"] = bombCarrierGlowType.selected
+            curSettings["GLOW_BOMB_CARRIER_TYPE"] = map[bombCarrierGlowType.selected]
             //uiUpdate() ?
             true
         }
 
-        bombGlowType.setItems("Normal", "Model", "Visible", "Visible Flicker")
-        bombGlowType.selected = "Normal"
+        bombGlowType.setItems(curLocalization["NORMAL"], curLocalization["MODEL"], curLocalization["VISIBLE"], curLocalization["VISIBLE_FLICKER"])
+        bombGlowType.selected = map[curLocalization["NORMAL"]]
         bombGlowType.changed { _, _ ->
-            curSettings["GLOW_BOMB_TYPE"] = bombGlowType.selected
+            curSettings["GLOW_BOMB_TYPE"] = map[bombGlowType.selected]
             //uiUpdate() ?
             true
         }
@@ -187,16 +193,9 @@ class GlowEspTab : Tab(false, false) {
 
 fun glowEspTabUpdate() {
     glowEspTab.apply {
+        updateMap()
         glowEsp.update()
         glowShowHealth.update()
-
-        enemyGlowType.selected = curSettings["GLOW_ENEMY_TYPE"]
-        teammateGlowType.selected = curSettings["GLOW_TEAMMATE_TYPE"]
-        weaponGlowType.selected = curSettings["GLOW_WEAPON_TYPE"]
-        targetGlowType.selected = curSettings["GLOW_TARGET_TYPE"]
-        grenadeGlowType.selected = curSettings["GLOW_GRENADE_TYPE"]
-        bombGlowType.selected = curSettings["GLOW_BOMB_TYPE"]
-        bombCarrierGlowType.selected = curSettings["GLOW_BOMB_CARRIER_TYPE"]
 
         showTeam.update()
         showEnemies.update()

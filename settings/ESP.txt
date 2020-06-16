@@ -1,9 +1,9 @@
-//Global enable esp
+﻿//Global enable esp
 ENABLE_ESP = true
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles visibility of esp on/off
 //Default key is G
-VISUALS_TOGGLE_KEY = 35
+ENABLE_ESP_SWITCH_KEY = 35
 
 //Enable full screen visual effect
 ENABLE_ADRENALINE = false
@@ -20,3 +20,15 @@ HITSOUND_FILE_NAME = "COD.wav"
 
 //The volume of the hitsound (0.0 - 1.0)
 HITSOUND_VOLUME = 0.1
+
+ENABLE_HITSOUND_ON_KEY = false
+ENABLE_HITSOUND_KEY = 22
+ENABLE_HITSOUND_SWITCH_KEY = 22
+ENABLE_ESP_ON_KEY = false
+ENABLE_ESP_KEY = 22
+RADAR_ESP_ON_KEY = false
+RADAR_ESP_KEY = 22
+RADAR_ESP_SWITCH_KEY = 22
+ENABLE_ADRENALINE_ON_KEY = false
+ENABLE_ADRENALINE_KEY = 22
+ENABLE_ADRENALINE_SWITCH_KEY = 22

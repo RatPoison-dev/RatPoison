@@ -1,5 +1,6 @@
-package rat.poison.scripts
+﻿package rat.poison.scripts
 
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.hooks.toneMapController
@@ -14,7 +15,7 @@ fun nightMode() = every(1000) {
     if (!curSettings["ENABLE_ESP"].strToBool())
         return@every
 
-    if (curSettings["ENABLE_NIGHTMODE"].strToBool()) {
+    if (curSettings["ENABLE_NIGHTMODE"].strToBool() && checkFlags("ENABLE_NIGHTMODE")) {
         if (toneMapController != 0L) {
             csgoEXE[toneMapController + m_bUseCustomAutoExposureMin] = 1
             csgoEXE[toneMapController + m_bUseCustomAutoExposureMax] = 1

@@ -1,6 +1,7 @@
 package rat.poison.scripts.esp
 
 import com.badlogic.gdx.math.MathUtils
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.dead
@@ -18,7 +19,7 @@ private var totalHits = 0
 private var fl = 0F
 
 fun adrenaline() = every(10) {
-    if (!curSettings["ENABLE_ADRENALINE"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || me.dead() || notInGame) return@every
+    if (!curSettings["ENABLE_ADRENALINE"].strToBool() || !checkFlags("ENABLE_ADRENALINE") ||  !curSettings["ENABLE_ESP"].strToBool() || me.dead() || notInGame) return@every
 
     val curHits = csgoEXE.int(me + m_totalHitsOnServer)
 

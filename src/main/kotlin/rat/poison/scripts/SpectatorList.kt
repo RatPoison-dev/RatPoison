@@ -3,6 +3,7 @@
 package rat.poison.scripts
 
 import rat.poison.App.haveTarget
+import rat.poison.checkFlags
 import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
@@ -23,7 +24,7 @@ import rat.poison.utils.notInGame
 import rat.poison.utils.varUtil.strToBool
 
 internal fun spectatorList() = every(100) {
-    if (!curSettings["SPECTATOR_LIST"].strToBool() || notInGame || !curSettings["MENU"].strToBool()) {
+    if (!curSettings["SPECTATOR_LIST"].strToBool() || !checkFlags("SPECTATOR_LIST") || notInGame || !curSettings["MENU"].strToBool()) {
         return@every
     }
 

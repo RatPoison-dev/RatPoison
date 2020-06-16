@@ -13,6 +13,7 @@ import rat.poison.curSettings
 import rat.poison.scripts.esp.disableAllEsp
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
+import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
@@ -34,16 +35,12 @@ class VisualsTab : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     //Static Visuals Tab Items
-    val enableEsp = VisCheckBoxCustom(curLocalization["ENABLE_ESP"], "ENABLE_ESP", nameInLocalization = "ENABLE_ESP")
-
-    val visualsToggleKey = VisInputFieldCustom(curLocalization["VISUALS_TOGGLE_KEY"], "VISUALS_TOGGLE_KEY", nameInLocalization = "VISUALS_TOGGLE_KEY")
-
-    val radarEsp = VisCheckBoxCustom(curLocalization["ENABLE_RADAR_ESP"], "RADAR_ESP", nameInLocalization = "ENABLE_RADAR_ESP")
-
-    val nightMode = VisCheckBoxCustom(curLocalization["ENABLE_NIGHTMODE"], "ENABLE_NIGHTMODE", nameInLocalization = "ENABLE_NIGHTMODE")
+    val enableEsp = BindsRelatedCheckBox(curLocalization["ENABLE_ESP"], "ENABLE_ESP", nameInLocalization = "ENABLE_ESP", padLeft = 270F)
+    val radarEsp = BindsRelatedCheckBox(curLocalization["ENABLE_RADAR_ESP"], "RADAR_ESP", nameInLocalization = "ENABLE_RADAR_ESP", padLeft = 270F)
+    val nightMode = BindsRelatedCheckBox(curLocalization["ENABLE_NIGHTMODE"], "ENABLE_NIGHTMODE", nameInLocalization = "ENABLE_NIGHTMODE", padLeft = 270F)
     val nightModeSlider = VisSliderCustom(curLocalization["NIGHTMODE_VALUE"], "NIGHTMODE_VALUE", 0.05F, 5F, .05F, false, nameInLocalization = "NIGHTMODE_VALUE")
 
-    val visAdrenaline = VisCheckBoxCustom(curLocalization["ENABLE_ADRENALINE"], "ENABLE_ADRENALINE", nameInLocalization = "ENABLE_ADRENALINE")
+    val visAdrenaline = BindsRelatedCheckBox(curLocalization["ENABLE_ADRENALINE"], "ENABLE_ADRENALINE", nameInLocalization = "ENABLE_ADRENALINE", padLeft = 270F)
 
     val showAimFov = VisCheckBoxCustom(" ", "DRAW_AIM_FOV")
     val showAimFovColor = VisColorPickerCustom( curLocalization["DRAW_AIM_FOV_COLOR"], "DRAW_AIM_FOV_COLOR", nameInLocalization = "DRAW_AIM_FOV_COLOR")
@@ -125,7 +122,6 @@ class VisualsTab : Tab(false, false) {
 
         //Add all items to label for tabbed pane content
         table.add(enableEsp).padLeft(25F).left().row()
-        table.add(visualsToggleKey).padLeft(25F).left().row()
         table.add(radarEsp).padLeft(25F).left().row()
         table.add(nightMode).padLeft(25F).left().row()
         table.add(nightModeSlider).padLeft(25F).left().row()
@@ -160,13 +156,12 @@ class VisualsTab : Tab(false, false) {
 
 fun updateDisableEsp() {
     visualsTab.apply {
-        val bool = !enableEsp.isChecked
+        val bool = !enableEsp.checkBox.isChecked
         var col = Color(255F, 255F, 255F, 1F)
         if (bool) {
             col = Color(105F, 105F, 105F, .2F)
         }
 
-        visualsToggleKey.disable(bool, col)
         radarEsp.disable(bool)
         visAdrenaline.disable(bool)
         nightMode.disable(bool)
@@ -318,9 +313,7 @@ fun updateDisableEsp() {
 fun visualsTabUpdate() {
     visualsTab.apply {
         enableEsp.update()
-        visualsToggleKey.update()
         radarEsp.update()
-        visualsToggleKey.update()
         visAdrenaline.update()
         nightMode.update()
         nightModeSlider.update()

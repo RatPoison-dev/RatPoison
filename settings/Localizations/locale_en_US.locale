@@ -11,6 +11,7 @@ TARGET = Target
 WEAPON = Weapon
 ON_KEY = On Key
 _SWITCH_KEY = Switch Key
+CONFIGURE = Binds
 _KEY = Key
 WARNING = Warning
 SCOPE = Scope
@@ -129,6 +130,7 @@ AUTO_STRAFE = Auto Strafe
 STRAFE_BHOP_ONLY = BHop Only
 FAST_STOP = Fast Stop
 AIM_STRAFER = Auto Aim Strafe
+AIM_STRAFER_TYPE = Type
 AIM_STRAFER_SAME = Same
 AIM_STRAFER_OPPOSITE = Opposite
 AIM_STRAFER_SHIFT = Shift Walk
@@ -258,6 +260,10 @@ FOOTSTEPS_TEXT = Text
 FOOTSTEPS_CIRCLE = Circle
 // Glow Esp tab
 INV_GLOW_ESP = Inv Glow
+NORMAL = Normal
+MODEL = Model
+VISIBLE = Visible
+VISIBLE_FLICKER = Visible Flicker
 MODEL_ESP = Model
 MODEL_AND_GLOW = Model & Glow
 // HitMarkers tab

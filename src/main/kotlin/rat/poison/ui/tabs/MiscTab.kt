@@ -31,36 +31,34 @@ class MiscTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     //Movement
     val bunnyHop = BindsRelatedCheckBox(curLocalization["ENABLE_BUNNY_HOP"], "ENABLE_BUNNY_HOP", nameInLocalization = "ENABLE_BUNNY_HOP")
-    val autoStrafe = VisCheckBoxCustom(curLocalization["AUTO_STRAFE"], "AUTO_STRAFE", nameInLocalization = "AUTO_STRAFE")
-    val autoStrafeBHopOnly = VisCheckBoxCustom(curLocalization["STRAFE_BHOP_ONLY"], "STRAFE_BHOP_ONLY", nameInLocalization = "STRAFE_BHOP_ONLY")
-    val fastStop = VisCheckBoxCustom(curLocalization["FAST_STOP"], "FAST_STOP", nameInLocalization = "FAST_STOP")
-    val aimStrafer = VisCheckBoxCustom(curLocalization["AIM_STRAFER"], "AIM_STRAFER", nameInLocalization = "AIM_STRAFER")
+    val autoStrafe = BindsRelatedCheckBox(curLocalization["AUTO_STRAFE"], "AUTO_STRAFE", nameInLocalization = "AUTO_STRAFE", padLeft = 165F)
+    val autoStrafeBHopOnly = BindsRelatedCheckBox(curLocalization["STRAFE_BHOP_ONLY"], "STRAFE_BHOP_ONLY", nameInLocalization = "STRAFE_BHOP_ONLY", padLeft = 165F)
+    val fastStop = BindsRelatedCheckBox(curLocalization["FAST_STOP"], "FAST_STOP", nameInLocalization = "FAST_STOP")
+    val aimStrafer = BindsRelatedCheckBox(curLocalization["AIM_STRAFER"], "AIM_STRAFER", nameInLocalization = "AIM_STRAFER")
     val aimStraferSelectBox = VisSelectBox<String>()
-    val aimStraferShift = VisCheckBoxCustom(curLocalization["AIM_STRAFER_SHIFT"], "AIM_STRAFER_SHIFT", nameInLocalization = "AIM_STRAFER_SHIFT")
+    val aimStraferShift = BindsRelatedCheckBox(curLocalization["AIM_STRAFER_SHIFT"], "AIM_STRAFER_SHIFT", nameInLocalization = "AIM_STRAFER_SHIFT")
     val aimStraferStrictness = VisSliderCustom(curLocalization["AIM_STRAFER_STRICTNESS"], "AIM_STRAFER_STRICTNESS", 0F, .5F, .01F, false, 3, width1 = 150F, width2 = 90F, nameInLocalization = "AIM_STRAFER_STRICTNESS")
     val headWalk = VisCheckBoxCustomWithoutVar(curLocalization["HEAD_WALK"], "HEAD_WALK")
 
     //Fov + bomb timer + spectator list
-    val fovChanger = VisCheckBoxCustom(curLocalization["ENABLE_FOV_CHANGER"], "ENABLE_FOV_CHANGER", nameInLocalization = "ENABLE_FOV_CHANGER")
+    val fovChanger = BindsRelatedCheckBox(curLocalization["ENABLE_FOV_CHANGER"], "ENABLE_FOV_CHANGER", nameInLocalization = "ENABLE_FOV_CHANGER")
     val fovDefault = VisSliderCustom(curLocalization["FOV_DEFAULT"], "FOV_DEFAULT", 10F, 150F, 1F, true, width1 = 142F, width2 = 90F, nameInLocalization = "FOV_DEFAULT")
-    val fovSmoothing = VisCheckBoxCustom(curLocalization["FOV_SMOOTH"], "FOV_SMOOTH", nameInLocalization = "FOV_SMOOTH")
+    val fovSmoothing = BindsRelatedCheckBox(curLocalization["FOV_SMOOTH"], "FOV_SMOOTH", nameInLocalization = "FOV_SMOOTH")
     val fovSniperDefault = VisSliderCustom(curLocalization["FOV_SNIPER_DEFAULT"], "FOV_SNIPER_DEFAULT", 10F, 150F, 1F, true, width1 = 142F, width2 = 90F, nameInLocalization = "FOV_SNIPER_DEFAULT")
     val fovSniperZoom1 = VisSliderCustom(curLocalization["FOV_ZOOM_1"], "FOV_ZOOM_1", 10F, 150F, 1F, true, width1 = 142F, width2 = 90F, nameInLocalization = "FOV_ZOOM_1")
     val fovSniperZoom2 = VisSliderCustom(curLocalization["FOV_ZOOM_2"], "FOV_ZOOM_2", 10F, 150F, 1F, true, width1 = 142F, width2 = 90F, nameInLocalization = "FOV_ZOOM_2")
-    val bombTimer = VisCheckBoxCustom(curLocalization["ENABLE_BOMB_TIMER"], "ENABLE_BOMB_TIMER", nameInLocalization = "ENABLE_BOMB_TIMER")
-    val bombTimerEnableBars = VisCheckBoxCustom(curLocalization["BOMB_TIMER_BARS"], "BOMB_TIMER_BARS", nameInLocalization = "BOMB_TIMER_BARS")
-    val bombTimerEnableMenu = VisCheckBoxCustom(curLocalization["BOMB_TIMER_MENU"], "BOMB_TIMER_MENU", nameInLocalization = "BOMB_TIMER_MENU")
-    val spectatorList = VisCheckBoxCustom(curLocalization["ENABLE_SPECTATOR_LIST"], "SPECTATOR_LIST", nameInLocalization = "ENABLE_SPECTATOR_LIST")
+    val bombTimer = BindsRelatedCheckBox(curLocalization["ENABLE_BOMB_TIMER"], "ENABLE_BOMB_TIMER", nameInLocalization = "ENABLE_BOMB_TIMER")
+    val bombTimerEnableBars = BindsRelatedCheckBox(curLocalization["BOMB_TIMER_BARS"], "BOMB_TIMER_BARS", nameInLocalization = "BOMB_TIMER_BARS", padLeft = 165F)
+    val bombTimerEnableMenu = BindsRelatedCheckBox(curLocalization["BOMB_TIMER_MENU"], "BOMB_TIMER_MENU", nameInLocalization = "BOMB_TIMER_MENU", padLeft = 165F)
+    val spectatorList = BindsRelatedCheckBox(curLocalization["ENABLE_SPECTATOR_LIST"], "SPECTATOR_LIST", nameInLocalization = "ENABLE_SPECTATOR_LIST")
 
-    val knifeBot = VisCheckBoxCustom(curLocalization["ENABLE_AUTO_KNIFE"], "ENABLE_AUTO_KNIFE", nameInLocalization = "ENABLE_AUTO_KNIFE")
-    val lsBomb = VisCheckBox(curLocalization["ENABLE_PERFECT_BOMB_DEFUSE"])
-    val doorSpam = VisCheckBoxCustom(curLocalization["ENABLE_DOOR_SPAM"], "D_SPAM", nameInLocalization = "ENABLE_DOOR_SPAM")
-    var doorSpamKey = VisInputFieldCustom(curLocalization["DOOR_SPAM_KEY"], "D_SPAM_KEY", nameInLocalization = "DOOR_SPAM_KEY")
-    val weaponSpam = VisCheckBoxCustom(curLocalization["ENABLE_WEAPON_SPAM"], "W_SPAM", nameInLocalization = "ENABLE_WEAPON_SPAM")
-    var weaponSpamKey = VisInputFieldCustom(curLocalization["WEAPON_SPAM_KEY"], "W_SPAM_KEY", nameInLocalization = "WEAPON_SPAM_KEY")
-    val enableReducedFlash = VisCheckBoxCustom(curLocalization["ENABLE_REDUCED_FLASH"], "ENABLE_REDUCED_FLASH", nameInLocalization = "ENABLE_REDUCED_FLASH")
+    val knifeBot = BindsRelatedCheckBox(curLocalization["ENABLE_AUTO_KNIFE"], "ENABLE_AUTO_KNIFE", nameInLocalization = "ENABLE_AUTO_KNIFE")
+    val lsBomb = VisCheckBoxCustomWithoutVar(curLocalization["ENABLE_PERFECT_BOMB_DEFUSE"], "ENABLE_PERFECT_BOMB_DEFUSE")
+    val doorSpam = BindsRelatedCheckBox(curLocalization["ENABLE_DOOR_SPAM"], "D_SPAM", nameInLocalization = "ENABLE_DOOR_SPAM")
+    val weaponSpam = BindsRelatedCheckBox(curLocalization["ENABLE_WEAPON_SPAM"], "W_SPAM", nameInLocalization = "ENABLE_WEAPON_SPAM")
+    val enableReducedFlash = BindsRelatedCheckBox(curLocalization["ENABLE_REDUCED_FLASH"], "ENABLE_REDUCED_FLASH", nameInLocalization = "ENABLE_REDUCED_FLASH")
     val flashMaxAlpha = VisSliderCustom(curLocalization["FLASH_MAX_ALPHA"], "FLASH_MAX_ALPHA", 1F, 255F, 1F, true, width1 = 150F, width2 = 90F, nameInLocalization = "FLASH_MAX_ALPHA")
-    val hitSoundCheckBox = VisCheckBoxCustom(curLocalization["ENABLE_HITSOUND"], "ENABLE_HITSOUND", nameInLocalization = "ENABLE_HITSOUND")
+    val hitSoundCheckBox = BindsRelatedCheckBox(curLocalization["ENABLE_HITSOUND"], "ENABLE_HITSOUND", nameInLocalization = "ENABLE_HITSOUND")
     val hitSoundBox = VisSelectBox<String>()
     val hitSoundVolume = VisSliderCustom(curLocalization["HITSOUND_VOLUME"], "HITSOUND_VOLUME", .1F, 1F, .1F, false, width1 = 150F, width2 = 90F, nameInLocalization = "HITSOUND_VOLUME")
     val selfNade = VisTextButtonCustom(curLocalization["THROW_SELF_NADE"], nameInLocalization = "THROW_SELF_NADE")
@@ -76,11 +74,6 @@ class MiscTab : Tab(false, false) {
             nameChanger(nameChangeInput.text)
         }
 
-        weaponSpamKey.changed { _, _ ->
-            weaponSpamToggleKey = ObservableBoolean({keyPressed(weaponSpamKey.value.toString().toInt())})
-            true
-        }
-
         //Aim Strafer Table
         aimStraferSelectBox.setItems(curLocalization["AIM_STRAFER_SAME"], curLocalization["AIM_STRAFER_OPPOSITE"])
         aimStraferSelectBox.changed { _, _ ->
@@ -91,8 +84,8 @@ class MiscTab : Tab(false, false) {
             }
         }
         val aimStraferTable = VisTable()
-        aimStraferTable.add(aimStrafer).left()
-        aimStraferTable.add(aimStraferSelectBox).padLeft(142F - aimStrafer.width).left()
+        aimStraferTable.add(aimStrafer).left().row()
+        aimStraferTable.add(aimStraferSelectBox).left()
 
         //Create Head Walk Toggle
         val headWalkTable = VisTable()
@@ -102,7 +95,6 @@ class MiscTab : Tab(false, false) {
             true
         }
         headWalkTable.add(headWalk).left()
-
         //enable last sec bomb defuse
         val lsBombTable = VisTable()
         lsBomb.isChecked = curSettings["LS_BOMB"].strToBool()
@@ -113,9 +105,9 @@ class MiscTab : Tab(false, false) {
         lsBombTable.add(lsBomb).left()
 
         //Create Hit Sound Toggle
-        if (curSettings["ENABLE_HITSOUND"].strToBool()) hitSoundCheckBox.toggle()
+        if (curSettings["ENABLE_HITSOUND"].strToBool()) hitSoundCheckBox.checkBox.toggle()
         hitSoundCheckBox.changed { _, _ ->
-            curSettings["ENABLE_HITSOUND"] = hitSoundCheckBox.isChecked.boolToStr()
+            curSettings["ENABLE_HITSOUND"] = hitSoundCheckBox.checkBox.isChecked.boolToStr()
             true
         }
 
@@ -123,8 +115,8 @@ class MiscTab : Tab(false, false) {
         val hitSound = VisTable()
         updateHitSoundList()
 
-        hitSound.add(hitSoundCheckBox)
-        hitSound.add(hitSoundBox).padLeft(150F-hitSoundCheckBox.width).width(90F)
+        hitSound.add(hitSoundCheckBox).row()
+        hitSound.add(hitSoundBox).width(90F).left()
 
         hitSoundBox.selected = curSettings["HITSOUND_FILE_NAME"].replace("\"", "")
 
@@ -140,7 +132,7 @@ class MiscTab : Tab(false, false) {
         val superPaneTable1 = VisTable()
         val subPane = VisSplitPane(subPaneTable1, subPaneTable2, true)
         val superPane = VisSplitPane(subPane, superPaneTable1, false)
-        
+
         subPane.setColor(1F, 1F, 1F, 1F)
         superPane.setColor(1F, 1F, 1F, 1F)
 
@@ -188,10 +180,8 @@ class MiscTab : Tab(false, false) {
         superPaneTable1.add(lsBombTable).left().padLeft(5F).row()
         superPaneTable1.addSeparator().width(250F).left()
         superPaneTable1.add(doorSpam).left().padLeft(5F).row()
-        superPaneTable1.add(doorSpamKey).left().padLeft(5F).row()
         superPaneTable1.addSeparator().width(250F).left()
         superPaneTable1.add(weaponSpam).left().padLeft(5F).row()
-        superPaneTable1.add(weaponSpamKey).left().padLeft(5F).row()
         superPaneTable1.addSeparator().width(250F).left()
         superPaneTable1.add(selfNade).pad(5F).top().left().width(240F).row()
         superPaneTable1.addSeparator().width(250F).left()
@@ -247,9 +237,7 @@ fun miscTabUpdate() {
         }
         aimStraferStrictness.update()
         doorSpam.update()
-        doorSpamKey.update()
         weaponSpam.update()
-        weaponSpamKey.update()
         bombTimer.update()
         bombTimerEnableMenu.update()
         bombTimerEnableBars.update()
@@ -257,7 +245,7 @@ fun miscTabUpdate() {
         headWalk.isChecked = curSettings["HEAD_WALK"].strToBool()
         enableReducedFlash.update()
         flashMaxAlpha.update()
-        hitSoundCheckBox.isChecked = curSettings["ENABLE_HITSOUND"].strToBool()
+        hitSoundCheckBox.checkBox.isChecked = curSettings["ENABLE_HITSOUND"].strToBool()
         hitSoundBox.selected = curSettings["HITSOUND_FILE_NAME"].replace("\"", "")
         hitSoundVolume.update()
         hitSoundCheckBox.update()

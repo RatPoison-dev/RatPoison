@@ -1,8 +1,9 @@
-package rat.poison.scripts
+﻿package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import rat.poison.App
+import rat.poison.checkFlags
 import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.game.CSGO
@@ -31,7 +32,7 @@ fun bombTimer() {
 
         if (curSettings["ENABLE_BOMB_TIMER"].strToBool()) {
             bombText.setText(bombState.toString()) //Update regardless of BOMB_TIMER_MENU
-            if (curSettings["BOMB_TIMER_BARS"].strToBool() && bombState.planted) {
+            if (curSettings["BOMB_TIMER_BARS"].strToBool() && checkFlags("BOMB_TIMER_BARS") && bombState.planted) {
                 val cColor = if ((me.team() == 3.toLong() && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) { //If player has time to defuse
                     Color(0F, 255F, 0F, .25F) //Green
                 } else if ((me.team() == 3.toLong() && bombState.timeLeftToDefuse < bombState.timeLeftToExplode) || (me.team() == 2.toLong() && !bombState.gettingDefused)) { //If player is defusing with time left, or is terrorist and the bomb isn't being defused

@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.utils.Align
 import com.sun.jna.Memory
+import org.jire.arrowhead.keyPressed
 import rat.poison.App
+import rat.poison.checkFlags
 import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
@@ -56,7 +58,7 @@ private data class Box(var x0: Float = 0F, var y0: Float = 0F,
 private var currentIdx = 0
 
 fun boxEsp() = App {
-	if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !curSettings["BOX_ESP_DETAILS"].strToBool())|| !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
+	if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !checkFlags("ENABLE_BOX_ESP") && !curSettings["BOX_ESP_DETAILS"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
 
 	val meTeam = me.team()
 
@@ -225,7 +227,7 @@ fun boxEsp() = App {
 			val w = x1 - x0
 			val h = y1 - y0
 
-			if (curSettings["ENABLE_BOX_ESP"].strToBool()) {
+			if (curSettings["ENABLE_BOX_ESP"].strToBool() && checkFlags("ENABLE_BOX_ESP")) {
 				rect(x0, y0, w, h)
 			}
 

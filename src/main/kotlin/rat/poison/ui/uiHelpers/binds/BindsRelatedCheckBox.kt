@@ -1,7 +1,8 @@
 package rat.poison.ui.uiHelpers.binds
 
-import com.kotcrab.vis.ui.widget.Tooltip
-import com.kotcrab.vis.ui.widget.VisCheckBox
+import com.kotcrab.vis.ui.VisUI
+import com.kotcrab.vis.ui.widget.*
+import org.jetbrains.kotlin.cli.common.computeKotlinPaths
 import rat.poison.App.uiBinds
 import rat.poison.boolToStr
 import rat.poison.curLocalization
@@ -9,21 +10,35 @@ import rat.poison.curSettings
 import rat.poison.strToBool
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
+import rat.poison.ui.uiHelpers.VisTextButtonCustom
 
-class BindsRelatedCheckBox(mainText: String, varName: String, nameInLocalization: String = varName) : VisCheckBox(mainText) {
+class BindsRelatedCheckBox(mainText: String, varName: String, nameInLocalization: String = varName, padLeft: Float = 175F, isFixedPad: Boolean = false) : VisTable() {
     private val defaultText = mainText
     private val variableName = varName
     private val localeName = nameInLocalization
-
+    val checkBox = VisCheckBox(mainText)
+    private val configureButton = VisTextButtonCustom(curLocalization["CONFIGURE"], "CONFIGURE")
     init {
         if (curLocalization[nameInLocalization+"_TOOLTIP"] != "") {
             Tooltip.Builder(curLocalization[nameInLocalization+"_TOOLTIP"]).target(this).build()
         }
         update()
-        changed { _, _ ->
+        pack()
+        add(checkBox).height(18F).left()
+        add(im)
+        if (!isFixedPad) {
+            add(configureButton).height(22F).padLeft(padLeft - checkBox.width).padRight(10F)
+        }
+        else {
+            add(configureButton).height(22F).padLeft(padLeft)
+        }
+        configureButton.changed { _, _ ->
             curSettings["BINDS"] = !curSettings["BINDS"].strToBool()
             uiBinds.setBindOption(varName, localeName)
-            curSettings[variableName] = isChecked.boolToStr()
+            true
+        }
+        checkBox.changed { _, _ ->
+            curSettings[variableName] = checkBox.isChecked.boolToStr()
             //CheckBoxes are the only things to disable/enable other settings, call all updates on change
             //Move to update() ?
             updateDisableRCrosshair()
@@ -38,11 +53,12 @@ class BindsRelatedCheckBox(mainText: String, varName: String, nameInLocalization
 
     fun update() {
         val tmpText = curLocalization[localeName]
-        this.setText(if (tmpText.isBlank()) defaultText else tmpText )
-        isChecked = curSettings[variableName].strToBool()
+        configureButton.update()
+        this.checkBox.setText(if (tmpText.isBlank()) defaultText else tmpText )
+        this.checkBox.isChecked = curSettings[variableName].strToBool()
     }
 
     fun disable(bool: Boolean) {
-        isDisabled = bool
+        this.checkBox.isDisabled = bool
     }
 }

@@ -1,6 +1,7 @@
-package rat.poison.scripts
+﻿package rat.poison.scripts
 
 import org.jire.arrowhead.keyPressed
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.angle
 import rat.poison.game.clientState
@@ -23,8 +24,8 @@ private var lastAngY = 0.0
 fun strafeHelper() = every(2) {
     if (MENUTOG || notInGame || inBackground) return@every
 
-    val aStrafe = curSettings["AUTO_STRAFE"].strToBool()
-    val aimStrafe = curSettings["AIM_STRAFER"].strToBool()
+    val aStrafe = curSettings["AUTO_STRAFE"].strToBool() && checkFlags("AUTO_STRAFE")
+    val aimStrafe = curSettings["AIM_STRAFER"].strToBool() && checkFlags("AIM_STRAFER")
 
     if (!aStrafe && !aimStrafe) {
         return@every
@@ -35,7 +36,7 @@ fun strafeHelper() = every(2) {
         val grounded = me.onGround()
 
         if (aStrafe) { //Auto Strafe
-            if ((curSettings["STRAFE_BHOP_ONLY"].strToBool() && keyPressed(VK_SPACE)) || (!curSettings["STRAFE_BHOP_ONLY"].strToBool())) {
+            if ((curSettings["STRAFE_BHOP_ONLY"].strToBool() && checkFlags("STRAFE_BHOP_ONLY") && keyPressed(VK_SPACE)) || (!curSettings["STRAFE_BHOP_ONLY"].strToBool() && checkFlags("STRAFE_BHOP_ONLY"))) {
                 if (!grounded) {
                     if (!keyPressed(KeyEvent.VK_A) && !keyPressed(KeyEvent.VK_D)) {
                         if (curAngY > lastAngY) {

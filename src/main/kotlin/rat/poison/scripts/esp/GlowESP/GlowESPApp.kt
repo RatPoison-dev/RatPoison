@@ -1,6 +1,7 @@
-package rat.poison.scripts.esp.GlowESP
+﻿package rat.poison.scripts.esp.GlowESP
 
 import rat.poison.App
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
@@ -19,7 +20,7 @@ import kotlin.system.measureNanoTime
 private var sync = 0
 
 internal fun glowEspApp() = App {
-	if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return@App
+	if (!curSettings["GLOW_ESP"].strToBool() || !checkFlags("GLOW_ESP") || !curSettings["ENABLE_ESP"].strToBool()) return@App
 
 	sync++
 

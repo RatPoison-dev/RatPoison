@@ -1,5 +1,6 @@
 package rat.poison.scripts.esp.GlowESP
 
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
@@ -14,7 +15,7 @@ import rat.poison.utils.varUtil.strToBool
 import rat.poison.utils.varUtil.strToColor
 
 internal fun glowEspEvery() = every(10, true) {
-	if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return@every
+	if (!curSettings["GLOW_ESP"].strToBool() || !checkFlags("GLOW_ESP") || !curSettings["ENABLE_ESP"].strToBool()) return@every
 
 	val currentAngle = clientState.angle()
 	val position = me.position()

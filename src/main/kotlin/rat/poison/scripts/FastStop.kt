@@ -1,6 +1,7 @@
-package rat.poison.scripts
+﻿package rat.poison.scripts
 
 import org.jire.arrowhead.keyPressed
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.angle
 import rat.poison.game.clientState
@@ -19,7 +20,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 internal fun fastStop() = every(4) {
-    if (!curSettings["FAST_STOP"].strToBool() || notInGame) return@every
+    if (!curSettings["FAST_STOP"].strToBool() || !checkFlags("FAST_STOP") || notInGame) return@every
 
     if (!me.dead()) {
         val vel = me.velocity()

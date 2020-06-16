@@ -1,6 +1,7 @@
-package rat.poison.scripts
+﻿package rat.poison.scripts
 
 import rat.poison.App
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.dead
@@ -13,7 +14,7 @@ import rat.poison.game.netvars.NetVarOffsets.m_zoomLevel
 import rat.poison.utils.varUtil.strToBool
 
 internal fun fovChanger() = App {
-    if (!curSettings["ENABLE_FOV_CHANGER"].strToBool() || me.dead()) return@App
+    if (!curSettings["ENABLE_FOV_CHANGER"].strToBool() || !checkFlags("ENABLE_FOV_CHANGER") || me.dead()) return@App
     val meWep = me.weaponEntity()
 
     val zLevel = csgoEXE.int(meWep + m_zoomLevel)
@@ -59,7 +60,7 @@ internal fun fovChanger() = App {
             return@App
         }
 
-        if (curSettings["FOV_SMOOTH"].strToBool()) {
+        if (curSettings["FOV_SMOOTH"].strToBool() && checkFlags("FOV_SMOOTH")) {
 
             if (curFov < targetFov) {
                 csgoEXE[me + m_iDefaultFov] = curFov + 1

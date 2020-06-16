@@ -1,6 +1,7 @@
-package rat.poison.scripts
+﻿package rat.poison.scripts
 
 import org.jire.arrowhead.keyPressed
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.entity.dead
 import rat.poison.game.hooks.cursorEnable
@@ -16,7 +17,7 @@ private var toggled = false
 var weaponSpamToggleKey = ObservableBoolean({keyPressed(curSettings["W_SPAM_KEY"].toInt())})
 
 fun weaponSpam() = every (20) {
-    if (!curSettings["W_SPAM"].strToBool()) return@every
+    if (!curSettings["W_SPAM"].strToBool() || !checkFlags("W_SPAM")) return@every
 
     updateCursorEnable()
     if (cursorEnable || me.dead()) return@every

@@ -1,4 +1,4 @@
-//Enable Fov Changer
+﻿//Enable Fov Changer
 ENABLE_FOV_CHANGER = false
 
 //Default FOV for each gun
@@ -16,3 +16,15 @@ FOV_ZOOM_1 = 40
 
 //Default FOV for zoom lvl 2 (snipers only)
 FOV_ZOOM_2 = 25
+
+ENABLE_FOV_CHANGER_ON_KEY = false
+
+ENABLE_FOV_CHANGER_KEY = 22
+
+ENABLE_FOV_CHANGER_SWITCH_KEY = 22
+
+FOV_SMOOTH_ON_KEY = false
+
+FOV_SMOOTH_KEY = 22
+
+FOV_SMOOTH_SWITCH_KEY = 22

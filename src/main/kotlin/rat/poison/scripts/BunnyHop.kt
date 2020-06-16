@@ -1,6 +1,6 @@
 package rat.poison.scripts
 
-import org.jire.arrowhead.keyPressed
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.entity.dead
@@ -14,7 +14,7 @@ import rat.poison.utils.varUtil.strToBool
 import java.awt.event.KeyEvent.VK_SPACE
 
 fun bunnyHop() = every(4) {
-    if (curSettings["ENABLE_BUNNY_HOP"].strToBool() && (curSettings["ENABLE_BUNNY_HOP_ON_KEY"].strToBool() && keyPressed(curSettings["ENABLE_BUNNY_HOP_KEY"].toInt()) || (!curSettings["ENABLE_BUNNY_HOP_ON_KEY"].strToBool())) && (me > 0 && !me.dead() && me.onGround())) {
+    if (curSettings["ENABLE_BUNNY_HOP"].strToBool() && checkFlags("ENABLE_BUNNY_HOP") && (me > 0 && !me.dead() && me.onGround())) {
         updateCursorEnable()
         if (cursorEnable) return@every
         CSGO.clientDLL[dwForceJump] = 6

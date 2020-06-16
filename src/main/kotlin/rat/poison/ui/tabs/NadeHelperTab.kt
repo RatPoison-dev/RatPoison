@@ -56,7 +56,7 @@ class NadeHelperTab : Tab(false, false) {
         }
 
         clearNadeHelper.changed { _, _ ->
-            Dialogs.showConfirmDialog(App.menuStage, curLocalization["WARNING"], curLocalization["CLEAR_CURRENTLY_LOADED_WARNING"], arrayOf("YES", "NO"), arrayOf(1, 2)) { it ->
+            Dialogs.showConfirmDialog(App.menuStage, curLocalization["WARNING"], curLocalization["CLEAR_CURRENTLY_LOADED_WARNING"], arrayOf(curLocalization["YES"], curLocalization["NO"]), arrayOf(1, 2)) { it ->
                 when (it) {
                     1 -> {
                         nadeHelperArrayList.clear()

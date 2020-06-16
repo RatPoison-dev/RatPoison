@@ -10,6 +10,7 @@ import rat.poison.ui.changed
 import rat.poison.ui.tabs.boxEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
+import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
 import rat.poison.visualsMap
 
 class BoxEspTab : Tab(false, false) {
@@ -20,7 +21,7 @@ class BoxEspTab : Tab(false, false) {
     val skeletonEsp = VisCheckBoxCustom(curLocalization["ENABLE_SKELETON_ESP"], "SKELETON_ESP", nameInLocalization = "ENABLE_SKELETON_ESP")
     val showTeamSkeleton = VisCheckBoxCustom(curLocalization["TEAMMATES"], "SKELETON_SHOW_TEAM", nameInLocalization = "TEAMMATES")
     val showEnemiesSkeleton = VisCheckBoxCustom(curLocalization["ENEMIES"], "SKELETON_SHOW_ENEMIES", nameInLocalization = "ENEMIES")
-    val boxEsp = VisCheckBoxCustom(curLocalization["ENABLE_BOX_ESP"], "ENABLE_BOX_ESP", nameInLocalization = "ENABLE_BOX_ESP")
+    val boxEsp = BindsRelatedCheckBox(curLocalization["ENABLE_BOX_ESP"], "ENABLE_BOX_ESP", nameInLocalization = "ENABLE_BOX_ESP", padLeft = 225F)
     val boxShowHealth = VisCheckBoxCustom(curLocalization["HEALTH_BASED"], "BOX_SHOW_HEALTH", "HEALTH_BASED")
     val boxEspDetails = VisCheckBoxCustom(curLocalization["ENABLE_BOX_ESP_DETAILS"], "BOX_ESP_DETAILS", nameInLocalization = "ENABLE_BOX_ESP_DETAILS")
     val boxEspHealth = VisCheckBoxCustom(curLocalization["HEALTH"], "BOX_ESP_HEALTH", nameInLocalization = "HEALTH")
