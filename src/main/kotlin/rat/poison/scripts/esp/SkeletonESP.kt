@@ -14,11 +14,11 @@ import rat.poison.game.me
 import rat.poison.game.worldToScreen
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
-import rat.poison.strToBool
 import rat.poison.utils.Vector
 import rat.poison.utils.collections.CacheableList
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.notInGame
+import rat.poison.utils.varUtil.strToBool
 
 private val bones = Array(2048) { Line() }
 private val entityBones = Long2ObjectArrayMap<CacheableList<Pair<Int, Int>>>()

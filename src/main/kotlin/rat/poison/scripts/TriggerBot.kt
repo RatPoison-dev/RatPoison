@@ -4,6 +4,7 @@ import org.jire.arrowhead.keyPressed
 import org.jire.arrowhead.keyReleased
 import rat.poison.curSettings
 import rat.poison.game.CSGO
+import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.angle
 import rat.poison.game.clientState
@@ -11,26 +12,25 @@ import rat.poison.game.entity.*
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.iCrossHairID
 import rat.poison.game.offsets.ClientOffsets
+import rat.poison.game.offsets.ClientOffsets.dwForceAttack
 import rat.poison.robot
 import rat.poison.scripts.aim.boneTrig
 import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.inMyTeam
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.strToBool
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
+import rat.poison.utils.varUtil.strToBool
 import java.awt.event.InputEvent.BUTTON1_DOWN_MASK
 
 private var callingInShot = false
-private var inShot = false
+var triggerInShot = false
 
 fun boneTrigger() = every(10) {
     if (DANGER_ZONE || me.dead()) {
         return@every
     }
-
-    boneTrig = false
 
     if (curSettings["ENABLE_TRIGGER"].strToBool()) {
         val wep = me.weapon()
@@ -67,7 +67,7 @@ fun boneTrigger() = every(10) {
                         if (bINCROSS) {
                             val inCross = csgoEXE.uint(me + iCrossHairID)
                             if (inCross > 0) {
-                                val ent = CSGO.clientDLL.uint(ClientOffsets.dwEntityList + (inCross * 0x10) - 0x10)
+                                val ent = clientDLL.uint(ClientOffsets.dwEntityList + (inCross * 0x10) - 0x10)
                                 if (!ent.inMyTeam() && !ent.isProtected() && !ent.dead()) {
                                     if ((curSettings["TRIGGER_ENABLE_KEY"].strToBool() && keyPressed(curSettings["TRIGGER_KEY"].toInt())) || !curSettings["TRIGGER_ENABLE_KEY"].strToBool()) {
                                         bTrigShoot(bDELAY, bAIMBOT)
@@ -81,14 +81,18 @@ fun boneTrigger() = every(10) {
                             val currentAngle = clientState.angle()
                             val position = me.position()
                             val target = findTarget(position, currentAngle, false, bFOV, -2)
-                            if (target >= 0) {
+                            if (target > 0) {
                                 if (!target.dead() && !target.isProtected()) {
                                     if ((curSettings["TRIGGER_ENABLE_KEY"].strToBool() && keyPressed(curSettings["TRIGGER_KEY"].toInt())) || !curSettings["TRIGGER_ENABLE_KEY"].strToBool()) {
                                         bTrigShoot(bDELAY, bAIMBOT)
                                         return@every
                                     }
                                 }
+                            } else {
+                                boneTrig = false
                             }
+                        } else {
+                            boneTrig = false //that shit handled at end
                         }
                     }
                 }
@@ -96,7 +100,10 @@ fun boneTrigger() = every(10) {
         }
 
         callingInShot = false
-        inShot = false
+        triggerInShot = false
+    } else {
+        boneTrig = false
+        triggerInShot = false
     }
 }
 
@@ -104,17 +111,20 @@ fun boneTrigger() = every(10) {
 fun bTrigShoot(delay: Int, aimbot: Boolean = false) {
     if (!callingInShot) {
         callingInShot = true
-        Thread(Runnable {
-            Thread.sleep(delay.toLong())
-            inShot = true
-        }).start()
+        if (delay > 0) {
+            Thread(Runnable {
+                Thread.sleep(delay.toLong())
+                triggerInShot = true
+            }).start()
+        } else {
+            triggerInShot = true
+        }
     }
 
-    if (inShot) {
-        //Switch me.weapon() categ -> doesn't work
-        robot.mousePress(BUTTON1_DOWN_MASK)
-        robot.mouseRelease(BUTTON1_DOWN_MASK)
-
+    if (triggerInShot) {
         boneTrig = aimbot
+
+        clientDLL[dwForceAttack] = 6
+        Thread.sleep(1)
     }
 }

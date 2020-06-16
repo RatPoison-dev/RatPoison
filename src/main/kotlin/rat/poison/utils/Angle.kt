@@ -25,7 +25,7 @@ fun Vector.normalize() = apply {
     z = 0.0
 }
 
-internal fun Angle.distanceTo(target: Angle) = abs(x - target.x) + abs(y - target.y) + abs(z - target.z)
+internal fun Angle.distanceTo(target: Angle) = kotlin.math.abs(x - target.x) + kotlin.math.abs(y - target.y) + kotlin.math.abs(z - target.z)
 
 internal fun Angle.isValid() = !(z != 0.0
         || x < -89 || x > 180

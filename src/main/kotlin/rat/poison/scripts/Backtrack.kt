@@ -1,126 +1,141 @@
 package rat.poison.scripts
 
+import com.sun.jna.Memory
 import org.jire.arrowhead.keyPressed
-import rat.poison.*
-import rat.poison.game.*
+import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.engineDLL
+import rat.poison.game.angle
+import rat.poison.game.clientState
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
-import rat.poison.game.entity.dead
-import rat.poison.game.entity.dormant
-import rat.poison.game.entity.team
 import rat.poison.game.forEntities
+import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.flSimulationTime
 import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.game.offsets.ClientOffsets.dwInput
 import rat.poison.game.offsets.EngineOffsets.dwClientState_LastOutgoingCommand
 import rat.poison.game.offsets.EngineOffsets.dwGlobalVars
+import rat.poison.game.offsets.EngineOffsets.dwbSendPackets
 import rat.poison.scripts.aim.calcTarget
-import rat.poison.scripts.aim.findTarget
 import rat.poison.utils.Angle
 import rat.poison.utils.Structs.*
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.notInGame
+import rat.poison.utils.varUtil.strToBool
 import kotlin.math.abs
 
-var btRecords = Array(64) { Array(12) { backtrackTab() } }
-data class backtrackTab(var simtime: Float = 0f, var neckPos: Angle = Angle(), var chestPos: Angle = Angle(),
-                        var stomachPos: Angle = Angle(), var pelvisPos: Angle = Angle(), var alpha: Float = 100f)
+var btRecords = Array(64) { Array(12) { BacktrackTable() } }
+data class BacktrackTable(var simtime: Float = 0f, var neckPos: Angle = Angle(), var chestPos: Angle = Angle(),
+                          var stomachPos: Angle = Angle(), var pelvisPos: Angle = Angle(), var alpha: Float = 100f)
 
 private var enableNeck = false
 private var enableChest = false
 private var enableStomach = false
 private var enablePelvis = false
-private var bestTarget = -1L
+var bestBacktrackTarget = -1L
 
 fun sendPacket(bool: Boolean) { //move outta here
     val byte = if (bool) 1.toByte() else 0.toByte()
-    engineDLL[0xD409A] = byte
+    engineDLL[0xD415A] = byte //Bitch ass lil coder signature wont work
 }
 
-fun backtrack() = every(4) {
+fun setupBacktrack() = every(4) {
     if (notInGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0) {
-        btRecords = Array(64) { Array(13) { backtrackTab() } }
-        if (engineDLL.byte(0xD409A) == 0.toByte()) {
+        btRecords = Array(64) { Array(13) { BacktrackTable() } }
+        if (engineDLL.byte(0xD415A) == 0.toByte()) {
             sendPacket(true)
         }
         return@every
     }
     constructRecords()
+}
 
-    if (!me.weaponEntity().canFire()) return@every
+fun attemptBacktrack(): Boolean {
+    if (((curSettings["BACKTRACK_SPOTTED"].strToBool() && bestBacktrackTarget.spotted()) || !curSettings["BACKTRACK_SPOTTED"].strToBool()) && bestBacktrackTarget != -1L) {
 
-    if (curSettings["ENABLE_BACKTRACK_ON_KEY"].strToBool() && !keyPressed(curSettings["BACKTRACK_KEY"].toInt())) return@every
+        //Get/set vars
+        val meWep = me.weapon()
+        var prefix = ""
+        when {
+            meWep.pistol -> {
+                prefix = "PISTOL_"
+            }
+            meWep.rifle -> {
+                prefix = "RIFLE_"
+            }
+            meWep.shotgun -> {
+                prefix = "SHOTGUN_"
+            }
+            meWep.sniper -> {
+                prefix = "SNIPER_"
+            }
+            meWep.smg -> {
+                prefix = "SMG_"
+            }
+        }
 
-    //Get/set vars
-    val meWep = me.weapon()
-    var prefix = ""
-    when {
-        meWep.pistol -> { prefix = "PISTOL_" }
-        meWep.rifle -> { prefix = "RIFLE_" }
-        meWep.shotgun -> { prefix = "SHOTGUN_" }
-        meWep.sniper -> { prefix = "SNIPER_" }
-        meWep.smg -> { prefix = "SMG_" }
-    }
+        if (meWep.gun) { //Not 100% this applies to every 'gun'
+            enableNeck = curSettings[prefix + "BACKTRACK_NECK"].strToBool()
+            enableChest = curSettings[prefix + "BACKTRACK_CHEST"].strToBool()
+            enableStomach = curSettings[prefix + "BACKTRACK_STOMACH"].strToBool()
+            enablePelvis = curSettings[prefix + "BACKTRACK_PELVIS"].strToBool()
+        }
 
-    if (meWep.gun) { //Not 100% this applies to every 'gun'
-        enableNeck = curSettings[prefix + "BACKTRACK_NECK"].strToBool()
-        enableChest = curSettings[prefix + "BACKTRACK_CHEST"].strToBool()
-        enableStomach = curSettings[prefix + "BACKTRACK_STOMACH"].strToBool()
-        enablePelvis = curSettings[prefix + "BACKTRACK_PELVIS"].strToBool()
-    }
+        val curSequenceNumber = csgoEXE.int(clientState + dwClientState_LastOutgoingCommand) + 1
+        sendPacket(false)
 
-    val curSequenceNumber = csgoEXE.int(clientState + dwClientState_LastOutgoingCommand) + 1
-    sendPacket(false)
+        val input = memToInput(csgoEXE.read(clientDLL.address + dwInput, 253)!!)
 
-    val input = memToInput(csgoEXE.read(clientDLL.address + dwInput, 253)!!)
+        val userCMDptr = input.pCommands + (curSequenceNumber % 150) * 0x64
+        val verifiedUserCMDptr = input.pVerifiedCommands + (curSequenceNumber % 150) * 0x68
+        val oldUserCMDptr = input.pCommands + ((curSequenceNumber - 1) % 150) * 0x64
 
-    val userCMDptr = input.pCommands + (curSequenceNumber % 150) * 0x64
-    val verifiedUserCMDptr = input.pVerifiedCommands + (curSequenceNumber % 150) * 0x68
-    val oldUserCMDptr = input.pCommands + ((curSequenceNumber - 1) % 150) * 0x64
+        while (csgoEXE.int(userCMDptr + 0x4) < curSequenceNumber) {
+            Thread.sleep(1)
+        }
 
-    while (csgoEXE.int(userCMDptr + 0x4) < curSequenceNumber) {
-        Thread.sleep(1)
-    }
+        //Check invalid?
+        val oldUserCMD = memToUserCMD(csgoEXE.read(oldUserCMDptr, 100)!!)
+        var userCMD = memToUserCMD(csgoEXE.read(userCMDptr, 100)!!)
 
-    //Check invalid?
-    val oldUserCMD = memToUserCMD(csgoEXE.read(oldUserCMDptr, 100)!!)
-    var userCMD = memToUserCMD(csgoEXE.read(userCMDptr, 100)!!)
+        userCMD = fixUserCMD(userCMD, oldUserCMD)
 
-    userCMD = fixUserCMD(userCMD, oldUserCMD)
+        val bestTime = bestSimTime()
 
-    val bestTime = bestSimTime()
+        if (bestTime == -1f) {
+            sendPacket(true)
+            return false
+        }
 
-    if (bestTime == -1f) {
+        userCMD.iButtons = userCMD.iButtons or 1 // << 1 =|= IN_ATTACK
+        userCMD.iTickCount = timeToTicks(bestTime)
+
+        userCMDToMem(userCMDptr, userCMD)
+        userCMDToMem(verifiedUserCMDptr, userCMD)
+
         sendPacket(true)
-        return@every
+        return true
     }
-
-    userCMD.iButtons = userCMD.iButtons or 1 // << 1 =|= IN_ATTACK
-    userCMD.iTickCount = timeToTicks(bestTime)
-
-    userCMDToMem(userCMDptr, userCMD)
-    userCMDToMem(verifiedUserCMDptr, userCMD)
-
-    sendPacket(true)
+    return false
 }
 
 fun constructRecords() {
     var bestFov = 5.0
+    val clientAngle = clientState.angle()
     forEntities(ccsPlayer) {
         val ent = it.entity
 
         if (!ent.dead() && !ent.dormant()) {
             val pos = ent.bones(6)
 
-            val fov = calcTarget(bestFov, bestTarget, pos, clientState.angle(), 10, 6, ovrStatic = true)[0] as Double
+            val fov = calcTarget(bestFov, bestBacktrackTarget, pos, clientAngle, 10, 6, ovrStatic = true)[0] as Double
 
             if (fov < bestFov && fov > 0) {
                 bestFov = fov
-                bestTarget = ent
+                bestBacktrackTarget = ent
             }
         }
 
@@ -128,7 +143,7 @@ fun constructRecords() {
     }
 
     if (bestFov == 5.0) {
-        bestTarget = -1L
+        bestBacktrackTarget = -1L
     }
 
     forEntities(ccsPlayer) {
@@ -148,10 +163,16 @@ fun constructRecords() {
 
             val neckPos: Angle; val chestPos: Angle; val stomachPos: Angle; val pelvisPos: Angle
 
-            if (enableNeck) { neckPos = ent.bones(7); record.neckPos = neckPos }
-            if (enableChest) { chestPos = ent.bones(6); record.chestPos = chestPos }
-            if (enableStomach) { stomachPos = ent.bones(5); record.stomachPos = stomachPos }
-            if (enablePelvis) { pelvisPos = ent.bones(0); record.pelvisPos = pelvisPos }
+            val boneMemory: Memory by lazy {
+                Memory(3984)
+            }
+
+            //reduce them shits
+            csgoEXE.read(ent.boneMatrix(), boneMemory)
+            if (enableNeck) { neckPos = boneMemory.bones(7); record.neckPos = neckPos }
+            if (enableChest) { chestPos = boneMemory.bones(6); record.chestPos = chestPos }
+            if (enableStomach) { stomachPos = boneMemory.bones(5); record.stomachPos = stomachPos }
+            if (enablePelvis) { pelvisPos = boneMemory.bones(0); record.pelvisPos = pelvisPos }
 
             record.alpha = 100f
             record.simtime = entSimTime
@@ -164,13 +185,13 @@ fun constructRecords() {
 }
 
 fun bestSimTime(): Float {
-    if (bestTarget <= 0L) {
+    if (bestBacktrackTarget <= 0L) {
         return -1f
     }
 
     var tmp = Double.MAX_VALUE
     var best = -1f
-    val targetID = (csgoEXE.uint(bestTarget + dwIndex)-1).toInt()
+    val targetID = (csgoEXE.uint(bestBacktrackTarget + dwIndex)-1).toInt()
     val clientAngle = clientState.angle()
     val meTime = csgoEXE.float(me + flSimulationTime)
     val maxFov = curSettings["BACKTRACK_FOV"].toFloat()
@@ -190,7 +211,7 @@ fun bestSimTime(): Float {
             }
 
             if (pos != Angle()) {
-                val fov = calcTarget(tmp, bestTarget, pos, clientAngle, 10, 6, ovrStatic = true)[0] as Double
+                val fov = calcTarget(tmp, bestBacktrackTarget, pos, clientAngle, 10, 6, ovrStatic = true)[0] as Double
 
                 if (tmp > fov && btRecords[targetID][t].simtime > meTime - 1 && fov > 0 && fov < maxFov) {
                     tmp = fov

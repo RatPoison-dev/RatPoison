@@ -5,8 +5,8 @@ import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.settings.*
-import rat.poison.strToBool
 import rat.poison.utils.*
+import rat.poison.utils.varUtil.strToBool
 import java.lang.Math.toRadians
 import kotlin.math.abs
 import kotlin.math.pow
@@ -96,7 +96,7 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	return closestPlayer
 }
 
-fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, angle: Angle, lockFOV: Int = curSettings["AIM_FOV"].toInt(), BONE: Int, ovrStatic: Boolean = false): MutableList<Any> {
+fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, curAngle: Angle, lockFOV: Int = curSettings["AIM_FOV"].toInt(), BONE: Int, ovrStatic: Boolean = false): MutableList<Any> {
 	val retList = mutableListOf(-1.0, 0.0, 0L)
 
 	var ePos: Angle = entity.bones(BONE)
@@ -110,8 +110,8 @@ fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, angle:
 
 		val dest = getCalculatedAngle(me, ePos)
 
-		val pitchDiff = abs(angle.x - dest.x)
-		var yawDiff = abs(angle.y - dest.y)
+		val pitchDiff = abs(curAngle.x - dest.x)
+		var yawDiff = abs(curAngle.y - dest.y)
 
 		if (yawDiff > 180f) {
 			yawDiff = 360f - yawDiff
@@ -126,11 +126,11 @@ fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, angle:
 			retList[2] = entity
 		}
 	} else {
-		val camAng = angle//clientState.angle()
+		val camAng = curAngle//clientState.angle()
 		val calcAng = realCalcAngle(me, ePos)
-		val punch = me.punch()
-		camAng.x += punch.x*2
-		camAng.y += punch.y*2
+		//val punch = me.punch()
+		//camAng.x += punch.x*2
+		//camAng.y += punch.y*2
 
 		val delta = Angle(camAng.x - calcAng.x, camAng.y - calcAng.y, 0.0)
 		delta.normalize()
@@ -176,11 +176,6 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			return@every
 		}
 
-		//if (!canFire && !meWep.automatic && !meWep.pistol && !meWep.shotgun && !meWep.sniper && !meWep.smg) { //Aim after shot
-		//	reset()
-		//	return@every
-		//}
-
 		if (curSettings["AIM_ONLY_ON_SHOT"].strToBool() && !canFire) {
 			reset()
 			return@every
@@ -195,12 +190,11 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		val forceAim = (keyPressed(curSettings["FORCE_AIM_KEY"].toInt()) || curSettings["FORCE_AIM_ALWAYS"].strToBool())
 		val haveAmmo = meWepEnt.bullets() > 0
 
-		val pressed = ((aim || boneTrig) && !MENUTOG && haveAmmo &&
-				(if (meWep.rifle || meWep.smg) {
-					(me.shotsFired() > curSettings["AIM_AFTER_SHOTS"].toInt())
-				} else {
-					true
-				})) || forceAim
+		val pressed = ((aim || boneTrig) && !MENUTOG && haveAmmo && (if (meWep.rifle || meWep.smg) {
+			(me.shotsFired() > curSettings["AIM_AFTER_SHOTS"].toInt())
+		} else {
+			true
+		})) || forceAim
 
 		var currentTarget = target
 
@@ -223,7 +217,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 				BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 4); destBone } else { destBone = aB; aB },
 				visCheck = shouldVisCheck) //Try to find new target
 
-		if (currentTarget < 0) { //If target is invalid from last run
+		if (currentTarget <= 0) { //If target is invalid from last run
 			currentTarget = findTarget(position, currentAngle, aim,
 					BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 4); destBone } else { destBone = aB; aB },
 					visCheck = shouldVisCheck) //Try to find new target
@@ -269,7 +263,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			val destinationAngle = getCalculatedAngle(me, bonePosition) //Rename to current angle
 
 			if (!perfect) {
-				destinationAngle.finalize(currentAngle, (1.1 - curSettings["AIM_SMOOTHNESS"].toDouble() / 5.0)) //10.0 is max smooth value
+				destinationAngle.finalize(currentAngle, (1.1 - curSettings["AIM_SMOOTHNESS"].toDouble() / 5.0)) //5.0 is max smooth value
 			}
 
 			val aimSpeed = curSettings["AIM_SPEED"].toInt()

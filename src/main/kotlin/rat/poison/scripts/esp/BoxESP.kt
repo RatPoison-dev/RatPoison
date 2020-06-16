@@ -6,26 +6,26 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.utils.Align
 import com.sun.jna.Memory
-import rat.poison.*
-import rat.poison.game.*
+import rat.poison.App
+import rat.poison.curLocalization
+import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
 import rat.poison.game.hooks.defuseKitEntities
-import rat.poison.game.netvars.NetVarOffsets
-import rat.poison.game.netvars.NetVarOffsets.bHasHelmet
-import rat.poison.game.netvars.NetVarOffsets.bIsScoped
+import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.iClip1
 import rat.poison.game.netvars.NetVarOffsets.iPrimaryReserveAmmoCount
-import rat.poison.game.offsets.ClientOffsets
+import rat.poison.game.worldToScreen
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.Vector
-import rat.poison.utils.extensions.readIndex
-import rat.poison.utils.extensions.uint
 import rat.poison.utils.notInGame
+import rat.poison.utils.varUtil.strToBool
+import rat.poison.utils.varUtil.strToColor
+import rat.poison.utils.varUtil.strToColorGDX
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.sign
@@ -91,13 +91,14 @@ fun boxEsp() = App {
 		vFeet.set(vHead.x, vHead.y, vHead.z - 75)
 
 		if (worldToScreen(vHead, vTop) && worldToScreen(vFeet, vBot)) {
-			val vMid = Vector((vTop.x + vBot.x)/2, (vTop.y + vBot.y)/2, (vTop.z + vBot.z)/2)
+			val vMid = Vector((vTop.x + vBot.x)/2f, (vTop.y + vBot.y)/2f, (vTop.z + vBot.z)/2f)
+			val entHealth = entity.health()
 			val tCol = when (curSettings["BOX_SHOW_HEALTH"].strToBool()) {
-				true -> rat.poison.game.Color((255 - 2.55 * entity.health()).toInt(), (2.55 * entity.health()).toInt(), 0, 1.0)
+				true -> rat.poison.game.Color((255 - 2.55 * entHealth).toInt(), (2.55 * entHealth).toInt(), 0, 1.0)
 				false -> curSettings["BOX_TEAM_COLOR"].strToColor()
 			}
 			val eCol = when (curSettings["BOX_SHOW_HEALTH"].strToBool()) {
-				true -> rat.poison.game.Color((255 - 2.55 * entity.health()).toInt(), (2.55 * entity.health()).toInt(), 0, 1.0)
+				true -> rat.poison.game.Color((255 - 2.55 * entHealth).toInt(), (2.55 * entHealth).toInt(), 0, 1.0)
 				false -> curSettings["BOX_ENEMY_COLOR"].strToColor()
 			}
 			val c = if (meTeam == entTeam) Color(tCol.red/255F, tCol.green/255F, tCol.blue/255F, 1F) else Color(eCol.red/255F, eCol.green/255F, eCol.blue/255F, 1F)

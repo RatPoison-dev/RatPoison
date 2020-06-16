@@ -97,7 +97,6 @@ FORCE_AIM_KEY = Przycisk celowania
 FORCE_AIM_ALWAYS = Zawsze celuj
 FORCE_AIM_THROUGH_WALLS = Zawsze celuj przez ściany
 AUTOMATIC_WEAPONS = Automatyczne bronie
-AUTO_WEP_DELAY = Opóźnienie [ms]
 AIM_TARGET_SWAP_DELAY = Opóźnienie zmiany celu
 OVERRIDE_WEAPONS_CHECKBOX = Zastąp domyślne ustawienia
 AIM_ONLY_ON_SHOT = Celuj tylko podczas strzelania

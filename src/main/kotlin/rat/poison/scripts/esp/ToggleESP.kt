@@ -5,9 +5,9 @@ import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.hooks.toneMapController
 import rat.poison.game.netvars.NetVarOffsets
-import rat.poison.strToBool
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.every
+import rat.poison.utils.varUtil.strToBool
 
 fun espToggle() = every(50) {
     if (keyPressed(curSettings["VISUALS_TOGGLE_KEY"].toInt())) {

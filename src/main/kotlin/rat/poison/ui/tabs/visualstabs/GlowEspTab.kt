@@ -1,12 +1,12 @@
 ﻿package rat.poison.ui.tabs.visualstabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.kotcrab.vis.ui.VisUI
-import com.kotcrab.vis.ui.widget.VisImage
-import com.kotcrab.vis.ui.widget.VisImageTextButton
+import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curLocalization
+import rat.poison.curSettings
+import rat.poison.ui.changed
 import rat.poison.ui.tabs.glowEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
@@ -16,9 +16,15 @@ class GlowEspTab : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     val glowEsp = VisCheckBoxCustom(curLocalization["ENABLE"], "GLOW_ESP", nameInLocalization = "ENABLE")
-    val invGlowEsp = VisCheckBoxCustom(curLocalization["INV_GLOW_ESP"], "INV_GLOW_ESP", nameInLocalization = "INV_GLOW_ESP")
-    val modelEsp = VisCheckBoxCustom(curLocalization["MODEL_ESP"], "MODEL_ESP", nameInLocalization = "MODEL_ESP")
-    val modelAndGlow = VisCheckBoxCustom(curLocalization["MODEL_AND_GLOW"], "MODEL_AND_GLOW", nameInLocalization = "MODEL_AND_GLOW")//VisCheckBox("Model & Glow Esp", nameInLocalization = "MODEL_AND_GLOW")
+
+    var enemyGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
+    var teammateGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
+    var weaponGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
+    var grenadeGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
+    var targetGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
+    var bombCarrierGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
+    var bombGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
+
     val glowShowHealth = VisCheckBoxCustom(curLocalization["HEALTH_BASED"], "GLOW_SHOW_HEALTH", "HEALTH_BASED")
 
     val showTeam = VisCheckBoxCustom(" ", "GLOW_SHOW_TEAM")
@@ -43,15 +49,80 @@ class GlowEspTab : Tab(false, false) {
     val glowHighlightColor = VisColorPickerCustom(curLocalization["TARGET"], "GLOW_HIGHLIGHT_COLOR", nameInLocalization = "TARGET")
 
     init {
+        //weaponGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
+        //var grenadeGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
+        //var targetGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
+        //var bombCarrierGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
+        //var bombGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
+
+        enemyGlowType.setItems("Normal", "Model", "Visible", "Visible Flicker")
+        enemyGlowType.selected = "Normal"
+        enemyGlowType.changed { _, _ ->
+            curSettings["GLOW_ENEMY_TYPE"] = enemyGlowType.selected
+            //uiUpdate() ?
+            true
+        }
+
+        teammateGlowType.setItems("Normal", "Model", "Visible", "Visible Flicker")
+        teammateGlowType.selected = "Normal"
+        teammateGlowType.changed { _, _ ->
+            curSettings["GLOW_TEAMMATE_TYPE"] = teammateGlowType.selected
+            //uiUpdate() ?
+            true
+        }
+
+        grenadeGlowType.setItems("Normal", "Model", "Visible", "Visible Flicker")
+        grenadeGlowType.selected = "Normal"
+        grenadeGlowType.changed { _, _ ->
+            curSettings["GLOW_GRENADE_TYPE"] = grenadeGlowType.selected
+            //uiUpdate() ?
+            true
+        }
+
+        weaponGlowType.setItems("Normal", "Model", "Visible", "Visible Flicker")
+        weaponGlowType.selected = "Normal"
+        weaponGlowType.changed { _, _ ->
+            curSettings["GLOW_WEAPON_TYPE"] = weaponGlowType.selected
+            //uiUpdate() ?
+            true
+        }
+
+        targetGlowType.setItems("Normal", "Model", "Visible", "Visible Flicker")
+        targetGlowType.selected = "Normal"
+        targetGlowType.changed { _, _ ->
+            curSettings["GLOW_TARGET_TYPE"] = targetGlowType.selected
+            //uiUpdate() ?
+            true
+        }
+
+        bombCarrierGlowType.setItems("Normal", "Model", "Visible", "Visible Flicker")
+        bombCarrierGlowType.selected = "Normal"
+        bombCarrierGlowType.changed { _, _ ->
+            curSettings["GLOW_BOMB_CARRIER_TYPE"] = bombCarrierGlowType.selected
+            //uiUpdate() ?
+            true
+        }
+
+        bombGlowType.setItems("Normal", "Model", "Visible", "Visible Flicker")
+        bombGlowType.selected = "Normal"
+        bombGlowType.changed { _, _ ->
+            curSettings["GLOW_BOMB_TYPE"] = bombGlowType.selected
+            //uiUpdate() ?
+            true
+        }
+
         ////////////////////FORMATTING
         table.padLeft(25F)
         table.padRight(25F)
 
-        table.add(glowEsp).left()
-        table.add(invGlowEsp).left().row()
+//        entityGlowType.selected = curSettings["GLOW_ENTITY_TYPE"]
+//        weaponGlowType.selected = curSettings["GLOW_WEAPON_TYPE"]
+//        targetGlowType.selected = curSettings["GLOW_TARGET_TYPE"]
+//        grenadeGlowType.selected = curSettings["GLOW_GRENADE_TYPE"]
+//        bombGlowType.selected = curSettings["GLOW_BOMB_TYPE"]
+//        bombCarrierGlowType.selected = curSettings["GLOW_BOMB_CARRIER_TYPE"]
 
-        table.add(modelEsp).left()
-        table.add(modelAndGlow).left().row()
+        table.add(glowEsp).left()
         table.add(glowShowHealth).left().row()
 
         var tmpTable = VisTable()
@@ -59,42 +130,49 @@ class GlowEspTab : Tab(false, false) {
         tmpTable.add(glowTeamColor).width(175F - showTeam.width).padRight(50F)
 
         table.add(tmpTable).left()
+        table.add(teammateGlowType).left().row()
 
         tmpTable = VisTable()
         tmpTable.add(showEnemies)
         tmpTable.add(glowEnemyColor).width(175F - showEnemies.width).padRight(50F)
 
-        table.add(tmpTable).left().row()
+        table.add(tmpTable).left()
+        table.add(enemyGlowType).left().row()
 
         tmpTable = VisTable()
         tmpTable.add(showBomb)
         tmpTable.add(glowBombColor).width(175F - showBomb.width).padRight(50F)
 
         table.add(tmpTable).left()
+        table.add(bombGlowType).left().row()
 
         tmpTable = VisTable()
         tmpTable.add(showBombCarrier)
         tmpTable.add(glowBombCarrierColor).width(175F - showBombCarrier.width).padRight(50F)
 
-        table.add(tmpTable).left().row()
+        table.add(tmpTable).left()
+        table.add(bombCarrierGlowType).left().row()
 
         tmpTable = VisTable()
         tmpTable.add(showWeapons)
         tmpTable.add(glowWeaponColor).width(175F - showWeapons.width).padRight(50F)
 
         table.add(tmpTable).left()
+        table.add(weaponGlowType).left().row()
 
         tmpTable = VisTable()
         tmpTable.add(showGrenades)
         tmpTable.add(glowGrenadeColor).width(175F - showGrenades.width).padRight(50F)
 
-        table.add(tmpTable).left().row()
+        table.add(tmpTable).left()
+        table.add(grenadeGlowType).left().row()
 
         tmpTable = VisTable()
         tmpTable.add(showTarget)
         tmpTable.add(glowHighlightColor).width(175F - showTarget.width).padRight(50F)
 
-        table.add(tmpTable).left().row()
+        table.add(tmpTable).left()
+        table.add(targetGlowType).left().row()
         ////////////////////FORMATTING
     }
 
@@ -110,10 +188,16 @@ class GlowEspTab : Tab(false, false) {
 fun glowEspTabUpdate() {
     glowEspTab.apply {
         glowEsp.update()
-        invGlowEsp.update()
-        modelEsp.update()
         glowShowHealth.update()
-        modelAndGlow.update()
+
+        enemyGlowType.selected = curSettings["GLOW_ENEMY_TYPE"]
+        teammateGlowType.selected = curSettings["GLOW_TEAMMATE_TYPE"]
+        weaponGlowType.selected = curSettings["GLOW_WEAPON_TYPE"]
+        targetGlowType.selected = curSettings["GLOW_TARGET_TYPE"]
+        grenadeGlowType.selected = curSettings["GLOW_GRENADE_TYPE"]
+        bombGlowType.selected = curSettings["GLOW_BOMB_TYPE"]
+        bombCarrierGlowType.selected = curSettings["GLOW_BOMB_CARRIER_TYPE"]
+
         showTeam.update()
         showEnemies.update()
         showBomb.update()
@@ -136,15 +220,5 @@ fun glowEspTabUpdate() {
         glowTeamColor.updateTitle()
         glowHighlightColor.updateTitle()
         glowWeaponColor.updateTitle()
-
-        if (invGlowEsp.isChecked || modelEsp.isChecked) {
-            glowEsp.isChecked = true
-            glowEsp.isDisabled = true
-        }
-
-        if (modelAndGlow.isChecked) {
-            modelEsp.isChecked = true
-            modelEsp.isDisabled = true
-        }
     }
 }

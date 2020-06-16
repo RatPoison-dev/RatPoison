@@ -4,15 +4,14 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.aimingMap
 import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.settings.*
-import rat.poison.strToBool
-import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiHelpers.tables.AimBTrigTable
 import rat.poison.ui.uiHelpers.tables.AimBacktrackTable
 import rat.poison.ui.uiHelpers.tables.AimTable
+import rat.poison.ui.uiPanels.aimTab
+import rat.poison.utils.varUtil.strToBool
 
 //I really couldn't give a shit to update this to the same as the other tabs
 
@@ -51,13 +50,11 @@ fun updateDisableAim() {
         } else {
             weaponOverrideCheckBox.isChecked = curSettings["ENABLE_OVERRIDE"].strToBool()
         }
-        ingameSens.disable(bool, col)
         weaponOverrideCheckBox.isDisabled = bool
         activateFromFireKey.disable(bool)
         teammatesAreEnemies.disable(bool)
         holdAim.disable(bool)
         automaticWeaponsCheckBox.disable(bool)
-        automaticWeaponsInput.disable(bool, col)
         targetSwapDelay.disable(bool, col)
 
         fovTypeLabel.color = col
@@ -106,7 +103,6 @@ fun updateAim() {
         enableAim.update()
         updateMap()
         aimToggleKey.update()
-        ingameSens.update()
         activateFromFireKey.update()
         teammatesAreEnemies.update()
         holdAim.update()
@@ -119,7 +115,7 @@ fun updateAim() {
         perfectAimCheckBox.update()
         advancedSettingsCheckBox.update()
         aimBoneBox.setItems(curLocalization["HEAD"], curLocalization["NECK"], curLocalization["CHEST"], curLocalization["STOMACH"], curLocalization["NEAREST"], curLocalization["RANDOM"])
-        //fovTypeBox.setItems(curLocalization["STATIC"], curLocalization["DISTANCE"])
+        fovTypeBox.setItems(curLocalization["STATIC"], curLocalization["DISTANCE"])
         forceAimBoneBox.setItems(curLocalization["HEAD"], curLocalization["NECK"], curLocalization["CHEST"], curLocalization["STOMACH"], curLocalization["NEAREST"], curLocalization["RANDOM"])
         categorySelectionBox.setItems(curLocalization["PISTOL"], curLocalization["RIFLE"], curLocalization["SMG"], curLocalization["SNIPER"], curLocalization["SHOTGUN"])
         forceAimBoneKey.update()
@@ -127,7 +123,6 @@ fun updateAim() {
         forceAimAlways.update()
         forceAimThroughWalls.update()
         automaticWeaponsCheckBox.update()
-        automaticWeaponsInput.update()
         targetSwapDelay.update()
 
         enableAimOnShot.update()
@@ -149,6 +144,11 @@ fun updateAim() {
             aimAfterShots.disable(false, Color(255F, 255F, 255F, 1F))
         } else {
             aimAfterShots.disable(true, Color(0F, 0F, 0F, 0F))
+        }
+
+        fovTypeBox.selected = when(curSettings["FOV_TYPE"]) {
+            "DISTANCE" -> curLocalization["DISTANCE"]
+            else -> curLocalization["STATIC"]
         }
 
         aimBoneBox.selected = when (curSettings[categorySelected + "_AIM_BONE"].toInt()) {

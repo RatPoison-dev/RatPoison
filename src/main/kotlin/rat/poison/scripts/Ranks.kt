@@ -1,12 +1,10 @@
 package rat.poison.scripts
 
 import rat.poison.App.haveTarget
-import rat.poison.game.CSGO.csgoEXE
 import rat.poison.curLocalization
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
-import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.game.rankName
 import rat.poison.opened
 import rat.poison.ui.uiPanels.ranksTab

@@ -1,27 +1,30 @@
 ﻿package rat.poison.ui.uiHelpers.tables
 
 import com.badlogic.gdx.graphics.Color
-import com.kotcrab.vis.ui.util.dialog.Dialogs
-import com.kotcrab.vis.ui.widget.*
-import com.sun.jna.platform.win32.OaIdl
-import rat.poison.*
-import rat.poison.game.CSGO
+import com.kotcrab.vis.ui.widget.CollapsibleWidget
+import com.kotcrab.vis.ui.widget.VisSelectBox
+import com.kotcrab.vis.ui.widget.VisTable
+import rat.poison.aimingMap
+import rat.poison.curLocalization
+import rat.poison.curSettings
 import rat.poison.settings.*
-import rat.poison.ui.uiPanels.aimTab
+import rat.poison.toWeaponClass
 import rat.poison.ui.changed
-import rat.poison.ui.uiPanels.overridenWeapons
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.updateDisableEsp
 import rat.poison.ui.uiHelpers.*
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
 import rat.poison.ui.uiPanelTables.weaponOverrideSelected
+import rat.poison.ui.uiPanels.aimTab
+import rat.poison.ui.uiPanels.overridenWeapons
 import rat.poison.ui.uiUpdate
+import rat.poison.utils.varUtil.boolToStr
+import rat.poison.utils.varUtil.strToBool
 
 class AimTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
     val enableAim = VisCheckBoxCustom(curLocalization["ENABLE_AIM"], "ENABLE_AIM", nameInLocalization = "ENABLE_AIM")
-    val ingameSens = VisInputFieldCustom(curLocalization["GAME_SENSITIVITY"], "GAME_SENSITIVITY", false, false)
     val aimToggleKey = VisInputFieldCustom(curLocalization["AIM_TOGGLE_KEY"], "AIM_TOGGLE_KEY", nameInLocalization = "AIM_TOGGLE_KEY")
     val activateFromFireKey = VisCheckBoxCustom(curLocalization["ACTIVATE_FROM_AIM_KEY"], "ACTIVATE_FROM_AIM_KEY", nameInLocalization = "ACTIVATE_FROM_AIM_KEY")
     val holdAim = VisCheckBoxCustom(curLocalization["HOLD_AIM"], "HOLD_AIM", nameInLocalization = "HOLD_AIM")
@@ -37,8 +40,6 @@ class AimTable: VisTable(false) {
 
     //Automatic Weapons Collapsible
     val automaticWeaponsCheckBox = VisCheckBoxCustom(curLocalization["AUTOMATIC_WEAPONS"], "AUTOMATIC_WEAPONS", nameInLocalization = "AUTOMATIC_WEAPONS")
-    val automaticWeaponsInput = VisInputFieldCustom(curLocalization["AUTO_WEP_DELAY"], "AUTO_WEP_DELAY", false, nameInLocalization = "AUTO_WEP_DELAY")
-
     val targetSwapDelay = VisSliderCustom(curLocalization["AIM_TARGET_SWAP_DELAY"], "AIM_TARGET_SWAP_DELAY", 0F, 500F, 10F, true, width1 = 200F, width2 = 250F, nameInLocalization = "AIM_TARGET_SWAP_DELAY")
 
     //Override Weapon Checkbox & Selection Box
@@ -237,8 +238,6 @@ class AimTable: VisTable(false) {
         add(enableAim).left().row()
         add(aimToggleKey).left().row()
 
-        add(ingameSens).left().row()
-
         add(activateFromFireKey).left().row()
         add(teammatesAreEnemies).left().row()
         add(holdAim).left().row()
@@ -257,7 +256,6 @@ class AimTable: VisTable(false) {
         addSeparator()
 
         add(automaticWeaponsCheckBox).left().row()
-        add(automaticWeaponsInput).left().row()
 
         addSeparator()
 

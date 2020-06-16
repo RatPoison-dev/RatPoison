@@ -1,6 +1,5 @@
 package rat.poison.scripts
 
-import org.jire.arrowhead.get
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.hooks.toneMapController
@@ -8,8 +7,8 @@ import rat.poison.game.netvars.NetVarOffsets.m_bUseCustomAutoExposureMax
 import rat.poison.game.netvars.NetVarOffsets.m_bUseCustomAutoExposureMin
 import rat.poison.game.netvars.NetVarOffsets.m_flCustomAutoExposureMax
 import rat.poison.game.netvars.NetVarOffsets.m_flCustomAutoExposureMin
-import rat.poison.strToBool
 import rat.poison.utils.every
+import rat.poison.utils.varUtil.strToBool
 
 fun nightMode() = every(1000) {
     if (!curSettings["ENABLE_ESP"].strToBool())

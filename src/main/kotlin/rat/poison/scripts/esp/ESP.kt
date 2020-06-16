@@ -9,10 +9,9 @@ import rat.poison.game.entity.Entity
 import rat.poison.game.entity.EntityType
 import rat.poison.scripts.esp.GlowESP.glowEspApp
 import rat.poison.scripts.esp.GlowESP.glowEspEvery
-import rat.poison.strToBool
-import rat.poison.toInt
 import rat.poison.utils.extensions.uint
-import java.util.concurrent.atomic.AtomicLong
+import rat.poison.utils.varUtil.strToBool
+import rat.poison.utils.varUtil.toInt
 
 var glowTarget = -1L
 
@@ -33,7 +32,7 @@ fun esp() {
 	if (dbg) { println("[DEBUG] Initializing Radar ESP") }; radarEsp()
 }
 
-fun Entity.glow(color: Color, model: Boolean) {
+fun Entity.glow(color: Color, glowType: Int) {
 	val glowMemory: Memory by lazy {
 		Memory(60)
 	}
@@ -55,12 +54,18 @@ fun Entity.glow(color: Color, model: Boolean) {
 
 			glowMemory.setByte(0x26, curSettings["INV_GLOW_ESP"].toBoolean().toInt().toByte())
 
-			if (curSettings["MODEL_AND_GLOW"].strToBool())
-				glowMemory.setByte(0x2C, model.toInt().toByte())
-			else
-				glowMemory.setByte(0x2C, curSettings["MODEL_ESP"].toBoolean().toInt().toByte())
+			glowMemory.setByte(0x2C, glowType.toByte())
 
 			CSGO.csgoEXE.write(this, glowMemory)
 		}
+	}
+}
+
+fun String.toGlowNum(): Int {
+	return when(this) {
+		"Normal" -> 0
+		"Model" -> 1
+		"Visible" -> 2
+		else -> 3
 	}
 }

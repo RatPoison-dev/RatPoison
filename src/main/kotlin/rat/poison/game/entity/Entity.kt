@@ -1,5 +1,6 @@
 package rat.poison.game.entity
 
+import com.sun.jna.Memory
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
 import rat.poison.game.CSGO.csgoEXE
@@ -13,9 +14,9 @@ import rat.poison.game.netvars.NetVarOffsets.vecViewOffset
 import rat.poison.game.offsets.ClientOffsets.bDormant
 import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.game.offsets.ClientOffsets.pStudioHdr
+import rat.poison.settings.HEAD_BONE
 import rat.poison.utils.Angle
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.readCached
 
 typealias Entity = Long
 
@@ -75,3 +76,19 @@ fun Entity.bones(boneID: Int): Angle {
 	}
 	return ang
 }
+
+fun Memory.bones(boneID: Int): Angle {
+	val ang = Angle()
+	ang.apply {
+		x = getFloat(((0x30L * boneID) + 0xC)).toDouble()
+		y = getFloat(((0x30L * boneID) + 0x1C)).toDouble()
+		z = getFloat(((0x30L * boneID) + 0x2C)).toDouble()
+	}
+	return ang
+}
+
+//csgoEXE.read(entity.boneMatrix(), boneMemory)
+//
+//val xOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0xC)).toDouble()
+//val yOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x1C)).toDouble()
+//val zOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x2C)).toDouble()

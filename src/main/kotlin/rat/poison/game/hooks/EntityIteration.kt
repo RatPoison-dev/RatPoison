@@ -1,5 +1,6 @@
 package rat.poison.game.hooks
 
+//import rat.poison.scripts.sendPacket
 import com.sun.jna.Memory
 import com.sun.jna.platform.win32.WinNT
 import rat.poison.EXPERIMENTAL
@@ -19,11 +20,8 @@ import rat.poison.game.offsets.EngineOffsets
 import rat.poison.game.offsets.EngineOffsets.dwClientState
 import rat.poison.game.offsets.EngineOffsets.dwClientState_MapDirectory
 import rat.poison.game.offsets.EngineOffsets.dwGameDir
-import rat.poison.scripts.bspHandling.bspData
-import rat.poison.scripts.bspHandling.loadBsp
 import rat.poison.scripts.entsToTrack
 import rat.poison.scripts.sendPacket
-//import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint

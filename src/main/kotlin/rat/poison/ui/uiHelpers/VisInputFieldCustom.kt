@@ -29,7 +29,7 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
         }
 
         changed { _, _ ->
-            if (keyField.text.toIntOrNull() != null) {
+            if ((keyField.text.toIntOrNull() != null && intVal) || (keyField.text.toDoubleOrNull() != null && !intVal)) {
                 if (keyField.text != curSettings[variableName]) {
                     if (intVal) {
                         curSettings[variableName] = keyField.text.toInt().toString()

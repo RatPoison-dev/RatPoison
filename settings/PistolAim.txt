@@ -19,7 +19,7 @@ PISTOL_AIM_BONE = 7
 
 //Aim FOV
 //Aims at entities inside this value
-PISTOL_AIM_FOV = 20
+PISTOL_AIM_FOV = 4
 
 //Aim speed
 //MS delay between aiming steps

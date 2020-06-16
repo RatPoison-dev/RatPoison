@@ -1,7 +1,6 @@
 package rat.poison.utils
 
 import rat.poison.curLocalization
-import rat.poison.utils.Settings
 
 fun GetWeaponsMap(): Settings {
     val WeaponsMap = Settings()

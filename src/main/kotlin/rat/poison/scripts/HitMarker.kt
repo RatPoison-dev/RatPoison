@@ -15,8 +15,8 @@ import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_flHealthShotBoostExpirationTime
 import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
 import rat.poison.settings.MENUTOG
-import rat.poison.strToBool
-import rat.poison.strToColor
+import rat.poison.utils.varUtil.strToBool
+import rat.poison.utils.varUtil.strToColor
 
 var hitMarkerAlpha = 0F
 var hitMarkerCombo = 0

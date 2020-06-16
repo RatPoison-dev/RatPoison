@@ -9,11 +9,11 @@ import rat.poison.game.entity.*
 import rat.poison.game.hooks.defuseKitEntities
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
-import rat.poison.strToBool
-import rat.poison.strToColor
 import rat.poison.utils.Vector
 import rat.poison.utils.normalize
 import rat.poison.utils.notInGame
+import rat.poison.utils.varUtil.strToBool
+import rat.poison.utils.varUtil.strToColor
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.hypot
@@ -40,12 +40,12 @@ fun indicatorEsp() = App {
                     if (curSettings["INDICATOR_SHOW_ENEMIES"].strToBool() && !onMyTeam) {
                         color = when (curSettings["INDICATOR_SHOW_BOMB_CARRIER"].strToBool()) {
                             true -> "INDICATOR_BOMB_CARRIER_COLOR"
-                            false -> "INDICATOR_ENEMY_COLOR"
+                            else -> "INDICATOR_ENEMY_COLOR"
                         }
                     } else if (curSettings["INDICATOR_SHOW_TEAM"].strToBool() && onMyTeam) {
                         color = when (curSettings["INDICATOR_SHOW_BOMB_CARRIER"].strToBool()) {
                             true -> "INDICATOR_BOMB_CARRIER_COLOR"
-                            false -> "INDICATOR_TEAM_COLOR"
+                            else -> "INDICATOR_TEAM_COLOR"
                         }
                     }
                 } else {
@@ -56,7 +56,7 @@ fun indicatorEsp() = App {
                     } else {
                         color = when (!onMyTeam) {
                             true -> "INDICATOR_ENEMY_COLOR"
-                            false -> "INDICATOR_TEAM_COLOR"
+                            else -> "INDICATOR_TEAM_COLOR"
                         }
                     }
                 }

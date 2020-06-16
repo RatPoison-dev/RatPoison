@@ -1,7 +1,6 @@
 package rat.poison.utils.Structs
 
 import com.sun.jna.Memory
-import com.sun.jna.Pointer
 import com.sun.jna.Structure
 import org.jire.arrowhead.Struct
 import rat.poison.utils.Vector

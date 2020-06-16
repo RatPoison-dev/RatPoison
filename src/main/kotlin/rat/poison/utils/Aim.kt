@@ -11,8 +11,8 @@ import rat.poison.game.setAngle
 import rat.poison.settings.GAME_PITCH
 import rat.poison.settings.GAME_SENSITIVITY
 import rat.poison.settings.GAME_YAW
-import rat.poison.strToBool
 import rat.poison.utils.extensions.refresh
+import rat.poison.utils.varUtil.strToBool
 import kotlin.math.round
 
 private val delta = ThreadLocal.withInitial { Vector() }
@@ -58,7 +58,8 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 
 	delta.set(xFix, currentAngle.x - destinationAngle.x, 0.0)
 
-	var sens = curSettings["GAME_SENSITIVITY"].toDouble() + .5
+	var sens = GAME_SENSITIVITY + .5
+
 	if (perfect) sens = 1.0
 
 	val dx = round(delta.x / (sens * GAME_PITCH))

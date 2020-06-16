@@ -2,7 +2,6 @@ package rat.poison.ui
 
 import rat.poison.App.uiAimOverridenWeapons
 import rat.poison.App.uiMenu
-import rat.poison.App.uiSpecList
 import rat.poison.opened
 import rat.poison.ui.tabs.*
 import rat.poison.ui.tabs.visualstabs.*

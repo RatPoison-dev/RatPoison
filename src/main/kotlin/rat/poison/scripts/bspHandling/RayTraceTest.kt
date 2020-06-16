@@ -1,13 +1,18 @@
 package rat.poison.scripts.bspHandling
 
 import com.badlogic.gdx.math.Vector3
-import rat.poison.*
-import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.entity.*
+import rat.poison.App
+import rat.poison.bspVisTime
+import rat.poison.curSettings
+import rat.poison.game.entity.EntityType
+import rat.poison.game.entity.bones
+import rat.poison.game.entity.dead
 import rat.poison.game.entity.onGround
 import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.utils.notInGame
+import rat.poison.utils.varUtil.strToBool
+import rat.poison.utils.varUtil.toVector3
 import java.util.concurrent.TimeUnit
 import kotlin.system.measureNanoTime
 

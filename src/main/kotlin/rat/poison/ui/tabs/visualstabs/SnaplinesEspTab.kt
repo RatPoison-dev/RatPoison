@@ -3,7 +3,6 @@
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import com.sun.jna.platform.win32.OaIdl
 import rat.poison.curLocalization
 import rat.poison.ui.tabs.snaplinesEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
@@ -31,6 +30,9 @@ class SnaplinesEspTab : Tab(false, false) {
 
     val bombCarrierSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_BOMB_CARRIER")
     val bombCarrierSnaplinesColor = VisColorPickerCustom(curLocalization["BOMB_CARRIER"], "SNAPLINES_BOMB_CARRIER_COLOR", nameInLocalization = "BOMB_CARRIER")
+
+    val defuseKitSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_DEFUSE_KITS")
+    val defuseKitSnaplinesColor = VisColorPickerCustom("Defuse Kits", "SNAPLINES_DEFUSE_KIT_COLOR") //needs localization
 
     init {
         table.padLeft(25F)
@@ -65,7 +67,13 @@ class SnaplinesEspTab : Tab(false, false) {
 
         tmpTable = VisTable()
         tmpTable.add(bombCarrierSnaplines)
-        tmpTable.add(bombCarrierSnaplinesColor).width(175F - bombCarrierSnaplines.width).padRight(50F)
+        tmpTable.add(bombCarrierSnaplinesColor).width(175F - bombCarrierSnaplines.width).padRight(50F).row()
+
+        table.add(tmpTable)
+
+        tmpTable = VisTable()
+        tmpTable.add(defuseKitSnaplines)
+        tmpTable.add(defuseKitSnaplinesColor).width(175F - defuseKitSnaplines.width).padRight(50F)
 
         table.add(tmpTable)
     }

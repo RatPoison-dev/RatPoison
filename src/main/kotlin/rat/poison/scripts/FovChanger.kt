@@ -10,7 +10,7 @@ import rat.poison.game.entity.weaponEntity
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_iDefaultFov
 import rat.poison.game.netvars.NetVarOffsets.m_zoomLevel
-import rat.poison.strToBool
+import rat.poison.utils.varUtil.strToBool
 
 internal fun fovChanger() = App {
     if (!curSettings["ENABLE_FOV_CHANGER"].strToBool() || me.dead()) return@App

@@ -2,9 +2,7 @@
 
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Align
-import com.kotcrab.vis.ui.util.Validators
 import com.kotcrab.vis.ui.widget.VisSlider
-import com.kotcrab.vis.ui.widget.VisValidatableTextField
 import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.App.uiKeybinds
 import rat.poison.curLocalization

@@ -2,7 +2,9 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import rat.poison.*
+import rat.poison.App
+import rat.poison.curLocalization
+import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.entity.*
 import rat.poison.game.entityByType
@@ -12,6 +14,8 @@ import rat.poison.game.offsets.EngineOffsets
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.ui.uiPanels.bombText
 import rat.poison.utils.every
+import rat.poison.utils.varUtil.strToBool
+import rat.poison.utils.varUtil.toInt
 
 //ent_create planted_c4_training
 //ent_fire planted_c4_training ActivateSetTimerLength 20

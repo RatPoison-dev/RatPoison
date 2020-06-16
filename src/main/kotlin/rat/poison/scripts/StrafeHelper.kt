@@ -11,10 +11,10 @@ import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.robot
 import rat.poison.settings.MENUTOG
-import rat.poison.strToBool
 import rat.poison.utils.every
 import rat.poison.utils.inBackground
 import rat.poison.utils.notInGame
+import rat.poison.utils.varUtil.strToBool
 import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.VK_SPACE
 

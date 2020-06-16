@@ -7,10 +7,10 @@ import rat.poison.curSettings
 import rat.poison.game.entity.absPosition
 import rat.poison.game.worldToScreen
 import rat.poison.settings.MENUTOG
-import rat.poison.strToBool
-import rat.poison.strToColor
 import rat.poison.utils.Vector
 import rat.poison.utils.notInGame
+import rat.poison.utils.varUtil.strToBool
+import rat.poison.utils.varUtil.strToColor
 
 var entsToTrack = mutableListOf<Long>()
 

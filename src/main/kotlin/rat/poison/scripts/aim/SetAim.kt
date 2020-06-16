@@ -5,9 +5,9 @@ import rat.poison.game.Weapons
 import rat.poison.game.entity.weapon
 import rat.poison.game.me
 import rat.poison.settingsLoaded
-import rat.poison.strToBool
 import rat.poison.toWeaponClass
 import rat.poison.utils.every
+import rat.poison.utils.varUtil.strToBool
 
 var override = false
 var curWep = Weapons.AK47

@@ -11,13 +11,13 @@ import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
 import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.scripts.esp.disableAllEsp
-import rat.poison.strToBool
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiPanels.visualsTab
+import rat.poison.utils.varUtil.strToBool
 
 var espTabbedPane = TabbedPane()
 var glowEspTab = GlowEspTab()
@@ -159,18 +159,6 @@ class VisualsTab : Tab(false, false) {
 }
 
 fun updateDisableEsp() {
-    glowEspTab.apply {
-        if (invGlowEsp.isChecked || modelEsp.isChecked) {
-            glowEsp.isChecked = true
-            glowEsp.isDisabled = true
-        }
-
-        if (modelAndGlow.isChecked) {
-            modelEsp.isChecked = true
-            modelEsp.isDisabled = true
-        }
-    }
-
     visualsTab.apply {
         val bool = !enableEsp.isChecked
         var col = Color(255F, 255F, 255F, 1F)
@@ -212,10 +200,7 @@ fun updateDisableEsp() {
         espTabbedPane.switchTab(recTab)
 
         glowEspTab.glowEsp.disable(bool)
-        glowEspTab.invGlowEsp.disable(bool)
-        glowEspTab.modelEsp.disable(bool)
         glowEspTab.glowShowHealth.disable(bool)
-        glowEspTab.modelAndGlow.disable(bool)
         glowEspTab.showTeam.disable(bool)
         glowEspTab.showEnemies.disable(bool)
         glowEspTab.showBomb.disable(bool)

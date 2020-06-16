@@ -16,11 +16,11 @@ import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_hObserverTarget
 import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.opened
-import rat.poison.strToBool
 import rat.poison.ui.uiPanels.specListText
 import rat.poison.utils.every
 import rat.poison.utils.extensions.readIndex
 import rat.poison.utils.notInGame
+import rat.poison.utils.varUtil.strToBool
 
 internal fun spectatorList() = every(100) {
     if (!curSettings["SPECTATOR_LIST"].strToBool() || notInGame || !curSettings["MENU"].strToBool()) {
@@ -40,10 +40,10 @@ internal fun spectatorList() = every(100) {
 
             if (entSpecTarget > -1 && entSpecTarget == playerSpecTarget) {
                 if (!spectators.contains(entName)) {
-                    if (entName.length <= 3) {
-                        spectators += "${curLocalization["NAME_PREFIX"]} $entName\n"
+                    spectators += if (entName.length <= 3) {
+                        "${curLocalization["NAME_PREFIX"]} $entName\n"
                     } else {
-                        spectators += "$entName\n"
+                        "$entName\n"
                     }
                 }
             }

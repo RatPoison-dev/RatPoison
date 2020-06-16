@@ -63,7 +63,6 @@ SPECTATOR_LIST_WINDOW_NAME = Наблюдатели
 
 // Aim tab
 PISTOL = Пистолеты
-GAME_SENSITIVITY = Чувствительность мыши
 SHOTGUN = Дробовики
 RIFLE = Винтовки
 SNIPER = Снайперки
@@ -100,7 +99,6 @@ FORCE_AIM_KEY = Кнопка форса аима
 FORCE_AIM_ALWAYS = Аим работает всегда
 FORCE_AIM_THROUGH_WALLS = Аим работает через стены
 AUTOMATIC_WEAPONS = Автоматические оружия
-AUTO_WEP_DELAY = Задержка
 AIM_TARGET_SWAP_DELAY = Переключение цели
 OVERRIDE_WEAPONS_CHECKBOX = Переопределение оружий
 AIM_ONLY_ON_SHOT = Аимиться только когда можно стрелять

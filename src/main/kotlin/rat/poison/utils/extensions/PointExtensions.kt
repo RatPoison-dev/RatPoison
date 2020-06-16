@@ -14,5 +14,5 @@ fun WinDef.POINT.refresh() = apply { CUser32.GetCursorPos(this) }
 fun WinDef.POINT.distance(b: WinDef.POINT): Double {
 	val px = (b.x - this.x).toDouble()
 	val py = (b.y - this.y).toDouble()
-	return sqrt(px * px + py * py)
+	return kotlin.math.sqrt(px * px + py * py)
 }

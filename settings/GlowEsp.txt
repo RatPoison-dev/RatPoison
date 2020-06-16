@@ -1,19 +1,20 @@
 //Enable glow esp
 GLOW_ESP = false
 
-//Enable inverted glow esp
-//Glows all of the entity like a silhouette
-INV_GLOW_ESP = false
+//Type of glow on entities (enemies & teammates)
+GLOW_ENEMY_TYPE = Normal
 
-//Enable model esp
-//Glows the details of the model
-//Not visible through walls
-MODEL_ESP = false
+GLOW_TEAMMATE_TYPE = Normal
 
-//Enable model and glow
-//Will use glow esp (or inv glow esp) when entity is not visible
-//Will use model esp when entity is visible
-MODEL_AND_GLOW = false
+GLOW_GRENADE_TYPE = Normal
+
+GLOW_WEAPON_TYPE = Normal
+
+GLOW_BOMB_CARRIER_TYPE = Normal
+
+GLOW_BOMB_TYPE = Normal
+
+GLOW_TARGET_TYPE = Normal
 
 //Enable glow esp on teammates
 GLOW_SHOW_TEAM = false

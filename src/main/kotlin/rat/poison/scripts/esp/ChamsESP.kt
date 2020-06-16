@@ -1,7 +1,6 @@
 package rat.poison.scripts.esp
 
 import rat.poison.curSettings
-import rat.poison.game.CSGO
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.engineDLL
@@ -15,10 +14,10 @@ import rat.poison.game.offsets.ClientOffsets.dwEntityList
 import rat.poison.game.offsets.ClientOffsets.dwLocalPlayer
 import rat.poison.game.offsets.EngineOffsets.dwModelAmbientMin
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.strToBool
-import rat.poison.strToColor
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
+import rat.poison.utils.varUtil.strToBool
+import rat.poison.utils.varUtil.strToColor
 import java.lang.Float.floatToIntBits
 
 //Change for entities to for entities ccsplayer

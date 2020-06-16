@@ -6,12 +6,12 @@ import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curLocalization
 import rat.poison.curSettings
-import rat.poison.strToBool
-import rat.poison.ui.uiPanels.rcsTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiPanels.rcsTab
+import rat.poison.utils.varUtil.strToBool
 
 class RcsTab : Tab(false, false) {
     private val table = VisTable(false)
