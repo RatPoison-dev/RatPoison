@@ -15,6 +15,7 @@ import rat.poison.ui.tabs.updateDisableEsp
 import rat.poison.ui.uiHelpers.*
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
+import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
 import rat.poison.ui.uiPanelTables.weaponOverrideSelected
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiPanels.overridenWeapons
@@ -24,8 +25,7 @@ import rat.poison.utils.varUtil.strToBool
 
 class AimTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
-    val enableAim = VisCheckBoxCustom(curLocalization["ENABLE_AIM"], "ENABLE_AIM", nameInLocalization = "ENABLE_AIM")
-    val aimToggleKey = VisInputFieldCustom(curLocalization["AIM_TOGGLE_KEY"], "AIM_TOGGLE_KEY", nameInLocalization = "AIM_TOGGLE_KEY")
+    val enableAim = BindsRelatedCheckBox(curLocalization["ENABLE_AIM"], "ENABLE_AIM", nameInLocalization = "ENABLE_AIM", padLeft = 200F)
     val activateFromFireKey = VisCheckBoxCustom(curLocalization["ACTIVATE_FROM_AIM_KEY"], "ACTIVATE_FROM_AIM_KEY", nameInLocalization = "ACTIVATE_FROM_AIM_KEY")
     val holdAim = VisCheckBoxCustom(curLocalization["HOLD_AIM"], "HOLD_AIM", nameInLocalization = "HOLD_AIM")
     val teammatesAreEnemies = VisCheckBoxCustom(curLocalization["TEAMMATES_ARE_ENEMIES"], "TEAMMATES_ARE_ENEMIES", nameInLocalization = "TEAMMATES_ARE_ENEMIES")
@@ -236,7 +236,6 @@ class AimTable: VisTable(false) {
         //Add all items to label for tabbed pane content
 
         add(enableAim).left().row()
-        add(aimToggleKey).left().row()
 
         add(activateFromFireKey).left().row()
         add(teammatesAreEnemies).left().row()

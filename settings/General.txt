@@ -32,7 +32,7 @@ OVERLAY_HEIGHT = 1080
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles aim on or off
 //Default key is F3
-AIM_TOGGLE_KEY = 114
+ENABLE_AIM_SWITCH_KEY = 114
 
 //Aim Strafer
 AIM_STRAFER = false
@@ -142,6 +142,8 @@ KEYBINDS_Y = 400.0
 KEYBINDS_ALPHA = 1.0
 AIM_ONLY_ON_SHOT = false
 
+BINDS_ALPHA = 1.0
+
 //Can't be edited from menu, not guaranteed to work properly
 PISTOL_AIM_AFTER_SHOTS = 0
 SHOTGUN_AIM_AFTER_SHOTS = 0
@@ -173,3 +175,7 @@ W_SPAM_ON_KEY = true
 W_SPAM_KEY = 80
 
 W_SPAM_SWITCH_KEY = 22
+
+ENABLE_AIM_ON_KEY = false
+
+ENABLE_AIM_KEY = 22

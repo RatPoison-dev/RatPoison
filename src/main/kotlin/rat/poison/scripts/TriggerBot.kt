@@ -2,6 +2,7 @@ package rat.poison.scripts
 
 import org.jire.arrowhead.keyPressed
 import org.jire.arrowhead.keyReleased
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.CSGO.clientDLL
@@ -32,7 +33,7 @@ fun boneTrigger() = every(10) {
         return@every
     }
 
-    if (curSettings["ENABLE_TRIGGER"].strToBool()) {
+    if (curSettings["ENABLE_TRIGGER"].strToBool() && checkFlags("ENABLE_TRIGGER")) {
         val wep = me.weapon()
 
         val bFOV : Int; val bDELAY : Int; val bINCROSS : Boolean; val bINFOV : Boolean; val bAIMBOT : Boolean

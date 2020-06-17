@@ -4,7 +4,9 @@ import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.ui.tabs.boxEspTab
 import rat.poison.ui.tabs.glowEspTab
+import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiPanels.miscTab
+import rat.poison.ui.uiPanels.rcsTab
 import rat.poison.ui.uiPanels.visualsTab
 
 var bunnyHopToggleKey = ObservableBoolean({ keyPressed(1) })
@@ -29,6 +31,10 @@ var radarEspToggleKey = ObservableBoolean({keyPressed(1) })
 var nightModeToggleKey = ObservableBoolean({keyPressed(1) })
 var visAdrenalineToggleKey = ObservableBoolean({keyPressed(1) })
 var glowEspToggleKey = ObservableBoolean({keyPressed(1) })
+var enableRCSToggleKey = ObservableBoolean({keyPressed(1) })
+var enableAimToggleKey = ObservableBoolean({keyPressed(1) })
+var enableTrigToggleKey = ObservableBoolean({keyPressed(1) })
+var enableBacktrackToggleKey = ObservableBoolean({keyPressed(1) })
 
 fun constructVars() {
     bunnyHopToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_BUNNY_HOP_SWITCH_KEY"].toInt()) })
@@ -53,6 +59,10 @@ fun constructVars() {
     nightModeToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_NIGHTMODE_SWITCH_KEY"].toInt()) })
     visAdrenalineToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_ADRENALINE_SWITCH_KEY"].toInt()) })
     glowEspToggleKey = ObservableBoolean({ keyPressed(curSettings["GLOW_ESP_SWITCH_KEY"].toInt()) })
+    enableRCSToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_RCS_SWITCH_KEY"].toInt()) })
+    enableAimToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_AIM_SWITCH_KEY"].toInt()) })
+    enableTrigToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_TRIGGER_SWITCH_KEY"].toInt()) })
+    enableBacktrackToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_BACKTRACK_SWITCH_KEY"].toInt()) })
 }
 fun addListeners() {
     bunnyHopToggleKey.update()
@@ -162,5 +172,21 @@ fun addListeners() {
     glowEspToggleKey.update()
     if (glowEspToggleKey.justBecameTrue) {
         glowEspTab.glowEsp.checkBox.isChecked = !glowEspTab.glowEsp.checkBox.isChecked
+    }
+    enableRCSToggleKey.update()
+    if (enableRCSToggleKey.justBecameTrue) {
+        rcsTab.enableRCS.checkBox.isChecked = !rcsTab.enableRCS.checkBox.isChecked
+    }
+    enableAimToggleKey.update()
+    if (enableAimToggleKey.justBecameTrue) {
+        aimTab.tAim.enableAim.checkBox.isChecked = !aimTab.tAim.enableAim.checkBox.isChecked
+    }
+    enableTrigToggleKey.update()
+    if (enableTrigToggleKey.justBecameTrue) {
+        aimTab.tTrig.enableTrig.checkBox.isChecked = !aimTab.tTrig.enableTrig.checkBox.isChecked
+    }
+    enableBacktrackToggleKey.update()
+    if (enableBacktrackToggleKey.justBecameTrue) {
+        aimTab.tBacktrack.enableBacktrack.checkBox.isChecked = !aimTab.tBacktrack.enableBacktrack.checkBox.isChecked
     }
 }

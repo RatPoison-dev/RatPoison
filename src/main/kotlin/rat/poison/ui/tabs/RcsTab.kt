@@ -10,6 +10,7 @@ import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
 import rat.poison.ui.uiPanels.rcsTab
 import rat.poison.utils.varUtil.strToBool
 
@@ -17,8 +18,7 @@ class RcsTab : Tab(false, false) {
     private val table = VisTable(false)
 
     //Init labels/sliders/boxes that show values here
-    val enableRCS = VisCheckBoxCustom(curLocalization["ENABLE_RCS"], "ENABLE_RCS", nameInLocalization = "ENABLE_RCS")
-    val rcsToggleKey = VisInputFieldCustom(curLocalization["RCS_TOGGLE_KEY"], "RCS_TOGGLE_KEY", nameInLocalization = "RCS_TOGGLE_KEY")
+    val enableRCS = BindsRelatedCheckBox(curLocalization["ENABLE_RCS"], "ENABLE_RCS", nameInLocalization = "ENABLE_RCS", padLeft = 200F)
     val rcsSmoothingX = VisSliderCustom(curLocalization["RCS_SMOOTHING_X"], "RCS_SMOOTHING_X", .1F, 1F, .02F, false, width1 = 200F, width2 = 250F, nameInLocalization = "RCS_SMOOTHING_X")
     val rcsSmoothingY = VisSliderCustom(curLocalization["RCS_SMOOTHING_Y"], "RCS_SMOOTHING_Y", .1F, 1F, .02F, false, width1 = 200F, width2 = 250F, nameInLocalization = "RCS_SMOOTHING_Y")
 
@@ -41,7 +41,6 @@ class RcsTab : Tab(false, false) {
         table.padRight(25F)
 
         table.add(enableRCS).left().row()
-        table.add(rcsToggleKey).left().row()
         table.add(rcsSmoothingX).left().row()
         table.add(rcsSmoothingY).left().row()
         table.add(rcsReturnAim).left().row()
@@ -103,7 +102,6 @@ fun rcsTabUpdate() {
         rcsSmoothingX.update()
         rcsSmoothingY.update()
         rcsReturnAim.update()
-        rcsToggleKey.update()
         enableRCrosshair.update()
         enableSCrosshair.update()
         rCrosshairWidth.update()

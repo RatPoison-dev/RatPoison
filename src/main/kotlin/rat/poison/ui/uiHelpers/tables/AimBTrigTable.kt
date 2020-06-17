@@ -12,15 +12,13 @@ import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisLabelCustom
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
+import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiUpdate
 
 class AimBTrigTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
-    val enableTrig = VisCheckBoxCustom(curLocalization["ENABLE_TRIGGER"], "ENABLE_TRIGGER", nameInLocalization = "ENABLE_TRIGGER")
-
-    val boneTriggerEnableKey = VisCheckBoxCustom(curLocalization["TRIGGER_ENABLE_KEY"], "TRIGGER_ENABLE_KEY", nameInLocalization = "TRIGGER_ENABLE_KEY")
-    val boneTriggerKey = VisInputFieldCustom(curLocalization["TRIGGER_KEY"], "TRIGGER_KEY", nameInLocalization = "TRIGGER_KEY")
+    val enableTrig = BindsRelatedCheckBox(curLocalization["ENABLE_TRIGGER"], "ENABLE_TRIGGER", nameInLocalization = "ENABLE_TRIGGER", padLeft = 200F)
 
     val trigAimbot = ATabVisCheckBox(curLocalization["TRIGGER_AIMBOT"], "_TRIGGER_AIMBOT", nameInLocalization = "TRIGGER_AIMBOT")
     val trigInCross = ATabVisCheckBox(curLocalization["TRIGGER_IS_IN_CROSS"], "_TRIGGER_INCROSS", nameInLocalization = "TRIGGER_IS_IN_CROSS")
@@ -61,8 +59,6 @@ class AimBTrigTable: VisTable(false) {
             //Add all items to label for tabbed pane content
 
             add(enableTrig).left().row()
-            add(boneTriggerEnableKey).left().row()
-            add(boneTriggerKey).left().row()
             add(categorySelection).left().row()
             add(trigAimbot).left().row()
             add(trigInCross).left().row()

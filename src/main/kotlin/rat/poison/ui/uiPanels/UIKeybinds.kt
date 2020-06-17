@@ -12,11 +12,11 @@ import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import kotlin.math.round
 
 class UIKeybinds : VisWindow(curLocalization["KEYBINDS_PANEL_NAME"]) {
-    val aimToggleKey = VisInputFieldCustom(curLocalization["AIM_TOGGLE_KEY"], "AIM_TOGGLE_KEY", nameInLocalization = "AIM_TOGGLE_KEY")
+    val aimToggleKey = VisInputFieldCustom(curLocalization["AIM_TOGGLE_KEY"], "ENABLE_AIM_SWITCH_KEY", nameInLocalization = "AIM_TOGGLE_KEY")
     val forceAimKey = VisInputFieldCustom(curLocalization["FORCE_AIM_KEY"], "FORCE_AIM_KEY", nameInLocalization = "FORCE_AIM_KEY")
-    val rcsToggleKey = VisInputFieldCustom(curLocalization["RCS_TOGGLE_KEY"], "RCS_TOGGLE_KEY", nameInLocalization = "RCS_TOGGLE_KEY")
+    val rcsToggleKey = VisInputFieldCustom(curLocalization["RCS_TOGGLE_KEY"], "ENABLE_RCS_SWITCH_KEY", nameInLocalization = "RCS_TOGGLE_KEY")
     val forceAimBoneKey = VisInputFieldCustom(curLocalization["FORCE_AIM_BONE_KEY"], "FORCE_AIM_BONE_KEY", nameInLocalization = "FORCE_AIM_BONE_KEY" )
-    val boneTriggerKey = VisInputFieldCustom(curLocalization["TRIGGER_KEY"], "TRIGGER_KEY", nameInLocalization = "TRIGGER_KEY")
+    val boneTriggerKey = VisInputFieldCustom(curLocalization["TRIGGER_KEY"], "ENABLE_TRIGGER_SWITCH_KEY", nameInLocalization = "TRIGGER_KEY")
     val visualsToggleKey = VisInputFieldCustom(curLocalization["VISUALS_TOGGLE_KEY"], "ENABLE_ESP_SWITCH_KEY", nameInLocalization = "VISUALS_TOGGLE_KEY")
     val doorSpamKey = VisInputFieldCustom(curLocalization["DOOR_SPAM_KEY"], "D_SPAM_KEY", nameInLocalization = "DOOR_SPAM_KEY")
     val weaponSpamKey = VisInputFieldCustom(curLocalization["WEAPON_SPAM_KEY"], "W_SPAM_KEY", nameInLocalization = "WEAPON_SPAM_KEY")
@@ -81,6 +81,8 @@ fun updateKeybinds() {
         visualsToggleKey.update()
         doorSpamKey.update()
         weaponSpamKey.update()
+        rcsToggleKey.update()
+
         menuKeyField.update()
     }
 }
@@ -98,10 +100,9 @@ fun keybindsUpdate(neglect: Actor) {
         menuKeyField.update(neglect)
     }
 
-    aimTab.tAim.aimToggleKey.update(neglect)
+    aimTab.tAim.enableAim.update()
     aimTab.tAim.forceAimKey.update(neglect)
     aimTab.tAim.forceAimBoneKey.update(neglect)
-    aimTab.tTrig.boneTriggerKey.update(neglect)
-    rcsTab.rcsToggleKey.update(neglect)
+    rcsTab.enableRCS.update()
     optionsTab.menuKey.update(neglect)
 }

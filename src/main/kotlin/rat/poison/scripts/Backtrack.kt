@@ -2,6 +2,7 @@ package rat.poison.scripts
 
 import com.sun.jna.Memory
 import org.jire.arrowhead.keyPressed
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
@@ -43,7 +44,7 @@ fun sendPacket(bool: Boolean) { //move outta here
 }
 
 fun setupBacktrack() = every(4) {
-    if (notInGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0) {
+    if (notInGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || !checkFlags("ENABLE_BACKTRACK") || me <= 0) {
         btRecords = Array(64) { Array(13) { BacktrackTable() } }
         if (engineDLL.byte(0xD415A) == 0.toByte()) {
             sendPacket(true)

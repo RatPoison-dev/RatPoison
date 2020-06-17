@@ -1,7 +1,8 @@
-package rat.poison.scripts
+﻿package rat.poison.scripts
 
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.angle
 import rat.poison.game.clientState
@@ -20,7 +21,7 @@ private val newPunch = Vector2()
 private val playerPunch = Vector3()
 
 fun rcs() = every(4) {
-	if (me <= 0 || !curSettings["ENABLE_RCS"].strToBool()) return@every
+	if (me <= 0 || !curSettings["ENABLE_RCS"].strToBool() || !checkFlags("ENABLE_RCS")) return@every
 
 	val weaponEntity = me.weaponEntity()
 	val weapon = me.weapon(weaponEntity)

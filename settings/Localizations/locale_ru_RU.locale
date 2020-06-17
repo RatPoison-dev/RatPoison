@@ -208,7 +208,7 @@ RANKS_WINS = Победы
 
 // RCS Tab
 ENABLE_RCS = Включить РКС
-RCS_TOGGLE_KEY = Кнопка переключения
+RCS_TOGGLE_KEY = Кнопка переключения РКС
 RCS_SMOOTHING_X = Сила РКС по X
 RCS_SMOOTHING_Y = Сила РКС по Y
 RCS_RETURNAIM = Возвращать аим

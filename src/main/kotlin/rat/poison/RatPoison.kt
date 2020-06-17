@@ -17,7 +17,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Matrix4
-import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.kotcrab.vis.ui.VisUI
 import com.sun.management.OperatingSystemMXBean
@@ -42,12 +41,13 @@ import rat.poison.scripts.esp.drawBacktrack
 import rat.poison.scripts.esp.esp
 import rat.poison.scripts.esp.espToggle
 import rat.poison.settings.MENUTOG
-import rat.poison.ui.*
-import rat.poison.ui.tabs.RcsTab
 import rat.poison.ui.tabs.saveDefault
 import rat.poison.ui.uiPanels.*
 import rat.poison.ui.uiUpdate
-import rat.poison.utils.*
+import rat.poison.utils.ObservableBoolean
+import rat.poison.utils.Settings
+import rat.poison.utils.addListeners
+import rat.poison.utils.constructVars
 import rat.poison.utils.extensions.appendHumanReadableSize
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.varUtil.strToBool
@@ -57,12 +57,12 @@ import java.io.FileReader
 import java.lang.management.ManagementFactory
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.set
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.system.measureNanoTime
-import java.util.Locale
 
 //Override Weapon
 data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = false,      var tFlatAim: Boolean = false,
@@ -303,8 +303,6 @@ fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
 
 var opened = false
 var overlayMenuKey = ObservableBoolean({keyPressed(1)})
-var toggleAimKey = ObservableBoolean({keyPressed(1)})
-var toggleRCSKey = ObservableBoolean({keyPressed(1)})
 
 var syncTime = 0L
 var glowTime = 0L
@@ -336,8 +334,6 @@ object App : ApplicationAdapter() {
 
     override fun create() {
         overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
-        toggleAimKey = ObservableBoolean({ keyPressed(curSettings["AIM_TOGGLE_KEY"].toInt()) })
-        toggleRCSKey = ObservableBoolean({ keyPressed(curSettings["RCS_TOGGLE_KEY"].toInt()) })
         constructVars()
         VisUI.load(Gdx.files.internal("skin\\tinted.json"))
         //Implement stage for menu
@@ -506,18 +502,6 @@ object App : ApplicationAdapter() {
 
                     if (dbg) println("[DEBUG] Menu Toggled")
                 }
-
-                //Aim Toggle Key
-                toggleAimKey.update()
-                if (toggleAimKey.justBecameTrue) {
-                    aimTab.tAim.enableAim.isChecked = !aimTab.tAim.enableAim.isChecked
-                }
-
-                // RCS Toggle Key
-                toggleRCSKey.update()
-                if (toggleRCSKey.justBecameTrue) {
-                    rcsTab.enableRCS.isChecked = !rcsTab.enableRCS.isChecked
-                }
                 addListeners()
 
                 val w = overlay.width
@@ -605,15 +589,6 @@ fun getSystemLocale(): Locale? {
     return Locale.getDefault()
 }
 
-fun Any.strToBool() = this.toString().toLowerCase() == "true" || this == true || this == 1.0 || this == 1 || this == 1F
-fun Any.boolToStr() = this.toString()
-fun Any.strToColor() = convStrToColor(this.toString())
-fun Any.strToColorGDX() = convStrToColorGDX(this.toString())
-fun Any.cToDouble() = this.toString().toDouble()
-fun Any.cToFloat() = this.toString().toFloat()
-fun Boolean.toFloat() = if (this) 1F else 0F
-fun Boolean.toDouble() = if (this) 1.0 else 0.0
-fun Boolean.toInt() = if (this) 1 else 0
 
 fun convStrToColor(input: String): rat.poison.game.Color { //Rat poison color
     var line = input
@@ -679,41 +654,4 @@ fun Array<DoubleArray>.toMatrix4(): Matrix4 {
 
     mat4.set(fArr)
     return mat4
-}
-
-operator fun Vector3.minus(v: Vector3): Vector3 {
-    x - v.x
-    y - v.y
-    z - v.z
-    return this
-}
-
-operator fun Vector3.plus(v: Vector3): Vector3 {
-    x + v.x
-    y + v.y
-    z + v.z
-    return this
-}
-
-operator fun Vector3.times(f: Float): Vector3 {
-    x * f
-    y * f
-    z * f
-    return this
-}
-
-operator fun Vector3.divAssign(f: Float) {
-    x /= f
-    y /= f
-    z /= f
-}
-
-fun Angle.toVector3(): Vector3 {
-    val vec = Vector3()
-    vec.x = x.toFloat(); vec.y = y.toFloat(); vec.z = z.toFloat()
-    return vec
-}
-
-fun Vector3.toVector(): Vector {
-    return Vector(x.toDouble(), y.toDouble(), z.toDouble())
 }

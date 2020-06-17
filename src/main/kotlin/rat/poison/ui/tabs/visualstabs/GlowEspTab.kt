@@ -17,7 +17,7 @@ class GlowEspTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val glowEsp = BindsRelatedCheckBox(curLocalization["ENABLE"], "GLOW_ESP", nameInLocalization = "ENABLE", padLeft = 50F, isFixedPad = true)
+    val glowEsp = BindsRelatedCheckBox(curLocalization["ENABLE"], "GLOW_ESP", nameInLocalization = "ENABLE", padLeft = 155F)
     var map = visualsMap()
     var enemyGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
     var teammateGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
@@ -128,7 +128,7 @@ class GlowEspTab : Tab(false, false) {
 //        bombGlowType.selected = curSettings["GLOW_BOMB_TYPE"]
 //        bombCarrierGlowType.selected = curSettings["GLOW_BOMB_CARRIER_TYPE"]
 
-        table.add(glowEsp).left()
+        table.add(glowEsp).left().row()
         table.add(glowShowHealth).left().row()
 
         var tmpTable = VisTable()

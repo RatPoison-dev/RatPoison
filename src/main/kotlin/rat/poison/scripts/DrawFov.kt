@@ -3,6 +3,7 @@ package rat.poison.scripts
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils.clamp
 import rat.poison.App
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.CSGO.csgoEXE
@@ -77,7 +78,7 @@ fun drawFov() = App {
             circle(x, y, clamp(aimRadius, 10F, 1000F))
         }
 
-        if (curSettings["ENABLE_TRIGGER"].strToBool() && curSettings["DRAW_TRIGGER_FOV"].strToBool() && triggerRadius != -1F && bINFOV) {
+        if (curSettings["ENABLE_TRIGGER"].strToBool() && checkFlags("ENABLE_TRIGGER") && curSettings["DRAW_TRIGGER_FOV"].strToBool() && triggerRadius != -1F && bINFOV) {
             val col = curSettings["DRAW_TRIGGER_FOV_COLOR"].strToColor()
             setColor(col.red / 255F, col.green / 255F, col.blue / 255F, 1F)
             circle(x, y, clamp(triggerRadius, 10F, 1000F))

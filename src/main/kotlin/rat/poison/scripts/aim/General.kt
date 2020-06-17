@@ -1,6 +1,7 @@
-package rat.poison.scripts.aim
+﻿package rat.poison.scripts.aim
 
 import org.jire.arrowhead.keyPressed
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
@@ -165,7 +166,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 													  currentAngle: Angle, aimSpeed: Int, aimSpeedDivisor: Int) -> R) = every(duration) {
 	try {
 		if (!precheck()) return@every
-		if (!curSettings["ENABLE_AIM"].strToBool()) return@every
+		if (!curSettings["ENABLE_AIM"].strToBool() || !checkFlags("ENABLE_AIM")) return@every
 
 		val meWep = me.weapon()
 		val meWepEnt = me.weaponEntity()

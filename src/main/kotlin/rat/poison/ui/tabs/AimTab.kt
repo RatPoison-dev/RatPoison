@@ -40,7 +40,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
 fun updateDisableAim() {
     aimTab.tAim.apply {
-        val bool = !enableAim.isChecked
+        val bool = !enableAim.checkBox.isChecked
         var col = Color(255F, 255F, 255F, 1F)
         if (bool) {
             col = Color(105F, 105F, 105F, .2F)
@@ -102,7 +102,6 @@ fun updateAim() {
     aimTab.tAim.apply {
         enableAim.update()
         updateMap()
-        aimToggleKey.update()
         activateFromFireKey.update()
         teammatesAreEnemies.update()
         holdAim.update()
@@ -195,22 +194,20 @@ fun updateAim() {
 //Triggerbot
 fun updateDisableTrig() {
     aimTab.tTrig.apply {
-        val bool = if (!aimTab.tAim.enableAim.isChecked) { //Issue?
+        val bool = if (!aimTab.tAim.enableAim.checkBox.isChecked) { //Issue?
             enableTrig.disable(true)
-            !enableTrig.isChecked
+            !enableTrig.checkBox.isChecked
         } else {
             enableTrig.disable(false)
-            !enableTrig.isChecked
+            !enableTrig.checkBox.isChecked
         }
         var col = Color(255F, 255F, 255F, 1F)
         if (bool) {
             col = Color(105F, 105F, 105F, .2F)
         }
-        boneTriggerEnableKey.disable(bool)
-        boneTriggerKey.disable(bool, col)
         categorySelectLabel.color = col
         categorySelectionBox.isDisabled = bool
-        if (!aimTab.tAim.enableAim.isChecked) {
+        if (!aimTab.tAim.enableAim.checkBox.isChecked) {
             trigAimbot.disable(true)
         } else {
             trigAimbot.disable(bool)
@@ -230,8 +227,6 @@ fun updateTrig() {
     aimTab.tTrig.apply {
         enableTrig.update()
         enableTrig.update()
-        boneTriggerEnableKey.update()
-        boneTriggerKey.update()
         trigInCross.update()
         trigInFov.update()
         trigFov.update()
@@ -245,7 +240,7 @@ fun updateTrig() {
 //Backtrack
 fun updateDisableBacktrack() {
     aimTab.tBacktrack.apply {
-        val bool = !aimTab.tBacktrack.enableBacktrack.isChecked
+        val bool = !aimTab.tBacktrack.enableBacktrack.checkBox.isChecked
 
         var col = Color(255F, 255F, 255F, 1F)
         if (bool) {
@@ -254,8 +249,6 @@ fun updateDisableBacktrack() {
 
         //enableBacktrack.disable(bool)
         backtrackVisualize.disable(bool)
-        backtrackEnableKey.disable(bool)
-        backtrackKey.disable(bool, col)
         backtrackFOV.disable(bool, col)
         backtrackMS.disable(bool, col)
         backtrackSpotted.disable(bool)
@@ -276,8 +269,6 @@ fun updateBacktrack() {
         enableBacktrack.update()
         bonesVisLabel.update()
         backtrackVisualize.update()
-        backtrackEnableKey.update()
-        backtrackKey.update()
         backtrackFOV.update()
         backtrackMS.update()
         backtrackPreferAccurate.update()

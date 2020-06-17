@@ -60,4 +60,6 @@ SMG_BACKTRACK_PELVIS = true
 SNIPER_BACKTRACK_PELVIS = true
 
 //Enable bone trigger key that enables bone trigger only when TRIGGER_KEY is pressed
-BACKTRACK_ENABLE_KEY = false
+ENABLE_BACKTRACK_ON_KEY = false
+ENABLE_BACKTRACK_KEY = 22
+ENABLE_BACKTRACK_SWITCH_KEY = 22

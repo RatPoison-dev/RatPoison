@@ -4,13 +4,13 @@ import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.widget.*
 import org.jetbrains.kotlin.cli.common.computeKotlinPaths
 import rat.poison.App.uiBinds
-import rat.poison.boolToStr
 import rat.poison.curLocalization
 import rat.poison.curSettings
-import rat.poison.strToBool
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
 import rat.poison.ui.uiHelpers.VisTextButtonCustom
+import rat.poison.utils.varUtil.boolToStr
+import rat.poison.utils.varUtil.strToBool
 
 class BindsRelatedCheckBox(mainText: String, varName: String, nameInLocalization: String = varName, padLeft: Float = 175F, isFixedPad: Boolean = false) : VisTable() {
     private val defaultText = mainText

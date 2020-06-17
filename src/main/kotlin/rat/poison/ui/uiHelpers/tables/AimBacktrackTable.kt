@@ -13,16 +13,15 @@ import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisLabelCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
+import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiUpdate
 
 class AimBacktrackTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
 
-    val enableBacktrack = VisCheckBoxCustom(curLocalization["ENABLE_BACKTRACK"], "ENABLE_BACKTRACK")
+    val enableBacktrack = BindsRelatedCheckBox(curLocalization["ENABLE_BACKTRACK"], "ENABLE_BACKTRACK", padLeft = 200F)
     val backtrackVisualize = VisCheckBoxCustom(curLocalization["BACKTRACK_VISUALIZE"], "BACKTRACK_VISUALIZE")
-    val backtrackEnableKey = VisCheckBoxCustom(curLocalization["ENABLE_BACKTRACK_ON_KEY"], "ENABLE_BACKTRACK_ON_KEY")
-    val backtrackKey = VisInputFieldCustom(curLocalization["BACKTRACK_KEY"], "BACKTRACK_KEY")
     val backtrackFOV = VisSliderCustom(curLocalization["FOV"], "BACKTRACK_FOV", 0.1f, 2f, .1f, false, nameInLocalization = "FOV")
     val backtrackMS = VisSliderCustom(curLocalization["BACKTRACK_MS"], "BACKTRACK_MS", 20f, 200f, 5f, true)
     val backtrackPreferAccurate = VisCheckBoxCustom(curLocalization["BACKTRACK_PREFER_ACCURATE"], "BACKTRACK_PREFER_ACCURATE")
@@ -67,8 +66,6 @@ class AimBacktrackTable: VisTable(false) {
             //Add all items to label for tabbed pane content
             add(enableBacktrack).left().row()
             add(backtrackVisualize).left().row()
-            add(backtrackEnableKey).left().row()
-            add(backtrackKey).left().row()
 
             add(backtrackFOV).left().row()
             add(backtrackMS).left().row()
