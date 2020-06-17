@@ -8,6 +8,7 @@ import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiPanels.miscTab
 import rat.poison.ui.uiPanels.rcsTab
 import rat.poison.ui.uiPanels.visualsTab
+import rat.poison.utils.varUtil.strToBool
 
 var bunnyHopToggleKey = ObservableBoolean({ keyPressed(1) })
 var boxEspToggleKey = ObservableBoolean({ keyPressed(1) })
@@ -26,7 +27,6 @@ var doorSpamToggleKey = ObservableBoolean({keyPressed(1) })
 var weaponSpamToggleKey = ObservableBoolean({keyPressed(1) })
 var enableReducedFlashToggleKey = ObservableBoolean({keyPressed(1) })
 var hitSoundCheckBoxToggleKey = ObservableBoolean({keyPressed(1) })
-var enableEspToggleKey = ObservableBoolean({keyPressed(1) })
 var radarEspToggleKey = ObservableBoolean({keyPressed(1) })
 var nightModeToggleKey = ObservableBoolean({keyPressed(1) })
 var visAdrenalineToggleKey = ObservableBoolean({keyPressed(1) })
@@ -37,32 +37,31 @@ var enableTrigToggleKey = ObservableBoolean({keyPressed(1) })
 var enableBacktrackToggleKey = ObservableBoolean({keyPressed(1) })
 
 fun constructVars() {
-    bunnyHopToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_BUNNY_HOP_SWITCH_KEY"].toInt()) })
-    boxEspToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_BOX_ESP_SWITCH_KEY"].toInt()) } )
-    autoStrafeToggleKey = ObservableBoolean({ keyPressed(curSettings["AUTO_STRAFE_SWITCH_KEY"].toInt()) })
-    autoStrafeBHopOnlyToggleKey = ObservableBoolean({ keyPressed(curSettings["STRAFE_BHOP_ONLY_SWITCH_KEY"].toInt()) })
-    fastStopToggleKey = ObservableBoolean({ keyPressed(curSettings["FAST_STOP_SWITCH_KEY"].toInt()) })
-    aimStraferToggleKey = ObservableBoolean({ keyPressed(curSettings["AIM_STRAFER_SWITCH_KEY"].toInt()) })
-    fovChangerToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_FOV_CHANGER_SWITCH_KEY"].toInt()) })
-    fovSmoothingToggleKey = ObservableBoolean({ keyPressed(curSettings["FOV_SMOOTH_SWITCH_KEY"].toInt()) })
-    bombTimerToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_BOMB_TIMER_SWITCH_KEY"].toInt()) })
-    bombTimerEnableBarsToggleKey = ObservableBoolean({ keyPressed(curSettings["BOMB_TIMER_BARS_SWITCH_KEY"].toInt()) })
-    bombTimerEnableMenuToggleKey = ObservableBoolean({ keyPressed(curSettings["BOMB_TIMER_MENU_SWITCH_KEY"].toInt()) })
-    spectatorListToggleKey = ObservableBoolean({ keyPressed(curSettings["SPECTATOR_LIST_SWITCH_KEY"].toInt()) })
-    knifeBotToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_AUTO_KNIFE_SWITCH_KEY"].toInt()) })
-    doorSpamToggleKey = ObservableBoolean({ keyPressed(curSettings["D_SPAM_SWITCH_KEY"].toInt()) })
-    weaponSpamToggleKey = ObservableBoolean({ keyPressed(curSettings["W_SPAM_SWITCH_KEY"].toInt()) })
-    enableReducedFlashToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_REDUCED_FLASH_SWITCH_KEY"].toInt()) })
-    hitSoundCheckBoxToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_HITSOUND_SWITCH_KEY"].toInt()) })
-    enableEspToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_ESP_SWITCH_KEY"].toInt()) })
-    radarEspToggleKey = ObservableBoolean({ keyPressed(curSettings["RADAR_ESP_SWITCH_KEY"].toInt()) })
-    nightModeToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_NIGHTMODE_SWITCH_KEY"].toInt()) })
-    visAdrenalineToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_ADRENALINE_SWITCH_KEY"].toInt()) })
-    glowEspToggleKey = ObservableBoolean({ keyPressed(curSettings["GLOW_ESP_SWITCH_KEY"].toInt()) })
-    enableRCSToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_RCS_SWITCH_KEY"].toInt()) })
-    enableAimToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_AIM_SWITCH_KEY"].toInt()) })
-    enableTrigToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_TRIGGER_SWITCH_KEY"].toInt()) })
-    enableBacktrackToggleKey = ObservableBoolean({ keyPressed(curSettings["ENABLE_BACKTRACK_SWITCH_KEY"].toInt()) })
+    bunnyHopToggleKey = ObservableBoolean({ curSettings["ENABLE_BUNNY_HOP_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["ENABLE_BUNNY_HOP_SWITCH_KEY"].toInt()) })
+    boxEspToggleKey = ObservableBoolean({ curSettings["ENABLE_BOX_ESP_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["ENABLE_BOX_ESP_SWITCH_KEY"].toInt()) } )
+    autoStrafeToggleKey = ObservableBoolean({ curSettings["AUTO_STRAFE_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["AUTO_STRAFE_SWITCH_KEY"].toInt()) })
+    autoStrafeBHopOnlyToggleKey = ObservableBoolean({ curSettings["STRAFE_BHOP_ONLY_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["STRAFE_BHOP_ONLY_SWITCH_KEY"].toInt()) })
+    fastStopToggleKey = ObservableBoolean({ curSettings["FAST_STOP_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["FAST_STOP_SWITCH_KEY"].toInt()) })
+    aimStraferToggleKey = ObservableBoolean({ curSettings["AIM_STRAFER_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["AIM_STRAFER_SWITCH_KEY"].toInt()) })
+    fovChangerToggleKey = ObservableBoolean({ curSettings["ENABLE_FOV_CHANGER_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["ENABLE_FOV_CHANGER_SWITCH_KEY"].toInt()) })
+    fovSmoothingToggleKey = ObservableBoolean({ curSettings["FOV_SMOOTH_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["FOV_SMOOTH_SWITCH_KEY"].toInt()) })
+    bombTimerToggleKey = ObservableBoolean({ curSettings["ENABLE_BOMB_TIMER_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["ENABLE_BOMB_TIMER_SWITCH_KEY"].toInt()) })
+    bombTimerEnableBarsToggleKey = ObservableBoolean({ curSettings["BOMB_TIMER_BARS_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["BOMB_TIMER_BARS_SWITCH_KEY"].toInt()) })
+    bombTimerEnableMenuToggleKey = ObservableBoolean({ curSettings["BOMB_TIMER_MENU_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["BOMB_TIMER_MENU_SWITCH_KEY"].toInt()) })
+    spectatorListToggleKey = ObservableBoolean({ curSettings["SPECTATOR_LIST_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["SPECTATOR_LIST_SWITCH_KEY"].toInt()) })
+    knifeBotToggleKey = ObservableBoolean({ curSettings["ENABLE_AUTO_KNIFE_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["ENABLE_AUTO_KNIFE_SWITCH_KEY"].toInt()) })
+    doorSpamToggleKey = ObservableBoolean({ curSettings["D_SPAM_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["D_SPAM_SWITCH_KEY"].toInt()) })
+    weaponSpamToggleKey = ObservableBoolean({ curSettings["W_SPAM_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["W_SPAM_SWITCH_KEY"].toInt()) })
+    enableReducedFlashToggleKey = ObservableBoolean({ curSettings["ENABLE_REDUCED_FLASH_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["ENABLE_REDUCED_FLASH_SWITCH_KEY"].toInt()) })
+    hitSoundCheckBoxToggleKey = ObservableBoolean({ curSettings["ENABLE_HITSOUND_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["ENABLE_HITSOUND_SWITCH_KEY"].toInt()) })
+    radarEspToggleKey = ObservableBoolean({ curSettings["RADAR_ESP_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["RADAR_ESP_SWITCH_KEY"].toInt()) })
+    nightModeToggleKey = ObservableBoolean({ curSettings["ENABLE_NIGHTMODE_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["ENABLE_NIGHTMODE_SWITCH_KEY"].toInt()) })
+    visAdrenalineToggleKey = ObservableBoolean({ curSettings["ENABLE_ADRENALINE_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["ENABLE_ADRENALINE_SWITCH_KEY"].toInt()) })
+    glowEspToggleKey = ObservableBoolean({ curSettings["GLOW_ESP_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["GLOW_ESP_SWITCH_KEY"].toInt()) })
+    enableRCSToggleKey = ObservableBoolean({ curSettings["ENABLE_RCS_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["ENABLE_RCS_SWITCH_KEY"].toInt()) })
+    enableAimToggleKey = ObservableBoolean({ curSettings["ENABLE_AIM_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["ENABLE_AIM_SWITCH_KEY"].toInt()) })
+    enableTrigToggleKey = ObservableBoolean({ curSettings["ENABLE_TRIGGER_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["ENABLE_TRIGGER_SWITCH_KEY"].toInt()) })
+    enableBacktrackToggleKey = ObservableBoolean({ curSettings["ENABLE_BACKTRACK_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["ENABLE_BACKTRACK_SWITCH_KEY"].toInt()) })
 }
 fun addListeners() {
     bunnyHopToggleKey.update()
@@ -146,10 +145,6 @@ fun addListeners() {
     hitSoundCheckBoxToggleKey.update()
     if (hitSoundCheckBoxToggleKey.justBecameTrue) {
         miscTab.hitSoundCheckBox.checkBox.isChecked = !miscTab.hitSoundCheckBox.checkBox.isChecked
-    }
-    enableEspToggleKey.update()
-    if (enableEspToggleKey.justBecameTrue) {
-        visualsTab.enableEsp.checkBox.isChecked = !visualsTab.enableEsp.checkBox.isChecked
     }
 
 

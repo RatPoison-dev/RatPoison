@@ -635,7 +635,7 @@ fun List<String>.pull(idx: Int): String {
 }
 
 fun checkFlags(nameInSettings: String): Boolean {
-    return ((curSettings[nameInSettings+"_ON_KEY"].strToBool() && keyPressed(curSettings[nameInSettings+"_KEY"].toInt())) || (!curSettings[nameInSettings+"_ON_KEY"].strToBool()))
+    return ((curSettings[nameInSettings+"_ON_KEY"].strToBool() && keyPressed(curSettings[nameInSettings+"_KEY"].toInt())) || (!curSettings[nameInSettings+"_ON_KEY"].strToBool() && ((curSettings[nameInSettings+"_DISABLE_ON_KEY"].strToBool() && !keyPressed(curSettings[nameInSettings+"_DISABLE_KEY"].toInt())) || !curSettings[nameInSettings+"_DISABLE_ON_KEY"].strToBool())))
 }
 
 //Matrix 4 uses column-major order

@@ -1,4 +1,4 @@
-﻿//Enable glow esp
+//Enable glow esp
 GLOW_ESP = false
 
 //Type of glow on entities (enemies & teammates)
@@ -70,4 +70,9 @@ GLOW_ESP_ON_KEY = false
 
 GLOW_ESP_KEY = 22
 
+
+GLOW_ESP_SWITCH_ON_KEY = false
 GLOW_ESP_SWITCH_KEY = 22
+
+GLOW_ESP_DISABLE_ON_KEY = false
+GLOW_ESP_DISABLE_KEY = 22

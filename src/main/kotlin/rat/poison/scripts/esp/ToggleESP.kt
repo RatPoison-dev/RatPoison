@@ -10,7 +10,7 @@ import rat.poison.utils.every
 import rat.poison.utils.varUtil.strToBool
 
 fun espToggle() = every(50) {
-    if (keyPressed(curSettings["ENABLE_ESP_SWITCH_KEY"].toInt())) {
+    if ((curSettings["ENABLE_ESP_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["ENABLE_ESP_SWITCH_KEY"].toInt()))) {
         curSettings["ENABLE_ESP"] = !curSettings["ENABLE_ESP"].strToBool()
         if (!curSettings["ENABLE_ESP"].strToBool()) {
             disableAllEsp()

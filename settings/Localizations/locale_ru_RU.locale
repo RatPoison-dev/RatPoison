@@ -7,7 +7,9 @@ NAME = Имя
 YES = Да
 NO = Нет
 ON_KEY = На Кнопку
-_KEY = Кнопка
+CONFIGURATION =
+_KEY = Кнопка включения
+_DISABLE_KEY = Кнопка отключения
 _SWITCH_KEY = Кнопка переключения
 CONFIGURE = Бинды
 GRENADES = Гранаты
@@ -423,3 +425,9 @@ BACKTRACK_MS = Макс МС
 BACKTRACK_PREFER_ACCURATE = Предпочитать точные записи
 BACKTRACK_SPOTTED = Проверка на видимость
 ENABLE_WEAPON_BACKTRACK = Включить бэктрек оружия
+
+// Binds panel
+ALWAYS_ON = Всегда включен
+TOGGLE_KEY = Переключение на кнопку
+ON_HOTKEY = Вкл. на кнопку
+OFF_HOTKEY = Выкл. на кнопку

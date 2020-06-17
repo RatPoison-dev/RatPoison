@@ -1,4 +1,4 @@
-﻿// Enable/disable the spectator list
+// Enable/disable the spectator list
 SPECTATOR_LIST = true
 
 
@@ -10,4 +10,8 @@ SPECTATOR_LIST_ALPHA = 0.75
 
 SPECTATOR_LIST_ON_KEY = false
 SPECTATOR_LIST_KEY = 22
+
+SPECTATOR_LIST_SWITCH_ON_KEY = false
 SPECTATOR_LIST_SWITCH_KEY = 22
+SPECTATOR_LIST_DISABLE_ON_KEY = false
+SPECTATOR_LIST_DISABLE_KEY = 22

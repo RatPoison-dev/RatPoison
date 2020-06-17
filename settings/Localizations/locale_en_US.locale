@@ -10,7 +10,9 @@ GRENADES = Grenades
 TARGET = Target
 WEAPON = Weapon
 ON_KEY = On Key
-_SWITCH_KEY = Switch Key
+CONFIGURATION = Configuration
+_SWITCH_KEY = Toggle Key
+_DISABLE_KEY = Disable On Key
 CONFIGURE = Binds
 _KEY = Key
 WARNING = Warning
@@ -503,3 +505,9 @@ BACKTRACK_MS = Max MS
 BACKTRACK_PREFER_ACCURATE = Prefer Accurate Records
 BACKTRACK_SPOTTED = Check Visible
 ENABLE_WEAPON_BACKTRACK = Enable Weapon Backtrack
+
+// Binds panel
+ALWAYS_ON = Always On
+TOGGLE_KEY = Toggle Key
+ON_HOTKEY = On Hotkey
+OFF_HOTKEY = Off Hotkey

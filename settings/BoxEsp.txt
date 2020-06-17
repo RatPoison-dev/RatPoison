@@ -3,7 +3,12 @@ ENABLE_BOX_ESP = true
 
 ENABLE_BOX_ESP_ON_KEY = false
 ENABLE_BOX_ESP_KEY = 22
+
+ENABLE_BOX_ESP_SWITCH_ON_KEY = false
 ENABLE_BOX_ESP_SWITCH_KEY = 22
+
+ENABLE_BOX_ESP_DISABLE_ON_KEY = false
+ENABLE_BOX_ESP_DISABLE_KEY = 22
 
 //Enable box esp details
 //Shows optional extra details (Health/Armor bar, Name/Weapon text) for each enemy, configurable below
