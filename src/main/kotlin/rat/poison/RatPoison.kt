@@ -325,7 +325,6 @@ object App : ApplicationAdapter() {
     lateinit var uiSpecList: UISpectatorList
     lateinit var uiAimOverridenWeapons: UIAimOverridenWeapons
     lateinit var uiKeybinds: UIKeybinds
-    lateinit var uiBinds: UIBinds
     private val sbText = StringBuilder()
 
     private val osBean = ManagementFactory.getOperatingSystemMXBean() as OperatingSystemMXBean
@@ -346,8 +345,6 @@ object App : ApplicationAdapter() {
         uiSpecList = UISpectatorList()
         uiAimOverridenWeapons = UIAimOverridenWeapons()
         uiKeybinds = UIKeybinds()
-        uiBinds = UIBinds()
-
         menuStage.addActor(uiMenu)
 
         Gdx.input.inputProcessor = InputMultiplexer().apply {
@@ -382,6 +379,7 @@ object App : ApplicationAdapter() {
                                 if (curSettings["KEYBINDS"].strToBool()) {
                                     if (!menuStage.actors.contains(uiKeybinds)) {
                                         menuStage.addActor(uiKeybinds)
+                                        uiKeybinds.updateBindsList()
                                     }
                                 } else if (menuStage.actors.contains(uiKeybinds)) {
                                     menuStage.clear()
@@ -392,14 +390,6 @@ object App : ApplicationAdapter() {
                                         menuStage.addActor(uiAimOverridenWeapons)
                                     }
                                 } else if (menuStage.actors.contains(uiAimOverridenWeapons)) {
-                                    menuStage.clear() //actors.remove at index doesnt work after 1 loop?
-                                }
-
-                                if (curSettings["BINDS"].strToBool()) {
-                                    if (!menuStage.actors.contains(uiBinds)) {
-                                        menuStage.addActor(uiBinds)
-                                    }
-                                } else if (menuStage.actors.contains(uiBinds)) {
                                     menuStage.clear() //actors.remove at index doesnt work after 1 loop?
                                 }
 
@@ -499,7 +489,7 @@ object App : ApplicationAdapter() {
 
                     uiMenu.updateChilds()
                     uiUpdate()
-
+                    curSettings["BINDS"] = "false"
                     if (dbg) println("[DEBUG] Menu Toggled")
                 }
                 addListeners()

@@ -1,11 +1,13 @@
 package rat.poison.scripts.esp
 
 import org.jire.arrowhead.keyPressed
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.hooks.toneMapController
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.ui.uiUpdate
+import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.every
 import rat.poison.utils.varUtil.strToBool
 
@@ -29,5 +31,11 @@ fun espToggle() = every(50) {
         Thread.sleep(100)
 
         uiUpdate()
+    }
+    if (curSettings["GLOW_ESP"].strToBool() && !checkFlags("GLOW_ESP")) {
+        disableGlowAndChams()
+    }
+    if (curSettings["CHAMS_ESP"].strToBool() && !checkFlags("CHAMS_ESP")) {
+        disableGlowAndChams()
     }
 }

@@ -1,5 +1,6 @@
 package rat.poison.scripts.esp
 
+import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.Color
 import rat.poison.game.entity.Entity
@@ -13,6 +14,32 @@ import rat.poison.utils.extensions.uint
 import java.lang.Float.floatToIntBits
 
 //Change to construct entities at call to prevent crashing?
+
+internal fun disableGlowAndChams() {
+    val cWhite = Color(255, 255, 255, 1.0)
+    forEntities body@ {
+        val entity = it.entity
+        val type = it.type
+        val glowAddress = it.glowAddress
+        if (entity <= 0 || me == entity || glowAddress <= 0) return@body false
+
+        if (type != EntityType.NULL) {
+            when (type) {
+                EntityType.CCSPlayer -> {
+                    glowAddress.glow(cWhite); entity.chams(cWhite)
+                }
+                EntityType.CPlantedC4 -> glowAddress.glow(cWhite)
+                EntityType.CC4 -> glowAddress.glow(cWhite)
+                else -> {
+                    if (type.weapon || type.grenade) {
+                        glowAddress.glow(cWhite)
+                    }
+                }
+            }
+        }
+        return@body false
+    }
+}
 
 internal fun disableAllEsp() {
     val cWhite = Color(255, 255, 255, 1.0)

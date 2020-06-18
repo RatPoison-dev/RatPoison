@@ -25,3 +25,15 @@ CHAMS_ENEMY_COLOR = Color(red=255, green=0, blue=4, alpha=1.0)
 
 //Color of your hands/weapon
 CHAMS_SELF_COLOR = Color(red=255, green=94, blue=0, alpha=1.0)
+
+CHAMS_ESP_ON_KEY = false
+
+CHAMS_ESP_KEY = 22
+
+CHAMS_ESP_SWITCH_KEY = 22
+
+CHAMS_ESP_SWITCH_ON_KEY = false
+CHAMS_ESP_SWITCH_KEY = 22
+
+CHAMS_ESP_DISABLE_ON_KEY = false
+CHAMS_ESP_DISABLE_KEY = 22

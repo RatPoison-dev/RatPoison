@@ -1,7 +1,7 @@
 package rat.poison.utils
 
 class Settings : MutableMap<String, Any?> {
-    private val savedValues = mutableMapOf<String, String>()
+    val savedValues = mutableMapOf<String, String>()
 
     override fun get(key: String): String {
         if (savedValues.containsKey(key)) {

@@ -5,6 +5,7 @@ import com.sun.jna.Memory
 import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap
 import org.jire.arrowhead.unsign
 import rat.poison.App
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
@@ -25,7 +26,7 @@ private val entityBones = Long2ObjectArrayMap<CacheableList<Pair<Int, Int>>>()
 private var currentIdx = 0
 
 internal fun skeletonEsp() = App {
-	if (!curSettings["SKELETON_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
+	if (!curSettings["SKELETON_ESP"].strToBool() || !checkFlags("SKELETON_ESP") || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
 
 	val meTeam = me.team()
 	forEntities(ccsPlayer) {

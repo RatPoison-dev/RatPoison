@@ -9,6 +9,7 @@ import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
 import rat.poison.App.uiAimOverridenWeapons
 import rat.poison.App.uiBombWindow
+import rat.poison.App.uiKeybinds
 import rat.poison.App.uiSpecList
 import rat.poison.game.CSGO
 import rat.poison.opened

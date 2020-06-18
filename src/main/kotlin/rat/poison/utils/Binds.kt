@@ -2,8 +2,7 @@ package rat.poison.utils
 
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
-import rat.poison.ui.tabs.boxEspTab
-import rat.poison.ui.tabs.glowEspTab
+import rat.poison.ui.tabs.*
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiPanels.miscTab
 import rat.poison.ui.uiPanels.rcsTab
@@ -35,6 +34,12 @@ var enableRCSToggleKey = ObservableBoolean({keyPressed(1) })
 var enableAimToggleKey = ObservableBoolean({keyPressed(1) })
 var enableTrigToggleKey = ObservableBoolean({keyPressed(1) })
 var enableBacktrackToggleKey = ObservableBoolean({keyPressed(1) })
+var chamsEspToggleKey = ObservableBoolean({keyPressed(1) })
+var indicatorEspToggleKey = ObservableBoolean({keyPressed(1) })
+var skeletonEspToggleKey = ObservableBoolean({keyPressed(1) })
+var enableFootStepsToggleKey = ObservableBoolean({keyPressed(1) })
+var enableSnaplinesToggleKey = ObservableBoolean({keyPressed(1) })
+var hitMarkerToggleKey = ObservableBoolean({keyPressed(1) })
 
 fun constructVars() {
     bunnyHopToggleKey = ObservableBoolean({ curSettings["ENABLE_BUNNY_HOP_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["ENABLE_BUNNY_HOP_SWITCH_KEY"].toInt()) })
@@ -62,126 +67,156 @@ fun constructVars() {
     enableAimToggleKey = ObservableBoolean({ curSettings["ENABLE_AIM_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["ENABLE_AIM_SWITCH_KEY"].toInt()) })
     enableTrigToggleKey = ObservableBoolean({ curSettings["ENABLE_TRIGGER_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["ENABLE_TRIGGER_SWITCH_KEY"].toInt()) })
     enableBacktrackToggleKey = ObservableBoolean({ curSettings["ENABLE_BACKTRACK_SWITCH_ON_KEY"].strToBool() &&  keyPressed(curSettings["ENABLE_BACKTRACK_SWITCH_KEY"].toInt()) })
+    skeletonEspToggleKey = ObservableBoolean({ curSettings["SKELETON_ESP_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["SKELETON_ESP_SWITCH_KEY"].toInt()) })
+    chamsEspToggleKey = ObservableBoolean({ curSettings["CHAMS_ESP_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["CHAMS_ESP_SWITCH_KEY"].toInt()) })
+    indicatorEspToggleKey = ObservableBoolean({ curSettings["INDICATOR_ESP_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["INDICATOR_ESP_SWITCH_KEY"].toInt()) })
+    enableFootStepsToggleKey = ObservableBoolean({ curSettings["ENABLE_FOOTSTEPS_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["ENABLE_FOOTSTEPS_SWITCH_KEY"].toInt()) })
+    hitMarkerToggleKey = ObservableBoolean({ curSettings["ENABLE_HITMARKER_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["ENABLE_HITMARKER_SWITCH_KEY"].toInt()) })
+    enableSnaplinesToggleKey = ObservableBoolean({ curSettings["ENABLE_SNAPLINES_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["ENABLE_SNAPLINES_SWITCH_KEY"].toInt()) })
 }
 fun addListeners() {
     bunnyHopToggleKey.update()
     if (bunnyHopToggleKey.justBecameTrue) {
-        miscTab.bunnyHop.checkBox.isChecked = !miscTab.bunnyHop.checkBox.isChecked
+        miscTab.bunnyHop.isChecked = !miscTab.bunnyHop.isChecked
     }
     boxEspToggleKey.update()
     if (boxEspToggleKey.justBecameTrue) {
-        boxEspTab.boxEsp.checkBox.isChecked = !boxEspTab.boxEsp.checkBox.isChecked
+        boxEspTab.boxEsp.isChecked = !boxEspTab.boxEsp.isChecked
     }
     autoStrafeToggleKey.update()
     if (autoStrafeToggleKey.justBecameTrue) {
-        miscTab.autoStrafe.checkBox.isChecked = !miscTab.autoStrafe.checkBox.isChecked
+        miscTab.autoStrafe.isChecked = !miscTab.autoStrafe.isChecked
     }
 
     autoStrafeBHopOnlyToggleKey.update()
     if (autoStrafeBHopOnlyToggleKey.justBecameTrue) {
-        miscTab.autoStrafeBHopOnly.checkBox.isChecked = !miscTab.autoStrafeBHopOnly.checkBox.isChecked
+        miscTab.autoStrafeBHopOnly.isChecked = !miscTab.autoStrafeBHopOnly.isChecked
     }
 
     fastStopToggleKey.update()
     if (fastStopToggleKey.justBecameTrue) {
-        miscTab.fastStop.checkBox.isChecked = !miscTab.fastStop.checkBox.isChecked
+        miscTab.fastStop.isChecked = !miscTab.fastStop.isChecked
     }
 
     aimStraferToggleKey.update()
     if (aimStraferToggleKey.justBecameTrue) {
-        miscTab.aimStrafer.checkBox.isChecked = !miscTab.aimStrafer.checkBox.isChecked
+        miscTab.aimStrafer.isChecked = !miscTab.aimStrafer.isChecked
     }
 
     fovChangerToggleKey.update()
     if (fovChangerToggleKey.justBecameTrue) {
-        miscTab.fovChanger.checkBox.isChecked = !miscTab.fovChanger.checkBox.isChecked
+        miscTab.fovChanger.isChecked = !miscTab.fovChanger.isChecked
     }
 
     fovSmoothingToggleKey.update()
     if (fovSmoothingToggleKey.justBecameTrue) {
-        miscTab.fovSmoothing.checkBox.isChecked = !miscTab.fovSmoothing.checkBox.isChecked
+        miscTab.fovSmoothing.isChecked = !miscTab.fovSmoothing.isChecked
     }
 
     bombTimerToggleKey.update()
     if (bombTimerToggleKey.justBecameTrue) {
-        miscTab.bombTimer.checkBox.isChecked = !miscTab.bombTimer.checkBox.isChecked
+        miscTab.bombTimer.isChecked = !miscTab.bombTimer.isChecked
     }
 
     bombTimerEnableBarsToggleKey.update()
     if (bombTimerEnableBarsToggleKey.justBecameTrue) {
-        miscTab.bombTimerEnableBars.checkBox.isChecked = !miscTab.bombTimerEnableBars.checkBox.isChecked
+        miscTab.bombTimerEnableBars.isChecked = !miscTab.bombTimerEnableBars.isChecked
     }
 
     bombTimerEnableMenuToggleKey.update()
     if (bombTimerEnableMenuToggleKey.justBecameTrue) {
-        miscTab.bombTimerEnableMenu.checkBox.isChecked = !miscTab.bombTimerEnableMenu.checkBox.isChecked
+        miscTab.bombTimerEnableMenu.isChecked = !miscTab.bombTimerEnableMenu.isChecked
     }
 
     spectatorListToggleKey.update()
     if (spectatorListToggleKey.justBecameTrue) {
-        miscTab.spectatorList.checkBox.isChecked = !miscTab.spectatorList.checkBox.isChecked
+        miscTab.spectatorList.isChecked = !miscTab.spectatorList.isChecked
     }
 
     knifeBotToggleKey.update()
     if (knifeBotToggleKey.justBecameTrue) {
-        miscTab.knifeBot.checkBox.isChecked = !miscTab.knifeBot.checkBox.isChecked
+        miscTab.knifeBot.isChecked = !miscTab.knifeBot.isChecked
     }
 
     doorSpamToggleKey.update()
     if (doorSpamToggleKey.justBecameTrue) {
-        miscTab.doorSpam.checkBox.isChecked = !miscTab.doorSpam.checkBox.isChecked
+        miscTab.doorSpam.isChecked = !miscTab.doorSpam.isChecked
     }
 
     weaponSpamToggleKey.update()
     if (weaponSpamToggleKey.justBecameTrue) {
-        miscTab.weaponSpam.checkBox.isChecked = !miscTab.weaponSpam.checkBox.isChecked
+        miscTab.weaponSpam.isChecked = !miscTab.weaponSpam.isChecked
     }
 
     enableReducedFlashToggleKey.update()
     if (enableReducedFlashToggleKey.justBecameTrue) {
-        miscTab.enableReducedFlash.checkBox.isChecked = !miscTab.enableReducedFlash.checkBox.isChecked
+        miscTab.enableReducedFlash.isChecked = !miscTab.enableReducedFlash.isChecked
     }
 
     hitSoundCheckBoxToggleKey.update()
     if (hitSoundCheckBoxToggleKey.justBecameTrue) {
-        miscTab.hitSoundCheckBox.checkBox.isChecked = !miscTab.hitSoundCheckBox.checkBox.isChecked
+        miscTab.hitSoundCheckBox.isChecked = !miscTab.hitSoundCheckBox.isChecked
     }
 
 
     radarEspToggleKey.update()
     if (radarEspToggleKey.justBecameTrue) {
-        visualsTab.radarEsp.checkBox.isChecked = !visualsTab.radarEsp.checkBox.isChecked
+        visualsTab.radarEsp.isChecked = !visualsTab.radarEsp.isChecked
     }
 
 
     nightModeToggleKey.update()
     if (nightModeToggleKey.justBecameTrue) {
-        visualsTab.nightMode.checkBox.isChecked = !visualsTab.nightMode.checkBox.isChecked
+        visualsTab.nightMode.isChecked = !visualsTab.nightMode.isChecked
     }
 
 
     visAdrenalineToggleKey.update()
     if (visAdrenalineToggleKey.justBecameTrue) {
-        visualsTab.visAdrenaline.checkBox.isChecked = !visualsTab.visAdrenaline.checkBox.isChecked
+        visualsTab.visAdrenaline.isChecked = !visualsTab.visAdrenaline.isChecked
     }
     glowEspToggleKey.update()
     if (glowEspToggleKey.justBecameTrue) {
-        glowEspTab.glowEsp.checkBox.isChecked = !glowEspTab.glowEsp.checkBox.isChecked
+        glowEspTab.glowEsp.isChecked = !glowEspTab.glowEsp.isChecked
     }
     enableRCSToggleKey.update()
     if (enableRCSToggleKey.justBecameTrue) {
-        rcsTab.enableRCS.checkBox.isChecked = !rcsTab.enableRCS.checkBox.isChecked
+        rcsTab.enableRCS.isChecked = !rcsTab.enableRCS.isChecked
     }
     enableAimToggleKey.update()
     if (enableAimToggleKey.justBecameTrue) {
-        aimTab.tAim.enableAim.checkBox.isChecked = !aimTab.tAim.enableAim.checkBox.isChecked
+        aimTab.tAim.enableAim.isChecked = !aimTab.tAim.enableAim.isChecked
     }
     enableTrigToggleKey.update()
     if (enableTrigToggleKey.justBecameTrue) {
-        aimTab.tTrig.enableTrig.checkBox.isChecked = !aimTab.tTrig.enableTrig.checkBox.isChecked
+        aimTab.tTrig.enableTrig.isChecked = !aimTab.tTrig.enableTrig.isChecked
     }
     enableBacktrackToggleKey.update()
     if (enableBacktrackToggleKey.justBecameTrue) {
-        aimTab.tBacktrack.enableBacktrack.checkBox.isChecked = !aimTab.tBacktrack.enableBacktrack.checkBox.isChecked
+        aimTab.tBacktrack.enableBacktrack.isChecked = !aimTab.tBacktrack.enableBacktrack.isChecked
+    }
+    chamsEspToggleKey.update()
+    if (chamsEspToggleKey.justBecameTrue) {
+        chamsEspTab.chamsEsp.isChecked = !chamsEspTab.chamsEsp.isChecked
+    }
+    indicatorEspToggleKey.update()
+    if (indicatorEspToggleKey.justBecameTrue) {
+        indicatorEspTab.indicatorEsp.isChecked = !indicatorEspTab.indicatorEsp.isChecked
+    }
+    skeletonEspToggleKey.update()
+    if (skeletonEspToggleKey.justBecameTrue) {
+        boxEspTab.skeletonEsp.isChecked = !boxEspTab.skeletonEsp.isChecked
+    }
+    enableFootStepsToggleKey.update()
+    if (enableFootStepsToggleKey.justBecameTrue) {
+        footStepsEspTab.enableFootSteps.isChecked = !footStepsEspTab.enableFootSteps.isChecked
+    }
+    enableSnaplinesToggleKey.update()
+    if (enableSnaplinesToggleKey.justBecameTrue) {
+        snaplinesEspTab.enableSnaplines.isChecked = !snaplinesEspTab.enableSnaplines.isChecked
+    }
+    hitMarkerToggleKey.update()
+    if (hitMarkerToggleKey.justBecameTrue) {
+        hitMarkerTab.hitMarker.isChecked = !hitMarkerTab.hitMarker.isChecked
     }
 }

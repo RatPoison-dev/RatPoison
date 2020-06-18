@@ -20,7 +20,7 @@ import rat.poison.ui.uiUpdate
 class AimBacktrackTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
 
-    val enableBacktrack = BindsRelatedCheckBox(curLocalization["ENABLE_BACKTRACK"], "ENABLE_BACKTRACK", padLeft = 200F)
+    val enableBacktrack = BindsRelatedCheckBox(curLocalization["ENABLE_BACKTRACK"], "ENABLE_BACKTRACK")
     val backtrackVisualize = VisCheckBoxCustom(curLocalization["BACKTRACK_VISUALIZE"], "BACKTRACK_VISUALIZE")
     val backtrackFOV = VisSliderCustom(curLocalization["FOV"], "BACKTRACK_FOV", 0.1f, 2f, .1f, false, nameInLocalization = "FOV")
     val backtrackMS = VisSliderCustom(curLocalization["BACKTRACK_MS"], "BACKTRACK_MS", 20f, 200f, 5f, true)

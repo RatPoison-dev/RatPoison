@@ -1,4 +1,4 @@
-﻿package rat.poison.ui.tabs.visualstabs
+package rat.poison.ui.tabs.visualstabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
@@ -8,12 +8,13 @@ import rat.poison.ui.tabs.snaplinesEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
 
 class SnaplinesEspTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val enableSnaplines = VisCheckBoxCustom(curLocalization["ENABLE"], "ENABLE_SNAPLINES", nameInLocalization = "ENABLE")
+    val enableSnaplines = BindsRelatedCheckBox(curLocalization["ENABLE"], "ENABLE_SNAPLINES", nameInLocalization = "ENABLE")
     val snaplinesWidth = VisSliderCustom(curLocalization["LINE_WIDTH"], "SNAPLINES_WIDTH", 1F, 10F, 1F, false, nameInLocalization = "LINE_WIDTH")
 
     val enemySnaplines = VisCheckBoxCustom(" ", "SNAPLINES_ENEMIES")

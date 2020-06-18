@@ -17,7 +17,7 @@ class GlowEspTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val glowEsp = BindsRelatedCheckBox(curLocalization["ENABLE"], "GLOW_ESP", nameInLocalization = "ENABLE", padLeft = 155F)
+    val glowEsp = BindsRelatedCheckBox(curLocalization["ENABLE"], "GLOW_ESP", nameInLocalization = "ENABLE")
     var map = visualsMap()
     var enemyGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....
     var teammateGlowType = VisSelectBox<String>() //Change to VisSelectBoxCustom sometime....

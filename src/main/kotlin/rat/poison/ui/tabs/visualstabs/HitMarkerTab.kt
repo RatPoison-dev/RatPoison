@@ -8,12 +8,13 @@ import rat.poison.ui.tabs.hitMarkerTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
 
 class HitMarkerTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val hitMarker = VisCheckBoxCustom(curLocalization["ENABLE"], "ENABLE_HITMARKER", nameInLocalization = "ENABLE")
+    val hitMarker = BindsRelatedCheckBox(curLocalization["ENABLE"], "ENABLE_HITMARKER", nameInLocalization = "ENABLE")
     val hitMarkerOutline = VisCheckBoxCustom(curLocalization["HITMARKER_OUTLINE"], "HITMARKER_OUTLINE", nameInLocalization = "HITMARKER_OUTLINE")
     val hitMarkerCombo = VisCheckBoxCustom(curLocalization["HITMARKER_COMBO"], "HITMARKER_COMBO", nameInLocalization = "HITMARKER_COMBO")
     val hitMarkerRecoilPos = VisCheckBoxCustom(curLocalization["HITMARKER_RECOIL_POSITION"], "HITMARKER_RECOIL_POSITION", nameInLocalization = "HITMARKER_RECOIL_POSITION")

@@ -58,7 +58,7 @@ private data class Box(var x0: Float = 0F, var y0: Float = 0F,
 private var currentIdx = 0
 
 fun boxEsp() = App {
-	if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !checkFlags("ENABLE_BOX_ESP") && !curSettings["BOX_ESP_DETAILS"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
+	if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !checkFlags("ENABLE_BOX_ESP") && !curSettings["BOX_ESP_DETAILS"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || !checkFlags("ENABLE_ESP") || MENUTOG || notInGame) return@App
 
 	val meTeam = me.team()
 

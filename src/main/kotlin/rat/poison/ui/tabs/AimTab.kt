@@ -40,7 +40,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
 fun updateDisableAim() {
     aimTab.tAim.apply {
-        val bool = !enableAim.checkBox.isChecked
+        val bool = !enableAim.isChecked
         var col = Color(255F, 255F, 255F, 1F)
         if (bool) {
             col = Color(105F, 105F, 105F, .2F)
@@ -194,12 +194,12 @@ fun updateAim() {
 //Triggerbot
 fun updateDisableTrig() {
     aimTab.tTrig.apply {
-        val bool = if (!aimTab.tAim.enableAim.checkBox.isChecked) { //Issue?
+        val bool = if (!aimTab.tAim.enableAim.isChecked) { //Issue?
             enableTrig.disable(true)
-            !enableTrig.checkBox.isChecked
+            !enableTrig.isChecked
         } else {
             enableTrig.disable(false)
-            !enableTrig.checkBox.isChecked
+            !enableTrig.isChecked
         }
         var col = Color(255F, 255F, 255F, 1F)
         if (bool) {
@@ -207,7 +207,7 @@ fun updateDisableTrig() {
         }
         categorySelectLabel.color = col
         categorySelectionBox.isDisabled = bool
-        if (!aimTab.tAim.enableAim.checkBox.isChecked) {
+        if (!aimTab.tAim.enableAim.isChecked) {
             trigAimbot.disable(true)
         } else {
             trigAimbot.disable(bool)
@@ -240,7 +240,7 @@ fun updateTrig() {
 //Backtrack
 fun updateDisableBacktrack() {
     aimTab.tBacktrack.apply {
-        val bool = !aimTab.tBacktrack.enableBacktrack.checkBox.isChecked
+        val bool = !aimTab.tBacktrack.enableBacktrack.isChecked
 
         var col = Color(255F, 255F, 255F, 1F)
         if (bool) {

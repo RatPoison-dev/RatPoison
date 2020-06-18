@@ -3,6 +3,7 @@ package rat.poison.scripts.esp
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import rat.poison.App
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
@@ -16,7 +17,7 @@ import rat.poison.utils.varUtil.strToColor
 import kotlin.math.ceil
 
 fun snapLines() = App {
-    if (!curSettings["ENABLE_SNAPLINES"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
+    if (!curSettings["ENABLE_SNAPLINES"].strToBool() || !checkFlags("ENABLE_SNAPLINES") || !checkFlags("ENABLE_ESP") || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
 
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()

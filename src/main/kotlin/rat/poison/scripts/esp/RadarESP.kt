@@ -15,7 +15,7 @@ import rat.poison.utils.every
 import rat.poison.utils.varUtil.strToBool
 
 internal fun radarEsp() = every(100) {
-    if (!curSettings["RADAR_ESP"].strToBool() || !checkFlags("RADAR_ESP") || DANGER_ZONE) return@every
+    if (!curSettings["RADAR_ESP"].strToBool() || !checkFlags("ENABLE_ESP") || !checkFlags("RADAR_ESP") || DANGER_ZONE) return@every
 
     forEntities(ccsPlayer) {
         val entity = it.entity

@@ -1,6 +1,5 @@
 ﻿package rat.poison.ui.uiPanels
 
-import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisWindow
@@ -9,19 +8,16 @@ import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
+import rat.poison.ui.uiHelpers.binds.ConcatedInputField
+import rat.poison.utils.Settings
 import kotlin.math.round
 
+val map = Settings()
+fun addCheckBoxToTrack(localeName: String, varName: String) {
+    map[varName] = localeName
+}
 class UIKeybinds : VisWindow(curLocalization["KEYBINDS_PANEL_NAME"]) {
-    val aimToggleKey = VisInputFieldCustom(curLocalization["AIM_TOGGLE_KEY"], "ENABLE_AIM_SWITCH_KEY", nameInLocalization = "AIM_TOGGLE_KEY")
-    val forceAimKey = VisInputFieldCustom(curLocalization["FORCE_AIM_KEY"], "FORCE_AIM_KEY", nameInLocalization = "FORCE_AIM_KEY")
-    val rcsToggleKey = VisInputFieldCustom(curLocalization["RCS_TOGGLE_KEY"], "ENABLE_RCS_SWITCH_KEY", nameInLocalization = "RCS_TOGGLE_KEY")
-    val forceAimBoneKey = VisInputFieldCustom(curLocalization["FORCE_AIM_BONE_KEY"], "FORCE_AIM_BONE_KEY", nameInLocalization = "FORCE_AIM_BONE_KEY" )
-    val boneTriggerKey = VisInputFieldCustom(curLocalization["TRIGGER_KEY"], "ENABLE_TRIGGER_SWITCH_KEY", nameInLocalization = "TRIGGER_KEY")
-    val visualsToggleKey = VisInputFieldCustom(curLocalization["VISUALS_TOGGLE_KEY"], "ENABLE_ESP_SWITCH_KEY", nameInLocalization = "VISUALS_TOGGLE_KEY")
-    val doorSpamKey = VisInputFieldCustom(curLocalization["DOOR_SPAM_KEY"], "D_SPAM_KEY", nameInLocalization = "DOOR_SPAM_KEY")
-    val weaponSpamKey = VisInputFieldCustom(curLocalization["WEAPON_SPAM_KEY"], "W_SPAM_KEY", nameInLocalization = "WEAPON_SPAM_KEY")
-    val menuKeyField = VisInputFieldCustom(curLocalization["MENU_KEY"], "MENU_KEY", nameInLocalization = "MENU_KEY")
-
+    private val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, false)
     init {
         defaults().left()
 
@@ -31,78 +27,42 @@ class UIKeybinds : VisWindow(curLocalization["KEYBINDS_PANEL_NAME"]) {
         padRight(25F)
 
         //Create UI_Alpha Slider
-        val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, false)
         menuAlphaSlider.value = 1F
         menuAlphaSlider.changed { _, _ ->
             val alp = (round(menuAlphaSlider.value * 100F) / 100F)
             changeAlpha(alp)
-
             true
         }
-
-        add(aimToggleKey).left().row()
-        add(forceAimKey).left().row()
-        add(forceAimBoneKey).left().row()
-        add(boneTriggerKey).left().row()
-        add(visualsToggleKey).left().row()
-        add(rcsToggleKey).left().row()
-        add(doorSpamKey).left().row()
-        add(weaponSpamKey).left().row()
-        add(menuKeyField).left().row()
-        add(menuAlphaSlider).growX()
-
-        setSize(325F, 325F)
+        setSize(400f, 325F)
         setPosition(curSettings["KEYBINDS_X"].toFloat(), curSettings["KEYBINDS_Y"].toFloat())
         color.a = curSettings["KEYBINDS_ALPHA"].toFloat()
         isResizable = false
     }
-
     fun changeAlpha(alpha: Float) {
         color.a = alpha
     }
-
-    fun updatePosition(x: Float, y: Float) {
-        setPosition(x, y)
+    fun updateBindsList() {
+        reset()
+        map.savedValues.forEach { (varName, localeName) ->
+            if (!curSettings[varName+"_KEY"].isBlank() &&curSettings[varName+"_KEY"] != "22") {
+                add(ConcatedInputField(localeName, "KEYBINDS_ON_KEY", varName+"_KEY")).left().row()
+            }
+            if (!curSettings[varName+"_SWITCH_KEY"].isBlank() && curSettings[varName+"_SWITCH_KEY"] != "22") {
+                add(ConcatedInputField(localeName, "KEYBINDS_TOGGLE", varName+"_SWITCH_KEY")).left().row()
+            }
+            if (!curSettings[varName+"_DISABLE_KEY"].isBlank() && curSettings[varName+"_DISABLE_KEY"] != "22") {
+                add(ConcatedInputField(localeName, "KEYBINDS_OFF_KEY", varName+"_DISABLE_KEY")).left().row()
+            }
+        }
+        add(menuAlphaSlider).growX()
     }
     fun update() {
         this.titleLabel.setText(curLocalization["KEYBINDS_PANEL_NAME"])
     }
 }
 
-// This is retarted
 fun updateKeybinds() {
     uiKeybinds.apply {
         update()
-        aimToggleKey.update()
-        forceAimKey.update()
-        forceAimBoneKey.update()
-        rcsToggleKey.update()
-        boneTriggerKey.update()
-        visualsToggleKey.update()
-        doorSpamKey.update()
-        weaponSpamKey.update()
-        rcsToggleKey.update()
-
-        menuKeyField.update()
     }
-}
-
-fun keybindsUpdate(neglect: Actor) {
-    uiKeybinds.apply {
-        aimToggleKey.update(neglect)
-        forceAimKey.update(neglect)
-        forceAimBoneKey.update(neglect)
-        rcsToggleKey.update(neglect)
-        boneTriggerKey.update(neglect)
-        visualsToggleKey.update(neglect)
-        doorSpamKey.update(neglect)
-        weaponSpamKey.update(neglect)
-        menuKeyField.update(neglect)
-    }
-
-    aimTab.tAim.enableAim.update()
-    aimTab.tAim.forceAimKey.update(neglect)
-    aimTab.tAim.forceAimBoneKey.update(neglect)
-    rcsTab.enableRCS.update()
-    optionsTab.menuKey.update(neglect)
 }

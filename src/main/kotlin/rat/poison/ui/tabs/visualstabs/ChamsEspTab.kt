@@ -8,12 +8,13 @@ import rat.poison.ui.tabs.chamsEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
 
 class ChamsEspTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val chamsEsp = VisCheckBoxCustom(curLocalization["ENABLE"], "CHAMS_ESP", nameInLocalization = "ENABLE")
+    val chamsEsp = BindsRelatedCheckBox(curLocalization["ENABLE"], "CHAMS_ESP", nameInLocalization = "ENABLE")
     val chamsShowHealth = VisCheckBoxCustom(curLocalization["CHAMS_SHOW_HEALTH"], "CHAMS_SHOW_HEALTH", nameInLocalization = "CHAMS_SHOW_HEALTH")
     val chamsBrightness = VisSliderCustom(curLocalization["CHAMS_BRIGHTNESS"], "CHAMS_BRIGHTNESS", 0F, 5000F, 25F, true, nameInLocalization = "CHAMS_BRIGHTNESS")
 

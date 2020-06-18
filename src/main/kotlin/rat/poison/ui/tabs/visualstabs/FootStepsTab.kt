@@ -11,11 +11,12 @@ import rat.poison.ui.tabs.footStepsEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
 
 class FootstepsEspTab : Tab(false, false) {
     private val table = VisTable()
 
-    val enableFootSteps = VisCheckBoxCustom(curLocalization["ENABLE"], "ENABLE_FOOTSTEPS", nameInLocalization = "ENABLE")
+    val enableFootSteps = BindsRelatedCheckBox(curLocalization["ENABLE"], "ENABLE_FOOTSTEPS", nameInLocalization = "ENABLE")
     val footStepType = VisSelectBox<String>()
     val footStepUpdateTimer = VisSliderCustom(curLocalization["FOOTSTEP_UPDATE"], "FOOTSTEP_UPDATE", 5F, 120F, 1F, true, nameInLocalization = "FOOTSTEP_UPDATE")
     val footStepTTL = VisSliderCustom(curLocalization["FOOTSTEP_TTL"], "FOOTSTEP_TTL", 15F, 240F, 1F, true, nameInLocalization = "FOOTSTEP_TTL")

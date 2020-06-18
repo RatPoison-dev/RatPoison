@@ -1,5 +1,6 @@
 package rat.poison.scripts.esp
 
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
@@ -23,7 +24,7 @@ import java.lang.Float.floatToIntBits
 //Change for entities to for entities ccsplayer
 
 fun chamsEsp() = every(250) {
-    if ((!curSettings["CHAMS_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool())) return@every
+    if ((!curSettings["CHAMS_ESP"].strToBool() || !checkFlags("CHAMS_ESP") || !checkFlags("ENABLE_ESP") || !curSettings["ENABLE_ESP"].strToBool())) return@every
 
     val myTeam = me.team()
 

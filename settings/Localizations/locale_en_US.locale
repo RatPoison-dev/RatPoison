@@ -511,3 +511,8 @@ ALWAYS_ON = Always On
 TOGGLE_KEY = Toggle Key
 ON_HOTKEY = On Hotkey
 OFF_HOTKEY = Off Hotkey
+
+// Keybinds panel
+KEYBINDS_TOGGLE = [Toggle Key]
+KEYBINDS_ON_KEY = [On Key]
+KEYBINDS_OFF_KEY = [Off Key]

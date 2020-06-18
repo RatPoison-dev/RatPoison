@@ -3,6 +3,7 @@ package rat.poison.scripts.esp
 import com.badlogic.gdx.graphics.Color
 import org.jire.arrowhead.keyPressed
 import rat.poison.App
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.entity.dead
 import rat.poison.game.entity.weapon
@@ -19,7 +20,7 @@ import rat.poison.utils.varUtil.strToBool
 fun drawBacktrack() = App {
     if (MENUTOG) return@App
     if (me.dead()) return@App
-    if (notInGame || !curSettings["BACKTRACK_VISUALIZE"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["ENABLE_BACKTRACK"].strToBool()) return@App
+    if (notInGame || !curSettings["BACKTRACK_VISUALIZE"].strToBool() || !checkFlags("ENABLE_ESP") || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["ENABLE_BACKTRACK"].strToBool()) return@App
 
     val backtrackOnKey = curSettings["ENABLE_BACKTRACK_ON_KEY"].strToBool()
     val backtrackKeyPressed = keyPressed(curSettings["BACKTRACK_KEY"].toInt())

@@ -431,3 +431,8 @@ ALWAYS_ON = Всегда включен
 TOGGLE_KEY = Переключение на кнопку
 ON_HOTKEY = Вкл. на кнопку
 OFF_HOTKEY = Выкл. на кнопку
+
+// Keybinds panel
+KEYBINDS_TOGGLE = [Кнопка перекл.]
+KEYBINDS_ON_KEY = [Кнопка вкл.]
+KEYBINDS_OFF_KEY = [Кнопка выкл.]

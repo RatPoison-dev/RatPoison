@@ -3,6 +3,7 @@ package rat.poison.scripts.esp
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import rat.poison.App
 import rat.poison.App.shapeRenderer
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
@@ -21,7 +22,7 @@ import kotlin.math.sin
 
 //Whole lotta math shit here
 fun indicatorEsp() = App {
-    if (!curSettings["ENABLE_ESP"].strToBool() || MENUTOG || !curSettings["INDICATOR_ESP"].strToBool() || notInGame) return@App
+    if (!curSettings["ENABLE_ESP"].strToBool() || !checkFlags("ENABLE_ESP") || MENUTOG || !curSettings["INDICATOR_ESP"].strToBool() || !checkFlags("INDICATOR_ESP") || notInGame) return@App
 
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()

@@ -18,7 +18,7 @@ class RcsTab : Tab(false, false) {
     private val table = VisTable(false)
 
     //Init labels/sliders/boxes that show values here
-    val enableRCS = BindsRelatedCheckBox(curLocalization["ENABLE_RCS"], "ENABLE_RCS", nameInLocalization = "ENABLE_RCS", padLeft = 200F)
+    val enableRCS = BindsRelatedCheckBox(curLocalization["ENABLE_RCS"], "ENABLE_RCS", nameInLocalization = "ENABLE_RCS")
     val rcsSmoothingX = VisSliderCustom(curLocalization["RCS_SMOOTHING_X"], "RCS_SMOOTHING_X", .1F, 1F, .02F, false, width1 = 200F, width2 = 250F, nameInLocalization = "RCS_SMOOTHING_X")
     val rcsSmoothingY = VisSliderCustom(curLocalization["RCS_SMOOTHING_Y"], "RCS_SMOOTHING_Y", .1F, 1F, .02F, false, width1 = 200F, width2 = 250F, nameInLocalization = "RCS_SMOOTHING_Y")
 

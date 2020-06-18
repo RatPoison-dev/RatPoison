@@ -35,12 +35,12 @@ class VisualsTab : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     //Static Visuals Tab Items
-    val enableEsp = BindsRelatedCheckBox(curLocalization["ENABLE_ESP"], "ENABLE_ESP", nameInLocalization = "ENABLE_ESP", padLeft = 270F)
-    val radarEsp = BindsRelatedCheckBox(curLocalization["ENABLE_RADAR_ESP"], "RADAR_ESP", nameInLocalization = "ENABLE_RADAR_ESP", padLeft = 270F)
-    val nightMode = BindsRelatedCheckBox(curLocalization["ENABLE_NIGHTMODE"], "ENABLE_NIGHTMODE", nameInLocalization = "ENABLE_NIGHTMODE", padLeft = 270F)
+    val enableEsp = BindsRelatedCheckBox(curLocalization["ENABLE_ESP"], "ENABLE_ESP", nameInLocalization = "ENABLE_ESP")
+    val radarEsp = BindsRelatedCheckBox(curLocalization["ENABLE_RADAR_ESP"], "RADAR_ESP", nameInLocalization = "ENABLE_RADAR_ESP")
+    val nightMode = BindsRelatedCheckBox(curLocalization["ENABLE_NIGHTMODE"], "ENABLE_NIGHTMODE", nameInLocalization = "ENABLE_NIGHTMODE")
     val nightModeSlider = VisSliderCustom(curLocalization["NIGHTMODE_VALUE"], "NIGHTMODE_VALUE", 0.05F, 5F, .05F, false, nameInLocalization = "NIGHTMODE_VALUE")
 
-    val visAdrenaline = BindsRelatedCheckBox(curLocalization["ENABLE_ADRENALINE"], "ENABLE_ADRENALINE", nameInLocalization = "ENABLE_ADRENALINE", padLeft = 270F)
+    val visAdrenaline = BindsRelatedCheckBox(curLocalization["ENABLE_ADRENALINE"], "ENABLE_ADRENALINE", nameInLocalization = "ENABLE_ADRENALINE")
 
     val showAimFov = VisCheckBoxCustom(" ", "DRAW_AIM_FOV")
     val showAimFovColor = VisColorPickerCustom( curLocalization["DRAW_AIM_FOV_COLOR"], "DRAW_AIM_FOV_COLOR", nameInLocalization = "DRAW_AIM_FOV_COLOR")
@@ -156,7 +156,7 @@ class VisualsTab : Tab(false, false) {
 
 fun updateDisableEsp() {
     visualsTab.apply {
-        val bool = !enableEsp.checkBox.isChecked
+        val bool = !enableEsp.isChecked
         var col = Color(255F, 255F, 255F, 1F)
         if (bool) {
             col = Color(105F, 105F, 105F, .2F)

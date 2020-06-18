@@ -18,7 +18,7 @@ import rat.poison.ui.uiUpdate
 
 class AimBTrigTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
-    val enableTrig = BindsRelatedCheckBox(curLocalization["ENABLE_TRIGGER"], "ENABLE_TRIGGER", nameInLocalization = "ENABLE_TRIGGER", padLeft = 200F)
+    val enableTrig = BindsRelatedCheckBox(curLocalization["ENABLE_TRIGGER"], "ENABLE_TRIGGER", nameInLocalization = "ENABLE_TRIGGER")
 
     val trigAimbot = ATabVisCheckBox(curLocalization["TRIGGER_AIMBOT"], "_TRIGGER_AIMBOT", nameInLocalization = "TRIGGER_AIMBOT")
     val trigInCross = ATabVisCheckBox(curLocalization["TRIGGER_IS_IN_CROSS"], "_TRIGGER_INCROSS", nameInLocalization = "TRIGGER_IS_IN_CROSS")

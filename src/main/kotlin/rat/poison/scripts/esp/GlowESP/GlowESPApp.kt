@@ -20,7 +20,7 @@ import kotlin.system.measureNanoTime
 private var sync = 0
 
 internal fun glowEspApp() = App {
-	if (!curSettings["GLOW_ESP"].strToBool() || !checkFlags("GLOW_ESP") || !curSettings["ENABLE_ESP"].strToBool()) return@App
+	if (!curSettings["GLOW_ESP"].strToBool() || !checkFlags("ENABLE_ESP") || !checkFlags("GLOW_ESP") || !curSettings["ENABLE_ESP"].strToBool()) return@App
 
 	sync++
 

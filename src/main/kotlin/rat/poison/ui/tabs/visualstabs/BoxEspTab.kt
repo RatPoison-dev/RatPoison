@@ -18,10 +18,10 @@ class BoxEspTab : Tab(false, false) {
 
     var map = visualsMap()
     //Init labels/sliders/boxes that show values here
-    val skeletonEsp = VisCheckBoxCustom(curLocalization["ENABLE_SKELETON_ESP"], "SKELETON_ESP", nameInLocalization = "ENABLE_SKELETON_ESP")
+    val skeletonEsp = BindsRelatedCheckBox(curLocalization["ENABLE_SKELETON_ESP"], "SKELETON_ESP", nameInLocalization = "ENABLE_SKELETON_ESP")
     val showTeamSkeleton = VisCheckBoxCustom(curLocalization["TEAMMATES"], "SKELETON_SHOW_TEAM", nameInLocalization = "TEAMMATES")
     val showEnemiesSkeleton = VisCheckBoxCustom(curLocalization["ENEMIES"], "SKELETON_SHOW_ENEMIES", nameInLocalization = "ENEMIES")
-    val boxEsp = BindsRelatedCheckBox(curLocalization["ENABLE_BOX_ESP"], "ENABLE_BOX_ESP", nameInLocalization = "ENABLE_BOX_ESP", padLeft = 225F)
+    val boxEsp = BindsRelatedCheckBox(curLocalization["ENABLE_BOX_ESP"], "ENABLE_BOX_ESP", nameInLocalization = "ENABLE_BOX_ESP")
     val boxShowHealth = VisCheckBoxCustom(curLocalization["HEALTH_BASED"], "BOX_SHOW_HEALTH", "HEALTH_BASED")
     val boxEspDetails = VisCheckBoxCustom(curLocalization["ENABLE_BOX_ESP_DETAILS"], "BOX_ESP_DETAILS", nameInLocalization = "ENABLE_BOX_ESP_DETAILS")
     val boxEspHealth = VisCheckBoxCustom(curLocalization["HEALTH"], "BOX_ESP_HEALTH", nameInLocalization = "HEALTH")
@@ -166,7 +166,7 @@ class BoxEspTab : Tab(false, false) {
         table.addSeparator().colspan(2)
         table.add(boxEsp).left().row()
         table.add(boxEspDetails).left().row()
-        table.add(boxShowHealth).left().row()
+        table.add(boxShowHealth).left()
         table.add(boxEspHealth).left()
         table.add(boxEspHealthPos).left().row()
         table.add(boxEspArmor).left()

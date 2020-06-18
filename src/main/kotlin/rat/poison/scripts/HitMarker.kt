@@ -24,7 +24,7 @@ var hitMarkerCombo = 0
 private var totalHits = 0
 
 fun hitMarker() = App {
-    if ((!curSettings["ENABLE_HITMARKER"].strToBool() && !curSettings["HITMARKER_COMBO"].strToBool()) ||  !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || me.dead()) return@App
+    if ((!curSettings["ENABLE_HITMARKER"].strToBool() && !curSettings["HITMARKER_COMBO"].strToBool()) || !checkFlags("ENABLE_HITMARKER") || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || me.dead()) return@App
 
     val curHits = csgoEXE.int(me + m_totalHitsOnServer)
 
@@ -77,7 +77,7 @@ fun hitMarker() = App {
 
             var col : rat.poison.game.Color
 
-            if (curSettings["ENABLE_HITMARKER"].strToBool()) {
+            if (curSettings["ENABLE_HITMARKER"].strToBool() && checkFlags("ENABLE_HITMARKER")) {
                 if (curSettings["HITMARKER_OUTLINE"].strToBool()) { //Outline
                     col = curSettings["HITMARKER_OUTLINE_COLOR"].strToColor()
                     setColor(col.red / 255F, col.green / 255F, col.blue / 255F, hitMarkerAlpha)

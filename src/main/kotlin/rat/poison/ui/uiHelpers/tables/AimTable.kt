@@ -25,7 +25,7 @@ import rat.poison.utils.varUtil.strToBool
 
 class AimTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
-    val enableAim = BindsRelatedCheckBox(curLocalization["ENABLE_AIM"], "ENABLE_AIM", nameInLocalization = "ENABLE_AIM", padLeft = 200F)
+    val enableAim = BindsRelatedCheckBox(curLocalization["ENABLE_AIM"], "ENABLE_AIM", nameInLocalization = "ENABLE_AIM")
     val activateFromFireKey = VisCheckBoxCustom(curLocalization["ACTIVATE_FROM_AIM_KEY"], "ACTIVATE_FROM_AIM_KEY", nameInLocalization = "ACTIVATE_FROM_AIM_KEY")
     val holdAim = VisCheckBoxCustom(curLocalization["HOLD_AIM"], "HOLD_AIM", nameInLocalization = "HOLD_AIM")
     val teammatesAreEnemies = VisCheckBoxCustom(curLocalization["TEAMMATES_ARE_ENEMIES"], "TEAMMATES_ARE_ENEMIES", nameInLocalization = "TEAMMATES_ARE_ENEMIES")

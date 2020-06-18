@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.Align
 import rat.poison.App
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
@@ -26,7 +27,7 @@ private data class FootStep(var x: Double = 0.0, var y: Double = 0.0, var z: Dou
 private var stepTimer = 0
 
 fun footStepEsp() = App {
-    if (!curSettings["ENABLE_ESP"].strToBool() || !curSettings["ENABLE_FOOTSTEPS"].strToBool()) return@App
+    if (!curSettings["ENABLE_ESP"].strToBool() || !checkFlags("ENABLE_ESP") || !curSettings["ENABLE_FOOTSTEPS"].strToBool() || !checkFlags("ENABLE_FOOTSTEPS")) return@App
 
     stepTimer++
     if (stepTimer >= curSettings["FOOTSTEP_UPDATE"].toInt()) {

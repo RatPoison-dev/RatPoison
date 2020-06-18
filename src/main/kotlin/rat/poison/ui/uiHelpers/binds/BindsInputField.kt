@@ -7,7 +7,6 @@ import com.kotcrab.vis.ui.widget.*
 import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.ui.changed
-import rat.poison.ui.uiPanels.keybindsUpdate
 
 class BindsInputField(localeName: String, varName: String, addLink: Boolean = true, isInt: Boolean = true) : VisTable() {
     private val defaultText = curLocalization[localeName]
@@ -35,7 +34,6 @@ class BindsInputField(localeName: String, varName: String, addLink: Boolean = tr
                         curSettings[variableName] = keyField.text.toDouble().toString()
                         value = keyField.text.toDouble()
                     }
-                    keybindsUpdate(this)
                 }
             }
 

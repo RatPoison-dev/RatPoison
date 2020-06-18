@@ -8,12 +8,13 @@ import rat.poison.ui.tabs.indicatorEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
 
 class IndicatorEspTab : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val indicatorEsp = VisCheckBoxCustom(curLocalization["ENABLE"], "INDICATOR_ESP", nameInLocalization = "ENABLE")
+    val indicatorEsp = BindsRelatedCheckBox(curLocalization["ENABLE"], "INDICATOR_ESP", nameInLocalization = "ENABLE")
     val indicatorDistance = VisSliderCustom(curLocalization["INDICATOR_DISTANCE"], "INDICATOR_DISTANCE", 2F, 50F, .1F, false, nameInLocalization = "INDICATOR_DISTANCE")
     val indicatorSize = VisSliderCustom(curLocalization["INDICATOR_SIZE"], "INDICATOR_SIZE", 5F, 25F, .5F, false, nameInLocalization = "INDICATOR_SIZE")
 

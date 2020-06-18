@@ -18,7 +18,7 @@ var opened = false
 lateinit var hitSound: Sound
 
 fun hitSoundEsp() = every(50) {
-    if (!curSettings["MENU"].strToBool() || !curSettings["ENABLE_HITSOUND"].strToBool() || !checkFlags("ENABLE_HITSOUND") || notInGame || me <= 0) return@every
+    if (!curSettings["MENU"].strToBool() || !checkFlags("ENABLE_ESP") || !curSettings["ENABLE_HITSOUND"].strToBool() || !checkFlags("ENABLE_HITSOUND") || notInGame || me <= 0) return@every
 
     if (VisUI.isLoaded()) {
         val curHits = csgoEXE.int(me + m_totalHitsOnServer)
