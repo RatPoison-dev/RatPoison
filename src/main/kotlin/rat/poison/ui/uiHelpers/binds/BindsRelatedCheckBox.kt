@@ -9,7 +9,7 @@ import rat.poison.curLocalization
 import rat.poison.curSettings
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
-import rat.poison.ui.uiPanels.addCheckBoxToTrack
+import rat.poison.ui.uiPanels.addToCheck
 import rat.poison.utils.varUtil.boolToStr
 import rat.poison.utils.varUtil.strToBool
 
@@ -24,7 +24,7 @@ class BindsRelatedCheckBox(mainText: String, varName: String, nameInLocalization
     private val switchKey = BindsInputField("_SWITCH_KEY", varName)
     init {
 
-        addCheckBoxToTrack(nameInLocalization, varName)
+        addToCheck(nameInLocalization, varName)
 
         if (curLocalization[nameInLocalization+"_TOOLTIP"] != "") {
             Tooltip.Builder(curLocalization[nameInLocalization+"_TOOLTIP"]).target(this).build()

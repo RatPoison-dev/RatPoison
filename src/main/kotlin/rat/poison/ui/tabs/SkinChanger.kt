@@ -18,6 +18,8 @@ import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisLabelCustom
 import rat.poison.ui.uiHelpers.VisTextButtonCustom
+import rat.poison.ui.uiHelpers.binds.BindsRelatedButton
+import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
 import rat.poison.ui.uiPanels.skinChangerTab
 import rat.poison.utils.GetWeaponsMap
 import java.io.File
@@ -28,7 +30,7 @@ class SkinChangerTab : Tab(false, false) {
     var weaponsMap = GetWeaponsMap()
 
     //Init labels/sliders/boxes that show values here
-    var enableSkinChanger = VisCheckBoxCustom(curLocalization["ENABLE_SKIN_CHANGER"], "SKINCHANGER", nameInLocalization = "ENABLE_SKIN_CHANGER")
+    var enableSkinChanger = BindsRelatedCheckBox(curLocalization["ENABLE_SKIN_CHANGER"], "SKINCHANGER", nameInLocalization = "ENABLE_SKIN_CHANGER")
     //var enableKnifeChanger = VisCheckBoxCustom(curLocalization["ENABLE_KNIFE_CHANGER"], "KNIFECHANGER", nameInLocalization = "ENABLE_KNIFE_CHANGER")
 
     private var categorySelectionBox = VisSelectBox<String>()
@@ -49,8 +51,8 @@ class SkinChangerTab : Tab(false, false) {
     private var skinWear = VisSlider(0.0F, 1.0F, .01F, false)
     //private var skinWear = VisValidatableTextField(Validators.FLOATS)
 
-    private var forceUpdate = VisTextButtonCustom(curLocalization["MANUAL_FORCE_UPDATE"], nameInLocalization = "MANUAL_FORCE_UPDATE")
-    var autoForceUpdate = VisCheckBoxCustom(curLocalization["AUTO_FORCE_UPDATE"], "FORCE_UPDATE_AUTO", nameInLocalization = "AUTO_FORCE_UPDATE")
+    private var forceUpdate = BindsRelatedButton(curLocalization["MANUAL_FORCE_UPDATE"], "MANUAL_FORCE_UPDATE", nameInLocalization = "MANUAL_FORCE_UPDATE")
+    var autoForceUpdate = BindsRelatedCheckBox(curLocalization["AUTO_FORCE_UPDATE"], "FORCE_UPDATE_AUTO", nameInLocalization = "AUTO_FORCE_UPDATE")
 
     private var weaponSelected = "DESERT_EAGLE"
     private var minValue = 0.0F

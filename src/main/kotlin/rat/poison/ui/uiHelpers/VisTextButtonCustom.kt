@@ -7,6 +7,7 @@ import rat.poison.ui.changed
 
 class VisTextButtonCustom(mainText: String, nameInLocalization: String = "") : VisTextButton(mainText) {
     private val localeName = nameInLocalization
+    private val defaultText = mainText
     init {
         update()
         if (curLocalization[nameInLocalization+"_TOOLTIP"] != "") {
@@ -20,6 +21,8 @@ class VisTextButtonCustom(mainText: String, nameInLocalization: String = "") : V
     }
 
     fun update() {
+        val tmpText = curLocalization[localeName]
+        this.setText(if (tmpText.isBlank()) defaultText else tmpText)
         this.setText(curLocalization[localeName])
     }
 

@@ -5,6 +5,7 @@ import rat.poison.curSettings
 import rat.poison.game.angle
 import rat.poison.game.clientState
 import rat.poison.robot
+import rat.poison.settings.MENUTOG
 import rat.poison.utils.Angle
 import rat.poison.utils.normalize
 import rat.poison.utils.pathAim
@@ -13,7 +14,9 @@ import java.awt.event.MouseEvent
 
 fun selfNade() {
     Thread(Runnable {
-        robot.keyPress(curSettings["MENU_KEY"].toInt())
+        if (MENUTOG) {
+            robot.keyPress(curSettings["MENU_KEY"].toInt())
+        }
         Thread.sleep(50)
 
         val curAng = clientState.angle()

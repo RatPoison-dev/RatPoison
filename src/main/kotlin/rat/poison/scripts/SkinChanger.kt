@@ -1,5 +1,6 @@
 package rat.poison.scripts
 
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.CSGO.ENTITY_SIZE
 import rat.poison.game.CSGO.clientDLL
@@ -28,7 +29,7 @@ private var preBayonetT = 64
 
 //fuck
 fun skinChanger() = every(2) {
-    if (!curSettings["SKINCHANGER"].strToBool() || notInGame) return@every
+    if (!curSettings["SKINCHANGER"].strToBool() || !checkFlags("SKINCHANGER") || notInGame) return@every
 
     //val modelIndex = curSettings["KNIFE_IDX"].toInt() //For knife
     //val indexOffset = if (modelIndex < 11) 1 else 2
@@ -59,7 +60,7 @@ fun skinChanger() = every(2) {
             val pID = (split[2].toInt() * 2) + split[1].toInt()
 
             if (weaponEntity.type().gun) {
-                if (curSettings["SKINCHANGER"].strToBool()) {
+                if (curSettings["SKINCHANGER"].strToBool() && checkFlags("SKINCHANGER")) {
                     val sWep = curSettings["SKIN_" + weaponEntity.type().name].toSkinWeaponClass()
 
                     //Change these to read weaponEntity kit to a mem and read from it

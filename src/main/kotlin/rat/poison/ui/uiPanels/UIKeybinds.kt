@@ -13,7 +13,7 @@ import rat.poison.utils.Settings
 import kotlin.math.round
 
 val map = Settings()
-fun addCheckBoxToTrack(localeName: String, varName: String) {
+fun addToCheck(localeName: String, varName: String) {
     map[varName] = localeName
 }
 class UIKeybinds : VisWindow(curLocalization["KEYBINDS_PANEL_NAME"]) {

@@ -2,11 +2,10 @@ package rat.poison.utils
 
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
+import rat.poison.scripts.forcedUpdate
+import rat.poison.scripts.selfNade
 import rat.poison.ui.tabs.*
-import rat.poison.ui.uiPanels.aimTab
-import rat.poison.ui.uiPanels.miscTab
-import rat.poison.ui.uiPanels.rcsTab
-import rat.poison.ui.uiPanels.visualsTab
+import rat.poison.ui.uiPanels.*
 import rat.poison.utils.varUtil.strToBool
 
 var bunnyHopToggleKey = ObservableBoolean({ keyPressed(1) })
@@ -40,6 +39,10 @@ var skeletonEspToggleKey = ObservableBoolean({keyPressed(1) })
 var enableFootStepsToggleKey = ObservableBoolean({keyPressed(1) })
 var enableSnaplinesToggleKey = ObservableBoolean({keyPressed(1) })
 var hitMarkerToggleKey = ObservableBoolean({keyPressed(1) })
+var enableSkinChangerToggleKey = ObservableBoolean({keyPressed(1) })
+var throwSelfNadeKey = ObservableBoolean({ keyPressed(1)})
+var manualForceUpdateKey = ObservableBoolean({ keyPressed(1)})
+var autoForceUpdateToggleKey = ObservableBoolean({ keyPressed(1)})
 
 fun constructVars() {
     bunnyHopToggleKey = ObservableBoolean({ curSettings["ENABLE_BUNNY_HOP_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["ENABLE_BUNNY_HOP_SWITCH_KEY"].toInt()) })
@@ -73,6 +76,10 @@ fun constructVars() {
     enableFootStepsToggleKey = ObservableBoolean({ curSettings["ENABLE_FOOTSTEPS_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["ENABLE_FOOTSTEPS_SWITCH_KEY"].toInt()) })
     hitMarkerToggleKey = ObservableBoolean({ curSettings["ENABLE_HITMARKER_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["ENABLE_HITMARKER_SWITCH_KEY"].toInt()) })
     enableSnaplinesToggleKey = ObservableBoolean({ curSettings["ENABLE_SNAPLINES_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["ENABLE_SNAPLINES_SWITCH_KEY"].toInt()) })
+    enableSkinChangerToggleKey = ObservableBoolean({ curSettings["SKINCHANGER_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["SKINCHANGER_SWITCH_KEY"].toInt()) })
+    autoForceUpdateToggleKey = ObservableBoolean({ curSettings["FORCE_UPDATE_AUTO_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["FORCE_UPDATE_AUTO_SWITCH_KEY"].toInt()) })
+    throwSelfNadeKey = ObservableBoolean({ keyPressed(curSettings["THROW_SELF_NADE_KEY"].toInt()) })
+    manualForceUpdateKey = ObservableBoolean({ keyPressed(curSettings["MANUAL_FORCE_UPDATE_KEY"].toInt()) })
 }
 fun addListeners() {
     bunnyHopToggleKey.update()
@@ -218,5 +225,21 @@ fun addListeners() {
     hitMarkerToggleKey.update()
     if (hitMarkerToggleKey.justBecameTrue) {
         hitMarkerTab.hitMarker.isChecked = !hitMarkerTab.hitMarker.isChecked
+    }
+    autoForceUpdateToggleKey.update()
+    if (autoForceUpdateToggleKey.justBecameTrue) {
+        skinChangerTab.autoForceUpdate.isChecked = !skinChangerTab.autoForceUpdate.isChecked
+    }
+    enableSkinChangerToggleKey.update()
+    if (enableSkinChangerToggleKey.justBecameTrue) {
+        skinChangerTab.enableSkinChanger.isChecked = !skinChangerTab.enableSkinChanger.isChecked
+    }
+    throwSelfNadeKey.update()
+    if (throwSelfNadeKey.justBecameTrue) {
+        selfNade()
+    }
+    manualForceUpdateKey.update()
+    if (manualForceUpdateKey.justBecameTrue) {
+        forcedUpdate()
     }
 }

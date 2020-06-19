@@ -4,11 +4,17 @@ ENEMIES = Przeciwnicy
 HEALTH = Zdrowie
 ARMOR = Kamizelka
 NAME = Nazwa
-GRENADES = Granaty
-TARGET = Cel
 YES = Tak
 NO = Nie
+GRENADES = Granaty
+TARGET = Cel
 WEAPON = Broń
+ON_KEY = Na przycisk
+CONFIGURATION = Konfiguracja
+_SWITCH_KEY = Przycisk przełączania
+_DISABLE_KEY = Przycisk wyłączania
+CONFIGURE = Bindy
+_KEY = Przycisk
 WARNING = Uwaga
 SCOPE = Luneta
 BONES = Części ciała
@@ -60,7 +66,6 @@ SPECTATOR_LIST_WINDOW_NAME = Lista widzów
 
 // Aim tab
 PISTOL = PISTOLET
-GAME_SENSITIVITY = Czułość myszy w grze
 SHOTGUN = STRZELBA
 RIFLE = KARABIN
 SNIPER = KARABIN SNAJPERSKI
@@ -77,6 +82,7 @@ PELVIS = MIEDNICA
 NEAREST = NAJBLIŻSZY
 RANDOM = LOSOWY
 WEAPON_CATEGORY = Kategoria broni:
+
 // Triggerbot
 ENABLE_TRIGGER = Włącz triggerbota
 TRIGGER_ENABLE_KEY = Triggerbot pod przyciskiem
@@ -127,6 +133,7 @@ AUTO_STRAFE = Automatyczne strafowanie
 STRAFE_BHOP_ONLY = Tylko bhop
 FAST_STOP = Szybki stop
 AIM_STRAFER = Auto strafowanie
+AIM_STRAFER_TYPE = Typ
 AIM_STRAFER_SAME = Ten sam kierunek
 AIM_STRAFER_OPPOSITE = Przeciwny kierunek
 AIM_STRAFER_SHIFT = Redukcja ruchu
@@ -256,6 +263,10 @@ FOOTSTEPS_TEXT = Tekst
 FOOTSTEPS_CIRCLE = Okręgi
 // Glow Esp tab
 INV_GLOW_ESP = Odwrócona poświata
+NORMAL = Normalny
+MODEL = Model
+VISIBLE = Widzialny
+VISIBLE_FLICKER = Widzialny migający
 MODEL_ESP = Model
 MODEL_AND_GLOW = Model & poświata
 // HitMarkers tab
@@ -494,3 +505,8 @@ BACKTRACK_MS = Max MS
 BACKTRACK_PREFER_ACCURATE = Preferuj celne zapisy
 BACKTRACK_SPOTTED = Sprawdź czy widoczny
 ENABLE_WEAPON_BACKTRACK = Włącz backtrack na broni
+// Binds panel
+ALWAYS_ON = Zawsze włączony
+TOGGLE_KEY = Przycisk przełączania
+ON_HOTKEY = Włącz gdy przytrzymany
+OFF_HOTKEY = Wyłącz gdy przytrzymany

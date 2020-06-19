@@ -19,6 +19,7 @@ import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.*
 import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
+import rat.poison.ui.uiHelpers.binds.BindsRelatedButton
 import rat.poison.ui.uiPanels.miscTab
 import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.varUtil.boolToStr
@@ -61,7 +62,7 @@ class MiscTab : Tab(false, false) {
     val hitSoundCheckBox = BindsRelatedCheckBox(curLocalization["ENABLE_HITSOUND"], "ENABLE_HITSOUND", nameInLocalization = "ENABLE_HITSOUND")
     val hitSoundBox = VisSelectBox<String>()
     val hitSoundVolume = VisSliderCustom(curLocalization["HITSOUND_VOLUME"], "HITSOUND_VOLUME", .1F, 1F, .1F, false, width1 = 150F, width2 = 90F, nameInLocalization = "HITSOUND_VOLUME")
-    val selfNade = VisTextButtonCustom(curLocalization["THROW_SELF_NADE"], nameInLocalization = "THROW_SELF_NADE")
+    val selfNade = BindsRelatedButton(curLocalization["THROW_SELF_NADE"], "THROW_SELF_NADE", nameInLocalization = "THROW_SELF_NADE")
     private val nameChangeInput = VisValidatableTextField()
     private val nameChange = VisTextButtonCustom(curLocalization["ENABLE_NAME_CHANGER"], nameInLocalization = "ENABLE_NAME_CHANGER")
 
