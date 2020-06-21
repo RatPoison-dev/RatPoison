@@ -10,8 +10,7 @@ import rat.poison.ui.changed
 
 class BindsInputField(localeName: String, varName: String, addLink: Boolean = true, isInt: Boolean = true) : VisTable() {
     private val defaultText = curLocalization[localeName]
-    var variableName = varName + localeName
-    private val localeName = localeName
+    var variableName = varName
     private val intVal = isInt
 
     //val globalTable = VisTable()
@@ -26,12 +25,12 @@ class BindsInputField(localeName: String, varName: String, addLink: Boolean = tr
 
         changed { _, _ ->
             if (keyField.text.toIntOrNull() != null) {
-                if (keyField.text != curSettings[variableName]) {
+                if (keyField.text != curSettings[variableName+"_KEY"]) {
                     if (intVal) {
-                        curSettings[variableName] = keyField.text.toInt().toString()
+                        curSettings[variableName+"_KEY"] = keyField.text.toInt().toString()
                         value = keyField.text.toInt()
                     } else {
-                        curSettings[variableName] = keyField.text.toDouble().toString()
+                        curSettings[variableName+"_KEY"] = keyField.text.toDouble().toString()
                         value = keyField.text.toDouble()
                     }
                 }
@@ -49,10 +48,15 @@ class BindsInputField(localeName: String, varName: String, addLink: Boolean = tr
 
     fun update(neglect: Actor? = null) {
         if (neglect != this) {
-            val tmpText = curLocalization[localeName]
-            this.keyLabel.setText(if (tmpText.isBlank()) defaultText else tmpText)
-            if (!curSettings[variableName].isBlank()) {
-                keyField.text = curSettings[variableName]
+
+            //val tmpText = curLocalization[localeName]
+            when (curSettings[variableName+"_KEY_TYPE"]) {
+                "OnKey" -> this.keyLabel.setText(curLocalization["_KEY"])
+                "SwitchKey" -> this.keyLabel.setText(curLocalization["_SWITCH_KEY"])
+                "OffKey" -> this.keyLabel.setText(curLocalization["_DISABLE_KEY"])
+            }
+            if (!curSettings[variableName+"_KEY"].isBlank()) {
+                keyField.text = curSettings[variableName+"_KEY"]
                 value = if (intVal) {
                     keyField.text.toInt()
                 } else {

@@ -2,7 +2,8 @@
 ENABLE_BACKTRACK = true
 
 //Enable backtrack on key
-ENABLE_BACKTRACK_ON_KEY = false
+ENABLE_BACKTRACK_KEY_TYPE = AlwaysOn
+ENABLE_BACKTRACK_KEY = 22
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm),
 //Default key is Mouse5
@@ -60,10 +61,7 @@ SMG_BACKTRACK_PELVIS = true
 SNIPER_BACKTRACK_PELVIS = true
 
 //Enable bone trigger key that enables bone trigger only when TRIGGER_KEY is pressed
-ENABLE_BACKTRACK_ON_KEY = false
+ENABLE_BACKTRACK_KEY_TYPE = AlwaysOn
+ENABLE_BACKTRACK_KEY = 22
 ENABLE_BACKTRACK_KEY = 22
 
-ENABLE_BACKTRACK_SWITCH_ON_KEY = false
-ENABLE_BACKTRACK_SWITCH_KEY = 22
-ENABLE_BACKTRACK_DISABLE_ON_KEY = false
-ENABLE_BACKTRACK_DISABLE_KEY = 22

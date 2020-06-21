@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 import org.jire.arrowhead.keyPressed
 import org.lwjgl.glfw.GLFW.*
 import rat.poison.game.CSGO
+import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.updateViewMatrix
 import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
@@ -639,9 +640,10 @@ fun List<String>.pull(idx: Int): String {
 }
 
 fun checkFlags(nameInSettings: String): Boolean {
-    return ((curSettings[nameInSettings+"_ON_KEY"].strToBool() && keyPressed(curSettings[nameInSettings+"_KEY"].toInt())) || (!curSettings[nameInSettings+"_ON_KEY"].strToBool() && ((curSettings[nameInSettings+"_DISABLE_ON_KEY"].strToBool() && !keyPressed(curSettings[nameInSettings+"_DISABLE_KEY"].toInt())) || !curSettings[nameInSettings+"_DISABLE_ON_KEY"].strToBool())))
+    val keyType = curSettings[nameInSettings + "_KEY_TYPE"]
+    val key = curSettings[nameInSettings + "_KEY"].toInt()
+    return (keyType == "OnKey" && keyPressed(key)) || (keyType == "OffKey" && !keyPressed(key)) || (keyType != "OffKey" && keyType != "OnKey")
 }
-
 //Matrix 4 uses column-major order
 fun Array<DoubleArray>.toMatrix4(): Matrix4 {
     val input = this

@@ -19,9 +19,7 @@ class BindsRelatedCheckBox(mainText: String, varName: String, nameInLocalization
     private val variableName = varName
     private val localeName = nameInLocalization
     private val selectBox = VisSelectBox<String>()
-    private val onKey = BindsInputField("_KEY", varName)
-    private val offKey = BindsInputField("_DISABLE_KEY", varName)
-    private val switchKey = BindsInputField("_SWITCH_KEY", varName)
+    private val keyType = BindsInputField("_KEY", varName)
     init {
 
         addToCheck(nameInLocalization, varName)
@@ -32,9 +30,8 @@ class BindsRelatedCheckBox(mainText: String, varName: String, nameInLocalization
 
         // positions
         selectBox.setPosition(curSettings["BINDS_X"].toFloat(), curSettings["BINDS_Y"].toFloat())
-        switchKey.setPosition(selectBox.x+130f, selectBox.y-40)
-        onKey.setPosition(selectBox.x+130f, selectBox.y-40)
-        offKey.setPosition(selectBox.x+130f, selectBox.y-40)
+        keyType.setPosition(selectBox.x+130f, selectBox.y-40)
+
         // w&h
         selectBox.width = 200f
 
@@ -45,49 +42,40 @@ class BindsRelatedCheckBox(mainText: String, varName: String, nameInLocalization
                     if (!curSettings["BINDS"].strToBool()) {
                         curSettings["BINDS"] = "true"
                         menuStage.addActor(selectBox)
+                        keyType.remove()
                         selectBox.setItems(curLocalization["ALWAYS_ON"], curLocalization["TOGGLE_KEY"], curLocalization["ON_HOTKEY"], curLocalization["OFF_HOTKEY"])
-                        val switchKeyEnabled = curSettings[varName + "_SWITCH_ON_KEY"].strToBool()
-                        val onKeyEnabled = curSettings[varName + "_ON_KEY"].strToBool()
-                        val disableKeyEnabled = curSettings[varName + "_DISABLE_ON_KEY"].strToBool()
-                        if (!switchKeyEnabled && !onKeyEnabled && !disableKeyEnabled) {
-                            selectBox.selected = curLocalization["ALWAYS_ON"]
-                        } else if (switchKeyEnabled && !onKeyEnabled && !disableKeyEnabled) {
-                            selectBox.selected = curLocalization["TOGGLE_KEY"]
-                            menuStage.addActor(switchKey)
-                        } else if (!switchKeyEnabled && onKeyEnabled && !disableKeyEnabled) {
-                            selectBox.selected = curLocalization["ON_HOTKEY"]
-                            menuStage.addActor(onKey)
-                        } else {
-                            selectBox.selected = curLocalization["OFF_HOTKEY"]
-                            menuStage.addActor(offKey)
+                        keyType.update()
+                        when (curSettings[varName + "_KEY_TYPE"]) {
+                            "OnKey" -> {
+                                selectBox.selected = curLocalization["ON_HOTKEY"]
+                                menuStage.addActor(keyType)
+                            }
+                            "OffKey" -> {
+                                selectBox.selected = curLocalization["OFF_HOTKEY"]
+                                menuStage.addActor(keyType)
+                            }
+                            "SwitchKey" -> {
+                                selectBox.selected = curLocalization["TOGGLE_KEY"]
+                                menuStage.addActor(keyType)
+                            }
+                            "AlwaysOn" -> {
+                                selectBox.selected = curLocalization["ALWAYS_ON"]
+                            }
                         }
-                        selectBox.changed { _, _ ->
-                            switchKey.remove()
-                            onKey.remove()
-                            offKey.remove()
-                            curSettings[varName + "_SWITCH_ON_KEY"] = "false"
-                            if (selectBox.selected == curLocalization["ALWAYS_ON"]) {
-                                curSettings[varName + "_SWITCH_ON_KEY"] = "false"
-                                curSettings[varName + "_ON_KEY"] = "false"
-                                curSettings[varName + "_DISABLE_ON_KEY"] = "false"
+                        selectBox.changed {_, _ ->
+                            curSettings[varName+"_KEY_TYPE"] = when (selectBox.selected) {
+                                curLocalization["ON_HOTKEY"] -> "OnKey"
+                                curLocalization["OFF_HOTKEY"] -> "OffKey"
+                                curLocalization["TOGGLE_KEY"] -> "SwitchKey"
+                                else -> "AlwaysOn"
                             }
-                            if (selectBox.selected == curLocalization["TOGGLE_KEY"]) {
-                                curSettings[varName + "_SWITCH_ON_KEY"] = "true"
-                                curSettings[varName + "_ON_KEY"] = "false"
-                                curSettings[varName + "_DISABLE_ON_KEY"] = "false"
-                                menuStage.addActor(switchKey)
-                            }
-                            if (selectBox.selected == curLocalization["ON_HOTKEY"]) {
-                                curSettings[varName + "_ON_KEY"] = "true"
-                                curSettings[varName + "_SWITCH_ON_KEY"] = "false"
-                                curSettings[varName + "_DISABLE_ON_KEY"] = "false"
-                                menuStage.addActor(onKey)
-                            }
-                            if (selectBox.selected == curLocalization["OFF_HOTKEY"]) {
-                                curSettings[varName + "_SWITCH_ON_KEY"] = "false"
-                                curSettings[varName + "_ON_KEY"] = "false"
-                                curSettings[varName + "_DISABLE_ON_KEY"] = "true"
-                                menuStage.addActor(offKey)
+                            if (curSettings[varName + "_KEY_TYPE"] != "AlwaysOn") {
+                                keyType.update()
+                                if (menuStage.actors.contains(keyType)) {
+                                    keyType.remove()
+                                    menuStage.addActor(keyType)
+                                }
+                                menuStage.addActor(keyType)
                             }
                         }
                     }
@@ -114,6 +102,7 @@ class BindsRelatedCheckBox(mainText: String, varName: String, nameInLocalization
         }
     }
     fun update() {
+
         val tmpText = curLocalization[localeName]
         this.setText(if (tmpText.isBlank()) defaultText else tmpText )
         this.isChecked = curSettings[variableName].strToBool()
