@@ -15,8 +15,8 @@ import rat.poison.utils.varUtil.strToBool
 
 val glowEspFlags = ObservableBoolean({curSettings["GLOW_ESP"].strToBool() && checkFlags("GLOW_ESP")})
 val chamsEspFlags =  ObservableBoolean({curSettings["CHAMS_ESP"].strToBool() && checkFlags("CHAMS_ESP")})
-val fovChangerFlags = ObservableBoolean({curSettings["ENABLE_FOV_CHANGER"].strToBool() && !checkFlags("ENABLE_FOV_CHANGER")})
-val reducedFlashFlags = ObservableBoolean({curSettings["ENABLE_REDUCED_FLASH"].strToBool() && !checkFlags("ENABLE_REDUCED_FLASH")})
+val fovChangerFlags = ObservableBoolean({curSettings["ENABLE_FOV_CHANGER"].strToBool() && checkFlags("ENABLE_FOV_CHANGER")})
+val reducedFlashFlags = ObservableBoolean({curSettings["ENABLE_REDUCED_FLASH"].strToBool() && checkFlags("ENABLE_REDUCED_FLASH")})
 
 fun espToggle() = every(50) {
     if ((curSettings["ENABLE_ESP_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["ENABLE_ESP_SWITCH_KEY"].toInt()))) {
