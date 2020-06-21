@@ -2,17 +2,22 @@ package rat.poison.ui.uiPanels
 
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Align
+import com.kotcrab.vis.ui.util.dialog.Dialogs
+import com.kotcrab.vis.ui.widget.VisImageButton
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.VisWindow
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
+import rat.poison.App
 import rat.poison.App.uiAimOverridenWeapons
 import rat.poison.App.uiBombWindow
 import rat.poison.App.uiKeybinds
 import rat.poison.App.uiSpecList
+import rat.poison.curLocalization
 import rat.poison.game.CSGO
 import rat.poison.opened
+import rat.poison.scripts.nadeHelperArrayList
 import rat.poison.ui.tabs.*
 import rat.poison.ui.uiUpdate
 import kotlin.math.sign
@@ -212,7 +217,13 @@ class UIMenu : VisWindow("Rat Poison 1.7") {
     }
 
     override fun close() {
-        exitProcess(0)
+        Dialogs.showConfirmDialog(App.menuStage, curLocalization["WARNING"], curLocalization["UNLOAD_CONFIRMATION"], arrayOf(curLocalization["YES"], curLocalization["NO"]), arrayOf(1, 2)) { it ->
+            when (it) {
+                1 -> {
+                    exitProcess(0)
+                }
+            }
+        }
     }
 
     internal fun changeAlpha(alpha: Float) {

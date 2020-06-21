@@ -5,23 +5,29 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.VisUI
-import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.widget.VisSelectBox
+import com.kotcrab.vis.ui.widget.VisSplitPane
+import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisValidatableTextField
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import org.jire.arrowhead.keyPressed
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curLocalization
 import rat.poison.curSettings
+import rat.poison.game.entity.dead
+import rat.poison.game.me
+import rat.poison.scripts.disableFovChanger
+import rat.poison.scripts.disableReducedFlash
 import rat.poison.scripts.esp.updateHitsound
 import rat.poison.scripts.nameChanger
 import rat.poison.scripts.selfNade
-import rat.poison.scripts.weaponSpamToggleKey
 import rat.poison.ui.changed
-import rat.poison.ui.uiHelpers.*
-import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
+import rat.poison.ui.uiHelpers.VisCheckBoxCustomWithoutVar
+import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiHelpers.VisTextButtonCustom
 import rat.poison.ui.uiHelpers.binds.BindsRelatedButton
+import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
 import rat.poison.ui.uiPanels.miscTab
-import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.varUtil.boolToStr
 import rat.poison.utils.varUtil.strToBool
 import java.io.File
@@ -50,6 +56,7 @@ class MiscTab : Tab(false, false) {
     val fovSniperZoom2 = VisSliderCustom(curLocalization["FOV_ZOOM_2"], "FOV_ZOOM_2", 10F, 150F, 1F, true, width1 = 142F, width2 = 90F, nameInLocalization = "FOV_ZOOM_2")
     val bombTimer = BindsRelatedCheckBox(curLocalization["ENABLE_BOMB_TIMER"], "ENABLE_BOMB_TIMER", nameInLocalization = "ENABLE_BOMB_TIMER")
     val bombTimerEnableBars = BindsRelatedCheckBox(curLocalization["BOMB_TIMER_BARS"], "BOMB_TIMER_BARS", nameInLocalization = "BOMB_TIMER_BARS")
+    //val bombTimerBarsShowTTE = BindsRelatedCheckBox(curLocalization["BOMB_TIMER_BARS_SHOW_TTE"], "BOMB_TIMER_BARS_SHOW_TTE")
     val bombTimerEnableMenu = BindsRelatedCheckBox(curLocalization["BOMB_TIMER_MENU"], "BOMB_TIMER_MENU", nameInLocalization = "BOMB_TIMER_MENU")
     val spectatorList = BindsRelatedCheckBox(curLocalization["ENABLE_SPECTATOR_LIST"], "SPECTATOR_LIST", nameInLocalization = "ENABLE_SPECTATOR_LIST")
 
@@ -110,6 +117,21 @@ class MiscTab : Tab(false, false) {
         hitSoundCheckBox.changed { _, _ ->
             curSettings["ENABLE_HITSOUND"] = hitSoundCheckBox.isChecked.boolToStr()
             true
+        }
+
+        fovChanger.changed {_, _ ->
+            if (!fovChanger.isChecked && me.dead()) {
+                disableFovChanger()
+            }
+            true
+        }
+
+        enableReducedFlash.changed { _, _ ->
+            if (!enableReducedFlash.isChecked) {
+                disableReducedFlash()
+            }
+            true
+
         }
 
         //Create Hit Sound Selector Box

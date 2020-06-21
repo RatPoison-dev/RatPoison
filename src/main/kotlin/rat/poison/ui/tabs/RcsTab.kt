@@ -2,10 +2,12 @@
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curLocalization
 import rat.poison.curSettings
+import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
@@ -27,6 +29,7 @@ class RcsTab : Tab(false, false) {
     val enableRCrosshair = VisCheckBoxCustom(curLocalization["ENABLE_RECOIL_CROSSHAIR"], "ENABLE_RECOIL_CROSSHAIR", nameInLocalization = "ENABLE_RECOIL_CROSSHAIR")
     val enableSCrosshair = VisCheckBoxCustom(curLocalization["ENABLE_SNIPER_CROSSHAIR"], "ENABLE_SNIPER_CROSSHAIR", nameInLocalization = "ENABLE_SNIPER_CROSSHAIR")
 
+    val rCrosshairType = VisSelectBox<String>()
     val rCrosshairWidth = VisSliderCustom(curLocalization["RCROSSHAIR_WIDTH"], "RCROSSHAIR_WIDTH", 1F, 5F, 1F, true, width1 = 200F, width2 = 250F, nameInLocalization = "RCROSSHAIR_WIDTH")
     val rCrosshairLength = VisSliderCustom(curLocalization["RCROSSHAIR_LENGTH"], "RCROSSHAIR_LENGTH", 3F, 100F, 1F, true, width1 = 200F, width2 = 250F, nameInLocalization = "RCROSSHAIR_LENGTH")
     val rCrosshairXOffset = VisSliderCustom(curLocalization["RCROSSHAIR_XOFFSET"], "RCROSSHAIR_XOFFSET", -48F, 48F, 1F, true, width1 = 200F, width2 = 250F, nameInLocalization = "RCROSSHAIR_XOFFSET")
@@ -40,12 +43,24 @@ class RcsTab : Tab(false, false) {
         table.padLeft(25F)
         table.padRight(25F)
 
+        rCrosshairType.setItems(curLocalization["RCROSSHAIR_TYPE_CROSSHAIR"], curLocalization["RCROSSHAIR_TYPE_CIRCLE"])
+        rCrosshairType.selected = curLocalization[curSettings["RCROSSHAIR_TYPE"]]
+        rCrosshairType.changed { _, _ ->
+            if (rCrosshairType.selected == curLocalization["RCROSSHAIR_TYPE_CROSSHAIR"]) {
+                curSettings["RCROSSHAIR_TYPE"] = "RCROSSHAIR_TYPE_CROSSHAIR"
+            } else {
+                curSettings["RCROSSHAIR_TYPE"] = "RCROSSHAIR_TYPE_CIRCLE"
+            }
+        }
         table.add(enableRCS).left().row()
         table.add(rcsSmoothingX).left().row()
         table.add(rcsSmoothingY).left().row()
         table.add(rcsReturnAim).left().row()
         table.addSeparator()
-        table.add(enableRCrosshair).left().row()
+        val tmpTable = VisTable()
+        tmpTable.add(enableRCrosshair).left()
+        tmpTable.add(rCrosshairType).padLeft(200F - enableRCrosshair.width)
+        table.add(tmpTable).left().row()
         table.add(enableSCrosshair).left().row()
         table.add(rCrosshairWidth).left().row()
         table.add(rCrosshairLength).left().row()

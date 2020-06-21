@@ -100,6 +100,8 @@ fun updateDisableAim() {
 
 fun updateAim() {
     aimTab.tAim.apply {
+        fovTypeBox.setItems(curLocalization["STATIC"], curLocalization["DISTANCE"])
+        fovTypeBox.selected = curLocalization[curSettings["FOV_TYPE"].replace("\"", "")]
         enableAim.update()
         updateMap()
         activateFromFireKey.update()

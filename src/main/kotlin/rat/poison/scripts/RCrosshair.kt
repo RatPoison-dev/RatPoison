@@ -70,17 +70,22 @@ internal fun rcrosshair() = App {
             }
 
             begin()
-            set(ShapeRenderer.ShapeType.Filled)
             val col = curSettings["RCROSSHAIR_COLOR"].strToColor()
             color = Color(col.red / 255F, col.green / 255F, col.blue / 255F, curSettings["RCROSSHAIR_ALPHA"].toFloat())
 
             val hasSniper = me.weapon().scope
 
             if ((eSC && hasSniper && !me.isScoped()) || !eSC || (eRC && !hasSniper)) {
-                //Horizontal
-                rect(x - lO, y - wO, cL, cW)
-                //Vertical
-                rect(x - wO, y - lO, cW, cL)
+                if (curSettings["RCROSSHAIR_TYPE"] == "RCROSSHAIR_TYPE_CROSSHAIR") {
+                    set(ShapeRenderer.ShapeType.Filled)
+                    //Horizontal
+                    rect(x - lO, y - wO, cL, cW)
+                    //Vertical
+                    rect(x - wO, y - lO, cW, cL)
+                }
+                else {
+                    circle(x, y, curSettings["RCROSSHAIR_CIRCLE_RADIUS"].toFloat())
+                }
             }
 
             set(ShapeRenderer.ShapeType.Line)

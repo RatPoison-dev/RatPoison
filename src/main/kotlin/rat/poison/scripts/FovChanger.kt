@@ -11,6 +11,7 @@ import rat.poison.game.entity.weaponEntity
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_iDefaultFov
 import rat.poison.game.netvars.NetVarOffsets.m_zoomLevel
+import rat.poison.utils.notInGame
 import rat.poison.utils.varUtil.strToBool
 
 internal fun fovChanger() = App {
@@ -72,5 +73,11 @@ internal fun fovChanger() = App {
                 csgoEXE[me + m_iDefaultFov] = targetFov
             }
         }
+    }
+}
+
+fun disableFovChanger() {
+    if (!me.dead() && !notInGame && me >= 0) {
+        csgoEXE[me + m_iDefaultFov] = 90
     }
 }

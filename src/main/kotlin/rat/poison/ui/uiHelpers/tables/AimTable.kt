@@ -88,13 +88,11 @@ class AimTable: VisTable(false) {
     fun updateMap () {
         map = aimingMap()
     }
-
     init {
         //Fov Type
         val fovType = VisTable()
         fovTypeBox.setItems(curLocalization["STATIC"], curLocalization["DISTANCE"])
         fovTypeBox.selected = curLocalization[curSettings["FOV_TYPE"].replace("\"", "")]
-
         fovTypeBox.changed { _, _ ->
             curSettings["FOV_TYPE"] = map[fovTypeBox.selected]
             updateDisableEsp()

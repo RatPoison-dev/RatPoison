@@ -3,21 +3,19 @@
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.util.dialog.Dialogs
-import com.kotcrab.vis.ui.util.dialog.OptionDialogAdapter
-import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
-import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.App
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curLocalization
 import rat.poison.scripts.*
 import rat.poison.ui.changed
-import rat.poison.ui.uiPanels.nadeHelperTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisLabelCustom
 import rat.poison.ui.uiHelpers.VisTextButtonCustom
+import rat.poison.ui.uiHelpers.binds.BindsRelatedCheckBox
+import rat.poison.ui.uiPanels.nadeHelperTab
 import java.io.File
 
 class NadeHelperTab : Tab(false, false) {
@@ -32,6 +30,7 @@ class NadeHelperTab : Tab(false, false) {
     val deleteFileNadeHelper = VisTextButtonCustom(curLocalization["DELETE_SELECTED_FILE"], "DELETE_SELECTED_FILE")
     val clearNadeHelper = VisTextButtonCustom(curLocalization["CLEAR_CURRENTLY_LOADED"], "CLEAR_CURRENTLY_LOADED")
     val deleteCurrentPositionHelper = VisTextButtonCustom(curLocalization["DELETE_AT_CURRENT_POSITION"], "DELETE_AT_CURRENT_POSITION")
+    val enableThrowingHelper = BindsRelatedCheckBox(curLocalization["ENABLE_AUTO_THROWER"], "ENABLE_NADE_THROWER", "ENABLE_AUTO_THROWER")
     private val nadeHelperFileSelectBox = VisSelectBox<String>()
 
     init {
@@ -79,6 +78,7 @@ class NadeHelperTab : Tab(false, false) {
         sldTable.add(deleteFileNadeHelper).width(150F)
 
         table.add(enableNadeHelper).row()
+        table.add(enableThrowingHelper).row()
 
         table.add(nadeHelperFileSelectBox).row()
         table.add(sldTable).row()
@@ -118,13 +118,13 @@ class NadeHelperTab : Tab(false, false) {
 
 fun nadeHelperTabUpdate() {
     nadeHelperTab.apply {
+        enableThrowingHelper.update()
         enableNadeHelper.update()
         addPosition.update()
         saveFileNadeHelper.update()
         loadFileNadeHelper.update()
         deleteFileNadeHelper.update()
         clearNadeHelper.update()
-        nadeHelperLoadedFile.update()
         deleteCurrentPositionHelper.update()
     }
 }
