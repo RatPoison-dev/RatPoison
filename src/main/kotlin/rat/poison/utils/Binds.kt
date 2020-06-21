@@ -43,6 +43,7 @@ var enableSkinChangerToggleKey = ObservableBoolean({keyPressed(1) })
 var throwSelfNadeKey = ObservableBoolean({ keyPressed(1)})
 var manualForceUpdateKey = ObservableBoolean({ keyPressed(1)})
 var autoForceUpdateToggleKey = ObservableBoolean({ keyPressed(1)})
+var enableThrowingHelperToggleKey = ObservableBoolean({ keyPressed(1)})
 
 fun constructVars() {
     bunnyHopToggleKey = ObservableBoolean({ curSettings["ENABLE_BUNNY_HOP_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["ENABLE_BUNNY_HOP_SWITCH_KEY"].toInt()) })
@@ -78,6 +79,7 @@ fun constructVars() {
     enableSnaplinesToggleKey = ObservableBoolean({ curSettings["ENABLE_SNAPLINES_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["ENABLE_SNAPLINES_SWITCH_KEY"].toInt()) })
     enableSkinChangerToggleKey = ObservableBoolean({ curSettings["SKINCHANGER_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["SKINCHANGER_SWITCH_KEY"].toInt()) })
     autoForceUpdateToggleKey = ObservableBoolean({ curSettings["FORCE_UPDATE_AUTO_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["FORCE_UPDATE_AUTO_SWITCH_KEY"].toInt()) })
+    enableThrowingHelperToggleKey = ObservableBoolean({ curSettings["ENABLE_NADE_THROWER_SWITCH_ON_KEY"].strToBool() && keyPressed(curSettings["ENABLE_NADE_THROWER_SWITCH_KEY"].toInt()) })
     throwSelfNadeKey = ObservableBoolean({ keyPressed(curSettings["THROW_SELF_NADE_KEY"].toInt()) })
     manualForceUpdateKey = ObservableBoolean({ keyPressed(curSettings["MANUAL_FORCE_UPDATE_KEY"].toInt()) })
 }
@@ -241,5 +243,9 @@ fun addListeners() {
     manualForceUpdateKey.update()
     if (manualForceUpdateKey.justBecameTrue) {
         forcedUpdate()
+    }
+    enableThrowingHelperToggleKey.update()
+    if (enableThrowingHelperToggleKey.justBecameTrue) {
+        nadeHelperTab.enableThrowingHelper.isChecked = !nadeHelperTab.enableThrowingHelper.isChecked
     }
 }
