@@ -28,7 +28,7 @@ class RcsTab : Tab(false, false) {
 
     val enableRCrosshair = VisCheckBoxCustom(curLocalization["ENABLE_RECOIL_CROSSHAIR"], "ENABLE_RECOIL_CROSSHAIR", nameInLocalization = "ENABLE_RECOIL_CROSSHAIR")
     val enableSCrosshair = VisCheckBoxCustom(curLocalization["ENABLE_SNIPER_CROSSHAIR"], "ENABLE_SNIPER_CROSSHAIR", nameInLocalization = "ENABLE_SNIPER_CROSSHAIR")
-
+    val radius = VisSliderCustom(curLocalization["RADIUS"], "RCROSSHAIR_CIRCLE_RADIUS", 1F, 50F, 1F, true, nameInLocalization = "RADIUS")
     val rCrosshairType = VisSelectBox<String>()
     val rCrosshairWidth = VisSliderCustom(curLocalization["RCROSSHAIR_WIDTH"], "RCROSSHAIR_WIDTH", 1F, 5F, 1F, true, width1 = 200F, width2 = 250F, nameInLocalization = "RCROSSHAIR_WIDTH")
     val rCrosshairLength = VisSliderCustom(curLocalization["RCROSSHAIR_LENGTH"], "RCROSSHAIR_LENGTH", 3F, 100F, 1F, true, width1 = 200F, width2 = 250F, nameInLocalization = "RCROSSHAIR_LENGTH")
@@ -44,12 +44,22 @@ class RcsTab : Tab(false, false) {
         table.padRight(25F)
 
         rCrosshairType.setItems(curLocalization["RCROSSHAIR_TYPE_CROSSHAIR"], curLocalization["RCROSSHAIR_TYPE_CIRCLE"])
+        when (curSettings["RCROSSHAIR_TYPE"]) {
+            "Crosshair" -> {
+                rCrosshairType.selected = curLocalization["RCROSSHAIR_TYPE_CROSSHAIR"]
+            }
+            "Circle" -> {
+                rCrosshairType.selected = curLocalization["RCROSSHAIR_TYPE_CIRCLE"]
+            }
+        }
         rCrosshairType.selected = curLocalization[curSettings["RCROSSHAIR_TYPE"]]
         rCrosshairType.changed { _, _ ->
             if (rCrosshairType.selected == curLocalization["RCROSSHAIR_TYPE_CROSSHAIR"]) {
-                curSettings["RCROSSHAIR_TYPE"] = "RCROSSHAIR_TYPE_CROSSHAIR"
+                table.removeActor(radius)
+                curSettings["RCROSSHAIR_TYPE"] = "Crosshair"
             } else {
-                curSettings["RCROSSHAIR_TYPE"] = "RCROSSHAIR_TYPE_CIRCLE"
+                table.add(radius).left().row()
+                curSettings["RCROSSHAIR_TYPE"] = "Circle"
             }
         }
         table.add(enableRCS).left().row()

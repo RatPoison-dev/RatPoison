@@ -214,6 +214,7 @@ RANKS_WINS = Wins
 
 // RCS Tab
 ENABLE_RCS = Enable RCS
+RADIUS = Radius
 RCS_TOGGLE_KEY = Toggle RCS Key
 RCS_SMOOTHING_X = RCS X Smoothing
 RCS_SMOOTHING_Y = RCS Y Smoothing
