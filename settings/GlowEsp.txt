@@ -1,6 +1,10 @@
 //Enable glow esp
 GLOW_ESP = false
 
+//Keybinds for glow esp
+GLOW_ESP_KEY_TYPE = AlwaysOn
+GLOW_ESP_KEY = 22
+
 //Type of glow on entities (enemies & teammates)
 GLOW_ENEMY_TYPE = Normal
 
@@ -63,13 +67,3 @@ GLOW_GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)
 
 //Color of visible, in aimbot FOV players
 GLOW_HIGHLIGHT_COLOR = Color(red=0, green=174, blue=255, alpha=1.0)
-
-
-
-GLOW_ESP_KEY_TYPE = AlwaysOn
-GLOW_ESP_KEY = 22
-
-GLOW_ESP_KEY = 22
-
-
-

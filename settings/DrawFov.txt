@@ -5,4 +5,3 @@ DRAW_TRIGGER_FOV = true
 //Aim FOV Color
 DRAW_AIM_FOV_COLOR = Color(red=0, green=255, blue=13, alpha=1.0)
 DRAW_TRIGGER_FOV_COLOR = Color(red=0, green=230, blue=255, alpha=1.0)
-

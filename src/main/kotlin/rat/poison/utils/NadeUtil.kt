@@ -18,7 +18,7 @@ fun jumpAndThrow() {
 fun standAndThrow() {
     Thread(Runnable {
         robot.mousePress(MouseEvent.BUTTON1_DOWN_MASK)
-        Thread.sleep(12)
+        Thread.sleep(6)
         robot.mouseRelease(MouseEvent.BUTTON1_DOWN_MASK)
     }).start()
 }

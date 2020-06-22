@@ -61,12 +61,14 @@ LS_BOMB = false
 D_SPAM = false
 
 //Door spam key
+D_SPAM_KEY_TYPE = OnKey
 D_SPAM_KEY = 80
 
 //Enable weapon spam
 W_SPAM = false
 
 //weapon spam key
+W_SPAM_KEY_TYPE = OnKey
 W_SPAM_KEY = 79
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles head walk on/off
@@ -107,6 +109,9 @@ FORCE_AIM_THROUGH_WALLS = false
 
 //MS Delay between when aimbot paths are recalculated
 AIM_DURATION = 1
+
+ENABLE_AIM_KEY_TYPE = SwitchKey
+ENABLE_AIM_KEY = 114
 
 //Bone IDs of bones used
 HEAD_BONE = 8
@@ -159,37 +164,14 @@ FAST_STOP_KEY = 22
 FAST_STOP_KEY = 22
 
 
-
-
 AIM_STRAFER_KEY_TYPE = AlwaysOn
 AIM_STRAFER_KEY = 22
 
 AIM_STRAFER_KEY = 22
 
 
-
-
 AIM_STRAFER_SHIFT_KEY_TYPE = AlwaysOn
 AIM_STRAFER_SHIFT_KEY = 22
-
-D_SPAM_KEY_TYPE = AlwaysOn
-D_SPAM_KEY = 22
-
-D_SPAM_KEY = 79
-
-
-
-
-W_SPAM_KEY_TYPE = AlwaysOn
-W_SPAM_KEY = 22
-
-W_SPAM_KEY = 80
-
-
-
-
-ENABLE_AIM_KEY_TYPE = AlwaysOn
-ENABLE_AIM_KEY = 22
 
 ENABLE_AIM_KEY = 22
 

@@ -268,26 +268,14 @@ fun loadLocalizationFromFile(localizationName: String) {
     curSettings["DEFAULT_LOCALE"] = localizationName
 }
 
-fun fixBinds(line: String): String {
-    var replacedLine = line
-    if ("TRIGGER_ENABLE_KEY" in line) {
-        replacedLine = line.replace("TRIGGER_ENABLE_KEY", "ENABLE_TRIGGER_ON_KEY")
-    }
-    if ("TRIGGER_KEY" in line) {
-        replacedLine = line.replace("TRIGGER_KEY", "ENABLE_TRIGGER_KEY")
-    }
-    return replacedLine
-}
-
 fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
     settingsLoaded = false
     if (specificFile) {
         FileReader(File(fileDir)).readLines().forEach { line ->
             if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith("\"") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
-                var lline = fixBinds(line)
-                val curLine = lline.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
+                val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
                 if (curLine.size == 3) {
-                    if ("oWeapon" !in lline) {
+                    if ("oWeapon" !in line) {
                         curSettings[curLine[0]] = curLine[2]
                     }
                 } else {

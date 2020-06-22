@@ -54,17 +54,10 @@ TRIGGER_ENABLE_KEY = false
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), enables bone trigger when held
 //Default key is F
-ENABLE_TRIGGER_KEY_TYPE = AlwaysOn
-ENABLE_TRIGGER_KEY = 22
+ENABLE_TRIGGER_KEY_TYPE = OnKey
 ENABLE_TRIGGER_KEY = 70
 
 ENABLE_AUTO_KNIFE_KEY_TYPE = AlwaysOn
 ENABLE_AUTO_KNIFE_KEY = 22
 
 ENABLE_AUTO_KNIFE_KEY = 22
-
-
-
-
-
-

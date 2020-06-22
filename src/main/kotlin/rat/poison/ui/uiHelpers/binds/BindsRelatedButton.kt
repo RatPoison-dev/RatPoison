@@ -14,12 +14,12 @@ import rat.poison.utils.varUtil.strToBool
 class BindsRelatedButton(mainText: String, varName: String, nameInLocalization: String = "") : VisTextButton(mainText) {
     private val localeName = nameInLocalization
     private val defaultText = mainText
-    private val onKey = BindsInputField("_KEY", varName)
+    private val keyType = BindsInputField("_KEY", varName)
 
     init {
         addToCheck(nameInLocalization, varName)
         // positions
-        onKey.setPosition(curSettings["BINDS_X"].toFloat()+130f, curSettings["BINDS_Y"].toFloat()-40)
+        keyType.setPosition(curSettings["BINDS_X"].toFloat()+130f, curSettings["BINDS_Y"].toFloat()-40)
 
         update()
         if (curLocalization[nameInLocalization+"_TOOLTIP"] != "") {
@@ -30,7 +30,7 @@ class BindsRelatedButton(mainText: String, varName: String, nameInLocalization: 
                 if (button == 1) { //0 left click //1 right click
                     if (!curSettings["BINDS"].strToBool()) {
                         curSettings["BINDS"] = "true"
-                        menuStage.addActor(onKey)
+                        menuStage.addActor(keyType)
                     }
                     else {
                         curSettings["BINDS"] = "false"

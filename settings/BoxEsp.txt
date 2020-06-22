@@ -1,11 +1,9 @@
 //Enable box esp
 ENABLE_BOX_ESP = true
 
+// Keybinds for box esp
 ENABLE_BOX_ESP_KEY_TYPE = AlwaysOn
 ENABLE_BOX_ESP_KEY = 22
-ENABLE_BOX_ESP_KEY = 22
-
-
 
 //Enable box esp details
 //Shows optional extra details (Health/Armor bar, Name/Weapon text) for each enemy, configurable below

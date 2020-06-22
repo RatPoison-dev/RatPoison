@@ -3,7 +3,8 @@ ENABLE_ESP = true
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles visibility of esp on/off
 //Default key is G
-
+ENABLE_ESP_KEY_TYPE = SwitchKey
+ENABLE_ESP_KEY = 71
 
 
 //Enable full screen visual effect
@@ -26,19 +27,10 @@ ENABLE_HITSOUND_KEY_TYPE = AlwaysOn
 ENABLE_HITSOUND_KEY = 22
 ENABLE_HITSOUND_KEY = 22
 
-
-ENABLE_ESP_KEY_ENABLED = false
-ENABLE_ESP_KEY_TYPE = AlwaysOn
-ENABLE_ESP_KEY = 22
-ENABLE_ESP_KEY = 22
 RADAR_ESP_KEY_TYPE = AlwaysOn
-RADAR_ESP_KEY = 22
 RADAR_ESP_KEY = 22
 
 
 ENABLE_ADRENALINE_KEY_ENABLED = false
 ENABLE_ADRENALINE_KEY_TYPE = AlwaysOn
 ENABLE_ADRENALINE_KEY = 22
-ENABLE_ADRENALINE_KEY = 22
-
-ENABLE_ADRENALINE_DISABLE_KEY = 22

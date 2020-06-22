@@ -28,8 +28,3 @@ CHAMS_SELF_COLOR = Color(red=255, green=94, blue=0, alpha=1.0)
 
 CHAMS_ESP_KEY_TYPE = AlwaysOn
 CHAMS_ESP_KEY = 22
-
-CHAMS_ESP_KEY = 22
-
-
-

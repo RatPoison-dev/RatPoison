@@ -71,12 +71,13 @@ class BindsRelatedCheckBox(mainText: String, varName: String, nameInLocalization
                             }
                             if (curSettings[varName + "_KEY_TYPE"] != "AlwaysOn") {
                                 keyType.update()
-                                if (menuStage.actors.contains(keyType)) {
-                                    keyType.remove()
-                                    menuStage.addActor(keyType)
-                                }
+                                keyType.remove()
                                 menuStage.addActor(keyType)
                             }
+                            else {
+                                keyType.remove()
+                            }
+                            true
                         }
                     }
                     else {

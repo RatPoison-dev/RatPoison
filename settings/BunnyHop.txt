@@ -8,6 +8,8 @@ AUTO_STRAFE = true
 //Enable auto strafing only when holding the bunny hop key
 STRAFE_BHOP_ONLY = true
 
+// VK Key Code (http://cherrytree.at/misc/vk.htm) for bunny hop
+// Default key is SPACE
 ENABLE_BUNNY_HOP_KEY_TYPE = OnKey
 ENABLE_BUNNY_HOP_KEY = 32
 

@@ -44,14 +44,12 @@ class UIKeybinds : VisWindow(curLocalization["KEYBINDS_PANEL_NAME"]) {
     fun updateBindsList() {
         reset()
         map.savedValues.forEach { (varName, localeName) ->
-            if (!curSettings[varName+"_KEY"].isBlank() &&curSettings[varName+"_KEY"] != "22") {
-                add(ConcatedInputField(localeName, "KEYBINDS_ON_KEY", varName+"_KEY")).left().row()
-            }
-            if (!curSettings[varName+"_SWITCH_KEY"].isBlank() && curSettings[varName+"_SWITCH_KEY"] != "22") {
-                add(ConcatedInputField(localeName, "KEYBINDS_TOGGLE", varName+"_SWITCH_KEY")).left().row()
-            }
-            if (!curSettings[varName+"_DISABLE_KEY"].isBlank() && curSettings[varName+"_DISABLE_KEY"] != "22") {
-                add(ConcatedInputField(localeName, "KEYBINDS_OFF_KEY", varName+"_DISABLE_KEY")).left().row()
+            if (curSettings[varName+"_KEY"] != "22") {
+                when (curSettings[varName + "_KEY_TYPE"]) {
+                    "OnKey" -> add(ConcatedInputField(localeName, "KEYBINDS_ON_KEY", varName + "_KEY")).left().row()
+                    "OffKey" -> add(ConcatedInputField(localeName, "KEYBINDS_OFF_KEY", varName + "_KEY")).left().row()
+                    "SwitchKey" -> add(ConcatedInputField(localeName, "KEYBINDS_TOGGLE", varName + "_KEY")).left().row()
+                }
             }
         }
         add(menuAlphaSlider).growX()
