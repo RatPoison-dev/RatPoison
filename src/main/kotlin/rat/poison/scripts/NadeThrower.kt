@@ -14,26 +14,27 @@ import rat.poison.utils.varUtil.strToBool
 
 private var mPos = Vector()
 private var calcRes = 0.0
-
+private var eyeAng = Angle(0.0, 0.0, 0.0)
 private var closestAngle = Angle(90.0, 90.0, 90.0)
 private var closestDistance = 100.0
 private var clfSpot = listOf<Any>()
 
 fun autoThrowNade(fSpot: List<Any>, recoveredAngle: Angle) {
-    writeAim(me.eyeAngle(), recoveredAngle, curSettings["NADE_THROWER_SMOOTHNESS"].cToDouble())
-    var eyeAng = me.eyeAngle()
+    eyeAng = me.eyeAngle()
     calcRes = eyeAng.distanceTo(recoveredAngle)
-    if (calcRes < 0.9) {
+    writeAim(eyeAng, recoveredAngle, curSettings["NADE_THROWER_SMOOTHNESS"].cToDouble())
+    if (calcRes < 0.1) {
         when (fSpot[5]) {
             "J+T" -> jumpAndThrow()
             "S+T" -> standAndThrow()
         }
         closestAngle = Angle(90.0, 90.0, 90.0)
         closestDistance = 100.0
+        Thread.sleep(20)
     }
 }
 
-fun nadeThrower() = every(3) {
+fun nadeThrower() = every(10) {
     if (!curSettings["ENABLE_NADE_HELPER"].strToBool() || !curSettings["ENABLE_NADE_THROWER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@every
 
     if (me <= 0L || MENUTOG) return@every
