@@ -128,7 +128,7 @@ fun main() {
     println("Loading settings...")
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
     val locale = getSystemLocale()
-    if (curSettings["DEFAULT_LOCALE"] == "NONE") {
+    if (curSettings["DEFAULT_LOCALE"].replace("\"", "").isBlank()) {
         if (locale != null && Files.exists(Paths.get("settings/Localizations/locale_${locale}.locale"))) {
             loadLocalizationFromFile("locale_${locale}")
         }
