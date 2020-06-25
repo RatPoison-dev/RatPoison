@@ -275,9 +275,7 @@ fun loadSettingsFromFiles(fileDir : String, specificFile : Boolean = false) {
             if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith("\"") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
                 if (curLine.size == 3) {
-                    if ("oWeapon" !in line) {
-                        curSettings[curLine[0]] = curLine[2]
-                    }
+                    curSettings[curLine[0]] = curLine[2]
                 } else {
                     println("Debug: Setting invalid -- $curLine")
                 }

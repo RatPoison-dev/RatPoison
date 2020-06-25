@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.utils.Align
 import com.sun.jna.Memory
-import org.jire.arrowhead.keyPressed
 import rat.poison.App
 import rat.poison.checkFlags
 import rat.poison.curLocalization
@@ -161,6 +160,40 @@ fun boxEsp() = App {
 		entityMemory.clear()
 
 		false
+	}
+	if (curSettings["BOX_SHOW_WEAPONS"].strToBool()) {
+		// TODO: Replace with OBB
+		forEntities body@{
+			val entity = it.entity
+			if (it.type.weapon) {
+				val entPos = entity.position()
+				if (entPos != Vector(0.0, 0.0, 0.0)) {
+					val vTop = Vector()
+					val vBot = Vector()
+					if (worldToScreen(Vector(entPos.x, entPos.y, entPos.z + 10.0), vTop) && worldToScreen(Vector(entPos.x, entPos.y, entPos.z - 10.0), vBot)) {
+						val boxH = (vBot.y - vTop.y).toFloat()
+						val boxW = boxH / 2F
+						val sx = (vTop.x - boxW).toFloat()
+						val sy = vTop.y.toFloat()
+						val dCol = curSettings["BOX_WEAPONS_COLOR"].strToColor()
+						val c = Color(dCol.red / 255F, dCol.green / 255F, dCol.blue / 255F, 1F)
+						boxes[currentIdx].apply {
+							x0 = sx
+							y0 = sy
+							x1 = (sx + ceil(boxW * 2F))
+							y1 = sy + boxH
+							color = c
+							curAmmo = csgoEXE.int(entity + iClip1)
+							maxAmmo = csgoEXE.int(entity + iPrimaryReserveAmmoCount)
+							type = it.type
+							name = it.type.toString()
+						}
+						currentIdx++
+					}
+				}
+			}
+			return@body false
+		}
 	}
 
 	if (curSettings["BOX_SHOW_DEFUSERS"].strToBool()) {
@@ -453,6 +486,51 @@ fun boxEsp() = App {
 						draw(sb, glyph, x0 + w / 2F, y0 + h - 4F)
 						////Bottom
 
+						sb.end()
+						set(ShapeRenderer.ShapeType.Line)
+						this@sr.color = Color.WHITE
+					}
+				}
+			}
+			else if (type.weapon) {
+				if (curSettings["BOX_ESP_DETAILS"].strToBool()) {
+					textRenderer.apply {
+						val glyph = GlyphLayout()
+						this@sr.color = Color.WHITE
+
+						if (sb.isDrawing) {
+							sb.end()
+						}
+						sb.begin()
+						var yAdd = 0F
+						// Top
+						val boxDetailsTextTop = StringBuilder()
+						if (bEspName && bEspNamePos == "T") {
+							boxDetailsTextTop.append("$name\n")
+							yAdd += 16F
+						}
+						if (bEspAmmo && bEspAmmoPos == "T") {
+							if (curAmmo != -1 && maxAmmo > 0) {
+								boxDetailsTextTop.append(" ")
+								boxDetailsTextTop.append("[$curAmmo/$maxAmmo]")
+								yAdd += 18F
+							}
+						}
+						glyph.setText(this, boxDetailsTextTop, 0, (boxDetailsTextTop as CharSequence).length, detailTextColor, 1F, Align.center, false, null)
+						draw(sb, glyph, x0 + w / 2F, y0 + yAdd)
+						// Bottom
+						val boxDetailsTextBottom = StringBuilder()
+						if (bEspName && bEspNamePos == "B") {
+							boxDetailsTextBottom.append("$name\n")
+						}
+						if (bEspAmmo && bEspAmmoPos == "B") {
+							if (curAmmo != -1 && maxAmmo > 0) {
+								boxDetailsTextBottom.append(" ")
+								boxDetailsTextBottom.append("[$curAmmo/$maxAmmo]")
+							}
+						}
+						glyph.setText(this, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, detailTextColor, 1F, Align.center, false, null)
+						draw(sb, glyph, x0 + w / 2F, y0 + h - 4F)
 						sb.end()
 						set(ShapeRenderer.ShapeType.Line)
 						this@sr.color = Color.WHITE

@@ -53,6 +53,9 @@ class BoxEspTab : Tab(false, false) {
     val showDefusers = VisCheckBoxCustom(" ", "BOX_SHOW_DEFUSERS")
     val boxDefuserColor = VisColorPickerCustom(curLocalization["DEFUSERS"], "BOX_DEFUSER_COLOR", nameInLocalization = "DEFUSERS")
 
+    val showWeapons = VisCheckBoxCustom(" ", "BOX_SHOW_WEAPONS")
+    val boxWeaponsColor = VisColorPickerCustom(curLocalization["WEAPONS"], "BOX_WEAPONS_COLOR", "WEAPONS")
+
     fun updateMap() {
         map = visualsMap()
     }
@@ -208,6 +211,11 @@ class BoxEspTab : Tab(false, false) {
         tmpTable.add(showDefusers)
         tmpTable.add(boxDefuserColor).width(175F - showEnemiesBox.width).padRight(50F)
 
+        table.add(tmpTable).left().row()
+
+        tmpTable = VisTable()
+        tmpTable.add(showWeapons)
+        tmpTable.add(boxWeaponsColor).width(175F - showEnemiesBox.width).padRight(50F)
         table.add(tmpTable).left().row()
     }
 

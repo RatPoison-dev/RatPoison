@@ -71,3 +71,6 @@ BOX_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
 
 //Color of the defuse kit box
 BOX_DEFUSER_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)
+
+BOX_SHOW_WEAPONS = true
+BOX_WEAPONS_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)
