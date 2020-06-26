@@ -9,7 +9,6 @@ RCS_SMOOTHING_Y = 0.7
 
 //Moves your cursor back to where you started spraying
 RCS_RETURNAIM = false
-RCS_TOGGLE_KEY = 22
 
 ENABLE_RCS_KEY_TYPE = SwitchKey
 ENABLE_RCS_KEY = 22

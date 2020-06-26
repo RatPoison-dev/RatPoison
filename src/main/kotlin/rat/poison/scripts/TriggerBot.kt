@@ -70,7 +70,7 @@ fun boneTrigger() = every(10) {
                             if (inCross > 0) {
                                 val ent = clientDLL.uint(ClientOffsets.dwEntityList + (inCross * 0x10) - 0x10)
                                 if (!ent.inMyTeam() && !ent.isProtected() && !ent.dead()) {
-                                    if ((curSettings["TRIGGER_ENABLE_KEY"].strToBool() && keyPressed(curSettings["TRIGGER_KEY"].toInt())) || !curSettings["TRIGGER_ENABLE_KEY"].strToBool()) {
+                                    if (checkFlags("ENABLE_TRIGGER")) {
                                         bTrigShoot(bDELAY, bAIMBOT)
                                         return@every
                                     }
@@ -84,7 +84,7 @@ fun boneTrigger() = every(10) {
                             val target = findTarget(position, currentAngle, false, bFOV, -2)
                             if (target > 0) {
                                 if (!target.dead() && !target.isProtected()) {
-                                    if ((curSettings["TRIGGER_ENABLE_KEY"].strToBool() && keyPressed(curSettings["TRIGGER_KEY"].toInt())) || !curSettings["TRIGGER_ENABLE_KEY"].strToBool()) {
+                                    if (checkFlags("ENABLE_TRIGGER")) {
                                         bTrigShoot(bDELAY, bAIMBOT)
                                         return@every
                                     }
