@@ -285,6 +285,8 @@ fun updateDisableEsp() {
 
         footStepsEspTab.enableFootSteps.disable(bool)
         footStepsEspTab.footStepType.isDisabled = bool
+        footStepsEspTab.footStepRange.disable(bool)
+        footStepsEspTab.footStepRangeSlider.disable(bool, col)
         footStepsEspTab.footStepUpdateTimer.disable(bool, col)
         footStepsEspTab.footStepTTL.disable(bool, col)
         footStepsEspTab.footStepTeamBox.disable(bool)

@@ -9,11 +9,13 @@ import rat.poison.curSettings
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
+import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.me
 import rat.poison.game.w2sViewMatrix
 import rat.poison.game.worldToScreen
 import rat.poison.toMatrix4
 import rat.poison.utils.Vector
+import rat.poison.utils.distanceTo
 import rat.poison.utils.varUtil.cToFloat
 import rat.poison.utils.varUtil.strToBool
 import rat.poison.utils.varUtil.strToColorGDX
@@ -48,42 +50,50 @@ fun footStepEsp() = App {
             if (curSettings["FOOTSTEP_TYPE"].toInt() == 1) {
                 //As text
                 val inVec = Vector(footSteps[i].x, footSteps[i].y, footSteps[i].z)
-                val outVec = Vector()
-                if (worldToScreen(inVec, outVec)) {
-                    val sbText = StringBuilder("Step")
-                    textRenderer.apply {
-                        val glyph = GlyphLayout()
+                val distance = me.position().distanceTo(inVec)
+                // distance check
+                if ((curSettings["ENABLE_FOOTSTEPS_RANGE"].strToBool() && distance <= curSettings["FOOTSTEPS_RANGE"].toDouble()) || !curSettings["ENABLE_FOOTSTEPS_RANGE"].strToBool()) {
+                    val outVec = Vector()
+                    if (worldToScreen(inVec, outVec)) {
+                        val sbText = StringBuilder("Step")
+                        textRenderer.apply {
+                            val glyph = GlyphLayout()
 
-                        sb.begin()
+                            sb.begin()
 
-                        glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, color, 1F, Align.left, false, null)
-                        draw(sb, glyph, outVec.x.toFloat(), outVec.y.toFloat())
+                            glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, color, 1F, Align.left, false, null)
+                            draw(sb, glyph, outVec.x.toFloat(), outVec.y.toFloat())
 
-                        sb.end()
+                            sb.end()
+                        }
                     }
                 }
             } else {
                 //As circle
-                val oldMatrix = Matrix4(shapeRenderer.projectionMatrix.values)
-                shapeRenderer.apply {
-                    if (isDrawing) {
+                val inVec = Vector(footSteps[i].x, footSteps[i].y, footSteps[i].z)
+                val distance = me.position().distanceTo(inVec)
+                if ((curSettings["ENABLE_FOOTSTEPS_RANGE"].strToBool() && distance <= curSettings["FOOTSTEPS_RANGE"].toDouble()) || !curSettings["ENABLE_FOOTSTEPS_RANGE"].strToBool()) {
+                    val oldMatrix = Matrix4(shapeRenderer.projectionMatrix.values)
+                    shapeRenderer.apply {
+                        if (isDrawing) {
+                            end()
+                        }
+
+                        val gameMatrix = w2sViewMatrix.toMatrix4()
+
+                        begin()
+                        this.color = color
+
+                        //Circle at position
+                        gameMatrix.translate(0F, 0F, footSteps[i].z.cToFloat())
+                        projectionMatrix = gameMatrix
+                        circle(footSteps[i].x.toFloat(), footSteps[i].y.toFloat(), (curSettings["FOOTSTEP_TTL"].toFloat() - footSteps[i].ttl.toFloat()) + 10F)
+                        gameMatrix.translate(0F, 0F, -footSteps[i].z.cToFloat())
+
                         end()
                     }
-
-                    val gameMatrix = w2sViewMatrix.toMatrix4()
-
-                    begin()
-                    this.color = color
-
-                    //Circle at position
-                    gameMatrix.translate(0F, 0F, footSteps[i].z.cToFloat())
-                    projectionMatrix = gameMatrix
-                    circle(footSteps[i].x.toFloat(), footSteps[i].y.toFloat(), (curSettings["FOOTSTEP_TTL"].toFloat() - footSteps[i].ttl.toFloat()) + 10F)
-                    gameMatrix.translate(0F, 0F, -footSteps[i].z.cToFloat())
-
-                    end()
+                    shapeRenderer.projectionMatrix = oldMatrix
                 }
-                shapeRenderer.projectionMatrix = oldMatrix
             }
 
             footSteps[i].ttl--

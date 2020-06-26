@@ -261,6 +261,7 @@ CHAMS_BRIGHTNESS = Яркость чамсов
 // Footsteps tab
 FOOTSTEP_UPDATE = Обновление таймера
 FOOTSTEP_TTL = Время жизни
+FOOTSTEPS_RANGE = Дистанция
 FOOTSTEPS_TEXT = Текст
 FOOTSTEPS_CIRCLE = Кружок
 // Glow Esp tab

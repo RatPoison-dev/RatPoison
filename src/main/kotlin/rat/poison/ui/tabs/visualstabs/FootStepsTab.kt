@@ -20,7 +20,8 @@ class FootstepsEspTab : Tab(false, false) {
     val footStepType = VisSelectBox<String>()
     val footStepUpdateTimer = VisSliderCustom(curLocalization["FOOTSTEP_UPDATE"], "FOOTSTEP_UPDATE", 5F, 120F, 1F, true, nameInLocalization = "FOOTSTEP_UPDATE")
     val footStepTTL = VisSliderCustom(curLocalization["FOOTSTEP_TTL"], "FOOTSTEP_TTL", 15F, 240F, 1F, true, nameInLocalization = "FOOTSTEP_TTL")
-
+    val footStepRange = VisCheckBoxCustom(curLocalization["FOOTSTEPS_RANGE"], "ENABLE_FOOTSTEPS_RANGE", "FOOTSTEPS_RANGE")
+    val footStepRangeSlider = VisSliderCustom(" ", "FOOTSTEPS_RANGE", 100F, 10000F, 100F, false)
     val footStepTeamBox = VisCheckBoxCustom(" ", "FOOTSTEP_TEAM")
     val footStepTeamColor = VisColorPickerCustom(curLocalization["TEAMMATES"],"FOOTSTEP_TEAM_COLOR", nameInLocalization = "TEAMMATES")
 
@@ -48,6 +49,8 @@ class FootstepsEspTab : Tab(false, false) {
         table.add(enableFootSteps).padRight(225F - enableFootSteps.width)
         table.add(footStepType).padRight(225F - footStepType.width).row()
         table.add(footStepUpdateTimer).colspan(2).left().row()
+        table.add(footStepRange).padRight(225F - footStepRange.width).row()
+        table.add(footStepRangeSlider).colspan(2).left().row()
         table.add(footStepTTL).colspan(2).left().row()
 
         var tmpTable = VisTable()
@@ -83,6 +86,7 @@ fun footStepsEspTabUpdate() {
         footStepUpdateTimer.update()
         footStepTTL.update()
         footStepTeamBox.update()
+        footStepRange.update()
         footStepTeamColor.update()
         footStepEnemyBox.update()
         footStepEnemyColor.update()

@@ -265,6 +265,7 @@ CHAMS_BRIGHTNESS = Chams Brightness
 // Footsteps tab
 FOOTSTEP_UPDATE = Update Timer
 FOOTSTEP_TTL = TTL
+FOOTSTEPS_RANGE = Distance
 FOOTSTEPS_TEXT = Text
 FOOTSTEPS_CIRCLE = Circle
 // Glow Esp tab
