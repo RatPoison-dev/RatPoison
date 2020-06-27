@@ -503,7 +503,6 @@ HITMARKER_RECOIL_POSITION_TOOLTIP = Whether or not hitmarket show recoil positio
 INDICATOR_SIZE_TOOLTIP = Size of the indicator
 HOLD_AIM_TOOLTIP = Aims at the enemy even after he left the FOV of the aimbot
 VARIATION_DEADZONE_TOOLTIP = Variation of area where variation doesnt occur
-GAME_SENSITIVITY_TOOLTIP = Input your mouse sensitivity here, it has to match the game one otherwise using path aim will be highly inaccurate
 
 // Backtrack
 ENABLE_BACKTRACK = Master Backtrack Switch
