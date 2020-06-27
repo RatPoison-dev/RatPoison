@@ -26,7 +26,6 @@ import kotlinx.coroutines.launch
 import org.jire.arrowhead.keyPressed
 import org.lwjgl.glfw.GLFW.*
 import rat.poison.game.CSGO
-import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.updateViewMatrix
 import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
@@ -40,7 +39,6 @@ import rat.poison.scripts.bspHandling.rayTraceTest
 import rat.poison.scripts.esp.adrenaline
 import rat.poison.scripts.esp.drawBacktrack
 import rat.poison.scripts.esp.esp
-import rat.poison.scripts.esp.espToggle
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.tabs.saveDefault
 import rat.poison.ui.uiPanels.*
@@ -191,7 +189,6 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Auto Knife") }; autoKnife()
     if (dbg) { println("[DEBUG] Initializing Reduced Flash") }; reducedFlash()
     if (dbg) { println("[DEBUG] Initializing ESPs") }; esp()
-    if (dbg) { println("[DEBUG] Initializing Esp Toggle") }; espToggle()
     //if (dbg) { println("[DEBUG] Initializing Automatic Weapons") }; automaticWeapon()
     if (dbg) { println("[DEBUG] Initializing Fast Stop") }; fastStop()
     if (dbg) { println("[DEBUG] Initializing Head Walk (Currently disabled)") }; headWalk()
@@ -209,7 +206,6 @@ fun main() {
     if (EXPERIMENTAL) {
         rayTraceTest() //Dont bother rn
     }
-    addListeners()
     //Overlay check, not updated?
     if (curSettings["MENU"].strToBool()) {
         println("App Title: " + curSettings["MENU_APP"].replace("\"", ""))

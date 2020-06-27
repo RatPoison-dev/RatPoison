@@ -105,7 +105,7 @@ fun constructVars() {
     reducedFlashFlags = ObservableBoolean({curSettings["ENABLE_REDUCED_FLASH"].strToBool() && checkFlags("ENABLE_REDUCED_FLASH")})
 }
 
-fun addListeners() = App {
+fun addListeners() {
     bunnyHopToggleKey.update()
     if (bunnyHopToggleKey.justBecameTrue) {
         miscTab.bunnyHop.isChecked = !miscTab.bunnyHop.isChecked
