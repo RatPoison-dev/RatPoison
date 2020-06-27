@@ -22,10 +22,7 @@ fun drawBacktrack() = App {
     if (me.dead()) return@App
     if (notInGame || !curSettings["BACKTRACK_VISUALIZE"].strToBool() || !checkFlags("ENABLE_ESP") || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["ENABLE_BACKTRACK"].strToBool()) return@App
 
-    val backtrackOnKey = curSettings["ENABLE_BACKTRACK_ON_KEY"].strToBool()
-    val backtrackKeyPressed = keyPressed(curSettings["BACKTRACK_KEY"].toInt())
-
-    if (backtrackOnKey && !backtrackKeyPressed) return@App
+    if (!checkFlags("ENABLE_BACKTRACK")) return@App
 
     val meWep = me.weapon()
     var prefix = ""

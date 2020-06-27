@@ -29,6 +29,7 @@ CT = КТ
 BOMB = Бомба
 BOMB_CARRIER = Носитель Бомбы
 DEFUSERS = Дефуза
+DEFUSE_KITS = Наборы дефуза
 DEFUSER = DEFUSER
 SELF = Себя
 HEALTH_BASED = На основании здоровья

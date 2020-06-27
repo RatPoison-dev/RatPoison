@@ -87,6 +87,7 @@ fun footStepsEspTabUpdate() {
         footStepTTL.update()
         footStepTeamBox.update()
         footStepRange.update()
+        footStepRangeSlider.update()
         footStepTeamColor.update()
         footStepEnemyBox.update()
         footStepEnemyColor.update()

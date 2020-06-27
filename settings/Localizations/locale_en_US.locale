@@ -29,6 +29,7 @@ CT = CT
 BOMB = Bomb
 BOMB_CARRIER = Bomb Carrier
 DEFUSERS = Defusers
+DEFUSE_KITS = Defuse Kits
 DEFUSER = DEFUSER
 SELF = Self
 HEALTH_BASED = Health Based

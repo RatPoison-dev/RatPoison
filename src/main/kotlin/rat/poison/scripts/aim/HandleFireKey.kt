@@ -1,6 +1,7 @@
 package rat.poison.scripts.aim
 
 import org.jire.arrowhead.keyPressed
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.entity.*
@@ -52,10 +53,7 @@ fun fireWeapon() {
 
     if (meWep.sniper && curSettings["ENABLE_SCOPED_ONLY"].strToBool() && !me.isScoped()) return
 
-    val backtrackOnKey = curSettings["ENABLE_BACKTRACK_ON_KEY"].strToBool()
-    val backtrackKeyPressed = keyPressed(curSettings["BACKTRACK_KEY"].toInt())
-
-    if (curSettings["ENABLE_BACKTRACK"].strToBool() && (!backtrackOnKey || (backtrackOnKey && backtrackKeyPressed))) {
+    if (curSettings["ENABLE_BACKTRACK"].strToBool() && checkFlags("ENABLE_BACKTRACK")) {
         if (attemptBacktrack()) {
             return
         }

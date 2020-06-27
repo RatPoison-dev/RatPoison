@@ -32,8 +32,8 @@ OVERLAY_HEIGHT = 1080
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles aim on or off
 //Default key is F3
-
-
+ENABLE_AIM_KEY_TYPE = SwitchKey
+ENABLE_AIM_KEY = 114
 
 //Aim Strafer
 AIM_STRAFER = false
@@ -67,7 +67,7 @@ D_SPAM_KEY = 80
 //Enable weapon spam
 W_SPAM = false
 
-//weapon spam key
+//Weapon spam key
 W_SPAM_KEY_TYPE = OnKey
 W_SPAM_KEY = 79
 
@@ -109,9 +109,6 @@ FORCE_AIM_THROUGH_WALLS = false
 
 //MS Delay between when aimbot paths are recalculated
 AIM_DURATION = 1
-
-ENABLE_AIM_KEY_TYPE = SwitchKey
-ENABLE_AIM_KEY = 114
 
 //Bone IDs of bones used
 HEAD_BONE = 8
@@ -161,18 +158,10 @@ BINDS_Y = 540
 FAST_STOP_KEY_TYPE = AlwaysOn
 FAST_STOP_KEY = 22
 
-FAST_STOP_KEY = 22
-
-
 AIM_STRAFER_KEY_TYPE = AlwaysOn
 AIM_STRAFER_KEY = 22
 
-AIM_STRAFER_KEY = 22
-
-
 AIM_STRAFER_SHIFT_KEY_TYPE = AlwaysOn
 AIM_STRAFER_SHIFT_KEY = 22
-
-ENABLE_AIM_KEY = 22
 
 THROW_SELF_NADE_KEY = 22

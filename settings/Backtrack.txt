@@ -1,13 +1,10 @@
 //Enable backtrack
 ENABLE_BACKTRACK = true
 
-//Enable backtrack on key
-ENABLE_BACKTRACK_KEY_TYPE = AlwaysOn
-ENABLE_BACKTRACK_KEY = 22
-
 //VK Key Code (http://cherrytree.at/misc/vk.htm),
 //Default key is Mouse5
-BACKTRACK_KEY = 6
+ENABLE_BACKTRACK_KEY_TYPE = AlwaysOn
+ENABLE_BACKTRACK_KEY = 6
 
 //Backtrack activation FOV (between 0.1 and 2)
 BACKTRACK_FOV = 1.0
