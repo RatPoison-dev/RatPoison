@@ -209,7 +209,8 @@ fun main() {
     if (EXPERIMENTAL) {
         rayTraceTest() //Dont bother rn
     }
-
+    constructVars()
+    addListeners()
     //Overlay check, not updated?
     if (curSettings["MENU"].strToBool()) {
         println("App Title: " + curSettings["MENU_APP"].replace("\"", ""))
@@ -334,7 +335,6 @@ object App : ApplicationAdapter() {
 
     override fun create() {
         overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
-        constructVars()
         VisUI.load(Gdx.files.internal("skin\\tinted.json"))
         //Implement stage for menu
         menuStage = Stage() //Main Menu Stage
@@ -493,7 +493,6 @@ object App : ApplicationAdapter() {
                     curSettings["BINDS"] = "false"
                     if (dbg) println("[DEBUG] Menu Toggled")
                 }
-                addListeners()
 
                 val w = overlay.width
                 val h = overlay.height
