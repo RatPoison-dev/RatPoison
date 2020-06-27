@@ -2,11 +2,21 @@ package rat.poison.utils
 
 import org.jire.arrowhead.keyPressed
 import rat.poison.App
+import rat.poison.checkFlags
 import rat.poison.curSettings
+import rat.poison.game.CSGO
+import rat.poison.game.hooks.toneMapController
+import rat.poison.game.netvars.NetVarOffsets
+import rat.poison.scripts.disableFovChanger
+import rat.poison.scripts.disableReducedFlash
+import rat.poison.scripts.esp.*
+import rat.poison.scripts.esp.disableAllEsp
+import rat.poison.scripts.esp.disableGlowAndChams
 import rat.poison.scripts.forcedUpdate
 import rat.poison.scripts.selfNade
 import rat.poison.ui.tabs.*
 import rat.poison.ui.uiPanels.*
+import rat.poison.ui.uiUpdate
 import rat.poison.utils.varUtil.strToBool
 
 var bunnyHopToggleKey = ObservableBoolean({ keyPressed(1) })
@@ -45,6 +55,11 @@ var throwSelfNadeKey = ObservableBoolean({ keyPressed(1)})
 var manualForceUpdateKey = ObservableBoolean({ keyPressed(1)})
 var autoForceUpdateToggleKey = ObservableBoolean({ keyPressed(1)})
 var enableThrowingHelperToggleKey = ObservableBoolean({ keyPressed(1)})
+var espToggleKey = ObservableBoolean({ keyPressed(1)})
+var glowEspFlags = ObservableBoolean({ keyPressed(1)})
+var chamsEspFlags = ObservableBoolean({ keyPressed(1)})
+var fovChangerFlags = ObservableBoolean({ keyPressed(1)})
+var reducedFlashFlags = ObservableBoolean({ keyPressed(1)})
 
 fun constructVars() {
     bunnyHopToggleKey = ObservableBoolean({ curSettings["ENABLE_BUNNY_HOP_KEY_TYPE"] == "SwitchKey" && keyPressed(curSettings["ENABLE_BUNNY_HOP_KEY"].toInt()) })
@@ -83,6 +98,11 @@ fun constructVars() {
     enableThrowingHelperToggleKey = ObservableBoolean({ curSettings["ENABLE_NADE_THROWER_KEY_TYPE"] == "SwitchKey" && keyPressed(curSettings["ENABLE_NADE_THROWER_KEY"].toInt()) })
     throwSelfNadeKey = ObservableBoolean({ keyPressed(curSettings["THROW_SELF_NADE_KEY"].toInt()) })
     manualForceUpdateKey = ObservableBoolean({ keyPressed(curSettings["MANUAL_FORCE_UPDATE_KEY"].toInt()) })
+    espToggleKey = ObservableBoolean({ curSettings["ENABLE_ESP_KEY_TYPE"] == "SwitchKey" && keyPressed(curSettings["ENABLE_ESP_KEY"].toInt()) })
+    glowEspFlags = ObservableBoolean({curSettings["GLOW_ESP"].strToBool() && checkFlags("GLOW_ESP")})
+    chamsEspFlags =  ObservableBoolean({curSettings["CHAMS_ESP"].strToBool() && checkFlags("CHAMS_ESP")})
+    fovChangerFlags = ObservableBoolean({curSettings["ENABLE_FOV_CHANGER"].strToBool() && checkFlags("ENABLE_FOV_CHANGER")})
+    reducedFlashFlags = ObservableBoolean({curSettings["ENABLE_REDUCED_FLASH"].strToBool() && checkFlags("ENABLE_REDUCED_FLASH")})
 }
 
 fun addListeners() = App {
@@ -241,6 +261,40 @@ fun addListeners() = App {
     throwSelfNadeKey.update()
     if (throwSelfNadeKey.justBecameTrue) {
         selfNade()
+    }
+    espToggleKey.update()
+    if (espToggleKey.justBecameTrue) {
+        curSettings["ENABLE_ESP"] = !curSettings["ENABLE_ESP"].strToBool()
+        if (!curSettings["ENABLE_ESP"].strToBool()) {
+            disableAllEsp()
+
+            if (curSettings["ENABLE_NIGHTMODE"].strToBool()) {
+                if (toneMapController != 0L) {
+                    CSGO.csgoEXE[toneMapController + NetVarOffsets.m_bUseCustomAutoExposureMin] = 1
+                    CSGO.csgoEXE[toneMapController + NetVarOffsets.m_bUseCustomAutoExposureMax] = 1
+
+                    CSGO.csgoEXE[toneMapController + NetVarOffsets.m_flCustomAutoExposureMin] = 1F
+                    CSGO.csgoEXE[toneMapController + NetVarOffsets.m_flCustomAutoExposureMax] = 1F
+                }
+            }
+        }
+        uiUpdate()
+    }
+    glowEspFlags.update()
+    if (glowEspFlags.justBecameFalse) {
+        disableGlowAndChams()
+    }
+    chamsEspFlags.update()
+    if (chamsEspFlags.justBecameFalse) {
+        disableGlowAndChams()
+    }
+    fovChangerFlags.update()
+    if (fovChangerFlags.justBecameFalse) {
+        disableFovChanger()
+    }
+    reducedFlashFlags.update()
+    if (reducedFlashFlags.justBecameFalse) {
+        disableReducedFlash()
     }
     manualForceUpdateKey.update()
     if (manualForceUpdateKey.justBecameTrue) {
