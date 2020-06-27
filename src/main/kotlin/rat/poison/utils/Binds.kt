@@ -1,6 +1,7 @@
 package rat.poison.utils
 
 import org.jire.arrowhead.keyPressed
+import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.scripts.forcedUpdate
 import rat.poison.scripts.selfNade
@@ -84,7 +85,7 @@ fun constructVars() {
     manualForceUpdateKey = ObservableBoolean({ keyPressed(curSettings["MANUAL_FORCE_UPDATE_KEY"].toInt()) })
 }
 
-fun addListeners() {
+fun addListeners() = App {
     bunnyHopToggleKey.update()
     if (bunnyHopToggleKey.justBecameTrue) {
         miscTab.bunnyHop.isChecked = !miscTab.bunnyHop.isChecked

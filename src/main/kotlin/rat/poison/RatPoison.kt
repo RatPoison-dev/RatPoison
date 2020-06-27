@@ -146,7 +146,7 @@ fun main() {
     dbg = curSettings["DEBUG"].strToBool()
 
     if (dbg) println("DEBUG enabled")
-
+    constructVars()
     Thread.sleep(5000)
     println("Launching...")
 
@@ -209,7 +209,6 @@ fun main() {
     if (EXPERIMENTAL) {
         rayTraceTest() //Dont bother rn
     }
-    constructVars()
     addListeners()
     //Overlay check, not updated?
     if (curSettings["MENU"].strToBool()) {
@@ -493,6 +492,7 @@ object App : ApplicationAdapter() {
                     curSettings["BINDS"] = "false"
                     if (dbg) println("[DEBUG] Menu Toggled")
                 }
+                addListeners()
 
                 val w = overlay.width
                 val h = overlay.height
