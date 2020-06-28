@@ -37,6 +37,7 @@ class VisualsTab : Tab(false, false) {
     //Static Visuals Tab Items
     val enableEsp = BindsRelatedCheckBox(curLocalization["ENABLE_ESP"], "ENABLE_ESP", nameInLocalization = "ENABLE_ESP")
     val radarEsp = BindsRelatedCheckBox(curLocalization["ENABLE_RADAR_ESP"], "RADAR_ESP", nameInLocalization = "ENABLE_RADAR_ESP")
+    val legitRadar = VisCheckBoxCustom(curLocalization["LEGIT_RADAR"], "LEGIT_RADAR")
     val nightMode = BindsRelatedCheckBox(curLocalization["ENABLE_NIGHTMODE"], "ENABLE_NIGHTMODE", nameInLocalization = "ENABLE_NIGHTMODE")
     val nightModeSlider = VisSliderCustom(curLocalization["NIGHTMODE_VALUE"], "NIGHTMODE_VALUE", 0.05F, 5F, .05F, false, nameInLocalization = "NIGHTMODE_VALUE")
 
@@ -123,6 +124,7 @@ class VisualsTab : Tab(false, false) {
         //Add all items to label for tabbed pane content
         table.add(enableEsp).padLeft(25F).left().row()
         table.add(radarEsp).padLeft(25F).left().row()
+        table.add(legitRadar).padLeft(25F).left().row()
         table.add(nightMode).padLeft(25F).left().row()
         table.add(nightModeSlider).padLeft(25F).left().row()
         table.add(visAdrenaline).padLeft(25F).left().row()
@@ -163,6 +165,7 @@ fun updateDisableEsp() {
         }
 
         radarEsp.disable(bool)
+        legitRadar.disable(bool)
         visAdrenaline.disable(bool)
         nightMode.disable(bool)
         nightModeSlider.disable(bool, col)
@@ -318,6 +321,7 @@ fun visualsTabUpdate() {
     visualsTab.apply {
         enableEsp.update()
         radarEsp.update()
+        legitRadar.update()
         visAdrenaline.update()
         nightMode.update()
         nightModeSlider.update()

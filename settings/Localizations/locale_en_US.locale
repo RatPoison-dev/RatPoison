@@ -244,6 +244,7 @@ AUTO_FORCE_UPDATE = Auto Force Update
 ENABLE_ESP = Enable ESP
 VISUALS_TOGGLE_KEY = Visuals Toggle Key
 ENABLE_RADAR_ESP = Radar Esp
+LEGIT_RADAR = Legit Radar
 ENABLE_NIGHTMODE = Nightmode/Fullbright
 NIGHTMODE_VALUE = %
 ENABLE_ADRENALINE = Adrenaline
@@ -503,6 +504,7 @@ HITMARKER_RECOIL_POSITION_TOOLTIP = Whether or not hitmarket show recoil positio
 INDICATOR_SIZE_TOOLTIP = Size of the indicator
 HOLD_AIM_TOOLTIP = Aims at the enemy even after he left the FOV of the aimbot
 VARIATION_DEADZONE_TOOLTIP = Variation of area where variation doesnt occur
+LEGIT_RADAR_TOOLTIP = Show enemies on radar depend on their footsteps
 
 // Backtrack
 ENABLE_BACKTRACK = Master Backtrack Switch

@@ -55,7 +55,6 @@ var throwSelfNadeKey = ObservableBoolean({ keyPressed(1)})
 var manualForceUpdateKey = ObservableBoolean({ keyPressed(1)})
 var autoForceUpdateToggleKey = ObservableBoolean({ keyPressed(1)})
 var enableThrowingHelperToggleKey = ObservableBoolean({ keyPressed(1)})
-var espToggleKey = ObservableBoolean({ keyPressed(1)})
 var glowEspFlags = ObservableBoolean({ keyPressed(1)})
 var chamsEspFlags = ObservableBoolean({ keyPressed(1)})
 var fovChangerFlags = ObservableBoolean({ keyPressed(1)})
@@ -98,7 +97,6 @@ fun constructVars() {
     enableThrowingHelperToggleKey = ObservableBoolean({ curSettings["ENABLE_NADE_THROWER_KEY_TYPE"] == "SwitchKey" && keyPressed(curSettings["ENABLE_NADE_THROWER_KEY"].toInt()) })
     throwSelfNadeKey = ObservableBoolean({ keyPressed(curSettings["THROW_SELF_NADE_KEY"].toInt()) })
     manualForceUpdateKey = ObservableBoolean({ keyPressed(curSettings["MANUAL_FORCE_UPDATE_KEY"].toInt()) })
-    espToggleKey = ObservableBoolean({ curSettings["ENABLE_ESP_KEY_TYPE"] == "SwitchKey" && keyPressed(curSettings["ENABLE_ESP_KEY"].toInt()) })
     glowEspFlags = ObservableBoolean({curSettings["GLOW_ESP"].strToBool() && checkFlags("GLOW_ESP")})
     chamsEspFlags =  ObservableBoolean({curSettings["CHAMS_ESP"].strToBool() && checkFlags("CHAMS_ESP")})
     fovChangerFlags = ObservableBoolean({curSettings["ENABLE_FOV_CHANGER"].strToBool() && checkFlags("ENABLE_FOV_CHANGER")})
@@ -261,24 +259,6 @@ fun addListeners() {
     throwSelfNadeKey.update()
     if (throwSelfNadeKey.justBecameTrue) {
         selfNade()
-    }
-    espToggleKey.update()
-    if (espToggleKey.justBecameTrue) {
-        curSettings["ENABLE_ESP"] = !curSettings["ENABLE_ESP"].strToBool()
-        if (!curSettings["ENABLE_ESP"].strToBool()) {
-            disableAllEsp()
-
-            if (curSettings["ENABLE_NIGHTMODE"].strToBool()) {
-                if (toneMapController != 0L) {
-                    CSGO.csgoEXE[toneMapController + NetVarOffsets.m_bUseCustomAutoExposureMin] = 1
-                    CSGO.csgoEXE[toneMapController + NetVarOffsets.m_bUseCustomAutoExposureMax] = 1
-
-                    CSGO.csgoEXE[toneMapController + NetVarOffsets.m_flCustomAutoExposureMin] = 1F
-                    CSGO.csgoEXE[toneMapController + NetVarOffsets.m_flCustomAutoExposureMax] = 1F
-                }
-            }
-        }
-        uiUpdate()
     }
     glowEspFlags.update()
     if (glowEspFlags.justBecameFalse) {

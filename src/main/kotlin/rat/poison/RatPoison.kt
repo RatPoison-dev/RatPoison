@@ -43,10 +43,7 @@ import rat.poison.settings.MENUTOG
 import rat.poison.ui.tabs.saveDefault
 import rat.poison.ui.uiPanels.*
 import rat.poison.ui.uiUpdate
-import rat.poison.utils.ObservableBoolean
-import rat.poison.utils.Settings
-import rat.poison.utils.addListeners
-import rat.poison.utils.constructVars
+import rat.poison.utils.*
 import rat.poison.utils.extensions.appendHumanReadableSize
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.varUtil.strToBool
@@ -199,6 +196,7 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Weapon Changer") }; skinChanger()
     if (dbg) { println("[DEBUG] Initializing NightMode/FullBright") }; nightMode()
     if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()
+    if (dbg) { println("[DEBUG] Initializing Toggle Listeners") }; toggleListeners()
 
     setupBacktrack()
     drawBacktrack()
