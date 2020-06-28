@@ -44,22 +44,13 @@ class RcsTab : Tab(false, false) {
         table.padRight(25F)
 
         rCrosshairType.setItems(curLocalization["RCROSSHAIR_TYPE_CROSSHAIR"], curLocalization["RCROSSHAIR_TYPE_CIRCLE"])
-        when (curSettings["RCROSSHAIR_TYPE"]) {
-            "Crosshair" -> {
-                rCrosshairType.selected = curLocalization["RCROSSHAIR_TYPE_CROSSHAIR"]
-            }
-            "Circle" -> {
-                rCrosshairType.selected = curLocalization["RCROSSHAIR_TYPE_CIRCLE"]
-            }
-        }
-        rCrosshairType.selected = curLocalization[curSettings["RCROSSHAIR_TYPE"]]
         rCrosshairType.changed { _, _ ->
             if (rCrosshairType.selected == curLocalization["RCROSSHAIR_TYPE_CROSSHAIR"]) {
                 table.removeActor(radius)
                 curSettings["RCROSSHAIR_TYPE"] = "Crosshair"
             } else {
-                table.add(radius).left().row()
                 curSettings["RCROSSHAIR_TYPE"] = "Circle"
+                table.add(radius).left().row()
             }
         }
         table.add(enableRCS).left().row()
@@ -78,6 +69,15 @@ class RcsTab : Tab(false, false) {
         table.add(rCrosshairYOffset).left().row()
         table.add(rCrosshairAlpha).left().row()
         table.add(rCrosshairColor).left().row()
+        when (curSettings["RCROSSHAIR_TYPE"]) {
+            "Crosshair" -> {
+                rCrosshairType.selected = curLocalization["RCROSSHAIR_TYPE_CROSSHAIR"]
+            }
+            "Circle" -> {
+                rCrosshairType.selected = curLocalization["RCROSSHAIR_TYPE_CIRCLE"]
+                table.add(radius).left().row()
+            }
+        }
         ////////////////////FORMATTING
     }
 

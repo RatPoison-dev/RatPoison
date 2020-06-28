@@ -37,6 +37,7 @@ import rat.poison.scripts.aim.pathAim
 import rat.poison.scripts.aim.setAim
 import rat.poison.scripts.bspHandling.rayTraceTest
 import rat.poison.scripts.esp.adrenaline
+import rat.poison.scripts.esp.constructFootSteps
 import rat.poison.scripts.esp.drawBacktrack
 import rat.poison.scripts.esp.esp
 import rat.poison.settings.MENUTOG
@@ -197,7 +198,7 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing NightMode/FullBright") }; nightMode()
     if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()
     if (dbg) { println("[DEBUG] Initializing Toggle Listeners") }; toggleListeners()
-
+    if (dbg) { println("[DEBUG] Initializing Constructing Footsteps") }; constructFootSteps()
     setupBacktrack()
     drawBacktrack()
 

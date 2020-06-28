@@ -26,17 +26,9 @@ val footSteps = Array(256) { FootStep() }
 data class FootStep(var x: Double = 0.0, var y: Double = 0.0, var z: Double = 0.0,
                             var ttl: Int = curSettings["FOOTSTEP_TTL"].toInt(),
                             var open: Boolean = true, var myTeam: Boolean = false, var from: Entity = 0L)
-private var stepTimer = 0
 
 fun footStepEsp() = App {
-    stepTimer++
-    if (stepTimer >= curSettings["FOOTSTEP_UPDATE"].toInt()) {
-        constructSteps()
-
-        stepTimer = 0
-    }
     if (!curSettings["ENABLE_ESP"].strToBool() || !checkFlags("ENABLE_ESP") || !curSettings["ENABLE_FOOTSTEPS"].strToBool() || !checkFlags("ENABLE_FOOTSTEPS")) return@App
-
     for (i in footSteps.indices) {
         if (!footSteps[i].open) {
             val color = if (footSteps[i].myTeam) {
@@ -85,18 +77,6 @@ fun footStepEsp() = App {
                     end()
                 }
                 shapeRenderer.projectionMatrix = oldMatrix
-            }
-
-            footSteps[i].ttl--
-            if (footSteps[i].ttl <= 0) { //Reset
-                footSteps[i].apply {
-                    x = 0.0
-                    y = 0.0
-                    z = 0.0
-                    ttl = curSettings["FOOTSTEP_TTL"].toInt()
-                    open = true
-                    from = 0L
-                }
             }
         }
     }
