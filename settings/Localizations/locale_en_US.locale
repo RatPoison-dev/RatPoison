@@ -128,6 +128,7 @@ AIM_SPEED_DIVISOR = Mouse Move Divisor
 
 // Misc tab
 ENABLE_BUNNY_HOP = Bunny Hop
+ENABLE_NO_SMOKE = No Smoke
 BHOP_HITCHANCE = Hitchance
 AUTO_STRAFE = Auto Strafe
 STRAFE_BHOP_ONLY = BHop Only

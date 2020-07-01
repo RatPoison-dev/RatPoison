@@ -187,6 +187,7 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Auto Knife") }; autoKnife()
     if (dbg) { println("[DEBUG] Initializing Reduced Flash") }; reducedFlash()
     if (dbg) { println("[DEBUG] Initializing ESPs") }; esp()
+    noSmoke()
     //if (dbg) { println("[DEBUG] Initializing Automatic Weapons") }; automaticWeapon()
     if (dbg) { println("[DEBUG] Initializing Fast Stop") }; fastStop()
     if (dbg) { println("[DEBUG] Initializing Head Walk (Currently disabled)") }; headWalk()

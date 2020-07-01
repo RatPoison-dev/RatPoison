@@ -129,6 +129,7 @@ AIM_SPEED_DIVISOR = Делитель движения мыши
 // Misc tab
 ENABLE_BUNNY_HOP = Банни Хоп
 BHOP_HITCHANCE = Хитшанс
+ENABLE_NO_SMOKE = Выкл. Смоки
 AUTO_STRAFE = Автострейфы
 STRAFE_BHOP_ONLY = Только при бхопе
 FAST_STOP = Быстрая остановка

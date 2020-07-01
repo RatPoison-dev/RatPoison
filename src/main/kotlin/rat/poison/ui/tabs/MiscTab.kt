@@ -62,6 +62,7 @@ class MiscTab : Tab(false, false) {
     val spectatorList = BindsRelatedCheckBox(curLocalization["ENABLE_SPECTATOR_LIST"], "SPECTATOR_LIST", nameInLocalization = "ENABLE_SPECTATOR_LIST")
 
     val knifeBot = BindsRelatedCheckBox(curLocalization["ENABLE_AUTO_KNIFE"], "ENABLE_AUTO_KNIFE", nameInLocalization = "ENABLE_AUTO_KNIFE")
+    val noSmoke = VisCheckBoxCustom(curLocalization["ENABLE_NO_SMOKE"], "ENABLE_NO_SMOKE")
     val lsBomb = VisCheckBoxCustomWithoutVar(curLocalization["ENABLE_PERFECT_BOMB_DEFUSE"], "ENABLE_PERFECT_BOMB_DEFUSE")
     val doorSpam = BindsRelatedCheckBox(curLocalization["ENABLE_DOOR_SPAM"], "D_SPAM", nameInLocalization = "ENABLE_DOOR_SPAM")
     val weaponSpam = BindsRelatedCheckBox(curLocalization["ENABLE_WEAPON_SPAM"], "W_SPAM", nameInLocalization = "ENABLE_WEAPON_SPAM")
@@ -201,6 +202,7 @@ class MiscTab : Tab(false, false) {
         superPaneTable1.add(flashMaxAlpha).left().padLeft(5F).row()
         superPaneTable1.addSeparator().width(250F).left()
         superPaneTable1.add(knifeBot).left().padLeft(5F).row()
+        superPaneTable1.add(noSmoke).left().padLeft(5F).row()
         superPaneTable1.addSeparator().width(250F).left()
         superPaneTable1.add(lsBombTable).left().padLeft(5F).row()
         superPaneTable1.addSeparator().width(250F).left()
