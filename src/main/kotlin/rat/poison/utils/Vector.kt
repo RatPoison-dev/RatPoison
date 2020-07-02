@@ -12,3 +12,5 @@ data class Vector(var x: Double = 0.0, var y: Double = 0.0, var z: Double = 0.0)
 	
 	private fun valid() = !invalid()
 }
+
+val emptyVector = Vector(0.0, 0.0, 0.0)

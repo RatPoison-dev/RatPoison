@@ -250,6 +250,7 @@ fun miscTabUpdate() {
         autoStrafeBHopOnly.update()
         fastStop.update()
         knifeBot.update()
+        noSmoke.update()
         fovChanger.update()
         fovDefault.update()
         fovSmoothing.update()
