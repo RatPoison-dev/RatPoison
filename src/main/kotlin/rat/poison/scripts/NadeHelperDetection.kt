@@ -1,13 +1,18 @@
 package rat.poison.scripts
 
 import com.sun.jna.Memory
+import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.clientState
 import rat.poison.game.hooks.onJoin
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.ui.uiPanels.nadeHelperTab
+import rat.poison.utils.notInGame
+import rat.poison.utils.varUtil.strToBool
 
 fun detectJoin() = onJoin {
+    if (!curSettings["ENABLE_NADE_HELPER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@onJoin
+
     val strBuf: Memory by lazy {
         Memory(128) //128 str?
     }
