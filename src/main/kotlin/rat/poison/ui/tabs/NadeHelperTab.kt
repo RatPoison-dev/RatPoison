@@ -31,7 +31,7 @@ class NadeHelperTab : Tab(false, false) {
     val clearNadeHelper = VisTextButtonCustom(curLocalization["CLEAR_CURRENTLY_LOADED"], "CLEAR_CURRENTLY_LOADED")
     val deleteCurrentPositionHelper = VisTextButtonCustom(curLocalization["DELETE_AT_CURRENT_POSITION"], "DELETE_AT_CURRENT_POSITION")
     val enableThrowingHelper = BindsRelatedCheckBox(curLocalization["ENABLE_AUTO_THROWER"], "ENABLE_NADE_THROWER", "ENABLE_AUTO_THROWER")
-    private val nadeHelperFileSelectBox = VisSelectBox<String>()
+    val nadeHelperFileSelectBox = VisSelectBox<String>()
 
     init {
         //Nade position create button
