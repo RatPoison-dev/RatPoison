@@ -11,7 +11,6 @@ import rat.poison.game.entity.position
 import rat.poison.game.forEntities
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.game.worldToScreen
-import rat.poison.settings.MENUTOG
 import rat.poison.utils.Vector
 import rat.poison.utils.emptyVector
 import rat.poison.utils.notInGame

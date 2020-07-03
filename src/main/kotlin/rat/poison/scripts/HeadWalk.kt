@@ -1,6 +1,7 @@
 package rat.poison.scripts
 
 import org.jire.arrowhead.keyPressed
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.angle
 import rat.poison.game.clientState
@@ -33,7 +34,7 @@ var mePos = Vector()
 var onEntPos = Vector()
 
 internal fun headWalk() = every(1) {
-    if (!curSettings["HEAD_WALK"].strToBool()) return@every
+    if (!curSettings["HEAD_WALK"].strToBool() || !checkFlags("HEAD_WALK")) return@every
 
     if (me.dead()) return@every
 

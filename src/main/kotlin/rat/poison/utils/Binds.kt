@@ -60,6 +60,7 @@ var chamsEspFlags = ObservableBoolean({ keyPressed(1)})
 var fovChangerFlags = ObservableBoolean({ keyPressed(1)})
 var reducedFlashFlags = ObservableBoolean({ keyPressed(1)})
 var noSmokeToggleKey = ObservableBoolean({ keyPressed(1)})
+var headWalkToggleKey = ObservableBoolean({ keyPressed(1)})
 
 fun constructVars() {
     bunnyHopToggleKey = ObservableBoolean({ curSettings["ENABLE_BUNNY_HOP_KEY_TYPE"] == "SwitchKey" && keyPressed(curSettings["ENABLE_BUNNY_HOP_KEY"].toInt()) })
@@ -97,6 +98,7 @@ fun constructVars() {
     autoForceUpdateToggleKey = ObservableBoolean({ curSettings["FORCE_UPDATE_AUTO_KEY_TYPE"] == "SwitchKey" && keyPressed(curSettings["FORCE_UPDATE_AUTO_KEY"].toInt()) })
     enableThrowingHelperToggleKey = ObservableBoolean({ curSettings["ENABLE_NADE_THROWER_KEY_TYPE"] == "SwitchKey" && keyPressed(curSettings["ENABLE_NADE_THROWER_KEY"].toInt()) })
     noSmokeToggleKey = ObservableBoolean({ curSettings["ENABLE_NO_SMOKE_KEY_TYPE"] == "SwitchKey" && keyPressed(curSettings["ENABLE_NO_SMOKE_KEY"].toInt()) })
+    headWalkToggleKey = ObservableBoolean({ curSettings["HEAD_WALK_KEY_TYPE"] == "SwitchKey" && keyPressed(curSettings["HEAD_WALK_KEY"].toInt()) })
     throwSelfNadeKey = ObservableBoolean({ keyPressed(curSettings["THROW_SELF_NADE_KEY"].toInt()) })
     manualForceUpdateKey = ObservableBoolean({ keyPressed(curSettings["MANUAL_FORCE_UPDATE_KEY"].toInt()) })
     glowEspFlags = ObservableBoolean({curSettings["GLOW_ESP"].strToBool() && checkFlags("GLOW_ESP")})
@@ -245,6 +247,10 @@ fun addListeners() {
     enableFootStepsToggleKey.update()
     if (enableFootStepsToggleKey.justBecameTrue) {
         footStepsEspTab.enableFootSteps.isChecked = !footStepsEspTab.enableFootSteps.isChecked
+    }
+    headWalkToggleKey.update()
+    if (headWalkToggleKey.justBecameTrue) {
+        miscTab.headWalk.isChecked = !miscTab.headWalk.isChecked
     }
     enableSnaplinesToggleKey.update()
     if (enableSnaplinesToggleKey.justBecameTrue) {
