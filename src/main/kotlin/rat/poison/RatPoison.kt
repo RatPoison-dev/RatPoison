@@ -142,7 +142,6 @@ fun main() {
     dbg = curSettings["DEBUG"].strToBool()
 
     if (dbg) println("DEBUG enabled")
-    constructVars()
     Thread.sleep(5000)
     println("Launching...")
 
@@ -488,7 +487,7 @@ object App : ApplicationAdapter() {
                     curSettings["BINDS"] = "false"
                     if (dbg) println("[DEBUG] Menu Toggled")
                 }
-                addListeners()
+                callUpdates()
 
                 val w = overlay.width
                 val h = overlay.height

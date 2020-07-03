@@ -34,8 +34,8 @@ fun noSmoke() = App {
                     val glyph = GlyphLayout()
 
                     sb.begin()
-
-                    glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, curSettings["NO_SMOKE_COLOR"].strToColorGDX(), 1F, Align.left, false, null)
+                    val color = curSettings["NO_SMOKE_COLOR"].strToColorGDX()
+                    glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, color, 1F, Align.left, false, null)
                     draw(sb, glyph, outVec.x.toFloat(), outVec.y.toFloat())
 
                     sb.end()
