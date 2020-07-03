@@ -2,16 +2,19 @@ package rat.poison.scripts
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.utils.Align
 import rat.poison.App
+import rat.poison.checkFlags
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.Entity
-import rat.poison.game.entity.EntityType
+import rat.poison.game.entity.EntityType.Companion.smokeGrenadeProjectile
 import rat.poison.game.entity.position
 import rat.poison.game.forEntities
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.game.worldToScreen
+import rat.poison.settings.MENUTOG
 import rat.poison.utils.Vector
 import rat.poison.utils.emptyVector
+import rat.poison.utils.notInGame
 import rat.poison.utils.varUtil.strToBool
 import rat.poison.utils.varUtil.strToColorGDX
 
@@ -19,7 +22,7 @@ data class Smoke(var ttl: Int = 1050, var open: Boolean = true, var ent: Entity 
 val smokes = Array(512) { Smoke() }
 
 fun noSmoke() = App {
-    if (!curSettings["ENABLE_NO_SMOKE"].strToBool()) return@App
+    if (!curSettings["ENABLE_NO_SMOKE"].strToBool() || !checkFlags("ENABLE_NO_SMOKE") || !curSettings["ENABLE_ESP"].strToBool() || !checkFlags("ENABLE_ESP") || notInGame) return@App
     constructSmokes()
 
     for (i in smokes.indices) {
@@ -59,35 +62,32 @@ fun noSmoke() = App {
 
 
 fun constructSmokes() {
-    forEntities body@ {
-        if (it.type == EntityType.CSmokeGrenadeProjectile) {
-            val entity = it.entity
-            val entPos = entity.position()
-            csgoEXE[entity + NetVarOffsets.vecOrigin] = 0.0
-            csgoEXE[entity + NetVarOffsets.vecOrigin + 4] = 0.0
-            csgoEXE[entity + NetVarOffsets.vecOrigin + 8] = 0.0
-
-            var found = false
-            for (i in smokes.indices) {
-                if (smokes[i].ent == entity && smokes[i].latestPos != entPos && entPos != emptyVector) {
-                    smokes[i].apply {
-                        ttl = 1050
-                        open = false
-                        ent = entity
-                        latestPos = entPos
-                    }
-                    found = true
+    forEntities(smokeGrenadeProjectile) {
+        val entity = it.entity
+        val entPos = entity.position()
+        csgoEXE[entity + NetVarOffsets.vecOrigin] = 0.0
+        csgoEXE[entity + NetVarOffsets.vecOrigin + 4] = 0.0
+        csgoEXE[entity + NetVarOffsets.vecOrigin + 8] = 0.0
+        var found = false
+        for (i in smokes.indices) {
+            if (smokes[i].ent == entity && smokes[i].latestPos != entPos && entPos != emptyVector) {
+                smokes[i].apply {
+                    ttl = 1050
+                    open = false
+                    ent = entity
+                    latestPos = entPos
                 }
+                found = true
             }
-            if (!found) {
-                if (entPos != emptyVector) {
-                    val idx = emptySlot()
-                    smokes[idx].apply {
-                        ttl = 1050
-                        open = false
-                        ent = entity
-                        latestPos = entPos
-                    }
+        }
+        if (!found) {
+            if (entPos != emptyVector) {
+                val idx = emptySlot()
+                smokes[idx].apply {
+                    ttl = 1050
+                    open = false
+                    ent = entity
+                    latestPos = entPos
                 }
             }
         }
