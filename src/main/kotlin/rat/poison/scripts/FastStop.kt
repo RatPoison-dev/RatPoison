@@ -11,8 +11,8 @@ import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.robot
-import rat.poison.strToBool
 import rat.poison.utils.every
+import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.notInGame
 import java.awt.event.KeyEvent.*
 import kotlin.math.cos

@@ -3,6 +3,7 @@ package rat.poison.ui.tabs.visualstabs
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.toLocale
 import rat.poison.ui.tabs.snaplinesEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
@@ -15,19 +16,19 @@ class SnaplinesEspTab : Tab(false, false) {
     val enableSnaplines = VisCheckBoxCustom("Enable", "ENABLE_SNAPLINES")
     val snaplinesWidth = VisSliderCustom("Line Width", "SNAPLINES_WIDTH", 1F, 10F, 1F, false)
 
-    val enemySnaplines = VisCheckBoxCustom(" ", "SNAPLINES_ENEMIES")
+    val enemySnaplines = VisCheckBoxCustom(" ", "SNAPLINES_ENEMIES", false)
     val enemySnaplinesColor = VisColorPickerCustom("Enemies", "SNAPLINES_ENEMY_COLOR")
 
-    val teamSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_TEAMMATES")
+    val teamSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_TEAMMATES", false)
     val teamSnaplinesColor = VisColorPickerCustom("Teammates", "SNAPLINES_TEAM_COLOR")
 
-    val weaponSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_WEAPONS")
+    val weaponSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_WEAPONS", false)
     val weaponSnaplinesColor = VisColorPickerCustom("Weapons", "SNAPLINES_WEAPON_COLOR")
 
-    val bombSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_BOMB")
+    val bombSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_BOMB", false)
     val bombSnaplinesColor = VisColorPickerCustom("Bomb", "SNAPLINES_BOMB_COLOR")
 
-    val bombCarrierSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_BOMB_CARRIER")
+    val bombCarrierSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_BOMB_CARRIER", false)
     val bombCarrierSnaplinesColor = VisColorPickerCustom("Bomb Carrier", "SNAPLINES_BOMB_CARRIER_COLOR")
 
     init {
@@ -73,7 +74,7 @@ class SnaplinesEspTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Snaplines"
+        return "Snaplines".toLocale()
     }
 }
 

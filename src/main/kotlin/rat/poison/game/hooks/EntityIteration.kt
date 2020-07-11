@@ -18,9 +18,9 @@ import rat.poison.game.offsets.EngineOffsets
 import rat.poison.game.offsets.EngineOffsets.dwClientState
 import rat.poison.game.offsets.EngineOffsets.dwClientState_MapDirectory
 import rat.poison.game.offsets.EngineOffsets.dwGameDir
-import rat.poison.scripts.bspHandling.bspData
 import rat.poison.scripts.bspHandling.loadBsp
 import rat.poison.scripts.entsToTrack
+import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
@@ -62,21 +62,24 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
 
         notInGame = if (new == SignOnState.IN_GAME) {
             if (PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0) {
-                val write = 0x74.toByte()
+                val write = 0xEB.toByte()
                 try {
                     clientDLL[ClientOffsets.dwGlowUpdate] = write
-                } catch (e: Exception) { e.printStackTrace() }
+                } catch (e: Exception) {  }
 
                 try {
                     clientDLL[ClientOffsets.dwGlowUpdate2] = write
-                } catch (e: Exception) { e.printStackTrace() }
+                } catch (e: Exception) {  }
             }
 
             if (GARBAGE_COLLECT_ON_MAP_START) {
                 System.gc()
             }
+
+            sendPacket(true)
             false
         } else {
+            sendPacket(true)
             true
         }
     }

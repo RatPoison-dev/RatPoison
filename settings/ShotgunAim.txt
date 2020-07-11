@@ -15,7 +15,7 @@ SHOTGUN_FACTOR_RECOIL = false
 
 //Aim Bone
 //Default bone to aim at
-SHOTGUN_AIM_BONE = -1
+SHOTGUN_AIM_BONE = Nearest
 
 //Aim FOV
 //Aims at entities inside this value

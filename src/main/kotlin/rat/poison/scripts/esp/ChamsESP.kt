@@ -14,10 +14,10 @@ import rat.poison.game.offsets.ClientOffsets.dwEntityList
 import rat.poison.game.offsets.ClientOffsets.dwLocalPlayer
 import rat.poison.game.offsets.EngineOffsets.dwModelAmbientMin
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.strToBool
-import rat.poison.strToColor
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
+import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.generalUtil.strToColor
 import java.lang.Float.floatToIntBits
 
 //Change for entities to for entities ccsplayer

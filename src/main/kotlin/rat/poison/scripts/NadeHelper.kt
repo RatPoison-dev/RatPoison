@@ -9,7 +9,6 @@ import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
 import com.sun.jna.Memory
 import rat.poison.*
-import rat.poison.App.menuStage
 import rat.poison.game.CSGO
 import rat.poison.game.entity.absPosition
 import rat.poison.game.entity.boneMatrix
@@ -18,10 +17,16 @@ import rat.poison.game.entity.weapon
 import rat.poison.game.me
 import rat.poison.game.w2sViewMatrix
 import rat.poison.game.worldToScreen
+import rat.poison.overlay.App
+import rat.poison.overlay.App.menuStage
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.uiPanels.nadeHelperTab
 import rat.poison.utils.Vector
+import rat.poison.utils.generalUtil.cToDouble
+import rat.poison.utils.generalUtil.cToFloat
+import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.generalUtil.toMatrix4
 import rat.poison.utils.notInGame
 import java.io.File
 import java.io.FileReader

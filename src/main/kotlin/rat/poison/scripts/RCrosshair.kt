@@ -2,7 +2,6 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.gameHeight
@@ -12,11 +11,12 @@ import rat.poison.game.entity.punch
 import rat.poison.game.entity.weapon
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets
+import rat.poison.overlay.App
 import rat.poison.settings.MENUTOG
-import rat.poison.strToBool
-import rat.poison.strToColor
 import rat.poison.ui.uiPanels.mainTabbedPane
 import rat.poison.ui.uiPanels.rcsTab
+import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.generalUtil.strToColor
 import java.lang.Math.toRadians
 import kotlin.math.atan
 import kotlin.math.floor

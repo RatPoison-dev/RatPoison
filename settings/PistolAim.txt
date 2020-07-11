@@ -15,7 +15,7 @@ PISTOL_FACTOR_RECOIL = false
 
 //Aim Bone
 //Default bone to aim at
-PISTOL_AIM_BONE = 7
+PISTOL_AIM_BONE = Neck
 
 //Aim FOV
 //Aims at entities inside this value

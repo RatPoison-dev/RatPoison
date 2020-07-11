@@ -1,22 +1,30 @@
 package rat.poison.ui.uiHelpers.tables
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.widget.*
 import rat.poison.*
 import rat.poison.game.CSGO
+import rat.poison.overlay.App
 import rat.poison.settings.*
-import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.changed
-import rat.poison.ui.uiPanels.overridenWeapons
 import rat.poison.ui.tabs.categorySelected
+import rat.poison.ui.tabs.gunCategories
 import rat.poison.ui.tabs.updateDisableEsp
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
+import rat.poison.ui.uiHelpers.VisSelectBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
+import rat.poison.ui.uiPanelTables.weaponOverrideSelected
+import rat.poison.ui.uiPanels.aimTab
+import rat.poison.ui.uiPanels.overridenWeapons
 import rat.poison.ui.uiUpdate
+import rat.poison.utils.generalUtil.boolToStr
+import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.generalUtil.toWeaponClass
 
 class AimTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
@@ -26,8 +34,7 @@ class AimTable: VisTable(false) {
     val holdAim = VisCheckBoxCustom("Hold Aim", "HOLD_AIM")
     val teammatesAreEnemies = VisCheckBoxCustom("Teammates Are Enemies", "TEAMMATES_ARE_ENEMIES")
 
-    val fovTypeLabel = VisLabel("Fov Type: ")
-    val fovTypeBox = VisSelectBox<String>()
+    val fovType = VisSelectBoxCustom("Fov Type", "FOV_TYPE", false, true, "DISTANCE", "STATIC")
 
     val forceAimBoneKey = VisInputFieldCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
     val forceAimKey = VisInputFieldCustom("Force Aim Key", "FORCE_AIM_KEY")
@@ -43,8 +50,8 @@ class AimTable: VisTable(false) {
     //Override Weapon Checkbox & Selection Box
     private val categorySelection = VisTable()
     val categorySelectionBox = VisSelectBox<String>()
-    val categorySelectLabel = VisLabel("Weapon Category: ")
-    val weaponOverrideCheckBox = VisCheckBox("Override Weapons")
+    val categorySelectLabel = VisLabel("${"Weapon-Category".toLocale()}:")
+    val weaponOverrideCheckBox = VisCheckBox("Override-Weapons".toLocale())
 
     val enableAimOnShot = ATabVisCheckBox("Aim On Shot", "_AIM_ONLY_ON_SHOT")
     val enableFactorRecoil = ATabVisCheckBox("Factor Recoil", "_FACTOR_RECOIL")
@@ -52,11 +59,8 @@ class AimTable: VisTable(false) {
     val enablePathAim = ATabVisCheckBox("Mouse Movement", "_ENABLE_PATH_AIM")
     val enableScopedOnly = VisCheckBoxCustom("Scoped Only", "SNIPER_ENABLE_SCOPED_ONLY")
 
-    val aimBoneLabel = VisLabel("Bone: ")
-    val aimBoneBox = VisSelectBox<String>()
-
-    val forceAimBoneLabel = VisLabel("Force Bone: ")
-    val forceAimBoneBox = VisSelectBox<String>()
+    val aimBone = VisSelectBoxCustom("Bone", "_AIM_BONE", true, true,"HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
+    val forceAimBone = VisSelectBoxCustom("Force Bone", "_AIM_FORCE_BONE", true, true,"HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
 
     val aimFov = ATabVisSlider("Aim FOV", "_AIM_FOV", 1F, 180F, 1F, true)
     val aimSpeed = ATabVisSlider("Aim Speed", "_AIM_SPEED", 0F, 10F, 1F, true)
@@ -64,14 +68,14 @@ class AimTable: VisTable(false) {
     val aimAfterShots = ATabVisSlider("Aim After #", "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true)
 
     //Perfect Aim Collapsible
-    val perfectAimCheckBox = VisCheckBox("Enable Perfect Aim")
+    val perfectAimCheckBox = VisCheckBox("Enable-Perfect-Aim".toLocale())
     private val perfectAimTable = VisTable()
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
     val perfectAimFov = ATabVisSlider("FOV", "_PERFECT_AIM_FOV", 1F, 180F, 1F, true)
     val perfectAimChance = ATabVisSlider("Chance", "_PERFECT_AIM_CHANCE", 1F, 100F, 1F, true)
 
     //Advanced Settings Collapsible
-    val advancedSettingsCheckBox = VisCheckBox("Advanced Settings")
+    val advancedSettingsCheckBox = VisCheckBox("Advanced-Settings".toLocale())
     private val advancedSettingsTable = VisTable()
     val advancedSettingsCollapsible = CollapsibleWidget(advancedSettingsTable)
     val randomizeX = ATabVisSlider("X Variation", "_RANDOM_X_VARIATION", 0F, 50F, 1F, true)
@@ -83,32 +87,6 @@ class AimTable: VisTable(false) {
     val advancedSpeedDivisor = ATabVisSlider("Mouse Move Divisor", "_AIM_SPEED_DIVISOR", 1F, 10F, 1F, true)
 
     init {
-        if (curSettings["WARNING"].strToBool()) {
-            val dialog = Dialogs.showOKDialog(App.menuStage, "Warning", "Current Version: 1.7" +
-                    "\n\nIf you have any problems submit an issue on Github" +
-                    "\nGitHub: https://github.com/TheFuckingRat/RatPoison" +
-                    "\n\nUpdate 1.6 removes aim strictness from aim settings" +
-                    "\nOlder configs shouldn't break, but your aim settings" +
-                    "\nmight need to be updated." +
-                    "\n\n Official discord server: https://discord.gg/J2uHTJ2")
-            dialog.setPosition(CSGO.gameWidth / 4F - dialog.width / 2F, CSGO.gameHeight.toFloat() / 2F)
-            App.menuStage.addActor(dialog)
-        }
-
-        //Fov Type
-        val fovType = VisTable()
-        fovTypeBox.setItems("DISTANCE", "STATIC")
-        fovTypeBox.selected = curSettings["FOV_TYPE"].replace("\"", "")
-
-        fovTypeBox.changed { _, _ ->
-            curSettings["FOV_TYPE"] = fovTypeBox.selected
-            updateDisableEsp()
-            true
-        }
-
-        fovType.add(fovTypeLabel).width(200F)
-        fovType.add(fovTypeBox)
-
         //Create Override Weapon Check Box & Collapsible
         weaponOverrideCheckBox.isChecked = curSettings["ENABLE_OVERRIDE"].strToBool()
         overridenWeapons.weaponOverride = weaponOverrideCheckBox.isChecked
@@ -117,7 +95,7 @@ class AimTable: VisTable(false) {
             overridenWeapons.weaponOverride = weaponOverrideCheckBox.isChecked
             curSettings["ENABLE_OVERRIDE"] = weaponOverrideCheckBox.isChecked.toString()
 
-            val curWep = curSettings[overridenWeapons.weaponOverrideSelected].toWeaponClass()
+            val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
             overridenWeapons.enableOverride = curWep.tOverride
 
             uiUpdate()
@@ -125,15 +103,24 @@ class AimTable: VisTable(false) {
         }
 
         //Create Category Selector Box
-        categorySelectionBox.setItems("PISTOL", "RIFLE", "SMG", "SNIPER", "SHOTGUN")
-        categorySelectionBox.selected = "PISTOL"
-        categorySelected = categorySelectionBox.selected
+        val itemsArray = Array<String>()
+        for (i in gunCategories) {
+            if (dbg && curLocale[i].isBlank()) {
+                println("[DEBUG] $CURRENT_LOCALE $i is missing!")
+            }
+
+            itemsArray.add(curLocale[i])
+        }
+        categorySelectionBox.items = itemsArray
+
+        categorySelectionBox.selectedIndex = 1
+        categorySelected = gunCategories[categorySelectionBox.selectedIndex]
         categorySelection.add(categorySelectLabel).padRight(200F-categorySelectLabel.width)
         categorySelection.add(categorySelectionBox)
 
         categorySelectionBox.changed { _, _ ->
-            categorySelected = categorySelectionBox.selected
-            aimTab.tTrig.categorySelectionBox.selected = categorySelected
+            categorySelected = gunCategories[categorySelectionBox.selectedIndex]
+            aimTab.tTrig.categorySelectionBox.selectedIndex = gunCategories.indexOf(categorySelected)
 
             if (categorySelected == "SNIPER") {
                 enableScopedOnly.color = Color(255F, 255F, 255F, 1F)
@@ -161,46 +148,6 @@ class AimTable: VisTable(false) {
         enableScopedOnly.color = Color(255F, 255F, 255F, 0F)
         enableScopedOnly.isDisabled = true
 
-        //Create Aim Bone Selector Box
-        val aimBone = VisTable()
-        aimBoneBox.setItems("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
-        aimBoneBox.selected = when (curSettings[categorySelected + "_AIM_BONE"].toInt()) {
-            HEAD_BONE -> "HEAD"
-            NECK_BONE -> "NECK"
-            CHEST_BONE -> "CHEST"
-            STOMACH_BONE -> "STOMACH"
-            NEAREST_BONE -> "NEAREST"
-            else -> "RANDOM"
-        }
-        aimBone.add(aimBoneLabel).width(200F)
-        aimBone.add(aimBoneBox)
-
-        aimBoneBox.changed { _, _ ->
-            val setBone = curSettings[aimBoneBox.selected + "_BONE"].toInt()
-            curSettings[categorySelected + "_AIM_BONE"] = setBone.toString()
-            true
-        }
-
-        //Create Force Aim Bone Selector Box
-        val forceAimBone = VisTable()
-        forceAimBoneBox.setItems("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
-        forceAimBoneBox.selected = when (curSettings[categorySelected + "_AIM_FORCE_BONE"].toInt()) {
-            HEAD_BONE -> "HEAD"
-            NECK_BONE -> "NECK"
-            CHEST_BONE -> "CHEST"
-            STOMACH_BONE -> "STOMACH"
-            NEAREST_BONE -> "NEAREST"
-            else -> "RANDOM"
-        }
-        forceAimBone.add(forceAimBoneLabel).width(200F)
-        forceAimBone.add(forceAimBoneBox)
-
-        forceAimBoneBox.changed { _, _ ->
-            val setBone = curSettings[forceAimBoneBox.selected + "_BONE"].toInt()
-            curSettings[categorySelected + "_AIM_FORCE_BONE"] = setBone.toString()
-            true
-        }
-
         //Create Perfect Aim Collapsible Check Box
         perfectAimCheckBox.isChecked = curSettings[categorySelected + "_PERFECT_AIM"].strToBool()
         perfectAimCheckBox.changed { _, _ ->
@@ -211,7 +158,6 @@ class AimTable: VisTable(false) {
         perfectAimCollapsible.setCollapsed(!curSettings[categorySelected + "_PERFECT_AIM"].strToBool(), true)
         perfectAimTable.add(perfectAimFov).left().row()
         perfectAimTable.add(perfectAimChance).left().row()
-
         //End Perfect Aim Collapsible Check Box
 
         //Create Advanced Aim Settings Collapsible

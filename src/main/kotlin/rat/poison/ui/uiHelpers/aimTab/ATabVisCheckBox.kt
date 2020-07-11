@@ -1,15 +1,19 @@
 package rat.poison.ui.uiHelpers.aimTab
 
 import com.kotcrab.vis.ui.widget.VisCheckBox
-import rat.poison.boolToStr
+import rat.poison.CURRENT_LOCALE
+import rat.poison.curLocale
 import rat.poison.curSettings
-import rat.poison.strToBool
+import rat.poison.dbg
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.updateDisableAim
 import rat.poison.ui.uiUpdate
+import rat.poison.utils.generalUtil.boolToStr
+import rat.poison.utils.generalUtil.strToBool
 
-class ATabVisCheckBox(mainText: String, varExtension: String) : VisCheckBox(mainText) {
+class ATabVisCheckBox(text: String, varExtension: String) : VisCheckBox(text) {
+    private val mainText = text
     private val variableExtension = varExtension
 
     init {
@@ -38,6 +42,13 @@ class ATabVisCheckBox(mainText: String, varExtension: String) : VisCheckBox(main
             isChecked = tmp.strToBool()
         } else {
             println("[Error] $categorySelected$variableExtension is empty")
+        }
+
+        if (CURRENT_LOCALE != "") { //Only update locale if we have one
+            if (dbg && curLocale[variableExtension].isBlank()) {
+                println("[DEBUG] $CURRENT_LOCALE $variableExtension is missing!")
+            }
+            setText(curLocale[variableExtension])
         }
     }
 

@@ -7,17 +7,21 @@ import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import org.jire.arrowhead.keyPressed
-import rat.poison.*
+import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.curSettings
 import rat.poison.scripts.esp.updateHitsound
 import rat.poison.scripts.nameChanger
 import rat.poison.scripts.selfNade
 import rat.poison.scripts.weaponSpamToggleKey
+import rat.poison.toLocale
 import rat.poison.ui.changed
-import rat.poison.ui.uiPanels.miscTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiPanels.miscTab
 import rat.poison.utils.ObservableBoolean
+import rat.poison.utils.generalUtil.boolToStr
+import rat.poison.utils.generalUtil.strToBool
 import java.io.File
 
 class MiscTab : Tab(false, false) {
@@ -33,7 +37,7 @@ class MiscTab : Tab(false, false) {
     val aimStraferSelectBox = VisSelectBox<String>()
     val aimStraferShift = VisCheckBoxCustom("Shift Walk", "AIM_STRAFER_SHIFT")
     val aimStraferStrictness = VisSliderCustom("Strictness", "AIM_STRAFER_STRICTNESS", 0F, .5F, .01F, false, 3, width1 = 150F, width2 = 90F)
-    val headWalk = VisCheckBox("Head Walk")
+    val headWalk = VisCheckBoxCustom("Head Walk", "HEAD_WALK")
 
     //Fov + bomb timer + spectator list
     val fovChanger = VisCheckBoxCustom("Fov Changer", "ENABLE_FOV_CHANGER")
@@ -48,7 +52,7 @@ class MiscTab : Tab(false, false) {
     val spectatorList = VisCheckBoxCustom("Spectator List", "SPECTATOR_LIST")
 
     val knifeBot = VisCheckBoxCustom("Knife Bot", "ENABLE_AUTO_KNIFE")
-    val lsBomb = VisCheckBox("Perfect Bomb Defuse")
+    val lsBomb = VisCheckBoxCustom("Perfect Bomb Defuse", "LS_BOMB")
     val doorSpam = VisCheckBoxCustom("Door Spam", "D_SPAM")
     var doorSpamKey = VisInputFieldCustom("Door Spam Key", "D_SPAM_KEY")
     val weaponSpam = VisCheckBoxCustom("Weapon Spam", "W_SPAM")
@@ -58,7 +62,7 @@ class MiscTab : Tab(false, false) {
     val hitSoundCheckBox = VisCheckBoxCustom("Hitsound", "ENABLE_HITSOUND")
     val hitSoundBox = VisSelectBox<String>()
     val hitSoundVolume = VisSliderCustom("Volume", "HITSOUND_VOLUME", .1F, 1F, .1F, false, width1 = 150F, width2 = 90F)
-    private val selfNade = VisTextButton("Self Nade")
+    val selfNade = VisTextButton("Self-Nade".toLocale())
     private val nameChangeInput = VisValidatableTextField()
     private val nameChange = VisTextButton("Name Change")
 
@@ -88,24 +92,6 @@ class MiscTab : Tab(false, false) {
         val aimStraferTable = VisTable()
         aimStraferTable.add(aimStrafer).left()
         aimStraferTable.add(aimStraferSelectBox).padLeft(142F - aimStrafer.width).left()
-
-        //Create Head Walk Toggle
-        val headWalkTable = VisTable()
-        headWalk.isChecked = curSettings["HEAD_WALK"].strToBool()
-        headWalk.changed { _, _ ->
-            curSettings["HEAD_WALK"] = headWalk.isChecked.boolToStr()
-            true
-        }
-        headWalkTable.add(headWalk).left()
-
-        //enable last sec bomb defuse
-        val lsBombTable = VisTable()
-        lsBomb.isChecked = curSettings["LS_BOMB"].strToBool()
-        lsBomb.changed { _, _ ->
-            curSettings["LS_BOMB"] = lsBomb.isChecked.boolToStr()
-            true
-        }
-        lsBombTable.add(lsBomb).left()
 
         //Create Hit Sound Toggle
         if (curSettings["ENABLE_HITSOUND"].strToBool()) hitSoundCheckBox.toggle()
@@ -163,7 +149,7 @@ class MiscTab : Tab(false, false) {
         subPaneTable1.add(aimStraferShift).left().padLeft(14F).row()
         subPaneTable1.add(aimStraferStrictness).left().padLeft(14F).row()
         subPaneTable1.addSeparator().width(250F).left()
-        subPaneTable1.add(headWalkTable).left().padLeft(14F).row()
+        subPaneTable1.add(headWalk).left().padLeft(14F).row()
         //Bottom left pane (fov + bomb timer + spectator list)
         subPaneTable2.add(fovChanger).left().padLeft(14F).row()
         subPaneTable2.add(fovDefault).left().padLeft(14F).row()
@@ -185,7 +171,7 @@ class MiscTab : Tab(false, false) {
         superPaneTable1.addSeparator().width(250F).left()
         superPaneTable1.add(knifeBot).left().padLeft(5F).row()
         superPaneTable1.addSeparator().width(250F).left()
-        superPaneTable1.add(lsBombTable).left().padLeft(5F).row()
+        superPaneTable1.add(lsBomb).left().padLeft(5F).row()
         superPaneTable1.addSeparator().width(250F).left()
         superPaneTable1.add(doorSpam).left().padLeft(5F).row()
         superPaneTable1.add(doorSpamKey).left().padLeft(5F).row()
@@ -206,7 +192,7 @@ class MiscTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Misc"
+        return "Misc".toLocale()
     }
 }
 
@@ -238,12 +224,13 @@ fun miscTabUpdate() {
         bombTimerEnableMenu.update()
         bombTimerEnableBars.update()
         spectatorList.update()
-        headWalk.isChecked = curSettings["HEAD_WALK"].strToBool()
+        headWalk.update()
         enableReducedFlash.update()
         flashMaxAlpha.update()
-        hitSoundCheckBox.isChecked = curSettings["ENABLE_HITSOUND"].strToBool()
+        hitSoundCheckBox.update()
         hitSoundBox.selected = curSettings["HITSOUND_FILE_NAME"].replace("\"", "")
         hitSoundVolume.update()
-        lsBomb.isChecked = curSettings["LS_BOMB"].strToBool()
+        lsBomb.update()
+        selfNade.setText("Self-Nade".toLocale())
     }
 }

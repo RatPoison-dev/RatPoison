@@ -5,12 +5,15 @@ import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
+import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.boxEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
+import rat.poison.ui.uiHelpers.VisSelectBoxCustom
 
-class BoxEspTab : Tab(false, false) {
+//Swap VisSelectBoxCustom to showText false is mainText is " "
+class BoxEspTab: Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
@@ -20,89 +23,67 @@ class BoxEspTab : Tab(false, false) {
     val boxEsp = VisCheckBoxCustom("Bounding Box", "ENABLE_BOX_ESP")
     val boxEspDetails = VisCheckBoxCustom("Box Details", "BOX_ESP_DETAILS")
     val boxEspHealth = VisCheckBoxCustom("Health", "BOX_ESP_HEALTH")
-    val boxEspHealthPos = VisSelectBox<String>()
+    val boxEspHealthPos = VisSelectBoxCustom(" ", "BOX_ESP_HEALTH_POS", false, false, "Left", "Right")
     val boxEspArmor = VisCheckBoxCustom("Armor", "BOX_ESP_ARMOR")
-    val boxEspArmorPos = VisSelectBox<String>()
+    val boxEspArmorPos = VisSelectBoxCustom(" ", "BOX_ESP_ARMOR_POS", false, false, "Left", "Right")
     val boxEspName = VisCheckBoxCustom("Name", "BOX_ESP_NAME")
-    val boxEspNamePos = VisSelectBox<String>()
+    val boxEspNamePos = VisSelectBoxCustom(" ", "BOX_ESP_NAME_POS", false, false, "Top", "Bottom")
     val boxEspWeapon = VisCheckBoxCustom("Weapon", "BOX_ESP_WEAPON")
-    val boxEspWeaponPos = VisSelectBox<String>()
+    val boxEspWeaponPos = VisSelectBoxCustom(" ", "BOX_ESP_WEAPON_POS", false, false, "Top", "Bottom")
+
+    val boxEspAmmo = VisCheckBoxCustom("Ammo", "BOX_ESP_AMMO")
+    val boxEspAmmoPos = VisSelectBoxCustom(" ", "BOX_ESP_AMMO_POS", false, false, "Top", "Bottom")
+    val boxEspHelmet = VisCheckBoxCustom("Helmet", "BOX_ESP_HELMET")
+    val boxEspHelmetPos = VisSelectBoxCustom(" ", "BOX_ESP_HELMET_POS", false, false, "Left", "Right")
+    val boxEspKevlar = VisCheckBoxCustom("Kevlar", "BOX_ESP_KEVLAR")
+    val boxEspKevlarPos = VisSelectBoxCustom(" ", "BOX_ESP_KEVLAR_POS", false, false, "Left", "Right")
+    val boxEspScoped = VisCheckBoxCustom("Scoped", "BOX_ESP_SCOPED")
+    val boxEspScopedPos = VisSelectBoxCustom(" ", "BOX_ESP_SCOPED_POS", false, false, "Left", "Right")
+    val boxEspFlashed = VisCheckBoxCustom("Flashed", "BOX_ESP_FLASHED")
+    val boxEspFlashedPos = VisSelectBoxCustom(" ", "BOX_ESP_FLASHED_POS", false, false, "Left", "Right")
+
 
     val boxDetailColor = VisColorPickerCustom("Detail Text", "BOX_DETAILS_TEXT_COLOR")
 
-    val showTeamBox = VisCheckBoxCustom(" ", "BOX_SHOW_TEAM")
+    val showTeamBox = VisCheckBoxCustom(" ", "BOX_SHOW_TEAM", false)
     val boxTeamColor = VisColorPickerCustom("Teammates", "BOX_TEAM_COLOR")
 
-    val showEnemiesBox = VisCheckBoxCustom(" ", "BOX_SHOW_ENEMIES")
+    val showEnemiesBox = VisCheckBoxCustom(" ", "BOX_SHOW_ENEMIES", false)
     val boxEnemyColor = VisColorPickerCustom("Enemies", "BOX_ENEMY_COLOR")
 
-    val showDefusers = VisCheckBoxCustom(" ", "BOX_SHOW_DEFUSERS")
+    val showDefusers = VisCheckBoxCustom(" ", "BOX_SHOW_DEFUSERS", false)
     val boxDefuserColor = VisColorPickerCustom("Defusers", "BOX_DEFUSER_COLOR")
 
     init {
-        //Create Box ESP Health Pos Selector
-        boxEspHealthPos.setItems("Left", "Right")
-        boxEspHealthPos.selected = when (curSettings["BOX_ESP_HEALTH_POS"].replace("\"", "")) {
-            "L" -> "Left"
-            else -> "Right"
-        }
-        boxEspHealthPos.changed { _, _ ->
-            curSettings["BOX_ESP_HEALTH_POS"] = boxEspHealthPos.selected.first()
-            true
-        }
-
-        //Create Box ESP Armor Pos Selector
-        boxEspArmorPos.setItems("Left", "Right")
-        boxEspArmorPos.selected = when (curSettings["BOX_ESP_ARMOR_POS"].replace("\"", "")) {
-            "L" -> "Left"
-            else -> "Right"
-        }
-        boxEspArmorPos.changed { _, _ ->
-            curSettings["BOX_ESP_ARMOR_POS"] = boxEspArmorPos.selected.first()
-            true
-        }
-
-        //Create Box ESP Name Pos Selector
-        boxEspNamePos.setItems("Top", "Bottom")
-        boxEspNamePos.selected = when (curSettings["BOX_ESP_NAME_POS"].replace("\"", "")) {
-            "T" -> "Top"
-            else -> "Bottom"
-        }
-        boxEspNamePos.changed { _, _ ->
-            curSettings["BOX_ESP_NAME_POS"] = boxEspNamePos.selected.first()
-            true
-        }
-
-        //Create Box ESP Weapon Pos Selector
-        boxEspWeaponPos.setItems("Top", "Bottom")
-        boxEspWeaponPos.selected = when (curSettings["BOX_ESP_WEAPON_POS"].replace("\"", "")) {
-            "T" -> "Top"
-            else -> "Bottom"
-        }
-        boxEspWeaponPos.changed { _, _ ->
-            curSettings["BOX_ESP_WEAPON_POS"] = boxEspWeaponPos.selected.first()
-            true
-        }
-
         table.padLeft(25F)
         table.padRight(25F)
 
         table.add(skeletonEsp).left().row()
-        table.add(showTeamSkeleton).padRight(225F - showTeamSkeleton.width).left()
-        table.add(showEnemiesSkeleton).padRight(225F - showEnemiesSkeleton.width).left().row()
+        table.add(showTeamSkeleton).padRight(225F - showTeamSkeleton.width).left() //225
+        table.add(showEnemiesSkeleton).padRight(225F - showEnemiesSkeleton.width).left().row()//225
         table.addSeparator().colspan(2)
         table.add(boxEsp).left().row()
         table.add(boxEspDetails).left().row()
-        table.add(boxEspHealth).left()
-        table.add(boxEspHealthPos).left().row()
-        table.add(boxEspArmor).left()
-        table.add(boxEspArmorPos).left().row()
         table.add(boxEspName).left()
         table.add(boxEspNamePos).left().row()
         table.add(boxEspWeapon).left()
         table.add(boxEspWeaponPos).left().row()
+        table.add(boxEspAmmo).left()
+        table.add(boxEspAmmoPos).left().row()
+        table.add(boxEspHealth).left()
+        table.add(boxEspHealthPos).left().row()
+        table.add(boxEspArmor).left()
+        table.add(boxEspArmorPos).left().row()
+        table.add(boxEspHelmet).left()
+        table.add(boxEspHelmetPos).left().row()
+        table.add(boxEspKevlar).left()
+        table.add(boxEspKevlarPos).left().row()
+        table.add(boxEspScoped).left()
+        table.add(boxEspScopedPos).left().row()
+        table.add(boxEspFlashed).left()
+        table.add(boxEspFlashedPos).left().row()
 
-        table.add(boxDetailColor).width(175F - boxDetailColor.width).padRight(50F).row()
+        table.add(boxDetailColor).width(175F - boxDetailColor.width).left().row()
 
         var tmpTable = VisTable()
         tmpTable.add(showTeamBox)
@@ -128,7 +109,7 @@ class BoxEspTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Box"
+        return "Box".toLocale()
     }
 }
 
@@ -137,9 +118,23 @@ fun boxEspTabUpdate() {
         boxEsp.update()
         boxEspDetails.update()
         boxEspHealth.update()
+        boxEspHealthPos.update()
         boxEspArmor.update()
+        boxEspArmorPos.update()
         boxEspName.update()
+        boxEspNamePos.update()
         boxEspWeapon.update()
+        boxEspWeaponPos.update()
+        boxEspHelmet.update()
+        boxEspHelmetPos.update()
+        boxEspKevlar.update()
+        boxEspKevlarPos.update()
+        boxEspAmmo.update()
+        boxEspAmmoPos.update()
+        boxEspScoped.update()
+        boxEspScopedPos.update()
+        boxEspFlashed.update()
+        boxEspFlashedPos.update()
         boxDetailColor.update()
         skeletonEsp.update()
         showTeamSkeleton.update()

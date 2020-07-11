@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.utils.Align
-import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.CSGO.csgoEXE
@@ -14,9 +13,10 @@ import rat.poison.game.entity.punch
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_flHealthShotBoostExpirationTime
 import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
+import rat.poison.overlay.App
 import rat.poison.settings.MENUTOG
-import rat.poison.strToBool
-import rat.poison.strToColor
+import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.generalUtil.strToColor
 
 var hitMarkerAlpha = 0F
 var hitMarkerCombo = 0

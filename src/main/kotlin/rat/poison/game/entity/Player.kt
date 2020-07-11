@@ -15,9 +15,11 @@ import rat.poison.game.netvars.NetVarOffsets.aimPunchAngle
 import rat.poison.game.netvars.NetVarOffsets.angEyeAngles
 import rat.poison.game.netvars.NetVarOffsets.bGunGameImmunity
 import rat.poison.game.netvars.NetVarOffsets.bHasDefuser
+import rat.poison.game.netvars.NetVarOffsets.bHasHelmet
 import rat.poison.game.netvars.NetVarOffsets.bIsScoped
 import rat.poison.game.netvars.NetVarOffsets.dwBoneMatrix
 import rat.poison.game.netvars.NetVarOffsets.fFlags
+import rat.poison.game.netvars.NetVarOffsets.flFlashDuration
 import rat.poison.game.netvars.NetVarOffsets.hActiveWeapon
 import rat.poison.game.netvars.NetVarOffsets.iCompetitiveRanking
 import rat.poison.game.netvars.NetVarOffsets.iCompetitiveWins
@@ -25,7 +27,6 @@ import rat.poison.game.netvars.NetVarOffsets.iDeaths
 import rat.poison.game.netvars.NetVarOffsets.iHealth
 import rat.poison.game.netvars.NetVarOffsets.iKills
 import rat.poison.game.netvars.NetVarOffsets.lifeState
-import rat.poison.game.netvars.NetVarOffsets.m_Local
 import rat.poison.game.netvars.NetVarOffsets.nTickBase
 import rat.poison.game.netvars.NetVarOffsets.vecVelocity
 import rat.poison.game.netvars.NetVarOffsets.vecViewOffset
@@ -64,6 +65,12 @@ internal fun Memory.health(): Int = this.getInt(iHealth)
 
 internal fun Player.armor(): Int = csgoEXE.int(this + ArmorValue)
 internal fun Memory.armor(): Int = this.getInt(ArmorValue)
+
+internal fun Player.hasHelmet(): Boolean = csgoEXE.int(this + bHasHelmet) > 0
+internal fun Memory.hasHelmet(): Boolean = this.getInt(bHasHelmet) > 0
+
+internal fun Player.flashed(): Boolean = csgoEXE.float(this + flFlashDuration) > 0.25f
+internal fun Memory.flashed(): Boolean = this.getFloat(flFlashDuration) > 0.25f
 
 internal fun Player.lifeState(): Int = csgoEXE.byte(this + lifeState).toInt()
 
@@ -112,6 +119,7 @@ internal fun Player.boneMatrix() = csgoEXE.uint(this + dwBoneMatrix)
 internal fun Player.bone(offset: Int, boneID: Int = HEAD_BONE, boneMatrix: Long = boneMatrix()) = csgoEXE.float(boneMatrix + ((0x30 * boneID) + offset)).toDouble()
 
 internal fun Player.isScoped(): Boolean = csgoEXE.boolean(this + bIsScoped)
+internal fun Memory.isScoped(): Boolean = this.getByte(bIsScoped) > 0
 
 internal fun Player.hasDefuser(): Boolean = csgoEXE.boolean(this + bHasDefuser)
 

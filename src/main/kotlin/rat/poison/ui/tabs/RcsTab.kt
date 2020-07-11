@@ -5,11 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
-import rat.poison.strToBool
-import rat.poison.ui.uiPanels.rcsTab
+import rat.poison.toLocale
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiPanels.rcsTab
+import rat.poison.utils.generalUtil.strToBool
 
 class RcsTab : Tab(false, false) {
     private val table = VisTable(false)
@@ -59,7 +60,7 @@ class RcsTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "RCS"
+        return "RCS".toLocale()
     }
 }
 

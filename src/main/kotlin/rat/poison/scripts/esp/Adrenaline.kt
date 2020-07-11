@@ -10,8 +10,8 @@ import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
 import rat.poison.scripts.bombState
 import rat.poison.scripts.currentGameTicks
 import rat.poison.scripts.hitMarkerCombo
-import rat.poison.strToBool
 import rat.poison.utils.every
+import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.notInGame
 
 private var totalHits = 0

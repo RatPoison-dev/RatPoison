@@ -2,13 +2,14 @@ package rat.poison.ui.uiPanels
 
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.widget.VisWindow
-import rat.poison.App.uiMenu
-import rat.poison.opened
+import rat.poison.overlay.App.uiMenu
+import rat.poison.overlay.opened
+import rat.poison.toLocale
 import rat.poison.ui.uiPanelTables.OverridenWeapons
 
-val overridenWeapons = OverridenWeapons()
+var overridenWeapons = OverridenWeapons()
 
-class UIAimOverridenWeapons : VisWindow("Override Weapons") {
+class UIAimOverridenWeapons : VisWindow("Override-Weapons".toLocale()) {
     init {
         defaults().left()
         align(Align.topLeft)
@@ -18,7 +19,7 @@ class UIAimOverridenWeapons : VisWindow("Override Weapons") {
         pack()
 
         setSize(300F, uiMenu.height)
-        isResizable = false
+        isResizable = true
     }
 
     override fun positionChanged() { //Not draggable

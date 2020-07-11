@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
+import rat.poison.toLocale
 import rat.poison.ui.tabs.nadesTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
@@ -13,7 +14,7 @@ class NadesVT : Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
-    val nadeTracer = VisCheckBoxCustom(" ", "NADE_TRACER")
+    val nadeTracer = VisCheckBoxCustom(" ", "NADE_TRACER", false)
     val nadeTracerColor = VisColorPickerCustom("Tracer", "NADE_TRACER_COLOR")
 
     val nadeTracerUpdateTime = VisSliderCustom("Tracer Update Time", "NADE_TRACER_UPDATE_TIME", 5F, curSettings["OPENGL_FPS"].toInt().toFloat(), 1F, true, width1 = 200F, width2 = 250F)
@@ -37,13 +38,14 @@ class NadesVT : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Nades"
+        return "Nades".toLocale()
     }
 }
 
 fun nadesVTUpdate() {
     nadesTab.apply {
         nadeTracer.update()
+        nadeTracerColor.update()
         nadeTracerUpdateTime.update()
         nadeTracerTimeout.update()
     }

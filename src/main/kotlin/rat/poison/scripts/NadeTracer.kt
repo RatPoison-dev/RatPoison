@@ -2,14 +2,14 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils.clamp
-import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.game.entity.absPosition
 import rat.poison.game.worldToScreen
+import rat.poison.overlay.App
 import rat.poison.settings.MENUTOG
-import rat.poison.strToBool
-import rat.poison.strToColor
 import rat.poison.utils.Vector
+import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.generalUtil.strToColor
 import rat.poison.utils.notInGame
 
 var entsToTrack = mutableListOf<Long>()

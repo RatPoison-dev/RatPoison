@@ -12,7 +12,7 @@ import rat.poison.jna.*
 import rat.poison.jna.enums.AccentStates
 import rat.poison.jna.structures.Rect
 import rat.poison.jna.structures.WindowCompositionAttributeData
-import rat.poison.strToBool
+import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inBackground
 import kotlin.concurrent.thread
 import kotlin.properties.Delegates

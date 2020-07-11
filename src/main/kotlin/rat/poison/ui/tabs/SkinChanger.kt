@@ -8,14 +8,13 @@ import com.kotcrab.vis.ui.util.Validators
 import com.kotcrab.vis.ui.util.adapter.ArrayListAdapter
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.SETTINGS_DIRECTORY
-import rat.poison.curSettings
+import rat.poison.*
 import rat.poison.scripts.forcedUpdate
 import rat.poison.scripts.skinChanger
-import rat.poison.toSkinWeaponClass
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiPanels.skinChangerTab
+import rat.poison.utils.generalUtil.toSkinWeaponClass
 import java.io.File
 
 class SkinChangerTab : Tab(false, false) {
@@ -34,17 +33,17 @@ class SkinChangerTab : Tab(false, false) {
     private var listAdapter = ListAdapter(strArray)
     private var skinSelectionList = ListView(listAdapter)
 
-    private var idLabel = VisLabel("Skin ID: ")
-    private var statTrakLabel = VisLabel("StatTrak: ")
-    private var wearLabel = VisLabel("Wear: ")
+    private var idLabel = VisLabel("Skin-ID".toLocale())
+    private var statTrakLabel = VisLabel("StatTrak".toLocale())
+    private var wearLabel = VisLabel("Wear".toLocale())
 
     private var skinIDInput = VisValidatableTextField(Validators.INTEGERS)
     private var skinStatTrak = VisValidatableTextField(Validators.INTEGERS)
     private var skinWear = VisSlider(0.0F, 1.0F, .01F, false)
     //private var skinWear = VisValidatableTextField(Validators.FLOATS)
 
-    private var forceUpdate = VisTextButton("Manual Force Update")
-    var autoForceUpdate = VisCheckBoxCustom("Auto Force Update", "FORCE_UPDATE_AUTO")
+    private var forceUpdate = VisTextButton("Manual-Force-Update".toLocale())
+    var autoForceUpdate = VisCheckBoxCustom("Auto-Force-Update".toLocale(), "FORCE_UPDATE_AUTO")
 
     private var weaponSelected = "DESERT_EAGLE"
     private var minValue = 0.0F
@@ -57,11 +56,21 @@ class SkinChangerTab : Tab(false, false) {
             listAdapter.add(tmpStartArray[i])
         }
 
-        categorySelectionBox.setItems("PISTOL", "RIFLE", "SMG", "SNIPER", "SHOTGUN")
-        categorySelectionBox.selected = "PISTOL"
+        //Create Category Selector Box
+        val itemsArray = Array<String>()
+        for (i in gunCategories) {
+            if (dbg && curLocale[i].isBlank()) {
+                println("[DEBUG] $CURRENT_LOCALE $i is missing!")
+            }
+
+            itemsArray.add(curLocale[i])
+        }
+
+        categorySelectionBox.items = itemsArray
+        categorySelectionBox.selectedIndex = 1
 
         categorySelectionBox.changed { _, _ ->
-            when (categorySelectionBox.selected) {
+            when (gunCategories[categorySelectionBox.selectedIndex]) {
                 "PISTOL" -> { weaponSelectionBox.clearItems(); weaponSelectionBox.setItems("DESERT_EAGLE", "DUAL_BERRETA", "FIVE_SEVEN", "GLOCK", "USP_SILENCER", "CZ75A", "R8_REVOLVER", "P2000", "TEC9", "P250") }
                 "SMG" -> { weaponSelectionBox.clearItems(); weaponSelectionBox.setItems("MAC10", "P90", "MP5", "UMP45", "MP7", "MP9", "PP_BIZON") }
                 "RIFLE" -> { weaponSelectionBox.clearItems(); weaponSelectionBox.setItems("AK47", "AUG", "FAMAS", "SG553", "GALIL", "M4A4", "M4A1_SILENCER", "NEGEV", "M249") }
@@ -207,7 +216,7 @@ class SkinChangerTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Skin Changer"
+        return "Skin-Changer".toLocale()
     }
 }
 

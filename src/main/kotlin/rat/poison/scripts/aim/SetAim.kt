@@ -4,10 +4,11 @@ import rat.poison.curSettings
 import rat.poison.game.Weapons
 import rat.poison.game.entity.weapon
 import rat.poison.game.me
+import rat.poison.settings.*
 import rat.poison.settingsLoaded
-import rat.poison.strToBool
-import rat.poison.toWeaponClass
 import rat.poison.utils.every
+import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.generalUtil.toWeaponClass
 
 var override = false
 var curWep = Weapons.AK47
@@ -16,6 +17,10 @@ fun setAim() = every(100, true) {
     try {
         override = false
         curWep = me.weapon()
+
+        if (curWep.grenade || curWep.knife || curWep.miscEnt || curWep == Weapons.ZEUS_X27 || curWep.bomb) {
+            return@every
+        }
 
         if (settingsLoaded) { //If we have settings to read
             if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
@@ -71,8 +76,8 @@ fun setAim() = every(100, true) {
 
             if (strPre != "") {
                 curSettings["FACTOR_RECOIL"] = curSettings[strPre + "_FACTOR_RECOIL"].strToBool()
-                curSettings["AIM_BONE"] = curSettings[strPre + "_AIM_BONE"].toInt()
-                curSettings["FORCE_AIM_BONE"] = curSettings[strPre + "_AIM_FORCE_BONE"].toInt()
+                curSettings["AIM_BONE"] = curSettings[strPre + "_AIM_BONE"].boneToNum()
+                curSettings["FORCE_AIM_BONE"] = curSettings[strPre + "_AIM_FORCE_BONE"].boneToNum()
                 curSettings["AIM_FOV"] = curSettings[strPre + "_AIM_FOV"].toInt()
                 curSettings["AIM_SPEED"] = curSettings[strPre + "_AIM_SPEED"].toInt()
                 curSettings["AIM_SMOOTHNESS"] = curSettings[strPre + "_AIM_SMOOTHNESS"].toDouble()
@@ -98,4 +103,15 @@ fun setAim() = every(100, true) {
             }
         }
     } catch (e: Exception) { println("SetAim failure") } //Fix crashing
+}
+
+fun String.boneToNum(): Int {
+    return when (this) {
+        "HEAD" -> HEAD_BONE
+        "NECK" -> NECK_BONE
+        "CHEST" -> CHEST_BONE
+        "STOMACH" -> STOMACH_BONE
+        "NEAREST" -> NEAREST_BONE
+        else -> RANDOM_BONE
+    }
 }

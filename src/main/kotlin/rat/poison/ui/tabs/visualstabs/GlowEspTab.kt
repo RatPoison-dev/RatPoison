@@ -1,97 +1,120 @@
 package rat.poison.ui.tabs.visualstabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.kotcrab.vis.ui.VisUI
-import com.kotcrab.vis.ui.widget.VisImage
-import com.kotcrab.vis.ui.widget.VisImageTextButton
+import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.curSettings
+import rat.poison.toLocale
+import rat.poison.ui.changed
 import rat.poison.ui.tabs.glowEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
+import rat.poison.ui.uiHelpers.VisSelectBoxCustom
 
-class GlowEspTab : Tab(false, false) {
+class GlowEspTab: Tab(false, false) {
     private val table = VisTable()
 
     //Init labels/sliders/boxes that show values here
     val glowEsp = VisCheckBoxCustom("Enable", "GLOW_ESP")
-    val invGlowEsp = VisCheckBoxCustom("Inv Glow", "INV_GLOW_ESP")
-    val modelEsp = VisCheckBoxCustom("Model", "MODEL_ESP")
-    val modelAndGlow = VisCheckBoxCustom("Model & Glow", "MODEL_AND_GLOW")//VisCheckBox("Model & Glow Esp")
 
-    val showTeam = VisCheckBoxCustom(" ", "GLOW_SHOW_TEAM")
+    //val aimBone = VisSelectBoxCustom("Bone", "_AIM_BONE", true, "HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
+
+    //Visible flicker - is the bypass for now, issue in collecting settings
+    var enemyGlowType = VisSelectBoxCustom(" ", "GLOW_ENEMY_TYPE", false, false,"Normal", "Model", "Visible", "Visible-Flicker")
+    var teammateGlowType = VisSelectBoxCustom(" ", "GLOW_TEAMMATE_TYPE", false, false,"Normal", "Model", "Visible", "Visible-Flicker")
+    var weaponGlowType = VisSelectBoxCustom(" ", "GLOW_WEAPON_TYPE", false, false,"Normal", "Model", "Visible", "Visible-Flicker")
+    var grenadeGlowType = VisSelectBoxCustom(" ", "GLOW_GRENADE_TYPE", false, false, "Normal", "Model", "Visible", "Visible-Flicker")
+    var targetGlowType = VisSelectBoxCustom(" ", "GLOW_TARGET_TYPE", false, false, "Normal", "Model", "Visible", "Visible-Flicker")
+    var bombCarrierGlowType = VisSelectBoxCustom(" ", "GLOW_BOMB_CARRIER_TYPE", false, false, "Normal", "Model", "Visible", "Visible-Flicker")
+    var bombGlowType = VisSelectBoxCustom(" ", "GLOW_BOMB_TYPE", false, false, "Normal", "Model", "Visible", "Visible-Flicker")
+
+    val glowShowHealth = VisCheckBoxCustom("Show Health", "GLOW_SHOW_HEALTH")
+
+    val showTeam = VisCheckBoxCustom(" ", "GLOW_SHOW_TEAM", false)
     val glowTeamColor = VisColorPickerCustom("Teammates", "GLOW_TEAM_COLOR")
 
-    val showEnemies = VisCheckBoxCustom(" ", "GLOW_SHOW_ENEMIES")
+    val showEnemies = VisCheckBoxCustom(" ", "GLOW_SHOW_ENEMIES", false)
     val glowEnemyColor = VisColorPickerCustom("Enemies", "GLOW_ENEMY_COLOR")
 
-    val showBomb = VisCheckBoxCustom(" ", "GLOW_SHOW_BOMB")
+    val showBomb = VisCheckBoxCustom(" ", "GLOW_SHOW_BOMB", false)
     val glowBombColor = VisColorPickerCustom("Bomb", "GLOW_BOMB_COLOR")
 
-    val showBombCarrier = VisCheckBoxCustom(" ", "GLOW_SHOW_BOMB_CARRIER")
+    val showBombCarrier = VisCheckBoxCustom(" ", "GLOW_SHOW_BOMB_CARRIER", false)
     val glowBombCarrierColor = VisColorPickerCustom("Bomb Carrier", "GLOW_BOMB_CARRIER_COLOR")
 
-    val showWeapons = VisCheckBoxCustom(" ", "GLOW_SHOW_WEAPONS")
+    val showWeapons = VisCheckBoxCustom(" ", "GLOW_SHOW_WEAPONS", false)
     val glowWeaponColor = VisColorPickerCustom("Weapons", "GLOW_WEAPON_COLOR")
 
-    val showGrenades = VisCheckBoxCustom(" ", "GLOW_SHOW_WEAPONS")
+    val showGrenades = VisCheckBoxCustom(" ", "GLOW_SHOW_GRENADES", false)
     val glowGrenadeColor = VisColorPickerCustom("Grenades", "GLOW_GRENADE_COLOR")
 
-    val showTarget = VisCheckBoxCustom(" ", "GLOW_SHOW_TARGET")
-    val glowHighlightColor = VisColorPickerCustom("Target", "GLOW_HIGHLIGHT_COLOR")
+    val showTarget = VisCheckBoxCustom(" ", "GLOW_SHOW_TARGET", false)
+    val glowHighlightColor = VisColorPickerCustom("Target", "GLOW_TARGET_COLOR")
 
     init {
         ////////////////////FORMATTING
         table.padLeft(25F)
         table.padRight(25F)
 
-        table.add(glowEsp).left()
-        table.add(invGlowEsp).left().row()
+//        entityGlowType.selected = curSettings["GLOW_ENTITY_TYPE"]
+//        weaponGlowType.selected = curSettings["GLOW_WEAPON_TYPE"]
+//        targetGlowType.selected = curSettings["GLOW_TARGET_TYPE"]
+//        grenadeGlowType.selected = curSettings["GLOW_GRENADE_TYPE"]
+//        bombGlowType.selected = curSettings["GLOW_BOMB_TYPE"]
+//        bombCarrierGlowType.selected = curSettings["GLOW_BOMB_CARRIER_TYPE"]
 
-        table.add(modelEsp).left()
-        table.add(modelAndGlow).left().row()
+        table.add(glowEsp).left()
+        table.add(glowShowHealth).left().row()
 
         var tmpTable = VisTable()
         tmpTable.add(showTeam)
         tmpTable.add(glowTeamColor).width(175F - showTeam.width).padRight(50F)
 
         table.add(tmpTable).left()
+        table.add(teammateGlowType).left().row()
 
         tmpTable = VisTable()
         tmpTable.add(showEnemies)
         tmpTable.add(glowEnemyColor).width(175F - showEnemies.width).padRight(50F)
 
-        table.add(tmpTable).left().row()
+        table.add(tmpTable).left()
+        table.add(enemyGlowType).left().row()
 
         tmpTable = VisTable()
         tmpTable.add(showBomb)
         tmpTable.add(glowBombColor).width(175F - showBomb.width).padRight(50F)
 
         table.add(tmpTable).left()
+        table.add(bombGlowType).left().row()
 
         tmpTable = VisTable()
         tmpTable.add(showBombCarrier)
         tmpTable.add(glowBombCarrierColor).width(175F - showBombCarrier.width).padRight(50F)
 
-        table.add(tmpTable).left().row()
+        table.add(tmpTable).left()
+        table.add(bombCarrierGlowType).left().row()
 
         tmpTable = VisTable()
         tmpTable.add(showWeapons)
         tmpTable.add(glowWeaponColor).width(175F - showWeapons.width).padRight(50F)
 
         table.add(tmpTable).left()
+        table.add(weaponGlowType).left().row()
 
         tmpTable = VisTable()
         tmpTable.add(showGrenades)
         tmpTable.add(glowGrenadeColor).width(175F - showGrenades.width).padRight(50F)
 
-        table.add(tmpTable).left().row()
+        table.add(tmpTable).left()
+        table.add(grenadeGlowType).left().row()
 
         tmpTable = VisTable()
         tmpTable.add(showTarget)
         tmpTable.add(glowHighlightColor).width(175F - showTarget.width).padRight(50F)
 
-        table.add(tmpTable).left().row()
+        table.add(tmpTable).left()
+        table.add(targetGlowType).left().row()
         ////////////////////FORMATTING
     }
 
@@ -100,16 +123,30 @@ class GlowEspTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Glow"
+        return "Glow".toLocale()
     }
 }
 
 fun glowEspTabUpdate() {
     glowEspTab.apply {
         glowEsp.update()
-        invGlowEsp.update()
-        modelEsp.update()
-        modelAndGlow.update()
+        glowShowHealth.update()
+
+        //enemyGlowType.selected = curSettings["GLOW_ENEMY_TYPE"]
+        //teammateGlowType.selected = curSettings["GLOW_TEAMMATE_TYPE"]
+        //weaponGlowType.selected = curSettings["GLOW_WEAPON_TYPE"]
+        //targetGlowType.selected = curSettings["GLOW_TARGET_TYPE"]
+        //grenadeGlowType.selected = curSettings["GLOW_GRENADE_TYPE"]
+        //bombGlowType.selected = curSettings["GLOW_BOMB_TYPE"]
+        //bombCarrierGlowType.selected = curSettings["GLOW_BOMB_CARRIER_TYPE"]
+        enemyGlowType.update()
+        teammateGlowType.update()
+        weaponGlowType.update()
+        targetGlowType.update()
+        grenadeGlowType.update()
+        bombGlowType.update()
+        bombCarrierGlowType.update()
+
         showTeam.update()
         showEnemies.update()
         showBomb.update()
@@ -123,16 +160,14 @@ fun glowEspTabUpdate() {
         glowBombCarrierColor.update()
         glowWeaponColor.update()
         glowGrenadeColor.update()
-        glowHighlightColor.update()
 
-        if (invGlowEsp.isChecked || modelEsp.isChecked) {
-            glowEsp.isChecked = true
-            glowEsp.isDisabled = true
-        }
-
-        if (modelAndGlow.isChecked) {
-            modelEsp.isChecked = true
-            modelEsp.isDisabled = true
-        }
+        //glowBombCarrierColor.updateTitle()
+        //glowBombColor.updateTitle()
+        //glowEnemyColor.updateTitle()
+        //glowGrenadeColor.updateTitle()
+        //glowHighlightColor.update()
+        //glowTeamColor.updateTitle()
+        //glowHighlightColor.updateTitle()
+        //glowWeaponColor.updateTitle()
     }
 }

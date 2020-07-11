@@ -10,23 +10,24 @@ import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
 import rat.poison.curSettings
 import rat.poison.scripts.esp.disableAllEsp
-import rat.poison.strToBool
+import rat.poison.toLocale
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiPanels.visualsTab
+import rat.poison.utils.generalUtil.strToBool
 
 val espTabbedPane = TabbedPane()
-val glowEspTab = GlowEspTab()
-val chamsEspTab = ChamsEspTab()
-val indicatorEspTab = IndicatorEspTab()
-val boxEspTab = BoxEspTab()
-val snaplinesEspTab = SnaplinesEspTab()
-val footStepsEspTab = FootstepsEspTab()
-val hitMarkerTab = HitMarkerTab()
-val nadesTab = NadesVT()
+var glowEspTab = GlowEspTab()
+var chamsEspTab = ChamsEspTab()
+var indicatorEspTab = IndicatorEspTab()
+var boxEspTab = BoxEspTab()
+var snaplinesEspTab = SnaplinesEspTab()
+var footStepsEspTab = FootstepsEspTab()
+var hitMarkerTab = HitMarkerTab()
+var nadesTab = NadesVT()
 
 class VisualsTab : Tab(false, false) {
     private val table = VisTable()
@@ -44,10 +45,10 @@ class VisualsTab : Tab(false, false) {
 
     val visAdrenaline = VisCheckBoxCustom("Adrenaline", "ENABLE_ADRENALINE")
 
-    val showAimFov = VisCheckBoxCustom(" ", "DRAW_AIM_FOV")
+    val showAimFov = VisCheckBoxCustom(" ", "DRAW_AIM_FOV", false)
     val showAimFovColor = VisColorPickerCustom("Draw Aim FOV", "DRAW_AIM_FOV_COLOR")
 
-    val showTriggerFov = VisCheckBoxCustom(" ", "DRAW_TRIGGER_FOV")
+    val showTriggerFov = VisCheckBoxCustom(" ", "DRAW_TRIGGER_FOV", false)
     val showTriggerFovColor = VisColorPickerCustom("Draw Trigger FOV", "DRAW_TRIGGER_FOV_COLOR")
 
     init {
@@ -140,23 +141,11 @@ class VisualsTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Visuals"
+        return "Visuals".toLocale()
     }
 }
 
 fun updateDisableEsp() {
-    glowEspTab.apply {
-        if (invGlowEsp.isChecked || modelEsp.isChecked) {
-            glowEsp.isChecked = true
-            glowEsp.isDisabled = true
-        }
-
-        if (modelAndGlow.isChecked) {
-            modelEsp.isChecked = true
-            modelEsp.isDisabled = true
-        }
-    }
-
     visualsTab.apply {
         val bool = !enableEsp.isChecked
         var col = Color(255F, 255F, 255F, 1F)
@@ -198,9 +187,6 @@ fun updateDisableEsp() {
         espTabbedPane.switchTab(recTab)
 
         glowEspTab.glowEsp.disable(bool)
-        glowEspTab.invGlowEsp.disable(bool)
-        glowEspTab.modelEsp.disable(bool)
-        glowEspTab.modelAndGlow.disable(bool)
         glowEspTab.showTeam.disable(bool)
         glowEspTab.showEnemies.disable(bool)
         glowEspTab.showBomb.disable(bool)
@@ -244,13 +230,25 @@ fun updateDisableEsp() {
         boxEspTab.boxEsp.disable(bool)
         boxEspTab.boxEspDetails.disable(bool)
         boxEspTab.boxEspHealth.disable(bool)
-        boxEspTab.boxEspHealthPos.isDisabled = bool
+        boxEspTab.boxEspHealthPos.disable(bool, col)
         boxEspTab.boxEspArmor.disable(bool)
-        boxEspTab.boxEspArmorPos.isDisabled = bool
+        boxEspTab.boxEspArmorPos.disable(bool, col)
         boxEspTab.boxEspName.disable(bool)
-        boxEspTab.boxEspNamePos.isDisabled = bool
+        boxEspTab.boxEspNamePos.disable(bool, col)
         boxEspTab.boxEspWeapon.disable(bool)
-        boxEspTab.boxEspWeaponPos.isDisabled = bool
+        boxEspTab.boxEspWeaponPos.disable(bool, col)
+
+        boxEspTab.boxEspHelmet.disable(bool)
+        boxEspTab.boxEspHelmetPos.disable(bool, col)
+        boxEspTab.boxEspKevlar.disable(bool)
+        boxEspTab.boxEspKevlarPos.disable(bool, col)
+        boxEspTab.boxEspAmmo.disable(bool)
+        boxEspTab.boxEspAmmoPos.disable(bool, col)
+        boxEspTab.boxEspScoped.disable(bool)
+        boxEspTab.boxEspScopedPos.disable(bool, col)
+        boxEspTab.boxEspFlashed.disable(bool)
+        boxEspTab.boxEspFlashedPos.disable(bool, col)
+
         boxEspTab.skeletonEsp.disable(bool)
         boxEspTab.showTeamSkeleton.disable(bool)
         boxEspTab.showEnemiesSkeleton.disable(bool)
@@ -310,6 +308,7 @@ fun visualsTabUpdate() {
         visualsToggleKey.update()
         nightMode.update()
         nightModeSlider.update()
+        visAdrenaline.update()
         showAimFov.update()
         showAimFovColor.update()
         showTriggerFov.update()

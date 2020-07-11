@@ -38,6 +38,8 @@ object NetVarOffsets {
 	val nTickBase by netVar("DT_BasePlayer")
 
 	val flFlashMaxAlpha by netVar("DT_CSPlayer")
+	val flFlashDuration by netVar("DT_CSPlayer", "m_flFlashDuration")
+
 	val bGunGameImmunity by netVar("DT_CSPlayer")
 	val iCrossHairID by netVar("DT_CSPlayer", "m_bHasDefuser", 0x5C)
 	val iShotsFired by netVar("DT_CSPlayer")
@@ -70,6 +72,9 @@ object NetVarOffsets {
 	
 	val flNextPrimaryAttack by netVar("DT_BaseCombatWeapon")
 	val iClip1 by netVar("DT_BaseCombatWeapon")
+	val iPrimaryReserveAmmoCount by netVar("DT_BaseCombatWeapon", "m_iPrimaryReserveAmmoCount")
+
+	var bHasHelmet by netVar("DT_CSPlayer", "m_bHasHelmet")
 	
 	val iItemDefinitionIndex by netVar("DT_BaseCombatWeapon")
 

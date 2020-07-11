@@ -1,15 +1,21 @@
 package rat.poison.ui.uiHelpers.tables
 
+import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.ui.uiPanels.aimTab
+import rat.poison.CURRENT_LOCALE
+import rat.poison.curLocale
+import rat.poison.dbg
+import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
+import rat.poison.ui.tabs.gunCategories
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
+import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiUpdate
 
 class AimBTrigTable: VisTable(false) {
@@ -28,19 +34,29 @@ class AimBTrigTable: VisTable(false) {
     //Override Weapon Checkbox & Selection Box
     private val categorySelection = VisTable()
     val categorySelectionBox = VisSelectBox<String>()
-    val categorySelectLabel = VisLabel("Weapon Category: ")
+    val categorySelectLabel = VisLabel("${"Weapon-Category".toLocale()}:")
 
     init {
         //Create Category Selector Box
-        categorySelectionBox.setItems("PISTOL", "RIFLE", "SMG", "SNIPER", "SHOTGUN")
-        categorySelectionBox.selected = "PISTOL"
-        categorySelected = categorySelectionBox.selected
+        val itemsArray = Array<String>()
+        for (i in gunCategories) {
+            if (dbg && curLocale[i].isBlank()) {
+                println("[DEBUG] $CURRENT_LOCALE $i is missing!")
+            }
+
+            itemsArray.add(curLocale[i])
+        }
+
+        categorySelectionBox.items = itemsArray
+        categorySelectionBox.selectedIndex = 1
+
+        categorySelected = gunCategories[categorySelectionBox.selectedIndex]
         categorySelection.add(categorySelectLabel).padRight(200F-categorySelectLabel.width)
         categorySelection.add(categorySelectionBox)
 
         categorySelectionBox.changed { _, _ ->
-            categorySelected = categorySelectionBox.selected
-            aimTab.tAim.categorySelectionBox.selected = categorySelected
+            categorySelected = gunCategories[categorySelectionBox.selectedIndex]
+            aimTab.tAim.categorySelectionBox.selectedIndex = gunCategories.indexOf(categorySelected)
             uiUpdate()
             true
         }

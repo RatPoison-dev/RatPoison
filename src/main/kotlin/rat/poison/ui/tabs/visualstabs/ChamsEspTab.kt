@@ -3,6 +3,7 @@ package rat.poison.ui.tabs.visualstabs
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.toLocale
 import rat.poison.ui.tabs.chamsEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
@@ -16,13 +17,13 @@ class ChamsEspTab : Tab(false, false) {
     val chamsShowHealth = VisCheckBoxCustom("Chams Show Health", "CHAMS_SHOW_HEALTH")
     val chamsBrightness = VisSliderCustom("Chams Brightness", "CHAMS_BRIGHTNESS", 0F, 5000F, 25F, true)
 
-    val showTeam = VisCheckBoxCustom(" ", "CHAMS_SHOW_TEAM")
+    val showTeam = VisCheckBoxCustom(" ", "CHAMS_SHOW_TEAM", false)
     val chamsTeamColor = VisColorPickerCustom("Teammates", "CHAMS_TEAM_COLOR")
 
-    val showEnemies = VisCheckBoxCustom(" ", "CHAMS_SHOW_ENEMIES")
+    val showEnemies = VisCheckBoxCustom(" ", "CHAMS_SHOW_ENEMIES", false)
     val chamsEnemyColor = VisColorPickerCustom("Enemies", "CHAMS_ENEMY_COLOR")
 
-    val showSelf = VisCheckBoxCustom(" ", "CHAMS_SHOW_SELF")
+    val showSelf = VisCheckBoxCustom(" ", "CHAMS_SHOW_SELF", false)
     val chamsSelfColor = VisColorPickerCustom("Self", "CHAMS_SELF_COLOR")
 
     init {
@@ -61,7 +62,7 @@ class ChamsEspTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Chams"
+        return "Chams".toLocale()
     }
 }
 

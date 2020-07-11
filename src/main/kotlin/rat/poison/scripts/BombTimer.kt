@@ -2,7 +2,6 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.entity.*
@@ -10,11 +9,13 @@ import rat.poison.game.entityByType
 import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets.dwUse
 import rat.poison.game.offsets.EngineOffsets
+import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.strToBool
-import rat.poison.toInt
+import rat.poison.toLocale
 import rat.poison.ui.uiPanels.bombText
 import rat.poison.utils.every
+import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.generalUtil.toInt
 
 //ent_create planted_c4_training
 //ent_fire planted_c4_training ActivateSetTimerLength 20
@@ -119,21 +120,21 @@ data class BombState(var hasBomb: Boolean = false,
         sb.setLength(0)
 
         if (planted) {
-            sb.append("Bomb Planted!\n")
+            sb.append("${"Bomb-Planted!".toLocale()}\n")
 
-            sb.append("TimeToExplode : ${formatFloat(timeLeftToExplode)} \n")
+            sb.append("${"Time-To-Explode:".toLocale()} ${formatFloat(timeLeftToExplode)} \n")
 
             if (location.isNotBlank())
-                sb.append("Location : $location\n")
+                sb.append("${"Location:".toLocale()} $location\n")
             if (gettingDefused) {
-                sb.append("Can Defuse: $canDefuse\n")
+                sb.append("${"Can-Defuse:".toLocale()} $canDefuse\n")
                 // Redundant as the UI already shows this, but may have a use case I'm missing
-                sb.append("Time To Defuse: ${formatFloat(timeLeftToDefuse)}\n")
+                sb.append("${"Time-To-Defuse:".toLocale()} ${formatFloat(timeLeftToDefuse)}\n")
 
-                sb.append("Time Left After: ${timeLeftToExplode - timeLeftToDefuse}")
+                sb.append("${"Time-Left-After:".toLocale()} ${timeLeftToExplode - timeLeftToDefuse}")
             }
         } else {
-            sb.append("Bomb Not Planted!\n")
+            sb.append("${"Bomb-Not-Planted!".toLocale()}\n")
         }
         return sb.toString()
     }

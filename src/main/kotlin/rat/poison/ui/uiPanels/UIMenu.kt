@@ -7,30 +7,33 @@ import com.kotcrab.vis.ui.widget.VisWindow
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
-import rat.poison.App.uiAimOverridenWeapons
 import rat.poison.game.CSGO
-import rat.poison.opened
+import rat.poison.overlay.App.uiAimOverridenWeapons
+import rat.poison.overlay.opened
 import rat.poison.ui.tabs.*
 import rat.poison.ui.uiUpdate
 import kotlin.math.sign
 import kotlin.system.exitProcess
 
 val mainTabbedPane = TabbedPane()
-    val aimTab = AimTab()
-    val visualsTab = VisualsTab()
-    val rcsTab = RcsTab()
-    val miscTab = MiscTab()
-    val ranksTab = RanksTab()
-    val nadeHelperTab = NadeHelperTab()
-    val skinChangerTab = SkinChangerTab()
-    val optionsTab = OptionsTab()
+    var aimTab = AimTab()
+    var visualsTab = VisualsTab()
+    var rcsTab = RcsTab()
+    var miscTab = MiscTab()
+    var ranksTab = RanksTab()
+    var nadeHelperTab = NadeHelperTab()
+    var skinChangerTab = SkinChangerTab()
+    var optionsTab = OptionsTab()
 
-private var wantedHeight = 565F
-private var wantedWidth = 535F
-private var isResizingHeight = false
-private var isResizingWidth = false
 
-class UIMenu : VisWindow("Rat Poison 1.7.1.1") {
+class UIMenu : VisWindow("Rat Poison 1.7") {
+    var wantedHeight = 565F
+    var wantedWidth = 535F
+    val normHeight = 565F //Fuck you too
+    val normWidth = 535F
+    private var isResizingHeight = false
+    private var isResizingWidth = false
+
     init {
         defaults().left()
 
@@ -75,9 +78,6 @@ class UIMenu : VisWindow("Rat Poison 1.7.1.1") {
                 if (tab == null) return
 
                 mainTabbedPaneContent.clear()
-
-                val normHeight = 565F //Fuck you too
-                val normWidth = 535F
 
                 when (tab) { //Update table content to tab selected content
                     aimTab -> {
@@ -145,8 +145,8 @@ class UIMenu : VisWindow("Rat Poison 1.7.1.1") {
         })
 
         //Add tab pane & scroll pane to main ui window
-        add(mainTabbedPane.table).growX().minSize(25F).row()
-        add(mainScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
+        add(mainTabbedPane.table).growX().row()
+        add(mainScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.top).row()
         pack()
         centerWindow()
 
@@ -175,7 +175,7 @@ class UIMenu : VisWindow("Rat Poison 1.7.1.1") {
         uiAimOverridenWeapons.color.a = alpha
     }
 
-    private fun changeHeight() {
+    fun changeHeight() {
         if (!isResizingHeight) {
             isResizingHeight = true
             Thread(Runnable {
@@ -196,7 +196,7 @@ class UIMenu : VisWindow("Rat Poison 1.7.1.1") {
         }
     }
 
-    private fun changeWidth() {
+    fun changeWidth() {
         if (!isResizingWidth) {
             isResizingWidth = true
             Thread(Runnable {

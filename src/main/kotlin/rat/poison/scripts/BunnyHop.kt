@@ -9,8 +9,8 @@ import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets.dwForceJump
-import rat.poison.strToBool
 import rat.poison.utils.every
+import rat.poison.utils.generalUtil.strToBool
 import java.awt.event.KeyEvent.VK_SPACE
 
 fun bunnyHop() = every(4) {

@@ -2,7 +2,6 @@
 
 package rat.poison.scripts
 
-import rat.poison.App.haveTarget
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
@@ -14,11 +13,12 @@ import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_hObserverTarget
 import rat.poison.game.offsets.ClientOffsets.dwIndex
-import rat.poison.opened
-import rat.poison.strToBool
+import rat.poison.overlay.App.haveTarget
+import rat.poison.overlay.opened
 import rat.poison.ui.uiPanels.specListText
 import rat.poison.utils.every
 import rat.poison.utils.extensions.readIndex
+import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.notInGame
 
 internal fun spectatorList() = every(100) {

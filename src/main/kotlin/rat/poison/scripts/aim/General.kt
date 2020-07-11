@@ -5,8 +5,8 @@ import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.settings.*
-import rat.poison.strToBool
 import rat.poison.utils.*
+import rat.poison.utils.generalUtil.strToBool
 import java.lang.Math.toRadians
 import kotlin.math.abs
 import kotlin.math.pow
@@ -96,18 +96,22 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	return closestPlayer
 }
 
-fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, angle: Angle, lockFOV: Int = curSettings["AIM_FOV"].toInt(), BONE: Int): MutableList<Any> {
+fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, curAngle: Angle, lockFOV: Int = curSettings["AIM_FOV"].toInt(), BONE: Int, ovrStatic: Boolean = false): MutableList<Any> {
 	val retList = mutableListOf(-1.0, 0.0, 0L)
 
-	val ePos: Angle = entity.bones(BONE)
+	var ePos: Angle = entity.bones(BONE)
 
-	if (curSettings["FOV_TYPE"].replace("\"", "") == "DISTANCE") {
+	if (ovrStatic) {
+		ePos = position
+	}
+
+	if (curSettings["FOV_TYPE"].replace("\"", "") == "DISTANCE" && !ovrStatic) {
 		val distance = position.distanceTo(ePos)
 
 		val dest = getCalculatedAngle(me, ePos)
 
-		val pitchDiff = abs(angle.x - dest.x)
-		var yawDiff = abs(angle.y - dest.y)
+		val pitchDiff = abs(curAngle.x - dest.x)
+		var yawDiff = abs(curAngle.y - dest.y)
 
 		if (yawDiff > 180f) {
 			yawDiff = 360f - yawDiff
@@ -122,11 +126,8 @@ fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, angle:
 			retList[2] = entity
 		}
 	} else {
-		val camAng = clientState.angle()
+		val camAng = curAngle
 		val calcAng = realCalcAngle(me, ePos)
-		val punch = me.punch()
-		camAng.x += punch.x*2
-		camAng.y += punch.y*2
 
 		val delta = Angle(camAng.x - calcAng.x, camAng.y - calcAng.y, 0.0)
 		delta.normalize()
@@ -166,7 +167,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		val meWepEnt = me.weaponEntity()
 		val canFire = meWepEnt.canFire()
 
-		if (meWep.grenade || meWep.knife || meWep.miscEnt || meWep == Weapons.ZEUS_X27) {
+		if (meWep.grenade || meWep.knife || meWep.miscEnt || meWep == Weapons.ZEUS_X27 || meWep.bomb) {
 			reset()
 			return@every
 		}

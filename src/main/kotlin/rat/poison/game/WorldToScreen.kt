@@ -5,8 +5,8 @@ import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.offsets.ClientOffsets.dwViewMatrix
-import rat.poison.strToBool
 import rat.poison.utils.Vector
+import rat.poison.utils.generalUtil.strToBool
 
 val w2sViewMatrix = Array(4) { DoubleArray(4) }
 

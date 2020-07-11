@@ -4,31 +4,26 @@ package rat.poison.scripts.bspHandling
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector3
-import com.sun.jna.Structure
 import info.ata4.bsplib.BspFile
 import info.ata4.bsplib.app.SourceAppDB
 import info.ata4.bsplib.app.SourceAppID
-import info.ata4.bsplib.struct.*
-import info.ata4.bsplib.vector.Vector3f
-import org.jire.arrowhead.Struct
+import info.ata4.bsplib.struct.BspData
+import info.ata4.bsplib.struct.DLeaf
+import info.ata4.bsplib.struct.DNode
+import info.ata4.bsplib.struct.DPlane
 import org.lwjgl.opengl.GL11.glPointSize
-import rat.poison.*
-import rat.poison.App.sb
-import rat.poison.App.shapeRenderer
-import rat.poison.App.textRenderer
-import rat.poison.game.CSGO
+import rat.poison.dbg
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.worldToScreen
-import rat.poison.scripts.bombState
+import rat.poison.overlay.App.sb
+import rat.poison.overlay.App.shapeRenderer
+import rat.poison.overlay.App.textRenderer
 import rat.poison.utils.Vector
+import rat.poison.utils.generalUtil.toVector
 import java.io.File
-import java.lang.Float.max
-import java.lang.Math.pow
-import java.util.concurrent.TimeUnit
 import kotlin.math.pow
 import kotlin.math.sqrt
-import kotlin.system.measureNanoTime
 
 var bspData: BspData = BspData()
 

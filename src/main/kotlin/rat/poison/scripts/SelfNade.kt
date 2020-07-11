@@ -6,13 +6,10 @@ import rat.poison.game.angle
 import rat.poison.game.clientState
 import rat.poison.robot
 import rat.poison.utils.Angle
+import rat.poison.utils.normalize
 import rat.poison.utils.pathAim
 import java.awt.event.KeyEvent
 import java.awt.event.MouseEvent
-import rat.poison.game.CSGO
-import rat.poison.game.offsets.ClientOffsets.dwForceJump
-import rat.poison.utils.normalize
-import kotlin.math.abs
 
 fun selfNade() {
     Thread(Runnable {

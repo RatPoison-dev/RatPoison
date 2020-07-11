@@ -5,6 +5,7 @@ import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.curSettings
 import rat.poison.scripts.bombState
+import rat.poison.toLocale
 import rat.poison.ui.changed
 import kotlin.math.round
 
@@ -12,7 +13,7 @@ lateinit var bombText : VisLabel
 
 //Needs cleanup
 
-class UIBombTimer : VisWindow("Bomb Timer") {
+class UIBombTimer : VisWindow("Bomb-Timer".toLocale()) {
     init {
         defaults().left()
 

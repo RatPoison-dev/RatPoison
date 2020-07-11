@@ -1,12 +1,12 @@
 package rat.poison.scripts
 
-import com.kotcrab.vis.ui.widget.VisLabel
-import rat.poison.App.haveTarget
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
 import rat.poison.game.rankName
-import rat.poison.opened
+import rat.poison.overlay.App.haveTarget
+import rat.poison.overlay.opened
+import rat.poison.toLocale
 import rat.poison.ui.uiPanels.ranksTab
 import rat.poison.utils.every
 import rat.poison.utils.extensions.roundNDecimals
@@ -58,11 +58,11 @@ fun ranks() = every(1000, true) { //Rebuild every second
 
             when (entTeam) { //Bruh
                 "CT" -> {
-                    teamList.add("CT")
+                    teamList.add("CT".toLocale())
                 }
 
                 "T" -> {
-                    teamList.add("T")
+                    teamList.add("T".toLocale())
                 }
             }
 

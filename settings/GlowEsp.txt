@@ -1,22 +1,26 @@
 //Enable glow esp
 GLOW_ESP = false
 
-//Enable inverted glow esp
-//Glows all of the entity like a silhouette
-INV_GLOW_ESP = false
+//Type of glow on entities (enemies & teammates)
+GLOW_ENEMY_TYPE = Normal
 
-//Enable model esp
-//Glows the details of the model
-//Not visible through walls
-MODEL_ESP = false
+GLOW_TEAMMATE_TYPE = Normal
 
-//Enable model and glow
-//Will use glow esp (or inv glow esp) when entity is not visible
-//Will use model esp when entity is visible
-MODEL_AND_GLOW = false
+GLOW_GRENADE_TYPE = Normal
+
+GLOW_WEAPON_TYPE = Normal
+
+GLOW_BOMB_CARRIER_TYPE = Normal
+
+GLOW_BOMB_TYPE = Normal
+
+GLOW_TARGET_TYPE = Normal
 
 //Enable glow esp on teammates
 GLOW_SHOW_TEAM = false
+
+//Glow color will depends on player health
+GLOW_SHOW_HEALTH = false
 
 //Enable glow esp on enemies
 GLOW_SHOW_ENEMIES = true
@@ -58,6 +62,6 @@ GLOW_WEAPON_COLOR = Color(red=251, green=0, blue=255, alpha=0.5)
 GLOW_GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)
 
 //Color of visible, in aimbot FOV players
-GLOW_HIGHLIGHT_COLOR = Color(red=0, green=174, blue=255, alpha=1.0)
+GLOW_TARGET_COLOR = Color(red=0, green=174, blue=255, alpha=1.0)
 
 

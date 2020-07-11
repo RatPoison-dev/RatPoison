@@ -2,7 +2,6 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils.clamp
-import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.CSGO.csgoEXE
@@ -10,10 +9,12 @@ import rat.poison.game.entity.weapon
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_iDefaultFov
 import rat.poison.game.netvars.NetVarOffsets.m_iFOV
+import rat.poison.overlay.App
 import rat.poison.settings.MENUTOG
-import rat.poison.strToBool
-import rat.poison.strToColor
-import java.lang.Math.*
+import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.generalUtil.strToColor
+import java.lang.Math.toDegrees
+import java.lang.Math.toRadians
 
 fun drawFov() = App {
     if (!curSettings["ENABLE_ESP"].strToBool() || MENUTOG)

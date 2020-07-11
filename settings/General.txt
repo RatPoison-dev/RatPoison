@@ -1,9 +1,12 @@
 //Enabe DEBUG
-DEBUG = false
+DEBUG = true
 
 //Enable the overlay, menu
 //Any settings/scripts reliant on drawing on the overlay won't enable
 MENU = true
+
+//Alpha of the menu
+MENU_ALPHA = 1.0
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles visibility of the menu on the overlay
 //Default key is F1
@@ -25,9 +28,6 @@ MENU_STAY_FOCUSED = true
 //The default overlay width and height, backup if width and height cannot be grabbed from MENU_APP
 OVERLAY_WIDTH = 1920
 OVERLAY_HEIGHT = 1080
-
-//Enable overlay warning on initialize
-WARNING = true
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles aim on or off
 //Default key is F3
@@ -118,7 +118,7 @@ RANDOM_BONE = -4
 PERFECT_AIM = false
 PERFECT_AIM_CHANCE = 15
 PERFECT_AIM_FOV = 10
-AIM_BONE = 7
+AIM_BONE = 8
 FORCE_AIM_BONE = 8
 AIM_SPEED = 2
 AIM_FOV = 20

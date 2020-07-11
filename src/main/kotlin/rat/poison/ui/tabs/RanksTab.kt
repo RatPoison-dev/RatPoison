@@ -5,6 +5,7 @@ import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.scripts.*
+import rat.poison.toLocale
 
 class RanksTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -36,17 +37,17 @@ class RanksTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Ranks"
+        return "Ranks".toLocale()
     }
 
     fun updateRanks() {
-        teamsLabel.setText("Team  \n")
-        namesLabel.setText("Name  \n")
-        ranksLabel.setText("Rank  \n")
-        killsLabel.setText("Kills  \n")
-        deathsLabel.setText("Deaths  \n")
-        KDsLabel.setText("K/D  \n")
-        winsLabel.setText("Wins  \n")
+        teamsLabel.setText("Team".toLocale() + "  \n")
+        namesLabel.setText("Name".toLocale() + "  \n")
+        ranksLabel.setText("Rank".toLocale() + "  \n")
+        killsLabel.setText("Kills".toLocale() + "  \n")
+        deathsLabel.setText("Deaths".toLocale() + "  \n")
+        KDsLabel.setText("K/D".toLocale() + "  \n")
+        winsLabel.setText("Wins".toLocale() + "  \n")
 
         for (i in 0 until teamList.size-1) {
             teamsLabel.setText(teamsLabel.text.toString() + teamList[i] + "  \n")

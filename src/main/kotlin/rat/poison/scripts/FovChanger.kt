@@ -1,6 +1,5 @@
 package rat.poison.scripts
 
-import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.dead
@@ -10,7 +9,8 @@ import rat.poison.game.entity.weaponEntity
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_iDefaultFov
 import rat.poison.game.netvars.NetVarOffsets.m_zoomLevel
-import rat.poison.strToBool
+import rat.poison.overlay.App
+import rat.poison.utils.generalUtil.strToBool
 
 internal fun fovChanger() = App {
     if (!curSettings["ENABLE_FOV_CHANGER"].strToBool() || me.dead()) return@App

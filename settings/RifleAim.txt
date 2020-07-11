@@ -15,7 +15,7 @@ RIFLE_FACTOR_RECOIL = true
 
 //Aim Bone
 //Default bone to aim at
-RIFLE_AIM_BONE = 6
+RIFLE_AIM_BONE = Stomach
 
 //Aim FOV
 //Aims at entities inside this value

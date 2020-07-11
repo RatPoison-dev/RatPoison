@@ -2,28 +2,38 @@ package rat.poison.ui.tabs
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.curSettings
-import rat.poison.settings.*
-import rat.poison.strToBool
-import rat.poison.ui.uiPanels.aimTab
+import com.sun.jna.StringArray
+import rat.poison.*
 import rat.poison.ui.uiHelpers.tables.AimBTrigTable
+import rat.poison.ui.uiHelpers.tables.AimBacktrackTable
 import rat.poison.ui.uiHelpers.tables.AimTable
+import rat.poison.ui.uiPanels.aimTab
+import rat.poison.utils.generalUtil.strToBool
 
-//I really couldn't give a shit to update this to the same as the other tabs
+
+//val itemsArray = Array<String>()
+//for (i in boxItems) {
+//    itemsArray.add(i)
+//}
 
 var categorySelected = "PISTOL"
+val gunCategories = arrayOf("PISTOL", "RIFLE", "SMG", "SNIPER", "SHOTGUN")
+var boneCategories = arrayOf("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
 
 class AimTab : Tab(true, false) { //Aim.kts tab
     private val table = VisTable(false)
     val tAim = AimTable()
     val tTrig = AimBTrigTable()
+    val tBacktrack = AimBacktrackTable()
 
     init {
         table.add(tAim).growX().row()
-        table.add(tTrig).growX()
+        table.add(tTrig).growX().row()
+        table.add(tBacktrack).growX().row()
     }
 
     override fun getContentTable(): Table? {
@@ -31,7 +41,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     }
 
     override fun getTabTitle(): String? {
-        return "Aim"
+        return "Aim".toLocale()
     }
 }
 
@@ -55,8 +65,9 @@ fun updateDisableAim() {
         automaticWeaponsInput.disable(bool, col)
         targetSwapDelay.disable(bool, col)
 
-        fovTypeLabel.color = col
-        fovTypeBox.isDisabled = bool
+        //fovTypeLabel.color = col
+        //fovTypeBox.isDisabled = bool
+        fovType.update()
 
         forceAimBoneKey.disable(bool, col)
         forceAimKey.disable(bool, col)
@@ -69,10 +80,10 @@ fun updateDisableAim() {
         enableFlatAim.isDisabled = bool
         enablePathAim.isDisabled = bool
         enableScopedOnly.isDisabled = bool
-        aimBoneLabel.color = col
-        aimBoneBox.isDisabled = bool
-        forceAimBoneLabel.color = col
-        forceAimBoneBox.isDisabled = bool
+
+        aimBone.disable(bool, col)
+        forceAimBone.disable(bool, col)
+
         aimFov.disable(bool, col)
         aimSpeed.disable(bool, col)
         aimSmooth.disable(bool, col)
@@ -98,6 +109,20 @@ fun updateDisableAim() {
 
 fun updateAim() {
     aimTab.tAim.apply {
+        categorySelectLabel.setText("${"Weapon-Category".toLocale()}:") //Do not like this
+        //Create Category Selector Box
+        val itemsArray = Array<String>()
+        for (i in gunCategories) {
+            if (dbg && curLocale[i].isBlank()) {
+                println("[DEBUG] $CURRENT_LOCALE $i is missing!")
+            }
+
+            itemsArray.add(curLocale[i])
+        }
+
+        categorySelectionBox.items = itemsArray
+        //categorySelectionBox.selectedIndex = 1
+
         enableAim.update()
         aimToggleKey.update()
         activateFromFireKey.update()
@@ -111,7 +136,8 @@ fun updateAim() {
         automaticWeaponsInput.update()
         targetSwapDelay.update()
 
-        fovTypeBox.selected = curSettings["FOV_TYPE"].replace("\"", "")
+        fovType.update()
+        //fovTypeBox.selected = curSettings["FOV_TYPE"].replace("\"", "")
 
         enableAimOnShot.update()
         enableFactorRecoil.update()
@@ -134,23 +160,8 @@ fun updateAim() {
             aimAfterShots.disable(true, Color(0F, 0F, 0F, 0F))
         }
 
-        aimBoneBox.selected = when (curSettings[categorySelected + "_AIM_BONE"].toInt()) {
-            HEAD_BONE -> "HEAD"
-            NECK_BONE -> "NECK"
-            CHEST_BONE -> "CHEST"
-            STOMACH_BONE -> "STOMACH"
-            NEAREST_BONE -> "NEAREST"
-            else -> "RANDOM"
-        }
-
-        forceAimBoneBox.selected = when (curSettings[categorySelected + "_AIM_FORCE_BONE"].toInt()) {
-            HEAD_BONE -> "HEAD"
-            NECK_BONE -> "NECK"
-            CHEST_BONE -> "CHEST"
-            STOMACH_BONE -> "STOMACH"
-            NEAREST_BONE -> "NEAREST"
-            else -> "RANDOM"
-        }
+        aimBone.update()
+        forceAimBone.update()
 
         aimFov.update()
         aimSpeed.update()
@@ -212,6 +223,20 @@ fun updateDisableTrig() {
 
 fun updateTrig() {
     aimTab.tTrig.apply {
+        categorySelectLabel.setText("${"Weapon-Category".toLocale()}:")
+        //Create Category Selector Box
+        val itemsArray = Array<String>()
+        for (i in gunCategories) {
+            if (dbg && curLocale[i].isBlank()) {
+                println("[DEBUG] $CURRENT_LOCALE $i is missing!")
+            }
+
+            itemsArray.add(curLocale[i])
+        }
+
+        categorySelectionBox.items = itemsArray
+        //categorySelectionBox.selectedIndex = 1
+
         enableTrig.update()
         enableTrig.update()
         boneTriggerEnableKey.update()
@@ -224,4 +249,66 @@ fun updateTrig() {
     }
 
     updateDisableTrig()
+}
+
+//Backtrack
+fun updateDisableBacktrack() {
+    aimTab.tBacktrack.apply {
+        val bool = !aimTab.tBacktrack.enableBacktrack.isChecked
+
+        var col = Color(255F, 255F, 255F, 1F)
+        if (bool) {
+            col = Color(105F, 105F, 105F, .2F)
+        }
+
+        //enableBacktrack.disable(bool)
+        backtrackVisualize.disable(bool)
+        backtrackEnableKey.disable(bool)
+        backtrackKey.disable(bool, col)
+        backtrackFOV.disable(bool, col)
+        backtrackMS.disable(bool, col)
+        backtrackSpotted.disable(bool)
+        backtrackPreferAccurate.disable(bool)
+        categorySelectLabel.color = col
+        categorySelectionBox.isDisabled = bool
+        backtrackWeaponEnabled.disable(bool)
+        backtrackWeaponNeck.disable(bool)
+        backtrackWeaponChest.disable(bool)
+        backtrackWeaponStomach.disable(bool)
+        backtrackWeaponPelvis.disable(bool)
+    }
+}
+
+fun updateBacktrack() {
+    aimTab.tBacktrack.apply {
+        categorySelectLabel.setText("${"Weapon-Category".toLocale()}:")
+        //Create Category Selector Box
+        val itemsArray = Array<String>()
+        for (i in gunCategories) {
+            if (dbg && curLocale[i].isBlank()) {
+                println("[DEBUG] $CURRENT_LOCALE $i is missing!")
+            }
+
+            itemsArray.add(curLocale[i])
+        }
+
+        categorySelectionBox.items = itemsArray
+        //categorySelectionBox.selectedIndex = 1
+
+        enableBacktrack.update()
+        backtrackVisualize.update()
+        backtrackEnableKey.update()
+        backtrackKey.update()
+        backtrackFOV.update()
+        backtrackMS.update()
+        backtrackPreferAccurate.update()
+        backtrackSpotted.update()
+        backtrackWeaponEnabled.update()
+        backtrackWeaponNeck.update()
+        backtrackWeaponChest.update()
+        backtrackWeaponStomach.update()
+        backtrackWeaponPelvis.update()
+    }
+
+    updateDisableBacktrack()
 }

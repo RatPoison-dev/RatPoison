@@ -2,15 +2,15 @@ package rat.poison.scripts.esp
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import rat.poison.App
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
+import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
-import rat.poison.strToBool
-import rat.poison.strToColor
 import rat.poison.utils.Vector
+import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.generalUtil.strToColor
 import rat.poison.utils.notInGame
 
 fun snapLines() = App {

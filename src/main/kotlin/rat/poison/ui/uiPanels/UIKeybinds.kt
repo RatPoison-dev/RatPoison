@@ -2,12 +2,10 @@ package rat.poison.ui.uiPanels
 
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Align
-import com.kotcrab.vis.ui.util.Validators
 import com.kotcrab.vis.ui.widget.VisSlider
-import com.kotcrab.vis.ui.widget.VisValidatableTextField
 import com.kotcrab.vis.ui.widget.VisWindow
-import rat.poison.App.uiKeybinds
 import rat.poison.curSettings
+import rat.poison.overlay.App.uiKeybinds
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import kotlin.math.round

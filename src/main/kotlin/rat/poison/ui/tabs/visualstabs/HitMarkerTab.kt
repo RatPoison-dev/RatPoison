@@ -3,6 +3,7 @@ package rat.poison.ui.tabs.visualstabs
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.toLocale
 import rat.poison.ui.tabs.hitMarkerTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
@@ -49,7 +50,7 @@ class HitMarkerTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String? {
-        return "Hitmarker"
+        return "Hitmarker".toLocale()
     }
 }
 
