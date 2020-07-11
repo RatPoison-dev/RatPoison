@@ -2,6 +2,7 @@ package rat.poison.utils.generalUtil
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Matrix4
+import rat.poison.dbg
 import rat.poison.oWeapon
 import rat.poison.sWeapon
 
@@ -16,15 +17,22 @@ fun Boolean.toDouble() = if (this) 1.0 else 0.0
 fun Boolean.toInt() = if (this) 1 else 0
 
 fun convStrToColor(input: String): rat.poison.game.Color { //Rat poison color
-    var line = input
-    line = line.replace("Color(", "").replace(")", "").replace(",", "")
+    try {
+        var line = input
+        line = line.replace("Color(", "").replace(")", "").replace(",", "")
 
-    val arrayLine = line.trim().split(" ".toRegex(), 4)
+        val arrayLine = line.trim().split(" ".toRegex(), 4)
 
-    return rat.poison.game.Color(arrayLine[0].replace("red=", "").toInt(),
-            arrayLine[1].replace("green=", "").toInt(),
-            arrayLine[2].replace("blue=", "").toInt(),
-            arrayLine[3].replace("alpha=", "").toDouble())
+        return rat.poison.game.Color(arrayLine[0].replace("red=", "").toInt(),
+                arrayLine[1].replace("green=", "").toInt(),
+                arrayLine[2].replace("blue=", "").toInt(),
+                arrayLine[3].replace("alpha=", "").toDouble())
+    } catch (e: Exception) {
+        if (dbg) {
+            println("[DEBUG] $input Color is invalid, using white")
+        }
+        return rat.poison.game.Color(255, 255, 255, 1.0)
+    }
 }
 
 fun convStrToColorGDX(input: String): Color {
