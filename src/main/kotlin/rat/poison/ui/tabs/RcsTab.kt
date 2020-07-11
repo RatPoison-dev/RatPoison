@@ -18,8 +18,8 @@ class RcsTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     val enableRCS = VisCheckBoxCustom("Enable RCS", "ENABLE_RCS")
 
-    val rcsSmoothingX = VisSliderCustom("RCS X Smoothing", "RCS_SMOOTHING_X", .1F, 1F, .02F, false, width1 = 200F, width2 = 250F)
-    val rcsSmoothingY = VisSliderCustom("RCS Y Smoothing", "RCS_SMOOTHING_Y", .1F, 1F, .02F, false, width1 = 200F, width2 = 250F)
+    val rcsSmoothingX = VisSliderCustom("RCS X Accuracy", "RCS_SMOOTHING_X", .1F, 1F, .02F, false, width1 = 200F, width2 = 250F)
+    val rcsSmoothingY = VisSliderCustom("RCS Y Accuracy", "RCS_SMOOTHING_Y", .1F, 1F, .02F, false, width1 = 200F, width2 = 250F)
 
     val rcsReturnAim = VisCheckBoxCustom("Return Aim", "RCS_RETURNAIM")
 
