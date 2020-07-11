@@ -571,3 +571,9 @@ Override-Weapons = Setaim failure
 Bomb-Timer = Setaim failure
 Spectator-List = Setaim failure
 
+//bomb timer
+Bomb-Not-Planted! = Setaim failure
+Bomb-Planted! = Setaim failure
+Time-To-Explode: = Setaim failure
+Location: = Setaim failure
+
