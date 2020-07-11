@@ -6,6 +6,7 @@ import rat.poison.dbg
 import rat.poison.settingsLoaded
 import java.io.File
 import java.io.FileReader
+import kotlin.text.Charsets.UTF_8
 
 fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
     println("Loading settings... " + if (dbg) { "$fileDir $specificFile" } else { "" })
@@ -44,7 +45,7 @@ fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
 }
 
 fun loadLocale(fileDir: String) {
-    FileReader(File(fileDir)).readLines().forEach { line ->
+    File(fileDir).readLines(UTF_8).forEach { line ->
         if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith("\"") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
             val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 

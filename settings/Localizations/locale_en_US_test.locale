@@ -577,3 +577,11 @@ Bomb-Planted! = Setaim failure
 Time-To-Explode: = Setaim failure
 Location: = Setaim failure
 
+//more new shit
+//footsteps
+Text = Setaim failure
+Circle = Setaim failure
+
+//aim strafer
+Same = Setaim failure
+Opposite = Setaim failure

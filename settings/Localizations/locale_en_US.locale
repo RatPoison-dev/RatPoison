@@ -576,3 +576,12 @@ Bomb-Not-Planted! = Bomb Not Planted!
 Bomb-Planted! = Bomb Planted!
 Time-To-Explode: = Time To Explode:
 Location: = Location:
+
+//more new shit
+//footsteps
+Text = Text
+Circle = Circle
+
+//aim strafer
+Same = Same
+Opposite = Opposite

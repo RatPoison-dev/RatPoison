@@ -7,13 +7,11 @@ import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import org.jire.arrowhead.keyPressed
-import rat.poison.SETTINGS_DIRECTORY
-import rat.poison.curSettings
+import rat.poison.*
 import rat.poison.scripts.esp.updateHitsound
 import rat.poison.scripts.nameChanger
 import rat.poison.scripts.selfNade
 import rat.poison.scripts.weaponSpamToggleKey
-import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
@@ -23,6 +21,8 @@ import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.generalUtil.boolToStr
 import rat.poison.utils.generalUtil.strToBool
 import java.io.File
+
+val aimStraferCategories = arrayOf("Same", "Opposite")
 
 class MiscTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -81,9 +81,18 @@ class MiscTab : Tab(false, false) {
         }
 
         //Aim Strafer Table
-        aimStraferSelectBox.setItems("Same", "Opposite")
+        val itemsArray = Array<String>()
+        for (i in aimStraferCategories) {
+            if (dbg && curLocale[i].isBlank()) {
+                println("[DEBUG] $CURRENT_LOCALE $i is missing!")
+            }
+
+            itemsArray.add(curLocale[i])
+        }
+        aimStraferSelectBox.items = itemsArray
+
         aimStraferSelectBox.changed { _, _ ->
-            if (aimStraferSelectBox.selected == "Same") {
+            if (aimStraferCategories[aimStraferSelectBox.selectedIndex] == "Same") {
                 curSettings["AIM_STRAFER_TYPE"] = 1
             } else {
                 curSettings["AIM_STRAFER_TYPE"] = 0
@@ -110,7 +119,7 @@ class MiscTab : Tab(false, false) {
         hitSoundBox.items = hitSoundFiles
 
         hitSound.add(hitSoundCheckBox)
-        hitSound.add(hitSoundBox).padLeft(150F-hitSoundCheckBox.width).width(90F)
+        hitSound.add(hitSoundBox).padLeft(100F-hitSoundCheckBox.width).width(90F)
 
         hitSoundBox.selected = curSettings["HITSOUND_FILE_NAME"].replace("\"", "")
 
@@ -211,10 +220,10 @@ fun miscTabUpdate() {
         fovSniperZoom2.update()
         aimStrafer.update()
         aimStraferShift.update()
-        aimStraferSelectBox.selected = when(curSettings["AIM_STRAFER_TYPE"].toInt()) {
+        aimStraferSelectBox.selectedIndex = aimStraferCategories.indexOf(when(curSettings["AIM_STRAFER_TYPE"].toInt()) {
             1 -> "Same"
             else -> "Opposite"
-        }
+        })
         aimStraferStrictness.update()
         doorSpam.update()
         doorSpamKey.update()

@@ -177,7 +177,8 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		//	return@every
 		//}
 
-		if (curSettings["AIM_ONLY_ON_SHOT"].strToBool() && !canFire) {
+		//&& !curSettings["AUTOMATIC_WEAPONS"].strToBool() && !meWep.automatic
+		if ((curSettings["AIM_ONLY_ON_SHOT"].strToBool() && !canFire)) {
 			reset()
 			return@every
 		}
@@ -193,7 +194,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 
 		val pressed = ((aim || boneTrig) && !MENUTOG && haveAmmo &&
 				(if (meWep.rifle || meWep.smg) {
-					(me.shotsFired() > curSettings["AIM_AFTER_SHOTS"].toInt())
+					me.shotsFired() >= curSettings["AIM_AFTER_SHOTS"].toInt()
 				} else {
 					true
 				})) || forceAim

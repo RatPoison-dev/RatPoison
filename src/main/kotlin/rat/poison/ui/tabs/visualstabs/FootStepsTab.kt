@@ -1,16 +1,18 @@
 package rat.poison.ui.tabs.visualstabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.curSettings
-import rat.poison.toLocale
+import rat.poison.*
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.footStepsEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
+
+val footstepItems = arrayOf("Text", "Circle")
 
 class FootstepsEspTab : Tab(false, false) {
     private val table = VisTable()
@@ -27,21 +29,30 @@ class FootstepsEspTab : Tab(false, false) {
     val footStepEnemyColor = VisColorPickerCustom("Enemies", "FOOTSTEP_ENEMY_COLOR")
 
     init {
-        footStepType.setItems("Text", "Circle")
-        footStepType.selected = when (curSettings["FOOTSTEP_TYPE"].toInt()) {
+        val itemsArray = Array<String>()
+        for (i in footstepItems) {
+            if (dbg && curLocale[i].isBlank()) {
+                println("[DEBUG] $CURRENT_LOCALE $i is missing!")
+            }
+
+            itemsArray.add(curLocale[i])
+        }
+        footStepType.items = itemsArray
+
+        footStepType.selectedIndex = footstepItems.indexOf(when (curSettings["FOOTSTEP_TYPE"].toInt()) {
             1 -> "Text"
             else -> "Circle"
-        }
+        })
+
         footStepType.changed { _, _ ->
-            curSettings["FOOTSTEP_TYPE"] = when (footStepType.selected) { "Text" -> 1; else -> 2}
+            curSettings["FOOTSTEP_TYPE"] = when (footstepItems[footStepType.selectedIndex]) { "Text" -> 1; else -> 2}
             true
         }
-
 
         table.padLeft(25F)
         table.padRight(25F)
 
-        table.add(enableFootSteps).padRight(175F - enableFootSteps.width)
+        table.add(enableFootSteps).padRight(225F - enableFootSteps.width)
         table.add(footStepType).padRight(225F - footStepType.width).row()
         table.add(footStepUpdateTimer).colspan(2).left().row()
         table.add(footStepTTL).colspan(2).left().row()
