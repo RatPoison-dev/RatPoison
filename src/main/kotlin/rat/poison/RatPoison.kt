@@ -108,7 +108,7 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Esp Toggle") }; espToggle()
     if (dbg) { println("[DEBUG] Initializing Automatic Weapons") }; automaticWeapon()
     if (dbg) { println("[DEBUG] Initializing Fast Stop") }; fastStop()
-    if (dbg) { println("[DEBUG] Initializing Head Walk (Currently disabled)") }; headWalk()
+    if (dbg) { println("[DEBUG] Initializing Head Walk") }; headWalk()
     if (dbg) { println("[DEBUG] Initializing Adrenaline") }; adrenaline()
     if (dbg) { println("[DEBUG] Initializing FovChanger") }; fovChanger()
     if (dbg) { println("[DEBUG] Initializing Door Spam") }; doorSpam()

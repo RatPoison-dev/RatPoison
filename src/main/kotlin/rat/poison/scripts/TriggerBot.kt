@@ -120,8 +120,11 @@ fun bTrigShoot(delay: Int, aimbot: Boolean = false) {
 
     if (triggerInShot) {
         boneTrig = aimbot
+        clientDLL[dwForceAttack] = 5
 
-        clientDLL[dwForceAttack] = 6
-        Thread.sleep(1)
+        Thread.sleep(50)
+        clientDLL[dwForceAttack] = 4
+        //triggerInShot = false
+        boneTrig = false
     }
 }
