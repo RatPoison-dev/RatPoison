@@ -121,7 +121,7 @@ internal fun glowEspApp() = App {
 						}
 				}
 
-				if (color != "") {
+				if (color.trim() != "" && !color.isBlank()) {
 					if (color == "GLOW_HEALTH") {
 						glowAddress.glow(Color((255 - 2.55 * health).toInt(), (2.55 * health).toInt(), 0, 1.0), glowType)
 					} else {
