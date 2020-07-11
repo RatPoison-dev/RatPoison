@@ -69,7 +69,7 @@ internal fun glowEspEvery() = every(10, true) {
 
 				if (showTarget && it.entity == glowTarget && glowTarget != -1L) {
 					glowType = curSettings["GLOW_TARGET_TYPE"].toGlowNum()
-					color = "GLOW_HIGHLIGHT_COLOR"
+					color = "GLOW_TARGET_COLOR"
 				} else if (showEnemies && !team) {
 					glowType = curSettings["GLOW_ENEMY_TYPE"].toGlowNum()
 					color = when (bEnt >= 0 && bEnt == entity && showBombCarrier) {
