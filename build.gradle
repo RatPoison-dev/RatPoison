@@ -131,6 +131,13 @@ task RatPoison {
 		skins.listFiles().each {
 			Files.copy(it.toPath(), (new File(dirSkin, it.getName())).toPath())
 		}
+
+		def dirLocalizations = file(new File(dir, "settings\\Localizations"))
+		dirLocalizations.mkdirs()
+		def localizations = file("settings\\Localizations")
+		localizations.listFiles().each {
+			Files.copy(it.toPath(), (new File(dirLocalizations, it.getName())).toPath())
+		}
 	}
 }
 
