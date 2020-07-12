@@ -48,13 +48,16 @@ class AimBTrigTable: VisTable(false) {
         }
 
         categorySelectionBox.items = itemsArray
-        categorySelectionBox.selectedIndex = 1
+        categorySelectionBox.selectedIndex = 0
 
         categorySelected = gunCategories[categorySelectionBox.selectedIndex]
         categorySelection.add(categorySelectLabel).padRight(200F-categorySelectLabel.width)
         categorySelection.add(categorySelectionBox)
 
         categorySelectionBox.changed { _, _ ->
+            println(categorySelectionBox.selectedIndex)
+            println(categorySelected)
+            println(gunCategories.indexOf(categorySelected))
             categorySelected = gunCategories[categorySelectionBox.selectedIndex]
             aimTab.tAim.categorySelectionBox.selectedIndex = gunCategories.indexOf(categorySelected)
             uiUpdate()

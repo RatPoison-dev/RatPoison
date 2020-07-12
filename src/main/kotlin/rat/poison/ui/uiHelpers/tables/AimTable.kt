@@ -113,7 +113,7 @@ class AimTable: VisTable(false) {
         }
         categorySelectionBox.items = itemsArray
 
-        categorySelectionBox.selectedIndex = 1
+        categorySelectionBox.selectedIndex = 0
         categorySelected = gunCategories[categorySelectionBox.selectedIndex]
         categorySelection.add(categorySelectLabel).padRight(200F-categorySelectLabel.width)
         categorySelection.add(categorySelectionBox)

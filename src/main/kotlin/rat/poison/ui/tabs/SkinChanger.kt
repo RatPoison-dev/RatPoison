@@ -67,7 +67,7 @@ class SkinChangerTab : Tab(false, false) {
         }
 
         categorySelectionBox.items = itemsArray
-        categorySelectionBox.selectedIndex = 1
+        categorySelectionBox.selectedIndex = 0
 
         categorySelectionBox.changed { _, _ ->
             when (gunCategories[categorySelectionBox.selectedIndex]) {

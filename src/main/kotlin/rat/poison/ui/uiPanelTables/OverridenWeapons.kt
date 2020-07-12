@@ -116,7 +116,7 @@ class OverridenWeapons : VisTable(true) {
         }
 
         categorySelectionBox.items = itemsArray
-        categorySelectionBox.selectedIndex = 1
+        categorySelectionBox.selectedIndex = 0
 
         categorySelected = gunCategories[categorySelectionBox.selectedIndex]
         categorySelection.add(categorySelectLabel).padRight(125F-categorySelectLabel.width)

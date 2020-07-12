@@ -1,21 +1,31 @@
 package rat.poison.scripts.esp
 
+import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.Color
 import rat.poison.game.entity.Entity
 import rat.poison.game.entity.EntityType
 import rat.poison.game.forEntities
+import rat.poison.game.hooks.toneMapController
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.utils.extensions.uint
+import rat.poison.utils.generalUtil.strToBool
 import java.lang.Float.floatToIntBits
 
 //Change to construct entities at call to prevent crashing?
 
 internal fun disableAllEsp() {
     val cWhite = Color(255, 255, 255, 1.0)
+
+    if (!curSettings["ENABLE_NIGHTMODE"].strToBool()) {
+        if (toneMapController != 0L) {
+            CSGO.csgoEXE[toneMapController + NetVarOffsets.m_bUseCustomAutoExposureMin] = 0
+            CSGO.csgoEXE[toneMapController + NetVarOffsets.m_bUseCustomAutoExposureMax] = 0
+        }
+    }
 
     val clientVModEnt = CSGO.csgoEXE.uint(CSGO.clientDLL.address + ClientOffsets.dwEntityList + (((CSGO.csgoEXE.uint(CSGO.csgoEXE.uint(CSGO.clientDLL.address + ClientOffsets.dwLocalPlayer) + NetVarOffsets.m_hViewModel)) and 0xFFF) - 1) * 16)
     CSGO.csgoEXE[clientVModEnt + 0x70] = 255.toByte()
