@@ -66,7 +66,7 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
                 itemsArray.add(curLocale[i])
             }
             selectBox.items = itemsArray
-            selectBox.selected = curLocale[curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }]]
+            selectBox.selectedIndex = boxItems.indexOf(curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }].toUpperCase())
         } else {
             selectBox.selected = curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }]
         }

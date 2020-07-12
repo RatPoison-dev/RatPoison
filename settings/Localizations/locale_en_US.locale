@@ -26,10 +26,6 @@ DEFUSER = DEFUSER
 SELF = Self
 HEALTH_BASED = Health Based
 ENABLE = Enable
-LEFT = Left
-RIGHT = Right
-TOP = Top
-BOTTOM = Bottom
 LINE_WIDTH = Line Width
 FOV = FOV
 
@@ -339,16 +335,16 @@ FORCE_UPDATE_AUTO = Force Update
 NADE_TRACER = Nade Tracer
 
 //Custom Glow
-Normal = Normal
-Model = Model
-Visible = Visible
-Visible-Flicker = Visible-Flicker
+NORMAL = Normal
+MODEL = Model
+VISIBLE = Visible
+VISIBLE-FLICKER = Visible-Flicker
 
 //Custom Box
-Left = Left
-Right = Right
-Top = Top
-Bottom = Bottom
+LEFT = Left
+RIGHT = Right
+TOP = Top
+BOTTOM = Bottom
 
 //Extensions
 _AIM_BONE = Bone
@@ -585,3 +581,6 @@ Circle = Circle
 //aim strafer
 Same = Same
 Opposite = Opposite
+
+//save config
+Enter-config-name = Enter config name

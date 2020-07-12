@@ -31,7 +31,7 @@ SHOTGUN_AIM_SPEED = 1
 SHOTGUN_AIM_SMOOTHNESS = 1.0
 
 //Force Bone
-SHOTGUN_AIM_FORCE_BONE = 8
+SHOTGUN_AIM_FORCE_BONE = Head
 
 //If the aimbot should only aim when you can shoot
 SHOTGUN_AIM_ONLY_ON_SHOT = true

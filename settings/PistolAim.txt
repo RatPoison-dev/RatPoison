@@ -31,7 +31,7 @@ PISTOL_AIM_SPEED = 2
 PISTOL_AIM_SMOOTHNESS = 2.5
 
 //Force Bone
-PISTOL_AIM_FORCE_BONE = 8
+PISTOL_AIM_FORCE_BONE = Head
 
 //If the aimbot should only aim when you can shoot
 PISTOL_AIM_ONLY_ON_SHOT = true

@@ -9,7 +9,7 @@ import java.io.FileReader
 import kotlin.text.Charsets.UTF_8
 
 fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
-    println("Loading settings... " + if (dbg) { "$fileDir $specificFile" } else { "" })
+    println("Loading settings... $fileDir $specificFile")
     settingsLoaded = false
     if (specificFile) {
         FileReader(File(fileDir)).readLines().forEach { line ->
@@ -25,7 +25,7 @@ fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
         }
     } else {
         File(fileDir).listFiles()?.forEach { file ->
-            if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo" && file.name.contains(".txt")) {
+            if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo" && file.name != "Localizations" && file.name.contains(".txt")) {
                 FileReader(file).readLines().forEach { line ->
                     if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                         val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE

@@ -252,7 +252,7 @@ fun saveCFG(cfgFileName: String) {
 
             val sbLines = StringBuilder()
             File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
-                if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo") {
+                if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo" && file.name != "Localizations") {
                     FileReader(file).readLines().forEach { line ->
                         if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                             val tempCurLine = line.trim().split(" ".toRegex(), 3) //Separate line into 'VARIABLE = VALUE'
@@ -281,7 +281,6 @@ fun saveCFG(cfgFileName: String) {
 
 fun loadCFG(cfgFileName: String) {
     if (!saving) {
-
         cfgFileName.replace(".cfg", "")
 
         val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg")

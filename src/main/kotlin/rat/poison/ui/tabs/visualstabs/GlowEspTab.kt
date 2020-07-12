@@ -21,13 +21,13 @@ class GlowEspTab: Tab(false, false) {
     //val aimBone = VisSelectBoxCustom("Bone", "_AIM_BONE", true, "HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
 
     //Visible flicker - is the bypass for now, issue in collecting settings
-    var enemyGlowType = VisSelectBoxCustom(" ", "GLOW_ENEMY_TYPE", false, false,"Normal", "Model", "Visible", "Visible-Flicker")
-    var teammateGlowType = VisSelectBoxCustom(" ", "GLOW_TEAMMATE_TYPE", false, false,"Normal", "Model", "Visible", "Visible-Flicker")
-    var weaponGlowType = VisSelectBoxCustom(" ", "GLOW_WEAPON_TYPE", false, false,"Normal", "Model", "Visible", "Visible-Flicker")
-    var grenadeGlowType = VisSelectBoxCustom(" ", "GLOW_GRENADE_TYPE", false, false, "Normal", "Model", "Visible", "Visible-Flicker")
-    var targetGlowType = VisSelectBoxCustom(" ", "GLOW_TARGET_TYPE", false, false, "Normal", "Model", "Visible", "Visible-Flicker")
-    var bombCarrierGlowType = VisSelectBoxCustom(" ", "GLOW_BOMB_CARRIER_TYPE", false, false, "Normal", "Model", "Visible", "Visible-Flicker")
-    var bombGlowType = VisSelectBoxCustom(" ", "GLOW_BOMB_TYPE", false, false, "Normal", "Model", "Visible", "Visible-Flicker")
+    var enemyGlowType = VisSelectBoxCustom(" ", "GLOW_ENEMY_TYPE", false, false,"NORMAL", "MODEL", "VISIBLE", "VISIBLE-FLICKER")
+    var teammateGlowType = VisSelectBoxCustom(" ", "GLOW_TEAMMATE_TYPE", false, false,"NORMAL", "MODEL", "VISIBLE", "VISIBLE-FLICKER")
+    var weaponGlowType = VisSelectBoxCustom(" ", "GLOW_WEAPON_TYPE", false, false,"NORMAL", "MODEL", "VISIBLE", "VISIBLE-FLICKER")
+    var grenadeGlowType = VisSelectBoxCustom(" ", "GLOW_GRENADE_TYPE", false, false, "NORMAL", "MODEL", "VISIBLE", "VISIBLE-FLICKER")
+    var targetGlowType = VisSelectBoxCustom(" ", "GLOW_TARGET_TYPE", false, false, "NORMAL", "MODEL", "VISIBLE", "VISIBLE-FLICKER")
+    var bombCarrierGlowType = VisSelectBoxCustom(" ", "GLOW_BOMB_CARRIER_TYPE", false, false, "NORMAL", "MODEL", "VISIBLE", "VISIBLE-FLICKER")
+    var bombGlowType = VisSelectBoxCustom(" ", "GLOW_BOMB_TYPE", false, false, "NORMAL", "MODEL", "VISIBLE", "VISIBLE-FLICKER")
 
     val glowShowHealth = VisCheckBoxCustom("Show Health", "GLOW_SHOW_HEALTH")
 
