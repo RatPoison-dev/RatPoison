@@ -331,7 +331,7 @@ fun boxEsp() = App {
 							rect(x0 + w + (barWidth * leftMulti), y0 + h, barWidth, -h) //Armor outline
 
 							this@sr.color = Color(0F, .3F, 1F, 1F)
-							rect(x0 + w + (barWidth * leftMulti), y0 + h, barWidth, -(h * (armor / 100F))) //Armor
+							rect(x0 + w + (barWidth * leftMulti), y0 + h, barWidth, -(h * clamp(armor / 100F, 0F, 1F))) //Armor
 
 							leftMulti += 2
 						}

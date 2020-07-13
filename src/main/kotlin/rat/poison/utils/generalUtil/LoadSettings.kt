@@ -9,7 +9,7 @@ import java.io.FileReader
 import kotlin.text.Charsets.UTF_8
 
 fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
-    println("Loading settings... $fileDir $specificFile")
+    println("Loading settings... "  + if (specificFile) { fileDir } else "")
     settingsLoaded = false
     if (specificFile) {
         FileReader(File(fileDir)).readLines().forEach { line ->

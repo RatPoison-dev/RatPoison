@@ -255,7 +255,8 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			}
 		}
 
-		val swapTarget = bestTarget > 0 && currentTarget != bestTarget && !curSettings["HOLD_AIM"].strToBool() && meWep.automatic
+		//Have a new best target, we aren't holding aim, and our weapon is automatic
+		val swapTarget = (bestTarget > 0 && currentTarget != bestTarget) && !curSettings["HOLD_AIM"].strToBool() && (meWep.automatic || curSettings["AUTOMATIC_WEAPONS"].strToBool())
 
 		if (currentTarget == me || !currentTarget.canShoot(shouldVisCheck) || swapTarget) {
 			reset()
