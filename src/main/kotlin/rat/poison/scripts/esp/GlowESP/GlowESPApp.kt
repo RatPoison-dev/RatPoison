@@ -37,7 +37,7 @@ internal fun glowEspApp() = App {
 				if (curSettings["ENABLE_AIM"].strToBool()) {
 					if (curSettings["GLOW_SHOW_TARGET"].strToBool() && target == -1L) {
 						val curTarg = findTarget(position, currentAngle, false, visCheck = !curSettings["FORCE_AIM_THROUGH_WALLS"].strToBool())
-						if (curTarg >= 0) {
+						if (curTarg > 0) {
 							glowTarget = curTarg
 						}
 					} else if (curSettings["GLOW_SHOW_TARGET"].strToBool()) {

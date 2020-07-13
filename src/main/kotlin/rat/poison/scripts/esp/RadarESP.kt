@@ -16,13 +16,21 @@ import rat.poison.utils.generalUtil.strToBool
 internal fun radarEsp() = every(100) {
     if (!curSettings["RADAR_ESP"].strToBool() || DANGER_ZONE) return@every
 
-    forEntities(ccsPlayer) {
-        val entity = it.entity
+    if (curSettings["LEGIT_RADAR"].strToBool()) {
+        for (i in footSteps.indices) {
+            if (footSteps[i].ent != 0L && !footSteps[i].open) {
+                footSteps[i].ent.show()
+            }
+        }
+    } else {
+        forEntities(ccsPlayer) {
+            val entity = it.entity
 
-        if (entity.dead() || entity == me || entity.dormant()) return@forEntities false
-        entity.show()
+            if (entity.dead() || entity == me || entity.dormant()) return@forEntities false
+            entity.show()
 
-        false
+            false
+        }
     }
 }
 

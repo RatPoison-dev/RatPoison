@@ -587,3 +587,5 @@ OPPOSITE = OPPOSITE
 
 //save config
 Enter-config-name = Enter config name
+
+LEGIT_RADAR = Legit Radar

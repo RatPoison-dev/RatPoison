@@ -19,14 +19,15 @@ import rat.poison.utils.generalUtil.toMatrix4
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-private val footSteps = Array(256) { FootStep() }
-private data class FootStep(var x: Double = 0.0, var y: Double = 0.0, var z: Double = 0.0,
+val footSteps = Array(256) { FootStep() }
+data class FootStep(var x: Double = 0.0, var y: Double = 0.0, var z: Double = 0.0,
                             var ttl: Int = curSettings["FOOTSTEP_TTL"].toInt(),
-                            var open: Boolean = true, var myTeam: Boolean = false)
+                            var open: Boolean = true, var myTeam: Boolean = false,
+                            var ent: Entity = 0L)
 private var stepTimer = 0
 
 fun footStepEsp() = App {
-    if (!curSettings["ENABLE_ESP"].strToBool() || !curSettings["ENABLE_FOOTSTEPS"].strToBool()) return@App
+    if (!curSettings["ENABLE_ESP"].strToBool()) return@App
 
     stepTimer++
     if (stepTimer >= curSettings["FOOTSTEP_UPDATE"].toInt()) {
@@ -34,6 +35,8 @@ fun footStepEsp() = App {
 
         stepTimer = 0
     }
+
+    if (!curSettings["ENABLE_FOOTSTEPS"].strToBool()) return@App
 
     for (i in footSteps.indices) {
         if (!footSteps[i].open) {
@@ -43,6 +46,10 @@ fun footStepEsp() = App {
                 curSettings["FOOTSTEP_ENEMY_COLOR"].strToColorGDX()
             }
             color.a = footSteps[i].ttl / curSettings["FOOTSTEP_TTL"].toFloat()
+
+            if ((footSteps[i].myTeam && !curSettings["FOOTSTEP_TEAM"].strToBool()) || (!footSteps[i].myTeam && !curSettings["FOOTSTEP_ENEMY"].strToBool())) {
+                continue
+            }
 
             if (curSettings["FOOTSTEP_TYPE"].toInt() == 1) {
                 //As text
@@ -93,6 +100,7 @@ fun footStepEsp() = App {
                     z = 0.0
                     ttl = curSettings["FOOTSTEP_TTL"].toInt()
                     open = true
+                    ent = 0L
                 }
             }
         }
@@ -107,8 +115,8 @@ private fun constructSteps() {
         val inMyTeam = ent.team() == me.team()
 
         //Team check
-        if (inMyTeam && !curSettings["FOOTSTEP_TEAM"].strToBool()) return@forEntities false
-        else if (!inMyTeam && !curSettings["FOOTSTEP_ENEMY"].strToBool()) return@forEntities false
+        //if (inMyTeam && !curSettings["FOOTSTEP_TEAM"].strToBool()) return@forEntities false
+        //else if (!inMyTeam && !curSettings["FOOTSTEP_ENEMY"].strToBool()) return@forEntities false
 
         val entVel = ent.velocity()
         val entMag = sqrt(entVel.x.pow(2.0) + entVel.y.pow(2.0) + entVel.z.pow(2.0))
@@ -124,6 +132,7 @@ private fun constructSteps() {
                 ttl = curSettings["FOOTSTEP_TTL"].toInt()
                 open = false
                 myTeam = inMyTeam
+                this.ent = ent
             }
         }
 

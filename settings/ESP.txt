@@ -11,6 +11,9 @@ ENABLE_ADRENALINE = false
 //Enable radar esp
 RADAR_ESP = false
 
+//Show enemies on radar when moving
+LEGIT_RADAR = false
+
 //Enable audible hitsound
 //Activates on enemy hit
 ENABLE_HITSOUND = false

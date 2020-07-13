@@ -13,11 +13,12 @@ import rat.poison.overlay.App
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
+import rat.poison.utils.notInGame
 import java.lang.Math.toDegrees
 import java.lang.Math.toRadians
 
 fun drawFov() = App {
-    if (!curSettings["ENABLE_ESP"].strToBool() || MENUTOG)
+    if (!curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame)
         return@App
 
     if (!curSettings["DRAW_AIM_FOV"].strToBool() && !curSettings["DRAW_TRIGGER_FOV"].strToBool())

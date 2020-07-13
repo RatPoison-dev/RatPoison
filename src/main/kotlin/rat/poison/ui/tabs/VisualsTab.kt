@@ -39,6 +39,7 @@ class VisualsTab : Tab(false, false) {
     val visualsToggleKey = VisInputFieldCustom("Visuals Toggle Key", "VISUALS_TOGGLE_KEY")
 
     val radarEsp = VisCheckBoxCustom("Radar Esp", "RADAR_ESP")
+    val legitRadar = VisCheckBoxCustom("Legit Radar", "LEGIT_RADAR")
 
     val nightMode = VisCheckBoxCustom("Nightmode/Fullbright", "ENABLE_NIGHTMODE")
     val nightModeSlider = VisSliderCustom("%", "NIGHTMODE_VALUE", 0.05F, 5F, .05F, false)
@@ -127,6 +128,7 @@ class VisualsTab : Tab(false, false) {
         table.add(enableEsp).padLeft(25F).left().row()
         table.add(visualsToggleKey).padLeft(25F).left().row()
         table.add(radarEsp).padLeft(25F).left().row()
+        table.add(legitRadar).padLeft(25F).left().row()
         table.add(nightMode).padLeft(25F).left().row()
         table.add(nightModeSlider).padLeft(25F).left().row()
         table.add(visAdrenaline).padLeft(25F).left().row()
@@ -155,6 +157,7 @@ fun updateDisableEsp() {
 
         visualsToggleKey.disable(bool, col)
         radarEsp.disable(bool)
+        legitRadar.disable(bool)
         visAdrenaline.disable(bool)
         nightMode.disable(bool)
         nightModeSlider.disable(bool, col)
@@ -305,6 +308,7 @@ fun visualsTabUpdate() {
         enableEsp.update()
         visualsToggleKey.update()
         radarEsp.update()
+        legitRadar.update()
         visualsToggleKey.update()
         nightMode.update()
         nightModeSlider.update()
