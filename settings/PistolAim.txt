@@ -15,11 +15,11 @@ PISTOL_FACTOR_RECOIL = false
 
 //Aim Bone
 //Default bone to aim at
-PISTOL_AIM_BONE = Neck
+PISTOL_AIM_BONE = NECK
 
 //Aim FOV
 //Aims at entities inside this value
-PISTOL_AIM_FOV = 20
+PISTOL_AIM_FOV = 4
 
 //Aim speed
 //MS delay between aiming steps

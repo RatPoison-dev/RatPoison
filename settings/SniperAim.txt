@@ -23,7 +23,7 @@ SNIPER_AIM_BONE = Nearest
 
 //Aim FOV
 //Aims at entities inside this value
-SNIPER_AIM_FOV = 40
+SNIPER_AIM_FOV = 8
 
 //Aim speed
 //MS delay between aiming steps
@@ -42,8 +42,8 @@ SNIPER_AIM_ONLY_ON_SHOT = true
 
 //Advanced aim settings
 SNIPER_ADVANCED_SETTINGS = false
-SNIPER_AIM_RCS_X = 2.0
-SNIPER_AIM_RCS_Y = 2.0
+SNIPER_AIM_RCS_X = 1.0
+SNIPER_AIM_RCS_Y = 1.0
 SNIPER_AIM_RCS_VARIATION = 0.0
 SNIPER_AIM_SPEED_DIVISOR = 1
 SNIPER_RANDOM_X_VARIATION = 0

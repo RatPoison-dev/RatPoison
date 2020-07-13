@@ -8,8 +8,11 @@ VISUALS_TOGGLE_KEY = 35
 //Enable full screen visual effect
 ENABLE_ADRENALINE = false
 
+//Strength of added adrenaline per shot
+ADRENALINE_STRENGTH = 0.15
+
 //Enable radar esp
-RADAR_ESP = true
+RADAR_ESP = false
 
 //Show enemies on radar when moving
 LEGIT_RADAR = true

@@ -19,7 +19,7 @@ SMG_AIM_BONE = Stomach
 
 //Aim FOV
 //Aims at entities inside this value
-SMG_AIM_FOV = 65
+SMG_AIM_FOV = 15
 
 //Aim speed
 //MS delay between aiming steps

@@ -15,20 +15,20 @@ RIFLE_FACTOR_RECOIL = true
 
 //Aim Bone
 //Default bone to aim at
-RIFLE_AIM_BONE = Stomach
+RIFLE_AIM_BONE = STOMACH
 
 //Aim FOV
 //Aims at entities inside this value
-RIFLE_AIM_FOV = 80
+RIFLE_AIM_FOV = 7
 
 //Aim speed
 //MS delay between aiming steps
 //Lower is faster
-RIFLE_AIM_SPEED = 3
+RIFLE_AIM_SPEED = 4
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-RIFLE_AIM_SMOOTHNESS = 3.0
+RIFLE_AIM_SMOOTHNESS = 4.5
 
 //Force Bone
 RIFLE_AIM_FORCE_BONE = Head

@@ -45,6 +45,7 @@ class VisualsTab : Tab(false, false) {
     val nightModeSlider = VisSliderCustom("%", "NIGHTMODE_VALUE", 0.05F, 5F, .05F, false)
 
     val visAdrenaline = VisCheckBoxCustom("Adrenaline", "ENABLE_ADRENALINE")
+    val adrenalineStrength = VisSliderCustom("Adrenaline Strength", "ADRENALINE_STRENGTH", 0.01F, 1F, 0.01F, false)
 
     val showAimFov = VisCheckBoxCustom(" ", "DRAW_AIM_FOV", false)
     val showAimFovColor = VisColorPickerCustom("Draw Aim FOV", "DRAW_AIM_FOV_COLOR")
@@ -132,6 +133,7 @@ class VisualsTab : Tab(false, false) {
         table.add(nightMode).padLeft(25F).left().row()
         table.add(nightModeSlider).padLeft(25F).left().row()
         table.add(visAdrenaline).padLeft(25F).left().row()
+        table.add(adrenalineStrength).padLeft(25F).left().row()
         table.add(aimFov).padLeft(25F).left().row()
         table.add(triggerFov).padLeft(25F).left().row()
         table.add(espTabbedPane.table).minWidth(500F).left().growX().row()
@@ -159,6 +161,7 @@ fun updateDisableEsp() {
         radarEsp.disable(bool)
         legitRadar.disable(bool)
         visAdrenaline.disable(bool)
+        adrenalineStrength.disable(bool, col)
         nightMode.disable(bool)
         nightModeSlider.disable(bool, col)
 
@@ -313,6 +316,7 @@ fun visualsTabUpdate() {
         nightMode.update()
         nightModeSlider.update()
         visAdrenaline.update()
+        adrenalineStrength.update()
         showAimFov.update()
         showAimFovColor.update()
         showTriggerFov.update()

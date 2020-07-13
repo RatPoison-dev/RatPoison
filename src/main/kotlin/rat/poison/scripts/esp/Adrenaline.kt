@@ -26,7 +26,7 @@ fun adrenaline() = every(10) {
         totalHits = 0
     } else if (totalHits != curHits) {
         totalHits = curHits
-        fl += if (curSettings["MENU"].strToBool()) { hitMarkerCombo * .5F } else { .25F }
+        fl += curSettings["ADRENALINE_STRENGTH"].toFloat()
     }
 
     var bFL = 0F

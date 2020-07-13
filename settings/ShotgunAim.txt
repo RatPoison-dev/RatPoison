@@ -19,7 +19,7 @@ SHOTGUN_AIM_BONE = Nearest
 
 //Aim FOV
 //Aims at entities inside this value
-SHOTGUN_AIM_FOV = 50
+SHOTGUN_AIM_FOV = 6
 
 //Aim speed
 //MS delay between aiming steps

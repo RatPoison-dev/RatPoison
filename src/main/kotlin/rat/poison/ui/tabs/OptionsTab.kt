@@ -191,7 +191,7 @@ fun saveDefault() {
             println("\nSaving!\n")
             File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
                 val sbLines = StringBuilder()
-                if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo") {
+                if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo" && file.name != "Localizations") {
                     FileReader(file).readLines().forEach { line ->
                         if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                             val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE

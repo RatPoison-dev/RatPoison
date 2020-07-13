@@ -1,5 +1,5 @@
 //Enabe DEBUG
-DEBUG = true
+DEBUG = false
 
 //Enable the overlay, menu
 //Any settings/scripts reliant on drawing on the overlay won't enable
@@ -13,7 +13,7 @@ MENU_ALPHA = 1.0
 MENU_KEY = 112
 
 //FOV Type : DISTANCE or STATIC
-FOV_TYPE = DISTANCE
+FOV_TYPE = STATIC
 
 //If the menu has a blur behind it
 GAUSSIAN_BLUR = false
@@ -95,7 +95,7 @@ TEAMMATES_ARE_ENEMIES = false
 FORCE_AIM_KEY = 5
 
 //Enables specific bone when held
-FORCE_AIM_BONE_KEY = 6
+FORCE_AIM_BONE_KEY = 4
 
 //Always force aim if within FOV
 FORCE_AIM_ALWAYS = false
@@ -116,20 +116,20 @@ RANDOM_BONE = -4
 
 //Temp variables, don't edit
 PERFECT_AIM = false
-PERFECT_AIM_CHANCE = 15
-PERFECT_AIM_FOV = 10
-AIM_BONE = 8
-FORCE_AIM_BONE = 8
-AIM_SPEED = 2
-AIM_FOV = 20
-FACTOR_RECOIL = false
+PERFECT_AIM_CHANCE = 10
+PERFECT_AIM_FOV = 5
+AIM_BONE = 5
+FORCE_AIM_BONE = -4
+AIM_SPEED = 4
+AIM_FOV = 7
+FACTOR_RECOIL = true
 ENABLE_FLAT_AIM = false
 ENABLE_PATH_AIM = true
 ENABLE_SCOPED_ONLY = true
-AIM_AFTER_SHOTS = 0
+AIM_AFTER_SHOTS = 1
 AIM_ADVANCED = false
-AIM_RCS_X = 2.0
-AIM_RCS_Y = 2.0
+AIM_RCS_X = 1.0
+AIM_RCS_Y = 1.0
 AIM_RCS_VARIATION = 0.0
 AIM_SPEED_DIVISOR = 1
 AIM_RANDOM_X_VARIATION = 0
@@ -139,7 +139,7 @@ KEYBINDS = false
 KEYBINDS_X = 400.0
 KEYBINDS_Y = 400.0
 KEYBINDS_ALPHA = 1.0
-AIM_ONLY_ON_SHOT = true
+AIM_ONLY_ON_SHOT = false
 
 //Can't be edited from menu, not guaranteed to work properly
 PISTOL_AIM_AFTER_SHOTS = 0
