@@ -335,16 +335,16 @@ FORCE_UPDATE_AUTO = Force Update
 NADE_TRACER = Nade Tracer
 
 //Custom Glow
-NORMAL = Normal
-MODEL = Model
-VISIBLE = Visible
-VISIBLE-FLICKER = Visible-Flicker
+NORMAL = NORMAL
+MODEL = MODEL
+VISIBLE = VISIBLE
+VISIBLE-FLICKER = VISIBLE FLICKER
 
 //Custom Box
-LEFT = Left
-RIGHT = Right
-TOP = Top
-BOTTOM = Bottom
+LEFT = LEFT
+RIGHT = RIGHT
+TOP = TOP
+BOTTOM = BOTTOM
 
 //Extensions
 _AIM_BONE = Bone
@@ -395,7 +395,7 @@ ENABLE_AUTO_KNIFE = Auto Knife
 ENABLE_FOV_CHANGER = Fov Changer
 FOV_DEFAULT = Default FOV
 FOV_SMOOTH = Smooth FOV Changes
-FOV_SNIPER_DEFAULT = Default Sniper FOV
+FOV_SNIPER_DEFAULT = Sniper FOV
 FOV_ZOOM_1 = Sniper Zoom 1
 FOV_ZOOM_2 = Sniper Zoom 2
 AIM_STRAFER = Aim Strafer
@@ -435,15 +435,15 @@ AUTOMATIC_WEAPONS = Automatic Weapons
 AIM_TARGET_SWAP_DELAY = Target Swap Delay
 SNIPER_ENABLE_SCOPED_ONLY = Scoped Only
 ENABLE_NADE_HELPER = Enable
-HEAD = Head
-NECK = Neck
-CHEST = Chest
-STOMACH = Stomach
-NEAREST = Nearest
-RANDOM = Random
+HEAD = HEAD
+NECK = NECK
+CHEST = CHEST
+STOMACH = STOMACH
+NEAREST = NEAREST
+RANDOM = RANDOM
 FOV_TYPE = Fov Type
-DISTANCE = Distance
-STATIC = Static
+DISTANCE = DISTANCE
+STATIC = STATIC
 
 //New
 Weapon-Category = Weapon Category
@@ -572,15 +572,18 @@ Bomb-Not-Planted! = Bomb Not Planted!
 Bomb-Planted! = Bomb Planted!
 Time-To-Explode: = Time To Explode:
 Location: = Location:
+Can-Defuse: = Can Defuse:
+Time-To-Defuse: Time To Defuse:
+Time-Left-After: = Time Left After:
 
 //more new shit
 //footsteps
-Text = Text
-Circle = Circle
+TEXT = TEXT
+CIRCLE = CIRCLE
 
 //aim strafer
-Same = Same
-Opposite = Opposite
+SAME = SAME
+OPPOSITE = OPPOSITE
 
 //save config
 Enter-config-name = Enter config name

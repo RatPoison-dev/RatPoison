@@ -63,9 +63,9 @@ fun Entity.glow(color: Color, glowType: Int) {
 
 fun String.toGlowNum(): Int {
 	return when(this) {
-		"Normal" -> 0
-		"Model" -> 1
-		"Visible" -> 2
+		"NORMAL" -> 0
+		"MODEL" -> 1
+		"VISIBLE" -> 2
 		else -> 3
 	}
 }

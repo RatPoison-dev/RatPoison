@@ -22,7 +22,7 @@ import rat.poison.utils.generalUtil.boolToStr
 import rat.poison.utils.generalUtil.strToBool
 import java.io.File
 
-val aimStraferCategories = arrayOf("Same", "Opposite")
+val aimStraferCategories = arrayOf("SAME", "OPPOSITE")
 
 class MiscTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -92,7 +92,7 @@ class MiscTab : Tab(false, false) {
         aimStraferSelectBox.items = itemsArray
 
         aimStraferSelectBox.changed { _, _ ->
-            if (aimStraferCategories[aimStraferSelectBox.selectedIndex] == "Same") {
+            if (aimStraferCategories[aimStraferSelectBox.selectedIndex] == "SAME") {
                 curSettings["AIM_STRAFER_TYPE"] = 1
             } else {
                 curSettings["AIM_STRAFER_TYPE"] = 0
@@ -221,8 +221,8 @@ fun miscTabUpdate() {
         aimStrafer.update()
         aimStraferShift.update()
         aimStraferSelectBox.selectedIndex = aimStraferCategories.indexOf(when(curSettings["AIM_STRAFER_TYPE"].toInt()) {
-            1 -> "Same"
-            else -> "Opposite"
+            1 -> "SAME"
+            else -> "OPPOSITE"
         })
         aimStraferStrictness.update()
         doorSpam.update()

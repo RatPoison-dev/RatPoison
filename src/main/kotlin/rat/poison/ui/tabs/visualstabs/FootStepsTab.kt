@@ -12,7 +12,7 @@ import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 
-val footstepItems = arrayOf("Text", "Circle")
+val footstepItems = arrayOf("TEXT", "CIRCLE")
 
 class FootstepsEspTab : Tab(false, false) {
     private val table = VisTable()
@@ -40,12 +40,12 @@ class FootstepsEspTab : Tab(false, false) {
         footStepType.items = itemsArray
 
         footStepType.selectedIndex = footstepItems.indexOf(when (curSettings["FOOTSTEP_TYPE"].toInt()) {
-            1 -> "Text"
-            else -> "Circle"
+            1 -> "TEXT"
+            else -> "CIRCLE"
         })
 
         footStepType.changed { _, _ ->
-            curSettings["FOOTSTEP_TYPE"] = when (footstepItems[footStepType.selectedIndex]) { "Text" -> 1; else -> 2}
+            curSettings["FOOTSTEP_TYPE"] = when (footstepItems[footStepType.selectedIndex]) { "TEXT" -> 1; else -> 2}
             true
         }
 

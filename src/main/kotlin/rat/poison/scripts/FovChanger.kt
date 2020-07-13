@@ -13,7 +13,15 @@ import rat.poison.overlay.App
 import rat.poison.utils.generalUtil.strToBool
 
 internal fun fovChanger() = App {
-    if (!curSettings["ENABLE_FOV_CHANGER"].strToBool() || me.dead()) return@App
+    val curFov = csgoEXE.int(me + m_iDefaultFov)
+
+    if (!curSettings["ENABLE_FOV_CHANGER"].strToBool() || me.dead()) {
+        if (curFov != 90) {
+            csgoEXE[me + m_iDefaultFov] = 90
+        }
+
+        return@App
+    }
     val meWep = me.weaponEntity()
 
     val zLevel = csgoEXE.int(meWep + m_zoomLevel)
@@ -21,8 +29,6 @@ internal fun fovChanger() = App {
     val targetFov: Int
 
     var instantSwap = false
-
-    val curFov = csgoEXE.int(me + m_iDefaultFov)
 
     if (me.weapon().sniper) {
         if (me.isScoped()) {

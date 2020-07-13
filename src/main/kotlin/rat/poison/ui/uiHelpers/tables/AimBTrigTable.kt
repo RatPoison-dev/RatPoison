@@ -55,9 +55,6 @@ class AimBTrigTable: VisTable(false) {
         categorySelection.add(categorySelectionBox)
 
         categorySelectionBox.changed { _, _ ->
-            println(categorySelectionBox.selectedIndex)
-            println(categorySelected)
-            println(gunCategories.indexOf(categorySelected))
             categorySelected = gunCategories[categorySelectionBox.selectedIndex]
             aimTab.tAim.categorySelectionBox.selectedIndex = gunCategories.indexOf(categorySelected)
             uiUpdate()

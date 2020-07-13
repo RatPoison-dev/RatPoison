@@ -248,18 +248,18 @@ fun boxEsp() = App {
 						val boxDetailsTextTop = StringBuilder()
 						boxDetailsTextTop.append("")
 
-						if (bEspName && bEspNamePos == "Top") {
+						if (bEspName && bEspNamePos == "TOP") {
 							boxDetailsTextTop.append("$name\n") //\n
 							yAdd += 18F
 						}
-						if (bEspWeapon && bEspWeaponPos == "Top") {
+						if (bEspWeapon && bEspWeaponPos == "TOP") {
 							boxDetailsTextTop.append(weapon)
 							yAdd += 18F
 						}
-						if (bEspAmmo && bEspAmmoPos == "Top") {
+						if (bEspAmmo && bEspAmmoPos == "TOP") {
 							if (curAmmo != -1 && maxAmmo > 0) {
 								if (bEspWeapon) {
-									if (bEspWeaponPos == "Top") {
+									if (bEspWeaponPos == "TOP") {
 										boxDetailsTextTop.append(" ")
 									} else {
 										yAdd += 18F
@@ -281,16 +281,16 @@ fun boxEsp() = App {
 						////Bottom
 						val boxDetailsTextBottom = StringBuilder()
 						boxDetailsTextBottom.append("")
-						if (bEspName && bEspNamePos == "Bottom") {
+						if (bEspName && bEspNamePos == "BOTTOM") {
 							boxDetailsTextBottom.append("$name\n")
 						}
-						if (bEspWeapon && bEspWeaponPos == "Bottom") {
+						if (bEspWeapon && bEspWeaponPos == "BOTTOM") {
 							boxDetailsTextBottom.append(weapon)
 						}
-						if (bEspAmmo && bEspAmmoPos == "Bottom") {
+						if (bEspAmmo && bEspAmmoPos == "BOTTOM") {
 							if (curAmmo != -1 && maxAmmo > 0) {
 								if (bEspWeapon) {
-									if (bEspWeaponPos == "Bottom") {
+									if (bEspWeaponPos == "BOTTOM") {
 										boxDetailsTextBottom.append(" ")
 									}
 								} else {
@@ -316,7 +316,7 @@ fun boxEsp() = App {
 						boxDetailsTextLeft.append("")
 						var leftMulti = 1
 
-						if (bEspHealth && bEspHealthPos == "Left") {
+						if (bEspHealth && bEspHealthPos == "LEFT") {
 							this@sr.color = Color.BLACK
 							rect(x0 + w + (barWidth * leftMulti), y0 + h, barWidth, -h) //Health outline
 
@@ -326,7 +326,7 @@ fun boxEsp() = App {
 							leftMulti += 2
 						}
 
-						if (bEspArmor && bEspArmorPos == "Left") {
+						if (bEspArmor && bEspArmorPos == "LEFT") {
 							this@sr.color = Color.BLACK
 							rect(x0 + w + (barWidth * leftMulti), y0 + h, barWidth, -h) //Armor outline
 
@@ -336,22 +336,22 @@ fun boxEsp() = App {
 							leftMulti += 2
 						}
 
-						if (bEspHelmet && bEspHelmetPos == "Left") {
+						if (bEspHelmet && bEspHelmetPos == "LEFT") {
 							boxDetailsTextLeft.append(if (helmet) "H" else "")
-							if (!bEspKevlar || bEspKevlarPos == "Right") {
+							if (!bEspKevlar || bEspKevlarPos == "RIGHT") {
 								boxDetailsTextLeft.append("\n")
 							}
 						}
 
-						if (bEspKevlar && bEspKevlarPos == "Left") {
+						if (bEspKevlar && bEspKevlarPos == "LEFT") {
 							boxDetailsTextLeft.append(if (kevlar) "K\n" else "")
 						}
 
-						if (bEspScoped && bEspScopedPos == "Left") {
+						if (bEspScoped && bEspScopedPos == "LEFT") {
 							boxDetailsTextLeft.append(if (scoped) "Scoped\n" else "") //Leave blank later, testing purposes rn
 						}
 
-						if (bEspFlashed && bEspFlashedPos == "Left") {
+						if (bEspFlashed && bEspFlashedPos == "LEFT") {
 							boxDetailsTextLeft.append(if (flashed) "Flashed" else "")
 						}
 
@@ -368,7 +368,7 @@ fun boxEsp() = App {
 						boxDetailsTextRight.append("")
 						var rightMulti = 2
 
-						if (bEspHealth && bEspHealthPos == "Right") {
+						if (bEspHealth && bEspHealthPos == "RIGHT") {
 							this@sr.color = Color.BLACK
 							rect(x0 - (barWidth * rightMulti), y0 + h, barWidth, -h) //Health outline
 
@@ -378,7 +378,7 @@ fun boxEsp() = App {
 							rightMulti += 2
 						}
 
-						if (bEspArmor && bEspArmorPos == "Right") {
+						if (bEspArmor && bEspArmorPos == "RIGHT") {
 							this@sr.color = Color.BLACK
 							rect(x0 - (barWidth * rightMulti), y0 + h, barWidth, -h) //Armor outline
 
@@ -388,22 +388,22 @@ fun boxEsp() = App {
 							rightMulti += 2
 						}
 
-						if (bEspHelmet && bEspHelmetPos == "Right") {
+						if (bEspHelmet && bEspHelmetPos == "RIGHT") {
 							boxDetailsTextRight.append(if (helmet) "H" else "")
-							if (!bEspKevlar || bEspKevlarPos == "Left") {
+							if (!bEspKevlar || bEspKevlarPos == "LEFT") {
 								boxDetailsTextRight.append("\n")
 							}
 						}
 
-						if (bEspKevlar && bEspKevlarPos == "Right") {
+						if (bEspKevlar && bEspKevlarPos == "RIGHT") {
 							boxDetailsTextRight.append(if (kevlar) "K\n" else "")
 						}
 
-						if (bEspScoped && bEspScopedPos == "Right") {
+						if (bEspScoped && bEspScopedPos == "RIGHT") {
 							boxDetailsTextRight.append(if (scoped) "Scoped\n" else "") //Leave blank later, testing purposes rn
 						}
 
-						if (bEspFlashed && bEspFlashedPos == "Right") {
+						if (bEspFlashed && bEspFlashedPos == "RIGHT") {
 							boxDetailsTextRight.append(if (flashed) "Flashed" else "")
 						}
 
@@ -434,7 +434,7 @@ fun boxEsp() = App {
 						var yAdd = 0F
 						val boxDetailsTextTop = StringBuilder()
 
-						if (bEspName && bEspNamePos == "Top") {
+						if (bEspName && bEspNamePos == "TOP") {
 							boxDetailsTextTop.append(curLocale["DEFUSER"])
 							yAdd += 16F
 						}
@@ -445,7 +445,7 @@ fun boxEsp() = App {
 						////Bottom
 						val boxDetailsTextBottom = StringBuilder()
 
-						if (bEspName && bEspNamePos == "Bottom") {
+						if (bEspName && bEspNamePos == "BOTTOM") {
 							boxDetailsTextBottom.append(curLocale["DEFUSER"])
 						}
 						glyph.setText(this, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, detailTextColor, 1F, Align.center, false, null)

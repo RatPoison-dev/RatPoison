@@ -7,43 +7,43 @@ BOX_ESP_DETAILS = true
 
 //Enable box esp health bar; Bar position Left / Right
 BOX_ESP_HEALTH = true
-BOX_ESP_HEALTH_POS = Left
+BOX_ESP_HEALTH_POS = LEFT
 
 //Enable box esp armor bar; Bar position Left / Right
 BOX_ESP_ARMOR = true
-BOX_ESP_ARMOR_POS = Left
+BOX_ESP_ARMOR_POS = LEFT
 
 //Enable box esp helmet text; Text position Left / Right
 BOX_ESP_HELMET = true
-BOX_ESP_HELMET_POS = Right
+BOX_ESP_HELMET_POS = RIGHT
 
 //Enable box esp helmet text; Text position Left / Right
 BOX_ESP_KEVLAR = true
-BOX_ESP_KEVLAR_POS = Right
+BOX_ESP_KEVLAR_POS = RIGHT
 
 //Enable box esp helmet text; Text position Left / Right
 BOX_ESP_SCOPED = true
-BOX_ESP_SCOPED_POS = Right
+BOX_ESP_SCOPED_POS = RIGHT
 
 //Enable box esp helmet text; Text position Left / Right
 BOX_ESP_FLASHED = true
-BOX_ESP_FLASHED_POS = Right
+BOX_ESP_FLASHED_POS = RIGHT
 
 //Enable box esp name text; Text position Top / Bottom
 BOX_ESP_NAME = true
-BOX_ESP_NAME_POS = Top
+BOX_ESP_NAME_POS = TOP
 
 //Enable box esp weapon text; Text position Top / Bottom
 BOX_ESP_WEAPON = true
-BOX_ESP_WEAPON_POS = Bottom
+BOX_ESP_WEAPON_POS = BOTTOM
 
 //Enable box esp ammo text; Text position Top / Bottom
 BOX_ESP_AMMO = true
-BOX_ESP_AMMO_POS = Bottom
+BOX_ESP_AMMO_POS = BOTTOM
 
 //Enable box esp scope text; Text position Top / Bottom
 BOX_ESP_SCOPE = true
-BOX_ESP_SCOPE_POS = Top
+BOX_ESP_SCOPE_POS = TOP
 
 //Enable box esp on teammates
 BOX_SHOW_TEAM = false

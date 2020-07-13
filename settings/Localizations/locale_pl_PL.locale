@@ -245,7 +245,7 @@ FOOTSTEPS_TEXT = Tekst
 FOOTSTEPS_CIRCLE = Okręgi
 // Glow Esp tab
 INV_GLOW_ESP = Odwrócona poświata
-MODEL_ESP = Model
+MODEL_ESP = MODEL
 MODEL_AND_GLOW = Model & poświata
 // HitMarkers tab
 HITMARKER_OUTLINE = Kontur
