@@ -22,11 +22,11 @@ fun esp() {
 		if (dbg) { println("[DEBUG] Initializing Box ESP") }; boxEsp()
 		if (dbg) { println("[DEBUG] Initializing Skeleton ESP") }; skeletonEsp()
 		if (dbg) { println("[DEBUG] Initializing Snap Lines") }; snapLines()
-		if (dbg) { println("[DEBUG] Initializing Footstep ESP") }; footStepEsp()
 	} else {
 		if (dbg) { println("[DEBUG] Menu disabled, using alternate glow esp") }; glowEspEvery()
 	}
 
+	if (dbg) { println("[DEBUG] Initializing Footstep ESP") }; footStepEsp() //Needed with & without menu
 	if (dbg) { println("[DEBUG] Initializing Chams ESP") }; chamsEsp()
 	if (dbg) { println("[DEBUG] Initializing Hitsound ESP") }; hitSoundEsp()
 	if (dbg) { println("[DEBUG] Initializing Radar ESP") }; radarEsp()

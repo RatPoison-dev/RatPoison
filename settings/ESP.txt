@@ -9,10 +9,10 @@ VISUALS_TOGGLE_KEY = 35
 ENABLE_ADRENALINE = false
 
 //Enable radar esp
-RADAR_ESP = false
+RADAR_ESP = true
 
 //Show enemies on radar when moving
-LEGIT_RADAR = false
+LEGIT_RADAR = true
 
 //Enable audible hitsound
 //Activates on enemy hit

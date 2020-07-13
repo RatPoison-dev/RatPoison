@@ -12,6 +12,7 @@ import rat.poison.game.w2sViewMatrix
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.utils.Vector
+import rat.poison.utils.every
 import rat.poison.utils.generalUtil.cToFloat
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColorGDX
@@ -26,15 +27,24 @@ data class FootStep(var x: Double = 0.0, var y: Double = 0.0, var z: Double = 0.
                             var ent: Entity = 0L)
 private var stepTimer = 0
 
-fun footStepEsp() = App {
+fun footStepEsp() {
+    constructSteps()
+
+    if (curSettings["MENU"].strToBool()) {
+        runFootSteps()
+    }
+}
+
+
+fun runFootSteps() = App {
     if (!curSettings["ENABLE_ESP"].strToBool()) return@App
 
-    stepTimer++
-    if (stepTimer >= curSettings["FOOTSTEP_UPDATE"].toInt()) {
-        constructSteps()
-
-        stepTimer = 0
-    }
+    //stepTimer++
+    //if (stepTimer >= curSettings["FOOTSTEP_UPDATE"].toInt()) {
+    //    constructSteps()
+    //
+    //    stepTimer = 0
+    //}
 
     if (!curSettings["ENABLE_FOOTSTEPS"].strToBool()) return@App
 
@@ -107,7 +117,7 @@ fun footStepEsp() = App {
     }
 }
 
-private fun constructSteps() {
+private fun constructSteps() = every(10) {
     forEntities(ccsPlayer) {
         val ent = it.entity
         if (ent == me || ent.dead() || ent.dormant()) return@forEntities false
@@ -125,14 +135,16 @@ private fun constructSteps() {
             val entPos = ent.absPosition()
 
             val idx = emptySlot()
-            footSteps[idx].apply {
-                x = entPos.x
-                y = entPos.y
-                z = entPos.z
-                ttl = curSettings["FOOTSTEP_TTL"].toInt()
-                open = false
-                myTeam = inMyTeam
-                this.ent = ent
+            if (idx != -1) {
+                footSteps[idx].apply {
+                    x = entPos.x
+                    y = entPos.y
+                    z = entPos.z
+                    ttl = curSettings["FOOTSTEP_TTL"].toInt()
+                    open = false
+                    myTeam = inMyTeam
+                    this.ent = ent
+                }
             }
         }
 
