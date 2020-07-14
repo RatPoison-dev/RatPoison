@@ -114,7 +114,7 @@ fun updateAim() {
         val itemsArray = Array<String>()
         for (i in gunCategories) {
             if (dbg && curLocale[i].isBlank()) {
-                println("[DEBUG] $CURRENT_LOCALE $i is missing!")
+                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
             }
 
             itemsArray.add(curLocale[i])
@@ -188,7 +188,7 @@ fun updateAim() {
 
 fun updateDisableTrig() {
     aimTab.tTrig.apply {
-        val bool = if (!aimTab.tAim.enableAim.isChecked) {
+        var bool = if (!aimTab.tAim.enableAim.isChecked) {
             //enableTrig.disable(true)
             //true
             enableTrig.disable(false)
@@ -205,6 +205,15 @@ fun updateDisableTrig() {
         boneTriggerKey.disable(bool, col)
         categorySelectLabel.color = col
         categorySelectionBox.isDisabled = bool
+        trigEnable.disable(bool)
+
+        if (!trigEnable.isChecked) {
+            bool = true
+            col = Color(105F, 105F, 105F, .2F)
+        }
+
+        trigShootBacktrack.disable(if (!bool) { !aimTab.tBacktrack.enableBacktrack.isChecked } else { true })
+
         if (!aimTab.tAim.enableAim.isChecked) {
             trigAimbot.disable(true)
         } else {
@@ -228,7 +237,7 @@ fun updateTrig() {
         val itemsArray = Array<String>()
         for (i in gunCategories) {
             if (dbg && curLocale[i].isBlank()) {
-                println("[DEBUG] $CURRENT_LOCALE $i is missing!")
+                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
             }
 
             itemsArray.add(curLocale[i])
@@ -241,6 +250,7 @@ fun updateTrig() {
         enableTrig.update()
         boneTriggerEnableKey.update()
         boneTriggerKey.update()
+        trigEnable.update()
         trigInCross.update()
         trigInFov.update()
         trigFov.update()
@@ -286,7 +296,7 @@ fun updateBacktrack() {
         val itemsArray = Array<String>()
         for (i in gunCategories) {
             if (dbg && curLocale[i].isBlank()) {
-                println("[DEBUG] $CURRENT_LOCALE $i is missing!")
+                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
             }
 
             itemsArray.add(curLocale[i])

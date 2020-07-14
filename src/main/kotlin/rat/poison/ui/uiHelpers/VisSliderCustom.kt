@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.CURRENT_LOCALE
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
@@ -50,9 +49,9 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
             round(sliderBar.value * rnd)/rnd
         }
 
-        if (CURRENT_LOCALE != "") { //Only update locale if we have one
+        if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
             if (dbg && curLocale[variableName].isBlank()) {
-                println("[DEBUG] $CURRENT_LOCALE $variableName is missing!")
+                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
             }
             sliderLabel.setText("${curLocale[variableName]}: $sliderVal")
         } else { //User our default input

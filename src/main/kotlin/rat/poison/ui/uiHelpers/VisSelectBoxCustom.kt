@@ -3,7 +3,6 @@ package rat.poison.ui.uiHelpers
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.*
-import rat.poison.CURRENT_LOCALE
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
@@ -46,10 +45,10 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
     }
 
     fun update() {
-        if (CURRENT_LOCALE != "") { //Only update locale if we have one
+        if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
             //Update the box label text
             if (dbg && curLocale[variableName].isBlank()) {
-                println("[DEBUG] $CURRENT_LOCALE $variableName is missing!")
+                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
             }
 
             if (showText) {
@@ -60,7 +59,7 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
             val itemsArray = Array<String>()
             for (i in boxItems) {
                 if (dbg && curLocale[i].isBlank()) {
-                    println("[DEBUG] $CURRENT_LOCALE $i is missing!")
+                    println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
                 }
 
                 itemsArray.add(curLocale[i])

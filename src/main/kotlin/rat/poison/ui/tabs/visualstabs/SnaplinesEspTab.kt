@@ -31,6 +31,9 @@ class SnaplinesEspTab : Tab(false, false) {
     val bombCarrierSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_BOMB_CARRIER", false)
     val bombCarrierSnaplinesColor = VisColorPickerCustom("Bomb Carrier", "SNAPLINES_BOMB_CARRIER_COLOR")
 
+    val defuseKitSnaplines = VisCheckBoxCustom(" ", "SNAPLINES_DEFUSE_KITS", false)
+    val defuseKitSnaplinesColor = VisColorPickerCustom("Defuse Kits", "SNAPLINES_DEFUSE_KIT_COLOR")
+
     init {
         table.padLeft(25F)
         table.padRight(25F)
@@ -41,31 +44,31 @@ class SnaplinesEspTab : Tab(false, false) {
         var tmpTable = VisTable()
         tmpTable.add(enemySnaplines)
         tmpTable.add(enemySnaplinesColor).width(175F - enemySnaplines.width).padRight(50F)
-
         table.add(tmpTable)
 
         tmpTable = VisTable()
         tmpTable.add(teamSnaplines)
         tmpTable.add(teamSnaplinesColor).width(175F - teamSnaplines.width).padRight(50F).row()
-
         table.add(tmpTable).row()
 
         tmpTable = VisTable()
         tmpTable.add(weaponSnaplines)
         tmpTable.add(weaponSnaplinesColor).width(175F - weaponSnaplines.width).padRight(50F)
-
         table.add(tmpTable)
 
         tmpTable = VisTable()
         tmpTable.add(bombSnaplines)
         tmpTable.add(bombSnaplinesColor).width(175F - bombSnaplines.width).padRight(50F).row()
-
         table.add(tmpTable).row()
 
         tmpTable = VisTable()
         tmpTable.add(bombCarrierSnaplines)
         tmpTable.add(bombCarrierSnaplinesColor).width(175F - bombCarrierSnaplines.width).padRight(50F)
+        table.add(tmpTable)
 
+        tmpTable = VisTable()
+        tmpTable.add(defuseKitSnaplines)
+        tmpTable.add(defuseKitSnaplinesColor).width(175F - defuseKitSnaplines.width).padRight(50F)
         table.add(tmpTable)
     }
 

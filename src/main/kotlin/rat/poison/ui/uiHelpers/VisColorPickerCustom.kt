@@ -7,7 +7,6 @@ import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.color.ColorPicker
 import com.kotcrab.vis.ui.widget.color.ColorPickerAdapter
-import rat.poison.CURRENT_LOCALE
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
@@ -51,9 +50,9 @@ class VisColorPickerCustom(mainText: String, varName: String) : VisTable() {
         val col = curSettings[variableName].strToColor()
         pickerImage.setColor(col.red/255F, col.green/255F, col.blue/255F, 1F)
 
-        if (CURRENT_LOCALE != "") { //Only update locale if we have one
+        if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
             if (dbg && curLocale[variableName].isBlank()) {
-                println("[DEBUG] $CURRENT_LOCALE $variableName is missing!")
+                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
             }
             pickerButton.setText(curLocale[variableName])
         }

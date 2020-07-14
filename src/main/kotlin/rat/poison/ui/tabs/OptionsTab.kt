@@ -49,8 +49,8 @@ class OptionsTab : Tab(false, false) {
 
     init {
         loadLocaleButton.changed { _, _ ->
-            CURRENT_LOCALE = localeFileSelectBox.selected
-            loadLocale("$SETTINGS_DIRECTORY\\Localizations\\$CURRENT_LOCALE.locale")
+            curSettings["CURRENT_LOCALE"] = localeFileSelectBox.selected
+            loadLocale("$SETTINGS_DIRECTORY\\Localizations\\${curSettings["CURRENT_LOCALE"]}.locale")
 
             refreshMenu()
             uiUpdate()
@@ -176,7 +176,7 @@ class OptionsTab : Tab(false, false) {
 
             if (items > 0) {
                 localeFileSelectBox.items = localeFilesArray
-                localeFileSelectBox.selected = CURRENT_LOCALE
+                localeFileSelectBox.selected = curSettings["CURRENT_LOCALE"]
             } else {
                 localeFileSelectBox.clearItems()
             }

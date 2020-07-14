@@ -19,7 +19,7 @@ SNIPER_FACTOR_RECOIL = false
 
 //Aim Bone
 //Default bone to aim at
-SNIPER_AIM_BONE = Nearest
+SNIPER_AIM_BONE = NEAREST
 
 //Aim FOV
 //Aims at entities inside this value

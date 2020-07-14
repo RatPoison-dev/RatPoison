@@ -32,7 +32,7 @@ fun boneTrigger() = every(10) {
     if (curSettings["ENABLE_TRIGGER"].strToBool()) {
         val wep = me.weapon()
 
-        val bFOV : Int; val bDELAY : Int; val bINCROSS : Boolean; val bINFOV : Boolean; val bAIMBOT : Boolean
+        val bFOV: Int; val bDELAY: Int; val bINCROSS: Boolean; val bINFOV: Boolean; val bAIMBOT: Boolean; val bBACKTRACK: Boolean
 
         var prefix = ""
 
@@ -45,11 +45,14 @@ fun boneTrigger() = every(10) {
         }
 
         if (wep.gun) { //Not 100% this applies to every 'gun'
+            if (!curSettings[prefix + "TRIGGER"].strToBool()) return@every
+
             bFOV = curSettings[prefix + "TRIGGER_FOV"].toInt()
             bDELAY = curSettings[prefix + "TRIGGER_SHOT_DELAY"].toInt()
             bINCROSS = curSettings[prefix + "TRIGGER_INCROSS"].strToBool()
             bINFOV = curSettings[prefix + "TRIGGER_INFOV"].strToBool()
             bAIMBOT = curSettings[prefix + "TRIGGER_AIMBOT"].strToBool()
+            bBACKTRACK = curSettings[prefix + "TRIGGER_BACKTRACK"].strToBool()
 
             if (wep.sniper) {
                 if (!(curSettings["SNIPER_TRIGGER"].strToBool() && ((me.isScoped() && curSettings["ENABLE_SCOPED_ONLY"].strToBool()) || (!curSettings["ENABLE_SCOPED_ONLY"].strToBool())))) {
@@ -120,11 +123,13 @@ fun bTrigShoot(delay: Int, aimbot: Boolean = false) {
 
     if (triggerInShot) {
         boneTrig = aimbot
-        clientDLL[dwForceAttack] = 5
 
-        Thread.sleep(50)
-        clientDLL[dwForceAttack] = 4
-        //triggerInShot = false
+        if (!attemptBacktrack()) {
+            clientDLL[dwForceAttack] = 5
+            Thread.sleep(50)
+            clientDLL[dwForceAttack] = 4
+        }
+
         boneTrig = false
     }
 }

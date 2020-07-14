@@ -84,7 +84,7 @@ class MiscTab : Tab(false, false) {
         val itemsArray = Array<String>()
         for (i in aimStraferCategories) {
             if (dbg && curLocale[i].isBlank()) {
-                println("[DEBUG] $CURRENT_LOCALE $i is missing!")
+                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
             }
 
             itemsArray.add(curLocale[i])

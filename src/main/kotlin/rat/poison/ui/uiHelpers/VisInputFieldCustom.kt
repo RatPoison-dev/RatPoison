@@ -7,7 +7,6 @@ import com.kotcrab.vis.ui.widget.LinkLabel
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.VisValidatableTextField
-import rat.poison.CURRENT_LOCALE
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
@@ -48,10 +47,10 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
 
     fun update(neglect: Actor? = null) {
         if (neglect != this) {
-            if (CURRENT_LOCALE != "") { //Only update locale if we have one
+            if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
                 if (dbg) {
                     if (curLocale[variableName].isBlank()) {
-                        println("[DEBUG] $CURRENT_LOCALE $variableName is missing!")
+                        println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
                     }
                 }
                 keyLabel.setText("${curLocale[variableName]}:")

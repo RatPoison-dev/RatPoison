@@ -4,8 +4,8 @@ import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.CURRENT_LOCALE
 import rat.poison.curLocale
+import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.toLocale
 import rat.poison.ui.changed
@@ -25,10 +25,13 @@ class AimBTrigTable: VisTable(false) {
     val boneTriggerEnableKey = VisCheckBoxCustom("Trigger On Key", "TRIGGER_ENABLE_KEY")
     val boneTriggerKey = VisInputFieldCustom("Trigger Key", "TRIGGER_KEY")
 
+    val trigEnable = ATabVisCheckBox("Enable", "_TRIGGER")
+
     val trigAimbot = ATabVisCheckBox("Aimbot", "_TRIGGER_AIMBOT")
     val trigInCross = ATabVisCheckBox("InCross", "_TRIGGER_INCROSS")
     val trigInFov = ATabVisCheckBox("InFov", "_TRIGGER_INFOV")
     val trigFov = ATabVisSlider("FOV", "_TRIGGER_FOV", 1F, 90F, 1F, true)
+    val trigShootBacktrack = ATabVisCheckBox("Shoot Backtrack", "_TRIGGER_BACKTRACK")
     val trigDelay = ATabVisSlider("Delay", "_TRIGGER_SHOT_DELAY", 0F, 500F, 10F, true)
 
     //Override Weapon Checkbox & Selection Box
@@ -41,7 +44,7 @@ class AimBTrigTable: VisTable(false) {
         val itemsArray = Array<String>()
         for (i in gunCategories) {
             if (dbg && curLocale[i].isBlank()) {
-                println("[DEBUG] $CURRENT_LOCALE $i is missing!")
+                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
             }
 
             itemsArray.add(curLocale[i])
@@ -76,6 +79,9 @@ class AimBTrigTable: VisTable(false) {
             add(boneTriggerEnableKey).left().row()
             add(boneTriggerKey).left().row()
             add(categorySelection).left().row()
+            add(trigEnable).left().row()
+
+            add(trigShootBacktrack).left().row()
             add(trigAimbot).left().row()
             add(trigInCross).left().row()
             add(trigInFov).left().row()

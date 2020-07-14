@@ -18,8 +18,9 @@ internal fun radarEsp() = every(100) {
 
     if (curSettings["LEGIT_RADAR"].strToBool()) {
         for (i in footSteps.indices) {
-            if (footSteps[i].ent != 0L && !footSteps[i].open) {
-                footSteps[i].ent.show()
+            val ent = footSteps[i].ent
+            if (ent != 0L && !footSteps[i].open) {
+                ent.show()
             }
         }
     } else {

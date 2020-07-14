@@ -4,8 +4,8 @@ import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.CURRENT_LOCALE
 import rat.poison.curLocale
+import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.toLocale
 import rat.poison.ui.changed
@@ -44,7 +44,7 @@ class AimBacktrackTable: VisTable(false) {
         val itemsArray = Array<String>()
         for (i in gunCategories) {
             if (dbg && curLocale[i].isBlank()) {
-                println("[DEBUG] $CURRENT_LOCALE $i is missing!")
+                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
             }
 
             itemsArray.add(curLocale[i])

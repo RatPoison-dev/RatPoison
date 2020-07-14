@@ -1,7 +1,6 @@
 package rat.poison.ui.uiHelpers
 
 import com.kotcrab.vis.ui.widget.VisCheckBox
-import rat.poison.CURRENT_LOCALE
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
@@ -30,9 +29,9 @@ class VisCheckBoxCustom(mainText: String, varName: String, showText: Boolean = t
     }
 
     fun update() {
-        if (CURRENT_LOCALE != "" && showText) { //Only update locale if we have one
+        if (curSettings["CURRENT_LOCALE"] != "" && showText) { //Only update locale if we have one
             if (dbg && curLocale[variableName].isBlank()) {
-                println("[DEBUG] $CURRENT_LOCALE $variableName is missing!")
+                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
             }
             setText(curLocale[variableName])
         }

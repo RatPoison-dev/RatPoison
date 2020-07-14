@@ -3,16 +3,15 @@ package rat.poison.scripts
 import com.sun.jna.Memory
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
+import rat.poison.game.*
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.engineDLL
-import rat.poison.game.angle
-import rat.poison.game.clientState
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
-import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.flSimulationTime
+import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.game.offsets.ClientOffsets.dwInput
 import rat.poison.game.offsets.EngineOffsets.dwClientState_LastOutgoingCommand
@@ -26,7 +25,7 @@ import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.notInGame
 import kotlin.math.abs
 
-var btRecords = Array(64) { Array(12) { BacktrackTable() } }
+var btRecords = Array(64) { Array(13) { BacktrackTable() } }
 data class BacktrackTable(var simtime: Float = 0f, var neckPos: Angle = Angle(), var chestPos: Angle = Angle(),
                           var stomachPos: Angle = Angle(), var pelvisPos: Angle = Angle(), var alpha: Float = 100f)
 
@@ -49,38 +48,39 @@ fun setupBacktrack() = every(4) {
         }
         return@every
     }
+
     constructRecords()
 }
 
 fun attemptBacktrack(): Boolean {
-    if (((curSettings["BACKTRACK_SPOTTED"].strToBool() && bestBacktrackTarget.spotted()) || !curSettings["BACKTRACK_SPOTTED"].strToBool()) && bestBacktrackTarget != -1L) {
+    if (((curSettings["BACKTRACK_SPOTTED"].strToBool() && bestBacktrackTarget.spotted()) || !curSettings["BACKTRACK_SPOTTED"].strToBool()) && bestBacktrackTarget > 0L) {
 
         //Get/set vars
         val meWep = me.weapon()
         var prefix = ""
         when {
             meWep.pistol -> {
-                prefix = "PISTOL_"
+                prefix = "PISTOL"
             }
             meWep.rifle -> {
-                prefix = "RIFLE_"
+                prefix = "RIFLE"
             }
             meWep.shotgun -> {
-                prefix = "SHOTGUN_"
+                prefix = "SHOTGUN"
             }
             meWep.sniper -> {
-                prefix = "SNIPER_"
+                prefix = "SNIPER"
             }
             meWep.smg -> {
-                prefix = "SMG_"
+                prefix = "SMG"
             }
         }
 
         if (meWep.gun) { //Not 100% this applies to every 'gun'
-            enableNeck = curSettings[prefix + "BACKTRACK_NECK"].strToBool()
-            enableChest = curSettings[prefix + "BACKTRACK_CHEST"].strToBool()
-            enableStomach = curSettings[prefix + "BACKTRACK_STOMACH"].strToBool()
-            enablePelvis = curSettings[prefix + "BACKTRACK_PELVIS"].strToBool()
+            enableNeck = curSettings[prefix + "_BACKTRACK_NECK"].strToBool()
+            enableChest = curSettings[prefix + "_BACKTRACK_CHEST"].strToBool()
+            enableStomach = curSettings[prefix + "_BACKTRACK_STOMACH"].strToBool()
+            enablePelvis = curSettings[prefix + "_BACKTRACK_PELVIS"].strToBool()
         }
 
         val curSequenceNumber = csgoEXE.int(clientState + dwClientState_LastOutgoingCommand) + 1
@@ -124,40 +124,27 @@ fun attemptBacktrack(): Boolean {
 fun constructRecords() {
     var bestFov = 5.0
     val clientAngle = clientState.angle()
-    forEntities(ccsPlayer) {
-        val ent = it.entity
-
-        if (!ent.dead() && !ent.dormant()) {
-            val pos = ent.bones(6)
-
-            val fov = calcTarget(bestFov, bestBacktrackTarget, pos, clientAngle, 10, 6, ovrStatic = true)[0] as Double
-
-            if (fov < bestFov && fov > 0) {
-                bestFov = fov
-                bestBacktrackTarget = ent
-            }
-        }
-
-        return@forEntities false
-    }
-
-    if (bestFov == 5.0) {
-        bestBacktrackTarget = -1L
-    }
+    val meTeam = me.team()
 
     forEntities(ccsPlayer) {
         val ent = it.entity
 
-        if (ent == me || ent.dormant() || ent.team() == me.team() || ent.dead()) {
-            return@forEntities false
+        if (ent.dead() || ent == me || ent.team() == meTeam || ent.dormant()) return@forEntities false
+
+        //Best target shit
+        val pos = ent.bones(6)
+        val fov = calcTarget(bestFov, bestBacktrackTarget, pos, clientAngle, 10, 6, ovrStatic = true)[0] as Double
+        if (fov < bestFov && fov > 0) {
+            bestFov = fov
+            bestBacktrackTarget = ent
         }
 
+        //Create records
         val entSimTime = csgoEXE.float(ent + flSimulationTime)
-
         val entID = (csgoEXE.uint(ent + dwIndex) - 1).toInt()
         val tick = getGlobalVars().tickCount % 13
 
-        if (entID in 0..63 && tick < 12) { //clamp that bitch error prone on player join/leave
+        if (entID in 0..63 && tick < 13) {
             val record = btRecords[entID][tick]
 
             val neckPos: Angle; val chestPos: Angle; val stomachPos: Angle; val pelvisPos: Angle
@@ -181,6 +168,47 @@ fun constructRecords() {
 
         return@forEntities false
     }
+
+    if (bestFov == 5.0) {
+        bestBacktrackTarget = -1L
+    }
+
+    //forEntities(ccsPlayer) {
+        //val ent = it.entity
+
+        //if (ent == me || ent.dormant() || ent.team() == me.team() || ent.dead()) {
+        //    return@forEntities false
+        //}
+
+        //val entSimTime = csgoEXE.float(ent + flSimulationTime)
+
+        //val entID = (csgoEXE.uint(ent + dwIndex) - 1).toInt()
+        //val tick = getGlobalVars().tickCount % 13
+
+        //if (entID in 0..63 && tick < 12) { //clamp that bitch error prone on player join/leave
+//            val record = btRecords[entID][tick]
+//
+//            val neckPos: Angle; val chestPos: Angle; val stomachPos: Angle; val pelvisPos: Angle
+//
+//            val boneMemory: Memory by lazy {
+//                Memory(3984)
+//            }
+//
+//            //reduce them shits
+//            csgoEXE.read(ent.boneMatrix(), boneMemory)
+//            if (enableNeck) { neckPos = boneMemory.bones(7); record.neckPos = neckPos }
+//            if (enableChest) { chestPos = boneMemory.bones(6); record.chestPos = chestPos }
+//            if (enableStomach) { stomachPos = boneMemory.bones(5); record.stomachPos = stomachPos }
+//            if (enablePelvis) { pelvisPos = boneMemory.bones(0); record.pelvisPos = pelvisPos }
+//
+//            record.alpha = 100f
+//            record.simtime = entSimTime
+//
+//            btRecords[entID][tick] = record
+        //}
+
+        //return@forEntities false
+    //}
 }
 
 fun bestSimTime(): Float {

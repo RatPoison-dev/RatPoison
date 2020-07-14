@@ -1,5 +1,5 @@
 //Enabe DEBUG
-DEBUG = false
+DEBUG = true
 
 //Enable the overlay, menu
 //Any settings/scripts reliant on drawing on the overlay won't enable
@@ -11,6 +11,9 @@ MENU_ALPHA = 1.0
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles visibility of the menu on the overlay
 //Default key is F1
 MENU_KEY = 112
+
+//Default locale
+CURRENT_LOCALE = locale_en_US
 
 //FOV Type : DISTANCE or STATIC
 FOV_TYPE = STATIC
@@ -116,17 +119,17 @@ RANDOM_BONE = -4
 
 //Temp variables, don't edit
 PERFECT_AIM = false
-PERFECT_AIM_CHANCE = 10
-PERFECT_AIM_FOV = 5
-AIM_BONE = 5
+PERFECT_AIM_CHANCE = 1
+PERFECT_AIM_FOV = 1
+AIM_BONE = -1
 FORCE_AIM_BONE = -4
-AIM_SPEED = 4
-AIM_FOV = 7
-FACTOR_RECOIL = true
-ENABLE_FLAT_AIM = false
-ENABLE_PATH_AIM = true
+AIM_SPEED = 1
+AIM_FOV = 8
+FACTOR_RECOIL = false
+ENABLE_FLAT_AIM = true
+ENABLE_PATH_AIM = false
 ENABLE_SCOPED_ONLY = true
-AIM_AFTER_SHOTS = 1
+AIM_AFTER_SHOTS = 0
 AIM_ADVANCED = false
 AIM_RCS_X = 1.0
 AIM_RCS_Y = 1.0
@@ -139,7 +142,7 @@ KEYBINDS = false
 KEYBINDS_X = 400.0
 KEYBINDS_Y = 400.0
 KEYBINDS_ALPHA = 1.0
-AIM_ONLY_ON_SHOT = false
+AIM_ONLY_ON_SHOT = true
 
 //Can't be edited from menu, not guaranteed to work properly
 PISTOL_AIM_AFTER_SHOTS = 0

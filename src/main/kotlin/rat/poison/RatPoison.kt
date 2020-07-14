@@ -40,7 +40,6 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 
 const val EXPERIMENTAL = false
 const val SETTINGS_DIRECTORY = "settings" //Internal
-var CURRENT_LOCALE = "locale_en_US" //our default is locale_en_US
 var saving = false
 var settingsLoaded = false
 
@@ -56,7 +55,7 @@ fun main() {
 
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
     //Set CURRENT_LOCALE here later
-    loadLocale("$SETTINGS_DIRECTORY\\Localizations\\$CURRENT_LOCALE.locale")
+    loadLocale("$SETTINGS_DIRECTORY\\Localizations\\${curSettings["CURRENT_LOCALE"]}.locale")
 
     dbg = curSettings["DEBUG"].strToBool()
     if (dbg) println("DEBUG enabled")
@@ -173,7 +172,7 @@ fun main() {
 
 fun String.toLocale(): String {
     if (dbg && curLocale[this].isBlank()) {
-        println("[DEBUG] $CURRENT_LOCALE $this is missing!")
+        println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $this is missing!")
     }
     return curLocale[this]
 }

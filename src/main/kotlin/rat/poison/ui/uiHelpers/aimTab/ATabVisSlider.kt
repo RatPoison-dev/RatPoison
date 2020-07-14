@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.CURRENT_LOCALE
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
@@ -60,9 +59,9 @@ class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMa
             println("[Error] $categorySelected$variableExtension is empty")
         }
 
-        if (CURRENT_LOCALE != "") { //Only update locale if we have one
+        if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
             if (dbg && curLocale[variableExtension].isBlank()) {
-                println("[DEBUG] $CURRENT_LOCALE $variableExtension is missing!")
+                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableExtension is missing!")
             }
             sliderLabel.setText("${curLocale[variableExtension]}: ${curSettings[categorySelected + variableExtension]}")
         }

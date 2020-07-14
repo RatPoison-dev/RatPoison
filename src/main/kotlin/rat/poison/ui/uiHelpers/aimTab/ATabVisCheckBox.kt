@@ -1,7 +1,6 @@
 package rat.poison.ui.uiHelpers.aimTab
 
 import com.kotcrab.vis.ui.widget.VisCheckBox
-import rat.poison.CURRENT_LOCALE
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
@@ -44,9 +43,9 @@ class ATabVisCheckBox(text: String, varExtension: String) : VisCheckBox(text) {
             println("[Error] $categorySelected$variableExtension is empty")
         }
 
-        if (CURRENT_LOCALE != "") { //Only update locale if we have one
+        if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
             if (dbg && curLocale[variableExtension].isBlank()) {
-                println("[DEBUG] $CURRENT_LOCALE $variableExtension is missing!")
+                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableExtension is missing!")
             }
             setText(curLocale[variableExtension])
         }

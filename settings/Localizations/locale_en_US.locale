@@ -419,7 +419,7 @@ RCROSSHAIR_XOFFSET = X Offset
 RCROSSHAIR_YOFFSET = Y Offset
 RCROSSHAIR_ALPHA = Alpha
 RCROSSHAIR_COLOR = Color
-ENABLE_TRIGGER = Enable
+ENABLE_TRIGGER = Trigger Master Switch
 TRIGGER_ENABLE_KEY = Trigger On Key
 TRIGGER_KEY = Trigger Key
 ENABLE_AIM = Enable
@@ -449,7 +449,7 @@ STATIC = STATIC
 Weapon-Category = Weapon Category
 MENU_KEY = Menu Key
 ENABLE_OVERRIDE = Enable Override
-ENABLE_BACKTRACK = Enable Backtrack
+ENABLE_BACKTRACK = Backtrack Master Switch
 BACKTRACK_VISUALIZE = Visualize
 ENABLE_BACKTRACK_ON_KEY = Activate On Key
 BACKTRACK_KEY = Backtrack Key
@@ -588,5 +588,9 @@ OPPOSITE = OPPOSITE
 //save config
 Enter-config-name = Enter config name
 
+//new shit
 LEGIT_RADAR = Legit Radar
 ADRENALINE_STRENGTH = Adrenaline Strength
+SNAPLINES_DEFUSE_KIT_COLOR = Defuse Kits
+_TRIGGER = Enable
+_TRIGGER_BACKTRACK = Shoot Backtrack
