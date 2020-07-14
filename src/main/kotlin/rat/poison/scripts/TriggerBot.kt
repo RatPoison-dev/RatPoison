@@ -70,7 +70,7 @@ fun boneTrigger() = every(10) {
                                 val ent = clientDLL.uint(ClientOffsets.dwEntityList + (inCross * 0x10) - 0x10)
                                 if (!ent.inMyTeam() && !ent.isProtected() && !ent.dead()) {
                                     if ((curSettings["TRIGGER_ENABLE_KEY"].strToBool() && keyPressed(curSettings["TRIGGER_KEY"].toInt())) || !curSettings["TRIGGER_ENABLE_KEY"].strToBool()) {
-                                        bTrigShoot(bDELAY, bAIMBOT)
+                                        bTrigShoot(bDELAY, bAIMBOT, bBACKTRACK)
                                         return@every
                                     }
                                 }
@@ -84,7 +84,7 @@ fun boneTrigger() = every(10) {
                             if (target > 0) {
                                 if (!target.dead() && !target.isProtected()) {
                                     if ((curSettings["TRIGGER_ENABLE_KEY"].strToBool() && keyPressed(curSettings["TRIGGER_KEY"].toInt())) || !curSettings["TRIGGER_ENABLE_KEY"].strToBool()) {
-                                        bTrigShoot(bDELAY, bAIMBOT)
+                                        bTrigShoot(bDELAY, bAIMBOT, bBACKTRACK)
                                         return@every
                                     }
                                 }
@@ -108,7 +108,7 @@ fun boneTrigger() = every(10) {
 }
 
 //Initial shot delay
-fun bTrigShoot(delay: Int, aimbot: Boolean = false) {
+fun bTrigShoot(delay: Int, aimbot: Boolean = false, backtrack: Boolean = false) {
     if (!callingInShot) {
         callingInShot = true
         if (delay > 0) {
@@ -124,7 +124,12 @@ fun bTrigShoot(delay: Int, aimbot: Boolean = false) {
     if (triggerInShot) {
         boneTrig = aimbot
 
-        if (!attemptBacktrack()) {
+        var didBacktrack = false
+        if (backtrack) {
+            didBacktrack = attemptBacktrack()
+        }
+
+        if (!didBacktrack) {
             clientDLL[dwForceAttack] = 5
             Thread.sleep(50)
             clientDLL[dwForceAttack] = 4
