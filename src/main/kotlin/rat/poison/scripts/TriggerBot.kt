@@ -81,6 +81,15 @@ fun boneTrigger() = every(10) {
                                 }
                             }
 
+                            if (bBACKTRACK) { //If backtrack setting is true
+                                if (bestBacktrackTarget > 0 && bBACKTRACK) {
+                                    if (!bestBacktrackTarget.dead() && !bestBacktrackTarget.isProtected()) {
+                                        bTrigShoot(bDELAY, bAIMBOT, true, delayType)
+                                        return@every
+                                    }
+                                }
+                            }
+
                             if (bINFOV) { //If in FOV setting is true
                                 val currentAngle = clientState.angle()
                                 val position = me.position()
@@ -88,15 +97,6 @@ fun boneTrigger() = every(10) {
                                 if (target > 0) {
                                     if (!target.dead() && !target.isProtected()) {
                                         bTrigShoot(bDELAY, bAIMBOT, false, delayType)
-                                        return@every
-                                    }
-                                }
-                            }
-
-                            if (bBACKTRACK) { //If backtrack setting is true
-                                if (bestBacktrackTarget > 0 && bBACKTRACK) {
-                                    if (!bestBacktrackTarget.dead() && !bestBacktrackTarget.isProtected()) {
-                                        bTrigShoot(bDELAY, bAIMBOT, true, delayType)
                                         return@every
                                     }
                                 }
