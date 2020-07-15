@@ -84,10 +84,10 @@ class AimTriggerTable: VisTable(false) {
             add(categorySelection).left().row()
             add(trigEnable).left().row()
 
-            add(trigShootBacktrack).left().row()
             add(trigAimbot).left().row()
             add(trigInCross).left().row()
             add(trigInFov).left().row()
+            add(trigShootBacktrack).left().row()
             add(trigFov).left().row()
             add(trigDelay).left().row()
             add(triggerDelayType).left().row()

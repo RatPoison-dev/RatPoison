@@ -224,6 +224,7 @@ fun updateDisableTrig() {
         } else {
             trigFov.disable(bool, col)
         }
+        trigShootBacktrack.disable(bool)
         trigDelay.disable(bool, col)
         triggerDelayType.disable(bool, col)
     }
@@ -253,6 +254,7 @@ fun updateTrig() {
         trigInCross.update()
         trigInFov.update()
         trigFov.update()
+        trigShootBacktrack.update()
         trigAimbot.update()
         trigDelay.update()
         triggerDelayType.update()

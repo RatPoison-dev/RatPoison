@@ -19,6 +19,7 @@ import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.inMyTeam
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
+import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
@@ -27,7 +28,7 @@ var callingInShot = false
 var triggerInShot = false
 
 fun boneTrigger() = every(10) {
-    if (DANGER_ZONE || me.dead()) {
+    if (DANGER_ZONE || me.dead() || MENUTOG) {
         callingInShot = false
         return@every
     }
@@ -82,7 +83,7 @@ fun boneTrigger() = every(10) {
                             }
 
                             if (bBACKTRACK) { //If backtrack setting is true
-                                if (bestBacktrackTarget > 0 && bBACKTRACK) {
+                                if (bestBacktrackTarget > 0) {
                                     if (!bestBacktrackTarget.dead() && !bestBacktrackTarget.isProtected()) {
                                         bTrigShoot(bDELAY, bAIMBOT, true, delayType)
                                         return@every
@@ -90,7 +91,7 @@ fun boneTrigger() = every(10) {
                                 }
                             }
 
-                            if (bINFOV) { //If in FOV setting is true
+                            if (bINFOV && curSettings["ENABLE_BACKTRACK"].strToBool()) { //If in FOV setting is true
                                 val currentAngle = clientState.angle()
                                 val position = me.position()
                                 val target = findTarget(position, currentAngle, false, bFOV, -2)
@@ -106,12 +107,10 @@ fun boneTrigger() = every(10) {
                 }
             }
         }
-
-        //callingInShot = false
         triggerInShot = false
     } else {
         boneTrig = false
-        triggerInShot = false
+        //triggerInShot = false
     }
 }
 
@@ -129,7 +128,7 @@ fun bTrigShoot(delay: Int, aimbot: Boolean = false, backtrack: Boolean = false, 
             triggerInShot = true
             triggerShoot(aimbot, backtrack)
         }
-    } else if (delayType == "FIRST-SHOT") {
+    } else if (delayType == "FIRST-SHOT" && triggerInShot) {
         triggerInShot = true
         triggerShoot(aimbot, backtrack)
     }
@@ -144,12 +143,11 @@ private fun triggerShoot(aimbot: Boolean = false, backtrack: Boolean = false) {
         didBacktrack = attemptBacktrack()
     }
 
-    if (!didBacktrack) {
+    if (!didBacktrack && me.weaponEntity().canFire()) {
         clientDLL[dwForceAttack] = 6
-        Thread.sleep(10)
-    } else {
-        Thread.sleep(10)
     }
+
+    Thread.sleep(10)
 
     boneTrig = false
     callingInShot = false
