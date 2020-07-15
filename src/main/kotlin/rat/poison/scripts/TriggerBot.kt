@@ -96,7 +96,6 @@ fun boneTrigger() = every(10) {
                             if (bBACKTRACK) { //If backtrack setting is true
                                 if (bestBacktrackTarget > 0 && bBACKTRACK) {
                                     if (!bestBacktrackTarget.dead() && !bestBacktrackTarget.isProtected()) {
-                                        println("attemptin a backtrackin")
                                         bTrigShoot(bDELAY, bAIMBOT, true, delayType)
                                         return@every
                                     }
@@ -119,7 +118,6 @@ fun boneTrigger() = every(10) {
 //Initial shot delay
 fun bTrigShoot(delay: Int, aimbot: Boolean = false, backtrack: Boolean = false, delayType: String = "") {
     if (!callingInShot) {
-        println("calling in shot true bro")
         callingInShot = true
         if (delay > 0) {
             Thread(Runnable {
