@@ -48,8 +48,8 @@ fun userCMDToMem(ptr: Int, cmd: UserCMD) {
 }
 
 fun fixUserCMD(cur: UserCMD, old: UserCMD): UserCMD {
-    //cur.vecViewAngles = old.vecViewAngles //silencio!
-    //cur.vecAimDirection = old.vecAimDirection
+    cur.vecViewAngles = old.vecViewAngles
+    cur.vecAimDirection = old.vecAimDirection
     cur.flForwardmove = old.flForwardmove
     cur.flSidemove = old.flSidemove
     cur.flUpmove = old.flUpmove
