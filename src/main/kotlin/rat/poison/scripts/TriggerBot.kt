@@ -58,7 +58,7 @@ fun boneTrigger() = every(10) {
             bINCROSS = curSettings[prefix + "TRIGGER_INCROSS"].strToBool()
             bINFOV = curSettings[prefix + "TRIGGER_INFOV"].strToBool()
             bAIMBOT = curSettings[prefix + "TRIGGER_AIMBOT"].strToBool()
-            bBACKTRACK = curSettings[prefix + "TRIGGER_BACKTRACK"].strToBool()
+            bBACKTRACK = curSettings[prefix + "TRIGGER_BACKTRACK"].strToBool() && curSettings["ENABLE_BACKTRACK"].strToBool()
 
             if (wep.sniper) { //Scope check
                 if (!(curSettings["SNIPER_TRIGGER"].strToBool() && ((me.isScoped() && curSettings["ENABLE_SCOPED_ONLY"].strToBool()) || (!curSettings["ENABLE_SCOPED_ONLY"].strToBool())))) {
@@ -91,7 +91,7 @@ fun boneTrigger() = every(10) {
                                 }
                             }
 
-                            if (bINFOV && curSettings["ENABLE_BACKTRACK"].strToBool()) { //If in FOV setting is true
+                            if (bINFOV) { //If in FOV setting is true
                                 val currentAngle = clientState.angle()
                                 val position = me.position()
                                 val target = findTarget(position, currentAngle, false, bFOV, -2)
