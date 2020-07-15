@@ -39,9 +39,15 @@ fun drawFov() = App {
 
     val wep = me.weapon()
     var prefix = ""
+
     val bFOV: Int
     var bINFOV = false
+
+    val backtrackFOV: Float
+    var backtrackENABLED = false
+
     var triggerRadius = -1F
+    var backtrackRadius = -1F
 
     when {
         wep.pistol -> { prefix = "PISTOL_" }
@@ -54,10 +60,14 @@ fun drawFov() = App {
     if (wep.gun) { //Not 100% this applies to every 'gun'
         bFOV = curSettings[prefix + "TRIGGER_FOV"].toInt()
         bINFOV = curSettings[prefix + "TRIGGER_INFOV"].strToBool()
-        triggerRadius = calcFovRadius(viewFov, bFOV)
+        triggerRadius = calcFovRadius(viewFov, bFOV.toFloat())
+
+        backtrackFOV = curSettings["BACKTRACK_FOV"].toFloat()
+        backtrackENABLED = curSettings[prefix + "TRIGGER_BACKTRACK"].strToBool()
+        backtrackRadius = calcFovRadius(viewFov, backtrackFOV)
     }
 
-    val aimRadius = calcFovRadius(viewFov, curSettings["AIM_FOV"].toInt())
+    val aimRadius = calcFovRadius(viewFov, curSettings["AIM_FOV"].toFloat())
 
     val rccXo = curSettings["RCROSSHAIR_XOFFSET"].toFloat()
     val rccYo = curSettings["RCROSSHAIR_YOFFSET"].toFloat()
@@ -83,12 +93,18 @@ fun drawFov() = App {
             circle(x, y, clamp(triggerRadius, 10F, 1000F))
         }
 
+        if (curSettings["ENABLE_BACKTRACK"].strToBool() && curSettings["DRAW_BACKTRACK_FOV"].strToBool() && backtrackRadius != -1F && backtrackENABLED) {
+            val col = curSettings["DRAW_BACKTRACK_FOV_COLOR"].strToColor()
+            setColor(col.red / 255F, col.green / 255F, col.blue / 255F, 1F)
+            circle(x, y, clamp(backtrackRadius, 10F, 1000F))
+        }
+
         color = Color(1F, 1F, 1F, 1F)
         end()
     }
 }
 
-fun calcFovRadius(viewFov: Int, aimFov: Int): Float {
+fun calcFovRadius(viewFov: Int, aimFov: Float): Float {
     var calcFov = 2.0 * toDegrees(kotlin.math.atan((CSGO.gameWidth.toDouble()/CSGO.gameHeight.toDouble()) * 0.75 * kotlin.math.tan(toRadians(viewFov/2.0))))
     calcFov = kotlin.math.tan(toRadians(aimFov/2.0)) / kotlin.math.tan(toRadians(calcFov/2.0)) * (CSGO.gameWidth.toDouble())
 

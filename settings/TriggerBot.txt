@@ -4,6 +4,9 @@ ENABLE_TRIGGER = false
 //Enable auto knife
 ENABLE_AUTO_KNIFE = false
 
+//Type of delay, FIRST-SHOT or BETWEEN-SHOTS
+TRIGGER_DELAY_TYPE = FIRST-SHOT
+
 //Enable bone trigger activation when holding the specified weapons
 PISTOL_TRIGGER = true
 RIFLE_TRIGGER = true

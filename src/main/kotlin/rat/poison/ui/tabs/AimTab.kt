@@ -3,12 +3,10 @@ package rat.poison.ui.tabs
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
-import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import com.sun.jna.StringArray
 import rat.poison.*
-import rat.poison.ui.uiHelpers.tables.AimBTrigTable
+import rat.poison.ui.uiHelpers.tables.AimTriggerTable
 import rat.poison.ui.uiHelpers.tables.AimBacktrackTable
 import rat.poison.ui.uiHelpers.tables.AimTable
 import rat.poison.ui.uiPanels.aimTab
@@ -27,7 +25,7 @@ var boneCategories = arrayOf("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RAN
 class AimTab : Tab(true, false) { //Aim.kts tab
     private val table = VisTable(false)
     val tAim = AimTable()
-    val tTrig = AimBTrigTable()
+    val tTrig = AimTriggerTable()
     val tBacktrack = AimBacktrackTable()
 
     init {
@@ -227,6 +225,7 @@ fun updateDisableTrig() {
             trigFov.disable(bool, col)
         }
         trigDelay.disable(bool, col)
+        triggerDelayType.disable(bool, col)
     }
 }
 
@@ -256,6 +255,7 @@ fun updateTrig() {
         trigFov.update()
         trigAimbot.update()
         trigDelay.update()
+        triggerDelayType.update()
     }
 
     updateDisableTrig()

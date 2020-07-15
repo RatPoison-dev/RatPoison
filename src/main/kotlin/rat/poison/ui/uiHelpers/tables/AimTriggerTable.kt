@@ -13,19 +13,22 @@ import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.gunCategories
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
+import rat.poison.ui.uiHelpers.VisSelectBoxCustom
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiUpdate
 
-class AimBTrigTable: VisTable(false) {
+class AimTriggerTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
-    val enableTrig = VisCheckBoxCustom("Enable Trigger", "ENABLE_TRIGGER")
+    val enableTrig = VisCheckBoxCustom("Enable Trigger", "ENABLE_TRIGGER") //Master switch
 
     val boneTriggerEnableKey = VisCheckBoxCustom("Trigger On Key", "TRIGGER_ENABLE_KEY")
     val boneTriggerKey = VisInputFieldCustom("Trigger Key", "TRIGGER_KEY")
 
-    val trigEnable = ATabVisCheckBox("Enable", "_TRIGGER")
+    val triggerDelayType = VisSelectBoxCustom("Trigger Delay Type", "TRIGGER_DELAY_TYPE", false, true,"FIRST-SHOT", "BETWEEN-SHOTS")
+
+    val trigEnable = ATabVisCheckBox("Enable", "_TRIGGER") //Per weapon category
 
     val trigAimbot = ATabVisCheckBox("Aimbot", "_TRIGGER_AIMBOT")
     val trigInCross = ATabVisCheckBox("InCross", "_TRIGGER_INCROSS")
@@ -87,6 +90,7 @@ class AimBTrigTable: VisTable(false) {
             add(trigInFov).left().row()
             add(trigFov).left().row()
             add(trigDelay).left().row()
+            add(triggerDelayType).left().row()
 
             addSeparator()
         }

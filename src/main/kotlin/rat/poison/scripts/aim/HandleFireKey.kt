@@ -11,6 +11,7 @@ import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
 import rat.poison.scripts.attemptBacktrack
+import rat.poison.scripts.callingInShot
 import rat.poison.scripts.triggerInShot
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
@@ -29,7 +30,7 @@ fun handleFireKey() = every(1) {
         return@every
     }
 
-    if (triggerInShot) {
+    if (triggerInShot || callingInShot) {
         //Let that bih handle shots
         return@every
     } else if (keyPressed(1)) {
