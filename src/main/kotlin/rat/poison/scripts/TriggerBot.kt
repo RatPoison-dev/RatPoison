@@ -107,10 +107,10 @@ fun boneTrigger() = every(10) {
                 }
             }
         }
+
         triggerInShot = false
     } else {
         boneTrig = false
-        //triggerInShot = false
     }
 }
 
@@ -137,13 +137,9 @@ fun bTrigShoot(delay: Int, aimbot: Boolean = false, backtrack: Boolean = false, 
 private fun triggerShoot(aimbot: Boolean = false, backtrack: Boolean = false) {
     boneTrig = aimbot
 
-    var didBacktrack = false
-
     if (backtrack) {
-        didBacktrack = attemptBacktrack()
-    }
-
-    if (!didBacktrack && me.weaponEntity().canFire()) {
+        attemptBacktrack()
+    } else if (me.weaponEntity().canFire()) { //CanFire is not needed?
         clientDLL[dwForceAttack] = 6
     }
 
