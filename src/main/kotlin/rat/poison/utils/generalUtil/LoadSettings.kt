@@ -90,6 +90,13 @@ fun validateSetting(settingName: String, value: String): Boolean {
             if (!validSettingsMap["FOV_TYPE"].stringToList().contains(inpValue)) {
                 valid = false
             }
+        } else if (value.contains("oWeapon")) {
+            val size = value.replace("oWeapon(", "").replace(")", "").split(", ").size
+
+            if (size != 17) {
+                println("Debug: Setting invalid: $settingName has incorrect size of $size expected 17")
+                return false
+            }
         }
     }
 
