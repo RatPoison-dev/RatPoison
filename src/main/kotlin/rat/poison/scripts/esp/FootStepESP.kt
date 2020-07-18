@@ -99,19 +99,8 @@ fun runFootSteps() = App {
 
                     end()
                 }
-                shapeRenderer.projectionMatrix = oldMatrix
-            }
 
-            footSteps[i].ttl--
-            if (footSteps[i].ttl <= 0) { //Reset
-                footSteps[i].apply {
-                    x = 0.0
-                    y = 0.0
-                    z = 0.0
-                    ttl = curSettings["FOOTSTEP_TTL"].toInt()
-                    open = true
-                    ent = 0L
-                }
+                shapeRenderer.projectionMatrix = oldMatrix
             }
         }
     }
@@ -144,6 +133,20 @@ private fun constructSteps() = every(10) {
                     open = false
                     myTeam = inMyTeam
                     this.ent = ent
+                }
+            }
+        }
+
+        for (i in footSteps.indices) {
+            footSteps[i].ttl -= 10
+            if (footSteps[i].ttl <= 0) { //Reset
+                footSteps[i].apply {
+                    x = 0.0
+                    y = 0.0
+                    z = 0.0
+                    ttl = curSettings["FOOTSTEP_TTL"].toInt()
+                    open = true
+                    this.ent = 0L
                 }
             }
         }

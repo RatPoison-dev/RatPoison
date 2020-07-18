@@ -225,8 +225,8 @@ fun updateDisableTrig() {
             trigFov.disable(bool, col)
         }
         trigShootBacktrack.disable(bool)
-        trigDelay.disable(bool, col)
-        triggerDelayType.disable(bool, col)
+        initTrigDelay.disable(bool, col)
+        perShotTrigDelay.disable(bool, col)
     }
 }
 
@@ -256,8 +256,8 @@ fun updateTrig() {
         trigFov.update()
         trigShootBacktrack.update()
         trigAimbot.update()
-        trigDelay.update()
-        triggerDelayType.update()
+        initTrigDelay.update()
+        perShotTrigDelay.update()
     }
 
     updateDisableTrig()

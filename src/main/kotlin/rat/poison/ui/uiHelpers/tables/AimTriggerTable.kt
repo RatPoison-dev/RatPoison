@@ -26,8 +26,6 @@ class AimTriggerTable: VisTable(false) {
     val boneTriggerEnableKey = VisCheckBoxCustom("Trigger On Key", "TRIGGER_ENABLE_KEY")
     val boneTriggerKey = VisInputFieldCustom("Trigger Key", "TRIGGER_KEY")
 
-    val triggerDelayType = VisSelectBoxCustom("Trigger Delay Type", "TRIGGER_DELAY_TYPE", false, true,"FIRST-SHOT", "BETWEEN-SHOTS")
-
     val trigEnable = ATabVisCheckBox("Enable", "_TRIGGER") //Per weapon category
 
     val trigAimbot = ATabVisCheckBox("Aimbot", "_TRIGGER_AIMBOT")
@@ -35,7 +33,8 @@ class AimTriggerTable: VisTable(false) {
     val trigInFov = ATabVisCheckBox("InFov", "_TRIGGER_INFOV")
     val trigFov = ATabVisSlider("FOV", "_TRIGGER_FOV", 1F, 90F, 1F, true)
     val trigShootBacktrack = ATabVisCheckBox("Shoot Backtrack", "_TRIGGER_BACKTRACK")
-    val trigDelay = ATabVisSlider("Delay", "_TRIGGER_SHOT_DELAY", 0F, 500F, 10F, true)
+    val initTrigDelay = ATabVisSlider("First Shot Delay", "_TRIGGER_INIT_SHOT_DELAY", 0F, 500F, 10F, true)
+    val perShotTrigDelay = ATabVisSlider("Per Shot Delay", "_TRIGGER_PER_SHOT_DELAY", 0F, 500F, 10F, true)
 
     //Override Weapon Checkbox & Selection Box
     private val categorySelection = VisTable()
@@ -89,8 +88,8 @@ class AimTriggerTable: VisTable(false) {
             add(trigInFov).left().row()
             add(trigShootBacktrack).left().row()
             add(trigFov).left().row()
-            add(trigDelay).left().row()
-            add(triggerDelayType).left().row()
+            add(initTrigDelay).left().row()
+            add(perShotTrigDelay).left().row()
 
             addSeparator()
         }

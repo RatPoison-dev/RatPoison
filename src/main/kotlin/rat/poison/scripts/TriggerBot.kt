@@ -12,8 +12,6 @@ import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.iCrossHairID
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
-import rat.poison.game.offsets.ClientOffsets.dwIndex
-import rat.poison.game.realCalcAngle
 import rat.poison.scripts.aim.boneTrig
 import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.inMyTeam
@@ -26,6 +24,7 @@ import rat.poison.utils.generalUtil.strToBool
 
 var callingInShot = false
 var triggerInShot = false
+private var inDelay = false
 
 fun boneTrigger() = every(10) {
     if (DANGER_ZONE || me.dead() || MENUTOG) {
@@ -33,28 +32,27 @@ fun boneTrigger() = every(10) {
         return@every
     }
 
-    //FIRST-SHOT or BETWEEN-SHOTS
-    val delayType = curSettings["TRIGGER_DELAY_TYPE"]
-    if (curSettings["ENABLE_TRIGGER"].strToBool() && ((!callingInShot && delayType == "BETWEEN-SHOTS") || (delayType == "FIRST-SHOT"))) {
-        val wep = me.weapon()
+    val wep = me.weapon()
+    var prefix = ""
 
+    when {
+        wep.pistol -> { prefix = "PISTOL_" }
+        wep.rifle -> { prefix = "RIFLE_" }
+        wep.shotgun -> { prefix = "SHOTGUN_" }
+        wep.sniper -> { prefix = "SNIPER_" }
+        wep.smg -> { prefix = "SMG_" }
+    }
+
+    //FIRST-SHOT & BETWEEN-SHOTS
+    val initDelay = curSettings[prefix + "TRIGGER_INIT_SHOT_DELAY"].toInt()
+    val shotDelay = curSettings[prefix + "TRIGGER_PER_SHOT_DELAY"].toInt()
+    if (curSettings["ENABLE_TRIGGER"].strToBool() && !inDelay) {
         val bFOV: Int; val bDELAY: Int; val bINCROSS: Boolean; val bINFOV: Boolean; val bAIMBOT: Boolean; val bBACKTRACK: Boolean
-
-        var prefix = ""
-
-        when {
-            wep.pistol -> { prefix = "PISTOL_" }
-            wep.rifle -> { prefix = "RIFLE_" }
-            wep.shotgun -> { prefix = "SHOTGUN_" }
-            wep.sniper -> { prefix = "SNIPER_" }
-            wep.smg -> { prefix = "SMG_" }
-        }
 
         if (wep.gun) { //Not 100% this applies to every 'gun'
             if (!curSettings[prefix + "TRIGGER"].strToBool()) return@every
 
             bFOV = curSettings[prefix + "TRIGGER_FOV"].toInt()
-            bDELAY = curSettings[prefix + "TRIGGER_SHOT_DELAY"].toInt()
             bINCROSS = curSettings[prefix + "TRIGGER_INCROSS"].strToBool()
             bINFOV = curSettings[prefix + "TRIGGER_INFOV"].strToBool()
             bAIMBOT = curSettings[prefix + "TRIGGER_AIMBOT"].strToBool()
@@ -76,8 +74,20 @@ fun boneTrigger() = every(10) {
                                 if (inCross > 0) {
                                     val ent = clientDLL.uint(ClientOffsets.dwEntityList + (inCross * 0x10) - 0x10)
                                     if (!ent.inMyTeam() && !ent.isProtected() && !ent.dead()) {
-                                        bTrigShoot(bDELAY, bAIMBOT, false, delayType)
+                                        bTrigShoot(initDelay, shotDelay, bAIMBOT, false)
                                         return@every
+                                    }
+                                }
+                            }
+
+                            var canFOV = false
+                            if (bINFOV) { //If in FOV setting is true
+                                val currentAngle = clientState.angle()
+                                val position = me.position()
+                                val target = findTarget(position, currentAngle, false, bFOV, -2)
+                                if (target > 0) {
+                                    if (!target.dead() && !target.isProtected()) {
+                                        canFOV = true
                                     }
                                 }
                             }
@@ -85,66 +95,83 @@ fun boneTrigger() = every(10) {
                             if (bBACKTRACK) { //If backtrack setting is true
                                 if (bestBacktrackTarget > 0) {
                                     if (!bestBacktrackTarget.dead() && !bestBacktrackTarget.isProtected()) {
-                                        bTrigShoot(bDELAY, bAIMBOT, true, delayType)
+                                        bTrigShoot(initDelay, shotDelay, bAIMBOT, true, canFOV)
                                         return@every
                                     }
                                 }
                             }
 
-                            if (bINFOV) { //If in FOV setting is true
-                                val currentAngle = clientState.angle()
-                                val position = me.position()
-                                val target = findTarget(position, currentAngle, false, bFOV, -2)
-                                if (target > 0) {
-                                    if (!target.dead() && !target.isProtected()) {
-                                        bTrigShoot(bDELAY, bAIMBOT, false, delayType)
-                                        return@every
-                                    }
-                                }
+                            if (canFOV) {
+                                bTrigShoot(initDelay, shotDelay, bAIMBOT, false)
+                                return@every
                             }
+
+                            //If not called finish
+                            //This prevents speed ups when losing target, canFire, etc...
+                            triggerInShot = false
+                            callingInShot = false
                         }
                     }
                 }
             }
         }
-
-        triggerInShot = false
     } else {
         boneTrig = false
     }
 }
 
 //Initial shot delay
-fun bTrigShoot(delay: Int, aimbot: Boolean = false, backtrack: Boolean = false, delayType: String = "") {
-    if (!callingInShot) {
-        callingInShot = true
-        if (delay > 0) {
-            Thread(Runnable {
-                Thread.sleep(delay.toLong())
+fun bTrigShoot(initDelay: Int, shotDelay: Int, aimbot: Boolean = false, backtrack: Boolean = false, backtrackFallback: Boolean = false) {
+    if (!inDelay) {
+        if (!callingInShot) {
+            callingInShot = true
+            if (initDelay > 0) {
+                Thread(Runnable {
+                    inDelay = true
+                    Thread.sleep(initDelay.toLong())
+                    inDelay = false
+                    triggerInShot = true
+                    triggerShoot(aimbot, backtrack, backtrackFallback)
+                }).start()
+            } else {
                 triggerInShot = true
-                triggerShoot(aimbot, backtrack)
-            }).start()
-        } else {
+                triggerShoot(aimbot, backtrack, backtrackFallback)
+            }
+        } else if (!triggerInShot) { //else if trigger in shot
             triggerInShot = true
-            triggerShoot(aimbot, backtrack)
+
+            if (shotDelay > 0) {
+                Thread(Runnable {
+                    inDelay = true
+                    Thread.sleep(shotDelay.toLong())
+                    inDelay = false
+                    triggerShoot(aimbot, backtrack, backtrackFallback)
+                }).start()
+            } else {
+                triggerShoot(aimbot, backtrack, backtrackFallback)
+            }
         }
-    } else if (delayType == "FIRST-SHOT" && triggerInShot) {
-        triggerInShot = true
-        triggerShoot(aimbot, backtrack)
     }
 }
 
-private fun triggerShoot(aimbot: Boolean = false, backtrack: Boolean = false) {
+private fun triggerShoot(aimbot: Boolean = false, backtrack: Boolean = false, backtrackFallback: Boolean = false) {
     boneTrig = aimbot
+    var didBacktrack = false
 
+    //Can combine statements? sippin dum dum juice rn
     if (backtrack) {
-        attemptBacktrack()
-    } else if (me.weaponEntity().canFire()) { //CanFire is not needed?
-        clientDLL[dwForceAttack] = 6
+        didBacktrack = attemptBacktrack()
+    } else {
+        clientDLL[dwForceAttack] = 6 //HandleFireKey.kt
     }
 
-    Thread.sleep(10)
+    if (!didBacktrack && backtrackFallback) {
+        clientDLL[dwForceAttack] = 6 //HandleFireKey.kt
+    }
+
+    //Fuck a beat i was tryna beat my meat
+    //thread sleep here 10
 
     boneTrig = false
-    callingInShot = false
+    triggerInShot = false
 }
