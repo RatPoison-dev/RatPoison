@@ -38,41 +38,38 @@ fun ranks() = every(1000, true) { //Rebuild every second
 
     forEntities(EntityType.CCSPlayer) {
         val entity = it.entity
-
-        if (entity.onGround()) { //Change later
-            val entTeam = when (entity.team()) {
-                3L -> "CT"
-                2L -> "T"
-                else -> "N/A"
-            }
-
-            val entName = entity.name()
-            val entRank = entity.rank().rankName()
-            val entKills = entity.kills().toString()
-            val entDeaths = entity.deaths().toString()
-            val entKD = when (entDeaths) {
-                "0" -> "N/A"
-                else -> (entKills.toFloat() / entDeaths.toFloat()).roundNDecimals(2).toString()
-            }
-            val entWins = entity.wins().toString()
-
-            when (entTeam) { //Bruh
-                "CT" -> {
-                    teamList.add("CT".toLocale())
-                }
-
-                "T" -> {
-                    teamList.add("T".toLocale())
-                }
-            }
-
-            nameList.add(entName)
-            rankList.add(entRank)
-            killsList.add(entKills)
-            deathsList.add(entDeaths)
-            KDList.add(entKD)
-            winsList.add(entWins)
+        val entTeam = when (entity.team()) {
+            3L -> "CT"
+            2L -> "T"
+            else -> "N/A"
         }
+
+        val entName = entity.name()
+        val entRank = entity.rank().rankName()
+        val entKills = entity.kills().toString()
+        val entDeaths = entity.deaths().toString()
+        val entKD = when (entDeaths) {
+            "0" -> "N/A"
+            else -> (entKills.toFloat() / entDeaths.toFloat()).roundNDecimals(2).toString()
+        }
+        val entWins = entity.wins().toString()
+
+        when (entTeam) { //Bruh
+            "CT" -> {
+                teamList.add("CT".toLocale())
+            }
+
+            "T" -> {
+                teamList.add("T".toLocale())
+            }
+        }
+
+        nameList.add(entName)
+        rankList.add(entRank)
+        killsList.add(entKills)
+        deathsList.add(entDeaths)
+        KDList.add(entKD)
+        winsList.add(entWins)
     }
 
     ranksTab.updateRanks()

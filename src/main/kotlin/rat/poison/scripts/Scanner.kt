@@ -155,48 +155,45 @@ fun scanner() {
                 try {
                     forEntities(EntityType.CCSPlayer) {
                         val entity = it.entity
-
-                        if (entity.onGround()) { //Change later
-                            var entTeam = when (entity.team()) {
-                                3L -> "CT"
-                                2L -> "T"
-                                else -> "N/A"
-                            }
-
-                            var entName = entity.name()
-                            var entRank = entity.rank().rankName()
-                            var entKills = entity.kills().toString()
-                            var entDeaths = entity.deaths().toString()
-                            var entKD = when (entDeaths) {
-                                "0" -> "N/A"
-                                else -> (entKills.toFloat() / entDeaths.toFloat()).roundNDecimals(2).toString()
-                            }
-                            var entWins = entity.wins().toString()
-
-                            for (i in entTeam.length..5) {
-                                entTeam += " "
-                            }
-                            for (i in entName.length..31) {
-                                entName += " "
-                            }
-                            for (i in entRank.length..4) {
-                                entRank += " "
-                            }
-                            for (i in entKills.length..4) {
-                                entKills += " "
-                            }
-                            for (i in entDeaths.length..5) {
-                                entDeaths += " "
-                            }
-                            for (i in entKD.length..3) {
-                                entKD += " "
-                            }
-                            for (i in entWins.length..4) {
-                                entWins += " "
-                            }
-
-                            println("$entTeam $entName $entRank $entKills $entDeaths $entKD $entWins")
+                        var entTeam = when (entity.team()) {
+                            3L -> "CT"
+                            2L -> "T"
+                            else -> "N/A"
                         }
+
+                        var entName = entity.name()
+                        var entRank = entity.rank().rankName()
+                        var entKills = entity.kills().toString()
+                        var entDeaths = entity.deaths().toString()
+                        var entKD = when (entDeaths) {
+                            "0" -> "N/A"
+                            else -> (entKills.toFloat() / entDeaths.toFloat()).roundNDecimals(2).toString()
+                        }
+                        var entWins = entity.wins().toString()
+
+                        for (i in entTeam.length..5) {
+                            entTeam += " "
+                        }
+                        for (i in entName.length..31) {
+                            entName += " "
+                        }
+                        for (i in entRank.length..4) {
+                            entRank += " "
+                        }
+                        for (i in entKills.length..4) {
+                            entKills += " "
+                        }
+                        for (i in entDeaths.length..5) {
+                            entDeaths += " "
+                        }
+                        for (i in entKD.length..3) {
+                            entKD += " "
+                        }
+                        for (i in entWins.length..4) {
+                            entWins += " "
+                        }
+
+                        println("$entTeam $entName $entRank $entKills $entDeaths $entKD $entWins")
                     }
                     println()
                 } catch (e: Exception) {
