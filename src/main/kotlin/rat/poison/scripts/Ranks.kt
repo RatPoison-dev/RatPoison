@@ -36,7 +36,7 @@ fun ranks() = every(1000, true) { //Rebuild every second
     //ctPlayers.clear()
     //tPlayers.clear()
 
-    forEntities(ccsPlayer) {
+    forEntities(EntityType.CCSPlayer) {
         val entity = it.entity
 
         if (entity.onGround()) { //Change later

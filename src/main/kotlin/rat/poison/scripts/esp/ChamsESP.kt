@@ -51,12 +51,12 @@ fun chamsEsp() = every(250) {
 
     //Set Cvar
     engineDLL[dwModelAmbientMin] = floatToIntBits(curSettings["CHAMS_BRIGHTNESS"].toInt().toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
-    forEntities(ccsPlayer) body@ {
+    forEntities(EntityType.CCSPlayer) {
         val entity = it.entity
-        if (entity <= 0 || entity == me || entity.dormant() || entity.dead()) return@body false
+        if (entity <= 0 || entity == me || entity.dormant() || entity.dead()) return@forEntities
 
         val glowAddress = it.glowAddress
-        if (glowAddress <= 0) return@body false
+        if (glowAddress <= 0) return@forEntities
 
         val entityTeam = entity.team()
         val team = !DANGER_ZONE && myTeam == entityTeam
@@ -76,7 +76,7 @@ fun chamsEsp() = every(250) {
             entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
         }
 
-        return@body false
+        return@forEntities
     }
 }
 

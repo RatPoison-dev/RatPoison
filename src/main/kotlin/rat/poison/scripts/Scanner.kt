@@ -148,7 +148,7 @@ fun scanner() {
                 println("${curLocale["RANKS_TEAM"]}   ${curLocale["RANKS_NAME"]}                             ${curLocale["RANKS_RANK"]}  ${curLocale["RANKS_KILLS"]} ${curLocale["RANKS_DEATHS"]} ${curLocale["RANKS_KD"]}  ${curLocale["RANKS_WINS"]}")
                 println("====== ================================ ===== ===== ====== ==== =====")
                 try {
-                    forEntities(EntityType.ccsPlayer) {
+                    forEntities(EntityType.CCSPlayer) {
                         val entity = it.entity
 
                         if (entity.onGround()) { //Change later

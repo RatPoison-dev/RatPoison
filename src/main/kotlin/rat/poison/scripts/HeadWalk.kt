@@ -4,6 +4,7 @@ import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.game.angle
 import rat.poison.game.clientState
+import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.entity.absPosition
 import rat.poison.game.entity.dead
@@ -99,9 +100,9 @@ internal fun onPlayerHead() : Boolean {
     var entPos : Angle
     onEnt = 0L
 
-    forEntities(ccsPlayer) {
+    forEntities(EntityType.CCSPlayer) {
         val entity = it.entity
-        if (entity == me || !entity.onGround()) return@forEntities false
+        if (entity == me || !entity.onGround()) return@forEntities
 
         entPos = entity.absPosition()
 
@@ -115,10 +116,8 @@ internal fun onPlayerHead() : Boolean {
         }
 
         if (onEnt != 0L) {
-            return@forEntities false
+            return@forEntities
         }
-
-        false
     }
 
     return when (onEnt) {

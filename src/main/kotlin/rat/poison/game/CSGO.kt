@@ -20,7 +20,6 @@ import rat.poison.utils.retry
 import kotlin.system.exitProcess
 
 object CSGO {
-
 	const val ENTITY_SIZE = 16
 	const val GLOW_OBJECT_SIZE = 56
 

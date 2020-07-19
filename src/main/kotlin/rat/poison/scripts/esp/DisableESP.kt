@@ -33,11 +33,11 @@ internal fun disableAllEsp() {
     CSGO.csgoEXE[clientVModEnt + 0x72] = 255.toByte()
     CSGO.engineDLL[EngineOffsets.dwModelAmbientMin] = floatToIntBits(0F) xor (CSGO.engineDLL.address + EngineOffsets.dwModelAmbientMin - 0x2C).toInt()
 
-    forEntities body@ {
+    forEntities {
         val entity = it.entity
         val type = it.type
         val glowAddress = it.glowAddress
-        if (entity <= 0 || me == entity || glowAddress <= 0) return@body false
+        if (entity <= 0 || me == entity || glowAddress <= 0) return@forEntities
 
         if (type != EntityType.NULL) {
             when (type) {
@@ -54,7 +54,7 @@ internal fun disableAllEsp() {
             }
         }
 
-        return@body false
+        return@forEntities
     }
 }
 

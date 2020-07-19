@@ -23,16 +23,14 @@ fun rayTraceTest() = App {
         var meVec = me.bones(8).toVector3()
         meVec = Vector3(meVec.x, meVec.y, meVec.z)
 
-        forEntities(EntityType.ccsPlayer) {
+        forEntities(EntityType.CCSPlayer) {
             val ent = it.entity
-            if (ent == me || !ent.onGround()) return@forEntities false
+            if (ent == me || !ent.onGround()) return@forEntities
 
             var entBones = ent.bones(8).toVector3()
             entBones = Vector3(entBones.x, entBones.y, entBones.z)
 
             bspIsVisible(meVec, Vector3(entBones.x, entBones.y, entBones.z))
-
-            false
         }
     }, TimeUnit.NANOSECONDS)
 }

@@ -3,6 +3,7 @@ package rat.poison.scripts.esp
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.Entity
+import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.entity.dead
 import rat.poison.game.entity.dormant
@@ -24,13 +25,11 @@ internal fun radarEsp() = every(100) {
             }
         }
     } else {
-        forEntities(ccsPlayer) {
+        forEntities(EntityType.CCSPlayer) {
             val entity = it.entity
 
-            if (entity.dead() || entity == me || entity.dormant()) return@forEntities false
+            if (entity.dead() || entity == me || entity.dormant()) return@forEntities
             entity.show()
-
-            false
         }
     }
 }

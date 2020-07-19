@@ -30,14 +30,14 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	var closestDelta = Double.MAX_VALUE
 	var closestPlayer = -1L
 
-	forEntities result@{
+	forEntities {
 		val entity = it.entity
 		if (entity <= 0 || entity == me || !entity.canShoot(visCheck)) {
-			return@result false
+			return@forEntities
 		}
 
 		if (it.type != EntityType.CCSPlayer) {
-			return@result false
+			return@forEntities
 		}
 
 		if (BONE == -3) { //Knife bot bone
@@ -82,7 +82,7 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 				}
 			}
 		}
-		return@result false
+		return@forEntities
 	}
 
 	if (closestDelta == Double.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return -1
@@ -270,7 +270,10 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 				destinationAngle.finalize(currentAngle, (1.1 - curSettings["AIM_SMOOTHNESS"].toDouble() / 5.0)) //10.0 is max smooth value
 			}
 
+
+
 			val aimSpeed = curSettings["AIM_SPEED"].toInt()
+
 			val aimSpeedDivisor = if (curSettings["AIM_ADVANCED"].strToBool()) curSettings["AIM_SPEED_DIVISOR"].toInt() else 1
 			doAim(destinationAngle, currentAngle, aimSpeed, aimSpeedDivisor)
 		}

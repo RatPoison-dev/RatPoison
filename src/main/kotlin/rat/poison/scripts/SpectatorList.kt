@@ -4,6 +4,7 @@ package rat.poison.scripts
 
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
+import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.entity.dormant
 import rat.poison.game.entity.hltv
@@ -30,7 +31,7 @@ internal fun spectatorList() = every(100) {
 
     val playerSpecTarget = csgoEXE.readIndex(me + dwIndex)
 
-    forEntities(ccsPlayer) body@ {
+    forEntities(EntityType.CCSPlayer) {
         val entity = it.entity
 
         if (entity.isSpectating() && !entity.hltv() && !entity.dormant()) {
@@ -43,7 +44,7 @@ internal fun spectatorList() = every(100) {
                 }
             }
         }
-        return@body false
+        return@forEntities
     }
 
     if (opened && haveTarget) {

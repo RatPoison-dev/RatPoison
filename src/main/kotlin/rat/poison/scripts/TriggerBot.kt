@@ -33,6 +33,9 @@ fun boneTrigger() = every(10) {
     }
 
     val wep = me.weapon()
+
+    if (!wep.gun) return@every
+
     var prefix = ""
 
     when {
@@ -47,7 +50,7 @@ fun boneTrigger() = every(10) {
     val initDelay = curSettings[prefix + "TRIGGER_INIT_SHOT_DELAY"].toInt()
     val shotDelay = curSettings[prefix + "TRIGGER_PER_SHOT_DELAY"].toInt()
     if (curSettings["ENABLE_TRIGGER"].strToBool() && !inDelay) {
-        val bFOV: Int; val bDELAY: Int; val bINCROSS: Boolean; val bINFOV: Boolean; val bAIMBOT: Boolean; val bBACKTRACK: Boolean
+        val bFOV: Int; val bINCROSS: Boolean; val bINFOV: Boolean; val bAIMBOT: Boolean; val bBACKTRACK: Boolean
 
         if (wep.gun) { //Not 100% this applies to every 'gun'
             if (!curSettings[prefix + "TRIGGER"].strToBool()) return@every
@@ -95,7 +98,7 @@ fun boneTrigger() = every(10) {
                             if (bBACKTRACK) { //If backtrack setting is true
                                 if (bestBacktrackTarget > 0) {
                                     if (!bestBacktrackTarget.dead() && !bestBacktrackTarget.isProtected()) {
-                                        bTrigShoot(initDelay, shotDelay, bAIMBOT, true, canFOV)
+                                        bTrigShoot(initDelay, shotDelay, false, true, canFOV)
                                         return@every
                                     }
                                 }

@@ -74,12 +74,8 @@ internal fun Memory.flashed(): Boolean = this.getFloat(flFlashDuration) > 0.25f
 
 internal fun Player.lifeState(): Int = csgoEXE.byte(this + lifeState).toInt()
 
-internal fun Player.dead() = try {
-	lifeState() != 0 || health() <= 0
-} catch (t: Throwable) {
-	t.printStackTrace()
-	false
-}
+internal fun Player.dead(): Boolean = (lifeState() != 0 || health() <= 0)
+
 
 internal fun Player.punch(): Angle {
 	val tmpAng = Angle()

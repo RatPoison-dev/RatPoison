@@ -35,8 +35,10 @@ private val contexts = Array(MAX_ENTITIES) { EntityContext() }
 private fun shouldReset() = System.currentTimeMillis() - lastCleanup.get() >= CLEANUP_TIME
 
 private fun reset() {
-    for (cacheableList in entitiesValues)
-        cacheableList?.clear()
+    for (i in entitiesValues) {
+        i?.removeAll(i)
+    }
+
     lastCleanup.set(System.currentTimeMillis())
 }
 
@@ -137,7 +139,9 @@ fun constructEntities() = every(500) {
                 val context = contexts[glowIndex].set(entity, glowAddress, glowIndex, type)
 
                 with(entities[type]!!) {
-                    if (!contains(context)) add(context)
+                    if (!contains(context)) {
+                        add(context)
+                    }
                 }
             }
         }

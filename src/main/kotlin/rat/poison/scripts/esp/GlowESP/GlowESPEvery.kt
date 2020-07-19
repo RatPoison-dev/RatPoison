@@ -48,12 +48,12 @@ internal fun glowEspEvery() = every(10, true) {
 	val showGrenades = curSettings["GLOW_SHOW_GRENADES"].strToBool()
 
 	val meTeam = me.team()
-	forEntities body@{
+	forEntities {
 		val entity = it.entity
-		if (entity <= 0 || me == entity || entity.dormant()) return@body false
+		if (entity <= 0 || me == entity || entity.dormant()) return@forEntities
 
 		val glowAddress = it.glowAddress
-		if (glowAddress <= 0) return@body false
+		if (glowAddress <= 0) return@forEntities
 
 		var health = 0
 		var color = ""
@@ -61,7 +61,7 @@ internal fun glowEspEvery() = every(10, true) {
 
 		when (it.type) {
 			EntityType.CCSPlayer -> {
-				if (entity.dead()) return@body false
+				if (entity.dead()) return@forEntities
 
 				val entityTeam = entity.team()
 				val team = !DANGER_ZONE && meTeam == entityTeam
@@ -114,6 +114,6 @@ internal fun glowEspEvery() = every(10, true) {
 			}
 		}
 
-		return@body false
+		return@forEntities
 	}
 }

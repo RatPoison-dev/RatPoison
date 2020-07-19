@@ -107,9 +107,9 @@ fun runFootSteps() = App {
 }
 
 private fun constructSteps() = every(10) {
-    forEntities(ccsPlayer) {
+    forEntities(EntityType.CCSPlayer) {
         val ent = it.entity
-        if (ent == me || ent.dead() || ent.dormant()) return@forEntities false
+        if (ent == me || ent.dead() || ent.dormant()) return@forEntities
 
         val inMyTeam = ent.team() == me.team()
 

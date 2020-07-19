@@ -65,7 +65,7 @@ fun snapLines() = App {
                 val enemyCheck = ((curSettings["SNAPLINES_ENEMIES"].strToBool() && !onTeam) && !DANGER_ZONE)
                 val teamCheck = ((curSettings["SNAPLINES_TEAMMATES"].strToBool() && onTeam) && !DANGER_ZONE)
 
-                if (me <= 0 || entity == me || dormCheck || entity.dead()) return@forEntities false
+                if (me <= 0 || entity == me || dormCheck || entity.dead()) return@forEntities
 
                 if (bEnt >= 0 && bEnt == entity) { //This is the bomb carrier
                     if (enemyCheck) {
@@ -98,7 +98,7 @@ fun snapLines() = App {
                 }
         }
 
-        if (colStr.isBlank()) return@forEntities false
+        if (colStr.isBlank()) return@forEntities
 
         shapeRenderer.apply {
             if (shapeRenderer.isDrawing) {
@@ -113,7 +113,7 @@ fun snapLines() = App {
             val entPos = entity.absPosition()
             val vec = Vector()
 
-            if ((entPos.x == 0.0 && entPos.y == 0.0 && entPos.z == 0.0)) return@forEntities false //Why is this here?
+            if ((entPos.x == 0.0 && entPos.y == 0.0 && entPos.z == 0.0)) return@forEntities
 
             set(ShapeRenderer.ShapeType.Filled)
             if (worldToScreen(entPos, vec)) { //Onscreen
@@ -125,6 +125,5 @@ fun snapLines() = App {
 
             end()
         }
-        false
     }
 }

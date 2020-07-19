@@ -126,10 +126,10 @@ fun constructRecords() {
     val clientAngle = clientState.angle()
     val meTeam = me.team()
 
-    forEntities(ccsPlayer) {
+    forEntities(EntityType.CCSPlayer) {
         val ent = it.entity
 
-        if (ent.dead() || ent == me || ent.team() == meTeam || ent.dormant()) return@forEntities false
+        if (ent.dead() || ent == me || ent.team() == meTeam || ent.dormant()) return@forEntities
 
         //Best target shit
         val pos = ent.bones(6)
@@ -166,49 +166,12 @@ fun constructRecords() {
             btRecords[entID][tick] = record
         }
 
-        return@forEntities false
+        return@forEntities
     }
 
     if (bestFov == 5.0) {
         bestBacktrackTarget = -1L
     }
-
-    //forEntities(ccsPlayer) {
-        //val ent = it.entity
-
-        //if (ent == me || ent.dormant() || ent.team() == me.team() || ent.dead()) {
-        //    return@forEntities false
-        //}
-
-        //val entSimTime = csgoEXE.float(ent + flSimulationTime)
-
-        //val entID = (csgoEXE.uint(ent + dwIndex) - 1).toInt()
-        //val tick = getGlobalVars().tickCount % 13
-
-        //if (entID in 0..63 && tick < 12) { //clamp that bitch error prone on player join/leave
-//            val record = btRecords[entID][tick]
-//
-//            val neckPos: Angle; val chestPos: Angle; val stomachPos: Angle; val pelvisPos: Angle
-//
-//            val boneMemory: Memory by lazy {
-//                Memory(3984)
-//            }
-//
-//            //reduce them shits
-//            csgoEXE.read(ent.boneMatrix(), boneMemory)
-//            if (enableNeck) { neckPos = boneMemory.bones(7); record.neckPos = neckPos }
-//            if (enableChest) { chestPos = boneMemory.bones(6); record.chestPos = chestPos }
-//            if (enableStomach) { stomachPos = boneMemory.bones(5); record.stomachPos = stomachPos }
-//            if (enablePelvis) { pelvisPos = boneMemory.bones(0); record.pelvisPos = pelvisPos }
-//
-//            record.alpha = 100f
-//            record.simtime = entSimTime
-//
-//            btRecords[entID][tick] = record
-        //}
-
-        //return@forEntities false
-    //}
 }
 
 fun bestSimTime(): Float {

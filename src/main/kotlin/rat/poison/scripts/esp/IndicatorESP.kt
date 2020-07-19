@@ -34,7 +34,7 @@ fun indicatorEsp() = App {
 
         when (it.type) {
             EntityType.CCSPlayer -> {
-                if (entity.dead() || entity == me || (entity.dormant() && !DANGER_ZONE)) return@forEntities false
+                if (entity.dead() || entity == me || (entity.dormant() && !DANGER_ZONE)) return@forEntities
 
                 if (bEnt >= 0 && bEnt == entity) { //This is the bomb carrier
                     if (curSettings["INDICATOR_SHOW_ENEMIES"].strToBool() && !onMyTeam) {
@@ -50,9 +50,9 @@ fun indicatorEsp() = App {
                     }
                 } else {
                     if (!curSettings["INDICATOR_SHOW_TEAM"].strToBool() && onMyTeam) {
-                        return@forEntities false
+                        return@forEntities
                     } else if (!curSettings["INDICATOR_SHOW_ENEMIES"].strToBool()) {
-                        return@forEntities false
+                        return@forEntities
                     } else {
                         color = when (!onMyTeam) {
                             true -> "INDICATOR_ENEMY_COLOR"
@@ -80,8 +80,6 @@ fun indicatorEsp() = App {
         if (color != "") {
             drawIndicator(entity, curSettings[color].strToColor())
         }
-
-        false
     }
 
     if (curSettings["INDICATOR_SHOW_DEFUSERS"].strToBool()) {
