@@ -73,7 +73,6 @@ fun ranks() = every(1000, true) { //Rebuild every second
             KDList.add(entKD)
             winsList.add(entWins)
         }
-        false
     }
 
     ranksTab.updateRanks()

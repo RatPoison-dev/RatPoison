@@ -1,9 +1,9 @@
-//Enabe DEBUG
+//Enable DEBUG
 DEBUG = true
 
 //Enable the overlay, menu
 //Any settings/scripts reliant on drawing on the overlay won't enable
-MENU = true
+MENU = false
 
 //Alpha of the menu
 MENU_ALPHA = 1.0

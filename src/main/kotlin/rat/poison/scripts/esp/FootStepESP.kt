@@ -150,8 +150,6 @@ private fun constructSteps() = every(10) {
                 }
             }
         }
-
-        false
     }
 }
 
