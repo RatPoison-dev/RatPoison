@@ -33,11 +33,12 @@ fun ranks() = every(1000, true) { //Rebuild every second
     deathsList.clear()
     KDList.clear()
     winsList.clear()
-    //ctPlayers.clear()
-    //tPlayers.clear()
 
     forEntities(EntityType.CCSPlayer) {
         val entity = it.entity
+
+        if (entity.hltv()) return@forEntities
+
         val entTeam = when (entity.team()) {
             3L -> "CT"
             2L -> "T"

@@ -40,7 +40,7 @@ fun drawFov() = App {
     val wep = me.weapon()
     var prefix = ""
 
-    val bFOV: Int
+    val bFOV: Float
     var bINFOV = false
 
     val backtrackFOV: Float
@@ -58,9 +58,9 @@ fun drawFov() = App {
     }
 
     if (wep.gun) { //Not 100% this applies to every 'gun'
-        bFOV = curSettings[prefix + "TRIGGER_FOV"].toInt()
+        bFOV = curSettings[prefix + "TRIGGER_FOV"].toFloat()
         bINFOV = curSettings[prefix + "TRIGGER_INFOV"].strToBool()
-        triggerRadius = calcFovRadius(viewFov, bFOV.toFloat())
+        triggerRadius = calcFovRadius(viewFov, bFOV)
 
         backtrackFOV = curSettings["BACKTRACK_FOV"].toFloat()
         backtrackENABLED = curSettings[prefix + "TRIGGER_BACKTRACK"].strToBool()

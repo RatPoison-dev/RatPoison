@@ -7,7 +7,6 @@ import org.jire.arrowhead.unsign
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
-import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.game.worldToScreen
@@ -15,13 +14,12 @@ import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.Vector
-import rat.poison.utils.collections.CacheableList
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.notInGame
 
 private val bones = Array(2048) { Line() }
-private val entityBones = Long2ObjectArrayMap<CacheableList<Pair<Int, Int>>>()
+private val entityBones = Long2ObjectArrayMap<MutableList<Pair<Int, Int>>>()
 private var currentIdx = 0
 
 internal fun skeletonEsp() = App {
@@ -37,7 +35,7 @@ internal fun skeletonEsp() = App {
 		val teamCheck = ((!curSettings["SKELETON_SHOW_TEAM"].strToBool() && meTeam == entTeam) && !DANGER_ZONE)
 
 		if (entity == me || entity.dead() || dormCheck || enemyCheck || teamCheck) return@forEntities
-		(entityBones.get(entity) ?: CacheableList(20)).apply {
+		(entityBones.get(entity) ?: mutableListOf()).apply {
 			if (isEmpty()) {
 				val studioModel = csgoEXE.uint(entity.studioHdr())
 				val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()

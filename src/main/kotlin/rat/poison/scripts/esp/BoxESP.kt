@@ -24,17 +24,12 @@ import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
 import rat.poison.toLocale
 import rat.poison.utils.Vector
-import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
 import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.notInGame
 import kotlin.math.abs
-import kotlin.math.ceil
 import kotlin.math.sign
-
-private val vHead = Vector()
-private val vFeet = Vector()
 
 private val vTop = Vector(0.0, 0.0, 0.0)
 private val vBot = Vector(0.0, 0.0, 0.0)
@@ -57,9 +52,6 @@ private data class Box(var x0: Float = 0F, var y0: Float = 0F,
 					   var type: EntityType = EntityType.NULL)
 
 private var currentIdx = 0
-
-
-
 
 fun boxEsp() = App {
 	var size = 0
@@ -93,8 +85,8 @@ fun boxEsp() = App {
 		val yOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x1C)).toDouble()
 		val zOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x2C)).toDouble()
 
-		vHead.set(xOff, yOff, zOff + 9)
-		vFeet.set(vHead.x, vHead.y, vHead.z - 75)
+		val vHead = Vector(xOff, yOff, zOff + 9)
+		val vFeet = Vector(vHead.x, vHead.y, vHead.z - 75)
 
 		if (worldToScreen(vHead, vTop) && worldToScreen(vFeet, vBot)) {
 			val vMid = Vector((vTop.x + vBot.x) / 2f, (vTop.y + vBot.y) / 2f, (vTop.z + vBot.z) / 2f)
@@ -110,8 +102,8 @@ fun boxEsp() = App {
 			val c = if (meTeam == entTeam) Color(tCol.red / 255F, tCol.green / 255F, tCol.blue / 255F, 1F) else Color(eCol.red / 255F, eCol.green / 255F, eCol.blue / 255F, 1F)
 
 			var boxH = vBot.y - vTop.y
-			val sW = abs(ceil((boxH / 5.0) * 2.0) / 2.0)
-			val sH = 2
+			val sW = abs(((boxH / 5.0) * 2.0) / 2.0)
+			val sH = 2.0
 
 			val midX = abs(abs(vTop.x) - abs(vBot.x))
 			if (abs(boxH) < sW + midX) {
@@ -128,8 +120,8 @@ fun boxEsp() = App {
 				box1x = (vBot.x - (sW * sign(vBot.x))).toFloat()
 			}
 
-			val box0y = (vMid.y - boxH / 2 + sH).toFloat()
-			val box1y = (vMid.y + boxH / 2 - sH).toFloat()
+			val box0y = (vMid.y - boxH / 2.0 + sH).toFloat()
+			val box1y = (vMid.y + boxH / 2.0 - sH).toFloat()
 
 			if (size < 128) {
 				boxes[size].apply {
@@ -186,7 +178,7 @@ fun boxEsp() = App {
 					boxes[size].apply {
 						x0 = sx
 						y0 = sy
-						x1 = (sx + ceil(boxW * 2F))
+						x1 = (sx + (boxW * 2F))
 						y1 = sy + boxH
 						color = c
 

@@ -47,7 +47,6 @@ fun setAim() = every(100, true) {
                         }
 
                         //Advanced advanced aim settings
-
                         override = true
                     }
                 }
@@ -78,7 +77,7 @@ fun setAim() = every(100, true) {
                 curSettings["FACTOR_RECOIL"] = curSettings[strPre + "_FACTOR_RECOIL"].strToBool()
                 curSettings["AIM_BONE"] = curSettings[strPre + "_AIM_BONE"].boneToNum()
                 curSettings["FORCE_AIM_BONE"] = curSettings[strPre + "_AIM_FORCE_BONE"].boneToNum()
-                curSettings["AIM_FOV"] = curSettings[strPre + "_AIM_FOV"].toInt()
+                curSettings["AIM_FOV"] = curSettings[strPre + "_AIM_FOV"].toFloat()
                 curSettings["AIM_SPEED"] = curSettings[strPre + "_AIM_SPEED"].toInt()
                 curSettings["AIM_SMOOTHNESS"] = curSettings[strPre + "_AIM_SMOOTHNESS"].toDouble()
 

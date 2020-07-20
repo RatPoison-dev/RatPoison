@@ -133,7 +133,7 @@ fun constructRecords() {
 
         //Best target shit
         val pos = ent.bones(6)
-        val fov = calcTarget(bestFov, bestBacktrackTarget, pos, clientAngle, 10, 6, ovrStatic = true)[0] as Double
+        val fov = calcTarget(bestFov, bestBacktrackTarget, pos, clientAngle, 10F, 6, ovrStatic = true)[0] as Double
         if (fov < bestFov && fov > 0) {
             bestFov = fov
             bestBacktrackTarget = ent
@@ -201,7 +201,7 @@ fun bestSimTime(): Float {
             }
 
             if (pos != Angle()) {
-                val fov = calcTarget(tmp, bestBacktrackTarget, pos, clientAngle, 10, 6, ovrStatic = true)[0] as Double
+                val fov = calcTarget(tmp, bestBacktrackTarget, pos, clientAngle, 10F, 6, ovrStatic = true)[0] as Double
 
                 if (tmp > fov && btRecords[targetID][t].simtime > meTime - 1 && fov > 0 && fov < maxFov) {
                     tmp = fov

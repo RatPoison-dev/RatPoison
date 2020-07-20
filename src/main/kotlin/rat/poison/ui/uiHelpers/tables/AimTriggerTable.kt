@@ -31,7 +31,7 @@ class AimTriggerTable: VisTable(false) {
     val trigAimbot = ATabVisCheckBox("Aimbot", "_TRIGGER_AIMBOT")
     val trigInCross = ATabVisCheckBox("InCross", "_TRIGGER_INCROSS")
     val trigInFov = ATabVisCheckBox("InFov", "_TRIGGER_INFOV")
-    val trigFov = ATabVisSlider("FOV", "_TRIGGER_FOV", 1F, 90F, 1F, true)
+    val trigFov = ATabVisSlider("FOV", "_TRIGGER_FOV", .5F, 90F, .5F, false)
     val trigShootBacktrack = ATabVisCheckBox("Shoot Backtrack", "_TRIGGER_BACKTRACK")
     val initTrigDelay = ATabVisSlider("First Shot Delay", "_TRIGGER_INIT_SHOT_DELAY", 0F, 500F, 10F, true)
     val perShotTrigDelay = ATabVisSlider("Per Shot Delay", "_TRIGGER_PER_SHOT_DELAY", 0F, 500F, 10F, true)

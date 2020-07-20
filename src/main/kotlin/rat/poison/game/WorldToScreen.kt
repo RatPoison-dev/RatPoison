@@ -10,10 +10,11 @@ import rat.poison.utils.generalUtil.strToBool
 
 val w2sViewMatrix = Array(4) { DoubleArray(4) }
 
-fun worldToScreen(from: Vector, vOut: Vector) = try {
+fun worldToScreen(from: Vector, vOut: Vector): Boolean {
 	if (!curSettings["MENU"].strToBool()) {
 		updateViewMatrix()
 	}
+
 	vOut.x = w2sViewMatrix[0][0] * from.x + w2sViewMatrix[0][1] * from.y + w2sViewMatrix[0][2] * from.z + w2sViewMatrix[0][3]
 	vOut.y = w2sViewMatrix[1][0] * from.x + w2sViewMatrix[1][1] * from.y + w2sViewMatrix[1][2] * from.z + w2sViewMatrix[1][3]
 
@@ -36,7 +37,7 @@ fun worldToScreen(from: Vector, vOut: Vector) = try {
 		vOut.x = x
 		vOut.y = y
 
-		true
+		return true
 	} else if (!w.isNaN() && w < 0.01F) { //If behind
 		val invw = -1.0 / w
 
@@ -52,11 +53,8 @@ fun worldToScreen(from: Vector, vOut: Vector) = try {
 		vOut.x = x
 		vOut.y = y
 
-		false
-	} else false
-} catch (e: Exception) {
-	e.printStackTrace()
-	false
+		return false
+	} else return false
 }
 
 fun updateViewMatrix() { //Call before using multiple world to screens

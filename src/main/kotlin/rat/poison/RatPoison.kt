@@ -29,7 +29,7 @@ import kotlin.collections.set
 
 //Override Weapon
 data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = false,      var tFlatAim: Boolean = false,
-                   var tPathAim: Boolean = false,       var tAimBone: Int = 0,              var tAimFov: Int = 0,
+                   var tPathAim: Boolean = false,       var tAimBone: Int = 0,              var tAimFov: Float = 0F,
                    var tAimSpeed: Int = 0,              var tAimSmooth: Double = 0.0,       var tPerfectAim: Boolean = false,
                    var tPAimFov: Int = 1,               var tPAimChance: Int = 1,           var tScopedOnly: Boolean = false,
                    var tBoneTrig: Boolean = false,      var tBTrigBone: Int = 0,            var tBTrigAim: Boolean = false,
@@ -105,7 +105,6 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Reduced Flash") }; reducedFlash()
     if (dbg) { println("[DEBUG] Initializing ESPs") }; esp()
     if (dbg) { println("[DEBUG] Initializing Esp Toggle") }; espToggle()
-    if (dbg) { println("[DEBUG] Initializing Automatic Weapons") }; automaticWeapon()
     if (dbg) { println("[DEBUG] Initializing Fast Stop") }; fastStop()
     if (dbg) { println("[DEBUG] Initializing Head Walk") }; headWalk()
     if (dbg) { println("[DEBUG] Initializing Adrenaline") }; adrenaline()

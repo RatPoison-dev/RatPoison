@@ -25,7 +25,7 @@ fun reset() {
 }
 
 fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
-                        lockFOV: Int = curSettings["AIM_FOV"].toInt(), BONE: Int = curSettings["AIM_BONE"].toInt(), visCheck: Boolean = true): Player {
+                        lockFOV: Float = curSettings["AIM_FOV"].toFloat(), BONE: Int = curSettings["AIM_BONE"].toInt(), visCheck: Boolean = true): Player {
 	var closestFOV = Double.MAX_VALUE
 	var closestDelta = Double.MAX_VALUE
 	var closestPlayer = -1L
@@ -96,7 +96,7 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	return closestPlayer
 }
 
-fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, curAngle: Angle, lockFOV: Int = curSettings["AIM_FOV"].toInt(), BONE: Int, ovrStatic: Boolean = false): MutableList<Any> {
+fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, curAngle: Angle, lockFOV: Float = curSettings["AIM_FOV"].toFloat(), BONE: Int, ovrStatic: Boolean = false): MutableList<Any> {
 	val retList = mutableListOf(-1.0, 0.0, 0L)
 
 	var ePos: Angle = entity.bones(BONE)

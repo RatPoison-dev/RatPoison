@@ -49,7 +49,7 @@ class RanksTab : Tab(false, false) {
         KDsLabel.setText("K/D".toLocale() + "  \n")
         winsLabel.setText("Wins".toLocale() + "  \n")
 
-        for (i in 0 until teamList.size-1) {
+        for (i in 0 until teamList.size) {
             teamsLabel.setText(teamsLabel.text.toString() + teamList[i] + "  \n")
             namesLabel.setText(namesLabel.text.toString() + nameList[i] + "  \n")
             ranksLabel.setText(ranksLabel.text.toString() + rankList[i] + "  \n")
@@ -60,30 +60,3 @@ class RanksTab : Tab(false, false) {
         }
     }
 }
-
-//        ctPlayers.forEachIndexed { _, ent->
-//            ent.forEachIndexed { idx, str->
-//                sb.append(str)
-//
-//                if ((idx != ent.size-1)) {
-//                    //for (i in 0 until 15 - str.length) {
-//                        sb.append("          ")
-//                    //}
-//                }
-//            }
-//            sb.appendln()
-//        }
-//        ctList.setText(sb)
-//        sb.clear()
-//        tPlayers.forEachIndexed { _, ent->
-//            ent.forEachIndexed { idx, str->
-//                sb.append(str)
-//
-//                if ((idx != ent.size-1)) {
-//                    //for (i in 0 until 15 - str.length) {
-//                        sb.append("          ")
-//                    //}
-//                }
-//            }
-//            sb.appendln()
-//        }

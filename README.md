@@ -57,58 +57,63 @@ Credit to Mr. Noad & 2772/Matt for a lot of help throughout this project
 
 **Recent Update**
 
-1.7.1.1 Update 5/27/2020
-* Glow esp is now one write per entity instead of multiple
-* Added static fov option
-* Added draw aim fov, draw trigger fov, for static fov only
-* Added nightmode/fullbright option
-* Changed RANK names to abbreviations to prevent hiding elements
-* Perfect aim is now calculated per aim move rather than per target
-* Added aim on shot option, aimbot will only aim when your gun can shoot
-* Loading settings/configs should only load .txt or .cfg files respectively
-* Scanner can now save/load/delete configs, and display ranks/kills/deaths/wins
-* Changed default settings to look more legit
-* Fully disabled knife changer
-
-
-1.7.1 Update 5/18/2020
-* Fixed ranks tab layout
-* Skinchanger tab should now update with configs
-* Removed knife changer for now
-* Force aim bone should update properly on config change
-* Fixed advanced aim settings error when using 0 X/Y Variation
-* Color Picker is now similar to most mainstream cheats, less ugly
-* Added gaussian blur option when menu is open
-* Added hold target aimbot option
-* Visuals toggle key should now disable bomb timer, spectator list, recoil crosshair
-    * Bomb timer, spectator list, recoil crosshair require 'Enable ESP' to be checked in the visuals tab to work
-
-
-1.7 Update 4/25/2020
-* Updated list of skins for skinchanger
-* Box details can be used without having the bounding box enabled
-* Added force bone key + selector (to categories only)
-* Removed flick scroll for now
-* M249 is now considered a rifle (bug)
-
-
-Update 1.7 (beta)
-* Changed Flat Aim name to Write Angles on menu
-* Changed Path Aim name to Mouse Movement on menu
-* All ui elements are drawn on 1 stage using 1 input processor instead of 4
-* Added initial bsp parser/vis check
-    * Can't be used for a visual check currently as it's too inaccurate
-    * Does not check map models atm
-    * Can be viewed by enabling debug in the options tab
-* Added keybinds window under options tab to display all keybinds, set to -1 to disable
-* Fixed automatic weapons shooting with cursor enabled (during buy menu)
-* Added entity dead and dormant check to prevent ghost footsteps
-* Enabled flick scroll on menu, you can scroll when needed by clicking and dragging on a blank part of the menu
-* Cleaned up menu for better consistency across tabs
-* Skinchanger will only update the local players bought weapons, not dropped weapons
-
-* Fixed nearest bone not working with menu disabled
-* Fixed cmd read/write files when menu is disabled
+1.7 Full Update
+* Important
+	* Added backtrack
+	* Fixed ForEntities loop not fully iterating, consistency should be improved for features in Aim & Visuals tabs
+	
+* New
+	* Added Helmet, Kevlar, Flashed, Scoped, and Ammo settings to Box ESP
+	* Added locale options in menu, you can change menu language with premade localization files
+	* Added glow and box health based options
+	* Added flicker free glow
+	* Added toggle RCS
+	* Added static fov option
+	* Added draw aim fov, draw trigger fov, for static fov only
+	* Added nightmode/fullbright option
+	* Added aim on shot option, aimbot will only aim when your gun can shoot
+	* Added gaussian blur option when menu is open
+	* Added hold target aimbot options
+	* Added force bone key + selector (to categories only)
+	* Added keybinds window under options tab to display all keybinds, set to -1 to disable
+	* Added entity dead and dormant check to prevent ghost footsteps
+	
+* Fixes
+	* Triggerbot has been fixed
+	* Fixed hitsound error when menu disabled, hitsound only available when using the menu
+	* Fixed ranks tab layout
+	* Fixed advanced aim settings error when using 0 X/Y Variation
+	* Fixed automatic weapons shooting with cursor enabled (during buy menu)
+	* Fixed nearest bone not working with menu disabled
+	* Fixed cmd read/write files when menu is disabled
+	
+* Miscellaneous
+	* Updated ranks tab, should work better & show all players
+	* Reworked override settings
+	* Minor adjustments to headwalk and spectatorlist
+	* Glow esp is now one write per entity instead of multiple
+	* Changed RANK names to abbreviations to prevent hiding elements
+	* Perfect aim is now calculated per aim move rather than per target
+	* Loading settings/configs should only load .txt or .cfg files respectively
+	* Scanner can now save/load/delete configs, and display ranks/kills/deaths/wins
+	* Changed default settings to look more legit
+	* Fully disabled knife changer
+	* Removed knife changer for now
+	* Force aim bone should update properly on config change
+	* Color Picker is now similar to most mainstream cheats, less ugly
+	* Visuals toggle key should now disable bomb timer, spectator list, recoil crosshair
+		* Bomb timer, spectator list, recoil crosshair require 'Enable ESP' to be checked in the visuals tab to work
+	* Box details can be used without having the bounding box enabled
+	* Removed flick scroll for now
+	* M249 is now considered a rifle 
+	* Changed Flat Aim name to Write Angles on menu
+	* Changed Path Aim name to Mouse Movement on menu
+	* All ui elements are drawn on 1 stage using 1 input processor instead of 4
+	* Cleaned up menu for better consistency across tabs
+	* Skinchanger should forceupdate properly, should see less lag & faster activation when equipping new weapons
+	* Skinchanger tab should now update with configs
+	* Updated list of skins for skinchanger
+	* Skinchanger will only update the local players bought weapons, not dropped weapons
 
 ---
 

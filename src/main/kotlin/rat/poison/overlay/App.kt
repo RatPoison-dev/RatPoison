@@ -160,8 +160,9 @@ object App : ApplicationAdapter() {
                         glClearColor(0F, 0F, 0F, 0F)
                         sb.projectionMatrix = menuStage.camera.combined
                         shapeRenderer.projectionMatrix = menuStage.camera.combined
-                        updateViewMatrix()
+                        uiMenu.changeAlpha()
                         appTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
+                            updateViewMatrix()
                             for (i in 0 until bodies.size) {
                                 bodies[i]()
                             }

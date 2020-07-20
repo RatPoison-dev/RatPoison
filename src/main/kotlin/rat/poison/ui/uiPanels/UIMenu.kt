@@ -7,6 +7,7 @@ import com.kotcrab.vis.ui.widget.VisWindow
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
+import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.overlay.App.uiAimOverridenWeapons
 import rat.poison.overlay.opened
@@ -170,7 +171,7 @@ class UIMenu : VisWindow("Rat Poison 1.7") {
         exitProcess(0)
     }
 
-    internal fun changeAlpha(alpha: Float) {
+    internal fun changeAlpha(alpha: Float = curSettings["MENU_ALPHA"].toFloat()) {
         color.a = alpha
         uiAimOverridenWeapons.color.a = alpha
     }

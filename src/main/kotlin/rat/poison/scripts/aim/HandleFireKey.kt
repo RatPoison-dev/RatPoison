@@ -11,6 +11,7 @@ import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
 import rat.poison.scripts.attemptBacktrack
+import rat.poison.scripts.automaticWeapons
 import rat.poison.scripts.callingInShot
 import rat.poison.scripts.triggerInShot
 import rat.poison.settings.MENUTOG
@@ -52,6 +53,15 @@ fun fireWeapon() {
 
     if (meWep.sniper && curSettings["ENABLE_SCOPED_ONLY"].strToBool() && !me.isScoped()) return
 
+    var shouldAuto = false
+
+    if (curSettings["AUTOMATIC_WEAPONS"].strToBool() && !meWep.automatic && meWep.gun) {
+        shouldAuto = automaticWeapons()
+        if (!shouldAuto) {
+            return
+        }
+    }
+
     val backtrackOnKey = curSettings["ENABLE_BACKTRACK_ON_KEY"].strToBool()
     val backtrackKeyPressed = keyPressed(curSettings["BACKTRACK_KEY"].toInt())
 
@@ -61,14 +71,8 @@ fun fireWeapon() {
         }
     }
 
-    if (curSettings["AUTOMATIC_WEAPONS"].strToBool() && !meWep.automatic && !meWep.grenade && !meWep.bomb) {
-        if (clientDLL.int(dwForceAttack) == 4) { //Dont bother?
-            clientDLL[dwForceAttack] = 5
-        }
-        Thread.sleep(1)
-        if (clientDLL.int(dwForceAttack) == 5) {
-            clientDLL[dwForceAttack] = 4
-        }
+    if (shouldAuto) {
+        clientDLL[dwForceAttack] = 6
     } else {
         clientDLL[dwForceAttack] = 5
     }

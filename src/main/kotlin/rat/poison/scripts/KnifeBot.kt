@@ -33,7 +33,7 @@ internal fun autoKnife() = every(10) {
             if (me.weapon().knife) {
                 val currentAngle = clientState.angle()
                 val position = me.position()
-                val target = findTarget(position, currentAngle, false, 32, -2)
+                val target = findTarget(position, currentAngle, false, 32F, -2)
                 if (target >= 0) {
                     if (keyReleased(AIM_KEY)) {
                         val targetPos = target.absPosition()

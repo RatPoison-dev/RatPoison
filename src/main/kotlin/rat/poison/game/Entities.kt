@@ -29,5 +29,7 @@ fun entityByType(type: EntityType): EntityContext? = entities[type]?.firstOrNull
 internal inline fun forEntities(type: EntityType = EntityType.CCSPlayer, crossinline body: (EntityContext) -> Unit) {
 	val forEnts = ArrayList(entities[type]!!)
 
-	forEnts.forEach(body)
+	for (i in forEnts) {
+		i.run(body)
+	}
 }

@@ -50,12 +50,12 @@ fun boneTrigger() = every(10) {
     val initDelay = curSettings[prefix + "TRIGGER_INIT_SHOT_DELAY"].toInt()
     val shotDelay = curSettings[prefix + "TRIGGER_PER_SHOT_DELAY"].toInt()
     if (curSettings["ENABLE_TRIGGER"].strToBool() && !inDelay) {
-        val bFOV: Int; val bINCROSS: Boolean; val bINFOV: Boolean; val bAIMBOT: Boolean; val bBACKTRACK: Boolean
+        val bFOV: Float; val bINCROSS: Boolean; val bINFOV: Boolean; val bAIMBOT: Boolean; val bBACKTRACK: Boolean
 
         if (wep.gun) { //Not 100% this applies to every 'gun'
             if (!curSettings[prefix + "TRIGGER"].strToBool()) return@every
 
-            bFOV = curSettings[prefix + "TRIGGER_FOV"].toInt()
+            bFOV = curSettings[prefix + "TRIGGER_FOV"].toFloat()
             bINCROSS = curSettings[prefix + "TRIGGER_INCROSS"].strToBool()
             bINFOV = curSettings[prefix + "TRIGGER_INFOV"].strToBool()
             bAIMBOT = curSettings[prefix + "TRIGGER_AIMBOT"].strToBool()
