@@ -7,6 +7,7 @@ import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
+import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 
@@ -15,7 +16,7 @@ var opened = false
 lateinit var hitSound: Sound
 
 fun hitSoundEsp() = every(50) {
-    if (!curSettings["ENABLE_HITSOUND"].strToBool()) return@every
+    if (!curSettings["ENABLE_HITSOUND"].strToBool() || MENUTOG || !curSettings["MENU"].strToBool()) return@every
 
     val curHits = csgoEXE.int(me + m_totalHitsOnServer)
 

@@ -81,6 +81,7 @@ fun main() {
         curSettings["ENABLE_NADE_HELPER"] = "false"
         curSettings["NADE_TRACER"] = "false"
         curSettings["DRAW_AIM_FOV"] = "false"
+        curSettings["ENABLE_HITSOUND"] = "false"
     } else {
         if (dbg) { println("[DEBUG] Initializing Recoil Ranks") }; ranks()
 
