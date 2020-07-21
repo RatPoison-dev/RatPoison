@@ -31,11 +31,10 @@ fun handleFireKey() = every(1) {
         return@every
     }
 
-    if (triggerInShot || callingInShot) {
-        //Let that bih handle shots
-        return@every
-    } else if (keyPressed(1)) {
+    if (keyPressed(1)) {
         fireWeapon()
+    } else if (triggerInShot || callingInShot) {
+        //Let trigger handle that bih
     } else {
         if (clientDLL.int(dwForceAttack) == 5) {
             clientDLL[dwForceAttack] = 4
@@ -47,7 +46,7 @@ fun fireWeapon() {
     if (!me.weaponEntity().canFire()) return
 
     updateCursorEnable()
-    if (cursorEnable || me.dead()) return
+    if (cursorEnable) return
 
     val meWep = me.weapon()
 
