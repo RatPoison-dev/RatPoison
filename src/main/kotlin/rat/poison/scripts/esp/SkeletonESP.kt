@@ -61,7 +61,7 @@ internal fun skeletonEsp() = App {
 				entityBones[entity] = this
 			}
 
-			forEach { et -> drawBone(entity, et.first, et.second); false }
+			forEach { et -> drawBone(entity, et.first, et.second); }
 		}
 	}
 

@@ -20,6 +20,8 @@ import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inBackground
 import rat.poison.utils.notInGame
 
+private var shouldShoot = false
+
 fun handleFireKey() = every(1) {
     if (MENUTOG || (me <= 0L && !notInGame) || (me > 0L && me.dead())) return@every //Brain blast to the past
 
@@ -32,11 +34,18 @@ fun handleFireKey() = every(1) {
     }
 
     if (keyPressed(1)) {
+        shouldShoot = true
         fireWeapon()
     } else if (triggerInShot || callingInShot) {
+        if (shouldShoot) { //Finish shooting...
+            if (clientDLL.int(dwForceAttack) == 5) {
+                clientDLL[dwForceAttack] = 4
+            }
+        }
         //Let trigger handle that bih
     } else {
         if (clientDLL.int(dwForceAttack) == 5) {
+            shouldShoot = false
             clientDLL[dwForceAttack] = 4
         }
     }

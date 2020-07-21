@@ -21,7 +21,7 @@ internal fun disableAllEsp() {
     val cWhite = Color(255, 255, 255, 1.0)
 
     if (!curSettings["ENABLE_NIGHTMODE"].strToBool()) {
-        if (toneMapController != 0L) {
+        if (toneMapController > 0L) {
             CSGO.csgoEXE[toneMapController + NetVarOffsets.m_bUseCustomAutoExposureMin] = 0
             CSGO.csgoEXE[toneMapController + NetVarOffsets.m_bUseCustomAutoExposureMax] = 0
         }
