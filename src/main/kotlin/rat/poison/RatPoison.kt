@@ -158,13 +158,10 @@ fun main() {
                 //Required to fix W2S offset
                 setWindowPosition(CSGO.gameX, CSGO.gameY)
                 setDecorated(false)
-                //useVsync(false)
+                useVsync(false)
                 glfwSwapInterval(0)
                 glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE)
                 setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings["OPENGL_MSAA_SAMPLES"].toInt())
-
-                //useVsync(true)
-                setIdleFPS(165)
             })
         }
     }
