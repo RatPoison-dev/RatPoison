@@ -41,6 +41,7 @@ fun handleFireKey() = every(1) {
             if (clientDLL.int(dwForceAttack) == 5) {
                 clientDLL[dwForceAttack] = 4
             }
+            shouldShoot = false
         }
         //Let trigger handle that bih
     } else {
