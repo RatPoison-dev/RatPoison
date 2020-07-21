@@ -53,7 +53,7 @@ fun boneTrigger() = every(10) {
         val bFOV: Float; val bINCROSS: Boolean; val bINFOV: Boolean; val bAIMBOT: Boolean; val bBACKTRACK: Boolean
 
         if (wep.gun) { //Not 100% this applies to every 'gun'
-            if (!curSettings[prefix + "TRIGGER"].strToBool()) { /*callingInShot = false;*/ return@every }
+            if (!curSettings[prefix + "TRIGGER"].strToBool()) { callingInShot = false; return@every }
 
             bFOV = curSettings[prefix + "TRIGGER_FOV"].toFloat()
             bINCROSS = curSettings[prefix + "TRIGGER_INCROSS"].strToBool()
@@ -63,7 +63,7 @@ fun boneTrigger() = every(10) {
 
             if (wep.sniper) { //Scope check
                 if (!(curSettings["SNIPER_TRIGGER"].strToBool() && ((me.isScoped() && curSettings["ENABLE_SCOPED_ONLY"].strToBool()) || (!curSettings["ENABLE_SCOPED_ONLY"].strToBool())))) {
-                    //callingInShot = false
+                    callingInShot = false
                     return@every
                 }
             }
