@@ -47,6 +47,7 @@ fun scanner() {
             line.equals("exit", true) -> {
                 disableAllEsp()
                 Thread.sleep(1000)
+                sendPacket(true)
                 exitProcess(0)
             }
             line.equals("reload", true) -> {

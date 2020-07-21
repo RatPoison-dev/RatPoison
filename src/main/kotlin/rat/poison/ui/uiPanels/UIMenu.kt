@@ -11,6 +11,8 @@ import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.overlay.App.uiAimOverridenWeapons
 import rat.poison.overlay.opened
+import rat.poison.scripts.esp.disableAllEsp
+import rat.poison.scripts.sendPacket
 import rat.poison.ui.tabs.*
 import rat.poison.ui.uiUpdate
 import kotlin.math.sign
@@ -168,6 +170,9 @@ class UIMenu : VisWindow("Rat Poison 1.7") {
     }
 
     override fun close() {
+        disableAllEsp()
+        Thread.sleep(1000)
+        sendPacket(true)
         exitProcess(0)
     }
 
