@@ -186,6 +186,8 @@ fun bestSimTime(): Float {
     val meTime = csgoEXE.float(me + flSimulationTime)
     val maxFov = curSettings["BACKTRACK_FOV"].toFloat()
 
+    if (targetID < 0) return -1f
+
     for (t in 0 until 12) {
         if (!isValidTick(timeToTicks(btRecords[targetID][t].simtime))) {
             continue
