@@ -95,4 +95,7 @@ object NetVarOffsets {
 	val m_bUseCustomAutoExposureMax by netVar("DT_EnvTonemapController", "m_bUseCustomAutoExposureMax")
 	val m_flCustomAutoExposureMin by netVar("DT_EnvTonemapController", "m_flCustomAutoExposureMin")
 	val m_flCustomAutoExposureMax by netVar("DT_EnvTonemapController", "m_flCustomAutoExposureMax")
+
+	val rgflCoordinateFrame by netVar("DT_CSPlayer", "m_CollisionGroup") //m_rgflCoordinateFrame
+	val m_Collision by netVar("DT_BasePlayer", "m_Collision")
 }

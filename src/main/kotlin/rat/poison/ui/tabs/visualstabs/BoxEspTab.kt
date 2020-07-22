@@ -20,7 +20,11 @@ class BoxEspTab: Tab(false, false) {
     val skeletonEsp = VisCheckBoxCustom("Enable Skeleton", "SKELETON_ESP")
     val showTeamSkeleton = VisCheckBoxCustom("Teammates", "SKELETON_SHOW_TEAM")
     val showEnemiesSkeleton = VisCheckBoxCustom("Enemies", "SKELETON_SHOW_ENEMIES")
+
     val boxEsp = VisCheckBoxCustom("Bounding Box", "ENABLE_BOX_ESP")
+
+    val advancedBBox = VisCheckBoxCustom("Advanced BBOX", "ADVANCED_BOUNDING_BOX")
+
     val boxEspDetails = VisCheckBoxCustom("Box Details", "BOX_ESP_DETAILS")
     val boxEspHealth = VisCheckBoxCustom("Health", "BOX_ESP_HEALTH")
     val boxEspHealthPos = VisSelectBoxCustom(" ", "BOX_ESP_HEALTH_POS", false, false, "LEFT", "RIGHT")
@@ -54,6 +58,9 @@ class BoxEspTab: Tab(false, false) {
     val showDefusers = VisCheckBoxCustom(" ", "BOX_SHOW_DEFUSERS", false)
     val boxDefuserColor = VisColorPickerCustom("Defusers", "BOX_DEFUSER_COLOR")
 
+    val showWeapons = VisCheckBoxCustom(" ", "BOX_SHOW_WEAPONS", false)
+    val boxWeaponsColor = VisColorPickerCustom("Weapons", "BOX_WEAPON_COLOR")
+
     init {
         table.padLeft(25F)
         table.padRight(25F)
@@ -63,6 +70,7 @@ class BoxEspTab: Tab(false, false) {
         table.add(showEnemiesSkeleton).padRight(225F - showEnemiesSkeleton.width).left().row()//225
         table.addSeparator().colspan(2)
         table.add(boxEsp).left().row()
+        table.add(advancedBBox).left().row()
         table.add(boxEspDetails).left().row()
         table.add(boxEspName).left()
         table.add(boxEspNamePos).left().row()
@@ -101,6 +109,12 @@ class BoxEspTab: Tab(false, false) {
         tmpTable.add(showDefusers)
         tmpTable.add(boxDefuserColor).width(175F - showEnemiesBox.width).padRight(50F)
 
+        table.add(tmpTable).left()
+
+        tmpTable = VisTable()
+        tmpTable.add(showWeapons)
+        tmpTable.add(boxWeaponsColor).width(175F - showEnemiesBox.width).padRight(50F)
+
         table.add(tmpTable).left().row()
     }
 
@@ -116,6 +130,7 @@ class BoxEspTab: Tab(false, false) {
 fun boxEspTabUpdate() {
     boxEspTab.apply {
         boxEsp.update()
+        advancedBBox.update()
         boxEspDetails.update()
         boxEspHealth.update()
         boxEspHealthPos.update()
@@ -141,8 +156,11 @@ fun boxEspTabUpdate() {
         showEnemiesSkeleton.update()
         showTeamBox.update()
         showEnemiesBox.update()
+        showDefusers.update()
+        showWeapons.update()
         boxTeamColor.update()
         boxEnemyColor.update()
         boxDefuserColor.update()
+        boxWeaponsColor.update()
     }
 }

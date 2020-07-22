@@ -248,6 +248,7 @@ fun updateDisableEsp() {
         indicatorEspTab.indicatorGrenadeColor.disable(bool)
 
         boxEspTab.boxEsp.disable(bool)
+        boxEspTab.advancedBBox.disable(bool)
         boxEspTab.boxEspDetails.disable(bool)
         boxEspTab.boxEspHealth.disable(bool)
         boxEspTab.boxEspHealthPos.disable(bool, col)
@@ -275,8 +276,10 @@ fun updateDisableEsp() {
         boxEspTab.showTeamBox.disable(bool)
         boxEspTab.showEnemiesBox.disable(bool)
         boxEspTab.showDefusers.disable(bool)
+        boxEspTab.showWeapons.disable(bool)
         boxEspTab.boxTeamColor.disable(bool)
         boxEspTab.boxEnemyColor.disable(bool)
+        boxEspTab.boxWeaponsColor.disable(bool)
         boxEspTab.boxDefuserColor.disable(bool)
 
         snaplinesEspTab.enableSnaplines.disable(bool)

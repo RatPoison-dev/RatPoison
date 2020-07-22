@@ -6,7 +6,7 @@ import rat.poison.game.CSGO.csgoEXE
 enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false, val grenadeProjectile: Boolean = false, val bomb: Boolean = false) {
 	NULL,
 	CAIBaseNPC,
-	CAK47(weapon = true),
+	CWeaponAK47(weapon = true),
 	CBaseAnimating,
 	CBaseAnimatingOverlay,
 	CBaseAttributableItem,

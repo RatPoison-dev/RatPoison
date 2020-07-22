@@ -8,7 +8,7 @@ FOOTSTEP_TYPE = 1
 FOOTSTEP_UPDATE = 30
 
 //Footstep time to live
-FOOTSTEP_TTL = 60
+FOOTSTEP_TTL = 15
 
 //Enable for teammates
 FOOTSTEP_TEAM = false

@@ -39,13 +39,6 @@ fun footStepEsp() {
 fun runFootSteps() = App {
     if (!curSettings["ENABLE_ESP"].strToBool()) return@App
 
-    //stepTimer++
-    //if (stepTimer >= curSettings["FOOTSTEP_UPDATE"].toInt()) {
-    //    constructSteps()
-    //
-    //    stepTimer = 0
-    //}
-
     if (!curSettings["ENABLE_FOOTSTEPS"].strToBool()) return@App
 
     for (i in footSteps.indices) {
@@ -107,49 +100,50 @@ fun runFootSteps() = App {
 }
 
 private fun constructSteps() = every(10) {
-    forEntities(EntityType.CCSPlayer) {
-        val ent = it.entity
-        if (ent == me || ent.dead() || ent.dormant()) return@forEntities
+    stepTimer+= 1
+    if (stepTimer >= curSettings["FOOTSTEP_UPDATE"].toInt()) {
+        forEntities(EntityType.CCSPlayer) {
+            val ent = it.entity
+            if (ent == me || ent.dead() || ent.dormant()) return@forEntities
 
-        val inMyTeam = ent.team() == me.team()
+            val inMyTeam = ent.team() == me.team()
 
-        //Team check
-        //if (inMyTeam && !curSettings["FOOTSTEP_TEAM"].strToBool()) return@forEntities false
-        //else if (!inMyTeam && !curSettings["FOOTSTEP_ENEMY"].strToBool()) return@forEntities false
+            val entVel = ent.velocity()
+            val entMag = sqrt(entVel.x.pow(2.0) + entVel.y.pow(2.0) + entVel.z.pow(2.0))
 
-        val entVel = ent.velocity()
-        val entMag = sqrt(entVel.x.pow(2.0) + entVel.y.pow(2.0) + entVel.z.pow(2.0))
+            if (entMag >= 150) {
+                val entPos = ent.absPosition()
 
-        if (entMag >= 150) {
-            val entPos = ent.absPosition()
+                val idx = emptySlot()
+                if (idx != -1) {
+                    footSteps[idx].apply {
+                        x = entPos.x
+                        y = entPos.y
+                        z = entPos.z
+                        ttl = curSettings["FOOTSTEP_TTL"].toInt()
+                        open = false
+                        myTeam = inMyTeam
+                        this.ent = ent
+                    }
+                }
+            }
 
-            val idx = emptySlot()
-            if (idx != -1) {
-                footSteps[idx].apply {
-                    x = entPos.x
-                    y = entPos.y
-                    z = entPos.z
-                    ttl = curSettings["FOOTSTEP_TTL"].toInt()
-                    open = false
-                    myTeam = inMyTeam
-                    this.ent = ent
+            for (i in footSteps.indices) {
+                footSteps[i].ttl -= 1
+                if (footSteps[i].ttl <= 0) { //Reset
+                    footSteps[i].apply {
+                        x = 0.0
+                        y = 0.0
+                        z = 0.0
+                        ttl = curSettings["FOOTSTEP_TTL"].toInt()
+                        open = true
+                        this.ent = 0L
+                    }
                 }
             }
         }
 
-        for (i in footSteps.indices) {
-            footSteps[i].ttl -= 10
-            if (footSteps[i].ttl <= 0) { //Reset
-                footSteps[i].apply {
-                    x = 0.0
-                    y = 0.0
-                    z = 0.0
-                    ttl = curSettings["FOOTSTEP_TTL"].toInt()
-                    open = true
-                    this.ent = 0L
-                }
-            }
-        }
+        stepTimer = 0
     }
 }
 

@@ -26,8 +26,18 @@ val entities: Object2ObjectMap<EntityType, MutableList<EntityContext>> = EntityL
 
 fun entityByType(type: EntityType): EntityContext? = entities[type]?.firstOrNull()
 
-internal inline fun forEntities(type: EntityType = EntityType.CCSPlayer, crossinline body: (EntityContext) -> Unit) {
-	val forEnts = ArrayList(entities[type]!!)
+internal inline fun forEntities(vararg types: EntityType, crossinline body: (EntityContext) -> Unit) {
+	var forEnts = ArrayList<EntityContext>()
+
+	if (types.isEmpty()) {
+		for (entType in EntityType.values()) {
+			forEnts.addAll(entities[entType]!!)
+		}
+	} else {
+		for (entType in types) {
+			forEnts.addAll(entities[entType]!!)
+		}
+	}
 
 	for (i in forEnts) {
 		i.run(body)

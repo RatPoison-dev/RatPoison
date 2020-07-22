@@ -4,20 +4,18 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.Align
 import com.sun.jna.Memory
-import rat.poison.curLocale
 import rat.poison.curSettings
+import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.entities
 import rat.poison.game.entity.*
-import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
-import rat.poison.game.hooks.defuseKitEntities
-import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.iClip1
 import rat.poison.game.netvars.NetVarOffsets.iPrimaryReserveAmmoCount
-import rat.poison.game.worldToScreen
+import rat.poison.game.netvars.NetVarOffsets.m_Collision
+import rat.poison.game.netvars.NetVarOffsets.rgflCoordinateFrame
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
@@ -31,430 +29,395 @@ import rat.poison.utils.notInGame
 import kotlin.math.abs
 import kotlin.math.sign
 
-private val vTop = Vector(0.0, 0.0, 0.0)
-private val vBot = Vector(0.0, 0.0, 0.0)
+data class BoundingBox(var left: Float = -1F, var right: Float = -1F, var top: Float = -1F, var bottom: Float = -1F)
 
-private val boxes = Array(128) { Box() }
 
-private data class Box(var x0: Float = 0F, var y0: Float = 0F,
-					   var x1: Float = 0F, var y1: Float = 0F,
-					   var color: Color = Color.WHITE,
-					   var health: Float = 100F,
-					   var armor: Float = 100F,
-					   var weapon: String = "",
-					   var curAmmo: Int = 0,
-					   var maxAmmo: Int = 0,
-					   var helmet: Boolean = false,
-					   var kevlar: Boolean = false,
-					   var scoped: Boolean = false,
-					   var flashed: Boolean = false,
-					   var name: String = "",
-					   var type: EntityType = EntityType.NULL)
-
-private var currentIdx = 0
-
+//Combine left/right top/bottom ooga booga
 fun boxEsp() = App {
-	var size = 0
 	if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !curSettings["BOX_ESP_DETAILS"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
 
-	val meTeam = me.team()
+	val advancedBBox = curSettings["ADVANCED_BOUNDING_BOX"].strToBool()
 
-	forEntities(EntityType.CCSPlayer) {
-		val entity = it.entity
-		val entTeam = entity.team()
+	val drawBox = curSettings["ENABLE_BOX_ESP"].strToBool()
+	val drawBoxDetails = curSettings["BOX_ESP_DETAILS"].strToBool()
 
-		val dormCheck = (entity.dormant() && !DANGER_ZONE)
-		val enemyCheck = ((!curSettings["BOX_SHOW_ENEMIES"].strToBool() && meTeam != entTeam) && !DANGER_ZONE)
-		val teamCheck = ((!curSettings["BOX_SHOW_TEAM"].strToBool() && meTeam == entTeam) && !DANGER_ZONE)
+	val bEspName = curSettings["BOX_ESP_NAME"].strToBool(); 		val bEspNamePos = curSettings["BOX_ESP_NAME_POS"].replace("\"", "")
+	val bEspWeapon = curSettings["BOX_ESP_WEAPON"].strToBool(); 	val bEspWeaponPos = curSettings["BOX_ESP_WEAPON_POS"].replace("\"", "")
+	val bEspHealth = curSettings["BOX_ESP_HEALTH"].strToBool(); 	val bEspHealthPos = curSettings["BOX_ESP_HEALTH_POS"].replace("\"", "")
+	val bEspArmor = curSettings["BOX_ESP_ARMOR"].strToBool(); 		val bEspArmorPos = curSettings["BOX_ESP_ARMOR_POS"].replace("\"", "")
+	val bEspAmmo = curSettings["BOX_ESP_AMMO"].strToBool(); 		val bEspAmmoPos = curSettings["BOX_ESP_AMMO_POS"].replace("\"", "")
+	val bEspHelmet = curSettings["BOX_ESP_HELMET"].strToBool(); 	val bEspHelmetPos = curSettings["BOX_ESP_HELMET_POS"].replace("\"", "")
+	val bEspKevlar = curSettings["BOX_ESP_KEVLAR"].strToBool(); 	val bEspKevlarPos = curSettings["BOX_ESP_KEVLAR_POS"].replace("\"", "")
+	val bEspScoped = curSettings["BOX_ESP_SCOPED"].strToBool(); 	val bEspScopedPos = curSettings["BOX_ESP_SCOPED_POS"].replace("\"", "")
+	val bEspFlashed = curSettings["BOX_ESP_FLASHED"].strToBool();	val bEspFlashedPos = curSettings["BOX_ESP_FLASHED_POS"].replace("\"", "")
 
-		if (entity == me || entity.dead() || dormCheck || enemyCheck || teamCheck) return@forEntities
+	val showTeam = curSettings["BOX_SHOW_TEAM"].strToBool()
+	val showEnemy = curSettings["BOX_SHOW_ENEMIES"].strToBool()
+	val showWeapons = curSettings["BOX_SHOW_WEAPONS"].strToBool()
+	val showDefuseKits = curSettings["BOX_SHOW_DEFUSERS"].strToBool()
 
-		//Reduce r/w
-		//Replace later
-		val boneMemory: Memory by lazy {
-			Memory(3984)
-		}
+	forEntities { //Player & Weapon boxes
+		val ent = it.entity
+		val isPlayer = it.type == EntityType.CCSPlayer
 
-		val entityMemory: Memory by lazy {
-			Memory(45948)
-		}
+		if (isPlayer || it.type.weapon) {
+			//Return if not onscreen
+			if (!worldToScreen(ent.position(), Vector())) return@forEntities
 
-		csgoEXE.read(entity.boneMatrix(), boneMemory)
+			//Team + Dormant + Dead + Self check
+			var health = 0
+			if (isPlayer) { health = ent.health() }
+			val onTeam = ent.team() == me.team()
+			if (isPlayer && !DANGER_ZONE && (ent == me || ent.dormant() || ent.dead() || (!showEnemy && !onTeam) || (!showTeam && onTeam))) return@forEntities
+			if (!isPlayer && !showWeapons) return@forEntities
 
-		val xOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0xC)).toDouble()
-		val yOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x1C)).toDouble()
-		val zOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x2C)).toDouble()
-
-		val vHead = Vector(xOff, yOff, zOff + 9)
-		val vFeet = Vector(vHead.x, vHead.y, vHead.z - 75)
-
-		if (worldToScreen(vHead, vTop) && worldToScreen(vFeet, vBot)) {
-			val vMid = Vector((vTop.x + vBot.x) / 2f, (vTop.y + vBot.y) / 2f, (vTop.z + vBot.z) / 2f)
-			val entHealth = entity.health()
-			val tCol = when (curSettings["BOX_SHOW_HEALTH"].strToBool()) {
-				true -> rat.poison.game.Color((255 - 2.55 * entHealth).toInt(), (2.55 * entHealth).toInt(), 0, 1.0)
-				false -> curSettings["BOX_TEAM_COLOR"].strToColor()
-			}
-			val eCol = when (curSettings["BOX_SHOW_HEALTH"].strToBool()) {
-				true -> rat.poison.game.Color((255 - 2.55 * entHealth).toInt(), (2.55 * entHealth).toInt(), 0, 1.0)
-				false -> curSettings["BOX_ENEMY_COLOR"].strToColor()
-			}
-			val c = if (meTeam == entTeam) Color(tCol.red / 255F, tCol.green / 255F, tCol.blue / 255F, 1F) else Color(eCol.red / 255F, eCol.green / 255F, eCol.blue / 255F, 1F)
-
-			var boxH = vBot.y - vTop.y
-			val sW = abs(((boxH / 5.0) * 2.0) / 2.0)
-			val sH = 2.0
-
-			val midX = abs(abs(vTop.x) - abs(vBot.x))
-			if (abs(boxH) < sW + midX) {
-				boxH = (sW + midX) * sign(boxH)
-			}
-
-			val box0x: Float
-			val box1x: Float
-			if (vBot.x > vTop.x) {
-				box0x = (vBot.x + (sW * sign(vBot.x))).toFloat()
-				box1x = (vTop.x - (sW * sign(vTop.x))).toFloat()
+			val bbox: BoundingBox = if ((isPlayer && advancedBBox) || (!isPlayer && showWeapons)) {
+				setupAccurateBox(ent)
 			} else {
-				box0x = (vTop.x + (sW * sign(vTop.x))).toFloat()
-				box1x = (vBot.x - (sW * sign(vBot.x))).toFloat()
+				setupFakeBox(ent)
 			}
 
-			val box0y = (vMid.y - boxH / 2.0 + sH).toFloat()
-			val box1y = (vMid.y + boxH / 2.0 - sH).toFloat()
+			if (bbox.left == -1F && bbox.right == -1F) return@forEntities //Invalid
 
-			if (size < 128) {
-				boxes[size].apply {
-					x0 = box0x
-					y0 = box0y
-					x1 = box1x
-					y1 = box1y
-					color = c
+			val boxWidth = bbox.right - bbox.left
+			val boxHeight = bbox.bottom - bbox.top
+			val barWidth = clamp(boxWidth * .025F, 2F, 20F)
 
-					//Reduce r/w
-					//Replace later
-					csgoEXE.read(entity, entityMemory)
+			shapeRenderer.begin()
+			shapeRenderer.set(ShapeRenderer.ShapeType.Line)
 
-					health = entityMemory.health().toFloat()
-					armor = entityMemory.armor().toFloat()
-
-					weapon = entity.weapon().name.toLocale()
-					name = entity.name()
-
-					val wepEnt = entity.weaponEntity()
-					curAmmo = csgoEXE.int(wepEnt + iClip1)
-					maxAmmo = csgoEXE.int(wepEnt + iPrimaryReserveAmmoCount)
-					helmet = entityMemory.hasHelmet()
-					kevlar = armor > 0
-					scoped = entityMemory.isScoped()
-					flashed = entityMemory.flashed()
-
-					type = EntityType.CCSPlayer
-				}
-				size++
-			}
-		}
-		boneMemory.clear()
-		entityMemory.clear()
-	}
-
-	if (curSettings["BOX_SHOW_DEFUSERS"].strToBool()) {
-		val tmp = defuseKitEntities
-		tmp.forEachIndexed { _, entity ->
-			val entPos = entity.position()
-
-			val vTop = Vector()
-			val vBot = Vector()
-
-			if (worldToScreen(Vector(entPos.x, entPos.y, entPos.z + 10.0), vTop) && worldToScreen(Vector(entPos.x, entPos.y, entPos.z - 10.0), vBot)) {
-				val boxH = (vBot.y - vTop.y).toFloat()
-				val boxW = boxH / 2F
-				val sx = (vTop.x - boxW).toFloat()
-				val sy = vTop.y.toFloat()
-				val dCol = curSettings["BOX_DEFUSER_COLOR"].strToColor()
-				val c = Color(dCol.red / 255F, dCol.green / 255F, dCol.blue / 255F, 1F)
-
-				if (size < 128) {
-					boxes[size].apply {
-						x0 = sx
-						y0 = sy
-						x1 = (sx + (boxW * 2F))
-						y1 = sy + boxH
-						color = c
-
-						type = EntityType.CEconEntity
-					}
-
-					size++
-				}
-			}
-		}
-	}
-
-	currentIdx = size
-
-	val bEspName = curSettings["BOX_ESP_NAME"].strToBool()
-	val bEspNamePos = curSettings["BOX_ESP_NAME_POS"].replace("\"", "")
-	val bEspWeapon = curSettings["BOX_ESP_WEAPON"].strToBool()
-	val bEspWeaponPos = curSettings["BOX_ESP_WEAPON_POS"].replace("\"", "")
-
-	val bEspHealth = curSettings["BOX_ESP_HEALTH"].strToBool()
-	val bEspHealthPos = curSettings["BOX_ESP_HEALTH_POS"].replace("\"", "")
-	val bEspArmor = curSettings["BOX_ESP_ARMOR"].strToBool()
-	val bEspArmorPos = curSettings["BOX_ESP_ARMOR_POS"].replace("\"", "")
-
-	val bEspAmmo = curSettings["BOX_ESP_AMMO"].strToBool()
-	val bEspAmmoPos = curSettings["BOX_ESP_AMMO_POS"].replace("\"", "")
-
-	val bEspHelmet = curSettings["BOX_ESP_HELMET"].strToBool()
-	val bEspHelmetPos = curSettings["BOX_ESP_HELMET_POS"].replace("\"", "")
-
-	val bEspKevlar = curSettings["BOX_ESP_KEVLAR"].strToBool()
-	val bEspKevlarPos = curSettings["BOX_ESP_KEVLAR_POS"].replace("\"", "")
-
-	val bEspScoped = curSettings["BOX_ESP_SCOPED"].strToBool()
-	val bEspScopedPos = curSettings["BOX_ESP_SCOPED_POS"].replace("\"", "")
-
-	val bEspFlashed = curSettings["BOX_ESP_FLASHED"].strToBool()
-	val bEspFlashedPos = curSettings["BOX_ESP_FLASHED_POS"].replace("\"", "")
-
-
-	shapeRenderer.begin()
-
-	for (i in 0 until currentIdx) boxes[i].apply {
-		shapeRenderer.color = color
-		val w = x1 - x0
-		val h = y1 - y0
-
-		if (curSettings["ENABLE_BOX_ESP"].strToBool()) {
-			shapeRenderer.rect(x0, y0, w, h)
-		}
-
-		val detailTextColor = curSettings["BOX_DETAILS_TEXT_COLOR"].strToColorGDX()
-
-		if (type == EntityType.CCSPlayer) {
-			if (curSettings["BOX_ESP_DETAILS"].strToBool()) {
-				shapeRenderer.color = Color.WHITE
-				val glyph = GlyphLayout()
-
-				if (sb.isDrawing) {
-					sb.end()
-				}
-
-				sb.begin()
-
-				////Top
-				var yAdd = 0F
-				val boxDetailsTextTop = StringBuilder()
-				boxDetailsTextTop.append("")
-
-				if (bEspName && bEspNamePos == "TOP") {
-					boxDetailsTextTop.append("$name\n") //\n
-					yAdd += 18F
-				}
-				if (bEspWeapon && bEspWeaponPos == "TOP") {
-					boxDetailsTextTop.append(weapon)
-					yAdd += 18F
-				}
-				if (bEspAmmo && bEspAmmoPos == "TOP") {
-					if (curAmmo != -1 && maxAmmo > 0) {
-						if (bEspWeapon) {
-							if (bEspWeaponPos == "TOP") {
-								boxDetailsTextTop.append(" ")
-							} else {
-								yAdd += 18F
-							}
-						} else {
-							boxDetailsTextTop.append("\n")
-							yAdd += 18F
+			//Draw the entity bounding box
+			if (drawBox) {
+				if (isPlayer) {
+					when {
+						curSettings["BOX_SHOW_HEALTH"].strToBool() -> {
+							shapeRenderer.setColor((255 - 2.55F * health) / 255F, (2.55F * health) / 255F, 0F, 1F)
 						}
-						boxDetailsTextTop.append("[$curAmmo/$maxAmmo]")
-					}
-				}
 
-				if (boxDetailsTextTop.isNotBlank() && boxDetailsTextTop.isNotEmpty()) {
-					glyph.setText(textRenderer, boxDetailsTextTop, 0, (boxDetailsTextTop as CharSequence).length, detailTextColor, 1F, Align.center, false, null)
-					textRenderer.draw(sb, glyph, x0 + (x1 - x0) / 2F, y0 + yAdd)
-				}
-				////Top
-
-				////Bottom
-				val boxDetailsTextBottom = StringBuilder()
-				boxDetailsTextBottom.append("")
-				if (bEspName && bEspNamePos == "BOTTOM") {
-					boxDetailsTextBottom.append("$name\n")
-				}
-				if (bEspWeapon && bEspWeaponPos == "BOTTOM") {
-					boxDetailsTextBottom.append(weapon)
-				}
-				if (bEspAmmo && bEspAmmoPos == "BOTTOM") {
-					if (curAmmo != -1 && maxAmmo > 0) {
-						if (bEspWeapon) {
-							if (bEspWeaponPos == "BOTTOM") {
-								boxDetailsTextBottom.append(" ")
-							}
-						} else {
-							boxDetailsTextBottom.append("\n")
+						onTeam -> {
+							shapeRenderer.color = curSettings["BOX_TEAM_COLOR"].strToColorGDX()
 						}
-						boxDetailsTextBottom.append("[$curAmmo/$maxAmmo]")
+
+						else -> {
+							shapeRenderer.color = curSettings["BOX_ENEMY_COLOR"].strToColorGDX()
+						}
 					}
+				} else {
+					shapeRenderer.color = curSettings["BOX_WEAPON_COLOR"].strToColorGDX()
 				}
 
-				if (boxDetailsTextBottom.isNotBlank() && boxDetailsTextBottom.isNotEmpty()) {
-					glyph.setText(textRenderer, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, detailTextColor, 1F, Align.center, false, null)
-					textRenderer.draw(sb, glyph, x0 + w / 2F, y0 + h - 4F)
-				}
-				////Bottom
-				sb.end()
-
-				shapeRenderer.set(ShapeRenderer.ShapeType.Filled)
-
-				val barWidth = clamp(w * .025F, -10F, -2F) //Why is this negative?
-
-				////Left
-				val boxDetailsTextLeft = StringBuilder()
-				boxDetailsTextLeft.append("")
-				var leftMulti = 1
-
-				if (bEspHealth && bEspHealthPos == "LEFT") {
-					shapeRenderer.color = Color.BLACK
-					shapeRenderer.rect(x0 + w + (barWidth * leftMulti), y0 + h, barWidth, -h) //Health outline
-
-					shapeRenderer.color = Color(1F - (.01F * health), (.01F * health), 0F, 1F)
-					shapeRenderer.rect(x0 + w + (barWidth * leftMulti), y0 + h, barWidth, -(h * (health / 100F))) //Health
-
-					leftMulti += 2
-				}
-
-				if (bEspArmor && bEspArmorPos == "LEFT") {
-					shapeRenderer.color = Color.BLACK
-					shapeRenderer.rect(x0 + w + (barWidth * leftMulti), y0 + h, barWidth, -h) //Armor outline
-
-					shapeRenderer.color = Color(0F, .3F, 1F, 1F)
-					shapeRenderer.rect(x0 + w + (barWidth * leftMulti), y0 + h, barWidth, -(h * clamp(armor / 100F, 0F, 1F))) //Armor
-
-					leftMulti += 2
-				}
-
-				if (bEspHelmet && bEspHelmetPos == "LEFT") {
-					boxDetailsTextLeft.append(if (helmet) "H" else "")
-					if (!bEspKevlar || bEspKevlarPos == "RIGHT") {
-						boxDetailsTextLeft.append("\n")
-					}
-				}
-
-				if (bEspKevlar && bEspKevlarPos == "LEFT") {
-					boxDetailsTextLeft.append(if (kevlar) "K\n" else "")
-				}
-
-				if (bEspScoped && bEspScopedPos == "LEFT") {
-					boxDetailsTextLeft.append(if (scoped) "Scoped\n" else "") //Leave blank later, testing purposes rn
-				}
-
-				if (bEspFlashed && bEspFlashedPos == "LEFT") {
-					boxDetailsTextLeft.append(if (flashed) "Flashed" else "")
-				}
-
-				sb.begin()
-				if (boxDetailsTextLeft.isNotBlank() && boxDetailsTextLeft.isNotEmpty()) {
-					glyph.setText(textRenderer, boxDetailsTextLeft, 0, (boxDetailsTextLeft as CharSequence).length, detailTextColor, 1F, Align.right, false, null)
-					textRenderer.draw(sb, glyph, x0 + w + (barWidth * leftMulti), y0)
-				}
-				sb.end()
-				////Left
-
-				////Right
-				val boxDetailsTextRight = StringBuilder()
-				boxDetailsTextRight.append("")
-				var rightMulti = 2
-
-				if (bEspHealth && bEspHealthPos == "RIGHT") {
-					shapeRenderer.color = Color.BLACK
-					shapeRenderer.rect(x0 - (barWidth * rightMulti), y0 + h, barWidth, -h) //Health outline
-
-					shapeRenderer.color = Color(1F - (.01F * health), (.01F * health), 0F, 1F)
-					shapeRenderer.rect(x0 - (barWidth * rightMulti), y0 + h, barWidth, -(h * (health / 100F))) //Health
-
-					rightMulti += 2
-				}
-
-				if (bEspArmor && bEspArmorPos == "RIGHT") {
-					shapeRenderer.color = Color.BLACK
-					shapeRenderer.rect(x0 - (barWidth * rightMulti), y0 + h, barWidth, -h) //Armor outline
-
-					shapeRenderer.color = Color(0F, .3F, 1F, 1F)
-					shapeRenderer.rect(x0 - (barWidth * rightMulti), y0 + h, barWidth, -(h * (armor / 100F))) //Armor
-
-					rightMulti += 2
-				}
-
-				if (bEspHelmet && bEspHelmetPos == "RIGHT") {
-					boxDetailsTextRight.append(if (helmet) "H" else "")
-					if (!bEspKevlar || bEspKevlarPos == "LEFT") {
-						boxDetailsTextRight.append("\n")
-					}
-				}
-
-				if (bEspKevlar && bEspKevlarPos == "RIGHT") {
-					boxDetailsTextRight.append(if (kevlar) "K\n" else "")
-				}
-
-				if (bEspScoped && bEspScopedPos == "RIGHT") {
-					boxDetailsTextRight.append(if (scoped) "Scoped\n" else "") //Leave blank later, testing purposes rn
-				}
-
-				if (bEspFlashed && bEspFlashedPos == "RIGHT") {
-					boxDetailsTextRight.append(if (flashed) "Flashed" else "")
-				}
-
-				sb.begin()
-				if (boxDetailsTextRight.isNotBlank() && boxDetailsTextRight.isNotEmpty()) {
-					glyph.setText(textRenderer, boxDetailsTextRight, 0, (boxDetailsTextRight as CharSequence).length, detailTextColor, 1F, Align.left, false, null)
-					textRenderer.draw(sb, glyph, x0 - (barWidth * rightMulti), y0)
-				}
-				sb.end()
-				////Right
-
-				shapeRenderer.set(ShapeRenderer.ShapeType.Line)
-				shapeRenderer.color = Color.WHITE
+				shapeRenderer.rect(bbox.left, bbox.top, boxWidth, boxHeight)
 			}
-		} else if (type == EntityType.CEconEntity) {
-			if (curSettings["BOX_ESP_DETAILS"].strToBool()) {
-				val glyph = GlyphLayout()
-				shapeRenderer.color = Color.WHITE
 
-				if (sb.isDrawing) {
-					sb.end()
+			if (!drawBoxDetails) return@forEntities
+
+			//Setup entity values
+			val entityMemory = csgoEXE.read(ent, 45948)!!
+
+			//Set filled for bars
+			shapeRenderer.set(ShapeRenderer.ShapeType.Filled)
+
+			//Draw possible left elements
+			var leftShift = 2
+			val boxDetailsLeftText = StringBuilder()
+			boxDetailsLeftText.append("")
+
+			if (bEspHealth && bEspHealthPos == "LEFT" && isPlayer) {
+				shapeRenderer.color = Color.BLACK
+				shapeRenderer.rect(bbox.left - (barWidth * leftShift), bbox.top, barWidth, boxHeight)
+
+				shapeRenderer.color = Color(1F - (.01F * health), (.01F * health), 0F, 1F)
+				shapeRenderer.rect(bbox.left - (barWidth * leftShift), bbox.bottom, barWidth, -(boxHeight * (health/100F)))
+
+				leftShift += 2
+			}
+
+			if (bEspArmor && bEspArmorPos == "LEFT" && isPlayer) {
+				shapeRenderer.color = Color.BLACK
+				shapeRenderer.rect(bbox.left - (barWidth * leftShift), bbox.top, barWidth, boxHeight)
+
+				shapeRenderer.color = Color(0F, .3F, 1F, 1F)
+				shapeRenderer.rect(bbox.left - (barWidth * leftShift), bbox.bottom, barWidth, -(boxHeight * (entityMemory.armor()/100F)))
+
+				leftShift += 2
+			}
+
+			if (bEspHelmet && bEspHelmetPos == "LEFT" && isPlayer) {
+				boxDetailsLeftText.append(if (entityMemory.hasHelmet()) "H" else "")
+				if (!bEspKevlar || bEspKevlarPos == "RIGHT") {
+					boxDetailsLeftText.append("\n")
+				}
+			}
+
+			if (bEspKevlar && bEspKevlarPos == "LEFT" && isPlayer) {
+				boxDetailsLeftText.append(if (entityMemory.armor() > 0) "K\n" else "")
+			}
+
+			if (bEspScoped && bEspScopedPos == "LEFT" && isPlayer) {
+				boxDetailsLeftText.append(if (entityMemory.isScoped()) "Scoped\n" else "")
+			}
+
+			if (bEspFlashed && bEspFlashedPos == "LEFT" && isPlayer) {
+				boxDetailsLeftText.append(if (entityMemory.flashed()) "Flashed" else "")
+			}
+
+			//Draw possible right elements
+			var rightShift = 1
+			val boxDetailsRightText = StringBuilder()
+			boxDetailsRightText.append("")
+
+			if (bEspHealth && bEspHealthPos == "RIGHT" && isPlayer) {
+				shapeRenderer.color = Color.BLACK
+				shapeRenderer.rect(bbox.right + (barWidth * rightShift), bbox.top, barWidth, boxHeight)
+
+				shapeRenderer.color = Color(1F - (.01F * health), (.01F * health), 0F, 1F)
+				shapeRenderer.rect(bbox.right + (barWidth * rightShift), bbox.bottom, barWidth, -(boxHeight * (health/100F)))
+
+				rightShift += 2
+			}
+
+			if (bEspArmor && bEspArmorPos == "RIGHT" && isPlayer) {
+				shapeRenderer.color = Color.BLACK
+				shapeRenderer.rect(bbox.right + (barWidth * rightShift), bbox.top, barWidth, boxHeight)
+
+				shapeRenderer.color = Color(0F, .3F, 1F, 1F)
+				shapeRenderer.rect(bbox.right + (barWidth * rightShift), bbox.bottom, barWidth, -(boxHeight * (entityMemory.armor()/100F)))
+
+				rightShift += 2
+			}
+
+			shapeRenderer.end()
+
+			if (bEspHelmet && bEspHelmetPos == "RIGHT" && isPlayer) {
+				boxDetailsRightText.append(if (entityMemory.hasHelmet()) "H" else "")
+				if (!bEspKevlar || bEspKevlarPos == "LEFT") {
+					boxDetailsRightText.append("\n")
+				}
+			}
+
+			if (bEspKevlar && bEspKevlarPos == "RIGHT" && isPlayer) {
+				boxDetailsRightText.append(if (entityMemory.armor() > 0) "K\n" else "")
+			}
+
+			if (bEspScoped && bEspScopedPos == "RIGHT" && isPlayer) {
+				boxDetailsRightText.append(if (entityMemory.isScoped()) "Scoped\n" else "")
+			}
+
+			if (bEspFlashed && bEspFlashedPos == "RIGHT" && isPlayer) {
+				boxDetailsRightText.append(if (entityMemory.flashed()) "Flashed" else "")
+			}
+
+			//Draw possible top elements
+			var topShift = 0
+			val boxDetailsTopText = StringBuilder()
+			boxDetailsTopText.append("")
+
+			if (bEspName && bEspNamePos == "TOP") {
+				if (isPlayer) {
+					boxDetailsTopText.append("${ent.name()}\n")
+				} else {
+					boxDetailsTopText.append("${it.type.name.replace("CWeapon", "").toUpperCase().toLocale()}\n")
 				}
 
-				sb.begin()
-				////Top
-				var yAdd = 0F
-				val boxDetailsTextTop = StringBuilder()
+				topShift += 18
+			}
 
-				if (bEspName && bEspNamePos == "TOP") {
-					boxDetailsTextTop.append(curLocale["DEFUSER"])
-					yAdd += 16F
+			if (bEspWeapon && bEspWeaponPos == "TOP" && isPlayer) {
+				boxDetailsTopText.append(ent.weapon().name.toLocale())
+				topShift += 18
+			}
+
+			if (bEspAmmo && bEspAmmoPos == "TOP") {
+				val curAmmo = csgoEXE.int(ent + iClip1)
+				val maxAmmo = csgoEXE.int(ent + iPrimaryReserveAmmoCount)
+
+				if (curAmmo != -1 && maxAmmo > 0) {
+					if (bEspWeapon) {
+						if (bEspWeaponPos == "TOP") {
+							boxDetailsTopText.append(" ")
+						} else {
+							topShift += 18
+						}
+					} else {
+						boxDetailsTopText.append("\n")
+						topShift += 18
+					}
+					boxDetailsTopText.append("[$curAmmo/$maxAmmo]")
 				}
-				glyph.setText(textRenderer, boxDetailsTextTop, 0, (boxDetailsTextTop as CharSequence).length, detailTextColor, 1F, Align.center, false, null)
-				textRenderer.draw(sb, glyph, x0 + w / 2F, y0 + yAdd)
-				////Top
+			}
 
-				////Bottom
-				val boxDetailsTextBottom = StringBuilder()
+			//Draw possible bottom elements
+			val boxDetailsBottomText = StringBuilder()
+			boxDetailsBottomText.append("")
 
-				if (bEspName && bEspNamePos == "BOTTOM") {
-					boxDetailsTextBottom.append(curLocale["DEFUSER"])
+			if (bEspName && bEspNamePos == "BOTTOM") {
+				if (isPlayer) {
+					boxDetailsBottomText.append("${ent.name()}\n")
+				} else {
+					boxDetailsBottomText.append("${it.type.name.replace("CWeapon", "").toUpperCase().toLocale()}\n")
 				}
-				glyph.setText(textRenderer, boxDetailsTextBottom, 0, (boxDetailsTextBottom as CharSequence).length, detailTextColor, 1F, Align.center, false, null)
-				textRenderer.draw(sb, glyph, x0 + w / 2F, y0 + h - 4F)
-				////Bottom
+			}
 
-				sb.end()
-				shapeRenderer.set(ShapeRenderer.ShapeType.Line)
-				shapeRenderer.color = Color.WHITE
+			if (bEspWeapon && bEspWeaponPos == "BOTTOM" && isPlayer) {
+				boxDetailsBottomText.append(ent.weapon().name.toLocale())
+			}
+
+			if (bEspAmmo && bEspAmmoPos == "BOTTOM") {
+				val curAmmo = csgoEXE.int(ent + iClip1)
+				val maxAmmo = csgoEXE.int(ent + iPrimaryReserveAmmoCount)
+
+				if (curAmmo != -1 && maxAmmo > 0) {
+					if (bEspWeapon) {
+						if (bEspWeaponPos == "BOTTOM") {
+							boxDetailsBottomText.append(" ")
+						}
+					} else {
+						boxDetailsBottomText.append("\n")
+					}
+					boxDetailsBottomText.append("[$curAmmo/$maxAmmo]")
+				}
+			}
+
+			sb.begin()
+
+			val detailTextColor = curSettings["BOX_DETAILS_TEXT_COLOR"].strToColorGDX()
+			val glyph = GlyphLayout()
+
+			glyph.setText(textRenderer, boxDetailsLeftText, detailTextColor, 1F, Align.right, false)
+			textRenderer.draw(sb, glyph, bbox.left - (barWidth * leftShift), bbox.top)
+
+			glyph.setText(textRenderer, boxDetailsRightText, detailTextColor, 1F, Align.left, false)
+			textRenderer.draw(sb, glyph, bbox.right + (barWidth * rightShift), bbox.top)
+
+			glyph.setText(textRenderer, boxDetailsTopText, detailTextColor, 1F, Align.center, false)
+			textRenderer.draw(sb, glyph, (bbox.left + bbox.right)/2F, bbox.top + topShift)
+
+			glyph.setText(textRenderer, boxDetailsBottomText, detailTextColor, 1F, Align.center, false)
+			textRenderer.draw(sb, glyph, (bbox.left + bbox.right)/2F, bbox.bottom)
+
+			sb.end()
+		}
+	}
+}
+
+//Create a fake accurate box using headpos
+fun setupFakeBox(ent: Entity): BoundingBox {
+	val bbox = BoundingBox()
+
+	val boneMemory = csgoEXE.read(ent.boneMatrix(), 3984)!!
+
+	val headPos = Vector(boneMemory.getFloat(((0x30L * HEAD_BONE) + 0xC)).toDouble(),
+			boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x1C)).toDouble(),
+			boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x2C)).toDouble())
+
+	val vHead = Vector(headPos.x, headPos.y, headPos.z + 9)
+	val vFeet = Vector(vHead.x, vHead.y, vHead.z - 75)
+
+	val vTop = Vector()
+	val vBottom = Vector()
+
+	if (worldToScreen(vHead, vTop) && worldToScreen(vFeet, vBottom)) {
+		val vMiddle = Vector((vTop.x + vBottom.x)/2F, (vTop.y + vBottom.y)/2F, (vTop.z + vBottom.z)/2F)
+		var boxH = vBottom.y - vTop.y
+		val sW = abs(((boxH / 5.0) * 2.0) / 2.0)
+		val sH = 2.0
+
+		val midX = abs(abs(vTop.x) - abs(vBottom.x))
+		if (abs(boxH) < sW + midX) {
+			boxH = (sW + midX) * sign(boxH)
+		}
+
+		if (vBottom.x > vTop.x) {
+			bbox.left = (vBottom.x + (sW * sign(vBottom.x))).toFloat()
+			bbox.right = (vTop.x - (sW * sign(vTop.x))).toFloat()
+		} else {
+			bbox.left = (vTop.x + (sW * sign(vTop.x))).toFloat()
+			bbox.right = (vBottom.x - (sW * sign(vBottom.x))).toFloat()
+		}
+
+		bbox.top = (vMiddle.y - boxH / 2.0 + sH).toFloat()
+		bbox.bottom = (vMiddle.y + boxH / 2.0 + sH).toFloat()
+	}
+
+	return bbox
+}
+
+//Create a real accurate box using vecMins & vecMaxs
+fun setupAccurateBox(ent: Entity): BoundingBox {
+	//Get frameMatrix
+	val frameMatrix = Array(4) { FloatArray(4) }
+	val buffer = csgoEXE.read(ent + rgflCoordinateFrame - 0x30, 4 * 4 * 4)
+	if (buffer != null) {
+		if (buffer.getFloatArray(0, 16).all(Float::isFinite)) {
+			var offset = 0
+			for (row in 0..3) for (col in 0..3) {
+				val value = buffer.getFloat(offset.toLong())
+				frameMatrix[row][col] = value
+				offset += 4 //Changed, error but not compd
 			}
 		}
 	}
-	shapeRenderer.end()
+
+	val collisionMem: Memory by lazy {
+		Memory(56)
+	}
+	csgoEXE.read(ent + m_Collision, collisionMem)
+
+	//Set min/max
+	val vecMins = Vector(collisionMem.getFloat(8).toDouble(), collisionMem.getFloat(12).toDouble(), collisionMem.getFloat(16).toDouble())
+	val vecMaxs = Vector(collisionMem.getFloat(20).toDouble(), collisionMem.getFloat(24).toDouble(), collisionMem.getFloat(28).toDouble())
+
+	//Set OBB to loop
+	val pointsArray = mutableListOf<Vector>()
+	pointsArray.add(Vector(vecMins.x, vecMins.y, vecMins.z))
+	pointsArray.add(Vector(vecMins.x, vecMaxs.y, vecMins.z))
+	pointsArray.add(Vector(vecMaxs.x, vecMaxs.y, vecMins.z))
+	pointsArray.add(Vector(vecMaxs.x, vecMins.y, vecMins.z))
+	pointsArray.add(Vector(vecMaxs.x, vecMaxs.y, vecMaxs.z))
+	pointsArray.add(Vector(vecMins.x, vecMaxs.y, vecMaxs.z))
+	pointsArray.add(Vector(vecMins.x, vecMins.y, vecMaxs.z))
+	pointsArray.add(Vector(vecMaxs.x, vecMins.y, vecMaxs.z))
+
+	val screenPointsTransformedArray = mutableListOf<Vector>()
+
+	for (i in pointsArray) {
+		val vecOut = Vector()
+		worldToScreen(transformVector(i, frameMatrix), vecOut)
+		screenPointsTransformedArray.add(vecOut)
+	}
+
+	var left = screenPointsTransformedArray[0].x
+	var top = screenPointsTransformedArray[0].y
+	var right = screenPointsTransformedArray[0].x
+	var bottom = screenPointsTransformedArray[0].y
+
+	for (i in screenPointsTransformedArray) {
+		if (left > i.x) {
+			left = i.x
+		}
+
+		if (top < i.y) {
+			top = i.y
+		}
+
+		if (right < i.x) {
+			right = i.x
+		}
+
+		if (bottom > i.y) {
+			bottom = i.y
+		}
+	}
+
+	return BoundingBox(left.toFloat(), right.toFloat(), top.toFloat(), bottom.toFloat())
+}
+
+fun transformVector(vec: Vector, array: Array<FloatArray>): Vector {
+	val outVec = Vector()
+	val thisVec = Vector3(vec.x.toFloat(), vec.y.toFloat(), vec.z.toFloat())
+	outVec.x = (thisVec.dot(array[0][0], array[0][1], array[0][2]) + array[0][3]).toDouble()
+	outVec.y = (thisVec.dot(array[1][0], array[1][1], array[1][2]) + array[1][3]).toDouble()
+	outVec.z = (thisVec.dot(array[2][0], array[2][1], array[2][2]) + array[2][3]).toDouble()
+
+	return outVec
 }
