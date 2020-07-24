@@ -28,10 +28,10 @@ The first step is to compile the source code into a usable cheat program.
 * If you don't have the JDK you will have the option to install it through the build.bat file, this is recommended.
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will be in a directory called **RatPoison 1.7.1.1**.
+directory, and will be in a directory called **RatPoison 1.7**.
 
-From within the **RatPoison 1.7.1.1** directory, you can start the cheat by running
-the _"Start RatPoison 1.7.1.1"_ script.
+From within the **RatPoison 1.7** directory, you can start the cheat by running
+the _"Start RatPoison 1.7"_ script.
 If you have chosen to randomize the cheat name, you should open the file ending in .bat which should show ![BatFile](https://i.imgur.com/JZAhmtr.png) as an icon.
 
 You can launch the cheat at any time after launching CSGO.
@@ -42,10 +42,16 @@ You can launch the cheat at any time after launching CSGO.
 * Overlay is black/doesn't go transparent/isn't showing up
     * The overlay only works on Windows 10, it doesn't turn transparent on W7
     * CSGO needs to be borderless/windowed for the overlay to show up on top of CS, otherwise it's just an app in your taskbar
+    * JDK 1.8 is also known to cause this problem, make sure you have JDK 12 or later installed
 
 * Game looks framey despite having normal FPS (example 144hz/144fps, but looks like 60)
     * Lowering opengl fps to 30 helps
     * Enabling gsync & disabling vsync if supported
+   
+* Cheat is stuck at launching
+    * Check if cheat is fully updated, game updates could break it
+    * Run the bat file with admin privileges
+    * Make sure CSGO is _not_ running with admin privileges and you have full permissions to the folder where cheat is in
 
 ---
 
