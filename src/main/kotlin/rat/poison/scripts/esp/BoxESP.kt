@@ -23,7 +23,6 @@ import rat.poison.settings.MENUTOG
 import rat.poison.toLocale
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColor
 import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.notInGame
 import kotlin.math.abs
@@ -82,6 +81,10 @@ fun boxEsp() = App {
 			val boxWidth = bbox.right - bbox.left
 			val boxHeight = bbox.bottom - bbox.top
 			val barWidth = clamp(boxWidth * .025F, 2F, 20F)
+
+			if (shapeRenderer.isDrawing) {
+				shapeRenderer.end()
+			}
 
 			shapeRenderer.begin()
 			shapeRenderer.set(ShapeRenderer.ShapeType.Line)
@@ -306,9 +309,9 @@ fun setupFakeBox(ent: Entity): BoundingBox {
 
 	val boneMemory = csgoEXE.read(ent.boneMatrix(), 3984)!!
 
-	val headPos = Vector(boneMemory.getFloat(((0x30L * HEAD_BONE) + 0xC)).toDouble(),
-			boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x1C)).toDouble(),
-			boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x2C)).toDouble())
+	val headPos = Vector(boneMemory.getFloat(((0x30L * HEAD_BONE) + 0xC)),
+			boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x1C)),
+			boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x2C)))
 
 	val vHead = Vector(headPos.x, headPos.y, headPos.z + 9)
 	val vFeet = Vector(vHead.x, vHead.y, vHead.z - 75)
@@ -324,15 +327,15 @@ fun setupFakeBox(ent: Entity): BoundingBox {
 
 		val midX = abs(abs(vTop.x) - abs(vBottom.x))
 		if (abs(boxH) < sW + midX) {
-			boxH = (sW + midX) * sign(boxH)
+			boxH = ((sW + midX) * sign(boxH)).toFloat()
 		}
 
 		if (vBottom.x > vTop.x) {
-			bbox.left = (vBottom.x + (sW * sign(vBottom.x))).toFloat()
-			bbox.right = (vTop.x - (sW * sign(vTop.x))).toFloat()
+			bbox.left = (vBottom.x + sW).toFloat()//(vBottom.x - (sW * sign(vBottom.x))).toFloat()
+			bbox.right = (vTop.x - sW).toFloat()//(vTop.x + (sW * sign(vTop.x))).toFloat()
 		} else {
-			bbox.left = (vTop.x + (sW * sign(vTop.x))).toFloat()
-			bbox.right = (vBottom.x - (sW * sign(vBottom.x))).toFloat()
+			bbox.left = (vTop.x + sW).toFloat()//(vTop.x - (sW * sign(vTop.x))).toFloat()
+			bbox.right = (vBottom.x - sW).toFloat()//(vBottom.x + (sW * sign(vBottom.x))).toFloat()
 		}
 
 		bbox.top = (vMiddle.y - boxH / 2.0 + sH).toFloat()
@@ -353,7 +356,7 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 			for (row in 0..3) for (col in 0..3) {
 				val value = buffer.getFloat(offset.toLong())
 				frameMatrix[row][col] = value
-				offset += 4 //Changed, error but not compd
+				offset += 4
 			}
 		}
 	}
@@ -364,8 +367,8 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 	csgoEXE.read(ent + m_Collision, collisionMem)
 
 	//Set min/max
-	val vecMins = Vector(collisionMem.getFloat(8).toDouble(), collisionMem.getFloat(12).toDouble(), collisionMem.getFloat(16).toDouble())
-	val vecMaxs = Vector(collisionMem.getFloat(20).toDouble(), collisionMem.getFloat(24).toDouble(), collisionMem.getFloat(28).toDouble())
+	val vecMins = Vector(collisionMem.getFloat(8), collisionMem.getFloat(12), collisionMem.getFloat(16))
+	val vecMaxs = Vector(collisionMem.getFloat(20), collisionMem.getFloat(24), collisionMem.getFloat(28))
 
 	//Set OBB to loop
 	val pointsArray = mutableListOf<Vector>()
@@ -409,15 +412,15 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 		}
 	}
 
-	return BoundingBox(left.toFloat(), right.toFloat(), top.toFloat(), bottom.toFloat())
+	return BoundingBox(left, right, top, bottom)
 }
 
 fun transformVector(vec: Vector, array: Array<FloatArray>): Vector {
 	val outVec = Vector()
-	val thisVec = Vector3(vec.x.toFloat(), vec.y.toFloat(), vec.z.toFloat())
-	outVec.x = (thisVec.dot(array[0][0], array[0][1], array[0][2]) + array[0][3]).toDouble()
-	outVec.y = (thisVec.dot(array[1][0], array[1][1], array[1][2]) + array[1][3]).toDouble()
-	outVec.z = (thisVec.dot(array[2][0], array[2][1], array[2][2]) + array[2][3]).toDouble()
+	val thisVec = Vector3(vec.x, vec.y, vec.z)
+	outVec.x = (thisVec.dot(array[0][0], array[0][1], array[0][2]) + array[0][3])
+	outVec.y = (thisVec.dot(array[1][0], array[1][1], array[1][2]) + array[1][3])
+	outVec.z = (thisVec.dot(array[2][0], array[2][1], array[2][2]) + array[2][3])
 
 	return outVec
 }

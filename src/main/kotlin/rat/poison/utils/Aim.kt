@@ -16,25 +16,25 @@ import kotlin.math.round
 
 private val delta = ThreadLocal.withInitial { Vector() }
 
-fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: Double) = destinationAngle.apply {
+fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: Float) = destinationAngle.apply {
 	x -= currentAngle.x
 	y -= currentAngle.y
-	z = 0.0
+	z = 0F
 	normalize()
 
 	var smooth = smoothing
 
-	if (smooth == 0.0) {
-		smooth = 1.0
+	if (smooth == 0F) {
+		smooth = 1F
 	}
 
-	x = currentAngle.x + x / 100 * (100 / smooth)
-	y = currentAngle.y + y / 100 * (100 / smooth)
+	x = currentAngle.x + x / 100F * (100F / smooth)
+	y = currentAngle.y + y / 100F * (100F / smooth)
 
 	normalize()
 }
 
-fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Double, silent: Boolean = false) {
+fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Float, silent: Boolean = false) {
 	if (!silent) {
 		val dAng = applyFlatSmoothing(currentAngle, destinationAngle, smoothing)
 		clientState.setAngle(dAng)
@@ -49,13 +49,13 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 	var xFix = currentAngle.y - destinationAngle.y
 
 	//Normalize, fixes flipping to 360/-360 instead of 180/-180 like normal
-	while (xFix > 180) xFix -= 360
-	while (xFix <= -180) xFix += 360
+	while (xFix > 180) xFix -= 360F
+	while (xFix <= -180) xFix += 360F
 
-	if (xFix > 180) xFix = 180.0
-	if (xFix < -180F) xFix = -180.0
+	if (xFix > 180) xFix = 180F
+	if (xFix < -180F) xFix = -180F
 
-	delta.set(xFix, currentAngle.x - destinationAngle.x, 0.0)
+	delta.set(xFix, currentAngle.x - destinationAngle.x, 0F)
 
 	var sens = GAME_SENSITIVITY + .5
 	if (perfect) sens = 1.0
@@ -89,7 +89,7 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 	}
 
 	if (perfect) {
-		writeAim(currentAngle, destinationAngle, 1.0)
+		writeAim(currentAngle, destinationAngle, 1F)
 		//Thread.sleep(50)
 	} else HumanMouse.fastSteps(mousePos, target) { steps, _ ->
 		mousePos = mousePos.refresh()

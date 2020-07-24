@@ -5,7 +5,6 @@ import rat.poison.curSettings
 import rat.poison.game.angle
 import rat.poison.game.clientState
 import rat.poison.game.entity.EntityType
-import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.entity.absPosition
 import rat.poison.game.entity.dead
 import rat.poison.game.entity.onGround

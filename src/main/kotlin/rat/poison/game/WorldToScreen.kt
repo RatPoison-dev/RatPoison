@@ -15,40 +15,40 @@ fun worldToScreen(from: Vector, vOut: Vector): Boolean {
 		updateViewMatrix()
 	}
 
-	vOut.x = w2sViewMatrix[0][0] * from.x + w2sViewMatrix[0][1] * from.y + w2sViewMatrix[0][2] * from.z + w2sViewMatrix[0][3]
-	vOut.y = w2sViewMatrix[1][0] * from.x + w2sViewMatrix[1][1] * from.y + w2sViewMatrix[1][2] * from.z + w2sViewMatrix[1][3]
+	vOut.x = (w2sViewMatrix[0][0] * from.x + w2sViewMatrix[0][1] * from.y + w2sViewMatrix[0][2] * from.z + w2sViewMatrix[0][3]).toFloat()
+	vOut.y = (w2sViewMatrix[1][0] * from.x + w2sViewMatrix[1][1] * from.y + w2sViewMatrix[1][2] * from.z + w2sViewMatrix[1][3]).toFloat()
 
-	val w = w2sViewMatrix[3][0] * from.x + w2sViewMatrix[3][1] * from.y + w2sViewMatrix[3][2] * from.z + w2sViewMatrix[3][3]
+	val w = (w2sViewMatrix[3][0] * from.x + w2sViewMatrix[3][1] * from.y + w2sViewMatrix[3][2] * from.z + w2sViewMatrix[3][3]).toFloat()
 
 	val width = gameWidth
 	val height = gameHeight
 
 	if (!w.isNaN() && w >= 0.01F) { //If infront (on screen)
-		val invw = 1.0 / w
+		val invw = 1F / w
 		vOut.x *= invw
 		vOut.y *= invw
 
-		var x = width / 2.0
-		var y = height / 2.0
+		var x = width / 2.0F
+		var y = height / 2.0F
 
-		x += 0.5 * vOut.x * width + 0.5
-		y += 0.5 * vOut.y * height + 0.5 //For future, -= was changed to +=, it was flipped
+		x += 0.5F * vOut.x * width + 0.5F
+		y += 0.5F * vOut.y * height + 0.5F
 
 		vOut.x = x
 		vOut.y = y
 
 		return true
 	} else if (!w.isNaN() && w < 0.01F) { //If behind
-		val invw = -1.0 / w
+		val invw = -1F / w
 
 		vOut.x *= invw
 		vOut.y *= invw
 
-		var x = width / 2.0
-		var y = height / 2.0
+		var x = width / 2F
+		var y = height / 2F
 
-		x += 0.5 * vOut.x * width + 0.5
-		y -= 0.5 * vOut.y * height + 0.5 //-?
+		x += 0.5F * vOut.x * width + 0.5F
+		y -= 0.5F * vOut.y * height + 0.5F
 
 		vOut.x = x
 		vOut.y = y

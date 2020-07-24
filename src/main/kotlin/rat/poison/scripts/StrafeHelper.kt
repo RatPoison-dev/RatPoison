@@ -18,7 +18,7 @@ import rat.poison.utils.notInGame
 import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.VK_SPACE
 
-private var lastAngY = 0.0
+private var lastAngY = 0.0F
 
 fun strafeHelper() = every(2) {
     if (MENUTOG || notInGame || inBackground) return@every

@@ -101,11 +101,11 @@ fun nadeHelper() = App {
                         var t1 = false
                         var t2 = false
 
-                        if (worldToScreen(Vector(hPos[0].cToDouble(), hPos[1].cToDouble(), hPos[2].cToDouble()), vec2)) {
+                        if (worldToScreen(Vector(hPos[0].cToFloat(), hPos[1].cToFloat(), hPos[2].cToFloat()), vec2)) {
                             t1 = true
                         }
 
-                        if (worldToScreen(Vector(hLPos[0].cToDouble(), hLPos[1].cToDouble(), hLPos[2].cToDouble()), vec3)) {
+                        if (worldToScreen(Vector(hLPos[0].cToFloat(), hLPos[1].cToFloat(), hLPos[2].cToFloat()), vec3)) {
                             set(ShapeRenderer.ShapeType.Filled)
                             circle(vec3.x.toFloat(), vec3.y.toFloat() - 2F, 4F)
                             set(ShapeRenderer.ShapeType.Line)

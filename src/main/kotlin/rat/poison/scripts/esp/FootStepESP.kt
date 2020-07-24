@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.Align
 import rat.poison.*
 import rat.poison.game.entity.*
-import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.game.w2sViewMatrix
@@ -21,7 +20,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 val footSteps = Array(256) { FootStep() }
-data class FootStep(var x: Double = 0.0, var y: Double = 0.0, var z: Double = 0.0,
+data class FootStep(var x: Float = 0F, var y: Float = 0F, var z: Float = 0F,
                             var ttl: Int = curSettings["FOOTSTEP_TTL"].toInt(),
                             var open: Boolean = true, var myTeam: Boolean = false,
                             var ent: Entity = 0L)
@@ -109,7 +108,7 @@ private fun constructSteps() = every(10) {
             val inMyTeam = ent.team() == me.team()
 
             val entVel = ent.velocity()
-            val entMag = sqrt(entVel.x.pow(2.0) + entVel.y.pow(2.0) + entVel.z.pow(2.0))
+            val entMag = sqrt(entVel.x.pow(2F) + entVel.y.pow(2F) + entVel.z.pow(2F))
 
             if (entMag >= 150) {
                 val entPos = ent.absPosition()
@@ -132,9 +131,9 @@ private fun constructSteps() = every(10) {
                 footSteps[i].ttl -= 1
                 if (footSteps[i].ttl <= 0) { //Reset
                     footSteps[i].apply {
-                        x = 0.0
-                        y = 0.0
-                        z = 0.0
+                        x = 0F
+                        y = 0F
+                        z = 0F
                         ttl = curSettings["FOOTSTEP_TTL"].toInt()
                         open = true
                         this.ent = 0L

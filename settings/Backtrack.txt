@@ -8,9 +8,6 @@ ENABLE_BACKTRACK_ON_KEY = false
 //Default key is Mouse5
 BACKTRACK_KEY = 6
 
-//Backtrack activation FOV (between 0.1 and 2)
-BACKTRACK_FOV = 1.0
-
 //Show points
 BACKTRACK_VISUALIZE = false
 
@@ -30,34 +27,6 @@ RIFLE_BACKTRACK = true
 SHOTGUN_BACKTRACK = true
 SMG_BACKTRACK = true
 SNIPER_BACKTRACK = true
-
-//Enable neck bone activation when in fov
-PISTOL_BACKTRACK_NECK = true
-RIFLE_BACKTRACK_NECK = true
-SHOTGUN_BACKTRACK_NECK = true
-SMG_BACKTRACK_NECK = true
-SNIPER_BACKTRACK_NECK = true
-
-//Enable chest bone activation when in fov
-PISTOL_BACKTRACK_CHEST = true
-RIFLE_BACKTRACK_CHEST = true
-SHOTGUN_BACKTRACK_CHEST = true
-SMG_BACKTRACK_CHEST = true
-SNIPER_BACKTRACK_CHEST = true
-
-//Enable stomach bone activation when in fov
-PISTOL_BACKTRACK_STOMACH = true
-RIFLE_BACKTRACK_STOMACH = true
-SHOTGUN_BACKTRACK_STOMACH = true
-SMG_BACKTRACK_STOMACH = true
-SNIPER_BACKTRACK_STOMACH = true
-
-//Enable pelvis bone activation when in fov
-PISTOL_BACKTRACK_PELVIS = true
-RIFLE_BACKTRACK_PELVIS = true
-SHOTGUN_BACKTRACK_PELVIS = true
-SMG_BACKTRACK_PELVIS = true
-SNIPER_BACKTRACK_PELVIS = true
 
 //Enable bone trigger key that enables bone trigger only when TRIGGER_KEY is pressed
 BACKTRACK_ENABLE_KEY = false

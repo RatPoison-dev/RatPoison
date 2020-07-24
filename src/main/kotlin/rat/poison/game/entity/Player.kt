@@ -79,31 +79,31 @@ internal fun Player.dead(): Boolean = (lifeState() != 0 || health() <= 0)
 
 internal fun Player.punch(): Angle {
 	val tmpAng = Angle()
-	tmpAng.x = csgoEXE.float(this + aimPunchAngle).toDouble()
-	tmpAng.y = csgoEXE.float(this + aimPunchAngle + 4).toDouble()
-	tmpAng.z = 0.0
+	tmpAng.x = csgoEXE.float(this + aimPunchAngle)
+	tmpAng.y = csgoEXE.float(this + aimPunchAngle + 4)
+	tmpAng.z = 0F
 
 	return tmpAng
 }
 
 internal fun Player.shotsFired(): Int = csgoEXE.int(this + NetVarOffsets.iShotsFired)
 
-internal fun Player.viewOffset(): Angle = Vector(csgoEXE.float(this + vecViewOffset).toDouble(),
-		csgoEXE.float(this + vecViewOffset + 4).toDouble(),
-		csgoEXE.float(this + vecViewOffset + 8).toDouble())
+internal fun Player.viewOffset(): Angle = Vector(csgoEXE.float(this + vecViewOffset),
+		csgoEXE.float(this + vecViewOffset + 4),
+		csgoEXE.float(this + vecViewOffset + 8))
 
-internal fun Player.velocity(): Angle = Vector(csgoEXE.float(this + vecVelocity).toDouble(),
-		csgoEXE.float(this + vecVelocity + 4).toDouble(),
-		csgoEXE.float(this + vecVelocity + 8).toDouble())
+internal fun Player.velocity(): Angle = Vector(csgoEXE.float(this + vecVelocity),
+		csgoEXE.float(this + vecVelocity + 4),
+		csgoEXE.float(this + vecVelocity + 8))
 
 
 private val angle2Vector: Long2ObjectMap<Vector> = Long2ObjectOpenHashMap()
 
 internal fun Player.eyeAngle(): Angle =
 		if (this == me) clientState.angle()
-		else Angle(csgoEXE.float(this + angEyeAngles).toDouble(),
-				csgoEXE.float(this + angEyeAngles + 4).toDouble(),
-				csgoEXE.float(this + angEyeAngles + 8).toDouble())
+		else Angle(csgoEXE.float(this + angEyeAngles),
+				csgoEXE.float(this + angEyeAngles + 4),
+				csgoEXE.float(this + angEyeAngles + 8))
 
 
 internal fun Player.direction(): Vector = readCached(angle2Vector) {
@@ -112,7 +112,7 @@ internal fun Player.direction(): Vector = readCached(angle2Vector) {
 
 internal fun Player.boneMatrix() = csgoEXE.uint(this + dwBoneMatrix)
 
-internal fun Player.bone(offset: Int, boneID: Int = HEAD_BONE, boneMatrix: Long = boneMatrix()) = csgoEXE.float(boneMatrix + ((0x30 * boneID) + offset)).toDouble()
+internal fun Player.bone(offset: Int, boneID: Int = HEAD_BONE, boneMatrix: Long = boneMatrix()) = csgoEXE.float(boneMatrix + ((0x30 * boneID) + offset))
 
 internal fun Player.isScoped(): Boolean = csgoEXE.boolean(this + bIsScoped)
 internal fun Memory.isScoped(): Boolean = this.getByte(bIsScoped) > 0
@@ -136,7 +136,7 @@ internal fun Player.nearestBone(): Int {
 	val boneMatrix = boneMatrix()
 	val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
 
-	val w2sRetVec = Vector(0.0, 0.0, 0.0)
+	val w2sRetVec = Vector(0F, 0F, 0F)
 
 	//Get actual size
 	val modelMemory: Memory by lazy {
@@ -199,9 +199,9 @@ internal fun Player.nearestBone(): Int {
 }
 
 internal fun Memory.vector(addy: Long, xOff: Long, yOff: Long, zOff: Long): Vector {
-	val x = getFloat(addy + xOff).toDouble()
-	val y = getFloat(addy + yOff).toDouble()
-	val z = getFloat(addy + zOff).toDouble()
+	val x = getFloat(addy + xOff)
+	val y = getFloat(addy + yOff)
+	val z = getFloat(addy + zOff)
 
 	return Vector(x, y, z)
 }

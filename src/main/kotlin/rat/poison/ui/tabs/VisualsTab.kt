@@ -53,9 +53,6 @@ class VisualsTab : Tab(false, false) {
     val showTriggerFov = VisCheckBoxCustom(" ", "DRAW_TRIGGER_FOV", false)
     val showTriggerFovColor = VisColorPickerCustom("Draw Trigger FOV", "DRAW_TRIGGER_FOV_COLOR")
 
-    val showBacktrackFov = VisCheckBoxCustom(" ", "DRAW_BACKTRACK_FOV", false)
-    val showBacktrackFovColor = VisColorPickerCustom("Draw Backtrack FOV", "DRAW_BACKTRACK_FOV_COLOR")
-
     init {
         //ESP Tab
         espTabbedPane.add(glowEspTab)
@@ -128,10 +125,6 @@ class VisualsTab : Tab(false, false) {
         triggerFov.add(showTriggerFov).left()
         triggerFov.add(showTriggerFovColor).width(175F-showTriggerFov.width).left()
 
-        val backtrackFov = VisTable()
-        backtrackFov.add(showBacktrackFov).left()
-        backtrackFov.add(showBacktrackFovColor).width(175F-showBacktrackFov.width).left()
-
         //Add all items to label for tabbed pane content
         table.add(enableEsp).padLeft(25F).left().row()
         table.add(visualsToggleKey).padLeft(25F).left().row()
@@ -143,7 +136,6 @@ class VisualsTab : Tab(false, false) {
         table.add(adrenalineStrength).padLeft(25F).left().row()
         table.add(aimFov).padLeft(25F).left().row()
         table.add(triggerFov).padLeft(25F).left().row()
-        table.add(backtrackFov).padLeft(25F).left().row()
         table.add(espTabbedPane.table).minWidth(500F).left().growX().row()
         table.add(espScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
     }
@@ -179,18 +171,12 @@ fun updateDisableEsp() {
 
             showTriggerFov.disable(true)
             showTriggerFovColor.disable(true)
-
-            showBacktrackFov.disable(true)
-            showBacktrackFovColor.disable(true)
         } else {
             showAimFov.disable(bool)
             showAimFovColor.disable(bool)
 
             showTriggerFov.disable(bool)
             showTriggerFovColor.disable(bool)
-
-            showBacktrackFov.disable(bool)
-            showBacktrackFovColor.disable(bool)
         }
 
         val recTab = espTabbedPane.activeTab
@@ -338,7 +324,5 @@ fun visualsTabUpdate() {
         showAimFovColor.update()
         showTriggerFov.update()
         showTriggerFovColor.update()
-        showBacktrackFov.update()
-        showBacktrackFovColor.update()
     }
 }

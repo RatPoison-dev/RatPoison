@@ -25,15 +25,10 @@ class AimBacktrackTable: VisTable(false) {
     val backtrackVisualize = VisCheckBoxCustom("Visualize", "BACKTRACK_VISUALIZE")
     val backtrackEnableKey = VisCheckBoxCustom("Enable On Key", "ENABLE_BACKTRACK_ON_KEY")
     val backtrackKey = VisInputFieldCustom("Backtrack Key", "BACKTRACK_KEY")
-    val backtrackFOV = VisSliderCustom("Fov", "BACKTRACK_FOV", 0.1f, 2f, .1f, false, width1 = 200F, width2 = 250F)
     val backtrackMS = VisSliderCustom("Backtrack MS", "BACKTRACK_MS", 20f, 200f, 5f, true, width1 = 200F, width2 = 250F)
     val backtrackPreferAccurate = VisCheckBoxCustom("Prefer Accurate", "BACKTRACK_PREFER_ACCURATE")
     val backtrackSpotted = VisCheckBoxCustom("Check Spotted", "BACKTRACK_SPOTTED")
     val backtrackWeaponEnabled = ATabVisCheckBox("Enable Weapon Backtrack", "_BACKTRACK")
-    val backtrackWeaponNeck = ATabVisCheckBox("Neck", "_BACKTRACK_NECK")
-    val backtrackWeaponChest = ATabVisCheckBox("Chest", "_BACKTRACK_CHEST")
-    val backtrackWeaponStomach = ATabVisCheckBox("Stomach", "_BACKTRACK_STOMACH")
-    val backtrackWeaponPelvis = ATabVisCheckBox("Pelvis", "_BACKTRACK_PELVIS")
     //Override Weapon Checkbox & Selection Box
     private val categorySelection = VisTable()
     val categorySelectionBox = VisSelectBox<String>()
@@ -78,18 +73,12 @@ class AimBacktrackTable: VisTable(false) {
             add(backtrackEnableKey).left().row()
             add(backtrackKey).left().row()
 
-            add(backtrackFOV).left().row()
             add(backtrackMS).left().row()
             add(backtrackPreferAccurate).left().row()
             add(backtrackSpotted).left().row()
 
             add(categorySelection).left().row()
             add(backtrackWeaponEnabled).left().row()
-
-            add(backtrackWeaponNeck).left().row()
-            add(backtrackWeaponChest).left().row()
-            add(backtrackWeaponStomach).left().row()
-            add(backtrackWeaponPelvis).left().row()
 
             addSeparator()
         }

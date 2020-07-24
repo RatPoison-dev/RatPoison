@@ -47,9 +47,9 @@ internal fun Entity.position(): Angle {
 	val ent = this
 	val ang = Angle()
 	ang.apply {
-		x = csgoEXE.float(ent + vecOrigin).toDouble()
-		y = csgoEXE.float(ent + vecOrigin + 4).toDouble()
-		z = csgoEXE.float(ent + vecOrigin + 8).toDouble() + csgoEXE.float(ent + vecViewOffset + 8)
+		x = csgoEXE.float(ent + vecOrigin)
+		y = csgoEXE.float(ent + vecOrigin + 4)
+		z = csgoEXE.float(ent + vecOrigin + 8) + csgoEXE.float(ent + vecViewOffset + 8)
 	}
 	return ang
 }
@@ -58,9 +58,9 @@ fun Entity.absPosition(): Angle {
 	val ent = this
 	val ang = Angle()
 	ang.apply {
-		x = csgoEXE.float(ent + vecOrigin).toDouble()
-		y = csgoEXE.float(ent + vecOrigin + 4).toDouble()
-		z = csgoEXE.float(ent + vecOrigin + 8).toDouble()
+		x = csgoEXE.float(ent + vecOrigin)
+		y = csgoEXE.float(ent + vecOrigin + 4)
+		z = csgoEXE.float(ent + vecOrigin + 8)
 	}
 	return ang
 }
@@ -78,9 +78,9 @@ fun Entity.bones(boneID: Int): Angle {
 fun Memory.bones(boneID: Int): Angle {
 	val ang = Angle()
 	ang.apply {
-		x = getFloat(((0x30L * boneID) + 0xC)).toDouble()
-		y = getFloat(((0x30L * boneID) + 0x1C)).toDouble()
-		z = getFloat(((0x30L * boneID) + 0x2C)).toDouble()
+		x = getFloat(((0x30L * boneID) + 0xC))
+		y = getFloat(((0x30L * boneID) + 0x1C))
+		z = getFloat(((0x30L * boneID) + 0x2C))
 	}
 	return ang
 }

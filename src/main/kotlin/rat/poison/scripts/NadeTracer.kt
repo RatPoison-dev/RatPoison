@@ -14,16 +14,16 @@ import rat.poison.utils.notInGame
 
 var entsToTrack = mutableListOf<Long>()
 
-var positionsList = mutableListOf<List<Double>>()
-var grenadeList = mutableListOf<MutableList<List<Double>>>()
+var positionsList = mutableListOf<List<Float>>()
+var grenadeList = mutableListOf<MutableList<List<Float>>>()
 
 private var sync = 0
 
 fun nadeTracer() = App {
     if (!curSettings["NADE_TRACER"].strToBool() || MENUTOG || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@App
 
-    val empty = mutableListOf(0.0, 0.0, 0.0, 0.0, 0.0)
-    val alphaUpdate = clamp(.011 - curSettings["NADE_TRACER_TIMEOUT"].toDouble(), .001, .01)
+    val empty = mutableListOf(0F, 0F, 0F, 0F, 0F)
+    val alphaUpdate = clamp(.011F - curSettings["NADE_TRACER_TIMEOUT"].toFloat(), .001F, .01F)
     //Calculate spots
     if (sync >= (curSettings["NADE_TRACER_UPDATE_TIME"].toInt())) { //Change to add a 0 to the end to prevent connecting grenade lines
         val tmp = entsToTrack
@@ -41,7 +41,7 @@ fun nadeTracer() = App {
                 }
             }
 
-            val tmp2 = listOf(entPos.x, entPos.y, entPos.z, 1.0, ent.toDouble())
+            val tmp2 = listOf(entPos.x, entPos.y, entPos.z, 1F, ent.toFloat())
             val check = (entPos.x in -2.0..2.0 && entPos.y in -2.0..2.0 && entPos.z in -2.0..2.0)
             if (!check) {
                 if (idx == -1) {

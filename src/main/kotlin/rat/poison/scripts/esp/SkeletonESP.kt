@@ -105,13 +105,13 @@ private fun drawBone(target: Player, start: Int, end: Int) {
 	csgoEXE.read(target.boneMatrix(), boneMemory)
 
 	startBone.set(
-			boneMemory.getFloat(((0x30L * start) + 0xC)).toDouble(),
-			boneMemory.getFloat(((0x30L * start) + 0x1C)).toDouble(),
-			boneMemory.getFloat(((0x30L * start) + 0x2C)).toDouble())
+			boneMemory.getFloat(((0x30L * start) + 0xC)),
+			boneMemory.getFloat(((0x30L * start) + 0x1C)),
+			boneMemory.getFloat(((0x30L * start) + 0x2C)))
 	endBone.set(
-			boneMemory.getFloat(((0x30L * end) + 0xC)).toDouble(),
-			boneMemory.getFloat(((0x30L * end) + 0x1C)).toDouble(),
-			boneMemory.getFloat(((0x30L * end) + 0x2C)).toDouble())
+			boneMemory.getFloat(((0x30L * end) + 0xC)),
+			boneMemory.getFloat(((0x30L * end) + 0x1C)),
+			boneMemory.getFloat(((0x30L * end) + 0x2C)))
 
 	if (worldToScreen(startBone, startDraw) && worldToScreen(endBone, endDraw)) {
 		bones[currentIdx].apply {

@@ -20,7 +20,7 @@ fun selfNade() {
         val destAng = Angle() //= curAng doesnt work??
         destAng.set(curAng.x, curAng.y, curAng.z)
         destAng.apply {
-            x = -89.0
+            x = -89.0F
         }
         destAng.normalize()
 

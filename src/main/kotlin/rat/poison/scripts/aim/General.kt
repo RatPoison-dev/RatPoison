@@ -26,8 +26,8 @@ fun reset() {
 
 fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
                         lockFOV: Float = curSettings["AIM_FOV"].toFloat(), BONE: Int = curSettings["AIM_BONE"].toInt(), visCheck: Boolean = true): Player {
-	var closestFOV = Double.MAX_VALUE
-	var closestDelta = Double.MAX_VALUE
+	var closestFOV = Float.MAX_VALUE
+	var closestDelta = Float.MAX_VALUE
 	var closestPlayer = -1L
 
 	forEntities {
@@ -45,8 +45,8 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, entity.nearestBone())
 
 				if (arr[0] != -1.0) {
-					closestFOV = arr[0] as Double
-					closestDelta = arr[1] as Double
+					closestFOV = arr[0] as Float
+					closestDelta = arr[1] as Float
 					closestPlayer = arr[2] as Long
 				}
 			}
@@ -55,8 +55,8 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, i)
 
 				if (arr[0] != -1.0) {
-					closestFOV = arr[0] as Double
-					closestDelta = arr[1] as Double
+					closestFOV = arr[0] as Float
+					closestDelta = arr[1] as Float
 					closestPlayer = arr[2] as Long
 				}
 			}
@@ -67,8 +67,8 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 					val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, entity.nearestBone())
 
 					if (arr[0] != -1.0) {
-						closestFOV = arr[0] as Double
-						closestDelta = arr[1] as Double
+						closestFOV = arr[0] as Float
+						closestDelta = arr[1] as Float
 						closestPlayer = arr[2] as Long
 					}
 				}
@@ -76,8 +76,8 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, BONE)
 
 				if (arr[0] != -1.0) {
-					closestFOV = arr[0] as Double
-					closestDelta = arr[1] as Double
+					closestFOV = arr[0] as Float
+					closestDelta = arr[1] as Float
 					closestPlayer = arr[2] as Long
 				}
 			}
@@ -85,7 +85,7 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 		return@forEntities
 	}
 
-	if (closestDelta == Double.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return -1
+	if (closestDelta == Float.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return -1
 
 	val randInt = randInt(100+1)
 
@@ -96,8 +96,8 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	return closestPlayer
 }
 
-fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, curAngle: Angle, lockFOV: Float = curSettings["AIM_FOV"].toFloat(), BONE: Int, ovrStatic: Boolean = false): MutableList<Any> {
-	val retList = mutableListOf(-1.0, 0.0, 0L)
+fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Angle, curAngle: Angle, lockFOV: Float = curSettings["AIM_FOV"].toFloat(), BONE: Int, ovrStatic: Boolean = false): MutableList<Any> {
+	val retList = mutableListOf(-1F, 0F, 0L)
 
 	var ePos: Angle = entity.bones(BONE)
 
@@ -117,19 +117,18 @@ fun calcTarget(calcClosestDelta: Double, entity: Entity, position: Angle, curAng
 			yawDiff = 360f - yawDiff
 		}
 
-		val fov = abs(sin(toRadians(yawDiff)) * distance)
-		val delta = abs((sin(toRadians(pitchDiff)) + sin(toRadians(yawDiff))) * distance)
+		val fov = abs(sin(toRadians(yawDiff.toDouble())) * distance)
+		val delta = abs((sin(toRadians(pitchDiff.toDouble())) + sin(toRadians(yawDiff.toDouble()))) * distance)
 
 		if (delta <= lockFOV && delta <= calcClosestDelta) {
-			retList[0] = fov
-			retList[1] = delta
+			retList[0] = fov.toFloat()
+			retList[1] = delta.toFloat()
 			retList[2] = entity
 		}
 	} else {
-		val camAng = curAngle
 		val calcAng = realCalcAngle(me, ePos)
 
-		val delta = Angle(camAng.x - calcAng.x, camAng.y - calcAng.y, 0.0)
+		val delta = Angle(curAngle.x - calcAng.x, curAngle.y - calcAng.y, 0F)
 		delta.normalize()
 
 		val fov = sqrt(delta.x.pow(2) + delta.y.pow(2))
@@ -267,7 +266,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			val destinationAngle = getCalculatedAngle(me, bonePosition) //Rename to current angle
 
 			if (!perfect) {
-				destinationAngle.finalize(currentAngle, (1.1 - curSettings["AIM_SMOOTHNESS"].toDouble() / 5.0)) //10.0 is max smooth value
+				destinationAngle.finalize(currentAngle, (1.1F - curSettings["AIM_SMOOTHNESS"].toFloat() / 5F)) //10.0 is max smooth value
 			}
 
 			val aimSpeed = curSettings["AIM_SPEED"].toInt()

@@ -10,32 +10,32 @@ import kotlin.math.sin
 typealias Angle = Vector
 
 fun Vector.normalize() = apply {
-    if (x != x) x = 0.0
-    if (y != y) y = 0.0
+    if (x != x) x = 0F
+    if (y != y) y = 0F
 
-    if (x > 89) x = 89.0
-    if (x < -89) x = -89.0
+    if (x > 89) x = 89F
+    if (x < -89) x = -89F
 
     while (y > 180) y -= 360
     while (y <= -180) y += 360
 
-    if (y > 180) y = 180.0
-    if (y < -180F) y = -180.0
+    if (y > 180) y = 180F
+    if (y < -180F) y = -180F
 
-    z = 0.0
+    z = 0F
 }
 
 internal fun Angle.distanceTo(target: Angle) = abs(x - target.x) + abs(y - target.y) + abs(z - target.z)
 
-internal fun Angle.isValid() = !(z != 0.0
+internal fun Angle.isValid() = !(z != 0F
         || x < -89 || x > 180
         || y < -180 || y > 180
         || x.isNaN() || y.isNaN() || z.isNaN())
 
-internal fun Angle.finalize(orig: Angle, smoothness: Double) {
+internal fun Angle.finalize(orig: Angle, smoothness: Float) {
     x -= orig.x
     y -= orig.y
-    z = 0.0
+    z = 0F
     normalize()
 
     x = orig.x + x * smoothness

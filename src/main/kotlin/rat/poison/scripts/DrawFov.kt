@@ -43,11 +43,7 @@ fun drawFov() = App {
     val bFOV: Float
     var bINFOV = false
 
-    val backtrackFOV: Float
-    var backtrackENABLED = false
-
     var triggerRadius = -1F
-    var backtrackRadius = -1F
 
     when {
         wep.pistol -> { prefix = "PISTOL_" }
@@ -61,10 +57,6 @@ fun drawFov() = App {
         bFOV = curSettings[prefix + "TRIGGER_FOV"].toFloat()
         bINFOV = curSettings[prefix + "TRIGGER_INFOV"].strToBool()
         triggerRadius = calcFovRadius(viewFov, bFOV)
-
-        backtrackFOV = curSettings["BACKTRACK_FOV"].toFloat()
-        backtrackENABLED = curSettings[prefix + "TRIGGER_BACKTRACK"].strToBool()
-        backtrackRadius = calcFovRadius(viewFov, backtrackFOV)
     }
 
     val aimRadius = calcFovRadius(viewFov, curSettings["AIM_FOV"].toFloat())
@@ -91,12 +83,6 @@ fun drawFov() = App {
             val col = curSettings["DRAW_TRIGGER_FOV_COLOR"].strToColor()
             setColor(col.red / 255F, col.green / 255F, col.blue / 255F, 1F)
             circle(x, y, clamp(triggerRadius, 10F, 1000F))
-        }
-
-        if (curSettings["ENABLE_BACKTRACK"].strToBool() && curSettings["DRAW_BACKTRACK_FOV"].strToBool() && backtrackRadius != -1F && backtrackENABLED) {
-            val col = curSettings["DRAW_BACKTRACK_FOV_COLOR"].strToColor()
-            setColor(col.red / 255F, col.green / 255F, col.blue / 255F, 1F)
-            circle(x, y, clamp(backtrackRadius, 10F, 1000F))
         }
 
         color = Color(1F, 1F, 1F, 1F)

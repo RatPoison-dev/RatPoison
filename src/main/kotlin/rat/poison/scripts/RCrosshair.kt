@@ -57,8 +57,8 @@ internal fun rcrosshair() = App {
         //Center
         //x = (gameWidth / 2) - ((gameWidth * rccFOV) * punch.y).toFloat() + rccXo
         //y = (gameHeight / 2) - ((gameHeight * rccFOV) * punch.x).toFloat() + rccYo
-        x = (gameWidth / 2) - tan(toRadians(punch.y)).toFloat() * rccFov2 + rccXo
-        y = (gameHeight / 2) - tan(toRadians(punch.x)).toFloat() * rccFov2 + rccYo
+        x = (gameWidth / 2) - tan(toRadians(punch.y.toDouble())).toFloat() * rccFov2 + rccXo
+        y = (gameHeight / 2) - tan(toRadians(punch.x.toDouble())).toFloat() * rccFov2 + rccYo
     } else {
         //Center
         x = gameWidth / 2 + rccXo

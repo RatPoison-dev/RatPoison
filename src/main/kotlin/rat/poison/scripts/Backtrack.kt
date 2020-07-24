@@ -19,6 +19,7 @@ import rat.poison.game.offsets.EngineOffsets.dwGlobalVars
 import rat.poison.scripts.aim.calcTarget
 import rat.poison.utils.Angle
 import rat.poison.utils.Structs.*
+import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
@@ -26,13 +27,8 @@ import rat.poison.utils.notInGame
 import kotlin.math.abs
 
 var btRecords = Array(64) { Array(13) { BacktrackTable() } }
-data class BacktrackTable(var simtime: Float = 0f, var neckPos: Angle = Angle(), var chestPos: Angle = Angle(),
-                          var stomachPos: Angle = Angle(), var pelvisPos: Angle = Angle(), var alpha: Float = 100f)
+data class BacktrackTable(var simtime: Float = 0f, var headPos: Angle = Angle(), var absPos: Angle = Angle(), var alpha: Float = 100f)
 
-private var enableNeck = false
-private var enableChest = false
-private var enableStomach = false
-private var enablePelvis = false
 var bestBacktrackTarget = -1L
 
 fun sendPacket(bool: Boolean) { //move outta here
@@ -57,31 +53,8 @@ fun attemptBacktrack(): Boolean {
 
         //Get/set vars
         val meWep = me.weapon()
-        var prefix = ""
-        when {
-            meWep.pistol -> {
-                prefix = "PISTOL"
-            }
-            meWep.rifle -> {
-                prefix = "RIFLE"
-            }
-            meWep.shotgun -> {
-                prefix = "SHOTGUN"
-            }
-            meWep.sniper -> {
-                prefix = "SNIPER"
-            }
-            meWep.smg -> {
-                prefix = "SMG"
-            }
-        }
 
-        if (meWep.gun) { //Not 100% this applies to every 'gun'
-            enableNeck = curSettings[prefix + "_BACKTRACK_NECK"].strToBool()
-            enableChest = curSettings[prefix + "_BACKTRACK_CHEST"].strToBool()
-            enableStomach = curSettings[prefix + "_BACKTRACK_STOMACH"].strToBool()
-            enablePelvis = curSettings[prefix + "_BACKTRACK_PELVIS"].strToBool()
-        }
+        if (!meWep.gun) return false
 
         val curSequenceNumber = csgoEXE.int(clientState + dwClientState_LastOutgoingCommand) + 1
         sendPacket(false)
@@ -122,7 +95,7 @@ fun attemptBacktrack(): Boolean {
 }
 
 fun constructRecords() {
-    var bestFov = 5.0
+    var bestFov = 5F
     val clientAngle = clientState.angle()
     val meTeam = me.team()
 
@@ -133,7 +106,7 @@ fun constructRecords() {
 
         //Best target shit
         val pos = ent.bones(6)
-        val fov = calcTarget(bestFov, bestBacktrackTarget, pos, clientAngle, 10F, 6, ovrStatic = true)[0] as Double
+        val fov = calcTarget(bestFov, bestBacktrackTarget, pos, clientAngle, 10F, 6, ovrStatic = true)[0] as Float
         if (fov < bestFov && fov > 0) {
             bestFov = fov
             bestBacktrackTarget = ent
@@ -147,18 +120,17 @@ fun constructRecords() {
         if (entID in 0..63 && tick < 13) {
             val record = btRecords[entID][tick]
 
-            val neckPos: Angle; val chestPos: Angle; val stomachPos: Angle; val pelvisPos: Angle
-
             val boneMemory: Memory by lazy {
                 Memory(3984)
             }
 
-            //reduce them shits
             csgoEXE.read(ent.boneMatrix(), boneMemory)
-            if (enableNeck) { neckPos = boneMemory.bones(7); record.neckPos = neckPos }
-            if (enableChest) { chestPos = boneMemory.bones(6); record.chestPos = chestPos }
-            if (enableStomach) { stomachPos = boneMemory.bones(5); record.stomachPos = stomachPos }
-            if (enablePelvis) { pelvisPos = boneMemory.bones(0); record.pelvisPos = pelvisPos }
+            record.headPos = boneMemory.bones(8).apply {
+                z += 5
+            }
+            record.absPos = ent.absPosition().apply {
+                z -= 5
+            }
 
             record.alpha = 100f
             record.simtime = entSimTime
@@ -169,7 +141,7 @@ fun constructRecords() {
         return@forEntities
     }
 
-    if (bestFov == 5.0) {
+    if (bestFov == 5F) {
         bestBacktrackTarget = -1L
     }
 }
@@ -182,36 +154,54 @@ fun bestSimTime(): Float {
     var tmp = Double.MAX_VALUE
     var best = -1f
     val targetID = (csgoEXE.uint(bestBacktrackTarget + dwIndex)-1).toInt()
-    val clientAngle = clientState.angle()
-    val meTime = csgoEXE.float(me + flSimulationTime)
-    val maxFov = curSettings["BACKTRACK_FOV"].toFloat()
+//    val clientAngle = clientState.angle()
+//    val meTime = csgoEXE.float(me + flSimulationTime)
+//    val maxFov = curSettings["BACKTRACK_FOV"].toFloat()
 
     if (targetID < 0) return -1f
 
-    for (t in 0 until 12) {
-        if (!isValidTick(timeToTicks(btRecords[targetID][t].simtime))) {
-            continue
+    val validRecords = getValidRecords(targetID)
+    val minMaxIDX = getRangeRecords(targetID)
+
+    val minRecord = btRecords[targetID][minMaxIDX[0]]
+    val maxRecord = btRecords[targetID][minMaxIDX[1]]
+
+    val minHeadPos = Vector(); val maxHeadPos = Vector(); val minAbsPos = Vector(); val maxAbsPos = Vector()
+
+    if (worldToScreen(minRecord.headPos, minHeadPos) && worldToScreen(minRecord.absPos, minAbsPos) && worldToScreen(maxRecord.headPos, maxHeadPos) && worldToScreen(maxRecord.absPos, maxAbsPos)) {
+        val w = (minAbsPos.y - minHeadPos.y) / 4F
+        val minMidX = (minAbsPos.x + minHeadPos.x) / 2F
+        val maxMidX = (maxAbsPos.x + maxAbsPos.x) / 2F
+
+        var sign = -1
+
+        if (minMidX > maxMidX) {
+            sign = 1
         }
 
-        for (i in 1 until 5) {
-            var pos = Angle()
-            when (i) {
-                1 -> pos = btRecords[targetID][t].neckPos
-                2 -> pos = btRecords[targetID][t].chestPos
-                3 -> pos = btRecords[targetID][t].stomachPos
-                4 -> pos = btRecords[targetID][t].pelvisPos
-            }
+        //val topLeft = Vector(minHeadPos.x - (w / 1.5F) * sign, minHeadPos.y, minHeadPos.z)
+        val topRight = Vector(maxHeadPos.x + (w / 1.5F) * sign, maxHeadPos.y, maxHeadPos.z)
 
-            if (pos != Angle()) {
-                val fov = calcTarget(tmp, bestBacktrackTarget, pos, clientAngle, 10F, 6, ovrStatic = true)[0] as Double
+        val bottomLeft = Vector(minMidX - w * sign, minAbsPos.y, minAbsPos.z)
+        val bottomRight = Vector(maxMidX + w * sign, maxAbsPos.y, maxAbsPos.z)
 
-                if (tmp > fov && btRecords[targetID][t].simtime > meTime - 1 && fov > 0 && fov < maxFov) {
-                    tmp = fov
-                    best = btRecords[targetID][t].simtime
+        val centerX = CSGO.gameWidth/2F
+        val centerY = CSGO.gameHeight/2f
 
-                    if (!curSettings["BACKTRACK_PREFER_ACCURATE"].strToBool()) {
-                        return best
-                    }
+        //Implement proper convex polygon check
+        if (inRange(centerX, bottomLeft.x, bottomRight.x) && inRange(centerY, topRight.y, bottomRight.y)) {//If middle of screen is inside polygon
+            var bestMinX = Float.MAX_VALUE
+
+            for (i in validRecords) {
+                val record = btRecords[targetID][i]
+                val w2s = Vector()
+                worldToScreen(record.headPos, w2s)
+
+                val centerDist = abs(centerX - w2s.x)
+                if (centerDist < bestMinX) {
+                    bestMinX = centerDist
+
+                    best = record.simtime
                 }
             }
         }
@@ -235,4 +225,19 @@ fun timeToTicks(time: Float): Int {
 
 fun getGlobalVars(): GlobalVars {
     return memToGlobalVars(csgoEXE.read(engineDLL.address + dwGlobalVars, 64)!!)
+}
+
+fun inRange(value: Float, num1: Float, num2: Float): Boolean {
+    val min: Float
+    val max: Float
+
+    if (num1 > num2) {
+        max = num1
+        min = num2
+    } else {
+        max = num2
+        min = num1
+    }
+
+    return value > min && value < max
 }

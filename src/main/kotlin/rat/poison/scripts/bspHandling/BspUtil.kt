@@ -70,7 +70,7 @@ fun bspIsVisible(start: Vector3, end: Vector3): Boolean {
         val sbText = StringBuilder()
 
         val entW2S = Vector()
-        val entOnScreen = worldToScreen(Vector(end.x.toDouble(), end.y.toDouble(), end.z.toDouble()), entW2S)
+        val entOnScreen = worldToScreen(Vector(end.x, end.y, end.z), entW2S)
 
         val w2sOut = Vector()
         var pLeaf: DLeaf?

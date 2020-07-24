@@ -27,7 +27,7 @@ fun snapLines() = App {
             val entPos = entity.position()
             val vec = Vector()
 
-            if (!(entPos.x == 0.0 && entPos.y == 0.0 && entPos.z == 0.0)) {
+            if (!(entPos.x == 0F && entPos.y == 0F && entPos.z == 0F)) {
 
                 shapeRenderer.apply {
                     if (shapeRenderer.isDrawing) {
@@ -113,13 +113,13 @@ fun snapLines() = App {
             val entPos = entity.absPosition()
             val vec = Vector()
 
-            if ((entPos.x == 0.0 && entPos.y == 0.0 && entPos.z == 0.0)) return@forEntities
+            if ((entPos.x == 0F && entPos.y == 0F && entPos.z == 0F)) return@forEntities
 
             set(ShapeRenderer.ShapeType.Filled)
             if (worldToScreen(entPos, vec)) { //Onscreen
-                rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x.toFloat(), vec.y.toFloat(), curSettings["SNAPLINES_WIDTH"].toFloat())
+                rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, vec.y, curSettings["SNAPLINES_WIDTH"].toFloat())
             } else { //Offscreen
-                rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x.toFloat(), -vec.y.toFloat(), curSettings["SNAPLINES_WIDTH"].toFloat())
+                rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, -vec.y, curSettings["SNAPLINES_WIDTH"].toFloat())
             }
             set(ShapeRenderer.ShapeType.Line)
 

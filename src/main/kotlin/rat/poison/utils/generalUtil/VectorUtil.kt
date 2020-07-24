@@ -33,10 +33,10 @@ operator fun Vector3.divAssign(f: Float) {
 
 fun Angle.toVector3(): Vector3 {
     val vec = Vector3()
-    vec.x = x.toFloat(); vec.y = y.toFloat(); vec.z = z.toFloat()
+    vec.x = x; vec.y = y; vec.z = z
     return vec
 }
 
 fun Vector3.toVector(): Vector {
-    return Vector(x.toDouble(), y.toDouble(), z.toDouble())
+    return Vector(x, y, z)
 }

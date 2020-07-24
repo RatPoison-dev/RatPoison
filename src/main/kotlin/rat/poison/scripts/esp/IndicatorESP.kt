@@ -92,7 +92,7 @@ fun indicatorEsp() = App {
 
 fun calcAngle(src: Vector, dest: Vector, vAng: Vector): Vector {
     val delta = Vector(dest.x - src.x, dest.y - src.y, dest.z - src.z)
-    val angs =  Vector(Math.toDegrees(atan2(-delta.z, hypot(delta.x, delta.y))) - vAng.x, Math.toDegrees(atan2(delta.y, delta.x)) - vAng.y, 0.0)
+    val angs =  Vector((Math.toDegrees(atan2(-delta.z, hypot(delta.x, delta.y)).toDouble()) - vAng.x).toFloat(), (Math.toDegrees(atan2(delta.y, delta.x).toDouble()) - vAng.y).toFloat(), 0F)
     angs.normalize()
 
     return angs
@@ -104,13 +104,13 @@ fun angVec(ang: Vector): Vector {
     val sp = sin(ang.x / 180.0 * Math.PI)
     val cp = cos(ang.x / 180.0 * Math.PI)
 
-    return Vector(cp * cy, cp * sy, -sp)
+    return Vector((cp * cy).toFloat(), (cp * sy).toFloat(), (-sp).toFloat())
 }
 
 fun drawIndicator(enemyEnt: Long, drawColor: Color)
 {
-    val dist = curSettings["INDICATOR_DISTANCE"].toDouble() * 10
-    val size = curSettings["INDICATOR_SIZE"].toDouble()
+    val dist = curSettings["INDICATOR_DISTANCE"].toFloat() * 10F
+    val size = curSettings["INDICATOR_SIZE"].toFloat()
 
     val meEyeAngle = me.eyeAngle() //Remove readCached?
 
@@ -120,13 +120,13 @@ fun drawIndicator(enemyEnt: Long, drawColor: Color)
     val meAbs = me.absPosition()
     val entAbs = enemyEnt.absPosition()
 
-    val src = Vector(meAbs.x, meAbs.y, 0.0)
-    val dest = Vector(entAbs.x, entAbs.y, 0.0)
+    val src = Vector(meAbs.x, meAbs.y, 0F)
+    val dest = Vector(entAbs.x, entAbs.y, 0F)
 
-    var tmpAng = calcAngle(src, dest, Vector(0.0, 0.0, 0.0))
-    tmpAng = angVec(Vector(-tmpAng.x , 90.0 - tmpAng.y + meEyeAngle.y, -tmpAng.z))
+    var tmpAng = calcAngle(src, dest, Vector(0F, 0F, 0F))
+    tmpAng = angVec(Vector(-tmpAng.x , 90F - tmpAng.y + meEyeAngle.y, -tmpAng.z))
 
-    val triangPos = Vector((tWidth / 2.0) + (-tmpAng.x * dist), (tHeight / 2.0) + (tmpAng.y * dist), 0.0 + (tmpAng.z * dist))
+    val triangPos = Vector((tWidth / 2F) + (-tmpAng.x * dist), (tHeight / 2F) + (tmpAng.y * dist), 0F + (tmpAng.z * dist))
 
     shapeRenderer.apply {
         begin()

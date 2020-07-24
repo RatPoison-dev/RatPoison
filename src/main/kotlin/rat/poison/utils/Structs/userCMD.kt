@@ -136,13 +136,11 @@ fun cmd_iTickCount(mem: Memory): Int {
 }
 
 fun cmd_vecViewAngles(mem: Memory): Vector {
-    val vec = Vector(mem.getDouble(0x0C), mem.getDouble(0x10), mem.getDouble(0x14))
-    return vec
+    return Vector(mem.getFloat(0x0C), mem.getFloat(0x10), mem.getFloat(0x14))
 }
 
 fun cmd_vecAimDirection(mem: Memory): Vector {
-    val vec = Vector(mem.getDouble(0x18), mem.getDouble(0x1C), mem.getDouble(0x20))
-    return vec
+    return Vector(mem.getFloat(0x18), mem.getFloat(0x1C), mem.getFloat(0x20))
 }
 
 fun cmd_flForwardmove(mem: Memory): Float {

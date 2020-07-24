@@ -277,17 +277,12 @@ fun updateDisableBacktrack() {
         backtrackVisualize.disable(bool)
         backtrackEnableKey.disable(bool)
         backtrackKey.disable(bool, col)
-        backtrackFOV.disable(bool, col)
         backtrackMS.disable(bool, col)
         backtrackSpotted.disable(bool)
         backtrackPreferAccurate.disable(bool)
         categorySelectLabel.color = col
         categorySelectionBox.isDisabled = bool
         backtrackWeaponEnabled.disable(bool)
-        backtrackWeaponNeck.disable(bool)
-        backtrackWeaponChest.disable(bool)
-        backtrackWeaponStomach.disable(bool)
-        backtrackWeaponPelvis.disable(bool)
     }
 }
 
@@ -311,15 +306,10 @@ fun updateBacktrack() {
         backtrackVisualize.update()
         backtrackEnableKey.update()
         backtrackKey.update()
-        backtrackFOV.update()
         backtrackMS.update()
         backtrackPreferAccurate.update()
         backtrackSpotted.update()
         backtrackWeaponEnabled.update()
-        backtrackWeaponNeck.update()
-        backtrackWeaponChest.update()
-        backtrackWeaponStomach.update()
-        backtrackWeaponPelvis.update()
     }
 
     updateDisableBacktrack()
