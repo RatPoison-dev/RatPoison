@@ -126,18 +126,18 @@ private fun constructSteps() = every(10) {
                     }
                 }
             }
+        }
 
-            for (i in footSteps.indices) {
-                footSteps[i].ttl -= 1
-                if (footSteps[i].ttl <= 0) { //Reset
-                    footSteps[i].apply {
-                        x = 0F
-                        y = 0F
-                        z = 0F
-                        ttl = curSettings["FOOTSTEP_TTL"].toInt()
-                        open = true
-                        this.ent = 0L
-                    }
+        for (i in footSteps.indices) {
+            footSteps[i].ttl -= 10
+            if (footSteps[i].ttl <= 0) { //Reset
+                footSteps[i].apply {
+                    x = 0F
+                    y = 0F
+                    z = 0F
+                    ttl = curSettings["FOOTSTEP_TTL"].toInt()
+                    open = true
+                    this.ent = 0L
                 }
             }
         }

@@ -1,5 +1,6 @@
 package rat.poison.scripts
 
+import com.badlogic.gdx.math.MathUtils.clamp
 import com.sun.jna.Memory
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
@@ -10,6 +11,7 @@ import rat.poison.game.CSGO.engineDLL
 import rat.poison.game.entity.*
 import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
+import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.game.netvars.NetVarOffsets.flSimulationTime
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwIndex
@@ -25,6 +27,9 @@ import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.notInGame
 import kotlin.math.abs
+import kotlin.math.atan
+import kotlin.math.floor
+import kotlin.math.tan
 
 var btRecords = Array(64) { Array(13) { BacktrackTable() } }
 data class BacktrackTable(var simtime: Float = 0f, var headPos: Angle = Angle(), var absPos: Angle = Angle(), var alpha: Float = 100f)
@@ -54,7 +59,7 @@ fun attemptBacktrack(): Boolean {
         //Get/set vars
         val meWep = me.weapon()
 
-        if (!meWep.gun) return false
+        if (!meWep.gun || !me.weaponEntity().canFire()) return false
 
         val curSequenceNumber = csgoEXE.int(clientState + dwClientState_LastOutgoingCommand) + 1
         sendPacket(false)
@@ -89,6 +94,7 @@ fun attemptBacktrack(): Boolean {
         userCMDToMem(verifiedUserCMDptr, userCMD)
 
         sendPacket(true)
+        Thread.sleep(10)
         return true
     }
     return false
@@ -151,17 +157,15 @@ fun bestSimTime(): Float {
         return -1f
     }
 
-    var tmp = Double.MAX_VALUE
     var best = -1f
     val targetID = (csgoEXE.uint(bestBacktrackTarget + dwIndex)-1).toInt()
-//    val clientAngle = clientState.angle()
-//    val meTime = csgoEXE.float(me + flSimulationTime)
-//    val maxFov = curSettings["BACKTRACK_FOV"].toFloat()
 
     if (targetID < 0) return -1f
 
     val validRecords = getValidRecords(targetID)
     val minMaxIDX = getRangeRecords(targetID)
+
+    if (minMaxIDX[0] == Int.MAX_VALUE || minMaxIDX[1] == -1) return -1f
 
     val minRecord = btRecords[targetID][minMaxIDX[0]]
     val maxRecord = btRecords[targetID][minMaxIDX[1]]
@@ -185,11 +189,16 @@ fun bestSimTime(): Float {
         val bottomLeft = Vector(minMidX - w * sign, minAbsPos.y, minAbsPos.z)
         val bottomRight = Vector(maxMidX + w * sign, maxAbsPos.y, maxAbsPos.z)
 
-        val centerX = CSGO.gameWidth/2F
-        val centerY = CSGO.gameHeight/2f
+        val punch = me.punch()
+        val curFov = csgoEXE.int(me + NetVarOffsets.m_iDefaultFov)
+        val rccFov1 = atan((CSGO.gameWidth.toFloat()/ CSGO.gameHeight.toFloat()) * 0.75 * tan(Math.toRadians(curFov/2.0)))
+        val rccFov2 = (CSGO.gameWidth /2) / tan(rccFov1).toFloat()
+
+        val centerX = (CSGO.gameWidth / 2) - tan(Math.toRadians(punch.y.toDouble())).toFloat() * rccFov2
+        val centerY = (CSGO.gameHeight / 2) - tan(Math.toRadians(punch.x.toDouble())).toFloat() * rccFov2
 
         //Implement proper convex polygon check
-        if (inRange(centerX, bottomLeft.x, bottomRight.x) && inRange(centerY, topRight.y, bottomRight.y)) {//If middle of screen is inside polygon
+        if (inRange(centerX, bottomLeft.x, bottomRight.x) && inRange(centerY, topRight.y, bottomRight.y)) {//If middle of screen + recoil is inside polygon
             var bestMinX = Float.MAX_VALUE
 
             for (i in validRecords) {
@@ -214,7 +223,7 @@ fun isValidTick(tick: Int): Boolean {
     val gvars = getGlobalVars()
     val delta = gvars.tickCount - tick
     val deltaTime = delta * gvars.intervalPerTick
-    val max = curSettings["BACKTRACK_MS"].toFloat()/1000f
+    val max = clamp(curSettings["BACKTRACK_MS"].toFloat()/1000f, 0F, .19F)
 
     return abs(deltaTime) <= max
 }

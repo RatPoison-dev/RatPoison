@@ -79,7 +79,7 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 		randY = 0
 	}
 
-	target.x = (mousePos.x + dx / divisor).toInt() + randX //You do be testing some licks
+	target.x = (mousePos.x + dx / divisor).toInt() + randX
 	target.y = (mousePos.y + dy / divisor).toInt() + randY
 
 	if (checkOnScreen) {
@@ -90,7 +90,7 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 
 	if (perfect) {
 		writeAim(currentAngle, destinationAngle, 1F)
-		//Thread.sleep(50)
+		Thread.sleep(50)
 	} else HumanMouse.fastSteps(mousePos, target) { steps, _ ->
 		mousePos = mousePos.refresh()
 
