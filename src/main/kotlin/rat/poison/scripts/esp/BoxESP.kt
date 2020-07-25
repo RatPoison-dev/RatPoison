@@ -53,11 +53,13 @@ fun boxEsp() = App {
 	val showTeam = curSettings["BOX_SHOW_TEAM"].strToBool()
 	val showEnemy = curSettings["BOX_SHOW_ENEMIES"].strToBool()
 	val showWeapons = curSettings["BOX_SHOW_WEAPONS"].strToBool()
-	val showDefuseKits = curSettings["BOX_SHOW_DEFUSERS"].strToBool()
+	//val showDefuseKits = curSettings["BOX_SHOW_DEFUSERS"].strToBool()
 
 	forEntities { //Player & Weapon boxes
 		val ent = it.entity
 		val isPlayer = it.type == EntityType.CCSPlayer
+
+		if (ent <= 0) return@forEntities
 
 		if (isPlayer || it.type.weapon) {
 			//Return if not onscreen

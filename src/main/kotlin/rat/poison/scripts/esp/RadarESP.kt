@@ -4,7 +4,6 @@ import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.Entity
 import rat.poison.game.entity.EntityType
-import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.entity.dead
 import rat.poison.game.entity.dormant
 import rat.poison.game.forEntities

@@ -27,7 +27,7 @@ val entities: Object2ObjectMap<EntityType, MutableList<EntityContext>> = EntityL
 fun entityByType(type: EntityType): EntityContext? = entities[type]?.firstOrNull()
 
 internal inline fun forEntities(vararg types: EntityType, crossinline body: (EntityContext) -> Unit) {
-	val forEnts = ArrayList<EntityContext>()
+	val forEnts: ArrayList<EntityContext?> = ArrayList()
 
 	if (types.isEmpty()) {
 		for (entType in EntityType.values()) {
@@ -39,8 +39,7 @@ internal inline fun forEntities(vararg types: EntityType, crossinline body: (Ent
 		}
 	}
 
-	//try catch
 	for (i in forEnts) {
-		i.run(body)
+		i?.run(body)
 	}
 }
