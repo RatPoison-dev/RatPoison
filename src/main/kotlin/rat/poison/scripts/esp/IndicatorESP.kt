@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
-import rat.poison.game.hooks.defuseKitEntities
 import rat.poison.overlay.App
 import rat.poison.overlay.App.shapeRenderer
 import rat.poison.settings.DANGER_ZONE
@@ -19,7 +18,6 @@ import kotlin.math.cos
 import kotlin.math.hypot
 import kotlin.math.sin
 
-//Whole lotta math shit here
 fun indicatorEsp() = App {
     if (!curSettings["ENABLE_ESP"].strToBool() || MENUTOG || !curSettings["INDICATOR_ESP"].strToBool() || notInGame) return@App
 
@@ -83,9 +81,8 @@ fun indicatorEsp() = App {
     }
 
     if (curSettings["INDICATOR_SHOW_DEFUSERS"].strToBool()) {
-        val tmp = defuseKitEntities
-        tmp.forEachIndexed { _, entity ->
-            drawIndicator(entity, curSettings["INDICATOR_DEFUSER_COLOR"].strToColor())
+        forEntities(EntityType.CEconEntity) {
+            drawIndicator(it.entity, curSettings["INDICATOR_DEFUSER_COLOR"].strToColor())
         }
     }
 }
@@ -112,7 +109,7 @@ fun drawIndicator(enemyEnt: Long, drawColor: Color)
     val dist = curSettings["INDICATOR_DISTANCE"].toFloat() * 10F
     val size = curSettings["INDICATOR_SIZE"].toFloat()
 
-    val meEyeAngle = me.eyeAngle() //Remove readCached?
+    val meEyeAngle = me.eyeAngle()
 
     val tWidth = CSGO.gameWidth
     val tHeight = CSGO.gameHeight

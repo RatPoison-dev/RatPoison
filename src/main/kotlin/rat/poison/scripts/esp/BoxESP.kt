@@ -53,15 +53,17 @@ fun boxEsp() = App {
 	val showTeam = curSettings["BOX_SHOW_TEAM"].strToBool()
 	val showEnemy = curSettings["BOX_SHOW_ENEMIES"].strToBool()
 	val showWeapons = curSettings["BOX_SHOW_WEAPONS"].strToBool()
-	//val showDefuseKits = curSettings["BOX_SHOW_DEFUSERS"].strToBool()
+	val showDefuseKits = curSettings["BOX_SHOW_DEFUSERS"].strToBool()
 
 	forEntities { //Player & Weapon boxes
 		val ent = it.entity
 		val isPlayer = it.type == EntityType.CCSPlayer
+		val isWeapon = it.type.weapon
+		val isDefuseKit = it.type == EntityType.CEconEntity
 
 		if (ent <= 0) return@forEntities
 
-		if (isPlayer || it.type.weapon) {
+		if (isPlayer || isWeapon || it.type == EntityType.CEconEntity) {
 			//Return if not onscreen
 			if (!worldToScreen(ent.position(), Vector())) return@forEntities
 
@@ -70,9 +72,10 @@ fun boxEsp() = App {
 			if (isPlayer) { health = ent.health() }
 			val onTeam = ent.team() == me.team()
 			if (isPlayer && !DANGER_ZONE && (ent == me || ent.dormant() || ent.dead() || (!showEnemy && !onTeam) || (!showTeam && onTeam))) return@forEntities
-			if (!isPlayer && !showWeapons) return@forEntities
+			if (isWeapon && !showWeapons) return@forEntities
+			if (isDefuseKit && !showDefuseKits) return@forEntities
 
-			val bbox: BoundingBox = if ((isPlayer && advancedBBox) || (!isPlayer && showWeapons)) {
+			val bbox: BoundingBox = if ((isPlayer && advancedBBox) || (isWeapon && showWeapons) || (isDefuseKit && showDefuseKits)) {
 				setupAccurateBox(ent)
 			} else {
 				setupFakeBox(ent)
@@ -232,7 +235,7 @@ fun boxEsp() = App {
 				topShift += 18
 			}
 
-			if (bEspAmmo && bEspAmmoPos == "TOP") {
+			if (bEspAmmo && bEspAmmoPos == "TOP" && (isPlayer || isWeapon)) {
 				val curAmmo = csgoEXE.int(ent + iClip1)
 				val maxAmmo = csgoEXE.int(ent + iPrimaryReserveAmmoCount)
 
@@ -267,7 +270,7 @@ fun boxEsp() = App {
 				boxDetailsBottomText.append(ent.weapon().name.toLocale())
 			}
 
-			if (bEspAmmo && bEspAmmoPos == "BOTTOM") {
+			if (bEspAmmo && bEspAmmoPos == "BOTTOM" && (isPlayer || isWeapon)) {
 				val curAmmo = csgoEXE.int(ent + iClip1)
 				val maxAmmo = csgoEXE.int(ent + iPrimaryReserveAmmoCount)
 

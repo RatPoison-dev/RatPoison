@@ -603,3 +603,4 @@ _TRIGGER_PER_SHOT_DELAY = Per Shot Delay
 NONE = None
 ADVANCED_BOUNDING_BOX = Full Dynamic Box
 BOX_WEAPON_COLOR = Weapons
+CECONENTITY = Defuse Kit

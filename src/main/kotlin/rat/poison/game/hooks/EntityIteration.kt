@@ -94,7 +94,6 @@ fun updateCursorEnable() { //Call when needed
     cursorEnable = csgoEXE.int(cursorEnableAddress) xor cursorEnablePtr.toInt() != 1
 }
 
-var defuseKitEntities = mutableListOf<Long>()
 var toneMapController = 0L
 
 fun constructEntities() = every(500) {
@@ -113,7 +112,7 @@ fun constructEntities() = every(500) {
 
     if (shouldReset()) reset()
 
-    var tmpEntsToAdd = mutableListOf<Long>()
+    val tmpEntsToAdd = mutableListOf<Long>()
 
     for (glowIndex in 0..glowObjectCount) {
         val glowAddress = glowObject + (glowIndex * GLOW_OBJECT_SIZE)
@@ -131,12 +130,11 @@ fun constructEntities() = every(500) {
                     dzMode = true
                 }
 
-                //Fuck this?
-                if (type.grenadeProjectile) {
+                if (type.grenadeProjectile) { //include in...
                     tmpEntsToAdd.add(entity)
                 }
 
-                val context = contexts[glowIndex].set(entity, glowAddress, glowIndex, type)
+                val context = contexts[glowIndex].set(entity, glowAddress, glowIndex, type) //remove contexts[]
 
                 with(entities[type]!!) {
                     if (!contains(context)) {
@@ -150,7 +148,6 @@ fun constructEntities() = every(500) {
     entsToTrack = tmpEntsToAdd
 
     val maxIndex = clientDLL.int(dwEntityList + 0x24 - 0x10) //Not right?
-    tmpEntsToAdd = mutableListOf()
 
     for (i in 64..maxIndex) {
         val entity = clientDLL.uint(dwEntityList + (i * 0x10) - 0x10)
@@ -158,7 +155,13 @@ fun constructEntities() = every(500) {
             val type = EntityType.byEntityAddress(entity)
 
             if (type == EntityType.CEconEntity) {
-                tmpEntsToAdd.add(entity)
+                val context = EntityContext(entity)
+
+                with(entities[type]!!) {
+                    if (!contains(context)) {
+                        add(context)
+                    }
+                }
             }
 
             if (type == EntityType.CEnvTonemapController) {
@@ -166,7 +169,6 @@ fun constructEntities() = every(500) {
             }
         }
     }
-    defuseKitEntities = tmpEntsToAdd
 
     DANGER_ZONE = dzMode
 }

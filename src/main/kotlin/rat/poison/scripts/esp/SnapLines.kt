@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
-import rat.poison.game.hooks.defuseKitEntities
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
@@ -21,10 +20,8 @@ fun snapLines() = App {
     val bEnt = bomb.carrier()
 
     if (curSettings["SNAPLINES_DEFUSE_KITS"].strToBool()) {
-        val tmp = defuseKitEntities
-
-        tmp.forEachIndexed { _, entity ->
-            val entPos = entity.position()
+        forEntities(EntityType.CEconEntity) {
+            val entPos = it.entity.position()
             val vec = Vector()
 
             if (!(entPos.x == 0F && entPos.y == 0F && entPos.z == 0F)) {
@@ -41,9 +38,9 @@ fun snapLines() = App {
 
                     set(ShapeRenderer.ShapeType.Filled)
                     if (worldToScreen(entPos, vec)) { //Onscreen
-                        rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x.toFloat(), vec.y.toFloat(), curSettings["SNAPLINES_WIDTH"].toFloat())
+                        rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, vec.y, curSettings["SNAPLINES_WIDTH"].toFloat())
                     } else { //Offscreen
-                        rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x.toFloat(), -vec.y.toFloat(), curSettings["SNAPLINES_WIDTH"].toFloat())
+                        rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, -vec.y, curSettings["SNAPLINES_WIDTH"].toFloat())
                     }
                     set(ShapeRenderer.ShapeType.Line)
 
