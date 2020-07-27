@@ -30,13 +30,10 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	var closestDelta = Float.MAX_VALUE
 	var closestPlayer = -1L
 
-	forEntities {
+	forEntities(EntityType.CCSPlayer) {
 		val entity = it.entity
-		if (entity <= 0 || entity == me || !entity.canShoot(visCheck)) {
-			return@forEntities
-		}
 
-		if (it.type != EntityType.CCSPlayer) {
+		if (entity <= 0 || entity == me || !entity.canShoot(visCheck)) {
 			return@forEntities
 		}
 
@@ -44,7 +41,7 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			for (i in 3..8) {
 				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, entity.nearestBone())
 
-				if (arr[0] != -1.0) {
+				if (arr[0] as Float > 0F) {
 					closestFOV = arr[0] as Float
 					closestDelta = arr[1] as Float
 					closestPlayer = arr[2] as Long
@@ -54,7 +51,7 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			for (i in 3..8) {
 				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, i)
 
-				if (arr[0] != -1.0) {
+				if (arr[0] as Float > 0F) {
 					closestFOV = arr[0] as Float
 					closestDelta = arr[1] as Float
 					closestPlayer = arr[2] as Long
@@ -66,7 +63,7 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 				if (nB != -999) {
 					val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, entity.nearestBone())
 
-					if (arr[0] != -1.0) {
+					if (arr[0] as Float > 0F) {
 						closestFOV = arr[0] as Float
 						closestDelta = arr[1] as Float
 						closestPlayer = arr[2] as Long
@@ -75,7 +72,7 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			} else {
 				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, BONE)
 
-				if (arr[0] != -1.0) {
+				if (arr[0] as Float > 0F) {
 					closestFOV = arr[0] as Float
 					closestDelta = arr[1] as Float
 					closestPlayer = arr[2] as Long
@@ -87,7 +84,7 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 
 	if (closestDelta == Float.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return -1
 
-	val randInt = randInt(100+1)
+	val randInt = randInt(1, 100)
 
 	if (curSettings["PERFECT_AIM"].strToBool() && allowPerfect && closestFOV <= curSettings["PERFECT_AIM_FOV"].toInt() && randInt <= curSettings["PERFECT_AIM_CHANCE"].toInt()) {
 		canPerfect = true
@@ -126,12 +123,13 @@ fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Angle, curAngl
 			retList[2] = entity
 		}
 	} else {
+		val camAng = curAngle
 		val calcAng = realCalcAngle(me, ePos)
 
-		val delta = Angle(curAngle.x - calcAng.x, curAngle.y - calcAng.y, 0F)
+		val delta = Angle(camAng.x - calcAng.x, camAng.y - calcAng.y, 0F)
 		delta.normalize()
 
-		val fov = sqrt(delta.x.pow(2) + delta.y.pow(2))
+		val fov = sqrt(delta.x.pow(2F) + delta.y.pow(2F))
 
 		if (fov <= lockFOV && fov <= calcClosestDelta) {
 			retList[0] = fov

@@ -56,8 +56,6 @@ fun bspIsVisible(start: Vector3, end: Vector3): Boolean {
         return false
     }
 
-    //dir /= steps
-
     dir = Vector3(dir.x / steps, dir.y / steps, dir.z / steps)
 
     shapeRenderer.apply {
@@ -79,6 +77,29 @@ fun bspIsVisible(start: Vector3, end: Vector3): Boolean {
             point = Vector3(point.x + dir.x, point.y + dir.y, point.z + dir.z)
             pLeaf = getLeafFromPoint(point)
 
+//            for (i in 0 until pLeaf.numleafface) { //Loop faces
+//                val idx = pLeaf.fstleafface + i
+//
+//                val face = bspData.leafFaces[idx]
+//
+//                face.edg
+//
+//
+//            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             worldToScreen(point.toVector(), w2sOut)
 
             glPointSize(3F)
@@ -86,13 +107,13 @@ fun bspIsVisible(start: Vector3, end: Vector3): Boolean {
             val bW = pLeaf.contents and MASK_SOLID
             if (bW != 0) {
                 if (entOnScreen) {
-                    line(gameWidth/2F, gameHeight/2F, entW2S.x.toFloat(), entW2S.y.toFloat())
+                    line(gameWidth/2F, gameHeight/2F, entW2S.x, entW2S.y)
 
                     sbText.append("false")
                     textRenderer.apply {
                         sb.begin()
 
-                        draw(sb, sbText, entW2S.x.toFloat(), entW2S.y.toFloat())
+                        draw(sb, sbText, entW2S.x, entW2S.y)
 
                         sb.end()
                     }
@@ -104,55 +125,17 @@ fun bspIsVisible(start: Vector3, end: Vector3): Boolean {
                 return false
             }
 
-
-
-//            for (i in 0 until pLeaf.numleafface) {
-//                println("we do be in da leaf faces")
-//                val pLeafFaceIdx = bspData.leafFaces.elementAt(pLeaf.fstleafface + i)
-//                val pLeafFace = bspData.faces.elementAt(pLeafFaceIdx)
-//                //var polygon = bspData.occluderPolyDatas.elementAt(pLeafFaceIdx)
-//
-//                val pPlane = bspData.planes.elementAt(pLeafFace.pnum)
-//
-//                val dot1 = pPlane.normal.dot(Vector3f(start.x, start.y, start.z)) - pPlane.dist
-//                val dot2 = pPlane.normal.dot(Vector3f(end.x, end.y, end.z)) - pPlane.dist
-//
-//                println("dot1: $dot1 dot2: $dot2")
-//
-//                if (dot1 > 0F != dot2 > 0F) {
-//                    println("we in da loop")
-//                    if (dot1 - dot2 < 0.03125F) { //Epsilon
-//                        println("Returned at epsilon")
-//                        return false
-//                    }
-//
-//                    val t = dot1 / (dot1 - dot2)
-//                    if (t <= 0) {
-//                        println("Returned at t <= 0")
-//                        return false
-//                    }
-//
-//
-//
-//                    val intersection = start + (end - start) * t
-//                    if (pPlane.normal.dot(Vector3f(intersection.x, intersection.y, intersection.z))  - pPlane.dist < 0.0F) {
-//                        println("Returned at intersection")
-//                        return false
-//                    }
-//                }
-//            }
-
             steps--
         }
 
         if (entOnScreen) {
-            line(gameWidth/2F, gameHeight/2F, entW2S.x.toFloat(), entW2S.y.toFloat())
+            line(gameWidth/2F, gameHeight/2F, entW2S.x, entW2S.y)
 
             sbText.append("true")
             textRenderer.apply {
                 sb.begin()
 
-                draw(sb, sbText, entW2S.x.toFloat(), entW2S.y.toFloat())
+                draw(sb, sbText, entW2S.x, entW2S.y)
 
                 sb.end()
             }
@@ -183,7 +166,6 @@ fun getLeafFromPoint(point: Vector3): DLeaf {
 
         pPlane = bspData.planes.elementAtOrNull(pNode!!.planenum)!!
 
-        //dist = point.dot(pPlane!!.normal) - pPlane.dist
         dist = (point.x * pPlane.normal.x + point.y * pPlane.normal.y + point.z * pPlane.normal.z) - pPlane.dist
 
         //Loop node tree until we get to a leaf (negative number)
@@ -195,4 +177,34 @@ fun getLeafFromPoint(point: Vector3): DLeaf {
     }
 
     return bspData.leaves[-nodeNum - 1]
+}
+
+fun getNodeFromPoint(point: Vector): DNode {
+    var nodeNum = 0
+    var pNode: DNode? = DNode()
+    var pPlane: DPlane? = DPlane()
+
+    var dist: Float
+
+    while (nodeNum >= 0) {
+        if (pNode == null || pPlane == null) { //Shouldnt be null
+            println("shnull we continuing")
+            continue
+        }
+
+        pNode = bspData.nodes.elementAtOrNull(nodeNum)
+
+        pPlane = bspData.planes.elementAtOrNull(pNode!!.planenum)!!
+
+        dist = (point.x * pPlane.normal.x + point.y * pPlane.normal.y + point.z * pPlane.normal.z) - pPlane.dist
+
+        //Loop node tree until we get to a leaf (negative number)
+        nodeNum = if (dist > 0.0F) {
+            pNode.children[0]
+        } else {
+            pNode.children[1]
+        }
+    }
+
+    return pNode!!
 }

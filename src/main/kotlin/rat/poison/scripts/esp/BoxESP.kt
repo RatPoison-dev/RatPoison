@@ -63,7 +63,7 @@ fun boxEsp() = App {
 
 		if (ent <= 0) return@forEntities
 
-		if (isPlayer || isWeapon || it.type == EntityType.CEconEntity) {
+		if (isPlayer || isWeapon || isDefuseKit) {
 			//Return if not onscreen
 			if (!worldToScreen(ent.position(), Vector())) return@forEntities
 
@@ -336,11 +336,11 @@ fun setupFakeBox(ent: Entity): BoundingBox {
 		}
 
 		if (vBottom.x > vTop.x) {
-			bbox.left = (vBottom.x + sW).toFloat()//(vBottom.x - (sW * sign(vBottom.x))).toFloat()
-			bbox.right = (vTop.x - sW).toFloat()//(vTop.x + (sW * sign(vTop.x))).toFloat()
+			bbox.left = (vBottom.x + sW).toFloat()
+			bbox.right = (vTop.x - sW).toFloat()
 		} else {
-			bbox.left = (vTop.x + sW).toFloat()//(vTop.x - (sW * sign(vTop.x))).toFloat()
-			bbox.right = (vBottom.x - sW).toFloat()//(vBottom.x + (sW * sign(vBottom.x))).toFloat()
+			bbox.left = (vTop.x + sW).toFloat()
+			bbox.right = (vBottom.x - sW).toFloat()
 		}
 
 		bbox.top = (vMiddle.y - boxH / 2.0 + sH).toFloat()
@@ -367,7 +367,7 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 	}
 
 	val collisionMem: Memory by lazy {
-		Memory(56)
+		Memory(56) //Incorrect
 	}
 	csgoEXE.read(ent + m_Collision, collisionMem)
 

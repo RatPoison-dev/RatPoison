@@ -16,6 +16,7 @@ import rat.poison.scripts.aim.flatAim
 import rat.poison.scripts.aim.handleFireKey
 import rat.poison.scripts.aim.pathAim
 import rat.poison.scripts.aim.setAim
+import rat.poison.scripts.bspHandling.drawMapWireframe
 import rat.poison.scripts.bspHandling.rayTraceTest
 import rat.poison.scripts.esp.adrenaline
 import rat.poison.scripts.esp.esp
@@ -120,7 +121,8 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Handle Fire Key") }; handleFireKey()
 
     if (EXPERIMENTAL) {
-        rayTraceTest()
+        //rayTraceTest()
+        drawMapWireframe()
     }
 
     //Overlay check, not updated?
@@ -166,7 +168,7 @@ fun main() {
         }
     }
     else {
-        scanner() //Scanner is currently outdated
+        scanner()
     }
 }
 

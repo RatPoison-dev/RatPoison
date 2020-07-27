@@ -198,7 +198,7 @@ fun scanner() {
                     }
                     println()
                 } catch (e: Exception) {
-                    println("Exception in scanner.")
+                    println("Error...")
                 }
             }
         }
