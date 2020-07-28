@@ -9,11 +9,9 @@ import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.engineDLL
 import rat.poison.game.entity.*
-import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.game.netvars.NetVarOffsets.flSimulationTime
-import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.game.offsets.ClientOffsets.dwInput
 import rat.poison.game.offsets.EngineOffsets.dwClientState_LastOutgoingCommand
@@ -28,7 +26,6 @@ import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.notInGame
 import kotlin.math.abs
 import kotlin.math.atan
-import kotlin.math.floor
 import kotlin.math.tan
 
 var btRecords = Array(64) { Array(13) { BacktrackTable() } }
@@ -38,13 +35,13 @@ var bestBacktrackTarget = -1L
 
 fun sendPacket(bool: Boolean) { //move outta here
     val byte = if (bool) 1.toByte() else 0.toByte()
-    engineDLL[0xD415A] = byte //Bitch ass lil coder signature wont work
+    engineDLL[0xD41BA] = byte //Bitch ass lil coder signature wont work
 }
 
 fun setupBacktrack() = every(4) {
     if (notInGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0) {
         btRecords = Array(64) { Array(13) { BacktrackTable() } }
-        if (engineDLL.byte(0xD415A) == 0.toByte()) {
+        if (engineDLL.byte(0xD41BA) == 0.toByte()) {
             sendPacket(true)
         }
         return@every
