@@ -2,6 +2,7 @@ package rat.poison.game
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap
+import rat.poison.dbg
 import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.Player
 import rat.poison.settings.MAX_ENTITIES
@@ -39,7 +40,14 @@ internal inline fun forEntities(vararg types: EntityType, crossinline body: (Ent
 		}
 	}
 
-	for (i in forEnts) {
-		i?.run(body)
+	//iterator later
+	try {
+		for (i in forEnts) {
+			i?.run(body)
+		}
+	} catch (e: Exception) {
+		if (dbg) {
+			println("Error: ForEntities sucks")
+		}
 	}
 }
