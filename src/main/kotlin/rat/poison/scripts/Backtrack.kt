@@ -39,13 +39,13 @@ var bestBacktrackTarget = -1L
 
 fun sendPacket(bool: Boolean) { //move outta here
     val byte = if (bool) 1.toByte() else 0.toByte()
-    engineDLL[0xD415A] = byte //Bitch ass lil coder signature wont work
+    engineDLL[0xD41BA] = byte //Bitch ass lil coder signature wont work
 }
 
 fun setupBacktrack() = every(4) {
     if (notInGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0) {
         btRecords = Array(64) { Array(13) { BacktrackTable() } }
-        if (engineDLL.byte(0xD415A) == 0.toByte()) {
+        if (engineDLL.byte(0xD41BA) == 0.toByte()) {
             sendPacket(true)
         }
         return@every
