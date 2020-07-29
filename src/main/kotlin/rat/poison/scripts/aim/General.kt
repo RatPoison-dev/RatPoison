@@ -22,6 +22,7 @@ fun reset() {
 	destBone = -5
 	target = -1L
 	canPerfect = false
+	boneTrig = false //Should this be here?
 }
 
 fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
@@ -123,10 +124,9 @@ fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Angle, curAngl
 			retList[2] = entity
 		}
 	} else {
-		val camAng = curAngle
 		val calcAng = realCalcAngle(me, ePos)
 
-		val delta = Angle(camAng.x - calcAng.x, camAng.y - calcAng.y, 0F)
+		val delta = Angle(curAngle.x - calcAng.x, curAngle.y - calcAng.y, 0F)
 		delta.normalize()
 
 		val fov = sqrt(delta.x.pow(2F) + delta.y.pow(2F))
@@ -164,18 +164,12 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		val meWepEnt = me.weaponEntity()
 		val canFire = meWepEnt.canFire()
 
-		if (meWep.grenade || meWep.knife || meWep.miscEnt || meWep == Weapons.ZEUS_X27 || meWep.bomb) {
+		if (meWep.grenade || meWep.knife || meWep.miscEnt || meWep == Weapons.ZEUS_X27 || meWep.bomb) { //Invalid for aimbot
 			reset()
 			return@every
 		}
 
-		//if (!canFire && !meWep.automatic && !meWep.pistol && !meWep.shotgun && !meWep.sniper && !meWep.smg) { //Aim after shot
-		//	reset()
-		//	return@every
-		//}
-
-		//&& !curSettings["AUTOMATIC_WEAPONS"].strToBool() && !meWep.automatic
-		if ((curSettings["AIM_ONLY_ON_SHOT"].strToBool() && !canFire)) {
+		if (curSettings["AIM_ONLY_ON_SHOT"].strToBool() && (!canFire || didShoot)) { //Onshot
 			reset()
 			return@every
 		}

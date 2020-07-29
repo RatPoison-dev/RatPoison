@@ -21,6 +21,7 @@ import rat.poison.utils.inBackground
 import rat.poison.utils.notInGame
 
 private var shouldShoot = false
+var didShoot = false
 
 fun handleFireKey() = every(1) {
     if (MENUTOG || (me <= 0L && !notInGame) || (me > 0L && me.dead())) return@every //Brain blast to the past
@@ -35,6 +36,7 @@ fun handleFireKey() = every(1) {
 
     if (keyPressed(1)) {
         shouldShoot = true
+        Thread.sleep(10)
         fireWeapon()
     } else if (triggerInShot || callingInShot) {
         if (shouldShoot) { //Finish shooting...
@@ -42,13 +44,15 @@ fun handleFireKey() = every(1) {
                 clientDLL[dwForceAttack] = 4
             }
             shouldShoot = false
+            didShoot = false
         }
         //Let trigger handle that bih
     } else {
         if (clientDLL.int(dwForceAttack) == 5) {
-            shouldShoot = false
             clientDLL[dwForceAttack] = 4
         }
+        shouldShoot = false
+        didShoot = false
     }
 }
 
@@ -75,14 +79,18 @@ fun fireWeapon() {
     val backtrackKeyPressed = keyPressed(curSettings["BACKTRACK_KEY"].toInt())
 
     if (curSettings["ENABLE_BACKTRACK"].strToBool() && (!backtrackOnKey || (backtrackOnKey && backtrackKeyPressed))) {
-        if (attemptBacktrack()) {
-            return
+        if (shouldAuto || (!shouldAuto && !didShoot)) {
+            if (attemptBacktrack()) {
+                didShoot = true
+                return
+            }
         }
     }
 
     if (shouldAuto) {
         clientDLL[dwForceAttack] = 6
-    } else {
+    } else if (!didShoot) {
+        didShoot = true
         clientDLL[dwForceAttack] = 5
     }
 }
