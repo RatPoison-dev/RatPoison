@@ -17,11 +17,9 @@ import rat.poison.scripts.aim.handleFireKey
 import rat.poison.scripts.aim.pathAim
 import rat.poison.scripts.aim.setAim
 import rat.poison.scripts.bspHandling.drawMapWireframe
-import rat.poison.scripts.bspHandling.rayTraceTest
 import rat.poison.scripts.esp.*
 import rat.poison.utils.Settings
 import rat.poison.utils.detectLocale
-import rat.poison.utils.generalUtil.loadLocale
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.strToBool
 import java.awt.Robot
@@ -97,6 +95,7 @@ fun main() {
 
     if (dbg) { println("[DEBUG] Initializing Bunny Hop") }; bunnyHop()
     if (dbg) { println("[DEBUG] Initializing Auto Strafe") }; strafeHelper()
+    if (dbg) { println("[DEBUG] Initializing Kill Bind") }; killBind()
     if (dbg) { println("[DEBUG] Initializing RCS") }; rcs()
     if (dbg) { println("[DEBUG] Initializing Flat Aim") }; flatAim()
     if (dbg) { println("[DEBUG] Initializing Path Aim") }; pathAim()
