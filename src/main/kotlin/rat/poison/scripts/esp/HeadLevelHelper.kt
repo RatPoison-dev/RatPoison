@@ -31,6 +31,10 @@ fun headLevelHelper() = App {
             gameMatrix.translate(0f, 0f, mePos.z)
             projectionMatrix = gameMatrix
 
+            if (shapeRenderer.isDrawing) {
+                end()
+            }
+
             begin()
 
             glEnable(GL20.GL_BLEND) //sb end resets...

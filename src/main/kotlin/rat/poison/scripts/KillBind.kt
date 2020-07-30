@@ -22,11 +22,15 @@ fun killBind() = every(600) {
     if (!curSettings["KILL_BIND"].strToBool() || me.dead() || me <= 0 || notInGame) return@every
 
     forEntities(EntityType.CCSPlayer) {
-        val idx = emptySlot(it.entity)
-        if (it.entity != me) {
-            killBinds[idx].apply {
-                ent = it.entity
-                open = false
+        val ent = it.entity
+
+        if (it.entity != me && ent > 0) {
+            val idx = emptySlot(it.entity)
+            if (idx != -1) {
+                killBinds[idx].apply {
+                    this.ent = ent
+                    open = false
+                }
             }
         }
     }
