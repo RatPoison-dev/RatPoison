@@ -59,8 +59,6 @@ fun refreshMenu() {
     mainTabbedPane.add(skinChangerTab)
     mainTabbedPane.add(optionsTab)
 
-
-
     espTabbedPane.removeAll()
 
     glowEspTab = GlowEspTab()
@@ -71,6 +69,7 @@ fun refreshMenu() {
     footStepsEspTab = FootstepsEspTab()
     hitMarkerTab = HitMarkerTab()
     nadesTab = NadesVT()
+    headLevelTab = HeadLevelTab()
 
     espTabbedPane.add(glowEspTab)
     espTabbedPane.add(chamsEspTab)
@@ -80,6 +79,7 @@ fun refreshMenu() {
     espTabbedPane.add(footStepsEspTab)
     espTabbedPane.add(hitMarkerTab)
     espTabbedPane.add(nadesTab)
+    espTabbedPane.add(headLevelTab)
 
     uiAimOverridenWeapons.removeActor(overridenWeapons)
     uiAimOverridenWeapons.remove()
