@@ -82,7 +82,7 @@ fun skinChanger() = every(1, continuous = true) {
             forcedUpdate()
         }
     } catch (e: Exception) {
-        println(e)
+        //nah
     }
 }
 
