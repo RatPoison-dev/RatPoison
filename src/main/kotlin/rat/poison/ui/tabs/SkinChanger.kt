@@ -125,6 +125,7 @@ class SkinChangerTab : Tab(false, false) {
                 }
 
                 curSettings["SKIN_$weaponSelected"] = skinWep.toString()
+                forcedUpdate()
             }
         }
 
@@ -351,6 +352,5 @@ fun skinChangerTabUpdate() {
     skinChangerTab.apply {
         enableSkinChanger.update()
         autoForceUpdate.update()
-        //enableKnifeChanger.update()
     }
 }

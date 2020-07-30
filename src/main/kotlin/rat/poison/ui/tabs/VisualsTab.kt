@@ -28,6 +28,7 @@ var snaplinesEspTab = SnaplinesEspTab()
 var footStepsEspTab = FootstepsEspTab()
 var hitMarkerTab = HitMarkerTab()
 var nadesTab = NadesVT()
+var headLevelTab = HeadLevelTab()
 
 class VisualsTab : Tab(false, false) {
     private val table = VisTable()
@@ -63,6 +64,7 @@ class VisualsTab : Tab(false, false) {
         espTabbedPane.add(footStepsEspTab)
         espTabbedPane.add(hitMarkerTab)
         espTabbedPane.add(nadesTab)
+        espTabbedPane.add(headLevelTab)
 
         espTabbedPane.switchTab(glowEspTab)
 
@@ -110,6 +112,9 @@ class VisualsTab : Tab(false, false) {
                     }
                     nadesTab -> {
                         espTabbedPaneContent.add(nadesTab.contentTable).left().colspan(2).row()
+                    }
+                    headLevelTab -> {
+                        espTabbedPaneContent.add(headLevelTab.contentTable).left().colspan(2).row()
                     }
                 }
 
@@ -189,6 +194,7 @@ fun updateDisableEsp() {
         espTabbedPane.disableTab(footStepsEspTab, bool)
         espTabbedPane.disableTab(hitMarkerTab, bool)
         espTabbedPane.disableTab(nadesTab, bool)
+        espTabbedPane.disableTab(headLevelTab, bool)
 
         espTabbedPane.switchTab(recTab)
 
@@ -299,6 +305,12 @@ fun updateDisableEsp() {
         hitMarkerTab.hitMarkerColor.disable(bool)
         hitMarkerTab.hitMarkerOutlineColor.disable(bool)
         hitMarkerTab.hitMarkerComboColor.disable(bool)
+
+        headLevelTab.apply {
+            enableHeadLevel.disable(bool)
+            headLevelColor.disable(bool)
+            headLevelDeadzone.disable(bool, col)
+        }
         //Add disable nades tab
 
         if (!curSettings["ENABLE_ESP"].strToBool()) {

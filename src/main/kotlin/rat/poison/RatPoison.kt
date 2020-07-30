@@ -18,9 +18,7 @@ import rat.poison.scripts.aim.pathAim
 import rat.poison.scripts.aim.setAim
 import rat.poison.scripts.bspHandling.drawMapWireframe
 import rat.poison.scripts.bspHandling.rayTraceTest
-import rat.poison.scripts.esp.adrenaline
-import rat.poison.scripts.esp.esp
-import rat.poison.scripts.esp.espToggle
+import rat.poison.scripts.esp.*
 import rat.poison.utils.Settings
 import rat.poison.utils.generalUtil.loadLocale
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
@@ -119,6 +117,8 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Backtrack") }; setupBacktrack()
     if (dbg) { println("[DEBUG] Initializing Draw Backtrack") }; drawBacktrack()
     if (dbg) { println("[DEBUG] Initializing Handle Fire Key") }; handleFireKey()
+
+    headLevelHelper()
 
     if (EXPERIMENTAL) {
         //rayTraceTest()

@@ -1,9 +1,6 @@
 SKINCHANGER = false
-KNIFECHANGER = false
 
 FORCE_UPDATE_AUTO = true
-
-KNIFE_IDX = 17
 
 //Knife
 SKIN_KNIFE = sWeapon(tSkinID = 560, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)

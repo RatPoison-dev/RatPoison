@@ -25,6 +25,7 @@ fun uiUpdate() {
     nadesVTUpdate()
     snaplinesEspTabUpdate()
     footStepsEspTabUpdate()
+    headLevelTabUpdate()
     miscTabUpdate()
     rcsTabUpdate()
     nadeHelperTabUpdate()

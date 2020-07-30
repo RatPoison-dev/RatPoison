@@ -604,3 +604,7 @@ NONE = None
 ADVANCED_BOUNDING_BOX = Full Dynamic Box
 BOX_WEAPON_COLOR = Weapons
 CECONENTITY = Defuse Kit
+HEAD_LVL_COLOR = Line Color
+HEAD_LVL_DEADZONE = Deadzone
+HEAD_LVL_LINE_WIDTH = Line Width
+HeadLvl = HeadLvl
