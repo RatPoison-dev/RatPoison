@@ -118,7 +118,8 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Draw Backtrack") }; drawBacktrack()
     if (dbg) { println("[DEBUG] Initializing Handle Fire Key") }; handleFireKey()
 
-    headLevelHelper()
+    if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
+    if (dbg) { println("[DEBUG] Disabling Post Processing") }; disablePostProcessing()
 
     if (EXPERIMENTAL) {
         //rayTraceTest()
