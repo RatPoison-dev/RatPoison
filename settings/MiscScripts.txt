@@ -4,3 +4,6 @@ AUTOMATIC_WEAPONS = false
 
 //The MS delay between shooting
 AUTO_WEP_DELAY = 10
+
+KILL_BIND = false
+KILL_BIND_KEY = 222

@@ -63,6 +63,8 @@ class MiscTab : Tab(false, false) {
     val hitSoundBox = VisSelectBox<String>()
     val hitSoundVolume = VisSliderCustom("Volume", "HITSOUND_VOLUME", .1F, 1F, .1F, false, width1 = 150F, width2 = 90F)
     val selfNade = VisTextButton("Self-Nade".toLocale())
+    val enableKillBind = VisCheckBoxCustom("Kill Bind", "KILL_BIND")
+    val killBindKey = VisInputFieldCustom("Key", "KILL_BIND_KEY")
     private val nameChangeInput = VisValidatableTextField()
     private val nameChange = VisTextButton("Name Change")
 
@@ -190,6 +192,9 @@ class MiscTab : Tab(false, false) {
         superPaneTable1.addSeparator().width(250F).left()
         superPaneTable1.add(selfNade).pad(5F).top().left().width(240F).row()
         superPaneTable1.addSeparator().width(250F).left()
+        superPaneTable1.add(enableKillBind).left().padLeft(5F).row()
+        superPaneTable1.add(killBindKey).left().padLeft(5F).row()
+        superPaneTable1.addSeparator().width(250F).left()
         //superPaneTable1.add(nameChangeInput).pad(5F).top().left().width(240F).row()
         //superPaneTable1.add(nameChange).pad(5F).top().left().width(240F)
 
@@ -241,5 +246,7 @@ fun miscTabUpdate() {
         hitSoundVolume.update()
         lsBomb.update()
         selfNade.setText("Self-Nade".toLocale())
+        killBindKey.update()
+        enableKillBind.update()
     }
 }
