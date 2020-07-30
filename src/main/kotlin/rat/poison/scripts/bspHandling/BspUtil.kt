@@ -28,13 +28,17 @@ import kotlin.math.sqrt
 var bspData: BspData = BspData()
 
 fun loadBsp(fileDir: String) {
-    val bsp = BspFile(File(fileDir).toPath())
+    try {
+        val bsp = BspFile(File(fileDir).toPath())
 
-    bsp.sourceApp = SourceAppDB.getInstance().fromID(SourceAppID.COUNTER_STRIKE_GO)
-    bsp.loadLumpFiles()
-    val reader = bsp.reader
-    reader.loadAll()
-    bspData = reader.data
+        bsp.sourceApp = SourceAppDB.getInstance().fromID(SourceAppID.COUNTER_STRIKE_GO)
+        bsp.loadLumpFiles()
+        val reader = bsp.reader
+        reader.loadAll()
+        bspData = reader.data
+    } catch (e: Exception) {
+        println("Failed to load map $fileDir")
+    }
 }
 
 //Read brushes/faces/surfaces? from leaf to determine more accurately, i do be dummy brained

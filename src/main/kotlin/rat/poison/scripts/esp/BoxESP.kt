@@ -120,7 +120,7 @@ fun boxEsp() = App {
 			if (!drawBoxDetails) return@forEntities
 
 			//Setup entity values
-			val entityMemory = csgoEXE.read(ent, 45948)!!
+			val entityMemory = csgoEXE.read(ent, 45948) ?: return@forEntities
 
 			//Set filled for bars
 			shapeRenderer.set(ShapeRenderer.ShapeType.Filled)

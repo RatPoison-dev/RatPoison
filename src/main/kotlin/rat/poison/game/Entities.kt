@@ -42,12 +42,21 @@ internal inline fun forEntities(vararg types: EntityType, crossinline body: (Ent
 
 	//iterator later
 	try {
-		for (i in forEnts) {
-			i?.run(body)
+		val iterator = forEnts.listIterator()
+		while (iterator.hasNext()) {
+			iterator.next()?.run(body)
 		}
-	} catch (e: Exception) {
-		if (dbg) {
-			println("Error: ForEntities sucks")
-		}
+	} catch(e: Exception) {
+		println("forEntities error, report in discord")
 	}
+
+//	try {
+//		for (i in forEnts) {
+//			i?.run(body)
+//		}
+//	} catch (e: Exception) {
+//		if (dbg) {
+//			println("Error: ForEntities sucks")
+//		}
+//	}
 }
