@@ -611,3 +611,5 @@ HEAD_LVL_COLOR = Line Color
 HEAD_LVL_DEADZONE = Deadzone
 HEAD_LVL_LINE_WIDTH = Line Width
 HeadLvl = HeadLvl
+Disable-Post-Processing = Disable Post Processing
+DISABLE_POST_PROCESSING = Disable Post Processing

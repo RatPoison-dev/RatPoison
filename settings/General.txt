@@ -28,6 +28,9 @@ MENU_APP = "Counter-Strike: Global Offensive"
 //Menu stays focused even when csgo isn't
 MENU_STAY_FOCUSED = true
 
+//Whether post processing is disabled or not
+DISABLE_POST_PROCESSING = false
+
 //The default overlay width and height, backup if width and height cannot be grabbed from MENU_APP
 OVERLAY_WIDTH = 1920
 OVERLAY_HEIGHT = 1080
