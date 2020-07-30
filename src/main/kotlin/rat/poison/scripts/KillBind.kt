@@ -23,9 +23,11 @@ fun killBind() = every(600) {
 
     forEntities(EntityType.CCSPlayer) {
         val idx = emptySlot(it.entity)
-        killBinds[idx].apply {
-            ent = it.entity
-            open = false
+        if (it.entity != me) {
+            killBinds[idx].apply {
+                ent = it.entity
+                open = false
+            }
         }
     }
 
