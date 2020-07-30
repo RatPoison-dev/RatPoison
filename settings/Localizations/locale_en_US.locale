@@ -591,6 +591,7 @@ Enter-config-name = Enter config name
 
 //new shit
 LEGIT_RADAR = Legit Radar
+LEGIT_RADAR_FOOTSTEPS_DISTANCE = Distance
 ADRENALINE_STRENGTH = Adrenaline Strength
 SNAPLINES_DEFUSE_KIT_COLOR = Defuse Kits
 _TRIGGER = Enable

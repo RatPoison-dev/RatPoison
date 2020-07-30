@@ -20,6 +20,7 @@ import rat.poison.scripts.bspHandling.drawMapWireframe
 import rat.poison.scripts.bspHandling.rayTraceTest
 import rat.poison.scripts.esp.*
 import rat.poison.utils.Settings
+import rat.poison.utils.detectLocale
 import rat.poison.utils.generalUtil.loadLocale
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.strToBool
@@ -53,8 +54,8 @@ fun main() {
     System.setProperty("jna.nosys", "true")
 
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
-    //Set CURRENT_LOCALE here later
-    loadLocale("$SETTINGS_DIRECTORY\\Localizations\\${curSettings["CURRENT_LOCALE"]}.locale")
+
+    detectLocale()
 
     dbg = curSettings["DEBUG"].strToBool()
     if (dbg) println("DEBUG enabled")
