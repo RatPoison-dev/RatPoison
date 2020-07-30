@@ -13,6 +13,10 @@ import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 
+//!!
+//TODO Fix crashing cheat when loading a locale
+//!!
+
 class HeadLevelTab : Tab(false, false) {
     private val table = VisTable()
 
