@@ -612,3 +612,4 @@ HEAD_LVL_COLOR = Цвет линии
 HEAD_LVL_DEADZONE = Мертвая зона
 HEAD_LVL_LINE_WIDTH = Ширина линии
 HeadLvl = Уровень голов
+DISABLE_POST_PROCESSING = Отключить постообработку

@@ -226,6 +226,7 @@ fun miscTabUpdate() {
         bunnyHop.update()
         bunnyHopHitChance.update()
         autoStrafe.update()
+        postProcessingDisable.update()
         autoStrafeBHopOnly.update()
         fastStop.update()
         knifeBot.update()
