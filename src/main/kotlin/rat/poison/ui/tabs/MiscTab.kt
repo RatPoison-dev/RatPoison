@@ -32,6 +32,7 @@ class MiscTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     //Movement
     val bunnyHop = VisCheckBoxCustom("Bunny Hop", "ENABLE_BUNNY_HOP")
+    val bunnyHopHitChance = VisSliderCustom("HitChance", "BHOP_HITCHANCE", 0F, 100F,  1F, true, width1 = 150F, width2 = 73F)
     val autoStrafe = VisCheckBoxCustom("Auto Strafe", "AUTO_STRAFE")
     val autoStrafeBHopOnly = VisCheckBoxCustom("BHop Only", "STRAFE_BHOP_ONLY")
     val fastStop = VisCheckBoxCustom("Fast Stop", "FAST_STOP")
@@ -153,6 +154,7 @@ class MiscTab : Tab(false, false) {
 
         //Top left pane (movement)
         subPaneTable1.add(bunnyHop).left().padLeft(14F).row()
+        subPaneTable1.add(bunnyHopHitChance).left().padLeft(24F).row()
         subPaneTable1.add(autoStrafe).left().padLeft(24F).row()
         subPaneTable1.add(autoStrafeBHopOnly).left().padLeft(24F).row()
         subPaneTable1.addSeparator().width(250F).left()
@@ -215,6 +217,7 @@ class MiscTab : Tab(false, false) {
 fun miscTabUpdate() {
     miscTab.apply {
         bunnyHop.update()
+        bunnyHopHitChance.update()
         autoStrafe.update()
         autoStrafeBHopOnly.update()
         fastStop.update()

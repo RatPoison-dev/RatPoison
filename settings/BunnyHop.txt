@@ -1,5 +1,6 @@
 //Enable bunny hop
 ENABLE_BUNNY_HOP = true
+BHOP_HITCHANCE = 100
 
 //Enable auto strafe when bunny hopping
 //This will auto press left/right synchronizing with your mouse movement
