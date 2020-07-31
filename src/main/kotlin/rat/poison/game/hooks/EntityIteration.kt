@@ -147,10 +147,11 @@ fun constructEntities() = every(500) {
 
     entsToTrack = tmpEntsToAdd
 
-    val maxIndex = clientDLL.int(dwEntityList + 0x24 - 0x10) //Not right?
+    val maxIndex = clientDLL.int(dwEntityList + 0x24) //Not right?
 
     for (i in 64..maxIndex) {
         val entity = clientDLL.uint(dwEntityList + (i * 0x10) - 0x10)
+
         if (entity != 0L) {
             val type = EntityType.byEntityAddress(entity)
 

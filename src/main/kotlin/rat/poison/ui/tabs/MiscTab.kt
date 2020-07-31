@@ -10,6 +10,7 @@ import org.jire.arrowhead.keyPressed
 import rat.poison.*
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
+import rat.poison.scripts.esp.disablePostProcessing
 import rat.poison.scripts.esp.updateHitsound
 import rat.poison.scripts.nameChanger
 import rat.poison.scripts.selfNade
@@ -70,6 +71,7 @@ class MiscTab : Tab(false, false) {
     val killBindKey = VisInputFieldCustom("Key", "KILL_BIND_KEY")
     private val nameChangeInput = VisValidatableTextField()
     private val nameChange = VisTextButton("Name Change")
+    val postProcessingDisable = VisCheckBoxCustom("Disable-Post-Processing".toLocale(), "DISABLE_POST_PROCESSING")
 
     init {
         selfNade.changed { _, _ ->
@@ -78,6 +80,10 @@ class MiscTab : Tab(false, false) {
 
         nameChange.changed { _, _ ->
             nameChanger(nameChangeInput.text)
+        }
+
+        postProcessingDisable.changed { _, _ ->
+            disablePostProcessing()
         }
 
         weaponSpamKey.changed { _, _ ->
@@ -198,6 +204,7 @@ class MiscTab : Tab(false, false) {
         superPaneTable1.addSeparator().width(250F).left()
         superPaneTable1.add(enableKillBind).left().padLeft(5F).row()
         superPaneTable1.add(killBindKey).left().padLeft(5F).row()
+        superPaneTable1.add(postProcessingDisable).left().padLeft(5F).row()
         superPaneTable1.addSeparator().width(250F).left()
         //superPaneTable1.add(nameChangeInput).pad(5F).top().left().width(240F).row()
         //superPaneTable1.add(nameChange).pad(5F).top().left().width(240F)
