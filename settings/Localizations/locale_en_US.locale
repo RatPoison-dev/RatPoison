@@ -614,3 +614,4 @@ HEAD_LVL_LINE_WIDTH = Line Width
 HeadLvl = HeadLvl
 Disable-Post-Processing = Disable Post Processing
 DISABLE_POST_PROCESSING = Disable Post Processing
+BOX_ESP_MONEY = Money

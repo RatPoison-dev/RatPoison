@@ -27,6 +27,7 @@ import rat.poison.game.netvars.NetVarOffsets.iDeaths
 import rat.poison.game.netvars.NetVarOffsets.iHealth
 import rat.poison.game.netvars.NetVarOffsets.iKills
 import rat.poison.game.netvars.NetVarOffsets.lifeState
+import rat.poison.game.netvars.NetVarOffsets.m_iAccount
 import rat.poison.game.netvars.NetVarOffsets.nTickBase
 import rat.poison.game.netvars.NetVarOffsets.vecVelocity
 import rat.poison.game.netvars.NetVarOffsets.vecViewOffset
@@ -62,6 +63,9 @@ internal fun Player.onGround() = flags() and 1 == 1
 
 internal fun Player.health(): Int = csgoEXE.int(this + iHealth)
 internal fun Memory.health(): Int = this.getInt(iHealth)
+
+internal fun Player.money(): Int = csgoEXE.int(this + m_iAccount)
+internal fun Memory.money(): Int = this.getInt(m_iAccount)
 
 internal fun Player.armor(): Int = csgoEXE.int(this + ArmorValue)
 internal fun Memory.armor(): Int = this.getInt(ArmorValue)

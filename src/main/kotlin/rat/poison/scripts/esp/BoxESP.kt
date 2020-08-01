@@ -49,6 +49,7 @@ fun boxEsp() = App {
 	val bEspKevlar = curSettings["BOX_ESP_KEVLAR"].strToBool(); 	val bEspKevlarPos = curSettings["BOX_ESP_KEVLAR_POS"].replace("\"", "")
 	val bEspScoped = curSettings["BOX_ESP_SCOPED"].strToBool(); 	val bEspScopedPos = curSettings["BOX_ESP_SCOPED_POS"].replace("\"", "")
 	val bEspFlashed = curSettings["BOX_ESP_FLASHED"].strToBool();	val bEspFlashedPos = curSettings["BOX_ESP_FLASHED_POS"].replace("\"", "")
+	val bEspMoney = curSettings["BOX_ESP_MONEY"].strToBool();	    val bEspMoneyPos = curSettings["BOX_ESP_MONEY_POS"].replace("\"", "")
 
 	val showTeam = curSettings["BOX_SHOW_TEAM"].strToBool()
 	val showEnemy = curSettings["BOX_SHOW_ENEMIES"].strToBool()
@@ -230,6 +231,11 @@ fun boxEsp() = App {
 				topShift += 18
 			}
 
+			if (bEspMoney && bEspMoneyPos == "TOP" && isPlayer) {
+				boxDetailsTopText.append("${entityMemory.money()} $\n")
+				topShift += 18
+			}
+
 			if (bEspWeapon && bEspWeaponPos == "TOP" && isPlayer) {
 				boxDetailsTopText.append(ent.weapon().name.toLocale())
 				topShift += 18
@@ -264,6 +270,10 @@ fun boxEsp() = App {
 				} else {
 					boxDetailsBottomText.append("${it.type.name.replace("CWeapon", "").toUpperCase().toLocale()}\n")
 				}
+			}
+
+			if (bEspMoney && bEspMoneyPos == "BOTTOM" && isPlayer) {
+				boxDetailsBottomText.append("${entityMemory.money()} $\n")
 			}
 
 			if (bEspWeapon && bEspWeaponPos == "BOTTOM" && isPlayer) {

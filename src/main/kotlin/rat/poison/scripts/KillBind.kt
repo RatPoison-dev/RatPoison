@@ -1,13 +1,8 @@
 package rat.poison.scripts
 
 import rat.poison.curSettings
-import rat.poison.game.CSGO
-import rat.poison.game.entity.*
-import rat.poison.game.entity.dead
-import rat.poison.game.entity.health
-import rat.poison.game.forEntities
+import rat.poison.game.entity.kills
 import rat.poison.game.me
-import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.robot
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
