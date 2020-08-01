@@ -5,7 +5,6 @@ import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.target
-import rat.poison.scripts.bombState
 import rat.poison.scripts.esp.glow
 import rat.poison.scripts.esp.glowTarget
 import rat.poison.scripts.esp.toGlowNum
@@ -94,21 +93,7 @@ internal fun glowEspEvery() = every(10, true) {
 
 			EntityType.CPlantedC4, EntityType.CC4 -> if (showBomb) {
 				glowType = curSettings["GLOW_BOMB_TYPE"].toGlowNum()
-				color = when (curSettings["GLOW_BOMB_ADAPTIVE"].strToBool()) {
-					true -> if ((bombState.planted && bombState.timeLeftToExplode > 10) || (bombState.gettingDefused && bombState.canDefuse)) {
-						"GLOW_BOMB_ADAPTIVE_GREEN"
-					}
-					else if ((bombState.timeLeftToExplode < 5) || (bombState.gettingDefused && !bombState.canDefuse)) {
-						"GLOW_BOMB_ADAPTIVE_RED"
-					}
-					else if ((bombState.timeLeftToExplode < 10 && bombState.timeLeftToExplode >5)) {
-						"GLOW_BOMB_ADAPTIVE_YELLOW"
-					}
-					else {
-						"GLOW_BOMB_COLOR"
-					}
-					false -> "GLOW_BOMB_COLOR"
-				}
+				color = "GLOW_BOMB_COLOR"
 			}
 
 			else ->
