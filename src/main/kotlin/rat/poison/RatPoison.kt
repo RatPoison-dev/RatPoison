@@ -109,6 +109,7 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Head Walk") }; headWalk()
     if (dbg) { println("[DEBUG] Initializing Adrenaline") }; adrenaline()
     if (dbg) { println("[DEBUG] Initializing FovChanger") }; fovChanger()
+    if (dbg) { println("[DEBUG] Disabling Post Processing") }; disablePostProcessing()
     if (dbg) { println("[DEBUG] Initializing Door Spam") }; doorSpam()
     if (dbg) { println("[DEBUG] Initializing Weapon Spam") }; weaponSpam()
     if (dbg) { println("[DEBUG] Initializing Weapon Changer") }; skinChanger()
