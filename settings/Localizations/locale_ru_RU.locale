@@ -614,3 +614,4 @@ HEAD_LVL_LINE_WIDTH = Ширина линии
 HeadLvl = Уровень голов
 DISABLE_POST_PROCESSING = Отключить постообработку
 BOX_ESP_MONEY = Деньги
+BOX_ESP_MONEY_POS = Деньги
