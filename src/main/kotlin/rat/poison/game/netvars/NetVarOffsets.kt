@@ -46,7 +46,8 @@ object NetVarOffsets {
 	val bIsScoped by netVar("DT_CSPlayer")
 	val bHasDefuser by netVar("DT_CSPlayer", "m_bHasDefuser")
 	val nSurvivalTeam by netVar("DT_CSPlayer")
-	
+
+	val m_iAccount by netVar("DT_CSPlayer", "m_iAccount")
 	val flC4Blow by netVar("DT_PlantedC4")
 	val bBombDefused by netVar("DT_PlantedC4")
 	val hBombDefuser by netVar("DT_PlantedC4")

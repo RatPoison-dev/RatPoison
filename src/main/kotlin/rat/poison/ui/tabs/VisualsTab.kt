@@ -253,6 +253,8 @@ fun updateDisableEsp() {
         boxEspTab.boxEspNamePos.disable(bool, col)
         boxEspTab.boxEspWeapon.disable(bool)
         boxEspTab.boxEspWeaponPos.disable(bool, col)
+        boxEspTab.boxEspMoney.disable(bool)
+        boxEspTab.boxEspMoneyPos.disable(bool, col)
 
         boxEspTab.boxEspHelmet.disable(bool)
         boxEspTab.boxEspHelmetPos.disable(bool, col)
