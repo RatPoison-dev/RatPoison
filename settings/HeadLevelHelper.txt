@@ -1,4 +1,4 @@
-HEAD_LVL_ENABLE = true
+HEAD_LVL_ENABLE = false
 
 HEAD_LVL_DEADZONE = 5
 

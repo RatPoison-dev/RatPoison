@@ -15,11 +15,11 @@ SMG_FACTOR_RECOIL = true
 
 //Aim Bone
 //Default bone to aim at
-SMG_AIM_BONE = Stomach
+SMG_AIM_BONE = STOMACH
 
 //Aim FOV
 //Aims at entities inside this value
-SMG_AIM_FOV = 15
+SMG_AIM_FOV = 15.0
 
 //Aim speed
 //MS delay between aiming steps

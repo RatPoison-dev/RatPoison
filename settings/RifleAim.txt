@@ -19,7 +19,7 @@ RIFLE_AIM_BONE = STOMACH
 
 //Aim FOV
 //Aims at entities inside this value
-RIFLE_AIM_FOV = 7
+RIFLE_AIM_FOV = 7.0
 
 //Aim speed
 //MS delay between aiming steps

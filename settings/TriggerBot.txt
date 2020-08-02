@@ -13,9 +13,9 @@ SNIPER_TRIGGER = true
 
 //The bone trigger activation FOV (0 - 90)
 PISTOL_TRIGGER_FOV = 1
-RIFLE_TRIGGER_FOV = 2
+RIFLE_TRIGGER_FOV = 2.0
 SHOTGUN_TRIGGER_FOV = 5
-SMG_TRIGGER_FOV = 3
+SMG_TRIGGER_FOV = 3.0
 SNIPER_TRIGGER_FOV = 5
 
 //Activate if incross (recommended for sniper)

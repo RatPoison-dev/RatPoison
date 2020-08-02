@@ -170,6 +170,10 @@ fun boxEsp() = App {
 				boxDetailsLeftText.append(if (entityMemory.flashed()) "Flashed" else "")
 			}
 
+			if (bEspMoney && bEspMoneyPos == "LEFT" && isPlayer) {
+				boxDetailsLeftText.append("$${entityMemory.money()}\n")
+			}
+
 			//Draw possible right elements
 			var rightShift = 1
 			val boxDetailsRightText = StringBuilder()
@@ -216,6 +220,10 @@ fun boxEsp() = App {
 				boxDetailsRightText.append(if (entityMemory.flashed()) "Flashed" else "")
 			}
 
+			if (bEspMoney && bEspMoneyPos == "RIGHT" && isPlayer) {
+				boxDetailsRightText.append("$${entityMemory.money()}\n")
+			}
+
 			//Draw possible top elements
 			var topShift = 0
 			val boxDetailsTopText = StringBuilder()
@@ -232,7 +240,7 @@ fun boxEsp() = App {
 			}
 
 			if (bEspMoney && bEspMoneyPos == "TOP" && isPlayer) {
-				boxDetailsTopText.append("${entityMemory.money()} $\n")
+				boxDetailsTopText.append("$${entityMemory.money()}\n")
 				topShift += 18
 			}
 
@@ -273,7 +281,7 @@ fun boxEsp() = App {
 			}
 
 			if (bEspMoney && bEspMoneyPos == "BOTTOM" && isPlayer) {
-				boxDetailsBottomText.append("${entityMemory.money()} $\n")
+				boxDetailsBottomText.append("$${entityMemory.money()}\n")
 			}
 
 			if (bEspWeapon && bEspWeaponPos == "BOTTOM" && isPlayer) {

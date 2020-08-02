@@ -20,13 +20,6 @@ import java.lang.Float.floatToIntBits
 internal fun disableAllEsp() {
     val cWhite = Color(255, 255, 255, 1.0)
 
-    if (!curSettings["ENABLE_NIGHTMODE"].strToBool()) {
-        if (toneMapController != 0L) {
-            CSGO.csgoEXE[toneMapController + NetVarOffsets.m_flCustomAutoExposureMin] = 1F
-            CSGO.csgoEXE[toneMapController + NetVarOffsets.m_flCustomAutoExposureMax] = 1F
-        }
-    }
-
     val clientVModEnt = CSGO.csgoEXE.uint(CSGO.clientDLL.address + ClientOffsets.dwEntityList + (((CSGO.csgoEXE.uint(CSGO.csgoEXE.uint(CSGO.clientDLL.address + ClientOffsets.dwLocalPlayer) + NetVarOffsets.m_hViewModel)) and 0xFFF) - 1) * 16)
     CSGO.csgoEXE[clientVModEnt + 0x70] = 255.toByte()
     CSGO.csgoEXE[clientVModEnt + 0x71] = 255.toByte()

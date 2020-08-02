@@ -41,6 +41,10 @@ fun bombTimer() {
                 }
 
                 shapeRenderer.apply {
+                    if (isDrawing) {
+                        end()
+                    }
+
                     begin()
                     color = cColor
                     set(ShapeRenderer.ShapeType.Filled)

@@ -9,7 +9,7 @@ SKIN_KNIFE = sWeapon(tSkinID = 560, tStatTrak = 1337, tWear = 0.0001F, tSeed = -
 SKIN_DESERT_EAGLE = sWeapon(tSkinID = 711, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)
 SKIN_DUAL_BERRETA = sWeapon(tSkinID = 625, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)
 SKIN_FIVE_SEVEN = sWeapon(tSkinID = 660, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)
-SKIN_GLOCK = sWeapon(tSkinID = 353, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)
+SKIN_GLOCK = sWeapon(tSkinID=607, tStatTrak=1337, tWear=1.0E-4, tSeed=-1)
 SKIN_USP_SILENCER = sWeapon(tSkinID = 504, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)
 SKIN_CZ75A = sWeapon(tSkinID = 643, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)
 SKIN_R8_REVOLVER = sWeapon(tSkinID = 683, tStatTrak = 1337, tWear = 0.0001F, tSeed = -1)

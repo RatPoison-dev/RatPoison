@@ -35,7 +35,7 @@ class BoxEspTab: Tab(false, false) {
     val boxEspWeapon = VisCheckBoxCustom("Weapon", "BOX_ESP_WEAPON")
     val boxEspWeaponPos = VisSelectBoxCustom(" ", "BOX_ESP_WEAPON_POS", false, false, "TOP", "BOTTOM")
     val boxEspMoney = VisCheckBoxCustom("Money", "BOX_ESP_MONEY")
-    val boxEspMoneyPos = VisSelectBoxCustom(" ", "BOX_ESP_MONEY_POS", false, false, "TOP", "BOTTOM")
+    val boxEspMoneyPos = VisSelectBoxCustom(" ", "BOX_ESP_MONEY_POS", false, false, "TOP", "BOTTOM", "LEFT", "RIGHT")
 
     val boxEspAmmo = VisCheckBoxCustom("Ammo", "BOX_ESP_AMMO")
     val boxEspAmmoPos = VisSelectBoxCustom(" ", "BOX_ESP_AMMO_POS", false, false, "TOP", "BOTTOM")

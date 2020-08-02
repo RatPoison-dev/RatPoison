@@ -1,5 +1,5 @@
 //Enable backtrack
-ENABLE_BACKTRACK = true
+ENABLE_BACKTRACK = false
 
 //Enable backtrack on key
 ENABLE_BACKTRACK_ON_KEY = false

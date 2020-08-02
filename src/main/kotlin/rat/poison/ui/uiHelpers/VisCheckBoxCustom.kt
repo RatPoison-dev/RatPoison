@@ -9,9 +9,9 @@ import rat.poison.ui.tabs.*
 import rat.poison.utils.generalUtil.boolToStr
 import rat.poison.utils.generalUtil.strToBool
 
-class VisCheckBoxCustom(mainText: String, varName: String, showText: Boolean = true) : VisCheckBox(mainText) {
+class VisCheckBoxCustom(mainText: String, varName: String, visibleText: Boolean = true) : VisCheckBox(mainText) {
     private val variableName = varName
-    private val showText = showText
+    private val showText = visibleText
 
     init {
         update()
@@ -24,6 +24,7 @@ class VisCheckBoxCustom(mainText: String, varName: String, showText: Boolean = t
             updateDisableEsp()
             updateDisableAim()
             updateDisableTrig()
+            updateDisableBacktrack()
             true
         }
     }
