@@ -101,7 +101,7 @@ fun constructEntities() = every(500) {
     state = SignOnState[csgoEXE.int(clientState + EngineOffsets.dwSignOnState)]
 
     me = clientDLL.uint(dwLocalPlayer)
-    if (me <= 0) return@every
+    if (notInGame) return@every
 
     clientState = engineDLL.uint(dwClientState)
 
