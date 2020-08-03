@@ -14,6 +14,8 @@ import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwEntityList
 import rat.poison.game.offsets.ClientOffsets.dwGlowObject
 import rat.poison.game.offsets.ClientOffsets.dwLocalPlayer
+import rat.poison.game.offsets.ClientOffsets.dwSensitivity
+import rat.poison.game.offsets.ClientOffsets.dwSensitivityPtr
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.game.offsets.EngineOffsets.dwClientState
 import rat.poison.game.offsets.EngineOffsets.dwClientState_MapDirectory
@@ -172,4 +174,5 @@ fun constructEntities() = every(500) {
     }
 
     DANGER_ZONE = dzMode
+    GAME_SENSITIVITY = java.lang.Float.intBitsToFloat((clientDLL.uint(dwSensitivity) xor (clientDLL.address + dwSensitivityPtr)).toInt()).toDouble()
 }
