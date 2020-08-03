@@ -46,7 +46,7 @@ class UIMenu : VisWindow("Rat Poison 1.7") {
         x = 960F
         y = 540F
         align(Align.topLeft)
-        isResizable = false
+        isResizable = true
 
         //Main content pane for all tabs
         val mainTabbedPaneContent = VisTable()
@@ -149,7 +149,7 @@ class UIMenu : VisWindow("Rat Poison 1.7") {
 
         //Add tab pane & scroll pane to main ui window
         add(mainTabbedPane.table).growX().row()
-        add(mainScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.top).row()
+        add(mainScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.top).growY().row()
         pack()
         centerWindow()
 
