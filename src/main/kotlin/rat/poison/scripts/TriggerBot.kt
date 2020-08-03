@@ -119,6 +119,7 @@ fun boneTrigger() = every(10) {
                     }
                 }
             }
+            boneTrig = false
         }
     }
 }
