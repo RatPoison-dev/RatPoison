@@ -34,7 +34,7 @@ fun boneTrigger() = every(10) {
 
     val wep = me.weapon()
 
-    if (!wep.gun) return@every
+    if (!wep.gun) { return@every }
 
     var prefix = ""
 
@@ -119,7 +119,6 @@ fun boneTrigger() = every(10) {
                     }
                 }
             }
-            boneTrig = false
         }
     }
 }

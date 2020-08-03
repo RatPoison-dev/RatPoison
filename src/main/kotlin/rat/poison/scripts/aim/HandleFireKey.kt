@@ -30,6 +30,7 @@ fun handleFireKey() = every(1, continuous = true) {
     }
 
     if (keyPressed(1)) {
+        boneTrig = false
         if (!shouldShoot) {
             punchCheck = 0
             shouldShoot = true
@@ -53,6 +54,7 @@ fun handleFireKey() = every(1, continuous = true) {
         shouldShoot = false
         didShoot = false
         punchCheck = 0
+        boneTrig = false
     }
 }
 
