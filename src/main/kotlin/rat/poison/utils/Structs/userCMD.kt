@@ -183,6 +183,6 @@ fun cmd_siMouseDy(mem: Memory): Int { //Short
     return mem.getShort(0x46).toInt()
 }
 
-fun cmd_bHasBeenPredicted(mem: Memory): Boolean { //Prolly not right
+fun cmd_bHasBeenPredicted(mem: Memory): Boolean {
     return mem.getByte(0x48).toString().strToBool()
 }

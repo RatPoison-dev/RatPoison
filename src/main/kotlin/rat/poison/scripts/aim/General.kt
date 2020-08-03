@@ -38,48 +38,18 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			return@forEntities
 		}
 
-		if (BONE == -3) { //Knife bot bone
-			for (i in 3..8) {
-				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, entity.nearestBone())
-
-				if (arr[0] as Float > 0F) {
-					closestFOV = arr[0] as Float
-					closestDelta = arr[1] as Float
-					closestPlayer = arr[2] as Long
-				}
-			}
-		} else if (BONE == -2) { //Trigger bot bone
-			for (i in 3..8) {
-				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, i)
-
-				if (arr[0] as Float > 0F) {
-					closestFOV = arr[0] as Float
-					closestDelta = arr[1] as Float
-					closestPlayer = arr[2] as Long
-				}
-			}
+		val arr = if (BONE < 0) {
+			calcTarget(closestDelta, entity, position, angle, lockFOV, entity.nearestBone())
 		} else {
-			if (BONE == NEAREST_BONE) { //Nearest bone check
-				val nB = entity.nearestBone()
-				if (nB != -999) {
-					val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, entity.nearestBone())
-
-					if (arr[0] as Float > 0F) {
-						closestFOV = arr[0] as Float
-						closestDelta = arr[1] as Float
-						closestPlayer = arr[2] as Long
-					}
-				}
-			} else {
-				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, BONE)
-
-				if (arr[0] as Float > 0F) {
-					closestFOV = arr[0] as Float
-					closestDelta = arr[1] as Float
-					closestPlayer = arr[2] as Long
-				}
-			}
+			calcTarget(closestDelta, entity, position, angle, lockFOV, BONE)
 		}
+
+		if (arr[0] as Float > 0F) {
+			closestFOV = arr[0] as Float
+			closestDelta = arr[1] as Float
+			closestPlayer = arr[2] as Long
+		}
+
 		return@forEntities
 	}
 
@@ -155,7 +125,7 @@ fun Entity.canShoot(visCheck: Boolean = true) = ((if (DANGER_ZONE) { true } else
 
 internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boolean,
 								  crossinline doAim: (destinationAngle: Angle,
-													  currentAngle: Angle, aimSpeed: Int, aimSpeedDivisor: Int) -> R) = every(duration) {
+													  currentAngle: Angle, aimSpeed: Int, aimSpeedDivisor: Int) -> R) = every(duration, priority = 10) {
 	try {
 		if (!precheck()) return@every
 		if (!curSettings["ENABLE_AIM"].strToBool()) return@every
@@ -249,7 +219,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		//Have a new best target, we aren't holding aim, and our weapon is automatic
 		val swapTarget = (bestTarget > 0 && currentTarget != bestTarget) && !curSettings["HOLD_AIM"].strToBool() && (meWep.automatic || curSettings["AUTOMATIC_WEAPONS"].strToBool())
 
-		if (currentTarget == me || !currentTarget.canShoot(shouldVisCheck) || swapTarget) {
+		if (!currentTarget.canShoot(shouldVisCheck) || swapTarget) {
 			reset()
 			Thread.sleep(curSettings["AIM_TARGET_SWAP_DELAY"].toInt().toLong())
 		} else {

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL20.GL_FALSE
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.lwjgl.glfw.GLFW.*
+import org.lwjgl.opengl.GL
 import rat.poison.game.CSGO
 import rat.poison.overlay.App
 import rat.poison.scripts.*
@@ -163,7 +164,7 @@ fun main() {
                 setDecorated(false)
                 useVsync(false)
                 glfwSwapInterval(0)
-                glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE)
+                glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE)
                 setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings["OPENGL_MSAA_SAMPLES"].toInt())
             })
         }

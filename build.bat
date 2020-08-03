@@ -41,6 +41,6 @@ start.
 goto :n1
 :n1
 echo.
-echo To run this cheat, open csgo and run the bat folder in the cheat folder.
+echo To run this cheat, open csgo and run the bat in the cheat folder.
 echo.
 pause

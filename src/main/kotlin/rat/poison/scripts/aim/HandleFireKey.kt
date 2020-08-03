@@ -10,10 +10,7 @@ import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
-import rat.poison.scripts.attemptBacktrack
-import rat.poison.scripts.automaticWeapons
-import rat.poison.scripts.callingInShot
-import rat.poison.scripts.triggerInShot
+import rat.poison.scripts.*
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
@@ -23,10 +20,8 @@ import rat.poison.utils.notInGame
 private var shouldShoot = false
 var didShoot = false
 
-fun handleFireKey() = every(1) {
-    if (MENUTOG || (me <= 0L && !notInGame) || (me > 0L && me.dead())) return@every //Brain blast to the past
-
-    if (notInGame || inBackground) {
+fun handleFireKey() = every(1, continuous = true) {
+    if (MENUTOG || (me <= 0L && !notInGame) || (me > 0L && me.dead()) || inBackground) {
         if (clientDLL.int(dwForceAttack) == 5) {
             clientDLL[dwForceAttack] = 4
             Thread.sleep(1)
@@ -35,8 +30,11 @@ fun handleFireKey() = every(1) {
     }
 
     if (keyPressed(1)) {
-        shouldShoot = true
-        Thread.sleep(10)
+        if (!shouldShoot) {
+            punchCheck = 0
+            shouldShoot = true
+        }
+        Thread.yield()
         fireWeapon()
     } else if (triggerInShot || callingInShot) {
         if (shouldShoot) { //Finish shooting...
@@ -47,12 +45,14 @@ fun handleFireKey() = every(1) {
             didShoot = false
         }
         //Let trigger handle that bih
+        //punchCheck = 0
     } else {
         if (clientDLL.int(dwForceAttack) == 5) {
             clientDLL[dwForceAttack] = 4
         }
         shouldShoot = false
         didShoot = false
+        //punchCheck = 0
     }
 }
 
@@ -68,8 +68,13 @@ fun fireWeapon() {
 
     var shouldAuto = false
 
-    if (curSettings["AUTOMATIC_WEAPONS"].strToBool() && !meWep.automatic && meWep.gun) {
+    if (curSettings["AUTOMATIC_WEAPONS"].strToBool() && !meWep.automatic && meWep.gun && curSettings["ENABLE_AIM"].strToBool()) {
         shouldAuto = automaticWeapons()
+
+        if (!didShoot) { //Skip first delay
+            shouldAuto = true
+        }
+
         if (!shouldAuto) {
             return
         }
@@ -79,9 +84,12 @@ fun fireWeapon() {
     val backtrackKeyPressed = keyPressed(curSettings["BACKTRACK_KEY"].toInt())
 
     if (curSettings["ENABLE_BACKTRACK"].strToBool() && (!backtrackOnKey || (backtrackOnKey && backtrackKeyPressed))) {
-        if (shouldAuto || (!shouldAuto && !didShoot)) {
+        if (shouldAuto || (!shouldAuto && !didShoot) || meWep.automatic) {
+            clientDLL[dwForceAttack] = 4 //This probably isnt a perfect solution
             if (attemptBacktrack()) {
-                didShoot = true
+                if (!shouldAuto) {
+                    didShoot = true
+                }
                 return
             }
         }
@@ -89,7 +97,7 @@ fun fireWeapon() {
 
     if (shouldAuto) {
         clientDLL[dwForceAttack] = 6
-    } else if (!didShoot) {
+    } else if (!didShoot || meWep.automatic) {
         didShoot = true
         clientDLL[dwForceAttack] = 5
     }

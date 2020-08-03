@@ -13,6 +13,7 @@ import com.kotcrab.vis.ui.VisUI
 import com.sun.management.OperatingSystemMXBean
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import org.jire.arrowhead.keyPressed
+import org.lwjgl.glfw.GLFW.glfwMakeContextCurrent
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.CSGO
@@ -105,11 +106,11 @@ object App : ApplicationAdapter() {
         if (VisUI.isLoaded()) {
             if (!Thread.interrupted()) {
                 Gdx.gl.apply {
-                    glEnable(GL20.GL_BLEND)
+                    //glEnable(GL20.GL_BLEND)
                     glDisable(GL20.GL_DEPTH_TEST)
                     glClearColor(0F, 0F, 0F, 0F)
                     glClear(GL20.GL_COLOR_BUFFER_BIT)
-                    glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
+                    //glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
 
                     if (!menuStage.root.isVisible) return
 
@@ -169,7 +170,7 @@ object App : ApplicationAdapter() {
                                 bodies[i]()
                             }
                         }, TimeUnit.NANOSECONDS)
-                        glDisable(GL20.GL_BLEND)
+                        //glDisable(GL20.GL_BLEND)
                         glFinish()
                     }, TimeUnit.NANOSECONDS)
 

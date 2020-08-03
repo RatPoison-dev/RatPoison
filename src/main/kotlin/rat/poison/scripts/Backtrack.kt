@@ -33,6 +33,8 @@ data class BacktrackTable(var simtime: Float = 0f, var headPos: Angle = Angle(),
 
 var bestBacktrackTarget = -1L
 
+private var inBacktrack = false
+
 fun sendPacket(bool: Boolean) { //move outta here
     val byte = if (bool) 1.toByte() else 0.toByte()
     engineDLL[0xD41DA] = byte //Bitch ass lil coder signature wont work
@@ -41,7 +43,7 @@ fun sendPacket(bool: Boolean) { //move outta here
 fun setupBacktrack() = every(4) {
     if (notInGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0) {
         btRecords = Array(64) { Array(13) { BacktrackTable() } }
-        if (engineDLL.byte(0xD41DA) == 0.toByte()) {
+        if (engineDLL.byte(0xD41DA) == 0.toByte() && !inBacktrack) {
             sendPacket(true)
         }
         return@every
@@ -52,11 +54,12 @@ fun setupBacktrack() = every(4) {
 
 fun attemptBacktrack(): Boolean {
     if (((curSettings["BACKTRACK_SPOTTED"].strToBool() && bestBacktrackTarget.spotted()) || !curSettings["BACKTRACK_SPOTTED"].strToBool()) && bestBacktrackTarget > 0L) {
+        inBacktrack = true
 
         //Get/set vars
         val meWep = me.weapon()
 
-        if (!meWep.gun || !me.weaponEntity().canFire()) return false
+        if (!meWep.gun || !me.weaponEntity().canFire()) { inBacktrack = false; return false }
 
         val curSequenceNumber = csgoEXE.int(clientState + dwClientState_LastOutgoingCommand) + 1
         sendPacket(false)
@@ -81,6 +84,7 @@ fun attemptBacktrack(): Boolean {
 
         if (bestTime == -1f) {
             sendPacket(true)
+            inBacktrack = false
             return false
         }
 
@@ -92,8 +96,11 @@ fun attemptBacktrack(): Boolean {
 
         sendPacket(true)
         Thread.sleep(10)
+        inBacktrack = false
         return true
     }
+
+    inBacktrack = false
     return false
 }
 
