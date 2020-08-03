@@ -44,8 +44,10 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			calcTarget(closestDelta, entity, position, angle, lockFOV, BONE)
 		}
 
-		if (arr[0] as Float > 0F) {
-			closestFOV = arr[0] as Float
+		val fov = arr[0] as Float
+
+		if (fov > 0F) {
+			closestFOV = fov
 			closestDelta = arr[1] as Float
 			closestPlayer = arr[2] as Long
 		}
@@ -178,12 +180,12 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		}
 
 		val bestTarget = findTarget(position, currentAngle, aim,
-				BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 4); destBone } else { destBone = aB; aB },
+				BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 3); destBone } else { destBone = aB; aB },
 				visCheck = shouldVisCheck) //Try to find new target
 
 		if (currentTarget < 0) { //If target is invalid from last run
 			currentTarget = findTarget(position, currentAngle, aim,
-					BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 4); destBone } else { destBone = aB; aB },
+					BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 3); destBone } else { destBone = aB; aB },
 					visCheck = shouldVisCheck) //Try to find new target
 			if (currentTarget < 0) { //End if we don't, can't loop because of thread blocking
 				reset()

@@ -99,7 +99,7 @@ fun boneTrigger() = every(10) {
                             if (bBACKTRACK) { //If backtrack setting is true
                                 if (bestBacktrackTarget > 0) {
                                     if (!bestBacktrackTarget.dead() && !bestBacktrackTarget.isProtected()) {
-                                        bTrigShoot(initDelay, shotDelay, false, true, canFOV)
+                                        bTrigShoot(initDelay, shotDelay, bAIMBOT, true, canFOV)
                                         return@every
                                     }
                                 }

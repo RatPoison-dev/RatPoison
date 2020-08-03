@@ -44,15 +44,15 @@ fun handleFireKey() = every(1, continuous = true) {
             shouldShoot = false
             didShoot = false
         }
-        //Let trigger handle that bih
-        //punchCheck = 0
+        punchCheck = 0
+        //Let trigger handle the rest
     } else {
         if (clientDLL.int(dwForceAttack) == 5) {
             clientDLL[dwForceAttack] = 4
         }
         shouldShoot = false
         didShoot = false
-        //punchCheck = 0
+        punchCheck = 0
     }
 }
 
