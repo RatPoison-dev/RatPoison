@@ -22,7 +22,6 @@ fun reset() {
 	destBone = -5
 	target = -1L
 	canPerfect = false
-	boneTrig = false //Should this be here?
 }
 
 fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,

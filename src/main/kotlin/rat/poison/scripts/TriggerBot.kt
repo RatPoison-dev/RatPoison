@@ -78,7 +78,7 @@ fun boneTrigger() = every(10) {
                                 if (inCross > 0) {
                                     val ent = clientDLL.uint(ClientOffsets.dwEntityList + (inCross * 0x10) - 0x10)
                                     if (!ent.inMyTeam() && !ent.isProtected() && !ent.dead()) {
-                                        bTrigShoot(initDelay, shotDelay, bAIMBOT, false)
+                                        bTrigShoot(initDelay, shotDelay, false, false)
                                         return@every
                                     }
                                 }
@@ -114,13 +114,12 @@ fun boneTrigger() = every(10) {
                             //This prevents speed ups when losing target, canFire, etc...
                             triggerInShot = false
                             callingInShot = false
+                            boneTrig = false
                         }
                     }
                 }
             }
         }
-    } else {
-        boneTrig = false
     }
 }
 
@@ -173,9 +172,5 @@ private fun triggerShoot(aimbot: Boolean = false, backtrack: Boolean = false, ba
         clientDLL[dwForceAttack] = 6 //HandleFireKey.kt
     }
 
-    //Fuck a beat i was tryna beat my meat
-    //thread sleep here 10
-
-    boneTrig = false
     triggerInShot = false
 }
