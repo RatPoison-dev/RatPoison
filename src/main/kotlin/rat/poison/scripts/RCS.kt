@@ -32,10 +32,10 @@ fun rcs() = every(4) {
 
 	if (forceSet || /*!finishPunch ||*/ shotsFired > 1) {
 		if (lastPunch.isZero) {
-			lastPunch.set(p.x.toFloat(), p.y.toFloat())
+			lastPunch.set(p.x, p.y)
 		}
 
-		playerPunch.set(p.x.toFloat(), p.y.toFloat(), p.z.toFloat())
+		playerPunch.set(p.x, p.y, p.z)
 		newPunch.set(playerPunch.x - lastPunch.x, playerPunch.y - lastPunch.y)
 		newPunch.scl(1F + curSettings["RCS_SMOOTHING_Y"].toFloat(), 1F + curSettings["RCS_SMOOTHING_X"].toFloat())
 

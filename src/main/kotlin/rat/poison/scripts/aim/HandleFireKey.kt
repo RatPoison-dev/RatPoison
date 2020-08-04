@@ -87,7 +87,10 @@ fun fireWeapon() {
 
     if (curSettings["ENABLE_BACKTRACK"].strToBool() && (!backtrackOnKey || (backtrackOnKey && backtrackKeyPressed))) {
         if (shouldAuto || (!shouldAuto && !didShoot) || meWep.automatic) {
-            clientDLL[dwForceAttack] = 4 //This probably isnt a perfect solution
+            if (!meWep.automatic) {
+                clientDLL[dwForceAttack] = 4 //This probably isnt a perfect solution
+            }
+
             if (attemptBacktrack()) {
                 if (!shouldAuto) {
                     didShoot = true
