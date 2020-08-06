@@ -1,63 +1,65 @@
 package rat.poison.scripts
 
-import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.math.MathUtils.clamp
+import org.lwjgl.opengl.GL11.glDisable
+import org.lwjgl.opengl.GL11.glEnable
 import rat.poison.curSettings
+import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.absPosition
+import rat.poison.game.forEntities
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColor
+import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.notInGame
+import java.util.concurrent.ConcurrentLinkedQueue
 
-var entsToTrack = mutableListOf<Long>()
-
-var positionsList = mutableListOf<List<Float>>()
-var grenadeList = mutableListOf<MutableList<List<Float>>>()
+val grenadeList = ConcurrentLinkedQueue<Long>()
+val positionsList = mutableListOf<MutableList<Vector>>()
 
 private var sync = 0
+
+var arraySize = 5
 
 fun nadeTracer() = App {
     if (!curSettings["NADE_TRACER"].strToBool() || MENUTOG || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@App
 
-    val empty = mutableListOf(0F, 0F, 0F, 0F, 0F)
-    val alphaUpdate = clamp(.011F - curSettings["NADE_TRACER_TIMEOUT"].toFloat(), .001F, .01F)
-    //Calculate spots
-    if (sync >= (curSettings["NADE_TRACER_UPDATE_TIME"].toInt())) { //Change to add a 0 to the end to prevent connecting grenade lines
-        val tmp = entsToTrack
-
-        tmp.forEachIndexed { _, ent ->
+    if (sync >= (curSettings["NADE_TRACER_UPDATE_TIME"].toInt())) {
+        arraySize = clamp(curSettings["NADE_TRACER_TIMEOUT"].toInt(), 1, 30)
+        forEntities(EntityType.CSmokeGrenadeProjectile, EntityType.CMolotovProjectile, EntityType.CDecoyProjectile, EntityType.CBaseCSGrenadeProjectile) {
+            val ent = it.entity
             val entPos = ent.absPosition()
 
-            var idx = -1 //Not in a list
-            grenadeList.forEachIndexed {j, posList -> //Check if in list, set idx to that list if so
-                val n = posList[0]
-                val nn = n[4].toLong()
-
-                if (nn == ent) {
-                    idx = j
-                }
+            if (entPos.x in -2F..2F && entPos.y in -2F..2F && entPos.z in -2F..2F) {
+                return@forEntities
             }
 
-            val tmp2 = listOf(entPos.x, entPos.y, entPos.z, 1F, ent.toFloat())
-            val check = (entPos.x in -2.0..2.0 && entPos.y in -2.0..2.0 && entPos.z in -2.0..2.0)
-            if (!check) {
-                if (idx == -1) {
-                    positionsList = mutableListOf()
-                    positionsList.add(tmp2)
-                    positionsList.add(empty)
-                    grenadeList.add(positionsList)
-                } else {
-                    positionsList = grenadeList[idx]
+            if (!grenadeList.contains(ent)) {
+                grenadeList.add(ent)
+                positionsList.add(mutableListOf())
+            }
 
-                    if (positionsList[positionsList.size-1] == empty) {
-                        positionsList.removeAt(positionsList.size-1)
-                        positionsList.add(positionsList.size, tmp2) //Replace at end
-                        positionsList.add(positionsList.size-0, empty) //Set end to 0
-                        grenadeList[idx] = positionsList
-                    }
+            val idx = grenadeList.indexOf(ent)
+
+            positionsList[idx].add(entPos)
+
+            if (positionsList[idx].size > arraySize) {
+                positionsList[idx].removeAt(0)
+            }
+        }
+
+        grenadeList.forEach { i ->
+            val entPos = i.absPosition()
+            val idx = grenadeList.indexOf(i)
+            if (entPos.x in -2F..2F && entPos.y in -2F..2F && entPos.z in -2F..2F) {
+                if (positionsList[idx].size > 2) {
+                    positionsList[idx].removeAt(0)
+                } else {
+                    grenadeList.remove(i)
+                    positionsList.removeAt(idx)
                 }
             }
         }
@@ -65,69 +67,44 @@ fun nadeTracer() = App {
     }
     sync++ //Add 1 to tick
 
-    //Draw everything
-    var sizeVar = 0
-    for (i in 0 until grenadeList.size - sizeVar) {
-        if (i == 0) sizeVar = 0 //Reset
+    val alphaMin = 1.0F / arraySize.toFloat()
 
-        if (i >= grenadeList.size) {
+    for (i in 0 until grenadeList.size) {
+        if (positionsList[i].size <= 1) {
             continue
         }
 
-        val tmpPosList = grenadeList[i]
+        for (j in 0 until positionsList[i].size-1) {
+            val pos1 = positionsList[i][j]
+            val pos2 = positionsList[i][j+1]
+            val w2s1 = Vector()
+            val w2s2 = Vector()
 
-        var toRemove = true
-        for (j in 0 until tmpPosList.size-2) {
-            if (tmpPosList.size == 1) { //Edit the alpha of the very first spot
-                val tmpPos = tmpPosList[0]
-                val newTmpPos = listOf(tmpPos[0], tmpPos[1], tmpPos[2], tmpPos[3]-alphaUpdate, tmpPos[4])
-                tmpPosList[0] = newTmpPos
+            if (pos1.x in -2F..2F && pos1.y in -2F..2F && pos1.z in -2F..2F) {
+                continue
+            } else if (pos2.x in -2F..2F && pos2.y in -2F..2F && pos2.z in -2F..2F) {
                 continue
             }
 
-            val pPos1 = tmpPosList[j]
-            val pPos2 = tmpPosList[j+1]
-
-            if (pPos1 == empty || pPos2 == empty) {
-                continue
-            }
-
-            if (pPos1[3] <= 0) {
-                continue
-            } else if (pPos2[3] <= 0) {
-                continue
-            } else {
-                toRemove = false
-            }
-
-            val pPos1Vec = Vector()
-            val pPos2Vec = Vector()
-
-            if (worldToScreen(Vector(pPos1[0], pPos1[1], pPos1[2]), pPos1Vec) && worldToScreen(Vector(pPos2[0], pPos2[1], pPos2[2]), pPos2Vec)) {
+            if (worldToScreen(pos1, w2s1) && worldToScreen(pos2, w2s2)) {
                 shapeRenderer.apply {
+                    if (isDrawing) {
+                        end()
+                    }
+
                     begin()
+                    glEnable(GL20.GL_BLEND)
 
-                    val c = curSettings["NADE_TRACER_COLOR"].strToColor()
-                    val a = ((pPos1[3] + pPos2[3]) / 2F).toFloat()
-                    color = Color(c.red / 255F, c.green / 255F, c.blue / 255F, a)
+                    val c = curSettings["NADE_TRACER_COLOR"].strToColorGDX()
+                    c.a = 1F - alphaMin * j
 
-                    line(pPos1Vec.x.toFloat(), pPos1Vec.y.toFloat(), pPos2Vec.x.toFloat(), pPos2Vec.y.toFloat())
+                    color = c
 
+                    line(w2s1.x, w2s1.y, w2s2.x, w2s2.y)
+
+                    glDisable(GL20.GL_BLEND)
                     end()
                 }
-            }
-
-            val newPos1 = listOf(pPos1[0], pPos1[1], pPos1[2], pPos1[3]-alphaUpdate, pPos1[4])
-            val newPos2 = listOf(pPos2[0], pPos2[1], pPos2[2], pPos2[3]-alphaUpdate, pPos2[4])
-
-            tmpPosList[j] = newPos1
-            tmpPosList[j+1] = newPos2
-        }
-
-        if (tmpPosList.size > 2) {
-            if (toRemove) {
-                grenadeList.removeAt(i)
-                sizeVar++
             }
         }
     }

@@ -15,15 +15,16 @@ fun espToggle() = every(50) {
         if (!curSettings["ENABLE_ESP"].strToBool()) {
             disableAllEsp()
 
-            if (curSettings["ENABLE_NIGHTMODE"].strToBool()) {
-                if (toneMapController != 0L) {
-                    CSGO.csgoEXE[toneMapController + NetVarOffsets.m_bUseCustomAutoExposureMin] = 1
-                    CSGO.csgoEXE[toneMapController + NetVarOffsets.m_bUseCustomAutoExposureMax] = 1
-
-                    CSGO.csgoEXE[toneMapController + NetVarOffsets.m_flCustomAutoExposureMin] = 1F
-                    CSGO.csgoEXE[toneMapController + NetVarOffsets.m_flCustomAutoExposureMax] = 1F
-                }
-            }
+//            figure default shit/auto update on disable?
+//            if (curSettings["ENABLE_NIGHTMODE"].strToBool()) {
+//                if (toneMapController != 0L) {
+//                    CSGO.csgoEXE[toneMapController + NetVarOffsets.m_bUseCustomAutoExposureMin] = 1
+//                    CSGO.csgoEXE[toneMapController + NetVarOffsets.m_bUseCustomAutoExposureMax] = 1
+//
+//                    CSGO.csgoEXE[toneMapController + NetVarOffsets.m_flCustomAutoExposureMin] = 1F
+//                    CSGO.csgoEXE[toneMapController + NetVarOffsets.m_flCustomAutoExposureMax] = 1F
+//                }
+//            }
         }
 
         Thread.sleep(100)

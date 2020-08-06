@@ -21,7 +21,6 @@ import rat.poison.game.offsets.EngineOffsets.dwClientState
 import rat.poison.game.offsets.EngineOffsets.dwClientState_MapDirectory
 import rat.poison.game.offsets.EngineOffsets.dwGameDir
 import rat.poison.scripts.bspHandling.loadBsp
-import rat.poison.scripts.entsToTrack
 import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.every
@@ -114,13 +113,11 @@ fun constructEntities() = every(500) {
 
     if (shouldReset()) reset()
 
-    val tmpEntsToAdd = mutableListOf<Long>()
-
     for (glowIndex in 0..glowObjectCount) {
         val glowAddress = glowObject + (glowIndex * GLOW_OBJECT_SIZE)
         val entity = csgoEXE.uint(glowAddress)
         val tmpPos = entity.absPosition()
-        val check = (tmpPos.x in -2.0..2.0 && tmpPos.y in -2.0..2.0 && tmpPos.z in -2.0..2.0)
+        val check = (tmpPos.x in -2.0F..2.0F && tmpPos.y in -2.0F..2.0F && tmpPos.z in -2.0F..2.0F)
 
         if (!check) {
             if (entity != 0L) {
@@ -130,10 +127,6 @@ fun constructEntities() = every(500) {
                     //sometimes it takes a while for game to initialize gameRulesProxy
                     //so our dz mode detection wasn't working perfectly.
                     dzMode = true
-                }
-
-                if (type.grenadeProjectile) { //include in...
-                    tmpEntsToAdd.add(entity)
                 }
 
                 val context = contexts[glowIndex].set(entity, glowAddress, glowIndex, type) //remove contexts[]
@@ -146,8 +139,6 @@ fun constructEntities() = every(500) {
             }
         }
     }
-
-    entsToTrack = tmpEntsToAdd
 
     val maxIndex = clientDLL.int(dwEntityList + 0x24) //Not right?
 

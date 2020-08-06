@@ -126,7 +126,7 @@ fun Entity.canShoot(visCheck: Boolean = true) = ((if (DANGER_ZONE) { true } else
 
 internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boolean,
 								  crossinline doAim: (destinationAngle: Angle,
-													  currentAngle: Angle, aimSpeed: Int, aimSpeedDivisor: Int) -> R) = every(duration, priority = 10) {
+													  currentAngle: Angle, aimSpeed: Int, aimSpeedDivisor: Int) -> R) = every(duration) {
 	try {
 		if (!precheck()) return@every
 		if (!curSettings["ENABLE_AIM"].strToBool()) return@every

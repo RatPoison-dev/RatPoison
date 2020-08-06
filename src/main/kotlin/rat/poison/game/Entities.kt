@@ -46,17 +46,8 @@ internal inline fun forEntities(vararg types: EntityType, crossinline body: (Ent
 		while (iterator.hasNext()) {
 			iterator.next()?.run(body)
 		}
-	} catch(e: Exception) {
+	} catch (e: Exception) {
 		println("forEntities error, report in discord")
+		e.printStackTrace()
 	}
-
-//	try {
-//		for (i in forEnts) {
-//			i?.run(body)
-//		}
-//	} catch (e: Exception) {
-//		if (dbg) {
-//			println("Error: ForEntities sucks")
-//		}
-//	}
 }

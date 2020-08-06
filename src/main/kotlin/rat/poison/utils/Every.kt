@@ -5,7 +5,7 @@ var inBackground = false
 @Volatile
 var notInGame = false
 
-inline fun every(duration: Int, continuous: Boolean = false, priority: Int = 1, crossinline body: () -> Unit) = Thread(Runnable {
+inline fun every(duration: Int, continuous: Boolean = false, crossinline body: () -> Unit) = Thread(Runnable {
     while (!Thread.interrupted()) {
         if (continuous || (!inBackground)) {
             try {
@@ -17,7 +17,4 @@ inline fun every(duration: Int, continuous: Boolean = false, priority: Int = 1, 
 
         Thread.sleep(duration.toLong())
     }
-}).apply {
-    setPriority(priority)
-    start()
-}
+}).start()
