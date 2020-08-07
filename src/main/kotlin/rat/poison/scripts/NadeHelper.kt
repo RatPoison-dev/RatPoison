@@ -205,7 +205,7 @@ fun loadPositions(file: String) {
     nadeHelperArrayList.clear()
     FileReader("$SETTINGS_DIRECTORY\\NadeHelper\\$file").readLines().forEach { line ->
         val lLine = line.trim().replace("\"", "").replace("[", "").replace("]", "").split(", ")
-        val chunks = lLine.chunked(12) //Split arrayList into LoLs, size 11
+        val chunks = lLine.chunked(12) //Split arrayList into LoLs, size 12
         //Chunks [0] = 1 LoL
         chunks.forEach { chunk ->
             var bNotEmpty = true
