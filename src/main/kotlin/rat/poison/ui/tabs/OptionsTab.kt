@@ -48,7 +48,7 @@ class OptionsTab : Tab(false, false) {
     val loadButton = VisTextButtonCustom(curLocalization["LOAD_CONFIG"], nameInLocalization = "LOAD_CONFIG")
     val deleteButton = VisTextButtonCustom(curLocalization["DELETE_CONFIG"], nameInLocalization = "DELETE_CONFIG")
 
-    private val discordLink = LinkLabel(curLocalization["JOIN_DISCORD"], "https://discord.gg/8546tDG")
+    private val discordLink = LinkLabel(curLocalization["JOIN_DISCORD"], "https://discord.gg/xkTteTM")
 
     var fileSelectBox: VisSelectBox<String> = VisSelectBox()
     var localizationSelectBox: VisSelectBox<String> = VisSelectBox()
