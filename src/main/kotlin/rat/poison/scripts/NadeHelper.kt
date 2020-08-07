@@ -34,7 +34,7 @@ import java.nio.file.Files
 
 //Convert shit to an object {} ?
 //      mapcoords:            x    y    z
-private var feetSpot = listOf(0.0, 0.0, 0.0, "NAME") //Move string out of, remove .cToDouble() temp
+private var feetSpot = listOf(0.0, 0.0, 0.0, "NAME", "TYPE") //Move string out of, remove .cToDouble() temp
 private var headPos = listOf(0.0, 0.0, 0.0)
 private var headLookPos = listOf(0.0, 0.0, 0.0)
 private var LoL: List<List<Any>> = listOf(emptyList(), emptyList(), emptyList())
@@ -116,7 +116,13 @@ fun nadeHelper() = App {
 
                                 sb.begin()
                                 val sbText = StringBuilder()
-                                sbText.append(fSpot[3].toString())
+                                if (fSpot[5] != "Other") {
+                                    //            Name          Throwing Type
+                                    sbText.append("${fSpot[3]} (${fSpot[5]})")
+                                }
+                                else {
+                                    sbText.append("${fSpot[3]}")
+                                }
 
                                 glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
                                 draw(sb, glyph, vec3.x.toFloat(), vec3.y.toFloat() - 10F)
@@ -173,15 +179,22 @@ fun createPosition() {
                     3 -> "Molly"
                     else -> "Smoke" //4
                 }
+                //
+                Dialogs.showConfirmDialog(menuStage, "Choose Nade Throwing Type", "", arrayOf("Jump + Throw", "Stand + Throw", "Other"), arrayOf(1, 2, 3)) { i ->
+                    val throwingNadeType = when (i) {
+                        1 -> "J+T"
+                        2 -> "S+T"
+                        else -> "Other" //3
+                    }
+                    mPos = me.absPosition()
+                    feetSpot = listOf(mPos.x, mPos.y, mPos.z, input, chosenNadeType, throwingNadeType)
+                    headPos = listOf(xOff, yOff, zOff)
+                    headLookPos = listOf(hLPx, hLPy, hLPz)
+                    LoL = listOf(feetSpot, headPos, headLookPos)
+                    nadeHelperArrayList.add(LoL)
 
-                mPos = me.absPosition()
-                feetSpot = listOf(mPos.x, mPos.y, mPos.z, input, chosenNadeType)
-                headPos = listOf(xOff, yOff, zOff)
-                headLookPos = listOf(hLPx, hLPy, hLPz)
-                LoL = listOf(feetSpot, headPos, headLookPos)
-                nadeHelperArrayList.add(LoL)
-
-                nadeHelperTab.updateNadeFileHelperList()
+                    nadeHelperTab.updateNadeFileHelperList()
+                }
             }
         }
     }).setSize(200F, 200F)
@@ -192,7 +205,7 @@ fun loadPositions(file: String) {
     nadeHelperArrayList.clear()
     FileReader("$SETTINGS_DIRECTORY\\NadeHelper\\$file").readLines().forEach { line ->
         val lLine = line.trim().replace("\"", "").replace("[", "").replace("]", "").split(", ")
-        val chunks = lLine.chunked(11) //Split arrayList into LoLs, size 11
+        val chunks = lLine.chunked(12) //Split arrayList into LoLs, size 11
         //Chunks [0] = 1 LoL
         chunks.forEach { chunk ->
             var bNotEmpty = true
@@ -203,9 +216,9 @@ fun loadPositions(file: String) {
             }
 
             if (bNotEmpty) {
-                feetSpot = listOf(chunk[0].cToDouble(), chunk[1].cToDouble(), chunk[2].cToDouble(), chunk[3], chunk[4]) //5, 3 for location, 1 name, 1 type
-                headPos = listOf(chunk[5].cToDouble(), chunk[6].cToDouble(), chunk[7].cToDouble()) //3
-                headLookPos = listOf(chunk[8].cToDouble(), chunk[9].cToDouble(), chunk[10].cToDouble()) //3
+                feetSpot = listOf(chunk[0].cToDouble(), chunk[1].cToDouble(), chunk[2].cToDouble(), chunk[3], chunk[4], chunk[5]) //5, 3 for location, 1 name, 1 type, 1 throwing type
+                headPos = listOf(chunk[6].cToDouble(), chunk[7].cToDouble(), chunk[8].cToDouble()) //3
+                headLookPos = listOf(chunk[9].cToDouble(), chunk[10].cToDouble(), chunk[11].cToDouble()) //3
                 LoL = listOf(feetSpot, headPos, headLookPos)
                 nadeHelperArrayList.add(LoL)
 
@@ -253,5 +266,17 @@ fun deletePosition() {
     }
     if (removePos != -1) {
         nadeHelperArrayList.removeAt(removePos)
+    }
+}
+
+fun detectMap(mapName: String) {
+    if (!curSettings["ENABLE_NADE_HELPER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return
+
+    var newMapName = mapName.replace("maps\\", "").replace(".bsp", "")
+    nadeHelperTab.nadeHelperFileSelectBox.items.forEach {
+        if (newMapName == it.replace(".txt", "")) {
+            loadPositions(it)
+            return@forEach
+        }
     }
 }

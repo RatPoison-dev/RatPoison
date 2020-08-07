@@ -21,6 +21,7 @@ import rat.poison.game.offsets.EngineOffsets.dwClientState
 import rat.poison.game.offsets.EngineOffsets.dwClientState_MapDirectory
 import rat.poison.game.offsets.EngineOffsets.dwGameDir
 import rat.poison.scripts.bspHandling.loadBsp
+import rat.poison.scripts.detectMap
 import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.every
@@ -58,6 +59,7 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
         if (mapName.isNotBlank() && gameDir.isNotBlank()) {
             if (dbg) {
                 println("[DEBUG] Loading BSP at -- $gameDir\\$mapName")
+                detectMap(mapName)
             }
 
             loadBsp("$gameDir\\$mapName")
