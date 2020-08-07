@@ -41,7 +41,7 @@ class OptionsTab : Tab(false, false) {
     private val debug = VisCheckBoxCustom("Debug", "DEBUG")
     private val keybinds = VisCheckBoxCustom("Keybinds", "KEYBINDS")
     private val blur = VisCheckBoxCustom("Gaussian Blur", "GAUSSIAN_BLUR")
-    private val discordLink = LinkLabel("Join-Discord".toLocale(), "https://discord.gg/J2uHTJ2")
+    private val discordLink = LinkLabel("Join-Discord".toLocale(), "https://discord.gg/xkTteTM")
 
     var cfgFileSelectBox = VisSelectBox<String>()
     var localeFileSelectBox = VisSelectBox<String>()
