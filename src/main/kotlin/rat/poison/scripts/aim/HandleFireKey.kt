@@ -75,6 +75,7 @@ fun fireWeapon() {
 
         if (!didShoot) { //Skip first delay
             shouldAuto = true
+            didShoot = true
         }
 
         if (!shouldAuto) {
