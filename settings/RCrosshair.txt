@@ -1,5 +1,6 @@
 //Enable recoil crosshair
 ENABLE_RECOIL_CROSSHAIR = true
+RCROSSHAIR_TYPE = Circle
 
 //Enable sniper crosshair
 //Static crosshair when holding a sniper

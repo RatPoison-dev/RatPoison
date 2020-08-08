@@ -8,6 +8,7 @@ import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.entity.isScoped
 import rat.poison.game.entity.punch
+import rat.poison.game.entity.velocity
 import rat.poison.game.entity.weapon
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets
@@ -17,10 +18,9 @@ import rat.poison.ui.uiPanels.mainTabbedPane
 import rat.poison.ui.uiPanels.rcsTab
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
+import java.lang.Math.pow
 import java.lang.Math.toRadians
-import kotlin.math.atan
-import kotlin.math.floor
-import kotlin.math.tan
+import kotlin.math.*
 
 internal fun rcrosshair() = App {
     if (!curSettings["ENABLE_ESP"].strToBool())
@@ -72,17 +72,27 @@ internal fun rcrosshair() = App {
             }
 
             begin()
-            set(ShapeRenderer.ShapeType.Filled)
             val col = curSettings["RCROSSHAIR_COLOR"].strToColor()
             color = Color(col.red / 255F, col.green / 255F, col.blue / 255F, curSettings["RCROSSHAIR_ALPHA"].toFloat())
 
             val hasSniper = me.weapon().scope
 
             if ((eSC && hasSniper && !me.isScoped()) || !eSC || (eRC && !hasSniper)) {
-                //Horizontal
-                rect(x - lO, y - wO, cL, cW)
-                //Vertical
-                rect(x - wO, y - lO, cW, cL)
+                if (curSettings["RCROSSHAIR_TYPE"] == "Crosshair") {
+                    set(ShapeRenderer.ShapeType.Filled)
+                    //Horizontal
+                    rect(x - lO, y - wO, cL, cW)
+                    //Vertical
+                    rect(x - wO, y - lO, cW, cL)
+                }
+                else {
+                    val vel = me.velocity()
+                    var circleRad = sqrt(sqrt(vel.x.pow(2)+vel.y.pow(2)).pow(2)+vel.z.pow(2))/4F
+                    if (circleRad <= 0) {
+                        circleRad = 2F
+                    }
+                    circle(x, y, circleRad)
+                }
             }
 
             set(ShapeRenderer.ShapeType.Line)
