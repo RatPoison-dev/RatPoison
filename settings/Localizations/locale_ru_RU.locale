@@ -617,3 +617,6 @@ BOX_ESP_MONEY = Деньги
 BOX_ESP_MONEY_POS = Деньги
 ENABLE_NADE_THROWER = Автонейд
 NADE_THROWER_KEY = Кнопка
+CIRCLE = Круг
+CROSSHAIR = Прицел
+RCROSSHAIR_TYPE = Тип прицела

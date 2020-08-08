@@ -6,8 +6,10 @@ import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
 import rat.poison.toLocale
+import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
+import rat.poison.ui.uiHelpers.VisSelectBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiPanels.rcsTab
 import rat.poison.utils.generalUtil.strToBool
@@ -25,7 +27,9 @@ class RcsTab : Tab(false, false) {
 
     val enableRCrosshair = VisCheckBoxCustom("Recoil Crosshair", "ENABLE_RECOIL_CROSSHAIR")
     val enableSCrosshair = VisCheckBoxCustom("Scope Compatible", "ENABLE_SNIPER_CROSSHAIR")
-
+    
+    // fix later
+    val rCrosshairType = VisSelectBoxCustom("RCrosshair Type", "RCROSSHAIR_TYPE", false, false, "CIRCLE", "CROSSHAIR")
     val rCrosshairWidth = VisSliderCustom("RCrosshair Width", "RCROSSHAIR_WIDTH", 1F, 5F, 1F, true, width1 = 200F, width2 = 250F)
     val rCrosshairLength = VisSliderCustom("RCrosshair Length", "RCROSSHAIR_LENGTH", 3F, 100F, 1F, true, width1 = 200F, width2 = 250F)
     val rCrosshairXOffset = VisSliderCustom("RCrosshair X Offset", "RCROSSHAIR_XOFFSET", -48F, 48F, 1F, true, width1 = 200F, width2 = 250F)
@@ -38,13 +42,13 @@ class RcsTab : Tab(false, false) {
         ////////////////////FORMATTING
         table.padLeft(25F)
         table.padRight(25F)
-
         table.add(enableRCS).left().row()
         table.add(rcsSmoothingX).left().row()
         table.add(rcsSmoothingY).left().row()
         table.add(rcsReturnAim).left().row()
         table.addSeparator()
         table.add(enableRCrosshair).left().row()
+        table.add(rCrosshairType).left().row()
         table.add(enableSCrosshair).left().row()
         table.add(rCrosshairWidth).left().row()
         table.add(rCrosshairLength).left().row()
@@ -72,6 +76,7 @@ fun updateDisableRCrosshair() {
             color = Color(105F, 105F, 105F, .2F)
         }
 
+        rCrosshairType.disable(bool, color)
         rCrosshairWidth.disable(bool, color)
         rCrosshairLength.disable(bool, color)
         rCrosshairXOffset.disable(bool, color)
@@ -102,6 +107,7 @@ fun rcsTabUpdate() {
         rcsSmoothingY.update()
         rcsReturnAim.update()
         enableRCrosshair.update()
+        rCrosshairType.update()
         enableSCrosshair.update()
         rCrosshairWidth.update()
         rCrosshairLength.update()
