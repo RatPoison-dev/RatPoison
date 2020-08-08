@@ -2,6 +2,7 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.gameHeight
@@ -78,7 +79,7 @@ internal fun rcrosshair() = App {
             val hasSniper = me.weapon().scope
 
             if ((eSC && hasSniper && !me.isScoped()) || !eSC || (eRC && !hasSniper)) {
-                if (curSettings["RCROSSHAIR_TYPE"] == "Crosshair") {
+                if (curSettings["RCROSSHAIR_TYPE"] == curLocale["CROSSHAIR"]) {
                     set(ShapeRenderer.ShapeType.Filled)
                     //Horizontal
                     rect(x - lO, y - wO, cL, cW)
