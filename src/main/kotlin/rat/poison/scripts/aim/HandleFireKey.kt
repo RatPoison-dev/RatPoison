@@ -35,7 +35,7 @@ fun handleFireKey() = every(1, continuous = true) {
             punchCheck = 0
             shouldShoot = true
         }
-        Thread.sleep(15)
+        Thread.sleep(10)
         fireWeapon()
     } else if (triggerInShot || callingInShot) {
         if (shouldShoot) { //Finish shooting...
@@ -59,7 +59,10 @@ fun handleFireKey() = every(1, continuous = true) {
 }
 
 fun fireWeapon() {
-    if (!me.weaponEntity().canFire()) return
+    val shotsFired = me.shotsFired()
+    if (shotsFired > 0) {
+        didShoot = true
+    }
 
     updateCursorEnable()
     if (cursorEnable) return
@@ -75,7 +78,10 @@ fun fireWeapon() {
 
         if (!didShoot) { //Skip first delay
             shouldAuto = true
-            didShoot = true
+        }
+
+        if (clientDLL.int(dwForceAttack) == 5) {
+            clientDLL[dwForceAttack] = 4
         }
 
         if (!shouldAuto) {
@@ -88,10 +94,6 @@ fun fireWeapon() {
 
     if (curSettings["ENABLE_BACKTRACK"].strToBool() && (!backtrackOnKey || (backtrackOnKey && backtrackKeyPressed))) {
         if (shouldAuto || (!shouldAuto && !didShoot) || meWep.automatic) {
-            if (!meWep.automatic) {
-                clientDLL[dwForceAttack] = 4 //This probably isnt a perfect solution
-            }
-
             if (attemptBacktrack()) {
                 if (!shouldAuto) {
                     didShoot = true
@@ -101,9 +103,15 @@ fun fireWeapon() {
         }
     }
 
+
+
     if (shouldAuto) {
         clientDLL[dwForceAttack] = 6
     } else if (!didShoot || meWep.automatic) {
+        if (!meWep.automatic && me.shotsFired() > 0) { //Dont use shotsFired var, this can be different
+            return
+        }
+
         didShoot = true
         clientDLL[dwForceAttack] = 5
     }

@@ -20,7 +20,7 @@ fun automaticWeapons(): Boolean {
                     punchCheck = 0
                     return true
                 } else {
-                    punchCheck += 1
+                    punchCheck += 15
                 }
             }
         }
