@@ -12,3 +12,7 @@ NADE_TRACER_TIMEOUT = 5
 
 //Color of the grenade tracer line
 NADE_TRACER_COLOR = Color(red=4, green=255, blue=0, alpha=1.0)
+
+ENABLE_NADE_THROWER = false
+NADE_THROWER_SMOOTHNESS = 20
+NADE_THROWER_KEY = -1

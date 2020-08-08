@@ -13,7 +13,7 @@ import rat.poison.dbg
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.keybindsUpdate
 
-class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true) : VisTable() {
+class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true, keyWidth: Float = 200F) : VisTable() {
     private val textLabel = mainText
     private val variableName = varName
 
@@ -38,7 +38,7 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
             false
         }
 
-        add(keyLabel).width(200F)
+        add(keyLabel).width(keyWidth)
         add(keyField).spaceRight(6F).width(50F)
         if (addLink) {
             add(linkLabel)

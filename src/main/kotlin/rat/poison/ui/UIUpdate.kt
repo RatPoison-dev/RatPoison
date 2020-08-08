@@ -36,6 +36,11 @@ fun uiUpdate() {
 
     //Update windows
     uiAimOverridenWeapons.setPosition(uiMenu.x+uiMenu.width+4F, uiMenu.y)
+    //Update lists
+    optionsTab.updateCFGList()
+    optionsTab.updateLocaleList()
+    miscTab.updateHitSoundsList()
+    nadeHelperTab.updateNadeFileHelperList()
 }
 
 fun refreshMenu() {

@@ -121,6 +121,7 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Handle Fire Key") }; handleFireKey()
 
     if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
+    if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()
 
     if (EXPERIMENTAL) {
         //rayTraceTest()

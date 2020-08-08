@@ -20,6 +20,7 @@ import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiPanels.miscTab
+import rat.poison.ui.uiPanels.optionsTab
 import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.generalUtil.boolToStr
 import rat.poison.utils.generalUtil.strToBool
@@ -122,12 +123,7 @@ class MiscTab : Tab(false, false) {
 
         //Create Hit Sound Selector Box
         val hitSound = VisTable()
-        val hitSoundFiles = Array<String>()
-        File("$SETTINGS_DIRECTORY\\hitsounds").listFiles()?.forEach {
-            hitSoundFiles.add(it.name)
-        }
-
-        hitSoundBox.items = hitSoundFiles
+        updateHitSoundsList()
 
         hitSound.add(hitSoundCheckBox)
         hitSound.add(hitSoundBox).padLeft(100F-hitSoundCheckBox.width).width(90F)
@@ -218,6 +214,14 @@ class MiscTab : Tab(false, false) {
 
     override fun getTabTitle(): String? {
         return "Misc".toLocale()
+    }
+
+    fun updateHitSoundsList() {
+        val hitSoundFiles = Array<String>()
+        File("$SETTINGS_DIRECTORY\\hitsounds").listFiles()?.forEach {
+            hitSoundFiles.add(it.name)
+        }
+        hitSoundBox.items = hitSoundFiles
     }
 }
 
