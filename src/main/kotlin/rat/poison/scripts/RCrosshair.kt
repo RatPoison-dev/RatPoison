@@ -79,7 +79,7 @@ internal fun rcrosshair() = App {
             val hasSniper = me.weapon().scope
 
             if ((eSC && hasSniper && !me.isScoped()) || !eSC || (eRC && !hasSniper)) {
-                if (curSettings["RCROSSHAIR_TYPE"] == curLocale["CROSSHAIR"]) {
+                if (curSettings["RCROSSHAIR_TYPE"].toUpperCase() == "CROSSHAIR") {
                     set(ShapeRenderer.ShapeType.Filled)
                     //Horizontal
                     rect(x - lO, y - wO, cL, cW)

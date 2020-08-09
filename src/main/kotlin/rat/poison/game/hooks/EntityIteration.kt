@@ -99,7 +99,7 @@ fun updateCursorEnable() { //Call when needed
 
 var toneMapController = 0L
 
-fun constructEntities() = every(500) {
+fun constructEntities() = every(500, continuous = true) {
     updateCursorEnable()
     state = SignOnState[csgoEXE.int(clientState + EngineOffsets.dwSignOnState)]
 
