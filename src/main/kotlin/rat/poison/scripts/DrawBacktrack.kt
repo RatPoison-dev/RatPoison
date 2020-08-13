@@ -87,11 +87,11 @@ fun drawBacktrack() = App {
                 sign = 1
             }
 
-            val topLeft = Vector(minHeadPos.x - (w / 1.5F) * sign, minHeadPos.y, minHeadPos.z)
-            val topRight = Vector(maxHeadPos.x + (w / 1.5F) * sign, maxHeadPos.y, maxHeadPos.z)
+            val topLeft = Vector(minHeadPos.x - (w / 3F) * sign, minHeadPos.y, minHeadPos.z)
+            val topRight = Vector(maxHeadPos.x + (w / 3F) * sign, maxHeadPos.y, maxHeadPos.z)
 
-            val bottomLeft = Vector(minMidX - w * sign, minAbsPos.y, minAbsPos.z)
-            val bottomRight = Vector(maxMidX + w * sign, maxAbsPos.y, maxAbsPos.z)
+            val bottomLeft = Vector(minMidX - (w / 2F) * sign, minAbsPos.y+8F, minAbsPos.z)
+            val bottomRight = Vector(maxMidX + (w / 2F) * sign, maxAbsPos.y+8F, maxAbsPos.z)
 
             shapeRenderer.apply {
                 if (shapeRenderer.isDrawing) {

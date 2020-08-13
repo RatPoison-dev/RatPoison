@@ -187,8 +187,8 @@ fun bestSimTime(): Float {
             sign = 1
         }
 
-        //val topLeft = Vector(minHeadPos.x - (w / 1.5F) * sign, minHeadPos.y, minHeadPos.z)
-        val topRight = Vector(maxHeadPos.x + (w / 1.5F) * sign, maxHeadPos.y, maxHeadPos.z)
+        val topLeft = Vector(minHeadPos.x - (w / 3F) * sign, minHeadPos.y, minHeadPos.z)
+        val topRight = Vector(maxHeadPos.x + (w / 3F) * sign, maxHeadPos.y, maxHeadPos.z)
 
         val bottomLeft = Vector(minMidX - w * sign, minAbsPos.y, minAbsPos.z)
         val bottomRight = Vector(maxMidX + w * sign, maxAbsPos.y, maxAbsPos.z)
@@ -202,7 +202,10 @@ fun bestSimTime(): Float {
         val centerY = (CSGO.gameHeight / 2) - tan(Math.toRadians(punch.x.toDouble())).toFloat() * rccFov2
 
         //Implement proper convex polygon check
-        if (inRange(centerX, bottomLeft.x, bottomRight.x) && inRange(centerY, topRight.y, bottomRight.y)) {//If middle of screen + recoil is inside polygon
+        println(topRight.y.toString() + " blah " + bottomRight.y + " Skrt " + centerY)
+        println(bottomLeft.x.toString() + " yuh " + bottomRight.x + " wack " + centerX)
+
+        if (inRange(centerX, topLeft.x, topRight.x) && inRange(centerY, topLeft.y, bottomLeft.y)) {//If middle of screen + recoil is inside polygon
             var bestMinX = Float.MAX_VALUE
 
             for (i in validRecords) {
