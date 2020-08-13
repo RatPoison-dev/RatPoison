@@ -1,7 +1,6 @@
 package rat.poison.scripts
 
 import rat.poison.game.entity.*
-import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
 import rat.poison.game.rankName
 import rat.poison.overlay.App.haveTarget
@@ -12,17 +11,16 @@ import rat.poison.utils.every
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.notInGame
 
-//var ctPlayers = arrayListOf<List<String>>()
-//var tPlayers = arrayListOf<List<String>>()
 var teamList = mutableListOf<String>()
 var nameList = mutableListOf<String>()
+var steamIDList = mutableListOf<String>()
 var rankList = mutableListOf<String>()
 var killsList = mutableListOf<String>()
 var deathsList = mutableListOf<String>()
 var KDList = mutableListOf<String>()
 var winsList = mutableListOf<String>()
 
-fun ranks() = every(1000, true) { //Rebuild every second
+fun ranks() = every(5000, true) { //Rebuild every second
     if (notInGame || !opened || !haveTarget) return@every
 
     //Bruh -- fix later
@@ -65,7 +63,13 @@ fun ranks() = every(1000, true) { //Rebuild every second
             }
         }
 
+        var steamID = 0
+        try {
+            steamID = (entity.steamID().split(":")[2].toInt() * 2)
+        } catch (e: Exception) { }
+
         nameList.add(entName)
+        steamIDList.add(steamID.toString())
         rankList.add(entRank)
         killsList.add(entKills)
         deathsList.add(entDeaths)
