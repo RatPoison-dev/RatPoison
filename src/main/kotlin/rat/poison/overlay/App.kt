@@ -156,8 +156,10 @@ object App : ApplicationAdapter() {
                                 menuStage.clear() //actors.remove at index doesnt work after 1 loop?
                             }
 
-                            menuStage.act(Gdx.graphics.deltaTime)
-                            menuStage.draw()
+                            try {
+                                menuStage.act(Gdx.graphics.deltaTime)
+                                menuStage.draw()
+                            } catch(e: Exception) { }
                         }, TimeUnit.NANOSECONDS)
 
 
@@ -190,6 +192,7 @@ object App : ApplicationAdapter() {
                             val systemLoad = osBean.systemCpuLoad
 
                             sbText.clear()
+                            sbText.append("")
                             sbText.append("Total physical mem: ").appendHumanReadableSize(totalPhysMem)
                             sbText.append("\nFree physical mem: ").appendHumanReadableSize(freePhysMem)
 
@@ -211,6 +214,10 @@ object App : ApplicationAdapter() {
 
 
                         textRenderer.apply {
+                            if (sb.isDrawing) {
+                                sb.end()
+                            }
+
                             sb.begin()
 
                             draw(sb, sbText, CSGO.gameWidth/3F, CSGO.gameHeight-100F)

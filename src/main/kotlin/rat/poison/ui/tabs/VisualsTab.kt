@@ -29,6 +29,7 @@ var footStepsEspTab = FootstepsEspTab()
 var hitMarkerTab = HitMarkerTab()
 var nadesTab = NadesVT()
 var headLevelTab = HeadLevelTab()
+var spreadCircleTab = SpreadCircleTab()
 
 class VisualsTab : Tab(false, false) {
     private val table = VisTable()
@@ -66,6 +67,7 @@ class VisualsTab : Tab(false, false) {
         espTabbedPane.add(hitMarkerTab)
         espTabbedPane.add(nadesTab)
         espTabbedPane.add(headLevelTab)
+        espTabbedPane.add(spreadCircleTab)
 
         espTabbedPane.switchTab(glowEspTab)
 
@@ -116,6 +118,9 @@ class VisualsTab : Tab(false, false) {
                     }
                     headLevelTab -> {
                         espTabbedPaneContent.add(headLevelTab.contentTable).left().colspan(2).row()
+                    }
+                    spreadCircleTab -> {
+                        espTabbedPaneContent.add(spreadCircleTab.contentTable).left().colspan(2).row()
                     }
                 }
 
@@ -198,6 +203,7 @@ fun updateDisableEsp() {
         espTabbedPane.disableTab(hitMarkerTab, bool)
         espTabbedPane.disableTab(nadesTab, bool)
         espTabbedPane.disableTab(headLevelTab, bool)
+        espTabbedPane.disableTab(spreadCircleTab, bool)
 
         espTabbedPane.switchTab(recTab)
 
@@ -315,6 +321,11 @@ fun updateDisableEsp() {
             enableHeadLevel.disable(bool)
             headLevelColor.disable(bool)
             headLevelDeadzone.disable(bool, col)
+        }
+
+        spreadCircleTab.apply {
+            enableSpreadCircle.disable(bool)
+            spreadCircleColor.disable(bool)
         }
         //Add disable nades tab
 

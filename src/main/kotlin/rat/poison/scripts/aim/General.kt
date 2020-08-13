@@ -18,9 +18,11 @@ var canPerfect = false
 var boneTrig = false
 var destBone = -1
 
-fun reset() {
+fun reset(resetTarget: Boolean = false) {
 	destBone = -5
-	target = -1L
+	if (resetTarget) {
+		target = -1L
+	}
 	canPerfect = false
 }
 
@@ -136,7 +138,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		val canFire = meWepEnt.canFire()
 
 		if (meWep.grenade || meWep.knife || meWep.miscEnt || meWep == Weapons.ZEUS_X27 || meWep.bomb) { //Invalid for aimbot
-			reset()
+			reset(true)
 			return@every
 		}
 
@@ -146,7 +148,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		}
 
 		if (meWep.sniper && !me.isScoped() && curSettings["ENABLE_SCOPED_ONLY"].strToBool()) { //Scoped only
-			reset()
+			reset(true)
 			return@every
 		}
 
@@ -164,7 +166,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		var currentTarget = target
 
 		if (!pressed) {
-			reset()
+			reset(true)
 			return@every
 		}
 
@@ -178,11 +180,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			aB = curSettings["FORCE_AIM_BONE"].toInt()
 		}
 
-		val bestTarget = findTarget(position, currentAngle, aim,
-				BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 3); destBone } else { destBone = aB; aB },
-				visCheck = shouldVisCheck) //Try to find new target
-
-		if (currentTarget < 0) { //If target is invalid from last run
+		if (currentTarget <= 0 || curSettings["HOLD_AIM"].strToBool()) { //If target is invalid from last run
 			currentTarget = findTarget(position, currentAngle, aim,
 					BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 3); destBone } else { destBone = aB; aB },
 					visCheck = shouldVisCheck) //Try to find new target
@@ -200,14 +198,9 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			if (nearestBone != -999) {
 				destBone = nearestBone
 			} else {
-				reset()
+				reset(true)
 				return@every
 			}
-		}
-
-		if (bestTarget < 0) {
-			reset()
-			return@every
 		}
 
 		var perfect = false
@@ -217,11 +210,8 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			}
 		}
 
-		//Have a new best target, we aren't holding aim, and our weapon is automatic
-		val swapTarget = (bestTarget > 0 && currentTarget != bestTarget) && !curSettings["HOLD_AIM"].strToBool() && (meWep.automatic || curSettings["AUTOMATIC_WEAPONS"].strToBool())
-
-		if (!currentTarget.canShoot(shouldVisCheck) || swapTarget) {
-			reset()
+		if (!currentTarget.canShoot(shouldVisCheck)) {
+			reset(true)
 			Thread.sleep(curSettings["AIM_TARGET_SWAP_DELAY"].toInt().toLong())
 		} else {
 			val bonePosition = currentTarget.bones(destBone)
@@ -235,6 +225,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			val aimSpeed = curSettings["AIM_SPEED"].toInt()
 
 			val aimSpeedDivisor = if (curSettings["AIM_ADVANCED"].strToBool()) curSettings["AIM_SPEED_DIVISOR"].toInt() else 1
+
 			doAim(destinationAngle, currentAngle, aimSpeed, aimSpeedDivisor)
 		}
 	} catch (e: Exception) { e.printStackTrace() }

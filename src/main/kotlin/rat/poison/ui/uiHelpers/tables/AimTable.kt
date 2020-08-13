@@ -71,7 +71,7 @@ class AimTable: VisTable(false) {
     val perfectAimCheckBox = VisCheckBox("Enable-Perfect-Aim".toLocale())
     private val perfectAimTable = VisTable()
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
-    val perfectAimFov = ATabVisSlider("FOV", "_PERFECT_AIM_FOV", 1F, 180F, 1F, true)
+    val perfectAimFov = ATabVisSlider("FOV", "_PERFECT_AIM_FOV", 1F, 90F, .5F, true)
     val perfectAimChance = ATabVisSlider("Chance", "_PERFECT_AIM_CHANCE", 1F, 100F, 1F, true)
 
     //Advanced Settings Collapsible

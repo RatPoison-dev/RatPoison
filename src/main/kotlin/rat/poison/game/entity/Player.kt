@@ -167,10 +167,10 @@ internal fun Player.nearestBone(): Int {
 				val tPunch = me.punch()
 
 				if (worldToScreen(boneMemory.vector(parent * 0x30L, 0x0C, 0x1C, 0x2C), w2sRetVec)) {
-					val tempVec3 = Vector3(w2sRetVec.x.toFloat(), w2sRetVec.y.toFloat(), w2sRetVec.z.toFloat())
+					val tempVec3 = Vector3(w2sRetVec.x, w2sRetVec.y, w2sRetVec.z)
 
-					val tX = CSGO.gameWidth / 2 - ((CSGO.gameWidth / 95F) * tPunch.y).toFloat()
-					val tY = CSGO.gameHeight / 2 - ((CSGO.gameHeight / 95F) * tPunch.x).toFloat()
+					val tX = CSGO.gameWidth / 2 - ((CSGO.gameWidth / 95F) * tPunch.y)
+					val tY = CSGO.gameHeight / 2 - ((CSGO.gameHeight / 95F) * tPunch.x)
 
 					val dst2 = tempVec3.dst2(tX, tY, 0F)
 
@@ -181,10 +181,10 @@ internal fun Player.nearestBone(): Int {
 				}
 
 				if (worldToScreen(boneMemory.vector(idx * 0x30L, 0x0C, 0x1C, 0x2C), w2sRetVec)) {
-					val tempVec3 = Vector3(w2sRetVec.x.toFloat(), w2sRetVec.y.toFloat(), w2sRetVec.z.toFloat())
+					val tempVec3 = Vector3(w2sRetVec.x, w2sRetVec.y, w2sRetVec.z)
 
-					val tX = CSGO.gameWidth / 2 - ((CSGO.gameWidth / 95F) * tPunch.y).toFloat()
-					val tY = CSGO.gameHeight / 2 - ((CSGO.gameHeight / 95F) * tPunch.x).toFloat()
+					val tX = CSGO.gameWidth / 2 - ((CSGO.gameWidth / 95F) * tPunch.y)
+					val tY = CSGO.gameHeight / 2 - ((CSGO.gameHeight / 95F) * tPunch.x)
 
 					val dst2 = tempVec3.dst2(tX, tY, 0F)
 

@@ -14,6 +14,7 @@ import rat.poison.scripts.skinChanger
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiPanels.skinChangerTab
+import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.generalUtil.toSkinWeaponClass
 import java.io.File
 
@@ -22,13 +23,10 @@ class SkinChangerTab : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     var enableSkinChanger = VisCheckBoxCustom("Enable Skinchanger", "SKINCHANGER")
-    //var enableKnifeChanger = VisCheckBoxCustom("Enable Knifechanger", "KNIFECHANGER")
 
     private var categorySelectionBox = VisSelectBox<String>()
     private var weaponSelectionBox = VisSelectBox<String>()
-    //private var knifeSelectionBox = VisSelectBox<String>()
 
-    //This is so FUCKING dumb
     private var strArray = ArrayList<String>()
     private var listAdapter = ListAdapter(strArray)
     private var skinSelectionList = ListView(listAdapter)
@@ -40,7 +38,6 @@ class SkinChangerTab : Tab(false, false) {
     private var skinIDInput = VisValidatableTextField(Validators.INTEGERS)
     private var skinStatTrak = VisValidatableTextField(Validators.INTEGERS)
     private var skinWear = VisSlider(0.0F, 1.0F, .01F, false)
-    //private var skinWear = VisValidatableTextField(Validators.FLOATS)
 
     private var forceUpdate = VisTextButton("Manual-Force-Update".toLocale())
     var autoForceUpdate = VisCheckBoxCustom("Auto-Force-Update".toLocale(), "FORCE_UPDATE_AUTO")
@@ -94,7 +91,7 @@ class SkinChangerTab : Tab(false, false) {
 
                 skinIDInput.text = skinWep.tSkinID.toString()
                 skinStatTrak.text = skinWep.tStatTrak.toString()
-                skinWear.value = skinWep.tWear
+                skinWear.value = skinWep.tWear.roundNDecimals(1)
 
                 listAdapter.clear()
                 val tmpArray = getSkinArray(weaponSelected)
@@ -115,12 +112,12 @@ class SkinChangerTab : Tab(false, false) {
                 skinWep.tSkinID = skinIDInput.text.toInt()
                 if (skinWep.tWear < minValue) {
                     skinWep.tWear = minValue
-                    skinWear.value = minValue
+                    skinWear.value = minValue.roundNDecimals(1)
                     wearLabel.setText(minValue.toString())
                 }
                 if (skinWep.tWear > maxValue) {
                     skinWep.tWear = maxValue
-                    skinWear.value = maxValue
+                    skinWear.value = maxValue.roundNDecimals(1)
                     wearLabel.setText(maxValue.toString())
                 }
 
@@ -128,12 +125,6 @@ class SkinChangerTab : Tab(false, false) {
                 forcedUpdate()
             }
         }
-
-        //knifeSelectionBox.setItems("Bayonet", "Classic", "Flip", "Gut", "Karambit", "M9 Bayonet", "Huntsman", "Falchion", "Bowie", "Butterfly", "Shadow Daggers", "Paracord", "Survival", "Ursus", "Navaja", "Nomad", "Stiletto", "Talon", "Skeleton")
-        //knifeSelectionBox.changed { _, _ ->
-        //    curSettings["KNIFE_IDX"] = knifeSelectionBox.selectedIndex
-        //    true
-        //}
 
         skinIDInput.changed { _, _ ->
             val skinWep = curSettings["SKIN_$weaponSelected"].toSkinWeaponClass()
@@ -156,15 +147,15 @@ class SkinChangerTab : Tab(false, false) {
         skinWear.changed { _, _ ->
             when {
                 skinWear.value < minValue -> {
-                    skinWear.value = minValue
-                    wearLabel.setText("Wear: $minValue")
+                    skinWear.value = minValue.roundNDecimals(1)
+                    wearLabel.setText("Wear: ${minValue.roundNDecimals(1)}")
                 }
                 skinWear.value > maxValue -> {
-                    skinWear.value = maxValue
-                    wearLabel.setText("Wear: $maxValue")
+                    skinWear.value = maxValue.roundNDecimals(1)
+                    wearLabel.setText("Wear: ${maxValue.roundNDecimals(1)}")
                 }
                 else -> {
-                    wearLabel.setText("Wear: " + skinWear.value.toString())
+                    wearLabel.setText("Wear: ${skinWear.value.roundNDecimals(1)}")
                 }
             }
 
@@ -203,8 +194,6 @@ class SkinChangerTab : Tab(false, false) {
 
         leftTable.add(forceUpdate).left().row()
         leftTable.add(autoForceUpdate).left().row()
-        //leftTable.add(enableKnifeChanger).left().row()
-        //leftTable.add(knifeSelectionBox).left().row()
 
         table.add(leftTable).width(220F).align(Align.topLeft)
         table.add(skinSelectionList.mainTable).right().colspan(1).width(220F)
@@ -253,7 +242,7 @@ fun getSkinArray(wep: String): Array<String> {
     val wepSkinArray = Array<String>()
     var readingLines = false
 
-    File("$SETTINGS_DIRECTORY\\SkinInfo\\SkinInfo.txt").forEachLine { line->
+    File("$SETTINGS_DIRECTORY\\Data\\SkinInfo.txt").forEachLine { line->
         if (readingLines) {
             if (line.startsWith("}")) {
                 readingLines = false
@@ -274,7 +263,7 @@ fun getSkinArray(wep: String): Array<String> {
 fun getSkinNameFromID(ID: Int): String {
     var str = ""
     var found = false
-    File("$SETTINGS_DIRECTORY\\SkinInfo\\SkinInfo.txt").forEachLine { line->
+    File("$SETTINGS_DIRECTORY\\Data\\SkinInfo.txt").forEachLine { line->
         if (!found) {
             if (line.contains(":")) {
                 val tmpSplitLine = line.split(":")
@@ -293,7 +282,7 @@ fun getSkinIDFromName(Name: String, Weapon: String): Int {
     var id = 0
     var inCategory = ""
     var found = false
-    File("$SETTINGS_DIRECTORY\\SkinInfo\\SkinInfo.txt").forEachLine { line->
+    File("$SETTINGS_DIRECTORY\\Data\\SkinInfo.txt").forEachLine { line->
         if (!found) {
             if (line.contains("{")) {
                 inCategory = line.replace("{", "").trim()
@@ -315,7 +304,7 @@ fun getSkinIDFromName(Name: String, Weapon: String): Int {
 fun getMinValueFromID(ID: Int): Float {
     var minValue = 0.0F
     var found = false
-    File("$SETTINGS_DIRECTORY\\SkinInfo\\SkinInfo.txt").forEachLine { line->
+    File("$SETTINGS_DIRECTORY\\Data\\SkinInfo.txt").forEachLine { line->
         if (!found) {
             if (line.contains(":")) {
                 val tmpSplitLine = line.split(":")
@@ -333,7 +322,7 @@ fun getMinValueFromID(ID: Int): Float {
 fun getMaxValueFromID(ID: Int): Float {
     var minValue = 0.0F
     var found = false
-    File("$SETTINGS_DIRECTORY\\SkinInfo\\SkinInfo.txt").forEachLine { line->
+    File("$SETTINGS_DIRECTORY\\Data\\SkinInfo.txt").forEachLine { line->
         if (!found) {
             if (line.contains(":")) {
                 val tmpSplitLine = line.split(":")

@@ -28,6 +28,7 @@ fun uiUpdate() {
     headLevelTabUpdate()
     miscTabUpdate()
     rcsTabUpdate()
+    spreadCircleTabUpdate()
     nadeHelperTabUpdate()
     updateBacktrack()
     updateTrig()
@@ -75,6 +76,7 @@ fun refreshMenu() {
     hitMarkerTab = HitMarkerTab()
     nadesTab = NadesVT()
     headLevelTab = HeadLevelTab()
+    spreadCircleTab = SpreadCircleTab()
 
     espTabbedPane.add(glowEspTab)
     espTabbedPane.add(chamsEspTab)
@@ -85,12 +87,12 @@ fun refreshMenu() {
     espTabbedPane.add(hitMarkerTab)
     espTabbedPane.add(nadesTab)
     espTabbedPane.add(headLevelTab)
+    espTabbedPane.add(spreadCircleTab)
 
     uiAimOverridenWeapons.removeActor(overridenWeapons)
     uiAimOverridenWeapons.remove()
     overridenWeapons = OverridenWeapons()
     uiAimOverridenWeapons = UIAimOverridenWeapons()
-
 
     uiSpecList.remove()
     uiSpecList = UISpectatorList()

@@ -159,17 +159,16 @@ fun bTrigShoot(initDelay: Int, shotDelay: Int, aimbot: Boolean = false, backtrac
 }
 
 private fun triggerShoot(aimbot: Boolean = false, backtrack: Boolean = false, backtrackFallback: Boolean = false) {
-    boneTrig = aimbot
+    boneTrig = aimbot && !backtrack
     var didBacktrack = false
 
-    //Can combine statements? sippin dum dum juice rn
     if (backtrack) {
         didBacktrack = attemptBacktrack()
-    } else {
-        clientDLL[dwForceAttack] = 6 //HandleFireKey.kt
+        boneTrig = didBacktrack
     }
 
-    if (!didBacktrack && backtrackFallback) {
+    if (!backtrack || (backtrack && !didBacktrack && backtrackFallback)) {
+        boneTrig = aimbot
         clientDLL[dwForceAttack] = 6 //HandleFireKey.kt
     }
 
