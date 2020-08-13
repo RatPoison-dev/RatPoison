@@ -2,7 +2,6 @@ package rat.poison.utils.generalUtil
 
 import rat.poison.curLocale
 import rat.poison.curSettings
-import rat.poison.dbg
 import rat.poison.settingsLoaded
 import rat.poison.utils.Settings
 import java.io.File
@@ -30,7 +29,7 @@ fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
         }
     } else {
         File(fileDir).listFiles()?.forEach { file ->
-            if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo" && file.name != "Localizations" && file.name.contains(".txt")) {
+            if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "Data" && file.name != "Localizations" && file.name.contains(".txt")) {
                 FileReader(file).readLines().forEach { line ->
                     if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                         val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE

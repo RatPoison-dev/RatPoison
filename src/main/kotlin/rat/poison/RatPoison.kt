@@ -81,6 +81,7 @@ fun main() {
         curSettings["NADE_TRACER"] = "false"
         curSettings["DRAW_AIM_FOV"] = "false"
         curSettings["ENABLE_HITSOUND"] = "false"
+        curSettings["SPREAD_CIRCLE"] = "false"
     } else {
         if (dbg) { println("[DEBUG] Initializing Recoil Ranks") }; ranks()
 
@@ -92,6 +93,7 @@ fun main() {
         if (dbg) { println("[DEBUG] Initializing Nade Helper") }; nadeHelper()
         if (dbg) { println("[DEBUG] Initializing Nade Tracer") }; nadeTracer()
         if (dbg) { println("[DEBUG] Initializing Draw Fov") }; drawFov()
+        if (dbg) { println("[DEBUG] Initializing Spread Circle") }; spreadCircle()
     }
 
     if (dbg) { println("[DEBUG] Initializing Bunny Hop") }; bunnyHop()
@@ -127,6 +129,7 @@ fun main() {
         //rayTraceTest()
         drawMapWireframe()
     }
+
 
     //Overlay check, not updated?
     if (curSettings["MENU"].strToBool()) {

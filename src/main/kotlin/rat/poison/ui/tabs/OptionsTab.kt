@@ -15,7 +15,6 @@ import rat.poison.*
 import rat.poison.overlay.App.menuStage
 import rat.poison.overlay.App.uiBombWindow
 import rat.poison.overlay.App.uiKeybinds
-import rat.poison.overlay.App.uiMenu
 import rat.poison.overlay.App.uiSpecList
 import rat.poison.ui.changed
 import rat.poison.ui.refreshMenu
@@ -29,7 +28,6 @@ import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
-import kotlin.math.round
 
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -191,7 +189,7 @@ fun saveDefault() {
             println("\nSaving!\n")
             File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
                 val sbLines = StringBuilder()
-                if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo" && file.name != "Localizations") {
+                if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "Data" && file.name != "Localizations") {
                     FileReader(file).readLines().forEach { line ->
                         if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                             val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
@@ -252,7 +250,7 @@ fun saveCFG(cfgFileName: String) {
 
             val sbLines = StringBuilder()
             File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
-                if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "SkinInfo" && file.name != "Localizations") {
+                if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "Data" && file.name != "Localizations") {
                     FileReader(file).readLines().forEach { line ->
                         if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                             val tempCurLine = line.trim().split(" ".toRegex(), 3) //Separate line into 'VARIABLE = VALUE'
