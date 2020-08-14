@@ -620,3 +620,6 @@ NADE_THROWER_KEY = Кнопка
 CIRCLE = CIRCLE
 CROSSHAIR = CROSSHAIR
 RCROSSHAIR_TYPE = Тип прицела
+SPREAD_CIRCLE = Круг отдачи
+SPREAD_CIRCLE_COLOR = Цвет круга
+SpreadCircle = Круг отдачи
