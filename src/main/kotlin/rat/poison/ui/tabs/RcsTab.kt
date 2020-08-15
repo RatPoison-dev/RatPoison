@@ -20,15 +20,16 @@ class RcsTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     val enableRCS = VisCheckBoxCustom("Enable RCS", "ENABLE_RCS")
 
-    val rcsSmoothingX = VisSliderCustom("RCS X Accuracy", "RCS_SMOOTHING_X", .1F, 1F, .02F, false, width1 = 200F, width2 = 250F)
-    val rcsSmoothingY = VisSliderCustom("RCS Y Accuracy", "RCS_SMOOTHING_Y", .1F, 1F, .02F, false, width1 = 200F, width2 = 250F)
+    val rcsType = VisSelectBoxCustom("RCS Type", "RCS_TYPE", false, true, "STABLE", "LEGACY")
+
+    val rcsSmoothingX = VisSliderCustom("RCS X Accuracy", "RCS_SMOOTHING_X", .02F, 1F, .02F, false, width1 = 200F, width2 = 250F)
+    val rcsSmoothingY = VisSliderCustom("RCS Y Accuracy", "RCS_SMOOTHING_Y", .02F, 1F, .02F, false, width1 = 200F, width2 = 250F)
 
     val rcsReturnAim = VisCheckBoxCustom("Return Aim", "RCS_RETURNAIM")
 
     val enableRCrosshair = VisCheckBoxCustom("Recoil Crosshair", "ENABLE_RECOIL_CROSSHAIR")
     val enableSCrosshair = VisCheckBoxCustom("Scope Compatible", "ENABLE_SNIPER_CROSSHAIR")
-    
-    // fix later
+
     val rCrosshairType = VisSelectBoxCustom("RCrosshair Type", "RCROSSHAIR_TYPE", false, false, "CIRCLE", "CROSSHAIR")
     val rCrosshairWidth = VisSliderCustom("RCrosshair Width", "RCROSSHAIR_WIDTH", 1F, 5F, 1F, true, width1 = 200F, width2 = 250F)
     val rCrosshairLength = VisSliderCustom("RCrosshair Length", "RCROSSHAIR_LENGTH", 3F, 100F, 1F, true, width1 = 200F, width2 = 250F)
@@ -43,6 +44,7 @@ class RcsTab : Tab(false, false) {
         table.padLeft(25F)
         table.padRight(25F)
         table.add(enableRCS).left().row()
+        table.add(rcsType).left().row()
         table.add(rcsSmoothingX).left().row()
         table.add(rcsSmoothingY).left().row()
         table.add(rcsReturnAim).left().row()
@@ -94,6 +96,7 @@ fun updateDisableRcsSmoothing() {
             color = Color(105F, 105F, 105F, .2F)
         }
 
+        rcsType.disable(bool, color)
         rcsSmoothingX.disable(bool, color)
         rcsSmoothingY.disable(bool, color)
         rcsReturnAim.isDisabled = bool
@@ -103,6 +106,7 @@ fun updateDisableRcsSmoothing() {
 fun rcsTabUpdate() {
     rcsTab.apply {
         enableRCS.update()
+        rcsType.update()
         rcsSmoothingX.update()
         rcsSmoothingY.update()
         rcsReturnAim.update()

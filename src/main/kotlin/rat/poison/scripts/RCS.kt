@@ -14,44 +14,67 @@ import rat.poison.game.setAngle
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.normalize
+import kotlin.math.abs
 
-private val lastPunch = Vector2()
-private val newPunch = Vector2()
-private val playerPunch = Vector3()
+private val lastAppliedRCS = Vector2()
 
 fun rcs() = every(4) {
 	if (me <= 0 || !curSettings["ENABLE_RCS"].strToBool()) return@every
 
 	val weaponEntity = me.weaponEntity()
 	val weapon = me.weapon(weaponEntity)
-	if (!weapon.automatic) { lastPunch.set(0F, 0F); return@every }
+	if (!weapon.automatic) { lastAppliedRCS.set(0F, 0F); return@every }
 	val shotsFired = me.shotsFired()
 	val p = me.punch()
 
-	val forceSet = (shotsFired == 0 && !lastPunch.isZero)
+	val forceSet = (shotsFired == 0 && !lastAppliedRCS.isZero)
 
 	if (forceSet || /*!finishPunch ||*/ shotsFired > 1) {
-		if (lastPunch.isZero) {
-			lastPunch.set(p.x, p.y)
-		}
+		if (curSettings["RCS_TYPE"] == "STABLE") {
+			if (lastAppliedRCS.isZero) {
+				lastAppliedRCS.set(p.x * 2, p.y * 2)
+			}
 
-		playerPunch.set(p.x, p.y, p.z)
-		newPunch.set(playerPunch.x - lastPunch.x, playerPunch.y - lastPunch.y)
-		newPunch.scl(1F + curSettings["RCS_SMOOTHING_Y"].toFloat(), 1F + curSettings["RCS_SMOOTHING_X"].toFloat())
+			val realPunch = Vector2(p.x * 2, p.y * 2)
 
-		val angle = clientState.angle()
-		angle.apply {
-			x -= newPunch.x
-			y -= newPunch.y
-			normalize()
-		}
+			val punchToApply = Vector2(realPunch.x - lastAppliedRCS.x, realPunch.y - lastAppliedRCS.y)
+			punchToApply.scl(curSettings["RCS_SMOOTHING_Y"].toFloat(), curSettings["RCS_SMOOTHING_X"].toFloat())
 
-		clientState.setAngle(angle)
-		lastPunch.x = playerPunch.x
-		lastPunch.y = playerPunch.y
+			val angle = clientState.angle()
+			angle.apply {
+				x -= punchToApply.x
+				y -= punchToApply.y
+				normalize()
+			}
 
-		if (!curSettings["RCS_RETURNAIM"].strToBool() && forceSet) {
-			lastPunch.set(0F, 0F)
+			clientState.setAngle(angle)
+
+			lastAppliedRCS.x += punchToApply.x
+			lastAppliedRCS.y += punchToApply.y
+
+			if (!curSettings["RCS_RETURNAIM"].strToBool() && forceSet) {
+				lastAppliedRCS.set(0F, 0F)
+			}
+		} else {
+			val playerPunch = Vector3(p.x, p.y, p.z) //Set playerPunch to current punch
+
+			val punchToApply = Vector2((playerPunch.x - lastAppliedRCS.x), (playerPunch.y - lastAppliedRCS.y)) //Set to our current punch and what our last punch was
+			punchToApply.scl(1F + curSettings["RCS_SMOOTHING_Y"].toFloat(), 1F + curSettings["RCS_SMOOTHING_X"].toFloat())
+
+			val angle = clientState.angle()
+			angle.apply {
+				x -= punchToApply.x
+				y -= punchToApply.y
+				normalize()
+			}
+
+			clientState.setAngle(angle)
+			lastAppliedRCS.x = playerPunch.x
+			lastAppliedRCS.y = playerPunch.y
+
+			if (!curSettings["RCS_RETURNAIM"].strToBool() && forceSet) {
+				lastAppliedRCS.set(0F, 0F)
+			}
 		}
 	}
 }

@@ -309,17 +309,19 @@ fun boxEsp() = App {
 			val detailTextColor = curSettings["BOX_DETAILS_TEXT_COLOR"].strToColorGDX()
 			val glyph = GlyphLayout()
 
-			glyph.setText(textRenderer, boxDetailsLeftText, detailTextColor, 1F, Align.right, false)
-			textRenderer.draw(sb, glyph, bbox.left - (barWidth * leftShift), bbox.top)
+			try { //bitch ass little retard cunt ill fix you later
+				glyph.setText(textRenderer, boxDetailsLeftText, detailTextColor, 1F, Align.right, false)
+				textRenderer.draw(sb, glyph, bbox.left - (barWidth * leftShift), bbox.top)
 
-			glyph.setText(textRenderer, boxDetailsRightText, detailTextColor, 1F, Align.left, false)
-			textRenderer.draw(sb, glyph, bbox.right + (barWidth * rightShift), bbox.top)
+				glyph.setText(textRenderer, boxDetailsRightText, detailTextColor, 1F, Align.left, false)
+				textRenderer.draw(sb, glyph, bbox.right + (barWidth * rightShift), bbox.top)
 
-			glyph.setText(textRenderer, boxDetailsTopText, detailTextColor, 1F, Align.center, false)
-			textRenderer.draw(sb, glyph, (bbox.left + bbox.right)/2F, bbox.top + topShift)
+				glyph.setText(textRenderer, boxDetailsTopText, detailTextColor, 1F, Align.center, false)
+				textRenderer.draw(sb, glyph, (bbox.left + bbox.right) / 2F, bbox.top + topShift)
 
-			glyph.setText(textRenderer, boxDetailsBottomText, detailTextColor, 1F, Align.center, false)
-			textRenderer.draw(sb, glyph, (bbox.left + bbox.right)/2F, bbox.bottom)
+				glyph.setText(textRenderer, boxDetailsBottomText, detailTextColor, 1F, Align.center, false)
+				textRenderer.draw(sb, glyph, (bbox.left + bbox.right) / 2F, bbox.bottom)
+			} catch (e: Exception) {}
 
 			sb.end()
 		}
