@@ -1,6 +1,9 @@
 //Enable RCS
 ENABLE_RCS = false
 
+//RCS type (calculation) LEGACY/STABLE
+RCS_TYPE = STABLE
+
 //RCS smoothing (0.1 - 1.0)
 //0.1 is the least accurate
 //1.0 is 'perfect' RCS

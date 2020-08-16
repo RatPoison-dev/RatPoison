@@ -95,7 +95,6 @@ fun attemptBacktrack(): Boolean {
         userCMDToMem(verifiedUserCMDptr, userCMD)
 
         sendPacket(true)
-        Thread.sleep(10)
         inBacktrack = false
         return true
     }
@@ -187,8 +186,8 @@ fun bestSimTime(): Float {
             sign = 1
         }
 
-        val topLeft = Vector(minHeadPos.x - (w / 3F) * sign, minHeadPos.y, minHeadPos.z)
-        val topRight = Vector(maxHeadPos.x + (w / 3F) * sign, maxHeadPos.y, maxHeadPos.z)
+        val topLeft = Vector(minHeadPos.x - (w / 1.5F) * sign, minHeadPos.y, minHeadPos.z)
+        val topRight = Vector(maxHeadPos.x + (w / 1.5F) * sign, maxHeadPos.y, maxHeadPos.z)
 
         val bottomLeft = Vector(minMidX - w * sign, minAbsPos.y, minAbsPos.z)
         //val bottomRight = Vector(maxMidX + w * sign, maxAbsPos.y, maxAbsPos.z)
