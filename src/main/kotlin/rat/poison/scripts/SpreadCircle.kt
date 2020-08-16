@@ -81,8 +81,6 @@ private fun getWeaponData(wep: String): WeaponData {
     val wepData = WeaponData()
     var strList: List<String>
 
-    println(wep)
-
     File("$SETTINGS_DIRECTORY\\Data\\WeaponStats.txt").forEachLine { line->
         if (line.startsWith(wep)) {
             strList = line.split(" : ")
