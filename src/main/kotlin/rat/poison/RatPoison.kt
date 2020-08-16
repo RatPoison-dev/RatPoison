@@ -66,7 +66,7 @@ fun main() {
 
     if (dbg) println("[DEBUG] Initializing scripts...")
     //Init scripts
-    if (!curSettings["MENU"].strToBool()) { //If we arent' using the menu disable everything that uses the menu
+    if (!curSettings["MENU"].strToBool()) { //If we aren't using the menu disable everything that uses the menu
         if (dbg) println("[DEBUG] Menu disabled, disabling box, skeleton, rcrosshair, btimer, indicator, speclist, hitmarker, nade helper, nade tracer, draw fov")
 
         curSettings["ENABLE_BOX_ESP"] = "false"

@@ -87,7 +87,7 @@ fun skinChanger() = every(1, continuous = true) {
 }
 
 fun forcedUpdate() {
-    if (csgoEXE.int(clientState + 0x174) != -1) {
+    if (csgoEXE.int(clientState + 0x174) > 0) { //scr8 up
         csgoEXE[clientState + 0x174] = -1
     }
 }
