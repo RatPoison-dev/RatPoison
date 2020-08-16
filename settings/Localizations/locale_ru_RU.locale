@@ -623,3 +623,6 @@ RCROSSHAIR_TYPE = Тип прицела
 SPREAD_CIRCLE = Круг отдачи
 SPREAD_CIRCLE_COLOR = Цвет круга
 SpreadCircle = Круг отдачи
+RCS_TYPE = Тип RCS
+STABLE = Стабильный
+LEGACY = Старый
