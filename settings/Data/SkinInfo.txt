@@ -57,7 +57,7 @@ DESERT_EAGLE {
     Mudder : 90 : 0.06 : 0.80
 }
 
-DUAL_BERRETA {
+DUAL_BERETTA {
     Cobra Strike : 658 : 0.00 : 0.60
     Twin Turbo : 747 : 0.00 : 1.00
     Royal Consorts : 625 : 0.00 : 1.00

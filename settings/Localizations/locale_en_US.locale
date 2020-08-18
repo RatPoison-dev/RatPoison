@@ -68,15 +68,23 @@ RELOADING_SETTINGS = Reloading settings
 // Weapons
 DESERT_EAGLE = DESERT_EAGLE
 DEAGLE = DEAGLE
-DUAL_BERRETA = DUAL_BERRETA
+
+DUAL_BERETTA = DUAL_BERETTA
+ELITE = DUAL BERETTAS
+
 FIVE_SEVEN = FIVE_SEVEN
+FIVESEVEN = FIVE_SEVEN
+
 GLOCK = GLOCK
 AK47 = AK47
+M4A1 = M4A1S
+TASER = ZEUS
 AUG = AUG
 AWP = AWP
 FAMAS = FAMAS
 G3SG1 = G3SG1
 GALIL = GALIL
+GALILAR = GALIL
 M249 = M249
 M4A4 = M4A4
 MAC10 = MAC10
@@ -84,10 +92,16 @@ P90 = P90
 MP5 = MP5
 UMP45 = UMP45
 XM1014 = XM1014
+
 PP_BIZON = PP_BIZON
+BIZON = PP_BIZON
+
 MAG7 = MAG7
 NEGEV = NEGEV
+
 SAWED_OFF = SAWED_OFF
+SAWEDOFF = SAWED_OFF
+
 TEC9 = TEC9
 ZEUS_X27 = ZEUS_X27
 P2000 = P2000
@@ -96,7 +110,10 @@ MP9 = MP9
 NOVA = NOVA
 P250 = P250
 SCAR20 = SCAR20
+
 SG553 = SG553
+SG556 = SG553
+
 SSG08 = SSG08
 KNIFE = KNIFE
 FLASH_GRENADE = FLASH_GRENADE
@@ -276,7 +293,6 @@ INDICATOR_DEFUSER_COLOR = Defusers
 INDICATOR_WEAPON_COLOR = Weapons
 INDICATOR_GRENADE_COLOR = Grenades
 
-
 BOX_ESP_HEALTH = Health
 BOX_ESP_HEALTH_POS = Health
 BOX_ESP_ARMOR = Armor
@@ -285,7 +301,8 @@ BOX_ESP_NAME = Name
 BOX_ESP_NAME_POS = Name
 BOX_ESP_WEAPON = Weapon
 BOX_ESP_WEAPON_POS = Weapon
-
+BOX_ESP_MONEY = Money
+BOX_ESP_MONEY_POS = Money
 BOX_ESP_HELMET_POS = Helmet
 BOX_ESP_KEVLAR_POS = Kevlar
 BOX_ESP_AMMO_POS = Ammo
@@ -324,6 +341,11 @@ FOOTSTEP_ENEMY_COLOR = Enemies
 ENABLE_HITMARKER = Enable
 HITMARKER_WIDTH = Width
 HITMARKER_OUTLINE_COLOR = Outline Color
+
+HEAD_LVL_COLOR = Line Color
+HEAD_LVL_DEADZONE = Deadzone
+HEAD_LVL_LINE_WIDTH = Line Width
+HeadLvl = HeadLvl
 
 D_SPAM = Door Spam
 D_SPAM_KEY = Door Spam Key
@@ -564,11 +586,11 @@ Perfect-Aim = Perfect Aim
 Chance = Chance
 Override-Weapons = Override Weapons
 
-//menu shits
+//Menu Titles
 Bomb-Timer = Bomb Timer
 Spectator-List = Spectator List
 
-//bomb timer
+//Bomb Timer
 Bomb-Not-Planted! = Bomb Not Planted!
 Bomb-Planted! = Bomb Planted!
 Time-To-Explode: = Time To Explode:
@@ -577,8 +599,7 @@ Can-Defuse: = Can Defuse:
 Time-To-Defuse: Time To Defuse:
 Time-Left-After: = Time Left After:
 
-//more new shit
-//footsteps
+//Footsteps
 TEXT = TEXT
 CIRCLE = CIRCLE
 
@@ -608,14 +629,7 @@ NONE = None
 ADVANCED_BOUNDING_BOX = Full Dynamic Box
 BOX_WEAPON_COLOR = Weapons
 CECONENTITY = Defuse Kit
-HEAD_LVL_COLOR = Line Color
-HEAD_LVL_DEADZONE = Deadzone
-HEAD_LVL_LINE_WIDTH = Line Width
-HeadLvl = HeadLvl
-Disable-Post-Processing = Disable Post Processing
 DISABLE_POST_PROCESSING = Disable Post Processing
-BOX_ESP_MONEY = Money
-BOX_ESP_MONEY_POS = Money
 ENABLE_NADE_THROWER = Auto throw
 NADE_THROWER_KEY = Key
 CIRCLE = CIRCLE
@@ -623,6 +637,8 @@ CROSSHAIR = CROSSHAIR
 RCROSSHAIR_TYPE = RCrosshair Type
 SPREAD_CIRCLE_COLOR = Spread Circle
 SpreadCircle = SpreadCircle
+
+//RCS
 RCS_TYPE = RCS Type
 STABLE = STABLE
 LEGACY = LEGACY

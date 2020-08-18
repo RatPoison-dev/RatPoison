@@ -298,10 +298,10 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false,
 		private fun byID(id: Long) = cachedValues.firstOrNull { it.id == id }
 		
 		fun byEntityAddress(address: Long): EntityType {
-			val vt = (csgoEXE.read(address + 0x8, 4) ?: return NULL).getInt(0).unsign()
-			val fn = (csgoEXE.read(vt + 2 * 0x4, 4) ?: return NULL).getInt(0).unsign()
-			val cls = (csgoEXE.read(fn + 0x1, 4) ?: return NULL).getInt(0).unsign()
-			val clsid = (csgoEXE.read(cls + 0x14, 4) ?: return NULL).getInt(0).unsign()
+			val vt = (csgoEXE.read(address + 0x8, 4) ?: return NULL).getInt(0).unsign() //iclientnetworkable vtable
+			val fn = (csgoEXE.read(vt + 2 * 0x4, 4) ?: return NULL).getInt(0).unsign() //3rd func
+			val cls = (csgoEXE.read(fn + 0x1, 4) ?: return NULL).getInt(0).unsign() //clientclass
+			val clsid = (csgoEXE.read(cls + 0x14, 4) ?: return NULL).getInt(0).unsign() //classid
 			return byID(clsid) ?: NULL
 		}
 		

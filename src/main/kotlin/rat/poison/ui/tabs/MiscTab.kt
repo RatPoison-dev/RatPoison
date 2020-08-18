@@ -72,7 +72,7 @@ class MiscTab : Tab(false, false) {
     val killBindKey = VisInputFieldCustom("Key", "KILL_BIND_KEY")
     private val nameChangeInput = VisValidatableTextField()
     private val nameChange = VisTextButton("Name Change")
-    val postProcessingDisable = VisCheckBoxCustom("Disable-Post-Processing".toLocale(), "DISABLE_POST_PROCESSING")
+    val postProcessingDisable = VisCheckBoxCustom("DISABLE_POST_PROCESSING".toLocale(), "DISABLE_POST_PROCESSING")
 
     init {
         selfNade.changed { _, _ ->

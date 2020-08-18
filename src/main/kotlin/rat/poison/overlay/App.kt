@@ -213,17 +213,15 @@ object App : ApplicationAdapter() {
                         }
 
 
-                        textRenderer.apply {
-                            if (sb.isDrawing) {
-                                sb.end()
-                            }
-
-                            sb.begin()
-
-                            draw(sb, sbText, CSGO.gameWidth/3F, CSGO.gameHeight-100F)
-
+                        if (sb.isDrawing) {
                             sb.end()
                         }
+
+                        sb.begin()
+
+                        textRenderer.draw(sb, sbText, CSGO.gameWidth/3F, CSGO.gameHeight-100F)
+
+                        sb.end()
                     }
                 }
 

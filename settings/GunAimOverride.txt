@@ -7,7 +7,7 @@
 
 ////Pistols
 DESERT_EAGLE = oWeapon(tOverride=false, tFRecoil=false, tFlatAim=false, tPathAim=false, tAimBone=8, tAimFov=1, tAimSpeed=1, tAimSmooth=1,  tPerfectAim=false, tPAimFov=1, tPAimChance=1, tScopedOnly=false, tBoneTrig=false, tBTrigBone=0, tBTrigAim=false, tBTrigDelay=0, tAimAfterShots=0)
-DUAL_BERRETA = oWeapon(tOverride=false, tFRecoil=false, tFlatAim=false, tPathAim=false, tAimBone=8, tAimFov=1, tAimSpeed=1, tAimSmooth=1,  tPerfectAim=false, tPAimFov=1, tPAimChance=1, tScopedOnly=false, tBoneTrig=false, tBTrigBone=0, tBTrigAim=false, tBTrigDelay=0, tAimAfterShots=0)
+DUAL_BERETTA = oWeapon(tOverride=false, tFRecoil=false, tFlatAim=false, tPathAim=false, tAimBone=8, tAimFov=1, tAimSpeed=1, tAimSmooth=1,  tPerfectAim=false, tPAimFov=1, tPAimChance=1, tScopedOnly=false, tBoneTrig=false, tBTrigBone=0, tBTrigAim=false, tBTrigDelay=0, tAimAfterShots=0)
 FIVE_SEVEN = oWeapon(tOverride=false, tFRecoil=false, tFlatAim=false, tPathAim=false, tAimBone=8, tAimFov=1, tAimSpeed=1, tAimSmooth=1,  tPerfectAim=false, tPAimFov=1, tPAimChance=1, tScopedOnly=false, tBoneTrig=false, tBTrigBone=0, tBTrigAim=false, tBTrigDelay=0, tAimAfterShots=0)
 GLOCK = oWeapon(tOverride=false, tFRecoil=false, tFlatAim=false, tPathAim=false, tAimBone=8, tAimFov=1, tAimSpeed=1, tAimSmooth=1,  tPerfectAim=false, tPAimFov=1, tPAimChance=1, tScopedOnly=false, tBoneTrig=false, tBTrigBone=0, tBTrigAim=false, tBTrigDelay=0, tAimAfterShots=0)
 USP_SILENCER = oWeapon(tOverride=false, tFRecoil=false, tFlatAim=false, tPathAim=false, tAimBone=8, tAimFov=1, tAimSpeed=1, tAimSmooth=1,  tPerfectAim=false, tPAimFov=1, tPAimChance=1, tScopedOnly=false, tBoneTrig=false, tBTrigBone=0, tBTrigAim=false, tBTrigDelay=0, tAimAfterShots=0)

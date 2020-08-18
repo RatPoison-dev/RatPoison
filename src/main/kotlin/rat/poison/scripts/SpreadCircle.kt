@@ -5,9 +5,11 @@ import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.CSGO.csgoEXE
+import rat.poison.game.Weapons
 import rat.poison.game.entity.*
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets
+import rat.poison.game.netvars.NetVarOffsets.m_weaponMode
 import rat.poison.overlay.App
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
@@ -27,8 +29,10 @@ private data class WeaponData(var maxPlayerSpeed: Int = 0, var spread: Float = 0
                               var maxPlayerSpeedAlt: Int = 0, var spreadAlt: Float = 0f)
 
 private var wepData = WeaponData()
+private var curWep = me.weaponEntity()
 
 private fun refreshWepData() = every(100) {
+    curWep = me.weaponEntity()
     wepData = getWeaponData(me.weapon().name)
 }
 
@@ -41,8 +45,22 @@ fun spreadCircle() {
         val vAbsVelocity = me.velocity()
         val flVelocity = sqrt(vAbsVelocity.x.pow(2F) + vAbsVelocity.y.pow(2F) + vAbsVelocity.z.pow(2F))
 
-        var radius = wepData.inaccuracyMove * (flVelocity / wepData.maxPlayerSpeed)
-        radius += clamp(me.shotsFired() * wepData.inaccuracyFire, 0f, wepData.spreadAlt * 100)
+        val realInaccuracyFire: Float
+        val realSpread: Float
+        val realInaccuracyMove: Float
+
+        if (csgoEXE.int(curWep + m_weaponMode) > 0) { //Silencer
+            realInaccuracyFire = wepData.inaccuracyFireAlt
+            realSpread = wepData.spreadAlt
+            realInaccuracyMove = wepData.inaccuracyMoveAlt
+        } else {
+            realInaccuracyFire = wepData.inaccuracyFire
+            realSpread = wepData.spread
+            realInaccuracyMove = wepData.inaccuracyMove
+        }
+
+        var radius = realInaccuracyMove * (flVelocity / wepData.maxPlayerSpeed)
+        radius += clamp(me.shotsFired() * realInaccuracyFire, 0f, realSpread * 100)
 
         val defaultFov = csgoEXE.int(me + NetVarOffsets.m_iDefaultFov)
         val iFov = csgoEXE.int(me + NetVarOffsets.m_iFOV)

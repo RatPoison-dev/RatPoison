@@ -91,6 +91,7 @@ object NetVarOffsets {
 	val m_bShouldGlow by netVar("DT_DynamicProp", "m_bShouldGlow")
 	val m_fAccuracyPenalty by netVar("DT_WeaponCSBase", "m_fAccuracyPenalty")
 	val m_iViewModelIndex by netVar("DT_BaseCombatWeapon", "m_iViewModelIndex")
+	val m_weaponMode by netVar("DT_WeaponCSBase", "m_weaponMode")
 
 	val m_bUseCustomAutoExposureMin by netVar("DT_EnvTonemapController", "m_bUseCustomAutoExposureMin")
 	val m_bUseCustomAutoExposureMax by netVar("DT_EnvTonemapController", "m_bUseCustomAutoExposureMax")
