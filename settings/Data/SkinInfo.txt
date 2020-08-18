@@ -27,6 +27,7 @@ CZ75A {
 }
 
 DESERT_EAGLE {
+    Printstream : 962 : 0.00 : 0.80
     Blue Ply : 945 : 0.00 : 1.00
     Code Red : 711 : 0.00 : 1.00
     Golden Koi : 185 : 0.00 : 0.12
@@ -118,6 +119,7 @@ FIVE_SEVEN {
 }
 
 GLOCK {
+    Vogue : 963 : 0.00 : 0.75
     Bullet Queen : 957 : 0.00 : 1.00
     Wasteland Rebel : 586 : 0.00 : 0.54
     Water Elemental : 353 : 0.00 : 0.70
@@ -151,6 +153,7 @@ GLOCK {
 }
 
 P2000 {
+    Gnarled : 960 : 0.00 : 1.00
     Acid Etched : 951 : 0.00 : 1.00
     Fire Elemental : 389 : 0.00 : 0.60
     Imperial Dragon : 591 : 0.00 : 0.63
@@ -178,6 +181,7 @@ P2000 {
 }
 
 P250 {
+    Cassette : 968 : 0.00 : 0.60
     See Ya Later : 678 : 0.00 : 0.70
     AsiiMov : 551 : 0.10 : 1.00
     Muertos : 404 : 0.00 : 0.60
@@ -233,6 +237,7 @@ R8_REVOLVER {
 }
 
 TEC9 {
+    Brother : 964 : 0.00 : 1.00
     Decimator : 889 : 0.00 : 0.75
     Fuel Injector : 614 : 0.00 : 1.00
     Remote Control : 791 : 0.00 : 1.00
@@ -295,6 +300,7 @@ USP_SILENCER {
 }
 
 MAC10 {
+    Allure : 965 : 0.00 : 1.00
     Disco Tech : 947 : 0.00 : 1.00
     Stalker : 898 : 0.00 : 1.00
     Neon Rider : 433 : 0.00 : 0.45
@@ -330,6 +336,7 @@ MAC10 {
 }
 
 MP5 {
+    Kitbash : 974 : 0.00 : 0.80
     Desert Strike : 949 : 0.00 : 1.00
     Phosphor : 810 : 0.00 : 0.80
     Agent : 915 : 0.00 : 1.00
@@ -401,6 +408,7 @@ MP9 {
 }
 
 PP_BIZON {
+    Runic : 973 : 0.00 : 1.00
     Judgement of Anubis : 542 : 0.00 : 0.50
     High Roller : 676 : 0.00 : 1.00
     Embargo : 884 : 0.00 : 1.00
@@ -431,6 +439,7 @@ PP_BIZON {
 }
 
 P90 {
+    Freight : 969 : 0.00 : 1.00
     Asiimov : 359 : 0.00 : 0.92
     Death by Kitty : 156 : 0.08 : 0.32
     Nostalgia : 911 : 0.00 : 0.57
@@ -494,6 +503,7 @@ UMP45 {
 }
 
 AK47 {
+    Legion of Anubis : 959 : 0.00 : 0.70
     Phantom Disruptor : 941 : 0.00 : 0.65
     Asiimov : 801 : 0.05 : 0.70
     Neon Rider : 707 : 0.00 : 0.80
@@ -651,6 +661,7 @@ G3SG1 {
 }
 
 GALIL {
+    Connexion : 972 : 0.00 : 0.80
     Chatterbox : 398 : 0.35 : 0.85
     Sugar Rush : 661 : 0.00 : 0.55
     Eco : 428 : 0.10 : 0.85
@@ -708,6 +719,7 @@ M4A1_SILENCER {
 }
 
 M4A4 {
+    Tooth Fairy : 971 : 0.00 : 0.73
     Howl : 309 : 0.00 : 0.40
     The Emperor : 844 : 0.00 : 0.80
     Neo-Noir : 695 : 0.00 : 0.90
@@ -766,6 +778,7 @@ SCAR20 {
 }
 
 SG553 {
+    Ol' Rusty : 966 : 0.00 : 0.70
     Darkwing : 955 : 0.00 : 1.00
     Colony IV : 897 : 0.00 : 1.00
     Cyrex : 487 : 0.00 : 1.00
@@ -794,6 +807,7 @@ SG553 {
 }
 
 SSG08 {
+    Mainframe 001 : 967 : 0.00 : 1.00
     Fever Dream : 956 : 0.00 : 0.72
     Dragonfire : 624 : 0.00 : 0.50
     Blood in the Water : 222 : 0.06 : 0.20
@@ -819,6 +833,7 @@ SSG08 {
 }
 
 MAG7  {
+    Monster Call : 961 : 0.00 : 1.00
     Justice : 948 : 0.00 : 1.00
     Cinquedea : 737 : 0.00 : 1.00
     SWAG-7 : 703 : 0.00 : 0.92
@@ -908,6 +923,7 @@ SAWED_OFF {
 }
 
 XM1014 {
+    Entombed : 970 : 0.00 : 0.50
     Incinegator : 850 : 0.14 : 0.65
     Tranquility : 393 : 0.00 : 0.50
     Ziggy : 689 : 0.00 : 0.72
@@ -953,6 +969,7 @@ M249 {
 }
 
 NEGEV {
+    Ultralight : 958 : 0.00 : 0.79
     Prototype : 950 : 0.00 : 0.70
     Mjolnir : 763 : 0.00 : 0.60
     Lionfish : 698 : 0.00 : 0.55
