@@ -291,6 +291,7 @@ BOX_ESP_KEVLAR_POS = Бронежилет
 BOX_ESP_AMMO_POS = Патроны
 BOX_ESP_SCOPED_POS = В прицеле
 BOX_ESP_FLASHED_POS = Ослеплен
+BOX_ESP_RELOAD = Перезарядка
 BOX_SHOW_TEAM = Союзники
 BOX_SHOW_ENEMIES = Противники
 BOX_ESP_DETAILS = Детали бокса

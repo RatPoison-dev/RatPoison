@@ -44,6 +44,7 @@ object NetVarOffsets {
 	val iCrossHairID by netVar("DT_CSPlayer", "m_bHasDefuser", 0x5C)
 	val iShotsFired by netVar("DT_CSPlayer")
 	val bIsScoped by netVar("DT_CSPlayer")
+	val bInReload by netVar("DT_BaseCombatWeapon", "m_flNextPrimaryAttack", 109)
 	val bHasDefuser by netVar("DT_CSPlayer", "m_bHasDefuser")
 	val nSurvivalTeam by netVar("DT_CSPlayer")
 
