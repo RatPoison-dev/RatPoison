@@ -1,12 +1,9 @@
 package rat.poison.ui.tabs.visualstabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.curSettings
 import rat.poison.toLocale
-import rat.poison.ui.changed
 import rat.poison.ui.tabs.boxEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
@@ -47,7 +44,8 @@ class BoxEspTab: Tab(false, false) {
     val boxEspScopedPos = VisSelectBoxCustom(" ", "BOX_ESP_SCOPED_POS", false, false, "LEFT", "RIGHT")
     val boxEspFlashed = VisCheckBoxCustom("Flashed", "BOX_ESP_FLASHED")
     val boxEspFlashedPos = VisSelectBoxCustom(" ", "BOX_ESP_FLASHED_POS", false, false, "LEFT", "RIGHT")
-
+    val boxEspReload = VisCheckBoxCustom("Reload", "BOX_ESP_RELOAD")
+    val boxEspReloadPos = VisSelectBoxCustom(" ", "BOX_ESP_RELOAD_POS", false, false, "LEFT", "RIGHT")
 
     val boxDetailColor = VisColorPickerCustom("Detail Text", "BOX_DETAILS_TEXT_COLOR")
 
@@ -94,6 +92,8 @@ class BoxEspTab: Tab(false, false) {
         table.add(boxEspScopedPos).left().row()
         table.add(boxEspFlashed).left()
         table.add(boxEspFlashedPos).left().row()
+        table.add(boxEspReload).left()
+        table.add(boxEspReloadPos).left().row()
 
         table.add(boxDetailColor).width(175F - boxDetailColor.width).left().row()
 
@@ -148,6 +148,8 @@ fun boxEspTabUpdate() {
         boxEspMoneyPos.update()
         boxEspHelmet.update()
         boxEspHelmetPos.update()
+        boxEspReload.update()
+        boxEspReloadPos.update()
         boxEspKevlar.update()
         boxEspKevlarPos.update()
         boxEspAmmo.update()

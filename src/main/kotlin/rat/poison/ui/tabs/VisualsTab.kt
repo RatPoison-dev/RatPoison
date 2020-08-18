@@ -272,6 +272,8 @@ fun updateDisableEsp() {
         boxEspTab.boxEspScopedPos.disable(bool, col)
         boxEspTab.boxEspFlashed.disable(bool)
         boxEspTab.boxEspFlashedPos.disable(bool, col)
+        boxEspTab.boxEspReload.disable(bool)
+        boxEspTab.boxEspReloadPos.disable(bool, col)
 
         boxEspTab.skeletonEsp.disable(bool)
         boxEspTab.showTeamSkeleton.disable(bool)

@@ -4,6 +4,7 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.Weapons
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets
+import rat.poison.game.netvars.NetVarOffsets.bInReload
 import rat.poison.game.netvars.NetVarOffsets.flNextPrimaryAttack
 import rat.poison.game.netvars.NetVarOffsets.iClip1
 import rat.poison.utils.extensions.uint
@@ -11,6 +12,8 @@ import rat.poison.utils.extensions.uint
 typealias Weapon = Long
 
 internal fun Weapon.bullets() = csgoEXE.uint(this + iClip1)
+
+internal fun Weapon.inReload() = csgoEXE.boolean(this + bInReload)
 
 internal fun Weapon.nextPrimaryAttack() = csgoEXE.float(this + flNextPrimaryAttack).toDouble()
 
