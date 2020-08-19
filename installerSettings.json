@@ -1,3 +1,4 @@
 {
-    "force_install_jdk": false
+    "force_install_jdk": false,
+    "force_cheat_update": false
 }
