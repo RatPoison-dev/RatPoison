@@ -28,9 +28,9 @@ class BoxEspTab: Tab(false, false) {
     val boxEspArmor = VisCheckBoxCustom("Armor", "BOX_ESP_ARMOR")
     val boxEspArmorPos = VisSelectBoxCustom(" ", "BOX_ESP_ARMOR_POS", false, false, "LEFT", "RIGHT")
     val boxEspName = VisCheckBoxCustom("Name", "BOX_ESP_NAME")
-    val boxEspNamePos = VisSelectBoxCustom(" ", "BOX_ESP_NAME_POS", false, false, "TOP", "BOTTOM")
+    val boxEspNamePos = VisSelectBoxCustom(" ", "BOX_ESP_NAME_POS", false, false, "TOP", "BOTTOM", "LEFT", "RIGHT")
     val boxEspWeapon = VisCheckBoxCustom("Weapon", "BOX_ESP_WEAPON")
-    val boxEspWeaponPos = VisSelectBoxCustom(" ", "BOX_ESP_WEAPON_POS", false, false, "TOP", "BOTTOM")
+    val boxEspWeaponPos = VisSelectBoxCustom(" ", "BOX_ESP_WEAPON_POS", false, false, "TOP", "BOTTOM", "LEFT", "RIGHT")
     val boxEspMoney = VisCheckBoxCustom("Money", "BOX_ESP_MONEY")
     val boxEspMoneyPos = VisSelectBoxCustom(" ", "BOX_ESP_MONEY_POS", false, false, "TOP", "BOTTOM", "LEFT", "RIGHT")
 
@@ -41,11 +41,11 @@ class BoxEspTab: Tab(false, false) {
     val boxEspKevlar = VisCheckBoxCustom("Kevlar", "BOX_ESP_KEVLAR")
     val boxEspKevlarPos = VisSelectBoxCustom(" ", "BOX_ESP_KEVLAR_POS", false, false, "LEFT", "RIGHT")
     val boxEspScoped = VisCheckBoxCustom("Scoped", "BOX_ESP_SCOPED")
-    val boxEspScopedPos = VisSelectBoxCustom(" ", "BOX_ESP_SCOPED_POS", false, false, "LEFT", "RIGHT")
+    val boxEspScopedPos = VisSelectBoxCustom(" ", "BOX_ESP_SCOPED_POS", false, false, "TOP", "BOTTOM", "LEFT", "RIGHT")
     val boxEspFlashed = VisCheckBoxCustom("Flashed", "BOX_ESP_FLASHED")
-    val boxEspFlashedPos = VisSelectBoxCustom(" ", "BOX_ESP_FLASHED_POS", false, false, "LEFT", "RIGHT")
+    val boxEspFlashedPos = VisSelectBoxCustom(" ", "BOX_ESP_FLASHED_POS", false, false, "TOP", "BOTTOM", "LEFT", "RIGHT")
     val boxEspReload = VisCheckBoxCustom("Reload", "BOX_ESP_RELOAD")
-    val boxEspReloadPos = VisSelectBoxCustom(" ", "BOX_ESP_RELOAD_POS", false, false, "LEFT", "RIGHT")
+    val boxEspReloadPos = VisSelectBoxCustom(" ", "BOX_ESP_RELOAD_POS", false, false, "TOP", "BOTTOM", "LEFT", "RIGHT")
 
     val boxDetailColor = VisColorPickerCustom("Detail Text", "BOX_DETAILS_TEXT_COLOR")
 

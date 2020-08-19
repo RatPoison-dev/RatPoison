@@ -163,6 +163,10 @@ fun boxEsp() = App {
 				boxDetailsLeftText.append(if (entityMemory.armor() > 0) "K\n" else "")
 			}
 
+			if (bEspWeapon && bEspWeaponPos == "LEFT" && isPlayer) {
+				boxDetailsLeftText.append(ent.weapon().name.toLocale())
+			}
+
 			if (bEspScoped && bEspScopedPos == "LEFT" && isPlayer) {
 				boxDetailsLeftText.append(if (entityMemory.isScoped()) "Scoped\n" else "")
 			}
@@ -173,6 +177,14 @@ fun boxEsp() = App {
 
 			if (bEspReload && bEspReloadPos == "LEFT" && isPlayer) {
 				boxDetailsLeftText.append(if (ent.weaponEntity().inReload()) "Reload" else "")
+			}
+
+			if (bEspName && bEspNamePos == "LEFT") {
+				if (isPlayer) {
+					boxDetailsLeftText.append("${ent.name()}\n")
+				} else {
+					boxDetailsLeftText.append("${it.type.name.replace("CWeapon", "").toUpperCase().toLocale()}\n")
+				}
 			}
 
 			if (bEspMoney && bEspMoneyPos == "LEFT" && isPlayer) {
@@ -217,21 +229,34 @@ fun boxEsp() = App {
 				boxDetailsRightText.append(if (entityMemory.armor() > 0) "K\n" else "")
 			}
 
+			if (bEspWeapon && bEspWeaponPos == "RIGHT" && isPlayer) {
+				boxDetailsRightText.append(ent.weapon().name.toLocale())
+			}
+
 			if (bEspScoped && bEspScopedPos == "RIGHT" && isPlayer) {
 				boxDetailsRightText.append(if (entityMemory.isScoped()) "Scoped\n" else "")
 			}
 
 			if (bEspFlashed && bEspFlashedPos == "RIGHT" && isPlayer) {
-				boxDetailsRightText.append(if (entityMemory.flashed()) "Flashed" else "")
+				boxDetailsRightText.append(if (entityMemory.flashed()) "Flashed\n" else "")
 			}
 
 			if (bEspMoney && bEspMoneyPos == "RIGHT" && isPlayer) {
 				boxDetailsRightText.append("$${entityMemory.money()}\n")
 			}
 
-			if (bEspMoney && bEspMoneyPos == "RIGHT" && isPlayer) {
-				boxDetailsRightText.append(if (ent.weaponEntity().inReload()) "Reload" else "")
+			if (bEspReload && bEspReloadPos == "RIGHT" && isPlayer) {
+				boxDetailsRightText.append(if (ent.weaponEntity().inReload()) "Reload\n" else "")
 			}
+
+			if (bEspName && bEspNamePos == "RIGHT") {
+				if (isPlayer) {
+					boxDetailsRightText.append("${ent.name()}\n")
+				} else {
+					boxDetailsRightText.append("${it.type.name.replace("CWeapon", "").toUpperCase().toLocale()}\n")
+				}
+			}
+
 
 			//Draw possible top elements
 			var topShift = 0
@@ -251,6 +276,27 @@ fun boxEsp() = App {
 			if (bEspMoney && bEspMoneyPos == "TOP" && isPlayer) {
 				boxDetailsTopText.append("$${entityMemory.money()}\n")
 				topShift += 18
+			}
+
+			if (bEspScoped && bEspScopedPos == "TOP" && isPlayer) {
+				if (entityMemory.isScoped()) {
+					boxDetailsTopText.append("Scoped\n")
+					topShift += 18
+				}
+			}
+
+			if (bEspFlashed && bEspFlashedPos == "TOP" && isPlayer) {
+				if (entityMemory.flashed()) {
+					boxDetailsTopText.append("Flashed\n")
+					topShift += 18
+				}
+			}
+
+			if (bEspReload && bEspReloadPos == "TOP" && isPlayer) {
+				if (ent.weaponEntity().inReload()) {
+					boxDetailsTopText.append("Reload\n")
+					topShift += 18
+				}
 			}
 
 			if (bEspWeapon && bEspWeaponPos == "TOP" && isPlayer) {
@@ -291,6 +337,18 @@ fun boxEsp() = App {
 
 			if (bEspMoney && bEspMoneyPos == "BOTTOM" && isPlayer) {
 				boxDetailsBottomText.append("$${entityMemory.money()}\n")
+			}
+
+			if (bEspScoped && bEspScopedPos == "BOTTOM" && isPlayer) {
+				boxDetailsBottomText.append(if (entityMemory.isScoped()) "Scoped\n" else "")
+			}
+
+			if (bEspFlashed && bEspFlashedPos == "BOTTOM" && isPlayer) {
+				boxDetailsBottomText.append(if (entityMemory.flashed()) "Flashed\n" else "")
+			}
+
+			if (bEspReload && bEspReloadPos == "BOTTOM" && isPlayer) {
+				boxDetailsBottomText.append(if (ent.weaponEntity().inReload()) "Reload\n" else "")
 			}
 
 			if (bEspWeapon && bEspWeaponPos == "BOTTOM" && isPlayer) {
