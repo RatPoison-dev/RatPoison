@@ -59,13 +59,13 @@ class RanksTab : Tab(false, false) {
         namesTable.add(namesLabel).left().row()
 
         for (i in 0 until teamList.size) {
-            if (teamList[i] == "CT") {
+            if (teamList[i] == "CT".toLocale()) {
                 constructRank(i)
             }
         }
 
         for (i in 0 until teamList.size) {
-            if (teamList[i] == "T") {
+            if (teamList[i] == "T".toLocale()) {
                 constructRank(i)
             }
         }
