@@ -24,12 +24,6 @@ internal fun radarEsp() = every(100) {
                 ent.show()
             }
         }
-        forEntities(EntityType.CCSPlayer) {
-            val entity = it.entity
-            if (entity.weaponEntity().inReload() && me.position().distanceTo(entity.position()) <= curSettings["LEGIT_RADAR_FOOTSTEPS_DISTANCE"].toInt()) {
-                entity.show()
-            }
-        }
     } else {
         forEntities(EntityType.CCSPlayer) {
             val entity = it.entity

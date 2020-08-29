@@ -10,6 +10,7 @@ import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
 import rat.poison.curSettings
 import rat.poison.scripts.esp.disableAllEsp
+import rat.poison.scripts.esp.opened
 import rat.poison.toLocale
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
@@ -28,8 +29,7 @@ var snaplinesEspTab = SnaplinesEspTab()
 var footStepsEspTab = FootstepsEspTab()
 var hitMarkerTab = HitMarkerTab()
 var nadesTab = NadesVT()
-var headLevelTab = HeadLevelTab()
-var spreadCircleTab = SpreadCircleTab()
+var miscVisualsTab = MiscVisualsTab()
 
 class VisualsTab : Tab(false, false) {
     private val table = VisTable()
@@ -37,24 +37,7 @@ class VisualsTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     //Static Visuals Tab Items
     val enableEsp = VisCheckBoxCustom("Enable ESP", "ENABLE_ESP")
-
     val visualsToggleKey = VisInputFieldCustom("Visuals Toggle Key", "VISUALS_TOGGLE_KEY")
-
-    val radarEsp = VisCheckBoxCustom("Radar Esp", "RADAR_ESP")
-    val legitRadar = VisCheckBoxCustom("Legit Radar", "LEGIT_RADAR")
-    val legitRadarDistance = VisSliderCustom("Distance", "LEGIT_RADAR_FOOTSTEPS_DISTANCE", 100F, 5000F, 100F, true)
-
-    val nightMode = VisCheckBoxCustom("Nightmode/Fullbright", "ENABLE_NIGHTMODE")
-    val nightModeSlider = VisSliderCustom("%", "NIGHTMODE_VALUE", 0.05F, 5F, .05F, false)
-
-    val visAdrenaline = VisCheckBoxCustom("Adrenaline", "ENABLE_ADRENALINE")
-    val adrenalineStrength = VisSliderCustom("Adrenaline Strength", "ADRENALINE_STRENGTH", 0.01F, 1F, 0.01F, false)
-
-    val showAimFov = VisCheckBoxCustom(" ", "DRAW_AIM_FOV", false)
-    val showAimFovColor = VisColorPickerCustom("Draw Aim FOV", "DRAW_AIM_FOV_COLOR")
-
-    val showTriggerFov = VisCheckBoxCustom(" ", "DRAW_TRIGGER_FOV", false)
-    val showTriggerFovColor = VisColorPickerCustom("Draw Trigger FOV", "DRAW_TRIGGER_FOV_COLOR")
 
     init {
         //ESP Tab
@@ -66,8 +49,7 @@ class VisualsTab : Tab(false, false) {
         espTabbedPane.add(footStepsEspTab)
         espTabbedPane.add(hitMarkerTab)
         espTabbedPane.add(nadesTab)
-        espTabbedPane.add(headLevelTab)
-        espTabbedPane.add(spreadCircleTab)
+        espTabbedPane.add(miscVisualsTab)
 
         espTabbedPane.switchTab(glowEspTab)
 
@@ -91,63 +73,15 @@ class VisualsTab : Tab(false, false) {
 
                 espTabbedPaneContent.clear()
 
-                when (tab) {
-                    glowEspTab -> {
-                        espTabbedPaneContent.add(glowEspTab.contentTable).left().colspan(2).row()
-                    }
-                    chamsEspTab -> {
-                        espTabbedPaneContent.add(chamsEspTab.contentTable).left().colspan(2).row()
-                    }
-                    indicatorEspTab -> {
-                        espTabbedPaneContent.add(indicatorEspTab.contentTable).left().colspan(2).row()
-                    }
-                    boxEspTab -> {
-                        espTabbedPaneContent.add(boxEspTab.contentTable).left().colspan(2).row()
-                    }
-                    snaplinesEspTab -> {
-                        espTabbedPaneContent.add(snaplinesEspTab.contentTable).left().colspan(2).row()
-                    }
-                    footStepsEspTab -> {
-                        espTabbedPaneContent.add(footStepsEspTab.contentTable).left().colspan(2).row()
-                    }
-                    hitMarkerTab -> {
-                        espTabbedPaneContent.add(hitMarkerTab.contentTable).left().colspan(2).row()
-                    }
-                    nadesTab -> {
-                        espTabbedPaneContent.add(nadesTab.contentTable).left().colspan(2).row()
-                    }
-                    headLevelTab -> {
-                        espTabbedPaneContent.add(headLevelTab.contentTable).left().colspan(2).row()
-                    }
-                    spreadCircleTab -> {
-                        espTabbedPaneContent.add(spreadCircleTab.contentTable).left().colspan(2).row()
-                    }
-                }
+                espTabbedPaneContent.add(tab.contentTable).left().colspan(2).row()
 
                 espTabbedPaneContent.addSeparator().colspan(2).padLeft(25F).padRight(25F)
             }
         })
 
-        val aimFov = VisTable()
-        aimFov.add(showAimFov).left()
-        aimFov.add(showAimFovColor).width(175F-showAimFov.width).left()
-
-        val triggerFov = VisTable()
-        triggerFov.add(showTriggerFov).left()
-        triggerFov.add(showTriggerFovColor).width(175F-showTriggerFov.width).left()
-
         //Add all items to label for tabbed pane content
         table.add(enableEsp).padLeft(25F).left().row()
-        table.add(visualsToggleKey).padLeft(25F).left().row()
-        table.add(radarEsp).padLeft(25F).left().row()
-        table.add(legitRadar).padLeft(25F).left().row()
-        table.add(legitRadarDistance).padLeft(25F).left().row()
-        table.add(nightMode).padLeft(25F).left().row()
-        table.add(nightModeSlider).padLeft(25F).left().row()
-        table.add(visAdrenaline).padLeft(25F).left().row()
-        table.add(adrenalineStrength).padLeft(25F).left().row()
-        table.add(aimFov).padLeft(25F).left().row()
-        table.add(triggerFov).padLeft(25F).left().row()
+        table.add(visualsToggleKey).padLeft(25F).left().padBottom(10F).row()
         table.add(espTabbedPane.table).minWidth(500F).left().growX().row()
         table.add(espScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
     }
@@ -161,8 +95,11 @@ class VisualsTab : Tab(false, false) {
     }
 }
 
+//TODO Move all this to their respective files...
 fun updateDisableEsp() {
     visualsTab.apply {
+        if (!opened) return
+
         val bool = !enableEsp.isChecked
         var col = Color(255F, 255F, 255F, 1F)
         if (bool) {
@@ -170,27 +107,6 @@ fun updateDisableEsp() {
         }
 
         visualsToggleKey.disable(bool, col)
-        radarEsp.disable(bool)
-        legitRadar.disable(bool)
-        legitRadarDistance.disable(bool, col)
-        visAdrenaline.disable(bool)
-        adrenalineStrength.disable(bool, col)
-        nightMode.disable(bool)
-        nightModeSlider.disable(bool, col)
-
-        if (curSettings["FOV_TYPE"].replace("\"", "") == "DISTANCE") {
-            showAimFov.disable(true)
-            showAimFovColor.disable(true)
-
-            showTriggerFov.disable(true)
-            showTriggerFovColor.disable(true)
-        } else {
-            showAimFov.disable(bool)
-            showAimFovColor.disable(bool)
-
-            showTriggerFov.disable(bool)
-            showTriggerFovColor.disable(bool)
-        }
 
         val recTab = espTabbedPane.activeTab
 
@@ -202,12 +118,13 @@ fun updateDisableEsp() {
         espTabbedPane.disableTab(footStepsEspTab, bool)
         espTabbedPane.disableTab(hitMarkerTab, bool)
         espTabbedPane.disableTab(nadesTab, bool)
-        espTabbedPane.disableTab(headLevelTab, bool)
-        espTabbedPane.disableTab(spreadCircleTab, bool)
+        espTabbedPane.disableTab(miscVisualsTab, bool)
 
         espTabbedPane.switchTab(recTab)
 
         glowEspTab.glowEsp.disable(bool)
+        glowEspTab.glowShowHealth.disable(bool)
+        glowEspTab.glowSmokeCheck.disable(bool)
         glowEspTab.showTeam.disable(bool)
         glowEspTab.showEnemies.disable(bool)
         glowEspTab.showBomb.disable(bool)
@@ -234,6 +151,7 @@ fun updateDisableEsp() {
         indicatorEspTab.indicatorEsp.disable(bool)
         indicatorEspTab.indicatorDistance.disable(bool, col)
         indicatorEspTab.indicatorSize.disable(bool, col)
+        indicatorEspTab.indicatorSmokeCheck.disable(bool)
         indicatorEspTab.showTeam.disable(bool)
         indicatorEspTab.showEnemies.disable(bool)
         indicatorEspTab.showBomb.disable(bool)
@@ -249,6 +167,7 @@ fun updateDisableEsp() {
         indicatorEspTab.indicatorGrenadeColor.disable(bool)
 
         boxEspTab.boxEsp.disable(bool)
+        boxEspTab.advancedBBox.disable(bool)
         boxEspTab.advancedBBox.disable(bool)
         boxEspTab.boxEspDetails.disable(bool)
         boxEspTab.boxEspHealth.disable(bool)
@@ -272,8 +191,6 @@ fun updateDisableEsp() {
         boxEspTab.boxEspScopedPos.disable(bool, col)
         boxEspTab.boxEspFlashed.disable(bool)
         boxEspTab.boxEspFlashedPos.disable(bool, col)
-        boxEspTab.boxEspReload.disable(bool)
-        boxEspTab.boxEspReloadPos.disable(bool, col)
 
         boxEspTab.skeletonEsp.disable(bool)
         boxEspTab.showTeamSkeleton.disable(bool)
@@ -288,6 +205,8 @@ fun updateDisableEsp() {
         boxEspTab.boxDefuserColor.disable(bool)
 
         snaplinesEspTab.enableSnaplines.disable(bool)
+        snaplinesEspTab.snaplinesWidth.disable(bool, col)
+        snaplinesEspTab.snaplinesSmokeCheck.disable(bool)
         snaplinesEspTab.enemySnaplines.disable(bool)
         snaplinesEspTab.enemySnaplinesColor.disable(bool)
         snaplinesEspTab.teamSnaplines.disable(bool)
@@ -319,17 +238,48 @@ fun updateDisableEsp() {
         hitMarkerTab.hitMarkerOutlineColor.disable(bool)
         hitMarkerTab.hitMarkerComboColor.disable(bool)
 
-        headLevelTab.apply {
+        miscVisualsTab.apply {
+            radarEsp.disable(bool)
+            legitRadar.disable(bool)
+            legitRadarDistance.disable(bool, col)
+            visAdrenaline.disable(bool)
+            adrenalineStrength.disable(bool, col)
+            nightMode.disable(bool)
+            nightModeSlider.disable(bool, col)
+
+            if (curSettings["FOV_TYPE"].replace("\"", "") == "DISTANCE") {
+                showAimFov.disable(true)
+                showAimFovColor.disable(true)
+
+                showTriggerFov.disable(true)
+                showTriggerFovColor.disable(true)
+            } else {
+                showAimFov.disable(bool)
+                showAimFovColor.disable(bool)
+
+                showTriggerFov.disable(bool)
+                showTriggerFovColor.disable(bool)
+            }
+
+            enableSpreadCircle.disable(bool)
+            spreadCircleColor.disable(bool)
             enableHeadLevel.disable(bool)
             headLevelColor.disable(bool)
             headLevelDeadzone.disable(bool, col)
         }
 
-        spreadCircleTab.apply {
-            enableSpreadCircle.disable(bool)
-            spreadCircleColor.disable(bool)
+        nadesTab.apply {
+            nadeTracer.disable(bool)
+            nadeTracerColor.disable(bool)
+            nadeTracerUpdateTime.disable(bool, col)
+            nadeTracerTimeout.disable(bool, col)
+
+            visualizeSmokes.disable(bool)
+            visualizeSmokesColor.disable(bool)
+            visualizeSmokesPolys.disable(bool, col)
+            visualizeSmokesWidth.disable(bool, col)
+            visualizeSmokesHeight.disable(bool, col)
         }
-        //Add disable nades tab
 
         if (!curSettings["ENABLE_ESP"].strToBool()) {
             disableAllEsp()
@@ -343,17 +293,6 @@ fun visualsTabUpdate() {
     visualsTab.apply {
         enableEsp.update()
         visualsToggleKey.update()
-        radarEsp.update()
-        legitRadar.update()
-        legitRadarDistance.update()
         visualsToggleKey.update()
-        nightMode.update()
-        nightModeSlider.update()
-        visAdrenaline.update()
-        adrenalineStrength.update()
-        showAimFov.update()
-        showAimFovColor.update()
-        showTriggerFov.update()
-        showTriggerFovColor.update()
     }
 }

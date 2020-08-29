@@ -1,5 +1,3 @@
-//Thanks to Mr. Noad for help
-
 package rat.poison.scripts
 
 import rat.poison.curSettings
@@ -28,6 +26,7 @@ internal fun spectatorList() = every(100) {
     }
 
     var spectators = ""
+    var entCount = 1
 
     val playerSpecTarget = csgoEXE.readIndex(me + dwIndex)
 
@@ -40,7 +39,8 @@ internal fun spectatorList() = every(100) {
 
             if (entSpecTarget > -1 && entSpecTarget == playerSpecTarget) {
                 if (!spectators.contains(entName)) {
-                    spectators += "name: $entName\n"
+                    spectators += "$entCount. $entName\n"
+                    entCount++
                 }
             }
         }

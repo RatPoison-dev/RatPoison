@@ -8,12 +8,14 @@ import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
+import rat.poison.utils.generalUtil.strToBool
 
 //Swap VisSelectBoxCustom to showText false is mainText is " "
 class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean, private val showText: Boolean = true, vararg items: String) : VisTable() {
     private val textLabel = mainText
     private val variableName = varName
     private val useGunCategory = useCategory
+    private var hasTooltip = false
 
     private var boxLabel = VisLabel("$textLabel:")
     private val selectBox = VisSelectBox<String>()
@@ -25,6 +27,8 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
     init {
         update()
 
+        updateTooltip()
+
         val itemsArray = Array<String>()
         for (i in boxItems) {
             itemsArray.add(i)
@@ -34,6 +38,9 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
         selectBox.changed { _, _ ->
             //This uses the stored box items to set settings appropriately without fucking with enums/switches for the locale
             curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }] = boxItems[selectBox.selectedIndex]
+
+            updateDisableRCrosshair()
+
             false
         }
 
@@ -68,6 +75,27 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
             selectBox.selectedIndex = boxItems.indexOf(curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }].toUpperCase())
         } else {
             selectBox.selected = curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }]
+        }
+
+        updateTooltip()
+    }
+
+    private fun updateTooltip() {
+        if (curSettings["MENU_TOOLTIPS"].strToBool()) {
+            if (curLocale["${variableName}_TOOLTIP"] != "") {
+                if (!hasTooltip) {
+                    Tooltip.Builder(curLocale["${variableName}_TOOLTIP"]).target(this).build()
+                    hasTooltip = true
+                    if (dbg) {
+                        println("[DEBUG] Added tooltip to $variableName")
+                    }
+                }
+            }
+        } else {
+            if (hasTooltip) {
+                Tooltip.removeTooltip(this)
+                hasTooltip = false
+            }
         }
     }
 

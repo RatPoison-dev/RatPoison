@@ -5,7 +5,6 @@ import rat.poison.game.forEntities
 import rat.poison.game.rankName
 import rat.poison.overlay.App.haveTarget
 import rat.poison.overlay.opened
-import rat.poison.toLocale
 import rat.poison.ui.uiPanels.ranksTab
 import rat.poison.utils.every
 import rat.poison.utils.extensions.roundNDecimals
@@ -55,11 +54,11 @@ fun ranks() = every(5000, true) { //Rebuild every second
 
         when (entTeam) { //Bruh
             "CT" -> {
-                teamList.add("CT".toLocale())
+                teamList.add("CT")
             }
 
             "T" -> {
-                teamList.add("T".toLocale())
+                teamList.add("T")
             }
         }
 

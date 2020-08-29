@@ -1,6 +1,7 @@
 package rat.poison.ui.uiHelpers
 
 import com.badlogic.gdx.graphics.Color
+import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisTable
@@ -8,12 +9,14 @@ import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.ui.changed
+import rat.poison.utils.generalUtil.strToBool
 import kotlin.math.pow
 import kotlin.math.round
 
 class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, width1: Float = 225F, width2: Float = 225F) : VisTable() {
     private val labelText = mainText
     private val variableName = varName
+    private var hasTooltip = false
     private val isInt = intVal
     private val rnd = 10.0.pow(dec)
     private val w1 = width1
@@ -24,6 +27,8 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
 
     init {
         update()
+
+        updateTooltip()
 
         sliderBar.changed { _, _ ->
             val sliderVal : Any = if (isInt) {
@@ -56,6 +61,27 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
             sliderLabel.setText("${curLocale[variableName]}: $sliderVal")
         } else { //User our default input
             sliderLabel.setText("$labelText: $sliderVal")
+        }
+
+        updateTooltip()
+    }
+
+    private fun updateTooltip() {
+        if (curSettings["MENU_TOOLTIPS"].strToBool()) {
+            if (curLocale["${variableName}_TOOLTIP"] != "") {
+                if (!hasTooltip) {
+                    Tooltip.Builder(curLocale["${variableName}_TOOLTIP"]).target(this).build()
+                    hasTooltip = true
+                    if (dbg) {
+                        println("[DEBUG] Added tooltip to $variableName")
+                    }
+                }
+            }
+        } else {
+            if (hasTooltip) {
+                Tooltip.removeTooltip(this)
+                hasTooltip = false
+            }
         }
     }
 

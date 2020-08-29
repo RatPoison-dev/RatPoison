@@ -4,6 +4,7 @@ import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
+import rat.poison.scripts.esp.lineThroughSmoke
 import rat.poison.settings.*
 import rat.poison.utils.*
 import rat.poison.utils.generalUtil.strToBool

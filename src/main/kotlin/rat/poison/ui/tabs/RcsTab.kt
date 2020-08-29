@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
+import rat.poison.overlay.opened
 import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
@@ -31,8 +32,11 @@ class RcsTab : Tab(false, false) {
     val enableSCrosshair = VisCheckBoxCustom("Scope Compatible", "ENABLE_SNIPER_CROSSHAIR")
 
     val rCrosshairType = VisSelectBoxCustom("RCrosshair Type", "RCROSSHAIR_TYPE", false, false, "CIRCLE", "CROSSHAIR")
+
+    val rCrosshairRadius = VisSliderCustom("RCrosshair Radius", "RCROSSHAIR_RADIUS", 1F, 200F, 5F, true, width1 = 200F, width2 = 250F)
     val rCrosshairWidth = VisSliderCustom("RCrosshair Width", "RCROSSHAIR_WIDTH", 1F, 5F, 1F, true, width1 = 200F, width2 = 250F)
     val rCrosshairLength = VisSliderCustom("RCrosshair Length", "RCROSSHAIR_LENGTH", 3F, 100F, 1F, true, width1 = 200F, width2 = 250F)
+
     val rCrosshairXOffset = VisSliderCustom("RCrosshair X Offset", "RCROSSHAIR_XOFFSET", -48F, 48F, 1F, true, width1 = 200F, width2 = 250F)
     val rCrosshairYOffset = VisSliderCustom("RCrosshair Y Offset", "RCROSSHAIR_YOFFSET", -48F, 48F, 1F, true, width1 = 200F, width2 = 250F)
     val rCrosshairAlpha = VisSliderCustom("RCrosshair Alpha", "RCROSSHAIR_ALPHA", .1F, 1F, .1F, false, width1 = 200F, width2 = 250F)
@@ -52,6 +56,7 @@ class RcsTab : Tab(false, false) {
         table.add(enableRCrosshair).left().row()
         table.add(rCrosshairType).left().row()
         table.add(enableSCrosshair).left().row()
+        table.add(rCrosshairRadius).left().row()
         table.add(rCrosshairWidth).left().row()
         table.add(rCrosshairLength).left().row()
         table.add(rCrosshairXOffset).left().row()
@@ -72,6 +77,8 @@ class RcsTab : Tab(false, false) {
 
 fun updateDisableRCrosshair() {
     rcsTab.apply {
+        if (!opened) return
+
         val bool = !(curSettings["ENABLE_RECOIL_CROSSHAIR"].strToBool() || curSettings["ENABLE_SNIPER_CROSSHAIR"].strToBool())
         var color = Color(255F, 255F, 255F, 1F)
         if (bool) {
@@ -79,8 +86,23 @@ fun updateDisableRCrosshair() {
         }
 
         rCrosshairType.disable(bool, color)
-        rCrosshairWidth.disable(bool, color)
-        rCrosshairLength.disable(bool, color)
+
+        if (bool) {
+            rCrosshairRadius.disable(true, color)
+            rCrosshairWidth.disable(true, color)
+            rCrosshairLength.disable(true, color)
+        } else {
+            if (curSettings["RCROSSHAIR_TYPE"].toUpperCase() == "CROSSHAIR") {
+                rCrosshairRadius.disable(true, Color(105F, 105F, 105F, .2F))
+                rCrosshairWidth.disable(false, Color(255F, 255F, 255F, 1F))
+                rCrosshairLength.disable(false, Color(255F, 255F, 255F, 1F))
+            } else {
+                rCrosshairRadius.disable(false, Color(255F, 255F, 255F, 1F))
+                rCrosshairWidth.disable(true, Color(105F, 105F, 105F, .2F))
+                rCrosshairLength.disable(true, Color(105F, 105F, 105F, .2F))
+            }
+        }
+
         rCrosshairXOffset.disable(bool, color)
         rCrosshairYOffset.disable(bool, color)
         rCrosshairAlpha.disable(bool, color)
@@ -90,6 +112,8 @@ fun updateDisableRCrosshair() {
 
 fun updateDisableRcsSmoothing() {
     rcsTab.apply {
+        if (!opened) return
+
         val bool = !curSettings["ENABLE_RCS"].strToBool()
         var color = Color(255F, 255F, 255F, 1F)
         if (bool) {
@@ -113,6 +137,7 @@ fun rcsTabUpdate() {
         enableRCrosshair.update()
         rCrosshairType.update()
         enableSCrosshair.update()
+        rCrosshairRadius.update()
         rCrosshairWidth.update()
         rCrosshairLength.update()
         rCrosshairXOffset.update()

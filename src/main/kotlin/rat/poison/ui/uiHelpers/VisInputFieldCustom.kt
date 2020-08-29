@@ -2,22 +2,24 @@ package rat.poison.ui.uiHelpers
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.Actor
+import com.badlogic.gdx.scenes.scene2d.InputEvent
+import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.kotcrab.vis.ui.util.Validators
-import com.kotcrab.vis.ui.widget.LinkLabel
-import com.kotcrab.vis.ui.widget.VisLabel
-import com.kotcrab.vis.ui.widget.VisTable
-import com.kotcrab.vis.ui.widget.VisValidatableTextField
+import com.kotcrab.vis.ui.widget.*
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
+import rat.poison.overlay.needKeyActor
+import rat.poison.overlay.needKeyPress
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.keybindsUpdate
+import rat.poison.utils.generalUtil.strToBool
 
 class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true, keyWidth: Float = 200F) : VisTable() {
     private val textLabel = mainText
     private val variableName = varName
+    private var hasTooltip = false
 
-    //val globalTable = VisTable()
     private var keyLabel = VisLabel("$textLabel:")
     private val keyField = VisValidatableTextField(Validators.INTEGERS)
     private val linkLabel = LinkLabel("?", "http://cherrytree.at/misc/vk.htm")
@@ -26,11 +28,13 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
 
     init {
         update()
+
+        updateTooltip()
+
         changed { _, _ ->
             if (keyField.text.toIntOrNull() != null) {
-                if (keyField.text != curSettings[variableName]) {
+                if (keyField.text != curSettings[variableName]) { //If we need to change
                     curSettings[variableName] = keyField.text.toInt().toString()
-                    value = keyField.text.toInt()
                     keybindsUpdate(this)
                 }
             }
@@ -57,7 +61,27 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
             }
 
             keyField.text = curSettings[variableName]
-            value = keyField.text.toInt()
+        }
+
+        updateTooltip()
+    }
+
+    private fun updateTooltip() {
+        if (curSettings["MENU_TOOLTIPS"].strToBool()) {
+            if (curLocale["${variableName}_TOOLTIP"] != "") {
+                if (!hasTooltip) {
+                    Tooltip.Builder(curLocale["${variableName}_TOOLTIP"]).target(this).build()
+                    hasTooltip = true
+                    if (dbg) {
+                        println("[DEBUG] Added tooltip to $variableName")
+                    }
+                }
+            }
+        } else {
+            if (hasTooltip) {
+                Tooltip.removeTooltip(this)
+                hasTooltip = false
+            }
         }
     }
 

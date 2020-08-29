@@ -17,6 +17,8 @@ class IndicatorEspTab : Tab(false, false) {
     val indicatorDistance = VisSliderCustom("Indicator Distance", "INDICATOR_DISTANCE", 2F, 50F, .1F, false)
     val indicatorSize = VisSliderCustom("Indicator Size", "INDICATOR_SIZE", 5F, 25F, .5F, false)
 
+    val indicatorSmokeCheck = VisCheckBoxCustom("Smoke Check", "INDICATOR_SMOKE_CHECK")
+
     val showTeam = VisCheckBoxCustom(" ", "INDICATOR_SHOW_TEAM", false)
     val indicatorTeamColor = VisColorPickerCustom("Teammates", "GLOW_TEAM_COLOR")
 
@@ -46,6 +48,8 @@ class IndicatorEspTab : Tab(false, false) {
         table.add(indicatorEsp).left().row()
         table.add(indicatorDistance).left().colspan(2).row()
         table.add(indicatorSize).left().colspan(2).row()
+
+        table.add(indicatorSmokeCheck).left().row()
 
         var tmpTable = VisTable()
         tmpTable.add(showTeam)
@@ -104,6 +108,7 @@ fun indicatorEspTabUpdate() {
         indicatorEsp.update()
         indicatorDistance.update()
         indicatorSize.update()
+        indicatorSmokeCheck.update()
         showTeam.update()
         showEnemies.update()
         showBomb.update()

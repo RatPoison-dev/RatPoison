@@ -11,13 +11,6 @@ BACKTRACK_KEY = 6
 //Show points
 BACKTRACK_VISUALIZE = false
 
-//Activate on the best record in FOV, or disable for the first viable record
-//Can improve performance when disabled
-BACKTRACK_PREFER_ACCURATE = true
-
-//Max MS backtrack
-BACKTRACK_MS = 200
-
 //Check if an entity is spotted before shooting
 BACKTRACK_SPOTTED = true
 
@@ -28,5 +21,9 @@ SHOTGUN_BACKTRACK = true
 SMG_BACKTRACK = true
 SNIPER_BACKTRACK = true
 
-//Enable bone trigger key that enables bone trigger only when TRIGGER_KEY is pressed
-BACKTRACK_ENABLE_KEY = false
+//Max MS backtrack
+PISTOL_BACKTRACK_MS = 200
+RIFLE_BACKTRACK_MS = 200
+SHOTGUN_BACKTRACK_MS = 200
+SMG_BACKTRACK_MS = 200
+SNIPER_BACKTRACK_MS = 200

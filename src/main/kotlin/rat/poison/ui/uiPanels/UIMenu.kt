@@ -165,7 +165,7 @@ class UIMenu : VisWindow("Rat Poison 1.7") {
 
     fun updateChilds() {
         if (opened) {
-            uiAimOverridenWeapons.setPosition(x+width+4F, y)
+            uiAimOverridenWeapons.setPosition(x + width + 4F, y + height - uiAimOverridenWeapons.height)
         }
     }
 

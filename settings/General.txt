@@ -12,6 +12,9 @@ MENU_ALPHA = 1.0
 //Default key is F1
 MENU_KEY = 112
 
+//Show tooltips
+MENU_TOOLTIPS = true
+
 //Default locale
 CURRENT_LOCALE = locale_en_US
 
@@ -141,6 +144,19 @@ KEYBINDS_X = 400.0
 KEYBINDS_Y = 400.0
 KEYBINDS_ALPHA = 1.0
 AIM_ONLY_ON_SHOT = true
+
+//OverrideWepShit
+WEP_TRIGGER = false
+WEP_TRIGGER_AIMBOT = false
+WEP_TRIGGER_INCROSS = false
+WEP_TRIGGER_INFOV = false
+WEP_TRIGGER_BACKTRACK = false
+WEP_TRIGGER_FOV = 0.0
+WEP_TRIGGER_INIT_DELAY = 0
+WEP_TRIGGER_PER_DELAY = 0
+WEP_BACKTRACK = false
+WEP_BACKTRACK_MS = 0.0
+
 
 //Can't be edited from menu, not guaranteed to work properly
 PISTOL_AIM_AFTER_SHOTS = 0

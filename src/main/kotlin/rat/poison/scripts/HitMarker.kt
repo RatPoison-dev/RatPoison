@@ -23,7 +23,7 @@ var hitMarkerCombo = 0
 private var totalHits = 0
 
 fun hitMarker() = App {
-    if ((!curSettings["ENABLE_HITMARKER"].strToBool() && !curSettings["HITMARKER_COMBO"].strToBool()) ||  !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || me.dead()) return@App
+    if ((!curSettings["ENABLE_HITMARKER"].strToBool() && !curSettings["HITMARKER_COMBO"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || me.dead()) return@App
 
     val curHits = csgoEXE.int(me + m_totalHitsOnServer)
 
@@ -53,8 +53,8 @@ fun hitMarker() = App {
             val punch = me.punch()
 
             //Center
-            x = CSGO.gameWidth / 2 - ((CSGO.gameWidth / 95F) * punch.y).toFloat() + rccXo
-            y = CSGO.gameHeight / 2 - ((CSGO.gameHeight / 95F) * punch.x).toFloat() + rccYo
+            x = CSGO.gameWidth / 2 - ((CSGO.gameWidth / 95F) * punch.y) + rccXo
+            y = CSGO.gameHeight / 2 - ((CSGO.gameHeight / 95F) * punch.x) + rccYo
 
         } else {
             //Center

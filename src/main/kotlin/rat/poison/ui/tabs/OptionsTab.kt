@@ -51,6 +51,7 @@ class OptionsTab : Tab(false, false) {
             loadLocale("$SETTINGS_DIRECTORY\\Localizations\\${curSettings["CURRENT_LOCALE"]}.locale")
 
             refreshMenu()
+
             uiUpdate()
 
             false

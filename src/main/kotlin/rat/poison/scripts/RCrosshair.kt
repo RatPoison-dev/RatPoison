@@ -56,8 +56,6 @@ internal fun rcrosshair() = App {
         val punch = me.punch()
 
         //Center
-        //x = (gameWidth / 2) - ((gameWidth * rccFOV) * punch.y).toFloat() + rccXo
-        //y = (gameHeight / 2) - ((gameHeight * rccFOV) * punch.x).toFloat() + rccYo
         x = (gameWidth / 2) - tan(toRadians(punch.y.toDouble())).toFloat() * rccFov2 + rccXo
         y = (gameHeight / 2) - tan(toRadians(punch.x.toDouble())).toFloat() * rccFov2 + rccYo
     } else {
@@ -85,14 +83,8 @@ internal fun rcrosshair() = App {
                     rect(x - lO, y - wO, cL, cW)
                     //Vertical
                     rect(x - wO, y - lO, cW, cL)
-                }
-                else {
-                    val vel = me.velocity()
-                    var circleRad = sqrt(sqrt(vel.x.pow(2)+vel.y.pow(2)).pow(2)+vel.z.pow(2))/4F
-                    if (circleRad <= 0) {
-                        circleRad = 2F
-                    }
-                    circle(x, y, circleRad)
+                } else {
+                    circle(x, y, curSettings["RCROSSHAIR_RADIUS"].toFloat())
                 }
             }
 

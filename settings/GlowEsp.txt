@@ -10,6 +10,9 @@ GLOW_BOMB_CARRIER_TYPE = NORMAL
 GLOW_BOMB_TYPE = NORMAL
 GLOW_TARGET_TYPE = NORMAL
 
+//Disable through smoke
+GLOW_SMOKE_CHECK = false
+
 //Enable glow esp on teammates
 GLOW_SHOW_TEAM = false
 

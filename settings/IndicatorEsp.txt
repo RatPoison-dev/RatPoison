@@ -8,6 +8,9 @@ INDICATOR_SIZE = 10.0
 //Distance from the center of arrows pointing towards entities off screen
 INDICATOR_DISTANCE = 25.0
 
+//Disable through smoke
+INDICATOR_SMOKE_CHECK = false
+
 //Enable indicator esp on teammates
 INDICATOR_SHOW_TEAM = false
 

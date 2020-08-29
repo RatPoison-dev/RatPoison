@@ -16,6 +16,8 @@ class SnaplinesEspTab : Tab(false, false) {
     val enableSnaplines = VisCheckBoxCustom("Enable", "ENABLE_SNAPLINES")
     val snaplinesWidth = VisSliderCustom("Line Width", "SNAPLINES_WIDTH", 1F, 10F, 1F, false)
 
+    val snaplinesSmokeCheck = VisCheckBoxCustom("Smoke Check", "SNAPLINES_SMOKE_CHECK")
+
     val enemySnaplines = VisCheckBoxCustom(" ", "SNAPLINES_ENEMIES", false)
     val enemySnaplinesColor = VisColorPickerCustom("Enemies", "SNAPLINES_ENEMY_COLOR")
 
@@ -40,6 +42,8 @@ class SnaplinesEspTab : Tab(false, false) {
 
         table.add(enableSnaplines).left().row()
         table.add(snaplinesWidth).left().colspan(2).row()
+
+        table.add(snaplinesSmokeCheck).left().row()
 
         var tmpTable = VisTable()
         tmpTable.add(enemySnaplines)
@@ -85,6 +89,7 @@ fun snaplinesEspTabUpdate() {
     snaplinesEspTab.apply {
         enableSnaplines.update()
         snaplinesWidth.update()
+        snaplinesSmokeCheck.update()
         enemySnaplines.update()
         enemySnaplinesColor.update()
         teamSnaplines.update()

@@ -8,7 +8,7 @@ object NetVars {
 	internal val map = Int2ObjectArrayMap<ClassOffset>(20_000) // Cover us for a while with 20K
 	
 	private fun scanTable(netVars: MutableMap<Int, ClassOffset>, table: ClassTable, offset: Long, name: String) {
-		for (i in 0..table.propCount - 1) {
+		for (i in 0 until table.propCount) {
 			val prop = ClassVariable(table.propForID(i), offset)
 			if (Character.isDigit(prop.name[0])) continue
 			

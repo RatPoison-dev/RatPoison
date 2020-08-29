@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.*
+import rat.poison.overlay.opened
 import rat.poison.ui.uiHelpers.tables.AimTriggerTable
 import rat.poison.ui.uiHelpers.tables.AimBacktrackTable
 import rat.poison.ui.uiHelpers.tables.AimTable
@@ -21,6 +22,11 @@ import rat.poison.utils.generalUtil.strToBool
 var categorySelected = "PISTOL"
 val gunCategories = arrayOf("PISTOL", "RIFLE", "SMG", "SNIPER", "SHOTGUN")
 var boneCategories = arrayOf("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
+var pistolCategory = arrayOf("DESERT_EAGLE", "DUAL_BERETTA", "FIVE_SEVEN", "GLOCK", "USP_SILENCER", "CZ75A", "R8_REVOLVER", "P2000", "TEC9", "P250")
+var smgCategory = arrayOf("MAC10", "P90", "MP5", "UMP45", "MP7", "MP9", "PP_BIZON")
+var rifleCategory = arrayOf("AK47", "AUG", "FAMAS", "SG553", "GALIL", "M4A4", "M4A1_SILENCER", "NEGEV", "M249")
+var sniperCategory = arrayOf("AWP", "G3SG1", "SCAR20", "SSG08")
+var shotgunCategory = arrayOf("XM1014", "MAG7", "SAWED_OFF", "NOVA")
 
 class AimTab : Tab(true, false) { //Aim.kts tab
     private val table = VisTable(false)
@@ -44,6 +50,8 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 }
 
 fun updateDisableAim() {
+    if (!opened) return
+
     aimTab.tAim.apply {
         val bool = !enableAim.isChecked
         var col = Color(255F, 255F, 255F, 1F)
@@ -63,8 +71,6 @@ fun updateDisableAim() {
         automaticWeaponsInput.disable(bool, col)
         targetSwapDelay.disable(bool, col)
 
-        //fovTypeLabel.color = col
-        //fovTypeBox.isDisabled = bool
         fovType.update()
 
         forceAimBoneKey.disable(bool, col)
@@ -185,6 +191,8 @@ fun updateAim() {
 }
 
 fun updateDisableTrig() {
+    if (!opened) return
+
     aimTab.tTrig.apply {
         var bool = if (!aimTab.tAim.enableAim.isChecked) {
             //enableTrig.disable(true)
@@ -265,6 +273,8 @@ fun updateTrig() {
 
 //Backtrack
 fun updateDisableBacktrack() {
+    if (!opened) return
+
     aimTab.tBacktrack.apply {
         val bool = !aimTab.tBacktrack.enableBacktrack.isChecked
 
@@ -279,7 +289,6 @@ fun updateDisableBacktrack() {
         backtrackKey.disable(bool, col)
         backtrackMS.disable(bool, col)
         backtrackSpotted.disable(bool)
-        backtrackPreferAccurate.disable(bool)
         categorySelectLabel.color = col
         categorySelectionBox.isDisabled = bool
         backtrackWeaponEnabled.disable(bool)
@@ -287,6 +296,8 @@ fun updateDisableBacktrack() {
 }
 
 fun updateBacktrack() {
+    if (!opened) return
+
     aimTab.tBacktrack.apply {
         categorySelectLabel.setText("${"Weapon-Category".toLocale()}:")
         //Create Category Selector Box
@@ -300,14 +311,12 @@ fun updateBacktrack() {
         }
 
         categorySelectionBox.items = itemsArray
-        //categorySelectionBox.selectedIndex = 1
 
         enableBacktrack.update()
         backtrackVisualize.update()
         backtrackEnableKey.update()
         backtrackKey.update()
         backtrackMS.update()
-        backtrackPreferAccurate.update()
         backtrackSpotted.update()
         backtrackWeaponEnabled.update()
     }

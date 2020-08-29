@@ -13,42 +13,6 @@ import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.notInGame
 
-fun getRangeRecords(entID: Int, minIDX: Int = 0, maxIDX: Int = 13): Array<Int> {
-    var youngestSimtime = Float.MAX_VALUE
-    var oldestSimtime = 0F
-    val minMaxIDX = arrayOf(Int.MAX_VALUE, -1)
-
-    for (i in minIDX until maxIDX) {
-        val record = btRecords[entID][i]
-
-        if (isValidTick(timeToTicks(record.simtime))) {
-            if (record.simtime > oldestSimtime) {
-                oldestSimtime = record.simtime
-                minMaxIDX[1] = i
-            }
-
-            if (record.simtime < youngestSimtime) {
-                youngestSimtime = record.simtime
-                minMaxIDX[0] = i
-            }
-        }
-    }
-
-    return minMaxIDX
-}
-
-fun getValidRecords(entID: Int): List<Int> {
-    val recordsList = mutableListOf<Int>()
-
-    for (i in 0 until 13) {
-        if (isValidTick(timeToTicks(btRecords[entID][i].simtime))) {
-            recordsList.add(i)
-        }
-    }
-
-    return recordsList
-}
-
 fun drawBacktrack() = App {
     if (MENUTOG) return@App
     if (me.dead()) return@App
@@ -64,6 +28,8 @@ fun drawBacktrack() = App {
     if (!meWep.gun) return@App
 
     for (i in 0 until 63) {
+        if (btRecords[i][0].simtime == 0F) continue
+
         val minMaxIDX = getRangeRecords(i)
 
         if (minMaxIDX[0] == Int.MAX_VALUE || minMaxIDX[1] == -1) continue
@@ -111,10 +77,10 @@ fun drawBacktrack() = App {
 
                 end()
             }
+        }
 
-            for (j in btRecords[i]) {
-                j.alpha -= .5F
-            }
+        for (j in btRecords[i]) {
+            j.alpha -= .5F
         }
     }
 }

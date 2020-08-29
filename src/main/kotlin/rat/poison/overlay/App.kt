@@ -2,14 +2,20 @@ package rat.poison.overlay
 
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.scenes.scene2d.InputEvent
+import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.kotcrab.vis.ui.VisUI
+import com.kotcrab.vis.ui.widget.VisTextButton
+import com.kotcrab.vis.ui.widget.VisValidatableTextField
 import com.sun.management.OperatingSystemMXBean
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import org.jire.arrowhead.keyPressed
@@ -44,6 +50,9 @@ var appTime = 0L
 var menuTime = 0L
 var overlayTime = 0L
 var bspVisTime = 0L
+
+var needKeyPress = false
+lateinit var needKeyActor: VisTextButton
 
 object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
@@ -84,9 +93,7 @@ object App : ApplicationAdapter() {
 
         menuStage.addActor(uiMenu)
 
-        Gdx.input.inputProcessor = InputMultiplexer().apply {
-            addProcessor(menuStage)
-        }
+        Gdx.input.inputProcessor = InputMultiplexer(menuStage)
 
         sb = SpriteBatch()
         textRenderer = BitmapFont(false)
@@ -155,11 +162,6 @@ object App : ApplicationAdapter() {
                             } else if (menuStage.actors.contains(uiSpecList)) {
                                 menuStage.clear() //actors.remove at index doesnt work after 1 loop?
                             }
-
-                            try {
-                                menuStage.act(Gdx.graphics.deltaTime)
-                                menuStage.draw()
-                            } catch(e: Exception) { }
                         }, TimeUnit.NANOSECONDS)
 
 
@@ -172,7 +174,12 @@ object App : ApplicationAdapter() {
                                 bodies[i]()
                             }
                         }, TimeUnit.NANOSECONDS)
-                        //glDisable(GL20.GL_BLEND)
+
+                        try { //Draw menu last, on top
+                            menuStage.act(Gdx.graphics.deltaTime)
+                            menuStage.draw()
+                        } catch(e: Exception) { }
+
                         glFinish()
                     }, TimeUnit.NANOSECONDS)
 
@@ -219,6 +226,7 @@ object App : ApplicationAdapter() {
 
                         sb.begin()
 
+                        textRenderer.color = Color.WHITE
                         textRenderer.draw(sb, sbText, CSGO.gameWidth/3F, CSGO.gameHeight-100F)
 
                         sb.end()

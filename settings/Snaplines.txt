@@ -4,6 +4,9 @@ ENABLE_SNAPLINES = false
 //Line width
 SNAPLINES_WIDTH = 3.0
 
+//Disable through smoke
+SNAPLINES_SMOKE_CHECK = false
+
 //Enable snap lines for enemies
 SNAPLINES_ENEMIES = true
 

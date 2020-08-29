@@ -1,6 +1,7 @@
 package rat.poison.ui.uiHelpers.overrideWeaponsUI
 
 import com.kotcrab.vis.ui.widget.VisCheckBox
+import rat.poison.curLocale
 import rat.poison.oWeapon
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanelTables.weaponOverrideSelected
@@ -21,9 +22,8 @@ class OverrideVisCheckBoxCustom(mainText: String, varName: String) : VisCheckBox
     }
 
     fun update() {
-        //val tmpText = curLocalization[localeName]
-        //this.setText(if (tmpText.isBlank()) defaultText else tmpText )
-        setText(defaultText)
+        val tmpText = curLocale[defaultText]
+        setText(if (tmpText.isBlank()) defaultText else tmpText )
         isChecked = getOverrideVar(weaponOverrideSelected, varIdx).strToBool()
     }
 

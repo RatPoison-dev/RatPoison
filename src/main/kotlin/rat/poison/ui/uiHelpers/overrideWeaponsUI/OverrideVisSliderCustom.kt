@@ -5,6 +5,9 @@ import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisTable
+import rat.poison.curLocale
+import rat.poison.curSettings
+import rat.poison.dbg
 import rat.poison.oWeapon
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanelTables.weaponOverrideSelected
@@ -19,7 +22,6 @@ class OverrideVisSliderCustom(mainText: String, varName: String, varMin: Float, 
     private val rnd = 10.0.pow(dec)
     private val w1 = width1
     private val w2 = width2
-    private val defaultText = mainText
 
     private val sliderLabel = VisLabel("$labelText: " + getOverrideVar(weaponOverrideSelected, varIdx))
     private val sliderBar = VisSlider(varMin, varMax, stepSize, false)
@@ -34,9 +36,16 @@ class OverrideVisSliderCustom(mainText: String, varName: String, varMin: Float, 
                 round(sliderBar.value * rnd)/rnd
             }
 
-            //curSettings[variableName] = sliderVal.toString()
             setOverrideVar(weaponOverrideSelected, varIdx, sliderVal)
-            sliderLabel.setText("$labelText: $sliderVal")
+
+            if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
+                if (dbg && curLocale[variableName].isBlank()) {
+                    println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
+                }
+                sliderLabel.setText("${curLocale[variableName]}: $sliderVal")
+            } else { //User our default input
+                sliderLabel.setText("$labelText: $sliderVal")
+            }
         }
 
         add(sliderLabel).width(w1)
@@ -52,10 +61,14 @@ class OverrideVisSliderCustom(mainText: String, varName: String, varMin: Float, 
             round(sliderBar.value * rnd)/rnd
         }
 
-        //val tmpText = curLocalization[localeName]
-        //curSettings[variableName] = sliderVal.toString()
-        //sliderLabel.setText(if (tmpText.isBlank()) "$defaultText : $sliderVal" else tmpText )
-        sliderLabel.setText("$defaultText : $sliderVal")
+        if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
+            if (dbg && curLocale[variableName].isBlank()) {
+                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
+            }
+            sliderLabel.setText("${curLocale[variableName]}: $sliderVal")
+        } else { //User our default input
+            sliderLabel.setText("$labelText: $sliderVal")
+        }
     }
 
     fun disable(bool: Boolean, col: Color) {

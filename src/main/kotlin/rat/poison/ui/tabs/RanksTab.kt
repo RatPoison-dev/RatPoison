@@ -59,20 +59,20 @@ class RanksTab : Tab(false, false) {
         namesTable.add(namesLabel).left().row()
 
         for (i in 0 until teamList.size) {
-            if (teamList[i] == "CT".toLocale()) {
+            if (teamList[i] == "CT") {
                 constructRank(i)
             }
         }
 
         for (i in 0 until teamList.size) {
-            if (teamList[i] == "T".toLocale()) {
+            if (teamList[i] == "T") {
                 constructRank(i)
             }
         }
     }
 
     private fun constructRank(index: Int) {
-        teamsLabel.setText(teamsLabel.text.toString() + teamList[index] + "  \n")
+        teamsLabel.setText(teamsLabel.text.toString() + teamList[index].toLocale() + "  \n")
 
         if (steamIDList[index].toInt() != 0) { //Bot check
             namesTable.add(LinkLabel(nameList[index], "https://steamcommunity.com/profiles/%5BU:1:" + steamIDList[index] + "%5BU/")).height(21f).left().row()

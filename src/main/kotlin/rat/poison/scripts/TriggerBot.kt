@@ -12,9 +12,7 @@ import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.iCrossHairID
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
-import rat.poison.scripts.aim.boneTrig
-import rat.poison.scripts.aim.findTarget
-import rat.poison.scripts.aim.inMyTeam
+import rat.poison.scripts.aim.*
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
@@ -26,7 +24,7 @@ var callingInShot = false
 var triggerInShot = false
 private var inDelay = false
 
-fun boneTrigger() = every(10) {
+fun triggerBot() = every(10) {
     if (DANGER_ZONE || me.dead() || MENUTOG) {
         callingInShot = false
         return@every
@@ -46,25 +44,28 @@ fun boneTrigger() = every(10) {
         wep.smg -> { prefix = "SMG_" }
     }
 
+    //TODO cleanup
     //FIRST-SHOT & BETWEEN-SHOTS
-    val initDelay = curSettings[prefix + "TRIGGER_INIT_SHOT_DELAY"].toInt()
-    val shotDelay = curSettings[prefix + "TRIGGER_PER_SHOT_DELAY"].toInt()
-    if (curSettings["ENABLE_TRIGGER"].strToBool() && !inDelay) {
+    val initDelay = if (curWepOverride) curSettings["WEP_TRIGGER_INIT_DELAY"].toInt() else curSettings[prefix + "TRIGGER_INIT_SHOT_DELAY"].toInt()
+    val shotDelay = if (curWepOverride) curSettings["WEP_TRIGGER_PER_DELAY"].toInt() else curSettings[prefix + "TRIGGER_PER_SHOT_DELAY"].toInt()
+    if ((curSettings["ENABLE_TRIGGER"].strToBool()) && !inDelay) {
         val bFOV: Float; val bINCROSS: Boolean; val bINFOV: Boolean; val bAIMBOT: Boolean; val bBACKTRACK: Boolean
 
         if (wep.gun) { //Not 100% this applies to every 'gun'
-            if (!curSettings[prefix + "TRIGGER"].strToBool()) { callingInShot = false; boneTrig = false; return@every }
+            if (!curSettings[prefix + "TRIGGER"].strToBool() && !(curWepOverride && curWepSettings.tBoneTrig)) { callingInShot = false; boneTrig = false; return@every }
 
-            bFOV = curSettings[prefix + "TRIGGER_FOV"].toFloat()
-            bINCROSS = curSettings[prefix + "TRIGGER_INCROSS"].strToBool()
-            bINFOV = curSettings[prefix + "TRIGGER_INFOV"].strToBool()
-            bAIMBOT = curSettings[prefix + "TRIGGER_AIMBOT"].strToBool()
-            bBACKTRACK = curSettings[prefix + "TRIGGER_BACKTRACK"].strToBool() && curSettings["ENABLE_BACKTRACK"].strToBool()
+            bFOV = if (curWepOverride) curSettings["WEP_TRIGGER_FOV"].toFloat() else curSettings[prefix + "TRIGGER_FOV"].toFloat()
+            bINCROSS = if (curWepOverride) curSettings["WEP_TRIGGER_INCROSS"].strToBool() else curSettings[prefix + "TRIGGER_INCROSS"].strToBool()
+            bINFOV = if (curWepOverride) curSettings["WEP_TRIGGER_INFOV"].strToBool() else curSettings[prefix + "TRIGGER_INFOV"].strToBool()
+            bAIMBOT = if (curWepOverride) curSettings["WEP_TRIGGER_AIMBOT"].strToBool() else curSettings[prefix + "TRIGGER_AIMBOT"].strToBool()
+            bBACKTRACK = if (curWepOverride) curSettings["WEP_TRIGGER_BACKTRACK"].strToBool() else curSettings[prefix + "TRIGGER_BACKTRACK"].strToBool() && curSettings["ENABLE_BACKTRACK"].strToBool()
 
             if (wep.sniper) { //Scope check
-                if (!(curSettings["SNIPER_TRIGGER"].strToBool() && ((me.isScoped() && curSettings["ENABLE_SCOPED_ONLY"].strToBool()) || (!curSettings["ENABLE_SCOPED_ONLY"].strToBool())))) {
-                    callingInShot = false
-                    return@every
+                if (curSettings["SNIPER_TRIGGER"].strToBool() || (curWepOverride && curSettings["WEP_TRIGGER"].strToBool())) {
+                    if (curSettings["ENABLE_SCOPED_ONLY"].strToBool() && !me.isScoped()) {
+                        callingInShot = false
+                        return@every
+                    }
                 }
             }
 

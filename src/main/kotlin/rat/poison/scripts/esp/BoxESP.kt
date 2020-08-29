@@ -33,7 +33,7 @@ data class BoundingBox(var left: Float = -1F, var right: Float = -1F, var top: F
 
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
 fun boxEsp() = App {
-	if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !curSettings["BOX_ESP_DETAILS"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
+	if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !curSettings["BOX_ESP_DETAILS"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@App
 
 	val advancedBBox = curSettings["ADVANCED_BOUNDING_BOX"].strToBool()
 
@@ -49,7 +49,6 @@ fun boxEsp() = App {
 	val bEspKevlar = curSettings["BOX_ESP_KEVLAR"].strToBool(); 	val bEspKevlarPos = curSettings["BOX_ESP_KEVLAR_POS"].replace("\"", "")
 	val bEspScoped = curSettings["BOX_ESP_SCOPED"].strToBool(); 	val bEspScopedPos = curSettings["BOX_ESP_SCOPED_POS"].replace("\"", "")
 	val bEspFlashed = curSettings["BOX_ESP_FLASHED"].strToBool();	val bEspFlashedPos = curSettings["BOX_ESP_FLASHED_POS"].replace("\"", "")
-	val bEspReload = curSettings["BOX_ESP_RELOAD"].strToBool();	    val bEspReloadPos = curSettings["BOX_ESP_RELOAD_POS"].replace("\"", "")
 	val bEspMoney = curSettings["BOX_ESP_MONEY"].strToBool();	    val bEspMoneyPos = curSettings["BOX_ESP_MONEY_POS"].replace("\"", "")
 
 	val showTeam = curSettings["BOX_SHOW_TEAM"].strToBool()
@@ -68,6 +67,12 @@ fun boxEsp() = App {
 		if (isPlayer || isWeapon || isDefuseKit) {
 			//Return if not onscreen
 			if (!worldToScreen(ent.position(), Vector())) return@forEntities
+
+			if (curSettings["BOX_SMOKE_CHECK"].strToBool()) {
+				if (lineThroughSmoke(ent)) {
+					return@forEntities
+				}
+			}
 
 			//Team + Dormant + Dead + Self check
 			var health = 0
@@ -175,10 +180,6 @@ fun boxEsp() = App {
 				boxDetailsLeftText.append(if (entityMemory.flashed()) "Flashed" else "")
 			}
 
-			if (bEspReload && bEspReloadPos == "LEFT" && isPlayer) {
-				boxDetailsLeftText.append(if (ent.weaponEntity().inReload()) "Reload" else "")
-			}
-
 			if (bEspName && bEspNamePos == "LEFT") {
 				if (isPlayer) {
 					boxDetailsLeftText.append("${ent.name()}\n")
@@ -245,10 +246,6 @@ fun boxEsp() = App {
 				boxDetailsRightText.append("$${entityMemory.money()}\n")
 			}
 
-			if (bEspReload && bEspReloadPos == "RIGHT" && isPlayer) {
-				boxDetailsRightText.append(if (ent.weaponEntity().inReload()) "Reload\n" else "")
-			}
-
 			if (bEspName && bEspNamePos == "RIGHT") {
 				if (isPlayer) {
 					boxDetailsRightText.append("${ent.name()}\n")
@@ -288,13 +285,6 @@ fun boxEsp() = App {
 			if (bEspFlashed && bEspFlashedPos == "TOP" && isPlayer) {
 				if (entityMemory.flashed()) {
 					boxDetailsTopText.append("Flashed\n")
-					topShift += 18
-				}
-			}
-
-			if (bEspReload && bEspReloadPos == "TOP" && isPlayer) {
-				if (ent.weaponEntity().inReload()) {
-					boxDetailsTopText.append("Reload\n")
 					topShift += 18
 				}
 			}
@@ -345,10 +335,6 @@ fun boxEsp() = App {
 
 			if (bEspFlashed && bEspFlashedPos == "BOTTOM" && isPlayer) {
 				boxDetailsBottomText.append(if (entityMemory.flashed()) "Flashed\n" else "")
-			}
-
-			if (bEspReload && bEspReloadPos == "BOTTOM" && isPlayer) {
-				boxDetailsBottomText.append(if (ent.weaponEntity().inReload()) "Reload\n" else "")
 			}
 
 			if (bEspWeapon && bEspWeaponPos == "BOTTOM" && isPlayer) {

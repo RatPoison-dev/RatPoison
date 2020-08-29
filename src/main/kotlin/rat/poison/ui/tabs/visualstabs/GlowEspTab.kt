@@ -18,7 +18,7 @@ class GlowEspTab: Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     val glowEsp = VisCheckBoxCustom("Enable", "GLOW_ESP")
 
-    //val aimBone = VisSelectBoxCustom("Bone", "_AIM_BONE", true, "HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
+    val glowSmokeCheck = VisCheckBoxCustom("Smoke Check", "GLOW_SMOKE_CHECK")
 
     //Visible flicker - is the bypass for now, issue in collecting settings
     var enemyGlowType = VisSelectBoxCustom(" ", "GLOW_ENEMY_TYPE", false, false,"NORMAL", "MODEL", "VISIBLE", "VISIBLE-FLICKER")
@@ -66,6 +66,8 @@ class GlowEspTab: Tab(false, false) {
 
         table.add(glowEsp).left()
         table.add(glowShowHealth).left().row()
+
+        table.add(glowSmokeCheck).left().row()
 
         var tmpTable = VisTable()
         tmpTable.add(showTeam)
@@ -131,14 +133,8 @@ fun glowEspTabUpdate() {
     glowEspTab.apply {
         glowEsp.update()
         glowShowHealth.update()
+        glowSmokeCheck.update()
 
-        //enemyGlowType.selected = curSettings["GLOW_ENEMY_TYPE"]
-        //teammateGlowType.selected = curSettings["GLOW_TEAMMATE_TYPE"]
-        //weaponGlowType.selected = curSettings["GLOW_WEAPON_TYPE"]
-        //targetGlowType.selected = curSettings["GLOW_TARGET_TYPE"]
-        //grenadeGlowType.selected = curSettings["GLOW_GRENADE_TYPE"]
-        //bombGlowType.selected = curSettings["GLOW_BOMB_TYPE"]
-        //bombCarrierGlowType.selected = curSettings["GLOW_BOMB_CARRIER_TYPE"]
         enemyGlowType.update()
         teammateGlowType.update()
         weaponGlowType.update()
@@ -160,14 +156,5 @@ fun glowEspTabUpdate() {
         glowBombCarrierColor.update()
         glowWeaponColor.update()
         glowGrenadeColor.update()
-
-        //glowBombCarrierColor.updateTitle()
-        //glowBombColor.updateTitle()
-        //glowEnemyColor.updateTitle()
-        //glowGrenadeColor.updateTitle()
-        //glowHighlightColor.update()
-        //glowTeamColor.updateTitle()
-        //glowHighlightColor.updateTitle()
-        //glowWeaponColor.updateTitle()
     }
 }

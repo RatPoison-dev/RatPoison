@@ -45,24 +45,34 @@ fun Entity.glow(color: Color, glowType: Int) {
 		CSGO.csgoEXE.read(this, glowMemory)
 
 		if (glowMemory.getPointer(0) != null) {
-			glowMemory.setFloat(0x4, color.red / 255F)
-			glowMemory.setFloat(0x8, color.green / 255F)
-			glowMemory.setFloat(0xC, color.blue / 255F)
-			glowMemory.setFloat(0x10, color.alpha.toFloat())
-			glowMemory.setByte(0x24, 1)
-			glowMemory.setByte(0x25, 0)
+			if (glowType == -1) {
+				glowMemory.setFloat(0x4, 0F)
+				glowMemory.setFloat(0x8, 0F)
+				glowMemory.setFloat(0xC, 0F)
 
-			glowMemory.setByte(0x26, curSettings["INV_GLOW_ESP"].toBoolean().toInt().toByte())
+				glowMemory.setByte(0x2C, glowType.toByte())
 
-			glowMemory.setByte(0x2C, glowType.toByte())
+				CSGO.csgoEXE.write(this, glowMemory)
+			} else {
+				glowMemory.setFloat(0x4, color.red / 255F)
+				glowMemory.setFloat(0x8, color.green / 255F)
+				glowMemory.setFloat(0xC, color.blue / 255F)
+				glowMemory.setFloat(0x10, color.alpha.toFloat())
+				glowMemory.setByte(0x24, 1)
+				glowMemory.setByte(0x25, 0)
 
-			CSGO.csgoEXE.write(this, glowMemory)
+				glowMemory.setByte(0x26, curSettings["INV_GLOW_ESP"].toBoolean().toInt().toByte())
+
+				glowMemory.setByte(0x2C, glowType.toByte())
+
+				CSGO.csgoEXE.write(this, glowMemory)
+			}
 		}
 	}
 }
 
 fun String.toGlowNum(): Int {
-	return when(this) {
+	return when(this.toUpperCase()) {
 		"NORMAL" -> 0
 		"MODEL" -> 1
 		"VISIBLE" -> 2

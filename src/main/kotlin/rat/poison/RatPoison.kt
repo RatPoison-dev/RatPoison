@@ -5,11 +5,9 @@ package rat.poison
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
-import com.badlogic.gdx.graphics.GL20.GL_FALSE
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.lwjgl.glfw.GLFW.*
-import org.lwjgl.opengl.GL
 import rat.poison.game.CSGO
 import rat.poison.overlay.App
 import rat.poison.scripts.*
@@ -27,12 +25,17 @@ import java.awt.Robot
 import kotlin.collections.set
 
 //Override Weapon
-data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = false,      var tFlatAim: Boolean = false,
-                   var tPathAim: Boolean = false,       var tAimBone: Int = 0,              var tAimFov: Float = 0F,
-                   var tAimSpeed: Int = 0,              var tAimSmooth: Double = 0.0,       var tPerfectAim: Boolean = false,
-                   var tPAimFov: Int = 1,               var tPAimChance: Int = 1,           var tScopedOnly: Boolean = false,
-                   var tBoneTrig: Boolean = false,      var tBTrigBone: Int = 0,            var tBTrigAim: Boolean = false,
-                   var tBTrigDelay: Int = 0,            var tAimAfterShots: Int = 0)
+data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = false,          var tOnShot: Boolean = false,
+                   var tFlatAim: Boolean = false,       var tPathAim: Boolean = false,          var tAimBone: Int = 0,
+                   var tForceBone: Int = 0,             var tAimFov: Float = 0F,                var tAimSpeed: Int = 0,
+                   var tAimSmooth: Double = 0.0,        var tPerfectAim: Boolean = false,       var tPAimFov: Int = 1,
+                   var tPAimChance: Int = 1,            var tScopedOnly: Boolean = false,       var tAimAfterShots: Int = 0,
+
+                   var tBoneTrig: Boolean = false,     var tBTrigAim: Boolean = false,          var tBTrigInCross: Boolean = false,
+                   var tBTrigInFov: Boolean = false,   var tBTrigBacktrack: Boolean = false,    var tBTrigFov: Float = 0F,
+                   var tBTrigInitDelay: Int = 0,       var tBTrigPerShotDelay: Int = 0,
+
+                   var tBacktrack: Boolean = false,    var tBTMS: Int = 0)
 
 //Skinned Weapon
 data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var tSeed: Int)
@@ -103,7 +106,7 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Flat Aim") }; flatAim()
     if (dbg) { println("[DEBUG] Initializing Path Aim") }; pathAim()
     if (dbg) { println("[DEBUG] Initializing Set Aim") }; setAim()
-    if (dbg) { println("[DEBUG] Initializing Bone Trigger") }; boneTrigger()
+    if (dbg) { println("[DEBUG] Initializing Bone Trigger") }; triggerBot()
     if (dbg) { println("[DEBUG] Initializing Auto Knife") }; autoKnife()
     if (dbg) { println("[DEBUG] Initializing Reduced Flash") }; reducedFlash()
     if (dbg) { println("[DEBUG] Initializing ESPs") }; esp()
@@ -124,6 +127,8 @@ fun main() {
 
     if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
     if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()
+
+    drawSmokes()
 
     if (EXPERIMENTAL) {
         //rayTraceTest()

@@ -29,6 +29,8 @@ var bspData: BspData = BspData()
 
 fun loadBsp(fileDir: String) {
     try {
+        if (fileDir.isEmpty()) return
+
         val bsp = BspFile(File(fileDir).toPath())
 
         bsp.sourceApp = SourceAppDB.getInstance().fromID(SourceAppID.COUNTER_STRIKE_GO)

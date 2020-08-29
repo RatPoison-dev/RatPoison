@@ -13,8 +13,9 @@ import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
 import rat.poison.utils.notInGame
 
+//TODO god fix this eventually g
 fun snapLines() = App {
-    if (!curSettings["ENABLE_SNAPLINES"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
+    if (!curSettings["ENABLE_SNAPLINES"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@App
 
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()
@@ -24,8 +25,13 @@ fun snapLines() = App {
             val entPos = it.entity.position()
             val vec = Vector()
 
-            if (!(entPos.x == 0F && entPos.y == 0F && entPos.z == 0F)) {
+            if (curSettings["SNAPLINES_SMOKE_CHECK"].strToBool()) {
+                if (lineThroughSmoke(it.entity)) {
+                    return@forEntities
+                }
+            }
 
+            if (!(entPos.x == 0F && entPos.y == 0F && entPos.z == 0F)) {
                 shapeRenderer.apply {
                     if (shapeRenderer.isDrawing) {
                         end()
@@ -50,13 +56,18 @@ fun snapLines() = App {
         }
     }
 
-    forEntities {
+    forEntities(EntityType.CCSPlayer) {
         val entity = it.entity
         var colStr = ""
 
+        if (curSettings["SNAPLINES_SMOKE_CHECK"].strToBool()) {
+            if (lineThroughSmoke(entity)) {
+                return@forEntities
+            }
+        }
+
         when (it.type) {
             EntityType.CCSPlayer -> {
-
                 val dormCheck = (entity.dormant() && !DANGER_ZONE)
                 val onTeam = me.team() == entity.team()
                 val enemyCheck = ((curSettings["SNAPLINES_ENEMIES"].strToBool() && !onTeam) && !DANGER_ZONE)

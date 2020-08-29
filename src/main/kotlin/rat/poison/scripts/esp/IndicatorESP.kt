@@ -19,7 +19,7 @@ import kotlin.math.hypot
 import kotlin.math.sin
 
 fun indicatorEsp() = App {
-    if (!curSettings["ENABLE_ESP"].strToBool() || MENUTOG || !curSettings["INDICATOR_ESP"].strToBool() || notInGame) return@App
+    if (!curSettings["ENABLE_ESP"].strToBool() || !curSettings["INDICATOR_ESP"].strToBool() || notInGame) return@App
 
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()
@@ -33,6 +33,12 @@ fun indicatorEsp() = App {
         when (it.type) {
             EntityType.CCSPlayer -> {
                 if (entity.dead() || entity == me || (entity.dormant() && !DANGER_ZONE)) return@forEntities
+
+                if (curSettings["INDICATOR_SMOKE_CHECK"].strToBool()) {
+                    if (lineThroughSmoke(entity)) {
+                        return@forEntities
+                    }
+                }
 
                 if (bEnt >= 0 && bEnt == entity) { //This is the bomb carrier
                     if (curSettings["INDICATOR_SHOW_ENEMIES"].strToBool() && !onMyTeam) {

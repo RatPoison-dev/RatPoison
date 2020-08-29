@@ -52,7 +52,7 @@ fun String.toWeaponClass(): oWeapon {
     var tStr = this
     tStr = tStr.replace("oWeapon(", "").replace(")", "")
     val tSA = tStr.split(", ") //temp String Array
-    return oWeapon(tOverride = tSA.pull(0).strToBool(), tFRecoil = tSA.pull(1).strToBool(), tFlatAim = tSA.pull(2).strToBool(), tPathAim = tSA.pull(3).strToBool(), tAimBone = tSA.pull(4).toInt(), tAimFov = tSA.pull(5).toFloat(), tAimSpeed = tSA.pull(6).toInt(), tAimSmooth = tSA.pull(7).toDouble(), tPerfectAim = tSA.pull(8).strToBool(), tPAimFov = tSA.pull(9).toInt(), tPAimChance = tSA.pull(10).toInt(), tScopedOnly = tSA.pull(11).strToBool())//, tBoneTrig = tSA.pull(13).strToBool(), tBTrigBone = tSA.pull(14).toInt(), tBTrigAim = tSA.pull(15).strToBool(), tBTrigDelay = tSA.pull(16).toInt())
+    return oWeapon(tOverride = tSA.pull(0).strToBool(), tFRecoil = tSA.pull(1).strToBool(), tOnShot = tSA.pull(2).strToBool(), tFlatAim = tSA.pull(3).strToBool(), tPathAim = tSA.pull(4).strToBool(), tAimBone = tSA.pull(5).toInt(), tForceBone = tSA.pull(6).toInt(), tAimFov = tSA.pull(7).toFloat(), tAimSpeed = tSA.pull(8).toInt(), tAimSmooth = tSA.pull(9).toDouble(), tPerfectAim = tSA.pull(10).strToBool(), tPAimFov = tSA.pull(11).toInt(), tPAimChance = tSA.pull(12).toInt(), tScopedOnly = tSA.pull(13).strToBool(), tAimAfterShots = tSA.pull(14).toInt(), tBoneTrig = tSA.pull(15).strToBool(), tBTrigAim = tSA.pull(16).strToBool(), tBTrigInCross = tSA.pull(17).strToBool(), tBTrigInFov = tSA.pull(18).strToBool(), tBTrigBacktrack = tSA.pull(19).strToBool(), tBTrigFov = tSA.pull(20).toFloat(), tBTrigInitDelay = tSA.pull(21).toInt(), tBTrigPerShotDelay = tSA.pull(22).toInt(), tBacktrack = tSA.pull(23).strToBool(), tBTMS = tSA.pull(24).toInt())
 }
 
 fun String.toSkinWeaponClass(): sWeapon {

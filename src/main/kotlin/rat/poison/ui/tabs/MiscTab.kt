@@ -87,11 +87,6 @@ class MiscTab : Tab(false, false) {
             disablePostProcessing()
         }
 
-        weaponSpamKey.changed { _, _ ->
-            weaponSpamToggleKey = ObservableBoolean({keyPressed(weaponSpamKey.value)})
-            true
-        }
-
         //Aim Strafer Table
         val itemsArray = Array<String>()
         for (i in aimStraferCategories) {

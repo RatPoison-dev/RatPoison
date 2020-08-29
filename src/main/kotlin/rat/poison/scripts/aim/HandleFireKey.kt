@@ -68,8 +68,6 @@ fun fireWeapon() {
 
     val meWep = me.weapon()
 
-    if (meWep.sniper && curSettings["ENABLE_SCOPED_ONLY"].strToBool() && !me.isScoped()) return
-
     var shouldAuto = false
 
     if (curSettings["AUTOMATIC_WEAPONS"].strToBool() && !meWep.automatic && meWep.gun && curSettings["ENABLE_AIM"].strToBool()) {
@@ -91,7 +89,7 @@ fun fireWeapon() {
     val backtrackOnKey = curSettings["ENABLE_BACKTRACK_ON_KEY"].strToBool()
     val backtrackKeyPressed = keyPressed(curSettings["BACKTRACK_KEY"].toInt())
 
-    if (curSettings["ENABLE_BACKTRACK"].strToBool() && (!backtrackOnKey || (backtrackOnKey && backtrackKeyPressed))) {
+    if (curSettings["ENABLE_BACKTRACK"].strToBool() && ((!backtrackOnKey || (backtrackOnKey && backtrackKeyPressed)) || (curWepOverride && curSettings["WEP_BACKTRACK"].strToBool()))) {
         if (shouldAuto || (!shouldAuto && !didShoot) || meWep.automatic) {
             if (attemptBacktrack()) {
                 if (!shouldAuto) {
@@ -101,8 +99,6 @@ fun fireWeapon() {
             }
         }
     }
-
-
 
     if (shouldAuto) {
         clientDLL[dwForceAttack] = 6

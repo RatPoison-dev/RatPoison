@@ -22,6 +22,8 @@ class BoxEspTab: Tab(false, false) {
 
     val advancedBBox = VisCheckBoxCustom("Advanced BBOX", "ADVANCED_BOUNDING_BOX")
 
+    val boxSmokeCheck = VisCheckBoxCustom("Smoke Check", "BOX_SMOKE_CHECK")
+
     val boxEspDetails = VisCheckBoxCustom("Box Details", "BOX_ESP_DETAILS")
     val boxEspHealth = VisCheckBoxCustom("Health", "BOX_ESP_HEALTH")
     val boxEspHealthPos = VisSelectBoxCustom(" ", "BOX_ESP_HEALTH_POS", false, false, "LEFT", "RIGHT")
@@ -44,8 +46,6 @@ class BoxEspTab: Tab(false, false) {
     val boxEspScopedPos = VisSelectBoxCustom(" ", "BOX_ESP_SCOPED_POS", false, false, "TOP", "BOTTOM", "LEFT", "RIGHT")
     val boxEspFlashed = VisCheckBoxCustom("Flashed", "BOX_ESP_FLASHED")
     val boxEspFlashedPos = VisSelectBoxCustom(" ", "BOX_ESP_FLASHED_POS", false, false, "TOP", "BOTTOM", "LEFT", "RIGHT")
-    val boxEspReload = VisCheckBoxCustom("Reload", "BOX_ESP_RELOAD")
-    val boxEspReloadPos = VisSelectBoxCustom(" ", "BOX_ESP_RELOAD_POS", false, false, "TOP", "BOTTOM", "LEFT", "RIGHT")
 
     val boxDetailColor = VisColorPickerCustom("Detail Text", "BOX_DETAILS_TEXT_COLOR")
 
@@ -71,6 +71,7 @@ class BoxEspTab: Tab(false, false) {
         table.addSeparator().colspan(2)
         table.add(boxEsp).left().row()
         table.add(advancedBBox).left().row()
+        table.add(boxSmokeCheck).left().row()
         table.add(boxEspDetails).left().row()
         table.add(boxEspName).left()
         table.add(boxEspNamePos).left().row()
@@ -92,8 +93,6 @@ class BoxEspTab: Tab(false, false) {
         table.add(boxEspScopedPos).left().row()
         table.add(boxEspFlashed).left()
         table.add(boxEspFlashedPos).left().row()
-        table.add(boxEspReload).left()
-        table.add(boxEspReloadPos).left().row()
 
         table.add(boxDetailColor).width(175F - boxDetailColor.width).left().row()
 
@@ -135,6 +134,7 @@ fun boxEspTabUpdate() {
     boxEspTab.apply {
         boxEsp.update()
         advancedBBox.update()
+        boxSmokeCheck.update()
         boxEspDetails.update()
         boxEspHealth.update()
         boxEspHealthPos.update()
@@ -148,8 +148,6 @@ fun boxEspTabUpdate() {
         boxEspMoneyPos.update()
         boxEspHelmet.update()
         boxEspHelmetPos.update()
-        boxEspReload.update()
-        boxEspReloadPos.update()
         boxEspKevlar.update()
         boxEspKevlarPos.update()
         boxEspAmmo.update()

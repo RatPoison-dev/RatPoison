@@ -22,10 +22,6 @@ object NetVarOffsets {
 	val fFlags by netVar("DT_BasePlayer")
 	val lifeState by netVar("DT_BasePlayer")
 
-	val iFOV by netVar("DT_CSPlayer", "m_iFOV")
-
-	val m_Local by netVar("DT_BasePlayer", "m_Local")
-
 	val aimPunchAngle by netVar("DT_BasePlayer", "m_aimPunchAngle")
 	val szLastPlaceName by netVar("DT_BasePlayer")
 	val iHealth by netVar("DT_BasePlayer")
@@ -54,6 +50,8 @@ object NetVarOffsets {
 	val hBombDefuser by netVar("DT_PlantedC4")
 	val flDefuseCountDown by netVar("DT_PlantedC4")
 	val flSimulationTime by netVar("DT_CSPlayer", "m_flSimulationTime")
+
+	val bDidSmokeEffect by netVar("DT_SmokeGrenadeProjectile", "m_bDidSmokeEffect")
 
 	val m_iAccountID by netVar("DT_BaseAttributableItem", "m_iAccountID")
 	val m_OriginalOwnerXuidLow by netVar("DT_BaseAttributableItem", "m_OriginalOwnerXuidLow")

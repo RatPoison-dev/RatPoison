@@ -16,6 +16,8 @@ import rat.poison.game.offsets.ClientOffsets.dwInput
 import rat.poison.game.offsets.EngineOffsets.dwClientState_LastOutgoingCommand
 import rat.poison.game.offsets.EngineOffsets.dwGlobalVars
 import rat.poison.scripts.aim.calcTarget
+import rat.poison.scripts.aim.curWepCategory
+import rat.poison.scripts.aim.curWepOverride
 import rat.poison.utils.Angle
 import rat.poison.utils.Structs.*
 import rat.poison.utils.Vector
@@ -34,21 +36,34 @@ var bestBacktrackTarget = -1L
 
 private var inBacktrack = false
 
+private var haveGvars = false
+private lateinit var gvars: GlobalVars
+
 fun sendPacket(bool: Boolean) { //move outta here
     val byte = if (bool) 1.toByte() else 0.toByte()
     engineDLL[0xD418A] = byte //Bitch ass lil coder signature wont work
 }
 
-fun setupBacktrack() = every(4) {
-    if (notInGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0) {
-        btRecords = Array(64) { Array(13) { BacktrackTable() } }
-        if (engineDLL.byte(0xD418A) == 0.toByte() && !inBacktrack) {
-            sendPacket(true)
+fun setupBacktrack() {
+    every(15, true) {
+        if (!notInGame) {
+            gvars = getGlobalVars()
+            haveGvars = true
         }
-        return@every
     }
 
-    constructRecords()
+    every(4, true) {
+        if (notInGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0) {
+            btRecords = Array(64) { Array(13) { BacktrackTable() } }
+            if (engineDLL.byte(0xD418A) == 0.toByte() && !inBacktrack) {
+                sendPacket(true)
+            }
+
+            return@every
+        }
+
+        constructRecords()
+    }
 }
 
 fun attemptBacktrack(): Boolean {
@@ -111,7 +126,21 @@ fun constructRecords() {
     forEntities(EntityType.CCSPlayer) {
         val ent = it.entity
 
-        if (ent.dead() || ent == me || ent.team() == meTeam || ent.dormant()) return@forEntities
+        if (ent.dead() || ent == me || ent.team() == meTeam) return@forEntities
+
+        if (ent.dormant()) { //Reset that bitch
+            val entID = (csgoEXE.uint(ent + dwIndex) - 1).toInt()
+            for (i in 0 until 13) {
+                val record = btRecords[entID][i]
+
+                record.simtime = 0f
+                record.alpha = 100f
+
+                btRecords[entID][i] = record
+            }
+
+            return@forEntities
+        }
 
         //Best target shit
         val pos = ent.bones(6)
@@ -119,6 +148,8 @@ fun constructRecords() {
         if (fov < bestFov && fov > 0) {
             bestFov = fov
             bestBacktrackTarget = ent
+        } else if (bestFov == 5F) {
+            bestBacktrackTarget = -1L
         }
 
         //Create records
@@ -148,10 +179,6 @@ fun constructRecords() {
         }
 
         return@forEntities
-    }
-
-    if (bestFov == 5F) {
-        bestBacktrackTarget = -1L
     }
 }
 
@@ -222,16 +249,59 @@ fun bestSimTime(): Float {
 }
 
 fun isValidTick(tick: Int): Boolean {
-    val gvars = getGlobalVars()
+    if (!haveGvars) return false
+
     val delta = gvars.tickCount - tick
     val deltaTime = delta * gvars.intervalPerTick
-    val max = clamp(curSettings["BACKTRACK_MS"].toFloat()/1000f, 0F, .19F)
+
+    var backtrackMS = curSettings["${curWepCategory}_BACKTRACK_MS"].toFloat()
+    if (curWepOverride && curSettings["WEP_BACKTRACK"].strToBool()) {
+        backtrackMS = curSettings["WEP_BACKTRACK_MS"].toFloat()
+    }
+
+    val max = clamp(backtrackMS/1000f, 0F, .19F)
 
     return abs(deltaTime) <= max
 }
 
 fun timeToTicks(time: Float): Int {
     return (.5f + time / getGlobalVars().intervalPerTick).toInt()
+}
+
+fun getRangeRecords(entID: Int, minIDX: Int = 0, maxIDX: Int = 13): Array<Int> {
+    var youngestSimtime = Float.MAX_VALUE
+    var oldestSimtime = 0F
+    val minMaxIDX = arrayOf(Int.MAX_VALUE, -1)
+
+    for (i in minIDX until maxIDX) {
+        val record = btRecords[entID][i]
+
+        if (isValidTick(timeToTicks(record.simtime))) {
+            if (record.simtime > oldestSimtime) {
+                oldestSimtime = record.simtime
+                minMaxIDX[1] = i
+            }
+
+            if (record.simtime < youngestSimtime) {
+                youngestSimtime = record.simtime
+                minMaxIDX[0] = i
+            }
+        }
+    }
+
+    return minMaxIDX
+}
+
+fun getValidRecords(entID: Int): List<Int> {
+    val recordsList = mutableListOf<Int>()
+
+    for (i in 0 until 13) {
+        if (isValidTick(timeToTicks(btRecords[entID][i].simtime))) {
+            recordsList.add(i)
+        }
+    }
+
+    return recordsList
 }
 
 fun getGlobalVars(): GlobalVars {

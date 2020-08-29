@@ -3,6 +3,9 @@ ENABLE_BOX_ESP = true
 
 ADVANCED_BOUNDING_BOX = true
 
+//Disable through smoke
+BOX_SMOKE_CHECK = false
+
 //Enable box esp details
 //Shows optional extra details (Health/Armor bar, Name/Weapon text) for each enemy, configurable below
 BOX_ESP_DETAILS = true
@@ -30,10 +33,6 @@ BOX_ESP_SCOPED_POS = RIGHT
 //Enable box esp flashed text; Text position Left / Right
 BOX_ESP_FLASHED = true
 BOX_ESP_FLASHED_POS = RIGHT
-
-//Enable box esp reloading text; Text position Left / Right
-BOX_ESP_RELOAD = true
-BOX_ESP_RELOAD_POS = RIGHT
 
 //Enable box esp name text; Text position Top / Bottom
 BOX_ESP_NAME = true

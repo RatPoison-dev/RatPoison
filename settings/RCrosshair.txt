@@ -6,6 +6,9 @@ RCROSSHAIR_TYPE = CROSSHAIR
 //Static crosshair when holding a sniper
 ENABLE_SNIPER_CROSSHAIR = true
 
+//Radius of the crosshair circle
+RCROSSHAIR_RADIUS = 10
+
 //Width of the crosshair bars
 RCROSSHAIR_WIDTH = 2
 

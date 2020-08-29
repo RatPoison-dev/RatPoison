@@ -9,6 +9,7 @@ import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.target
 import rat.poison.scripts.esp.glow
 import rat.poison.scripts.esp.glowTarget
+import rat.poison.scripts.esp.lineThroughSmoke
 import rat.poison.scripts.esp.toGlowNum
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.generalUtil.strToBool
@@ -125,6 +126,13 @@ internal fun glowEspApp() = App {
 					if (color == "GLOW_HEALTH") {
 						glowAddress.glow(Color((255 - 2.55 * health).toInt(), (2.55 * health).toInt(), 0, 1.0), glowType)
 					} else {
+						if (curSettings["GLOW_SMOKE_CHECK"].strToBool()) {
+							if (lineThroughSmoke(entity)) {
+								glowAddress.glow(curSettings[color].strToColor(), -1)
+								return@forEntities
+							}
+						}
+
 						glowAddress.glow(curSettings[color].strToColor(), glowType)
 					}
 				}
