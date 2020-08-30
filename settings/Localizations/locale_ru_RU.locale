@@ -464,8 +464,8 @@ _BACKTRACK_CHEST = Грудь
 _BACKTRACK_STOMACH = Живот
 _BACKTRACK_PELVIS = Таз
 ENABLE_ADRENALINE = Включить адреналин
-GLOW_TARGET_COLOR = Цвет подсветки цели
-NADE_TRACER_COLOR = Цвет трейсера гранат
+GLOW_TARGET_COLOR = Цель аима
+NADE_TRACER_COLOR = Трейсер гранат
 ENABLE_HITSOUND = Включить звук попадания
 OPENGL_FPS = OpenGL FPS
 MENU_STAY_FOCUSED = Оставаться в фокусе
@@ -520,7 +520,7 @@ Box = Боксы
 Snaplines = Линии
 FootSteps = Шаги
 Hitmarker = Хитмаркеры
-Nades = Траектории
+Nades = Гранаты
 
 //grenade helper
 Loaded:-N/A = Загружено: N/A
@@ -608,7 +608,7 @@ NONE = None
 ADVANCED_BOUNDING_BOX = Полностью динамичен
 BOX_WEAPON_COLOR = Оружия
 CECONENTITY = Дефуза
-HEAD_LVL_COLOR = Цвет линии
+HEAD_LVL_COLOR = Уровень голов
 HEAD_LVL_DEADZONE = Мертвая зона
 HEAD_LVL_LINE_WIDTH = Ширина линии
 HeadLvl = Уровень головы
@@ -626,3 +626,29 @@ SpreadCircle = Круг отдачи
 RCS_TYPE = Тип RCS
 STABLE = Стабильный
 LEGACY = Старый
+
+RCROSSHAIR_RADIUS = Радиус
+
+//Override Shit
+tAimFov = FOV
+tAimSpeed = Скорость
+tAimSmooth = Плавность
+tAimAfterShots = Аим после #
+tPAimFov = FOV
+tPAimChance = % Шанс
+tBTrigFov = FOV
+tBTrigInitDelay = Задержка перед первым выстрелом
+tBTrigPerShotDelay = Задержка между выстрелами
+tBTMS = МС
+Force-Bone = Форсированная кость
+_BACKTRACK_MS = Бэктрек
+
+VISUALIZE_SMOKES_COLOR = Рисовать смоки
+VISUALIZE_SMOKES_POLYS = Количество полигонов
+VISUALIZE_SMOKES_WIDTH = Ширина
+VISUALIZE_SMOKES_HEIGHT = Высота
+
+GLOW_SMOKE_CHECK = Выключать в смоках
+INDICATOR_SMOKE_CHECK = Выключать в смоках
+BOX_SMOKE_CHECK = Выключать в смоках
+SNAPLINES_SMOKE_CHECK = Выключать в смоках
