@@ -57,7 +57,7 @@ You can launch the cheat at any time after launching CSGO.
 
 Open to pull requests
 
-Credit to Mr. Noad & 2772/Matt for a lot of help throughout this project
+Credit to Mr. Noad, 2772/Matt, Eston, and Spravedlivo for a lot of help throughout this project
 
 ---
 
@@ -73,7 +73,6 @@ Credit to Mr. Noad & 2772/Matt for a lot of help throughout this project
 	* Added locale options in menu, you can change menu language with premade localization files
 	* Added glow and box health based options
 	* Added flicker free glow
-	* Added toggle RCS
 	* Added static fov option
 	* Added draw aim fov, draw trigger fov, for static fov only
 	* Added nightmode/fullbright option

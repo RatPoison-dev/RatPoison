@@ -667,3 +667,5 @@ GLOW_SMOKE_CHECK = Smoke Check
 INDICATOR_SMOKE_CHECK = Smoke Check
 BOX_SMOKE_CHECK = Smoke Check
 SNAPLINES_SMOKE_CHECK = Smoke Check
+
+Keybinds = Keybinds

@@ -11,6 +11,7 @@ import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.overlay.App
+import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.utils.generalUtil.strToColor
 import rat.poison.game.Color as rColor
@@ -27,9 +28,7 @@ class VisColorPickerCustom(mainText: String, varName: String) : VisTable() {
     private var colorPicker : ColorPicker
 
     init {
-        update()
-
-        colorPicker = ColorPicker(labelText, object : ColorPickerAdapter() {
+        colorPicker = ColorPicker(variableName.toLocale(), object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
                 curSettings[variableName] = rColor((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), 1.0).toString()
                 newCol.a = 1F
@@ -44,6 +43,8 @@ class VisColorPickerCustom(mainText: String, varName: String) : VisTable() {
 
         this.add(pickerButton).growX()
         this.add(pickerImage).size(24f).pad(3f)
+
+        update()
     }
 
     fun update() {
@@ -55,6 +56,7 @@ class VisColorPickerCustom(mainText: String, varName: String) : VisTable() {
                 println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
             }
             pickerButton.setText(curLocale[variableName])
+            colorPicker.titleLabel.setText(variableName.toLocale())
         }
     }
 

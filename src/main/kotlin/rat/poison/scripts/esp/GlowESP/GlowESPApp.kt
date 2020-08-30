@@ -123,16 +123,16 @@ internal fun glowEspApp() = App {
 				}
 
 				if (color.trim() != "" && !color.isBlank()) {
+					if (curSettings["GLOW_SMOKE_CHECK"].strToBool()) {
+						if (lineThroughSmoke(entity)) {
+							glowAddress.glow(curSettings[color].strToColor(), -1)
+							return@forEntities
+						}
+					}
+
 					if (color == "GLOW_HEALTH") {
 						glowAddress.glow(Color((255 - 2.55 * health).toInt(), (2.55 * health).toInt(), 0, 1.0), glowType)
 					} else {
-						if (curSettings["GLOW_SMOKE_CHECK"].strToBool()) {
-							if (lineThroughSmoke(entity)) {
-								glowAddress.glow(curSettings[color].strToColor(), -1)
-								return@forEntities
-							}
-						}
-
 						glowAddress.glow(curSettings[color].strToColor(), glowType)
 					}
 				}

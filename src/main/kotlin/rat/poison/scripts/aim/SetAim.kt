@@ -18,7 +18,6 @@ var curWepSettings = oWeapon()
 
 fun setAim() = every(100, true) {
     try {
-        curWepOverride = false
         curWep = me.weapon()
 
         if (curWep.grenade || curWep.knife || curWep.miscEnt || curWep == Weapons.ZEUS_X27 || curWep.bomb) {
@@ -54,24 +53,14 @@ fun setAim() = every(100, true) {
                         curSettings["PERFECT_AIM_CHANCE"] = curWepSettings.tPAimChance
                         curSettings["ENABLE_SCOPED_ONLY"] = curWepSettings.tScopedOnly
 
-                        curSettings["WEP_TRIGGER"] = curWepSettings.tBoneTrig
-                        curSettings["WEP_TRIGGER_AIMBOT"] = curWepSettings.tBTrigAim
-                        curSettings["WEP_TRIGGER_INCROSS"] = curWepSettings.tBTrigInCross
-                        curSettings["WEP_TRIGGER_INFOV"] = curWepSettings.tBTrigInFov
-                        curSettings["WEP_TRIGGER_BACKTRACK"] = curWepSettings.tBTrigBacktrack
-                        curSettings["WEP_TRIGGER_FOV"] = curWepSettings.tBTrigFov
-                        curSettings["WEP_TRIGGER_INIT_DELAY"] = curWepSettings.tBTrigInitDelay
-                        curSettings["WEP_TRIGGER_PER_DELAY"] = curWepSettings.tBTrigPerShotDelay
-
-                        curSettings["WEP_BACKTRACK"] = curWepSettings.tBacktrack
-                        curSettings["WEP_BACKTRACK_MS"] = curWepSettings.tBTMS
-
                         if (curWep.rifle || curWep.smg) {
                             curSettings["AIM_AFTER_SHOTS"] = curWepSettings.tAimAfterShots
                         }
 
                         //Advanced advanced aim settings
                         curWepOverride = true
+                    } else {
+                        curWepOverride = false
                     }
                 }
             }

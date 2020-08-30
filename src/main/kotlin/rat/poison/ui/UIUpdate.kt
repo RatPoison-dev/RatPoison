@@ -11,8 +11,10 @@ import rat.poison.ui.uiPanelTables.OverridenWeapons
 import rat.poison.ui.uiPanelTables.overridenWeaponsUpdate
 import rat.poison.ui.uiPanels.*
 
+private var refreshing = false
+
 fun uiUpdate() {
-    if (!opened) return
+    if (!opened || refreshing) return
 
     overridenWeaponsUpdate()
     visualsTabUpdate()
@@ -44,6 +46,8 @@ fun uiUpdate() {
 }
 
 fun refreshMenu() {
+    refreshing = true
+
     mainTabbedPane.removeAll()
 
     aimTab = AimTab()
@@ -96,4 +100,6 @@ fun refreshMenu() {
 
     uiBombWindow.remove()
     uiBombWindow = UIBombTimer()
+
+    refreshing = false
 }

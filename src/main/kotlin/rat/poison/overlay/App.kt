@@ -220,16 +220,18 @@ object App : ApplicationAdapter() {
                         }
 
 
-                        if (sb.isDrawing) {
+                        try { //TODO fuck
+                            if (sb.isDrawing) {
+                                sb.end()
+                            }
+
+                            sb.begin()
+
+                            textRenderer.color = Color.WHITE
+                            textRenderer.draw(sb, sbText, CSGO.gameWidth / 3F, CSGO.gameHeight - 100F)
+
                             sb.end()
-                        }
-
-                        sb.begin()
-
-                        textRenderer.color = Color.WHITE
-                        textRenderer.draw(sb, sbText, CSGO.gameWidth/3F, CSGO.gameHeight-100F)
-
-                        sb.end()
+                        } catch (e: Exception) {}
                     }
                 }
 

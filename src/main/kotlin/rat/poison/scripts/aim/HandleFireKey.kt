@@ -89,7 +89,7 @@ fun fireWeapon() {
     val backtrackOnKey = curSettings["ENABLE_BACKTRACK_ON_KEY"].strToBool()
     val backtrackKeyPressed = keyPressed(curSettings["BACKTRACK_KEY"].toInt())
 
-    if (curSettings["ENABLE_BACKTRACK"].strToBool() && ((!backtrackOnKey || (backtrackOnKey && backtrackKeyPressed)) || (curWepOverride && curSettings["WEP_BACKTRACK"].strToBool()))) {
+    if (((curSettings["ENABLE_BACKTRACK"].strToBool() && !curWepOverride) || (curWepOverride && curWepSettings.tBacktrack)) && ((!backtrackOnKey || (backtrackOnKey && backtrackKeyPressed)))) {
         if (shouldAuto || (!shouldAuto && !didShoot) || meWep.automatic) {
             if (attemptBacktrack()) {
                 if (!shouldAuto) {

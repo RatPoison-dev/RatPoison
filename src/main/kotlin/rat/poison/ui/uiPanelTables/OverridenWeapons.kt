@@ -32,7 +32,7 @@ class OverridenWeapons : VisTable(false) {
     //Override Weapon Checkbox & Selection Box
     private val categorySelectLabel = VisLabel("${"Weapon-Category".toLocale()}:")
 
-    val weaponOverrideSelectionBox = VisSelectBox<String>()
+    private val weaponOverrideSelectionBox = VisSelectBox<String>()
     val weaponOverrideEnableCheckBox = OverrideVisCheckBoxCustom("Enable-Override", "tOverride")
 
     val enableFactorRecoil = OverrideVisCheckBoxCustom("Factor-Recoil", "tFRecoil")
@@ -65,8 +65,8 @@ class OverridenWeapons : VisTable(false) {
     val trigInFov = OverrideVisCheckBoxCustom("InFov", "tBTrigInFov")
     val trigBacktrack = OverrideVisCheckBoxCustom("Shoot Backtrack", "tBTrigBacktrack")
     val trigFov = OverrideVisSliderCustom("FOV", "tBTrigFov", 0.5F, 90F, 0.5F, false, width1 = 225F, width2 = 125F)
-    val trigInitDelay = OverrideVisSliderCustom("Init Shot Delay", "tBTrigInitDelay", 0F, 500F, 1F, true, width1 = 225F, width2 = 125F)
-    val trigPerShotDelay = OverrideVisSliderCustom("Per Shot Delay", "tBTrigPerShotDelay", 0F, 500F, 1F, true, width1 = 225F, width2 = 125F)
+    val trigInitDelay = OverrideVisSliderCustom("Init Shot Delay", "tBTrigInitDelay", 0F, 500F, 10F, true, width1 = 225F, width2 = 125F)
+    val trigPerShotDelay = OverrideVisSliderCustom("Per Shot Delay", "tBTrigPerShotDelay", 0F, 500F, 10F, true, width1 = 225F, width2 = 125F)
 
     val enableBacktrack = OverrideVisCheckBoxCustom("Enable Backtrack", "tBacktrack")
     val backtrackMS = OverrideVisSliderCustom("Backtrack MS", "tBTMS", 20F, 200F, 1F, true, width1 = 225F, width2 = 125F)
@@ -281,8 +281,10 @@ fun overridenWeaponsUpdate() {
             boneArray.add(curLocale[i])
         }
 
-        aimBoneBox.items = boneArray
-        forceBoneBox.items = boneArray
+        if (boneArray != Array<String>()) {
+            aimBoneBox.items = boneArray
+            forceBoneBox.items = boneArray
+        }
 
         aimBoneBox.selectedIndex = boneCategories.indexOf(when (curWep.tAimBone) {
             HEAD_BONE -> "HEAD"

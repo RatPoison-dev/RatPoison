@@ -18,6 +18,7 @@ import rat.poison.game.offsets.EngineOffsets.dwGlobalVars
 import rat.poison.scripts.aim.calcTarget
 import rat.poison.scripts.aim.curWepCategory
 import rat.poison.scripts.aim.curWepOverride
+import rat.poison.scripts.aim.curWepSettings
 import rat.poison.utils.Angle
 import rat.poison.utils.Structs.*
 import rat.poison.utils.Vector
@@ -255,8 +256,8 @@ fun isValidTick(tick: Int): Boolean {
     val deltaTime = delta * gvars.intervalPerTick
 
     var backtrackMS = curSettings["${curWepCategory}_BACKTRACK_MS"].toFloat()
-    if (curWepOverride && curSettings["WEP_BACKTRACK"].strToBool()) {
-        backtrackMS = curSettings["WEP_BACKTRACK_MS"].toFloat()
+    if (curWepOverride && curWepSettings.tBacktrack) {
+        backtrackMS = curWepSettings.tBTMS.toFloat()
     }
 
     val max = clamp(backtrackMS/1000f, 0F, .19F)

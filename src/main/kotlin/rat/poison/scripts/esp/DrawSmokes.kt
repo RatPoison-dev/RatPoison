@@ -107,8 +107,6 @@ fun lineThroughSmoke(ent: Player): Boolean {
     forEntities(EntityType.CSmokeGrenadeProjectile) {
         if (!csgoEXE.boolean(it.entity + bDidSmokeEffect) || through) return@forEntities
 
-        if (!worldToScreen(maxPos, Vector())) return@forEntities
-
         val pos = it.entity.absPosition()
 
         //TODO crunch...
@@ -131,40 +129,7 @@ fun lineThroughSmoke(ent: Player): Boolean {
         val realY = (a * bY - b * aY) / delta
 
         //This is most likely not perfect...
-        through = pos.distanceTo(Vector(realX, realY, pos.z)) <= 175f && mePos.distanceTo(maxPos) > mePos.distanceTo(pos)
+        through = (pos.distanceTo(Vector(realX, realY, pos.z)) <= 175f && mePos.distanceTo(maxPos) > mePos.distanceTo(pos)) || mePos.distanceTo(pos) <= 175f
     }
     return through
 }
-
-//decompd lua rest in peace sweet prince :(
-//for slot15 = 1, #entity.get_all("CSmokeGrenadeProjectile") do
-//slot8 = {}
-//
-//if entity.get_prop(slot3[slot15], "m_bDidSmokeEffect") == 1 then
-//slot5, slot6, slot7 = entity.get_prop(slot4, "m_vecOrigin")A
-//
-//for slot19 = 1, slot2 do
-//table.insert(slot8, {
-//    slot5 + uv3 * math.cos(math.rad(360 / slot2 * slot19)),
-//    slot6 + uv3 * math.sin(math.rad(360 / slot2 * slot19)),
-//    slot7
-//})
-//end
-//
-//for slot19 = 1, slot2 do
-//table.insert(slot8, {
-//    slot5 + uv3 * math.cos(math.rad(360 / slot2 * slot19)),
-//    slot6 + uv3 * math.sin(math.rad(360 / slot2 * slot19)),
-//    slot7 + uv11
-//})
-//end
-//
-//if uv8 then
-//for slot19 = 1, slot2 do
-//uv12(slot8[slot19], slot8[slot19 % slot2 + 1])
-//uv12(slot8[slot19 + slot2], slot8[slot19 % slot2 + slot2 + 1])
-//uv12(slot8[slot19], slot8[slot19 + slot2])
-//end
-//end
-//end
-//end

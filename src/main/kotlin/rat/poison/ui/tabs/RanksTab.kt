@@ -75,7 +75,7 @@ class RanksTab : Tab(false, false) {
         teamsLabel.setText(teamsLabel.text.toString() + teamList[index].toLocale() + "  \n")
 
         if (steamIDList[index].toInt() != 0) { //Bot check
-            namesTable.add(LinkLabel(nameList[index], "https://steamcommunity.com/profiles/%5BU:1:" + steamIDList[index] + "%5BU/")).height(21f).left().row()
+            namesTable.add(LinkLabel(nameList[index], "https://steamcommunity.com/profiles/%5BU:1:" + steamIDList[index] + "%5B/")).height(21f).left().row()
         } else {
             namesTable.add(nameList[index]).height(21f).left().row()
         }

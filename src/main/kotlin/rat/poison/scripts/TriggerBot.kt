@@ -44,24 +44,25 @@ fun triggerBot() = every(10) {
         wep.smg -> { prefix = "SMG_" }
     }
 
-    //TODO cleanup
+    //TODO cleanup, create global cursettings that get changed in SetAim...
     //FIRST-SHOT & BETWEEN-SHOTS
-    val initDelay = if (curWepOverride) curSettings["WEP_TRIGGER_INIT_DELAY"].toInt() else curSettings[prefix + "TRIGGER_INIT_SHOT_DELAY"].toInt()
-    val shotDelay = if (curWepOverride) curSettings["WEP_TRIGGER_PER_DELAY"].toInt() else curSettings[prefix + "TRIGGER_PER_SHOT_DELAY"].toInt()
-    if ((curSettings["ENABLE_TRIGGER"].strToBool()) && !inDelay) {
+    val initDelay = if (curWepOverride) curWepSettings.tBTrigInitDelay else curSettings[prefix + "TRIGGER_INIT_SHOT_DELAY"].toInt()
+    val shotDelay = if (curWepOverride) curWepSettings.tBTrigPerShotDelay else curSettings[prefix + "TRIGGER_PER_SHOT_DELAY"].toInt()
+
+    if (((curSettings["ENABLE_TRIGGER"].strToBool() && !curWepOverride) || (curWepOverride && curWepSettings.tBoneTrig)) && !inDelay) {
         val bFOV: Float; val bINCROSS: Boolean; val bINFOV: Boolean; val bAIMBOT: Boolean; val bBACKTRACK: Boolean
 
         if (wep.gun) { //Not 100% this applies to every 'gun'
             if (!curSettings[prefix + "TRIGGER"].strToBool() && !(curWepOverride && curWepSettings.tBoneTrig)) { callingInShot = false; boneTrig = false; return@every }
 
-            bFOV = if (curWepOverride) curSettings["WEP_TRIGGER_FOV"].toFloat() else curSettings[prefix + "TRIGGER_FOV"].toFloat()
-            bINCROSS = if (curWepOverride) curSettings["WEP_TRIGGER_INCROSS"].strToBool() else curSettings[prefix + "TRIGGER_INCROSS"].strToBool()
-            bINFOV = if (curWepOverride) curSettings["WEP_TRIGGER_INFOV"].strToBool() else curSettings[prefix + "TRIGGER_INFOV"].strToBool()
-            bAIMBOT = if (curWepOverride) curSettings["WEP_TRIGGER_AIMBOT"].strToBool() else curSettings[prefix + "TRIGGER_AIMBOT"].strToBool()
-            bBACKTRACK = if (curWepOverride) curSettings["WEP_TRIGGER_BACKTRACK"].strToBool() else curSettings[prefix + "TRIGGER_BACKTRACK"].strToBool() && curSettings["ENABLE_BACKTRACK"].strToBool()
+            bFOV = if (curWepOverride) curWepSettings.tBTrigFov else curSettings[prefix + "TRIGGER_FOV"].toFloat()
+            bINCROSS = if (curWepOverride) curWepSettings.tBTrigInCross else curSettings[prefix + "TRIGGER_INCROSS"].strToBool()
+            bINFOV = if (curWepOverride) curWepSettings.tBTrigInFov else curSettings[prefix + "TRIGGER_INFOV"].strToBool()
+            bAIMBOT = if (curWepOverride) curWepSettings.tBTrigAim else curSettings[prefix + "TRIGGER_AIMBOT"].strToBool()
+            bBACKTRACK = if (curWepOverride) curWepSettings.tBTrigBacktrack else curSettings[prefix + "TRIGGER_BACKTRACK"].strToBool() && curSettings["ENABLE_BACKTRACK"].strToBool()
 
             if (wep.sniper) { //Scope check
-                if (curSettings["SNIPER_TRIGGER"].strToBool() || (curWepOverride && curSettings["WEP_TRIGGER"].strToBool())) {
+                if (curSettings["SNIPER_TRIGGER"].strToBool() || (curWepOverride && curWepSettings.tBoneTrig)) {
                     if (curSettings["ENABLE_SCOPED_ONLY"].strToBool() && !me.isScoped()) {
                         callingInShot = false
                         return@every

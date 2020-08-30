@@ -6,11 +6,12 @@ import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.curSettings
 import rat.poison.overlay.App.uiKeybinds
+import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import kotlin.math.round
 
-class UIKeybinds : VisWindow("Keybinds") {
+class UIKeybinds : VisWindow("Keybinds".toLocale()) {
     val aimToggleKey = VisInputFieldCustom("Toggle Aim Key", "AIM_TOGGLE_KEY")
     val forceAimKey = VisInputFieldCustom("Force Aim Key", "FORCE_AIM_KEY")
     val forceAimBoneKey = VisInputFieldCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
