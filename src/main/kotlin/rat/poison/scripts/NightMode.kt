@@ -11,8 +11,7 @@ import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 
 fun nightMode() = every(1000) {
-    if (!curSettings["ENABLE_ESP"].strToBool())
-        return@every
+    if (!curSettings["ENABLE_ESP"].strToBool()) return@every
 
     if (curSettings["ENABLE_NIGHTMODE"].strToBool()) {
         if (toneMapController != 0L) {

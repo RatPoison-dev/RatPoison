@@ -138,7 +138,7 @@ fun constructRecords() {
         if (ent.dormant()) { //Reset that bitch
             val entID = (csgoEXE.uint(ent + dwIndex) - 1).toInt()
 
-            if (entID > 64) return@forEntities
+            if (entID !in 0..64) return@forEntities
 
             for (i in 0 until 13) {
                 val record = btRecords[entID][i]
