@@ -48,6 +48,7 @@ internal inline fun forEntities(vararg types: EntityType, crossinline body: (Ent
 		}
 	} catch (e: Exception) {
 		println("forEntities error, report in discord")
+		println("$types")
 		e.printStackTrace()
 	}
 }

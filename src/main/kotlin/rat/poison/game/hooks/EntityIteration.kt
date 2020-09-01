@@ -62,7 +62,7 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
                 detectMap(mapName)
             }
 
-            loadBsp("$gameDir\\$mapName")
+            //loadBsp("$gameDir\\$mapName")
         }
 
         notInGame = if (new == SignOnState.IN_GAME) {
@@ -70,11 +70,11 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
                 val write = 0xEB.toByte()
                 try {
                     clientDLL[ClientOffsets.dwGlowUpdate] = write
-                } catch (e: Exception) {  }
+                } catch (e: Exception) {}
 
                 try {
                     clientDLL[ClientOffsets.dwGlowUpdate2] = write
-                } catch (e: Exception) {  }
+                } catch (e: Exception) {}
             }
 
             if (GARBAGE_COLLECT_ON_MAP_START) {

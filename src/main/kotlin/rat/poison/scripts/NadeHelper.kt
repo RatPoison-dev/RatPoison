@@ -107,7 +107,7 @@ fun nadeHelper() = App {
 
                         if (worldToScreen(Vector(hLPos[0].cToFloat(), hLPos[1].cToFloat(), hLPos[2].cToFloat()), vec3)) {
                             set(ShapeRenderer.ShapeType.Filled)
-                            circle(vec3.x.toFloat(), vec3.y.toFloat() - 2F, 4F)
+                            circle(vec3.x, vec3.y - 2F, 4F)
                             set(ShapeRenderer.ShapeType.Line)
                             t2 = true
 
@@ -125,7 +125,7 @@ fun nadeHelper() = App {
                                 }
 
                                 glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
-                                draw(sb, glyph, vec3.x.toFloat(), vec3.y.toFloat() - 10F)
+                                draw(sb, glyph, vec3.x, vec3.y - 10F)
 
                                 sb.end()
                             }
@@ -134,10 +134,10 @@ fun nadeHelper() = App {
                         if (t2) {
                             if (!lineUp) {
                                 if (t1) {
-                                    line(vec2.x.toFloat() - 4F, vec2.y.toFloat() - 4F, vec3.x.toFloat(), vec3.y.toFloat() - 2F)
+                                    line(vec2.x - 4F, vec2.y - 4F, vec3.x, vec3.y - 2F)
                                 }
                             } else {
-                                line(CSGO.gameWidth / 2F, 0F, vec3.x.toFloat(), vec3.y.toFloat() - 2F)
+                                line(CSGO.gameWidth / 2F, 0F, vec3.x, vec3.y - 2F)
                             }
                         }
 
@@ -272,7 +272,7 @@ fun deletePosition() {
 fun detectMap(mapName: String) {
     if (!curSettings["ENABLE_NADE_HELPER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return
 
-    var newMapName = mapName.replace("maps\\", "").replace(".bsp", "")
+    val newMapName = mapName.replace("maps\\", "").replace(".bsp", "")
     nadeHelperTab.nadeHelperFileSelectBox.items.forEach {
         if (newMapName == it.replace(".txt", "")) {
             loadPositions(it)

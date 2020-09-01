@@ -195,7 +195,7 @@ class OverridenWeapons : VisTable(false) {
             val setBone = curSettings[boneCategories[forceBoneBox.selectedIndex] + "_BONE"]
             if (weaponOverride) {
                 val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-                curWep.tAimBone = setBone.toInt()
+                curWep.tForceBone = setBone.toInt()
                 curSettings[weaponOverrideSelected] = curWep.toString()
             }
         }

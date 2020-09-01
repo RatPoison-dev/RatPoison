@@ -16,7 +16,8 @@ import rat.poison.scripts.aim.handleFireKey
 import rat.poison.scripts.aim.pathAim
 import rat.poison.scripts.aim.setAim
 import rat.poison.scripts.bspHandling.drawMapWireframe
-import rat.poison.scripts.esp.*
+import rat.poison.scripts.bspHandling.rayTraceTest
+import rat.poison.scripts.visuals.*
 import rat.poison.utils.Settings
 import rat.poison.utils.detectLocale
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
@@ -85,6 +86,7 @@ fun main() {
         curSettings["DRAW_AIM_FOV"] = "false"
         curSettings["ENABLE_HITSOUND"] = "false"
         curSettings["SPREAD_CIRCLE"] = "false"
+        curSettings["VISUALIZE_SMOKES"] = "false"
     } else {
         if (dbg) { println("[DEBUG] Initializing Recoil Ranks") }; ranks()
 
@@ -97,6 +99,9 @@ fun main() {
         if (dbg) { println("[DEBUG] Initializing Nade Tracer") }; nadeTracer()
         if (dbg) { println("[DEBUG] Initializing Draw Fov") }; drawFov()
         if (dbg) { println("[DEBUG] Initializing Spread Circle") }; spreadCircle()
+        if (dbg) { println("[DEBUG] Initializing Draw Smokes") }; drawSmokes()
+
+        drawDebug()
     }
 
     if (dbg) { println("[DEBUG] Initializing Bunny Hop") }; bunnyHop()
@@ -128,10 +133,8 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
     if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()
 
-    drawSmokes()
-
     if (EXPERIMENTAL) {
-        //rayTraceTest()
+        rayTraceTest()
         drawMapWireframe()
     }
 

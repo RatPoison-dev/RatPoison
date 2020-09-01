@@ -4,7 +4,7 @@ import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.rankName
-import rat.poison.scripts.esp.disableAllEsp
+import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.tabs.deleteCFG
 import rat.poison.ui.tabs.loadCFG
 import rat.poison.ui.tabs.saveCFG

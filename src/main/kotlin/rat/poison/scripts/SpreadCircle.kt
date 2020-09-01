@@ -31,7 +31,7 @@ private data class WeaponData(var maxPlayerSpeed: Int = 0, var spread: Float = 0
 private var wepData = WeaponData()
 private var curWep = me.weaponEntity()
 
-private fun refreshWepData() = every(100) {
+private fun refreshWepData() = every(1000) {
     curWep = me.weaponEntity()
     wepData = getWeaponData(me.weapon().name)
 }

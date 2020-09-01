@@ -1,4 +1,4 @@
-package rat.poison.scripts.esp
+package rat.poison.scripts.visuals
 
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE

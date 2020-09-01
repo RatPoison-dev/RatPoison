@@ -9,14 +9,12 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
 import rat.poison.curSettings
-import rat.poison.scripts.esp.disableAllEsp
-import rat.poison.scripts.esp.opened
+import rat.poison.scripts.visuals.disableAllEsp
+import rat.poison.scripts.visuals.opened
 import rat.poison.toLocale
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
-import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
-import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiPanels.visualsTab
 import rat.poison.utils.generalUtil.strToBool
 

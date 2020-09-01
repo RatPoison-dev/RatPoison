@@ -1,10 +1,7 @@
-package rat.poison.scripts.esp
+package rat.poison.scripts.visuals
 
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
-import rat.poison.game.CSGO
-import rat.poison.game.hooks.toneMapController
-import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool

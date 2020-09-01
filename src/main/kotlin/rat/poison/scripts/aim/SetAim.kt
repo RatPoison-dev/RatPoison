@@ -11,7 +11,7 @@ import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toWeaponClass
 
-private var curWep = Weapons.AK47
+var curWep = Weapons.AK47
 var curWepOverride = false
 var curWepCategory = "PISTOL"
 var curWepSettings = oWeapon()

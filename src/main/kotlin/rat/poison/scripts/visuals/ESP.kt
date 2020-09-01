@@ -1,4 +1,4 @@
-package rat.poison.scripts.esp
+package rat.poison.scripts.visuals
 
 import com.sun.jna.Memory
 import rat.poison.curSettings
@@ -7,8 +7,8 @@ import rat.poison.game.CSGO
 import rat.poison.game.Color
 import rat.poison.game.entity.Entity
 import rat.poison.game.entity.EntityType
-import rat.poison.scripts.esp.GlowESP.glowEspApp
-import rat.poison.scripts.esp.GlowESP.glowEspEvery
+import rat.poison.scripts.visuals.GlowESP.glowEspApp
+import rat.poison.scripts.visuals.GlowESP.glowEspEvery
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toInt

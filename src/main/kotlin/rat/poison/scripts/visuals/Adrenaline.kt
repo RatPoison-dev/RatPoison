@@ -1,4 +1,4 @@
-package rat.poison.scripts.esp
+package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.math.MathUtils
 import rat.poison.curSettings
@@ -9,7 +9,6 @@ import rat.poison.game.netvars.NetVarOffsets.m_flHealthShotBoostExpirationTime
 import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
 import rat.poison.scripts.bombState
 import rat.poison.scripts.currentGameTicks
-import rat.poison.scripts.hitMarkerCombo
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.notInGame

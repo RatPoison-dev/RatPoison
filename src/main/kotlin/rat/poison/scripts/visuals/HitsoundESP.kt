@@ -1,4 +1,4 @@
-package rat.poison.scripts.esp
+package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Sound

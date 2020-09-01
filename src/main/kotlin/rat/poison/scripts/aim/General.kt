@@ -4,7 +4,6 @@ import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
-import rat.poison.scripts.esp.lineThroughSmoke
 import rat.poison.settings.*
 import rat.poison.utils.*
 import rat.poison.utils.generalUtil.strToBool
@@ -141,7 +140,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			return@every
 		}
 
-		if (curSettings["AIM_ONLY_ON_SHOT"].strToBool() && (!canFire || didShoot)) { //Onshot
+		if (curSettings["AIM_ONLY_ON_SHOT"].strToBool() && (!canFire || (didShoot && !meWep.automatic && !curSettings["AUTOMATIC_WEAPONS"].strToBool()))) { //Onshot
 			reset()
 			return@every
 		}
@@ -157,7 +156,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 
 		val pressed = ((aim || boneTrig) && !MENUTOG && haveAmmo &&
 				(if (meWep.rifle || meWep.smg) {
-					me.shotsFired() >= curSettings["AIM_AFTER_SHOTS"].toInt()
+					me.shotsFired() > curSettings["AIM_AFTER_SHOTS"].toInt()
 				} else {
 					true
 				})) || forceAim
@@ -183,11 +182,11 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 				BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 3); destBone } else { destBone = aB; aB },
 				visCheck = shouldVisCheck) //Try to find new target
 
-		if (currentTarget < 0) { //If target is invalid from last run
+		if (currentTarget <= 0) { //If target is invalid from last run
 			currentTarget = findTarget(position, currentAngle, aim,
 					BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 3); destBone } else { destBone = aB; aB },
 					visCheck = shouldVisCheck) //Try to find new target
-			if (currentTarget < 0) { //End if we don't, can't loop because of thread blocking
+			if (currentTarget <= 0) { //End if we don't, can't loop because of thread blocking
 				reset()
 				return@every
 			}
@@ -206,7 +205,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			}
 		}
 		//if (bestTarget <= 0 && !curSettings["HOLD_AIM"].strToBool()) {
-		if (bestTarget < 0) {
+		if (bestTarget <= 0 && !curSettings["HOLD_AIM"].strToBool()) {
 			reset()
 			return@every
 		}
@@ -217,8 +216,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 				perfect = true
 			}
 		}
-		//Have a new best target, we aren't holding aim, and our weapon is automatic
-		//val swapTarget = (bestTarget > 0 && currentTarget != bestTarget) && !curSettings["HOLD_AIM"].strToBool()
+
 		val swapTarget = (bestTarget > 0 && currentTarget != bestTarget) && !curSettings["HOLD_AIM"].strToBool() && (meWep.automatic || curSettings["AUTOMATIC_WEAPONS"].strToBool())
 
 		if (!currentTarget.canShoot(shouldVisCheck) || swapTarget) {

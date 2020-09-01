@@ -83,6 +83,7 @@ fun skinChanger() = every(1, continuous = true) {
             shouldUpdate = false
         }
     } catch (e: Exception) {
+        println("SkinChanger.kt Error...")
         //nah
     }
 }

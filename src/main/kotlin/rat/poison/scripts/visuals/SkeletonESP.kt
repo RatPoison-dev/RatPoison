@@ -1,4 +1,4 @@
-package rat.poison.scripts.esp
+package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.graphics.Color
 import com.sun.jna.Memory
@@ -19,11 +19,10 @@ import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.notInGame
 
 private val bones = Array(2048) { Line() }
-private val entityBones = Long2ObjectArrayMap<MutableList<Pair<Int, Int>>>()
 private var currentIdx = 0
 
 internal fun skeletonEsp() = App {
-	if (!curSettings["SKELETON_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame) return@App
+	if (!curSettings["SKELETON_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@App
 
 	val meTeam = me.team()
 	forEntities(EntityType.CCSPlayer) {
@@ -35,7 +34,10 @@ internal fun skeletonEsp() = App {
 		val teamCheck = ((!curSettings["SKELETON_SHOW_TEAM"].strToBool() && meTeam == entTeam) && !DANGER_ZONE)
 
 		if (entity == me || entity.dead() || dormCheck || enemyCheck || teamCheck) return@forEntities
-		(entityBones.get(entity) ?: mutableListOf()).apply {
+
+		val entityBones = mutableListOf<Pair<Int, Int>>()
+
+		(entityBones).apply {
 			if (isEmpty()) {
 				val studioModel = csgoEXE.uint(entity.studioHdr())
 				val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
@@ -57,8 +59,6 @@ internal fun skeletonEsp() = App {
 
 					offset += 216
 				}
-
-				entityBones[entity] = this
 			}
 
 			forEach { et -> drawBone(entity, et.first, et.second); }

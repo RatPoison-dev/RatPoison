@@ -1,4 +1,4 @@
-package rat.poison.scripts.esp
+package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
@@ -11,7 +11,6 @@ import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
-import rat.poison.game.entity.EntityType.Companion.byEntityAddress
 import rat.poison.game.forEntities
 import rat.poison.game.netvars.NetVarOffsets.iClip1
 import rat.poison.game.netvars.NetVarOffsets.iPrimaryReserveAmmoCount
@@ -20,7 +19,6 @@ import rat.poison.game.netvars.NetVarOffsets.rgflCoordinateFrame
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
-import rat.poison.settings.MENUTOG
 import rat.poison.toLocale
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool

@@ -1,4 +1,4 @@
-package rat.poison.scripts.esp
+package rat.poison.scripts.visuals
 
 import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
@@ -6,7 +6,6 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.engineDLL
 import rat.poison.game.Color
 import rat.poison.game.entity.*
-import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_hViewModel

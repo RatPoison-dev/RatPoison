@@ -1,4 +1,4 @@
-package rat.poison.scripts.esp
+package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.math.Matrix4
@@ -65,7 +65,7 @@ fun runFootSteps() = App {
                         sb.begin()
 
                         glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, color, 1F, Align.left, false, null)
-                        draw(sb, glyph, outVec.x.toFloat(), outVec.y.toFloat())
+                        draw(sb, glyph, outVec.x, outVec.y)
 
                         sb.end()
                     }
@@ -86,7 +86,7 @@ fun runFootSteps() = App {
                     //Circle at position
                     gameMatrix.translate(0F, 0F, footSteps[i].z.cToFloat())
                     projectionMatrix = gameMatrix
-                    circle(footSteps[i].x.toFloat(), footSteps[i].y.toFloat(), (curSettings["FOOTSTEP_TTL"].toFloat() - footSteps[i].ttl.toFloat()) + 10F)
+                    circle(footSteps[i].x, footSteps[i].y, (curSettings["FOOTSTEP_TTL"].toFloat() - footSteps[i].ttl.toFloat()) + 10F)
                     gameMatrix.translate(0F, 0F, -footSteps[i].z.cToFloat())
 
                     end()

@@ -1,4 +1,4 @@
-package rat.poison.scripts.esp
+package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.math.MathUtils.clamp

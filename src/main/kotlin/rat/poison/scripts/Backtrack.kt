@@ -47,10 +47,10 @@ fun sendPacket(bool: Boolean) { //move outta here
 
 fun setupBacktrack() {
     every(15, true) {
-        if (!notInGame) {
-            gvars = getGlobalVars()
-            haveGvars = true
-        }
+        if (notInGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0) return@every
+
+        gvars = getGlobalVars()
+        haveGvars = true
     }
 
     every(4, true) {
@@ -131,6 +131,9 @@ fun constructRecords() {
 
         if (ent.dormant()) { //Reset that bitch
             val entID = (csgoEXE.uint(ent + dwIndex) - 1).toInt()
+
+            if (entID > 64) return@forEntities
+
             for (i in 0 until 13) {
                 val record = btRecords[entID][i]
 

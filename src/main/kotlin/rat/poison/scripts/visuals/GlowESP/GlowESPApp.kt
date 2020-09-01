@@ -1,4 +1,4 @@
-package rat.poison.scripts.esp.GlowESP
+package rat.poison.scripts.visuals.GlowESP
 
 import rat.poison.curSettings
 import rat.poison.game.*
@@ -7,10 +7,10 @@ import rat.poison.overlay.App
 import rat.poison.overlay.glowTime
 import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.target
-import rat.poison.scripts.esp.glow
-import rat.poison.scripts.esp.glowTarget
-import rat.poison.scripts.esp.lineThroughSmoke
-import rat.poison.scripts.esp.toGlowNum
+import rat.poison.scripts.visuals.glow
+import rat.poison.scripts.visuals.glowTarget
+import rat.poison.scripts.visuals.lineThroughSmoke
+import rat.poison.scripts.visuals.toGlowNum
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor

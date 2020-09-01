@@ -1,4 +1,4 @@
-package rat.poison.scripts.esp
+package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
@@ -7,7 +7,6 @@ import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.settings.MENUTOG
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
