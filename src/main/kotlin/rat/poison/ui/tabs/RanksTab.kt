@@ -7,6 +7,7 @@ import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.scripts.*
 import rat.poison.toLocale
+import rat.poison.ui.uiRefreshing
 
 class RanksTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -72,6 +73,8 @@ class RanksTab : Tab(false, false) {
     }
 
     private fun constructRank(index: Int) {
+        if (uiRefreshing) return
+
         teamsLabel.setText(teamsLabel.text.toString() + teamList[index].toLocale() + "  \n")
 
         if (steamIDList[index].toInt() != 0) { //Bot check

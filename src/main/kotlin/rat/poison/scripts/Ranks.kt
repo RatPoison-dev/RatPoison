@@ -65,8 +65,8 @@ fun ranks() = every(5000, true) { //Rebuild every second
         var steamID = 0
         try {
             val entSteam = entity.steamID()
-            if (entSteam != "BOT") {
-                steamID = (entity.steamID().split(":")[2].toInt() * 2)
+            if (entSteam != "BOT" && entSteam.isNotEmpty()) {
+                steamID = (entSteam.split(":")[2].toInt() * 2) + entSteam.split(":")[1].toInt()
             }
         } catch (e: Exception) { println("Ranks.kt SteamID Error... ${entity.steamID()} ---")}
 
