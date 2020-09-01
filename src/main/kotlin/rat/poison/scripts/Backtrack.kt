@@ -49,8 +49,14 @@ fun setupBacktrack() {
     every(15, true) {
         if (notInGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0) return@every
 
-        gvars = getGlobalVars()
-        haveGvars = true
+        val tGvars = getGlobalVars()
+
+        if (tGvars != null) {
+            gvars = tGvars
+            haveGvars = true
+        } else {
+            haveGvars = false
+        }
     }
 
     every(4, true) {
@@ -159,7 +165,7 @@ fun constructRecords() {
         //Create records
         val entSimTime = csgoEXE.float(ent + flSimulationTime)
         val entID = (csgoEXE.uint(ent + dwIndex) - 1).toInt()
-        val tick = getGlobalVars().tickCount % 13
+        val tick = gvars.tickCount % 13
 
         if (entID in 0..63 && tick < 13) {
             val record = btRecords[entID][tick]
@@ -269,7 +275,7 @@ fun isValidTick(tick: Int): Boolean {
 }
 
 fun timeToTicks(time: Float): Int {
-    return (.5f + time / getGlobalVars().intervalPerTick).toInt()
+    return (.5f + time / gvars.intervalPerTick).toInt()
 }
 
 fun getRangeRecords(entID: Int, minIDX: Int = 0, maxIDX: Int = 13): Array<Int> {
@@ -308,8 +314,13 @@ fun getValidRecords(entID: Int): List<Int> {
     return recordsList
 }
 
-fun getGlobalVars(): GlobalVars {
-    return memToGlobalVars(csgoEXE.read(engineDLL.address + dwGlobalVars, 64)!!)
+fun getGlobalVars(): GlobalVars? {
+    val mem = csgoEXE.read(engineDLL.address + dwGlobalVars, 64)
+    if (mem != null) {
+        return memToGlobalVars(mem)
+    }
+
+    return null
 }
 
 fun inRange(value: Float, num1: Float, num2: Float): Boolean {

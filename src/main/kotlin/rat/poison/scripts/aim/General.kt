@@ -18,9 +18,11 @@ var canPerfect = false
 var boneTrig = false
 var destBone = -1
 
-fun reset() {
+fun reset(resetTarget: Boolean = true) {
 	destBone = -5
-	target = -1L
+	if (resetTarget) {
+		target = -1L
+	}
 	canPerfect = false
 }
 
@@ -141,7 +143,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		}
 
 		if (curSettings["AIM_ONLY_ON_SHOT"].strToBool() && (!canFire || (didShoot && !meWep.automatic && !curSettings["AUTOMATIC_WEAPONS"].strToBool()))) { //Onshot
-			reset()
+			reset(false)
 			return@every
 		}
 
