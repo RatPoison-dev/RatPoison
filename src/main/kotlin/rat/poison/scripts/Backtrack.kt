@@ -60,7 +60,7 @@ fun setupBacktrack() {
     }
 
     every(4, true) {
-        if (notInGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0) {
+        if (notInGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0 || !haveGvars) {
             btRecords = Array(64) { Array(13) { BacktrackTable() } }
             if (engineDLL.byte(0xD418A) == 0.toByte() && !inBacktrack) {
                 sendPacket(true)
@@ -74,7 +74,7 @@ fun setupBacktrack() {
 }
 
 fun attemptBacktrack(): Boolean {
-    if (((curSettings["BACKTRACK_SPOTTED"].strToBool() && bestBacktrackTarget.spotted()) || !curSettings["BACKTRACK_SPOTTED"].strToBool()) && bestBacktrackTarget > 0L) {
+    if (((curSettings["BACKTRACK_SPOTTED"].strToBool() && bestBacktrackTarget.spotted()) || !curSettings["BACKTRACK_SPOTTED"].strToBool()) && bestBacktrackTarget > 0L && haveGvars) {
         inBacktrack = true
 
         //Get/set vars
