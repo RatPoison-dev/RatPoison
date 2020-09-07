@@ -18,6 +18,7 @@ var killsList = mutableListOf<String>()
 var deathsList = mutableListOf<String>()
 var KDList = mutableListOf<String>()
 var winsList = mutableListOf<String>()
+var moneyList = mutableListOf<String>()
 
 fun ranks() = every(5000, true) { //Rebuild every second
     if (notInGame || !opened || !haveTarget) return@every
@@ -30,6 +31,7 @@ fun ranks() = every(5000, true) { //Rebuild every second
     deathsList.clear()
     KDList.clear()
     winsList.clear()
+    moneyList.clear()
 
     forEntities(EntityType.CCSPlayer) {
         val entity = it.entity
@@ -46,6 +48,7 @@ fun ranks() = every(5000, true) { //Rebuild every second
         val entRank = entity.rank().rankName()
         val entKills = entity.kills().toString()
         val entDeaths = entity.deaths().toString()
+        val entMoney = entity.money()
         val entKD = when (entDeaths) {
             "0" -> "N/A"
             else -> (entKills.toFloat() / entDeaths.toFloat()).roundNDecimals(2).toString()
@@ -77,6 +80,7 @@ fun ranks() = every(5000, true) { //Rebuild every second
         deathsList.add(entDeaths)
         KDList.add(entKD)
         winsList.add(entWins)
+        moneyList.add(entMoney.toString())
     }
 
     ranksTab.updateRanks()

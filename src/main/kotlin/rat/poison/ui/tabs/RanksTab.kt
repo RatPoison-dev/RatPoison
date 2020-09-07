@@ -23,6 +23,7 @@ class RanksTab : Tab(false, false) {
     private var deathsLabel = VisLabel()
     private var kdLabel = VisLabel()
     private var winsLabel = VisLabel()
+    private var moneyLabel = VisLabel()
 
     init {
         ranksListTable.add(teamsLabel)
@@ -35,6 +36,7 @@ class RanksTab : Tab(false, false) {
         ranksListTable.add(deathsLabel)
         ranksListTable.add(kdLabel)
         ranksListTable.add(winsLabel)
+        ranksListTable.add(moneyLabel)
 
         table.add(ranksListTable).maxWidth(500F)
     }
@@ -55,6 +57,7 @@ class RanksTab : Tab(false, false) {
         deathsLabel.setText("Deaths".toLocale() + "  \n")
         kdLabel.setText("K/D".toLocale() + "  \n")
         winsLabel.setText("Wins".toLocale() + "  \n")
+        moneyLabel.setText("Money".toLocale() + "  \n")
 
         namesTable.reset()
         namesTable.add(namesLabel).left().row()
@@ -88,5 +91,6 @@ class RanksTab : Tab(false, false) {
         deathsLabel.setText(deathsLabel.text.toString() + deathsList[index] + "  \n")
         kdLabel.setText(kdLabel.text.toString() + KDList[index] + "  \n")
         winsLabel.setText(winsLabel.text.toString() + winsList[index] + "  \n")
+        moneyLabel.setText(moneyLabel.text.toString() + moneyList[index] + "  \n")
     }
 }
