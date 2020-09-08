@@ -30,6 +30,7 @@ fun uiUpdate() {
     miscTabUpdate()
     rcsTabUpdate()
     miscVisualTabUpdate()
+    optionsTabUpdate()
     nadeHelperTabUpdate()
     updateBacktrack()
     updateTrig()

@@ -151,8 +151,8 @@ fun scanner() {
             }
             line.startsWith("ranks") -> {
                 println()
-                println("Team   Name                             Rank  Kills Deaths K/D  Wins")
-                println("====== ================================ ===== ===== ====== ==== =====")
+                println("Team   Name                             Rank  Kills Deaths K/D  Wins  Money")
+                println("====== ================================ ===== ===== ====== ==== ===== =====")
                 try {
                     forEntities(EntityType.CCSPlayer) {
                         val entity = it.entity
@@ -171,6 +171,7 @@ fun scanner() {
                             else -> (entKills.toFloat() / entDeaths.toFloat()).roundNDecimals(2).toString()
                         }
                         var entWins = entity.wins().toString()
+                        var entMoney = entity.money().toString()
 
                         for (i in entTeam.length..5) {
                             entTeam += " "
@@ -194,7 +195,11 @@ fun scanner() {
                             entWins += " "
                         }
 
-                        println("$entTeam $entName $entRank $entKills $entDeaths $entKD $entWins")
+                        for (i in entMoney.length..4) {
+                            entMoney += " "
+                        }
+
+                        println("$entTeam $entName $entRank $entKills $entDeaths $entKD $entWins $entMoney")
                     }
                     println()
                 } catch (e: Exception) {

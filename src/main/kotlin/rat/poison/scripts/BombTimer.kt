@@ -1,7 +1,9 @@
 package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.utils.Align
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.entity.*
@@ -56,6 +58,17 @@ fun bombTimer() {
                     set(ShapeRenderer.ShapeType.Line)
                     color = Color(1F, 1F, 1F, 1F)
                     end()
+                }
+                if (curSettings["BOMB_TIMER_BARS_SHOW_TTE"].strToBool()) {
+                    textRenderer.apply {
+                        sb.begin()
+                        val glyph = GlyphLayout()
+                        val sbText = StringBuilder()
+                        sbText.append(bombState.timeLeftToExplode)
+                        glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, Color.WHITE, 1f, Align.center, false, null)
+                        draw(sb, glyph, (CSGO.gameWidth / 2F), 15f)
+                        sb.end()
+                    }
                 }
             }
         }

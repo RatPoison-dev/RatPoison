@@ -7,11 +7,15 @@ import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
-import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.widget.LinkLabel
+import com.kotcrab.vis.ui.widget.VisSelectBox
+import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import rat.poison.*
+import rat.poison.overlay.App
 import rat.poison.overlay.App.menuStage
 import rat.poison.overlay.App.uiBombWindow
 import rat.poison.overlay.App.uiKeybinds
@@ -33,12 +37,12 @@ class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
     val menuKey = VisInputFieldCustom("Menu Key", "MENU_KEY")
-    private val menuAlpha = VisSliderCustom("Menu Alpha", "MENU_ALPHA", .5F, 1F, .05F, false, width1 = 200F, width2 = 250F)
-    private val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F)
-    private val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
-    private val debug = VisCheckBoxCustom("Debug", "DEBUG")
+    val menuAlpha = VisSliderCustom("Menu Alpha", "MENU_ALPHA", .5F, 1F, .05F, false, width1 = 200F, width2 = 250F)
+    val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F)
+    val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
+    val debug = VisCheckBoxCustom("Debug", "DEBUG")
     private val keybinds = VisCheckBoxCustom("Keybinds", "KEYBINDS")
-    private val blur = VisCheckBoxCustom("Gaussian Blur", "GAUSSIAN_BLUR")
+    val blur = VisCheckBoxCustom("Gaussian Blur", "GAUSSIAN_BLUR")
     private val discordLink = LinkLabel("Join-Discord".toLocale(), "https://discord.gg/xkTteTM")
 
     var cfgFileSelectBox = VisSelectBox<String>()
@@ -183,6 +187,17 @@ class OptionsTab : Tab(false, false) {
     }
 }
 
+fun optionsTabUpdate() {
+    optionsTab.apply {
+        debug.update()
+        blur.update()
+        stayFocused.update()
+        oglFPS.update()
+        menuAlpha.update()
+        menuKey.update()
+    }
+}
+
 fun saveDefault() {
     if (!saving) {
         GlobalScope.launch {
@@ -291,6 +306,7 @@ fun loadCFG(cfgFileName: String) {
                 println("Loading\n")
                 loadSettingsFromFiles("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg", true)
                 uiUpdate()
+                App.uiMenu.changeAlpha()
                 updateWindows()
                 println("\nLoading Complete!\n")
                 saving = false
