@@ -42,7 +42,7 @@ private lateinit var gvars: GlobalVars
 
 fun sendPacket(bool: Boolean) { //move outta here
     val byte = if (bool) 1.toByte() else 0.toByte()
-    engineDLL[0xD418A] = byte //Bitch ass lil coder signature wont work
+    engineDLL[0xD420A] = byte //Bitch ass lil coder signature wont work
 }
 
 fun setupBacktrack() {
@@ -62,7 +62,7 @@ fun setupBacktrack() {
     every(4, true) {
         if (notInGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0 || !haveGvars) {
             btRecords = Array(64) { Array(13) { BacktrackTable() } }
-            if (engineDLL.byte(0xD418A) == 0.toByte() && !inBacktrack) {
+            if (engineDLL.byte(0xD420A) == 0.toByte() && !inBacktrack) {
                 sendPacket(true)
             }
 
