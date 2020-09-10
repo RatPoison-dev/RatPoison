@@ -26,6 +26,9 @@ class ChamsEspTab : Tab(false, false) {
     val showSelf = VisCheckBoxCustom(" ", "CHAMS_SHOW_SELF", false)
     val chamsSelfColor = VisColorPickerCustom("Self", "CHAMS_SELF_COLOR")
 
+    val showTarget = VisCheckBoxCustom(" ", "CHAMS_SHOW_TARGET", false)
+    val chamsTargetColor = VisColorPickerCustom("Target", "CHAMS_TARGET_COLOR")
+
     init {
         ////////////////////FORMATTING
         table.padLeft(25F)
@@ -50,6 +53,12 @@ class ChamsEspTab : Tab(false, false) {
         tmpTable = VisTable()
         tmpTable.add(showSelf)
         tmpTable.add(chamsSelfColor).width(175F - showSelf.width).padRight(50F)
+
+        table.add(tmpTable).left()
+
+        tmpTable = VisTable()
+        tmpTable.add(showTarget)
+        tmpTable.add(chamsTargetColor).width(175F - showTarget.width).padRight(50F)
 
         table.add(tmpTable).left()
 

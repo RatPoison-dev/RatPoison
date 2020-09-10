@@ -2,6 +2,8 @@ package rat.poison.scripts
 
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
+import rat.poison.game.CSGO.clientDLL
+import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.angle
 import rat.poison.game.clientState
 import rat.poison.game.entity.dead
@@ -10,6 +12,10 @@ import rat.poison.game.entity.velocity
 import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
+import rat.poison.game.offsets.ClientOffsets.dwForceBackward
+import rat.poison.game.offsets.ClientOffsets.dwForceForward
+import rat.poison.game.offsets.ClientOffsets.dwForceLeft
+import rat.poison.game.offsets.ClientOffsets.dwForceRight
 import rat.poison.robot
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
@@ -21,6 +27,9 @@ import kotlin.math.sin
 internal fun fastStop() = every(4) {
     if (!curSettings["FAST_STOP"].strToBool() || notInGame) return@every
 
+    updateCursorEnable()
+    if (cursorEnable) return@every
+
     if (!me.dead()) {
         val vel = me.velocity()
         val yaw = clientState.angle().y
@@ -31,29 +40,46 @@ internal fun fastStop() = every(4) {
 
         if (!keyPressed(VK_SPACE) && me.onGround()) {
             if (x != 0.0 && y != 0.0) {
-                updateCursorEnable()
-                if (cursorEnable) return@every
-
                 if (!keyPressed(VK_W) && !keyPressed(VK_S)) {
                     if (x > 30) {
-                        robot.keyPress(VK_S)
-                        robot.keyRelease(VK_S)
+                        clientDLL[dwForceBackward] = 6
+                        //robot.keyRelease(VK_S)
                     } else if (x < -30) {
-                        robot.keyPress(VK_W)
-                        robot.keyRelease(VK_W)
+                        clientDLL[dwForceForward] = 6
+                        //robot.keyRelease(VK_W)
                     }
                 }
 
                 if (!keyPressed(VK_A) && !keyPressed(VK_D)) {
                     if (y > 30) {
-                        robot.keyPress(VK_D)
-                        robot.keyRelease(VK_D)
+                        clientDLL[dwForceRight] = 6
+                        //robot.keyRelease(VK_D)
                     } else if (y < -30) {
-                        robot.keyPress(VK_A)
-                        robot.keyRelease(VK_A)
+                        clientDLL[dwForceLeft] = 6
+                        //robot.keyRelease(VK_A)
                     }
                 }
             }
+
+//            if (keyPressed(VK_W)) {
+//                println("pressin w")
+//                csgoEXE[dwForceForward] = 6
+//            }
+//
+//            if (keyPressed(VK_A)) {
+//                println("pressin a")
+//                csgoEXE[dwForceLeft] = 6
+//            }
+//
+//            if (keyPressed(VK_S)) {
+//                println("pressin s")
+//                csgoEXE[dwForceBackward] = 6
+//            }
+//
+//            if (keyPressed(VK_D)) {
+//                println("pressin d")
+//                csgoEXE[dwForceRight] = 6
+//            }
         }
     }
 }

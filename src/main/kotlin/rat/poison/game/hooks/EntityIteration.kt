@@ -2,6 +2,7 @@ package rat.poison.game.hooks
 
 import com.sun.jna.Memory
 import com.sun.jna.platform.win32.WinNT
+import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.dbg
 import rat.poison.game.*
 import rat.poison.game.CSGO.GLOW_OBJECT_SIZE
@@ -20,6 +21,7 @@ import rat.poison.game.offsets.EngineOffsets
 import rat.poison.game.offsets.EngineOffsets.dwClientState
 import rat.poison.game.offsets.EngineOffsets.dwClientState_MapDirectory
 import rat.poison.game.offsets.EngineOffsets.dwGameDir
+import rat.poison.game.offsets.EngineOffsets.dwSignOnState
 import rat.poison.scripts.bspHandling.loadBsp
 import rat.poison.scripts.detectMap
 import rat.poison.scripts.sendPacket
@@ -27,6 +29,8 @@ import rat.poison.settings.*
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.notInGame
+import rat.poison.utils.shouldPostProcess
+import java.io.File
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.properties.Delegates
 
@@ -46,35 +50,48 @@ private fun reset() {
 
 private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
     if (old != new) {
-        val strBuf: Memory by lazy {
-            Memory(128) //128 str?
-        }
+        if (new.name == SignOnState.IN_GAME.name) {
+            shouldPostProcess = true
 
-        csgoEXE.read(clientState + dwClientState_MapDirectory, strBuf)
-        val mapName = strBuf.getString(0)
-
-        engineDLL.read(dwGameDir, strBuf)
-        val gameDir = strBuf.getString(0)
-
-        if (mapName.isNotBlank() && gameDir.isNotBlank()) {
-            if (dbg) {
-                println("[DEBUG] Loading BSP at -- $gameDir\\$mapName")
-                detectMap(mapName)
+            val strBuf: Memory by lazy {
+                Memory(128) //128 str?
             }
 
-            //loadBsp("$gameDir\\$mapName")
-        }
+            csgoEXE.read(clientState + dwClientState_MapDirectory, strBuf)
+            //val mapName = strBuf.getString(0)
 
-        notInGame = if (new == SignOnState.IN_GAME) {
+            //engineDLL.read(dwGameDir, strBuf)
+            //val gameDir = strBuf.getString(0)
+
+//        if (mapName.isNotBlank() && gameDir.isNotBlank()) {
+//            if (dbg) {
+//                println("[DEBUG] Loading BSP at -- $gameDir\\$mapName")
+//                detectMap(mapName)
+//            }
+//
+//            //loadBsp("$gameDir\\$mapName")
+//        }
+
+            //Find correct tonemap values
+//        File("$SETTINGS_DIRECTORY\\Data\\ToneMaps.txt").forEachLine { line ->
+//            if (mapName.toLowerCase().contains(line.split(" : ")[0].toLowerCase())) {
+//                //this is working... not needed for now
+//            }
+//        }
+
+            notInGame = false
+
             if (PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0) {
                 val write = 0xEB.toByte()
                 try {
                     clientDLL[ClientOffsets.dwGlowUpdate] = write
-                } catch (e: Exception) {}
+                } catch (e: Exception) {
+                }
 
                 try {
                     clientDLL[ClientOffsets.dwGlowUpdate2] = write
-                } catch (e: Exception) {}
+                } catch (e: Exception) {
+                }
             }
 
             if (GARBAGE_COLLECT_ON_MAP_START) {
@@ -82,13 +99,14 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
             }
 
             sendPacket(true)
-            false
         } else {
+            shouldPostProcess = false
+            notInGame = true
             sendPacket(true)
-            true
         }
     }
 }
+
 var cursorEnable = false
 private val cursorEnableAddress by lazy(LazyThreadSafetyMode.NONE) { clientDLL.address + ClientOffsets.dwMouseEnable }
 private val cursorEnablePtr by lazy(LazyThreadSafetyMode.NONE) { clientDLL.address + ClientOffsets.dwMouseEnablePtr }
@@ -101,12 +119,12 @@ var toneMapController = 0L
 
 fun constructEntities() = every(500, continuous = true) {
     updateCursorEnable()
-    state = SignOnState[csgoEXE.int(clientState + EngineOffsets.dwSignOnState)]
+    clientState = engineDLL.uint(dwClientState)
+    state = SignOnState[csgoEXE.int(clientState + dwSignOnState)]
 
     me = clientDLL.uint(dwLocalPlayer)
     if (notInGame) return@every
 
-    clientState = engineDLL.uint(dwClientState)
 
     var dzMode = false
 

@@ -1,11 +1,13 @@
 package rat.poison.scripts
 
+import org.apache.commons.lang3.StringUtils
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.rankName
 import rat.poison.overlay.App.haveTarget
 import rat.poison.overlay.opened
 import rat.poison.ui.uiPanels.ranksTab
+import rat.poison.ui.uiRefreshing
 import rat.poison.utils.every
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.notInGame
@@ -66,12 +68,11 @@ fun ranks() = every(5000, true) { //Rebuild every second
         }
 
         var steamID = 0
-        try {
-            val entSteam = entity.steamID()
-            if (entSteam != "BOT" && entSteam.isNotEmpty()) {
-                steamID = (entSteam.split(":")[2].toInt() * 2) + entSteam.split(":")[1].toInt()
-            }
-        } catch (e: Exception) { println("Ranks.kt SteamID Error... ${entity.steamID()} ---")}
+
+        val entSteam = entity.steamID()
+        if (entSteam != "BOT" && entSteam.isNotEmpty() && StringUtils.isNumeric(entSteam)) {
+            steamID = (entSteam.split(":")[2].toInt() * 2) + entSteam.split(":")[1].toInt()
+        }
 
         nameList.add(entName)
         steamIDList.add(steamID.toString())
@@ -83,5 +84,7 @@ fun ranks() = every(5000, true) { //Rebuild every second
         moneyList.add(entMoney.toString())
     }
 
-    ranksTab.updateRanks()
+    if (!uiRefreshing) {
+        ranksTab.updateRanks()
+    }
 }

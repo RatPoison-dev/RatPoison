@@ -37,7 +37,7 @@ fun handleFireKey() = every(1, continuous = true) {
         }
         Thread.sleep(15)
         fireWeapon()
-    } else if (triggerInShot || callingInShot) {
+    } else if (inTrigger) {
         if (shouldShoot) { //Finish shooting...
             if (clientDLL.int(dwForceAttack) == 5) {
                 clientDLL[dwForceAttack] = 4
@@ -47,7 +47,7 @@ fun handleFireKey() = every(1, continuous = true) {
         }
         punchCheck = 0
         //Let trigger handle the rest
-    } else {
+    } else if (shouldShoot) {
         clientDLL[dwForceAttack] = 4
 
         shouldShoot = false

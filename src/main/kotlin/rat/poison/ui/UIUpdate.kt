@@ -33,6 +33,7 @@ fun uiUpdate() {
     optionsTabUpdate()
     nadeHelperTabUpdate()
     updateBacktrack()
+    optionsTabUpdate()
     updateTrig()
     updateAim()
     updateDisableEsp()

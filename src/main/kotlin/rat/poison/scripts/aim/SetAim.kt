@@ -57,7 +57,13 @@ fun setAim() = every(100, true) {
                             curSettings["AIM_AFTER_SHOTS"] = curWepSettings.tAimAfterShots
                         }
 
-                        //Advanced advanced aim settings
+                        curSettings["TRIGGER_USE_FOV"] = curWepSettings.tBTrigInFov
+                        curSettings["TRIGGER_USE_INCROSS"] = curWepSettings.tBTrigInCross
+                        curSettings["TRIGGER_FOV"] = curWepSettings.tBTrigFov
+                        curSettings["TRIGGER_USE_AIMBOT"] = curWepSettings.tBTrigAim
+                        curSettings["TRIGGER_USE_BACKTRACK"] = curWepSettings.tBTrigBacktrack
+
+                                //Advanced advanced aim settings
                         curWepOverride = true
                     } else {
                         curWepOverride = false
@@ -93,9 +99,15 @@ fun setAim() = every(100, true) {
                 curSettings["AIM_RANDOM_X_VARIATION"] = curSettings[curWepCategory + "_RANDOM_X_VARIATION"].toInt()
                 curSettings["AIM_RANDOM_Y_VARIATION"] = curSettings[curWepCategory + "_RANDOM_Y_VARIATION"].toInt()
                 curSettings["AIM_VARIATION_DEADZONE"] = curSettings[curWepCategory + "_VARIATION_DEADZONE"].toInt()
+
+                curSettings["TRIGGER_FOV"] = curSettings[curWepCategory + "_TRIGGER_FOV"].toFloat()
+                curSettings["TRIGGER_USE_FOV"] = curSettings[curWepCategory + "_TRIGGER_INFOV"].strToBool()
+                curSettings["TRIGGER_USE_INCROSS"] = curSettings[curWepCategory + "_TRIGGER_INCROSS"].strToBool()
+                curSettings["TRIGGER_USE_AIMBOT"] = curSettings[curWepCategory + "_TRIGGER_AIMBOT"].strToBool()
+                curSettings["TRIGGER_USE_BACKTRACK"] = curSettings[curWepCategory + "_TRIGGER_BACKTRACK"].strToBool() && curSettings["ENABLE_BACKTRACK"].strToBool()
             }
         }
-    } catch (e: Exception) { println("SetAim failure") } //Fix crashing
+    } catch (e: Exception) { println("SetAim failure"); e.printStackTrace() } //Fix crashing
 }
 
 fun String.boneToNum(): Int {

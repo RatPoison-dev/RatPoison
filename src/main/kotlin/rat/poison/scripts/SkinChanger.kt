@@ -1,5 +1,6 @@
 package rat.poison.scripts
 
+import org.apache.commons.lang3.StringUtils
 import rat.poison.curSettings
 import rat.poison.game.CSGO.ENTITY_SIZE
 import rat.poison.game.CSGO.clientDLL
@@ -36,7 +37,7 @@ fun skinChanger() = every(1, continuous = true) {
     try {
         val sID = me.steamID()
         val split = sID.split(":")
-        if (split.size < 3) {
+        if (split.size < 3 || StringUtils.isNumeric(split[2]) || StringUtils.isNumeric(split[1])) { //This SHOULD make try catch redundant, as toInt() is the only catch case...
             return@every
         }
         val pID = (split[2].toInt() * 2) + split[1].toInt()
@@ -48,7 +49,7 @@ fun skinChanger() = every(1, continuous = true) {
 
             val weaponEntity = clientDLL.uint(dwEntityList + (myWeapon - 1) * ENTITY_SIZE)
 
-            if (weaponEntity.type().gun) {
+            if (weaponEntity.type().gun && myWeapon > 0 && weaponEntity > 0) {
                 if (curSettings["SKINCHANGER"].strToBool()) {
                     val sWep = curSettings["SKIN_" + weaponEntity.type().name].toSkinWeaponClass()
 
@@ -84,6 +85,7 @@ fun skinChanger() = every(1, continuous = true) {
         }
     } catch (e: Exception) {
         println("SkinChanger.kt Error...")
+        e.printStackTrace()
         //nah
     }
 }

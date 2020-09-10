@@ -242,7 +242,7 @@ fun getSkinArray(wep: String): Array<String> {
     val wepSkinArray = Array<String>()
     var readingLines = false
 
-    File("$SETTINGS_DIRECTORY\\Data\\SkinInfo.txt").forEachLine { line->
+    SKIN_INFO_FILE.forEachLine { line->
         if (readingLines) {
             if (line.startsWith("}")) {
                 readingLines = false
@@ -263,7 +263,7 @@ fun getSkinArray(wep: String): Array<String> {
 fun getSkinNameFromID(ID: Int): String {
     var str = ""
     var found = false
-    File("$SETTINGS_DIRECTORY\\Data\\SkinInfo.txt").forEachLine { line->
+    SKIN_INFO_FILE.forEachLine { line->
         if (!found) {
             if (line.contains(":")) {
                 val tmpSplitLine = line.split(":")
@@ -282,7 +282,7 @@ fun getSkinIDFromName(Name: String, Weapon: String): Int {
     var id = 0
     var inCategory = ""
     var found = false
-    File("$SETTINGS_DIRECTORY\\Data\\SkinInfo.txt").forEachLine { line->
+    SKIN_INFO_FILE.forEachLine { line->
         if (!found) {
             if (line.contains("{")) {
                 inCategory = line.replace("{", "").trim()
@@ -304,7 +304,7 @@ fun getSkinIDFromName(Name: String, Weapon: String): Int {
 fun getMinValueFromID(ID: Int): Float {
     var minValue = 0.0F
     var found = false
-    File("$SETTINGS_DIRECTORY\\Data\\SkinInfo.txt").forEachLine { line->
+    SKIN_INFO_FILE.forEachLine { line->
         if (!found) {
             if (line.contains(":")) {
                 val tmpSplitLine = line.split(":")
@@ -322,7 +322,7 @@ fun getMinValueFromID(ID: Int): Float {
 fun getMaxValueFromID(ID: Int): Float {
     var minValue = 0.0F
     var found = false
-    File("$SETTINGS_DIRECTORY\\Data\\SkinInfo.txt").forEachLine { line->
+    SKIN_INFO_FILE.forEachLine { line->
         if (!found) {
             if (line.contains(":")) {
                 val tmpSplitLine = line.split(":")

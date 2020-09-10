@@ -16,7 +16,7 @@ import kotlin.math.round
 
 private val delta = ThreadLocal.withInitial { Vector() }
 
-fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: Float) = destinationAngle.apply {
+fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: Float, divisor: Int) = destinationAngle.apply {
 	x -= currentAngle.x
 	y -= currentAngle.y
 	z = 0F
@@ -28,15 +28,24 @@ fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: 
 		smooth = 1F
 	}
 
-	x = currentAngle.x + x / 100F * (100F / smooth)
-	y = currentAngle.y + y / 100F * (100F / smooth)
+	var randX = if (curSettings["AIM_RANDOM_X_VARIATION"].toInt() > 0) randInt(0, curSettings["AIM_RANDOM_X_VARIATION"].toInt()) * randSign() else 0
+	var randY = if (curSettings["AIM_RANDOM_Y_VARIATION"].toInt() > 0) randInt(0, curSettings["AIM_RANDOM_Y_VARIATION"].toInt()) * randSign() else 0
+	val randDZ = curSettings["AIM_VARIATION_DEADZONE"].toInt() / 100F
+
+	if (x in -randDZ..randDZ && y in -randDZ..randDZ) {
+		randX = 0
+		randY = 0
+	}
+
+	x = currentAngle.x + (x + ((randX/10F) * (10F / smooth))) / 100F * (100F / smooth) / divisor
+	y = currentAngle.y + (y + ((randY/10F) * (10F / smooth))) / 100F * (100F / smooth) / divisor
 
 	normalize()
 }
 
-fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Float, silent: Boolean = false) {
+fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Float, divisor: Int = 1, silent: Boolean = false) {
 	if (!silent) {
-		val dAng = applyFlatSmoothing(currentAngle, destinationAngle, smoothing)
+		val dAng = applyFlatSmoothing(currentAngle, destinationAngle, smoothing, divisor)
 		clientState.setAngle(dAng)
 	}
 }
@@ -71,11 +80,8 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 	var randY = if (curSettings["AIM_RANDOM_Y_VARIATION"].toInt() > 0) randInt(0, curSettings["AIM_RANDOM_Y_VARIATION"].toInt()) * randSign() else 0
 	val randDZ = curSettings["AIM_VARIATION_DEADZONE"].toInt()
 
-	if (dx.toInt() in -randDZ..randDZ) {
+	if (dx.toInt() in -randDZ..randDZ && dy.toInt() in -randDZ..randDZ) {
 		randX = 0
-	}
-
-	if (dy.toInt() in -randDZ..randDZ) {
 		randY = 0
 	}
 

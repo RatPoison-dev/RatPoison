@@ -7,18 +7,15 @@ import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
-import com.kotcrab.vis.ui.widget.LinkLabel
-import com.kotcrab.vis.ui.widget.VisSelectBox
-import com.kotcrab.vis.ui.widget.VisTable
-import com.kotcrab.vis.ui.widget.VisTextButton
+import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import rat.poison.*
-import rat.poison.overlay.App
 import rat.poison.overlay.App.menuStage
 import rat.poison.overlay.App.uiBombWindow
 import rat.poison.overlay.App.uiKeybinds
+import rat.poison.overlay.App.uiMenu
 import rat.poison.overlay.App.uiSpecList
 import rat.poison.ui.changed
 import rat.poison.ui.refreshMenu
@@ -26,12 +23,15 @@ import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiPanels.optionsTab
+import rat.poison.ui.uiRefreshing
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.generalUtil.loadLocale
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
+
+private var saving = false
 
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -41,7 +41,7 @@ class OptionsTab : Tab(false, false) {
     val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F)
     val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
     val debug = VisCheckBoxCustom("Debug", "DEBUG")
-    private val keybinds = VisCheckBoxCustom("Keybinds", "KEYBINDS")
+    val keybinds = VisCheckBoxCustom("Keybinds", "KEYBINDS")
     val blur = VisCheckBoxCustom("Gaussian Blur", "GAUSSIAN_BLUR")
     private val discordLink = LinkLabel("Join-Discord".toLocale(), "https://discord.gg/xkTteTM")
 
@@ -187,17 +187,6 @@ class OptionsTab : Tab(false, false) {
     }
 }
 
-fun optionsTabUpdate() {
-    optionsTab.apply {
-        debug.update()
-        blur.update()
-        stayFocused.update()
-        oglFPS.update()
-        menuAlpha.update()
-        menuKey.update()
-    }
-}
-
 fun saveDefault() {
     if (!saving) {
         GlobalScope.launch {
@@ -306,10 +295,12 @@ fun loadCFG(cfgFileName: String) {
                 println("Loading\n")
                 loadSettingsFromFiles("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg", true)
                 uiUpdate()
-                App.uiMenu.changeAlpha()
                 updateWindows()
                 println("\nLoading Complete!\n")
                 saving = false
+                LOADED_CONFIG = "${cfgFileName.toLowerCase()}.cfg"
+                uiMenu.updateTitle()
+                uiMenu.changeAlpha()
             }
         }
     } else {
@@ -353,4 +344,20 @@ fun updateWindows() {
         uiSpecList.updatePosition(curSettings["SPECTATOR_LIST_X"].toFloat(), curSettings["SPECTATOR_LIST_Y"].toFloat())
         uiSpecList.changeAlpha(curSettings["SPECTATOR_LIST_ALPHA"].toFloat())
     }
+}
+
+fun optionsTabUpdate() {
+    if (uiRefreshing) return
+
+    optionsTab.apply {
+        menuKey.update()
+        menuAlpha.update()
+        oglFPS.update()
+        stayFocused.update()
+        debug.update()
+        keybinds.update()
+        blur.update()
+    }
+
+    updateWindows()
 }

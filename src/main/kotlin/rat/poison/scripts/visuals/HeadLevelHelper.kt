@@ -3,6 +3,7 @@ package rat.poison.scripts.visuals
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.math.Matrix4
+import org.lwjgl.opengl.GL11.glDisable
 import org.lwjgl.opengl.GL11.glEnable
 import rat.poison.curSettings
 import rat.poison.game.angle

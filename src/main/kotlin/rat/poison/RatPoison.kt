@@ -23,6 +23,7 @@ import rat.poison.utils.detectLocale
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.strToBool
 import java.awt.Robot
+import java.io.File
 import kotlin.collections.set
 
 //Override Weapon
@@ -41,16 +42,23 @@ data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = 
 //Skinned Weapon
 data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var tSeed: Int)
 
+const val TITLE = "RatPoison"
+const val BRANCH = "Testing"
+const val F_VERSION = "1.7"
+const val M_VERSION = "1.7.09"
+var LOADED_CONFIG = "DEFAULT"
+
 const val EXPERIMENTAL = false
 const val SETTINGS_DIRECTORY = "settings" //Internal
-var saving = false
-var settingsLoaded = false
 
+lateinit var WEAPON_STATS_FILE: File
+lateinit var SKIN_INFO_FILE: File
+
+var settingsLoaded = false
 val curSettings = Settings()
 val curLocale = Settings()
 
 var dbg: Boolean = false
-
 val robot = Robot().apply { this.autoDelay = 0 }
 
 fun main() {
@@ -68,10 +76,13 @@ fun main() {
 
     CSGO.initialize()
 
+    WEAPON_STATS_FILE = File("$SETTINGS_DIRECTORY\\Data\\WeaponStats.txt")
+    SKIN_INFO_FILE = File("$SETTINGS_DIRECTORY\\Data\\SkinInfo.txt")
+
     if (dbg) println("[DEBUG] Initializing scripts...")
     //Init scripts
     if (!curSettings["MENU"].strToBool()) { //If we aren't using the menu disable everything that uses the menu
-        if (dbg) println("[DEBUG] Menu disabled, disabling box, skeleton, rcrosshair, btimer, indicator, speclist, hitmarker, nade helper, nade tracer, draw fov")
+        if (dbg) println("[DEBUG] Menu disabled, disabling box, skeleton, rcrosshair, btimer, indicator, speclist, hitmarker, nade helper, nade tracer, draw fov, spread circle, visualize smokes")
 
         curSettings["ENABLE_BOX_ESP"] = "false"
         curSettings["SKELETON_ESP"] = "false"
@@ -100,6 +111,8 @@ fun main() {
         if (dbg) { println("[DEBUG] Initializing Draw Fov") }; drawFov()
         if (dbg) { println("[DEBUG] Initializing Spread Circle") }; spreadCircle()
         if (dbg) { println("[DEBUG] Initializing Draw Smokes") }; drawSmokes()
+        if (dbg) {println("[DEBUG] Initializing Far Radar") }; farRadar()
+        //farEsp()
 
         drawDebug()
     }
@@ -137,7 +150,6 @@ fun main() {
         rayTraceTest()
         drawMapWireframe()
     }
-
 
     //Overlay check, not updated?
     if (curSettings["MENU"].strToBool()) {

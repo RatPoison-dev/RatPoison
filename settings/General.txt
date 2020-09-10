@@ -1,5 +1,5 @@
 //Enable DEBUG
-DEBUG = true
+DEBUG = false
 
 //Enable the overlay, menu
 //Any settings/scripts reliant on drawing on the overlay won't enable
@@ -86,7 +86,7 @@ HOLD_TARGET = false
 AIM_TARGET_SWAP_DELAY = 150
 
 //Global enable override
-ENABLE_OVERRIDE = true
+ENABLE_OVERRIDE = false
 
 //Enable aimbot when aim key is pressed
 ACTIVATE_FROM_AIM_KEY = true
@@ -144,6 +144,12 @@ KEYBINDS_X = 400.0
 KEYBINDS_Y = 400.0
 KEYBINDS_ALPHA = 1.0
 AIM_ONLY_ON_SHOT = false
+
+TRIGGER_USE_FOV = true
+TRIGGER_USE_INCROSS = false
+TRIGGER_FOV = 2.0
+TRIGGER_USE_AIMBOT = true
+TRIGGER_USE_BACKTRACK = false
 
 //OverrideWepShit
 WEP_TRIGGER = false

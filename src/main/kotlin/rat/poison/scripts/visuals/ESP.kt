@@ -7,25 +7,22 @@ import rat.poison.game.CSGO
 import rat.poison.game.Color
 import rat.poison.game.entity.Entity
 import rat.poison.game.entity.EntityType
-import rat.poison.scripts.visuals.GlowESP.glowEspApp
-import rat.poison.scripts.visuals.GlowESP.glowEspEvery
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toInt
 
-var glowTarget = -1L
+var espTARGET = -1L
+
 
 fun esp() {
 	if (curSettings["MENU"].strToBool()) { //Temp until app fix
-		if (dbg) { println("[DEBUG] Initializing Glow ESP") }; glowEspApp()
 		if (dbg) { println("[DEBUG] Initializing Indicator ESP") }; indicatorEsp()
 		if (dbg) { println("[DEBUG] Initializing Box ESP") }; boxEsp()
 		if (dbg) { println("[DEBUG] Initializing Skeleton ESP") }; skeletonEsp()
 		if (dbg) { println("[DEBUG] Initializing Snap Lines") }; snapLines()
-	} else {
-		if (dbg) { println("[DEBUG] Menu disabled, using alternate glow esp") }; glowEspEvery()
 	}
 
+	if (dbg) { println("[DEBUG] Menu disabled, using alternate glow esp") }; glowEspEvery()
 	if (dbg) { println("[DEBUG] Initializing Footstep ESP") }; footStepEsp() //Needed with & without menu
 	if (dbg) { println("[DEBUG] Initializing Chams ESP") }; chamsEsp()
 	if (dbg) { println("[DEBUG] Initializing Hitsound ESP") }; hitSoundEsp()

@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.GL20.GL_BLEND
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -50,9 +51,6 @@ var appTime = 0L
 var menuTime = 0L
 var overlayTime = 0L
 var bspVisTime = 0L
-
-var needKeyPress = false
-lateinit var needKeyActor: VisTextButton
 
 object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
@@ -226,8 +224,10 @@ object App : ApplicationAdapter() {
                             }
 
                             sb.begin()
+                            glDisable(GL_BLEND)
 
                             textRenderer.color = Color.WHITE
+                            sb.color = Color.WHITE
                             textRenderer.draw(sb, sbText, CSGO.gameWidth / 3F, CSGO.gameHeight - 100F)
 
                             sb.end()

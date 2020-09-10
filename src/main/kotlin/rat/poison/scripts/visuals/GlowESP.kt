@@ -1,14 +1,10 @@
-package rat.poison.scripts.visuals.GlowESP
+package rat.poison.scripts.visuals
 
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.target
-import rat.poison.scripts.visuals.glow
-import rat.poison.scripts.visuals.glowTarget
-import rat.poison.scripts.visuals.lineThroughSmoke
-import rat.poison.scripts.visuals.toGlowNum
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
@@ -21,17 +17,17 @@ internal fun glowEspEvery() = every(10, true) {
 	val position = me.position()
 	val meWep = me.weapon()
 
-	glowTarget = -1L
-
 	if (!meWep.knife && meWep != Weapons.ZEUS_X27) {
 		if (curSettings["ENABLE_AIM"].strToBool()) {
 			if (curSettings["GLOW_SHOW_TARGET"].strToBool() && target == -1L) {
 				val curTarg = findTarget(position, currentAngle, false, visCheck = !curSettings["FORCE_AIM_THROUGH_WALLS"].strToBool())
-				if (curTarg > 0) {
-					glowTarget = curTarg
+				espTARGET = if (curTarg > 0) {
+					curTarg
+				} else {
+					-1
 				}
 			} else if (curSettings["GLOW_SHOW_TARGET"].strToBool()) {
-				glowTarget = target
+				espTARGET = target
 			}
 		}
 	}
@@ -57,8 +53,8 @@ internal fun glowEspEvery() = every(10, true) {
 		if (glowAddress <= 0) return@forEntities
 
 		var health = 0
-		var color = ""
-		var glowType = 0
+		var color = "NIL"
+		var glowType = -1
 
 		when (it.type) {
 			EntityType.CCSPlayer -> {
@@ -68,7 +64,7 @@ internal fun glowEspEvery() = every(10, true) {
 				val team = !DANGER_ZONE && meTeam == entityTeam
 				health = entity.health()
 
-				if (showTarget && it.entity == glowTarget && glowTarget != -1L) {
+				if (showTarget && entity == espTARGET && espTARGET != -1L) {
 					glowType = curSettings["GLOW_TARGET_TYPE"].toGlowNum()
 					color = "GLOW_TARGET_COLOR"
 				} else if (showEnemies && !team) {
@@ -107,7 +103,7 @@ internal fun glowEspEvery() = every(10, true) {
 				}
 		}
 
-		if (color != "") {
+		if (color != "NIL") {
 			if (curSettings["GLOW_SMOKE_CHECK"].strToBool()) {
 				if (lineThroughSmoke(entity)) {
 					glowAddress.glow(curSettings[color].strToColor(), -1)
@@ -120,6 +116,8 @@ internal fun glowEspEvery() = every(10, true) {
 			} else {
 				glowAddress.glow(curSettings[color].strToColor(), glowType)
 			}
+		} else {
+			glowAddress.glow(Color(255, 255, 255, 1.0), -1)
 		}
 
 		return@forEntities

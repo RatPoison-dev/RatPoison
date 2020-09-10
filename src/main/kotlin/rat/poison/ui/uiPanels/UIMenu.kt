@@ -7,7 +7,7 @@ import com.kotcrab.vis.ui.widget.VisWindow
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
-import rat.poison.curSettings
+import rat.poison.*
 import rat.poison.game.CSGO
 import rat.poison.overlay.App.uiAimOverridenWeapons
 import rat.poison.overlay.opened
@@ -15,6 +15,7 @@ import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.scripts.sendPacket
 import rat.poison.ui.tabs.*
 import rat.poison.ui.uiUpdate
+import rat.poison.utils.randInt
 import kotlin.math.sign
 import kotlin.system.exitProcess
 
@@ -28,8 +29,9 @@ val mainTabbedPane = TabbedPane()
     var skinChangerTab = SkinChangerTab()
     var optionsTab = OptionsTab()
 
+private var uid = randInt(2, 999999)
 
-class UIMenu : VisWindow("Rat Poison 1.7") {
+class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CONFIG - UID: $uid") {
     var wantedHeight = 565F
     var wantedWidth = 535F
     val normHeight = 565F //Fuck you too
@@ -227,6 +229,10 @@ class UIMenu : VisWindow("Rat Poison 1.7") {
                 }
             }).start()
         }
+    }
+
+    fun updateTitle() {
+        titleLabel.setText("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CONFIG - UID: $uid")
     }
 }
 

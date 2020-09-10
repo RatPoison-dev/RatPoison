@@ -2,6 +2,7 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.math.MathUtils.clamp
 import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.WEAPON_STATS_FILE
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.CSGO.csgoEXE
@@ -99,7 +100,7 @@ private fun getWeaponData(wep: String): WeaponData {
     val wepData = WeaponData()
     var strList: List<String>
 
-    File("$SETTINGS_DIRECTORY\\Data\\WeaponStats.txt").forEachLine { line->
+    WEAPON_STATS_FILE.forEachLine { line->
         if (line.startsWith(wep)) {
             strList = line.split(" : ")
 

@@ -1,6 +1,6 @@
 //Enable recoil crosshair
 ENABLE_RECOIL_CROSSHAIR = true
-RCROSSHAIR_TYPE = CROSSHAIR
+RCROSSHAIR_TYPE = CIRCLE
 
 //Enable sniper crosshair
 //Static crosshair when holding a sniper
@@ -10,10 +10,10 @@ ENABLE_SNIPER_CROSSHAIR = true
 RCROSSHAIR_RADIUS = 10
 
 //Width of the crosshair bars
-RCROSSHAIR_WIDTH = 2
+RCROSSHAIR_WIDTH = 5
 
 //Length of the crosshair bars
-RCROSSHAIR_LENGTH = 33
+RCROSSHAIR_LENGTH = 100
 
 //Alpha of the crosshair
 RCROSSHAIR_ALPHA = 0.5

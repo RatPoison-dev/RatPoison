@@ -4,6 +4,8 @@ package rat.poison.utils
 var inBackground = false
 @Volatile
 var notInGame = false
+@Volatile
+var shouldPostProcess = false
 
 inline fun every(duration: Int, continuous: Boolean = false, crossinline body: () -> Unit) = Thread(Runnable {
     while (!Thread.interrupted()) {

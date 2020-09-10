@@ -342,7 +342,7 @@ ENABLE_HITMARKER = Enable
 HITMARKER_WIDTH = Width
 HITMARKER_OUTLINE_COLOR = Outline Color
 
-HEAD_LVL_COLOR = Line Color
+HEAD_LVL_COLOR = Head Level
 HEAD_LVL_DEADZONE = Deadzone
 HEAD_LVL_LINE_WIDTH = Line Width
 HeadLvl = HeadLvl
@@ -670,3 +670,6 @@ BOX_SMOKE_CHECK = Smoke Check
 SNAPLINES_SMOKE_CHECK = Smoke Check
 
 Keybinds = Keybinds
+
+CHAMS_TARGET_COLOR = Target
+BOX_FAR_RADAR = Far Radar Box

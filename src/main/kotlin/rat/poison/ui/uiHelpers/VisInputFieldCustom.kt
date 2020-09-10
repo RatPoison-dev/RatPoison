@@ -2,15 +2,11 @@ package rat.poison.ui.uiHelpers
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.Actor
-import com.badlogic.gdx.scenes.scene2d.InputEvent
-import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.kotcrab.vis.ui.util.Validators
 import com.kotcrab.vis.ui.widget.*
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
-import rat.poison.overlay.needKeyActor
-import rat.poison.overlay.needKeyPress
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.keybindsUpdate
 import rat.poison.utils.generalUtil.strToBool
