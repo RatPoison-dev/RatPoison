@@ -1,6 +1,5 @@
 package rat.poison.scripts
 
-import com.badlogic.gdx.graphics.Color
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
@@ -12,7 +11,6 @@ import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.iCrossHairID
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
-import rat.poison.overlay.App
 import rat.poison.scripts.aim.*
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
@@ -21,7 +19,6 @@ import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.notInGame
-import java.time.LocalDateTime
 
 
 var inTrigger = false
@@ -35,9 +32,7 @@ fun triggerBot() = every(5) {
         return@every
     }
 
-    if (inTrigger) { //If we are queueing a shot, this shouldnt happen...
-        return@every
-    }
+    inTrigger = false //go and do the 2 step
 
     val initDelay = if (curWepOverride) curWepSettings.tBTrigInitDelay else curSettings[curWepCategory + "_TRIGGER_INIT_SHOT_DELAY"].toInt()
     val shotDelay = if (curWepOverride) curWepSettings.tBTrigPerShotDelay else curSettings[curWepCategory + "_TRIGGER_PER_SHOT_DELAY"].toInt()
@@ -51,7 +46,7 @@ fun triggerBot() = every(5) {
         //Scope check
         if (curWepCategory == "SNIPER") { //If we are holding a sniper
             if ((curSettings["ENABLE_SCOPED_ONLY"].strToBool() && !curWepOverride) || (curWepOverride && curWepSettings.tScopedOnly)) { //Scoped only check
-                if (me.isScoped()) {
+                if (!me.isScoped()) {
                     //Reset
                     inTrigger = false
                     triggerShots = 0
@@ -64,7 +59,7 @@ fun triggerBot() = every(5) {
 
         val wepEnt = me.weaponEntity()
         //Trigger precheck
-        if (wepEnt.bullets() <= 0 || keyPressed(AIM_KEY)) { //Can shoot check???
+        if (wepEnt.bullets() <= 0 || keyPressed(AIM_KEY) || !wepEnt.canFire()) { //Can shoot check???
             inTrigger = false
             triggerShots = 0
             return@every
@@ -127,7 +122,6 @@ private fun trigShoot(delay: Int, aimbot: Boolean = false, backtrack: Boolean = 
     }
 
     triggerShoot(aimbot, backtrack, backtrackFallback)
-    inTrigger = false
 }
 
 private fun triggerShoot(aimbot: Boolean = false, backtrack: Boolean = false, backtrackFallback: Boolean = false) {

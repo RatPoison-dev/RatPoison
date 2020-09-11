@@ -6,6 +6,7 @@ import com.kotcrab.vis.ui.widget.VisCheckBox
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
+import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
 import rat.poison.utils.generalUtil.boolToStr
@@ -31,6 +32,7 @@ class VisCheckBoxCustom(mainText: String, varName: String, visibleText: Boolean 
             updateDisableAim()
             updateDisableTrig()
             updateDisableBacktrack()
+            disableAllEsp() //Nothing bad could come from this....??
             true
         }
     }

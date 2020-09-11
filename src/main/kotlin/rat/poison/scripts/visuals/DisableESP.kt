@@ -10,11 +10,14 @@ import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.utils.extensions.uint
+import rat.poison.utils.notInGame
 import java.lang.Float.floatToIntBits
 
 //Change to construct entities at call to prevent crashing?
 
 internal fun disableAllEsp() {
+    if (notInGame) return
+
     val cWhite = Color(255, 255, 255, 1.0)
 
     val clientVModEnt = CSGO.csgoEXE.uint(CSGO.clientDLL.address + ClientOffsets.dwEntityList + (((CSGO.csgoEXE.uint(CSGO.csgoEXE.uint(CSGO.clientDLL.address + ClientOffsets.dwLocalPlayer) + NetVarOffsets.m_hViewModel)) and 0xFFF) - 1) * 16)

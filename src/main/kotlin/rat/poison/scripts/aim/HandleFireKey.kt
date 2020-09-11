@@ -47,7 +47,7 @@ fun handleFireKey() = every(1, continuous = true) {
         }
         punchCheck = 0
         //Let trigger handle the rest
-    } else if (shouldShoot) {
+    } else {
         clientDLL[dwForceAttack] = 4
 
         shouldShoot = false
