@@ -17,6 +17,7 @@ import rat.poison.overlay.App.uiBombWindow
 import rat.poison.overlay.App.uiKeybinds
 import rat.poison.overlay.App.uiMenu
 import rat.poison.overlay.App.uiSpecList
+import rat.poison.overlay.opened
 import rat.poison.ui.changed
 import rat.poison.ui.refreshMenu
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
@@ -299,8 +300,11 @@ fun loadCFG(cfgFileName: String) {
                 println("\nLoading Complete!\n")
                 saving = false
                 LOADED_CONFIG = "${cfgFileName.toLowerCase()}.cfg"
-                uiMenu.updateTitle()
-                uiMenu.changeAlpha()
+
+                if (opened) {
+                    uiMenu.updateTitle()
+                    uiMenu.changeAlpha()
+                }
             }
         }
     } else {

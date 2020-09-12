@@ -12,7 +12,7 @@ import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 
 private var totalHits = 0
-var opened = false
+private var opened = false
 lateinit var hitSound: Sound
 
 fun hitSoundEsp() = every(50) {

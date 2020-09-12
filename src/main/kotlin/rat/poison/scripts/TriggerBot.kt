@@ -11,6 +11,7 @@ import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.iCrossHairID
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
+import rat.poison.safeToInt
 import rat.poison.scripts.aim.*
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
@@ -34,8 +35,8 @@ fun triggerBot() = every(5) {
 
     inTrigger = false //go and do the 2 step
 
-    val initDelay = if (curWepOverride) curWepSettings.tBTrigInitDelay else curSettings[curWepCategory + "_TRIGGER_INIT_SHOT_DELAY"].toInt()
-    val shotDelay = if (curWepOverride) curWepSettings.tBTrigPerShotDelay else curSettings[curWepCategory + "_TRIGGER_PER_SHOT_DELAY"].toInt()
+    val initDelay = if (curWepOverride) curWepSettings.tBTrigInitDelay else curSettings[curWepCategory + "_TRIGGER_INIT_SHOT_DELAY"].safeToInt("Trig init shot")
+    val shotDelay = if (curWepOverride) curWepSettings.tBTrigPerShotDelay else curSettings[curWepCategory + "_TRIGGER_PER_SHOT_DELAY"].safeToInt("Trig per shot")
     val bFOV = curSettings["TRIGGER_FOV"].toFloat()
     val bINFOV = curSettings["TRIGGER_USE_FOV"].strToBool()
     val bINCROSS = curSettings["TRIGGER_USE_INCROSS"].strToBool()
@@ -66,7 +67,7 @@ fun triggerBot() = every(5) {
         }
 
         //Trigger key check
-        if (curSettings["TRIGGER_ENABLE_KEY"].strToBool() && !keyPressed(curSettings["TRIGGER_KEY"].toInt())) {
+        if (curSettings["TRIGGER_ENABLE_KEY"].strToBool() && !keyPressed(curSettings["TRIGGER_KEY"].safeToInt("Trig key"))) {
             inTrigger = false
             triggerShots = 0
             return@every

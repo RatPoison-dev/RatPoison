@@ -35,7 +35,8 @@ fun handleFireKey() = every(1, continuous = true) {
             punchCheck = 0
             shouldShoot = true
         }
-        Thread.sleep(15)
+
+        Thread.sleep(10)
         fireWeapon()
     } else if (inTrigger) {
         if (shouldShoot) { //Finish shooting...

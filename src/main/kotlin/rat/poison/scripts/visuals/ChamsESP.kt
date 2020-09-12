@@ -59,7 +59,7 @@ fun chamsEsp() = every(100) {
 
     if (!meWep.knife && meWep != Weapons.ZEUS_X27) {
         if (curSettings["ENABLE_AIM"].strToBool()) {
-            if (curSettings["GLOW_SHOW_TARGET"].strToBool() && target == -1L) {
+            if (curSettings["CHAMS_SHOW_TARGET"].strToBool() && target == -1L) {
                 val curTarg = findTarget(position, currentAngle, false, visCheck = !curSettings["FORCE_AIM_THROUGH_WALLS"].strToBool())
                 espTARGET = if (curTarg > 0) {
                     curTarg

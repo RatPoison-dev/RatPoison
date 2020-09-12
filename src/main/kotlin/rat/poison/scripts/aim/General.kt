@@ -129,114 +129,113 @@ fun Entity.canShoot(visCheck: Boolean = true) = ((if (DANGER_ZONE) { true } else
 internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boolean,
 								  crossinline doAim: (destinationAngle: Angle,
 													  currentAngle: Angle, aimSpeed: Int, aimSpeedDivisor: Int) -> R) = every(duration) {
-	try {
-		if (!precheck()) return@every
-		if (!curSettings["ENABLE_AIM"].strToBool()) return@every
+	if (!precheck()) return@every
+	if (!curSettings["ENABLE_AIM"].strToBool()) return@every
 
-		val meWep = me.weapon()
-		val meWepEnt = me.weaponEntity()
-		val canFire = meWepEnt.canFire()
+	val meWep = me.weapon()
+	val meWepEnt = me.weaponEntity()
+	val canFire = meWepEnt.canFire()
+	if (meWep.grenade || meWep.knife || meWep.miscEnt || meWep == Weapons.ZEUS_X27 || meWep.bomb) { //Invalid for aimbot
+		reset()
+		return@every
+	}
 
-		if (meWep.grenade || meWep.knife || meWep.miscEnt || meWep == Weapons.ZEUS_X27 || meWep.bomb) { //Invalid for aimbot
-			reset()
-			return@every
-		}
+	//weapon cant fire or we didShoot & weapon isnt automatic & automatic weapons isnt enabled
 
-		if (curSettings["AIM_ONLY_ON_SHOT"].strToBool() && (!canFire || (didShoot && !meWep.automatic && !curSettings["AUTOMATIC_WEAPONS"].strToBool()))) { //Onshot
-			reset(false)
-			return@every
-		}
+	if (curSettings["AIM_ONLY_ON_SHOT"].strToBool() && (!canFire || (didShoot && !meWep.automatic && !curSettings["AUTOMATIC_WEAPONS"].strToBool()))) { //Onshot
+		reset(false)
+		return@every
+	}
 
-		if (meWep.sniper && !me.isScoped() && curSettings["ENABLE_SCOPED_ONLY"].strToBool()) { //Scoped only
-			reset()
-			return@every
-		}
+	if (meWep.sniper && !me.isScoped() && curSettings["ENABLE_SCOPED_ONLY"].strToBool()) { //Scoped only
+		reset()
+		return@every
+	}
 
-		val aim = curSettings["ACTIVATE_FROM_AIM_KEY"].strToBool() && keyPressed(AIM_KEY)
-		val forceAim = (keyPressed(curSettings["FORCE_AIM_KEY"].toInt()) || curSettings["FORCE_AIM_ALWAYS"].strToBool())
-		val haveAmmo = meWepEnt.bullets() > 0
+	val aim = curSettings["ACTIVATE_FROM_AIM_KEY"].strToBool() && keyPressed(AIM_KEY)
+	val forceAim = (keyPressed(curSettings["FORCE_AIM_KEY"].toInt()) || curSettings["FORCE_AIM_ALWAYS"].strToBool())
+	val haveAmmo = meWepEnt.bullets() > 0
 
-		val pressed = ((aim || boneTrig) && !MENUTOG && haveAmmo &&
-				(if (meWep.rifle || meWep.smg) {
-					me.shotsFired() > curSettings["AIM_AFTER_SHOTS"].toInt()
-				} else {
-					true
-				})) || forceAim
+	val pressed = ((aim || boneTrig) && !MENUTOG && haveAmmo &&
+			(if (meWep.rifle || meWep.smg) {
+				me.shotsFired() >= curSettings["AIM_AFTER_SHOTS"].toInt()
+			} else {
+				true
+			})) || forceAim
 
-		var currentTarget = target
+	if (!pressed) {
+		reset()
+		return@every
+	}
 
-		if (!pressed) {
-			reset()
-			return@every
-		}
+	var currentTarget = target
 
-		val currentAngle = clientState.angle()
-		val position = me.position()
-		val shouldVisCheck = !(forceAim && curSettings["FORCE_AIM_THROUGH_WALLS"].strToBool())
+	val currentAngle = clientState.angle()
+	val position = me.position()
+	val shouldVisCheck = !(forceAim && curSettings["FORCE_AIM_THROUGH_WALLS"].strToBool())
 
-		var aB = curSettings["AIM_BONE"].toInt()
+	var aB = curSettings["AIM_BONE"].toInt()
 
-		if (keyPressed(curSettings["FORCE_AIM_BONE_KEY"].toInt())) {
-			aB = curSettings["FORCE_AIM_BONE"].toInt()
-		}
+	if (keyPressed(curSettings["FORCE_AIM_BONE_KEY"].toInt())) {
+		aB = curSettings["FORCE_AIM_BONE"].toInt()
+	}
 
-		val bestTarget = findTarget(position, currentAngle, aim,
+	val bestTarget = findTarget(position, currentAngle, aim,
+			BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 3); destBone } else { destBone = aB; aB },
+			visCheck = shouldVisCheck) //Try to find new target
+
+	if (currentTarget <= 0) { //If target is invalid from last run
+		currentTarget = findTarget(position, currentAngle, aim,
 				BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 3); destBone } else { destBone = aB; aB },
 				visCheck = shouldVisCheck) //Try to find new target
-
-		if (currentTarget <= 0) { //If target is invalid from last run
-			currentTarget = findTarget(position, currentAngle, aim,
-					BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 3); destBone } else { destBone = aB; aB },
-					visCheck = shouldVisCheck) //Try to find new target
-			if (currentTarget <= 0) { //End if we don't, can't loop because of thread blocking
-				reset()
-				return@every
-			}
-			target = currentTarget
-		}
-
-		//Set destination bone for calculating aim
-		if (aB == NEAREST_BONE) { //Nearest bone check
-			val nearestBone = currentTarget.nearestBone()
-
-			if (nearestBone != -999) {
-				destBone = nearestBone
-			} else {
-				reset()
-				return@every
-			}
-		}
-		//if (bestTarget <= 0 && !curSettings["HOLD_AIM"].strToBool()) {
-		if (bestTarget <= 0 && !curSettings["HOLD_AIM"].strToBool()) {
+		if (currentTarget <= 0) { //End if we don't, can't loop because of thread blocking
 			reset()
 			return@every
 		}
+		target = currentTarget
+	}
 
-		var perfect = false
-		if (canPerfect) {
-			if (randInt(100+1) <= curSettings["PERFECT_AIM_CHANCE"].toInt()) {
-				perfect = true
-			}
-		}
+	//Set destination bone for calculating aim
+	if (aB == NEAREST_BONE) { //Nearest bone check
+		val nearestBone = currentTarget.nearestBone()
 
-		val swapTarget = (bestTarget > 0 && currentTarget != bestTarget) && !curSettings["HOLD_AIM"].strToBool() && (meWep.automatic || curSettings["AUTOMATIC_WEAPONS"].strToBool())
-
-		if (!currentTarget.canShoot(shouldVisCheck) || swapTarget) {
-			reset()
-			Thread.sleep(curSettings["AIM_TARGET_SWAP_DELAY"].toInt().toLong())
+		if (nearestBone != -999) {
+			destBone = nearestBone
 		} else {
-			val bonePosition = currentTarget.bones(destBone)
-
-			val destinationAngle = getCalculatedAngle(me, bonePosition) //Rename to current angle
-
-			if (!perfect) {
-				destinationAngle.finalize(currentAngle, (1.1F - curSettings["AIM_SMOOTHNESS"].toFloat() / 5F)) //10.0 is max smooth value
-			}
-
-			val aimSpeed = curSettings["AIM_SPEED"].toInt()
-
-			val aimSpeedDivisor = if (curSettings["AIM_ADVANCED"].strToBool()) curSettings["AIM_SPEED_DIVISOR"].toInt() else 1
-			doAim(destinationAngle, currentAngle, aimSpeed, aimSpeedDivisor)
+			reset()
+			return@every
 		}
-	} catch (e: Exception) { e.printStackTrace() }
+	}
+	//if (bestTarget <= 0 && !curSettings["HOLD_AIM"].strToBool()) {
+	if (bestTarget <= 0 && !curSettings["HOLD_AIM"].strToBool()) {
+		reset()
+		return@every
+	}
+
+	var perfect = false
+	if (canPerfect) {
+		if (randInt(100+1) <= curSettings["PERFECT_AIM_CHANCE"].toInt()) {
+			perfect = true
+		}
+	}
+
+	val swapTarget = (bestTarget > 0 && currentTarget != bestTarget) && !curSettings["HOLD_AIM"].strToBool() && (meWep.automatic || curSettings["AUTOMATIC_WEAPONS"].strToBool())
+
+	if (!currentTarget.canShoot(shouldVisCheck) || swapTarget) {
+		reset()
+		Thread.sleep(curSettings["AIM_TARGET_SWAP_DELAY"].toInt().toLong())
+	} else {
+		val bonePosition = currentTarget.bones(destBone)
+
+		val destinationAngle = getCalculatedAngle(me, bonePosition) //Rename to current angle
+
+		if (!perfect) {
+			destinationAngle.finalize(currentAngle, (1.1F - curSettings["AIM_SMOOTHNESS"].toFloat() / 5F)) //10.0 is max smooth value
+		}
+
+		val aimSpeed = curSettings["AIM_SPEED"].toInt()
+
+		val aimSpeedDivisor = if (curSettings["AIM_ADVANCED"].strToBool()) curSettings["AIM_SPEED_DIVISOR"].toInt() else 1
+		doAim(destinationAngle, currentAngle, aimSpeed, aimSpeedDivisor)
+	}
 }

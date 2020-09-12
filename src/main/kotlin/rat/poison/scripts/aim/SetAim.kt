@@ -10,6 +10,7 @@ import rat.poison.settingsLoaded
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toWeaponClass
+import rat.poison.utils.notInGame
 
 var curWep = Weapons.AK47
 var curWepOverride = false
@@ -18,6 +19,8 @@ var curWepSettings = oWeapon()
 
 fun setAim() = every(100, true) {
     try {
+        if (notInGame) return@every
+
         curWep = me.weapon()
 
         if (curWep.grenade || curWep.knife || curWep.miscEnt || curWep == Weapons.ZEUS_X27 || curWep.bomb) {
@@ -63,7 +66,7 @@ fun setAim() = every(100, true) {
                         curSettings["TRIGGER_USE_AIMBOT"] = curWepSettings.tBTrigAim
                         curSettings["TRIGGER_USE_BACKTRACK"] = curWepSettings.tBTrigBacktrack
 
-                                //Advanced advanced aim settings
+                        //Advanced advanced aim settings
                         curWepOverride = true
                     } else {
                         curWepOverride = false
@@ -111,7 +114,7 @@ fun setAim() = every(100, true) {
 }
 
 fun String.boneToNum(): Int {
-    return when (this) {
+    return when (this.toUpperCase()) {
         "HEAD" -> HEAD_BONE
         "NECK" -> NECK_BONE
         "CHEST" -> CHEST_BONE

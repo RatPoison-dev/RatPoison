@@ -204,3 +204,14 @@ fun String.toLocale(): String {
     }
     return curLocale[this]
 }
+
+//Move elsewhere
+
+fun String.safeToInt(identifier: String = ""): Int {
+    return try {
+        this.toInt()
+    } catch(e: Exception) {
+        println("$identifier is invalid")
+        1
+    }
+}

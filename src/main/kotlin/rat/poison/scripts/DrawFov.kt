@@ -38,24 +38,15 @@ fun drawFov() = App {
     }
 
     val wep = me.weapon()
-    var prefix = ""
 
     val bFOV: Float
     var bINFOV = false
 
     var triggerRadius = -1F
 
-    when {
-        wep.pistol -> { prefix = "PISTOL_" }
-        wep.rifle -> { prefix = "RIFLE_" }
-        wep.shotgun -> { prefix = "SHOTGUN_" }
-        wep.sniper -> { prefix = "SNIPER_" }
-        wep.smg -> { prefix = "SMG_" }
-    }
-
     if (wep.gun) { //Not 100% this applies to every 'gun'
-        bFOV = curSettings[prefix + "TRIGGER_FOV"].toFloat()
-        bINFOV = curSettings[prefix + "TRIGGER_INFOV"].strToBool()
+        bFOV = curSettings["TRIGGER_FOV"].toFloat()
+        bINFOV = curSettings["TRIGGER_USE_FOV"].strToBool()
         triggerRadius = calcFovRadius(viewFov, bFOV)
     }
 

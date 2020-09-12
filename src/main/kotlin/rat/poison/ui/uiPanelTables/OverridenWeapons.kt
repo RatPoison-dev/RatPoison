@@ -69,7 +69,7 @@ class OverridenWeapons : VisTable(false) {
     val trigPerShotDelay = OverrideVisSliderCustom("Per Shot Delay", "tBTrigPerShotDelay", 0F, 500F, 10F, true, width1 = 225F, width2 = 125F)
 
     val enableBacktrack = OverrideVisCheckBoxCustom("Enable Backtrack", "tBacktrack")
-    val backtrackMS = OverrideVisSliderCustom("Backtrack MS", "tBTMS", 20F, 200F, 1F, true, width1 = 225F, width2 = 125F)
+    val backtrackMS = OverrideVisSliderCustom("Backtrack MS", "tBTMS", 20F, 200F, 5F, true, width1 = 225F, width2 = 125F)
 
     init {
         align(Align.left)
