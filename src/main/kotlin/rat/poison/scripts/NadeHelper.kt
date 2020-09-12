@@ -222,10 +222,15 @@ fun loadPositions(file: String) {
                 LoL = listOf(feetSpot, headPos, headLookPos)
                 nadeHelperArrayList.add(LoL)
 
-                nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: $file")
+                if (curSettings["MENU"].strToBool()) {
+                    nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: $file")
+                }
+
             } else {
                 println("[Error] $file is empty, not loading")
-                nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: N/A")
+                if (curSettings["MENU"].strToBool()) {
+                    nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: N/A")
+                }
             }
         }
     }
