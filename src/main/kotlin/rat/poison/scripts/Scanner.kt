@@ -29,7 +29,7 @@ fun scanner() {
         when {
             line.startsWith("help") -> {
                 if (line == "help") {
-                    println("\nAvailable commands: help [command], exit, ranks, reload, list, read [file name], write [file name] [variable name] = [value], save [default/cfgname], load [cfgname], delete [cfgname]\n")
+                    println("\nAvailable commands: help [command], exit, ranks, reload, list, read [file name], write [file name] [variable name] = [value], save [default/cfgname], load [cfgname], delete [cfgname], nadehelper [nadehelpername]\n")
                 } else {
                     when (line.split(" ".toRegex(), 2)[1]) {
                         "exit" -> println("\nCloses program and cmd\n")
@@ -41,6 +41,7 @@ fun scanner() {
                         "help" -> println("\nStandalone or Syntax: help [command] ; Replace [command] with the command listed in list\n")
                         "save" -> println("\nSave to default settings or to a config\n")
                         "load" -> println("\nLoad config\n")
+                        "nadehelper" -> println("\nLoad nadehelper file\n")
                     }
                 }
             }
@@ -128,6 +129,16 @@ fun scanner() {
                 } catch (e: Exception) {
                     println("Invalid variable/value")
                 }
+            }
+            line.startsWith("nadehelper") -> {
+                try {
+                    val name = line.trim().split(" ".toRegex(), 2)[1]
+
+                    loadPositions(name)
+                } catch (e: Exception) {
+                    println("Invalid variable/value")
+                }
+
             }
             line.startsWith("load") -> {
                 println()
