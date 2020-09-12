@@ -12,10 +12,9 @@ import rat.poison.game.offsets.ClientOffsets.dwForceJump
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.randInt
-import java.awt.event.KeyEvent.VK_SPACE
 
 fun bunnyHop() = every(4) {
-    if (curSettings["ENABLE_BUNNY_HOP"].strToBool() && keyPressed(VK_SPACE) && (me > 0 && !me.dead() && me.onGround()) && (randInt(0, 100) <= curSettings["BHOP_HITCHANCE"].toInt())) {
+    if (curSettings["ENABLE_BUNNY_HOP"].strToBool() && keyPressed(curSettings["ENABLE_BUNNY_HOP_KEY"].toInt()) && (me > 0 && !me.dead() && me.onGround()) && (randInt(0, 100) <= curSettings["BHOP_HITCHANCE"].toInt())) {
         updateCursorEnable()
         if (cursorEnable) return@every
         CSGO.clientDLL[dwForceJump] = 6

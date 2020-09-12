@@ -24,6 +24,10 @@ GLOW_SHOW_ENEMIES = true
 
 //Enable glow esp on bomb
 GLOW_SHOW_BOMB = true
+GLOW_BOMB_ADAPTIVE = true
+GLOW_BOMB_ADAPTIVE_CAN_DEFUSE = Color(red=0, green=255, blue=0, alpha=1.0)
+GLOW_BOMB_ADAPTIVE_CANT_DEFUSE = Color(red=255, green=0, blue=0, alpha=1.0)
+GLOW_BOMB_ADAPTIVE_LITTLE_TIME = Color(red=255, green=255, blue=0, alpha=1.0)
 
 //Enable glow esp on bomb carrier
 GLOW_SHOW_BOMB_CARRIER = true
