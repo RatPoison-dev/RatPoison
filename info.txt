@@ -1,1 +1,0 @@
-This program is inherently Charlatano at it's root. I've edited Charlatano to RatPoison in this instance as my own, for my own sake. The original is available here https://github.com/Jire/Charlatano

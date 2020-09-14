@@ -1,8 +1,0 @@
-//Enable skeleton esp
-SKELETON_ESP = false
-
-//Enable skeleton esp on teammates
-SKELETON_SHOW_TEAM = false
-
-//Enable skeleton esp on enemies
-SKELETON_SHOW_ENEMIES = true
