@@ -234,6 +234,7 @@ GLOW_ESP = Включено
 GLOW_SHOW_TEAM = Союзники
 GLOW_SHOW_ENEMIES = Противники
 GLOW_SHOW_BOMB = Бомба
+GLOW_BOMB_ADAPTIVE = Адаптивный глоу бомбы
 GLOW_SHOW_BOMB_CARRIER = Бомбардировщик
 GLOW_SHOW_WEAPONS = Оружия
 GLOW_SHOW_GRENADES = Гранаты
@@ -653,3 +654,6 @@ GLOW_SMOKE_CHECK = Выключать в смоках
 INDICATOR_SMOKE_CHECK = Выключать в смоках
 BOX_SMOKE_CHECK = Выключать в смоках
 SNAPLINES_SMOKE_CHECK = Выключать в смоках
+
+CHAMS_TARGET_COLOR = Цель
+BOX_FAR_RADAR = Дормант

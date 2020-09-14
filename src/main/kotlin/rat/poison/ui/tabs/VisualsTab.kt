@@ -133,6 +133,7 @@ fun updateDisableEsp() {
         glowEspTab.glowTeamColor.disable(bool)
         glowEspTab.glowEnemyColor.disable(bool)
         glowEspTab.glowBombColor.disable(bool)
+        glowEspTab.glowBombAdaptive.disable(bool)
         glowEspTab.glowBombCarrierColor.disable(bool)
         glowEspTab.glowWeaponColor.disable(bool)
         glowEspTab.glowGrenadeColor.disable(bool)

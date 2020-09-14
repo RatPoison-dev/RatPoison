@@ -39,6 +39,7 @@ class GlowEspTab: Tab(false, false) {
 
     val showBomb = VisCheckBoxCustom(" ", "GLOW_SHOW_BOMB", false)
     val glowBombColor = VisColorPickerCustom("Bomb", "GLOW_BOMB_COLOR")
+    val glowBombAdaptive = VisCheckBoxCustom("Adaptive Bomb Glow", "GLOW_BOMB_ADAPTIVE")
 
     val showBombCarrier = VisCheckBoxCustom(" ", "GLOW_SHOW_BOMB_CARRIER", false)
     val glowBombCarrierColor = VisColorPickerCustom("Bomb Carrier", "GLOW_BOMB_CARRIER_COLOR")
@@ -68,6 +69,7 @@ class GlowEspTab: Tab(false, false) {
         table.add(glowShowHealth).left().row()
 
         table.add(glowSmokeCheck).left().row()
+        table.add(glowBombAdaptive).left().row()
 
         var tmpTable = VisTable()
         tmpTable.add(showTeam)
@@ -152,6 +154,7 @@ fun glowEspTabUpdate() {
         showTarget.update()
         glowTeamColor.update()
         glowEnemyColor.update()
+        glowBombAdaptive.update()
         glowBombColor.update()
         glowBombCarrierColor.update()
         glowWeaponColor.update()
