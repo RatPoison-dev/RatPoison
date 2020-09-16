@@ -78,7 +78,7 @@ fun bombTimer() {
 fun currentGameTicks(): Float = CSGO.engineDLL.float(EngineOffsets.dwGlobalVars + 16)
 
 fun bombUpdater() = every(15) {
-    if (!curSettings["ENABLE_BOMB_TIMER"].strToBool() || DANGER_ZONE) return@every
+    if ((!curSettings["ENABLE_BOMB_TIMER"].strToBool() && !curSettings["GLOW_BOMB_ADAPTIVE"].strToBool()) || DANGER_ZONE) return@every
     val time = currentGameTicks()
     val bomb: Entity = entityByType(EntityType.CPlantedC4)?.entity ?: -1L
 
