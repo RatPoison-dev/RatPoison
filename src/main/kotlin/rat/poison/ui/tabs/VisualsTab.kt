@@ -243,6 +243,7 @@ fun updateDisableEsp() {
             legitRadarDistance.disable(bool, col)
             visAdrenaline.disable(bool)
             adrenalineStrength.disable(bool, col)
+            adrenalineCooldown.disable(bool, col)
             nightMode.disable(bool)
             nightModeSlider.disable(bool, col)
 

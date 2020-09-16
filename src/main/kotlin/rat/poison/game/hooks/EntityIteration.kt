@@ -32,6 +32,7 @@ import rat.poison.utils.notInGame
 import rat.poison.utils.shouldPostProcess
 import java.io.File
 import java.util.concurrent.atomic.AtomicLong
+import kotlin.math.sign
 import kotlin.properties.Delegates
 
 private val lastCleanup = AtomicLong(0L)
@@ -51,7 +52,10 @@ private fun reset() {
 private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
     if (old != new) {
         if (new.name == SignOnState.IN_GAME.name) {
-            shouldPostProcess = true
+            Thread(Runnable {
+                Thread.sleep(10000)
+                shouldPostProcess = true
+            }).start()
 
             val strBuf: Memory by lazy {
                 Memory(128) //128 str?

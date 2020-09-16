@@ -35,13 +35,13 @@ internal fun disableAllEsp() {
         if (type != EntityType.NULL) {
             when (type) {
                 EntityType.CCSPlayer -> {
-                    glowAddress.glow(cWhite); entity.chams(cWhite)
+                    glowAddress.glow(cWhite, -1); entity.chams(cWhite); entity.hideOnRadar()
                 }
-                EntityType.CPlantedC4 -> glowAddress.glow(cWhite)
-                EntityType.CC4 -> glowAddress.glow(cWhite)
+                EntityType.CPlantedC4 -> glowAddress.glow(cWhite, -1)
+                EntityType.CC4 -> glowAddress.glow(cWhite, -1)
                 else -> {
                     if (type.weapon || type.grenade) {
-                        glowAddress.glow(cWhite)
+                        glowAddress.glow(cWhite, -1)
                     }
                 }
             }
@@ -49,19 +49,4 @@ internal fun disableAllEsp() {
 
         return@forEntities
     }
-}
-
-private fun Entity.glow(color: Color) {
-    CSGO.csgoEXE[this + 0x4] = color.red / 255F
-    CSGO.csgoEXE[this + 0x8] = color.green / 255F
-    CSGO.csgoEXE[this + 0xC] = color.blue / 255F
-    CSGO.csgoEXE[this + 0x10] = color.alpha.toFloat()
-    CSGO.csgoEXE[this + 0x24] = false
-    CSGO.csgoEXE[this + 0x26] = false
-}
-
-private fun Entity.chams(color: Color) {
-    CSGO.csgoEXE[this + 0x70] = color.red.toByte()
-    CSGO.csgoEXE[this + 0x71] = color.green.toByte()
-    CSGO.csgoEXE[this + 0x72] = color.blue.toByte()
 }

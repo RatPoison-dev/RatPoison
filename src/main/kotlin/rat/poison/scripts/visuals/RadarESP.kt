@@ -21,7 +21,11 @@ internal fun radarEsp() = every(100) {
         for (i in footSteps.indices) {
             val ent = footSteps[i].ent
             if (ent > 0L && !footSteps[i].open && footSteps[i].ttl > 0 && Vector(footSteps[i].x, footSteps[i].y, footSteps[i].z).distanceTo(me.position()) <= curSettings["LEGIT_RADAR_FOOTSTEPS_DISTANCE"].toInt()) {
-                ent.show()
+                ent.showOnRadar()
+
+                println(me.position().distanceTo(ent.position()))
+            } else {
+                ent.hideOnRadar()
             }
         }
     } else {
@@ -29,11 +33,7 @@ internal fun radarEsp() = every(100) {
             val entity = it.entity
 
             if (entity.dead() || entity == me || entity.dormant()) return@forEntities
-            entity.show()
+            entity.showOnRadar()
         }
     }
-}
-
-private fun Entity.show() {
-    csgoEXE[this + bSpotted] = true
 }

@@ -39,7 +39,8 @@ fun adrenaline() = every(10) {
         val cGT = currentGameTicks()
         fl = MathUtils.clamp(fl, 0F, 2.5F)
         csgoEXE[me + m_flHealthShotBoostExpirationTime] = cGT + fl + bFL
-        fl -= .005F
+        println("$cGT $fl")
+        fl -= curSettings["ADRENALINE_COOLDOWN"].toFloat()
     } else {
         fl = 0F
     }

@@ -35,8 +35,8 @@ fun triggerBot() = every(5) {
 
     inTrigger = false //go and do the 2 step
 
-    val initDelay = if (curWepOverride) curWepSettings.tBTrigInitDelay else curSettings[curWepCategory + "_TRIGGER_INIT_SHOT_DELAY"].safeToInt("Trig init shot")
-    val shotDelay = if (curWepOverride) curWepSettings.tBTrigPerShotDelay else curSettings[curWepCategory + "_TRIGGER_PER_SHOT_DELAY"].safeToInt("Trig per shot")
+    val initDelay = if (curWepOverride) curWepSettings.tBTrigInitDelay else curSettings[curWepCategory + "_TRIGGER_INIT_SHOT_DELAY"].safeToInt("Trig init shot $curWepCategory found ${curSettings[curWepCategory + "_TRIGGER_INIT_SHOT_DELAY"]} invalid")
+    val shotDelay = if (curWepOverride) curWepSettings.tBTrigPerShotDelay else curSettings[curWepCategory + "_TRIGGER_PER_SHOT_DELAY"].safeToInt("Trig per shot $curWepCategory found ${curSettings[curWepCategory + "_TRIGGER_PER_SHOT_DELAY"]} invalid")
     val bFOV = curSettings["TRIGGER_FOV"].toFloat()
     val bINFOV = curSettings["TRIGGER_USE_FOV"].strToBool()
     val bINCROSS = curSettings["TRIGGER_USE_INCROSS"].strToBool()
