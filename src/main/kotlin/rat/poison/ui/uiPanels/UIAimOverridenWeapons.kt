@@ -19,7 +19,7 @@ class UIAimOverridenWeapons : VisWindow("Override-Weapons".toLocale()) {
 
         pack()
 
-        setSize(400F, 660F)
+        setSize(400F, 684F)
         isResizable = false
     }
 

@@ -34,7 +34,7 @@ fun chamsEsp() = every(100) {
         255
     }
 
-    if (me > 0L) {
+    if (me > 0L && !me.dead()) {
         //Edit playermodel to counter weapon brightness
         val clientVModEnt = csgoEXE.uint(clientDLL.address + dwEntityList + (((csgoEXE.uint(csgoEXE.uint(clientDLL.address + dwLocalPlayer) + m_hViewModel)) and 0xFFF) - 1) * 16)
 
@@ -45,9 +45,11 @@ fun chamsEsp() = every(100) {
             Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0)
         }
 
-        csgoEXE[clientVModEnt + 0x70] = clientMColor.red.toByte()
-        csgoEXE[clientVModEnt + 0x71] = clientMColor.green.toByte()
-        csgoEXE[clientVModEnt + 0x72] = clientMColor.blue.toByte()
+        if (clientVModEnt > 0) {
+            csgoEXE[clientVModEnt + 0x70] = clientMColor.red.toByte()
+            csgoEXE[clientVModEnt + 0x71] = clientMColor.green.toByte()
+            csgoEXE[clientVModEnt + 0x72] = clientMColor.blue.toByte()
+        }
     }
 
     //Set Cvar
@@ -82,7 +84,7 @@ fun chamsEsp() = every(100) {
         val entityTeam = entity.team()
         val team = !DANGER_ZONE && myTeam == entityTeam
 
-        if (curSettings["CHAMS_SHOW_TARGET"].strToBool() && entity == espTARGET && espTARGET != -1L) {
+        if (curSettings["CHAMS_SHOW_TARGET"].strToBool() && entity == espTARGET && espTARGET > 0L) {
             entity.chams(curSettings["CHAMS_TARGET_COLOR"].strToColor())
         } else if (curSettings["CHAMS_SHOW_ENEMIES"].strToBool() && !team) { //Show enemies & is enemy
             if (curSettings["CHAMS_SHOW_HEALTH"].strToBool()) {
@@ -101,10 +103,4 @@ fun chamsEsp() = every(100) {
 
         return@forEntities
     }
-}
-
-private fun Entity.chams(color: Color) {
-    csgoEXE[this + 0x70] = color.red.toByte()
-    csgoEXE[this + 0x71] = color.green.toByte()
-    csgoEXE[this + 0x72] = color.blue.toByte()
 }

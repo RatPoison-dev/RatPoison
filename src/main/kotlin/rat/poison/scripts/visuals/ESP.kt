@@ -3,10 +3,11 @@ package rat.poison.scripts.visuals
 import com.sun.jna.Memory
 import rat.poison.curSettings
 import rat.poison.dbg
-import rat.poison.game.CSGO
+import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.Color
 import rat.poison.game.entity.Entity
 import rat.poison.game.entity.EntityType
+import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toInt
@@ -35,11 +36,11 @@ fun Entity.glow(color: Color, glowType: Int) {
 	}
 
 	//Revalidate
-	val ent = CSGO.csgoEXE.uint(this)
+	val ent = csgoEXE.uint(this)
 	val entType = EntityType.byEntityAddress(ent)
 
 	if ((entType == EntityType.CCSPlayer || entType.weapon || entType.grenade || entType.bomb) && ent > 0) {
-		CSGO.csgoEXE.read(this, glowMemory)
+		csgoEXE.read(this, glowMemory)
 
 		if (glowMemory.getPointer(0) != null) {
 			if (glowType == -1) {
@@ -49,7 +50,7 @@ fun Entity.glow(color: Color, glowType: Int) {
 
 				glowMemory.setByte(0x2C, glowType.toByte())
 
-				CSGO.csgoEXE.write(this, glowMemory)
+				csgoEXE.write(this, glowMemory)
 			} else {
 				glowMemory.setFloat(0x4, color.red / 255F)
 				glowMemory.setFloat(0x8, color.green / 255F)
@@ -62,10 +63,26 @@ fun Entity.glow(color: Color, glowType: Int) {
 
 				glowMemory.setByte(0x2C, glowType.toByte())
 
-				CSGO.csgoEXE.write(this, glowMemory)
+				csgoEXE.write(this, glowMemory)
 			}
 		}
 	}
+}
+
+
+//TODO add sanity checks, prolly not crash cause
+fun Entity.chams(color: Color) {
+	csgoEXE[this + 0x70] = color.red.toByte()
+	csgoEXE[this + 0x71] = color.green.toByte()
+	csgoEXE[this + 0x72] = color.blue.toByte()
+}
+
+fun Entity.showOnRadar() {
+	csgoEXE[this + NetVarOffsets.bSpotted] = true
+}
+
+fun Entity.hideOnRadar() {
+	csgoEXE[this + NetVarOffsets.bSpotted] = false
 }
 
 fun String.toGlowNum(): Int {

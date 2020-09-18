@@ -21,6 +21,7 @@ class MiscVisualsTab : Tab(false, false) {
 
     val visAdrenaline = VisCheckBoxCustom("Adrenaline", "ENABLE_ADRENALINE")
     val adrenalineStrength = VisSliderCustom("Adrenaline Strength", "ADRENALINE_STRENGTH", 0.01F, 1F, 0.01F, false)
+    val adrenalineCooldown = VisSliderCustom("Adrenaline Cooldown", "ADRENALINE_COOLDOWN", 0.001F, 0.05F, 0.001F, false, dec = 3)
 
     val showAimFov = VisCheckBoxCustom(" ", "DRAW_AIM_FOV", false)
     val showAimFovColor = VisColorPickerCustom("Draw Aim FOV", "DRAW_AIM_FOV_COLOR")
@@ -62,6 +63,7 @@ class MiscVisualsTab : Tab(false, false) {
 
         table.add(visAdrenaline).left().row()
         table.add(adrenalineStrength).left().row()
+        table.add(adrenalineCooldown).left().row()
 
         table.addSeparator()
 
@@ -104,6 +106,7 @@ fun miscVisualTabUpdate() {
         nightModeSlider.update()
         visAdrenaline.update()
         adrenalineStrength.update()
+        adrenalineCooldown.update()
         showAimFov.update()
         showAimFovColor.update()
         showTriggerFov.update()
