@@ -3,11 +3,11 @@ OPENGL_VSYNC = false
 
 //FPS of the overlay
 //Increasing can cause performance degradation
-OPENGL_FPS = 200
+OPENGL_FPS = 60
 
 //MSAA antialiasing of the overlay
 //0 (disabled), 2, 4, 8
-OPENGL_MSAA_SAMPLES = 8
+OPENGL_MSAA_SAMPLES = 0
 
 //Enable or disable GL3
 OPENGL_3 = true

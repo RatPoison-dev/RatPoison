@@ -2,6 +2,5 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <option name="BUILD_PROCESS_HEAP_SIZE" value="4048" />
-    <bytecodeTargetLevel target="12" />
   </component>
 </project>
