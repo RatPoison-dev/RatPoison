@@ -30,7 +30,7 @@ fun adrenaline() = every(10) {
 
     var bFL = 0F
 
-    if (bombState.planted) {
+    if (bombState.planted && curSettings["ADRENALINE_BOMB_TIME"].strToBool()) {
         val tLeft = bombState.timeLeftToExplode
         bFL += (40 - tLeft) / 80F
     }
