@@ -126,7 +126,6 @@ private fun trigShoot(delay: Int, aimbot: Boolean = false, backtrack: Boolean = 
 }
 
 private fun triggerShoot(aimbot: Boolean = false, backtrack: Boolean = false, backtrackFallback: Boolean = false) {
-    boneTrig = aimbot// && !backtrack
     var didBacktrack = false
 
     if (backtrack) {

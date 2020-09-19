@@ -5,15 +5,6 @@ ENABLE_ESP = true
 //Default key is G
 VISUALS_TOGGLE_KEY = 35
 
-//Enable full screen visual effect
-ENABLE_ADRENALINE = false
-
-//Strength of added adrenaline per shot
-ADRENALINE_STRENGTH = 0.15
-
-//How much adrenaline loses each update
-ADRENALINE_COOLDOWN = 0.01
-
 //Enable radar esp
 RADAR_ESP = false
 

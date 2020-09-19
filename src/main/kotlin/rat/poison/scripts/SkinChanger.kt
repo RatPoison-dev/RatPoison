@@ -8,6 +8,7 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.clientState
 import rat.poison.game.entity.steamID
 import rat.poison.game.entity.type
+import rat.poison.game.entity.weaponEntity
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.hMyWeapons
 import rat.poison.game.netvars.NetVarOffsets.m_OriginalOwnerXuidLow
@@ -35,11 +36,16 @@ fun skinChanger() = every(1, continuous = true) {
     if ((!curSettings["SKINCHANGER"].strToBool() && !curSettings["KNIFECHANGER"].strToBool()) || notInGame) return@every
 
     try {
-        val sID = me.steamID()
-        val split = sID.split(":")
-        if (split.size < 3 || StringUtils.isNumeric(split[2]) || StringUtils.isNumeric(split[1])) { //This SHOULD make try catch redundant, as toInt() is the only catch case...
+        if (csgoEXE.int(clientState + 0x174) == -1) {
             return@every
         }
+
+        val sID = me.steamID()
+        val split = sID.split(":")
+        if (split.size < 3 || !StringUtils.isNumeric(split[2]) || !StringUtils.isNumeric(split[1])) { //This SHOULD make try catch redundant, as toInt() is the only catch case...
+            return@every
+        }
+
         val pID = (split[2].toInt() * 2) + split[1].toInt()
 
         for (i in 0..8) {
@@ -72,6 +78,7 @@ fun skinChanger() = every(1, continuous = true) {
                         csgoEXE[weaponEntity + m_iAccountID] = pID
 
                         if (!shouldUpdate && ((curWepPaint != wantedWepPaint) || (curStatTrak != wantedStatTrak) || (curWear != wantedWear)) && curSettings["FORCE_UPDATE_AUTO"].strToBool()) {
+
                             shouldUpdate = true
                         }
                     }
