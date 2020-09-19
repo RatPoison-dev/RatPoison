@@ -26,7 +26,6 @@ var bombState = BombState()
 private var lastSecDefusing = false
 
 fun bombTimer() {
-    bombUpdater() //Call once
 
     App {
         if (DANGER_ZONE || !curSettings["ENABLE_ESP"].strToBool()) return@App
