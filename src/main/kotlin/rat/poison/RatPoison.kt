@@ -141,6 +141,7 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Weapon Spam") }; weaponSpam()
     if (dbg) { println("[DEBUG] Initializing Weapon Changer") }; skinChanger()
     if (dbg) { println("[DEBUG] Initializing NightMode/FullBright") }; nightMode()
+    if (dbg) { println("[DEBUG] Initializing Bomb Updater")}; bombUpdater()
 
     if (dbg) { println("[DEBUG] Initializing Backtrack") }; setupBacktrack()
     if (dbg) { println("[DEBUG] Initializing Draw Backtrack") }; drawBacktrack()
