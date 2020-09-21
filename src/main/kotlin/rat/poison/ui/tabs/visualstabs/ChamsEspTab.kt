@@ -15,7 +15,7 @@ class ChamsEspTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     val chamsEsp = VisCheckBoxCustom("Enable", "CHAMS_ESP")
     val chamsShowHealth = VisCheckBoxCustom("Chams Show Health", "CHAMS_SHOW_HEALTH")
-    val chamsBrightness = VisSliderCustom("Chams Brightness", "CHAMS_BRIGHTNESS", 0F, 5000F, 25F, true)
+    val chamsBrightness = VisSliderCustom("Chams Brightness", "CHAMS_BRIGHTNESS", 0F, 100F, 1F, true)
 
     val showTeam = VisCheckBoxCustom(" ", "CHAMS_SHOW_TEAM", false)
     val chamsTeamColor = VisColorPickerCustom("Teammates", "CHAMS_TEAM_COLOR")

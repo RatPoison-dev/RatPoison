@@ -21,6 +21,7 @@ import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
 import rat.poison.toLocale
 import rat.poison.utils.Vector
+import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.notInGame
@@ -29,40 +30,72 @@ import kotlin.math.sign
 
 data class BoundingBox(var left: Float = -1F, var right: Float = -1F, var top: Float = -1F, var bottom: Float = -1F)
 
+//Just a bruh moment
+private var advancedBBox = false
+private var drawBox = curSettings["ENABLE_BOX_ESP"].strToBool()
+private var drawBoxDetails = curSettings["BOX_ESP_DETAILS"].strToBool()
+private var bEspName = false; private var bEspNamePos = "BOTTOM"
+private var bEspWeapon = false; private var bEspWeaponPos = "BOTTOM"
+private var bEspHealth = false; private var bEspHealthPos = "BOTTOM"
+private var bEspArmor = false; private var bEspArmorPos = "BOTTOM"
+private var bEspAmmo = false; private var bEspAmmoPos = "BOTTOM"
+private var bEspHelmet = false; private var bEspHelmetPos = "BOTTOM"
+private var bEspKevlar = false; private var bEspKevlarPos = "BOTTOM"
+private var bEspScoped = false; private var bEspScopedPos = "BOTTOM"
+private var bEspFlashed = false; private var bEspFlashedPos = "BOTTOM"
+private var bEspMoney = false; private var bEspMoneyPos = "BOTTOM"
+private var showTeam = false; private var showEnemy = false
+private var showWeapons = false
+private var showDefuseKits = false
+
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
-fun boxEsp() = App {
-	if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !curSettings["BOX_ESP_DETAILS"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@App
+fun boxEsp() {
+	every(1000) { //Update settings
+		advancedBBox = curSettings["ADVANCED_BOUNDING_BOX"].strToBool()
 
-	val advancedBBox = curSettings["ADVANCED_BOUNDING_BOX"].strToBool()
+		drawBox = curSettings["ENABLE_BOX_ESP"].strToBool()
+		drawBoxDetails = curSettings["BOX_ESP_DETAILS"].strToBool()
 
-	val drawBox = curSettings["ENABLE_BOX_ESP"].strToBool()
-	val drawBoxDetails = curSettings["BOX_ESP_DETAILS"].strToBool()
+		bEspName = curSettings["BOX_ESP_NAME"].strToBool()
+		bEspNamePos = curSettings["BOX_ESP_NAME_POS"].replace("\"", "")
+		bEspWeapon = curSettings["BOX_ESP_WEAPON"].strToBool()
+		bEspWeaponPos = curSettings["BOX_ESP_WEAPON_POS"].replace("\"", "")
+		bEspHealth = curSettings["BOX_ESP_HEALTH"].strToBool()
+		bEspHealthPos = curSettings["BOX_ESP_HEALTH_POS"].replace("\"", "")
+		bEspArmor = curSettings["BOX_ESP_ARMOR"].strToBool()
+		bEspArmorPos = curSettings["BOX_ESP_ARMOR_POS"].replace("\"", "")
+		bEspAmmo = curSettings["BOX_ESP_AMMO"].strToBool()
+		bEspAmmoPos = curSettings["BOX_ESP_AMMO_POS"].replace("\"", "")
+		bEspHelmet = curSettings["BOX_ESP_HELMET"].strToBool()
+		bEspHelmetPos = curSettings["BOX_ESP_HELMET_POS"].replace("\"", "")
+		bEspKevlar = curSettings["BOX_ESP_KEVLAR"].strToBool()
+		bEspKevlarPos = curSettings["BOX_ESP_KEVLAR_POS"].replace("\"", "")
+		bEspScoped = curSettings["BOX_ESP_SCOPED"].strToBool()
+		bEspScopedPos = curSettings["BOX_ESP_SCOPED_POS"].replace("\"", "")
+		bEspFlashed = curSettings["BOX_ESP_FLASHED"].strToBool()
+		bEspFlashedPos = curSettings["BOX_ESP_FLASHED_POS"].replace("\"", "")
+		bEspMoney = curSettings["BOX_ESP_MONEY"].strToBool()
+		bEspMoneyPos = curSettings["BOX_ESP_MONEY_POS"].replace("\"", "")
 
-	val bEspName = curSettings["BOX_ESP_NAME"].strToBool(); 		val bEspNamePos = curSettings["BOX_ESP_NAME_POS"].replace("\"", "")
-	val bEspWeapon = curSettings["BOX_ESP_WEAPON"].strToBool(); 	val bEspWeaponPos = curSettings["BOX_ESP_WEAPON_POS"].replace("\"", "")
-	val bEspHealth = curSettings["BOX_ESP_HEALTH"].strToBool(); 	val bEspHealthPos = curSettings["BOX_ESP_HEALTH_POS"].replace("\"", "")
-	val bEspArmor = curSettings["BOX_ESP_ARMOR"].strToBool(); 		val bEspArmorPos = curSettings["BOX_ESP_ARMOR_POS"].replace("\"", "")
-	val bEspAmmo = curSettings["BOX_ESP_AMMO"].strToBool(); 		val bEspAmmoPos = curSettings["BOX_ESP_AMMO_POS"].replace("\"", "")
-	val bEspHelmet = curSettings["BOX_ESP_HELMET"].strToBool(); 	val bEspHelmetPos = curSettings["BOX_ESP_HELMET_POS"].replace("\"", "")
-	val bEspKevlar = curSettings["BOX_ESP_KEVLAR"].strToBool(); 	val bEspKevlarPos = curSettings["BOX_ESP_KEVLAR_POS"].replace("\"", "")
-	val bEspScoped = curSettings["BOX_ESP_SCOPED"].strToBool(); 	val bEspScopedPos = curSettings["BOX_ESP_SCOPED_POS"].replace("\"", "")
-	val bEspFlashed = curSettings["BOX_ESP_FLASHED"].strToBool();	val bEspFlashedPos = curSettings["BOX_ESP_FLASHED_POS"].replace("\"", "")
-	val bEspMoney = curSettings["BOX_ESP_MONEY"].strToBool();	    val bEspMoneyPos = curSettings["BOX_ESP_MONEY_POS"].replace("\"", "")
+		showTeam = curSettings["BOX_SHOW_TEAM"].strToBool()
+		showEnemy = curSettings["BOX_SHOW_ENEMIES"].strToBool()
+		showWeapons = curSettings["BOX_SHOW_WEAPONS"].strToBool()
+		showDefuseKits = curSettings["BOX_SHOW_DEFUSERS"].strToBool()
+	}
 
-	val showTeam = curSettings["BOX_SHOW_TEAM"].strToBool()
-	val showEnemy = curSettings["BOX_SHOW_ENEMIES"].strToBool()
-	val showWeapons = curSettings["BOX_SHOW_WEAPONS"].strToBool()
-	val showDefuseKits = curSettings["BOX_SHOW_DEFUSERS"].strToBool()
+	App {
+		if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !curSettings["BOX_ESP_DETAILS"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@App
 
-	forEntities { //Player & Weapon boxes
-		val ent = it.entity
-		val isPlayer = it.type == EntityType.CCSPlayer
-		val isWeapon = it.type.weapon
-		val isDefuseKit = it.type == EntityType.CEconEntity
+		forEntities { //Player & Weapon boxes
+			val ent = it.entity
+			val isPlayer = it.type == EntityType.CCSPlayer
+			val isWeapon = it.type.weapon
+			val isDefuseKit = it.type == EntityType.CEconEntity
 
-		if (ent <= 0) return@forEntities
+			if (ent <= 0) return@forEntities
 
-		if (isPlayer || isWeapon || isDefuseKit) {
+			if (!isPlayer && !isWeapon && !isDefuseKit) return@forEntities
+
 			//Return if not onscreen
 			if (!worldToScreen(ent.position(), Vector())) return@forEntities
 
@@ -74,7 +107,9 @@ fun boxEsp() = App {
 
 			//Team + Dormant + Dead + Self check
 			var health = 0
-			if (isPlayer) { health = ent.health() }
+			if (isPlayer) {
+				health = ent.health()
+			}
 			val onTeam = ent.team() == me.team()
 			if (isPlayer && !DANGER_ZONE && (ent == me || ent.dormant() || ent.dead() || (!showEnemy && !onTeam) || (!showTeam && onTeam))) return@forEntities
 			if (isWeapon && !showWeapons) return@forEntities
@@ -140,7 +175,7 @@ fun boxEsp() = App {
 				shapeRenderer.rect(bbox.left - (barWidth * leftShift), bbox.top, barWidth, boxHeight)
 
 				shapeRenderer.color = Color(1F - (.01F * health), (.01F * health), 0F, 1F)
-				shapeRenderer.rect(bbox.left - (barWidth * leftShift), bbox.bottom, barWidth, -(boxHeight * (health/100F)))
+				shapeRenderer.rect(bbox.left - (barWidth * leftShift), bbox.bottom, barWidth, -(boxHeight * (health / 100F)))
 
 				leftShift += 2
 			}
@@ -150,7 +185,7 @@ fun boxEsp() = App {
 				shapeRenderer.rect(bbox.left - (barWidth * leftShift), bbox.top, barWidth, boxHeight)
 
 				shapeRenderer.color = Color(0F, .3F, 1F, 1F)
-				shapeRenderer.rect(bbox.left - (barWidth * leftShift), bbox.bottom, barWidth, -(boxHeight * (entityMemory.armor()/100F)))
+				shapeRenderer.rect(bbox.left - (barWidth * leftShift), bbox.bottom, barWidth, -(boxHeight * (entityMemory.armor() / 100F)))
 
 				leftShift += 2
 			}
@@ -200,7 +235,7 @@ fun boxEsp() = App {
 				shapeRenderer.rect(bbox.right + (barWidth * rightShift), bbox.top, barWidth, boxHeight)
 
 				shapeRenderer.color = Color(1F - (.01F * health), (.01F * health), 0F, 1F)
-				shapeRenderer.rect(bbox.right + (barWidth * rightShift), bbox.bottom, barWidth, -(boxHeight * (health/100F)))
+				shapeRenderer.rect(bbox.right + (barWidth * rightShift), bbox.bottom, barWidth, -(boxHeight * (health / 100F)))
 
 				rightShift += 2
 			}
@@ -210,7 +245,7 @@ fun boxEsp() = App {
 				shapeRenderer.rect(bbox.right + (barWidth * rightShift), bbox.top, barWidth, boxHeight)
 
 				shapeRenderer.color = Color(0F, .3F, 1F, 1F)
-				shapeRenderer.rect(bbox.right + (barWidth * rightShift), bbox.bottom, barWidth, -(boxHeight * (entityMemory.armor()/100F)))
+				shapeRenderer.rect(bbox.right + (barWidth * rightShift), bbox.bottom, barWidth, -(boxHeight * (entityMemory.armor() / 100F)))
 
 				rightShift += 2
 			}
@@ -372,7 +407,8 @@ fun boxEsp() = App {
 
 				glyph.setText(textRenderer, boxDetailsBottomText, detailTextColor, 1F, Align.center, false)
 				textRenderer.draw(sb, glyph, (bbox.left + bbox.right) / 2F, bbox.bottom)
-			} catch (e: Exception) {}
+			} catch (e: Exception) {
+			}
 
 			sb.end()
 		}

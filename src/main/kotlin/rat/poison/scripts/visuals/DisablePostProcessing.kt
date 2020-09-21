@@ -8,11 +8,11 @@ import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.notInGame
 import rat.poison.utils.shouldPostProcess
 
-fun disablePostProcessing() = every(10000) {
+fun disablePostProcessing() = every(10000, true) {
     if (notInGame || !shouldPostProcess) return@every
 
     if (curSettings["DISABLE_POST_PROCESSING"].strToBool()) {
-        csgoEXE[bOverridePostProcesing] = curSettings["DISABLE_POST_PROCESSING"].strToBool()
+        csgoEXE[bOverridePostProcesing] = true
     } else if (csgoEXE.boolean(bOverridePostProcesing)) {
         csgoEXE[bOverridePostProcesing] = false
     }

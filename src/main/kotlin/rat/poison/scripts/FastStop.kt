@@ -60,26 +60,6 @@ internal fun fastStop() = every(4) {
                     }
                 }
             }
-
-//            if (keyPressed(VK_W)) {
-//                println("pressin w")
-//                csgoEXE[dwForceForward] = 6
-//            }
-//
-//            if (keyPressed(VK_A)) {
-//                println("pressin a")
-//                csgoEXE[dwForceLeft] = 6
-//            }
-//
-//            if (keyPressed(VK_S)) {
-//                println("pressin s")
-//                csgoEXE[dwForceBackward] = 6
-//            }
-//
-//            if (keyPressed(VK_D)) {
-//                println("pressin d")
-//                csgoEXE[dwForceRight] = 6
-//            }
         }
     }
 }

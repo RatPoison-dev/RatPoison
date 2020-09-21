@@ -45,7 +45,7 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Testing"
 const val F_VERSION = "1.7"
-const val M_VERSION = "1.7.13"
+const val M_VERSION = "1.7.14"
 var LOADED_CONFIG = "DEFAULT"
 
 const val EXPERIMENTAL = false
@@ -60,6 +60,8 @@ val curLocale = Settings()
 
 var dbg: Boolean = false
 val robot = Robot().apply { this.autoDelay = 0 }
+
+var haltProcess = false
 
 fun main() {
     System.setProperty("jna.nosys", "true")
@@ -115,6 +117,7 @@ fun main() {
         //farEsp()
 
         drawDebug()
+        nameChanger()
     }
 
     if (dbg) { println("[DEBUG] Initializing Bunny Hop") }; bunnyHop()
@@ -204,8 +207,6 @@ fun String.toLocale(): String {
     }
     return curLocale[this]
 }
-
-//Move elsewhere
 
 fun String.safeToInt(identifier: String = ""): Int {
     return try {

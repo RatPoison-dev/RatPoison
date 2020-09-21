@@ -120,7 +120,7 @@ private fun drawBone(target: Player, start: Int, end: Int) {
 			eX = endDraw.x.toInt()
 			eY = endDraw.y.toInt()
 			val health = target.health()
-			if (health >= 0 && health < colors.size) {
+			if (health > 0 && health < colors.size) {
 				color = colors[health]
 			}
 		}

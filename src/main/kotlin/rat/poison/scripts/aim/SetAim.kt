@@ -16,6 +16,7 @@ var curWep = Weapons.AK47
 var curWepOverride = false
 var curWepCategory = "PISTOL"
 var curWepSettings = oWeapon()
+var haveAimSettings = false
 
 fun setAim() = every(100, true) {
     try {
@@ -68,6 +69,7 @@ fun setAim() = every(100, true) {
 
                         //Advanced advanced aim settings
                         curWepOverride = true
+                        haveAimSettings = true
                     } else {
                         curWepOverride = false
                     }
@@ -108,6 +110,8 @@ fun setAim() = every(100, true) {
                 curSettings["TRIGGER_USE_INCROSS"] = curSettings[curWepCategory + "_TRIGGER_INCROSS"].strToBool()
                 curSettings["TRIGGER_USE_AIMBOT"] = curSettings[curWepCategory + "_TRIGGER_AIMBOT"].strToBool()
                 curSettings["TRIGGER_USE_BACKTRACK"] = curSettings[curWepCategory + "_TRIGGER_BACKTRACK"].strToBool() && curSettings["ENABLE_BACKTRACK"].strToBool()
+
+                haveAimSettings = true
             }
         }
     } catch (e: Exception) { println("SetAim failure"); e.printStackTrace() } //Fix crashing

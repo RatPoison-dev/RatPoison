@@ -32,6 +32,7 @@ fun convStrToColor(input: String): rat.poison.game.Color { //Rat poison color
         if (dbg) {
             println("[DEBUG] $input Color is invalid, using white")
         }
+
         return rat.poison.game.Color(255, 255, 255, 1.0)
     }
 }

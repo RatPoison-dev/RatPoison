@@ -61,10 +61,10 @@ fun setupBacktrack() {
 
     every(4, true) {
         if (notInGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0 || !haveGvars) {
-            btRecords = Array(64) { Array(13) { BacktrackTable() } }
-            if (engineDLL.byte(0xD420A) == 0.toByte() && !inBacktrack) {
-                sendPacket(true)
-            }
+//            btRecords = Array(64) { Array(13) { BacktrackTable() } }
+//            if (engineDLL.byte(0xD420A) == 0.toByte() && !inBacktrack) {
+//                sendPacket(true)
+//            }
 
             return@every
         }

@@ -34,7 +34,7 @@ internal fun autoKnife() = every(10) {
                 val currentAngle = clientState.angle()
                 val position = me.position()
                 val target = findTarget(position, currentAngle, false, 32F, -2)
-                if (target >= 0) {
+                if (target > 0) {
                     if (keyReleased(AIM_KEY)) {
                         val targetPos = target.absPosition()
                         val mePos = me.absPosition()
@@ -63,7 +63,7 @@ internal fun autoKnife() = every(10) {
                                     }
                                 } else {
                                     if (imBehind
-                                            && Vector3.len2(me.velocity().x.toFloat(), me.velocity().y.toFloat(), me.velocity().z.toFloat()) > 0
+                                            && Vector3.len2(me.velocity().x, me.velocity().y, me.velocity().z) > 0
                                             && me.absPosition().distanceTo(targetPos) > StabDistance) {
                                         //wait to get close enough to be able to back stab
                                         KnifeAttackType.NONE
@@ -84,17 +84,17 @@ internal fun autoKnife() = every(10) {
 private val delta = Vector3()
 
 private fun isBehindMe(position: Vector): Boolean {
-    delta.set(me.absPosition().x.toFloat(), me.absPosition().y.toFloat(), me.absPosition().z.toFloat())
-            .sub(position.x.toFloat(), position.y.toFloat(), position.z.toFloat())
+    delta.set(me.absPosition().x, me.absPosition().y, me.absPosition().z)
+            .sub(position.x, position.y, position.z)
     delta.nor()
-    return delta.dot(me.direction().x.toFloat(), me.direction().y.toFloat(), me.direction().z.toFloat()) > 0.475f
+    return delta.dot(me.direction().x, me.direction().y, me.direction().z) > 0.475f
 }
 
 private fun canBackStab(position: Vector, direction: Vector): Boolean {
-    delta.set(position.x.toFloat(), position.y.toFloat(), position.z.toFloat())
-            .sub(me.absPosition().x.toFloat(), me.absPosition().y.toFloat(), me.absPosition().z.toFloat())
+    delta.set(position.x, position.y, position.z)
+            .sub(me.absPosition().x, me.absPosition().y, me.absPosition().z)
     delta.nor()
-    return delta.dot(direction.x.toFloat(), direction.y.toFloat(), direction.z.toFloat()) > 0.475f
+    return delta.dot(direction.x, direction.y, direction.z) > 0.475f
 }
 
 var TRIGGER_FORCE_VALUES = false

@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.*
+import rat.poison.scripts.changeName
 import rat.poison.scripts.visuals.disablePostProcessing
 import rat.poison.scripts.visuals.updateHitsound
 import rat.poison.scripts.nameChanger
@@ -20,8 +21,6 @@ import rat.poison.utils.generalUtil.boolToStr
 import rat.poison.utils.generalUtil.strToBool
 import java.io.File
 
-val aimStraferCategories = arrayOf("SAME", "OPPOSITE")
-
 class MiscTab : Tab(false, false) {
     private val table = VisTable(true)
 
@@ -32,10 +31,6 @@ class MiscTab : Tab(false, false) {
     val autoStrafe = VisCheckBoxCustom("Auto Strafe", "AUTO_STRAFE")
     val autoStrafeBHopOnly = VisCheckBoxCustom("BHop Only", "STRAFE_BHOP_ONLY")
     val fastStop = VisCheckBoxCustom("Fast Stop", "FAST_STOP")
-    val aimStrafer = VisCheckBoxCustom("Auto Aim Strafe", "AIM_STRAFER")
-    val aimStraferSelectBox = VisSelectBox<String>()
-    val aimStraferShift = VisCheckBoxCustom("Shift Walk", "AIM_STRAFER_SHIFT")
-    val aimStraferStrictness = VisSliderCustom("Strictness", "AIM_STRAFER_STRICTNESS", 0F, .5F, .01F, false, 3, width1 = 150F, width2 = 90F)
     val headWalk = VisCheckBoxCustom("Head Walk", "HEAD_WALK")
 
     //Fov + bomb timer + spectator list
@@ -65,7 +60,7 @@ class MiscTab : Tab(false, false) {
     val enableKillBind = VisCheckBoxCustom("Kill Bind", "KILL_BIND")
     val killBindKey = VisInputFieldCustom("Key", "KILL_BIND_KEY")
     private val nameChangeInput = VisValidatableTextField()
-    private val nameChange = VisTextButton("Name Change")
+    private val nameChange = VisTextButton("Name-Change".toLocale())
     val postProcessingDisable = VisCheckBoxCustom("DISABLE_POST_PROCESSING".toLocale(), "DISABLE_POST_PROCESSING")
 
     init {
@@ -74,34 +69,12 @@ class MiscTab : Tab(false, false) {
         }
 
         nameChange.changed { _, _ ->
-            nameChanger(nameChangeInput.text)
+            changeName(nameChangeInput.text)
         }
 
         postProcessingDisable.changed { _, _ ->
             disablePostProcessing()
         }
-
-        //Aim Strafer Table
-        val itemsArray = Array<String>()
-        for (i in aimStraferCategories) {
-            if (dbg && curLocale[i].isBlank()) {
-                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
-            }
-
-            itemsArray.add(curLocale[i])
-        }
-        aimStraferSelectBox.items = itemsArray
-
-        aimStraferSelectBox.changed { _, _ ->
-            if (aimStraferCategories[aimStraferSelectBox.selectedIndex] == "SAME") {
-                curSettings["AIM_STRAFER_TYPE"] = 1
-            } else {
-                curSettings["AIM_STRAFER_TYPE"] = 0
-            }
-        }
-        val aimStraferTable = VisTable()
-        aimStraferTable.add(aimStrafer).left()
-        aimStraferTable.add(aimStraferSelectBox).padLeft(142F - aimStrafer.width).left()
 
         //Create Hit Sound Toggle
         if (curSettings["ENABLE_HITSOUND"].strToBool()) hitSoundCheckBox.toggle()
@@ -126,75 +99,68 @@ class MiscTab : Tab(false, false) {
         }
 
         //testing this bs
-        val subPaneTable1 = VisTable()
-        val subPaneTable2 = VisTable()
-        val superPaneTable1 = VisTable()
-        val subPane = VisSplitPane(subPaneTable1, subPaneTable2, true)
-        val superPane = VisSplitPane(subPane, superPaneTable1, false)
+        val leftTable = VisTable()
+        val rightTable = VisTable()
+        val superTable = VisSplitPane(leftTable, rightTable, false)
         
-        subPane.setColor(1F, 1F, 1F, 1F)
-        superPane.setColor(1F, 1F, 1F, 1F)
+        superTable.setColor(1F, 1F, 1F, 1F)
 
         //Set alignments
-        subPaneTable1.align(Align.topLeft)
-        subPaneTable2.align(Align.topLeft)
-        superPaneTable1.align(Align.topLeft)
+        leftTable.align(Align.topLeft)
+        rightTable.align(Align.topLeft)
 
-        subPane.touchable = Touchable.childrenOnly
-        superPane.touchable = Touchable.childrenOnly
+        superTable.touchable = Touchable.childrenOnly
 
         //Top left pane (movement)
-        subPaneTable1.add(bunnyHop).left().padLeft(14F).row()
-        subPaneTable1.add(bunnyHopHitChance).left().padLeft(24F).row()
-        subPaneTable1.add(autoStrafe).left().padLeft(24F).row()
-        subPaneTable1.add(autoStrafeBHopOnly).left().padLeft(24F).row()
-        subPaneTable1.addSeparator().width(250F).left()
-        subPaneTable1.add(fastStop).left().padLeft(14F).row()
-        subPaneTable1.addSeparator().width(250F).left()
-        subPaneTable1.add(aimStraferTable).left().padLeft(14F).row()
-        subPaneTable1.add(aimStraferShift).left().padLeft(14F).row()
-        subPaneTable1.add(aimStraferStrictness).left().padLeft(14F).row()
-        subPaneTable1.addSeparator().width(250F).left()
-        subPaneTable1.add(headWalk).left().padLeft(14F).row()
+        leftTable.add(bunnyHop).left().padLeft(14F).row()
+        leftTable.add(bunnyHopHitChance).left().padLeft(24F).row()
+        leftTable.add(autoStrafe).left().padLeft(24F).row()
+        leftTable.add(autoStrafeBHopOnly).left().padLeft(24F).row()
+        leftTable.addSeparator().width(250F).left()
+        leftTable.add(fastStop).left().padLeft(14F).row()
+        leftTable.addSeparator().width(250F).left()
+        leftTable.add(headWalk).left().padLeft(14F).row()
+        leftTable.addSeparator().width(250F).left()
         //Bottom left pane (fov + bomb timer + spectator list)
-        subPaneTable2.add(fovChanger).left().padLeft(14F).row()
-        subPaneTable2.add(fovDefault).left().padLeft(14F).row()
-        subPaneTable2.add(fovSmoothing).left().padLeft(14F).row()
-        subPaneTable2.add(fovSniperDefault).left().padLeft(14F).row()
-        subPaneTable2.add(fovSniperZoom1).left().padLeft(14F).row()
-        subPaneTable2.add(fovSniperZoom2).left().padLeft(14F).row()
-        subPaneTable2.addSeparator().width(250F).left()
-        subPaneTable2.add(spectatorList).left().padLeft(14F).row()
-        subPaneTable2.add(bombTimer).left().padLeft(14F).row()
-        subPaneTable2.add(bombTimerEnableMenu).left().padLeft(24F).row()
-        subPaneTable2.add(bombTimerEnableBars).left().padLeft(24F).row()
+        leftTable.add(fovChanger).left().padLeft(14F).row()
+        leftTable.add(fovDefault).left().padLeft(14F).row()
+        leftTable.add(fovSmoothing).left().padLeft(14F).row()
+        leftTable.add(fovSniperDefault).left().padLeft(14F).row()
+        leftTable.add(fovSniperZoom1).left().padLeft(14F).row()
+        leftTable.add(fovSniperZoom2).left().padLeft(14F).row()
+        leftTable.addSeparator().width(250F).left()
+        leftTable.add(spectatorList).left().padLeft(14F).row()
+        leftTable.add(bombTimer).left().padLeft(14F).row()
+        leftTable.add(bombTimerEnableMenu).left().padLeft(24F).row()
+        leftTable.add(bombTimerEnableBars).left().padLeft(24F).row()
         //Right pane (misc?)
-        superPaneTable1.add(hitSound).left().padLeft(5F).row()
-        superPaneTable1.add(hitSoundVolume).left().padLeft(5F).row()
-        superPaneTable1.addSeparator().width(250F).left()
-        superPaneTable1.add(enableReducedFlash).left().padLeft(5F).row()
-        superPaneTable1.add(flashMaxAlpha).left().padLeft(5F).row()
-        superPaneTable1.addSeparator().width(250F).left()
-        superPaneTable1.add(knifeBot).left().padLeft(5F).row()
-        superPaneTable1.addSeparator().width(250F).left()
-        superPaneTable1.add(lsBomb).left().padLeft(5F).row()
-        superPaneTable1.addSeparator().width(250F).left()
-        superPaneTable1.add(doorSpam).left().padLeft(5F).row()
-        superPaneTable1.add(doorSpamKey).left().padLeft(5F).row()
-        superPaneTable1.addSeparator().width(250F).left()
-        superPaneTable1.add(weaponSpam).left().padLeft(5F).row()
-        superPaneTable1.add(weaponSpamKey).left().padLeft(5F).row()
-        superPaneTable1.addSeparator().width(250F).left()
-        superPaneTable1.add(selfNade).pad(5F).top().left().width(240F).row()
-        superPaneTable1.addSeparator().width(250F).left()
-        superPaneTable1.add(enableKillBind).left().padLeft(5F).row()
-        superPaneTable1.add(killBindKey).left().padLeft(5F).row()
-        superPaneTable1.add(postProcessingDisable).left().padLeft(5F).row()
-        superPaneTable1.addSeparator().width(250F).left()
-        //superPaneTable1.add(nameChangeInput).pad(5F).top().left().width(240F).row()
-        //superPaneTable1.add(nameChange).pad(5F).top().left().width(240F)
+        rightTable.add(hitSound).left().padLeft(5F).row()
+        rightTable.add(hitSoundVolume).left().padLeft(5F).row()
+        rightTable.addSeparator().width(250F).left()
+        rightTable.add(enableReducedFlash).left().padLeft(5F).row()
+        rightTable.add(flashMaxAlpha).left().padLeft(5F).row()
+        rightTable.addSeparator().width(250F).left()
+        rightTable.add(knifeBot).left().padLeft(5F).row()
+        rightTable.addSeparator().width(250F).left()
+        rightTable.add(lsBomb).left().padLeft(5F).row()
+        rightTable.addSeparator().width(250F).left()
+        rightTable.add(doorSpam).left().padLeft(5F).row()
+        rightTable.add(doorSpamKey).left().padLeft(5F).row()
+        rightTable.addSeparator().width(250F).left()
+        rightTable.add(weaponSpam).left().padLeft(5F).row()
+        rightTable.add(weaponSpamKey).left().padLeft(5F).row()
+        rightTable.addSeparator().width(250F).left()
+        rightTable.add(selfNade).pad(5F).top().left().width(240F).row()
+        rightTable.addSeparator().width(250F).left()
+        rightTable.add(enableKillBind).left().padLeft(5F).row()
+        rightTable.add(killBindKey).left().padLeft(5F).row()
+        rightTable.add(postProcessingDisable).left().padLeft(5F).row()
+        rightTable.addSeparator().width(250F).left()
+        rightTable.add(nameChangeInput).pad(5F).top().left().width(240F).row()
+        rightTable.add(nameChange).pad(5F).top().left().width(240F)
 
-        table.add(superPane).size(500F, 480F).top().growX()
+
+        table.add(superTable).size(500F, 520F).top().growX()
     }
 
     override fun getContentTable(): Table? {
@@ -229,13 +195,6 @@ fun miscTabUpdate() {
         fovSniperDefault.update()
         fovSniperZoom1.update()
         fovSniperZoom2.update()
-        aimStrafer.update()
-        aimStraferShift.update()
-        aimStraferSelectBox.selectedIndex = aimStraferCategories.indexOf(when(curSettings["AIM_STRAFER_TYPE"].toInt()) {
-            1 -> "SAME"
-            else -> "OPPOSITE"
-        })
-        aimStraferStrictness.update()
         doorSpam.update()
         doorSpamKey.update()
         weaponSpam.update()

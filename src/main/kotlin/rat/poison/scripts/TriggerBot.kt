@@ -27,7 +27,7 @@ private var triggerShots = 0
 
 fun triggerBot() = every(5) {
     //Don't run if not needed
-    if (DANGER_ZONE || me.dead() || notInGame || MENUTOG || !me.weapon().gun || !curSettings["ENABLE_TRIGGER"].strToBool()) { //Precheck
+    if (DANGER_ZONE || me.dead() || notInGame || MENUTOG || !me.weapon().gun || !curSettings["ENABLE_TRIGGER"].strToBool() || !haveAimSettings) { //Precheck
         inTrigger = false
         triggerShots = 0
         return@every
@@ -35,8 +35,8 @@ fun triggerBot() = every(5) {
 
     inTrigger = false //go and do the 2 step
 
-    val initDelay = if (curWepOverride) curWepSettings.tBTrigInitDelay else curSettings[curWepCategory + "_TRIGGER_INIT_SHOT_DELAY"].safeToInt("Trig init shot $curWepCategory found ${curSettings[curWepCategory + "_TRIGGER_INIT_SHOT_DELAY"]} invalid")
-    val shotDelay = if (curWepOverride) curWepSettings.tBTrigPerShotDelay else curSettings[curWepCategory + "_TRIGGER_PER_SHOT_DELAY"].safeToInt("Trig per shot $curWepCategory found ${curSettings[curWepCategory + "_TRIGGER_PER_SHOT_DELAY"]} invalid")
+    val initDelay = if (curWepOverride) curWepSettings.tBTrigInitDelay else curSettings[curWepCategory + "_TRIGGER_INIT_SHOT_DELAY"].safeToInt("tell ratto hes a retard")
+    val shotDelay = if (curWepOverride) curWepSettings.tBTrigPerShotDelay else curSettings[curWepCategory + "_TRIGGER_PER_SHOT_DELAY"].safeToInt("tell ratto hes a retard")
     val bFOV = curSettings["TRIGGER_FOV"].toFloat()
     val bINFOV = curSettings["TRIGGER_USE_FOV"].strToBool()
     val bINCROSS = curSettings["TRIGGER_USE_INCROSS"].strToBool()

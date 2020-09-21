@@ -74,7 +74,7 @@ fun snapLines() = App {
 
                 if (me <= 0 || entity == me || dormCheck || entity.dead()) return@forEntities
 
-                if (bEnt >= 0 && bEnt == entity) { //This is the bomb carrier
+                if (bEnt > 0 && bEnt == entity) { //This is the bomb carrier
                     if (enemyCheck) {
                         colStr = when(curSettings["SNAPLINES_BOMB_CARRIER"].strToBool()) {
                             true -> "SNAPLINES_BOMB_CARRIER_COLOR"

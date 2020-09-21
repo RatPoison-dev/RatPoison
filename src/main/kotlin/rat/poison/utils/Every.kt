@@ -1,5 +1,7 @@
 package rat.poison.utils
 
+import rat.poison.haltProcess
+
 @Volatile
 var inBackground = false
 @Volatile
@@ -9,7 +11,7 @@ var shouldPostProcess = false
 
 inline fun every(duration: Int, continuous: Boolean = false, crossinline body: () -> Unit) = Thread(Runnable {
     while (!Thread.interrupted()) {
-        if (continuous || (!inBackground)) {
+        if ((continuous || !inBackground) && !haltProcess) {
             try {
                 body()
             } catch (e: Exception) {

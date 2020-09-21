@@ -25,6 +25,7 @@ import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.CSGO
 import rat.poison.game.updateViewMatrix
+import rat.poison.haltProcess
 import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
 import rat.poison.jna.enums.AccentStates
@@ -111,11 +112,11 @@ object App : ApplicationAdapter() {
         if (VisUI.isLoaded()) {
             if (!Thread.interrupted()) {
                 Gdx.gl.apply {
-                    //glEnable(GL20.GL_BLEND)
+                    glEnable(GL_BLEND)
                     glDisable(GL20.GL_DEPTH_TEST)
                     glClearColor(0F, 0F, 0F, 0F)
                     glClear(GL20.GL_COLOR_BUFFER_BIT)
-                    //glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
+                    glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
 
                     if (!menuStage.root.isVisible) return
 
@@ -168,8 +169,10 @@ object App : ApplicationAdapter() {
                         uiMenu.changeAlpha()
                         appTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
                             updateViewMatrix()
-                            for (i in 0 until bodies.size) {
-                                bodies[i]()
+                            if (!haltProcess) {
+                                for (i in 0 until bodies.size) {
+                                    bodies[i]()
+                                }
                             }
                         }, TimeUnit.NANOSECONDS)
 

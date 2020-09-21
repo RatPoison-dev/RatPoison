@@ -109,11 +109,6 @@ ENABLE_BUNNY_HOP = Salto automático
 AUTO_STRAFE = Strafe automático
 STRAFE_BHOP_ONLY = Strafe solo durante el salto automático
 FAST_STOP = Parada rápida
-AIM_STRAFER = Ataque automático
-AIM_STRAFER_SAME = Mismo
-AIM_STRAFER_OPPOSITE = Opuesto
-AIM_STRAFER_SHIFT = Caminata de cambio
-AIM_STRAFER_STRICTNESS = Estricción
 HEAD_WALK = Paseo de la cabeza
 
 ENABLE_FOV_CHANGER = Cambiador de campo de visión

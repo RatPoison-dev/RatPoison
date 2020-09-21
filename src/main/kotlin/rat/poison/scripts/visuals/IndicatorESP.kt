@@ -39,7 +39,7 @@ fun indicatorEsp() = App {
                     }
                 }
 
-                if (bEnt >= 0 && bEnt == entity) { //This is the bomb carrier
+                if (bEnt > 0 && bEnt == entity) { //This is the bomb carrier
                     if (curSettings["INDICATOR_SHOW_ENEMIES"].strToBool() && !onMyTeam) {
                         color = when (curSettings["INDICATOR_SHOW_BOMB_CARRIER"].strToBool()) {
                             true -> "INDICATOR_BOMB_CARRIER_COLOR"

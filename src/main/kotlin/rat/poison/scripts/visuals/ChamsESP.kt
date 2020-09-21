@@ -21,9 +21,7 @@ import rat.poison.utils.generalUtil.strToColor
 import rat.poison.utils.notInGame
 import java.lang.Float.floatToIntBits
 
-//Change for entities to for entities ccsplayer
-
-fun chamsEsp() = every(100) {
+fun chamsEsp() = every(100, true) {
     if (!curSettings["CHAMS_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@every
 
     val myTeam = me.team()
@@ -84,7 +82,7 @@ fun chamsEsp() = every(100) {
         val entityTeam = entity.team()
         val team = !DANGER_ZONE && myTeam == entityTeam
 
-        if (curSettings["CHAMS_SHOW_TARGET"].strToBool() && entity == espTARGET && espTARGET > 0L) {
+        if (curSettings["CHAMS_SHOW_TARGET"].strToBool() && entity == espTARGET && espTARGET > 0L && !espTARGET.dead()) {
             entity.chams(curSettings["CHAMS_TARGET_COLOR"].strToColor())
         } else if (curSettings["CHAMS_SHOW_ENEMIES"].strToBool() && !team) { //Show enemies & is enemy
             if (curSettings["CHAMS_SHOW_HEALTH"].strToBool()) {

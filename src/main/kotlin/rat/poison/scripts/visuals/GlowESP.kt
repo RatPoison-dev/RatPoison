@@ -11,7 +11,7 @@ import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
 
-internal fun glowEspEvery() = every(10, true) {
+internal fun glowEspEvery() = every(100, true) {
 	if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return@every
 
 	val currentAngle = clientState.angle()
@@ -70,7 +70,7 @@ internal fun glowEspEvery() = every(10, true) {
 					color = "GLOW_TARGET_COLOR"
 				} else if (showEnemies && !team) {
 					glowType = curSettings["GLOW_ENEMY_TYPE"].toGlowNum()
-					color = when (bEnt >= 0 && bEnt == entity && showBombCarrier) {
+					color = when (bEnt > 0 && bEnt == entity && showBombCarrier) {
 						true -> { glowType = curSettings["GLOW_BOMB_CARRIER_TYPE"].toGlowNum(); "GLOW_BOMB_CARRIER_COLOR" }
 						else -> when (glowHealth) {
 							true -> "GLOW_HEALTH"
@@ -79,7 +79,7 @@ internal fun glowEspEvery() = every(10, true) {
 					}
 				} else if (showTeam && team) {
 					glowType = curSettings["GLOW_TEAMMATE_TYPE"].toGlowNum()
-					color = when (bEnt >= 0 && bEnt == entity && showBombCarrier) {
+					color = when (bEnt > 0 && bEnt == entity && showBombCarrier) {
 						true -> { glowType = curSettings["GLOW_BOMB_CARRIER_TYPE"].toGlowNum(); "GLOW_BOMB_CARRIER_COLOR" }
 						else -> when (glowHealth) {
 							true -> "GLOW_HEALTH"
@@ -92,9 +92,9 @@ internal fun glowEspEvery() = every(10, true) {
 			EntityType.CPlantedC4, EntityType.CC4 -> if (showBomb) {
 				glowType = curSettings["GLOW_BOMB_TYPE"].toGlowNum()
 				color = when (curSettings["GLOW_BOMB_ADAPTIVE"].strToBool()) {
-					true -> if ((bombState.planted && bombState.timeLeftToExplode > 10) || (bombState.planted && bombState.gettingDefused && bombState.canDefuse)) {
+					true -> if ((bombState.timeLeftToExplode > 10) || (bombState.gettingDefused && bombState.canDefuse) && bombState.planted) {
 						"GLOW_BOMB_ADAPTIVE_CAN_DEFUSE"
-					} else if ((bombState.planted && bombState.timeLeftToExplode < 5) || (bombState.planted && bombState.gettingDefused && !bombState.canDefuse)) {
+					} else if ((bombState.timeLeftToExplode < 5) || (bombState.gettingDefused && !bombState.canDefuse) && bombState.planted) {
 						"GLOW_BOMB_ADAPTIVE_CANT_DEFUSE"
 					} else if (bombState.planted && bombState.timeLeftToExplode < 10 && bombState.timeLeftToExplode > 5) {
 						"GLOW_BOMB_ADAPTIVE_LITTLE_TIME"

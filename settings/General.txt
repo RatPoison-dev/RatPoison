@@ -42,18 +42,6 @@ OVERLAY_HEIGHT = 1080
 //Default key is F3
 AIM_TOGGLE_KEY = 114
 
-//Aim Strafer
-AIM_STRAFER = false
-
-//Strafe Type, //0 is opposite, 1 is same
-AIM_STRAFER_TYPE = 0
-
-//Strafer shift move
-AIM_STRAFER_SHIFT = false
-
-//Strictness/deadzone
-AIM_STRAFER_STRICTNESS = 0.15
-
 //Enable fast stop
 //Will attempt to slow your velocity faster than normal if movement keys aren't being pressed
 FAST_STOP = false
