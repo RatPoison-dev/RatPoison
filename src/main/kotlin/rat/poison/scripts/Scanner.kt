@@ -29,7 +29,7 @@ fun scanner() {
         when {
             line.startsWith("help") -> {
                 if (line == "help") {
-                    println("\nAvailable commands: help [command], exit, ranks, reload, list, read [file name], write [file name] [variable name] = [value], save [default/cfgname], load [cfgname], delete [cfgname], nadehelper [nadehelpername]\n")
+                    println("\nAvailable commands: help [command], exit, ranks, reload, list, read [file name], write [file name] [variable name] = [value], save [default/cfgname], load [cfgname], delete [cfgname], nadehelper [nadehelpername], namechanger [name]\n")
                 } else {
                     when (line.split(" ".toRegex(), 2)[1]) {
                         "exit" -> println("\nCloses program and cmd\n")
@@ -42,6 +42,7 @@ fun scanner() {
                         "save" -> println("\nSave to default settings or to a config\n")
                         "load" -> println("\nLoad config\n")
                         "nadehelper" -> println("\nLoad nadehelper file\n")
+                        "namechanger" -> println("\nTemporary change your name")
                     }
                 }
             }
@@ -76,6 +77,15 @@ fun scanner() {
                     }
                 } catch (e: Exception) {
                     println("File not found, use list to see current files")
+                }
+            }
+            line.startsWith("namechanger") -> {
+                println()
+                try {
+                    val name = line.trim().split(" ".toRegex(), 2)[1]
+                    changeName(name)
+                } catch (e: Exception) {
+                    println("Failed to parse input")
                 }
             }
             line.startsWith("set") -> { //Set variable, instance use only

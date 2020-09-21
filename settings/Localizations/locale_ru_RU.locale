@@ -649,5 +649,8 @@ INDICATOR_SMOKE_CHECK = Выключать в смоках
 BOX_SMOKE_CHECK = Выключать в смоках
 SNAPLINES_SMOKE_CHECK = Выключать в смоках
 
-CHAMS_TARGET_COLOR = Цель
+CHAMS_TARGET_COLOR = Таргет
 BOX_FAR_RADAR = Дормант
+ADRENALINE_COOLDOWN = К/Д Адреналина
+ADRENALINE_BOMB_TIME = Использовать время до взрыва
+Name-Change = Временно изменить имя

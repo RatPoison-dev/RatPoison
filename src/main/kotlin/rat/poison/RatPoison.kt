@@ -117,7 +117,6 @@ fun main() {
         //farEsp()
 
         drawDebug()
-        nameChanger()
     }
 
     if (dbg) { println("[DEBUG] Initializing Bunny Hop") }; bunnyHop()
@@ -149,6 +148,7 @@ fun main() {
 
     if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
     if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()
+    if (dbg) { println("[DEBUG] Initializing Name Changer") }; nameChanger()
 
     if (EXPERIMENTAL) {
         rayTraceTest()
