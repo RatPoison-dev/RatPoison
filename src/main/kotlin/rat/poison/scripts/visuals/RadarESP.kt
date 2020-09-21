@@ -22,8 +22,6 @@ internal fun radarEsp() = every(100) {
             val ent = footSteps[i].ent
             if (ent > 0L && !footSteps[i].open && footSteps[i].ttl > 0 && Vector(footSteps[i].x, footSteps[i].y, footSteps[i].z).distanceTo(me.position()) <= curSettings["LEGIT_RADAR_FOOTSTEPS_DISTANCE"].toInt()) {
                 ent.showOnRadar()
-
-                println(me.position().distanceTo(ent.position()))
             } else {
                 ent.hideOnRadar()
             }
