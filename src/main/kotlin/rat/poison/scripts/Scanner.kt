@@ -42,7 +42,7 @@ fun scanner() {
                         "save" -> println("\nSave to default settings or to a config\n")
                         "load" -> println("\nLoad config\n")
                         "nadehelper" -> println("\nLoad nadehelper file\n")
-                        "namechanger" -> println("\nTemporary change your name")
+                        "namechanger" -> println("\nTemporarily change your name")
                     }
                 }
             }
