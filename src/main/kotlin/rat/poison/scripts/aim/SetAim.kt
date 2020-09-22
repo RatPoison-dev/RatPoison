@@ -18,7 +18,7 @@ var curWepCategory = "PISTOL"
 var curWepSettings = oWeapon()
 var haveAimSettings = false
 
-fun setAim() = every(100, true) {
+fun setAim() = every(500, true) {
     try {
         if (notInGame) return@every
 

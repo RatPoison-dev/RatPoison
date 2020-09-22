@@ -50,7 +50,9 @@ private var showDefuseKits = false
 
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
 fun boxEsp() {
-	every(1000) { //Update settings
+	every(1000, true) { //Update settings
+		if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !curSettings["BOX_ESP_DETAILS"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@every
+
 		advancedBBox = curSettings["ADVANCED_BOUNDING_BOX"].strToBool()
 
 		drawBox = curSettings["ENABLE_BOX_ESP"].strToBool()

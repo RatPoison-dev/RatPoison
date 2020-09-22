@@ -13,7 +13,7 @@ private var loopCount = 0
 fun nameChanger() = every(10, true) {
     if (nameChange == "") return@every
 
-    if (loopCount > 100) {
+    if (loopCount > 1000) {
         nameChange = ""
         loopCount = 0
     }

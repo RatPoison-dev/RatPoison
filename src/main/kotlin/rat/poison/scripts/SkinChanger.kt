@@ -36,10 +36,6 @@ fun skinChanger() = every(1, continuous = true) {
     if ((!curSettings["SKINCHANGER"].strToBool() && !curSettings["KNIFECHANGER"].strToBool()) || notInGame) return@every
 
     try {
-        if (csgoEXE.int(clientState + 0x174) == -1) {
-            return@every
-        }
-
         val sID = me.steamID()
         val split = sID.split(":")
         if (split.size < 3 || !StringUtils.isNumeric(split[2]) || !StringUtils.isNumeric(split[1])) { //This SHOULD make try catch redundant, as toInt() is the only catch case...
@@ -77,8 +73,7 @@ fun skinChanger() = every(1, continuous = true) {
                         csgoEXE[weaponEntity + m_nFallbackStatTrak] = sWep.tStatTrak
                         csgoEXE[weaponEntity + m_iAccountID] = pID
 
-                        if (!shouldUpdate && ((curWepPaint != wantedWepPaint) || (curStatTrak != wantedStatTrak) || (curWear != wantedWear)) && curSettings["FORCE_UPDATE_AUTO"].strToBool()) {
-
+                        if (((curWepPaint != wantedWepPaint) || (curStatTrak != wantedStatTrak) || (curWear != wantedWear)) && curSettings["FORCE_UPDATE_AUTO"].strToBool()) {
                             shouldUpdate = true
                         }
                     }
@@ -89,6 +84,29 @@ fun skinChanger() = every(1, continuous = true) {
         if (shouldUpdate) {
             forcedUpdate()
             shouldUpdate = false
+        } else {
+            if (csgoEXE.int(clientState + 0x174) > 0) {
+                for (i in 0..8) {
+                    val myWeapon = csgoEXE.uint(me + hMyWeapons + i * 0x4) and 0xFFF
+
+                    if (myWeapon.toInt() == 4095) continue
+
+                    val weaponEntity = clientDLL.uint(dwEntityList + (myWeapon - 1) * ENTITY_SIZE)
+
+                    if (weaponEntity.type().gun && myWeapon > 0 && weaponEntity > 0) {
+                        if (curSettings["SKINCHANGER"].strToBool()) {
+                            //Change these to read weaponEntity kit to a mem and read from it
+                            val accountID = csgoEXE.int(weaponEntity + m_OriginalOwnerXuidLow)
+
+                            if (pID == accountID) {
+                                csgoEXE[weaponEntity + m_iItemIDHigh] = 0
+                            }
+                        }
+                    }
+                }
+
+                Thread.sleep(500)
+            }
         }
     } catch (e: Exception) {
         println("SkinChanger.kt Error...")

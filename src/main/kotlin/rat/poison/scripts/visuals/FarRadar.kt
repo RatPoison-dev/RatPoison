@@ -43,7 +43,7 @@ fun farRadar() = App {
         val pos = Vector(mem.getFloat(0), mem.getFloat(4), mem.getFloat(8))
         val health = mem.getInt(0x50)
 
-        if (pos.x != 0.0F && health > 0 && health <= 100) {
+        if (pos.x != 0.0F && health > 0 && health <= 100 && entID <= 64) {
             if (farPlayerRecords[entID].alpha <= 0F && farPlayerRecords[entID].pos != pos) {
                 farPlayerRecords[entID] = FarPlayer(pos, 1F)
             }

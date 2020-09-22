@@ -45,7 +45,7 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Testing"
 const val F_VERSION = "1.7"
-const val M_VERSION = "1.7.14"
+const val M_VERSION = "1.7.15"
 var LOADED_CONFIG = "DEFAULT"
 
 const val EXPERIMENTAL = false
@@ -73,7 +73,6 @@ fun main() {
     dbg = curSettings["DEBUG"].strToBool()
     if (dbg) println("DEBUG enabled")
 
-    Thread.sleep(5000)
     println("Launching...")
 
     CSGO.initialize()
