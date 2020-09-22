@@ -2,7 +2,6 @@ package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.graphics.Color
 import com.sun.jna.Memory
-import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap
 import org.jire.arrowhead.unsign
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
@@ -12,17 +11,16 @@ import rat.poison.game.me
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.settings.MENUTOG
 import rat.poison.utils.Vector
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 
 private val bones = Array(2048) { Line() }
 private var currentIdx = 0
 
 internal fun skeletonEsp() = App {
-	if (!curSettings["SKELETON_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@App
+	if (!curSettings["SKELETON_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@App
 
 	val meTeam = me.team()
 	forEntities(EntityType.CCSPlayer) {

@@ -15,17 +15,14 @@ import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.game.offsets.ClientOffsets.dwInput
 import rat.poison.game.offsets.EngineOffsets.dwClientState_LastOutgoingCommand
 import rat.poison.game.offsets.EngineOffsets.dwGlobalVars
-import rat.poison.scripts.aim.calcTarget
-import rat.poison.scripts.aim.curWepCategory
-import rat.poison.scripts.aim.curWepOverride
-import rat.poison.scripts.aim.curWepSettings
+import rat.poison.scripts.aim.*
 import rat.poison.utils.Angle
 import rat.poison.utils.Structs.*
 import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 import kotlin.math.abs
 import kotlin.math.atan
 import kotlin.math.tan
@@ -38,7 +35,7 @@ var bestBacktrackTarget = -1L
 private var inBacktrack = false
 
 private var haveGvars = false
-private lateinit var gvars: GlobalVars
+var gvars = GlobalVars()
 
 fun sendPacket(bool: Boolean) { //move outta here
     val byte = if (bool) 1.toByte() else 0.toByte()
@@ -47,7 +44,7 @@ fun sendPacket(bool: Boolean) { //move outta here
 
 fun setupBacktrack() {
     every(15, true) {
-        if (notInGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0) return@every
+        if (!inGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0) return@every
 
         val tGvars = getGlobalVars()
 
@@ -60,7 +57,7 @@ fun setupBacktrack() {
     }
 
     every(4, true) {
-        if (notInGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0 || !haveGvars) {
+        if (!inGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0 || !haveGvars) {
 //            btRecords = Array(64) { Array(13) { BacktrackTable() } }
 //            if (engineDLL.byte(0xD420A) == 0.toByte() && !inBacktrack) {
 //                sendPacket(true)
@@ -78,9 +75,7 @@ fun attemptBacktrack(): Boolean {
         inBacktrack = true
 
         //Get/set vars
-        val meWep = me.weapon()
-
-        if (!meWep.gun || !me.weaponEntity().canFire()) { inBacktrack = false; return false }
+        if (!meCurWep.gun || !meCurWepEnt.canFire()) { inBacktrack = false; return false }
 
         val curSequenceNumber = csgoEXE.int(clientState + dwClientState_LastOutgoingCommand) + 1
         sendPacket(false)

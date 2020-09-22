@@ -3,7 +3,6 @@ package rat.poison.scripts
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
-import rat.poison.game.entity.EntityType.Companion.ccsPlayer
 import rat.poison.game.entity.dormant
 import rat.poison.game.entity.hltv
 import rat.poison.game.entity.isSpectating
@@ -18,10 +17,10 @@ import rat.poison.ui.uiPanels.specListText
 import rat.poison.utils.every
 import rat.poison.utils.extensions.readIndex
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 
 internal fun spectatorList() = every(100) {
-    if (!curSettings["SPECTATOR_LIST"].strToBool() || notInGame || !curSettings["MENU"].strToBool()) {
+    if (!curSettings["SPECTATOR_LIST"].strToBool() || !inGame || !curSettings["MENU"].strToBool()) {
         return@every
     }
 

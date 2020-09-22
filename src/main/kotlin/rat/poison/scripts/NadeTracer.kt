@@ -14,7 +14,7 @@ import rat.poison.settings.MENUTOG
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColorGDX
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 import java.util.concurrent.ConcurrentLinkedQueue
 
 val grenadeList = ConcurrentLinkedQueue<Long>()
@@ -25,7 +25,7 @@ private var sync = 0
 var arraySize = 5
 
 fun nadeTracer() = App {
-    if (!curSettings["NADE_TRACER"].strToBool() || MENUTOG || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@App
+    if (!curSettings["NADE_TRACER"].strToBool() || MENUTOG || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@App
 
     if (sync >= (curSettings["NADE_TRACER_UPDATE_TIME"].toInt())) {
         arraySize = clamp(curSettings["NADE_TRACER_TIMEOUT"].toInt(), 1, 30)

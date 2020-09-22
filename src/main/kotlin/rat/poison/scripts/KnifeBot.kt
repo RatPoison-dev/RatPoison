@@ -16,6 +16,8 @@ import rat.poison.overlay.App
 import rat.poison.overlay.opened
 import rat.poison.robot
 import rat.poison.scripts.aim.findTarget
+import rat.poison.scripts.aim.meCurWep
+import rat.poison.scripts.aim.meCurWepEnt
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
@@ -30,7 +32,7 @@ private const val StabDistance = 64f
 internal fun autoKnife() = every(10) {
     if (curSettings["MENU"].strToBool() && opened && App.haveTarget && !DANGER_ZONE) {
         if (curSettings["ENABLE_AUTO_KNIFE"].strToBool()) {
-            if (me.weapon().knife) {
+            if (meCurWep.knife) {
                 val currentAngle = clientState.angle()
                 val position = me.position()
                 val target = findTarget(position, currentAngle, false, 32F, -2)
@@ -47,7 +49,7 @@ internal fun autoKnife() = every(10) {
                                     val health = target.health()
                                     val hasArmor = target.armor() > 0
                                     val swingDmg =
-                                            (if (me.weaponEntity().nextPrimaryAttack() + .4f < me.time()) KnifeAttackType.SWING else KnifeAttackType.SLASH).getDmg(imBehind, hasArmor)
+                                            (if (meCurWepEnt.nextPrimaryAttack() + .4f < me.time()) KnifeAttackType.SWING else KnifeAttackType.SLASH).getDmg(imBehind, hasArmor)
                                     val slashDmg = KnifeAttackType.SLASH.getDmg(imBehind, hasArmor)
                                     val stabDmg = KnifeAttackType.STAB.getDmg(imBehind, hasArmor)
 

@@ -1,23 +1,23 @@
 package rat.poison.scripts
 
 import com.badlogic.gdx.math.MathUtils.clamp
-import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.WEAPON_STATS_FILE
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.Weapons
 import rat.poison.game.entity.*
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.game.netvars.NetVarOffsets.m_weaponMode
 import rat.poison.overlay.App
+import rat.poison.scripts.aim.meCurWep
+import rat.poison.scripts.aim.meCurWepEnt
+import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColorGDX
-import rat.poison.utils.notInGame
-import java.io.File
+import rat.poison.utils.inGame
 import java.lang.Math.toDegrees
 import java.lang.Math.toRadians
 import kotlin.math.atan
@@ -30,18 +30,16 @@ private data class WeaponData(var maxPlayerSpeed: Int = 0, var spread: Float = 0
                               var maxPlayerSpeedAlt: Int = 0, var spreadAlt: Float = 0f)
 
 private var wepData = WeaponData()
-private var curWep = me.weaponEntity()
 
 private fun refreshWepData() = every(1000) {
-    curWep = me.weaponEntity()
-    wepData = getWeaponData(me.weapon().name)
+    wepData = getWeaponData(meCurWep.name)
 }
 
 fun spreadCircle() {
     refreshWepData()
 
     App {
-        if (me.dead() || MENUTOG || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["SPREAD_CIRCLE"].strToBool() || notInGame) return@App
+        if (meDead || MENUTOG || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["SPREAD_CIRCLE"].strToBool() || !inGame) return@App
 
         val vAbsVelocity = me.velocity()
         val flVelocity = sqrt(vAbsVelocity.x.pow(2F) + vAbsVelocity.y.pow(2F) + vAbsVelocity.z.pow(2F))
@@ -50,7 +48,7 @@ fun spreadCircle() {
         val realSpread: Float
         val realInaccuracyMove: Float
 
-        if (csgoEXE.int(curWep + m_weaponMode) > 0) { //Silencer
+        if (csgoEXE.int(meCurWepEnt + m_weaponMode) > 0) { //Silencer
             realInaccuracyFire = wepData.inaccuracyFireAlt
             realSpread = wepData.spreadAlt
             realInaccuracyMove = wepData.inaccuracyMoveAlt

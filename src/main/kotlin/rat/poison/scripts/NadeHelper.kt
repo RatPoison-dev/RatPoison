@@ -13,12 +13,12 @@ import rat.poison.game.CSGO
 import rat.poison.game.entity.absPosition
 import rat.poison.game.entity.boneMatrix
 import rat.poison.game.entity.direction
-import rat.poison.game.entity.weapon
 import rat.poison.game.me
 import rat.poison.game.w2sViewMatrix
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.overlay.App.menuStage
+import rat.poison.scripts.aim.meCurWep
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.uiPanels.nadeHelperTab
@@ -27,7 +27,7 @@ import rat.poison.utils.generalUtil.cToDouble
 import rat.poison.utils.generalUtil.cToFloat
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toMatrix4
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
@@ -43,15 +43,13 @@ private var mPos = Vector()
 var nadeHelperArrayList = arrayListOf<List<List<Any>>>()
 
 fun nadeHelper() = App {
-    if (!curSettings["ENABLE_NADE_HELPER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@App
+    if (!curSettings["ENABLE_NADE_HELPER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@App
 
     if (me <= 0L || MENUTOG) return@App
 
     mPos = me.absPosition()
 
-    val myWep = me.weapon()
-    val nadeToCheck : String
-    nadeToCheck = when (myWep.name) {
+    val nadeToCheck : String = when (meCurWep.name) {
         "FLASH_GRENADE" -> "Flash"
         "SMOKE_GRENADE" -> "Smoke"
         "MOLOTOV" -> "Molly"

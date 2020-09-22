@@ -10,7 +10,7 @@ import rat.poison.ui.uiPanels.ranksTab
 import rat.poison.ui.uiRefreshing
 import rat.poison.utils.every
 import rat.poison.utils.extensions.roundNDecimals
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 
 var teamList = mutableListOf<String>()
 var nameList = mutableListOf<String>()
@@ -23,7 +23,7 @@ var winsList = mutableListOf<String>()
 var moneyList = mutableListOf<String>()
 
 fun ranks() = every(5000, true) { //Rebuild every second
-    if (notInGame || !opened || !haveTarget) return@every
+    if (!inGame || !opened || !haveTarget) return@every
 
     //Bruh -- fix later
     teamList.clear()

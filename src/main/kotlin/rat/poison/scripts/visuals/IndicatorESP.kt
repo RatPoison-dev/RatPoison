@@ -11,14 +11,14 @@ import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
 import rat.poison.utils.normalize
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.hypot
 import kotlin.math.sin
 
 fun indicatorEsp() = App {
-    if (!curSettings["ENABLE_ESP"].strToBool() || !curSettings["INDICATOR_ESP"].strToBool() || notInGame) return@App
+    if (!curSettings["ENABLE_ESP"].strToBool() || !curSettings["INDICATOR_ESP"].strToBool() || !inGame) return@App
 
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()

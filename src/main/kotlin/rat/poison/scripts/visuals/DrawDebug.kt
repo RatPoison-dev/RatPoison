@@ -6,9 +6,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.utils.Align
 import rat.poison.curSettings
 import rat.poison.game.CSGO
-import rat.poison.game.CSGO.csgoEXE
 import rat.poison.overlay.App
-import rat.poison.scripts.aim.curWep
+import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.curWepCategory
 import rat.poison.scripts.aim.curWepOverride
 import rat.poison.scripts.aim.curWepSettings
@@ -22,7 +21,7 @@ fun drawDebug() = App {
     txtString.appendln("Weapon Override: $curWepOverride")
 
     if (curWepOverride) {
-        txtString.appendln("Current Override: $curWepCategory: ${curWep.name}")
+        txtString.appendln("Current Override: $curWepCategory: ${meCurWep.name}")
 
         txtString.appendln("Factor Recoil: ${curWepSettings.tFRecoil}")
         txtString.appendln("On Shot: ${curWepSettings.tOnShot}")

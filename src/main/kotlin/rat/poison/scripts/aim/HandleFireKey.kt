@@ -5,7 +5,6 @@ import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.entity.*
 import rat.poison.game.entity.dead
-import rat.poison.game.entity.isScoped
 import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
@@ -15,13 +14,18 @@ import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inBackground
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 
 private var shouldShoot = false
 var didShoot = false
+var meDead = true
 
 fun handleFireKey() = every(1, continuous = true) {
-    if (MENUTOG || (me <= 0L && !notInGame) || (me > 0L && me.dead()) || inBackground) {
+    if (inGame) {
+        meDead = me.dead()
+    }
+
+    if (MENUTOG || (me <= 0L && !inGame) || (me > 0L && meDead) || inBackground) {
         if (clientDLL.int(dwForceAttack) == 5) {
             clientDLL[dwForceAttack] = 4
             Thread.sleep(1)
@@ -67,11 +71,9 @@ fun fireWeapon() {
     updateCursorEnable()
     if (cursorEnable) return
 
-    val meWep = me.weapon()
-
     var shouldAuto = false
 
-    if (curSettings["AUTOMATIC_WEAPONS"].strToBool() && !meWep.automatic && meWep.gun && curSettings["ENABLE_AIM"].strToBool()) {
+    if (curSettings["AUTOMATIC_WEAPONS"].strToBool() && !meCurWep.automatic && meCurWep.gun && curSettings["ENABLE_AIM"].strToBool()) {
         shouldAuto = automaticWeapons()
 
         if (!didShoot) { //Skip first delay
@@ -91,7 +93,7 @@ fun fireWeapon() {
     val backtrackKeyPressed = keyPressed(curSettings["BACKTRACK_KEY"].toInt())
 
     if (((curSettings["ENABLE_BACKTRACK"].strToBool() && !curWepOverride) || (curWepOverride && curWepSettings.tBacktrack)) && ((!backtrackOnKey || (backtrackOnKey && backtrackKeyPressed)))) {
-        if (shouldAuto || (!shouldAuto && !didShoot) || meWep.automatic) {
+        if (shouldAuto || (!shouldAuto && !didShoot) || meCurWep.automatic) {
             if (attemptBacktrack()) {
                 if (!shouldAuto) {
                     didShoot = true
@@ -103,8 +105,8 @@ fun fireWeapon() {
 
     if (shouldAuto) {
         clientDLL[dwForceAttack] = 6
-    } else if (!didShoot || meWep.automatic) {
-        if (!meWep.automatic && me.shotsFired() > 0) { //Dont use shotsFired var, this can be different
+    } else if (!didShoot || meCurWep.automatic) {
+        if (!meCurWep.automatic && me.shotsFired() > 0) { //Dont use shotsFired var, this can be different
             return
         }
 

@@ -8,11 +8,12 @@ import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets.dwUse
+import rat.poison.scripts.aim.meDead
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 
 fun doorSpam() = every(20) {
-    if (!curSettings["D_SPAM"].strToBool() || me.dead()) return@every
+    if (!curSettings["D_SPAM"].strToBool() || meDead) return@every
 
     updateCursorEnable()
     if (cursorEnable) return@every

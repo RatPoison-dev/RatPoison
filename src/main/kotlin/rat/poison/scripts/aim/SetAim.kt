@@ -3,6 +3,7 @@ package rat.poison.scripts.aim
 import rat.poison.curSettings
 import rat.poison.game.Weapons
 import rat.poison.game.entity.weapon
+import rat.poison.game.entity.weaponEntity
 import rat.poison.game.me
 import rat.poison.oWeapon
 import rat.poison.settings.*
@@ -10,9 +11,10 @@ import rat.poison.settingsLoaded
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toWeaponClass
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 
-var curWep = Weapons.AK47
+var meCurWep = Weapons.AK47
+var meCurWepEnt = 0L
 var curWepOverride = false
 var curWepCategory = "PISTOL"
 var curWepSettings = oWeapon()
@@ -20,28 +22,29 @@ var haveAimSettings = false
 
 fun setAim() = every(500, true) {
     try {
-        if (notInGame) return@every
+        if (!inGame) return@every
 
-        curWep = me.weapon()
+        meCurWep = me.weapon()
+        meCurWepEnt = me.weaponEntity()
 
-        if (curWep.grenade || curWep.knife || curWep.miscEnt || curWep == Weapons.ZEUS_X27 || curWep.bomb) {
+        if (meCurWep.grenade || meCurWep.knife || meCurWep.miscEnt || meCurWep == Weapons.ZEUS_X27 || meCurWep.bomb) {
             return@every
         }
 
         curWepCategory = when { //Set the aim settings to the weapon's category settings
-            curWep.rifle -> "RIFLE"
-            curWep.smg -> "SMG"
-            curWep.pistol -> "PISTOL"
-            curWep.sniper -> "SNIPER"
-            curWep.shotgun -> "SHOTGUN"
+            meCurWep.rifle -> "RIFLE"
+            meCurWep.smg -> "SMG"
+            meCurWep.pistol -> "PISTOL"
+            meCurWep.sniper -> "SNIPER"
+            meCurWep.shotgun -> "SHOTGUN"
             else -> ""
         }
 
         if (settingsLoaded) { //If we have settings to read
             if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
                 //V--Update aim settings for current weapons--V\\
-                if (curWep.rifle || curWep.smg || curWep.pistol || curWep.sniper || curWep.shotgun) {
-                    curWepSettings = curSettings[curWep.name].toWeaponClass()
+                if (meCurWep.rifle || meCurWep.smg || meCurWep.pistol || meCurWep.sniper || meCurWep.shotgun) {
+                    curWepSettings = curSettings[meCurWep.name].toWeaponClass()
 
                     if (curWepSettings.tOverride) {
                         curSettings["FACTOR_RECOIL"] = curWepSettings.tFRecoil
@@ -57,7 +60,7 @@ fun setAim() = every(500, true) {
                         curSettings["PERFECT_AIM_CHANCE"] = curWepSettings.tPAimChance
                         curSettings["ENABLE_SCOPED_ONLY"] = curWepSettings.tScopedOnly
 
-                        if (curWep.rifle || curWep.smg) {
+                        if (meCurWep.rifle || meCurWep.smg) {
                             curSettings["AIM_AFTER_SHOTS"] = curWepSettings.tAimAfterShots
                         }
 

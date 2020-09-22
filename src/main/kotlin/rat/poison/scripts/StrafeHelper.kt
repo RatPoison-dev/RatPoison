@@ -5,7 +5,6 @@ import rat.poison.curSettings
 import rat.poison.game.angle
 import rat.poison.game.clientState
 import rat.poison.game.entity.onGround
-import rat.poison.game.entity.weapon
 import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
@@ -14,14 +13,14 @@ import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inBackground
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.VK_SPACE
 
 private var lastAngY = 0.0F
 
 fun strafeHelper() = every(2) {
-    if (MENUTOG || notInGame || inBackground) return@every
+    if (MENUTOG || !inGame || inBackground) return@every
 
     val aStrafe = curSettings["AUTO_STRAFE"].strToBool()
 

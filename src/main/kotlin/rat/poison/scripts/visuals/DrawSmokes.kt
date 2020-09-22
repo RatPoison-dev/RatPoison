@@ -13,12 +13,12 @@ import rat.poison.utils.Vector
 import rat.poison.utils.distanceTo
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColorGDX
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 import kotlin.math.cos
 import kotlin.math.sin
 
 fun drawSmokes() = App {
-    if (notInGame || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["VISUALIZE_SMOKES"].strToBool()) return@App
+    if (!inGame || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["VISUALIZE_SMOKES"].strToBool()) return@App
 
     val smokePolys = curSettings["VISUALIZE_SMOKES_POLYS"].toInt()
     val smokeHeight = curSettings["VISUALIZE_SMOKES_HEIGHT"].toInt()

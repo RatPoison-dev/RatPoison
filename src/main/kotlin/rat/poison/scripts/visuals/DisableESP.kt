@@ -2,7 +2,6 @@ package rat.poison.scripts.visuals
 
 import rat.poison.game.CSGO
 import rat.poison.game.Color
-import rat.poison.game.entity.Entity
 import rat.poison.game.entity.EntityType
 import rat.poison.game.forEntities
 import rat.poison.game.me
@@ -10,13 +9,13 @@ import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 import java.lang.Float.floatToIntBits
 
 //Change to construct entities at call to prevent crashing?
 
 internal fun disableAllEsp() {
-    if (notInGame) return
+    if (!inGame) return
 
     val cWhite = Color(255, 255, 255, 1.0)
 

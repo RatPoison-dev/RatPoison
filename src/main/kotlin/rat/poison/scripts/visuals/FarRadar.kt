@@ -17,14 +17,14 @@ import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 import kotlin.math.abs
 
 data class FarPlayer(val pos: Vector = Vector(), var alpha: Float = 0F)
 private var farPlayerRecords = Array(64) { FarPlayer() }
 
 fun farRadar() = App {
-    if (notInGame || !curSettings["BOX_FAR_RADAR"].strToBool()) return@App
+    if (!inGame || !curSettings["BOX_FAR_RADAR"].strToBool()) return@App
 
     var dwRadar = clientDLL.int(dwRadarBase)
     dwRadar = csgoEXE.int(dwRadar + 0x74)

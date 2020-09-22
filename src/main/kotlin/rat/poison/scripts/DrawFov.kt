@@ -5,20 +5,20 @@ import com.badlogic.gdx.math.MathUtils.clamp
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.entity.weapon
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_iDefaultFov
 import rat.poison.game.netvars.NetVarOffsets.m_iFOV
 import rat.poison.overlay.App
+import rat.poison.scripts.aim.meCurWep
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 import java.lang.Math.toDegrees
 import java.lang.Math.toRadians
 
 fun drawFov() = App {
-    if (!curSettings["ENABLE_ESP"].strToBool() || MENUTOG || notInGame)
+    if (!curSettings["ENABLE_ESP"].strToBool() || MENUTOG || !inGame)
         return@App
 
     if (!curSettings["DRAW_AIM_FOV"].strToBool() && !curSettings["DRAW_TRIGGER_FOV"].strToBool())
@@ -37,14 +37,12 @@ fun drawFov() = App {
         iFov
     }
 
-    val wep = me.weapon()
-
     val bFOV: Float
     var bINFOV = false
 
     var triggerRadius = -1F
 
-    if (wep.gun) { //Not 100% this applies to every 'gun'
+    if (meCurWep.gun) { //Not 100% this applies to every 'gun'
         bFOV = curSettings["TRIGGER_FOV"].toFloat()
         bINFOV = curSettings["TRIGGER_USE_FOV"].strToBool()
         triggerRadius = calcFovRadius(viewFov, bFOV)

@@ -3,7 +3,6 @@ package rat.poison.scripts
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
-import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.angle
 import rat.poison.game.clientState
 import rat.poison.game.entity.dead
@@ -16,21 +15,21 @@ import rat.poison.game.offsets.ClientOffsets.dwForceBackward
 import rat.poison.game.offsets.ClientOffsets.dwForceForward
 import rat.poison.game.offsets.ClientOffsets.dwForceLeft
 import rat.poison.game.offsets.ClientOffsets.dwForceRight
-import rat.poison.robot
+import rat.poison.scripts.aim.meDead
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 import java.awt.event.KeyEvent.*
 import kotlin.math.cos
 import kotlin.math.sin
 
 internal fun fastStop() = every(4) {
-    if (!curSettings["FAST_STOP"].strToBool() || notInGame) return@every
+    if (!curSettings["FAST_STOP"].strToBool() || !inGame) return@every
 
     updateCursorEnable()
     if (cursorEnable) return@every
 
-    if (!me.dead()) {
+    if (!meDead) {
         val vel = me.velocity()
         val yaw = clientState.angle().y
 

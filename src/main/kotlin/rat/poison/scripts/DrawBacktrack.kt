@@ -4,28 +4,27 @@ import com.badlogic.gdx.graphics.Color
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.game.entity.dead
-import rat.poison.game.entity.weapon
 import rat.poison.game.me
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
+import rat.poison.scripts.aim.meCurWep
+import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 
 fun drawBacktrack() = App {
     if (MENUTOG) return@App
-    if (me.dead()) return@App
-    if (notInGame || !curSettings["BACKTRACK_VISUALIZE"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["ENABLE_BACKTRACK"].strToBool()) return@App
+    if (meDead) return@App
+    if (!inGame || !curSettings["BACKTRACK_VISUALIZE"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["ENABLE_BACKTRACK"].strToBool()) return@App
 
     val backtrackOnKey = curSettings["ENABLE_BACKTRACK_ON_KEY"].strToBool()
     val backtrackKeyPressed = keyPressed(curSettings["BACKTRACK_KEY"].toInt())
 
     if (backtrackOnKey && !backtrackKeyPressed) return@App
 
-    val meWep = me.weapon()
-
-    if (!meWep.gun) return@App
+    if (!meCurWep.gun) return@App
 
     for (i in 0 until 63) {
         if (btRecords[i][0].simtime == 0F) continue

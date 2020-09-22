@@ -2,8 +2,6 @@ package rat.poison.game.hooks
 
 import com.sun.jna.Memory
 import com.sun.jna.platform.win32.WinNT
-import rat.poison.SETTINGS_DIRECTORY
-import rat.poison.dbg
 import rat.poison.game.*
 import rat.poison.game.CSGO.GLOW_OBJECT_SIZE
 import rat.poison.game.CSGO.clientDLL
@@ -17,22 +15,16 @@ import rat.poison.game.offsets.ClientOffsets.dwGlowObject
 import rat.poison.game.offsets.ClientOffsets.dwLocalPlayer
 import rat.poison.game.offsets.ClientOffsets.dwSensitivity
 import rat.poison.game.offsets.ClientOffsets.dwSensitivityPtr
-import rat.poison.game.offsets.EngineOffsets
 import rat.poison.game.offsets.EngineOffsets.dwClientState
 import rat.poison.game.offsets.EngineOffsets.dwClientState_MapDirectory
-import rat.poison.game.offsets.EngineOffsets.dwGameDir
 import rat.poison.game.offsets.EngineOffsets.dwSignOnState
-import rat.poison.scripts.bspHandling.loadBsp
-import rat.poison.scripts.detectMap
 import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 import rat.poison.utils.shouldPostProcess
-import java.io.File
 import java.util.concurrent.atomic.AtomicLong
-import kotlin.math.sign
 import kotlin.properties.Delegates
 
 private val lastCleanup = AtomicLong(0L)
@@ -83,7 +75,7 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
 //            }
 //        }
 
-            notInGame = false
+            inGame = true
 
             if (PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0) {
                 val write = 0xEB.toByte()
@@ -105,7 +97,7 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
             sendPacket(true)
         } else {
             shouldPostProcess = false
-            notInGame = true
+            inGame = false
             sendPacket(true)
         }
     }
@@ -127,8 +119,7 @@ fun constructEntities() = every(500, continuous = true) {
     state = SignOnState[csgoEXE.int(clientState + dwSignOnState)]
 
     me = clientDLL.uint(dwLocalPlayer)
-    if (notInGame) return@every
-
+    if (!inGame) return@every
 
     var dzMode = false
 

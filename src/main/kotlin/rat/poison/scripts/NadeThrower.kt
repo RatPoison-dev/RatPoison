@@ -4,9 +4,9 @@ import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.game.entity.absPosition
 import rat.poison.game.entity.eyeAngle
-import rat.poison.game.entity.weapon
 import rat.poison.game.me
 import rat.poison.game.realCalcAngle
+import rat.poison.scripts.aim.meCurWep
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.*
 import rat.poison.utils.distanceTo
@@ -38,12 +38,10 @@ fun autoThrowNade(fSpot: List<Any>, recoveredAngle: Angle) {
 }
 
 fun nadeThrower() = every(10) {
-    if (!curSettings["ENABLE_NADE_THROWER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || notInGame || me <= 0L || MENUTOG) return@every
+    if (!curSettings["ENABLE_NADE_THROWER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !inGame || me <= 0L || MENUTOG) return@every
     mPos = me.absPosition()
 
-    val myWep = me.weapon()
-    val nadeToCheck : String
-    nadeToCheck = when (myWep.name) {
+    val nadeToCheck : String = when (meCurWep.name) {
         "FLASH_GRENADE" -> "Flash"
         "SMOKE_GRENADE" -> "Smoke"
         "MOLOTOV" -> "Molly"
@@ -59,7 +57,7 @@ fun nadeThrower() = every(10) {
             if (fSpot[4] == nadeToCheck || nadeToCheck == "Decoy") {
                 if ((mPos.x in fSpot[0].cToDouble() - 20..fSpot[0].cToDouble() + 20) && (mPos.y in fSpot[1].cToDouble() - 20..fSpot[1].cToDouble() + 20)) {
                     if (keyPressed(curSettings["NADE_THROWER_KEY"].toInt())) {
-                        var hLVec = Vector(hLPos[0].cToFloat(), hLPos[1].cToFloat(), hLPos[2].cToFloat())
+                        val hLVec = Vector(hLPos[0].cToFloat(), hLPos[1].cToFloat(), hLPos[2].cToFloat())
                         val recoveredAngle = realCalcAngle(me, hLVec)
                         val dist = me.eyeAngle().distanceTo(recoveredAngle)
                         if (dist < closestDistance) {

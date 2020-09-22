@@ -24,7 +24,7 @@ import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColorGDX
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 import kotlin.math.abs
 import kotlin.math.sign
 
@@ -51,7 +51,7 @@ private var showDefuseKits = false
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
 fun boxEsp() {
 	every(1000, true) { //Update settings
-		if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !curSettings["BOX_ESP_DETAILS"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@every
+		if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !curSettings["BOX_ESP_DETAILS"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@every
 
 		advancedBBox = curSettings["ADVANCED_BOUNDING_BOX"].strToBool()
 
@@ -86,7 +86,7 @@ fun boxEsp() {
 	}
 
 	App {
-		if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !curSettings["BOX_ESP_DETAILS"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@App
+		if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !curSettings["BOX_ESP_DETAILS"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@App
 
 		forEntities { //Player & Weapon boxes
 			val ent = it.entity

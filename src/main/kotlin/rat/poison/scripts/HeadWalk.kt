@@ -13,6 +13,7 @@ import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.robot
+import rat.poison.scripts.aim.meDead
 import rat.poison.utils.Angle
 import rat.poison.utils.Vector
 import rat.poison.utils.every
@@ -35,7 +36,7 @@ var onEntPos = Vector()
 internal fun headWalk() = every(1) {
     if (!curSettings["HEAD_WALK"].strToBool()) return@every
 
-    if (me.dead()) return@every
+    if (meDead) return@every
 
     if (!keyPressed(KeyEvent.VK_W) && !keyPressed(KeyEvent.VK_A) && !keyPressed(KeyEvent.VK_S) && !keyPressed(KeyEvent.VK_D)) {
         mePos = me.absPosition()

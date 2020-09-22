@@ -5,11 +5,11 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.offsets.ClientOffsets.bOverridePostProcesing
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 import rat.poison.utils.shouldPostProcess
 
 fun disablePostProcessing() = every(10000, true) {
-    if (notInGame || !shouldPostProcess) return@every
+    if (!inGame || !shouldPostProcess) return@every
 
     if (curSettings["DISABLE_POST_PROCESSING"].strToBool()) {
         csgoEXE[bOverridePostProcesing] = true

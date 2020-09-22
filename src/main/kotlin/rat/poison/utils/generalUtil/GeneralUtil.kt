@@ -1,7 +1,6 @@
 package rat.poison.utils.generalUtil
 
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.math.Matrix3
 import com.badlogic.gdx.math.Matrix4
 import rat.poison.dbg
 import rat.poison.oWeapon
@@ -22,7 +21,7 @@ fun convStrToColor(input: String): rat.poison.game.Color { //Rat poison color
         var line = input
         line = line.replace("Color(", "").replace(")", "").replace(",", "")
 
-        val arrayLine = line.trim().split(" ".toRegex(), 4)
+        val arrayLine = line.trim().split(" ", ignoreCase = true, limit = 4)
 
         return rat.poison.game.Color(arrayLine[0].replace("red=", "").toInt(),
                 arrayLine[1].replace("green=", "").toInt(),

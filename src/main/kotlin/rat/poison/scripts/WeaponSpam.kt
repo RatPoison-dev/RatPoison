@@ -7,6 +7,7 @@ import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.robot
+import rat.poison.scripts.aim.meDead
 import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
@@ -19,7 +20,7 @@ fun weaponSpam() = every (20) {
     if (!curSettings["W_SPAM"].strToBool()) return@every
 
     updateCursorEnable()
-    if (cursorEnable || me.dead()) return@every
+    if (cursorEnable || meDead) return@every
 
     weaponSpamToggleKey.update()
     if (weaponSpamToggleKey.justBecameTrue) {

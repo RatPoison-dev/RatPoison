@@ -7,22 +7,19 @@ import rat.poison.game.angle
 import rat.poison.game.clientState
 import rat.poison.game.entity.punch
 import rat.poison.game.entity.shotsFired
-import rat.poison.game.entity.weapon
-import rat.poison.game.entity.weaponEntity
 import rat.poison.game.me
 import rat.poison.game.setAngle
+import rat.poison.scripts.aim.meCurWep
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.normalize
-import kotlin.math.abs
 
 private val lastAppliedRCS = Vector2()
 
 fun rcs() = every(4) {
 	if (me <= 0 || !curSettings["ENABLE_RCS"].strToBool()) return@every
 
-	val weaponEntity = me.weaponEntity()
-	val weapon = me.weapon(weaponEntity)
+	val weapon = meCurWep
 	if (!weapon.automatic) { lastAppliedRCS.set(0F, 0F); return@every }
 	val shotsFired = me.shotsFired()
 	val p = me.punch()

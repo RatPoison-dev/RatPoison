@@ -12,18 +12,19 @@ import rat.poison.game.me
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.overlay.bspVisTime
+import rat.poison.scripts.aim.meDead
 import rat.poison.utils.Vector
 import rat.poison.utils.distanceTo
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toVector3
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 import kotlin.system.measureNanoTime
 
 fun rayTraceTest() = App {
     bspVisTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
-        if (me.dead() || !curSettings["DEBUG"].strToBool() || notInGame) return@App
+        if (meDead || !curSettings["DEBUG"].strToBool() || !inGame) return@App
 
         var meVec = me.bones(8).toVector3()
         meVec = Vector3(meVec.x, meVec.y, meVec.z)

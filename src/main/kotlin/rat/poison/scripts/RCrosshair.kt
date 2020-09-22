@@ -14,6 +14,7 @@ import rat.poison.game.entity.weapon
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.overlay.App
+import rat.poison.scripts.aim.meCurWep
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.uiPanels.mainTabbedPane
 import rat.poison.ui.uiPanels.rcsTab
@@ -52,7 +53,7 @@ internal fun rcrosshair() = App {
     val wO = floor(cW / 2.0).toFloat()
     val lO = floor(cL / 2.0).toFloat()
 
-    if (eRC && !(eSC && me.weapon().sniper)) {
+    if (eRC && !(eSC && meCurWep.sniper)) {
         val punch = me.punch()
 
         //Center
@@ -74,7 +75,7 @@ internal fun rcrosshair() = App {
             val col = curSettings["RCROSSHAIR_COLOR"].strToColor()
             color = Color(col.red / 255F, col.green / 255F, col.blue / 255F, curSettings["RCROSSHAIR_ALPHA"].toFloat())
 
-            val hasSniper = me.weapon().scope
+            val hasSniper = meCurWep.scope
 
             if ((eSC && hasSniper && !me.isScoped()) || !eSC || (eRC && !hasSniper)) {
                 if (curSettings["RCROSSHAIR_TYPE"].toUpperCase() == "CROSSHAIR") {

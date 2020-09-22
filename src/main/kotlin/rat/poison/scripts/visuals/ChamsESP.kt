@@ -12,17 +12,19 @@ import rat.poison.game.offsets.ClientOffsets.dwEntityList
 import rat.poison.game.offsets.ClientOffsets.dwLocalPlayer
 import rat.poison.game.offsets.EngineOffsets.dwModelAmbientMin
 import rat.poison.scripts.aim.findTarget
+import rat.poison.scripts.aim.meCurWep
+import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.aim.target
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 import java.lang.Float.floatToIntBits
 
 fun chamsEsp() = every(100, true) {
-    if (!curSettings["CHAMS_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || notInGame) return@every
+    if (!curSettings["CHAMS_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@every
 
     val myTeam = me.team()
 
@@ -32,7 +34,7 @@ fun chamsEsp() = every(100, true) {
         255
     }
 
-    if (me > 0L && !me.dead()) {
+    if (me > 0L && !meDead) {
         //Edit playermodel to counter weapon brightness
         val clientVModEnt = csgoEXE.uint(clientDLL.address + dwEntityList + (((csgoEXE.uint(csgoEXE.uint(clientDLL.address + dwLocalPlayer) + m_hViewModel)) and 0xFFF) - 1) * 16)
 
@@ -55,9 +57,8 @@ fun chamsEsp() = every(100, true) {
 
     val currentAngle = clientState.angle()
     val position = me.position()
-    val meWep = me.weapon()
 
-    if (!meWep.knife && meWep != Weapons.ZEUS_X27) {
+    if (!meCurWep.knife && meCurWep != Weapons.ZEUS_X27) {
         if (curSettings["ENABLE_AIM"].strToBool()) {
             if (curSettings["CHAMS_SHOW_TARGET"].strToBool() && target == -1L) {
                 val curTarg = findTarget(position, currentAngle, false, visCheck = !curSettings["FORCE_AIM_THROUGH_WALLS"].strToBool())

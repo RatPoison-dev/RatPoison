@@ -5,7 +5,7 @@ import rat.poison.haltProcess
 @Volatile
 var inBackground = false
 @Volatile
-var notInGame = false
+var inGame = true
 @Volatile
 var shouldPostProcess = false
 

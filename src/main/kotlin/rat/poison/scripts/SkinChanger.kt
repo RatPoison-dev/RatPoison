@@ -8,13 +8,11 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.clientState
 import rat.poison.game.entity.steamID
 import rat.poison.game.entity.type
-import rat.poison.game.entity.weaponEntity
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.hMyWeapons
 import rat.poison.game.netvars.NetVarOffsets.m_OriginalOwnerXuidLow
 import rat.poison.game.netvars.NetVarOffsets.m_flFallbackWear
 import rat.poison.game.netvars.NetVarOffsets.m_iAccountID
-import rat.poison.game.netvars.NetVarOffsets.m_iEntityQuality
 import rat.poison.game.netvars.NetVarOffsets.m_iItemIDHigh
 import rat.poison.game.netvars.NetVarOffsets.m_nFallbackPaintKit
 import rat.poison.game.netvars.NetVarOffsets.m_nFallbackStatTrak
@@ -23,7 +21,7 @@ import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toSkinWeaponClass
-import rat.poison.utils.notInGame
+import rat.poison.utils.inGame
 
 //https://github.com/0xf1a/xSkins
 
@@ -33,7 +31,7 @@ private var preBayonetT = 64
 private var shouldUpdate = false
 
 fun skinChanger() = every(1, continuous = true) {
-    if ((!curSettings["SKINCHANGER"].strToBool() && !curSettings["KNIFECHANGER"].strToBool()) || notInGame) return@every
+    if ((!curSettings["SKINCHANGER"].strToBool() && !curSettings["KNIFECHANGER"].strToBool()) || !inGame) return@every
 
     try {
         val sID = me.steamID()

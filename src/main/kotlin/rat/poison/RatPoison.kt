@@ -45,7 +45,7 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Testing"
 const val F_VERSION = "1.7"
-const val M_VERSION = "1.7.15"
+const val M_VERSION = "1.7.16"
 var LOADED_CONFIG = "DEFAULT"
 
 const val EXPERIMENTAL = false
@@ -212,7 +212,9 @@ fun String.safeToInt(identifier: String = ""): Int {
     return try {
         this.toInt()
     } catch(e: Exception) {
-        println("$identifier is invalid")
+        if (dbg) {
+            println("[DEBUG] $identifier is invalid")
+        }
         1
     }
 }

@@ -19,15 +19,14 @@ import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.notInGame
-
+import rat.poison.utils.inGame
 
 var inTrigger = false
 private var triggerShots = 0
 
 fun triggerBot() = every(5) {
     //Don't run if not needed
-    if (DANGER_ZONE || me.dead() || notInGame || MENUTOG || !me.weapon().gun || !curSettings["ENABLE_TRIGGER"].strToBool() || !haveAimSettings) { //Precheck
+    if (DANGER_ZONE || meDead || !inGame || MENUTOG || !meCurWep.gun || !curSettings["ENABLE_TRIGGER"].strToBool() || !haveAimSettings) { //Precheck
         inTrigger = false
         triggerShots = 0
         return@every
@@ -35,8 +34,8 @@ fun triggerBot() = every(5) {
 
     inTrigger = false //go and do the 2 step
 
-    val initDelay = if (curWepOverride) curWepSettings.tBTrigInitDelay else curSettings[curWepCategory + "_TRIGGER_INIT_SHOT_DELAY"].safeToInt("tell ratto hes a retard")
-    val shotDelay = if (curWepOverride) curWepSettings.tBTrigPerShotDelay else curSettings[curWepCategory + "_TRIGGER_PER_SHOT_DELAY"].safeToInt("tell ratto hes a retard")
+    val initDelay = if (curWepOverride) curWepSettings.tBTrigInitDelay else curSettings[curWepCategory + "_TRIGGER_INIT_SHOT_DELAY"].safeToInt("Trig init delay $curWepCategory")
+    val shotDelay = if (curWepOverride) curWepSettings.tBTrigPerShotDelay else curSettings[curWepCategory + "_TRIGGER_PER_SHOT_DELAY"].safeToInt("Trig per delay $curWepCategory")
     val bFOV = curSettings["TRIGGER_FOV"].toFloat()
     val bINFOV = curSettings["TRIGGER_USE_FOV"].strToBool()
     val bINCROSS = curSettings["TRIGGER_USE_INCROSS"].strToBool()
@@ -58,9 +57,8 @@ fun triggerBot() = every(5) {
 
         val useDelay = if (triggerShots > 0) { initDelay } else { shotDelay }
 
-        val wepEnt = me.weaponEntity()
         //Trigger precheck
-        if (wepEnt.bullets() <= 0 || keyPressed(AIM_KEY) || !wepEnt.canFire()) { //Can shoot check???
+        if (meCurWepEnt.bullets() <= 0 || keyPressed(AIM_KEY) || !meCurWepEnt.canFire()) { //Can shoot check???
             inTrigger = false
             triggerShots = 0
             return@every

@@ -10,27 +10,28 @@ import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_iDefaultFov
 import rat.poison.game.netvars.NetVarOffsets.m_zoomLevel
 import rat.poison.overlay.App
+import rat.poison.scripts.aim.meCurWep
+import rat.poison.scripts.aim.meCurWepEnt
+import rat.poison.scripts.aim.meDead
 import rat.poison.utils.generalUtil.strToBool
 
 internal fun fovChanger() = App {
     val curFov = csgoEXE.int(me + m_iDefaultFov)
 
-    if (!curSettings["ENABLE_FOV_CHANGER"].strToBool() || me.dead()) {
+    if (!curSettings["ENABLE_FOV_CHANGER"].strToBool() || meDead) {
         if (curFov != 90) {
             csgoEXE[me + m_iDefaultFov] = 90
         }
 
         return@App
     }
-    val meWep = me.weaponEntity()
-
-    val zLevel = csgoEXE.int(meWep + m_zoomLevel)
+    val zLevel = csgoEXE.int(meCurWepEnt + m_zoomLevel)
 
     val targetFov: Int
 
     var instantSwap = false
 
-    if (me.weapon().sniper) {
+    if (meCurWep.sniper) {
         if (me.isScoped()) {
             targetFov = when (zLevel) {
                 1 -> {
