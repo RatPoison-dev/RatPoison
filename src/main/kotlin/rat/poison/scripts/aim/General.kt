@@ -132,22 +132,6 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	if (!precheck()) return@every
 	if (!curSettings["ENABLE_AIM"].strToBool()) return@every
 
-	val aim = curSettings["ACTIVATE_FROM_AIM_KEY"].strToBool() && keyPressed(AIM_KEY)
-	val forceAim = (keyPressed(curSettings["FORCE_AIM_KEY"].toInt()) || curSettings["FORCE_AIM_ALWAYS"].strToBool())
-	val haveAmmo = meCurWepEnt.bullets() > 0
-
-	val pressed = ((aim || boneTrig) && !MENUTOG && haveAmmo &&
-			(if (meCurWep.rifle || meCurWep.smg) {
-				me.shotsFired() >= curSettings["AIM_AFTER_SHOTS"].toInt()
-			} else {
-				true
-			})) || forceAim
-
-	if (!pressed) {
-		reset()
-		return@every
-	}
-
 	val canFire = meCurWepEnt.canFire()
 	if (meCurWep.grenade || meCurWep.knife || meCurWep.miscEnt || meCurWep == Weapons.ZEUS_X27 || meCurWep.bomb) { //Invalid for aimbot
 		reset()
@@ -160,6 +144,22 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	}
 
 	if (meCurWep.sniper && !me.isScoped() && curSettings["ENABLE_SCOPED_ONLY"].strToBool()) { //Scoped only
+		reset()
+		return@every
+	}
+
+	val aim = curSettings["ACTIVATE_FROM_AIM_KEY"].strToBool() && keyPressed(AIM_KEY)
+	val forceAim = (keyPressed(curSettings["FORCE_AIM_KEY"].toInt()) || curSettings["FORCE_AIM_ALWAYS"].strToBool())
+	val haveAmmo = meCurWepEnt.bullets() > 0
+
+	val pressed = ((aim || boneTrig) && !MENUTOG && haveAmmo &&
+			(if (meCurWep.rifle || meCurWep.smg) {
+				me.shotsFired() >= curSettings["AIM_AFTER_SHOTS"].toInt()
+			} else {
+				true
+			})) || forceAim
+
+	if (!pressed) {
 		reset()
 		return@every
 	}
