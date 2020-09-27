@@ -55,7 +55,7 @@ fun triggerBot() = every(5) {
             }
         }
 
-        val useDelay = if (triggerShots > 0) { initDelay } else { shotDelay }
+        val useDelay = if (triggerShots > 0) { shotDelay } else { initDelay }
 
         //Trigger precheck
         if (meCurWepEnt.bullets() <= 0 || keyPressed(AIM_KEY) || !meCurWepEnt.canFire()) { //Can shoot check???

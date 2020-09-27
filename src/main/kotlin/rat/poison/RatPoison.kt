@@ -45,7 +45,7 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Testing"
 const val F_VERSION = "1.7"
-const val M_VERSION = "1.7.16"
+const val M_VERSION = "1.7.17"
 var LOADED_CONFIG = "DEFAULT"
 
 const val EXPERIMENTAL = false
@@ -161,8 +161,6 @@ fun main() {
         App.open()
 
         GlobalScope.launch {
-            Thread.sleep(2000)
-
             glfwInit()
 
             Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {

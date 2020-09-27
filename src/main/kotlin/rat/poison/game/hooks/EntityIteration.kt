@@ -44,10 +44,8 @@ private fun reset() {
 private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
     if (old != new) {
         if (new.name == SignOnState.IN_GAME.name) {
-            Thread(Runnable {
-                Thread.sleep(10000)
-                shouldPostProcess = true
-            }).start()
+            Thread.sleep(15000)
+            shouldPostProcess = true
 
             val strBuf: Memory by lazy {
                 Memory(128) //128 str?
@@ -119,7 +117,7 @@ fun constructEntities() = every(500, continuous = true) {
     state = SignOnState[csgoEXE.int(clientState + dwSignOnState)]
 
     me = clientDLL.uint(dwLocalPlayer)
-    if (!inGame) return@every
+    if (!inGame || me <= 0L) return@every
 
     var dzMode = false
 
