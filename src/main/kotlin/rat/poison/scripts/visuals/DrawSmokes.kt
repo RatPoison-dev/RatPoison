@@ -18,7 +18,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 fun drawSmokes() = App {
-    if (!inGame || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["VISUALIZE_SMOKES"].strToBool()) return@App
+    if (!inGame || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["VISUALIZE_SMOKES"].strToBool() || !inGame) return@App
 
     val smokePolys = curSettings["VISUALIZE_SMOKES_POLYS"].toInt()
     val smokeHeight = curSettings["VISUALIZE_SMOKES_HEIGHT"].toInt()

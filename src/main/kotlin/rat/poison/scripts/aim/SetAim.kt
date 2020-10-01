@@ -20,9 +20,9 @@ var curWepCategory = "PISTOL"
 var curWepSettings = oWeapon()
 var haveAimSettings = false
 
-fun setAim() = every(500, true) {
+fun setAim() = every(500, true, inGameCheck = true) {
     try {
-        if (!inGame) return@every
+        if (meDead) return@every
 
         meCurWep = me.weapon()
         meCurWepEnt = me.weaponEntity()

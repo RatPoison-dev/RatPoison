@@ -38,7 +38,7 @@ class RanksTab : Tab(false, false) {
         ranksListTable.add(winsLabel)
         ranksListTable.add(moneyLabel)
 
-        table.add(ranksListTable).maxWidth(500F)
+        table.add(ranksListTable).left().maxWidth(500F)
     }
 
     override fun getContentTable(): Table? {

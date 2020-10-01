@@ -20,13 +20,13 @@ import rat.poison.ui.uiPanels.mainTabbedPane
 import rat.poison.ui.uiPanels.rcsTab
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
+import rat.poison.utils.inGame
 import java.lang.Math.pow
 import java.lang.Math.toRadians
 import kotlin.math.*
 
 internal fun rcrosshair() = App {
-    if (!curSettings["ENABLE_ESP"].strToBool())
-        return@App
+    if (!curSettings["ENABLE_ESP"].strToBool() || !inGame) return@App
 
     val eRC = curSettings["ENABLE_RECOIL_CROSSHAIR"].strToBool()
     val eSC = curSettings["ENABLE_SNIPER_CROSSHAIR"].strToBool()

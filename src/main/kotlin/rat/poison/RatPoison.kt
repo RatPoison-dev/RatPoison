@@ -45,7 +45,7 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Testing"
 const val F_VERSION = "1.7"
-const val M_VERSION = "1.7.17"
+const val M_VERSION = "1.7.18"
 var LOADED_CONFIG = "DEFAULT"
 
 const val EXPERIMENTAL = false
@@ -193,8 +193,7 @@ fun main() {
                 setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings["OPENGL_MSAA_SAMPLES"].toInt())
             })
         }
-    }
-    else {
+    } else {
         scanner()
     }
 }

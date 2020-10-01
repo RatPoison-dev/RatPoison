@@ -22,6 +22,7 @@ import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toSkinWeaponClass
 import rat.poison.utils.inGame
+import rat.poison.utils.shouldPostProcess
 
 //https://github.com/0xf1a/xSkins
 
@@ -30,8 +31,8 @@ private var preBayonetT = 64
 
 private var shouldUpdate = false
 
-fun skinChanger() = every(1, continuous = true) {
-    if ((!curSettings["SKINCHANGER"].strToBool() && !curSettings["KNIFECHANGER"].strToBool()) || !inGame) return@every
+fun skinChanger() = every(1, continuous = true, inGameCheck = true) {
+    if ((!curSettings["SKINCHANGER"].strToBool() && !curSettings["KNIFECHANGER"].strToBool())) return@every
 
     try {
         val sID = me.steamID()
@@ -114,7 +115,7 @@ fun skinChanger() = every(1, continuous = true) {
 }
 
 fun forcedUpdate() {
-    if (csgoEXE.int(clientState + 0x174) > 0) { //scr8 up
+    if (csgoEXE.int(clientState + 0x174) > 0 && shouldPostProcess) { //scr8 up
         csgoEXE[clientState + 0x174] = -1
     }
 }

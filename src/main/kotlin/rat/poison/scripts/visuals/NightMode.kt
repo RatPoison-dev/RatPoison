@@ -10,7 +10,7 @@ import rat.poison.game.netvars.NetVarOffsets.m_flCustomAutoExposureMin
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 
-fun nightMode() = every(1000) {
+fun nightMode() = every(1000, inGameCheck = true) {
     if (!curSettings["ENABLE_ESP"].strToBool()) return@every
 
     if (curSettings["ENABLE_NIGHTMODE"].strToBool()) {

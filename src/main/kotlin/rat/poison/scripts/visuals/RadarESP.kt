@@ -14,7 +14,7 @@ import rat.poison.utils.distanceTo
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 
-internal fun radarEsp() = every(100) {
+internal fun radarEsp() = every(100, inGameCheck = true) {
     if (!curSettings["RADAR_ESP"].strToBool() || DANGER_ZONE) return@every
 
     if (curSettings["LEGIT_RADAR"].strToBool()) {

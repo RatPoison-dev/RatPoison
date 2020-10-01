@@ -14,11 +14,14 @@ import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meCurWepEnt
 import rat.poison.scripts.aim.meDead
 import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.inGame
 
 internal fun fovChanger() = App {
+    if (!inGame) return@App
+
     val curFov = csgoEXE.int(me + m_iDefaultFov)
 
-    if (!curSettings["ENABLE_FOV_CHANGER"].strToBool() || meDead) {
+    if (!curSettings["ENABLE_FOV_CHANGER"].strToBool()) {
         if (curFov != 90) {
             csgoEXE[me + m_iDefaultFov] = 90
         }

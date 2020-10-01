@@ -18,6 +18,7 @@ import rat.poison.ui.uiPanels.bombText
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toInt
+import rat.poison.utils.inGame
 
 //ent_create planted_c4_training
 //ent_fire planted_c4_training ActivateSetTimerLength 20
@@ -25,49 +26,46 @@ import rat.poison.utils.generalUtil.toInt
 var bombState = BombState()
 private var lastSecDefusing = false
 
-fun bombTimer() {
+fun bombTimer() = App {
+    if (DANGER_ZONE || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@App
 
-    App {
-        if (DANGER_ZONE || !curSettings["ENABLE_ESP"].strToBool()) return@App
+    if (curSettings["ENABLE_BOMB_TIMER"].strToBool()) {
+        bombText.setText(bombState.toString()) //Update regardless of BOMB_TIMER_MENU
+        if (curSettings["BOMB_TIMER_BARS"].strToBool() && bombState.planted) {
+            val cColor = if ((me.team() == 3.toLong() && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) { //If player has time to defuse
+                Color(0F, 255F, 0F, .25F) //Green
+            } else if ((me.team() == 3.toLong() && bombState.timeLeftToDefuse < bombState.timeLeftToExplode) || (me.team() == 2.toLong() && !bombState.gettingDefused)) { //If player is defusing with time left, or is terrorist and the bomb isn't being defused
+                Color(0F, 255F, 0F, .25F) //Red
+            } else {
+                Color(255F, 0F, 0F, .25F) //Bomb is being defused/not enough time
+            }
 
-        if (curSettings["ENABLE_BOMB_TIMER"].strToBool()) {
-            bombText.setText(bombState.toString()) //Update regardless of BOMB_TIMER_MENU
-            if (curSettings["BOMB_TIMER_BARS"].strToBool() && bombState.planted) {
-                val cColor = if ((me.team() == 3.toLong() && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) { //If player has time to defuse
-                    Color(0F, 255F, 0F, .25F) //Green
-                } else if ((me.team() == 3.toLong() && bombState.timeLeftToDefuse < bombState.timeLeftToExplode) || (me.team() == 2.toLong() && !bombState.gettingDefused)) { //If player is defusing with time left, or is terrorist and the bomb isn't being defused
-                    Color(0F, 255F, 0F, .25F) //Red
-                } else {
-                    Color(255F, 0F, 0F, .25F) //Bomb is being defused/not enough time
-                }
-
-                shapeRenderer.apply {
-                    if (isDrawing) {
-                        end()
-                    }
-
-                    begin()
-                    color = cColor
-                    set(ShapeRenderer.ShapeType.Filled)
-                    rect(0F, 0F, CSGO.gameWidth.toFloat() * (bombState.timeLeftToExplode / 40F), 16F)
-                    if (bombState.gettingDefused) {
-                        val defuseLeft = bombState.timeLeftToDefuse / 10F
-                        rect((CSGO.gameWidth / 2F) - ((CSGO.gameWidth / 4F) * defuseLeft) / 2F, (CSGO.gameHeight / 3F) * 2, (CSGO.gameWidth / 4F) * defuseLeft, 16F)
-                    }
-                    set(ShapeRenderer.ShapeType.Line)
-                    color = Color(1F, 1F, 1F, 1F)
+            shapeRenderer.apply {
+                if (isDrawing) {
                     end()
                 }
-                if (curSettings["BOMB_TIMER_BARS_SHOW_TTE"].strToBool()) {
-                    textRenderer.apply {
-                        sb.begin()
-                        val glyph = GlyphLayout()
-                        val sbText = StringBuilder()
-                        sbText.append(bombState.timeLeftToExplode)
-                        glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, Color.WHITE, 1f, Align.center, false, null)
-                        draw(sb, glyph, (CSGO.gameWidth / 2F), 15f)
-                        sb.end()
-                    }
+
+                begin()
+                color = cColor
+                set(ShapeRenderer.ShapeType.Filled)
+                rect(0F, 0F, CSGO.gameWidth.toFloat() * (bombState.timeLeftToExplode / 40F), 16F)
+                if (bombState.gettingDefused) {
+                    val defuseLeft = bombState.timeLeftToDefuse / 10F
+                    rect((CSGO.gameWidth / 2F) - ((CSGO.gameWidth / 4F) * defuseLeft) / 2F, (CSGO.gameHeight / 3F) * 2, (CSGO.gameWidth / 4F) * defuseLeft, 16F)
+                }
+                set(ShapeRenderer.ShapeType.Line)
+                color = Color(1F, 1F, 1F, 1F)
+                end()
+            }
+            if (curSettings["BOMB_TIMER_BARS_SHOW_TTE"].strToBool()) {
+                textRenderer.apply {
+                    sb.begin()
+                    val glyph = GlyphLayout()
+                    val sbText = StringBuilder()
+                    sbText.append(bombState.timeLeftToExplode)
+                    glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, Color.WHITE, 1f, Align.center, false, null)
+                    draw(sb, glyph, (CSGO.gameWidth / 2F), 15f)
+                    sb.end()
                 }
             }
         }
@@ -76,7 +74,7 @@ fun bombTimer() {
 
 fun currentGameTicks(): Float = CSGO.engineDLL.float(EngineOffsets.dwGlobalVars + 16)
 
-fun bombUpdater() = every(15) {
+fun bombUpdater() = every(15, inGameCheck = true) {
     if ((!curSettings["ENABLE_BOMB_TIMER"].strToBool() && !curSettings["GLOW_BOMB_ADAPTIVE"].strToBool()) || DANGER_ZONE) return@every
     val time = currentGameTicks()
     val bomb: Entity = entityByType(EntityType.CPlantedC4)?.entity ?: -1L

@@ -228,5 +228,7 @@ fun scanner() {
                 }
             }
         }
+
+        Thread.sleep(1)
     }
 }

@@ -18,13 +18,14 @@ import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
+import rat.poison.utils.inGame
 
 var hitMarkerAlpha = 0F
 var hitMarkerCombo = 0
 private var totalHits = 0
 
 fun hitMarker() = App {
-    if ((!curSettings["ENABLE_HITMARKER"].strToBool() && !curSettings["HITMARKER_COMBO"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || meDead) return@App
+    if ((!curSettings["ENABLE_HITMARKER"].strToBool() && !curSettings["HITMARKER_COMBO"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || meDead || !inGame) return@App
 
     val curHits = csgoEXE.int(me + m_totalHitsOnServer)
 

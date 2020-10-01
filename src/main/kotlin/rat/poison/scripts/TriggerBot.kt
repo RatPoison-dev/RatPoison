@@ -24,7 +24,7 @@ import rat.poison.utils.inGame
 var inTrigger = false
 private var triggerShots = 0
 
-fun triggerBot() = every(5) {
+fun triggerBot() = every(5, inGameCheck = true) {
     //Don't run if not needed
     if (DANGER_ZONE || meDead || !inGame || MENUTOG || !meCurWep.gun || !curSettings["ENABLE_TRIGGER"].strToBool() || !haveAimSettings) { //Precheck
         inTrigger = false
@@ -58,7 +58,7 @@ fun triggerBot() = every(5) {
         val useDelay = if (triggerShots > 0) { shotDelay } else { initDelay }
 
         //Trigger precheck
-        if (meCurWepEnt.bullets() <= 0 || keyPressed(AIM_KEY) || !meCurWepEnt.canFire()) { //Can shoot check???
+        if (meCurWepEnt.bullets() <= 0 || keyPressed(AIM_KEY)) { //Can shoot check???
             inTrigger = false
             triggerShots = 0
             return@every
@@ -75,7 +75,7 @@ fun triggerBot() = every(5) {
             val iC = getIncross(me)
             if (iC > 0) {
                 //Shoot
-                trigShoot(useDelay, bAIMBOT, backtrack = false, backtrackFallback = false)
+                trigQueueShot(useDelay, bAIMBOT, backtrack = false, backtrackFallback = false)
                 return@every
             }
         }
@@ -96,28 +96,37 @@ fun triggerBot() = every(5) {
             if (bestBacktrackTarget > 0) {
                 if (!bestBacktrackTarget.dead() && !bestBacktrackTarget.isProtected()) {
                     //Shoot
-                    trigShoot(useDelay, bAIMBOT, bBACKTRACK, canFOV)
+                    trigQueueShot(useDelay, bAIMBOT, bBACKTRACK, canFOV)
                     return@every
                 }
             }
         }
 
         if (canFOV) { //Cant backtrack
-            trigShoot(useDelay, bAIMBOT, backtrack = false, backtrackFallback = false)
+            trigQueueShot(useDelay, bAIMBOT, backtrack = false, backtrackFallback = false)
+            return@every
         }
 
         //If not in cross, not in backtrack, and not in fov
         //Reset
+        inTrigger = false
         triggerShots = 0
     }
 }
 
-private fun trigShoot(delay: Int, aimbot: Boolean = false, backtrack: Boolean = false, backtrackFallback: Boolean = false) {
+private fun trigQueueShot(delay: Int, aimbot: Boolean = false, backtrack: Boolean = false, backtrackFallback: Boolean = false) {
     inTrigger = true
     triggerShots++
 
     if (delay > 0) {
         Thread.sleep(delay.toLong())
+    }
+
+    //Trigger key check
+    if (curSettings["TRIGGER_ENABLE_KEY"].strToBool() && !keyPressed(curSettings["TRIGGER_KEY"].toInt())) {
+        inTrigger = false
+        triggerShots = 0
+        return
     }
 
     triggerShoot(aimbot, backtrack, backtrackFallback)

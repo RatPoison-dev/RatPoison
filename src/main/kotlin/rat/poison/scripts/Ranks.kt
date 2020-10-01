@@ -22,8 +22,8 @@ var KDList = mutableListOf<String>()
 var winsList = mutableListOf<String>()
 var moneyList = mutableListOf<String>()
 
-fun ranks() = every(5000, true) { //Rebuild every second
-    if (!inGame || !opened || !haveTarget) return@every
+fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every second
+    if (!opened || !haveTarget) return@every
 
     //Bruh -- fix later
     teamList.clear()

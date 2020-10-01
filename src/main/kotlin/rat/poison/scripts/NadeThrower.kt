@@ -7,6 +7,7 @@ import rat.poison.game.entity.eyeAngle
 import rat.poison.game.me
 import rat.poison.game.realCalcAngle
 import rat.poison.scripts.aim.meCurWep
+import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.*
 import rat.poison.utils.distanceTo
@@ -37,8 +38,8 @@ fun autoThrowNade(fSpot: List<Any>, recoveredAngle: Angle) {
     }
 }
 
-fun nadeThrower() = every(10) {
-    if (!curSettings["ENABLE_NADE_THROWER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !inGame || me <= 0L || MENUTOG) return@every
+fun nadeThrower() = every(10, inGameCheck = true) {
+    if (!curSettings["ENABLE_NADE_THROWER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || me <= 0L || MENUTOG || meDead) return@every
     mPos = me.absPosition()
 
     val nadeToCheck : String = when (meCurWep.name) {

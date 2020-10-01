@@ -10,14 +10,15 @@ import rat.poison.game.entity.shotsFired
 import rat.poison.game.me
 import rat.poison.game.setAngle
 import rat.poison.scripts.aim.meCurWep
+import rat.poison.scripts.aim.meDead
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.normalize
 
 private val lastAppliedRCS = Vector2()
 
-fun rcs() = every(4) {
-	if (me <= 0 || !curSettings["ENABLE_RCS"].strToBool()) return@every
+fun rcs() = every(4, inGameCheck = true) {
+	if (me <= 0 || !curSettings["ENABLE_RCS"].strToBool() || meDead) return@every
 
 	val weapon = meCurWep
 	if (!weapon.automatic) { lastAppliedRCS.set(0F, 0F); return@every }

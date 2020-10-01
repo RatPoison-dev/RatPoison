@@ -23,40 +23,38 @@ import java.awt.event.KeyEvent.*
 import kotlin.math.cos
 import kotlin.math.sin
 
-internal fun fastStop() = every(4) {
-    if (!curSettings["FAST_STOP"].strToBool() || !inGame) return@every
+internal fun fastStop() = every(4, inGameCheck = true) {
+    if (!curSettings["FAST_STOP"].strToBool() || meDead) return@every
 
     updateCursorEnable()
     if (cursorEnable) return@every
 
-    if (!meDead) {
-        val vel = me.velocity()
-        val yaw = clientState.angle().y
+    val vel = me.velocity()
+    val yaw = clientState.angle().y
 
-        //Velocity relative to player direction
-        val x = (vel.x * cos(yaw / 180 * Math.PI) + vel.y * sin(yaw / 180 * Math.PI))
-        val y = (vel.y * cos(yaw / 180 * Math.PI) - vel.x * sin(yaw / 180 * Math.PI))
+    //Velocity relative to player direction
+    val x = (vel.x * cos(yaw / 180 * Math.PI) + vel.y * sin(yaw / 180 * Math.PI))
+    val y = (vel.y * cos(yaw / 180 * Math.PI) - vel.x * sin(yaw / 180 * Math.PI))
 
-        if (!keyPressed(VK_SPACE) && me.onGround()) {
-            if (x != 0.0 && y != 0.0) {
-                if (!keyPressed(VK_W) && !keyPressed(VK_S)) {
-                    if (x > 30) {
-                        clientDLL[dwForceBackward] = 6
-                        //robot.keyRelease(VK_S)
-                    } else if (x < -30) {
-                        clientDLL[dwForceForward] = 6
-                        //robot.keyRelease(VK_W)
-                    }
+    if (!keyPressed(VK_SPACE) && me.onGround()) {
+        if (x != 0.0 && y != 0.0) {
+            if (!keyPressed(VK_W) && !keyPressed(VK_S)) {
+                if (x > 30) {
+                    clientDLL[dwForceBackward] = 6
+                    //robot.keyRelease(VK_S)
+                } else if (x < -30) {
+                    clientDLL[dwForceForward] = 6
+                    //robot.keyRelease(VK_W)
                 }
+            }
 
-                if (!keyPressed(VK_A) && !keyPressed(VK_D)) {
-                    if (y > 30) {
-                        clientDLL[dwForceRight] = 6
-                        //robot.keyRelease(VK_D)
-                    } else if (y < -30) {
-                        clientDLL[dwForceLeft] = 6
-                        //robot.keyRelease(VK_A)
-                    }
+            if (!keyPressed(VK_A) && !keyPressed(VK_D)) {
+                if (y > 30) {
+                    clientDLL[dwForceRight] = 6
+                    //robot.keyRelease(VK_D)
+                } else if (y < -30) {
+                    clientDLL[dwForceLeft] = 6
+                    //robot.keyRelease(VK_A)
                 }
             }
         }

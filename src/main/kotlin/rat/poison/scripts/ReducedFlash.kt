@@ -8,11 +8,10 @@ import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.flFlashMaxAlpha
 import rat.poison.scripts.aim.meDead
 import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.inGame
 
 fun reducedFlash() = onFlash {
 	if (!curSettings["ENABLE_REDUCED_FLASH"].strToBool()) return@onFlash
 
-	if (me > 0 && !meDead) {
-		csgoEXE[me + flFlashMaxAlpha] = curSettings["FLASH_MAX_ALPHA"].toFloat()
-	}
+	csgoEXE[me + flFlashMaxAlpha] = curSettings["FLASH_MAX_ALPHA"].toFloat()
 }

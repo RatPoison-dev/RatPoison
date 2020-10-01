@@ -43,8 +43,8 @@ fun sendPacket(bool: Boolean) { //move outta here
 }
 
 fun setupBacktrack() {
-    every(15, true) {
-        if (!inGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0) return@every
+    every(15, true, inGameCheck = true) {
+        if (!curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0) return@every
 
         val tGvars = getGlobalVars()
 
@@ -56,15 +56,8 @@ fun setupBacktrack() {
         }
     }
 
-    every(4, true) {
-        if (!inGame || !curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0 || !haveGvars) {
-//            btRecords = Array(64) { Array(13) { BacktrackTable() } }
-//            if (engineDLL.byte(0xD420A) == 0.toByte() && !inBacktrack) {
-//                sendPacket(true)
-//            }
-
-            return@every
-        }
+    every(4, true, inGameCheck = true) {
+        if (!curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0 || !haveGvars) return@every
 
         constructRecords()
     }
@@ -195,7 +188,7 @@ fun bestSimTime(): Float {
     var best = -1f
     val targetID = (csgoEXE.uint(bestBacktrackTarget + dwIndex)-1).toInt()
 
-    if (targetID < 0) return -1f
+    if (targetID <= 0) return -1f
 
     val validRecords = getValidRecords(targetID)
     val minMaxIDX = getRangeRecords(targetID)

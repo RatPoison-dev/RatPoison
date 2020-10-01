@@ -13,12 +13,16 @@ import rat.poison.game.entity.position
 import rat.poison.game.me
 import rat.poison.game.w2sViewMatrix
 import rat.poison.overlay.App
+import rat.poison.scripts.aim.meDead
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.generalUtil.toMatrix4
+import rat.poison.utils.inGame
 import kotlin.math.abs
 
 fun headLevelHelper() = App {
+    if (!inGame || meDead) return@App
+
     val mePos = me.position()
     val meAng = clientState.angle()
 

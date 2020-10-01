@@ -39,7 +39,7 @@ fun spreadCircle() {
     refreshWepData()
 
     App {
-        if (meDead || MENUTOG || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["SPREAD_CIRCLE"].strToBool() || !inGame) return@App
+        if (meDead || MENUTOG || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["SPREAD_CIRCLE"].strToBool() || !inGame || meDead) return@App
 
         val vAbsVelocity = me.velocity()
         val flVelocity = sqrt(vAbsVelocity.x.pow(2F) + vAbsVelocity.y.pow(2F) + vAbsVelocity.z.pow(2F))

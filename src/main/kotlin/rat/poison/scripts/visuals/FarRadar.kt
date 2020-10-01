@@ -14,6 +14,7 @@ import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwRadarBase
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
+import rat.poison.scripts.aim.meDead
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
@@ -24,7 +25,7 @@ data class FarPlayer(val pos: Vector = Vector(), var alpha: Float = 0F)
 private var farPlayerRecords = Array(64) { FarPlayer() }
 
 fun farRadar() = App {
-    if (!inGame || !curSettings["BOX_FAR_RADAR"].strToBool()) return@App
+    if (!inGame || !curSettings["BOX_FAR_RADAR"].strToBool() || meDead) return@App
 
     var dwRadar = clientDLL.int(dwRadarBase)
     dwRadar = csgoEXE.int(dwRadar + 0x74)

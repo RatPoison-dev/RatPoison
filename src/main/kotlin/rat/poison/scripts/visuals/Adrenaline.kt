@@ -17,8 +17,8 @@ import rat.poison.utils.inGame
 private var totalHits = 0
 private var fl = 0F
 
-fun adrenaline() = every(10) {
-    if (!curSettings["ENABLE_ADRENALINE"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || meDead || !inGame) return@every
+fun adrenaline() = every(10, inGameCheck = true) {
+    if (!curSettings["ENABLE_ADRENALINE"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || meDead) return@every
 
     val curHits = csgoEXE.int(me + m_totalHitsOnServer)
 

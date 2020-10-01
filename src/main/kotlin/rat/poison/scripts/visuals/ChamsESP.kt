@@ -23,8 +23,8 @@ import rat.poison.utils.generalUtil.strToColor
 import rat.poison.utils.inGame
 import java.lang.Float.floatToIntBits
 
-fun chamsEsp() = every(100, true) {
-    if (!curSettings["CHAMS_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@every
+fun chamsEsp() = every(100, true, inGameCheck = true) {
+    if (!curSettings["CHAMS_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return@every
 
     val myTeam = me.team()
 

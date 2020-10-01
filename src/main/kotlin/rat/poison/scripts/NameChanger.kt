@@ -10,10 +10,10 @@ private var nameChange = ""
 private var loopCount = 0
 
 //TODO link uc post
-fun nameChanger() = every(10, true) {
+fun nameChanger() = every(10, true, inGameCheck = true) {
     if (nameChange == "") return@every
 
-    if (loopCount > 1000) {
+    if (loopCount > 10000) {
         nameChange = ""
         loopCount = 0
     }

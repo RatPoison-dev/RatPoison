@@ -19,6 +19,7 @@ import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.overlay.App.menuStage
 import rat.poison.scripts.aim.meCurWep
+import rat.poison.scripts.aim.meDead
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.uiPanels.nadeHelperTab
@@ -45,7 +46,7 @@ var nadeHelperArrayList = arrayListOf<List<List<Any>>>()
 fun nadeHelper() = App {
     if (!curSettings["ENABLE_NADE_HELPER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@App
 
-    if (me <= 0L || MENUTOG) return@App
+    if (me <= 0L || MENUTOG || meDead) return@App
 
     mPos = me.absPosition()
 

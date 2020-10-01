@@ -12,7 +12,7 @@ import rat.poison.scripts.aim.meDead
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 
-fun doorSpam() = every(20) {
+fun doorSpam() = every(20, inGameCheck = true) {
     if (!curSettings["D_SPAM"].strToBool() || meDead) return@every
 
     updateCursorEnable()

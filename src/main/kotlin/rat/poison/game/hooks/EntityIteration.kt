@@ -44,8 +44,10 @@ private fun reset() {
 private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
     if (old != new) {
         if (new.name == SignOnState.IN_GAME.name) {
-            Thread.sleep(15000)
-            shouldPostProcess = true
+            Thread(Runnable {
+                Thread.sleep(10000)
+                shouldPostProcess = true
+            }).start()
 
             val strBuf: Memory by lazy {
                 Memory(128) //128 str?
@@ -79,13 +81,7 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
                 val write = 0xEB.toByte()
                 try {
                     clientDLL[ClientOffsets.dwGlowUpdate] = write
-                } catch (e: Exception) {
-                }
-
-                try {
-                    clientDLL[ClientOffsets.dwGlowUpdate2] = write
-                } catch (e: Exception) {
-                }
+                } catch (e: Exception) { }
             }
 
             if (GARBAGE_COLLECT_ON_MAP_START) {

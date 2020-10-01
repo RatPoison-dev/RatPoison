@@ -24,11 +24,13 @@ import org.lwjgl.glfw.GLFW.glfwMakeContextCurrent
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.CSGO
+import rat.poison.game.me
 import rat.poison.game.updateViewMatrix
 import rat.poison.haltProcess
 import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
 import rat.poison.jna.enums.AccentStates
+import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.uiPanels.*
 import rat.poison.ui.uiUpdate
@@ -36,6 +38,8 @@ import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.extensions.appendHumanReadableSize
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.inGame
+import rat.poison.utils.shouldPostProcess
 import java.lang.management.ManagementFactory
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
@@ -200,8 +204,11 @@ object App : ApplicationAdapter() {
                             val systemLoad = osBean.systemCpuLoad
 
                             sbText.clear()
-                            sbText.append("")
-                            sbText.append("Total physical mem: ").appendHumanReadableSize(totalPhysMem)
+                            sbText.append("\nIn Game: $inGame")
+                            sbText.append("\nShouldPostProcess: $shouldPostProcess")
+                            sbText.append("\nMe: $me Dead: $meDead")
+                            sbText.append("\n")
+                            sbText.append("\nTotal physical mem: ").appendHumanReadableSize(totalPhysMem)
                             sbText.append("\nFree physical mem: ").appendHumanReadableSize(freePhysMem)
 
                             sbText.append("\nTotal allocated mem: ").appendHumanReadableSize(totalMem)

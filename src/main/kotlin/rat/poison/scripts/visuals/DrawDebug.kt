@@ -95,10 +95,8 @@ fun drawDebug() = App {
 
     sb.begin()
 
-    val glyph = GlyphLayout()
-
-    glyph.setText(textRenderer, txtString, Color(1f, 1f, 0f, 1f), 1F, Align.left, false)
-    textRenderer.draw(sb, glyph, 8f, CSGO.gameHeight/4f + 512)
+    textRenderer.setColor(Color.YELLOW)
+    textRenderer.draw(sb, txtString, 8f, CSGO.gameHeight/4f + 512)
 
     sb.end()
 }

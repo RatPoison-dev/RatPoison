@@ -33,10 +33,8 @@ private var onEnt = 0L
 var mePos = Vector()
 var onEntPos = Vector()
 
-internal fun headWalk() = every(1) {
-    if (!curSettings["HEAD_WALK"].strToBool()) return@every
-
-    if (meDead) return@every
+internal fun headWalk() = every(2, inGameCheck = true) {
+    if (!curSettings["HEAD_WALK"].strToBool() || meDead) return@every
 
     if (!keyPressed(KeyEvent.VK_W) && !keyPressed(KeyEvent.VK_A) && !keyPressed(KeyEvent.VK_S) && !keyPressed(KeyEvent.VK_D)) {
         mePos = me.absPosition()

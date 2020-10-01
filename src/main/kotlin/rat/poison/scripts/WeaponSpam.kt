@@ -16,7 +16,7 @@ import java.awt.event.MouseEvent
 private var toggled = false
 var weaponSpamToggleKey = ObservableBoolean({keyPressed(curSettings["W_SPAM_KEY"].toInt())})
 
-fun weaponSpam() = every (20) {
+fun weaponSpam() = every (20, inGameCheck = true) {
     if (!curSettings["W_SPAM"].strToBool()) return@every
 
     updateCursorEnable()
