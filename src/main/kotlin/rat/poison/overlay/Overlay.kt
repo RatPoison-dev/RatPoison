@@ -4,7 +4,6 @@
 package rat.poison.overlay
 
 import com.sun.jna.platform.win32.WinUser
-import rat.poison.EXPERIMENTAL
 import rat.poison.curSettings
 import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
@@ -51,11 +50,11 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	}
 
 	override var protectAgainstScreenshots: Boolean by Delegates.observable(false) { _, _, value ->
-		if (EXPERIMENTAL) {
-			with(User32) {
-				SetWindowDisplayAffinity(myHWND, if (value) 1 else 0)
-			}
-		}
+		//if (EXPERIMENTAL) {
+		//	with(User32) {
+		//		SetWindowDisplayAffinity(myHWND, if (value) 1 else 0)
+		//	}
+		//}
 	}
 
 	fun start() {
