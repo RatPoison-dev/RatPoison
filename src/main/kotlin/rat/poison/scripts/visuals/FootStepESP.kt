@@ -1,6 +1,5 @@
 package rat.poison.scripts.visuals
 
-import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.Align
 import rat.poison.*
@@ -59,16 +58,13 @@ fun runFootSteps() = App {
                 val outVec = Vector()
                 if (worldToScreen(inVec, outVec)) {
                     val sbText = StringBuilder("Step")
-                    textRenderer.apply {
-                        val glyph = GlyphLayout()
 
-                        sb.begin()
+                    sb.begin()
 
-                        glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, color, 1F, Align.left, false, null)
-                        draw(sb, glyph, outVec.x, outVec.y)
+                    textRenderer.color = color
+                    textRenderer.draw(sb, sbText, outVec.x, outVec.y, 1F, Align.left, false)
 
-                        sb.end()
-                    }
+                    sb.end()
                 }
             } else {
                 //As circle

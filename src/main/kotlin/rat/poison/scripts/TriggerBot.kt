@@ -144,6 +144,9 @@ private fun triggerShoot(aimbot: Boolean = false, backtrack: Boolean = false, ba
         boneTrig = aimbot
         clientDLL[dwForceAttack] = 6 //HandleFireKey.kt
     }
+
+    Thread.sleep(10)
+    boneTrig = false
 }
 
 private fun getIncross(ent: Entity): Entity {

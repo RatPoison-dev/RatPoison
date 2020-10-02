@@ -6,17 +6,11 @@ import rat.poison.game.clientState
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 
-private var nameChange = ""
-private var loopCount = 0
+var nameChange = ""
 
 //TODO link uc post
 fun nameChanger() = every(10, true, inGameCheck = true) {
     if (nameChange == "") return@every
-
-    if (loopCount > 10000) {
-        nameChange = ""
-        loopCount = 0
-    }
 
     val len = nameChange.length
 
@@ -37,8 +31,6 @@ fun nameChanger() = every(10, true, inGameCheck = true) {
     csgoEXE.write(voiceStream, mem)
 
     csgoEXE[netChan + 0x84] = curBit.toByte()
-
-    loopCount++
 }
 
 fun changeName(name: String) {

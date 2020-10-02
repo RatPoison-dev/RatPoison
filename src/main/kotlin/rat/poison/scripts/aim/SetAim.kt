@@ -90,7 +90,7 @@ fun setAim() = every(500, true, inGameCheck = true) {
                 curSettings["AIM_SMOOTHNESS"] = curSettings[curWepCategory + "_AIM_SMOOTHNESS"].toDouble()
 
                 curSettings["PERFECT_AIM"] = curSettings[curWepCategory + "_PERFECT_AIM"].strToBool()
-                curSettings["PERFECT_AIM_FOV"] = curSettings[curWepCategory + "_PERFECT_AIM_FOV"].toInt()
+                curSettings["PERFECT_AIM_FOV"] = curSettings[curWepCategory + "_PERFECT_AIM_FOV"].toDouble()
                 curSettings["PERFECT_AIM_CHANCE"] = curSettings[curWepCategory + "_PERFECT_AIM_CHANCE"].toInt()
                 curSettings["ENABLE_FLAT_AIM"] = curSettings[curWepCategory + "_ENABLE_FLAT_AIM"].strToBool()
                 curSettings["ENABLE_PATH_AIM"] = curSettings[curWepCategory + "_ENABLE_PATH_AIM"].strToBool()

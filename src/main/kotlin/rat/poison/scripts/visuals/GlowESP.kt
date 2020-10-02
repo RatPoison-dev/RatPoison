@@ -98,9 +98,9 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 				EntityType.CPlantedC4, EntityType.CC4 -> if (showBomb) {
 					glowType = curSettings["GLOW_BOMB_TYPE"].toGlowNum()
 					color = when (curSettings["GLOW_BOMB_ADAPTIVE"].strToBool()) {
-						true -> if ((bombState.timeLeftToExplode > 10) || (bombState.gettingDefused && bombState.canDefuse) && bombState.planted) {
+						true -> if (((bombState.timeLeftToExplode > 10) || (bombState.gettingDefused && bombState.canDefuse)) && bombState.planted) {
 							"GLOW_BOMB_ADAPTIVE_CAN_DEFUSE"
-						} else if ((bombState.timeLeftToExplode < 5) || (bombState.gettingDefused && !bombState.canDefuse) && bombState.planted) {
+						} else if (((bombState.timeLeftToExplode < 5) || (bombState.gettingDefused && !bombState.canDefuse)) && bombState.planted) {
 							"GLOW_BOMB_ADAPTIVE_CANT_DEFUSE"
 						} else if (bombState.planted && bombState.timeLeftToExplode < 10 && bombState.timeLeftToExplode > 5) {
 							"GLOW_BOMB_ADAPTIVE_LITTLE_TIME"

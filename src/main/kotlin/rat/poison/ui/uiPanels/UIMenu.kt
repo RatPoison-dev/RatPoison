@@ -174,7 +174,6 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
     override fun close() {
         haltProcess = true
         disableAllEsp()
-        Thread.sleep(1000)
         sendPacket(true)
         exitProcess(0)
     }

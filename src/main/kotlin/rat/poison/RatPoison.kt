@@ -15,8 +15,6 @@ import rat.poison.scripts.aim.flatAim
 import rat.poison.scripts.aim.handleFireKey
 import rat.poison.scripts.aim.pathAim
 import rat.poison.scripts.aim.setAim
-import rat.poison.scripts.bspHandling.drawMapWireframe
-import rat.poison.scripts.bspHandling.rayTraceTest
 import rat.poison.scripts.visuals.*
 import rat.poison.utils.Settings
 import rat.poison.utils.detectLocale
@@ -45,10 +43,10 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Testing"
 const val F_VERSION = "1.7"
-const val M_VERSION = "1.7.18"
+const val M_VERSION = "1.7.19"
 var LOADED_CONFIG = "DEFAULT"
 
-const val EXPERIMENTAL = false
+//const val EXPERIMENTAL = false
 const val SETTINGS_DIRECTORY = "settings" //Internal
 
 lateinit var WEAPON_STATS_FILE: File
@@ -149,10 +147,10 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()
     if (dbg) { println("[DEBUG] Initializing Name Changer") }; nameChanger()
 
-    if (EXPERIMENTAL) {
-        rayTraceTest()
-        drawMapWireframe()
-    }
+    //if (EXPERIMENTAL) {
+        //rayTraceTest()
+        //drawMapWireframe()
+    //}
 
     //Overlay check, not updated?
     if (curSettings["MENU"].strToBool()) {

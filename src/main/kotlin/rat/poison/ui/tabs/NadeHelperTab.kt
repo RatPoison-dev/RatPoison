@@ -57,7 +57,7 @@ class NadeHelperTab : Tab(false, false) {
 
         val clearNadeHelper = VisTextButton("Clear-Currently-Loaded".toLocale())
         clearNadeHelper.changed { _, _ ->
-            Dialogs.showOptionDialog(App.menuStage, "Warning".toLocale(), "Clear-the-current-positions?".toLocale(), Dialogs.OptionDialogType.YES_NO, object: OptionDialogAdapter() {
+            Dialogs.showOptionDialog(App.menuStage, "Warning".toLocale(), "CLEAR_POSITIONS".toLocale(), Dialogs.OptionDialogType.YES_NO, object: OptionDialogAdapter() {
                 override fun yes() {
                     nadeHelperArrayList.clear()
                     nadeHelperLoadedFile.setText("Loaded:-N/A".toLocale())

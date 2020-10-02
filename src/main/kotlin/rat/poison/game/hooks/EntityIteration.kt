@@ -18,6 +18,7 @@ import rat.poison.game.offsets.ClientOffsets.dwSensitivityPtr
 import rat.poison.game.offsets.EngineOffsets.dwClientState
 import rat.poison.game.offsets.EngineOffsets.dwClientState_MapDirectory
 import rat.poison.game.offsets.EngineOffsets.dwSignOnState
+import rat.poison.scripts.nameChange
 import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.every
@@ -76,6 +77,7 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
 //        }
 
             inGame = true
+            nameChange = ""
 
             if (PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0) {
                 val write = 0xEB.toByte()

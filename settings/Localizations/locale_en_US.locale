@@ -671,3 +671,5 @@ BOX_FAR_RADAR = Far Radar Box
 ADRENALINE_COOLDOWN = Adrenaline Cooldown
 ADRENALINE_BOMB_TIME = Use Bomb Time
 Name-Change = Temporary Name Change
+Warning = Warning
+CLEAR_POSITIONS = Clear all currently loaded positions?

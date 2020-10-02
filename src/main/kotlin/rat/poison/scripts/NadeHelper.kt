@@ -1,7 +1,6 @@
 package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.Align
@@ -110,24 +109,23 @@ fun nadeHelper() = App {
                             set(ShapeRenderer.ShapeType.Line)
                             t2 = true
 
-                            textRenderer.apply {
-                                val glyph = GlyphLayout()
-
-                                sb.begin()
-                                val sbText = StringBuilder()
-                                if (fSpot[5] != "Other") {
-                                    //            Name          Throwing Type
-                                    sbText.append("${fSpot[3]} (${fSpot[5]})")
-                                }
-                                else {
-                                    sbText.append("${fSpot[3]}")
-                                }
-
-                                glyph.setText(textRenderer, sbText, 0, (sbText as CharSequence).length, Color.WHITE, 1F, Align.center, false, null)
-                                draw(sb, glyph, vec3.x, vec3.y - 10F)
-
-                                sb.end()
+                            val sbText = StringBuilder()
+                            if (fSpot[5] != "Other") {
+                                //            Name          Throwing Type
+                                sbText.append("${fSpot[3]} (${fSpot[5]})")
                             }
+                            else {
+                                sbText.append("${fSpot[3]}")
+                            }
+
+                            if (!sb.isDrawing) {
+                                sb.begin()
+                            }
+
+                            textRenderer.color = Color.WHITE
+                            textRenderer.draw(sb, sbText, vec3.x, vec3.y - 10F, 1F, Align.center, false)
+
+                            sb.end()
                         }
 
                         if (t2) {

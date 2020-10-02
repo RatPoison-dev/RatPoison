@@ -1,7 +1,6 @@
 package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.math.Vector3
@@ -395,22 +394,11 @@ fun boxEsp() {
 			sb.begin()
 
 			val detailTextColor = curSettings["BOX_DETAILS_TEXT_COLOR"].strToColorGDX()
-			val glyph = GlyphLayout()
-
-			try { //bitch ass little retard cunt ill fix you later
-				glyph.setText(textRenderer, boxDetailsLeftText, detailTextColor, 1F, Align.right, false)
-				textRenderer.draw(sb, glyph, bbox.left - (barWidth * leftShift), bbox.top)
-
-				glyph.setText(textRenderer, boxDetailsRightText, detailTextColor, 1F, Align.left, false)
-				textRenderer.draw(sb, glyph, bbox.right + (barWidth * rightShift), bbox.top)
-
-				glyph.setText(textRenderer, boxDetailsTopText, detailTextColor, 1F, Align.center, false)
-				textRenderer.draw(sb, glyph, (bbox.left + bbox.right) / 2F, bbox.top + topShift)
-
-				glyph.setText(textRenderer, boxDetailsBottomText, detailTextColor, 1F, Align.center, false)
-				textRenderer.draw(sb, glyph, (bbox.left + bbox.right) / 2F, bbox.bottom)
-			} catch (e: Exception) {
-			}
+			textRenderer.color = detailTextColor
+			textRenderer.draw(sb, boxDetailsLeftText, bbox.left - (barWidth * leftShift), bbox.top, 1F, Align.right, false)
+			textRenderer.draw(sb, boxDetailsRightText, bbox.right + (barWidth * rightShift), bbox.top, 1F, Align.left, false)
+			textRenderer.draw(sb, boxDetailsTopText, (bbox.left + bbox.right) / 2F, bbox.top + topShift, 1F, Align.center, false)
+			textRenderer.draw(sb, boxDetailsBottomText, (bbox.left + bbox.right) / 2F, bbox.bottom, 1F, Align.center, false)
 
 			sb.end()
 		}

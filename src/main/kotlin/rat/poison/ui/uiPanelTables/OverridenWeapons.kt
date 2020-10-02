@@ -56,7 +56,7 @@ class OverridenWeapons : VisTable(false) {
     val perfectAimCheckBox = OverrideVisCheckBoxCustom("Perfect-Aim", "tPerfectAim")
     private val perfectAimTable = VisTable()
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
-    val perfectAimFov = OverrideVisSliderCustom("FOV", "tPAimFov", 1F, 180F, 1F, true, width1 = 225F, width2 = 125F)
+    val perfectAimFov = OverrideVisSliderCustom("FOV", "tPAimFov", 1F, 90F, .5F, false, width1 = 225F, width2 = 125F)
     val perfectAimChance = OverrideVisSliderCustom("Chance", "tPAimChance", 1F, 100F, 1F, true, width1 = 225F, width2 = 125F)
 
     val trigEnable = OverrideVisCheckBoxCustom("Enable Trigger", "tBoneTrig")

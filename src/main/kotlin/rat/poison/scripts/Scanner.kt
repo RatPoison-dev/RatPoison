@@ -4,6 +4,7 @@ import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.rankName
+import rat.poison.haltProcess
 import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.tabs.deleteCFG
 import rat.poison.ui.tabs.loadCFG
@@ -47,8 +48,8 @@ fun scanner() {
                 }
             }
             line.equals("exit", true) -> {
+                haltProcess = true
                 disableAllEsp()
-                Thread.sleep(1000)
                 sendPacket(true)
                 exitProcess(0)
             }

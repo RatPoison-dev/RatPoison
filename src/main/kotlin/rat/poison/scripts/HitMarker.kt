@@ -1,14 +1,11 @@
 package rat.poison.scripts
 
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.utils.Align
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.entity.dead
 import rat.poison.game.entity.punch
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_flHealthShotBoostExpirationTime
@@ -18,6 +15,7 @@ import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
+import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.inGame
 
 var hitMarkerAlpha = 0F
@@ -105,25 +103,23 @@ fun hitMarker() = App {
 
         if (curSettings["HITMARKER_COMBO"].strToBool()) {
             if (hitMarkerCombo >= 2) {
-                textRenderer.apply {
-                    if (sb.isDrawing) {
-                        sb.end()
-                    }
-
-                    val glyph = GlyphLayout()
-                    sb.begin()
-
-                    val hitMarkerComboSB = StringBuilder()
-
-                    hitMarkerComboSB.append("x$hitMarkerCombo")
-
-                    val col = curSettings["HITMARKER_COMBO_COLOR"].strToColor()
-
-                    glyph.setText(textRenderer, hitMarkerComboSB, 0, (hitMarkerComboSB as CharSequence).length, Color(col.red / 255F, col.green / 255F, col.blue / 255F, hitMarkerAlpha), 1F, Align.center, false, null)
-                    draw(sb, glyph, x + hMS + hMLL, y - hMS - hMLL)
-
+                if (sb.isDrawing) {
                     sb.end()
                 }
+
+                sb.begin()
+
+                val hitMarkerComboSB = StringBuilder()
+
+                hitMarkerComboSB.append("x$hitMarkerCombo")
+
+                val col = curSettings["HITMARKER_COMBO_COLOR"].strToColorGDX()
+                col.a = hitMarkerAlpha
+
+                textRenderer.color = col
+                textRenderer.draw(sb, hitMarkerComboSB, x + hMS + hMLL, y - hMS - hMLL, 1F, Align.center, false)
+
+                sb.end()
             }
         }
 
