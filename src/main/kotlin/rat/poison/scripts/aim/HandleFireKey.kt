@@ -60,7 +60,7 @@ fun handleFireKey() = every(1, continuous = true) {
         shouldShoot = false
         didShoot = false
         punchCheck = 0
-        //boneTrig = false
+        boneTrig = false
     }
 }
 

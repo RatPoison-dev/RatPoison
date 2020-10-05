@@ -391,7 +391,9 @@ fun boxEsp() {
 				}
 			}
 
-			sb.begin()
+			if (!sb.isDrawing) {
+				sb.begin()
+			}
 
 			val detailTextColor = curSettings["BOX_DETAILS_TEXT_COLOR"].strToColorGDX()
 			textRenderer.color = detailTextColor

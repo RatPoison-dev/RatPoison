@@ -116,7 +116,6 @@ fun triggerBot() = every(5, inGameCheck = true) {
 
 private fun trigQueueShot(delay: Int, aimbot: Boolean = false, backtrack: Boolean = false, backtrackFallback: Boolean = false) {
     inTrigger = true
-    triggerShots++
 
     if (delay > 0) {
         Thread.sleep(delay.toLong())
@@ -129,6 +128,7 @@ private fun trigQueueShot(delay: Int, aimbot: Boolean = false, backtrack: Boolea
         return
     }
 
+    triggerShots++
     triggerShoot(aimbot, backtrack, backtrackFallback)
 }
 
@@ -146,7 +146,7 @@ private fun triggerShoot(aimbot: Boolean = false, backtrack: Boolean = false, ba
     }
 
     Thread.sleep(10)
-    boneTrig = false
+    //boneTrig = false
 }
 
 private fun getIncross(ent: Entity): Entity {

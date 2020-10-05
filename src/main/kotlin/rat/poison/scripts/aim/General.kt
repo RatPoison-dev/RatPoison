@@ -203,7 +203,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			return@every
 		}
 	}
-	//if (bestTarget <= 0 && !curSettings["HOLD_AIM"].strToBool()) {
+
 	if (bestTarget <= 0 && !curSettings["HOLD_AIM"].strToBool()) {
 		reset()
 		return@every

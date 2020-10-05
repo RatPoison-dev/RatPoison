@@ -29,7 +29,7 @@ internal fun rcrosshair() = App {
     if (!curSettings["ENABLE_ESP"].strToBool() || !inGame) return@App
 
     val eRC = curSettings["ENABLE_RECOIL_CROSSHAIR"].strToBool()
-    val eSC = curSettings["ENABLE_SNIPER_CROSSHAIR"].strToBool()
+    val eSC = !curSettings["ENABLE_SNIPER_CROSSHAIR"].strToBool()
 
     if (!eRC && !eSC) return@App
 
