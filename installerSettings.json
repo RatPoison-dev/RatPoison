@@ -1,6 +1,7 @@
 {
     "force_install_jdk": false,
     "force_cheat_update": false,
+    "force_cheat_compile": false,
     "build_folder": "build/",
     "jdk_zip_name": "JDK.zip",
     "github_repo": "TheFuckingRat/RatPoison",
