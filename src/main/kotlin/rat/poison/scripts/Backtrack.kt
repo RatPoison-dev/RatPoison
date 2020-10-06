@@ -39,7 +39,7 @@ var gvars = GlobalVars()
 
 fun sendPacket(bool: Boolean) { //move outta here
     val byte = if (bool) 1.toByte() else 0.toByte()
-    engineDLL[0xD420A] = byte //Bitch ass lil coder signature wont work
+    engineDLL[0xD41DA] = byte //Bitch ass lil coder signature wont work
 }
 
 fun setupBacktrack() {
