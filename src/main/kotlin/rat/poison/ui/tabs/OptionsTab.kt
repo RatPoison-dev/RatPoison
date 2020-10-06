@@ -283,7 +283,7 @@ fun saveCFG(cfgFileName: String) {
     }
 }
 
-fun loadCFG(cfgFileName: String) {
+fun loadCFG(cfgFileName: String, deleteCfgAfterLoad: Boolean = false) {
     if (!saving) {
         cfgFileName.replace(".cfg", "")
 
@@ -305,6 +305,7 @@ fun loadCFG(cfgFileName: String) {
                     uiMenu.updateTitle()
                     uiMenu.changeAlpha()
                 }
+                if (deleteCfgAfterLoad) { cfgFile.delete() }
             }
         }
     } else {

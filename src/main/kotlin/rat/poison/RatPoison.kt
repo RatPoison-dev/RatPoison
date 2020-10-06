@@ -20,6 +20,7 @@ import rat.poison.utils.Settings
 import rat.poison.utils.detectLocale
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.loadMigration
 import java.awt.Robot
 import java.io.File
 import kotlin.collections.set
@@ -77,6 +78,8 @@ fun main() {
 
     WEAPON_STATS_FILE = File("$SETTINGS_DIRECTORY\\Data\\WeaponStats.txt")
     SKIN_INFO_FILE = File("$SETTINGS_DIRECTORY\\Data\\SkinInfo.txt")
+
+    loadMigration()
 
     if (dbg) println("[DEBUG] Initializing scripts...")
     //Init scripts
