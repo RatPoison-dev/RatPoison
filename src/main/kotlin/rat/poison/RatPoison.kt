@@ -170,7 +170,7 @@ fun main() {
                 var w = CSGO.gameWidth
                 var h = CSGO.gameHeight
 
-                if ((w == 0 || h == 0) || curSettings["MENU_APP"] != "\"Counter-Strike: Global Offensive\"") {
+                if ((w == 0 || h == 0) || curSettings["MENU_APP"] != "\"Counter-Strike: Global Offensive\"" || curSettings["APPLESS"].strToBool()) {
                     w = curSettings["OVERLAY_WIDTH"].toInt()
                     h = curSettings["OVERLAY_HEIGHT"].toInt()
                 }
@@ -187,7 +187,7 @@ fun main() {
 
                 //Required to fix W2S offset
                 setWindowPosition(CSGO.gameX, CSGO.gameY)
-                setDecorated(false)
+                setDecorated(curSettings["APPLESS"].strToBool())
                 useVsync(false)
                 glfwSwapInterval(0)
                 glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE)

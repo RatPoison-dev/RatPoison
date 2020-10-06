@@ -61,7 +61,7 @@ object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
-    private val overlay = Overlay(curSettings["MENU_APP"].replace("\"", ""), "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
+    private val overlay = Overlay(if (curSettings["APPLESS"].strToBool()) { "Counter-Strike: Global Offensive" } else { curSettings["MENU_APP"].replace("\"", "") }, "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     lateinit var menuStage: Stage
     private val bodies = ObjectArrayList<App.() -> Unit>()
     private lateinit var camera: OrthographicCamera
@@ -263,13 +263,15 @@ object App : ApplicationAdapter() {
                     aimTab.tAim.enableAim.isChecked = !aimTab.tAim.enableAim.isChecked
                 }
 
-                val w = overlay.width
-                val h = overlay.height
+                if (!curSettings["APPLESS"].strToBool()) {
+                    val w = overlay.width
+                    val h = overlay.height
 
-                if (menuStage.viewport.screenWidth != w || menuStage.viewport.screenHeight != h) {
-                    resize(w, h)
-                    menuStage.viewport.update(w, h)
-                    if (dbg) println("[DEBUG] Resized Viewports")
+                    if (menuStage.viewport.screenWidth != w || menuStage.viewport.screenHeight != h) {
+                        resize(w, h)
+                        menuStage.viewport.update(w, h)
+                        if (dbg) println("[DEBUG] Resized Viewports")
+                    }
                 }
             }
         }
