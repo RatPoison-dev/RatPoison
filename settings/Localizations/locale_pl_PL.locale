@@ -9,6 +9,12 @@ TARGET = Cel
 WEAPON = Broń
 WARNING = Uwaga
 SCOPE = Luneta
+BONES = Części ciała
+AMMO = Amunicja
+HELMET = Hełm
+KEVLAR = Kamizelka
+SCOPED = Przycelowany
+FLASHED = Oślepiony
 WEAPONS = Bronie
 UNDEFINED = nd.
 T = T
@@ -20,262 +26,8 @@ DEFUSER = Zestaw do rozbrajania
 SELF = Ty
 HEALTH_BASED = Na podstawie zdrowia
 ENABLE = Włącz
-LEFT = Lewo
-Left = Lewo
-RIGHT = Prawo
-Right = Prawo
-TOP = Góra
-Top = Góra
-BOTTOM = Dół
-Bottom = Dół
 LINE_WIDTH = Długość linii
 FOV = Pole widzenia
-
-// Tabs name
-AIM_TAB_NAME = Aimbot
-HITMARKER_TAB_NAME = Hitmarker
-SNAPLINES_TAB_NAME = Linie
-MISC_TAB_NAME = Różne
-RCS_TAB_NAME = RCS
-VISUALS_TAB_NAME = Efekty
-FOOTSTEPS_TAB_NAME = Kroki
-OVERRIDE_WEAPONS_PANEL_NAME = Zastąp ustawienia
-KEYBINDS_PANEL_NAME = Klawisze
-INDICATORS_TAB_NAME = Wskaźnik
-NADES_TAB_NAME = Granaty
-GLOW_TAB_NAME = Poświata
-BOX_ESP_TAB_NAME = Box
-CHAMS_TAB_NAME = Kameleon
-SKIN_CHANGER_TAB_NAME = Zmiana skinów
-NADE_HELPER_TAB_NAME = Granaty
-RANKS_TAB_NAME = Rangi
-OPTIONS_TAB_NAME = Opcje
-
-BOMB_TIMER_WINDOW_NAME = Zegar bomby
-SPECTATOR_LIST_WINDOW_NAME = Lista widzów
-
-// Aim tab
-PISTOL = PISTOLET
-SHOTGUN = STRZELBA
-RIFLE = KARABIN
-SNIPER = KARABIN SNAJPERSKI
-SMG = PISTOLET MASZYNOWY
-
-STATIC = STATYCZNY
-DISTANCE = ODLEGŁOŚĆ
-
-HEAD = GŁOWA
-NECK = SZYJA
-CHEST = TUŁÓW
-STOMACH = BRZUCH
-NEAREST = NAJBLIŻSZY
-RANDOM = LOSOWY
-WEAPON_CATEGORY = Kategoria broni:
-// Triggerbot
-ENABLE_TRIGGER = Włącz triggerbota
-TRIGGER_ENABLE_KEY = Triggerbot pod przyciskiem
-TRIGGER_KEY = Przycisk triggerbota
-TRIGGER_AIMBOT = Aimbot
-TRIGGER_IS_IN_CROSS = Na celowniku
-TRIGGER_IS_IN_FOV = W polu widzenia
-TRIGGER_DELAY = Opóźnienie
-// Aimbot
-ENABLE_AIM = Włącz aimbota
-AIM_TOGGLE_KEY = Przycisk przełączenia aimbota
-ACTIVATE_FROM_AIM_KEY = Aktywuj przez przycisk strzelania
-HOLD_AIM = Celowanie w przeciwnika przy wyjściu z pola widzenia
-TEAMMATES_ARE_ENEMIES = Członkowie drużyny są przeciwnikami
-FOV_TYPE = Typ pola widzenia
-FORCE_AIM_BONE_KEY = Przycisk zastąpienia kości
-FORCE_AIM_KEY = Przycisk celowania
-FORCE_AIM_ALWAYS = Zawsze celuj
-FORCE_AIM_THROUGH_WALLS = Zawsze celuj przez ściany
-AUTOMATIC_WEAPONS = Automatyczne bronie
-AIM_TARGET_SWAP_DELAY = Opóźnienie zmiany celu
-OVERRIDE_WEAPONS_CHECKBOX = Zastąp domyślne ustawienia
-AIM_ONLY_ON_SHOT = Celuj tylko podczas strzelania
-FACTOR_RECOIL = Kontroluj rozrzut
-ENABLE_FLAT_AIM = Nadpisz kąt widzenia
-ENABLE_PATH_AIM = Ruch kursorem
-SNIPER_ENABLE_SCOPED_ONLY = Tylko przycelowany
-AIM_BONE = Część ciała:
-AIM_FORCE_BONE = Zastąp domyślną część ciała:
-AIM_FOV = Pole widzenia aimbota
-AIM_SPEED = Prędkość aimbota
-AIM_SMOOTHNESS = Plynność
-AIM_AFTER_SHOTS = Celuj po #
-ENABLE_PERFECT_AIM = Włącz perfekcyjny strzał
-PERFECT_AIM_CHANCE = Szansa
-ADVANCED_SETTINGS = Ustawienia zaawansowane
-RANDOM_X_VARIATION = Wariacja horyzontalna
-RANDOM_Y_VARIATION = Wariacja wertykalna
-VARIATION_DEADZONE = Martwa strefa wariacji
-AIM_RCS_X = Wariacja RCS X
-AIM_RCS_Y = Wariacja RCS Y
-AIM_RCS_VARIATION = Wariacja RCS
-AIM_SPEED_DIVISOR = Dzielnik ruchu myszy
-
-// Misc tab
-ENABLE_BUNNY_HOP = Automatyczny skok
-AUTO_STRAFE = Automatyczne strafowanie
-STRAFE_BHOP_ONLY = Tylko bhop
-FAST_STOP = Szybki stop
-HEAD_WALK = Utrzymaj się na głowie
-
-ENABLE_FOV_CHANGER = Zmiana pola widzenia
-FOV_DEFAULT = Domyślne
-FOV_SMOOTH = Płynna zmiana
-FOV_SNIPER_DEFAULT = Lunety
-FOV_ZOOM_1 = Pierwszy zoom
-FOV_ZOOM_2 = Drugi zoom
-ENABLE_BOMB_TIMER = Zegar bomby
-BOMB_TIMER_BARS = Pasek czasu
-BOMB_TIMER_MENU = Menu bomby
-ENABLE_SPECTATOR_LIST = Lista widzów
-
-ENABLE_AUTO_KNIFE = Automatyczny nóż
-ENABLE_PERFECT_BOMB_DEFUSE = Perfekcyjne rozbrajanie bomby
-ENABLE_DOOR_SPAM = Spamowanie drzwiami
-DOOR_SPAM_KEY = Przycisk spamu drzwiami
-ENABLE_WEAPON_SPAM = Spamowanie bronią
-WEAPON_SPAM_KEY = Przycisk spamu bronią
-ENABLE_REDUCED_FLASH = Redukcja oślepienia
-FLASH_MAX_ALPHA = Intensywność
-ENABLE_HITSOUND = Dźwięk trafienia
-HITSOUND_VOLUME = Głośność
-THROW_SELF_NADE = Rzuć na siebie granat
-ENABLE_NAME_CHANGER = Zmiana nazwy
-
-
-// Nade helper tab
-ENABLE_NADE_HELPER = Włącz pomocnika rzucania granatów
-LOADED = Załadowany:
-LOADED_NOTHING = Żaden plik nie jest załadowany
-CREATE_GRENADE_POSITION = Stwórz nową pozycję
-SAVE_AS_FILE = Zapisz do pliku
-LOAD_FROM_FILE = Wczytaj z pliku
-DELETE_SELECTED_FILE = Usuń zaznaczony plik
-CLEAR_CURRENTLY_LOADED = Wyczyść aktualnie załadowane pozycje
-CLEAR_CURRENTLY_LOADED_WARNING = Czy chcesz wyczyścić aktualnie załadowane pozycje?
-DELETE_AT_CURRENT_POSITION = Usuń obecną pozycję
-ENTER_POSITION_NAME = Wprowadź nazwę pozycji
-CHOOSE_NADE_TYPE = Wybierz typ granatu
-NADE_FLASH = Błyskowy
-NADE_FRAG = Zaczepny
-NADE_MOLLY = Mołotow
-NADE_SMOKE = Dymny
-ENTER_FILE_NAME = Wprowadź nazwę pliku
-
-// Options tab
-MENU_KEY = Przycisk menu
-OPENGL_FPS = Klatki na sekundę OpenGL
-MENU_STAY_FOCUSED = Na wierzchu
-ENABLE_DEBUG = Debugowanie
-KEYBINDS = Klawisze
-GAUSSIAN_BLUR = Rozmycie Gaussowe
-JOIN_DISCORD = Dołącz do Discorda [angielski]
-MENU_ALPHA_SLIDER = Przezroczystość:
-SAVE_CONFIG = Zapisz CFG
-ENTER_CONFIG_NAME = Nazwa konfiguracji:
-LOAD_CONFIG = Wczytaj CFG
-DELETE_CONFIG = Usuń CFG
-SAVE_CONFIG_TO_DEFAULT = Zapisz aktualną konfigurację do ustawień domyślnych
-LOAD_LOCALIZATION = Wczytaj lokalizację
-
-// Ranks tab
-RANKS_TEAM = Drużyna
-RANKS_NAME = Nazwa
-RANKS_RANK = Ranga
-RANKS_KILLS = Fragi
-RANKS_DEATHS = Śmierci
-RANKS_KD = K/D
-RANKS_WINS = Wygrane
-
-// RCS Tab
-ENABLE_RCS = Włącz kontrolę rozrzutu
-RCS_TOGGLE_KEY = Przycisk przełączenia RCS
-RCS_SMOOTHING_X = Płynność horyzontalna
-RCS_SMOOTHING_Y = Płynność wertykalna
-RCS_RETURNAIM = Powrót celownika
-ENABLE_RECOIL_CROSSHAIR = Celownik rozrzutu
-ENABLE_SNIPER_CROSSHAIR = Celownik karabinu snajperskiego
-RCROSSHAIR_WIDTH = Szerokość
-RCROSSHAIR_LENGTH = Długość
-RCROSSHAIR_XOFFSET = Margines horyzontalny
-RCROSSHAIR_YOFFSET = Margines wertykalny
-RCROSSHAIR_ALPHA = Przezroczystość
-RCROSSHAIR_COLOR = Kolor celownika rozrzutu
-
-// Skin changer tab
-ENABLE_SKIN_CHANGER = Włącz zmianę skinów
-ENABLE_KNIFE_CHANGER = Włącz zmianę noża
-SKIN_ID = ID skina:
-STATTRACK = StatTrak:
-WEAR = Zewnętrze:
-MANUAL_FORCE_UPDATE = Zaaktualizuj skiny
-AUTO_FORCE_UPDATE = Automatycznie aktualizuj skiny
-
-// Visuals tab
-ENABLE_ESP = Włącz efekty
-VISUALS_TOGGLE_KEY = Przycisk przełączenia efektów
-ENABLE_RADAR_ESP = Radar
-ENABLE_NIGHTMODE = Jasność
-NIGHTMODE_VALUE = %
-ENABLE_ADRENALINE = Adrenalina
-DRAW_AIM_FOV_COLOR = FOV aimbota
-DRAW_TRIGGER_FOV_COLOR = FOV triggerbota
-// Box Esp tab
-ENABLE_SKELETON_ESP = Włącz szkielet
-ENABLE_BOX_ESP = Włącz Box
-ENABLE_BOX_ESP_DETAILS = Informacje w Boxie
-BOX_DETAILS_TEXT_COLOR = Kolor tekstu
-// Chams tab
-CHAMS_ESP = Włącz
-CHAMS_SHOW_HEALTH = Pokaż zdrowie
-CHAMS_BRIGHTNESS = Jasność
-// Footsteps tab
-FOOTSTEP_UPDATE = Częstotliwość
-FOOTSTEP_TTL = Czas życia
-FOOTSTEPS_TEXT = Tekst
-FOOTSTEPS_CIRCLE = Okręgi
-// Glow Esp tab
-INV_GLOW_ESP = Odwrócona poświata
-MODEL_ESP = MODEL
-MODEL_AND_GLOW = Model & poświata
-// HitMarkers tab
-HITMARKER_OUTLINE = Kontur
-HITMARKER_COMBO = Kombo #
-HITMARKER_RECOIL_POSITION = Pozycja odrzutu
-HITMARKER_SPACING = Odstęp
-HITMARKER_LENGTH = Długość linii
-HITMARKER_COLOR = Hitmarker
-HITMARKER_COMBO_COLOR = Kombo
-// Indicators tab
-INDICATOR_DISTANCE = Odległość wskaźnika
-INDICATOR_SIZE = Rozmiar wskaźnika
-// Nades tab
-NADE_TRACER_COLOR = Smuga
-NADE_TRACER_UPDATE_TIME = Czas aktualizacji
-NADE_TRACER_TIMEOUT = Czas wygaszania
-
-
-// Override weapons panel
-CATEGORY = Kategoria:
-ENABLE_OVERRIDE = Zastąp
-OVERRIDE_AIM_SPEED = Prędkość:
-OVERRIDE_SMOOTH = Płynność:
-
-// Spectator list
-NAME_PREFIX = nick:
-
-// Bomb Timer
-BOMB_IS_PLANTED = Bomba podłożona!
-BOMB_IS_NOT_PLANTED = Bomba nie jest podłożona!
-TIME_TO_EXPLODE = Czas do wybuchu:
-LOCATION = Pozycja:
-CAN_DEFUSE = Czy można rozbroić na czas:
-TIME_TO_DEFUSE = Czas do rozbrojenia:
-TIME_LEFT_AFTER = Pozostały czas:
 
 /// Scanner
 TYPE_HELP = Wpisz help aby wyświetlić dostępne opcje
@@ -313,15 +65,24 @@ RELOADING_SETTINGS = Przeładowuję ustawienia
 
 // Weapons
 DESERT_EAGLE = DESERT_EAGLE
+DEAGLE = DEAGLE
+
 DUAL_BERETTA = DUAL_BERETTA
+ELITE = DUAL BERETTAS
+
 FIVE_SEVEN = FIVE_SEVEN
+FIVESEVEN = FIVE_SEVEN
+
 GLOCK = GLOCK
 AK47 = AK47
+M4A1 = M4A4
+TASER = ZEUS
 AUG = AUG
 AWP = AWP
 FAMAS = FAMAS
 G3SG1 = G3SG1
 GALIL = GALIL
+GALILAR = GALIL
 M249 = M249
 M4A4 = M4A4
 MAC10 = MAC10
@@ -329,10 +90,16 @@ P90 = P90
 MP5 = MP5
 UMP45 = UMP45
 XM1014 = XM1014
+
 PP_BIZON = PP_BIZON
+BIZON = PP_BIZON
+
 MAG7 = MAG7
 NEGEV = NEGEV
+
 SAWED_OFF = SAWED_OFF
+SAWEDOFF = SAWED_OFF
+
 TEC9 = TEC9
 ZEUS_X27 = ZEUS_X27
 P2000 = P2000
@@ -341,15 +108,18 @@ MP9 = MP9
 NOVA = NOVA
 P250 = P250
 SCAR20 = SCAR20
+
 SG553 = SG553
+SG556 = SG553
+
 SSG08 = SSG08
-KNIFE = Nóż
-FLASH_GRENADE = Granat błyskowy
-EXPLOSIVE_GRENADE = Granat zaczepny
-SMOKE_GRENADE = Granat dymny
-MOLOTOV = Mołotow
-DECOY_GRENADE = Wabik
-INCENDIARY_GRENADE = Granat zapalający
+KNIFE = KNIFE
+FLASH_GRENADE = FLASH_GRENADE
+EXPLOSIVE_GRENADE = EXPLOSIVE_GRENADE
+SMOKE_GRENADE = SMOKE_GRENADE
+MOLOTOV = MOLOTOV
+DECOY_GRENADE = DECOY_GRENADE
+INCENDIARY_GRENADE = INCENDIARY_GRENADE
 C4 = C4
 MEDISHOT = MEDISHOT
 KNIFE_T = KNIFE_T
@@ -363,25 +133,25 @@ TABLET = TABLET
 HAMMER = HAMMER
 FIRE_BOMB = FIRE_BOMB
 DIVERSION_DEVICE = DIVERSION_DEVICE
-KNIFE_BAYONET = Bagnet
-KNIFE_CSS = Klasyczny nóż
-KNIFE_FLIP = Nóż składany
-KNIFE_GUT = Nóż z hakiem
-KNIFE_KARAMBIT = Karambit
-KNIFE_M9_BAYONET = Bagnet M9
-KNIFE_TACTICAL = Nóż myśliwski
-KNIFE_FALCHION = Nóż falcjon
-KNIFE_BOWIE = Nóż Bowie
-KNIFE_BUTTERFLY = Nóż motylkowy
-KNIFE_PUSH = Sztylety Cienia
-KNIFE_CORD = Nóż paracord
-KNIFE_CANIS = Nóż survivalowy
-KNIFE_URSUS = Ursus
-KNIFE_GYPSY = Navaja
-KNIFE_OUTDOOR = Nóż nomada
-KNIFE_STILETTO = Sztylet
-KNIFE_WIDOWMAKER = Szpon
-KNIFE_SKELETON = Nóż szkieletowy
+KNIFE_BAYONET = KNIFE_BAYONET
+KNIFE_CSS = KNIFE_CSS
+KNIFE_FLIP = KNIFE_FLIP
+KNIFE_GUT = KNIFE_GUT
+KNIFE_KARAMBIT = KNIFE_KARAMBIT
+KNIFE_M9_BAYONET = KNIFE_M9_BAYONET
+KNIFE_TACTICAL = KNIFE_TACTICAL
+KNIFE_FALCHION = KNIFE_FALCHION
+KNIFE_BOWIE = KNIFE_BOWIE
+KNIFE_BUTTERFLY = KNIFE_BUTTERFLY
+KNIFE_PUSH = KNIFE_PUSH
+KNIFE_CORD = KNIFE_CORD
+KNIFE_CANIS = KNIFE_CANIS
+KNIFE_URSUS = KNIFE_URSUS
+KNIFE_GYPSY = KNIFE_GYPSY
+KNIFE_OUTDOOR = KNIFE_OUTDOOR
+KNIFE_STILETTO = KNIFE_STILETTO
+KNIFE_WIDOWMAKER = KNIFE_WIDOWMAKER
+KNIFE_SKELETON = KNIFE_SKELETON
 
 // Tooltips
 ENABLE_BUNNY_HOP_TOOLTIP = Włącz automatyczny skok
@@ -389,15 +159,15 @@ ENABLE_PATH_AIM_TOOLTIP = Porusza kursorem aby celować
 ENABLE_FLAT_AIM_TOOLTIP = Nadpisuje aktualny kąt widzenia
 AIM_BONE_TOOLTIP = Domyślna część ciała w którą celuje aimbot
 AIM_FORCE_BONE_TOOLTIP = Podczas wciśnięcia przycisku zastępuje domyślną część ciała na ustawioną tutaj
-FORCE_AIM_BONE_KEY_TOOLTIP = Zastąpia domyślną część ciała aimbota
+FORCE_AIM_BONE_KEY_TOOLTIP = Zastępuje domyślną część ciała aimbota
 AUTOMATIC_WEAPONS_TOOLTIP = Nieautomatyczne bronie mogą strzelać automatycznie gdy przycisk aimbota jest wciśnięty
 AIM_ONLY_ON_SHOT_TOOLTIP = Aimbot celuje tylko wtedy kiedy możesz wystrzelić
 FACTOR_RECOIL_TOOLTIP = Kontroluj rozrzut podczas strzelania
 ENABLE_AIM_TOOLTIP = Włącza lub wyłącza aimbota
 SNIPER_ENABLE_SCOPED_ONLY_TOOLTIP = Aimbot będzie tylko działał przy używaniu lunety
 ACTIVATE_FROM_AIM_KEY_TOOLTIP = Aimbot będzie tylko działał przy trzymaniu przycisku celu
-AIM_FOV_TOOLTIP = Pole widzenia aimbota
-FOV_TYPE_TOOLTIP = Typ pola widzenia
+AIM_FOV_TOOLTIP = Pole zasięgu aimbota
+FOV_TYPE_TOOLTIP = Typ pola zasięgu
 AIM_SPEED_TOOLTIP = Mniej to szybciej
 AIM_SMOOTHNESS_TOOLTIP = Mniej to mniej płynnie
 AIM_AFTER_SHOTS_TOOLTIP = Celuje po zdefiniowanej ilości strzałów
@@ -463,114 +233,440 @@ MANUAL_FORCE_UPDATE_TOOLTIP = Naciśnij aby zaaktualizować skiny
 HITMARKER_OUTLINE_TOOLTIP = Kontur hitmarkera
 HITMARKER_RECOIL_POSITION_TOOLTIP = Hitmarker wyświetla się na pozycji celownika rozrzutu
 INDICATOR_SIZE_TOOLTIP = Wielkość wskaźnika
-HOLD_AIM_TOOLTIP = Nadal celuje w przeciwnika mimo tego, że opuścił pole widzenia aimbota
+HOLD_AIM_TOOLTIP = Nadal celuje w przeciwnika mimo tego, że opuścił pole zasięgu aimbota
 VARIATION_DEADZONE_TOOLTIP = Pole widzenia gdzie wariacja aimbota nie występuje
 
-//New shit added
-AUTO_WEP_DELAY = Sex.
-RADAR_ESP = radar shit
-DRAW_AIM_FOV = draw aim fov shit
-DRAW_TRIGGER_FOV = draw trigger fov shit
-GLOW_ESP = glow esp shit
-GLOW_SHOW_TEAM = glow show team shit
-GLOW_SHOW_ENEMIES = glow show enemies shit
-GLOW_SHOW_BOMB = glow show bomb shit
-GLOW_SHOW_BOMB_CARRIER = glow show bomb carrier shit
-GLOW_SHOW_WEAPONS = glow show weapons shit
-GLOW_SHOW_GRENADES = glow show grenades shit
-GLOW_SHOW_TARGET = glow show target shit
-CHAMS_SHOW_TEAM = chams show team shit
-CHAMS_SHOW_ENEMIES = chams show enemies shit
-CHAMS_SHOW_SELF = chams show self shit
-INDICATOR_ESP = indicator esp shit
-INDICATOR_SHOW_TEAM = indicator show team shit
-INDICATOR_SHOW_ENEMIES = indicator show enemies shit
-INDICATOR_SHOW_BOMB = indicator show bomb shit
-INDICATOR_SHOW_BOMB_CARRIER = indicator show bomb carrier shit
-INDICATOR_SHOW_WEAPONS = indicator show weapons shit
-INDICATOR_SHOW_GRENADES = indicator show grenades shit
-INDICATOR_SHOW_DEFUSERS = indicator show defusers shit
-BOX_ESP_DETAILS = box esp details shit
-BOX_ESP_HEALTH = box esp health shit
-BOX_ESP_ARMOR = box esp armor shit
-BOX_ESP_NAME = box esp name shit
-BOX_ESP_WEAPON = box esp weapon shit
-SKELETON_ESP = skeleton esp shit
-SKELETON_SHOW_TEAM = skeleton show team shit
-SKELETON_SHOW_ENEMIES = skeleton show enemies shit
-BOX_SHOW_TEAM = box show team shit
-BOX_SHOW_ENEMIES = box show enemies shit
-ENABLE_HITMARKER = enable hitmarker shit
-HITMARKER_WIDTH = hitmarker width shit
-SKINCHANGER = skinchanger shit
-FORCE_UPDATE_AUTO = force update auto shit
-NADE_TRACER = nade tracer shit
-ENABLE_SNAPLINES = enable snaplines shit
-SNAPLINES_WIDTH = snaplines width shit
-SNAPLINES_ENEMIES = snaplines enemies shit
-SNAPLINES_TEAMMATES = snaplines teammates shit
-SNAPLINES_WEAPONS = snapline weapons shit
-SNAPLINES_BOMB = snapline bomb shit
-SNAPLINES_BOMB_CARRIER = snapline bomb carrier shit
-ENABLE_FOOTSTEPS = footsteps shit
-FOOTSTEP_TEAM = footstep team shit
-FOOTSTEP_ENEMY = footstep enemy shit
-D_SPAM = d spam shit
-D_SPAM_KEY = d spam key shit
-W_SPAM = w spam shit
-W_SPAM_KEY = w spam key shit
-SPECTATOR_LIST = spec list shit
-GLOW_TEAM_COLOR = glow team color
-GLOW_ENEMY_COLOR = glow enemy color
-GLOW_BOMB_COLOR = glow bomb color
-GLOW_BOMB_CARRIER_COLOR = glow bomb carrier color
-GLOW_WEAPON_COLOR = glow weapon color
-GLOW_GRENADE_COLOR = glow grenade color
-CHAMS_TEAM_COLOR = chams team color
-CHAMS_ENEMY_COLOR = chams enemy color
-CHAMS_SELF_COLOR = chams self color
-GLOW_TEAM_COLOR = glow team color
-INDICATOR_ENEMY_COLOR = indicator enemy color
-INDICATOR_BOMB_COLOR = indicator bomb color
-INDICATOR_BOMB_CARRIER_COLOR = indicator bomb carrier color
-INDICATOR_DEFUSER_COLOR = indicator defuser color
-INDICATOR_WEAPON_COLOR = indicator weapon color
-INDICATOR_GRENADE_COLOR = indicator grenade color
-BOX_TEAM_COLOR = box team color
-BOX_ENEMY_COLOR = box enemy color
-BOX_DEFUSER_COLOR = box defuser color
-HITMARKER_OUTLINE_COLOR = hitmarker outline color
-SNAPLINES_ENEMY_COLOR = snaplines enemy color
-SNAPLINES_TEAM_COLOR = snaplines team color
-SNAPLINES_WEAPON_COLOR = snaplines weapon color
-SNAPLINES_BOMB_COLOR = snaplines bomb color
-SNAPLINES_BOMB_CARRIER_COLOR = snaplines bomb carrier color
-FOOTSTEP_TEAM_COLOR = footstep team color
-FOOTSTEP_ENEMY_COLOR = footstep enemy color
-GLOW_SHOW_HEALTH = glow show health
-GLOW_ENEMY_TYPE = glow enemy type
-GLOW_TEAMMATE_TYPE = glow teammate type
-GLOW_WEAPON_TYPE = glow weapon type
-GLOW_TARGET_TYPE = glow target type
-GLOW_GRENADE_TYPE = glow grenade type
-GLOW_BOMB_TYPE = glow bomb type
-GLOW_BOMB_CARRIER_TYPE = glob bomb carrier type
+//New shit redux
+AUTO_WEP_DELAY = Opóźnienie
+RADAR_ESP = Radar
+DRAW_AIM_FOV = FOV aimbota
+DRAW_TRIGGER_FOV = FOV triggerbota
 
-//Custom Glow Shit
-Normal = normal shit
-Model = model shit
-Visible = visible shit
-Visible-Flicker = visible flicker shit
+GLOW_ESP = Włącz
+GLOW_SHOW_TEAM = Sojusznicy
+GLOW_SHOW_ENEMIES = Przeciwnicy
+GLOW_SHOW_BOMB = Bomba
+GLOW_BOMB_ADAPTIVE = Adaptacyjna poświata bomby
+GLOW_SHOW_BOMB_CARRIER = Niosący bombę
+GLOW_SHOW_WEAPONS = Bronie
+GLOW_SHOW_GRENADES = Granaty
+GLOW_SHOW_TARGET = Cel
+GLOW_TEAM_COLOR = Sojusznicy
+GLOW_ENEMY_COLOR = Przeciwnicy
+GLOW_BOMB_COLOR = Bomba
+GLOW_BOMB_CARRIER_COLOR = Niosący bombę
+GLOW_WEAPON_COLOR = Bronie
+GLOW_GRENADE_COLOR = Granaty
+GLOW_SHOW_HEALTH = Pokaż zdrowie
+GLOW_ENEMY_TYPE = Przeciwnicy
+GLOW_TEAMMATE_TYPE = Sojusznicy
+GLOW_WEAPON_TYPE = Bronie
+GLOW_TARGET_TYPE = Cel
+GLOW_GRENADE_TYPE = Granaty
+GLOW_BOMB_TYPE = Bomba
+GLOW_BOMB_CARRIER_TYPE = Niosący bombę
+GLOW_TEAM_COLOR = Sojusznicy
 
-//Somewhat shit?
-_AIM_BONE = Bone shit
-_AIM_FORCE_BONE = Force Bone shit
-_TRIGGER_INCROSS = trigger incross shit
-_TRIGGER_INFOV = trigger infov shit
-_TRIGGER_AIMBOT = trigger aimbot shit
-_AIM_ONLY_ON_SHOT = aim on shot shit
-_FACTOR_RECOIL = factor recoil shit
-_ENABLE_FLAT_AIM = flat aim shit
-_ENABLE_PATH_AIM = path aim shit
-_AIM_BONE = aim bone shit
-_AIM_FORCE_BONE = aim force bone shit
+CHAMS_SHOW_TEAM = Sojusznicy
+CHAMS_SHOW_ENEMIES = Przeciwnicy
+CHAMS_SHOW_SELF = Ty
+CHAMS_TEAM_COLOR = Sojusznicy
+CHAMS_ENEMY_COLOR = Przeciwnicy
+CHAMS_SELF_COLOR = Ty
+
+INDICATOR_ESP = Włącz
+INDICATOR_SHOW_TEAM = Sojusznicy
+INDICATOR_SHOW_ENEMIES = Przeciwnicy
+INDICATOR_SHOW_BOMB = Bomba
+INDICATOR_SHOW_BOMB_CARRIER = Niosący bombę
+INDICATOR_SHOW_WEAPONS = Bronie
+INDICATOR_SHOW_GRENADES = Granaty
+INDICATOR_SHOW_DEFUSERS = Zestawy do rozbrajania
+INDICATOR_ENEMY_COLOR = Przeciwnicy
+INDICATOR_BOMB_COLOR = Bomba
+INDICATOR_BOMB_CARRIER_COLOR = Niosący bombę
+INDICATOR_DEFUSER_COLOR = Zestawy do rozbrajania
+INDICATOR_WEAPON_COLOR = Bronie
+INDICATOR_GRENADE_COLOR = Granaty
+
+BOX_ESP_HEALTH = Zdrowie
+BOX_ESP_HEALTH_POS = Zdrowie
+BOX_ESP_ARMOR = Kamizelka
+BOX_ESP_ARMOR_POS = Kamizelka
+BOX_ESP_NAME = Nazwa
+BOX_ESP_NAME_POS = Nazwa
+BOX_ESP_WEAPON = Broń
+BOX_ESP_WEAPON_POS = Broń
+BOX_ESP_MONEY = Pieniądze
+BOX_ESP_MONEY_POS = Pieniądze
+BOX_ESP_HELMET_POS = Hełm
+BOX_ESP_KEVLAR_POS = Kamizelka
+BOX_ESP_AMMO_POS = Amunicja
+BOX_ESP_SCOPED_POS = Przycelowany
+BOX_ESP_FLASHED_POS = Oślepiony
+BOX_SHOW_TEAM = Sojusznicy
+BOX_SHOW_ENEMIES = Przeciwnicy
+BOX_ESP_DETAILS = Informacje w Boxie
+BOX_TEAM_COLOR = Sojusznicy
+BOX_ENEMY_COLOR = Przeciwnicy
+BOX_DEFUSER_COLOR = Zestawy do rozbrajania
+
+SKELETON_ESP = Szkielet
+SKELETON_SHOW_TEAM = Sojusznicy
+SKELETON_SHOW_ENEMIES = Przeciwnicy
+
+ENABLE_SNAPLINES = Włącz
+SNAPLINES_WIDTH = Szerokość
+SNAPLINES_ENEMIES = Przeciwnicy
+SNAPLINES_ENEMY_COLOR = Przeciwnicy
+SNAPLINES_TEAMMATES = Sojusznicy
+SNAPLINES_TEAM_COLOR = Sojusznicy
+SNAPLINES_WEAPONS = Bronie
+SNAPLINES_WEAPON_COLOR = Bronie
+SNAPLINES_BOMB = Bomba
+SNAPLINES_BOMB_COLOR = Bomba
+SNAPLINES_BOMB_CARRIER = Niosący bombę
+SNAPLINES_BOMB_CARRIER_COLOR = Niosący bombę
+
+ENABLE_FOOTSTEPS = Włącz
+FOOTSTEP_TEAM = Sojusznicy
+FOOTSTEP_TEAM_COLOR = Sojusznicy
+FOOTSTEP_ENEMY = Przeciwnicy
+FOOTSTEP_ENEMY_COLOR = Przeciwnicy
+
+ENABLE_HITMARKER = Włącz
+HITMARKER_WIDTH = Szerokość
+HITMARKER_OUTLINE_COLOR = Kontur
+
+HEAD_LVL_COLOR = Poziom głowy
+HEAD_LVL_DEADZONE = Martwa strefa
+HEAD_LVL_LINE_WIDTH = Szerokość linii
+HeadLvl = HeadLvl
+
+D_SPAM = Spamowanie drzwiami
+D_SPAM_KEY = Przycisk spamu drzwiami
+W_SPAM = Spamowanie bronią
+W_SPAM_KEY = Przycisk spamu bronią
+SPECTATOR_LIST = Lista widzów
+
+SKINCHANGER = Włącz zmianę skinów
+FORCE_UPDATE_AUTO = Automatycznie aktualizuj skiny
+NADE_TRACER = Smuga
+
+//Custom Glow
+NORMAL = Normalny
+MODEL = Model
+VISIBLE = Widzialny
+VISIBLE-FLICKER = Widzialny migający
+
+//Custom Box
+LEFT = Lewo
+RIGHT = Prawo
+TOP = Góra
+BOTTOM = Dół
+
+//Extensions
+_AIM_BONE = Kość
+_AIM_FORCE_BONE = Zastąp kość
+_TRIGGER_INCROSS = Na celowniku
+_TRIGGER_INFOV = W polu zasięgu
+_TRIGGER_AIMBOT = Aimbot
+_AIM_ONLY_ON_SHOT = Celuj tylko podczas strzelania
+_FACTOR_RECOIL = Kontroluj rozrzut
+_ENABLE_FLAT_AIM = Nadpisz kąt widzenia
+_ENABLE_PATH_AIM = Ruch kursorem
+
+//Need organization
+ENABLE_ESP = Włącz
+VISUALS_TOGGLE_KEY = Przycisk przełączenia efektów
+ENABLE_NIGHTMODE = Jasność
+NIGHTMODE_VALUE = %
+DRAW_AIM_FOV_COLOR = FOV aimbota
+DRAW_TRIGGER_FOV_COLOR = FOV triggerbota
+CHAMS_ESP = Włącz
+CHAMS_SHOW_HEALTH = Pokaż zdrowie
+CHAMS_BRIGHTNESS = Jasność
+INDICATOR_DISTANCE = Odległość wskaźnika
+INDICATOR_SIZE = Rozmiar wskaźnika
+ENABLE_BOX_ESP = Włącz Box
+BOX_ESP_HELMET = Hełm
+BOX_ESP_KEVLAR = Kamizelka
+BOX_ESP_AMMO = Amunicja
+BOX_ESP_SCOPED = Przycelowany
+BOX_ESP_FLASHED = Oślepiony
+BOX_DETAILS_TEXT_COLOR = Kolor tekstu
+HITMARKER_OUTLINE = Kontur
+HITMARKER_COMBO = Kombo #
+HITMARKER_RECOIL_POSITION = Pozycja odrzutu
+HITMARKER_SPACING = Odstęp
+HITMARKER_LENGTH = Długość linii
+HITMARKER_COLOR = Hitmarker
+HITMARKER_COMBO_COLOR = Kombo
+NADE_TRACER_UPDATE_TIME = Czas aktualizacji
+NADE_TRACER_TIMEOUT = Czas wygaszania
+FOOTSTEP_UPDATE = Częstotliwość
+FOOTSTEP_TTL = Czas życia
+ENABLE_BUNNY_HOP = Bunny Hop
+AUTO_STRAFE = Automatyczne strafowanie
+STRAFE_BHOP_ONLY = Tylko BHop
+FAST_STOP = Szybki stop
+ENABLE_AUTO_KNIFE = Automatyczny nóż
+ENABLE_FOV_CHANGER = Zmiana pola widzenia
+FOV_DEFAULT = Domyślne
+FOV_SMOOTH = Płynna zmiana
+FOV_SNIPER_DEFAULT = Lunety
+FOV_ZOOM_1 = Pierwszy zoom
+FOV_ZOOM_2 = Drugi zoom
+ENABLE_BOMB_TIMER = Włącz
+BOMB_TIMER_MENU = Menu bomby
+BOMB_TIMER_BARS = Pasek czasu
+ENABLE_REDUCED_FLASH = Redukcja oślepienia
+FLASH_MAX_ALPHA = Intensywność
+HITSOUND_VOLUME = Głośność
+ENABLE_RCS = Włącz
+RCS_SMOOTHING_X = Celność horyzontalna
+RCS_SMOOTHING_Y = Celność wertykalna
+RCS_RETURNAIM = Powrót celownika
+ENABLE_RECOIL_CROSSHAIR = Celownik rozrzutu
+ENABLE_SNIPER_CROSSHAIR = Celownik karabinu snajperskiego
+RCROSSHAIR_WIDTH = Szerokość
+RCROSSHAIR_LENGTH = Długość
+RCROSSHAIR_XOFFSET = Margines horyzontalny
+RCROSSHAIR_YOFFSET = Margines wertykalny
+RCROSSHAIR_ALPHA = Przezroczystość
+RCROSSHAIR_COLOR = Kolor
+ENABLE_TRIGGER = Triggerbot - główny przełącznik
+TRIGGER_ENABLE_KEY = Triggerbot pod przyciskiem
+TRIGGER_KEY = Przycisk triggerbota
+ENABLE_AIM = Włącz
+AIM_TOGGLE_KEY = Przycisk przełączenia aimbota
+ACTIVATE_FROM_AIM_KEY = Aktywuj przez przycisk strzelania
+TEAMMATES_ARE_ENEMIES = Członkowie drużyny są przeciwnikami
+HOLD_AIM = Celowanie poza polem zasięgu
+FORCE_AIM_BONE_KEY = Przycisk zastąpienia kości
+FORCE_AIM_KEY = Przycisk celowania
+FORCE_AIM_ALWAYS = Zawsze celuj
+FORCE_AIM_THROUGH_WALLS = Zawsze celuj przez ściany
+AUTOMATIC_WEAPONS = Automatyczne bronie
+AIM_TARGET_SWAP_DELAY = Opóźnienie zmiany celu
+SNIPER_ENABLE_SCOPED_ONLY = Tylko przycelowany
+ENABLE_NADE_HELPER = Włącz
+HEAD = GŁOWA
+NECK = SZYJA
+CHEST = TUŁÓW
+STOMACH = BRZUCH
+NEAREST = NAJBLIŻSZY
+RANDOM = LOSOWY
+FOV_TYPE = Typ pola widzenia
+DISTANCE = ODLEGŁOŚĆ
+STATIC = STATYCZNY
+//New
+Weapon-Category = Kategoria broni
+MENU_KEY = Przycisk menu
+ENABLE_OVERRIDE = Zastąp ustawienia	 							 
+ENABLE_BACKTRACK = Backtrack - główny przełącznik
+BACKTRACK_VISUALIZE = Zobrazuj
+ENABLE_BACKTRACK_ON_KEY = Backtrack na przycisk
+BACKTRACK_KEY = Przycisk backtracka
+BACKTRACK_FOV = FOV
+BACKTRACK_MS = Max MS			 
+BACKTRACK_PREFER_ACCURATE = Preferuj celne zapisy
+BACKTRACK_SPOTTED = Sprawdź czy widoczny
+_BACKTRACK = Backtrack
+_BACKTRACK_NECK = Szyja
+_BACKTRACK_CHEST = Tułów
+_BACKTRACK_STOMACH = Brzuch
+_BACKTRACK_PELVIS = Miednica
+ENABLE_ADRENALINE = Adrenalina
+GLOW_TARGET_COLOR = Kolor poświaty celu
+NADE_TRACER_COLOR = Kolor smugi granatu
+ENABLE_HITSOUND = Dźwięk trafienia
+OPENGL_FPS = Klatki na sekundę OpenGL
+MENU_STAY_FOCUSED = Na wierzchu
+DEBUG = Debugowanie
+KEYBINDS = Klawisze
+GAUSSIAN_BLUR = Włącz blur menu
+PISTOL = PISTOLET
+RIFLE = KARABIN
+SMG = PISTOLET MASZYNOWY
+SNIPER = KARABIN SNAJPERSKI
+SHOTGUN = STRZELBA
+_AIM_FOV = Pole zasięgu
+_AIM_SPEED = Prędkość
+_AIM_SMOOTHNESS = Płynność
+_AIM_AFTER_SHOTS = Celuj po #
+_PERFECT_AIM_FOV = Pole zasięgu
+_PERFECT_AIM_CHANCE = % Szansy
+_RANDOM_X_VARIATION = Wariacja horyzontalna
+_RANDOM_Y_VARIATION = Wariacja wertykalna
+_VARIATION_DEADZONE = Martwa strefa wariacji
+_AIM_RCS_X = Wariacja RCS X
+_AIM_RCS_Y = Wariacja RCS Y
+_AIM_RCS_VARIATION = Wariacja RCS
+_AIM_SPEED_DIVISOR = Dzielnik prędkości
+_TRIGGER_FOV = Pole zasięgu
+_TRIGGER_INIT_SHOT_DELAY = Początkowe opóźnienie strzału
+HEAD_WALK = Utrzymaj się na głowie
+Team = Drużyna
+Name = Nazwa
+Rank = Ranga
+Kills = Fragi
+Deaths = Śmierci
+K/D = K/D
+Wins = Wygrane
+Money = Pieniądze
+Self-Nade = Rzuć na siebie granat
+LS_BOMB = Perfekcyjne rozbrajanie bomby
+MENU_ALPHA = Przezroczystość
+
+//menu tabs
+Misc = Różne
+Aim = Aimbot
+Visuals = Efekty
+RCS = RCS
+Ranks = Rangi
+Nade-Helper = Granaty
+Skin-Changer = Zmiana skinów
+Options = Opcje
+Glow = Poświata
+Chams = Kameleon
+Indicator = Wskaźnik
+Box = Box
+Snaplines = Linie
+FootSteps = Kroki
+Hitmarker = Hitmarker
+Nades = Granaty
+
+//grenade helper
+Loaded:-N/A = Załadowany: N/A
+Create-Grenade-Position = Stwórz nową pozycję
+Save-As-File = Zapisz do pliku
+Load-From-File = Wczytaj z pliku
+Delete-Selected-File = Usuń zaznaczony plik
+Clear-Currently-Loaded = Wyczyść aktualnie załadowane pozycje
+Delete-At-Current-Position = Usuń obecną pozycję
+
+//skin changer
+Skin-ID = ID skina
+StatTrak = StatTrak
+Wear = Zewnętrze
+Manual-Force-Update = Zaaktualizuj skiny
+Auto-Force-Update = Automatycznie aktualizuj skiny
+
+//options tab
+Join-Discord = Dołącz do Discorda [angielski]
+Load-Locale = Wczytaj lokalizację
+Save-CFG = Zapisz CFG
+Load-CFG = Wczytaj CFG
+Delete-CFG = Usuń CFG
+Save-Current-Config-To-Default-Settings = Zapisz aktualną konfigurację do ustawień domyślnych
+
+//aim tab
+Enable-Perfect-Aim = Włącz perfekcyjny strzał
+Advanced-Settings = Ustawienia zaawansowane
+
+//overide weapons shit
+Enable-Override = Zastąp ustawienia
+Factor-Recoil = Kontroluj rozrzut
+Flat-Aim = Nadpisz kąt widzenia
+Path-Aim = Ruch kursorem
+Scoped-Only = Tylko przycelowany
+Bone = Kość
+Speed = Prędkość 
+Smooth = Płynność
+Aim-After-# = Celuj po #
+Perfect-Aim = Perfekcyjny strzał
+Chance = Szansa
+Override-Weapons = Zastąp ustawienia broni
+
+//Menu Titles
+Bomb-Timer = Czas do wybuchu bomby
+Spectator-List = Lista widzów
+
+//Bomb Timer
+Bomb-Not-Planted! = Bomba nie jest podłożona!
+Bomb-Planted! = Bomba podłożona!
+Time-To-Explode: = Czas do wybuchu:
+Location: = Pozycja:
+Can-Defuse: = Czy można rozbroić na czas:
+Time-To-Defuse: Czas do rozbrojenia:
+Time-Left-After: = Pozostały czas:
+
+//Footsteps
+TEXT = Tekst
+CIRCLE = Okrąg
+
+//aim strafer
+SAME = Ten sam kierunek
+OPPOSITE = Przeciwny kierunek
+
+//save config
+Enter-config-name = Wprowadź nazwę konfiguracji
+
+//new shit
+LEGIT_RADAR = Legit Radar
+LEGIT_RADAR_FOOTSTEPS_DISTANCE = Odległość
+ADRENALINE_STRENGTH = Moc adrenaliny
+SNAPLINES_DEFUSE_KIT_COLOR = Zestaw do rozbrajania
+_TRIGGER = Włącz
+_TRIGGER_BACKTRACK = Strzelaj w Backtrack
+KILL_BIND = Kill Bind
+KILL_BIND_KEY = Przycisk
+BHOP_HITCHANCE = Szansa
+
+FIRST-SHOT = PIERWSZY STRZAŁ
+BETWEEN-SHOTS = MIĘDZY STRZAŁAMI
+TRIGGER_DELAY_TYPE = Typ opóźnienia triggerbota
+_TRIGGER_PER_SHOT_DELAY = Opóźnienie między strzałami
+NONE = Żaden
+ADVANCED_BOUNDING_BOX = Dynamiczny Box
+BOX_WEAPON_COLOR = Bronie
+CECONENTITY = Zestaw do rozbrajania
+DISABLE_POST_PROCESSING = Wyłącz Post Processing
+ENABLE_NADE_THROWER = Automatyczny rzut
+NADE_THROWER_KEY = Przycisk
+CIRCLE = Okrąg
+CROSSHAIR = Celownik
+RCROSSHAIR_TYPE = Typ celownika
+SPREAD_CIRCLE_COLOR = Okrąg rozrzutu
+SpreadCircle = SpreadCircle
+
+//RCS
+RCS_TYPE = Typ kontroli rozrzutu
+STABLE = STABILNY
+LEGACY = ORYGINALNY
+RCROSSHAIR_RADIUS = Pole
+
+//Override Shit
+tAimFov = Pole zasięgu
+tAimSpeed = Prędkość
+tAimSmooth = Płynność
+tAimAfterShots = Celuj po #
+tPAimFov = Pole zasięgu
+tPAimChance = % Szansy
+tBTrigFov = Pole zasięgu
+tBTrigInitDelay = Początkowe opóźnienie strzału
+tBTrigPerShotDelay = Opóźnienie między strzałami
+tBTMS = MS
+Force-Bone = Zastąp kość
+_BACKTRACK_MS = Backtrack
+
+VISUALIZE_SMOKES_COLOR = Rysuj granaty dymne
+VISUALIZE_SMOKES_POLYS = Ilość kątów
+VISUALIZE_SMOKES_WIDTH = Szerokość
+VISUALIZE_SMOKES_HEIGHT = Wysokość
+
+GLOW_SMOKE_CHECK = Widoczność przez dym
+INDICATOR_SMOKE_CHECK = Widoczność przez dym
+BOX_SMOKE_CHECK = Widoczność przez dym
+SNAPLINES_SMOKE_CHECK = Widoczność przez dym
+
+Keybinds = Klawisze
+
+CHAMS_TARGET_COLOR = Cel
+BOX_FAR_RADAR = Box dalekiego radaru
+ADRENALINE_COOLDOWN = Czas pomiędzy efektami
+ADRENALINE_BOMB_TIME = Użyj czasu do wybuchu bomby
+Name-Change = Tymczasowa zmiana nicku
+Warning = Uwaga
+CLEAR_POSITIONS = Czy chcesz wyczyścić aktualnie załadowane pozycje?			  			 

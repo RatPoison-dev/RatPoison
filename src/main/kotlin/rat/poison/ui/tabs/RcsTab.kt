@@ -33,7 +33,7 @@ class RcsTab : Tab(false, false) {
 
     val rCrosshairType = VisSelectBoxCustom("RCrosshair Type", "RCROSSHAIR_TYPE", false, false, "CIRCLE", "CROSSHAIR")
 
-    val rCrosshairRadius = VisSliderCustom("RCrosshair Radius", "RCROSSHAIR_RADIUS", 1F, 200F, 5F, true, width1 = 200F, width2 = 250F)
+    val rCrosshairRadius = VisSliderCustom("RCrosshair Radius", "RCROSSHAIR_RADIUS", 1F, 50F, 1F, true, width1 = 200F, width2 = 250F)
     val rCrosshairWidth = VisSliderCustom("RCrosshair Width", "RCROSSHAIR_WIDTH", 1F, 5F, 1F, true, width1 = 200F, width2 = 250F)
     val rCrosshairLength = VisSliderCustom("RCrosshair Length", "RCROSSHAIR_LENGTH", 3F, 100F, 1F, true, width1 = 200F, width2 = 250F)
 

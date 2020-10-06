@@ -91,7 +91,9 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 
 		saveStyle()
 
-		makeUndecorated()
+		if (!curSettings["APPLESS"].strToBool()) {
+			makeUndecorated()
+		}
 
 		beActive()
 
@@ -124,26 +126,25 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 			x = rcWindow.left + (rcWindow.right - rcWindow.left - width) / 2 - 1
 			y = rcWindow.top + rcWindow.bottom - rcWindow.top - height - 1
 
-			if (oldX != x || oldY != y || oldWidth != width || oldHeight != height) {
-				SetWindowPos(
-						myHWND, HWND_TOPPOS, x, y, width, height, WinUser.SWP_NOSENDCHANGING or WinUser.SWP_NOZORDER
-						or WinUser.SWP_DEFERERASE or WinUser.SWP_NOREDRAW or WinUser.SWP_ASYNCWINDOWPOS or WinUser.SWP_FRAMECHANGED
-				)
-				listener?.onBoundsChange(this@Overlay, x, y, width, height)
-			}
-			val isMyWindowVisible = IsWindowVisible(myHWND)
-			if (getActiveWindow() == targetAppHWND) {
-				if (!isMyWindowVisible) {
-					ShowWindow(myHWND, WinUser.SW_SHOW)
-					listener?.onForeground(this@Overlay)
-					if (!clickThrough) beActive()
+			if (!curSettings["APPLESS"].strToBool()) {
+				if (oldX != x || oldY != y || oldWidth != width || oldHeight != height) {
+					SetWindowPos(myHWND, HWND_TOPPOS, x, y, width, height, WinUser.SWP_NOSENDCHANGING or WinUser.SWP_NOZORDER or WinUser.SWP_DEFERERASE or WinUser.SWP_NOREDRAW or WinUser.SWP_ASYNCWINDOWPOS or WinUser.SWP_FRAMECHANGED)
+					listener?.onBoundsChange(this@Overlay, x, y, width, height)
 				}
-			} else {
-				if (isMyWindowVisible) {
-					if (curSettings["MENU_APP"].replace("\"", "") == "Counter-Strike: Global Offensive") {
-						if (!curSettings["MENU_STAY_FOCUSED"].strToBool()) {
-							ShowWindow(myHWND, WinUser.SW_HIDE)
-							listener?.onBackground(this@Overlay)
+				val isMyWindowVisible = IsWindowVisible(myHWND)
+				if (getActiveWindow() == targetAppHWND) {
+					if (!isMyWindowVisible) {
+						ShowWindow(myHWND, WinUser.SW_SHOW)
+						listener?.onForeground(this@Overlay)
+						if (!clickThrough) beActive()
+					}
+				} else {
+					if (isMyWindowVisible) {
+						if (curSettings["MENU_APP"].replace("\"", "") == "Counter-Strike: Global Offensive") {
+							if (!curSettings["MENU_STAY_FOCUSED"].strToBool()) {
+								ShowWindow(myHWND, WinUser.SW_HIDE)
+								listener?.onBackground(this@Overlay)
+							}
 						}
 					}
 				}
@@ -173,9 +174,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 		val dimension = java.awt.Toolkit.getDefaultToolkit().screenSize
 		val x = ((dimension.getWidth() - initialWidth) / 2).toInt()
 		val y = ((dimension.getHeight() - initialHeight) / 2).toInt()
-		SetWindowPos(
-				myHWND, HWND_ZERO, x, y, initialWidth, initialHeight, WinUser.SWP_SHOWWINDOW
-		)
+		SetWindowPos(myHWND, HWND_ZERO, x, y, initialWidth, initialHeight, WinUser.SWP_SHOWWINDOW)
 
 		SetForegroundWindow(myHWND)
 		SetActiveWindow(myHWND)
@@ -209,13 +208,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	}
 
 	private fun makeOpaque() = with(User32) {
-		SetWindowCompositionAttribute(
-			myHWND,
-			WindowCompositionAttributeData(
-					AccentState = AccentStates.ACCENT_DISABLED,
-					AccentFlags = AccentFlag_DrawAllBorders
-			)
-		)
+		SetWindowCompositionAttribute(myHWND, WindowCompositionAttributeData(AccentState = AccentStates.ACCENT_DISABLED, AccentFlags = AccentFlag_DrawAllBorders))
 	}
 
 	private fun getWindowHWND(windowName: String, timeout: Long = 3000L): Long = with(User32) {
@@ -283,16 +276,20 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 
 			AttachThreadInput(dwCurrentThread.toLong(), dwFGThread.toLong(), false)
 
-			SetWindowPos(myHWND, HWND_TOPPOS, x, y, width, height, 0)
+			if (!curSettings["APPLESS"].strToBool()) {
+				SetWindowPos(myHWND, HWND_TOPPOS, x, y, width, height, 0)
+			}
+
 			listener?.onActive(this@Overlay)
 		}
 	}
 
 	private fun bePassive() = with(User32) {
-		SetWindowLongA(
-				myHWND, WinUser.GWL_EXSTYLE, WinUser.WS_EX_LAYERED or WinUser.WS_EX_TRANSPARENT or WS_EX_TOOLWINDOW or WS_EX_TOPMOST
-		)
-		makeTransparent()
+		if (!curSettings["APPLESS"].strToBool()) {
+			SetWindowLongA(myHWND, WinUser.GWL_EXSTYLE, WinUser.WS_EX_LAYERED or WinUser.WS_EX_TRANSPARENT or WS_EX_TOOLWINDOW or WS_EX_TOPMOST)
+			makeTransparent()
+		}
+
 		if (targetAppHWND != HWND_ZERO) {
 			if (getActiveWindow() == targetAppHWND) {
 				SetForegroundWindow(targetAppHWND)
@@ -300,6 +297,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 				SetFocus(targetAppHWND)
 			}
 		}
+
 		listener?.onPassive(this@Overlay)
 	}
 }

@@ -59,8 +59,8 @@ class AimTable: VisTable(false) {
     val enablePathAim = ATabVisCheckBox("Mouse Movement", "_ENABLE_PATH_AIM")
     val enableScopedOnly = VisCheckBoxCustom("Scoped Only", "SNIPER_ENABLE_SCOPED_ONLY")
 
-    val aimBone = VisSelectBoxCustom("Bone", "_AIM_BONE", true, true,"HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
-    val forceAimBone = VisSelectBoxCustom("Force Bone", "_AIM_FORCE_BONE", true, true,"HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
+    val aimBone = VisSelectBoxCustom("Bone".toLocale(), "_AIM_BONE", true, true,"HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
+    val forceAimBone = VisSelectBoxCustom("Force-Bone".toLocale(), "_AIM_FORCE_BONE", true, true,"HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
 
     val aimFov = ATabVisSlider("Aim FOV", "_AIM_FOV", .5F, 90F, .5F, false)
     val aimSpeed = ATabVisSlider("Aim Speed", "_AIM_SPEED", 0F, 10F, 1F, true)
