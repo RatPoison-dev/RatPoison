@@ -2,6 +2,7 @@ package rat.poison.ui
 
 import rat.poison.overlay.App.uiAimOverridenWeapons
 import rat.poison.overlay.App.uiBombWindow
+import rat.poison.overlay.App.uiKeybinds
 import rat.poison.overlay.App.uiMenu
 import rat.poison.overlay.App.uiSpecList
 import rat.poison.overlay.opened
@@ -102,6 +103,9 @@ fun refreshMenu() {
 
     uiBombWindow.remove()
     uiBombWindow = UIBombTimer()
+
+    uiKeybinds.remove()
+    uiKeybinds = UIKeybinds()
 
     uiRefreshing = false
 }

@@ -60,7 +60,7 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 
 	val randInt = randInt(1, 100)
 
-	if (curSettings["PERFECT_AIM"].strToBool() && allowPerfect && closestFOV <= curSettings["PERFECT_AIM_FOV"].toInt() && randInt <= curSettings["PERFECT_AIM_CHANCE"].toInt()) {
+	if (curSettings["PERFECT_AIM"].strToBool() && allowPerfect && closestFOV <= curSettings["PERFECT_AIM_FOV"].toFloat() && randInt <= curSettings["PERFECT_AIM_CHANCE"].toInt()) {
 		canPerfect = true
 	}
 

@@ -31,7 +31,7 @@ internal fun rcrosshair() = App {
     val eRC = curSettings["ENABLE_RECOIL_CROSSHAIR"].strToBool()
     val eSC = !curSettings["ENABLE_SNIPER_CROSSHAIR"].strToBool()
 
-    if (!eRC && !eSC) return@App
+    if (!eRC) return@App
 
     val x: Float
     val y: Float

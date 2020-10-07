@@ -1,5 +1,6 @@
 package rat.poison.scripts
 
+import com.badlogic.gdx.math.MathUtils.clamp
 import rat.poison.curSettings
 import rat.poison.game.entity.dead
 import rat.poison.game.entity.weapon
@@ -17,7 +18,9 @@ fun automaticWeapons(): Boolean {
         updateCursorEnable()
         if (!cursorEnable && !meDead) {
             if (!meCurWep.automatic && !meCurWep.grenade && !meCurWep.bomb) {
-                if (punchCheck >= curSettings["AUTO_WEP_DELAY"].toInt()) {
+                val autoWepDelay = clamp(curSettings["AUTO_WEP_DELAY"].toInt(), 1, 5000)
+
+                if (punchCheck >= autoWepDelay) {
                     punchCheck = 0
                     return true
                 } else {

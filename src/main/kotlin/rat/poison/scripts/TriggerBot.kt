@@ -94,7 +94,7 @@ fun triggerBot() = every(5, inGameCheck = true) {
 
         if (bBACKTRACK) { //If we should check backtrack
             if (bestBacktrackTarget > 0) {
-                if (!bestBacktrackTarget.dead() && !bestBacktrackTarget.isProtected()) {
+                if (bestBacktrackTarget.canShoot()) {
                     //Shoot
                     trigQueueShot(useDelay, bAIMBOT, bBACKTRACK, canFOV)
                     return@every

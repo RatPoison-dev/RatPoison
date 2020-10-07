@@ -44,7 +44,7 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Testing"
 const val F_VERSION = "1.7"
-const val M_VERSION = "1.7.20"
+const val M_VERSION = "1.7.21"
 var LOADED_CONFIG = "DEFAULT"
 
 //const val EXPERIMENTAL = false
