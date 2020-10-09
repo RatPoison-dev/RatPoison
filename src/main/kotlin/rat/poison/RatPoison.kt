@@ -29,7 +29,7 @@ import kotlin.collections.set
 data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = false,          var tOnShot: Boolean = false,
                    var tFlatAim: Boolean = false,       var tPathAim: Boolean = false,          var tAimBone: Int = 0,
                    var tForceBone: Int = 0,             var tAimFov: Float = 0F,                var tAimSpeed: Int = 0,
-                   var tAimSmooth: Double = 0.0,        var tPerfectAim: Boolean = false,       var tPAimFov: Int = 1,
+                   var tAimSmooth: Float = 0F,        var tPerfectAim: Boolean = false,       var tPAimFov: Float = 1F,
                    var tPAimChance: Int = 1,            var tScopedOnly: Boolean = false,       var tAimAfterShots: Int = 0,
 
                    var tBoneTrig: Boolean = false,     var tBTrigAim: Boolean = false,          var tBTrigInCross: Boolean = false,
