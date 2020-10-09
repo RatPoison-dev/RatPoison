@@ -25,15 +25,20 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
     var value = 0
 
     init {
-        update()
-
-        updateTooltip()
-
+        //Update the items inside the box with locale items
         val itemsArray = Array<String>()
         for (i in boxItems) {
-            itemsArray.add(i)
+            if (dbg && curLocale[i].isBlank()) {
+                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
+            }
+
+            itemsArray.add(curLocale[i])
         }
+
         selectBox.items = itemsArray
+        update()
+        updateTooltip()
+
 
         selectBox.changed { _, _ ->
             //This uses the stored box items to set settings appropriately without fucking with enums/switches for the locale
@@ -53,25 +58,14 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
 
     fun update() {
         if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
-            //Update the box label text
-            if (dbg && curLocale[variableName].isBlank()) {
+            if (dbg && curLocale[variableName].isBlank()) { //Variable is missing in locale
                 println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
             }
 
-            if (showText) {
+            if (showText) { //Update box label text
                 boxLabel.setText("${curLocale[variableName]}:")
             }
 
-            //Update the items inside the box with locale items
-            val itemsArray = Array<String>()
-            for (i in boxItems) {
-                if (dbg && curLocale[i].isBlank()) {
-                    println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
-                }
-
-                itemsArray.add(curLocale[i])
-            }
-            selectBox.items = itemsArray
             selectBox.selectedIndex = boxItems.indexOf(curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }].toUpperCase())
         } else {
             selectBox.selected = curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }]

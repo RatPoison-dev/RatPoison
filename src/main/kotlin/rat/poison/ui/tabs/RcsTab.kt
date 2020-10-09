@@ -86,6 +86,7 @@ fun updateDisableRCrosshair() {
         }
 
         rCrosshairType.disable(bool, color)
+        enableSCrosshair.disable(bool)
 
         if (bool) {
             rCrosshairRadius.disable(true, color)

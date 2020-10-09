@@ -26,9 +26,6 @@ import rat.poison.utils.shouldPostProcess
 
 //https://github.com/0xf1a/xSkins
 
-private var preBayonetCT = 89
-private var preBayonetT = 64
-
 private var shouldUpdate = false
 
 fun skinChanger() = every(1, continuous = true, inGameCheck = true) {

@@ -33,13 +33,13 @@ class OverridenWeapons : VisTable(false) {
     private val categorySelectLabel = VisLabel("${"Weapon-Category".toLocale()}:")
 
     private val weaponOverrideSelectionBox = VisSelectBox<String>()
-    val weaponOverrideEnableCheckBox = OverrideVisCheckBoxCustom("Enable-Override", "tOverride")
+    val weaponOverrideEnableCheckBox = OverrideVisCheckBoxCustom("Enable Override", "tOverride")
 
-    val enableFactorRecoil = OverrideVisCheckBoxCustom("Factor-Recoil", "tFRecoil")
-    val enableOnShot = OverrideVisCheckBoxCustom("On-Shot", "tOnShot")
-    val enableFlatAim = OverrideVisCheckBoxCustom("Flat-Aim", "tFlatAim")
-    val enablePathAim = OverrideVisCheckBoxCustom("Path-Aim", "tPathAim")
-    val enableScopedOnly = OverrideVisCheckBoxCustom("Scoped-Only", "tScopedOnly")
+    val enableFactorRecoil = OverrideVisCheckBoxCustom("Factor Recoil", "tFRecoil")
+    val enableOnShot = OverrideVisCheckBoxCustom("On Shot", "tOnShot")
+    val enableFlatAim = OverrideVisCheckBoxCustom("Flat Aim", "tFlatAim")
+    val enablePathAim = OverrideVisCheckBoxCustom("Path Aim", "tPathAim")
+    val enableScopedOnly = OverrideVisCheckBoxCustom("Scoped Only", "tScopedOnly")
 
     //TODO Labels might need locale updates?
     private val aimBoneLabel = VisLabel("Bone".toLocale())
@@ -50,10 +50,10 @@ class OverridenWeapons : VisTable(false) {
     val aimFov = OverrideVisSliderCustom("FOV", "tAimFov", 0.5F, 90F, 0.5F, false, width1 = 225F, width2 = 125F)
     val aimSpeed = OverrideVisSliderCustom("Speed", "tAimSpeed", 0F, 10F, 1F, true, width1 = 225F, width2 = 125F)
     val aimSmoothness = OverrideVisSliderCustom("Smooth", "tAimSmooth", 1F, 5F, .1F, false, width1 = 225F, width2 = 125F)
-    val aimAfterShots = OverrideVisSliderCustom("Aim-After-#", "tAimAfterShots", 0F, 10F, 1F, true, width1 = 225F, width2 = 125F)
+    val aimAfterShots = OverrideVisSliderCustom("Aim After #", "tAimAfterShots", 0F, 10F, 1F, true, width1 = 225F, width2 = 125F)
 
     //Perfect Aim Collapsible
-    val perfectAimCheckBox = OverrideVisCheckBoxCustom("Perfect-Aim", "tPerfectAim")
+    val perfectAimCheckBox = OverrideVisCheckBoxCustom("Perfect Aim", "tPerfectAim")
     private val perfectAimTable = VisTable()
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
     val perfectAimFov = OverrideVisSliderCustom("FOV", "tPAimFov", 1F, 90F, .5F, false, width1 = 225F, width2 = 125F)

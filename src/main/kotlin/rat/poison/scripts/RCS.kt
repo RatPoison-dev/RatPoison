@@ -54,6 +54,10 @@ fun rcs() = every(4, inGameCheck = true) {
 				lastAppliedRCS.set(0F, 0F)
 			}
 		} else {
+			if (lastAppliedRCS.isZero) {
+				lastAppliedRCS.set(p.x, p.y)
+			}
+
 			val playerPunch = Vector3(p.x, p.y, p.z) //Set playerPunch to current punch
 
 			val punchToApply = Vector2((playerPunch.x - lastAppliedRCS.x), (playerPunch.y - lastAppliedRCS.y)) //Set to our current punch and what our last punch was
