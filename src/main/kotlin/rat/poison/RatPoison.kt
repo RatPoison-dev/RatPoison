@@ -9,6 +9,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.lwjgl.glfw.GLFW.*
 import rat.poison.game.CSGO
+import rat.poison.game.offsets.EngineOffsets.dwbSendPackets
 import rat.poison.overlay.App
 import rat.poison.scripts.*
 import rat.poison.scripts.aim.flatAim
@@ -149,6 +150,7 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
     if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()
     if (dbg) { println("[DEBUG] Initializing Name Changer") }; nameChanger()
+    if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
 
     //if (EXPERIMENTAL) {
         //rayTraceTest()
