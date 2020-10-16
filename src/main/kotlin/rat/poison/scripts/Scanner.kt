@@ -6,12 +6,12 @@ import rat.poison.game.forEntities
 import rat.poison.game.rankName
 import rat.poison.haltProcess
 import rat.poison.scripts.visuals.disableAllEsp
-import rat.poison.ui.tabs.deleteCFG
-import rat.poison.ui.tabs.loadCFG
-import rat.poison.ui.tabs.saveCFG
-import rat.poison.ui.tabs.saveDefault
+import rat.poison.utils.deleteCFG
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
+import rat.poison.utils.loadCFG
+import rat.poison.utils.saveCFG
+import rat.poison.utils.saveDefault
 import java.io.File
 import java.io.FileNotFoundException
 import java.nio.file.Files
@@ -143,9 +143,9 @@ fun scanner() {
             }
             line.startsWith("nadehelper") -> {
                 try {
-                    val name = line.trim().split(" ".toRegex(), 2)[1]
+                    val name = line.trim().split(" ".toRegex(), 2)[1].replace(".txt", "")
 
-                    loadPositions(name)
+                    loadPositions("$name.txt")
                 } catch (e: Exception) {
                     println("Invalid variable/value")
                 }

@@ -1,7 +1,6 @@
 package rat.poison.utils
 
 import rat.poison.SETTINGS_DIRECTORY
-import rat.poison.ui.tabs.loadCFG
 import java.io.File
 
 fun loadMigration() {
