@@ -10,23 +10,28 @@ The official branch (Charlatano) is located at [Jire's GitHub Repository](https:
 
 ---
 
-**Beginner's Guide Video**
+##📝 Table of Contents
 
---> **[Beginner's Video](https://www.youtube.com/watch?v=BnvuJJCyF9Y "Rat Poison")** <-- Recommended to watch before continuing.
+- [Beginner's guide video](#video)
+- [Compilation](#compilation)
+- [Common issues](#issues)
+- [Contributing](#contributing)
+- [Recent update](#update)
+- [Grenade helper](#grenade-helper)
+- [Available Features](#features)
 
----
+##Beginner's guide video <a name = "video"></a>
 
-**Beginner's Guide**
+[![video](https://img.youtube.com/vi/BnvuJJCyF9Y/0.jpg)](https://www.youtube.com/watch?v=BnvuJJCyF9Y)
 
-*Note: AdoptOpenJDK is now automatically installed, and the java home variable automatically set!
-This means you won't _need_ Java Development Kit 13. If the hack isn't working, make sure to uninstall any installed JDK first!*
+Recommended to watch before continuing.
 
+##Compilation <a name = "compilation"></a>
 The first step is to compile the source code into a usable cheat program.
 
 * Download the latest updates (which includes the newest features) by downloading directly as a ZIP.
 * Extract the contents from the archive to any folder (to your desktop, for example).
-* Double click on the "_build_" (_build.bat_) script and wait for it to complete.
-* If you don't have the JDK you will have the option to install it through the build.bat file, this is recommended.
+* Double click on the "_installer_" (_installer.exe_) script and wait for it to complete.
 
 Once those steps are complete, the usable cheat program can be found within the _build_
 directory, and will be in a directory called **RatPoison 1.7**.
@@ -37,9 +42,7 @@ If you have chosen to randomize the cheat name, you should open the file ending 
 
 You can launch the cheat at any time after launching CSGO.
 
----
-
-**Common Issues**
+##Common issues <a name = "issues"></a>
 * Overlay is black/doesn't go transparent/isn't showing up
     * The overlay only works on Windows 10, it doesn't turn transparent on W7
     * CSGO needs to be borderless/windowed for the overlay to show up on top of CS, otherwise it's just an app in your taskbar
@@ -49,20 +52,23 @@ You can launch the cheat at any time after launching CSGO.
     * Lowering opengl fps to 30 helps
     * Enabling gsync & disabling vsync if supported
    
-* Cheat is stuck at launching
-    * Check if cheat is fully updated, game updates could break it
-    * Run the bat file with admin privileges
-    * Make sure CSGO is _not_ running with admin privileges and you have full permissions to the folder where cheat is in
+* Cheat is stuck at launching? Make sure you have checked all of those steps:
+    * you are running currently most up-to-date version of RatPoison
+    * you disabled all anti-cheat clients working on your computer
+    * your RatPoison folder is placed somewhere with all running permissions
+    * you don't use RatPoison with some other cheats running
+    * you aren't currently running VAC bypass (running the bat file with administrator privileges should work)
+    * you restarted your computer
 
----
+    If nothing else works then you can try running the bat file as admin.
 
+##Contributing <a name = "contributing"></a>
 Open to pull requests
 
-Credit to Mr. Noad, 2772/Matt, Eston, and Spravedlivo for a lot of help throughout this project
+Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.com/matt1tk), [Eston](https://github.com/sotakoira), and [Spravedlivo](https://github.com/retart1337) for a lot of help throughout this project
 
----
 
-**Recent Update**
+##Recent update <a name = "update"></a>
 
 1.7 Full Update
 * Important
@@ -121,9 +127,7 @@ Credit to Mr. Noad, 2772/Matt, Eston, and Spravedlivo for a lot of help througho
 	* Updated list of skins for skinchanger
 	* Skinchanger will only update the local players bought weapons, not dropped weapons
 
----
-
-**Grenade Helper**
+##Grenade helper <a name = "grenade-helper"></a>
 Overlay Only
 Configurable in the Nade Helper Tab. Files hold all positions from when saved in the menu. The template file included is Mirage.txt, load
 into a test/offline Mirage map, make sure it's selected in the drop down and then click the 'Load From File' button. Then press the key corresponding to the
@@ -138,9 +142,8 @@ middle of the circle, then look up and aim at the circle in the air.
 If you have older versions of saved txt files from before Hotfix 6 these will cause an error when loaded using RP.
 To fix you need to edit the text file and add the nade type (Flash, Smoke, Molly, Frag) after the position name, see the example Mirage.txt file for an example, case sensitive and must be spelled correctly
 
----
 
-**Available Features**
+##Available Features <a name = "features"></a>
 * Menu (Borderless/Fullscreen only)
 
 * Aimbot
