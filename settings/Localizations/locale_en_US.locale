@@ -272,6 +272,7 @@ MENU_ALPHA_TOOLTIP = Modify transparency of menu
 GAUSSIAN_BLUR_TOOLTIP = Make blur behind menu
 ENABLE_HITMARKER_TOOLTIP = Indicates when you hit someone
 CHAMS_ESP_TOOLTIP = Enable/disable chams esp
+NADE_THROWER_SMOOTHNESS_TOOLTIP = Auto-thrower aim smoothness
 
 //New shit redux
 AUTO_WEP_DELAY = MS Interval
@@ -583,6 +584,8 @@ Load-From-File = Load From File
 Delete-Selected-File = Delete Selected File
 Clear-Currently-Loaded = Clear Currently Loaded
 Delete-At-Current-Position = Delete At Current Position
+NADE_THROWER_SMOOTHNESS = Smoothness
+NADE_ACCURACY_RADIUS = Accuracy radius
 
 //skin changer
 Skin-ID = Skin ID

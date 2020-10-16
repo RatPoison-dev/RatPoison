@@ -16,6 +16,7 @@ import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
+import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiPanels.nadeHelperTab
 import java.io.File
 
@@ -24,9 +25,11 @@ class NadeHelperTab : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     val enableNadeHelper = VisCheckBoxCustom("Nade-Helper".toLocale(), "ENABLE_NADE_HELPER")
+    val accuracyRadius = VisSliderCustom("Accuracy radius", "NADE_ACCURACY_RADIUS", 100F, 5000F, 20F, true, 2, 175F, 100F)
     val nadeHelperLoadedFile = VisLabel("Loaded:-N/A".toLocale())
     val enableNadeThrower = VisCheckBoxCustom("Auto throw", "ENABLE_NADE_THROWER")
     val nadeThrowerKey = VisInputFieldCustom("Key", "NADE_THROWER_KEY", true, 100F)
+    val nadeThrowerSmooth = VisSliderCustom("Smoothness", "NADE_THROWER_SMOOTHNESS", 10F, 100F, 1F, true, 2, 150F, 100F)
     val nadeHelperFileSelectBox = VisSelectBox<String>()
 
     init {
@@ -79,8 +82,10 @@ class NadeHelperTab : Tab(false, false) {
         sldTable.add(deleteFileNadeHelper).width(150F)
 
         table.add(enableNadeHelper).row()
+        table.add(accuracyRadius).row()
         table.add(enableNadeThrower).row()
         table.add(nadeThrowerKey).row()
+        table.add(nadeThrowerSmooth).center().row()
 
         table.add(nadeHelperFileSelectBox).row()
         table.add(sldTable).row()
@@ -121,7 +126,9 @@ class NadeHelperTab : Tab(false, false) {
 fun nadeHelperTabUpdate() {
     nadeHelperTab.apply {
         enableNadeHelper.update()
+        accuracyRadius.update()
         enableNadeThrower.update()
         nadeThrowerKey.update()
+        nadeThrowerSmooth.update()
     }
 }

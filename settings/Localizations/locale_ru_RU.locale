@@ -526,6 +526,10 @@ Load-From-File = Загрузить
 Delete-Selected-File = Удалить файл
 Clear-Currently-Loaded = Отчистить загруженный файл
 Delete-At-Current-Position = Удалить позицию гранаты
+NADE_THROWER_SMOOTHNESS = Смуч автонейда
+ENABLE_NADE_THROWER = Автонейд
+NADE_THROWER_KEY = Кнопка
+NADE_ACCURACY_RADIUS = Радиус точности
 
 //skin changer
 Skin-ID = Скин ID
@@ -611,8 +615,6 @@ HeadLvl = Уровень головы
 DISABLE_POST_PROCESSING = Отключить постообработку
 BOX_ESP_MONEY = Деньги
 BOX_ESP_MONEY_POS = Деньги
-ENABLE_NADE_THROWER = Автонейд
-NADE_THROWER_KEY = Кнопка
 CIRCLE = CIRCLE
 CROSSHAIR = CROSSHAIR
 RCROSSHAIR_TYPE = Тип прицела
