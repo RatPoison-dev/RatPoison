@@ -15,6 +15,7 @@ import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.game.offsets.ClientOffsets.dwInput
 import rat.poison.game.offsets.EngineOffsets.dwClientState_LastOutgoingCommand
 import rat.poison.game.offsets.EngineOffsets.dwGlobalVars
+import rat.poison.game.offsets.EngineOffsets.dwbSendPackets
 import rat.poison.scripts.aim.*
 import rat.poison.utils.Angle
 import rat.poison.utils.Structs.*
@@ -39,7 +40,7 @@ var gvars = GlobalVars()
 
 fun sendPacket(bool: Boolean) { //move outta here
     val byte = if (bool) 1.toByte() else 0.toByte()
-    engineDLL[0xD41DA] = byte //Bitch ass lil coder signature wont work
+    engineDLL[dwbSendPackets] = byte //Bitch ass lil coder signature wont work
 }
 
 fun setupBacktrack() {
