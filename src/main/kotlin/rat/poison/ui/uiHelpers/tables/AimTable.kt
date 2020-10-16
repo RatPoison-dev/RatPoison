@@ -121,6 +121,7 @@ class AimTable: VisTable(false) {
         categorySelectionBox.changed { _, _ ->
             categorySelected = gunCategories[categorySelectionBox.selectedIndex]
             aimTab.tTrig.categorySelectionBox.selectedIndex = gunCategories.indexOf(categorySelected)
+            aimTab.tBacktrack.categorySelectionBox.selectedIndex = gunCategories.indexOf(categorySelected)
 
             if (categorySelected == "SNIPER") {
                 enableScopedOnly.color = Color(255F, 255F, 255F, 1F)

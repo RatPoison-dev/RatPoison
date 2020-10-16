@@ -119,7 +119,7 @@ fun Entity.inMyTeam() =
 			me.survivalTeam().let { it > -1 && it == this.survivalTeam() }
 		} else me.team() == team()
 
-fun Entity.canShoot(visCheck: Boolean = true) = ((if (DANGER_ZONE) { true } else if (visCheck) { spotted() } else { true })
+fun Entity.canShoot(visCheck: Boolean = true) = ((if (DANGER_ZONE) { true } else if (visCheck) { spotted() || curSettings["TEAMMATES_ARE_ENEMIES"].strToBool() } else { true })
 		&& !dormant()
 		&& !dead()
 		&& !inMyTeam()

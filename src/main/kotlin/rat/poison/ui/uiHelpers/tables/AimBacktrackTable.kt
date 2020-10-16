@@ -56,6 +56,7 @@ class AimBacktrackTable: VisTable(false) {
         categorySelectionBox.changed { _, _ ->
             categorySelected = gunCategories[categorySelectionBox.selectedIndex]
             aimTab.tAim.categorySelectionBox.selectedIndex = gunCategories.indexOf(categorySelected)
+            aimTab.tBacktrack.categorySelectionBox.selectedIndex = gunCategories.indexOf(categorySelected)
             uiUpdate()
             true
         }
