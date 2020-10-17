@@ -62,7 +62,7 @@ You can launch the cheat at any time after launching CSGO.
 
     If nothing else works then you can try running the bat file as admin.
 
-##Contributing <a name = "contributing"></a>
+## Contributing <a name = "contributing"></a>
 Open to pull requests
 
 Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.com/matt1tk), [Eston](https://github.com/sotakoira), and [Spravedlivo](https://github.com/retart1337) for a lot of help throughout this project
