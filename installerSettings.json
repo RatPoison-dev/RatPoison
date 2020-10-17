@@ -6,7 +6,7 @@
     "update_type": "call_installer",
     "build_folder": "build/",
     "jdk_zip_name": "JDK.zip",
-    "github_repo": "TheFuckingRat/RatPoison",
+    "github_repo": "TheRatCode/RatPoison",
     "settings_directory": "settings/",
     "bypass_download": false,
     "show_last_X_commits": 5,
