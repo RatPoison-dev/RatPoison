@@ -67,8 +67,9 @@ fun nadeHelper() = App {
 
             //If valid nade for nade held
             if (fSpot[4] == nadeToCheck || nadeToCheck == "Decoy") {
-                //If within 500 units of position's circle
-                if ((mPos.x in fSpot[0].cToDouble() - 500..fSpot[0].cToDouble() + 500) && (mPos.y in fSpot[1].cToDouble() - 500..fSpot[1].cToDouble() + 500)) {
+                //If within X units of position's circle
+                val units = curSettings["NADE_ACCURACY_RADIUS"].toInt()
+                if ((mPos.x in fSpot[0].cToDouble() - units..fSpot[0].cToDouble() + units) && (mPos.y in fSpot[1].cToDouble() - units..fSpot[1].cToDouble() + units)) {
 
                     val oldMatrix = Matrix4(shapeRenderer.projectionMatrix.values)
 
