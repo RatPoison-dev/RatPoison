@@ -10,7 +10,7 @@ The official branch (Charlatano) is located at [Jire's GitHub Repository](https:
 
 ---
 
-##📝 Table of Contents
+## 📝 Table of Contents
 
 - [Beginner's guide video](#video)
 - [Compilation](#compilation)
@@ -20,13 +20,13 @@ The official branch (Charlatano) is located at [Jire's GitHub Repository](https:
 - [Grenade helper](#grenade-helper)
 - [Available Features](#features)
 
-##Beginner's guide video <a name = "video"></a>
+## Beginner's guide video <a name = "video"></a>
 
-[![video](https://img.youtube.com/vi/BnvuJJCyF9Y/0.jpg)](https://www.youtube.com/watch?v=BnvuJJCyF9Y)
+[![video](https://img.youtube.com/vi/LXBTAnnwahU/0.jpg)](https://www.youtube.com/watch?v=LXBTAnnwahU)
 
 Recommended to watch before continuing.
 
-##Compilation <a name = "compilation"></a>
+## Compilation <a name = "compilation"></a>
 The first step is to compile the source code into a usable cheat program.
 
 * Download the latest updates (which includes the newest features) by downloading directly as a ZIP.
@@ -42,7 +42,7 @@ If you have chosen to randomize the cheat name, you should open the file ending 
 
 You can launch the cheat at any time after launching CSGO.
 
-##Common issues <a name = "issues"></a>
+## Common issues <a name = "issues"></a>
 * Overlay is black/doesn't go transparent/isn't showing up
     * The overlay only works on Windows 10, it doesn't turn transparent on W7
     * CSGO needs to be borderless/windowed for the overlay to show up on top of CS, otherwise it's just an app in your taskbar
@@ -68,7 +68,7 @@ Open to pull requests
 Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.com/matt1tk), [Eston](https://github.com/sotakoira), and [Spravedlivo](https://github.com/retart1337) for a lot of help throughout this project
 
 
-##Recent update <a name = "update"></a>
+## Recent update <a name = "update"></a>
 
 1.7 Full Update
 * Important
@@ -127,7 +127,7 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 	* Updated list of skins for skinchanger
 	* Skinchanger will only update the local players bought weapons, not dropped weapons
 
-##Grenade helper <a name = "grenade-helper"></a>
+## Grenade helper <a name = "grenade-helper"></a>
 Overlay Only
 Configurable in the Nade Helper Tab. Files hold all positions from when saved in the menu. The template file included is Mirage.txt, load
 into a test/offline Mirage map, make sure it's selected in the drop down and then click the 'Load From File' button. Then press the key corresponding to the
@@ -143,7 +143,7 @@ If you have older versions of saved txt files from before Hotfix 6 these will ca
 To fix you need to edit the text file and add the nade type (Flash, Smoke, Molly, Frag) after the position name, see the example Mirage.txt file for an example, case sensitive and must be spelled correctly
 
 
-##Available Features <a name = "features"></a>
+## Available Features <a name = "features"></a>
 * Menu (Borderless/Fullscreen only)
 
 * Aimbot
