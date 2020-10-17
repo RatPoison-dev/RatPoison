@@ -2,6 +2,7 @@ package rat.poison.game.hooks
 
 import com.sun.jna.Memory
 import com.sun.jna.platform.win32.WinNT
+import rat.poison.dbg
 import rat.poison.game.*
 import rat.poison.game.CSGO.GLOW_OBJECT_SIZE
 import rat.poison.game.CSGO.clientDLL
@@ -17,7 +18,9 @@ import rat.poison.game.offsets.ClientOffsets.dwSensitivity
 import rat.poison.game.offsets.ClientOffsets.dwSensitivityPtr
 import rat.poison.game.offsets.EngineOffsets.dwClientState
 import rat.poison.game.offsets.EngineOffsets.dwClientState_MapDirectory
+import rat.poison.game.offsets.EngineOffsets.dwGameDir
 import rat.poison.game.offsets.EngineOffsets.dwSignOnState
+import rat.poison.scripts.detectMap
 import rat.poison.scripts.nameChange
 import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
@@ -55,19 +58,19 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
             }
 
             csgoEXE.read(clientState + dwClientState_MapDirectory, strBuf)
-            //val mapName = strBuf.getString(0)
+            val mapName = strBuf.getString(0)
 
-            //engineDLL.read(dwGameDir, strBuf)
-            //val gameDir = strBuf.getString(0)
+            engineDLL.read(dwGameDir, strBuf)
+            val gameDir = strBuf.getString(0)
 
-//        if (mapName.isNotBlank() && gameDir.isNotBlank()) {
-//            if (dbg) {
-//                println("[DEBUG] Loading BSP at -- $gameDir\\$mapName")
-//                detectMap(mapName)
-//            }
-//
-//            //loadBsp("$gameDir\\$mapName")
-//        }
+            if (mapName.isNotBlank() && gameDir.isNotBlank()) {
+                if (dbg) {
+                    println("[DEBUG] Detecting nade map at -- $gameDir\\$mapName")
+                    detectMap(mapName)
+                }
+
+                //loadBsp("$gameDir\\$mapName")
+            }
 
             //Find correct tonemap values
 //        File("$SETTINGS_DIRECTORY\\Data\\ToneMaps.txt").forEachLine { line ->
