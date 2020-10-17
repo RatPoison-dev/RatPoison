@@ -94,7 +94,7 @@ class NadeHelperTab : Tab(false, false) {
         table.add(addPosition).width(250F).row()
         table.add(deleteCurrentPositionHelper).width(250F).row()
 
-        table.add(nadeHelperLoadedFile).center().row()
+        table.add(nadeHelperLoadedFile).row()
     }
 
     fun updateNadeFileHelperList() {
