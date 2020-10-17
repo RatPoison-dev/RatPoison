@@ -69,10 +69,12 @@ fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every second
 
         var steamID = 0
 
-        val entSteam = entity.steamID()
-        if (entSteam != "BOT" && entSteam.isNotEmpty()) {
-            steamID = (entSteam.split(":")[2].toInt() * 2) + entSteam.split(":")[1].toInt()
-        }
+        try {
+            val entSteam = entity.steamID()
+            if (entSteam != "BOT" && entSteam.isNotEmpty() && StringUtils.isNumeric(entSteam.split(":")[2])) {
+                steamID = (entSteam.split(":")[2].toInt() * 2) + entSteam.split(":")[1].toInt()
+            }
+        } catch (e: Exception) { }
 
         nameList.add(entName)
         steamIDList.add(steamID.toString())
