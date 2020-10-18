@@ -65,7 +65,7 @@ You can launch the cheat at any time after launching CSGO.
 ## Contributing <a name = "contributing"></a>
 Open to pull requests
 
-Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.com/matt1tk), [Eston](https://github.com/sotakoira), and [Spravedlivo](https://github.com/retart1337) for a lot of help throughout this project
+Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.com/matt1tk), [Eston](https://github.com/sotakoira), and [Spravedlivo](https://github.com/SPRAVEDLIVO) for a lot of help throughout this project
 
 
 ## Recent update <a name = "update"></a>
