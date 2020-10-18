@@ -78,6 +78,8 @@ FIVESEVEN = FIVE_SEVEN
 GLOCK = GLOCK
 AK47 = AK47
 M4A1 = M4A4
+CITEMHEALTHSHOT = Health shot
+CPROPDOORROTATING = Door stuck
 TASER = ZEUS
 AUG = AUG
 AWP = AWP
@@ -724,6 +726,3 @@ tBTrigBacktrack = Shoot Backtrack
 tBacktrack = Enable Backtrack
 tOverride = Enable Override
 tPerfectAim = Perfect Aim
-
-CITEMHEALTHSHOT = Health shot
-CPROPDOORROTATING = Door stuck
