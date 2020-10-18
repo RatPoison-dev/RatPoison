@@ -66,8 +66,8 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
             if (mapName.isNotBlank() && gameDir.isNotBlank()) {
                 if (dbg) {
                     println("[DEBUG] Detecting nade map at -- $gameDir\\$mapName")
-                    detectMap(mapName)
                 }
+                detectMap(mapName)
 
                 //loadBsp("$gameDir\\$mapName")
             }
@@ -120,35 +120,35 @@ fun constructEntities() = every(500, continuous = true) {
     me = clientDLL.uint(dwLocalPlayer)
     if (!inGame || me <= 0L) return@every
 
-    var dzMode = false
-
     val glowObject = clientDLL.uint(dwGlowObject)
     val glowObjectCount = clientDLL.int(dwGlowObject + 4)
 
     if (shouldReset()) reset()
 
+    var dzMode = false
+
     for (glowIndex in 0..glowObjectCount) {
         val glowAddress = glowObject + (glowIndex * GLOW_OBJECT_SIZE)
         val entity = csgoEXE.uint(glowAddress)
-        val tmpPos = entity.absPosition()
-        val check = (tmpPos.x in -2.0F..2.0F && tmpPos.y in -2.0F..2.0F && tmpPos.z in -2.0F..2.0F)
 
-        if (!check) {
-            if (entity != 0L) {
-                val type = EntityType.byEntityAddress(entity)
+        if (entity > 0L) {
+            val type = EntityType.byEntityAddress(entity)
+            if (type != EntityType.NULL) {
+                val tmpPos = entity.absPosition()
+                val check = (tmpPos.x in -2.0F..2.0F && tmpPos.y in -2.0F..2.0F && tmpPos.z in -2.0F..2.0F)
 
-                if (type == EntityType.CFists) {
-                    //sometimes it takes a while for game to initialize gameRulesProxy
-                    //so our dz mode detection wasn't working perfectly.
-                    dzMode = true
+                if (!check) {
+                    val context = contexts[glowIndex].set(entity, glowAddress, glowIndex, type) //remove contexts[]
+
+                    with(entities[type]!!) {
+                        if (!contains(context)) {
+                            add(context)
+                        }
+                    }
                 }
 
-                val context = contexts[glowIndex].set(entity, glowAddress, glowIndex, type) //remove contexts[]
-
-                with(entities[type]!!) {
-                    if (!contains(context)) {
-                        add(context)
-                    }
+                if (type == EntityType.CFists) {
+                    dzMode = true
                 }
             }
         }

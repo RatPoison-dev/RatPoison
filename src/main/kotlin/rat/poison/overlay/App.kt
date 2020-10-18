@@ -25,6 +25,7 @@ import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
 import rat.poison.jna.enums.AccentStates
 import rat.poison.scripts.aim.meDead
+import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.uiPanels.*
 import rat.poison.ui.uiUpdate
@@ -201,6 +202,7 @@ object App : ApplicationAdapter() {
                             sbText.append("\nIn Game: $inGame")
                             sbText.append("\nShouldPostProcess: $shouldPostProcess")
                             sbText.append("\nMe: $me Dead: $meDead")
+                            sbText.append("\nDanger Zone: $DANGER_ZONE")
                             sbText.append("\n")
                             sbText.append("\nTotal physical mem: ").appendHumanReadableSize(totalPhysMem)
                             sbText.append("\nFree physical mem: ").appendHumanReadableSize(freePhysMem)

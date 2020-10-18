@@ -4,8 +4,6 @@ import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.overlay.glowTime
-import rat.poison.overlay.sync
-import rat.poison.overlay.syncTime
 import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.target
@@ -68,13 +66,13 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 					if (entity.dead()) return@forEntities
 
 					val entityTeam = entity.team()
-					val team = !DANGER_ZONE && meTeam == entityTeam
+					val onTeam = !DANGER_ZONE && meTeam == entityTeam
 					health = entity.health()
 
 					if (showTarget && entity == espTARGET && espTARGET != -1L) {
 						glowType = curSettings["GLOW_TARGET_TYPE"].toGlowNum()
 						color = "GLOW_TARGET_COLOR"
-					} else if (showEnemies && !team) {
+					} else if (showEnemies && !onTeam) {
 						glowType = curSettings["GLOW_ENEMY_TYPE"].toGlowNum()
 						color = when (bEnt > 0 && bEnt == entity && showBombCarrier) {
 							true -> { glowType = curSettings["GLOW_BOMB_CARRIER_TYPE"].toGlowNum(); "GLOW_BOMB_CARRIER_COLOR" }
@@ -83,7 +81,7 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 								else -> "GLOW_ENEMY_COLOR"
 							}
 						}
-					} else if (showTeam && team) {
+					} else if (showTeam && onTeam) {
 						glowType = curSettings["GLOW_TEAMMATE_TYPE"].toGlowNum()
 						color = when (bEnt > 0 && bEnt == entity && showBombCarrier) {
 							true -> { glowType = curSettings["GLOW_BOMB_CARRIER_TYPE"].toGlowNum(); "GLOW_BOMB_CARRIER_COLOR" }

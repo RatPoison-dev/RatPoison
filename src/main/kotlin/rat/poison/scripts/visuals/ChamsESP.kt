@@ -20,7 +20,6 @@ import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
-import rat.poison.utils.inGame
 import java.lang.Float.floatToIntBits
 
 fun chamsEsp() = every(100, true, inGameCheck = true) {
@@ -81,19 +80,19 @@ fun chamsEsp() = every(100, true, inGameCheck = true) {
         if (glowAddress <= 0) return@forEntities
 
         val entityTeam = entity.team()
-        val team = !DANGER_ZONE && myTeam == entityTeam
+        val onTeam = !DANGER_ZONE && myTeam == entityTeam
 
         if (curSettings["CHAMS_SHOW_TARGET"].strToBool() && entity == espTARGET && espTARGET > 0L && !espTARGET.dead()) {
             entity.chams(curSettings["CHAMS_TARGET_COLOR"].strToColor())
-        } else if (curSettings["CHAMS_SHOW_ENEMIES"].strToBool() && !team) { //Show enemies & is enemy
+        } else if (curSettings["CHAMS_SHOW_ENEMIES"].strToBool() && !onTeam) { //Show enemies & is enemy
             if (curSettings["CHAMS_SHOW_HEALTH"].strToBool()) {
                 entity.chams(Color((255 - 2.55 * entity.health()).toInt(), (2.55 * entity.health()).toInt(), 0, 1.0))
             } else {
                 entity.chams(curSettings["CHAMS_ENEMY_COLOR"].strToColor())
             }
-        } else if (!curSettings["CHAMS_SHOW_ENEMIES"].strToBool() && !team) { //Not show enemies
+        } else if (!curSettings["CHAMS_SHOW_ENEMIES"].strToBool() && !onTeam) { //Not show enemies
             entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
-        } else if (curSettings["CHAMS_SHOW_TEAM"].strToBool() && team) { //Show team & is team
+        } else if (curSettings["CHAMS_SHOW_TEAM"].strToBool() && onTeam) { //Show team & is team
             entity.chams(curSettings["CHAMS_TEAM_COLOR"].strToColor())
         }
         else {

@@ -106,12 +106,13 @@ fun boxEsp() {
 				}
 			}
 
-			//Team + Dormant + Dead + Self check
 			var health = 0
 			if (isPlayer) {
 				health = ent.health()
 			}
-			val onTeam = ent.team() == me.team()
+			val onTeam = !DANGER_ZONE && ent.team() == me.team()
+
+			//Team + Dormant + Dead + Self check
 			if (isPlayer && !DANGER_ZONE && (ent == me || ent.dormant() || ent.dead() || (!showEnemy && !onTeam) || (!showTeam && onTeam))) return@forEntities
 			if (isWeapon && !showWeapons) return@forEntities
 			if (isDefuseKit && !showDefuseKits) return@forEntities

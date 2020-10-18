@@ -724,3 +724,6 @@ tBTrigBacktrack = Shoot Backtrack
 tBacktrack = Enable Backtrack
 tOverride = Enable Override
 tPerfectAim = Perfect Aim
+
+CITEMHEALTHSHOT = Health shot
+CPROPDOORROTATING = Door stuck
