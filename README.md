@@ -1,22 +1,20 @@
 [![Pull Requests](https://img.shields.io/github/issues-pr/TheRatCode/RatPoison.svg)](https://github.com/TheRatCode/RatPoison/pulls/)
 [![Release](https://img.shields.io/github/release/TheRatCode/RatPoison.svg)](https://github.com/TheRatCode/RatPoison/releases/)
 ![Code size](https://img.shields.io/github/languages/code-size/TheRatCode/RatPoison.svg)
+![GitHub repo size](https://img.shields.io/github/repo-size/TheRatCode/RatPoison.svg)
+#### [Support Ratto (Ratpoison)](https://www.patreon.com/ratto)
 
-[![forthebadge](https://forthebadge.com/images/badges/0-percent-optimized.svg)](http://forthebadge.com/)
-[![forthebadge](https://forthebadge.com/images/badges/works-on-my-machine.svg)](http://forthebadge.com/)
-### [Support Ratto (Ratpoison)](https://www.patreon.com/ratto)
+#### Support Spravedlivo (Ratpoison + [Installer](https://github.com/SPRAVEDLIVO/RatInstaller/))
+**Donate with Bitcoin:** bc1qmxkd2dalzwdy0dhhqh8v64m9xj0nz0g52l292e
 
-### Support Spravedlivo (Ratpoison + [Installer](https://github.com/SPRAVEDLIVO/RatInstaller/))
-* Donate with Bitcoin: bc1qmxkd2dalzwdy0dhhqh8v64m9xj0nz0g52l292e
-
-### Support Jire (Charlatano)
-* Donate with Bitcoin: 3ErbuRTxtFqvMQ7F2Z8SfpgAXjonsQs8Vc
-* Or with PayPal: enisitysoft@gmail.com
-* Or with CashApp: $jires
+#### Support Jire (Charlatano)
+**Donate with Bitcoin:** 3ErbuRTxtFqvMQ7F2Z8SfpgAXjonsQs8Vc
+**Or with PayPal:** enisitysoft@gmail.com
+**Or with CashApp:** $jires
 
 ---
 
-This branch is being updated at [TheRatCode's Github Repository](https://github.com/TheRatCode/RatPoison)
+This branch is being updated at [TheFuckingRat's Github Repository](https://github.com/TheFuckingRat/RatPoison)
 
 The official branch (Charlatano) is located at [Jire's GitHub Repository](https://github.com/Jire/Charlatano).
 
