@@ -6,7 +6,7 @@
 ### [Support Ratto (Ratpoison)](https://www.patreon.com/ratto)
 
 ### Support Spravedlivo (Ratpoison + [Installer](https://github.com/SPRAVEDLIVO/RatInstaller/))
-**Donate with Bitcoin:** bc1qmxkd2dalzwdy0dhhqh8v64m9xj0nz0g52l292e
+* Donate with Bitcoin: bc1qmxkd2dalzwdy0dhhqh8v64m9xj0nz0g52l292e
 
 ### Support Jire (Charlatano)
 * Donate with Bitcoin: 3ErbuRTxtFqvMQ7F2Z8SfpgAXjonsQs8Vc
