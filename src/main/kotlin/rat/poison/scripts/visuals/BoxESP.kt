@@ -113,7 +113,7 @@ fun boxEsp() {
 			val onTeam = !DANGER_ZONE && ent.team() == me.team()
 
 			//Team + Dormant + Dead + Self check
-			if (isPlayer && !DANGER_ZONE && (ent == me || ent.dormant() || ent.dead() || (!showEnemy && !onTeam) || (!showTeam && onTeam))) return@forEntities
+			if (isPlayer && (ent == me || ent.dormant() || ent.dead() || (!showEnemy && !onTeam) || (!showTeam && onTeam))) return@forEntities
 			if (isWeapon && !showWeapons) return@forEntities
 			if (isDefuseKit && !showDefuseKits) return@forEntities
 

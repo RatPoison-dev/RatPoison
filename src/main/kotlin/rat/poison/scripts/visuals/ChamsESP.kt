@@ -1,5 +1,6 @@
 package rat.poison.scripts.visuals
 
+import com.badlogic.gdx.math.MathUtils.clamp
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.CSGO.clientDLL
@@ -86,7 +87,7 @@ fun chamsEsp() = every(100, true, inGameCheck = true) {
             entity.chams(curSettings["CHAMS_TARGET_COLOR"].strToColor())
         } else if (curSettings["CHAMS_SHOW_ENEMIES"].strToBool() && !onTeam) { //Show enemies & is enemy
             if (curSettings["CHAMS_SHOW_HEALTH"].strToBool()) {
-                entity.chams(Color((255 - 2.55 * entity.health()).toInt(), (2.55 * entity.health()).toInt(), 0, 1.0))
+                entity.chams(Color((255 - 2.55 * clamp(entity.health(), 0, 100)).toInt(), (2.55 * clamp(entity.health(), 0, 100)).toInt(), 0, 1.0))
             } else {
                 entity.chams(curSettings["CHAMS_ENEMY_COLOR"].strToColor())
             }

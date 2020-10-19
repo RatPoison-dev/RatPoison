@@ -25,13 +25,13 @@ fun indicatorEsp() = App {
 
     forEntities {
         val entity = it.entity
-        val onMyTeam = me.team() == entity.team()
+        val onTeam = !DANGER_ZONE && me.team() == entity.team()
 
         var color = ""
 
         when (it.type) {
             EntityType.CCSPlayer -> {
-                if (entity.dead() || entity == me || (entity.dormant() && !DANGER_ZONE)) return@forEntities
+                if (entity.dead() || entity == me || entity.dormant()) return@forEntities
 
                 if (curSettings["INDICATOR_SMOKE_CHECK"].strToBool()) {
                     if (lineThroughSmoke(entity)) {
@@ -40,24 +40,24 @@ fun indicatorEsp() = App {
                 }
 
                 if (bEnt > 0 && bEnt == entity) { //This is the bomb carrier
-                    if (curSettings["INDICATOR_SHOW_ENEMIES"].strToBool() && !onMyTeam) {
+                    if (curSettings["INDICATOR_SHOW_ENEMIES"].strToBool() && !onTeam) {
                         color = when (curSettings["INDICATOR_SHOW_BOMB_CARRIER"].strToBool()) {
                             true -> "INDICATOR_BOMB_CARRIER_COLOR"
                             false -> "INDICATOR_ENEMY_COLOR"
                         }
-                    } else if (curSettings["INDICATOR_SHOW_TEAM"].strToBool() && onMyTeam) {
+                    } else if (curSettings["INDICATOR_SHOW_TEAM"].strToBool() && onTeam) {
                         color = when (curSettings["INDICATOR_SHOW_BOMB_CARRIER"].strToBool()) {
                             true -> "INDICATOR_BOMB_CARRIER_COLOR"
                             false -> "INDICATOR_TEAM_COLOR"
                         }
                     }
                 } else {
-                    if (!curSettings["INDICATOR_SHOW_TEAM"].strToBool() && onMyTeam) {
+                    if (!curSettings["INDICATOR_SHOW_TEAM"].strToBool() && onTeam) {
                         return@forEntities
                     } else if (!curSettings["INDICATOR_SHOW_ENEMIES"].strToBool()) {
                         return@forEntities
                     } else {
-                        color = when (!onMyTeam) {
+                        color = when (!onTeam) {
                             true -> "INDICATOR_ENEMY_COLOR"
                             false -> "INDICATOR_TEAM_COLOR"
                         }

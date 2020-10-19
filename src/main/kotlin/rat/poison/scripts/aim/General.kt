@@ -228,11 +228,13 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 
 		if (!perfect) {
 			destinationAngle.finalize(currentAngle, (1.1F - curSettings["AIM_SMOOTHNESS"].toFloat() / 5F)) //10.0 is max smooth value
+
+			val aimSpeed = curSettings["AIM_SPEED"].toInt()
+
+			val aimSpeedDivisor = if (curSettings["AIM_ADVANCED"].strToBool()) curSettings["AIM_SPEED_DIVISOR"].toInt() else 1
+			doAim(destinationAngle, currentAngle, aimSpeed, aimSpeedDivisor)
+		} else {
+			doAim(destinationAngle, currentAngle, 1, 1)
 		}
-
-		val aimSpeed = curSettings["AIM_SPEED"].toInt()
-
-		val aimSpeedDivisor = if (curSettings["AIM_ADVANCED"].strToBool()) curSettings["AIM_SPEED_DIVISOR"].toInt() else 1
-		doAim(destinationAngle, currentAngle, aimSpeed, aimSpeedDivisor)
 	}
 }

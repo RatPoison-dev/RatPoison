@@ -67,10 +67,10 @@ fun snapLines() = App {
 
         when (it.type) {
             EntityType.CCSPlayer -> {
-                val dormCheck = (entity.dormant() && !DANGER_ZONE)
-                val onTeam = me.team() == entity.team()
-                val enemyCheck = ((curSettings["SNAPLINES_ENEMIES"].strToBool() && !onTeam) && !DANGER_ZONE)
-                val teamCheck = ((curSettings["SNAPLINES_TEAMMATES"].strToBool() && onTeam) && !DANGER_ZONE)
+                val dormCheck = entity.dormant()
+                val onTeam = !DANGER_ZONE && me.team() == entity.team()
+                val enemyCheck = (curSettings["SNAPLINES_ENEMIES"].strToBool() && !onTeam)
+                val teamCheck = (curSettings["SNAPLINES_TEAMMATES"].strToBool() && onTeam)
 
                 if (me <= 0 || entity == me || dormCheck || entity.dead()) return@forEntities
 
