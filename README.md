@@ -2,7 +2,7 @@
 [![Release](https://img.shields.io/github/release/TheRatCode/RatPoison.svg)](https://github.com/TheRatCode/RatPoison/releases/)
 ![Code size](https://img.shields.io/github/languages/code-size/TheRatCode/RatPoison.svg)
 ![GitHub repo size](https://img.shields.io/github/repo-size/TheRatCode/RatPoison.svg)
-
+[![Discord](https://discord.com/api/guilds/741016380282896455/widget.png?style=shield)](https://discord.gg/xkTteTM)
 ### [Support Ratto (Ratpoison)](https://www.patreon.com/ratto)
 
 ### Support Spravedlivo (Ratpoison + [Installer](https://github.com/SPRAVEDLIVO/RatInstaller/))
