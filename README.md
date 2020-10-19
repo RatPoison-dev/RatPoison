@@ -1,3 +1,8 @@
+[![Pull Requests](https://img.shields.io/github/issues-pr/TheRatCode/RatPoison.svg)](https://github.com/TheRatCode/RatPoison/pulls/)
+[![Release](https://img.shields.io/github/release/TheRatCode/RatPoison.svg)](https://github.com/TheRatCode/RatPoison/releases/)
+[![forthebadge](https://forthebadge.com/images/badges/0-percent-optimized.svg)](http://forthebadge.com/)
+[![forthebadge](https://forthebadge.com/images/badges/works-on-my-machine.svg)](http://forthebadge.com/)
+![Code size](https://img.shields.io/github/languages/code-size/TheRatCode/RatPoison.svg)
 #### [Support Ratto (Ratpoison)](https://www.patreon.com/ratto)
 
 #### Support Spravedlivo (Ratpoison + [Installer](https://github.com/SPRAVEDLIVO/RatInstaller/))
