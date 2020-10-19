@@ -1,2 +1,2 @@
-1.7.22
-new-testing
+1.7
+master

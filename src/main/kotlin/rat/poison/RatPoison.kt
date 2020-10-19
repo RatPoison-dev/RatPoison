@@ -43,9 +43,9 @@ data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = 
 data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var tSeed: Int)
 
 const val TITLE = "RatPoison"
-const val BRANCH = "Testing"
+const val BRANCH = "Master"
 const val F_VERSION = "1.7"
-const val M_VERSION = "1.7.22"
+const val M_VERSION = "1.7.0"
 var LOADED_CONFIG = "DEFAULT"
 
 //const val EXPERIMENTAL = false
