@@ -4,19 +4,19 @@
 
 [![forthebadge](https://forthebadge.com/images/badges/0-percent-optimized.svg)](http://forthebadge.com/)
 [![forthebadge](https://forthebadge.com/images/badges/works-on-my-machine.svg)](http://forthebadge.com/)
-#### [Support Ratto (Ratpoison)](https://www.patreon.com/ratto)
+### [Support Ratto (Ratpoison)](https://www.patreon.com/ratto)
 
-#### Support Spravedlivo (Ratpoison + [Installer](https://github.com/SPRAVEDLIVO/RatInstaller/))
-**Donate with Bitcoin:** bc1qmxkd2dalzwdy0dhhqh8v64m9xj0nz0g52l292e
+### Support Spravedlivo (Ratpoison + [Installer](https://github.com/SPRAVEDLIVO/RatInstaller/))
+* Donate with Bitcoin: bc1qmxkd2dalzwdy0dhhqh8v64m9xj0nz0g52l292e
 
-#### Support Jire (Charlatano)
-**Donate with Bitcoin:** 3ErbuRTxtFqvMQ7F2Z8SfpgAXjonsQs8Vc
-**Or with PayPal:** enisitysoft@gmail.com
-**Or with CashApp:** $jires
+### Support Jire (Charlatano)
+* Donate with Bitcoin: 3ErbuRTxtFqvMQ7F2Z8SfpgAXjonsQs8Vc
+* Or with PayPal: enisitysoft@gmail.com
+* Or with CashApp: $jires
 
 ---
 
-This branch is being updated at [TheFuckingRat's Github Repository](https://github.com/TheFuckingRat/RatPoison)
+This branch is being updated at [TheRatCode's Github Repository](https://github.com/TheRatCode/RatPoison)
 
 The official branch (Charlatano) is located at [Jire's GitHub Repository](https://github.com/Jire/Charlatano).
 
