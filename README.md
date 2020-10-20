@@ -115,6 +115,7 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 	* Added smoke check to Glow, Box, Snaplines and Indicator
 	* Added auto throwing to nade helper
 	* Added temporary name change, resets after joining another server
+	* Added stable RCS, applies to total aimpunch/recoil over time
 	
 * Fixes
 	* Triggerbot has been fixed
@@ -179,6 +180,7 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 
 * RCS
     * RCS for all weapons, customizable X & Y smoothing
+	* Types: Legacy and Stable
     * Customizable recoil crosshair, type/width/length/positioning/color
 
 * Visuals
