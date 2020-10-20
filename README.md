@@ -175,11 +175,11 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
     * Group aimbot settings (Pistol/Rifle/Sniper/Shotgun/SMG)
     * Individual aimbot settings (AK/M4/etc)
     * Aim bone, force bone, aim on shot, speed, FOV, strictness, smoothness
-    * (non-silent) Perfect aim, customize FOV and % chance to activate
+    * (non-silent) Perfect aim, customizable FOV and % chance to activate
 	* Backtrack: Shoot enemies up to 200 ms back in time
 
 * RCS
-    * RCS for all weapons, customizable X & Y smoothing
+    * RCS for all weapons, customizable X & Y accuracy
 	* Types: Legacy and Stable
     * Customizable recoil crosshair, type/width/length/positioning/color
 
@@ -200,6 +200,8 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
         * Teammates, Enemies, Weapons, Bomb, Bomb Carrier, Defuse Kits
     * Footsteps
         * Teammates, Enemies
+	* Hitmarker
+	* Nade tracer
     * FOV Changer
     * Skin Changer
 	* Spread Circle
@@ -219,7 +221,6 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 * Misc
     * Knife bot
     * Hitsounds
-    * Hitmarker
     * Bomb timer (Text Menu, Visual Bars)
     * Spectator list (Text Menu)
     * Optional sniper/scoped crosshair
