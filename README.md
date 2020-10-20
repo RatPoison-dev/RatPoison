@@ -28,7 +28,6 @@ The official branch (Charlatano) is located at [Jire's GitHub Repository](https:
 - [Common issues](#issues)
 - [Contributing](#contributing)
 - [Recent update](#update)
-- [Grenade helper](#grenade-helper)
 - [Available Features](#features)
 
 ## Beginner's guide video <a name = "video"></a>
@@ -72,6 +71,12 @@ You can launch the cheat at any time after launching CSGO.
     * you restarted your computer
 
     If nothing else works then you can try running the bat file as admin.
+	
+* Map is unusually bright after joining the server
+	* Disable post processing in Misc tab
+	
+* Installer is detected by antivirus as a malicious program
+	* False-positive, add the executable to exclusions or exclude the whole folder in your antivirus.
 
 ## Contributing <a name = "contributing"></a>
 Open to pull requests
@@ -85,9 +90,11 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 * Important
 	* Added backtrack
 	* Fixed ForEntities loop not fully iterating, consistency should be improved for features in Aim & Visuals tabs
+	* Added installer executable
+		* Installer automatically downloads appropriate JDK, allows the cheat to be updated and built without any hassle
 	
 * New
-	* Added Helmet, Kevlar, Flashed, Scoped, and Ammo settings to Box ESP
+	* Added Helmet, Kevlar, Flashed, Scoped, Ammo and Money settings to Box ESP
 	* Added locale options in menu, you can change menu language with premade localization files
 	* Added glow and box health based options
 	* Added flicker free glow
@@ -100,6 +107,15 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 	* Added force bone key + selector (to categories only)
 	* Added keybinds window under options tab to display all keybinds, set to -1 to disable
 	* Added entity dead and dormant check to prevent ghost footsteps
+	* Added legit radar option, shows enemies making footstep noise within set distance
+	* Added appless menu type
+	* Added disable post processing option (does not work with nightmode)
+	* Added far radar box, draws a box around enemies spotted by other players
+	* Added head level helper, draws a line on your sight with customizable deadzone
+	* Added smoke check to Glow, Box, Snaplines and Indicator
+	* Added auto throwing to nade helper
+	* Added temporary name change, resets after joining another server
+	* Added stable RCS, applies to total aimpunch/recoil over time
 	
 * Fixes
 	* Triggerbot has been fixed
@@ -109,12 +125,16 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 	* Fixed automatic weapons shooting with cursor enabled (during buy menu)
 	* Fixed nearest bone not working with menu disabled
 	* Fixed cmd read/write files when menu is disabled
+	* Fixed taser spamming SetAim failure with Override Weapons enabled
+	* Fixed teammates are enemies not aimbotting friendly players
+	* Fixed fast stop blocking movement on high latency servers
+	* Fixed bomb timer and spectator list opacity sliders not updating after loading a config
 	
 * Miscellaneous
 	* Updated ranks tab, should work better & show all players
 	* Reworked override settings
-	* Minor adjustments to headwalk and spectatorlist
-	* Glow esp is now one write per entity instead of multiple
+	* Minor adjustments to head walk and spectator list
+	* Glow ESP is now one write per entity instead of multiple
 	* Changed RANK names to abbreviations to prevent hiding elements
 	* Perfect aim is now calculated per aim move rather than per target
 	* Loading settings/configs should only load .txt or .cfg files respectively
@@ -137,57 +157,55 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 	* Skinchanger tab should now update with configs
 	* Updated list of skins for skinchanger
 	* Skinchanger will only update the local players bought weapons, not dropped weapons
-
-## Grenade helper <a name = "grenade-helper"></a>
-Overlay Only
-Configurable in the Nade Helper Tab. Files hold all positions from when saved in the menu. The template file included is Mirage.txt, load
-into a test/offline Mirage map, make sure it's selected in the drop down and then click the 'Load From File' button. Then press the key corresponding to the
-'Nade Helper Toggle Key' (Default F2) to toggle visibility of the positions around the map. They are only visible when within a certain distance, to make sure you can see them
-the main spots are T spawn, A ramp, and top mid, if you don't see any in these areas press the toggle key a few times to see if they do pop up, if the file is loaded
-(testable in the cmd, should say 'Loading Positions'), and walk around a bit to see if you were not in range before. The 'Clear Currently Loaded' button clears all positions currently loaded. The 'Create Grenade Position'
-button saves your current position, and where you are looking, and asks you to enter a name for the position (ex. 'Smoke Mid'), so go to a position, test the throw and if it's how how you want
-it go back to that spot, aim appropriately and save the position (or save before and delete the position if you have to). The 'Delete At Current Position' button deletes a position if you are standing on top of it, and
-is highlighted blue. The starting head position isn't completely centered on your screen, to line yourself up with the position, look straight down and center your cursor with the
-middle of the circle, then look up and aim at the circle in the air.
-
-If you have older versions of saved txt files from before Hotfix 6 these will cause an error when loaded using RP.
-To fix you need to edit the text file and add the nade type (Flash, Smoke, Molly, Frag) after the position name, see the example Mirage.txt file for an example, case sensitive and must be spelled correctly
+	* Updated nade helper to work with menu disabled
+	* Removed standalone autostrafer
+	* Changed chams brightness slider to allow more precise adjustments
+	* FOV sliders now allow float values
+	* Changed step values of some sliders
+	* Added more information in debug screen
 
 
 ## Available Features <a name = "features"></a>
-* Menu (Borderless/Fullscreen only)
+* Menu (Windowed/Fullscreen Windowed only)
+	* Appless: Menu shows as an app on the taskbar
 
 * Aimbot
     * Flat Aim: Write to view angles
     * Path aim: Mouse movement
     * Group aimbot settings (Pistol/Rifle/Sniper/Shotgun/SMG)
     * Individual aimbot settings (AK/M4/etc)
-    * Aim bone, speed, FOV, strictness, smoothness
-    * (non-silent) Perfect aim, customize FOV and % chance to activate
+    * Aim bone, force bone, aim on shot, speed, FOV, strictness, smoothness
+    * (non-silent) Perfect aim, customizable FOV and % chance to activate
+	* Backtrack: Shoot enemies up to 200 ms back in time
 
 * RCS
-    * RCS for all weapons, customizable X & Y smoothing
-    * Customizable recoil crosshair, width/length/positioning/color
+    * RCS for all weapons, customizable X & Y accuracy
+	* Types: Legacy and Stable
+    * Customizable recoil crosshair, type/width/length/positioning/color
 
 * Visuals
     * Radar
-    * Glow
+		* Legit radar
+    * Glow (Normal, Model, Visible, Visible Flicker)
         * Teammates, Enemies, Weapons, Grenades, Bomb, Bomb Carrier, Aimbot Target
     * clrRender chams
-        * Teammates, Enemies
+        * Teammates, Enemies, Self, Aimbot Target
     * Arrow indicators
         * Teammates, Enemies, Weapons, Grenades, Bomb, Bomb Carrier, Defusers
-    * Box (Health, Armor, Name, Weapon)
-        * Teammates, Enemies, Defusers
+    * Box (Name, Health, Armor, Helmet, Kevlar, Weapon, Money, Ammo, Flashed, Scoped)
+        * Teammates, Enemies, Defusers, Weapons
     * Skeleton
         * Teammates, Enemies
     * Snaplines
-        * Teammates, Enemies, Weapons, Bomb, Bomb Carrier
+        * Teammates, Enemies, Weapons, Bomb, Bomb Carrier, Defuse Kits
     * Footsteps
         * Teammates, Enemies
+	* Hitmarker
+	* Nade tracer
     * FOV Changer
     * Skin Changer
-    * Knife Changer (Models Only)
+	* Spread Circle
+	* Head Level Helper
 
 * Bone Trigger
     * FOV, InCross
@@ -195,13 +213,14 @@ To fix you need to edit the text file and add the nade type (Flash, Smoke, Molly
     * Aimbot on activation
     * Optional trigger key
     * Initial shot delay
+	* Between shots delay
+	* Shoot at backtrack
 
 * Danger Zone compatible
 
 * Misc
     * Knife bot
     * Hitsounds
-    * Hitmarker
     * Bomb timer (Text Menu, Visual Bars)
     * Spectator list (Text Menu)
     * Optional sniper/scoped crosshair
@@ -212,4 +231,9 @@ To fix you need to edit the text file and add the nade type (Flash, Smoke, Molly
     * Last second bomb defusal
     * Door spam
     * Weapon spam
+	* Nade helper
     * Self nade
+	* Kill bind
+	* Disable Post Processing
+	* Temporary name change
+
