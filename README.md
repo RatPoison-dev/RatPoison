@@ -166,7 +166,7 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 
 
 ## Available Features <a name = "features"></a>
-* Menu (Borderless/Fullscreen only)
+* Menu (Windowed/Fullscreen Windowed only)
 	* Appless: Menu shows as an app on the taskbar
 
 * Aimbot
