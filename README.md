@@ -76,6 +76,9 @@ You can launch the cheat at any time after launching CSGO.
 * Map is unusually bright after joining the server/Nightmode does not work
 	* Untick Disable Post Processing option in Misc tab
 	
+* Backtrack does not seem to work, hit rate is awfully low
+	* Unbind mouse1 in console, disable spotted only in backtrack settings or use triggerbot with shoot backtrack enabled.
+	
 * Installer is detected by antivirus as a malicious program
 	* False-positive, add the executable to exclusions or exclude the whole folder in your antivirus.
 
