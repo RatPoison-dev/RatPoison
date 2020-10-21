@@ -70,11 +70,14 @@ You can launch the cheat at any time after launching CSGO.
     * you don't use RatPoison with some other cheats running
     * you aren't currently running VAC bypass (running the bat file with administrator privileges should work)
     * you restarted your computer
-
-    If nothing else works then you can try running the bat file as admin.
+    
+ 		**If nothing else works then you can try running the bat file as admin.**
 	
-* Map is unusually bright after joining the server
-	* Disable post processing in Misc tab
+* Map is unusually bright after joining the server/Nightmode does not work
+	* Untick Disable Post Processing option in Misc tab
+	
+* Backtrack does not seem to work, hit rate is awfully low
+	* Unbind mouse1 in console, disable spotted only in backtrack settings or use triggerbot with shoot backtrack enabled.
 	
 * Installer is detected by antivirus as a malicious program
 	* False-positive, add the executable to exclusions or exclude the whole folder in your antivirus.
