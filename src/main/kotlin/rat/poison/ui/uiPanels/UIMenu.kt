@@ -23,7 +23,7 @@ val mainTabbedPane = TabbedPane()
     var aimTab = AimTab()
     var visualsTab = VisualsTab()
     var rcsTab = RcsTab()
-    var miscTab = MiscTab()
+    var miscTabs = MiscTabs()
     var ranksTab = RanksTab()
     var nadeHelperTab = NadeHelperTab()
     var skinChangerTab = SkinChangerTab()
@@ -66,7 +66,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         mainTabbedPane.add(aimTab)
         mainTabbedPane.add(visualsTab)
         mainTabbedPane.add(rcsTab)
-        mainTabbedPane.add(miscTab)
+        mainTabbedPane.add(miscTabs)
         mainTabbedPane.add(ranksTab)
         mainTabbedPane.add(nadeHelperTab)
         mainTabbedPane.add(skinChangerTab)
@@ -106,19 +106,19 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         changeHeight()
                         mainTabbedPaneContent.add(rcsTab.contentTable).growX()
                     }
+                    miscTabs -> {
+                        wantedHeight = normHeight
+                        wantedWidth = normWidth
+                        changeWidth()
+                        changeHeight()
+                        mainTabbedPaneContent.add(miscTabs.contentTable).growX()
+                    }
                     visualsTab -> {
                         wantedHeight = normHeight
                         wantedWidth = normWidth
                         changeWidth()
                         changeHeight()
                         mainTabbedPaneContent.add(visualsTab.contentTable).growX()
-                    }
-                    miscTab -> {
-                        wantedHeight = normHeight
-                        wantedWidth = normWidth
-                        changeWidth()
-                        changeHeight()
-                        mainTabbedPaneContent.add(miscTab.contentTable).growX()
                     }
                     ranksTab -> {
                         wantedHeight = normHeight

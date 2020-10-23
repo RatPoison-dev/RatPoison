@@ -361,7 +361,7 @@ _ENABLE_PATH_AIM = Движения мышью
 
 //Need organization
 ENABLE_ESP = Включено
-VISUALS_TOGGLE_KEY = Кнопка переключения визуалов
+VISUALS_TOGGLE_KEY = Кнопка переключения
 ENABLE_NIGHTMODE = Ночной режим
 NIGHTMODE_VALUE = %
 DRAW_AIM_FOV_COLOR = Рисовать FOV Аима
@@ -403,7 +403,7 @@ FOV_SMOOTH = Плавное изменение
 FOV_SNIPER_DEFAULT = FOV на c.винтовках
 FOV_ZOOM_1 = Первый зум
 FOV_ZOOM_2 = Второй зум
-ENABLE_BOMB_TIMER = Включено
+ENABLE_BOMB_TIMER = Включить таймер бомбы
 BOMB_TIMER_MENU = Меню
 BOMB_TIMER_BARS = Полоска
 ENABLE_REDUCED_FLASH = Уменьшенное ослепление
@@ -463,10 +463,10 @@ _BACKTRACK_NECK = Шея
 _BACKTRACK_CHEST = Грудь
 _BACKTRACK_STOMACH = Живот
 _BACKTRACK_PELVIS = Таз
-ENABLE_ADRENALINE = Включить адреналин
+ENABLE_ADRENALINE = Адреналин
 GLOW_TARGET_COLOR = Цель аима
 NADE_TRACER_COLOR = Трейсер гранат
-ENABLE_HITSOUND = Включить звук попадания
+ENABLE_HITSOUND = Звук попадания
 OPENGL_FPS = OpenGL FPS
 MENU_STAY_FOCUSED = Оставаться в фокусе
 DEBUG = Отладка
@@ -522,6 +522,13 @@ Snaplines = Линии
 FootSteps = Шаги
 Hitmarker = Хитмаркеры
 Nades = Гранаты
+Bomb = Бомба
+MUSIC_KIT_SPOOFER = Подмена набора музыки
+MUSIC_KIT_ID = ID
+FOV-Changer = Изменение ФОВ
+Movement = Мувы
+Others = Другое
+
 
 //grenade helper
 Loaded:-N/A = Загружено: N/A
@@ -578,10 +585,11 @@ triggerAim = Аим
 triggerIsInCross = По пересечению
 triggerIsInFOV = По FOV
 triggerShootBacktrack = Стрелять в бэктрек
+enableAutomatic = Автоматические оружия
 enableBacktrack = Включить бэктрек
 enableOverride = Включить переопределение
 enablePerfectAim = Включить идеальную наводку
-autoWepDelay = Задержка автоматических оружий
+autoWepDelay = Задержка автом. оружий
 
 //menu shits
 Bomb-Timer = Таймер бомбы

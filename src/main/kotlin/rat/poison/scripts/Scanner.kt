@@ -1,17 +1,15 @@
 package rat.poison.scripts
 
 import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.curSettings
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.rankName
 import rat.poison.haltProcess
 import rat.poison.scripts.visuals.disableAllEsp
-import rat.poison.utils.deleteCFG
+import rat.poison.utils.*
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
-import rat.poison.utils.loadCFG
-import rat.poison.utils.saveCFG
-import rat.poison.utils.saveDefault
 import java.io.File
 import java.io.FileNotFoundException
 import java.nio.file.Files
@@ -30,7 +28,7 @@ fun scanner() {
         when {
             line.startsWith("help") -> {
                 if (line == "help") {
-                    println("\nAvailable commands: help [command], exit, ranks, reload, list, read [file name], write [file name] [variable name] = [value], save [default/cfgname], load [cfgname], delete [cfgname], nadehelper [nadehelpername], namechanger [name]\n")
+                    println("\nAvailable commands: help [command], exit, ranks, reload, list, read [file name], write [file name] [variable name] = [value], save [default/cfgname], load [cfgname], delete [cfgname], nadehelper [nadehelpername], namechanger [name], musickit [id]\n")
                 } else {
                     when (line.split(" ".toRegex(), 2)[1]) {
                         "exit" -> println("\nCloses program and cmd\n")
@@ -44,6 +42,7 @@ fun scanner() {
                         "load" -> println("\nLoad config\n")
                         "nadehelper" -> println("\nLoad nadehelper file\n")
                         "namechanger" -> println("\nTemporarily change your name")
+                        "musickit" -> println("\nChange your musickit to [id]")
                     }
                 }
             }
@@ -126,6 +125,20 @@ fun scanner() {
                 } catch (e: ScriptException) {
                     println("Invalid variable/value")
                 }
+            }
+            line.startsWith("musickit") -> {
+                try {
+                    val id = line.trim().split(" ".toRegex(), 2)[1]
+                    curSettings["MUSIC_KIT_ID"] = id
+                    if (inGame) {
+                        writeSpoof()
+                    }
+                    println("Music kit was set.")
+                }
+                catch (e: Exception) {
+                    println("Invalid variable/value")
+                }
+
             }
             line.startsWith("save") -> {
                 println()

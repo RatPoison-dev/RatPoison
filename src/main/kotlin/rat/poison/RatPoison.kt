@@ -37,7 +37,7 @@ data class oWeapon(var enableOverride: Boolean = false, var factorRecoil: Boolea
                    var triggerIsInFOV: Boolean = false, var triggerShootBacktrack: Boolean = false, internal var triggerFOV: Float = 0F,
                    var triggerInitDelay: Int = 0, var triggerDelayBetweenShoots: Int = 0,
 
-                   var enableBacktrack: Boolean = false, var backtrackMS: Int = 0, var autoWepDelay: Int = 100)
+                   var enableBacktrack: Boolean = false, var backtrackMS: Int = 0, var autoWepDelay: Int = 100, var enableAutomatic: Boolean = true)
 
 //Skinned Weapon
 data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var tSeed: Int)
@@ -152,6 +152,7 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()
     if (dbg) { println("[DEBUG] Initializing Name Changer") }; nameChanger()
     if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
+    if (dbg) { println("[DEBUG] Initializing Music Kit Spoofer") }; musicKitSpoofer()
 
     //if (EXPERIMENTAL) {
         //rayTraceTest()

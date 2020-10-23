@@ -8,6 +8,7 @@ import rat.poison.curSettings
 import rat.poison.overlay.App.uiKeybinds
 import rat.poison.toLocale
 import rat.poison.ui.changed
+import rat.poison.ui.tabs.othersTab
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import kotlin.math.round
 
@@ -81,7 +82,7 @@ fun keybindsUpdate(neglect: Actor) {
     aimTab.tAim.forceAimBoneKey.update(neglect)
     aimTab.tTrig.boneTriggerKey.update(neglect)
     visualsTab.visualsToggleKey.update(neglect)
-    miscTab.doorSpamKey.update(neglect)
-    miscTab.weaponSpamKey.update(neglect)
+    othersTab.doorSpamKey.update(neglect)
+    othersTab.weaponSpamKey.update(neglect)
     optionsTab.menuKey.update(neglect)
 }

@@ -53,6 +53,7 @@ class OverridenWeapons : VisTable(false) {
     val aimSmoothness = OverrideVisSliderCustom("Smooth", "aimSmoothness", 1F, 5F, .1F, false, width1 = 225F, width2 = 125F)
     val aimAfterShots = OverrideVisSliderCustom("Aim After #", "aimAfterShoots", 0F, 10F, 1F, true, width1 = 225F, width2 = 125F)
     //JOE MAMMA WAS HERE
+    val enableAutomatic = OverrideVisCheckBoxCustom("Enable Automatic Weapons", "enableAutomatic")
     val autoWepDelay = OverrideVisInputFieldCustom("Automatic weapon delay", "autoWepDelay", false)
     //Perfect Aim Collapsible
     val perfectAimCheckBox = OverrideVisCheckBoxCustom("Perfect Aim", "enablePerfectAim")
@@ -231,6 +232,7 @@ class OverridenWeapons : VisTable(false) {
         add(aimAfterShots).left().row()
         add(perfectAimCheckBox).left().row()
         add(perfectAimCollapsible).left().row()
+        add(enableAutomatic).left().row()
         add(autoWepDelay).left().row()
 
         addSeparator()
@@ -310,6 +312,7 @@ fun overridenWeaponsUpdate() {
         aimFov.update()
         aimSpeed.update()
         autoWepDelay.update()
+        enableAutomatic.update()
 
         aimSmoothness.update()
         aimAfterShots.update()

@@ -11,14 +11,14 @@ import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.keybindsUpdate
 import rat.poison.utils.generalUtil.strToBool
 
-class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true, keyWidth: Float = 200F) : VisTable() {
+class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true, keyWidth: Float = 200F, link: String = "http://cherrytree.at/misc/vk.htm") : VisTable() {
     private val textLabel = mainText
     private val variableName = varName
     private var hasTooltip = false
 
     private var keyLabel = VisLabel("$textLabel:")
     private val keyField = VisValidatableTextField(Validators.INTEGERS)
-    private val linkLabel = LinkLabel("?", "http://cherrytree.at/misc/vk.htm")
+    private val linkLabel = LinkLabel("?", link)
 
     var value = 0
 
