@@ -16,7 +16,7 @@ var meCurWep = Weapons.AK47
 var meCurWepEnt = 0L
 var curWepOverride = false
 var curWepCategory = "PISTOL"
-var curWepSettings = oWeapon(autoWepDelay = 100)
+var curWepSettings = oWeapon()
 var haveAimSettings = false
 
 fun setAim() = every(500, true, inGameCheck = true) {

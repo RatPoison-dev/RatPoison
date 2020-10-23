@@ -8,13 +8,13 @@ import rat.poison.ui.uiPanelTables.weaponOverrideSelected
 import rat.poison.ui.uiPanels.overridenWeapons
 import rat.poison.utils.generalUtil.strToBool
 
-private val flatAimIdx = getOverrideVarIndex(oWeapon(autoWepDelay = 100).toString(), "writeAngles")
-private val pathAimIdx = getOverrideVarIndex(oWeapon(autoWepDelay = 100).toString(), "mouseMovements")
+private val flatAimIdx = getOverrideVarIndex(oWeapon().toString(), "writeAngles")
+private val pathAimIdx = getOverrideVarIndex(oWeapon().toString(), "mouseMovements")
 
 class OverrideVisCheckBoxCustom(mainText: String, varName: String) : VisCheckBox(mainText) {
     private val variableName = varName
     private val defaultText = mainText
-    private val varIdx = getOverrideVarIndex(oWeapon(autoWepDelay = 100).toString(), variableName)
+    private val varIdx = getOverrideVarIndex(oWeapon().toString(), variableName)
 
     init {
         update()
