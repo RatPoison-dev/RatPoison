@@ -11,8 +11,9 @@ import rat.poison.*
 import rat.poison.settings.*
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
-import rat.poison.ui.uiHelpers.VisCheckBoxCustom
+import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisCheckBoxCustom
+import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisInputFieldCustom
 import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisSliderCustom
 import rat.poison.ui.uiPanels.overridenWeapons
 import rat.poison.ui.uiUpdate
@@ -33,13 +34,13 @@ class OverridenWeapons : VisTable(false) {
     private val categorySelectLabel = VisLabel("${"Weapon-Category".toLocale()}:")
 
     private val weaponOverrideSelectionBox = VisSelectBox<String>()
-    val weaponOverrideEnableCheckBox = OverrideVisCheckBoxCustom("Enable Override", "tOverride")
+    val weaponOverrideEnableCheckBox = OverrideVisCheckBoxCustom("Enable Override", "enableOverride")
 
-    val enableFactorRecoil = OverrideVisCheckBoxCustom("Factor Recoil", "tFRecoil")
-    val enableOnShot = OverrideVisCheckBoxCustom("On Shot", "tOnShot")
-    val enableFlatAim = OverrideVisCheckBoxCustom("Flat Aim", "tFlatAim")
-    val enablePathAim = OverrideVisCheckBoxCustom("Path Aim", "tPathAim")
-    val enableScopedOnly = OverrideVisCheckBoxCustom("Scoped Only", "tScopedOnly")
+    val enableFactorRecoil = OverrideVisCheckBoxCustom("Factor Recoil", "factorRecoil")
+    val enableOnShot = OverrideVisCheckBoxCustom("On Shot", "onShot")
+    val enableFlatAim = OverrideVisCheckBoxCustom("Write angles", "writeAngles")
+    val enablePathAim = OverrideVisCheckBoxCustom("Mouse Movements", "mouseMovements")
+    val enableScopedOnly = OverrideVisCheckBoxCustom("Scoped Only", "aimScopedOnly")
 
     //TODO Labels might need locale updates?
     private val aimBoneLabel = VisLabel("Bone".toLocale())
@@ -47,29 +48,30 @@ class OverridenWeapons : VisTable(false) {
     private val forceBoneLabel = VisLabel("Force-Bone".toLocale())
     val forceBoneBox = VisSelectBox<String>()
 
-    val aimFov = OverrideVisSliderCustom("FOV", "tAimFov", 0.5F, 90F, 0.5F, false, width1 = 225F, width2 = 125F)
-    val aimSpeed = OverrideVisSliderCustom("Speed", "tAimSpeed", 0F, 10F, 1F, true, width1 = 225F, width2 = 125F)
-    val aimSmoothness = OverrideVisSliderCustom("Smooth", "tAimSmooth", 1F, 5F, .1F, false, width1 = 225F, width2 = 125F)
-    val aimAfterShots = OverrideVisSliderCustom("Aim After #", "tAimAfterShots", 0F, 10F, 1F, true, width1 = 225F, width2 = 125F)
-
+    val aimFov = OverrideVisSliderCustom("FOV", "aimFOV", 0.5F, 90F, 0.5F, false, width1 = 225F, width2 = 125F)
+    val aimSpeed = OverrideVisSliderCustom("Speed", "aimSpeed", 0F, 10F, 1F, true, width1 = 225F, width2 = 125F)
+    val aimSmoothness = OverrideVisSliderCustom("Smooth", "aimSmoothness", 1F, 5F, .1F, false, width1 = 225F, width2 = 125F)
+    val aimAfterShots = OverrideVisSliderCustom("Aim After #", "aimAfterShoots", 0F, 10F, 1F, true, width1 = 225F, width2 = 125F)
+    //JOE MAMMA WAS HERE
+    val autoWepDelay = OverrideVisInputFieldCustom("Automatic weapon delay", "autoWepDelay", false)
     //Perfect Aim Collapsible
-    val perfectAimCheckBox = OverrideVisCheckBoxCustom("Perfect Aim", "tPerfectAim")
+    val perfectAimCheckBox = OverrideVisCheckBoxCustom("Perfect Aim", "enablePerfectAim")
     private val perfectAimTable = VisTable()
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
-    val perfectAimFov = OverrideVisSliderCustom("FOV", "tPAimFov", 1F, 90F, .5F, false, width1 = 225F, width2 = 125F)
-    val perfectAimChance = OverrideVisSliderCustom("Chance", "tPAimChance", 1F, 100F, 1F, true, width1 = 225F, width2 = 125F)
+    val perfectAimFov = OverrideVisSliderCustom("FOV", "perfectAimFov", 1F, 90F, .5F, false, width1 = 225F, width2 = 125F)
+    val perfectAimChance = OverrideVisSliderCustom("Chance", "perfectAimChance", 1F, 100F, 1F, true, width1 = 225F, width2 = 125F)
 
-    val trigEnable = OverrideVisCheckBoxCustom("Enable Trigger", "tBoneTrig")
-    val trigAimbot = OverrideVisCheckBoxCustom("Aimbot", "tBTrigAim")
-    val trigInCross = OverrideVisCheckBoxCustom("InCross", "tBTrigInCross")
-    val trigInFov = OverrideVisCheckBoxCustom("InFov", "tBTrigInFov")
-    val trigBacktrack = OverrideVisCheckBoxCustom("Shoot Backtrack", "tBTrigBacktrack")
-    val trigFov = OverrideVisSliderCustom("FOV", "tBTrigFov", 0.5F, 90F, 0.5F, false, width1 = 225F, width2 = 125F)
-    val trigInitDelay = OverrideVisSliderCustom("Init Shot Delay", "tBTrigInitDelay", 0F, 500F, 10F, true, width1 = 225F, width2 = 125F)
-    val trigPerShotDelay = OverrideVisSliderCustom("Per Shot Delay", "tBTrigPerShotDelay", 0F, 500F, 10F, true, width1 = 225F, width2 = 125F)
+    val trigEnable = OverrideVisCheckBoxCustom("Enable Trigger", "enableTriggerBot")
+    val trigAimbot = OverrideVisCheckBoxCustom("Aimbot", "triggerAim")
+    val trigInCross = OverrideVisCheckBoxCustom("InCross", "triggerIsInCross")
+    val trigInFov = OverrideVisCheckBoxCustom("InFov", "triggerIsInFOV")
+    val trigBacktrack = OverrideVisCheckBoxCustom("Shoot Backtrack", "triggerShootBacktrack")
+    val trigFov = OverrideVisSliderCustom("FOV", "triggerFOV", 0.5F, 90F, 0.5F, false, width1 = 225F, width2 = 125F)
+    val trigInitDelay = OverrideVisSliderCustom("Init Shot Delay", "triggerInitDelay", 0F, 500F, 10F, true, width1 = 225F, width2 = 125F)
+    val trigPerShotDelay = OverrideVisSliderCustom("Per Shot Delay", "triggerDelayBetweenShoots", 0F, 500F, 10F, true, width1 = 225F, width2 = 125F)
 
-    val enableBacktrack = OverrideVisCheckBoxCustom("Enable Backtrack", "tBacktrack")
-    val backtrackMS = OverrideVisSliderCustom("Backtrack MS", "tBTMS", 20F, 200F, 5F, true, width1 = 225F, width2 = 125F)
+    val enableBacktrack = OverrideVisCheckBoxCustom("Enable Backtrack", "enableBacktrack")
+    val backtrackMS = OverrideVisSliderCustom("Backtrack MS", "backtrackMS", 20F, 200F, 5F, true, width1 = 225F, width2 = 125F)
 
     init {
         align(Align.left)
@@ -149,7 +151,7 @@ class OverridenWeapons : VisTable(false) {
         //Create Enable Override Toggle
         weaponOverrideEnableCheckBox.changed { _, _ ->
             val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-            curWep.tOverride = weaponOverrideEnableCheckBox.isChecked
+            curWep.enableOverride = weaponOverrideEnableCheckBox.isChecked
             curSettings[weaponOverrideSelected] = curWep.toString()
             enableOverride = weaponOverrideEnableCheckBox.isChecked
             uiUpdate()
@@ -176,7 +178,7 @@ class OverridenWeapons : VisTable(false) {
             val setBone = curSettings[boneCategories[aimBoneBox.selectedIndex] + "_BONE"]
             if (weaponOverride) {
                 val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-                curWep.tAimBone = setBone.toInt()
+                curWep.aimBone = setBone.toInt()
                 curSettings[weaponOverrideSelected] = curWep.toString()
             }
         }
@@ -195,7 +197,7 @@ class OverridenWeapons : VisTable(false) {
             val setBone = curSettings[boneCategories[forceBoneBox.selectedIndex] + "_BONE"]
             if (weaponOverride) {
                 val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-                curWep.tForceBone = setBone.toInt()
+                curWep.aimForceBone = setBone.toInt()
                 curSettings[weaponOverrideSelected] = curWep.toString()
             }
         }
@@ -229,6 +231,7 @@ class OverridenWeapons : VisTable(false) {
         add(aimAfterShots).left().row()
         add(perfectAimCheckBox).left().row()
         add(perfectAimCollapsible).left().row()
+        add(autoWepDelay).left().row()
 
         addSeparator()
 
@@ -252,7 +255,7 @@ fun overridenWeaponsUpdate() {
     overridenWeapons.apply {
         val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
 
-        overridenWeapons.weaponOverrideEnableCheckBox.isChecked = curWep.tOverride
+        overridenWeapons.weaponOverrideEnableCheckBox.isChecked = curWep.enableOverride
 
         if (categorySelected == "SNIPER") {
             enableScopedOnly.disable(false)
@@ -286,7 +289,7 @@ fun overridenWeaponsUpdate() {
             forceBoneBox.items = boneArray
         }
 
-        aimBoneBox.selectedIndex = boneCategories.indexOf(when (curWep.tAimBone) {
+        aimBoneBox.selectedIndex = boneCategories.indexOf(when (curWep.aimBone) {
             HEAD_BONE -> "HEAD"
             NECK_BONE -> "NECK"
             CHEST_BONE -> "CHEST"
@@ -295,7 +298,7 @@ fun overridenWeaponsUpdate() {
             else -> "RANDOM"
         })
 
-        forceBoneBox.selectedIndex = boneCategories.indexOf(when (curWep.tForceBone) {
+        forceBoneBox.selectedIndex = boneCategories.indexOf(when (curWep.aimForceBone) {
             HEAD_BONE -> "HEAD"
             NECK_BONE -> "NECK"
             CHEST_BONE -> "CHEST"
@@ -306,12 +309,13 @@ fun overridenWeaponsUpdate() {
 
         aimFov.update()
         aimSpeed.update()
+        autoWepDelay.update()
 
         aimSmoothness.update()
         aimAfterShots.update()
 
-        perfectAimCheckBox.isChecked = curWep.tPerfectAim
-        perfectAimCollapsible.isCollapsed = !curWep.tPerfectAim
+        perfectAimCheckBox.isChecked = curWep.enablePerfectAim
+        perfectAimCollapsible.isCollapsed = !curWep.enablePerfectAim
         perfectAimFov.update()
         perfectAimChance.update()
 

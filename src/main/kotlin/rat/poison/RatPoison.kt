@@ -27,17 +27,17 @@ import java.io.File
 import kotlin.collections.set
 
 //Override Weapon
-data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = false,          var tOnShot: Boolean = false,
-                   var tFlatAim: Boolean = false,       var tPathAim: Boolean = false,          var tAimBone: Int = 0,
-                   var tForceBone: Int = 0,             var tAimFov: Float = 0F,                var tAimSpeed: Int = 0,
-                   var tAimSmooth: Float = 0F,        var tPerfectAim: Boolean = false,       var tPAimFov: Float = 1F,
-                   var tPAimChance: Int = 1,            var tScopedOnly: Boolean = false,       var tAimAfterShots: Int = 0,
+data class oWeapon(var enableOverride: Boolean = false, var factorRecoil: Boolean = false, var onShot: Boolean = false,
+                   var writeAngles: Boolean = false, var mouseMovements: Boolean = false, var aimBone: Int = 0,
+                   var aimForceBone: Int = 0, var aimFOV: Float = 0F, var aimSpeed: Int = 0,
+                   var aimSmoothness: Float = 0F, var enablePerfectAim: Boolean = false, var perfectAimFov: Float = 1F,
+                   var perfectAimChance: Int = 1, var aimScopedOnly: Boolean = false, var aimAfterShoots: Int = 0,
 
-                   var tBoneTrig: Boolean = false,     var tBTrigAim: Boolean = false,          var tBTrigInCross: Boolean = false,
-                   var tBTrigInFov: Boolean = false,   var tBTrigBacktrack: Boolean = false,    var tBTrigFov: Float = 0F,
-                   var tBTrigInitDelay: Int = 0,       var tBTrigPerShotDelay: Int = 0,
+                   var enableTriggerBot: Boolean = false, var triggerAim: Boolean = false, var triggerIsInCross: Boolean = false,
+                   var triggerIsInFOV: Boolean = false, var triggerShootBacktrack: Boolean = false, internal var triggerFOV: Float = 0F,
+                   var triggerInitDelay: Int = 0, var triggerDelayBetweenShoots: Int = 0,
 
-                   var tBacktrack: Boolean = false,    var tBTMS: Int = 0)
+                   var enableBacktrack: Boolean = false, var backtrackMS: Int = 0, var autoWepDelay: Int = 100)
 
 //Skinned Weapon
 data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var tSeed: Int)

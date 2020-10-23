@@ -23,7 +23,6 @@ import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.inGame
 import kotlin.math.abs
 import kotlin.math.atan
 import kotlin.math.tan
@@ -254,8 +253,8 @@ fun isValidTick(tick: Int): Boolean {
     val deltaTime = delta * gvars.intervalPerTick
 
     var backtrackMS = curSettings["${curWepCategory}_BACKTRACK_MS"].toFloat()
-    if (curWepOverride && curWepSettings.tBacktrack) {
-        backtrackMS = curWepSettings.tBTMS.toFloat()
+    if (curWepOverride && curWepSettings.enableBacktrack) {
+        backtrackMS = curWepSettings.backtrackMS.toFloat()
     }
 
     val max = clamp(backtrackMS/1000f, 0F, .19F)

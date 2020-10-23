@@ -92,7 +92,7 @@ fun validateSetting(settingName: String, value: String): Boolean {
         } else if (value.contains("oWeapon")) {
             val size = value.replace("oWeapon(", "").replace(")", "").split(", ").size
 
-            if (size != 25) {
+            if (size != 26) {
                 println("Debug: Setting invalid: $settingName has incorrect size of $size expected 25")
                 return false
             }
