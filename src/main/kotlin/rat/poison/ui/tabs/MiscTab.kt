@@ -28,6 +28,7 @@ class MiscTab : Tab(false, false) {
     //Movement
     val bunnyHop = VisCheckBoxCustom("Bunny Hop", "ENABLE_BUNNY_HOP")
     val bunnyHopHitChance = VisSliderCustom("HitChance", "BHOP_HITCHANCE", 0F, 100F,  1F, true, width1 = 150F, width2 = 73F)
+    val bunnyHopKey = VisInputFieldCustom("Bunny Hop Key", "ENABLE_BUNNY_HOP_KEY", keyWidth = 160F)
     val autoStrafe = VisCheckBoxCustom("Auto Strafe", "AUTO_STRAFE")
     val autoStrafeBHopOnly = VisCheckBoxCustom("BHop Only", "STRAFE_BHOP_ONLY")
     val fastStop = VisCheckBoxCustom("Fast Stop", "FAST_STOP")
@@ -43,6 +44,7 @@ class MiscTab : Tab(false, false) {
     val bombTimer = VisCheckBoxCustom("Bomb Timer", "ENABLE_BOMB_TIMER")
     val bombTimerEnableBars = VisCheckBoxCustom("Timer Bars", "BOMB_TIMER_BARS")
     val bombTimerEnableMenu = VisCheckBoxCustom("Timer Menu", "BOMB_TIMER_MENU")
+    val bombTimerShowTTE = VisCheckBoxCustom("Time To Explode", "BOMB_TIMER_BARS_SHOW_TTE")
     val spectatorList = VisCheckBoxCustom("Spectator List", "SPECTATOR_LIST")
 
     val knifeBot = VisCheckBoxCustom("Knife Bot", "ENABLE_AUTO_KNIFE")
@@ -114,6 +116,7 @@ class MiscTab : Tab(false, false) {
         //Top left pane (movement)
         leftTable.add(bunnyHop).left().padLeft(14F).row()
         leftTable.add(bunnyHopHitChance).left().padLeft(24F).row()
+        leftTable.add(bunnyHopKey).left().padLeft(24F).row()
         leftTable.add(autoStrafe).left().padLeft(24F).row()
         leftTable.add(autoStrafeBHopOnly).left().padLeft(24F).row()
         leftTable.addSeparator().width(250F).left()
@@ -133,6 +136,7 @@ class MiscTab : Tab(false, false) {
         leftTable.add(bombTimer).left().padLeft(14F).row()
         leftTable.add(bombTimerEnableMenu).left().padLeft(24F).row()
         leftTable.add(bombTimerEnableBars).left().padLeft(24F).row()
+        leftTable.add(bombTimerShowTTE).left().padLeft(24F).row()
         //Right pane (misc?)
         rightTable.add(hitSound).left().padLeft(5F).row()
         rightTable.add(hitSoundVolume).left().padLeft(5F).row()
@@ -184,6 +188,7 @@ fun miscTabUpdate() {
     miscTab.apply {
         bunnyHop.update()
         bunnyHopHitChance.update()
+        bunnyHopKey.update()
         autoStrafe.update()
         postProcessingDisable.update()
         autoStrafeBHopOnly.update()
@@ -201,6 +206,7 @@ fun miscTabUpdate() {
         weaponSpamKey.update()
         bombTimer.update()
         bombTimerEnableMenu.update()
+        bombTimerShowTTE.update()
         bombTimerEnableBars.update()
         spectatorList.update()
         headWalk.update()

@@ -222,6 +222,7 @@ HITMARKER_RECOIL_POSITION_TOOLTIP = Включает/выключает пози
 INDICATOR_SIZE_TOOLTIP = Размер индикатора
 HOLD_AIM_TOOLTIP = Продолжать аимиться в цель, даже когда цель находится вне фова аима
 _VARIATION_DEADZONE_TOOLTIP = Вариация, где вариация не работает
+BOMB_TIMER_BARS_SHOW_TTE_TOOLTIP = Писать время до взрыва (например, 20.0 с) поверх полоски внизу экрана
 
 //New shit redux
 AUTO_WEP_DELAY = Задержка
@@ -390,6 +391,8 @@ NADE_TRACER_TIMEOUT = Тайм-аут
 FOOTSTEP_UPDATE = Таймер обновления
 FOOTSTEP_TTL = Время жизни
 ENABLE_BUNNY_HOP = Банни-Хоп
+ENABLE_BUNNY_HOP_KEY = Кнопка БХопа
+BOMB_TIMER_BARS_SHOW_TTE = Время до взрыва
 AUTO_STRAFE = Авто стрейфы
 STRAFE_BHOP_ONLY = Только при БХопе
 FAST_STOP = Быстрая остановка
