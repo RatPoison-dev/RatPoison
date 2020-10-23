@@ -45,10 +45,10 @@ The first step is to compile the source code into a usable cheat program.
 * Double click on the "_installer_" (_installer.exe_) script and wait for it to complete.
 
 Once those steps are complete, the usable cheat program can be found within the _build_
-directory, and will be in a directory called **RatPoison 1.7**.
+directory, and will be in a directory called **RatPoison 1.8**.
 
-From within the **RatPoison 1.7** directory, you can start the cheat by running
-the _"Start RatPoison 1.7"_ script.
+From within the **RatPoison 1.8** directory, you can start the cheat by running
+the _"Start RatPoison 1.8"_ script.
 If you have chosen to randomize the cheat name, you should open the file ending in .bat which should show ![BatFile](https://i.imgur.com/JZAhmtr.png) as an icon.
 
 You can launch the cheat at any time after launching CSGO.
