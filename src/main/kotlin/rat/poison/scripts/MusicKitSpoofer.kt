@@ -12,6 +12,7 @@ import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
 import rat.poison.utils.shouldPostProcess
 
+//https://www.unknowncheats.me/forum/counterstrike-global-offensive/164236-spoofing-music-kit-casual-rank-via-netvar-patching.html
 fun musicKitSpoofer() = every(10000, true, inGameCheck = true) {
     if (!shouldPostProcess) return@every
     if (curSettings["MUSIC_KIT_SPOOFER"].strToBool()) {
