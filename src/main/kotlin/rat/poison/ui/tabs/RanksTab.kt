@@ -8,6 +8,7 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.scripts.*
 import rat.poison.toLocale
 import rat.poison.ui.uiRefreshing
+import rat.poison.utils.RanksPlayer
 
 class RanksTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -61,39 +62,27 @@ class RanksTab : Tab(false, false) {
 
         namesTable.reset()
         namesTable.add(namesLabel).left().row()
-
-        for (i in 0 until teamList.size) {
-            if (teamList[i] == "CT") {
-                constructRank(i)
-            }
-        }
-
-        for (i in 0 until teamList.size) {
-            if (teamList[i] == "T") {
-                constructRank(i)
+        playerList.forEach { player ->
+            when (player.team) {
+                3L -> constructRank(player)
+                2L -> constructRank(player)
             }
         }
     }
-
-    private fun constructRank(index: Int) {
+    private fun constructRank(player: RanksPlayer) {
         if (uiRefreshing) return
-
-        teamsLabel.setText(teamsLabel.text.toString() + teamList[index].toLocale() + "  \n")
-
-        var tmpName = nameList[index]
-        tmpName = tmpName.substring(0, if (tmpName.length > 24) 24 else tmpName.length)
-
-        if (steamIDList[index].toInt() != 0) { //Bot check
-            namesTable.add(LinkLabel(tmpName, "https://steamcommunity.com/profiles/%5BU:1:" + steamIDList[index] + "%5B/")).height(21f).left().row()
+        teamsLabel.setText(teamsLabel.text.toString() + player.teamStr.toLocale() + "  \n")
+        var tmpName = player.name
+        if (player.steamID.toInt() != 0) { //Bot check
+            namesTable.add(LinkLabel(tmpName, "https://steamcommunity.com/profiles/%5BU:1:" + player.steamID + "%5B/")).height(21f).left().row()
         } else {
             namesTable.add(tmpName).height(21f).left().row()
         }
-
-        ranksLabel.setText(ranksLabel.text.toString() + rankList[index] + "  \n")
-        killsLabel.setText(killsLabel.text.toString() + killsList[index] + "  \n")
-        deathsLabel.setText(deathsLabel.text.toString() + deathsList[index] + "  \n")
-        kdLabel.setText(kdLabel.text.toString() + KDList[index] + "  \n")
-        winsLabel.setText(winsLabel.text.toString() + winsList[index] + "  \n")
-        moneyLabel.setText(moneyLabel.text.toString() + moneyList[index] + "  \n")
+        ranksLabel.setText(ranksLabel.text.toString() + player.rank + "  \n")
+        killsLabel.setText(killsLabel.text.toString() + player.kills + "  \n")
+        deathsLabel.setText(deathsLabel.text.toString() + player.deaths + "  \n")
+        kdLabel.setText(kdLabel.text.toString() + player.KD + "  \n")
+        winsLabel.setText(winsLabel.text.toString() + player.wins + "  \n")
+        moneyLabel.setText(moneyLabel.text.toString() + player.money + "  \n")
     }
 }
