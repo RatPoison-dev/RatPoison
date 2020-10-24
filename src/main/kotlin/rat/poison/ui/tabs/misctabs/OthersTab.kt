@@ -13,6 +13,7 @@ import rat.poison.scripts.changeName
 import rat.poison.scripts.selfNade
 import rat.poison.scripts.visuals.disablePostProcessing
 import rat.poison.scripts.visuals.updateHitsound
+import rat.poison.scripts.visuals.updateKillSound
 import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.othersTab
@@ -31,9 +32,12 @@ class OthersTab: Tab(false, false) {
     var weaponSpamKey = VisInputFieldCustom("Weapon Spam Key", "W_SPAM_KEY",true, 225F)
     val enableReducedFlash = VisCheckBoxCustom("Reduced Flash", "ENABLE_REDUCED_FLASH")
     val flashMaxAlpha = VisSliderCustom("Max Alpha", "FLASH_MAX_ALPHA", 5F, 255F, 5F, true)
-    val hitSoundCheckBox = VisCheckBoxCustom("Hitsound", "ENABLE_HITSOUND")
+    val hitSoundCheckBox = VisCheckBoxCustom("HitSound", "ENABLE_HITSOUND")
     val hitSoundBox = VisSelectBox<String>()
     val hitSoundVolume = VisSliderCustom("Volume", "HITSOUND_VOLUME", .1F, 1F, .1F, false)
+    val killSoundCheckBox = VisCheckBoxCustom("KillSound", "ENABLE_KILLSOUND")
+    val killSoundBox = VisSelectBox<String>()
+    val killSoundVolume = VisSliderCustom("Volume", "KILLSOUND_VOLUME", .1F, 1F, .1F, false)
     val selfNade = VisTextButton("Self-Nade".toLocale())
     val enableKillBind = VisCheckBoxCustom("Kill Bind", "KILL_BIND")
     val killBindKey = VisInputFieldCustom("Key", "KILL_BIND_KEY", true, 225F)
@@ -54,23 +58,32 @@ class OthersTab: Tab(false, false) {
         hitSound.add(hitSoundCheckBox).left()
         hitSound.add(hitSoundBox).padLeft(168F-hitSoundCheckBox.width).width(90F)
 
+        val tmpTable = VisTable()
+        tmpTable.add(killSoundCheckBox).left()
+        tmpTable.add(killSoundBox).padLeft(168F-killSoundCheckBox.width).width(90F)
         table.add(hitSound).left().row()
         table.add(hitSoundVolume).left().row()
+        table.addSeparator().row()
+        table.add(tmpTable).left().row()
+        table.add(killSoundVolume).left().row()
+        table.addSeparator().row()
         table.add(enableReducedFlash).left().row()
         table.add(flashMaxAlpha).left().row()
+        table.addSeparator().row()
         table.add(doorSpam).left().row()
         table.add(doorSpamKey).left().row()
-        //
+        table.addSeparator().row()
         table.add(weaponSpam).left().row()
         table.add(weaponSpamKey).left().row()
+        table.addSeparator().row()
         table.add(selfNade).left().row()
-        //table.addSeparator().width(250F).left()
         table.add(enableKillBind).left().row()
         table.add(killBindKey).left().row()
         table.add(postProcessingDisable).left().row()
-        //table.addSeparator().width(250F).left()
+        table.addSeparator().row()
         table.add(nameChangeInput).left().row()
         table.add(nameChange).left().padTop(2F).row()
+        table.addSeparator().row()
         table.add(spectatorList).left().row()
         table.add(enableMusicKitSpoofer).left().row()
         table.add(musicKitId).left().row()
@@ -104,6 +117,23 @@ class OthersTab: Tab(false, false) {
             true
         }
 
+        //Create Kill Sound Toggle
+        if (curSettings["ENABLE_KILLSOUND"].strToBool()) killSoundCheckBox.toggle()
+        killSoundCheckBox.changed { _, _ ->
+            curSettings["ENABLE_KILLSOUND"] = killSoundCheckBox.isChecked.boolToStr()
+            true
+        }
+
+        //Create Hit Sound Selector Box
+
+        killSoundBox.selected = curSettings["KILLSOUND_FILE_NAME"].replace("\"", "")
+
+        killSoundBox.changed { _, _ ->
+            updateKillSound(killSoundBox.selected)
+            curSettings["KILLSOUND_FILE_NAME"] = killSoundBox.selected
+            true
+        }
+
     }
     override fun getTabTitle(): String {
         return "Others".toLocale()
@@ -118,6 +148,7 @@ class OthersTab: Tab(false, false) {
             hitSoundFiles.add(it.name)
         }
         hitSoundBox.items = hitSoundFiles
+        killSoundBox.items = hitSoundFiles
     }
 }
 
@@ -132,6 +163,9 @@ fun othersTabUpdate() {
         hitSoundCheckBox.update()
         hitSoundBox.selected = curSettings["HITSOUND_FILE_NAME"].replace("\"", "")
         hitSoundVolume.update()
+        killSoundCheckBox.update()
+        killSoundBox.selected = curSettings["KILLSOUND_FILE_NAME"].replace("\"", "")
+        killSoundVolume.update()
         selfNade.setText("Self-Nade".toLocale())
         killBindKey.update()
         enableKillBind.update()

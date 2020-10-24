@@ -153,7 +153,7 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Name Changer") }; nameChanger()
     if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
     if (dbg) { println("[DEBUG] Initializing Music Kit Spoofer") }; musicKitSpoofer()
-
+    if (dbg) { println("[DEBUG] Initializing Kill Sound") }; killSoundEsp()
     //if (EXPERIMENTAL) {
         //rayTraceTest()
         //drawMapWireframe()
