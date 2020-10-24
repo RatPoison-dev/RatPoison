@@ -102,7 +102,9 @@ class OthersTab: Tab(false, false) {
         }
 
         musicKitId.changed {_, _ ->
-            writeSpoof()
+            if (curSettings["MUSIC_KIT_SPOOFER"].strToBool()) {
+                writeSpoof()
+            }
         }
 
         //Create Hit Sound Toggle
