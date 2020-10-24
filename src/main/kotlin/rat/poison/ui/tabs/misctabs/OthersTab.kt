@@ -14,6 +14,7 @@ import rat.poison.scripts.selfNade
 import rat.poison.scripts.visuals.disablePostProcessing
 import rat.poison.scripts.visuals.updateHitsound
 import rat.poison.scripts.visuals.updateKillSound
+import rat.poison.scripts.writeSpoof
 import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.othersTab
@@ -98,6 +99,10 @@ class OthersTab: Tab(false, false) {
 
         postProcessingDisable.changed { _, _ ->
             disablePostProcessing()
+        }
+
+        musicKitId.changed {_, _ ->
+            writeSpoof()
         }
 
         //Create Hit Sound Toggle

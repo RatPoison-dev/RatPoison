@@ -130,9 +130,7 @@ fun scanner() {
                 try {
                     val id = line.trim().split(" ".toRegex(), 2)[1]
                     curSettings["MUSIC_KIT_ID"] = id
-                    if (inGame) {
-                        writeSpoof()
-                    }
+                    writeSpoof()
                     println("Music kit was set.")
                 }
                 catch (e: Exception) {
