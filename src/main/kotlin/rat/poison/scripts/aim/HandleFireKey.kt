@@ -13,6 +13,7 @@ import rat.poison.scripts.*
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.generalUtil.toWeaponClass
 import rat.poison.utils.inBackground
 import rat.poison.utils.inGame
 
@@ -74,8 +75,12 @@ fun fireWeapon() {
     if (cursorEnable) return
 
     var shouldAuto = false
-
-    if (curSettings["AUTOMATIC_WEAPONS"].strToBool() && !meCurWep.automatic && meCurWep.gun && curSettings["ENABLE_AIM"].strToBool()) {
+    curWepSettings = curSettings[meCurWep.name].toWeaponClass()
+    val shouldCall = when (curWepSettings.enableOverride) {
+        true -> curWepSettings.enableAutomatic
+        false -> curSettings["AUTOMATIC_WEAPONS"].strToBool()
+    }
+    if (shouldCall && !meCurWep.automatic && meCurWep.gun && curSettings["ENABLE_AIM"].strToBool()) {
         shouldAuto = automaticWeapons()
 
         if (!didShoot) { //Skip first delay
@@ -94,7 +99,7 @@ fun fireWeapon() {
     val backtrackOnKey = curSettings["ENABLE_BACKTRACK_ON_KEY"].strToBool()
     val backtrackKeyPressed = keyPressed(curSettings["BACKTRACK_KEY"].toInt())
 
-    if (((curSettings["ENABLE_BACKTRACK"].strToBool() && !curWepOverride) || (curWepOverride && curWepSettings.tBacktrack)) && ((!backtrackOnKey || (backtrackOnKey && backtrackKeyPressed)))) {
+    if (((curSettings["ENABLE_BACKTRACK"].strToBool() && !curWepOverride) || (curWepOverride && curWepSettings.enableBacktrack)) && ((!backtrackOnKey || (backtrackOnKey && backtrackKeyPressed)))) {
         if (shouldAuto || (!shouldAuto && !didShoot) || meCurWep.automatic) {
             if (attemptBacktrack()) {
                 if (!shouldAuto) {

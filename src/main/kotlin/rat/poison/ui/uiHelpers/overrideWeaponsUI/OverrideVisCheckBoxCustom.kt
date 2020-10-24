@@ -1,7 +1,6 @@
 package rat.poison.ui.uiHelpers.overrideWeaponsUI
 
 import com.kotcrab.vis.ui.widget.VisCheckBox
-import rat.poison.curLocale
 import rat.poison.oWeapon
 import rat.poison.toLocale
 import rat.poison.ui.changed
@@ -9,8 +8,8 @@ import rat.poison.ui.uiPanelTables.weaponOverrideSelected
 import rat.poison.ui.uiPanels.overridenWeapons
 import rat.poison.utils.generalUtil.strToBool
 
-private val flatAimIdx = getOverrideVarIndex(oWeapon().toString(), "tFlatAim")
-private val pathAimIdx = getOverrideVarIndex(oWeapon().toString(), "tPathAim")
+private val flatAimIdx = getOverrideVarIndex(oWeapon().toString(), "writeAngles")
+private val pathAimIdx = getOverrideVarIndex(oWeapon().toString(), "mouseMovements")
 
 class OverrideVisCheckBoxCustom(mainText: String, varName: String) : VisCheckBox(mainText) {
     private val variableName = varName
@@ -20,10 +19,10 @@ class OverrideVisCheckBoxCustom(mainText: String, varName: String) : VisCheckBox
     init {
         update()
         changed { _, _ ->
-            if (varName == "tFlatAim" && isChecked) {
+            if (varName == "writeAngles" && isChecked) {
                 setOverrideVar(weaponOverrideSelected, pathAimIdx, false)
                 overridenWeapons.enablePathAim.isChecked = false
-            } else if (varName == "tPathAim" && isChecked) {
+            } else if (varName == "mouseMovements" && isChecked) {
                 setOverrideVar(weaponOverrideSelected, flatAimIdx, false)
                 overridenWeapons.enableFlatAim.isChecked = false
             }

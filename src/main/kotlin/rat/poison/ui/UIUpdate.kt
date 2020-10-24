@@ -7,6 +7,10 @@ import rat.poison.overlay.App.uiMenu
 import rat.poison.overlay.App.uiSpecList
 import rat.poison.overlay.opened
 import rat.poison.ui.tabs.*
+import rat.poison.ui.tabs.misctabs.bombTabUpdate
+import rat.poison.ui.tabs.misctabs.fovChangerTabUpdate
+import rat.poison.ui.tabs.misctabs.movementTabUpdate
+import rat.poison.ui.tabs.misctabs.othersTabUpdate
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiPanelTables.OverridenWeapons
 import rat.poison.ui.uiPanelTables.overridenWeaponsUpdate
@@ -28,7 +32,6 @@ fun uiUpdate() {
     nadesVTUpdate()
     snaplinesEspTabUpdate()
     footStepsEspTabUpdate()
-    miscTabUpdate()
     rcsTabUpdate()
     miscVisualTabUpdate()
     optionsTabUpdate()
@@ -38,13 +41,17 @@ fun uiUpdate() {
     updateTrig()
     updateAim()
     updateDisableEsp()
+    movementTabUpdate()
+    fovChangerTabUpdate()
+    bombTabUpdate()
+    othersTabUpdate()
 
     //Update windows
     uiAimOverridenWeapons.setPosition(uiMenu.x+uiMenu.width+4F, uiMenu.y)
     //Update lists
     optionsTab.updateCFGList()
     optionsTab.updateLocaleList()
-    miscTab.updateHitSoundsList()
+    othersTab.updateHitSoundsList()
     nadeHelperTab.updateNadeFileHelperList()
 }
 
@@ -56,7 +63,7 @@ fun refreshMenu() {
     aimTab = AimTab()
     visualsTab = VisualsTab()
     rcsTab = RcsTab()
-    miscTab = MiscTab()
+    miscTabs = MiscTabs()
     ranksTab = RanksTab()
     nadeHelperTab = NadeHelperTab()
     skinChangerTab = SkinChangerTab()
@@ -65,12 +72,13 @@ fun refreshMenu() {
     mainTabbedPane.add(aimTab)
     mainTabbedPane.add(visualsTab)
     mainTabbedPane.add(rcsTab)
-    mainTabbedPane.add(miscTab)
+    mainTabbedPane.add(miscTabs)
     mainTabbedPane.add(ranksTab)
     mainTabbedPane.add(nadeHelperTab)
     mainTabbedPane.add(skinChangerTab)
     mainTabbedPane.add(optionsTab)
 
+    miscTabbedPane.removeAll()
     espTabbedPane.removeAll()
 
     glowEspTab = GlowEspTab()
@@ -92,6 +100,11 @@ fun refreshMenu() {
     espTabbedPane.add(hitMarkerTab)
     espTabbedPane.add(nadesTab)
     espTabbedPane.add(miscVisualsTab)
+
+    miscTabbedPane.add(movementTab)
+    miscTabbedPane.add(fovChangerTab)
+    miscTabbedPane.add(bombTab)
+    miscTabbedPane.add(othersTab)
 
     uiAimOverridenWeapons.removeActor(overridenWeapons)
     uiAimOverridenWeapons.remove()

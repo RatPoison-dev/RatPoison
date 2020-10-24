@@ -2,16 +2,11 @@ package rat.poison.ui.uiHelpers.tables
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Array
-import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.widget.*
 import rat.poison.*
-import rat.poison.game.CSGO
-import rat.poison.overlay.App
-import rat.poison.settings.*
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.gunCategories
-import rat.poison.ui.tabs.updateDisableEsp
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSelectBoxCustom
@@ -96,7 +91,7 @@ class AimTable: VisTable(false) {
             curSettings["ENABLE_OVERRIDE"] = weaponOverrideCheckBox.isChecked.toString()
 
             val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-            overridenWeapons.enableOverride = curWep.tOverride
+            overridenWeapons.enableOverride = curWep.enableOverride
 
             uiUpdate()
             true
