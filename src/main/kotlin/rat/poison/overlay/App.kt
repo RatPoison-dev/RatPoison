@@ -18,6 +18,7 @@ import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.CSGO
+import rat.poison.game.entity.shotsFired
 import rat.poison.game.me
 import rat.poison.game.updateViewMatrix
 import rat.poison.haltProcess
@@ -203,6 +204,7 @@ object App : ApplicationAdapter() {
                             sbText.append("\nShouldPostProcess: $shouldPostProcess")
                             sbText.append("\nMe: $me Dead: $meDead")
                             sbText.append("\nDanger Zone: $DANGER_ZONE")
+                            sbText.append("\nShots fired: ${me.shotsFired()}")
                             sbText.append("\n")
                             sbText.append("\nTotal physical mem: ").appendHumanReadableSize(totalPhysMem)
                             sbText.append("\nFree physical mem: ").appendHumanReadableSize(freePhysMem)

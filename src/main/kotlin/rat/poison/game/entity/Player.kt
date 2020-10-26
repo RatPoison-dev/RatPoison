@@ -26,6 +26,7 @@ import rat.poison.game.netvars.NetVarOffsets.iCompetitiveWins
 import rat.poison.game.netvars.NetVarOffsets.iDeaths
 import rat.poison.game.netvars.NetVarOffsets.iHealth
 import rat.poison.game.netvars.NetVarOffsets.iKills
+import rat.poison.game.netvars.NetVarOffsets.iScore
 import rat.poison.game.netvars.NetVarOffsets.lifeState
 import rat.poison.game.netvars.NetVarOffsets.m_iAccount
 import rat.poison.game.netvars.NetVarOffsets.nTickBase
@@ -269,6 +270,12 @@ internal fun Player.wins(): Int {
 	val index = csgoEXE.uint(this + dwIndex)
 
 	return (csgoEXE.int(clientDLL.uint(dwPlayerResource) + iCompetitiveWins + index * 4))
+}
+
+internal fun Player.score(): Int {
+	val index = csgoEXE.uint(this + dwIndex)
+
+	return (csgoEXE.int(clientDLL.uint(dwPlayerResource) + iScore + index * 4))
 }
 
 internal fun Player.hltv(): Boolean {
