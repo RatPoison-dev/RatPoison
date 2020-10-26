@@ -189,7 +189,7 @@ fun bestSimTime(): Float {
     var best = -1f
     val targetID = (csgoEXE.uint(bestBacktrackTarget + dwIndex)-1).toInt()
 
-    if (targetID <= 0) return -1f
+    if (targetID < 0 || targetID > 63) return -1f
 
     val validRecords = getValidRecords(targetID)
     val minMaxIDX = getRangeRecords(targetID)
@@ -294,9 +294,11 @@ fun getRangeRecords(entID: Int, minIDX: Int = 0, maxIDX: Int = 13): Array<Int> {
 fun getValidRecords(entID: Int): List<Int> {
     val recordsList = mutableListOf<Int>()
 
-    for (i in 0 until 13) {
-        if (isValidTick(timeToTicks(btRecords[entID][i].simtime))) {
-            recordsList.add(i)
+    if (entID in 0..63) {
+        for (i in 0 until 13) {
+            if (isValidTick(timeToTicks(btRecords[entID][i].simtime))) {
+                recordsList.add(i)
+            }
         }
     }
 

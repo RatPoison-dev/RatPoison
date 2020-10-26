@@ -130,34 +130,35 @@ fun drawIndicator(enemyEnt: Long, drawColor: Color)
 
     val triangPos = Vector((tWidth / 2F) + (-tmpAng.x * dist), (tHeight / 2F) + (tmpAng.y * dist), 0F + (tmpAng.z * dist))
 
-    shapeRenderer.apply {
-        begin()
-        set(ShapeRenderer.ShapeType.Filled)
-        color = com.badlogic.gdx.graphics.Color(drawColor.red / 255F, drawColor.green / 255F, drawColor.blue / 255F, drawColor.alpha.toFloat())
-
-        val rot = -atan2(triangPos.x - tWidth/2.0, triangPos.y - tHeight/2.0)
-
-        //Middle of triangle
-        val triangX = triangPos.x
-        val triangY = triangPos.y
-
-        val sin = size*sin(rot)
-        val cos = size*cos(rot)
-
-        //Rotate triangle
-        val vert1x = (-sin + triangX).toFloat()
-        val vert1y = (cos + triangY).toFloat()
-
-        val vert2x = (-cos + sin + triangX).toFloat()
-        val vert2y = (-sin - cos + triangY).toFloat()
-
-        val vert3x = (cos + sin + triangX).toFloat()
-        val vert3y = (sin - cos + triangY).toFloat()
-
-        triangle(vert1x, vert1y, vert2x, vert2y, vert3x, vert3y)
-
-        color = com.badlogic.gdx.graphics.Color(255F, 255F, 255F, 1F)
-        set(ShapeRenderer.ShapeType.Line)
-        end()
+    if (!shapeRenderer.isDrawing) {
+        shapeRenderer.begin()
     }
+
+    shapeRenderer.set(ShapeRenderer.ShapeType.Filled)
+    shapeRenderer.color = com.badlogic.gdx.graphics.Color(drawColor.red / 255F, drawColor.green / 255F, drawColor.blue / 255F, drawColor.alpha.toFloat())
+
+    val rot = -atan2(triangPos.x - tWidth/2.0, triangPos.y - tHeight/2.0)
+
+    //Middle of triangle
+    val triangX = triangPos.x
+    val triangY = triangPos.y
+
+    val sin = size*sin(rot)
+    val cos = size*cos(rot)
+
+    //Rotate triangle
+    val vert1x = (-sin + triangX).toFloat()
+    val vert1y = (cos + triangY).toFloat()
+
+    val vert2x = (-cos + sin + triangX).toFloat()
+    val vert2y = (-sin - cos + triangY).toFloat()
+
+    val vert3x = (cos + sin + triangX).toFloat()
+    val vert3y = (sin - cos + triangY).toFloat()
+
+    shapeRenderer.triangle(vert1x, vert1y, vert2x, vert2y, vert3x, vert3y)
+
+    shapeRenderer.color = com.badlogic.gdx.graphics.Color(255F, 255F, 255F, 1F)
+    shapeRenderer.set(ShapeRenderer.ShapeType.Line)
+    shapeRenderer.end()
 }
