@@ -9,10 +9,8 @@ import rat.poison.overlay.App.haveTarget
 import rat.poison.overlay.opened
 import rat.poison.ui.uiPanels.ranksTab
 import rat.poison.ui.uiRefreshing
-import rat.poison.utils.RanksPlayer
-import rat.poison.utils.every
+import rat.poison.utils.*
 import rat.poison.utils.extensions.roundNDecimals
-import rat.poison.utils.sortRanksPlayerList
 
 var playerList = mutableListOf<RanksPlayer>()
 
@@ -55,7 +53,7 @@ fun ranks() = every(1000, true, inGameCheck = true) { //Rebuild every second
             }
         } catch (e: Exception) { }
         playerList.add(RanksPlayer(name=entName, team = entTeam, steamID = steamID.toString(), teamStr = tmpTeam, rank=entRank, kills = entKills, deaths = entDeaths, KD = entKD, wins = entWins, money = entMoney, score = entScore))
-        //playerList = sortRanksPlayerList(me.team(), playerList)
+        playerList.sort()
     }
     if (!uiRefreshing) {
         ranksTab.updateRanks()
