@@ -22,10 +22,12 @@ fun snapLines() = App {
     if (curSettings["SNAPLINES_DEFUSE_KITS"].strToBool()) {
         forEntities(EntityType.CEconEntity) {
             val entPos = it.entity.position()
+            val entity = it.entity
+            val entPos = entity.position()
             val vec = Vector()
 
             if (curSettings["SNAPLINES_SMOKE_CHECK"].strToBool()) {
-                if (lineThroughSmoke(it.entity)) {
+                if (lineThroughSmoke(entity)) {
                     return@forEntities
                 }
             }
@@ -55,7 +57,7 @@ fun snapLines() = App {
         }
     }
 
-    forEntities(EntityType.CCSPlayer) {
+    forEntities {
         val entity = it.entity
         var colStr = ""
 
