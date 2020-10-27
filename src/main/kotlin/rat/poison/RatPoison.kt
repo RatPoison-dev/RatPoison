@@ -31,7 +31,7 @@ data class oWeapon(var enableOverride: Boolean = false, var factorRecoil: Boolea
                    var writeAngles: Boolean = false, var mouseMovements: Boolean = false, var aimBone: Int = 0,
                    var aimForceBone: Int = 0, var aimFOV: Float = 0F, var aimSpeed: Int = 0,
                    var aimSmoothness: Float = 0F, var enablePerfectAim: Boolean = false, var perfectAimFov: Float = 1F,
-                   var perfectAimChance: Int = 1, var aimScopedOnly: Boolean = false, var aimAfterShoots: Int = 0,
+                   var perfectAimChance: Int = 1, var aimScopedOnly: Boolean = false, var aimAfterShots: Int = 0,
 
                    var enableTriggerBot: Boolean = false, var triggerAim: Boolean = false, var triggerIsInCross: Boolean = false,
                    var triggerIsInFOV: Boolean = false, var triggerShootBacktrack: Boolean = false, internal var triggerFOV: Float = 0F,

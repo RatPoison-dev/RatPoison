@@ -60,7 +60,7 @@ fun setAim() = every(500, true, inGameCheck = true) {
                         curSettings["ENABLE_SCOPED_ONLY"] = curWepSettings.aimScopedOnly
 
                         if (meCurWep.rifle || meCurWep.smg) {
-                            curSettings["AIM_AFTER_SHOTS"] = curWepSettings.aimAfterShoots
+                            curSettings["AIM_AFTER_SHOTS"] = curWepSettings.aimAfterShots
                         }
 
                         curSettings["TRIGGER_USE_FOV"] = curWepSettings.triggerIsInFOV

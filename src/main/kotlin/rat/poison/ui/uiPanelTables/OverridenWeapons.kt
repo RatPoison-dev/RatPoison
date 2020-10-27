@@ -51,7 +51,7 @@ class OverridenWeapons : VisTable(false) {
     val aimFov = OverrideVisSliderCustom("FOV", "aimFOV", 0.5F, 90F, 0.5F, false, width1 = 225F, width2 = 125F)
     val aimSpeed = OverrideVisSliderCustom("Speed", "aimSpeed", 0F, 10F, 1F, true, width1 = 225F, width2 = 125F)
     val aimSmoothness = OverrideVisSliderCustom("Smooth", "aimSmoothness", 1F, 5F, .1F, false, width1 = 225F, width2 = 125F)
-    val aimAfterShots = OverrideVisSliderCustom("Aim After #", "aimAfterShoots", 0F, 10F, 1F, true, width1 = 225F, width2 = 125F)
+    val aimAfterShots = OverrideVisSliderCustom("Aim After #", "aimAfterShots", 0F, 10F, 1F, true, width1 = 225F, width2 = 125F)
     //JOE MAMMA WAS HERE
     val enableAutomatic = OverrideVisCheckBoxCustom("Enable Automatic Weapons", "enableAutomatic")
     val autoWepDelay = OverrideVisInputFieldCustom("Automatic weapon delay", "autoWepDelay", false)

@@ -34,7 +34,7 @@ fun drawDebug() = App {
         txtString.appendln("Perfect Fov: ${curWepSettings.perfectAimFov}")
         txtString.appendln("Perfect Chance: ${curWepSettings.perfectAimChance}")
         txtString.appendln("Scoped Only: ${curWepSettings.aimScopedOnly}")
-        txtString.appendln("Aim After #: ${curWepSettings.aimAfterShoots}")
+        txtString.appendln("Aim After #: ${curWepSettings.aimAfterShots}")
         txtString.appendln()
         txtString.appendln("Trigger: ${curWepSettings.enableTriggerBot}")
         txtString.appendln("Trigger Aimbot: ${curWepSettings.triggerAim}")
