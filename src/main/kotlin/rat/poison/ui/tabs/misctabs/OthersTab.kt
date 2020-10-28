@@ -97,10 +97,6 @@ class OthersTab: Tab(false, false) {
             changeName(nameChangeInput.text)
         }
 
-        postProcessingDisable.changed { _, _ ->
-            disablePostProcessing()
-        }
-
         musicKitId.changed {_, _ ->
             if (curSettings["MUSIC_KIT_SPOOFER"].strToBool()) {
                 writeSpoof()
