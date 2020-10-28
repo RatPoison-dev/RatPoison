@@ -8,7 +8,7 @@ NADE_TRACER = false
 NADE_TRACER_UPDATE_TIME = 10
 
 //How many positions are stored at a time
-NADE_TRACER_TIMEOUT = 5
+NADE_TRACER_TIMEOUT = 1
 
 //Color of the grenade tracer line
 NADE_TRACER_COLOR = Color(red=4, green=255, blue=0, alpha=1.0)
@@ -19,7 +19,7 @@ NADE_ACCURACY_RADIUS = 500
 NADE_THROWER_KEY = -1
 
 //Visualize smoke grenades
-VISUALIZE_SMOKES = true
+VISUALIZE_SMOKES = false
 
 VISUALIZE_SMOKES_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
 

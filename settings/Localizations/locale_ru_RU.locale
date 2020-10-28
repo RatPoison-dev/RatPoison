@@ -673,3 +673,4 @@ ADRENALINE_BOMB_TIME = Использовать время до взрыва
 Name-Change = Временно изменить имя
 Warning = Предупреждение
 CLEAR_POSITIONS = Отчистить все загруженные позиции?
+ENABLE_PLAYER_ESP = ESP на отдельных игроков

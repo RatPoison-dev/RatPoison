@@ -9,6 +9,7 @@ import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.target
 import rat.poison.scripts.bombState
 import rat.poison.settings.DANGER_ZONE
+import rat.poison.ui.tabs.enableEspPlayerList
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
@@ -64,6 +65,7 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 			when (it.type) {
 				EntityType.CCSPlayer -> {
 					if (entity.dead()) return@forEntities
+					if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && entity.getValidSteamID() !in enableEspPlayerList) return@forEntities
 
 					val entityTeam = entity.team()
 					val onTeam = !DANGER_ZONE && meTeam == entityTeam

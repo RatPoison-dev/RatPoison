@@ -19,6 +19,7 @@ import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
 import rat.poison.toLocale
+import rat.poison.ui.tabs.enableEspPlayerList
 import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
@@ -96,6 +97,7 @@ fun boxEsp() {
 			if (ent <= 0) return@forEntities
 
 			if (!isPlayer && !isWeapon && !isDefuseKit) return@forEntities
+			if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && (ent.getValidSteamID() !in enableEspPlayerList)) return@forEntities
 
 			//Return if not onscreen
 			if (!worldToScreen(ent.position(), Vector())) return@forEntities

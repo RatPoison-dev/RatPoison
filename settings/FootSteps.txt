@@ -14,7 +14,7 @@ FOOTSTEP_TTL = 15
 FOOTSTEP_TEAM = false
 
 //Enable for enemies
-FOOTSTEP_ENEMY = true
+FOOTSTEP_ENEMY = false
 
 //Team footsteps color
 FOOTSTEP_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)

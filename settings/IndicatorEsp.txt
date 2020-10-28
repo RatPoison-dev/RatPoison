@@ -15,19 +15,19 @@ INDICATOR_SMOKE_CHECK = false
 INDICATOR_SHOW_TEAM = false
 
 //Enable indicator esp on enemies
-INDICATOR_SHOW_ENEMIES = true
+INDICATOR_SHOW_ENEMIES = false
 
 //Enable indicator esp on bomb
-INDICATOR_SHOW_BOMB = true
+INDICATOR_SHOW_BOMB = false
 
 //Enable defuser esp on defuse kits
-INDICATOR_SHOW_DEFUSERS = true
+INDICATOR_SHOW_DEFUSERS = false
 
 //Enable indicator esp on bomb carrier
-INDICATOR_SHOW_BOMB_CARRIER = true
+INDICATOR_SHOW_BOMB_CARRIER = false
 
 //Enable indicator esp on weapons
-INDICATOR_SHOW_WEAPONS = true
+INDICATOR_SHOW_WEAPONS = false
 
 //Enable indicator esp on grenades
 INDICATOR_SHOW_GRENADES = false

@@ -16,6 +16,7 @@ import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.DANGER_ZONE
+import rat.poison.ui.tabs.enableEspPlayerList
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
@@ -36,6 +37,7 @@ fun farRadar() = App {
         //Prechecks
         if (ent == me || me.team() == ent.team() || DANGER_ZONE || !ent.dormant()) return@forEntities
         if (ent.dead()) return@forEntities
+        if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && ent.getValidSteamID() !in enableEspPlayerList) return@forEntities
 
         val entID = csgoEXE.int(ent + ClientOffsets.dwIndex)
 

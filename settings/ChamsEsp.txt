@@ -6,13 +6,13 @@ CHAMS_ESP = false
 CHAMS_SHOW_HEALTH = false
 
 //clrRender brightness (0 - 1000)
-CHAMS_BRIGHTNESS = 250
+CHAMS_BRIGHTNESS = 0
 
 //Enable chams esp on teammates
 CHAMS_SHOW_TEAM = false
 
 //Enable chams esp on enemies
-CHAMS_SHOW_ENEMIES = true
+CHAMS_SHOW_ENEMIES = false
 
 //Enable chams on yourself (guns and hand)
 CHAMS_SHOW_SELF = false

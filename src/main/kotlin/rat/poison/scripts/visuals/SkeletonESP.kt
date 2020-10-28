@@ -11,6 +11,7 @@ import rat.poison.game.me
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
+import rat.poison.ui.tabs.enableEspPlayerList
 import rat.poison.utils.Vector
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
@@ -30,7 +31,7 @@ internal fun skeletonEsp() = App {
 		val dormCheck = (entity.dormant() && !DANGER_ZONE)
 		val enemyCheck = ((!curSettings["SKELETON_SHOW_ENEMIES"].strToBool() && meTeam != entTeam) && !DANGER_ZONE)
 		val teamCheck = ((!curSettings["SKELETON_SHOW_TEAM"].strToBool() && meTeam == entTeam) && !DANGER_ZONE)
-
+		if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && entity.getValidSteamID() !in enableEspPlayerList) return@forEntities
 		if (entity == me || entity.dead() || dormCheck || enemyCheck || teamCheck) return@forEntities
 
 		val entityBones = mutableListOf<Pair<Int, Int>>()

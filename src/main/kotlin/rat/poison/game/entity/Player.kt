@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector3
 import com.sun.jna.Memory
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
+import org.apache.commons.lang3.StringUtils
 import org.jire.arrowhead.unsign
 import rat.poison.game.*
 import rat.poison.game.CSGO.ENTITY_SIZE
@@ -246,6 +247,15 @@ internal fun Player.steamID(): String {
 	val sID = mem.getString(0x94) //0x90 is int of steamID
 	mem.clear()
 	return sID
+}
+
+internal fun Player.getValidSteamID(): Int {
+	var entSteam = this.steamID()
+	var steamID = 0
+	if (entSteam != "BOT" && entSteam.isNotEmpty() && StringUtils.isNumeric(entSteam.split(":")[2])) {
+		steamID = (entSteam.split(":")[2].toInt() * 2) + entSteam.split(":")[1].toInt()
+	}
+	return steamID
 }
 
 internal fun Player.rank(): Int {

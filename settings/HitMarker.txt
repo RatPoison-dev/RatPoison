@@ -1,16 +1,16 @@
 //Enable visual hitmarker
 //Activates on enemy hit
 //Relies on the RCrosshairs X/Y Offset for center position
-ENABLE_HITMARKER = true
+ENABLE_HITMARKER = false
 
 //If hitmarker appears at your ingame crosshair, or where your recoil is spraying
 HITMARKER_RECOIL_POSITION = false
 
 //Display number of hits while crosshair is visible
-HITMARKER_COMBO = true
+HITMARKER_COMBO = false
 
 //Visible hitmarker outline
-HITMARKER_OUTLINE = true
+HITMARKER_OUTLINE = false
 
 //Spacing of lines from the center
 HITMARKER_SPACING = 5

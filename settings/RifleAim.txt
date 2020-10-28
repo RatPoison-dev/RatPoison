@@ -8,41 +8,41 @@ RIFLE_ENABLE_FLAT_AIM = false
 
 //Enable path aim
 //Uses mouse movement to aim
-RIFLE_ENABLE_PATH_AIM = true
+RIFLE_ENABLE_PATH_AIM = false
 
 //Factor recoil when shooting
-RIFLE_FACTOR_RECOIL = true
+RIFLE_FACTOR_RECOIL = false
 
 //Aim Bone
 //Default bone to aim at
-RIFLE_AIM_BONE = STOMACH
+RIFLE_AIM_BONE = NEAREST
 
 //Aim FOV
 //Aims at entities inside this value
-RIFLE_AIM_FOV = 7.0
+RIFLE_AIM_FOV = 0.5
 
 //Aim speed
 //MS delay between aiming steps
 //Lower is faster
-RIFLE_AIM_SPEED = 4
+RIFLE_AIM_SPEED = 10
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-RIFLE_AIM_SMOOTHNESS = 4.5
+RIFLE_AIM_SMOOTHNESS = 5.0
 
 //Force Bone
-RIFLE_AIM_FORCE_BONE = Head
+RIFLE_AIM_FORCE_BONE = NEAREST
 
 //Aim after X shots
-RIFLE_AIM_AFTER_SHOTS = 1
+RIFLE_AIM_AFTER_SHOTS = 10
 
 //If the aimbot should only aim when you can shoot
 RIFLE_AIM_ONLY_ON_SHOT = false
 
 //Advanced aim settings
 RIFLE_ADVANCED_SETTINGS = false
-RIFLE_AIM_RCS_X = 1.0
-RIFLE_AIM_RCS_Y = 1.0
+RIFLE_AIM_RCS_X = 0.05
+RIFLE_AIM_RCS_Y = 0.05
 RIFLE_AIM_RCS_VARIATION = 0.0
 RIFLE_AIM_SPEED_DIVISOR = 1
 RIFLE_RANDOM_X_VARIATION = 0
@@ -59,7 +59,7 @@ RIFLE_VARIATION_DEADZONE = 0
 RIFLE_PERFECT_AIM = false
 
 //Perfect aim fov (0 - 45)
-RIFLE_PERFECT_AIM_FOV = 5
+RIFLE_PERFECT_AIM_FOV = 1
 
 //Perfect aim % chance to activate (1 - 100)
-RIFLE_PERFECT_AIM_CHANCE = 10
+RIFLE_PERFECT_AIM_CHANCE = 1
