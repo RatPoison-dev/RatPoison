@@ -1,14 +1,17 @@
 package rat.poison.ui.tabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.kotcrab.vis.ui.widget.LinkLabel
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.scripts.*
+import rat.poison.scripts.playerList
 import rat.poison.toLocale
+import rat.poison.ui.uiHelpers.ranksTab.RanksLinkLabelCustom
 import rat.poison.ui.uiRefreshing
 import rat.poison.utils.RanksPlayer
+
+var enableEspPlayerList = mutableListOf(0)
+private var linksLabelMap = mutableMapOf<Int, RanksLinkLabelCustom>()
 
 class RanksTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -73,8 +76,14 @@ class RanksTab : Tab(false, false) {
         if (uiRefreshing) return
         teamsLabel.setText(teamsLabel.text.toString() + player.teamStr.toLocale() + "  \n")
         var tmpName = player.name
-        if (player.steamID.toInt() != 0) { //Bot check
-            namesTable.add(LinkLabel(tmpName, "https://steamcommunity.com/profiles/%5BU:1:" + player.steamID + "%5B/")).height(21f).left().row()
+        val steamID = player.steamID.toInt()
+        if (steamID != 0) { //Bot check
+            val linkLabel = linksLabelMap.getOrElse(steamID, {
+                val label = RanksLinkLabelCustom(tmpName, "https://steamcommunity.com/profiles/%5BU:1:" + player.steamID + "%5B/", steamID)
+                linksLabelMap[steamID] = label
+                return@getOrElse label
+            })
+            namesTable.add(linkLabel).height(21f).left().row()
         } else {
             namesTable.add(tmpName).height(21f).left().row()
         }

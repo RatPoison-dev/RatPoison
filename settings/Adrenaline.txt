@@ -2,10 +2,10 @@
 ENABLE_ADRENALINE = false
 
 //Strength of added adrenaline per shot
-ADRENALINE_STRENGTH = 0.15
+ADRENALINE_STRENGTH = 0.2
 
 //How much adrenaline loses each update
 ADRENALINE_COOLDOWN = 0.01
 
 //Use bomb time left to account for adrenaline
-ADRENALINE_BOMB_TIME = true
+ADRENALINE_BOMB_TIME = false

@@ -8,41 +8,41 @@ SMG_ENABLE_FLAT_AIM = false
 
 //Enable path aim
 //Uses mouse movement to aim
-SMG_ENABLE_PATH_AIM = true
+SMG_ENABLE_PATH_AIM = false
 
 //Factor recoil when shooting
-SMG_FACTOR_RECOIL = true
+SMG_FACTOR_RECOIL = false
 
 //Aim Bone
 //Default bone to aim at
-SMG_AIM_BONE = STOMACH
+SMG_AIM_BONE = NEAREST
 
 //Aim FOV
 //Aims at entities inside this value
-SMG_AIM_FOV = 15.0
+SMG_AIM_FOV = 0.5
 
 //Aim speed
 //MS delay between aiming steps
 //Lower is faster
-SMG_AIM_SPEED = 4
+SMG_AIM_SPEED = 10
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-SMG_AIM_SMOOTHNESS = 4.0
+SMG_AIM_SMOOTHNESS = 5.0
 
 //Force Bone
-SMG_AIM_FORCE_BONE = Head
+SMG_AIM_FORCE_BONE = NEAREST
 
 //Aim after X shots
-SMG_AIM_AFTER_SHOTS = 0
+SMG_AIM_AFTER_SHOTS = 10
 
 //If the aimbot should only aim when you can shoot
 SMG_AIM_ONLY_ON_SHOT = false
 
 //Advanced aim settings
 SMG_ADVANCED_SETTINGS = false
-SMG_AIM_RCS_X = 1.0
-SMG_AIM_RCS_Y = 1.0
+SMG_AIM_RCS_X = 0.05
+SMG_AIM_RCS_Y = 0.05
 SMG_AIM_RCS_VARIATION = 0.0
 SMG_AIM_SPEED_DIVISOR = 1
 SMG_RANDOM_X_VARIATION = 0
@@ -59,7 +59,7 @@ SMG_VARIATION_DEADZONE = 0
 SMG_PERFECT_AIM = false
 
 //Perfect aim fov (0 - 45)
-SMG_PERFECT_AIM_FOV = 10
+SMG_PERFECT_AIM_FOV = 1
 
 //Perfect aim % chance to activate (1 - 100)
-SMG_PERFECT_AIM_CHANCE = 10
+SMG_PERFECT_AIM_CHANCE = 1

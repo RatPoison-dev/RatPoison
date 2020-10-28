@@ -12,6 +12,7 @@ import rat.poison.curSettings
 import rat.poison.overlay.opened
 import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.toLocale
+import rat.poison.ui.changed
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
@@ -239,6 +240,7 @@ fun updateDisableEsp() {
 
         miscVisualsTab.apply {
             radarEsp.disable(bool)
+            enablePlayerEsp.disable(bool)
             legitRadar.disable(bool)
             legitRadarDistance.disable(bool, col)
             visAdrenaline.disable(bool)

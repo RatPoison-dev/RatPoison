@@ -12,6 +12,8 @@ import rat.poison.ui.uiHelpers.VisSliderCustom
 class MiscVisualsTab : Tab(false, false) {
     private val table = VisTable()
 
+    val enablePlayerEsp = VisCheckBoxCustom("Player ESP", "ENABLE_PLAYER_ESP")
+
     val radarEsp = VisCheckBoxCustom("Radar Esp", "RADAR_ESP")
     val legitRadar = VisCheckBoxCustom("Legit Radar", "LEGIT_RADAR")
     val legitRadarDistance = VisSliderCustom("Distance", "LEGIT_RADAR_FOOTSTEPS_DISTANCE", 100F, 5000F, 100F, true)
@@ -51,6 +53,7 @@ class MiscVisualsTab : Tab(false, false) {
         triggerFov.add(showTriggerFovColor).width(175F-showTriggerFov.width).left()
 
         //Add all items to label for tabbed pane content
+        table.add(enablePlayerEsp).left().row()
         table.add(radarEsp).left().row()
         table.add(legitRadar).left().row()
         table.add(legitRadarDistance).left().row()
@@ -102,6 +105,7 @@ class MiscVisualsTab : Tab(false, false) {
 fun miscVisualTabUpdate() {
     miscVisualsTab.apply {
         radarEsp.update()
+        enablePlayerEsp.update()
         legitRadar.update()
         legitRadarDistance.update()
         nightMode.update()

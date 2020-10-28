@@ -9,6 +9,7 @@ import rat.poison.game.me
 import rat.poison.game.w2sViewMatrix
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
+import rat.poison.ui.tabs.enableEspPlayerList
 import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.cToFloat
@@ -100,6 +101,7 @@ private fun constructSteps() = every(10) {
         forEntities(EntityType.CCSPlayer) {
             val ent = it.entity
             if (ent == me || ent.dead() || ent.dormant()) return@forEntities
+            if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && ent.getValidSteamID() !in enableEspPlayerList) return@forEntities
 
             val inMyTeam = ent.team() == me.team()
 

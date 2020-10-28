@@ -20,26 +20,26 @@ GLOW_SHOW_TEAM = false
 GLOW_SHOW_HEALTH = false
 
 //Enable glow esp on enemies
-GLOW_SHOW_ENEMIES = true
+GLOW_SHOW_ENEMIES = false
 
 //Enable glow esp on bomb
-GLOW_SHOW_BOMB = true
-GLOW_BOMB_ADAPTIVE = true
+GLOW_SHOW_BOMB = false
+GLOW_BOMB_ADAPTIVE = false
 GLOW_BOMB_ADAPTIVE_CAN_DEFUSE = Color(red=0, green=255, blue=0, alpha=1.0)
 GLOW_BOMB_ADAPTIVE_CANT_DEFUSE = Color(red=255, green=0, blue=0, alpha=1.0)
 GLOW_BOMB_ADAPTIVE_LITTLE_TIME = Color(red=255, green=255, blue=0, alpha=1.0)
 
 //Enable glow esp on bomb carrier
-GLOW_SHOW_BOMB_CARRIER = true
+GLOW_SHOW_BOMB_CARRIER = false
 
 //Enable glow esp on dropped weapons
-GLOW_SHOW_WEAPONS = true
+GLOW_SHOW_WEAPONS = false
 
 //Enable glow esp on dropped/thrown grenades
 GLOW_SHOW_GRENADES = false
 
 //Enable glow esp on visible, in aimbot FOV players
-GLOW_SHOW_TARGET = true
+GLOW_SHOW_TARGET = false
 
 //Color of your teammates
 GLOW_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
@@ -57,12 +57,12 @@ GLOW_BOMB_CARRIER_COLOR = Color(red=255, green=140, blue=0, alpha=1.0)
 GLOW_DEFUSER_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)
 
 //Color of dropped weapons
-GLOW_WEAPON_COLOR = Color(red=251, green=0, blue=255, alpha=0.5)
+GLOW_WEAPON_COLOR = Color(red=255, green=153, blue=0, alpha=1.0)
 
 //Color of thrown grenades
-GLOW_GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)
+GLOW_GRENADE_COLOR = Color(red=224, green=224, blue=224, alpha=1.0)
 
 //Color of visible, in aimbot FOV players
-GLOW_TARGET_COLOR = Color(red=0, green=174, blue=255, alpha=1.0)
+GLOW_TARGET_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
 
 

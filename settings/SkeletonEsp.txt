@@ -5,4 +5,4 @@ SKELETON_ESP = false
 SKELETON_SHOW_TEAM = false
 
 //Enable skeleton esp on enemies
-SKELETON_SHOW_ENEMIES = true
+SKELETON_SHOW_ENEMIES = false

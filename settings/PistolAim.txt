@@ -8,38 +8,38 @@ PISTOL_ENABLE_FLAT_AIM = false
 
 //Enable path aim
 //Uses mouse movement to aim
-PISTOL_ENABLE_PATH_AIM = true
+PISTOL_ENABLE_PATH_AIM = false
 
 //Factor recoil when shooting
 PISTOL_FACTOR_RECOIL = false
 
 //Aim Bone
 //Default bone to aim at
-PISTOL_AIM_BONE = NECK
+PISTOL_AIM_BONE = NEAREST
 
 //Aim FOV
 //Aims at entities inside this value
-PISTOL_AIM_FOV = 4
+PISTOL_AIM_FOV = 1.0
 
 //Aim speed
 //MS delay between aiming steps
 //Lower is faster
-PISTOL_AIM_SPEED = 2
+PISTOL_AIM_SPEED = 10
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-PISTOL_AIM_SMOOTHNESS = 2.5
+PISTOL_AIM_SMOOTHNESS = 5.0
 
 //Force Bone
-PISTOL_AIM_FORCE_BONE = Head
+PISTOL_AIM_FORCE_BONE = NEAREST
 
 //If the aimbot should only aim when you can shoot
-PISTOL_AIM_ONLY_ON_SHOT = true
+PISTOL_AIM_ONLY_ON_SHOT = false
 
 //Advanced aim settings
 PISTOL_ADVANCED_SETTINGS = false
-PISTOL_AIM_RCS_X = 2.0
-PISTOL_AIM_RCS_Y = 2.0
+PISTOL_AIM_RCS_X = 0.05
+PISTOL_AIM_RCS_Y = 0.05
 PISTOL_AIM_RCS_VARIATION = 0.0
 PISTOL_AIM_SPEED_DIVISOR = 1
 PISTOL_RANDOM_X_VARIATION = 0
@@ -56,7 +56,7 @@ PISTOL_VARIATION_DEADZONE = 0
 PISTOL_PERFECT_AIM = false
 
 //Perfect aim fov (0 - 45)
-PISTOL_PERFECT_AIM_FOV = 10
+PISTOL_PERFECT_AIM_FOV = 1.0
 
 //Perfect aim % chance to activate (1 - 100)
-PISTOL_PERFECT_AIM_CHANCE = 15
+PISTOL_PERFECT_AIM_CHANCE = 1

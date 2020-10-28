@@ -1,15 +1,14 @@
 package rat.poison.scripts
 
-import org.apache.commons.lang3.StringUtils
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
-import rat.poison.game.me
 import rat.poison.game.rankName
 import rat.poison.overlay.App.haveTarget
 import rat.poison.overlay.opened
 import rat.poison.ui.uiPanels.ranksTab
 import rat.poison.ui.uiRefreshing
-import rat.poison.utils.*
+import rat.poison.utils.RanksPlayer
+import rat.poison.utils.every
 import rat.poison.utils.extensions.roundNDecimals
 
 var playerList = mutableListOf<RanksPlayer>()
@@ -44,14 +43,7 @@ fun ranks() = every(1000, true, inGameCheck = true) { //Rebuild every second
         }
         val entWins = entity.wins().toString()
 
-        var steamID = 0
-
-        try {
-            val entSteam = entity.steamID()
-            if (entSteam != "BOT" && entSteam.isNotEmpty() && StringUtils.isNumeric(entSteam.split(":")[2])) {
-                steamID = (entSteam.split(":")[2].toInt() * 2) + entSteam.split(":")[1].toInt()
-            }
-        } catch (e: Exception) { }
+        val steamID = entity.getValidSteamID()
         playerList.add(RanksPlayer(name=entName, team = entTeam, steamID = steamID.toString(), teamStr = tmpTeam, rank=entRank, kills = entKills, deaths = entDeaths, KD = entKD, wins = entWins, money = entMoney, score = entScore))
         playerList.sort()
     }

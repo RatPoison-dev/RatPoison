@@ -8,7 +8,7 @@ FOV_DEFAULT = 90
 FOV_SNIPER_DEFAULT = 90
 
 //Enable smooth FOV transitioning (where possible)
-FOV_SMOOTH = true
+FOV_SMOOTH = false
 
 //These are defaulted for invisible scope blur
 //Default FOV for zoom lvl 1 (snipers only)

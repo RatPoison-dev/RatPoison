@@ -30,7 +30,7 @@ MENU_APP = "Counter-Strike: Global Offensive"
 APPLESS = false
 
 //Menu stays focused even when csgo isn't
-MENU_STAY_FOCUSED = true
+MENU_STAY_FOCUSED = false
 
 //Whether post processing is disabled or not
 DISABLE_POST_PROCESSING = false
@@ -41,7 +41,7 @@ OVERLAY_HEIGHT = 1080
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles aim on or off
 //Default key is F3
-AIM_TOGGLE_KEY = 114
+AIM_TOGGLE_KEY = -1
 
 //Enable fast stop
 //Will attempt to slow your velocity faster than normal if movement keys aren't being pressed
@@ -57,16 +57,16 @@ LS_BOMB = false
 D_SPAM = false
 
 //Door spam key
-D_SPAM_KEY = 80
+D_SPAM_KEY = -1
 
 //Enable weapon spam
 W_SPAM = false
 
 //weapon spam key
-W_SPAM_KEY = 79
+W_SPAM_KEY = -1
 
 //Global enable aim
-ENABLE_AIM = true
+ENABLE_AIM = false
 
 //Hold target - If the aimbot should lock on a target as long as the aim key is pressed and the target is alive
 HOLD_TARGET = false
@@ -78,17 +78,17 @@ AIM_TARGET_SWAP_DELAY = 150
 ENABLE_OVERRIDE = false
 
 //Enable aimbot when aim key is pressed
-ACTIVATE_FROM_AIM_KEY = true
+ACTIVATE_FROM_AIM_KEY = false
 
 //Enables aimbot against teammates
 TEAMMATES_ARE_ENEMIES = false
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), enables aimbot when held
 //Default key is MOUSE_4
-FORCE_AIM_KEY = 5
+FORCE_AIM_KEY = -1
 
 //Enables specific bone when held
-FORCE_AIM_BONE_KEY = 4
+FORCE_AIM_BONE_KEY = -1
 
 //Always force aim if within FOV
 FORCE_AIM_ALWAYS = false
@@ -109,20 +109,20 @@ RANDOM_BONE = -4
 
 //Temp variables, don't edit
 PERFECT_AIM = false
-PERFECT_AIM_CHANCE = 10
-PERFECT_AIM_FOV = 5
-AIM_BONE = 5
-FORCE_AIM_BONE = -4
-AIM_SPEED = 4
-AIM_FOV = 7.0
-FACTOR_RECOIL = true
+PERFECT_AIM_CHANCE = 1
+PERFECT_AIM_FOV = 1.0
+AIM_BONE = -1
+FORCE_AIM_BONE = -1
+AIM_SPEED = 10
+AIM_FOV = 0.5
+FACTOR_RECOIL = false
 ENABLE_FLAT_AIM = false
-ENABLE_PATH_AIM = true
-ENABLE_SCOPED_ONLY = true
-AIM_AFTER_SHOTS = 1
+ENABLE_PATH_AIM = false
+ENABLE_SCOPED_ONLY = false
+AIM_AFTER_SHOTS = 10
 AIM_ADVANCED = false
-AIM_RCS_X = 1.0
-AIM_RCS_Y = 1.0
+AIM_RCS_X = 0.05
+AIM_RCS_Y = 0.05
 AIM_RCS_VARIATION = 0.0
 AIM_SPEED_DIVISOR = 1
 AIM_RANDOM_X_VARIATION = 0
@@ -134,10 +134,10 @@ KEYBINDS_Y = 400.0
 KEYBINDS_ALPHA = 1.0
 AIM_ONLY_ON_SHOT = false
 
-TRIGGER_USE_FOV = true
+TRIGGER_USE_FOV = false
 TRIGGER_USE_INCROSS = false
 TRIGGER_FOV = 2.0
-TRIGGER_USE_AIMBOT = true
+TRIGGER_USE_AIMBOT = false
 TRIGGER_USE_BACKTRACK = false
 
 //OverrideWepShit

@@ -1,16 +1,17 @@
 //Global enable esp
 ENABLE_ESP = true
+ENABLE_PLAYER_ESP = false
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles visibility of esp on/off
 //Default key is G
-VISUALS_TOGGLE_KEY = 35
+VISUALS_TOGGLE_KEY = -1
 
 //Enable radar esp
 RADAR_ESP = false
 
 //Show enemies on radar when moving
-LEGIT_RADAR = true
-LEGIT_RADAR_FOOTSTEPS_DISTANCE = 1200
+LEGIT_RADAR = false
+LEGIT_RADAR_FOOTSTEPS_DISTANCE = 100
 
 //Enable audible hitsound
 //Activates on enemy hit

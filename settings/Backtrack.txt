@@ -6,24 +6,24 @@ ENABLE_BACKTRACK_ON_KEY = false
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm),
 //Default key is Mouse5
-BACKTRACK_KEY = 6
+BACKTRACK_KEY = -1
 
 //Show points
 BACKTRACK_VISUALIZE = false
 
 //Check if an entity is spotted before shooting
-BACKTRACK_SPOTTED = true
+BACKTRACK_SPOTTED = false
 
 //Enable backtrack when holding the specified weapons
-PISTOL_BACKTRACK = true
-RIFLE_BACKTRACK = true
-SHOTGUN_BACKTRACK = true
-SMG_BACKTRACK = true
-SNIPER_BACKTRACK = true
+PISTOL_BACKTRACK = false
+RIFLE_BACKTRACK = false
+SHOTGUN_BACKTRACK = false
+SMG_BACKTRACK = false
+SNIPER_BACKTRACK = false
 
 //Max MS backtrack
-PISTOL_BACKTRACK_MS = 200
-RIFLE_BACKTRACK_MS = 200
-SHOTGUN_BACKTRACK_MS = 200
-SMG_BACKTRACK_MS = 200
-SNIPER_BACKTRACK_MS = 200
+PISTOL_BACKTRACK_MS = 80
+RIFLE_BACKTRACK_MS = 80
+SHOTGUN_BACKTRACK_MS = 80
+SMG_BACKTRACK_MS = 80
+SNIPER_BACKTRACK_MS = 80

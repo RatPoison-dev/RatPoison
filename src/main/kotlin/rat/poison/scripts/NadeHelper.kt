@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
 import com.sun.jna.Memory
+import org.jetbrains.annotations.Nullable
 import rat.poison.*
 import rat.poison.game.CSGO
 import rat.poison.game.entity.absPosition

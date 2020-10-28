@@ -2,8 +2,7 @@ package rat.poison.scripts
 
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
-import rat.poison.game.CSGO
-import rat.poison.game.entity.dead
+import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.entity.onGround
 import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
@@ -18,6 +17,6 @@ fun bunnyHop() = every(4, inGameCheck = true) {
     if (curSettings["ENABLE_BUNNY_HOP"].strToBool() && keyPressed(curSettings["ENABLE_BUNNY_HOP_KEY"].toInt()) && (me > 0 && !meDead && me.onGround()) && (randInt(0, 100) <= curSettings["BHOP_HITCHANCE"].toInt())) {
         updateCursorEnable()
         if (cursorEnable) return@every
-        CSGO.clientDLL[dwForceJump] = 6
+        clientDLL[dwForceJump] = 6
     }
 }
