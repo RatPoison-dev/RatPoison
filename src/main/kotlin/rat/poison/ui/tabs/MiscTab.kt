@@ -72,10 +72,6 @@ class MiscTab : Tab(false, false) {
             changeName(nameChangeInput.text)
         }
 
-        postProcessingDisable.changed { _, _ ->
-            disablePostProcessing()
-        }
-
         //Create Hit Sound Toggle
         if (curSettings["ENABLE_HITSOUND"].strToBool()) hitSoundCheckBox.toggle()
         hitSoundCheckBox.changed { _, _ ->
