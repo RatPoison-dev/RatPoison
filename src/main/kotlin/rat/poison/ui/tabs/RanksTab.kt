@@ -4,11 +4,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.curSettings
 import rat.poison.scripts.playerList
 import rat.poison.toLocale
 import rat.poison.ui.uiHelpers.ranksTab.RanksLinkLabelCustom
 import rat.poison.ui.uiRefreshing
 import rat.poison.utils.RanksPlayer
+import rat.poison.utils.generalUtil.strToBool
 
 var enableEspPlayerList = mutableListOf(0)
 private var linksLabelMap = mutableMapOf<Int, RanksLinkLabelCustom>()
@@ -16,31 +18,32 @@ private var linksLabelMap = mutableMapOf<Int, RanksLinkLabelCustom>()
 class RanksTab : Tab(false, false) {
     private val table = VisTable(true)
 
-    private var ranksListTable = VisTable()
-    private var teamsLabel = VisLabel()
+    var ranksListTable = VisTable()
+    var teamsLabel = VisLabel()
 
-    private var namesTable = VisTable()
-    private var namesLabel = VisLabel()
+    var namesTable = VisTable()
+    var namesLabel = VisLabel()
+    // if R.A.T.T.O wont do proper selection idc then
 
-    private var ranksLabel = VisLabel()
-    private var killsLabel = VisLabel()
-    private var deathsLabel = VisLabel()
-    private var kdLabel = VisLabel()
-    private var winsLabel = VisLabel()
-    private var moneyLabel = VisLabel()
+    var ranksLabel = VisLabel()
+    var killsLabel = VisLabel()
+    var deathsLabel = VisLabel()
+    var kdLabel = VisLabel()
+    var winsLabel = VisLabel()
+    var moneyLabel = VisLabel()
 
     init {
-        ranksListTable.add(teamsLabel)
+        if (curSettings["RANKS_TAB_DISPLAY_TEAM"].strToBool())   { ranksListTable.add(teamsLabel) }
 
-        namesTable.add(namesLabel).row()
-        ranksListTable.add(namesTable).top().padRight(4f) //Table
+        if (curSettings["RANKS_TAB_DISPLAY_NAME"].strToBool())   { namesTable.add(namesLabel).row() }
+        if (curSettings["RANKS_TAB_DISPLAY_NAME"].strToBool())   { ranksListTable.add(namesTable).top().padRight(4f) } //Table
 
-        ranksListTable.add(ranksLabel)
-        ranksListTable.add(killsLabel)
-        ranksListTable.add(deathsLabel)
-        ranksListTable.add(kdLabel)
-        ranksListTable.add(winsLabel)
-        ranksListTable.add(moneyLabel)
+        if (curSettings["RANKS_TAB_DISPLAY_RANK"].strToBool())   { ranksListTable.add(ranksLabel) }
+        if (curSettings["RANKS_TAB_DISPLAY_KILLS"].strToBool())  { ranksListTable.add(killsLabel) }
+        if (curSettings["RANKS_TAB_DISPLAY_DEATHS"].strToBool()) { ranksListTable.add(deathsLabel) }
+        if (curSettings["RANKS_TAB_DISPLAY_KD"].strToBool())     { ranksListTable.add(kdLabel) }
+        if (curSettings["RANKS_TAB_DISPLAY_WINS"].strToBool())   { ranksListTable.add(winsLabel) }
+        if (curSettings["RANKS_TAB_DISPLAY_MONEY"].strToBool())  { ranksListTable.add(moneyLabel) }
 
         table.add(ranksListTable).left().maxWidth(500F)
     }
@@ -53,15 +56,33 @@ class RanksTab : Tab(false, false) {
         return "Ranks".toLocale()
     }
 
+    fun rebuildTable() {
+        if (uiRefreshing) return
+        uiRefreshing = true
+        ranksListTable.reset()
+        if (curSettings["RANKS_TAB_DISPLAY_TEAM"].strToBool())   { ranksListTable.add(teamsLabel) }
+
+        if (curSettings["RANKS_TAB_DISPLAY_NAME"].strToBool())   { namesTable.add(namesLabel).row() }
+        if (curSettings["RANKS_TAB_DISPLAY_NAME"].strToBool())   { ranksListTable.add(namesTable).top().padRight(4f) } //Table
+
+        if (curSettings["RANKS_TAB_DISPLAY_RANK"].strToBool())   { ranksListTable.add(ranksLabel) }
+        if (curSettings["RANKS_TAB_DISPLAY_KILLS"].strToBool())  { ranksListTable.add(killsLabel) }
+        if (curSettings["RANKS_TAB_DISPLAY_DEATHS"].strToBool()) { ranksListTable.add(deathsLabel) }
+        if (curSettings["RANKS_TAB_DISPLAY_KD"].strToBool())     { ranksListTable.add(kdLabel) }
+        if (curSettings["RANKS_TAB_DISPLAY_WINS"].strToBool())   { ranksListTable.add(winsLabel) }
+        if (curSettings["RANKS_TAB_DISPLAY_MONEY"].strToBool())  { ranksListTable.add(moneyLabel) }
+        uiRefreshing = false
+    }
+
     fun updateRanks() {
-        teamsLabel.setText("Team".toLocale() + "  \n")
-        namesLabel.setText("Name".toLocale())
-        ranksLabel.setText("Rank".toLocale() + "  \n")
-        killsLabel.setText("Kills".toLocale() + "  \n")
-        deathsLabel.setText("Deaths".toLocale() + "  \n")
-        kdLabel.setText("K/D".toLocale() + "  \n")
-        winsLabel.setText("Wins".toLocale() + "  \n")
-        moneyLabel.setText("Money".toLocale() + "  \n")
+        if (curSettings["RANKS_TAB_DISPLAY_TEAM"].strToBool())   { teamsLabel.setText("Team".toLocale() + "  \n") }
+        if (curSettings["RANKS_TAB_DISPLAY_NAME"].strToBool())   { namesLabel.setText("Name".toLocale()) }
+        if (curSettings["RANKS_TAB_DISPLAY_RANK"].strToBool())   { ranksLabel.setText("Rank".toLocale() + "  \n") }
+        if (curSettings["RANKS_TAB_DISPLAY_KILLS"].strToBool())  { killsLabel.setText("Kills".toLocale() + "  \n") }
+        if (curSettings["RANKS_TAB_DISPLAY_DEATHS"].strToBool()) { deathsLabel.setText("Deaths".toLocale() + "  \n") }
+        if (curSettings["RANKS_TAB_DISPLAY_KD"].strToBool())     { kdLabel.setText("K/D".toLocale() + "  \n") }
+        if (curSettings["RANKS_TAB_DISPLAY_WINS"].strToBool())   { winsLabel.setText("Wins".toLocale() + "  \n") }
+        if (curSettings["RANKS_TAB_DISPLAY_MONEY"].strToBool())  { moneyLabel.setText("Money".toLocale() + "  \n") }
 
         namesTable.reset()
         namesTable.add(namesLabel).left().row()
@@ -74,24 +95,30 @@ class RanksTab : Tab(false, false) {
     }
     private fun constructRank(player: RanksPlayer) {
         if (uiRefreshing) return
-        teamsLabel.setText(teamsLabel.text.toString() + player.teamStr.toLocale() + "  \n")
         var tmpName = player.name
-        val steamID = player.steamID.toInt()
-        if (steamID != 0) { //Bot check
-            val linkLabel = linksLabelMap.getOrElse(steamID, {
-                val label = RanksLinkLabelCustom(tmpName, "https://steamcommunity.com/profiles/%5BU:1:" + player.steamID + "%5B/", steamID)
-                linksLabelMap[steamID] = label
-                return@getOrElse label
-            })
-            namesTable.add(linkLabel).height(21f).left().row()
-        } else {
-            namesTable.add(tmpName).height(21f).left().row()
+        if (curSettings["RANKS_TAB_ENABLE_LIMIT"].strToBool() && tmpName.length >= curSettings["RANKS_TAB_CHAR_LIMIT"].toInt()) {
+            tmpName = tmpName.substring(0, curSettings["RANKS_TAB_CHAR_LIMIT"].toInt())
         }
-        ranksLabel.setText(ranksLabel.text.toString() + player.rank + "  \n")
-        killsLabel.setText(killsLabel.text.toString() + player.kills + "  \n")
-        deathsLabel.setText(deathsLabel.text.toString() + player.deaths + "  \n")
-        kdLabel.setText(kdLabel.text.toString() + player.KD + "  \n")
-        winsLabel.setText(winsLabel.text.toString() + player.wins + "  \n")
-        moneyLabel.setText(moneyLabel.text.toString() + player.money + "  \n")
+        val steamID = player.steamID.toInt()
+        if (curSettings["RANKS_TAB_DISPLAY_NAME"].strToBool()) {
+            if (steamID != 0) { //Bot check
+                val linkLabel = linksLabelMap.getOrElse(steamID, {
+                    val label = RanksLinkLabelCustom(tmpName, "https://steamcommunity.com/profiles/%5BU:1:" + player.steamID + "%5B/", steamID)
+                    linksLabelMap[steamID] = label
+                    return@getOrElse label
+                })
+                linkLabel.setText(tmpName)
+                namesTable.add(linkLabel).height(21f).left().row()
+            } else {
+                namesTable.add(tmpName).height(21f).left().row()
+            }
+        }
+        if (curSettings["RANKS_TAB_DISPLAY_TEAM"].strToBool())   { teamsLabel.setText(teamsLabel.text.toString() + player.teamStr.toLocale() + "  \n") }
+        if (curSettings["RANKS_TAB_DISPLAY_RANK"].strToBool())   { ranksLabel.setText(ranksLabel.text.toString() + player.rank + "  \n") }
+        if (curSettings["RANKS_TAB_DISPLAY_KILLS"].strToBool())  { killsLabel.setText(killsLabel.text.toString() + player.kills + "  \n") }
+        if (curSettings["RANKS_TAB_DISPLAY_DEATHS"].strToBool()) { deathsLabel.setText(deathsLabel.text.toString() + player.deaths + "  \n") }
+        if (curSettings["RANKS_TAB_DISPLAY_KD"].strToBool())     { kdLabel.setText(kdLabel.text.toString() + player.KD + "  \n") }
+        if (curSettings["RANKS_TAB_DISPLAY_WINS"].strToBool())   { winsLabel.setText(winsLabel.text.toString() + player.wins + "  \n") }
+        if (curSettings["RANKS_TAB_DISPLAY_MONEY"].strToBool())  { moneyLabel.setText(moneyLabel.text.toString() + player.money + "  \n") }
     }
 }

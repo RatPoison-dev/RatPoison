@@ -37,8 +37,8 @@ class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
     val menuKey = VisInputFieldCustom("Menu Key", "MENU_KEY")
-    val menuAlpha = VisSliderCustom("Menu Alpha", "MENU_ALPHA", .5F, 1F, .05F, false, width1 = 200F, width2 = 250F)
-    val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, width1 = 200F, width2 = 250F)
+    val menuAlpha = VisSliderCustom("Menu Alpha", "MENU_ALPHA", .5F, 1F, .05F, false, labelWidth = 200F, sliderWidth = 250F)
+    val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, labelWidth = 200F, sliderWidth = 250F)
     val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
     val debug = VisCheckBoxCustom("Debug", "DEBUG")
     val keybinds = VisCheckBoxCustom("Keybinds", "KEYBINDS")
