@@ -250,12 +250,16 @@ internal fun Player.steamID(): String {
 }
 
 internal fun Player.getValidSteamID(): Int {
-	var entSteam = this.steamID()
-	var steamID = 0
-	if (entSteam != "BOT" && entSteam.isNotEmpty() && StringUtils.isNumeric(entSteam.split(":")[2])) {
-		steamID = (entSteam.split(":")[2].toInt() * 2) + entSteam.split(":")[1].toInt()
+	return try {
+		var entSteam = this.steamID()
+		var steamID = 0
+		if (entSteam != "BOT" && entSteam.isNotEmpty() && StringUtils.isNumeric(entSteam.split(":")[2])) {
+			steamID = (entSteam.split(":")[2].toInt() * 2) + entSteam.split(":")[1].toInt()
+		}
+		steamID
+	}catch (e: Exception) {
+		0
 	}
-	return steamID
 }
 
 internal fun Player.rank(): Int {

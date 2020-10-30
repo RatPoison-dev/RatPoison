@@ -50,7 +50,6 @@ fun uiUpdate() {
 
     //Update windows
     uiAimOverridenWeapons.setPosition(uiMenu.x+uiMenu.width+4F, uiMenu.y)
-    uiRanksWindow.setPosition(uiMenu.x+uiMenu.width+4F, uiMenu.y)
     //Update lists
     optionsTab.updateCFGList()
     optionsTab.updateLocaleList()

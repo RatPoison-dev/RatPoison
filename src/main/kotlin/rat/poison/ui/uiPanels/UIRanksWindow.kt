@@ -16,7 +16,7 @@ class UIRanksWindow : VisWindow("Ranks".toLocale()) {
     private var playerName = VisLabel("")
     private var mainTable = VisTable()
     private var enableCharLimit = VisCheckBoxCustom("Char Limit", "RANKS_TAB_ENABLE_LIMIT")
-    private var charLimit = VisSliderCustom("Limit", "RANKS_TAB_CHAR_LIMIT", 1F, 100F, 1F, true, 2, sliderWidth = 200F, labelWidth = 100F)
+    private var charLimit = VisSliderCustom("Limit", "RANKS_TAB_CHAR_LIMIT", 1F, 32F, 1F, true, 2, sliderWidth = 200F, labelWidth = 100F)
     private var enablePlayerEsp = VisCheckBoxCustom("Player ESP", "PLAYER_ESP")
 
     //customize displayable things
@@ -93,12 +93,6 @@ class UIRanksWindow : VisWindow("Ranks".toLocale()) {
         setPosition(curSettings["RANKS_X"].toFloat(), curSettings["RANKS_Y"].toFloat())
         color.a = curSettings["RANKS_ALPHA"].toFloat()
         isResizable = false
-    }
-
-    override fun positionChanged() { //Not draggable
-        if (opened) {
-            setPosition(App.uiMenu.x + App.uiMenu.width + 4F, App.uiMenu.y + App.uiMenu.height - height)
-        }
     }
     private fun buildTable() {
         defaults().left()
