@@ -66,6 +66,7 @@ object App : ApplicationAdapter() {
     lateinit var uiBombWindow: UIBombTimer
     lateinit var uiSpecList: UISpectatorList
     lateinit var uiAimOverridenWeapons: UIAimOverridenWeapons
+    lateinit var uiRanksWindow: UIRanksWindow
     lateinit var uiKeybinds: UIKeybinds
     private val sbText = StringBuilder()
 
@@ -88,6 +89,7 @@ object App : ApplicationAdapter() {
         uiBombWindow = UIBombTimer()
         uiSpecList = UISpectatorList()
         uiAimOverridenWeapons = UIAimOverridenWeapons()
+        uiRanksWindow = UIRanksWindow()
         uiKeybinds = UIKeybinds()
 
         menuStage.addActor(uiMenu)
@@ -136,6 +138,14 @@ object App : ApplicationAdapter() {
                                         menuStage.addActor(uiAimOverridenWeapons)
                                     }
                                 } else if (menuStage.actors.contains(uiAimOverridenWeapons)) {
+                                    menuStage.clear() //actors.remove at index doesnt work after 1 loop?
+                                }
+
+                                if (curSettings["RANKS"].strToBool()) {
+                                    if (!menuStage.actors.contains(uiRanksWindow)) {
+                                        menuStage.addActor(uiRanksWindow)
+                                    }
+                                } else if (menuStage.actors.contains(uiRanksWindow)) {
                                     menuStage.clear() //actors.remove at index doesnt work after 1 loop?
                                 }
 

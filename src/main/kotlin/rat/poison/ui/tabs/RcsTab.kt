@@ -7,7 +7,6 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
 import rat.poison.overlay.opened
 import rat.poison.toLocale
-import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSelectBoxCustom
@@ -23,8 +22,8 @@ class RcsTab : Tab(false, false) {
 
     val rcsType = VisSelectBoxCustom("RCS Type", "RCS_TYPE", false, true, "STABLE", "LEGACY")
 
-    val rcsSmoothingX = VisSliderCustom("RCS X Accuracy", "RCS_SMOOTHING_X", .02F, 1F, .02F, false, width1 = 200F, width2 = 250F)
-    val rcsSmoothingY = VisSliderCustom("RCS Y Accuracy", "RCS_SMOOTHING_Y", .02F, 1F, .02F, false, width1 = 200F, width2 = 250F)
+    val rcsSmoothingX = VisSliderCustom("RCS X Accuracy", "RCS_SMOOTHING_X", .02F, 1F, .02F, false, labelWidth = 200F, sliderWidth = 250F)
+    val rcsSmoothingY = VisSliderCustom("RCS Y Accuracy", "RCS_SMOOTHING_Y", .02F, 1F, .02F, false, labelWidth = 200F, sliderWidth = 250F)
 
     val rcsReturnAim = VisCheckBoxCustom("Return Aim", "RCS_RETURNAIM")
 
@@ -33,13 +32,13 @@ class RcsTab : Tab(false, false) {
 
     val rCrosshairType = VisSelectBoxCustom("RCrosshair Type", "RCROSSHAIR_TYPE", false, false, "CIRCLE", "CROSSHAIR")
 
-    val rCrosshairRadius = VisSliderCustom("RCrosshair Radius", "RCROSSHAIR_RADIUS", 1F, 50F, 1F, true, width1 = 200F, width2 = 250F)
-    val rCrosshairWidth = VisSliderCustom("RCrosshair Width", "RCROSSHAIR_WIDTH", 1F, 5F, 1F, true, width1 = 200F, width2 = 250F)
-    val rCrosshairLength = VisSliderCustom("RCrosshair Length", "RCROSSHAIR_LENGTH", 3F, 100F, 1F, true, width1 = 200F, width2 = 250F)
+    val rCrosshairRadius = VisSliderCustom("RCrosshair Radius", "RCROSSHAIR_RADIUS", 1F, 50F, 1F, true, labelWidth = 200F, sliderWidth = 250F)
+    val rCrosshairWidth = VisSliderCustom("RCrosshair Width", "RCROSSHAIR_WIDTH", 1F, 5F, 1F, true, labelWidth = 200F, sliderWidth = 250F)
+    val rCrosshairLength = VisSliderCustom("RCrosshair Length", "RCROSSHAIR_LENGTH", 3F, 100F, 1F, true, labelWidth = 200F, sliderWidth = 250F)
 
-    val rCrosshairXOffset = VisSliderCustom("RCrosshair X Offset", "RCROSSHAIR_XOFFSET", -48F, 48F, 1F, true, width1 = 200F, width2 = 250F)
-    val rCrosshairYOffset = VisSliderCustom("RCrosshair Y Offset", "RCROSSHAIR_YOFFSET", -48F, 48F, 1F, true, width1 = 200F, width2 = 250F)
-    val rCrosshairAlpha = VisSliderCustom("RCrosshair Alpha", "RCROSSHAIR_ALPHA", .1F, 1F, .1F, false, width1 = 200F, width2 = 250F)
+    val rCrosshairXOffset = VisSliderCustom("RCrosshair X Offset", "RCROSSHAIR_XOFFSET", -48F, 48F, 1F, true, labelWidth = 200F, sliderWidth = 250F)
+    val rCrosshairYOffset = VisSliderCustom("RCrosshair Y Offset", "RCROSSHAIR_YOFFSET", -48F, 48F, 1F, true, labelWidth = 200F, sliderWidth = 250F)
+    val rCrosshairAlpha = VisSliderCustom("RCrosshair Alpha", "RCROSSHAIR_ALPHA", .1F, 1F, .1F, false, labelWidth = 200F, sliderWidth = 250F)
 
     val rCrosshairColor = VisColorPickerCustom("Set RCrosshair Color", "RCROSSHAIR_COLOR")
 

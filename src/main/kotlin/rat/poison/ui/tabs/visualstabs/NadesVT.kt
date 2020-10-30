@@ -17,14 +17,14 @@ class NadesVT : Tab(false, false) {
     val nadeTracer = VisCheckBoxCustom(" ", "NADE_TRACER", false)
     val nadeTracerColor = VisColorPickerCustom("Tracer", "NADE_TRACER_COLOR")
 
-    val nadeTracerUpdateTime = VisSliderCustom("Tracer Update Time", "NADE_TRACER_UPDATE_TIME", 5F, curSettings["OPENGL_FPS"].toInt().toFloat(), 1F, true, width1 = 200F, width2 = 250F)
-    val nadeTracerTimeout = VisSliderCustom("Tracer Timeout", "NADE_TRACER_TIMEOUT", 1F, 30F, 1F, true, width1 = 200F, width2 = 250F)
+    val nadeTracerUpdateTime = VisSliderCustom("Tracer Update Time", "NADE_TRACER_UPDATE_TIME", 5F, curSettings["OPENGL_FPS"].toInt().toFloat(), 1F, true, labelWidth = 200F, sliderWidth = 250F)
+    val nadeTracerTimeout = VisSliderCustom("Tracer Timeout", "NADE_TRACER_TIMEOUT", 1F, 30F, 1F, true, labelWidth = 200F, sliderWidth = 250F)
 
     val visualizeSmokes = VisCheckBoxCustom(" ", "VISUALIZE_SMOKES", false)
     val visualizeSmokesColor = VisColorPickerCustom("Smoke Box", "VISUALIZE_SMOKES_COLOR")
-    val visualizeSmokesPolys = VisSliderCustom("Smoke Poly Count", "VISUALIZE_SMOKES_POLYS", 3F, 25F, 1F, true, width1 = 200F, width2 = 250F)
-    val visualizeSmokesWidth = VisSliderCustom("Smoke Width", "VISUALIZE_SMOKES_WIDTH", 100F, 200F, 1F, true, width1 = 200F, width2 = 250F)
-    val visualizeSmokesHeight = VisSliderCustom("Smoke Height", "VISUALIZE_SMOKES_HEIGHT", 100F, 150F, 1F, true, width1 = 200F, width2 = 250F)
+    val visualizeSmokesPolys = VisSliderCustom("Smoke Poly Count", "VISUALIZE_SMOKES_POLYS", 3F, 25F, 1F, true, labelWidth = 200F, sliderWidth = 250F)
+    val visualizeSmokesWidth = VisSliderCustom("Smoke Width", "VISUALIZE_SMOKES_WIDTH", 100F, 200F, 1F, true, labelWidth = 200F, sliderWidth = 250F)
+    val visualizeSmokesHeight = VisSliderCustom("Smoke Height", "VISUALIZE_SMOKES_HEIGHT", 100F, 150F, 1F, true, labelWidth = 200F, sliderWidth = 250F)
 
     init {
         table.padLeft(25F)

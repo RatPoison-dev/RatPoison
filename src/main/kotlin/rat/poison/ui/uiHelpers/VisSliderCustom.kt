@@ -13,14 +13,14 @@ import rat.poison.utils.generalUtil.strToBool
 import kotlin.math.pow
 import kotlin.math.round
 
-class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, width1: Float = 225F, width2: Float = 225F) : VisTable() {
+class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, labelWidth: Float = 225F, sliderWidth: Float = 225F) : VisTable() {
     private val labelText = mainText
     private val variableName = varName
     private var hasTooltip = false
     private val isInt = intVal
     private val rnd = 10.0.pow(dec)
-    private val w1 = width1
-    private val w2 = width2
+    private val w1 = labelWidth
+    private val w2 = sliderWidth
 
     private val sliderLabel = VisLabel("$labelText: " + curSettings[variableName])
     private val sliderBar = VisSlider(varMin, varMax, stepSize, false)

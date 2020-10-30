@@ -11,8 +11,8 @@ import rat.poison.*
 import rat.poison.game.CSGO
 import rat.poison.overlay.App.uiAimOverridenWeapons
 import rat.poison.overlay.opened
-import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.scripts.sendPacket
+import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.tabs.*
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.randInt

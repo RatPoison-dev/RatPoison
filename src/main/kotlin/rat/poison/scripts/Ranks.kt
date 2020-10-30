@@ -13,7 +13,7 @@ import rat.poison.utils.extensions.roundNDecimals
 
 var playerList = mutableListOf<RanksPlayer>()
 
-fun ranks() = every(1000, true, inGameCheck = true) { //Rebuild every second
+fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every 5seconds
     if (!opened || !haveTarget) return@every
 
     //Bruh -- fix later
@@ -45,7 +45,9 @@ fun ranks() = every(1000, true, inGameCheck = true) { //Rebuild every second
 
         val steamID = entity.getValidSteamID()
         playerList.add(RanksPlayer(name=entName, team = entTeam, steamID = steamID.toString(), teamStr = tmpTeam, rank=entRank, kills = entKills, deaths = entDeaths, KD = entKD, wins = entWins, money = entMoney, score = entScore))
+        uiRefreshing = true
         playerList.sort()
+        uiRefreshing = false
     }
     if (!uiRefreshing) {
         ranksTab.updateRanks()

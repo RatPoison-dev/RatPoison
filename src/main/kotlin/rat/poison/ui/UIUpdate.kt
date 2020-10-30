@@ -4,6 +4,7 @@ import rat.poison.overlay.App.uiAimOverridenWeapons
 import rat.poison.overlay.App.uiBombWindow
 import rat.poison.overlay.App.uiKeybinds
 import rat.poison.overlay.App.uiMenu
+import rat.poison.overlay.App.uiRanksWindow
 import rat.poison.overlay.App.uiSpecList
 import rat.poison.overlay.opened
 import rat.poison.ui.tabs.*
@@ -45,9 +46,11 @@ fun uiUpdate() {
     fovChangerTabUpdate()
     bombTabUpdate()
     othersTabUpdate()
+    uiRanksWindow.update()
 
     //Update windows
     uiAimOverridenWeapons.setPosition(uiMenu.x+uiMenu.width+4F, uiMenu.y)
+    uiRanksWindow.setPosition(uiMenu.x+uiMenu.width+4F, uiMenu.y)
     //Update lists
     optionsTab.updateCFGList()
     optionsTab.updateLocaleList()
@@ -110,6 +113,9 @@ fun refreshMenu() {
     uiAimOverridenWeapons.remove()
     overridenWeapons = OverridenWeapons()
     uiAimOverridenWeapons = UIAimOverridenWeapons()
+
+    uiRanksWindow.remove()
+    uiRanksWindow = UIRanksWindow()
 
     uiSpecList.remove()
     uiSpecList = UISpectatorList()
