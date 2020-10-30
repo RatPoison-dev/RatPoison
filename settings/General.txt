@@ -16,7 +16,7 @@ MENU_KEY = 112
 MENU_TOOLTIPS = true
 
 //Default locale
-CURRENT_LOCALE = locale_ru_RU
+CURRENT_LOCALE = locale_en_US
 
 //FOV Type : DISTANCE or STATIC
 FOV_TYPE = STATIC
