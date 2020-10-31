@@ -59,7 +59,7 @@ class MiscTabs : Tab(false, false) {
         table.add(miscScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
     }
     override fun getTabTitle(): String {
-        return return "Misc".toLocale()
+        return "Misc".toLocale()
     }
 
     override fun getContentTable(): Table {
