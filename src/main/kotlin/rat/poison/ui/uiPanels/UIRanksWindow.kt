@@ -1,10 +1,11 @@
 package rat.poison.ui.uiPanels
 
 import com.badlogic.gdx.utils.Align
-import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.widget.VisLabel
+import com.kotcrab.vis.ui.widget.VisSlider
+import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.curSettings
-import rat.poison.overlay.App
-import rat.poison.overlay.opened
 import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.enableEspPlayerList
@@ -121,6 +122,7 @@ class UIRanksWindow : VisWindow("Ranks".toLocale()) {
         playerName.setText(name)
         mainTable.add(playerName).left().row()
         mainTable.add(enablePlayerEsp).left().row()
+        enablePlayerEsp.isChecked = steamID in enableEspPlayerList
         enablePlayerEsp.changed {_, _ ->
             if (enableEspPlayerList.contains(steamID)) {
                 enableEspPlayerList.remove(steamID)

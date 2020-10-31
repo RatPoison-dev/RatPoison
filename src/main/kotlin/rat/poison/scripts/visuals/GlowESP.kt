@@ -65,7 +65,7 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 			when (it.type) {
 				EntityType.CCSPlayer -> {
 					if (entity.dead()) return@forEntities
-					if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && entity.getValidSteamID() !in enableEspPlayerList) return@forEntities
+					if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && (entity.getValidSteamID() !in enableEspPlayerList)) return@forEntities
 
 					val entityTeam = entity.team()
 					val onTeam = !DANGER_ZONE && meTeam == entityTeam

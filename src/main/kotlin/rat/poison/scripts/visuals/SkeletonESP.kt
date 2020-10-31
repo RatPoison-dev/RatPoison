@@ -31,7 +31,7 @@ internal fun skeletonEsp() = App {
 		val dormCheck = (entity.dormant() && !DANGER_ZONE)
 		val enemyCheck = ((!curSettings["SKELETON_SHOW_ENEMIES"].strToBool() && meTeam != entTeam) && !DANGER_ZONE)
 		val teamCheck = ((!curSettings["SKELETON_SHOW_TEAM"].strToBool() && meTeam == entTeam) && !DANGER_ZONE)
-		if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && entity.getValidSteamID() !in enableEspPlayerList) return@forEntities
+		if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && (entity.getValidSteamID() !in enableEspPlayerList)) return@forEntities
 		if (entity == me || entity.dead() || dormCheck || enemyCheck || teamCheck) return@forEntities
 
 		val entityBones = mutableListOf<Pair<Int, Int>>()

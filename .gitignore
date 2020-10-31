@@ -2,6 +2,7 @@ build
 out
 
 .gradle
+.idea
 
 .idea/workspace.xml
 .idea/tasks.xml

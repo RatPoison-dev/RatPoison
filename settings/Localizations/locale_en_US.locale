@@ -609,6 +609,7 @@ Auto-Force-Update = Auto Force Update
 //options tab
 Join-Discord = Join Discord
 Load-Locale = Load Locale
+Save-CFG-As = Save As
 Save-CFG = Save CFG
 Load-CFG = Load CFG
 Delete-CFG = Delete CFG

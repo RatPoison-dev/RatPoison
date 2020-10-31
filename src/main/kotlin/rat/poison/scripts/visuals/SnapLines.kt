@@ -73,7 +73,7 @@ fun snapLines() = App {
                 val onTeam = !DANGER_ZONE && me.team() == entity.team()
                 val enemyCheck = (curSettings["SNAPLINES_ENEMIES"].strToBool() && !onTeam)
                 val teamCheck = (curSettings["SNAPLINES_TEAMMATES"].strToBool() && onTeam)
-                if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && entity.getValidSteamID() !in enableEspPlayerList) return@forEntities
+                if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && (entity.getValidSteamID() !in enableEspPlayerList)) return@forEntities
 
                 if (me <= 0 || entity == me || dormCheck || entity.dead()) return@forEntities
 

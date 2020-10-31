@@ -47,7 +47,7 @@ const val BRANCH = "Beta"
 const val F_VERSION = "1.8"
 const val M_VERSION = "1.8.0"
 
-var LOADED_CONFIG = "DEFAULT"
+var LOADED_CONFIG = "DefaultSettings"
 
 //const val EXPERIMENTAL = false
 const val SETTINGS_DIRECTORY = "settings" //Internal

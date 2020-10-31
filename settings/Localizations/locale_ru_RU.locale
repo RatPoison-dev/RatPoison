@@ -555,6 +555,7 @@ Auto-Force-Update = Автоматически обновлять
 //options tab
 Join-Discord = Discord
 Load-Locale = Загрузить перевод
+Save-CFG-As = Сохранить как
 Save-CFG = Сохранить CFG
 Load-CFG = Загрузить CFG
 Delete-CFG = Удалить CFG

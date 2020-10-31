@@ -33,7 +33,7 @@ fun indicatorEsp() = App {
         when (it.type) {
             EntityType.CCSPlayer -> {
                 if (entity.dead() || entity == me || entity.dormant()) return@forEntities
-                if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && entity.getValidSteamID() !in enableEspPlayerList) return@forEntities
+                if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && (entity.getValidSteamID() !in enableEspPlayerList)) return@forEntities
 
                 if (curSettings["INDICATOR_SMOKE_CHECK"].strToBool()) {
                     if (lineThroughSmoke(entity)) {

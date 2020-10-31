@@ -37,7 +37,6 @@ fun farRadar() = App {
         //Prechecks
         if (ent == me || me.team() == ent.team() || DANGER_ZONE || !ent.dormant()) return@forEntities
         if (ent.dead()) return@forEntities
-        if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && ent.getValidSteamID() !in enableEspPlayerList) return@forEntities
 
         val entID = csgoEXE.int(ent + ClientOffsets.dwIndex)
 
