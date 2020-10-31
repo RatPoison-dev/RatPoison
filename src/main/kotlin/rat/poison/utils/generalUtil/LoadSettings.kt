@@ -8,10 +8,12 @@ import java.io.File
 import java.io.FileReader
 import kotlin.text.Charsets.UTF_8
 
+private val keybindsSettings = listOf("AIM_TOGGLE_KEY", "FORCE_AIM_KEY", "FORCE_AIM_BONE_KEY", "TRIGGER_KEY", "VISUALS_TOGGLE_KEY", "D_SPAM_KEY", "W_SPAM_KEY", "MENU_KEY")
+
 fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
     println("Loading settings... "  + if (specificFile) { fileDir } else "")
     setupValidSettings()
-
+    val overloadKeybinds = curSettings["OVERLOAD_KEYBINDS"].strToBool()
     settingsLoaded = false
     if (specificFile) {
         FileReader(File(fileDir)).readLines().forEach { line ->
@@ -19,7 +21,7 @@ fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
                 val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
                 if (curLine.size == 3) {
-                    if (validateSetting(curLine[0], curLine[2])) {
+                    if (validateSetting(curLine[0], curLine[2]) && (!overloadKeybinds || curLine[0] !in keybindsSettings)) {
                         curSettings[curLine[0]] = curLine[2]
                     }
                 } else {
@@ -29,13 +31,13 @@ fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
         }
     } else {
         File(fileDir).listFiles()?.forEach { file ->
-            if (file.name != "CFGS" && file.name != "hitsounds" && file.name != "NadeHelper" && file.name != "Data" && file.name != "Localizations" && file.name.contains(".txt")) {
+            if (!file.isDirectory && file.name.contains(".txt")) {
                 FileReader(file).readLines().forEach { line ->
                     if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                         val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
                         if (curLine.size == 3) {
-                            if (validateSetting(curLine[0], curLine[2])) {
+                            if (validateSetting(curLine[0], curLine[2]) && (!overloadKeybinds || curLine[0] !in keybindsSettings)) {
                                 curSettings[curLine[0]] = curLine[2]
                             }
                         } else {
@@ -46,6 +48,7 @@ fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
             }
         }
     }
+    curSettings["OVERLOAD_KEYBINDS"] = overloadKeybinds
     settingsLoaded = true
     println("Settings loaded")
 }

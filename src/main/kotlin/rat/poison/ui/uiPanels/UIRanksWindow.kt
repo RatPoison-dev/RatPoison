@@ -126,12 +126,11 @@ class UIRanksWindow : VisWindow("Ranks".toLocale()) {
         enablePlayerEsp.changed {_, _ ->
             if (enableEspPlayerList.contains(steamID)) {
                 enableEspPlayerList.remove(steamID)
-                true
             }
             else {
                 enableEspPlayerList.add(steamID)
-                true
             }
+            return@changed true
         }
         mainTable.add(menuAlphaSlider).width(300F)
 

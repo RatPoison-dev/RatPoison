@@ -9,7 +9,6 @@ import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
 import rat.poison.overlay.App
 import rat.poison.overlay.opened
-import rat.poison.ui.tabs.saving
 import rat.poison.ui.tabs.updateWindows
 import rat.poison.ui.uiPanels.optionsTab
 import rat.poison.ui.uiUpdate
@@ -17,6 +16,8 @@ import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
+
+var saving = false
 
 fun saveDefault() {
     if (!saving) {

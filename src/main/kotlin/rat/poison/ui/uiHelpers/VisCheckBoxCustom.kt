@@ -16,6 +16,7 @@ class VisCheckBoxCustom(mainText: String, varName: String, visibleText: Boolean 
     private val variableName = varName
     private val showText = visibleText
     private var hasTooltip = false
+    private val labelText = mainText
 
     init {
         update()
@@ -41,8 +42,11 @@ class VisCheckBoxCustom(mainText: String, varName: String, visibleText: Boolean 
         if (curSettings["CURRENT_LOCALE"] != "" && showText) { //Only update locale if we have one
             if (dbg && curLocale[variableName].isBlank()) {
                 println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
+                setText(labelText)
             }
-            setText(curLocale[variableName])
+            else {
+                setText(curLocale[variableName])
+            }
         }
 
         isChecked = curSettings[variableName].strToBool()
