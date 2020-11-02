@@ -12,13 +12,10 @@ import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.SETTINGS_DIRECTORY
-import rat.poison.curSettings
-import rat.poison.dbg
+import rat.poison.*
 import rat.poison.overlay.App.menuStage
 import rat.poison.overlay.App.uiBombWindow
 import rat.poison.overlay.App.uiSpecList
-import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.refreshMenu
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
@@ -31,8 +28,6 @@ import rat.poison.utils.*
 import rat.poison.utils.generalUtil.loadLocale
 import java.io.File
 
-var saving = false
-
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
@@ -42,7 +37,8 @@ class OptionsTab : Tab(false, false) {
     val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
     val debug = VisCheckBoxCustom("Debug", "DEBUG")
     val keybinds = VisCheckBoxCustom("Keybinds", "KEYBINDS")
-    val blur = VisCheckBoxCustom("Gaussian Blur", "GAUSSIAN_BLUR")
+    val blur = VisCheckBoxCustom("Menu Blur", "GAUSSIAN_BLUR")
+    val overloadKeybinds = VisCheckBoxCustom("Overload Keybinds", "OVERLOAD_KEYBINDS")
     private val discordLink = LinkLabel("Join-Discord".toLocale(), "https://discord.gg/xkTteTM")
 
     var cfgFileSelectBox = VisSelectBox<String>()
@@ -62,8 +58,14 @@ class OptionsTab : Tab(false, false) {
         }
 
         //Create Save Button
-        val saveButton = VisTextButton("Save-CFG".toLocale())
-        saveButton.changed { _, _ ->
+
+        val saveCFG = VisTextButton("Save-CFG".toLocale())
+        saveCFG.changed { _, _ ->
+            saveCFG(LOADED_CONFIG)
+        }
+
+        val saveCFGAs = VisTextButton("Save-CFG-As".toLocale())
+        saveCFGAs.changed { _, _ ->
             Dialogs.showInputDialog(menuStage, "Enter-config-name".toLocale(), "", object : InputDialogAdapter() {
                 override fun finished(input: String) {
                     saveCFG(input)
@@ -108,7 +110,8 @@ class OptionsTab : Tab(false, false) {
 
         //Add everything to table
         val sldTable = VisTable()
-        sldTable.add(saveButton).width(100F)
+        sldTable.add(saveCFG).padRight(20F).padLeft(5F).width(100F)
+        sldTable.add(saveCFGAs).padRight(20F).width(100F)
         sldTable.add(loadButton).padLeft(20F).padRight(20F).width(100F)
         sldTable.add(deleteButton).width(100F)
 
@@ -123,6 +126,7 @@ class OptionsTab : Tab(false, false) {
         table.add(stayFocused).padLeft(25F).left().row()
         table.add(debug).padLeft(25F).left().row()
         table.add(keybinds).padLeft(25F).left().row()
+        table.add(overloadKeybinds).padLeft(25F).left().row()
         table.add(blur).padLeft(25F).left().row()
 
         table.addSeparator()
@@ -203,6 +207,7 @@ fun optionsTabUpdate() {
         menuKey.update()
         menuAlpha.update()
         oglFPS.update()
+        overloadKeybinds.update()
         stayFocused.update()
         debug.update()
         keybinds.update()

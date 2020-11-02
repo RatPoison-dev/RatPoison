@@ -12,3 +12,4 @@ RCS_SMOOTHING_Y = 0.1
 
 //Moves your cursor back to where you started spraying
 RCS_RETURNAIM = false
+RCS_AFTER_X_SHOTS = 1

@@ -27,7 +27,7 @@ fun rcs() = every(4, inGameCheck = true) {
 
 	val forceSet = (shotsFired == 0 && !lastAppliedRCS.isZero)
 
-	if (forceSet || /*!finishPunch ||*/ shotsFired > 1) {
+	if (forceSet || /*!finishPunch ||*/ shotsFired > curSettings["RCS_AFTER_X_SHOTS"].toInt()) {
 		if (curSettings["RCS_TYPE"] == "STABLE") {
 			if (lastAppliedRCS.isZero) {
 				lastAppliedRCS.set(p.x * 2, p.y * 2)

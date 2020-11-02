@@ -97,7 +97,6 @@ fun boxEsp() {
 			if (ent <= 0) return@forEntities
 
 			if (!isPlayer && !isWeapon && !isDefuseKit) return@forEntities
-			if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && (ent.getValidSteamID() !in enableEspPlayerList)) return@forEntities
 
 			//Return if not onscreen
 			if (!worldToScreen(ent.position(), Vector())) return@forEntities
@@ -111,6 +110,7 @@ fun boxEsp() {
 			var health = 0
 			if (isPlayer) {
 				health = ent.health()
+				if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && (ent.getValidSteamID() !in enableEspPlayerList)) return@forEntities
 			}
 			val onTeam = !DANGER_ZONE && ent.team() == me.team()
 

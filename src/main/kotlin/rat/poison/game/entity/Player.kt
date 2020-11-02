@@ -257,7 +257,7 @@ internal fun Player.getValidSteamID(): Int {
 			steamID = (entSteam.split(":")[2].toInt() * 2) + entSteam.split(":")[1].toInt()
 		}
 		steamID
-	}catch (e: Exception) {
+	} catch (e: Exception) {
 		0
 	}
 }

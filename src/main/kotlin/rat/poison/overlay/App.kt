@@ -43,8 +43,8 @@ import kotlin.math.min
 import kotlin.system.measureNanoTime
 
 var opened = false
-var overlayMenuKey = ObservableBoolean({ keyPressed(1) })
-var toggleAimKey = ObservableBoolean({ keyPressed(1) })
+var overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
+var toggleAimKey = ObservableBoolean({ keyPressed(curSettings["AIM_TOGGLE_KEY"].toInt()) })
 
 var syncTime = 0L
 var glowTime = 0L
@@ -75,9 +75,6 @@ object App : ApplicationAdapter() {
     private var timer = 0
 
     override fun create() {
-        overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
-        toggleAimKey = ObservableBoolean({ keyPressed(curSettings["AIM_TOGGLE_KEY"].toInt()) })
-
         VisUI.load(Gdx.files.internal("skin\\tinted.json"))
 
         //Implement stage for menu

@@ -101,7 +101,7 @@ private fun constructSteps() = every(10) {
         forEntities(EntityType.CCSPlayer) {
             val ent = it.entity
             if (ent == me || ent.dead() || ent.dormant()) return@forEntities
-            if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && ent.getValidSteamID() !in enableEspPlayerList) return@forEntities
+            if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && (ent.getValidSteamID() !in enableEspPlayerList)) return@forEntities
 
             val inMyTeam = ent.team() == me.team()
 

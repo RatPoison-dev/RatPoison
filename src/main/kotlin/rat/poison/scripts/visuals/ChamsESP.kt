@@ -82,7 +82,7 @@ fun chamsEsp() = every(100, true, inGameCheck = true) {
 
         val glowAddress = it.glowAddress
         if (glowAddress <= 0) return@forEntities
-        if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && entity.getValidSteamID() !in enableEspPlayerList) return@forEntities
+        if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && (entity.getValidSteamID() !in enableEspPlayerList)) return@forEntities
 
         val entityTeam = entity.team()
         val onTeam = !DANGER_ZONE && myTeam == entityTeam
