@@ -1,6 +1,5 @@
 package rat.poison.scripts.aim
 
-import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.entity.*
@@ -16,6 +15,7 @@ import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toWeaponClass
 import rat.poison.utils.inBackground
 import rat.poison.utils.inGame
+import rat.poison.utils.keyPressed
 
 private var shouldShoot = false
 var didShoot = false

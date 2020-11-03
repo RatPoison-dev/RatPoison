@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.kotcrab.vis.ui.VisUI
 import com.sun.management.OperatingSystemMXBean
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.CSGO
@@ -35,6 +34,7 @@ import rat.poison.utils.extensions.appendHumanReadableSize
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
+import rat.poison.utils.keyPressed
 import rat.poison.utils.shouldPostProcess
 import java.lang.management.ManagementFactory
 import java.util.concurrent.TimeUnit

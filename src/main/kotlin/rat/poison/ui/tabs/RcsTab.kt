@@ -124,6 +124,7 @@ fun updateDisableRcsSmoothing() {
         rcsType.disable(bool, color)
         rcsSmoothingX.disable(bool, color)
         rcsSmoothingY.disable(bool, color)
+        rcsAfterShots.disable(bool, color)
         rcsReturnAim.isDisabled = bool
     }
 }

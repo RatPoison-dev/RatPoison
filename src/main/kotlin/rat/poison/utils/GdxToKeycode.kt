@@ -76,12 +76,66 @@ class Keycodes : MutableMap<Int, String> {
     override fun containsKey(key: Int): Boolean {return false}
 }
 
+class DuplicationsMap : MutableMap<Int, List<Int>> {
+    private val savedValues = mutableMapOf<Int, List<Int>>()
+
+    override fun get(key: Int): List<Int> {
+        if (savedValues.containsKey(key)) {
+            return savedValues[key]!!
+        }
+        return listOf(key)
+    }
+
+    override fun put(key: Int, value: List<Int>): List<Int>? {
+        return savedValues.put(key, value)
+    }
+
+    override fun containsValue(value: List<Int>): Boolean {
+        TODO("containsValue")
+    }
+    override val entries: MutableSet<MutableMap.MutableEntry<Int, List<Int>>>
+        get() = TODO("entries")
+    override val keys: MutableSet<Int>
+        get() = TODO("keys")
+    override val size: Int
+        get() = TODO("size")
+    override val values: MutableCollection<List<Int>>
+        get() = TODO("values")
+    override fun clear() {}
+    override fun putAll(from: Map<out Int, List<Int>>) {}
+    override fun remove(key: Int): List<Int> {return listOf()}
+    override fun isEmpty(): Boolean {return false}
+    override fun containsKey(key: Int): Boolean {return false}
+}
+
 val gdxKeycodes = GdxToKeycode()
 val gdxButtons = GdxToKeycode()
 val keycodesMap = Keycodes()
+val duplicationsMap = DuplicationsMap()
+
+//uncomment when needed
+//fun keysTest() {
+//    while (true) {
+//        for (i in 1..255) {
+//            if (keyPressed(i)) {
+//                println(i)
+//            }
+//        }
+//    }
+//}
 
 
 fun initKeycodes() {
+    //duplications
+    duplicationsMap[111] = listOf(191, 111)
+    duplicationsMap[191] = listOf(111, 191)
+    //0 (caps/unknown)
+    duplicationsMap[20] = listOf(20, 145, 19, 44, 144)
+    duplicationsMap[145] = listOf(145, 20, 19, 44, 144)
+    duplicationsMap[19] = listOf(145, 20, 145, 44, 144)
+    duplicationsMap[44] = listOf(145, 20, 145, 44, 144)
+    duplicationsMap[144] = listOf(145, 20, 145, 44, 144)
+
     //gdxButtons
     gdxButtons[Input.Buttons.BACK] = 5
     gdxButtons[Input.Buttons.FORWARD] = 6
@@ -96,8 +150,8 @@ fun initKeycodes() {
     gdxKeycodes[APOSTROPHE] = 222
     gdxKeycodes[AT]
     gdxKeycodes[B] = 66
-    gdxKeycodes[BACK] = 166
-    gdxKeycodes[BACKSLASH] = 226
+    gdxKeycodes[BACK] = 220
+    gdxKeycodes[BACKSLASH] = 220
     gdxKeycodes[BACKSPACE] = 8
     gdxKeycodes[BUTTON_A]
     gdxKeycodes[BUTTON_B]
@@ -137,7 +191,7 @@ fun initKeycodes() {
     gdxKeycodes[ENDCALL]
     gdxKeycodes[ENTER] = 13
     gdxKeycodes[ENVELOPE]
-    gdxKeycodes[EQUALS]
+    gdxKeycodes[EQUALS] = 187
     gdxKeycodes[ESCAPE] = 27
     gdxKeycodes[EXPLORER]
     gdxKeycodes[F] = 70
@@ -166,7 +220,7 @@ fun initKeycodes() {
     gdxKeycodes[K] = 75
     gdxKeycodes[L] = 76
     gdxKeycodes[LEFT] = 37
-    gdxKeycodes[LEFT_BRACKET] = 221
+    gdxKeycodes[LEFT_BRACKET] = 219
     gdxKeycodes[M] = 77
     //gdxKeycodes[MAX_KEYCODE]
     gdxKeycodes[MEDIA_FAST_FORWARD]
@@ -212,7 +266,7 @@ fun initKeycodes() {
     gdxKeycodes[P] = 80
     gdxKeycodes[PAGE_DOWN] = 34
     gdxKeycodes[PAGE_UP] = 33
-    gdxKeycodes[PERIOD]
+    gdxKeycodes[PERIOD] = 110
     gdxKeycodes[PICTSYMBOLS]
     gdxKeycodes[PLUS] = 187
     gdxKeycodes[POUND]
@@ -220,23 +274,23 @@ fun initKeycodes() {
     gdxKeycodes[Q] = 81
     gdxKeycodes[R] = 82
     gdxKeycodes[RIGHT] = 39
-    gdxKeycodes[RIGHT_BRACKET] = 219
+    gdxKeycodes[RIGHT_BRACKET] = 221
     gdxKeycodes[S] = 83
     gdxKeycodes[SEARCH]
     gdxKeycodes[SEMICOLON] = 186
     gdxKeycodes[SHIFT_LEFT] = 160
     gdxKeycodes[SHIFT_RIGHT] = 161
-    gdxKeycodes[SLASH] = 111
+    gdxKeycodes[SLASH] = 191
     gdxKeycodes[SOFT_LEFT]
     gdxKeycodes[SOFT_RIGHT]
     gdxKeycodes[SPACE] = 32
-    gdxKeycodes[STAR]
+    gdxKeycodes[STAR] = 106
     gdxKeycodes[SWITCH_CHARSET]
     gdxKeycodes[SYM] = 91
     gdxKeycodes[T] = 84
     gdxKeycodes[TAB] = 9
     gdxKeycodes[U] = 85
-    gdxKeycodes[UNKNOWN]
+    gdxKeycodes[UNKNOWN] = 20
     gdxKeycodes[UP] = 38
     gdxKeycodes[V] = 86
     gdxKeycodes[VOLUME_DOWN] = 174
@@ -246,7 +300,7 @@ fun initKeycodes() {
     gdxKeycodes[Y] = 89
     gdxKeycodes[Z] = 90
     //vk keycodes
-    keycodesMap[-1] = "null"
+    keycodesMap[-1] = "none"
     keycodesMap[1] = "m1"
     keycodesMap[2] = "m2"
     keycodesMap[3] = "break"
@@ -266,18 +320,18 @@ fun initKeycodes() {
     keycodesMap[17] = "ctrl"
     keycodesMap[18] = "alt"
     keycodesMap[19] = "pause"
-    keycodesMap[20] = "caps lock"
-    keycodesMap[21] = "null"
-    keycodesMap[22] = "null"
-    keycodesMap[23] = "null"
-    keycodesMap[24] = "null"
-    keycodesMap[25] = "null"
-    keycodesMap[26] = "null"
+    keycodesMap[20] = "caps"
+    keycodesMap[21] = "none"
+    keycodesMap[22] = "none"
+    keycodesMap[23] = "none"
+    keycodesMap[24] = "none"
+    keycodesMap[25] = "none"
+    keycodesMap[26] = "none"
     keycodesMap[27] = "esc"
-    keycodesMap[28] = "null"
-    keycodesMap[29] = "null"
-    keycodesMap[30] = "null"
-    keycodesMap[31] = "null"
+    keycodesMap[28] = "none"
+    keycodesMap[29] = "none"
+    keycodesMap[30] = "none"
+    keycodesMap[31] = "none"
     keycodesMap[32] = "space"
     keycodesMap[33] = "pg up"
     keycodesMap[34] = "pg dwn"
@@ -339,8 +393,8 @@ fun initKeycodes() {
     keycodesMap[90] = "Z"
     keycodesMap[91] = "win"
     keycodesMap[92] = "win"
-    keycodesMap[93] = "null"
-    keycodesMap[94] = "null"
+    keycodesMap[93] = "none"
+    keycodesMap[94] = "none"
     keycodesMap[95] = "sleep"
     keycodesMap[96] = "num0"
     keycodesMap[97] = "num1"
@@ -354,9 +408,9 @@ fun initKeycodes() {
     keycodesMap[105] = "num9"
     keycodesMap[106] = "*"
     keycodesMap[107] = "+"
-    keycodesMap[108] = "?" //incorrect?
+    keycodesMap[108] = "/"
     keycodesMap[109] = "-"
-    keycodesMap[110] = "null"
+    keycodesMap[110] = ","
     keycodesMap[111] = "/"
     keycodesMap[112] = "F1"
     keycodesMap[113] = "F2"
@@ -392,11 +446,11 @@ fun initKeycodes() {
     keycodesMap[143] //Unassigned
     keycodesMap[144] = "num lock"
     keycodesMap[145] = "scr lock"
-    keycodesMap[146] = "null"
-    keycodesMap[147] = "null"
-    keycodesMap[148] = "null"
-    keycodesMap[149] = "null"
-    keycodesMap[150] = "null"
+    keycodesMap[146] = "none"
+    keycodesMap[147] = "none"
+    keycodesMap[148] = "none"
+    keycodesMap[149] = "none"
+    keycodesMap[150] = "none"
     keycodesMap[151] //Unassigned
     keycodesMap[152] //Unassigned
     keycodesMap[153] //Unassigned
@@ -428,78 +482,77 @@ fun initKeycodes() {
     keycodesMap[179] = "play"
     keycodesMap[180] = "mail"
     keycodesMap[181] = "media"
-    keycodesMap[182] = "null"
-    keycodesMap[183] = "null"
-    keycodesMap[184] = "null"
-    keycodesMap[185] = "null"
+    keycodesMap[182] = "none"
+    keycodesMap[183] = "none"
+    keycodesMap[184] = "none"
+    keycodesMap[185] = "none"
     keycodesMap[186] = ":"
     keycodesMap[187] = "+"
     keycodesMap[188] = ","
     keycodesMap[189] = "-"
     keycodesMap[190] = "."
-    keycodesMap[191] = "?"
+    keycodesMap[191] = "/"
     keycodesMap[192] = "~"
-    keycodesMap[193] = "null"
-    keycodesMap[194] = "null"
-    keycodesMap[195] = "null"
-    keycodesMap[196] = "null"
-    keycodesMap[197] = "null"
-    keycodesMap[198] = "null"
-    keycodesMap[199] = "null"
-    keycodesMap[200] = "null"
-    keycodesMap[201] = "null"
-    keycodesMap[202] = "null"
-    keycodesMap[203] = "null"
-    keycodesMap[204] = "null"
-    keycodesMap[205] = "null"
-    keycodesMap[206] = "null"
-    keycodesMap[207] = "null"
-    keycodesMap[208] = "null"
-    keycodesMap[209] = "null"
-    keycodesMap[210] = "null"
-    keycodesMap[211] = "null"
-    keycodesMap[212] = "null"
-    keycodesMap[213] = "null"
-    keycodesMap[214] = "null"
-    keycodesMap[215] = "null"
-    keycodesMap[216] = "null"
-    keycodesMap[217] = "null"
-    keycodesMap[218] = "null"
+    keycodesMap[193] = "none"
+    keycodesMap[194] = "none"
+    keycodesMap[195] = "none"
+    keycodesMap[196] = "none"
+    keycodesMap[197] = "none"
+    keycodesMap[198] = "none"
+    keycodesMap[199] = "none"
+    keycodesMap[200] = "none"
+    keycodesMap[201] = "none"
+    keycodesMap[202] = "none"
+    keycodesMap[203] = "none"
+    keycodesMap[204] = "none"
+    keycodesMap[205] = "none"
+    keycodesMap[206] = "none"
+    keycodesMap[207] = "none"
+    keycodesMap[208] = "none"
+    keycodesMap[209] = "none"
+    keycodesMap[210] = "none"
+    keycodesMap[211] = "none"
+    keycodesMap[212] = "none"
+    keycodesMap[213] = "none"
+    keycodesMap[214] = "none"
+    keycodesMap[215] = "none"
+    keycodesMap[216] = "none"
+    keycodesMap[217] = "none"
+    keycodesMap[218] = "none"
     keycodesMap[219] = "["
     keycodesMap[220] = "|"
     keycodesMap[221] = "]"
     keycodesMap[222] = "'"
-    keycodesMap[223] = "null"
-    keycodesMap[224] = "null"
-    keycodesMap[225] = "null"
+    keycodesMap[223] = "none"
+    keycodesMap[224] = "none"
+    keycodesMap[225] = "none"
     keycodesMap[226] = "\\"
-    keycodesMap[227] = "null"
-    keycodesMap[228] = "null"
-    keycodesMap[229] = "null"
-    keycodesMap[230] = "null"
-    keycodesMap[231] = "null"
-    keycodesMap[232] = "null"
-    keycodesMap[233] = "null"
-    keycodesMap[234] = "null"
-    keycodesMap[235] = "null"
-    keycodesMap[236] = "null"
-    keycodesMap[237] = "null"
-    keycodesMap[238] = "null"
-    keycodesMap[239] = "null"
-    keycodesMap[240] = "null"
-    keycodesMap[241] = "null"
-    keycodesMap[242] = "null"
-    keycodesMap[243] = "null"
-    keycodesMap[244] = "null"
-    keycodesMap[245] = "null"
+    keycodesMap[227] = "none"
+    keycodesMap[228] = "none"
+    keycodesMap[229] = "none"
+    keycodesMap[230] = "none"
+    keycodesMap[231] = "none"
+    keycodesMap[232] = "none"
+    keycodesMap[233] = "none"
+    keycodesMap[234] = "none"
+    keycodesMap[235] = "none"
+    keycodesMap[236] = "none"
+    keycodesMap[237] = "none"
+    keycodesMap[238] = "none"
+    keycodesMap[239] = "none"
+    keycodesMap[240] = "none"
+    keycodesMap[241] = "none"
+    keycodesMap[242] = "none"
+    keycodesMap[243] = "none"
+    keycodesMap[244] = "none"
+    keycodesMap[245] = "none"
     keycodesMap[246] = "attn"
     keycodesMap[247] = "CrSel"
     keycodesMap[248] = "ExSel"
     keycodesMap[249] = "EOF"
     keycodesMap[250] = "play"
     keycodesMap[251] = "zoom"
-    keycodesMap[252] = "null"
-    keycodesMap[253] = "null"
+    keycodesMap[252] = "none"
+    keycodesMap[253] = "none"
     keycodesMap[254] = "clear"
-
 }

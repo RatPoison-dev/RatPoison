@@ -1,6 +1,5 @@
 package rat.poison.scripts
 
-import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.game.entity.absPosition
 import rat.poison.game.entity.eyeAngle

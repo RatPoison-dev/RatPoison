@@ -1,6 +1,5 @@
 package rat.poison.scripts
 
-import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.game.angle
 import rat.poison.game.clientState
@@ -18,6 +17,7 @@ import rat.poison.utils.Angle
 import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.keyPressed
 import java.awt.event.KeyEvent
 import kotlin.math.abs
 import kotlin.math.cos
