@@ -83,8 +83,8 @@ val keycodesMap = Keycodes()
 
 fun initKeycodes() {
     //gdxButtons
-    gdxButtons[Input.Buttons.BACK] = 6
-    gdxButtons[Input.Buttons.FORWARD] = 5
+    gdxButtons[Input.Buttons.BACK] = 5
+    gdxButtons[Input.Buttons.FORWARD] = 6
     gdxButtons[Input.Buttons.LEFT] = 1
     gdxButtons[Input.Buttons.RIGHT] = 2
     gdxButtons[Input.Buttons.MIDDLE] = 4
