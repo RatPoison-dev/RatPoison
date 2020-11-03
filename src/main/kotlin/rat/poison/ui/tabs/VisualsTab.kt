@@ -16,6 +16,7 @@ import rat.poison.ui.changed
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
+import rat.poison.ui.uiHelpers.binds.BindableTableCustom
 import rat.poison.ui.uiPanels.visualsTab
 import rat.poison.utils.generalUtil.strToBool
 
@@ -36,7 +37,7 @@ class VisualsTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     //Static Visuals Tab Items
     val enableEsp = VisCheckBoxCustom("Enable ESP", "ENABLE_ESP")
-    val visualsToggleKey = VisInputFieldCustom("Visuals Toggle Key", "VISUALS_TOGGLE_KEY")
+    val visualsToggleKey = BindableTableCustom("Visuals Toggle Key", "VISUALS_TOGGLE_KEY")
 
     init {
         //ESP Tab

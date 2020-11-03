@@ -125,6 +125,7 @@ fun String.boneToNum(): Int {
         "NECK" -> NECK_BONE
         "CHEST" -> CHEST_BONE
         "STOMACH" -> STOMACH_BONE
+        "PELVIS" -> PELVIS_BONE
         "NEAREST" -> NEAREST_BONE
         else -> RANDOM_BONE
     }

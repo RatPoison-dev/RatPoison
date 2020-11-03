@@ -297,6 +297,7 @@ fun overridenWeaponsUpdate() {
             CHEST_BONE -> "CHEST"
             STOMACH_BONE -> "STOMACH"
             NEAREST_BONE -> "NEAREST"
+            PELVIS_BONE -> "PELVIS"
             else -> "RANDOM"
         })
 
@@ -305,6 +306,7 @@ fun overridenWeaponsUpdate() {
             NECK_BONE -> "NECK"
             CHEST_BONE -> "CHEST"
             STOMACH_BONE -> "STOMACH"
+            PELVIS_BONE -> "PELVIS"
             NEAREST_BONE -> "NEAREST"
             else -> "RANDOM"
         })

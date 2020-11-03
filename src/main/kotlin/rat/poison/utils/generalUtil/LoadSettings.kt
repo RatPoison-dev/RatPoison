@@ -111,7 +111,7 @@ fun validateSetting(settingName: String, value: String): Boolean {
 val validSettingsMap = Settings()
 fun setupValidSettings() {
     validSettingsMap["SKIP"] = listOf("AIM_BONE", "FORCE_AIM_BONE")
-    validSettingsMap["BONE"] = listOf("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
+    validSettingsMap["BONE"] = listOf("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "PELVIS", "RANDOM") //crashes when replacing to boneCategories
     validSettingsMap["BOX_POS"] = listOf("LEFT", "RIGHT", "TOP", "BOTTOM")
     validSettingsMap["GLOW_TYPE"] = listOf("NORMAL", "MODEL", "VISIBLE", "VISIBLE-FLICKER")
     validSettingsMap["FOV_TYPE"] = listOf("STATIC", "DISTANCE")

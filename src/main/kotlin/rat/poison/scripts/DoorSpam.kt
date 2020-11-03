@@ -1,6 +1,5 @@
 package rat.poison.scripts
 
-import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.entity.dead
@@ -11,6 +10,7 @@ import rat.poison.game.offsets.ClientOffsets.dwUse
 import rat.poison.scripts.aim.meDead
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.keyPressed
 
 fun doorSpam() = every(20, inGameCheck = true) {
     if (!curSettings["D_SPAM"].strToBool() || meDead) return@every

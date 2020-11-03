@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.kotcrab.vis.ui.VisUI
 import com.sun.management.OperatingSystemMXBean
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.CSGO
@@ -35,6 +34,7 @@ import rat.poison.utils.extensions.appendHumanReadableSize
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
+import rat.poison.utils.keyPressed
 import rat.poison.utils.shouldPostProcess
 import java.lang.management.ManagementFactory
 import java.util.concurrent.TimeUnit
@@ -59,6 +59,7 @@ object App : ApplicationAdapter() {
     lateinit var shapeRenderer: ShapeRenderer
     private val overlay = Overlay(if (curSettings["APPLESS"].strToBool()) { "Counter-Strike: Global Offensive" } else { curSettings["MENU_APP"].replace("\"", "") }, "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     lateinit var menuStage: Stage
+    lateinit var inputProcessor: Processor
     private val bodies = ObjectArrayList<App.() -> Unit>()
     private lateinit var camera: OrthographicCamera
 
@@ -79,6 +80,7 @@ object App : ApplicationAdapter() {
 
         //Implement stage for menu
         menuStage = Stage() //Main Menu Stage
+        inputProcessor = Processor()
 
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
 
@@ -91,7 +93,7 @@ object App : ApplicationAdapter() {
 
         menuStage.addActor(uiMenu)
 
-        Gdx.input.inputProcessor = InputMultiplexer(menuStage)
+        Gdx.input.inputProcessor = InputMultiplexer(menuStage, inputProcessor)
 
         sb = SpriteBatch()
         textRenderer = BitmapFont(false)

@@ -21,7 +21,7 @@ import rat.poison.utils.generalUtil.strToBool
 
 var categorySelected = "PISTOL"
 val gunCategories = arrayOf("PISTOL", "RIFLE", "SMG", "SNIPER", "SHOTGUN")
-var boneCategories = arrayOf("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
+var boneCategories = arrayOf("HEAD", "NECK", "CHEST", "STOMACH", "PELVIS", "NEAREST", "RANDOM")
 var pistolCategory = arrayOf("DESERT_EAGLE", "DUAL_BERETTA", "FIVE_SEVEN", "GLOCK", "USP_SILENCER", "CZ75A", "R8_REVOLVER", "P2000", "TEC9", "P250")
 var smgCategory = arrayOf("MAC10", "P90", "MP5", "UMP45", "MP7", "MP9", "PP_BIZON")
 var rifleCategory = arrayOf("AK47", "AUG", "FAMAS", "SG553", "GALIL", "M4A4", "M4A1_SILENCER", "NEGEV", "M249")

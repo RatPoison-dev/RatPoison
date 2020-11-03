@@ -1,7 +1,6 @@
 package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
-import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.game.entity.dead
 import rat.poison.game.me
@@ -13,6 +12,7 @@ import rat.poison.settings.MENUTOG
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
+import rat.poison.utils.keyPressed
 
 fun drawBacktrack() = App {
     if (MENUTOG) return@App

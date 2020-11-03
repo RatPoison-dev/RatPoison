@@ -1,6 +1,5 @@
 package rat.poison.scripts.aim
 
-import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
