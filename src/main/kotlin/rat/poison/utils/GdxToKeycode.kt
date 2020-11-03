@@ -280,7 +280,7 @@ fun initKeycodes() {
     keycodesMap[31] = "null"
     keycodesMap[32] = "space"
     keycodesMap[33] = "pg up"
-    keycodesMap[34] = "pg down"
+    keycodesMap[34] = "pg dwn"
     keycodesMap[35] = "end"
     keycodesMap[36] = "home"
     keycodesMap[37] = "left arrow"

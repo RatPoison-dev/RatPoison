@@ -442,6 +442,7 @@ HEAD = Голова
 NECK = Шея
 CHEST = Грудь
 STOMACH = Живот
+PELVIS = Таз
 NEAREST = Ближайшая
 RANDOM = Рандомная
 FOV_TYPE = Тип ФОВа

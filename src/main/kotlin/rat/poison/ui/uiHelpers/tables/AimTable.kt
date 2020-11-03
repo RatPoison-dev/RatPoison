@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.*
 import rat.poison.*
 import rat.poison.ui.changed
+import rat.poison.ui.tabs.boneCategories
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.gunCategories
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
@@ -55,8 +56,8 @@ class AimTable: VisTable(false) {
     val enablePathAim = ATabVisCheckBox("Mouse Movement", "_ENABLE_PATH_AIM")
     val enableScopedOnly = VisCheckBoxCustom("Scoped Only", "SNIPER_ENABLE_SCOPED_ONLY")
 
-    val aimBone = VisSelectBoxCustom("Bone".toLocale(), "_AIM_BONE", true, true,"HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
-    val forceAimBone = VisSelectBoxCustom("Force-Bone".toLocale(), "_AIM_FORCE_BONE", true, true,"HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "RANDOM")
+    val aimBone = VisSelectBoxCustom("Bone".toLocale(), "_AIM_BONE", useCategory = true, showText = true, items = *boneCategories)
+    val forceAimBone = VisSelectBoxCustom("Force-Bone".toLocale(), "_AIM_FORCE_BONE", useCategory = true, showText = true, items = *boneCategories)
 
     val aimFov = ATabVisSlider("Aim FOV", "_AIM_FOV", .5F, 90F, .5F, false)
     val aimSpeed = ATabVisSlider("Aim Speed", "_AIM_SPEED", 0F, 10F, 1F, true)
