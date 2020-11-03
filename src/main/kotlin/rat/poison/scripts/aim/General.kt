@@ -195,9 +195,6 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	//Set destination bone for calculating aim
 	if (aB == NEAREST_BONE) { //Nearest bone check
 		val nearestBone = currentTarget.nearestBone()
-		if (nearestBone == 4) {
-			println("dude")
-		}
 
 		if (nearestBone != -999) {
 			destBone = nearestBone
