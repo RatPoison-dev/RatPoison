@@ -21,6 +21,7 @@ import rat.poison.utils.Settings
 import rat.poison.utils.detectLocale
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.initKeycodes
 import rat.poison.utils.loadMigration
 import java.awt.Robot
 import java.io.File
@@ -84,6 +85,7 @@ fun main() {
     loadMigration()
 
     if (dbg) println("[DEBUG] Initializing scripts...")
+    initKeycodes()
     //Init scripts
     if (!curSettings["MENU"].strToBool()) { //If we aren't using the menu disable everything that uses the menu
         if (dbg) println("[DEBUG] Menu disabled, disabling box, skeleton, rcrosshair, btimer, indicator, speclist, hitmarker, nade helper, nade tracer, draw fov, spread circle, visualize smokes")

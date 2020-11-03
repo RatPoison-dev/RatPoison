@@ -21,6 +21,7 @@ import rat.poison.ui.refreshMenu
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiHelpers.binds.BindableTableCustom
 import rat.poison.ui.uiPanels.optionsTab
 import rat.poison.ui.uiRefreshing
 import rat.poison.ui.uiUpdate
@@ -31,7 +32,7 @@ import java.io.File
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
-    val menuKey = VisInputFieldCustom("Menu Key", "MENU_KEY")
+    val menuKey = BindableTableCustom("Menu Key", "MENU_KEY")
     val menuAlpha = VisSliderCustom("Menu Alpha", "MENU_ALPHA", .5F, 1F, .05F, false, labelWidth = 200F, sliderWidth = 250F)
     val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, labelWidth = 200F, sliderWidth = 250F)
     val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
@@ -61,7 +62,7 @@ class OptionsTab : Tab(false, false) {
 
         val saveCFG = VisTextButton("Save-CFG".toLocale())
         saveCFG.changed { _, _ ->
-            saveCFG(LOADED_CONFIG)
+            saveCFG(cfgFileSelectBox.selected)
         }
 
         val saveCFGAs = VisTextButton("Save-CFG-As".toLocale())

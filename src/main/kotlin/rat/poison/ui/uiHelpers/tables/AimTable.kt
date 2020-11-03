@@ -13,6 +13,8 @@ import rat.poison.ui.uiHelpers.VisSelectBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
+import rat.poison.ui.uiHelpers.binds.BindableTableCustom
+import rat.poison.ui.uiHelpers.binds.BindsButtonCustom
 import rat.poison.ui.uiPanelTables.weaponOverrideSelected
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiPanels.overridenWeapons
@@ -24,15 +26,14 @@ import rat.poison.utils.generalUtil.toWeaponClass
 class AimTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
     val enableAim = VisCheckBoxCustom("Enable Aim", "ENABLE_AIM")
-    val aimToggleKey = VisInputFieldCustom("Toggle Aim Key", "AIM_TOGGLE_KEY")
+    val aimToggleKey = BindableTableCustom("Toggle Aim Key" ,"AIM_TOGGLE_KEY", spaceRight = 20F)
     val activateFromFireKey = VisCheckBoxCustom("Activate From Fire Key", "ACTIVATE_FROM_AIM_KEY")
     val holdAim = VisCheckBoxCustom("Hold Aim", "HOLD_AIM")
     val teammatesAreEnemies = VisCheckBoxCustom("Teammates Are Enemies", "TEAMMATES_ARE_ENEMIES")
 
     val fovType = VisSelectBoxCustom("Fov Type", "FOV_TYPE", false, true, "DISTANCE", "STATIC")
-
-    val forceAimBoneKey = VisInputFieldCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
-    val forceAimKey = VisInputFieldCustom("Force Aim Key", "FORCE_AIM_KEY")
+    val forceAimBoneKey = BindableTableCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
+    val forceAimKey = BindableTableCustom("Force Aim Key", "FORCE_AIM_KEY")
     val forceAimAlways = VisCheckBoxCustom("Force Aim Always", "FORCE_AIM_ALWAYS")
     val forceAimThroughWalls = VisCheckBoxCustom("Force Aim Through Walls", "FORCE_AIM_THROUGH_WALLS")
 

@@ -103,7 +103,7 @@ class RanksTab : Tab(false, false) {
         if (curSettings["RANKS_TAB_DISPLAY_NAME"].strToBool()) {
             if (steamID != 0) { //Bot check
                 val linkLabel = linksLabelMap.getOrElse(steamID, {
-                    val label = RanksLinkLabelCustom(tmpName, "https://steamcommunity.com/profiles/%5BU:1:" + player.steamID + "%5B/", steamID)
+                    val label = RanksLinkLabelCustom(tmpName, steamID)
                     linksLabelMap[steamID] = label
                     return@getOrElse label
                 })

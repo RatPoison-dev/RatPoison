@@ -13,6 +13,7 @@ var HEAD_BONE = 8
 var NECK_BONE = 7
 var CHEST_BONE = 6
 var STOMACH_BONE = 5
+var PELVIS_BONE = 0
 var NEAREST_BONE = -1
 var RANDOM_BONE = -4
 

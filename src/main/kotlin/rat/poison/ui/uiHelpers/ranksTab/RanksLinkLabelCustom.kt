@@ -7,7 +7,7 @@ import rat.poison.ui.rightClicked
 import rat.poison.utils.generalUtil.strToBool
 
 //get rid of this bitch one day
-class RanksLinkLabelCustom(mainText: String, url: String, steamID: Int): LinkLabel(mainText, url) {
+class RanksLinkLabelCustom(mainText: String, steamID: Int): LinkLabel(mainText, "https://steamcommunity.com/profiles/%5BU:1:${steamID}%5B/") {
     init {
         rightClicked {_, _, _, _, _ ->
             curSettings["RANKS"] = !curSettings["RANKS"].strToBool()

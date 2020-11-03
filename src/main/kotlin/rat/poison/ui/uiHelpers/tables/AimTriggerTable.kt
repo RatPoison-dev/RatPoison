@@ -16,6 +16,7 @@ import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSelectBoxCustom
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
+import rat.poison.ui.uiHelpers.binds.BindableTableCustom
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiUpdate
 
@@ -24,7 +25,7 @@ class AimTriggerTable: VisTable(false) {
     val enableTrig = VisCheckBoxCustom("Enable Trigger", "ENABLE_TRIGGER") //Master switch
 
     val boneTriggerEnableKey = VisCheckBoxCustom("Trigger On Key", "TRIGGER_ENABLE_KEY")
-    val boneTriggerKey = VisInputFieldCustom("Trigger Key", "TRIGGER_KEY")
+    val boneTriggerKey = BindableTableCustom("Trigger Key", "TRIGGER_KEY")
 
     val trigEnable = ATabVisCheckBox("Enable", "_TRIGGER") //Per weapon category
 

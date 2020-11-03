@@ -8,12 +8,13 @@ import rat.poison.ui.tabs.movementTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiHelpers.binds.BindableTableCustom
 
 class MovementTab: Tab(false, false) {
     private val table = VisTable()
     val bunnyHop = VisCheckBoxCustom("Bunny Hop", "ENABLE_BUNNY_HOP")
     val bunnyHopHitChance = VisSliderCustom("HitChance", "BHOP_HITCHANCE", 0F, 100F,  1F, true)
-    val bunnyHopKey = VisInputFieldCustom("Bunny Hop Key", "ENABLE_BUNNY_HOP_KEY", keyWidth = 225F)
+    val bunnyHopKey = BindableTableCustom("Bunny Hop Key", "ENABLE_BUNNY_HOP_KEY", keyWidth = 225F)
     val autoStrafe = VisCheckBoxCustom("Auto Strafe", "AUTO_STRAFE")
     val autoStrafeBHopOnly = VisCheckBoxCustom("BHop Only", "STRAFE_BHOP_ONLY")
     val fastStop = VisCheckBoxCustom("Fast Stop", "FAST_STOP")

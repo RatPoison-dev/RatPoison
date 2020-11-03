@@ -1,44 +1,27 @@
-package rat.poison.ui.uiHelpers
+package rat.poison.ui.uiHelpers.binds
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.Actor
-import com.kotcrab.vis.ui.util.Validators
-import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.widget.Tooltip
+import com.kotcrab.vis.ui.widget.VisLabel
+import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
-import rat.poison.ui.changed
-import rat.poison.ui.uiPanels.keybindsUpdate
 import rat.poison.utils.generalUtil.strToBool
 
-class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true, keyWidth: Float = 200F, link: String = "http://cherrytree.at/misc/vk.htm") : VisTable() {
+class BindableTableCustom(mainText: String, varName: String, keyWidth: Float = 200F, spaceRight: Float = 6F): VisTable() {
     private val textLabel = mainText
     private val variableName = varName
+    private val keyLabel = VisLabel("$textLabel:")
+    private val button = BindsButtonCustom(varName)
     private var hasTooltip = false
-
-    private var keyLabel = VisLabel("$textLabel:")
-    private val keyField = VisValidatableTextField(Validators.INTEGERS)
-    private val linkLabel = LinkLabel("?", link)
 
     init {
         update()
 
-        changed { _, _ ->
-            if (keyField.text.toIntOrNull() != null) {
-                if (keyField.text != curSettings[variableName]) { //If we need to change
-                    curSettings[variableName] = keyField.text.toInt().toString()
-                    keybindsUpdate(this)
-                }
-            }
-
-            false
-        }
-
         add(keyLabel).width(keyWidth)
-        add(keyField).spaceRight(6F).width(50F)
-        if (addLink) {
-            add(linkLabel)
-        }
+        add(button).spaceRight(spaceRight).width(50F)
     }
 
     fun update(neglect: Actor? = null) {
@@ -51,13 +34,11 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
                 }
                 keyLabel.setText("${curLocale[variableName]}:")
             }
-
-            keyField.text = curSettings[variableName]
+            button.update()
         }
 
         updateTooltip()
     }
-
     private fun updateTooltip() {
         if (curSettings["MENU_TOOLTIPS"].strToBool()) {
             if (curLocale["${variableName}_TOOLTIP"] != "") {
@@ -76,9 +57,8 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
             }
         }
     }
-
     fun disable(bool: Boolean, col: Color) {
         keyLabel.color = col
-        keyField.isDisabled = bool
+        button.isDisabled = bool
     }
 }

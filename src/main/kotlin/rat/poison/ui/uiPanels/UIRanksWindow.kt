@@ -16,6 +16,8 @@ import kotlin.math.round
 class UIRanksWindow : VisWindow("Ranks".toLocale()) {
     private var playerName = VisLabel("")
     private var mainTable = VisTable()
+    private var steamID = 0
+    private var canReset = true
     private var enableCharLimit = VisCheckBoxCustom("Char Limit", "RANKS_TAB_ENABLE_LIMIT")
     private var charLimit = VisSliderCustom("Limit", "RANKS_TAB_CHAR_LIMIT", 1F, 32F, 1F, true, 2, sliderWidth = 200F, labelWidth = 100F)
     private var enablePlayerEsp = VisCheckBoxCustom("Player ESP", "PLAYER_ESP")
@@ -36,6 +38,17 @@ class UIRanksWindow : VisWindow("Ranks".toLocale()) {
         padRight(25F)
         buildTable()
         menuAlphaSlider.value = 1F
+        enablePlayerEsp.changed {_, _ ->
+            if (canReset) {
+                if (enablePlayerEsp.isChecked) {
+                    enableEspPlayerList.add(steamID)
+                }
+                else {
+                    enableEspPlayerList.remove(steamID)
+                }
+            }
+            return@changed true
+        }
         menuAlphaSlider.changed { _, _ ->
             val alp = (round(menuAlphaSlider.value * 100F) / 100F)
             changeAlpha(alp)
@@ -122,16 +135,10 @@ class UIRanksWindow : VisWindow("Ranks".toLocale()) {
         playerName.setText(name)
         mainTable.add(playerName).left().row()
         mainTable.add(enablePlayerEsp).left().row()
+        this.steamID = steamID
+        canReset = false
         enablePlayerEsp.isChecked = steamID in enableEspPlayerList
-        enablePlayerEsp.changed {_, _ ->
-            if (enableEspPlayerList.contains(steamID)) {
-                enableEspPlayerList.remove(steamID)
-            }
-            else {
-                enableEspPlayerList.add(steamID)
-            }
-            return@changed true
-        }
+        canReset = true
         mainTable.add(menuAlphaSlider).width(300F)
 
         add(mainTable).left()
