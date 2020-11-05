@@ -26,7 +26,7 @@ The official branch (Charlatano) is located at [Jire's GitHub Repository](https:
 
 - [Beginner's guide video](#video)
 - [Compilation](#compilation)
-- [Common issues](#issues)
+- [FAQ](#FAQ)
 - [Contributing](#contributing)
 - [Recent update](#update)
 - [Available Features](#features)
@@ -40,7 +40,7 @@ Recommended to watch before continuing.
 ## Compilation <a name = "compilation"></a>
 The first step is to compile the source code into a usable cheat program.
 
-* Download the latest updates (which includes the newest features) by downloading directly as a ZIP.
+* Download this branch [zip archive](https://github.com/TheRatCode/RatPoison/archive/beta.zip)
 * Extract the contents from the archive to any folder (to your desktop, for example).
 * Double click on the "_installer_" (_installer.exe_) script and wait for it to complete.
 
@@ -53,7 +53,10 @@ If you have chosen to randomize the cheat name, you should open the file ending 
 
 You can launch the cheat at any time after launching CSGO.
 
-## Common issues <a name = "issues"></a>
+## FAQ <a name = "FAQ"></a>
+* How do I open menu?
+    * Press <kbd>INSERT</kbd> while focused on CS:GO window.
+
 * Overlay is black/doesn't go transparent/isn't showing up
     * The overlay only works on Windows 10, it doesn't turn transparent on W7
     * CSGO needs to be borderless/windowed for the overlay to show up on top of CS, otherwise it's just an app in your taskbar
@@ -90,83 +93,12 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 
 ## Recent update <a name = "update"></a>
 
-1.7 Full Update
-* Important
-	* Added backtrack
-	* Fixed ForEntities loop not fully iterating, consistency should be improved for features in Aim & Visuals tabs
-	* Added installer executable
-		* Installer automatically downloads appropriate JDK, allows the cheat to be updated and built without any hassle
-	
+1.8 Full Update
 * New
-	* Added Helmet, Kevlar, Flashed, Scoped, Ammo and Money settings to Box ESP
-	* Added locale options in menu, you can change menu language with premade localization files
-	* Added glow and box health based options
-	* Added flicker free glow
-	* Added static fov option
-	* Added draw aim fov, draw trigger fov, for static fov only
-	* Added nightmode/fullbright option
-	* Added aim on shot option, aimbot will only aim when your gun can shoot
-	* Added gaussian blur option when menu is open
-	* Added hold target aimbot options
-	* Added force bone key + selector (to categories only)
-	* Added keybinds window under options tab to display all keybinds, set to -1 to disable
-	* Added entity dead and dormant check to prevent ghost footsteps
-	* Added legit radar option, shows enemies making footstep noise within set distance
-	* Added appless menu type
-	* Added disable post processing option (does not work with nightmode)
-	* Added far radar box, draws a box around enemies spotted by other players
-	* Added head level helper, draws a line on your sight with customizable deadzone
-	* Added smoke check to Glow, Box, Snaplines and Indicator
-	* Added auto throwing to nade helper
-	* Added temporary name change, resets after joining another server
-	* Added stable RCS, applies to total aimpunch/recoil over time
-	
+    * Player ESP
+    * Standalone RCS now works with regular aim
 * Fixes
-	* Triggerbot has been fixed
-	* Fixed hitsound error when menu disabled, hitsound only available when using the menu
-	* Fixed ranks tab layout
-	* Fixed advanced aim settings error when using 0 X/Y Variation
-	* Fixed automatic weapons shooting with cursor enabled (during buy menu)
-	* Fixed nearest bone not working with menu disabled
-	* Fixed cmd read/write files when menu is disabled
-	* Fixed taser spamming SetAim failure with Override Weapons enabled
-	* Fixed teammates are enemies not aimbotting friendly players
-	* Fixed fast stop blocking movement on high latency servers
-	* Fixed bomb timer and spectator list opacity sliders not updating after loading a config
-	
-* Miscellaneous
-	* Updated ranks tab, should work better & show all players
-	* Reworked override settings
-	* Minor adjustments to head walk and spectator list
-	* Glow ESP is now one write per entity instead of multiple
-	* Changed RANK names to abbreviations to prevent hiding elements
-	* Perfect aim is now calculated per aim move rather than per target
-	* Loading settings/configs should only load .txt or .cfg files respectively
-	* Scanner can now save/load/delete configs, and display ranks/kills/deaths/wins
-	* Changed default settings to look more legit
-	* Fully disabled knife changer
-	* Removed knife changer for now
-	* Force aim bone should update properly on config change
-	* Color Picker is now similar to most mainstream cheats, less ugly
-	* Visuals toggle key should now disable bomb timer, spectator list, recoil crosshair
-		* Bomb timer, spectator list, recoil crosshair require 'Enable ESP' to be checked in the visuals tab to work
-	* Box details can be used without having the bounding box enabled
-	* Removed flick scroll for now
-	* M249 is now considered a rifle 
-	* Changed Flat Aim name to Write Angles on menu
-	* Changed Path Aim name to Mouse Movement on menu
-	* All ui elements are drawn on 1 stage using 1 input processor instead of 4
-	* Cleaned up menu for better consistency across tabs
-	* Skinchanger should forceupdate properly, should see less lag & faster activation when equipping new weapons
-	* Skinchanger tab should now update with configs
-	* Updated list of skins for skinchanger
-	* Skinchanger will only update the local players bought weapons, not dropped weapons
-	* Updated nade helper to work with menu disabled
-	* Removed standalone autostrafer
-	* Changed chams brightness slider to allow more precise adjustments
-	* FOV sliders now allow float values
-	* Changed step values of some sliders
-	* Added more information in debug screen
+    * Reworked current binds system
 
 
 ## Available Features <a name = "features"></a>
