@@ -3,25 +3,26 @@
 package rat.poison.ui.tabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.widget.LinkLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.*
+import rat.poison.curSettings
+import rat.poison.dbg
 import rat.poison.overlay.App.uiBombWindow
 import rat.poison.overlay.App.uiSpecList
+import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
-import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiHelpers.binds.BindableTableCustom
 import rat.poison.ui.uiPanels.optionsTab
 import rat.poison.ui.uiRefreshing
 
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
-    val menuKey = VisInputFieldCustom("Menu Key", "MENU_KEY")
+    val menuKey = BindableTableCustom("Menu Key", "MENU_KEY")
     val menuAlpha = VisSliderCustom("Menu Alpha", "MENU_ALPHA", .5F, 1F, .05F, false, labelWidth = 200F, sliderWidth = 250F)
     val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, labelWidth = 200F, sliderWidth = 250F)
     val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")

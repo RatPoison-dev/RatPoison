@@ -517,7 +517,7 @@ RCS = Отдача
 Ranks = Ранги
 Nade-Helper = Раскидки
 Skin-Changer = Скины
-Options = Настройки
+Options = Опции
 Glow = Глоу
 Chams = Чамс
 Indicator = Индикаторы
@@ -532,6 +532,7 @@ MUSIC_KIT_ID = ID
 FOV-Changer = Изменение ФОВ
 Movement = Мувы
 Others = Другое
+Configs = CFG
 
 
 //grenade helper
@@ -694,3 +695,11 @@ RANKS_TAB_DISPLAY_KD = У/С
 RANKS_TAB_DISPLAY_WINS = Вины
 RANKS_TAB_DISPLAY_MONEY = Деньги
 OVERLOAD_KEYBINDS = Запретить переопределение биндов
+Save = Сохранить
+Load = Загрузить
+Delete = Удалить
+OVERWRITE_CONFIG = Желаете перезаписать конфиг?
+Confirm = Да
+Cancel = Нет
+FILE_NOT_FOUND_ERROR = Не удалось загрузить конфигурацию. Возможно она отсутсвует на диске. Название конфигурации:
+Error = Ошибка

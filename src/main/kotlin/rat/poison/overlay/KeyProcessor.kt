@@ -1,15 +1,15 @@
 package rat.poison.overlay
 
 import com.badlogic.gdx.InputProcessor
-import rat.poison.utils.gdxKeycodes
+import rat.poison.utils.gdxToVk
 
 class KeyProcessor: InputProcessor {
     var needKeyPress = false
-    var callBack: (_: Int) -> Unit = {}
+    var callBack: (_: Int, __: String) -> Unit = { _: Int, _: String -> }
 
     override fun keyDown(keycode: Int): Boolean {
         if (needKeyPress) {
-            callBack(gdxKeycodes.advancedGet(keycode, false))
+            callBack(keycode, "button")
             needKeyPress = false
         }
         return true
@@ -17,7 +17,7 @@ class KeyProcessor: InputProcessor {
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
         if (needKeyPress) {
-            callBack(gdxKeycodes.advancedGet(button, true))
+            callBack(button, "mouse")
             needKeyPress = false
         }
         return true

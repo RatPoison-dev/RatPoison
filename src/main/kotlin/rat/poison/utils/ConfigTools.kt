@@ -9,6 +9,7 @@ import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
 import rat.poison.overlay.App
 import rat.poison.overlay.opened
+import rat.poison.toLocale
 import rat.poison.ui.tabs.updateWindows
 import rat.poison.ui.uiPanels.configsTab
 import rat.poison.ui.uiPanels.optionsTab
@@ -74,7 +75,7 @@ fun loadCFG(cfgFileName: String, deleteCfgAfterLoad: Boolean = false) {
 
         val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg")
         if (!cfgFile.exists()) {
-            Dialogs.showErrorDialog(App.menuStage, "Error", "$cfgFileName not found, save your configuration first!")
+            Dialogs.showOKDialog(App.menuStage, "Error".toLocale(), "${"FILE_NOT_FOUND_ERROR".toLocale()}\n \"${cfgFileName}\"")
         } else {
             saving = true
             GlobalScope.launch {
@@ -139,9 +140,9 @@ fun saveCFG(cfgFileName: String) {
             if (!file.isDirectory) {
                 FileReader(file).readLines().forEach { line ->
                     if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
-                        val tempCurLine = line.trim().split(" ".toRegex(), 3) //Separate line into 'VARIABLE = VALUE'
+                        val tempCurLine = line.trim().split(" ".toRegex(), 3) //Separate line into 'VARIABLE=VALUE' //no spaces bc of trim()
 
-                        sbLines.append(tempCurLine[0] + " = " + curSettings[tempCurLine[0]] + "\n")
+                        sbLines.append(tempCurLine[0] + " = " + curSettings[tempCurLine[0]] + "\n") //add spaces back
                     }
                 }
             }
