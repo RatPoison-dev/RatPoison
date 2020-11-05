@@ -75,8 +75,7 @@ class ConfigsTab : Tab(false, false) {
                 if (tmpSelection.size > 0) { //Validate
                     val tmpName = configListAdapter.selection[0] //Selection is an array
 
-                    //TODO locale
-                    Dialogs.showConfirmDialog(menuStage, "Confirm overwrite config: $tmpName", "", arrayOf("Confirm", "Cancel"), arrayOf(1, 2)) { i ->
+                    Dialogs.showConfirmDialog(menuStage, "${"OVERWRITE_CONFIG".toLocale()}\n \"$tmpName\"", "", arrayOf("Confirm".toLocale(), "Cancel".toLocale()), arrayOf(1, 2)) { i ->
                         if (i == 1) { //Confirm
                             saveCFG(tmpName)
                         }
