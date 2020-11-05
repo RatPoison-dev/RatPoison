@@ -10,7 +10,7 @@ MENU_ALPHA = 1.0
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles visibility of the menu on the overlay
 //Default key is F1
-MENU_KEY = 112
+MENU_KEY = 45
 
 //Show tooltips
 MENU_TOOLTIPS = true
