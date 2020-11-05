@@ -46,7 +46,7 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Beta"
 const val F_VERSION = "1.8"
-const val M_VERSION = "1.8.0"
+const val M_VERSION = "1.8.01"
 
 var LOADED_CONFIG = "DefaultSettings"
 
@@ -69,7 +69,6 @@ fun main() {
     System.setProperty("jna.nosys", "true")
 
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
-
     detectLocale()
 
     dbg = curSettings["DEBUG"].strToBool()

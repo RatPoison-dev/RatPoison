@@ -10,6 +10,7 @@ import rat.poison.curSettings
 import rat.poison.overlay.App
 import rat.poison.overlay.opened
 import rat.poison.ui.tabs.updateWindows
+import rat.poison.ui.uiPanels.configsTab
 import rat.poison.ui.uiPanels.optionsTab
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
@@ -118,47 +119,46 @@ fun saveCFG(cfgFileName: String) {
 
     if (!saving) {
         saving = true
-        GlobalScope.launch {
-            println("Saving!")
 
-            val cfgDir = File("$SETTINGS_DIRECTORY\\CFGS")
-            if (!cfgDir.exists()) {
-                Files.createDirectory(cfgDir.toPath())
-            }
+        println("Saving!")
 
-            cfgFileName.replace(".cfg", "")
+        val cfgDir = File("$SETTINGS_DIRECTORY\\CFGS")
+        if (!cfgDir.exists()) {
+            Files.createDirectory(cfgDir.toPath())
+        }
 
-            val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg")
-            if (!cfgFile.exists()) {
-                cfgFile.createNewFile()
-            }
+        cfgFileName.replace(".cfg", "")
 
-            val sbLines = StringBuilder()
-            File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
-                if (!file.isDirectory) {
-                    FileReader(file).readLines().forEach { line ->
-                        if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
-                            val tempCurLine = line.trim().split(" ".toRegex(), 3) //Separate line into 'VARIABLE = VALUE'
+        val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg")
+        if (!cfgFile.exists()) {
+            cfgFile.createNewFile()
+        }
 
-                            sbLines.append(tempCurLine[0] + " = " + curSettings[tempCurLine[0]] + "\n")
-                        }
+        val sbLines = StringBuilder()
+        File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
+            if (!file.isDirectory) {
+                FileReader(file).readLines().forEach { line ->
+                    if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
+                        val tempCurLine = line.trim().split(" ".toRegex(), 3) //Separate line into 'VARIABLE = VALUE'
+
+                        sbLines.append(tempCurLine[0] + " = " + curSettings[tempCurLine[0]] + "\n")
                     }
                 }
             }
-
-            Files.delete(cfgFile.toPath()) //Replace with cfgFile. ??
-            Files.createFile(cfgFile.toPath())
-
-            var firstLine = false
-            sbLines.lines().forEach {cfgFile.appendText(if (!firstLine) { firstLine = true; it } else if (!it.isBlank()) "\n" + it else "\n")}
-            sbLines.clear()
-
-            println("\nSaving Complete!\n")
-            if (VisUI.isLoaded()) {
-                optionsTab.updateCFGList()
-            }
-            saving = false
         }
+
+        Files.delete(cfgFile.toPath()) //Replace with cfgFile. ??
+        Files.createFile(cfgFile.toPath())
+
+        var firstLine = false
+        sbLines.lines().forEach {cfgFile.appendText(if (!firstLine) { firstLine = true; it } else if (!it.isBlank()) "\n" + it else "\n")}
+        sbLines.clear()
+
+        println("\nSaving Complete!\n")
+        if (VisUI.isLoaded()) {
+            configsTab.updateCFGList()
+        }
+        saving = false
     }
 }
 
@@ -170,7 +170,7 @@ fun deleteCFG(cfgFileName: String) {
         cfgFile.delete()
     }
     if (VisUI.isLoaded()) {
-        optionsTab.updateCFGList()
+        configsTab.updateCFGList()
     }
     println("Deleted $cfgFileName\n")
 }

@@ -1,8 +1,6 @@
 package rat.poison.overlay
 
-import com.badlogic.gdx.ApplicationAdapter
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.InputMultiplexer
+import com.badlogic.gdx.*
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.GL20.GL_BLEND
@@ -59,7 +57,7 @@ object App : ApplicationAdapter() {
     lateinit var shapeRenderer: ShapeRenderer
     private val overlay = Overlay(if (curSettings["APPLESS"].strToBool()) { "Counter-Strike: Global Offensive" } else { curSettings["MENU_APP"].replace("\"", "") }, "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     lateinit var menuStage: Stage
-    lateinit var inputProcessor: Processor
+    lateinit var inputProcessor: KeyProcessor
     private val bodies = ObjectArrayList<App.() -> Unit>()
     private lateinit var camera: OrthographicCamera
 
@@ -80,7 +78,7 @@ object App : ApplicationAdapter() {
 
         //Implement stage for menu
         menuStage = Stage() //Main Menu Stage
-        inputProcessor = Processor()
+        inputProcessor = KeyProcessor()
 
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
 

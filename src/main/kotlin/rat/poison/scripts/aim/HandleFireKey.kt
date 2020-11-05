@@ -31,7 +31,6 @@ fun handleFireKey() = every(1, continuous = true) {
     if (MENUTOG || (me > 0L && meDead) || inBackground) {
         if (clientDLL.int(dwForceAttack) == 5) {
             clientDLL[dwForceAttack] = 4
-            Thread.sleep(1)
         }
         return@every
     }

@@ -24,7 +24,7 @@ class RcsTab : Tab(false, false) {
 
     val rcsSmoothingX = VisSliderCustom("RCS X Accuracy", "RCS_SMOOTHING_X", .02F, 1F, .02F, false, labelWidth = 200F, sliderWidth = 250F)
     val rcsSmoothingY = VisSliderCustom("RCS Y Accuracy", "RCS_SMOOTHING_Y", .02F, 1F, .02F, false, labelWidth = 200F, sliderWidth = 250F)
-    val rcsAfterShots = VisSliderCustom("RCS After", "RCS_AFTER_X_SHOTS", 1F, 10F, 1F, true, labelWidth = 200F, sliderWidth = 250F)
+    val rcsAfterShots = VisSliderCustom("RCS After", "RCS_AFTER_X_SHOTS", 0F, 10F, 1F, true, labelWidth = 200F, sliderWidth = 250F)
     val rcsReturnAim = VisCheckBoxCustom("Return Aim", "RCS_RETURNAIM")
 
     val enableRCrosshair = VisCheckBoxCustom("Recoil Crosshair", "ENABLE_RECOIL_CROSSHAIR")

@@ -19,6 +19,7 @@ import rat.poison.utils.randInt
 import kotlin.math.sign
 import kotlin.system.exitProcess
 
+//TODO move to func
 val mainTabbedPane = TabbedPane()
     var aimTab = AimTab()
     var visualsTab = VisualsTab()
@@ -28,6 +29,7 @@ val mainTabbedPane = TabbedPane()
     var nadeHelperTab = NadeHelperTab()
     var skinChangerTab = SkinChangerTab()
     var optionsTab = OptionsTab()
+    var configsTab = ConfigsTab()
 
 private var uid = randInt(2, 999999)
 
@@ -71,6 +73,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         mainTabbedPane.add(nadeHelperTab)
         mainTabbedPane.add(skinChangerTab)
         mainTabbedPane.add(optionsTab)
+        mainTabbedPane.add(configsTab)
 
         //Set aim tab as the first (init) tab
         mainTabbedPane.switchTab(aimTab)
@@ -144,6 +147,13 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         changeWidth()
                         changeHeight()
                         mainTabbedPaneContent.add(skinChangerTab.contentTable).growX()
+                    }
+                    configsTab -> {
+                        wantedHeight = normHeight
+                        wantedWidth = normWidth
+                        changeWidth()
+                        changeHeight()
+                        mainTabbedPaneContent.add(configsTab.contentTable).growX()
                     }
                 }
             }

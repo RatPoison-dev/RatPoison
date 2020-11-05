@@ -13,12 +13,6 @@ import rat.poison.ui.uiHelpers.tables.AimTable
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.utils.generalUtil.strToBool
 
-
-//val itemsArray = Array<String>()
-//for (i in boxItems) {
-//    itemsArray.add(i)
-//}
-
 var categorySelected = "PISTOL"
 val gunCategories = arrayOf("PISTOL", "RIFLE", "SMG", "SNIPER", "SHOTGUN")
 var boneCategories = arrayOf("HEAD", "NECK", "CHEST", "STOMACH", "PELVIS", "NEAREST", "RANDOM")

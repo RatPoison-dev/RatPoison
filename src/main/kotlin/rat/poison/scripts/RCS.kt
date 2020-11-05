@@ -20,8 +20,7 @@ private val lastAppliedRCS = Vector2()
 fun rcs() = every(4, inGameCheck = true) {
 	if (me <= 0 || !curSettings["ENABLE_RCS"].strToBool() || meDead) return@every
 
-	val weapon = meCurWep
-	if (!weapon.automatic) { lastAppliedRCS.set(0F, 0F); return@every }
+	if (!meCurWep.automatic) { lastAppliedRCS.set(0F, 0F); return@every }
 	val shotsFired = me.shotsFired()
 	val p = me.punch()
 

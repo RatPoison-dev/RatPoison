@@ -164,7 +164,7 @@ Load-CFG_TOOLTIP = Загрузить выбранный конфиг
 Delete-CFG_TOOLTIP = Удалить выбранный конфиг
 Load-Locale_TOOLTIP = Загрузить выбранный перевод
 MENU_KEY_TOOLTIP = Кнопка открытия меню
-Save-Current-Config-To-Default-Settings_TOOLTIP = Сохранить текущий конфиг по умолчанию
+SAVE_TO_DEFAULT_TOOLTIP = Сохранить текущий конфиг по умолчанию
 ENABLE_NADE_HELPER_TOOLTIP = Включает/выключает помощь для гранат
 Create-Grenade-Position_TOOLTIP = Создание позиции гранаты
 Save-As-File_TOOLTIP = Сохраняет текущие сохраненные гранаты в файл
@@ -561,7 +561,7 @@ Save-CFG-As = Сохранить как
 Save-CFG = Сохранить CFG
 Load-CFG = Загрузить CFG
 Delete-CFG = Удалить CFG
-Save-Current-Config-To-Default-Settings = Сделать CFG дефолтным
+SAVE_TO_DEFAULT = Сделать CFG дефолтным
 
 //aim tab
 Enable-Perfect-Aim = Включить идеальную наводку
@@ -622,7 +622,7 @@ SAME = Так-же
 OPPOSITE = Противоположно
 
 //save config
-Enter-config-name = Введите название CFG
+INPUT_CONFIG_NAME = Введите название CFG
 
 //new shit
 LEGIT_RADAR = Легитный радар

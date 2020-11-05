@@ -1,5 +1,5 @@
 //Enable DEBUG
-DEBUG = false
+DEBUG = true
 
 //Enable the overlay, menu
 //Any settings/scripts reliant on drawing on the overlay won't enable
@@ -69,7 +69,7 @@ W_SPAM_KEY = -1
 ENABLE_AIM = false
 
 //Hold target - If the aimbot should lock on a target as long as the aim key is pressed and the target is alive
-HOLD_TARGET = false
+HOLD_AIM = false
 
 //Swap delay if target becomes invalid, in ms
 AIM_TARGET_SWAP_DELAY = 150

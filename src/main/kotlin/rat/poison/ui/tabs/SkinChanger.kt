@@ -211,7 +211,7 @@ class SkinChangerTab : Tab(false, false) {
 }
 
 //Youre fucking dumb as shit fuck off I'm retarded
-private class ListAdapter(array: ArrayList<String>?) : ArrayListAdapter<String, VisTable>(array) {
+class ListAdapter(array: ArrayList<String>?) : ArrayListAdapter<String, VisTable>(array) {
     private var drawBG = VisUI.getSkin().getDrawable("window-bg")
     private var drawSelection = VisUI.getSkin().getDrawable("list-selection")
 
@@ -260,6 +260,7 @@ fun getSkinArray(wep: String): Array<String> {
     return wepSkinArray
 }
 
+//TODO is this ever needed?
 fun getSkinNameFromID(ID: Int): String {
     var str = ""
     var found = false

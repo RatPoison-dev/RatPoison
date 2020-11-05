@@ -22,6 +22,7 @@ var uiRefreshing = false
 fun uiUpdate() {
     if (!opened || uiRefreshing) return
 
+    //TODO these should be irrelevant since we reload tabs in refresh menu...
     overridenWeaponsUpdate()
     visualsTabUpdate()
     glowEspTabUpdate()
@@ -51,8 +52,8 @@ fun uiUpdate() {
     //Update windows
     uiAimOverridenWeapons.setPosition(uiMenu.x+uiMenu.width+4F, uiMenu.y)
     //Update lists
-    optionsTab.updateCFGList()
-    optionsTab.updateLocaleList()
+    configsTab.updateCFGList()
+    configsTab.updateLocaleList()
     othersTab.updateHitSoundsList()
     nadeHelperTab.updateNadeFileHelperList()
 }
@@ -70,6 +71,7 @@ fun refreshMenu() {
     nadeHelperTab = NadeHelperTab()
     skinChangerTab = SkinChangerTab()
     optionsTab = OptionsTab()
+    configsTab = ConfigsTab()
 
     mainTabbedPane.add(aimTab)
     mainTabbedPane.add(visualsTab)
@@ -79,6 +81,7 @@ fun refreshMenu() {
     mainTabbedPane.add(nadeHelperTab)
     mainTabbedPane.add(skinChangerTab)
     mainTabbedPane.add(optionsTab)
+    mainTabbedPane.add(configsTab)
 
     miscTabbedPane.removeAll()
     espTabbedPane.removeAll()

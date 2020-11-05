@@ -152,16 +152,18 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	val forceAim = (keyPressed(curSettings["FORCE_AIM_KEY"].toInt()) || curSettings["FORCE_AIM_ALWAYS"].strToBool())
 	val haveAmmo = meCurWepEnt.bullets() > 0
 
-	val pressed = ((aim || boneTrig) && !MENUTOG && haveAmmo &&
-			(if (meCurWep.rifle || meCurWep.smg) {
-				me.shotsFired() >= curSettings["AIM_AFTER_SHOTS"].toInt()
-			} else {
-				true
-			})) || forceAim
+	val pressed = ((aim || boneTrig) && !MENUTOG && haveAmmo) || forceAim
 
 	if (!pressed) {
 		reset()
 		return@every
+	}
+
+	if (meCurWep.rifle || meCurWep.smg) {
+		if (me.shotsFired() < curSettings["AIM_AFTER_SHOTS"].toInt()) {
+			reset()
+			return@every
+		}
 	}
 
 	var currentTarget = target

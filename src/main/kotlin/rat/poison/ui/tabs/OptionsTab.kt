@@ -5,34 +5,23 @@ package rat.poison.ui.tabs
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.VisUI
-import com.kotcrab.vis.ui.util.dialog.Dialogs
-import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
 import com.kotcrab.vis.ui.widget.LinkLabel
-import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
-import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.*
-import rat.poison.overlay.App.menuStage
 import rat.poison.overlay.App.uiBombWindow
 import rat.poison.overlay.App.uiSpecList
 import rat.poison.ui.changed
-import rat.poison.ui.refreshMenu
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
-import rat.poison.ui.uiHelpers.binds.BindableTableCustom
 import rat.poison.ui.uiPanels.optionsTab
 import rat.poison.ui.uiRefreshing
-import rat.poison.ui.uiUpdate
-import rat.poison.utils.*
-import rat.poison.utils.generalUtil.loadLocale
-import java.io.File
 
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
-    val menuKey = BindableTableCustom("Menu Key", "MENU_KEY")
+    val menuKey = VisInputFieldCustom("Menu Key", "MENU_KEY")
     val menuAlpha = VisSliderCustom("Menu Alpha", "MENU_ALPHA", .5F, 1F, .05F, false, labelWidth = 200F, sliderWidth = 250F)
     val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, labelWidth = 200F, sliderWidth = 250F)
     val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
@@ -42,80 +31,7 @@ class OptionsTab : Tab(false, false) {
     val overloadKeybinds = VisCheckBoxCustom("Overload Keybinds", "OVERLOAD_KEYBINDS")
     private val discordLink = LinkLabel("Join-Discord".toLocale(), "https://discord.gg/xkTteTM")
 
-    var cfgFileSelectBox = VisSelectBox<String>()
-    var localeFileSelectBox = VisSelectBox<String>()
-    var loadLocaleButton = VisTextButton("Load-Locale".toLocale())
-
     init {
-        loadLocaleButton.changed { _, _ ->
-            curSettings["CURRENT_LOCALE"] = localeFileSelectBox.selected
-            loadLocale("$SETTINGS_DIRECTORY\\Localizations\\${curSettings["CURRENT_LOCALE"]}.locale")
-
-            refreshMenu()
-
-            uiUpdate()
-
-            false
-        }
-
-        //Create Save Button
-
-        val saveCFG = VisTextButton("Save-CFG".toLocale())
-        saveCFG.changed { _, _ ->
-            saveCFG(cfgFileSelectBox.selected)
-        }
-
-        val saveCFGAs = VisTextButton("Save-CFG-As".toLocale())
-        saveCFGAs.changed { _, _ ->
-            Dialogs.showInputDialog(menuStage, "Enter-config-name".toLocale(), "", object : InputDialogAdapter() {
-                override fun finished(input: String) {
-                    saveCFG(input)
-                }
-            }).setSize(200F, 200F)
-            true
-        }
-
-        //Create Load Button
-        val loadButton = VisTextButton("Load-CFG".toLocale())
-        loadButton.changed { _, _ ->
-            if (!cfgFileSelectBox.selected.isNullOrEmpty()) {
-                if (cfgFileSelectBox.selected.count() > 0) {
-                    loadCFG(cfgFileSelectBox.selected)
-                }
-            }
-            true
-        }
-
-        //Create Delete Button
-        val deleteButton = VisTextButton("Delete-CFG".toLocale())
-        deleteButton.changed { _, _ ->
-            if (!cfgFileSelectBox.selected.isNullOrEmpty()) {
-                if (cfgFileSelectBox.selected.count() > 0) {
-                    deleteCFG(cfgFileSelectBox.selected)
-                }
-            }
-            true
-        }
-
-        //File Select Box
-        updateCFGList()
-        updateLocaleList()
-
-        //Create Save Current Config To Default
-        val saveCurConfig = VisTextButton("Save-Current-Config-To-Default-Settings".toLocale())
-        saveCurConfig.changed { _, _ ->
-            saveWindows()
-            saveDefault()
-            true
-        }
-
-        //Add everything to table
-        val sldTable = VisTable()
-        sldTable.add(saveCFG).padRight(20F).padLeft(5F).width(100F)
-        sldTable.add(saveCFGAs).padRight(20F).width(100F)
-        sldTable.add(loadButton).padLeft(20F).padRight(20F).width(100F)
-        sldTable.add(deleteButton).width(100F)
-
         debug.changed { _, _ ->
             dbg = debug.isChecked
             true
@@ -132,19 +48,6 @@ class OptionsTab : Tab(false, false) {
 
         table.addSeparator()
 
-        table.add(cfgFileSelectBox).row()
-
-        table.add(sldTable).row()
-
-        table.add(saveCurConfig).width(340F).row()
-
-        table.addSeparator()
-
-        table.add(localeFileSelectBox).row()
-        table.add(loadLocaleButton).row()
-
-        table.addSeparator()
-
         table.add(discordLink)
     }
 
@@ -154,41 +57,6 @@ class OptionsTab : Tab(false, false) {
 
     override fun getTabTitle(): String? {
         return "Options".toLocale()
-    }
-
-    fun updateCFGList() {
-        if (VisUI.isLoaded()) {
-            val cfgFilesArray = Array<String>()
-            var items = 0
-            File("$SETTINGS_DIRECTORY\\CFGS").listFiles()?.forEach {
-                cfgFilesArray.add(it.name.replace(".cfg", ""))
-                items++
-            }
-
-            if (items > 0) {
-                cfgFileSelectBox.items = cfgFilesArray
-            } else {
-                cfgFileSelectBox.clearItems()
-            }
-        }
-    }
-
-    fun updateLocaleList() {
-        if (VisUI.isLoaded()) {
-            val localeFilesArray = Array<String>()
-            var items = 0
-            File("$SETTINGS_DIRECTORY\\Localizations").listFiles()?.forEach {
-                localeFilesArray.add(it.name.replace(".locale", ""))
-                items++
-            }
-
-            if (items > 0) {
-                localeFileSelectBox.items = localeFilesArray
-                localeFileSelectBox.selected = curSettings["CURRENT_LOCALE"]
-            } else {
-                localeFileSelectBox.clearItems()
-            }
-        }
     }
 }
 

@@ -181,7 +181,7 @@ Load-CFG_TOOLTIP = Load selected config
 Delete-CFG_TOOLTIP = Delete selected config
 Load-Locale_TOOLTIP = Load selected localization
 MENU_KEY_TOOLTIP = Key to open menu
-Save-Current-Config-To-Default-Settings_TOOLTIP = Save current config to default
+SAVE_TO_DEFAULT_TOOLTIP = Save current config to default
 ENABLE_NADE_HELPER_TOOLTIP = Whether or not enable nade helper
 Create-Grenade-Position_TOOLTIP = Create nade at current position
 Save-As-File_TOOLTIP = Save current nades to file
@@ -573,7 +573,9 @@ Visuals = Visuals
 RCS = RCS
 Ranks = Ranks
 Nade-Helper = Nade Helper
-Skin-Changer = Skin Changer
+Skin-Changer = Skins
+Configs = Configs
+Locale = Locale
 Options = Options
 Glow = Glow
 Chams = Chams
@@ -615,7 +617,7 @@ Save-CFG-As = Save As
 Save-CFG = Save CFG
 Load-CFG = Load CFG
 Delete-CFG = Delete CFG
-Save-Current-Config-To-Default-Settings = Save Current Config To Default Settings
+SAVE_TO_DEFAULT = Save Current Config To Default Settings
 
 //aim tab
 Enable-Perfect-Aim = Enable Perfect Aim
@@ -660,7 +662,7 @@ SAME = SAME
 OPPOSITE = OPPOSITE
 
 //save config
-Enter-config-name = Enter config name
+INPUT_CONFIG_NAME = Enter config name
 
 //new shit
 LEGIT_RADAR = Legit Radar
@@ -757,3 +759,7 @@ RANKS_TAB_DISPLAY_KD = K/D
 RANKS_TAB_DISPLAY_WINS = Wins
 RANKS_TAB_DISPLAY_MONEY = Money
 OVERLOAD_KEYBINDS = Restrict overloading keybinds
+
+Save = Save
+Load = Load
+Delete = Delete
