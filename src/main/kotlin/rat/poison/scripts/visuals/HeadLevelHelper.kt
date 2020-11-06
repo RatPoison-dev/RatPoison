@@ -28,7 +28,7 @@ fun headLevelHelper() = App {
     if (me.onGround() && curSettings["HEAD_LVL_ENABLE"].strToBool()) {
         val oldMatrix = Matrix4(shapeRenderer.projectionMatrix.values)
 
-        val deadZone = curSettings["HEAD_LVL_DEADZONE"].toInt()
+        val deadZone = curSettings["HEAD_LVL_DEADZONE"].toFloat()
 
         shapeRenderer.apply {
             val gameMatrix = w2sViewMatrix.toMatrix4()
