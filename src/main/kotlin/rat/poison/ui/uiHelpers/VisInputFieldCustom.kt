@@ -44,10 +44,9 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
     fun update(neglect: Actor? = null) {
         if (neglect != this) {
             if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
-                if (dbg) {
-                    if (curLocale[variableName].isBlank()) {
-                        println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
-                    }
+                if (curLocale[variableName].isBlank()) {
+                    if (dbg) println("${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
+                    keyLabel.setText("$textLabel:")
                 }
                 keyLabel.setText("${curLocale[variableName]}:")
             }

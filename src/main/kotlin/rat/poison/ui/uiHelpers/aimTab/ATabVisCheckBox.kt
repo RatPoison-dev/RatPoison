@@ -40,14 +40,17 @@ class ATabVisCheckBox(text: String, varExtension: String) : VisCheckBox(text) {
         if (tmp.isNotEmpty()) {
             isChecked = tmp.strToBool()
         } else {
-            println("[Error] $categorySelected$variableExtension is empty")
+            println("[Error] $categorySelected $variableExtension is empty")
         }
 
         if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
-            if (dbg && curLocale[variableExtension].isBlank()) {
-                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableExtension is missing!")
+            if (curLocale[variableExtension].isBlank()) {
+                if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableExtension is missing!")
+                setText(mainText)
             }
-            setText(curLocale[variableExtension])
+            else {
+                setText(curLocale[variableExtension])
+            }
         }
     }
 

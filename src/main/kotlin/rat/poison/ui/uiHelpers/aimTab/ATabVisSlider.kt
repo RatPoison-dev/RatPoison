@@ -60,10 +60,13 @@ class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMa
         }
 
         if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
-            if (dbg && curLocale[variableExtension].isBlank()) {
-                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableExtension is missing!")
+            if (curLocale[variableExtension].isBlank()) {
+                if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableExtension is missing!")
+                sliderLabel.setText("$labelText: ${curSettings[categorySelected + variableExtension]}")
             }
-            sliderLabel.setText("${curLocale[variableExtension]}: ${curSettings[categorySelected + variableExtension]}")
+            else {
+                sliderLabel.setText("${curLocale[variableExtension]}: ${curSettings[categorySelected + variableExtension]}")
+            }
         }
     }
 

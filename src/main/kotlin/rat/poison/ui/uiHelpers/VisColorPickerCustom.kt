@@ -52,8 +52,8 @@ class VisColorPickerCustom(mainText: String, varName: String) : VisTable() {
         pickerImage.setColor(col.red/255F, col.green/255F, col.blue/255F, 1F)
 
         if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
-            if (dbg && curLocale[variableName].isBlank()) {
-                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
+            if (curLocale[variableName].isBlank()) {
+                if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
                 pickerButton.setText(labelText)
                 colorPicker.titleLabel.setText(labelText)
             }

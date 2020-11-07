@@ -1,19 +1,18 @@
 package rat.poison.ui.tabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.kotcrab.vis.ui.widget.LinkLabel
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
 import rat.poison.scripts.playerList
 import rat.poison.toLocale
-import rat.poison.ui.uiHelpers.ranksTab.RanksLinkLabelCustom
 import rat.poison.ui.uiRefreshing
 import rat.poison.utils.RanksPlayer
 import rat.poison.utils.generalUtil.strToBool
 
-var enableEspPlayerList = mutableListOf(0)
-private var linksLabelMap = mutableMapOf<Int, RanksLinkLabelCustom>()
+var enableEspPlayerList = mutableListOf<Int>()
 
 class RanksTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -59,7 +58,7 @@ class RanksTab : Tab(false, false) {
     fun rebuildTable() {
         if (uiRefreshing) return
         uiRefreshing = true
-        ranksListTable.reset()
+        ranksListTable.clear()
         if (curSettings["RANKS_TAB_DISPLAY_TEAM"].strToBool())   { ranksListTable.add(teamsLabel) }
 
         if (curSettings["RANKS_TAB_DISPLAY_NAME"].strToBool())   { namesTable.add(namesLabel).row() }
@@ -84,7 +83,7 @@ class RanksTab : Tab(false, false) {
         if (curSettings["RANKS_TAB_DISPLAY_WINS"].strToBool())   { winsLabel.setText("Wins".toLocale() + "  \n") }
         if (curSettings["RANKS_TAB_DISPLAY_MONEY"].strToBool())  { moneyLabel.setText("Money".toLocale() + "  \n") }
 
-        namesTable.reset()
+        namesTable.clear()
         namesTable.add(namesLabel).left().row()
         playerList.forEach { player ->
             when (player.team) {
@@ -96,17 +95,12 @@ class RanksTab : Tab(false, false) {
     private fun constructRank(player: RanksPlayer) {
         if (uiRefreshing) return
         var tmpName = player.name
-        if (curSettings["RANKS_TAB_ENABLE_LIMIT"].strToBool() && tmpName.length >= curSettings["RANKS_TAB_CHAR_LIMIT"].toInt()) {
-            tmpName = tmpName.substring(0, curSettings["RANKS_TAB_CHAR_LIMIT"].toInt())
-        }
+        tmpName = sliceName(tmpName)
         val steamID = player.steamID.toInt()
         if (curSettings["RANKS_TAB_DISPLAY_NAME"].strToBool()) {
             if (steamID != 0) { //Bot check
-                val linkLabel = linksLabelMap.getOrElse(steamID, {
-                    val label = RanksLinkLabelCustom(tmpName, steamID)
-                    linksLabelMap[steamID] = label
-                    return@getOrElse label
-                })
+                //map is not needed since we are calling clear()
+                val linkLabel = LinkLabel(tmpName, steamID)
                 linkLabel.setText(tmpName)
                 namesTable.add(linkLabel).height(21f).left().row()
             } else {
@@ -121,4 +115,11 @@ class RanksTab : Tab(false, false) {
         if (curSettings["RANKS_TAB_DISPLAY_WINS"].strToBool())   { winsLabel.setText(winsLabel.text.toString() + player.wins + "  \n") }
         if (curSettings["RANKS_TAB_DISPLAY_MONEY"].strToBool())  { moneyLabel.setText(moneyLabel.text.toString() + player.money + "  \n") }
     }
+}
+
+fun sliceName(tmpName: String): String {
+    if (curSettings["RANKS_TAB_ENABLE_LIMIT"].strToBool() && tmpName.length >= curSettings["RANKS_TAB_CHAR_LIMIT"].toInt()) {
+        return tmpName.substring(0, curSettings["RANKS_TAB_CHAR_LIMIT"].toInt())
+    }
+    return tmpName
 }

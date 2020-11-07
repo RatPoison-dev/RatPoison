@@ -86,6 +86,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                 if (tab == null) return
 
                 mainTabbedPaneContent.clear()
+                if (tab != ranksTab) { curSettings["RANKS"] = false }
 
                 when (tab) { //Update table content to tab selected content
                     aimTab -> {
@@ -129,6 +130,8 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         changeWidth()
                         changeHeight()
                         mainTabbedPaneContent.add(ranksTab.contentTable).growX()
+                        curSettings["RANKS"] = true
+
                     }
                     nadeHelperTab -> {
                         wantedHeight = normHeight
