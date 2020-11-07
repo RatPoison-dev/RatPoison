@@ -95,10 +95,18 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 
 1.8 Full Update
 * New
-    * Player ESP
-    * Standalone RCS now works with regular aim
+    * Added Player ESP
+    * Added music kit changer
+    * Added pelvis to bone list
+    * Added RCS after # shots
 * Fixes
     * Reworked current binds system
+    * Fixed Hold Aim not updating in menu
+    * Fixed snaplines not drawing to the bomb
+* Miscellaneous
+    * Changed default menu key to insert
+    * Reworked options tab, moved configs to a separate tab
+    * Default config now has everything disabled
 
 
 ## Available Features <a name = "features"></a>
@@ -118,6 +126,7 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
     * RCS for all weapons, customizable X & Y accuracy
 	* Types: Legacy and Stable
     * Customizable recoil crosshair, type/width/length/positioning/color
+    * Apply RCS after # shots fired
 
 * Visuals
     * Radar
@@ -142,6 +151,7 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
     * Skin Changer
 	* Spread Circle
 	* Head Level Helper
+    * Player ESP
 
 * Bone Trigger
     * FOV, InCross
@@ -172,4 +182,5 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 	* Kill bind
 	* Disable Post Processing
 	* Temporary name change
+	* Music kit changer
 
