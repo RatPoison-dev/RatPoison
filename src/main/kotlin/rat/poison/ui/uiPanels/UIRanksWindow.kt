@@ -1,23 +1,21 @@
 package rat.poison.ui.uiPanels
 
 import com.badlogic.gdx.utils.Align
-import com.kotcrab.vis.ui.widget.VisLabel
-import com.kotcrab.vis.ui.widget.VisSlider
-import com.kotcrab.vis.ui.widget.VisTable
-import com.kotcrab.vis.ui.widget.VisWindow
+import com.kotcrab.vis.ui.widget.*
 import rat.poison.curSettings
+import rat.poison.scripts.playerList
 import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.enableEspPlayerList
+import rat.poison.ui.tabs.sliceName
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import kotlin.math.round
 
 class UIRanksWindow : VisWindow("Ranks".toLocale()) {
-    private var playerName = VisLabel("")
+    private var playersTable = VisTable()
     private var mainTable = VisTable()
     private var steamID = 0
-    private var canReset = true
     private var enableCharLimit = VisCheckBoxCustom("Char Limit", "RANKS_TAB_ENABLE_LIMIT")
     private var charLimit = VisSliderCustom("Limit", "RANKS_TAB_CHAR_LIMIT", 1F, 32F, 1F, true, 2, sliderWidth = 200F, labelWidth = 100F)
     private var enablePlayerEsp = VisCheckBoxCustom("Player ESP", "PLAYER_ESP")
@@ -39,13 +37,11 @@ class UIRanksWindow : VisWindow("Ranks".toLocale()) {
         buildTable()
         menuAlphaSlider.value = 1F
         enablePlayerEsp.changed {_, _ ->
-            if (canReset) {
-                if (enablePlayerEsp.isChecked) {
-                    enableEspPlayerList.add(steamID)
-                }
-                else {
-                    enableEspPlayerList.remove(steamID)
-                }
+            if (enablePlayerEsp.isChecked) {
+                enableEspPlayerList.add(steamID)
+            }
+            else {
+                enableEspPlayerList.remove(steamID)
             }
             return@changed true
         }
@@ -99,11 +95,12 @@ class UIRanksWindow : VisWindow("Ranks".toLocale()) {
 
 
         mainTable.add(menuAlphaSlider).width(300F)
+        add(playersTable)
         add(mainTable).top().left()
 
         pack()
 
-        setSize(325F, 400F)
+        setSize(400F, 500F)
         setPosition(curSettings["RANKS_X"].toFloat(), curSettings["RANKS_Y"].toFloat())
         color.a = curSettings["RANKS_ALPHA"].toFloat()
         isResizable = false
@@ -121,27 +118,31 @@ class UIRanksWindow : VisWindow("Ranks".toLocale()) {
         mainTable.add(displayKD).left().row()
         mainTable.add(displayWins).left().row()
         mainTable.add(displayMoney).left().row()
-
-
     }
+
+    fun buildCheckboxes() {
+        playersTable.clear()
+        playerList.forEach {
+            val name = sliceName(it.name)
+            val label = VisLabel(name)
+            val checkBox = VisCheckBox("")
+            checkBox.isChecked = it.steamID.toInt() in enableEspPlayerList
+            checkBox.changed {_, _ ->
+                when (checkBox.isChecked) {
+                    true -> enableEspPlayerList.add(it.steamID.toInt())
+                    false -> enableEspPlayerList.remove(it.steamID.toInt())
+                }
+                true
+            }
+            playersTable.add(checkBox).left()
+            playersTable.add(label).width(100F).row()
+
+        }
+        pack()
+    }
+
     fun changeAlpha(alpha: Float) {
         color.a = alpha
-    }
-    fun bindToUser(name: String, steamID: Int) {
-        reset()
-        mainTable.reset()
-        buildTable()
-        mainTable.addSeparator().width(325F).row()
-        playerName.setText(name)
-        mainTable.add(playerName).left().row()
-        mainTable.add(enablePlayerEsp).left().row()
-        this.steamID = steamID
-        canReset = false
-        enablePlayerEsp.isChecked = steamID in enableEspPlayerList
-        canReset = true
-        mainTable.add(menuAlphaSlider).width(300F)
-
-        add(mainTable).left()
     }
     fun update() {
         enableCharLimit.update()

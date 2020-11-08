@@ -55,8 +55,8 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
         }
 
         if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
-            if (dbg && curLocale[variableName].isBlank()) {
-                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
+            if (curLocale[variableName].isBlank()) {
+                if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
                 sliderLabel.setText("$labelText: $sliderVal")
             }
             else {
