@@ -30,6 +30,7 @@ class MovementTab: Tab(false, false) {
         table.add(bunnyHopKey).left().padLeft(14F).row()
         table.add(autoStrafe).left().padLeft(14F).row()
         table.add(autoStrafeBHopOnly).left().padLeft(14F).row()
+        table.addSeparator().row()
         table.add(fastStop).left().row()
         table.add(headWalk).left().row()
         table.add(knifeBot).left().row()

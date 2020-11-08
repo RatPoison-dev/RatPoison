@@ -4,22 +4,16 @@ package rat.poison.ui.tabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
-import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.util.dialog.Dialogs
-import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.*
-import rat.poison.game.entity.absPosition
-import rat.poison.game.me
+import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.curSettings
 import rat.poison.overlay.App.menuStage
-import rat.poison.scripts.*
+import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.refreshMenu
-import rat.poison.ui.uiPanels.configsTab
-import rat.poison.ui.uiPanels.nadeHelperTab
-import rat.poison.ui.uiRefreshing
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.deleteCFG
 import rat.poison.utils.generalUtil.loadLocale

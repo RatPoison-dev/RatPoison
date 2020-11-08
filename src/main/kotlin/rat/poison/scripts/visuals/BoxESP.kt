@@ -19,7 +19,7 @@ import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
 import rat.poison.toLocale
-import rat.poison.ui.tabs.enableEspPlayerList
+import rat.poison.ui.tabs.rankstabs.enableEspPlayerList
 import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool

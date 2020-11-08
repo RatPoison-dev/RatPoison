@@ -11,7 +11,7 @@ import rat.poison.game.me
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.ui.tabs.enableEspPlayerList
+import rat.poison.ui.tabs.rankstabs.enableEspPlayerList
 import rat.poison.utils.Vector
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool

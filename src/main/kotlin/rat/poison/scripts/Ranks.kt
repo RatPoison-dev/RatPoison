@@ -4,9 +4,8 @@ import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.rankName
 import rat.poison.overlay.App.haveTarget
-import rat.poison.overlay.App.uiRanksWindow
 import rat.poison.overlay.opened
-import rat.poison.ui.uiPanels.ranksTab
+import rat.poison.ui.tabs.mainRanksTab
 import rat.poison.ui.uiRefreshing
 import rat.poison.utils.RanksPlayer
 import rat.poison.utils.every
@@ -51,7 +50,6 @@ fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every 5seconds
         uiRefreshing = false
     }
     if (!uiRefreshing) {
-        ranksTab.updateRanks()
-        uiRanksWindow.buildCheckboxes()
+        mainRanksTab.updateRanks()
     }
 }

@@ -2,21 +2,16 @@ package rat.poison.ui.tabs.misctabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
-import com.kotcrab.vis.ui.widget.VisSelectBox
-import com.kotcrab.vis.ui.widget.VisTable
-import com.kotcrab.vis.ui.widget.VisTextButton
-import com.kotcrab.vis.ui.widget.VisValidatableTextField
+import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.SETTINGS_DIRECTORY
-import rat.poison.curSettings
+import rat.poison.*
 import rat.poison.scripts.changeName
 import rat.poison.scripts.selfNade
-import rat.poison.scripts.visuals.disablePostProcessing
 import rat.poison.scripts.visuals.updateHitsound
 import rat.poison.scripts.visuals.updateKillSound
 import rat.poison.scripts.writeSpoof
-import rat.poison.toLocale
 import rat.poison.ui.changed
+import rat.poison.ui.tabs.ListAdapter
 import rat.poison.ui.tabs.othersTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
@@ -47,8 +42,18 @@ class OthersTab: Tab(false, false) {
     val postProcessingDisable = VisCheckBoxCustom("DISABLE_POST_PROCESSING".toLocale(), "DISABLE_POST_PROCESSING")
     val spectatorList = VisCheckBoxCustom("Spectator List", "SPECTATOR_LIST")
     val enableMusicKitSpoofer = VisCheckBoxCustom("Music Kit Spoofer", "MUSIC_KIT_SPOOFER")
-    val musicKitId = VisInputFieldCustom("ID", "MUSIC_KIT_ID", true, 225F, "https://community.hashcsgo.com/threads/music-kit-ids.7/")
+    // me when the suggestions
+    private var musicKitsAdapter = ListAdapter(ArrayList())
+    private var musicKitsSelection = ListView(musicKitsAdapter)
+    val musicKitArray = getMusicKitsArray()
     init {
+        musicKitsSelection.updatePolicy = ListView.UpdatePolicy.ON_DRAW
+
+        musicKitArray.forEach {
+            musicKitsAdapter.add(it.name)
+        }
+        val selected = musicKitArray.first { it.id == curSettings["MUSIC_KIT_ID"].toInt() }.name
+        val currentlySelected = VisLabel("${"CURRENTLY".toLocale()}: $selected")
         //Crashing on adding separators with .colspan(2) (?)
         table.padLeft(25F)
         table.padRight(25F)
@@ -86,8 +91,10 @@ class OthersTab: Tab(false, false) {
         table.add(nameChange).left().padTop(2F).row()
         table.addSeparator().row()
         table.add(spectatorList).left().row()
+        table.addSeparator().row()
         table.add(enableMusicKitSpoofer).left().row()
-        table.add(musicKitId).left().row()
+        table.add(currentlySelected).left().row()
+        table.add(musicKitsSelection.mainTable).left().height(150F).row()
 
         selfNade.changed { _, _ ->
             selfNade()
@@ -97,9 +104,14 @@ class OthersTab: Tab(false, false) {
             changeName(nameChangeInput.text)
         }
 
-        musicKitId.changed {_, _ ->
-            if (curSettings["MUSIC_KIT_SPOOFER"].strToBool()) {
-                writeSpoof()
+        musicKitsAdapter.setItemClickListener { str ->
+            if (!str.isNullOrEmpty()) {
+                val id = getMusicKitId(str)
+                curSettings["MUSIC_KIT_ID"] = id
+                if (curSettings["MUSIC_KIT_SPOOFER"].strToBool()) {
+                    writeSpoof()
+                }
+                currentlySelected.setText("${"CURRENTLY".toLocale()}: $str")
             }
         }
 
@@ -175,6 +187,33 @@ fun othersTabUpdate() {
         postProcessingDisable.update()
         spectatorList.update()
         enableMusicKitSpoofer.update()
-        musicKitId.update()
     }
+}
+
+fun getMusicKitsArray(): Array<MusicKit> {
+    val musicKitsArray = Array<MusicKit>()
+    var strList: List<String>
+
+    MUSIC_KITS_FILE.forEachLine { line->
+        val musicKit = MusicKit()
+        strList = line.split(" : ")
+        try {
+            musicKit.id = strList[0].toInt()
+            musicKit.name = strList[1]
+        } catch (e: Exception) {
+            println("$strList is FUCKING WRONG BROOOOOOOOO FUCK")
+        }
+        finally {
+            musicKitsArray.add(musicKit)
+        }
+    }
+
+    return musicKitsArray
+}
+
+fun getMusicKitId(name: String): Int {
+    othersTab.musicKitArray.forEach {
+        if (it.name == name) return it.id
+    }
+    return 1
 }
