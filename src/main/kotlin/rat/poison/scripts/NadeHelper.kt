@@ -18,6 +18,7 @@ import rat.poison.game.w2sViewMatrix
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.overlay.App.menuStage
+import rat.poison.overlay.opened
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.HEAD_BONE
@@ -40,6 +41,8 @@ private var headPos = listOf(0.0, 0.0, 0.0)
 private var headLookPos = listOf(0.0, 0.0, 0.0)
 private var LoL: List<List<Any>> = listOf(emptyList(), emptyList(), emptyList())
 private var mPos = Vector()
+
+var nadeHelperLoadedFileStr = "N/A"
 
 var nadeHelperArrayList = arrayListOf<List<List<Any>>>()
 
@@ -221,13 +224,14 @@ fun loadPositions(file: String) {
                 LoL = listOf(feetSpot, headPos, headLookPos)
                 nadeHelperArrayList.add(LoL)
 
-                if (curSettings["MENU"].strToBool()) {
+                if (opened) {
                     nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: $file")
                 }
+                nadeHelperLoadedFileStr = file
 
             } else {
                 println("[Error] $file is empty, not loading")
-                if (curSettings["MENU"].strToBool()) {
+                if (opened) {
                     nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: N/A")
                 }
             }
@@ -281,7 +285,7 @@ fun detectMap(mapName: String) {
         val name = it.name
         if (newMapName == name.replace(".txt", "")) {
             loadPositions(name)
-            return@forEach
+            return
         }
     }
 }

@@ -131,5 +131,6 @@ fun nadeHelperTabUpdate() {
         enableNadeThrower.update()
         nadeThrowerKey.update()
         nadeThrowerSmooth.update()
+        nadeHelperLoadedFile.setText("Loaded: $nadeHelperLoadedFileStr")
     }
 }

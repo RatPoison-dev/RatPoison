@@ -94,7 +94,7 @@ class OthersTab: Tab(false, false) {
         table.addSeparator().row()
         table.add(enableMusicKitSpoofer).left().row()
         table.add(currentlySelected).left().row()
-        table.add(musicKitsSelection.mainTable).left().height(150F).row()
+        table.add(musicKitsSelection.mainTable).left().height(120F).row()
 
         selfNade.changed { _, _ ->
             selfNade()
