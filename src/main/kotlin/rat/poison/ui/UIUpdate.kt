@@ -4,14 +4,12 @@ import rat.poison.overlay.App.uiAimOverridenWeapons
 import rat.poison.overlay.App.uiBombWindow
 import rat.poison.overlay.App.uiKeybinds
 import rat.poison.overlay.App.uiMenu
-import rat.poison.overlay.App.uiRanksWindow
 import rat.poison.overlay.App.uiSpecList
 import rat.poison.overlay.opened
 import rat.poison.ui.tabs.*
-import rat.poison.ui.tabs.misctabs.bombTabUpdate
-import rat.poison.ui.tabs.misctabs.fovChangerTabUpdate
-import rat.poison.ui.tabs.misctabs.movementTabUpdate
-import rat.poison.ui.tabs.misctabs.othersTabUpdate
+import rat.poison.ui.tabs.misctabs.*
+import rat.poison.ui.tabs.rankstabs.MainRanksTab
+import rat.poison.ui.tabs.rankstabs.OptionsRanksTab
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiPanelTables.OverridenWeapons
 import rat.poison.ui.uiPanelTables.overridenWeaponsUpdate
@@ -47,7 +45,7 @@ fun uiUpdate() {
     fovChangerTabUpdate()
     bombTabUpdate()
     othersTabUpdate()
-    uiRanksWindow.update()
+
 
     //Update windows
     uiAimOverridenWeapons.setPosition(uiMenu.x+uiMenu.width+4F, uiMenu.y)
@@ -85,6 +83,7 @@ fun refreshMenu() {
 
     miscTabbedPane.removeAll()
     espTabbedPane.removeAll()
+    ranksTabbedPane.removeAll()
 
     glowEspTab = GlowEspTab()
     chamsEspTab = ChamsEspTab()
@@ -106,18 +105,26 @@ fun refreshMenu() {
     espTabbedPane.add(nadesTab)
     espTabbedPane.add(miscVisualsTab)
 
+    movementTab = MovementTab()
+    fovChangerTab = FOVChangerTab()
+    bombTab = BombTab()
+    othersTab = OthersTab()
+
     miscTabbedPane.add(movementTab)
     miscTabbedPane.add(fovChangerTab)
     miscTabbedPane.add(bombTab)
     miscTabbedPane.add(othersTab)
 
+    mainRanksTab = MainRanksTab()
+    optionsRanksTab = OptionsRanksTab()
+
+    ranksTabbedPane.add(mainRanksTab)
+    ranksTabbedPane.add(optionsRanksTab)
+
     uiAimOverridenWeapons.removeActor(overridenWeapons)
     uiAimOverridenWeapons.remove()
     overridenWeapons = OverridenWeapons()
     uiAimOverridenWeapons = UIAimOverridenWeapons()
-
-    uiRanksWindow.remove()
-    uiRanksWindow = UIRanksWindow()
 
     uiSpecList.remove()
     uiSpecList = UISpectatorList()

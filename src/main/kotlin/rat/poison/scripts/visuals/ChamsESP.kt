@@ -17,7 +17,7 @@ import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.aim.target
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.ui.tabs.enableEspPlayerList
+import rat.poison.ui.tabs.rankstabs.enableEspPlayerList
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool

@@ -9,7 +9,7 @@ import rat.poison.game.me
 import rat.poison.game.w2sViewMatrix
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
-import rat.poison.ui.tabs.enableEspPlayerList
+import rat.poison.ui.tabs.rankstabs.enableEspPlayerList
 import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.cToFloat

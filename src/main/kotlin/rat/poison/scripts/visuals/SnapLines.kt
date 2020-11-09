@@ -7,7 +7,7 @@ import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.ui.tabs.enableEspPlayerList
+import rat.poison.ui.tabs.rankstabs.enableEspPlayerList
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor

@@ -42,6 +42,8 @@ data class oWeapon(var enableOverride: Boolean = false, var factorRecoil: Boolea
 //Skinned Weapon
 data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var tSeed: Int)
 
+data class MusicKit(var id: Int = 0, var name: String = "")
+
 const val TITLE = "RatPoison"
 const val BRANCH = "Beta"
 const val F_VERSION = "1.8"
@@ -53,6 +55,7 @@ var LOADED_CONFIG = "DefaultSettings"
 const val SETTINGS_DIRECTORY = "settings" //Internal
 
 lateinit var WEAPON_STATS_FILE: File
+lateinit var MUSIC_KITS_FILE: File
 lateinit var SKIN_INFO_FILE: File
 
 var settingsLoaded = false
@@ -79,6 +82,7 @@ fun main() {
 
     WEAPON_STATS_FILE = File("$SETTINGS_DIRECTORY\\Data\\WeaponStats.txt")
     SKIN_INFO_FILE = File("$SETTINGS_DIRECTORY\\Data\\SkinInfo.txt")
+    MUSIC_KITS_FILE = File("$SETTINGS_DIRECTORY\\Data\\MusicKits.txt")
 
     loadMigration()
 
