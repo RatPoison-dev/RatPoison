@@ -7,6 +7,7 @@ import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
+import rat.poison.toLocale
 import rat.poison.ui.tabs.rankstabs.MainRanksTab
 import rat.poison.ui.tabs.rankstabs.OptionsRanksTab
 
@@ -53,7 +54,7 @@ class RanksTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String {
-        return "Piss"
+        return "Ranks".toLocale()
     }
 
     override fun getContentTable(): Table {

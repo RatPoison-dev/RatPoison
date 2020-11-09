@@ -13,6 +13,7 @@ class RanksVisCheckBoxCustom(steamID: Int) : VisCheckBox("") {
                 true -> enableEspPlayerList.add(steamID)
                 false -> enableEspPlayerList.remove(steamID)
             }
+            true
         }
     }
 }

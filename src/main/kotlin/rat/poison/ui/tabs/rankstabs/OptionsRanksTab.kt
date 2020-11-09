@@ -3,6 +3,7 @@ package rat.poison.ui.tabs.rankstabs
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.mainRanksTab
 import rat.poison.ui.tabs.optionsRanksTab
@@ -78,7 +79,7 @@ class OptionsRanksTab : Tab(false, false) {
         }
     }
     override fun getTabTitle(): String {
-        return "Options"
+        return "Options".toLocale()
     }
 
     override fun getContentTable(): Table {
