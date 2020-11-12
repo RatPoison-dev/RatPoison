@@ -1,10 +1,6 @@
 package rat.poison.settings
 
 import com.sun.jna.platform.win32.WinNT
-import rat.poison.game.CSGO.clientDLL
-import rat.poison.game.offsets.ClientOffsets.dwSensitivity
-import rat.poison.game.offsets.ClientOffsets.dwSensitivityPtr
-import rat.poison.utils.extensions.uint
 
 var GAME_PITCH = 0.022 // m_pitch
 var GAME_YAW = 0.022 // m_yaw

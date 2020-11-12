@@ -44,7 +44,6 @@ import rat.poison.utils.Vector
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.readCached
 import rat.poison.utils.to
-import java.lang.Exception
 
 typealias Player = Long
 

@@ -12,8 +12,6 @@ import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.gunCategories
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
-import rat.poison.ui.uiHelpers.VisInputFieldCustom
-import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
 import rat.poison.ui.uiHelpers.binds.VisBindTableCustom

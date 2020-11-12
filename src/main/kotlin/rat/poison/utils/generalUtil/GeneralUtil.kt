@@ -42,7 +42,7 @@ fun convStrToColorGDX(input: String): Color {
 
     val arrayLine = line.trim().split(" ".toRegex(), 4)
 
-    return if (arrayLine.size > 4) Color(arrayLine[0].replace("red=", "").toFloat()/255F,
+    return if (arrayLine.size >= 4) Color(arrayLine[0].replace("red=", "").toFloat()/255F,
             arrayLine[1].replace("green=", "").toFloat()/255F,
             arrayLine[2].replace("blue=", "").toFloat()/255F,
             arrayLine[3].replace("alpha=", "").toFloat()) else Color(255F, 255F, 255F, 1F)

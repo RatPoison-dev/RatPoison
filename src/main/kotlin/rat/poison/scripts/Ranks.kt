@@ -10,7 +10,6 @@ import rat.poison.ui.uiRefreshing
 import rat.poison.utils.RanksPlayer
 import rat.poison.utils.every
 import rat.poison.utils.extensions.roundNDecimals
-import java.util.concurrent.ConcurrentLinkedQueue
 
 var ranksPlayerList = mutableListOf<RanksPlayer>()
 

@@ -9,7 +9,6 @@ import rat.poison.overlay.App.uiKeybinds
 import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.othersTab
-import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
 import kotlin.math.round
 

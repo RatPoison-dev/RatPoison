@@ -23,7 +23,6 @@ import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.inGame
 import kotlin.math.abs
 import kotlin.math.atan
 import kotlin.math.tan

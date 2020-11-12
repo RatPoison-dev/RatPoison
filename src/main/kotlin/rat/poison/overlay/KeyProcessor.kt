@@ -1,7 +1,6 @@
 package rat.poison.overlay
 
 import com.badlogic.gdx.InputProcessor
-import rat.poison.utils.generalUtil.strToColorGDX
 
 //rewrite to events
 class KeyProcessor: InputProcessor {
