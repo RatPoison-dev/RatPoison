@@ -11,20 +11,19 @@ import rat.poison.*
 import rat.poison.game.CSGO
 import rat.poison.overlay.App.uiAimOverridenWeapons
 import rat.poison.overlay.opened
-import rat.poison.scripts.sendPacket
 import rat.poison.scripts.visuals.disableAllEsp
+import rat.poison.scripts.sendPacket
 import rat.poison.ui.tabs.*
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.randInt
 import kotlin.math.sign
 import kotlin.system.exitProcess
 
-//TODO move to func
 val mainTabbedPane = TabbedPane()
     var aimTab = AimTab()
     var visualsTab = VisualsTab()
     var rcsTab = RcsTab()
-    var miscTabs = MiscTabs()
+    var miscTab = MiscTabs()
     var ranksTab = RanksTab()
     var nadeHelperTab = NadeHelperTab()
     var skinChangerTab = SkinChangerTab()
@@ -68,7 +67,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         mainTabbedPane.add(aimTab)
         mainTabbedPane.add(visualsTab)
         mainTabbedPane.add(rcsTab)
-        mainTabbedPane.add(miscTabs)
+        mainTabbedPane.add(miscTab)
         mainTabbedPane.add(ranksTab)
         mainTabbedPane.add(nadeHelperTab)
         mainTabbedPane.add(skinChangerTab)
@@ -86,7 +85,6 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                 if (tab == null) return
 
                 mainTabbedPaneContent.clear()
-                if (tab != ranksTab) { curSettings["RANKS"] = false }
 
                 when (tab) { //Update table content to tab selected content
                     aimTab -> {
@@ -110,13 +108,6 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         changeHeight()
                         mainTabbedPaneContent.add(rcsTab.contentTable).growX()
                     }
-                    miscTabs -> {
-                        wantedHeight = normHeight
-                        wantedWidth = normWidth
-                        changeWidth()
-                        changeHeight()
-                        mainTabbedPaneContent.add(miscTabs.contentTable).growX()
-                    }
                     visualsTab -> {
                         wantedHeight = normHeight
                         wantedWidth = normWidth
@@ -124,14 +115,19 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         changeHeight()
                         mainTabbedPaneContent.add(visualsTab.contentTable).growX()
                     }
+                    miscTab -> {
+                        wantedHeight = normHeight
+                        wantedWidth = normWidth
+                        changeWidth()
+                        changeHeight()
+                        mainTabbedPaneContent.add(miscTab.contentTable).growX()
+                    }
                     ranksTab -> {
                         wantedHeight = normHeight
                         wantedWidth = normWidth
                         changeWidth()
                         changeHeight()
                         mainTabbedPaneContent.add(ranksTab.contentTable).growX()
-                        curSettings["RANKS"] = true
-
                     }
                     nadeHelperTab -> {
                         wantedHeight = normHeight
@@ -139,6 +135,13 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         changeWidth()
                         changeHeight()
                         mainTabbedPaneContent.add(nadeHelperTab.contentTable).growX()
+                    }
+                    configsTab -> {
+                        wantedHeight = normHeight
+                        wantedWidth = normWidth
+                        changeWidth()
+                        changeHeight()
+                        mainTabbedPaneContent.add(configsTab.contentTable).growX()
                     }
                     skinChangerTab -> {
                         wantedHeight = if (CSGO.gameHeight < 1000F) {
@@ -150,13 +153,6 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         changeWidth()
                         changeHeight()
                         mainTabbedPaneContent.add(skinChangerTab.contentTable).growX()
-                    }
-                    configsTab -> {
-                        wantedHeight = normHeight
-                        wantedWidth = normWidth
-                        changeWidth()
-                        changeHeight()
-                        mainTabbedPaneContent.add(configsTab.contentTable).growX()
                     }
                 }
             }

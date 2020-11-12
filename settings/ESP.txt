@@ -1,6 +1,5 @@
 //Global enable esp
 ENABLE_ESP = false
-ENABLE_PLAYER_ESP = false
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles visibility of esp on/off
 //Default key is G

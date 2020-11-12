@@ -17,7 +17,6 @@ import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.aim.target
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.ui.tabs.rankstabs.enableEspPlayerList
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
@@ -40,12 +39,10 @@ fun chamsEsp() = every(100, true, inGameCheck = true) {
         val clientVModEnt = csgoEXE.uint(clientDLL.address + dwEntityList + (((csgoEXE.uint(csgoEXE.uint(clientDLL.address + dwLocalPlayer) + m_hViewModel)) and 0xFFF) - 1) * 16)
 
         //Set VMod
-        val clientMColor = when (curSettings["CHAMS_SHOW_SELF"].strToBool()) {
-            true -> when (curSettings["CHAMS_SHOW_HEALTH"].strToBool()) {
-                true -> Color((255 - 2.55 * clamp(me.health(), 0, 100)).toInt(), (2.55 * clamp(me.health(), 0, 100)).toInt(), 0, 1.0)
-                false -> curSettings["CHAMS_SELF_COLOR"].strToColor()
-            }
-            false -> Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0)
+        val clientMColor = if (curSettings["CHAMS_SHOW_SELF"].strToBool()) {
+             curSettings["CHAMS_SELF_COLOR"].strToColor()
+        } else {
+            Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0)
         }
 
         if (clientVModEnt > 0) {
@@ -82,7 +79,6 @@ fun chamsEsp() = every(100, true, inGameCheck = true) {
 
         val glowAddress = it.glowAddress
         if (glowAddress <= 0) return@forEntities
-        if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && (entity.getValidSteamID() !in enableEspPlayerList)) return@forEntities
 
         val entityTeam = entity.team()
         val onTeam = !DANGER_ZONE && myTeam == entityTeam

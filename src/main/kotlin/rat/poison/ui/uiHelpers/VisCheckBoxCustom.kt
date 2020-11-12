@@ -15,8 +15,8 @@ import rat.poison.utils.generalUtil.strToBool
 class VisCheckBoxCustom(mainText: String, varName: String, visibleText: Boolean = true) : VisCheckBox(mainText) {
     private val variableName = varName
     private val showText = visibleText
-    private var hasTooltip = false
     private val labelText = mainText
+    private var hasTooltip = false
 
     init {
         update()

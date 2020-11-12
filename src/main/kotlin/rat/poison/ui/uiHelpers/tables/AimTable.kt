@@ -2,20 +2,24 @@ package rat.poison.ui.uiHelpers.tables
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Array
+import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.widget.*
 import rat.poison.*
+import rat.poison.game.CSGO
+import rat.poison.overlay.App
+import rat.poison.settings.*
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.boneCategories
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.gunCategories
+import rat.poison.ui.tabs.updateDisableEsp
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSelectBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
-import rat.poison.ui.uiHelpers.binds.BindableTableCustom
-import rat.poison.ui.uiHelpers.binds.BindsButtonCustom
+import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
 import rat.poison.ui.uiPanelTables.weaponOverrideSelected
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiPanels.overridenWeapons
@@ -27,14 +31,15 @@ import rat.poison.utils.generalUtil.toWeaponClass
 class AimTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
     val enableAim = VisCheckBoxCustom("Enable Aim", "ENABLE_AIM")
-    val aimToggleKey = BindableTableCustom("Toggle Aim Key" ,"AIM_TOGGLE_KEY", spaceRight = 20F)
+    val aimToggleKey = VisBindTableCustom("Toggle Aim Key", "AIM_TOGGLE_KEY")
     val activateFromFireKey = VisCheckBoxCustom("Activate From Fire Key", "ACTIVATE_FROM_AIM_KEY")
     val holdAim = VisCheckBoxCustom("Hold Aim", "HOLD_AIM")
     val teammatesAreEnemies = VisCheckBoxCustom("Teammates Are Enemies", "TEAMMATES_ARE_ENEMIES")
 
     val fovType = VisSelectBoxCustom("Fov Type", "FOV_TYPE", false, true, "DISTANCE", "STATIC")
-    val forceAimBoneKey = BindableTableCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
-    val forceAimKey = BindableTableCustom("Force Aim Key", "FORCE_AIM_KEY")
+
+    val forceAimBoneKey = VisBindTableCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
+    val forceAimKey = VisBindTableCustom("Force Aim Key", "FORCE_AIM_KEY")
     val forceAimAlways = VisCheckBoxCustom("Force Aim Always", "FORCE_AIM_ALWAYS")
     val forceAimThroughWalls = VisCheckBoxCustom("Force Aim Through Walls", "FORCE_AIM_THROUGH_WALLS")
 
@@ -42,7 +47,7 @@ class AimTable: VisTable(false) {
     val automaticWeaponsCheckBox = VisCheckBoxCustom("Automatic Weapons", "AUTOMATIC_WEAPONS")
     val automaticWeaponsInput = VisInputFieldCustom("MS Delay", "AUTO_WEP_DELAY", false)
 
-    val targetSwapDelay = VisSliderCustom("Target Swap Delay", "AIM_TARGET_SWAP_DELAY", 0F, 500F, 10F, true, labelWidth = 200F, sliderWidth = 250F)
+    val targetSwapDelay = VisSliderCustom("Target Swap Delay", "AIM_TARGET_SWAP_DELAY", 0F, 500F, 10F, true, width1 = 200F, width2 = 250F)
 
     //Override Weapon Checkbox & Selection Box
     private val categorySelection = VisTable()
@@ -57,7 +62,7 @@ class AimTable: VisTable(false) {
     val enableScopedOnly = VisCheckBoxCustom("Scoped Only", "SNIPER_ENABLE_SCOPED_ONLY")
 
     val aimBone = VisSelectBoxCustom("Bone".toLocale(), "_AIM_BONE", useCategory = true, showText = true, items = *boneCategories)
-    val forceAimBone = VisSelectBoxCustom("Force-Bone".toLocale(), "_AIM_FORCE_BONE", useCategory = true, showText = true, items = *boneCategories)
+    val forceAimBone = VisSelectBoxCustom("Force-Bone".toLocale(), "_AIM_FORCE_BONE", useCategory = true, showText = true,items = *boneCategories)
 
     val aimFov = ATabVisSlider("Aim FOV", "_AIM_FOV", .5F, 90F, .5F, false)
     val aimSpeed = ATabVisSlider("Aim Speed", "_AIM_SPEED", 0F, 10F, 1F, true)
@@ -93,7 +98,7 @@ class AimTable: VisTable(false) {
             curSettings["ENABLE_OVERRIDE"] = weaponOverrideCheckBox.isChecked.toString()
 
             val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-            overridenWeapons.enableOverride = curWep.enableOverride
+            overridenWeapons.enableOverride = curWep.tOverride
 
             uiUpdate()
             true

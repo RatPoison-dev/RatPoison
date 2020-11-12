@@ -18,9 +18,9 @@ class HitMarkerTab : Tab(false, false) {
     val hitMarkerCombo = VisCheckBoxCustom("Combo #", "HITMARKER_COMBO")
     val hitMarkerRecoilPos = VisCheckBoxCustom("Recoil Position", "HITMARKER_RECOIL_POSITION")
 
-    val hitMarkerSpacing = VisSliderCustom("Spacing", "HITMARKER_SPACING", 0F, 20F,1F, true, labelWidth = 200F, sliderWidth = 250F)
-    val hitMarkerLength = VisSliderCustom("Line Length", "HITMARKER_LENGTH", 1F, 50F, 1F, true, labelWidth = 200F, sliderWidth = 250F)
-    val hitMarkerWidth = VisSliderCustom("Line Width", "HITMARKER_WIDTH", 1F, 10F, 1F, true, labelWidth = 200F, sliderWidth = 250F)
+    val hitMarkerSpacing = VisSliderCustom("Spacing", "HITMARKER_SPACING", 0F, 20F,1F, true, width1 = 200F, width2 = 250F)
+    val hitMarkerLength = VisSliderCustom("Line Length", "HITMARKER_LENGTH", 1F, 50F, 1F, true, width1 = 200F, width2 = 250F)
+    val hitMarkerWidth = VisSliderCustom("Line Width", "HITMARKER_WIDTH", 1F, 10F, 1F, true, width1 = 200F, width2 = 250F)
 
     val hitMarkerColor = VisColorPickerCustom("Hitmarker", "HITMARKER_COLOR")
     val hitMarkerOutlineColor = VisColorPickerCustom("Outline", "HITMARKER_OUTLINE_COLOR")

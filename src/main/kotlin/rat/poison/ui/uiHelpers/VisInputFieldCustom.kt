@@ -11,17 +11,21 @@ import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.keybindsUpdate
 import rat.poison.utils.generalUtil.strToBool
 
-class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true, keyWidth: Float = 200F, link: String = "http://cherrytree.at/misc/vk.htm") : VisTable() {
+class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true, keyWidth: Float = 200F) : VisTable() {
     private val textLabel = mainText
     private val variableName = varName
     private var hasTooltip = false
 
     private var keyLabel = VisLabel("$textLabel:")
     private val keyField = VisValidatableTextField(Validators.INTEGERS)
-    private val linkLabel = LinkLabel("?", link)
+    private val linkLabel = LinkLabel("?", "http://cherrytree.at/misc/vk.htm")
+
+    var value = 0
 
     init {
         update()
+
+        updateTooltip()
 
         changed { _, _ ->
             if (keyField.text.toIntOrNull() != null) {
@@ -45,10 +49,12 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
         if (neglect != this) {
             if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
                 if (curLocale[variableName].isBlank()) {
-                    if (dbg) println("${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
-                    keyLabel.setText("$textLabel:")
+                    if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
+                    keyLabel.setText(textLabel)
                 }
-                keyLabel.setText("${curLocale[variableName]}:")
+                else {
+                    keyLabel.setText("${curLocale[variableName]}:")
+                }
             }
 
             keyField.text = curSettings[variableName]

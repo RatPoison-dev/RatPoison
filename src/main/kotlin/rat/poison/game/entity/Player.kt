@@ -44,6 +44,7 @@ import rat.poison.utils.Vector
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.readCached
 import rat.poison.utils.to
+import java.lang.Exception
 
 typealias Player = Long
 
@@ -250,16 +251,16 @@ internal fun Player.steamID(): String {
 }
 
 internal fun Player.getValidSteamID(): Int {
-	return try {
-		var entSteam = this.steamID()
-		var steamID = 0
-		if (entSteam != "BOT" && entSteam.isNotEmpty() && StringUtils.isNumeric(entSteam.split(":")[2])) {
-			steamID = (entSteam.split(":")[2].toInt() * 2) + entSteam.split(":")[1].toInt()
-		}
-		steamID
-	} catch (e: Exception) {
-		0
-	}
+	val entSteam = this.steamID()
+	val split = entSteam.split(":")
+	if (entSteam == "BOT" || entSteam.isEmpty() || split.size < 3 || !StringUtils.isNumeric(split[2])) return 0
+	return  (split[2].toInt() * 2) + split[1].toInt()
+}
+
+internal fun Player.score(): Int {
+	val index = csgoEXE.uint(this + dwIndex)
+
+	return (csgoEXE.int(clientDLL.uint(dwPlayerResource) + iScore + index * 4))
 }
 
 internal fun Player.rank(): Int {
@@ -284,12 +285,6 @@ internal fun Player.wins(): Int {
 	val index = csgoEXE.uint(this + dwIndex)
 
 	return (csgoEXE.int(clientDLL.uint(dwPlayerResource) + iCompetitiveWins + index * 4))
-}
-
-internal fun Player.score(): Int {
-	val index = csgoEXE.uint(this + dwIndex)
-
-	return (csgoEXE.int(clientDLL.uint(dwPlayerResource) + iScore + index * 4))
 }
 
 internal fun Player.hltv(): Boolean {

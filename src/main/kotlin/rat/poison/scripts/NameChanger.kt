@@ -8,7 +8,7 @@ import rat.poison.utils.extensions.uint
 
 var nameChange = ""
 
-//https://www.unknowncheats.me/forum/counterstrike-global-offensive/190477-csgo-name-changer.html
+//TODO link uc post
 fun nameChanger() = every(10, true, inGameCheck = true) {
     if (nameChange == "") return@every
 

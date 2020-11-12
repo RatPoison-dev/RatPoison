@@ -4,7 +4,6 @@ import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.angle
 import rat.poison.game.clientState
-import rat.poison.game.entity.dead
 import rat.poison.game.entity.onGround
 import rat.poison.game.entity.velocity
 import rat.poison.game.hooks.cursorEnable
@@ -17,7 +16,6 @@ import rat.poison.game.offsets.ClientOffsets.dwForceRight
 import rat.poison.scripts.aim.meDead
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.inGame
 import rat.poison.utils.keyPressed
 import java.awt.event.KeyEvent.*
 import kotlin.math.cos

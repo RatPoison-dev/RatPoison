@@ -11,6 +11,7 @@ import rat.poison.settingsLoaded
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toWeaponClass
+import rat.poison.utils.inGame
 
 var meCurWep = Weapons.AK47
 var meCurWepEnt = 0L
@@ -45,29 +46,29 @@ fun setAim() = every(500, true, inGameCheck = true) {
                 if (meCurWep.rifle || meCurWep.smg || meCurWep.pistol || meCurWep.sniper || meCurWep.shotgun) {
                     curWepSettings = curSettings[meCurWep.name].toWeaponClass()
 
-                    if (curWepSettings.enableOverride) {
-                        curSettings["FACTOR_RECOIL"] = curWepSettings.factorRecoil
-                        curSettings["ENABLE_FLAT_AIM"] = curWepSettings.writeAngles
-                        curSettings["ENABLE_PATH_AIM"] = curWepSettings.mouseMovements
-                        curSettings["AIM_BONE"] = curWepSettings.aimBone
-                        curSettings["FORCE_AIM_BONE"] = curWepSettings.aimForceBone
-                        curSettings["AIM_FOV"] = curWepSettings.aimFOV
-                        curSettings["AIM_SPEED"] = curWepSettings.aimSpeed
-                        curSettings["AIM_SMOOTHNESS"] = curWepSettings.aimSmoothness
-                        curSettings["PERFECT_AIM"] = curWepSettings.enablePerfectAim
-                        curSettings["PERFECT_AIM_FOV"] = curWepSettings.perfectAimFov
-                        curSettings["PERFECT_AIM_CHANCE"] = curWepSettings.perfectAimChance
-                        curSettings["ENABLE_SCOPED_ONLY"] = curWepSettings.aimScopedOnly
+                    if (curWepSettings.tOverride) {
+                        curSettings["FACTOR_RECOIL"] = curWepSettings.tFRecoil
+                        curSettings["ENABLE_FLAT_AIM"] = curWepSettings.tFlatAim
+                        curSettings["ENABLE_PATH_AIM"] = curWepSettings.tPathAim
+                        curSettings["AIM_BONE"] = curWepSettings.tAimBone
+                        curSettings["FORCE_AIM_BONE"] = curWepSettings.tForceBone
+                        curSettings["AIM_FOV"] = curWepSettings.tAimFov
+                        curSettings["AIM_SPEED"] = curWepSettings.tAimSpeed
+                        curSettings["AIM_SMOOTHNESS"] = curWepSettings.tAimSmooth
+                        curSettings["PERFECT_AIM"] = curWepSettings.tPerfectAim
+                        curSettings["PERFECT_AIM_FOV"] = curWepSettings.tPAimFov
+                        curSettings["PERFECT_AIM_CHANCE"] = curWepSettings.tPAimChance
+                        curSettings["ENABLE_SCOPED_ONLY"] = curWepSettings.tScopedOnly
 
                         if (meCurWep.rifle || meCurWep.smg) {
-                            curSettings["AIM_AFTER_SHOTS"] = curWepSettings.aimAfterShots
+                            curSettings["AIM_AFTER_SHOTS"] = curWepSettings.tAimAfterShots
                         }
 
-                        curSettings["TRIGGER_USE_FOV"] = curWepSettings.triggerIsInFOV
-                        curSettings["TRIGGER_USE_INCROSS"] = curWepSettings.triggerIsInCross
-                        curSettings["TRIGGER_FOV"] = curWepSettings.triggerFOV
-                        curSettings["TRIGGER_USE_AIMBOT"] = curWepSettings.triggerAim
-                        curSettings["TRIGGER_USE_BACKTRACK"] = curWepSettings.triggerShootBacktrack
+                        curSettings["TRIGGER_USE_FOV"] = curWepSettings.tBTrigInFov
+                        curSettings["TRIGGER_USE_INCROSS"] = curWepSettings.tBTrigInCross
+                        curSettings["TRIGGER_FOV"] = curWepSettings.tBTrigFov
+                        curSettings["TRIGGER_USE_AIMBOT"] = curWepSettings.tBTrigAim
+                        curSettings["TRIGGER_USE_BACKTRACK"] = curWepSettings.tBTrigBacktrack
 
                         //Advanced advanced aim settings
                         curWepOverride = true
@@ -125,8 +126,8 @@ fun String.boneToNum(): Int {
         "NECK" -> NECK_BONE
         "CHEST" -> CHEST_BONE
         "STOMACH" -> STOMACH_BONE
-        "PELVIS" -> PELVIS_BONE
         "NEAREST" -> NEAREST_BONE
+        "PELVIS" -> PELVIS_BONE
         else -> RANDOM_BONE
     }
 }

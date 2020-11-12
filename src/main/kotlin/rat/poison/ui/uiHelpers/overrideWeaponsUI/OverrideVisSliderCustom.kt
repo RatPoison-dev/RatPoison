@@ -1,6 +1,7 @@
 package rat.poison.ui.uiHelpers.overrideWeaponsUI
 
 import com.badlogic.gdx.graphics.Color
+import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisTable
@@ -40,11 +41,8 @@ class OverrideVisSliderCustom(mainText: String, varName: String, varMin: Float, 
             if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
                 if (dbg && curLocale[variableName].isBlank()) {
                     println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
-                    sliderLabel.setText("$labelText: $sliderVal")
                 }
-                else {
-                    sliderLabel.setText("${curLocale[variableName]}: $sliderVal")
-                }
+                sliderLabel.setText("${curLocale[variableName]}: $sliderVal")
             } else { //User our default input
                 sliderLabel.setText("$labelText: $sliderVal")
             }

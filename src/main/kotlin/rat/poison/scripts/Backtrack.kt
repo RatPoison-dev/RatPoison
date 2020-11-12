@@ -254,8 +254,8 @@ fun isValidTick(tick: Int): Boolean {
     val deltaTime = delta * gvars.intervalPerTick
 
     var backtrackMS = curSettings["${curWepCategory}_BACKTRACK_MS"].toFloat()
-    if (curWepOverride && curWepSettings.triggerShootBacktrack) {
-        backtrackMS = curWepSettings.backtrackMS.toFloat()
+    if (curWepOverride && curWepSettings.tBacktrack) {
+        backtrackMS = curWepSettings.tBTMS.toFloat()
     }
 
     val max = clamp(backtrackMS/1000f, 0F, .19F)

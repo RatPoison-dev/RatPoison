@@ -1,6 +1,8 @@
 package rat.poison.overlay
 
-import com.badlogic.gdx.*
+import com.badlogic.gdx.ApplicationAdapter
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.GL20.GL_BLEND
@@ -15,7 +17,6 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.CSGO
-import rat.poison.game.entity.shotsFired
 import rat.poison.game.me
 import rat.poison.game.updateViewMatrix
 import rat.poison.haltProcess
@@ -57,7 +58,7 @@ object App : ApplicationAdapter() {
     lateinit var shapeRenderer: ShapeRenderer
     private val overlay = Overlay(if (curSettings["APPLESS"].strToBool()) { "Counter-Strike: Global Offensive" } else { curSettings["MENU_APP"].replace("\"", "") }, "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     lateinit var menuStage: Stage
-    lateinit var inputProcessor: KeyProcessor
+    lateinit var keyProcessor: KeyProcessor
     private val bodies = ObjectArrayList<App.() -> Unit>()
     private lateinit var camera: OrthographicCamera
 
@@ -73,11 +74,14 @@ object App : ApplicationAdapter() {
     private var timer = 0
 
     override fun create() {
+
         VisUI.load(Gdx.files.internal("skin\\tinted.json"))
 
         //Implement stage for menu
         menuStage = Stage() //Main Menu Stage
-        inputProcessor = KeyProcessor()
+
+        //Implemet key processor for menu
+        keyProcessor = KeyProcessor()
 
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
 
@@ -89,7 +93,7 @@ object App : ApplicationAdapter() {
 
         menuStage.addActor(uiMenu)
 
-        Gdx.input.inputProcessor = InputMultiplexer(menuStage, inputProcessor)
+        Gdx.input.inputProcessor = InputMultiplexer(menuStage, keyProcessor)
 
         sb = SpriteBatch()
         textRenderer = BitmapFont(false)
@@ -201,7 +205,6 @@ object App : ApplicationAdapter() {
                             sbText.append("\nShouldPostProcess: $shouldPostProcess")
                             sbText.append("\nMe: $me Dead: $meDead")
                             sbText.append("\nDanger Zone: $DANGER_ZONE")
-                            sbText.append("\nShots fired: ${me.shotsFired()}")
                             sbText.append("\n")
                             sbText.append("\nTotal physical mem: ").appendHumanReadableSize(totalPhysMem)
                             sbText.append("\nFree physical mem: ").appendHumanReadableSize(freePhysMem)

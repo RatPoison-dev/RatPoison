@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
 import com.sun.jna.Memory
-import org.jetbrains.annotations.Nullable
 import rat.poison.*
 import rat.poison.game.CSGO
 import rat.poison.game.entity.absPosition
@@ -23,6 +22,7 @@ import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
+import rat.poison.ui.tabs.nadeHelperLoadedFileStr
 import rat.poison.ui.uiPanels.nadeHelperTab
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.cToDouble
@@ -41,8 +41,6 @@ private var headPos = listOf(0.0, 0.0, 0.0)
 private var headLookPos = listOf(0.0, 0.0, 0.0)
 private var LoL: List<List<Any>> = listOf(emptyList(), emptyList(), emptyList())
 private var mPos = Vector()
-
-var nadeHelperLoadedFileStr = "N/A"
 
 var nadeHelperArrayList = arrayListOf<List<List<Any>>>()
 
@@ -231,7 +229,7 @@ fun loadPositions(file: String) {
 
             } else {
                 println("[Error] $file is empty, not loading")
-                if (opened) {
+                if (curSettings["MENU"].strToBool()) {
                     nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: N/A")
                 }
             }
@@ -285,7 +283,8 @@ fun detectMap(mapName: String) {
         val name = it.name
         if (newMapName == name.replace(".txt", "")) {
             loadPositions(name)
-            return
+            return@forEach
         }
     }
 }
+

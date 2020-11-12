@@ -10,11 +10,11 @@ import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.utils.generalUtil.strToBool
 
-class BindableTableCustom(mainText: String, varName: String, keyWidth: Float = 200F, spaceRight: Float = 6F): VisTable() {
+class VisBindTableCustom(mainText: String, varName: String, keyWidth: Float = 200F, spaceRight: Float = 6F): VisTable() {
     private val textLabel = mainText
     private val variableName = varName
     private val keyLabel = VisLabel("$textLabel:")
-    private val button = BindsButtonCustom(varName)
+    private val button = PrivateVisBindsButtonCustom(varName)
     private var hasTooltip = false
 
     init {
@@ -27,12 +27,13 @@ class BindableTableCustom(mainText: String, varName: String, keyWidth: Float = 2
     fun update(neglect: Actor? = null) {
         if (neglect != this) {
             if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
-                if (dbg) {
-                    if (curLocale[variableName].isBlank()) {
-                        println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
-                    }
+                if (curLocale[variableName].isBlank()) {
+                    if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
+                    keyLabel.setText("$textLabel:")
                 }
-                keyLabel.setText("${curLocale[variableName]}:")
+                else {
+                    keyLabel.setText("${curLocale[variableName]}:")
+                }
             }
             button.update()
         }

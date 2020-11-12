@@ -49,8 +49,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 		}
 	}
 
-	//override var protectAgainstScreenshots: Boolean by Delegates.observable(false) { _, _, value ->
-	override var protectAgainstScreenshots: Boolean by Delegates.observable(false) { _, _, _ ->
+	override var protectAgainstScreenshots: Boolean by Delegates.observable(false) { _, _, value ->
 		//if (EXPERIMENTAL) {
 		//	with(User32) {
 		//		SetWindowDisplayAffinity(myHWND, if (value) 1 else 0)

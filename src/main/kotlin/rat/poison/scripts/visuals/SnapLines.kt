@@ -7,7 +7,6 @@ import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.ui.tabs.rankstabs.enableEspPlayerList
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
@@ -22,12 +21,11 @@ fun snapLines() = App {
 
     if (curSettings["SNAPLINES_DEFUSE_KITS"].strToBool()) {
         forEntities(EntityType.CEconEntity) {
-            val entity = it.entity
-            val entPos = entity.position()
+            val entPos = it.entity.position()
             val vec = Vector()
 
             if (curSettings["SNAPLINES_SMOKE_CHECK"].strToBool()) {
-                if (lineThroughSmoke(entity)) {
+                if (lineThroughSmoke(it.entity)) {
                     return@forEntities
                 }
             }
@@ -73,7 +71,6 @@ fun snapLines() = App {
                 val onTeam = !DANGER_ZONE && me.team() == entity.team()
                 val enemyCheck = (curSettings["SNAPLINES_ENEMIES"].strToBool() && !onTeam)
                 val teamCheck = (curSettings["SNAPLINES_TEAMMATES"].strToBool() && onTeam)
-                if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && (entity.getValidSteamID() !in enableEspPlayerList)) return@forEntities
 
                 if (me <= 0 || entity == me || dormCheck || entity.dead()) return@forEntities
 

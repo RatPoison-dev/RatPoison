@@ -17,46 +17,45 @@ import rat.poison.scripts.aim.handleFireKey
 import rat.poison.scripts.aim.pathAim
 import rat.poison.scripts.aim.setAim
 import rat.poison.scripts.visuals.*
+import rat.poison.ui.tabs.boneCategories
 import rat.poison.utils.Settings
 import rat.poison.utils.detectLocale
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.keysTest
 import rat.poison.utils.loadMigration
 import java.awt.Robot
 import java.io.File
 import kotlin.collections.set
 
 //Override Weapon
-data class oWeapon(var enableOverride: Boolean = false, var factorRecoil: Boolean = false, var onShot: Boolean = false,
-                   var writeAngles: Boolean = false, var mouseMovements: Boolean = false, var aimBone: Int = 0,
-                   var aimForceBone: Int = 0, var aimFOV: Float = 0F, var aimSpeed: Int = 0,
-                   var aimSmoothness: Float = 0F, var enablePerfectAim: Boolean = false, var perfectAimFov: Float = 1F,
-                   var perfectAimChance: Int = 1, var aimScopedOnly: Boolean = false, var aimAfterShots: Int = 0,
+data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = false,          var tOnShot: Boolean = false,
+                   var tFlatAim: Boolean = false,       var tPathAim: Boolean = false,          var tAimBone: Int = 0,
+                   var tForceBone: Int = 0,             var tAimFov: Float = 0F,                var tAimSpeed: Int = 0,
+                   var tAimSmooth: Float = 0F,        var tPerfectAim: Boolean = false,       var tPAimFov: Float = 1F,
+                   var tPAimChance: Int = 1,            var tScopedOnly: Boolean = false,       var tAimAfterShots: Int = 0,
 
-                   var enableTriggerBot: Boolean = false, var triggerAim: Boolean = false, var triggerIsInCross: Boolean = false,
-                   var triggerIsInFOV: Boolean = false, var triggerShootBacktrack: Boolean = false, internal var triggerFOV: Float = 0F,
-                   var triggerInitDelay: Int = 0, var triggerDelayBetweenShoots: Int = 0,
+                   var tBoneTrig: Boolean = false,     var tBTrigAim: Boolean = false,          var tBTrigInCross: Boolean = false,
+                   var tBTrigInFov: Boolean = false,   var tBTrigBacktrack: Boolean = false,    var tBTrigFov: Float = 0F,
+                   var tBTrigInitDelay: Int = 0,       var tBTrigPerShotDelay: Int = 0,
 
-                   var enableBacktrack: Boolean = false, var backtrackMS: Int = 0, var autoWepDelay: Int = 100, var enableAutomatic: Boolean = true)
+                   var tBacktrack: Boolean = false,    var tBTMS: Int = 0)
 
 //Skinned Weapon
 data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var tSeed: Int)
 
-data class MusicKit(var id: Int = 0, var name: String = "")
-
 const val TITLE = "RatPoison"
 const val BRANCH = "Beta"
 const val F_VERSION = "1.8"
-const val M_VERSION = "1.8.02"
-
-var LOADED_CONFIG = "DefaultSettings"
+const val M_VERSION = "1.8.3"
+var LOADED_CONFIG = "DEFAULT"
 
 //const val EXPERIMENTAL = false
 const val SETTINGS_DIRECTORY = "settings" //Internal
 
 lateinit var WEAPON_STATS_FILE: File
-lateinit var MUSIC_KITS_FILE: File
 lateinit var SKIN_INFO_FILE: File
+lateinit var MUSIC_KITS_FILE: File
 
 var settingsLoaded = false
 val curSettings = Settings()
@@ -71,12 +70,13 @@ fun main() {
     System.setProperty("jna.nosys", "true")
 
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
+
     detectLocale()
 
     dbg = curSettings["DEBUG"].strToBool()
     if (dbg) println("DEBUG enabled")
 
-    println("Launching...")
+    println("Waiting for ${curSettings["MENU_APP"]} process...")
 
     CSGO.initialize()
 
@@ -154,17 +154,17 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
     if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()
     if (dbg) { println("[DEBUG] Initializing Name Changer") }; nameChanger()
-    if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
-    if (dbg) { println("[DEBUG] Initializing Music Kit Spoofer") }; musicKitSpoofer()
     if (dbg) { println("[DEBUG] Initializing Kill Sound") }; killSoundEsp()
+    if (dbg) { println("[DEBUG] Initializing MusicKit Spoofer") }; musicKitSpoofer()
+    if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
+
     //if (EXPERIMENTAL) {
         //rayTraceTest()
         //drawMapWireframe()
     //}
-
     //Overlay check, not updated?
     if (curSettings["MENU"].strToBool()) {
-        println("App Title: " + curSettings["MENU_APP"].replace("\"", ""))
+        println("Game found. Launching.")
 
         App.open()
 
@@ -207,8 +207,9 @@ fun main() {
 }
 
 fun String.toLocale(): String {
-    if (dbg && curLocale[this].isBlank()) {
-        println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $this is missing!")
+    if (curLocale[this].isBlank()) {
+        if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $this is missing!")
+        return this
     }
     return curLocale[this]
 }

@@ -42,21 +42,49 @@ fun convStrToColorGDX(input: String): Color {
 
     val arrayLine = line.trim().split(" ".toRegex(), 4)
 
-    return Color(arrayLine[0].replace("red=", "").toFloat()/255F,
+    return if (arrayLine.size > 4) Color(arrayLine[0].replace("red=", "").toFloat()/255F,
             arrayLine[1].replace("green=", "").toFloat()/255F,
             arrayLine[2].replace("blue=", "").toFloat()/255F,
-            arrayLine[3].replace("alpha=", "").toFloat())
+            arrayLine[3].replace("alpha=", "").toFloat()) else Color(255F, 255F, 255F, 1F)
 }
 
+
+// WE ARE SENDING OUR FIRST RAT TO THE MOON BOYS
 fun String.toWeaponClass(): oWeapon {
-    return if (this != "") {
-        var tStr = this
-        tStr = tStr.replace("oWeapon(", "").replace(")", "")
-        val tSA = tStr.split(", ") //temp String Array
-        oWeapon(enableOverride = tSA.pull(0).strToBool(), factorRecoil = tSA.pull(1).strToBool(), onShot = tSA.pull(2).strToBool(), writeAngles = tSA.pull(3).strToBool(), mouseMovements = tSA.pull(4).strToBool(), aimBone = tSA.pull(5).toInt(), aimForceBone = tSA.pull(6).toInt(), aimFOV = tSA.pull(7).toFloat(), aimSpeed = tSA.pull(8).toInt(), aimSmoothness = tSA.pull(9).toFloat(), enablePerfectAim = tSA.pull(10).strToBool(), perfectAimFov = tSA.pull(11).toFloat(), perfectAimChance = tSA.pull(12).toInt(), aimScopedOnly = tSA.pull(13).strToBool(), aimAfterShots = tSA.pull(14).toInt(), enableTriggerBot = tSA.pull(15).strToBool(), triggerAim = tSA.pull(16).strToBool(), triggerIsInCross = tSA.pull(17).strToBool(), triggerIsInFOV = tSA.pull(18).strToBool(), triggerShootBacktrack = tSA.pull(19).strToBool(), triggerFOV = tSA.pull(20).toFloat(), triggerInitDelay = tSA.pull(21).toInt(), triggerDelayBetweenShoots = tSA.pull(22).toInt(), enableBacktrack = tSA.pull(23).strToBool(), backtrackMS = tSA.pull(24).toInt(), autoWepDelay = tSA.pull(25).toInt(), enableAutomatic = tSA.pull(26).toBoolean())
-    } else {
-        oWeapon()
+    var tStr = this
+    tStr = tStr.replace("oWeapon(", "").replace(")", "")
+    val tSA = tStr.split(", ") //temp String Array
+    val weapon = oWeapon()
+    val size = tSA.size
+
+    weapon.apply {
+        tOverride = if (size > 1) tSA.pull(0).strToBool() else tOverride
+        tFRecoil = if (size > 2) tSA.pull(1).strToBool() else tFRecoil
+        tOnShot = if (size > 3) tSA.pull(2).strToBool() else tOnShot
+        tFlatAim = if (size > 4) tSA.pull(3).strToBool() else tFlatAim
+        tPathAim = if (size > 5) tSA.pull(4).strToBool() else tPathAim
+        tAimBone = if (size > 6) tSA.pull(5).toInt() else tAimBone
+        tForceBone = if (size > 7) tSA.pull(6).toInt() else tForceBone
+        tAimFov = if (size > 8) tSA.pull(7).toFloat() else tAimFov
+        tAimSpeed = if (size > 9) tSA.pull(8).toInt() else tAimSpeed
+        tAimSmooth = if (size > 10) tSA.pull(9).toFloat() else tAimSmooth
+        tPerfectAim = if (size > 11) tSA.pull(10).strToBool() else tPerfectAim
+        tPAimFov = if (size > 12) tSA.pull(11).toFloat() else tPAimFov
+        tPAimChance = if (size > 13) tSA.pull(12).toInt() else tPAimChance
+        tScopedOnly = if (size > 14) tSA.pull(13).strToBool() else tScopedOnly
+        tAimAfterShots = if (size > 15) tSA.pull(14).toInt() else tAimAfterShots
+        tBoneTrig = if (size > 16) tSA.pull(15).strToBool() else tBoneTrig
+        tBTrigAim = if (size > 17) tSA.pull(16).strToBool() else tBTrigAim
+        tBTrigInCross = if (size > 18) tSA.pull(17).strToBool() else tBTrigInCross
+        tBTrigInFov = if (size > 19) tSA.pull(18).strToBool() else tBTrigInFov
+        tBTrigBacktrack = if (size > 20) tSA.pull(19).strToBool() else tBTrigBacktrack
+        tBTrigFov = if (size > 21) tSA.pull(20).toFloat() else tBTrigFov
+        tBTrigInitDelay = if (size > 22) tSA.pull(21).toInt() else tBTrigInitDelay
+        tBTrigPerShotDelay = if (size > 23) tSA.pull(22).toInt() else tBTrigPerShotDelay
+        tBacktrack = if (size > 24) tSA.pull(23).strToBool() else tBacktrack
+        tBTMS = if (size >= 25) tSA.pull(24).toInt() else tBTMS
     }
+    return weapon
 }
 
 fun String.toSkinWeaponClass(): sWeapon {

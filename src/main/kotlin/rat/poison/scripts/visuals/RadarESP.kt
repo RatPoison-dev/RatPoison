@@ -1,13 +1,11 @@
 package rat.poison.scripts.visuals
 
 import rat.poison.curSettings
-import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.entity.dead
 import rat.poison.game.entity.dormant
 import rat.poison.game.forEntities
 import rat.poison.game.me
-import rat.poison.game.netvars.NetVarOffsets.bSpotted
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
 import rat.poison.utils.distanceTo

@@ -7,7 +7,6 @@ import rat.poison.game.entity.*
 import rat.poison.overlay.App
 import rat.poison.overlay.App.shapeRenderer
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.ui.tabs.rankstabs.enableEspPlayerList
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
@@ -33,7 +32,6 @@ fun indicatorEsp() = App {
         when (it.type) {
             EntityType.CCSPlayer -> {
                 if (entity.dead() || entity == me || entity.dormant()) return@forEntities
-                if (curSettings["ENABLE_PLAYER_ESP"].strToBool() && (entity.getValidSteamID() !in enableEspPlayerList)) return@forEntities
 
                 if (curSettings["INDICATOR_SMOKE_CHECK"].strToBool()) {
                     if (lineThroughSmoke(entity)) {

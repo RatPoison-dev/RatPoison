@@ -1,64 +1,97 @@
 package rat.poison.ui.tabs
 
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.badlogic.gdx.utils.Align
+import com.kotcrab.vis.ui.widget.LinkLabel
+import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
-import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
+import rat.poison.scripts.ranksPlayerList
 import rat.poison.toLocale
-import rat.poison.ui.tabs.rankstabs.MainRanksTab
-import rat.poison.ui.tabs.rankstabs.OptionsRanksTab
-
-var ranksTabbedPane = TabbedPane()
-var mainRanksTab = MainRanksTab()
-var optionsRanksTab = OptionsRanksTab()
+import rat.poison.ui.uiRefreshing
+import rat.poison.utils.RanksPlayer
 
 class RanksTab : Tab(false, false) {
-    val table = VisTable()
+    private val table = VisTable(true)
+
+    private var ranksListTable = VisTable()
+    private var teamsLabel = VisLabel()
+
+    private var namesTable = VisTable()
+    private var namesLabel = VisLabel()
+
+    private var checkboxesTable = VisTable()
+    private var espLabel = VisLabel()
+
+    private var ranksLabel = VisLabel()
+    private var killsLabel = VisLabel()
+    private var deathsLabel = VisLabel()
+    private var kdLabel = VisLabel()
+    private var winsLabel = VisLabel()
+    private var moneyLabel = VisLabel()
 
     init {
-        ranksTabbedPane.add(mainRanksTab)
-        ranksTabbedPane.add(optionsRanksTab)
+        ranksListTable.add(teamsLabel)
 
-        ranksTabbedPane.switchTab(mainRanksTab)
+        namesTable.add(namesLabel).row()
+        ranksListTable.add(namesTable).top().padRight(4f) //Table
 
-        val ranksTabbedPaneContent = VisTable()
-        ranksTabbedPaneContent.padTop(10F)
-        ranksTabbedPaneContent.padBottom(10F)
-        ranksTabbedPaneContent.align(Align.top)
-        ranksTabbedPaneContent.columnDefaults(1)
+        ranksListTable.add(ranksLabel)
+        ranksListTable.add(killsLabel)
+        ranksListTable.add(deathsLabel)
+        ranksListTable.add(kdLabel)
+        ranksListTable.add(winsLabel)
+        ranksListTable.add(moneyLabel)
 
-        val ranksScrollPane = ScrollPane(ranksTabbedPaneContent)
-        ranksScrollPane.setFlickScroll(false)
-        ranksScrollPane.setSize(1000F, 1000F)
-
-        ranksTabbedPaneContent.add(mainRanksTab.contentTable).left().colspan(2).row()
-
-        ranksTabbedPaneContent.addSeparator().colspan(2).padLeft(25F).padRight(25F)
-
-        ranksTabbedPane.addListener(object : TabbedPaneAdapter() {
-            override fun switchedTab(tab: Tab?) {
-                if (tab == null) return
-
-                ranksTabbedPaneContent.clear()
-
-                ranksTabbedPaneContent.add(tab.contentTable).left().colspan(2).row()
-
-                ranksTabbedPaneContent.addSeparator().colspan(2).padLeft(25F).padRight(25F)
-            }
-        })
-        table.add(ranksTabbedPane.table).minWidth(500F).left().growX().row()
-        table.add(ranksScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
+        table.add(ranksListTable).left().maxWidth(500F)
     }
 
-    override fun getTabTitle(): String {
-        return "Ranks".toLocale()
-    }
-
-    override fun getContentTable(): Table {
+    override fun getContentTable(): Table? {
         return table
     }
 
+    override fun getTabTitle(): String? {
+        return "Ranks".toLocale()
+    }
+
+    fun updateRanks() {
+        teamsLabel.setText("Team".toLocale() + "  \n")
+        namesLabel.setText("Name".toLocale())
+        ranksLabel.setText("Rank".toLocale() + "  \n")
+        killsLabel.setText("Kills".toLocale() + "  \n")
+        deathsLabel.setText("Deaths".toLocale() + "  \n")
+        kdLabel.setText("K/D".toLocale() + "  \n")
+        winsLabel.setText("Wins".toLocale() + "  \n")
+        moneyLabel.setText("Money".toLocale() + "  \n")
+
+        namesTable.reset()
+        namesTable.add(namesLabel).left().row()
+
+        checkboxesTable.reset()
+        checkboxesTable.add(espLabel).left().row()
+
+        ranksPlayerList.forEach {
+            constructRank(it)
+        }
+    }
+
+    private fun constructRank(player: RanksPlayer) {
+        if (uiRefreshing) return
+
+        teamsLabel.setText(teamsLabel.text.toString() + player.teamStr.toLocale() + "  \n")
+
+        var tmpName = player.name
+        tmpName = tmpName.substring(0, if (tmpName.length > 23) 23 else tmpName.length)
+
+        if (player.steamID != 0) { //Bot check
+            namesTable.add(LinkLabel(tmpName, "https://steamcommunity.com/profiles/%5BU:1:" + player.steamID + "%5B/")).height(21f).left().row()
+        } else {
+            namesTable.add(tmpName).height(21f).left().row()
+        }
+        ranksLabel.setText(ranksLabel.text.toString() + player.rank + "  \n")
+        killsLabel.setText(killsLabel.text.toString() + player.kills + "  \n")
+        deathsLabel.setText(deathsLabel.text.toString() + player.deaths + "  \n")
+        kdLabel.setText(kdLabel.text.toString() + player.KD + "  \n")
+        winsLabel.setText(winsLabel.text.toString() + player.wins + "  \n")
+        moneyLabel.setText(moneyLabel.text.toString() + player.money + "  \n")
+    }
 }

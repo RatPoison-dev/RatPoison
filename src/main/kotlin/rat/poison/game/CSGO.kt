@@ -44,8 +44,6 @@ object CSGO {
 		private set
 
 	fun initialize() {
-		if (dbg) println("[DEBUG] Searching for and initializing CSGO")
-
 		retry(128) {
 			csgoEXE = processByName(PROCESS_NAME, PROCESS_ACCESS_FLAGS)!!
 		}

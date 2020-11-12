@@ -12,7 +12,6 @@ import rat.poison.ui.tabs.misctabs.BombTab
 import rat.poison.ui.tabs.misctabs.FOVChangerTab
 import rat.poison.ui.tabs.misctabs.MovementTab
 import rat.poison.ui.tabs.misctabs.OthersTab
-import rat.poison.utils.generalUtil.loadLocale
 
 var miscTabbedPane = TabbedPane()
 var movementTab = MovementTab()

@@ -179,7 +179,7 @@ Load-CFG_TOOLTIP = Wczytaj konfigurację z zaznaczonego pliku
 Delete-CFG_TOOLTIP = Usuń zaznaczoną konfigurację
 Load-Locale_TOOLTIP = Wczytaj zaznaczony plik lokalizacyjny
 MENU_KEY_TOOLTIP = Przycisk otwierający menu
-SAVE_TO_DEFAULT_TOOLTIP = Zapisuje aktualną konfigurację do domyślnej
+Save-Current-Config-To-Default-Settings_TOOLTIP = Zapisuje aktualną konfigurację do domyślnej
 ENABLE_NADE_HELPER_TOOLTIP = Włącza pomocnika rzucania granatów
 Create-Grenade-Position_TOOLTIP = Tworzy nową pozycję w wybranym miejscu
 Save-As-File_TOOLTIP = Zapisuje pozycje granatów do pliku
@@ -599,7 +599,7 @@ Load-Locale = Wczytaj lokalizację
 Save-CFG = Zapisz CFG
 Load-CFG = Wczytaj CFG
 Delete-CFG = Usuń CFG
-SAVE_TO_DEFAULT = Zapisz aktualną konfigurację do ustawień domyślnych
+Save-Current-Config-To-Default-Settings = Zapisz aktualną konfigurację do ustawień domyślnych
 
 //aim tab
 Enable-Perfect-Aim = Włącz perfekcyjny strzał
@@ -641,7 +641,7 @@ SAME = Ten sam kierunek
 OPPOSITE = Przeciwny kierunek
 
 //save config
-INPUT_CONFIG_NAME = Wprowadź nazwę konfiguracji
+Enter-config-name = Wprowadź nazwę konfiguracji
 
 //new shit
 LEGIT_RADAR = Legit Radar

@@ -15,10 +15,9 @@ import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.refreshMenu
 import rat.poison.ui.uiUpdate
-import rat.poison.utils.deleteCFG
+import rat.poison.utils.*
 import rat.poison.utils.generalUtil.loadLocale
-import rat.poison.utils.loadCFG
-import rat.poison.utils.saveCFG
+import rat.poison.utils.saveDefault
 import java.io.File
 
 class ConfigsTab : Tab(false, false) {
@@ -86,6 +85,13 @@ class ConfigsTab : Tab(false, false) {
             true
         }
 
+        val saveDefaultButton = VisTextButton("SAVE_DEFAULT".toLocale())
+        saveDefaultButton.changed { _, _ ->
+            saveWindows()
+            saveDefault()
+            true
+        }
+
         //Create Load Button
         val loadCFGButton = VisTextButton("Load".toLocale())
         loadCFGButton.changed { _, _ ->
@@ -124,7 +130,8 @@ class ConfigsTab : Tab(false, false) {
         val sldTable = VisTable()
         sldTable.add(saveCFGButton).width(80F)
         sldTable.add(loadCFGButton).width(80F)
-        sldTable.add(deleteButton).width(80F)
+        sldTable.add(deleteButton).width(80F).row()
+        sldTable.add(saveDefaultButton).width(80F).center()
 
         table.add(configLabel).left().width(240F)
         table.add(localeLabel).left().width(240F).row()

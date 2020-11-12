@@ -18,8 +18,9 @@ object NetVarOffsets {
 	val iKills by netVar("DT_CSPlayerResource")
 	val iDeaths by netVar("DT_CSPlayerResource")
 	val iCompetitiveWins by netVar("DT_CSPlayerResource")
-	val nMusicID by netVar("DT_CSPlayerResource", "m_nMusicID")
 	val iScore by netVar("DT_CSPlayerResource", "m_iScore")
+	val nMusicID by netVar("DT_CSPlayerResource", "m_nMusicID")
+	
 	val fFlags by netVar("DT_BasePlayer")
 	val lifeState by netVar("DT_BasePlayer")
 

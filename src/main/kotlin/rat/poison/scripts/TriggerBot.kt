@@ -34,18 +34,18 @@ fun triggerBot() = every(5, inGameCheck = true) {
 
     inTrigger = false //go and do the 2 step
 
-    val initDelay = if (curWepOverride) curWepSettings.triggerInitDelay else curSettings[curWepCategory + "_TRIGGER_INIT_SHOT_DELAY"].safeToInt("Trig init delay $curWepCategory")
-    val shotDelay = if (curWepOverride) curWepSettings.triggerDelayBetweenShoots else curSettings[curWepCategory + "_TRIGGER_PER_SHOT_DELAY"].safeToInt("Trig per delay $curWepCategory")
+    val initDelay = if (curWepOverride) curWepSettings.tBTrigInitDelay else curSettings[curWepCategory + "_TRIGGER_INIT_SHOT_DELAY"].safeToInt("Trig init delay $curWepCategory")
+    val shotDelay = if (curWepOverride) curWepSettings.tBTrigPerShotDelay else curSettings[curWepCategory + "_TRIGGER_PER_SHOT_DELAY"].safeToInt("Trig per delay $curWepCategory")
     val bFOV = curSettings["TRIGGER_FOV"].toFloat()
     val bINFOV = curSettings["TRIGGER_USE_FOV"].strToBool()
     val bINCROSS = curSettings["TRIGGER_USE_INCROSS"].strToBool()
     val bAIMBOT = curSettings["TRIGGER_USE_AIMBOT"].strToBool()
     val bBACKTRACK = curSettings["TRIGGER_USE_BACKTRACK"].strToBool()
 
-    if (curSettings[curWepCategory + "_TRIGGER"].strToBool() || (curWepOverride && curWepSettings.enableTriggerBot)) { //If trigger is enabled for current weapon
+    if (curSettings[curWepCategory + "_TRIGGER"].strToBool() || (curWepOverride && curWepSettings.tBoneTrig)) { //If trigger is enabled for current weapon
         //Scope check
         if (curWepCategory == "SNIPER") { //If we are holding a sniper
-            if ((curSettings["ENABLE_SCOPED_ONLY"].strToBool() && !curWepOverride) || (curWepOverride && curWepSettings.aimScopedOnly)) { //Scoped only check
+            if ((curSettings["ENABLE_SCOPED_ONLY"].strToBool() && !curWepOverride) || (curWepOverride && curWepSettings.tScopedOnly)) { //Scoped only check
                 if (!me.isScoped()) {
                     //Reset
                     inTrigger = false

@@ -16,16 +16,19 @@ import rat.poison.ui.tabs.othersTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
 import rat.poison.utils.generalUtil.boolToStr
 import rat.poison.utils.generalUtil.strToBool
 import java.io.File
 
+data class MusicKit(var id: Int = 0, var name: String = "")
+
 class OthersTab: Tab(false, false) {
     private val table = VisTable()
     val doorSpam = VisCheckBoxCustom("Door Spam", "D_SPAM")
-    var doorSpamKey = VisInputFieldCustom("Door Spam Key", "D_SPAM_KEY", true, 225F)
+    var doorSpamKey = VisBindTableCustom("Door Spam Key", "D_SPAM_KEY")
     val weaponSpam = VisCheckBoxCustom("Weapon Spam", "W_SPAM")
-    var weaponSpamKey = VisInputFieldCustom("Weapon Spam Key", "W_SPAM_KEY",true, 225F)
+    var weaponSpamKey = VisBindTableCustom("Weapon Spam Key", "W_SPAM_KEY")
     val enableReducedFlash = VisCheckBoxCustom("Reduced Flash", "ENABLE_REDUCED_FLASH")
     val flashMaxAlpha = VisSliderCustom("Max Alpha", "FLASH_MAX_ALPHA", 5F, 255F, 5F, true)
     val hitSoundCheckBox = VisCheckBoxCustom("HitSound", "ENABLE_HITSOUND")
@@ -36,7 +39,7 @@ class OthersTab: Tab(false, false) {
     val killSoundVolume = VisSliderCustom("Volume", "KILLSOUND_VOLUME", .1F, 1F, .1F, false)
     val selfNade = VisTextButton("Self-Nade".toLocale())
     val enableKillBind = VisCheckBoxCustom("Kill Bind", "KILL_BIND")
-    val killBindKey = VisInputFieldCustom("Key", "KILL_BIND_KEY", true, 225F)
+    val killBindKey = VisBindTableCustom("Key", "KILL_BIND_KEY")
     private val nameChangeInput = VisValidatableTextField()
     private val nameChange = VisTextButton("Name-Change".toLocale())
     val postProcessingDisable = VisCheckBoxCustom("DISABLE_POST_PROCESSING".toLocale(), "DISABLE_POST_PROCESSING")

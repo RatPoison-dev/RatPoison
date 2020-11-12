@@ -12,7 +12,6 @@ import rat.poison.overlay.opened
 import rat.poison.toLocale
 import rat.poison.ui.tabs.updateWindows
 import rat.poison.ui.uiPanels.configsTab
-import rat.poison.ui.uiPanels.optionsTab
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import java.io.File
@@ -95,7 +94,7 @@ fun loadCFG(cfgFileName: String, deleteCfgAfterLoad: Boolean = false) {
             }
         }
     } else {
-        Dialogs.showErrorDialog(App.menuStage, "Error", "Wait for saving to finish first!")
+        Dialogs.showOKDialog(App.menuStage, "Error".toLocale(), "${"SAVING_NOW_ERROR".toLocale()}\n \"${cfgFileName}\"")
     }
 }
 

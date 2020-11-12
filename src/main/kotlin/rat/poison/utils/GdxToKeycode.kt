@@ -33,12 +33,12 @@ fun vkKeycodeToString(keycode: Int): String {
 }
 
 //uncomment when needed
-//fun keysTest() {
-//    while (true) {
-//        for (i in 1..255) {
-//            if (keyPressed(i)) {
-//                println(i)
-//            }
-//        }
-//    }
-//}
+fun keysTest() {
+    while (true) {
+        for (i in 1..255) {
+            if (keyPressed(i)) {
+                println(i)
+            }
+        }
+    }
+}

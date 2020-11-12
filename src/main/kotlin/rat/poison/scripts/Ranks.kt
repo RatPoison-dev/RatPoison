@@ -5,30 +5,25 @@ import rat.poison.game.forEntities
 import rat.poison.game.rankName
 import rat.poison.overlay.App.haveTarget
 import rat.poison.overlay.opened
-import rat.poison.ui.tabs.mainRanksTab
+import rat.poison.ui.uiPanels.ranksTab
 import rat.poison.ui.uiRefreshing
 import rat.poison.utils.RanksPlayer
 import rat.poison.utils.every
 import rat.poison.utils.extensions.roundNDecimals
+import java.util.concurrent.ConcurrentLinkedQueue
 
-var playerList = mutableListOf<RanksPlayer>()
+var ranksPlayerList = mutableListOf<RanksPlayer>()
 
-fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every 5seconds
+fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every second
     if (!opened || !haveTarget) return@every
 
     //Bruh -- fix later
-    playerList.clear()
-
+    ranksPlayerList.clear()
     forEntities(EntityType.CCSPlayer) {
         val entity = it.entity
 
         if (entity.hltv()) return@forEntities
 
-        val tmpTeam = when (entity.team()) {
-            3L -> "CT"
-            2L -> "T"
-            else -> "N/A"
-        }
         val entTeam = entity.team()
 
         val entName = entity.name()
@@ -43,13 +38,20 @@ fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every 5seconds
         }
         val entWins = entity.wins().toString()
 
-        val steamID = entity.getValidSteamID()
-        playerList.add(RanksPlayer(name=entName, team = entTeam, steamID = steamID.toString(), teamStr = tmpTeam, rank=entRank, kills = entKills, deaths = entDeaths, KD = entKD, wins = entWins, money = entMoney, score = entScore))
-        uiRefreshing = true
-        playerList.sort()
-        uiRefreshing = false
+        val teamStr = when (entTeam) { //Bruh
+            3L -> "CT"
+            2L -> "T"
+            else -> "N/A"
+        }
+
+        var steamID = entity.getValidSteamID()
+
+        val player = RanksPlayer(entName, steamID, entRank, teamStr, entKills, entDeaths, entKD, entWins, entMoney, entTeam, entScore)
+        ranksPlayerList.add(player)
     }
+    ranksPlayerList.sort()
+
     if (!uiRefreshing) {
-        mainRanksTab.updateRanks()
+        ranksTab.updateRanks()
     }
 }

@@ -15,16 +15,16 @@ import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
-import rat.poison.ui.uiHelpers.binds.BindableTableCustom
+import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
 import rat.poison.ui.uiPanels.optionsTab
 import rat.poison.ui.uiRefreshing
 
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
-    val menuKey = BindableTableCustom("Menu Key", "MENU_KEY")
-    val menuAlpha = VisSliderCustom("Menu Alpha", "MENU_ALPHA", .5F, 1F, .05F, false, labelWidth = 200F, sliderWidth = 250F)
-    val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true, labelWidth = 200F, sliderWidth = 250F)
+    val menuKey = VisBindTableCustom("Menu Key", "MENU_KEY")
+    val menuAlpha = VisSliderCustom("Menu Alpha", "MENU_ALPHA", .5F, 1F, .05F, false)
+    val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true)
     val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
     val debug = VisCheckBoxCustom("Debug", "DEBUG")
     val keybinds = VisCheckBoxCustom("Keybinds", "KEYBINDS")

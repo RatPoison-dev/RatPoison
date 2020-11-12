@@ -16,7 +16,7 @@ import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
-import rat.poison.ui.uiHelpers.binds.BindableTableCustom
+import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiUpdate
 
@@ -26,9 +26,9 @@ class AimBacktrackTable: VisTable(false) {
     val enableBacktrack = VisCheckBoxCustom("Master Switch", "ENABLE_BACKTRACK")
     val backtrackVisualize = VisCheckBoxCustom("Visualize", "BACKTRACK_VISUALIZE")
     val backtrackEnableKey = VisCheckBoxCustom("Enable On Key", "ENABLE_BACKTRACK_ON_KEY")
-    val backtrackKey = BindableTableCustom("Backtrack Key", "BACKTRACK_KEY")
+    val backtrackKey = VisBindTableCustom("Backtrack Key", "BACKTRACK_KEY")
     val backtrackSpotted = VisCheckBoxCustom("Check Spotted", "BACKTRACK_SPOTTED")
-    val backtrackWeaponEnabled = ATabVisCheckBox("Enable Weapon Backtrack", "_BACKTRACK")
+    val backtrackWeaponEnabled = ATabVisCheckBox("Weapon Backtrack", "_BACKTRACK")
     val backtrackMS = ATabVisSlider("Backtrack MS", "_BACKTRACK_MS", 20f, 200f, 5f, true, width1 = 200F, width2 = 250F)
 
     //Override Weapon Checkbox & Selection Box

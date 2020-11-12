@@ -10,17 +10,19 @@ import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.othersTab
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
+import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
 import kotlin.math.round
 
 class UIKeybinds : VisWindow("Keybinds".toLocale()) {
-    val aimToggleKey = VisInputFieldCustom("Toggle Aim Key", "AIM_TOGGLE_KEY")
-    val forceAimKey = VisInputFieldCustom("Force Aim Key", "FORCE_AIM_KEY")
-    val forceAimBoneKey = VisInputFieldCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
-    val boneTriggerKey = VisInputFieldCustom("Trigger Key", "TRIGGER_KEY")
-    val visualsToggleKey = VisInputFieldCustom("Visuals Toggle Key", "VISUALS_TOGGLE_KEY")
-    val doorSpamKey = VisInputFieldCustom("Door Spam Key", "D_SPAM_KEY")
-    val weaponSpamKey = VisInputFieldCustom("Weapon Spam Key", "W_SPAM_KEY")
-    val menuKeyField = VisInputFieldCustom("Menu Key", "MENU_KEY")
+    val aimToggleKey = VisBindTableCustom("Toggle Aim Key", "AIM_TOGGLE_KEY")
+    val forceAimKey = VisBindTableCustom("Force Aim Key", "FORCE_AIM_KEY")
+    val forceAimBoneKey = VisBindTableCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
+    val boneTriggerKey = VisBindTableCustom("Trigger Key", "TRIGGER_KEY")
+    val visualsToggleKey = VisBindTableCustom("Visuals Toggle Key", "VISUALS_TOGGLE_KEY")
+    val doorSpamKey = VisBindTableCustom("Door Spam Key", "D_SPAM_KEY")
+    val nadeThrowerKey = VisBindTableCustom("Nade Thrower Key", "NADE_THROWER_KEY")
+    val weaponSpamKey = VisBindTableCustom("Weapon Spam Key", "W_SPAM_KEY")
+    val menuKeyField = VisBindTableCustom("Menu Key", "MENU_KEY")
 
     init {
         defaults().left()
@@ -48,6 +50,7 @@ class UIKeybinds : VisWindow("Keybinds".toLocale()) {
         add(doorSpamKey).left().row()
         add(weaponSpamKey).left().row()
         add(menuKeyField).left().row()
+        add(nadeThrowerKey).left().row()
         add(menuAlphaSlider).growX()
 
         setSize(325F, 325F)
@@ -75,6 +78,7 @@ fun keybindsUpdate(neglect: Actor) {
         doorSpamKey.update(neglect)
         weaponSpamKey.update(neglect)
         menuKeyField.update(neglect)
+        nadeThrowerKey.update(neglect)
     }
 
     aimTab.tAim.aimToggleKey.update(neglect)
@@ -85,4 +89,5 @@ fun keybindsUpdate(neglect: Actor) {
     othersTab.doorSpamKey.update(neglect)
     othersTab.weaponSpamKey.update(neglect)
     optionsTab.menuKey.update(neglect)
+    nadeHelperTab.nadeThrowerKey.update(neglect)
 }

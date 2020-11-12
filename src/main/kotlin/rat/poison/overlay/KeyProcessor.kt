@@ -1,8 +1,9 @@
 package rat.poison.overlay
 
 import com.badlogic.gdx.InputProcessor
-import rat.poison.utils.gdxToVk
+import rat.poison.utils.generalUtil.strToColorGDX
 
+//rewrite to events
 class KeyProcessor: InputProcessor {
     var needKeyPress = false
     var callBack: (_: Int, __: String) -> Unit = { _: Int, _: String -> }

@@ -8,8 +8,6 @@ import rat.poison.overlay.App.uiSpecList
 import rat.poison.overlay.opened
 import rat.poison.ui.tabs.*
 import rat.poison.ui.tabs.misctabs.*
-import rat.poison.ui.tabs.rankstabs.MainRanksTab
-import rat.poison.ui.tabs.rankstabs.OptionsRanksTab
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiPanelTables.OverridenWeapons
 import rat.poison.ui.uiPanelTables.overridenWeaponsUpdate
@@ -20,7 +18,6 @@ var uiRefreshing = false
 fun uiUpdate() {
     if (!opened || uiRefreshing) return
 
-    //TODO these should be irrelevant since we reload tabs in refresh menu...
     overridenWeaponsUpdate()
     visualsTabUpdate()
     glowEspTabUpdate()
@@ -32,6 +29,10 @@ fun uiUpdate() {
     nadesVTUpdate()
     snaplinesEspTabUpdate()
     footStepsEspTabUpdate()
+    movementTabUpdate()
+    fovChangerTabUpdate()
+    bombTabUpdate()
+    othersTabUpdate()
     rcsTabUpdate()
     miscVisualTabUpdate()
     optionsTabUpdate()
@@ -41,11 +42,6 @@ fun uiUpdate() {
     updateTrig()
     updateAim()
     updateDisableEsp()
-    movementTabUpdate()
-    fovChangerTabUpdate()
-    bombTabUpdate()
-    othersTabUpdate()
-
 
     //Update windows
     uiAimOverridenWeapons.setPosition(uiMenu.x+uiMenu.width+4F, uiMenu.y)
@@ -64,7 +60,7 @@ fun refreshMenu() {
     aimTab = AimTab()
     visualsTab = VisualsTab()
     rcsTab = RcsTab()
-    miscTabs = MiscTabs()
+    miscTab = MiscTabs()
     ranksTab = RanksTab()
     nadeHelperTab = NadeHelperTab()
     skinChangerTab = SkinChangerTab()
@@ -74,16 +70,15 @@ fun refreshMenu() {
     mainTabbedPane.add(aimTab)
     mainTabbedPane.add(visualsTab)
     mainTabbedPane.add(rcsTab)
-    mainTabbedPane.add(miscTabs)
+    mainTabbedPane.add(miscTab)
     mainTabbedPane.add(ranksTab)
     mainTabbedPane.add(nadeHelperTab)
     mainTabbedPane.add(skinChangerTab)
     mainTabbedPane.add(optionsTab)
     mainTabbedPane.add(configsTab)
 
-    miscTabbedPane.removeAll()
     espTabbedPane.removeAll()
-    ranksTabbedPane.removeAll()
+    miscTabbedPane.removeAll()
 
     glowEspTab = GlowEspTab()
     chamsEspTab = ChamsEspTab()
@@ -95,6 +90,11 @@ fun refreshMenu() {
     nadesTab = NadesVT()
     miscVisualsTab = MiscVisualsTab()
 
+    movementTab = MovementTab()
+    fovChangerTab = FOVChangerTab()
+    bombTab = BombTab()
+    othersTab = OthersTab()
+
     espTabbedPane.add(glowEspTab)
     espTabbedPane.add(chamsEspTab)
     espTabbedPane.add(indicatorEspTab)
@@ -105,21 +105,10 @@ fun refreshMenu() {
     espTabbedPane.add(nadesTab)
     espTabbedPane.add(miscVisualsTab)
 
-    movementTab = MovementTab()
-    fovChangerTab = FOVChangerTab()
-    bombTab = BombTab()
-    othersTab = OthersTab()
-
     miscTabbedPane.add(movementTab)
     miscTabbedPane.add(fovChangerTab)
     miscTabbedPane.add(bombTab)
     miscTabbedPane.add(othersTab)
-
-    mainRanksTab = MainRanksTab()
-    optionsRanksTab = OptionsRanksTab()
-
-    ranksTabbedPane.add(mainRanksTab)
-    ranksTabbedPane.add(optionsRanksTab)
 
     uiAimOverridenWeapons.removeActor(overridenWeapons)
     uiAimOverridenWeapons.remove()

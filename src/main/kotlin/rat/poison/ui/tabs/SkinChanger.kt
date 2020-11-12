@@ -260,7 +260,6 @@ fun getSkinArray(wep: String): Array<String> {
     return wepSkinArray
 }
 
-//TODO is this ever needed?
 fun getSkinNameFromID(ID: Int): String {
     var str = ""
     var found = false

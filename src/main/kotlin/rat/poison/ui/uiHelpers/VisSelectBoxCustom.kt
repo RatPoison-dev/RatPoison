@@ -28,13 +28,11 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
         //Update the items inside the box with locale items
         val itemsArray = Array<String>()
         for (i in boxItems) {
-            if (curLocale[i].isBlank()) {
-                if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
-                itemsArray.add(i)
+            if (dbg && curLocale[i].isBlank()) {
+                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
             }
-            else {
-                itemsArray.add(curLocale[i])
-            }
+
+            itemsArray.add(curLocale[i])
         }
 
         selectBox.items = itemsArray
@@ -59,12 +57,12 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
     }
 
     fun update() {
-        if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
-            if (dbg && curLocale[variableName].isBlank()) { //Variable is missing in locale
-                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
+        if (curSettings["CURRENT_LOCALE"] != "" && showText) { //Only update locale if we have one
+            if (curLocale[variableName].isBlank()) { //Variable is missing in locale
+                if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
+                boxLabel.setText("$textLabel:")
             }
-
-            if (showText) { //Update box label text
+            else {
                 boxLabel.setText("${curLocale[variableName]}:")
             }
 
