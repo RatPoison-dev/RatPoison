@@ -4,17 +4,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.*
+import rat.poison.MUSIC_KITS_FILE
+import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.curSettings
 import rat.poison.scripts.changeName
 import rat.poison.scripts.selfNade
 import rat.poison.scripts.visuals.updateHitsound
 import rat.poison.scripts.visuals.updateKillSound
 import rat.poison.scripts.writeSpoof
+import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.ListAdapter
 import rat.poison.ui.tabs.othersTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
-import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
 import rat.poison.utils.generalUtil.boolToStr
@@ -190,6 +192,7 @@ fun othersTabUpdate() {
         postProcessingDisable.update()
         spectatorList.update()
         enableMusicKitSpoofer.update()
+        updateHitSoundsList()
     }
 }
 

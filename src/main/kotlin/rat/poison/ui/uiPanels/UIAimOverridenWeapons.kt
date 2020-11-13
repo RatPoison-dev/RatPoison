@@ -2,7 +2,6 @@ package rat.poison.ui.uiPanels
 
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.widget.VisWindow
-import rat.poison.overlay.App
 import rat.poison.overlay.App.uiMenu
 import rat.poison.overlay.opened
 import rat.poison.toLocale

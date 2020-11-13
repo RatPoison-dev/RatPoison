@@ -6,7 +6,6 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.toLocale
 import rat.poison.ui.tabs.movementTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
-import rat.poison.ui.uiHelpers.VisInputFieldCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
 

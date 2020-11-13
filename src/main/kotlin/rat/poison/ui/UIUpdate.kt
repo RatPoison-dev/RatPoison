@@ -48,7 +48,6 @@ fun uiUpdate() {
     //Update lists
     configsTab.updateCFGList()
     configsTab.updateLocaleList()
-    othersTab.updateHitSoundsList()
     nadeHelperTab.updateNadeFileHelperList()
 }
 

@@ -28,7 +28,10 @@ fun vkKeycodeToString(keycode: Int): String {
         if (keycode < 0 || keycode > 255) blankKey
         else toString(tmp)
     } else {
-        buttonsMap[vkToMouse[keycode]]!!
+        if (vkToMouse[keycode] in buttonsMap) {buttonsMap[vkToMouse[keycode]]!!}
+        else {
+            return blankKey
+        }
     }
 }
 

@@ -17,12 +17,10 @@ import rat.poison.scripts.aim.handleFireKey
 import rat.poison.scripts.aim.pathAim
 import rat.poison.scripts.aim.setAim
 import rat.poison.scripts.visuals.*
-import rat.poison.ui.tabs.boneCategories
 import rat.poison.utils.Settings
 import rat.poison.utils.detectLocale
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.keysTest
 import rat.poison.utils.loadMigration
 import java.awt.Robot
 import java.io.File
