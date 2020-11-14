@@ -72,7 +72,9 @@ task RatPoison {
 		def name = "RatPoison $version"
 
 		def dir = file("build/$name/")
-		if (dir.exists()) dir.deleteDir()
+		if (dir.exists()) {
+			dir.deleteDir()
+		}
 		dir.mkdirs()
 
 		def jarName = "${name}.jar"
@@ -91,38 +93,19 @@ task RatPoison {
 		pause""".getBytes())
 
 		def dirSettings = file(new File(dir, "settings"))
-		dirSettings.mkdirs()
 		def settings = file("settings")
-		settings.listFiles().each {
-			Files.copy(it.toPath(), (new File(dirSettings, it.getName())).toPath())
-		}
-
-		def dirHitsounds = file(new File(dir, "settings\\hitsounds"))
-		dirHitsounds.mkdirs()
-		def hitsounds = file("settings\\hitsounds")
-		hitsounds.listFiles().each {
-			Files.copy(it.toPath(), (new File(dirHitsounds, it.getName())).toPath())
-		}
-
-		def dirCfgs = file(new File(dir, "settings\\CFGS"))
-		dirCfgs.mkdirs()
-		def cfgs = file("settings\\CFGS")
-		cfgs.listFiles().each {
-			Files.copy(it.toPath(), (new File(dirCfgs, it.getName())).toPath())
-		}
-
-		def dirHelper = file(new File(dir, "settings\\NadeHelper"))
-		dirHelper.mkdirs()
-		def helper = file("settings\\NadeHelper")
-		helper.listFiles().each {
-			Files.copy(it.toPath(), (new File(dirHelper, it.getName())).toPath())
-		}
-
-		def dirSkinInfo = file(new File(dir, "settings\\Data"))
-		dirSkinInfo.mkdirs()
-		def skinfo = file("settings\\Data")
-		skinfo.listFiles().each {
-			Files.copy(it.toPath(), (new File(dirSkinInfo, it.getName())).toPath())
+		dirSettings.mkdirs()
+		settings.listFiles().each {previous ->
+			if (previous.isDirectory()) {
+				def tmpdir = (new File(dirSettings, previous.getName()))
+				tmpdir.mkdirs()
+				previous.listFiles().each {
+					Files.copy(it.toPath(), (new File(tmpdir, it.getName())).toPath())
+				}
+			}
+			else {
+				Files.copy(previous.toPath(), (new File(dirSettings, previous.getName())).toPath())
+			}
 		}
 
 		def dirSkin = file(new File(dir, "skin"))
@@ -130,13 +113,6 @@ task RatPoison {
 		def skins = file("skin")
 		skins.listFiles().each {
 			Files.copy(it.toPath(), (new File(dirSkin, it.getName())).toPath())
-		}
-
-		def dirLocalizations = file(new File(dir, "settings\\Localizations"))
-		dirLocalizations.mkdirs()
-		def localizations = file("settings\\Localizations")
-		localizations.listFiles().each {
-			Files.copy(it.toPath(), (new File(dirLocalizations, it.getName())).toPath())
 		}
 	}
 }
