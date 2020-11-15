@@ -252,7 +252,7 @@ internal fun Player.steamID(): String {
 internal fun Player.getValidSteamID(): Int {
 	val entSteam = this.steamID()
 	val split = entSteam.split(":")
-	if (entSteam == "BOT" || entSteam == "" || split.size < 3 || !StringUtils.isNumeric(split[2])) return 0
+	if (entSteam == "BOT" || entSteam.isEmpty() || split.size < 3 || !StringUtils.isNumeric(split[2])) return 0
 	return  (split[2].toInt() * 2) + split[1].toInt()
 }
 

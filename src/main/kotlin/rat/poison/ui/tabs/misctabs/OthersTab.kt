@@ -120,13 +120,6 @@ class OthersTab: Tab(false, false) {
             }
         }
 
-        enableMusicKitSpoofer.changed {_, _ ->
-            if (!enableMusicKitSpoofer.isChecked) {
-                curSettings["MUSIC_KIT_ID"] = 1
-            }
-            writeSpoof()
-        }
-
         //Create Hit Sound Toggle
         if (curSettings["ENABLE_HITSOUND"].strToBool()) hitSoundCheckBox.toggle()
         hitSoundCheckBox.changed { _, _ ->
