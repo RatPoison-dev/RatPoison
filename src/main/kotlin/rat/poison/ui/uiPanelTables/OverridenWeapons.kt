@@ -90,11 +90,13 @@ class OverridenWeapons : VisTable(false) {
 
             val itemsArray = Array<String>()
             for (i in tmpCategory) {
-                if (dbg && curLocale[i].isBlank()) {
-                    println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
+                if (curLocale[i].isBlank()) {
+                    if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
+                    itemsArray.add(i)
                 }
-
-                itemsArray.add(curLocale[i])
+                else {
+                    itemsArray.add(curLocale[i])
+                }
             }
             weaponOverrideSelectionBox.items = itemsArray
 

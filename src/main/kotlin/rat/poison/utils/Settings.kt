@@ -15,16 +15,16 @@ class Settings : MutableMap<String, Any?> {
     }
 
     override fun containsValue(value: Any?): Boolean {
-        TODO("containsValue")
+        return savedValues.containsValue(value)
     }
     override val entries: MutableSet<MutableMap.MutableEntry<String, Any?>>
         get() = TODO("entries")
     override val keys: MutableSet<String>
-        get() = TODO("keys")
+        get() = savedValues.keys
     override val size: Int
-        get() = TODO("size")
+        get() = savedValues.size
     override val values: MutableCollection<Any?>
-        get() = TODO("values")
+        get() = mutableListOf()
     override fun clear() {}
     override fun putAll(from: Map<out String, Any?>) {}
     override fun remove(key: String): Any? {return false}

@@ -1,3 +1,4 @@
+@file:Suppress("deprecation")
 package rat.poison.overlay
 
 import com.badlogic.gdx.ApplicationAdapter
