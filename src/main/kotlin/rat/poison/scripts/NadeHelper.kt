@@ -210,7 +210,7 @@ fun loadPositions(file: String) {
         chunks.forEach { chunk ->
             var bNotEmpty = true
             chunk.forEach {
-                if (it.isEmpty()) {
+                if (it == "") {
                     bNotEmpty = false
                 }
             }
