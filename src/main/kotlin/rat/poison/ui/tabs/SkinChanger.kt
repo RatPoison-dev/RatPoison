@@ -81,7 +81,7 @@ class SkinChangerTab : Tab(false, false) {
             true
         }
 
-        weaponSelectionBox.setItems("DESERT_EAGLE", "DUAL_BERETTA", "FIVE_SEVEN", "GLOCK", "USP_SILENCER", "CZ75A", "R8_REVOLVER", "P2000", "TEC9", "P250")
+        weaponSelectionBox.setItems(*pistolCategory)
         weaponSelectionBox.selected = "DESERT_EAGLE"
         weaponSelectionBox.changed { _, _ ->
             if (!weaponSelectionBox.selected.isNullOrEmpty()) {
@@ -148,14 +148,14 @@ class SkinChangerTab : Tab(false, false) {
             when {
                 skinWear.value < minValue -> {
                     skinWear.value = minValue.roundNDecimals(1)
-                    wearLabel.setText("Wear: ${minValue.roundNDecimals(1)}")
+                    wearLabel.setText("${"Wear".toLocale()}: ${minValue.roundNDecimals(1)}")
                 }
                 skinWear.value > maxValue -> {
                     skinWear.value = maxValue.roundNDecimals(1)
-                    wearLabel.setText("Wear: ${maxValue.roundNDecimals(1)}")
+                    wearLabel.setText("${"Wear".toLocale()}: ${maxValue.roundNDecimals(1)}")
                 }
                 else -> {
-                    wearLabel.setText("Wear: ${skinWear.value.roundNDecimals(1)}")
+                    wearLabel.setText("${"Wear".toLocale()}: ${skinWear.value.roundNDecimals(1)}")
                 }
             }
 
@@ -256,7 +256,7 @@ fun getSkinArray(wep: String): Array<String> {
             readingLines = true
         }
     }
-
+    wepSkinArray.sort()
     return wepSkinArray
 }
 

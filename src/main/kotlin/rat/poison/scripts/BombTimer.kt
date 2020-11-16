@@ -84,7 +84,7 @@ fun bombUpdater() = every(15, inGameCheck = true) {
         planted = hasBomb && !bomb.defused() && timeLeftToExplode > 0
 
         if (planted) {
-            if (location.isEmpty()) location = bomb.plantLocation()
+            if (location == "") location = bomb.plantLocation()
 
             val defuser = bomb.defuser()
             timeLeftToDefuse = bomb.defuseTime() - time

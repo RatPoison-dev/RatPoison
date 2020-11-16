@@ -127,6 +127,13 @@ class OthersTab: Tab(false, false) {
             true
         }
 
+        enableMusicKitSpoofer.changed {_, _ ->
+            if (!enableMusicKitSpoofer.isChecked) {
+                curSettings["MUSIC_KIT_ID"] = 1
+            }
+            writeSpoof()
+        }
+
         //Create Hit Sound Selector Box
 
         hitSoundBox.selected = curSettings["HITSOUND_FILE_NAME"].replace("\"", "")
