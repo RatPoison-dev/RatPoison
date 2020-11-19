@@ -1,4 +1,4 @@
-@file:Suppress("deprecation")
+@file:Suppress("DEPRECATION")
 package rat.poison.overlay
 
 import com.badlogic.gdx.ApplicationAdapter
@@ -41,6 +41,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.system.measureNanoTime
+import rat.poison.game.entity.shotsFired
 
 var opened = false
 var overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
@@ -206,6 +207,7 @@ object App : ApplicationAdapter() {
                             sbText.append("\nShouldPostProcess: $shouldPostProcess")
                             sbText.append("\nMe: $me Dead: $meDead")
                             sbText.append("\nDanger Zone: $DANGER_ZONE")
+                            sbText.append("\nShots fired: ${me.shotsFired()}")
                             sbText.append("\n")
                             sbText.append("\nTotal physical mem: ").appendHumanReadableSize(totalPhysMem)
                             sbText.append("\nFree physical mem: ").appendHumanReadableSize(freePhysMem)

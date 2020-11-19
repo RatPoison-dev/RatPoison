@@ -73,6 +73,9 @@ class OverridenWeapons : VisTable(false) {
     val enableBacktrack = OverrideVisCheckBoxCustom("Enable Backtrack", "tBacktrack")
     val backtrackMS = OverrideVisSliderCustom("Backtrack MS", "tBTMS", 20F, 200F, 5F, true, width1 = 225F, width2 = 125F)
 
+    val autoWepCheckbox = OverrideVisCheckBoxCustom("Automatic Weapons", "tAutowep")
+    val autoWepDelay = OverrideVisSliderCustom("Delay", "tAutowepDelay", 0F, 1000F, 10F, true, width1 = 225F, width2 = 125F)
+
     init {
         align(Align.left)
 
@@ -237,6 +240,10 @@ class OverridenWeapons : VisTable(false) {
         add(perfectAimCollapsible).left().row()
 
         addSeparator()
+        add(autoWepCheckbox).left().row()
+        add(autoWepDelay).left().row()
+
+        addSeparator()
 
         add(trigEnable).left().row()
         add(trigAimbot).left().row()
@@ -317,6 +324,9 @@ fun overridenWeaponsUpdate() {
 
         aimSmoothness.update()
         aimAfterShots.update()
+
+        autoWepDelay.update()
+        autoWepCheckbox.update()
 
         perfectAimCheckBox.isChecked = curWep.tPerfectAim
         perfectAimCollapsible.isCollapsed = !curWep.tPerfectAim

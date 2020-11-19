@@ -162,7 +162,7 @@ _ENABLE_FLAT_AIM_TOOLTIP = Nadpisuje aktualny kąt widzenia
 _AIM_BONE_TOOLTIP = Domyślna część ciała w którą celuje aimbot
 _AIM_FORCE_BONE_TOOLTIP = Podczas wciśnięcia przycisku zastępuje domyślną część ciała na ustawioną tutaj
 FORCE_AIM_BONE_KEY_TOOLTIP = Zastępuje domyślną część ciała aimbota
-AUTOMATIC_WEAPONS_TOOLTIP = Nieautomatyczne bronie mogą strzelać automatycznie gdy przycisk aimbota jest wciśnięty
+GLOBAL_AUTOMATIC_WEAPONS_TOOLTIP = Nieautomatyczne bronie mogą strzelać automatycznie gdy przycisk aimbota jest wciśnięty
 _AIM_ONLY_ON_SHOT_TOOLTIP = Aimbot celuje tylko wtedy kiedy możesz wystrzelić
 _FACTOR_RECOIL_TOOLTIP = Kontroluj rozrzut podczas strzelania
 ENABLE_AIM_TOOLTIP = Włącza lub wyłącza aimbota
@@ -275,7 +275,7 @@ CHAMS_ESP_TOOLTIP = Włącza/wyłącza efekt kameleona
 NADE_THROWER_SMOOTHNESS_TOOLTIP = Płynność automatycznego rzucania granatów													   
 
 //New shit redux
-AUTO_WEP_DELAY = Opóźnienie
+GLOBAL_AUTO_WEP_DELAY = Opóźnienie
 RADAR_ESP = Radar
 DRAW_AIM_FOV = FOV aimbota
 DRAW_TRIGGER_FOV = FOV triggerbota
@@ -485,7 +485,7 @@ FORCE_AIM_BONE_KEY = Przycisk zastąpienia kości
 FORCE_AIM_KEY = Przycisk celowania
 FORCE_AIM_ALWAYS = Zawsze celuj
 FORCE_AIM_THROUGH_WALLS = Zawsze celuj przez ściany
-AUTOMATIC_WEAPONS = Automatyczne bronie
+GLOBAL_AUTOMATIC_WEAPONS = Automatyczne bronie
 AIM_TARGET_SWAP_DELAY = Opóźnienie zmiany celu
 SNIPER_ENABLE_SCOPED_ONLY = Tylko przycelowany
 ENABLE_NADE_HELPER = Włącz

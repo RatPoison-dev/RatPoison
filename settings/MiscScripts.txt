@@ -1,9 +1,9 @@
 //Enable automatic weapons
 //Will attempt to shoot non-automatic weapons based on auto wep delay
-AUTOMATIC_WEAPONS = false
+GLOBAL_AUTOMATIC_WEAPONS = false
 
 //The MS delay between shooting
-AUTO_WEP_DELAY = 100
+GLOBAL_AUTO_WEP_DELAY = 100
 
 KILL_BIND = false
 KILL_BIND_KEY = -1
