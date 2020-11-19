@@ -13,10 +13,9 @@ import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.keyPressed
 import rat.poison.utils.randInt
 
-fun bunnyHop() = every(4, inGameCheck = true) {
-    if (curSettings["ENABLE_BUNNY_HOP"].strToBool() && keyPressed(curSettings["ENABLE_BUNNY_HOP_KEY"].toInt()) && (me > 0 && !meDead && me.onGround()) && (randInt(0, 100) <= curSettings["BHOP_HITCHANCE"].toInt())) {
-        updateCursorEnable()
-        if (cursorEnable) return@every
-        CSGO.clientDLL[dwForceJump] = 6
-    }
+fun bunnyHop() = every(1, continuous = true, inGameCheck = true) {
+    if (!curSettings["ENABLE_BUNNY_HOP"].strToBool() || me < 0  || meDead || !me.onGround() || cursorEnable || !keyPressed(curSettings["ENABLE_BUNNY_HOP_KEY"].toInt()) || (randInt(0, 100) > curSettings["BHOP_HITCHANCE"].toInt())) return@every
+    updateCursorEnable()
+    if (cursorEnable) return@every
+    CSGO.clientDLL[dwForceJump] = 6
 }

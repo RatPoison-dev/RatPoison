@@ -61,7 +61,7 @@ fun Player.weapon(weaponEntity: Weapon = weaponEntity()): Weapons {
 
 internal fun Player.flags(): Int = csgoEXE.int(this + fFlags)
 
-internal fun Player.onGround() = flags() and 1 == 1
+internal fun Player.onGround(): Boolean = flags() and 1 == 1
 
 internal fun Player.health(): Int = csgoEXE.int(this + iHealth)
 internal fun Memory.health(): Int = this.getInt(iHealth)
