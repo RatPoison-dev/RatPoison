@@ -35,7 +35,7 @@ class MiscVisualsTab : Tab(false, false) {
 
     val enableHeadLevel = VisCheckBoxCustom(" ", "HEAD_LVL_ENABLE", false)
     val headLevelColor = VisColorPickerCustom("Enable", "HEAD_LVL_COLOR")
-    val headLevelDeadzone = VisSliderCustom("Deadzone", "HEAD_LVL_DEADZONE", .1F, 10F, .1F, false, width1 = 225F, width2 = 225F)
+    val headLevelDeadzone = VisSliderCustom("Deadzone", "HEAD_LVL_DEADZONE", .1F, 10F, .1F, false, labelWidth = 225F, barWidth = 225F)
 
 
     init {

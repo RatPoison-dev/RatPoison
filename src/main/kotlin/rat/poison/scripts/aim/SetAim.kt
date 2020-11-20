@@ -62,6 +62,8 @@ fun setAim() = every(500, true, inGameCheck = true) {
                         if (meCurWep.rifle || meCurWep.smg) {
                             curSettings["AIM_AFTER_SHOTS"] = curWepSettings.tAimAfterShots
                         }
+                        curSettings["AUTO_WEP_DELAY"] = curWepSettings.tAutowepDelay
+                        curSettings["AUTOMATIC_WEAPONS"] = curWepSettings.tAutowep
 
                         curSettings["TRIGGER_USE_FOV"] = curWepSettings.tBTrigInFov
                         curSettings["TRIGGER_USE_INCROSS"] = curWepSettings.tBTrigInCross
@@ -94,6 +96,9 @@ fun setAim() = every(500, true, inGameCheck = true) {
                 curSettings["ENABLE_FLAT_AIM"] = curSettings[curWepCategory + "_ENABLE_FLAT_AIM"].strToBool()
                 curSettings["ENABLE_PATH_AIM"] = curSettings[curWepCategory + "_ENABLE_PATH_AIM"].strToBool()
                 curSettings["ENABLE_SCOPED_ONLY"] = curSettings["SNIPER_ENABLE_SCOPED_ONLY"].strToBool()
+
+                curSettings["AUTOMATIC_WEAPONS"] = curSettings["GLOBAL_AUTOMATIC_WEAPONS"].strToBool()
+                curSettings["AUTO_WEP_DELAY"] = curSettings["GLOBAL_AUTO_WEP_DELAY"].toInt()
 
                 curSettings["AIM_ONLY_ON_SHOT"] = curSettings[curWepCategory + "_AIM_ONLY_ON_SHOT"].strToBool()
                 curSettings["AIM_AFTER_SHOTS"] = curSettings[curWepCategory + "_AIM_AFTER_SHOTS"].toInt()

@@ -1,7 +1,9 @@
 package rat.poison.ui.uiHelpers.overrideWeaponsUI
 
 import rat.poison.curSettings
+import rat.poison.oWeapon
 import rat.poison.utils.generalUtil.pull
+import rat.poison.utils.generalUtil.stringToList
 
 fun splitOverrideString(curWep: String): MutableList<String> {
     var tStr = curWep
@@ -13,6 +15,9 @@ fun splitOverrideString(curWep: String): MutableList<String> {
 
 fun getOverrideVar(curWep: String, index: Int): Any {
     val tSA = splitOverrideString(curSettings[curWep])
+    if (tSA.size < index) {
+        return splitOverrideString(oWeapon().toString()).pull(index)
+    }
 
     return tSA.pull(index)
 }
@@ -22,7 +27,7 @@ fun getOverrideVarIndex(curWep: String, varName: String): Int {
 
     var idx = -1
     for (i in tSA.indices) {
-        if (tSA[i].contains(varName)) {
+        if (tSA[i].split("=")[0] == varName) {
             idx = i
         }
     }

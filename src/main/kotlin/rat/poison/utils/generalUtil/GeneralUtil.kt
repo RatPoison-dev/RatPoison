@@ -82,7 +82,9 @@ fun String.toWeaponClass(): oWeapon {
         tBTrigInitDelay = if (size > 22) tSA.pull(21).toInt() else tBTrigInitDelay
         tBTrigPerShotDelay = if (size > 23) tSA.pull(22).toInt() else tBTrigPerShotDelay
         tBacktrack = if (size > 24) tSA.pull(23).strToBool() else tBacktrack
-        tBTMS = if (size >= 25) tSA.pull(24).toInt() else tBTMS
+        tBTMS = if (size > 25) tSA.pull(24).toInt() else tBTMS
+        tAutowep = if (size > 26) tSA.pull(25).strToBool() else tAutowep
+        tAutowepDelay = if (size >= 27) tSA.pull(26).toInt() else tAutowepDelay
     }
     return weapon
 }

@@ -279,7 +279,8 @@ fun detectMap(mapName: String) {
     if (!curSettings["ENABLE_NADE_HELPER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return
 
     val newMapName = mapName.replace("maps\\", "").replace(".bsp", "")
-    File("$SETTINGS_DIRECTORY/NadeHelper").listFiles().forEach {
+    val dir = File("$SETTINGS_DIRECTORY/NadeHelper").listFiles()
+    dir?.forEach {
         val name = it.name
         if (newMapName == name.replace(".txt", "")) {
             loadPositions(name)

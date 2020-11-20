@@ -74,7 +74,7 @@ fun fireWeapon() {
 
     var shouldAuto = false
 
-    if (curSettings["AUTOMATIC_WEAPONS"].strToBool() && !meCurWep.automatic && meCurWep.gun && curSettings["ENABLE_AIM"].strToBool()) {
+    if (curSettings["AUTOMATIC_WEAPONS"].strToBool() && !meCurWep.automatic && meCurWep.gun) {
         shouldAuto = automaticWeapons()
 
         if (!didShoot) { //Skip first delay

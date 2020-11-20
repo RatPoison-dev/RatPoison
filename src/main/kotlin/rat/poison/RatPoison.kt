@@ -37,7 +37,8 @@ data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = 
                    var tBTrigInFov: Boolean = false,   var tBTrigBacktrack: Boolean = false,    var tBTrigFov: Float = 0F,
                    var tBTrigInitDelay: Int = 0,       var tBTrigPerShotDelay: Int = 0,
 
-                   var tBacktrack: Boolean = false,    var tBTMS: Int = 0)
+                   var tBacktrack: Boolean = false,    var tBTMS: Int = 0,
+                   var tAutowep: Boolean = false,      var tAutowepDelay: Int = 0)
 
 //Skinned Weapon
 data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var tSeed: Int)

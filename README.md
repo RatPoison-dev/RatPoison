@@ -1,7 +1,9 @@
 [![Pull Requests](https://img.shields.io/github/issues-pr/TheRatCode/RatPoison.svg)](https://github.com/TheRatCode/RatPoison/pulls/)
+[![Release](https://img.shields.io/github/release/TheRatCode/RatPoison.svg)](https://github.com/TheRatCode/RatPoison/releases/)
 ![Code size](https://img.shields.io/github/languages/code-size/TheRatCode/RatPoison.svg)
 ![GitHub repo size](https://img.shields.io/github/repo-size/TheRatCode/RatPoison.svg)
 [![Discord](https://discord.com/api/guilds/741016380282896455/widget.png?style=shield)](https://discord.gg/xkTteTM)
+[![Downloads](https://img.shields.io/github/downloads/TheFuckingRat/RatPoison/total.svg)](https://github.com/TheRatCode/RatPoison/releases/latest)
 ### [Support Ratto (Ratpoison)](https://www.patreon.com/ratto)
 
 ### Support Spravedlivo (Ratpoison + [Installer](https://github.com/SPRAVEDLIVO/RatInstaller/))
@@ -93,21 +95,44 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 
 1.8 Full Update
 * New
-    * Added Player ESP
-    * Added music kit changer
-    * Added pelvis to bone list
-    * Added RCS after # shots
+    <details>
+    
+        * Added music kit changer
+        * Added pelvis to bone list
+        * Added customizable automatic weapons delay
+        
+    </details>
 * Fixes
-    * Reworked current binds system
-    * Fixed Hold Aim not updating in menu
-    * Fixed snaplines not drawing to the bomb
+    <details>
+        
+        * Reworked current binds system
+        * Fixed Hold Aim not updating in menu
+        * Fixed snaplines not drawing to the bomb
+        
+    </details>    
 * Miscellaneous
-    * Changed default menu key to insert
-    * Reworked options tab, moved configs to a separate tab
-    * Default config now has everything disabled
+    <details>
+    
+        * Changed default menu key to insert
+        * Reworked options tab, moved configs to a separate tab
+        * Default config now has everything disabled
+        
+    </details>
 
 
 ## Available Features <a name = "features"></a>
+
+*   **Menu** - customize your settings with menu
+*   **Aimbot** - aim assistance
+*   **RCS** - recoil control system
+*   **Visuals** - render different effects (e.g. glow) on your enemies
+*   **Trigger** - automatically fires when crosshair is on enemy
+*   **Skin changer** - change weapon skins
+*   **Ranks** - reveal ranks of your enemies
+*   **Misc** - miscellaneous features that dont' fix any of these categories
+
+<details>
+
 * Menu (Windowed/Fullscreen Windowed only)
 	* Appless: Menu shows as an app on the taskbar
 
@@ -181,3 +206,4 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 	* Disable Post Processing
 	* Temporary name change
 	* Music kit changer
+</details>
