@@ -4,6 +4,8 @@ import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.curSettings
+import rat.poison.overlay.App.uiSpecList
+import rat.poison.overlay.opened
 import rat.poison.toLocale
 import rat.poison.ui.changed
 import kotlin.math.round
@@ -38,6 +40,14 @@ class UISpectatorList : VisWindow("Spectator-List".toLocale()) {
         setPosition(curSettings["SPECTATOR_LIST_X"].toFloat(), curSettings["SPECTATOR_LIST_Y"].toFloat())
         changeAlpha(curSettings["SPECTATOR_LIST_ALPHA"].toFloat())
         isResizable = false
+    }
+
+    override fun positionChanged() {
+        if (opened) {
+            curSettings["SPECTATOR_LIST_X"] = uiSpecList.x
+            curSettings["SPECTATOR_LIST_Y"] = uiSpecList.y
+            super.positionChanged()
+        }
     }
 
     fun changeAlpha(alpha: Float) {
