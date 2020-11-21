@@ -22,7 +22,6 @@ class AimBacktrackTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
 
     val enableBacktrack = VisCheckBoxCustom("Master Switch", "ENABLE_BACKTRACK")
-    val backtrackVisualize = VisCheckBoxCustom("Visualize", "BACKTRACK_VISUALIZE")
     val backtrackEnableKey = VisCheckBoxCustom("Enable On Key", "ENABLE_BACKTRACK_ON_KEY")
     val backtrackKey = VisBindTableCustom("Backtrack Key", "BACKTRACK_KEY")
     val backtrackSpotted = VisCheckBoxCustom("Check Spotted", "BACKTRACK_SPOTTED")
@@ -70,7 +69,6 @@ class AimBacktrackTable: VisTable(false) {
             padRight(25F)
             //Add all items to label for tabbed pane content
             add(enableBacktrack).left().row()
-            add(backtrackVisualize).left().row()
             add(backtrackEnableKey).left().row()
             add(backtrackKey).left().row()
 

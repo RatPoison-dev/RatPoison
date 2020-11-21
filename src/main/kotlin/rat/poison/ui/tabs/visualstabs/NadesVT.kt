@@ -26,6 +26,9 @@ class NadesVT : Tab(false, false) {
     val visualizeSmokesWidth = VisSliderCustom("Smoke Width", "VISUALIZE_SMOKES_WIDTH", 100F, 200F, 1F, true, labelWidth = 200F, barWidth = 250F)
     val visualizeSmokesHeight = VisSliderCustom("Smoke Height", "VISUALIZE_SMOKES_HEIGHT", 100F, 150F, 1F, true, labelWidth = 200F, barWidth = 250F)
 
+    val drawSmokesTime = VisCheckBoxCustom(" ", "SMOKE_WEAR_OFF_TIME", false)
+    val drawSmokesTimeColor = VisColorPickerCustom("Smokes timer", "SMOKE_WEAR_OFF_TIME_COLOR")
+
     init {
         table.padLeft(25F)
         table.padRight(25F)
@@ -48,6 +51,13 @@ class NadesVT : Tab(false, false) {
         table.add(visualizeSmokesPolys).row()
         table.add(visualizeSmokesWidth).row()
         table.add(visualizeSmokesHeight).row()
+
+        table.addSeparator()
+        tmpTable = VisTable()
+        tmpTable.add(drawSmokesTime)
+        tmpTable.add(drawSmokesTimeColor).width(175F - drawSmokesTime.width).padRight(50F)
+
+        table.add(tmpTable).left().row()
     }
 
     override fun getContentTable(): Table? {
@@ -70,5 +80,7 @@ fun nadesVTUpdate() {
         visualizeSmokesPolys.update()
         visualizeSmokesWidth.update()
         visualizeSmokesHeight.update()
+        drawSmokesTime.update()
+        drawSmokesTimeColor.update()
     }
 }

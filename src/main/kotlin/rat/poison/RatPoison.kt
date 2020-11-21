@@ -149,6 +149,8 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Backtrack") }; setupBacktrack()
     if (dbg) { println("[DEBUG] Initializing Draw Backtrack") }; drawBacktrack()
     if (dbg) { println("[DEBUG] Initializing Handle Fire Key") }; handleFireKey()
+    if (dbg) { println("[DEBUG] Initializing GVars updater") }; updateGVars()
+    if (dbg) { println("[DEBUG] Initializing Nades Timer") }; nadesTimer()
 
     if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
     if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()

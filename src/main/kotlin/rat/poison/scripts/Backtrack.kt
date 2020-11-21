@@ -42,25 +42,21 @@ fun sendPacket(bool: Boolean) { //move outta here
     engineDLL[dwbSendPackets] = byte //Bitch ass lil coder signature wont work
 }
 
-fun setupBacktrack() {
-    every(15, true, inGameCheck = true) {
-        if (!curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0) return@every
-
-        val tGvars = getGlobalVars()
-
-        if (tGvars != null) {
-            gvars = tGvars
-            haveGvars = true
-        } else {
-            haveGvars = false
-        }
+fun updateGVars() = every(15, true, inGameCheck = true){
+    if (me <= 0) return@every
+    val tGvars = getGlobalVars()
+    if (tGvars != null) {
+        gvars = tGvars
+        haveGvars = true
+    } else {
+        haveGvars = false
     }
+}
 
-    every(4, true, inGameCheck = true) {
-        if (!curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0 || !haveGvars) return@every
+fun setupBacktrack() = every(4, true, inGameCheck = true) {
+    if (!curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0 || !haveGvars) return@every
 
-        constructRecords()
-    }
+    constructRecords()
 }
 
 fun attemptBacktrack(): Boolean {

@@ -7,6 +7,7 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.MUSIC_KITS_FILE
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
+import rat.poison.game.hooks.cursorEnable
 import rat.poison.scripts.changeName
 import rat.poison.scripts.selfNade
 import rat.poison.scripts.visuals.updateHitsound
@@ -15,6 +16,7 @@ import rat.poison.scripts.writeSpoof
 import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.ListAdapter
+import rat.poison.ui.tabs.miscVisualsTab
 import rat.poison.ui.tabs.othersTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
@@ -57,6 +59,18 @@ class OthersTab: Tab(false, false) {
         musicKitArray.forEach {
             musicKitsAdapter.add(it.name)
         }
+        postProcessingDisable.changed {_, _ ->
+            when (postProcessingDisable.isChecked) {
+                true -> {
+                    curSettings["ENABLE_NIGHTMODE"] = false
+                    miscVisualsTab.nightMode.update()
+                    miscVisualsTab.nightMode.disable(true)
+                }
+                false -> miscVisualsTab.nightMode.disable(false)
+            }
+            true
+        }
+
         val selected = musicKitArray.first { it.id == curSettings["MUSIC_KIT_ID"].toInt() }.name
         val currentlySelected = VisLabel("${"CURRENTLY".toLocale()}: $selected")
         //Crashing on adding separators with .colspan(2) (?)
