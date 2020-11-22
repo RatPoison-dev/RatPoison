@@ -8,6 +8,7 @@ import rat.poison.MUSIC_KITS_FILE
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
 import rat.poison.game.hooks.cursorEnable
+import rat.poison.overlay.opened
 import rat.poison.scripts.changeName
 import rat.poison.scripts.selfNade
 import rat.poison.scripts.visuals.updateHitsound
@@ -184,12 +185,14 @@ class OthersTab: Tab(false, false) {
         return table
     }
     fun updateHitSoundsList() {
-        val hitSoundFiles = Array<String>()
-        File("$SETTINGS_DIRECTORY\\hitsounds").listFiles()?.forEach {
-            hitSoundFiles.add(it.name)
+        if (opened) {
+            val hitSoundFiles = Array<String>()
+            File("$SETTINGS_DIRECTORY\\hitsounds").listFiles()?.forEach {
+                hitSoundFiles.add(it.name)
+            }
+            hitSoundBox.items = hitSoundFiles
+            killSoundBox.items = hitSoundFiles
         }
-        hitSoundBox.items = hitSoundFiles
-        killSoundBox.items = hitSoundFiles
     }
 }
 
