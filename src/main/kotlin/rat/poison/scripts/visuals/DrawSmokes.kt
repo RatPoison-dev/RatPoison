@@ -29,6 +29,7 @@ fun drawSmokes() = App {
 
     forEntities(EntityType.CSmokeGrenadeProjectile) {
         if (!csgoEXE.boolean(it.entity + bDidSmokeEffect)) return@forEntities
+        if ((SMOKE_EFFECT_TIME - ((gvars.tickCount - csgoEXE.int(it.entity + NetVarOffsets.nSmokeEffectTickBegin)) * gvars.intervalPerTick)).toDouble().coerceAtLeast(0.0) == 0.0) return@forEntities
 
         val smokePos = it.entity.absPosition()
         val points = mutableListOf<Vector>()
@@ -98,47 +99,38 @@ fun connectPoints(vec1: Vector, vec2: Vector) {
 fun lineThroughSmoke(ent: Player): Boolean {
     var through = false
 
-    forEntities(EntityType.CSmokeGrenadeProjectile) {
-        if (through) return@forEntities
-
-        through = lineThroughSmoke(ent, it.entity)
-    }
-    return through
-}
-
-fun lineThroughSmoke(ent: Long, smoke: Long): Boolean {
-
     val mePos = me.position()
     val maxPos = ent.position()
 
     val pX = -(maxPos.y - mePos.y)
     val pY = (maxPos.x - mePos.x)
 
-    if (!csgoEXE.boolean(smoke + bDidSmokeEffect)) return false
-    if ((SMOKE_EFFECT_TIME - ((gvars.tickCount - csgoEXE.int(ent + NetVarOffsets.nSmokeEffectTickBegin)) * gvars.intervalPerTick)).toDouble().coerceAtLeast(0.0) == 0.0) return false
+    forEntities(EntityType.CSmokeGrenadeProjectile) {
+        if (!csgoEXE.boolean(it.entity + bDidSmokeEffect) || through) return@forEntities
 
-    val pos = smoke.absPosition()
+        val pos = it.entity.absPosition()
 
-    //TODO crunch...
-    val x3 = pos.x + pX
-    val y3 = pos.y + pY
-    val x4 = pos.x - pX
-    val y4 = pos.y - pY
+        //TODO crunch...
+        val x3 = pos.x + pX
+        val y3 = pos.y + pY
+        val x4 = pos.x - pX
+        val y4 = pos.y - pY
 
-    val aX = mePos.x - maxPos.x
-    val bX = x3 - x4
-    val aY = mePos.y - maxPos.y
-    val bY = y3 - y4
+        val aX = mePos.x - maxPos.x
+        val bX = x3 - x4
+        val aY = mePos.y - maxPos.y
+        val bY = y3 - y4
 
-    val delta = aX * bY - aY * bX
+        val delta = aX * bY - aY * bX
 
-    val a = mePos.x * maxPos.y - mePos.y * maxPos.x
-    val b = x3 * y4 - y3 * x4
+        val a = mePos.x * maxPos.y - mePos.y * maxPos.x
+        val b = x3 * y4 - y3 * x4
 
-    val realX = (a * bX - b * aX) / delta
-    val realY = (a * bY - b * aY) / delta
+        val realX = (a * bX - b * aX) / delta
+        val realY = (a * bY - b * aY) / delta
 
-    //This is most likely not perfect...
-    return (pos.distanceTo(Vector(realX, realY, pos.z)) <= 175f && mePos.distanceTo(maxPos) > mePos.distanceTo(pos) && mePos.y - pos.y < 10) || mePos.distanceTo(pos) <= 175f
-
+        //This is most likely not perfect...
+        through = (pos.distanceTo(Vector(realX, realY, pos.z)) <= 175f && mePos.distanceTo(maxPos) > mePos.distanceTo(pos)) || mePos.distanceTo(pos) <= 175f
+    }
+    return through
 }
