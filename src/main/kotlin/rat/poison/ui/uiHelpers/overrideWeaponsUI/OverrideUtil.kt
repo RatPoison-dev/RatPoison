@@ -15,7 +15,7 @@ fun splitOverrideString(curWep: String): MutableList<String> {
 
 fun getOverrideVar(curWep: String, index: Int): Any {
     val tSA = splitOverrideString(curSettings[curWep])
-    if (tSA.size < index) {
+    if (tSA.size <= index) {
         return splitOverrideString(oWeapon().toString()).pull(index)
     }
 

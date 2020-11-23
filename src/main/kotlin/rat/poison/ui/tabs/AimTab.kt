@@ -278,7 +278,6 @@ fun updateDisableBacktrack() {
         }
 
         //enableBacktrack.disable(bool)
-        backtrackVisualize.disable(bool)
         backtrackEnableKey.disable(bool)
         backtrackKey.disable(bool, col)
         backtrackMS.disable(bool, col)
@@ -307,7 +306,6 @@ fun updateBacktrack() {
         categorySelectionBox.items = itemsArray
 
         enableBacktrack.update()
-        backtrackVisualize.update()
         backtrackEnableKey.update()
         backtrackKey.update()
         backtrackMS.update()

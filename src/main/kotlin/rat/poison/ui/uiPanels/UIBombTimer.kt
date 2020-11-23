@@ -4,9 +4,12 @@ import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.curSettings
+import rat.poison.overlay.App
+import rat.poison.overlay.opened
 import rat.poison.scripts.bombState
 import rat.poison.toLocale
 import rat.poison.ui.changed
+import rat.poison.utils.saveWindows
 import kotlin.math.round
 
 lateinit var bombText : VisLabel
@@ -38,6 +41,14 @@ class UIBombTimer : VisWindow("Bomb-Timer".toLocale()) {
         setPosition(curSettings["BOMB_TIMER_X"].toFloat(), curSettings["BOMB_TIMER_Y"].toFloat())
         changeAlpha(curSettings["BOMB_TIMER_ALPHA"].toFloat())
         isResizable = false
+    }
+
+    override fun positionChanged() {
+        if (opened) {
+            curSettings["BOMB_TIMER_X"] = App.uiBombWindow.x
+            curSettings["BOMB_TIMER_Y"] = App.uiBombWindow.y
+            super.positionChanged()
+        }
     }
 
     fun changeAlpha(alpha: Float) {

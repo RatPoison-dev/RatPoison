@@ -2,10 +2,12 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import rat.poison.curSettings
+import rat.poison.game.me
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
+import rat.poison.scripts.visuals.lineThroughSmoke
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
@@ -23,6 +25,8 @@ fun drawBacktrack() = App {
     if (backtrackOnKey && !backtrackKeyPressed) return@App
 
     if (!meCurWep.gun) return@App
+
+    if (curSettings["BACKTRACK_VISUALIZE_SMOKE_CHECK"].strToBool() && lineThroughSmoke(me)) return@App
 
     for (i in 0 until 63) {
         if (btRecords[i][0].simtime == 0F) continue

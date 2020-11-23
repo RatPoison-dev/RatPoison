@@ -54,6 +54,7 @@ object NetVarOffsets {
 	val flSimulationTime by netVar("DT_CSPlayer", "m_flSimulationTime")
 
 	val bDidSmokeEffect by netVar("DT_SmokeGrenadeProjectile", "m_bDidSmokeEffect")
+	val nSmokeEffectTickBegin by netVar("DT_SmokeGrenadeProjectile", "m_nSmokeEffectTickBegin")
 
 	val m_iAccountID by netVar("DT_BaseAttributableItem", "m_iAccountID")
 	val m_OriginalOwnerXuidLow by netVar("DT_BaseAttributableItem", "m_OriginalOwnerXuidLow")

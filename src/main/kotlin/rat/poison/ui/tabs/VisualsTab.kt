@@ -261,7 +261,8 @@ fun updateDisableEsp() {
                 showTriggerFov.disable(bool)
                 showTriggerFovColor.disable(bool)
             }
-
+            backtrackVisualizeSmokeCheck.disable(bool)
+            backtrackVisualize.disable(bool)
             enableSpreadCircle.disable(bool)
             spreadCircleColor.disable(bool)
             enableHeadLevel.disable(bool)
@@ -280,6 +281,8 @@ fun updateDisableEsp() {
             visualizeSmokesPolys.disable(bool, col)
             visualizeSmokesWidth.disable(bool, col)
             visualizeSmokesHeight.disable(bool, col)
+            drawSmokesTime.disable(bool)
+            drawSmokesTimeColor.disable(bool)
         }
 
         if (!curSettings["ENABLE_ESP"].strToBool()) {

@@ -16,7 +16,7 @@ fun detectLocale() {
     val dir = "$SETTINGS_DIRECTORY/Localizations/locale_${locale}.locale"
     if (locale != null && Files.exists(Paths.get(dir))) {
         loadLocale(dir)
-        curSettings["CURRENT_LOCALE"] = "locale_${locale}.locale"
+        curSettings["CURRENT_LOCALE"] = "locale_${locale}"
     }
     else {
         loadLocale("$SETTINGS_DIRECTORY/Localizations/locale_en_US.locale")

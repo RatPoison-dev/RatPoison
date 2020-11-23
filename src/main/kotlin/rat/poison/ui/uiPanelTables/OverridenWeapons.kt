@@ -51,7 +51,7 @@ class OverridenWeapons : VisTable(false) {
 
     val aimFov = OverrideVisSliderCustom("FOV", "tAimFov", 0.5F, 90F, 0.5F, false, width1 = 225F, width2 = 125F)
     val aimSpeed = OverrideVisSliderCustom("Speed", "tAimSpeed", 0F, 10F, 1F, true, width1 = 225F, width2 = 125F)
-    val aimSmoothness = OverrideVisSliderCustom("Smooth", "tAimSmooth", 1F, 5F, .1F, false, width1 = 225F, width2 = 125F)
+    val aimSmoothness = OverrideVisSliderCustom("Smooth", "tAimSmooth", 1F, 10F, .1F, false, width1 = 225F, width2 = 125F)
     val aimAfterShots = OverrideVisSliderCustom("Aim After #", "tAimAfterShots", 0F, 10F, 1F, true, width1 = 225F, width2 = 125F)
 
     //Perfect Aim Collapsible

@@ -95,10 +95,14 @@ class ConfigsTab : Tab(false, false) {
         //Create Load Button
         val loadCFGButton = VisTextButton("Load".toLocale())
         loadCFGButton.changed { _, _ ->
-            val tmpSelection = configListAdapter.selection
-            if (tmpSelection.size > 0) { //Validate
-                val tmpName = configListAdapter.selection[0] //Selection is an array
-                loadCFG(tmpName)
+            if (cfgNameTextBox.text.isNullOrEmpty()) { //Save using list selection
+                val tmpSelection = configListAdapter.selection
+                if (tmpSelection.size > 0) { //Validate
+                    val tmpName = configListAdapter.selection[0] //Selection is an array
+                    loadCFG(tmpName)
+                }
+            } else {
+                loadCFG(cfgNameTextBox.text)
             }
 
             true

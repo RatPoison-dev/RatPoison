@@ -6,9 +6,12 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.entity.position
 import rat.poison.game.forEntities
+import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.game.netvars.NetVarOffsets.bDidSmokeEffect
 import rat.poison.overlay.App
 import rat.poison.overlay.App.shapeRenderer
+import rat.poison.scripts.gvars
+import rat.poison.settings.SMOKE_EFFECT_TIME
 import rat.poison.utils.Vector
 import rat.poison.utils.distanceTo
 import rat.poison.utils.generalUtil.strToBool
@@ -26,6 +29,7 @@ fun drawSmokes() = App {
 
     forEntities(EntityType.CSmokeGrenadeProjectile) {
         if (!csgoEXE.boolean(it.entity + bDidSmokeEffect)) return@forEntities
+        if ((SMOKE_EFFECT_TIME - ((gvars.tickCount - csgoEXE.int(it.entity + NetVarOffsets.nSmokeEffectTickBegin)) * gvars.intervalPerTick)).toDouble().coerceAtLeast(0.0) == 0.0) return@forEntities
 
         val smokePos = it.entity.absPosition()
         val points = mutableListOf<Vector>()
@@ -72,8 +76,6 @@ fun drawSmokes() = App {
             shapeRenderer.end()
         }
     }
-
-    lineThroughSmoke(me)
 }
 
 fun connectPoints(vec1: Vector, vec2: Vector) {

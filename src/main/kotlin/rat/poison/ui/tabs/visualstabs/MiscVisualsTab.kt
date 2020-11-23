@@ -27,6 +27,9 @@ class MiscVisualsTab : Tab(false, false) {
     val showAimFov = VisCheckBoxCustom(" ", "DRAW_AIM_FOV", false)
     val showAimFovColor = VisColorPickerCustom("Draw Aim FOV", "DRAW_AIM_FOV_COLOR")
 
+    val backtrackVisualize = VisCheckBoxCustom("Backtrack Visualize", "BACKTRACK_VISUALIZE")
+    val backtrackVisualizeSmokeCheck = VisCheckBoxCustom("Backtrack Visualize Smoke Check", "BACKTRACK_VISUALIZE_SMOKE_CHECK")
+
     val showTriggerFov = VisCheckBoxCustom(" ", "DRAW_TRIGGER_FOV", false)
     val showTriggerFovColor = VisColorPickerCustom("Draw Trigger FOV", "DRAW_TRIGGER_FOV_COLOR")
 
@@ -35,7 +38,7 @@ class MiscVisualsTab : Tab(false, false) {
 
     val enableHeadLevel = VisCheckBoxCustom(" ", "HEAD_LVL_ENABLE", false)
     val headLevelColor = VisColorPickerCustom("Enable", "HEAD_LVL_COLOR")
-    val headLevelDeadzone = VisSliderCustom("Deadzone", "HEAD_LVL_DEADZONE", .1F, 10F, .1F, false, labelWidth = 225F, barWidth = 225F)
+    val headLevelDeadzone = VisSliderCustom("Deadzone", "HEAD_LVL_DEADZONE", .01F, 10F, .1F, false, labelWidth = 225F, barWidth = 225F)
 
 
     init {
@@ -71,6 +74,11 @@ class MiscVisualsTab : Tab(false, false) {
 
         table.add(aimFov).left().row()
         table.add(triggerFov).left().row()
+
+        table.addSeparator()
+
+        table.add(backtrackVisualize).left().row()
+        table.add(backtrackVisualizeSmokeCheck).left().row()
 
         table.addSeparator()
 
@@ -113,6 +121,8 @@ fun miscVisualTabUpdate() {
         showAimFov.update()
         showAimFovColor.update()
         showTriggerFov.update()
+        backtrackVisualize.update()
+        backtrackVisualizeSmokeCheck.update()
         showTriggerFovColor.update()
         enableSpreadCircle.update()
         spreadCircleColor.update()
