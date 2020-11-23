@@ -281,8 +281,8 @@ fun detectMap(mapName: String) {
     val newMapName = mapName.replace("maps\\", "").replace(".bsp", "")
     val dir = File("$SETTINGS_DIRECTORY/NadeHelper").listFiles()
     dir?.forEach {
-        val name = it.name.replace(".txt", "")
-        if (newMapName.contains(name)) {
+        val name = it.name
+        if (newMapName.contains(name.replace(".txt", ""))) {
             loadPositions(name)
             return@forEach
         }
