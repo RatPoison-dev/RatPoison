@@ -1,18 +1,14 @@
 package rat.poison.scripts.visuals
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Align
 import rat.poison.curSettings
-import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.EntityType
+import rat.poison.game.entity.didEffect
 import rat.poison.game.entity.position
+import rat.poison.game.entity.timeLeftToDisappear
 import rat.poison.game.forEntities
-import rat.poison.game.netvars.NetVarOffsets
-import rat.poison.game.netvars.NetVarOffsets.nSmokeEffectTickBegin
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
-import rat.poison.scripts.gvars
-import rat.poison.settings.SMOKE_EFFECT_TIME
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColorGDX
@@ -25,12 +21,10 @@ fun nadesTimer() = App {
 
     forEntities(EntityType.CSmokeGrenadeProjectile) {
         val ent = it.entity
-        if (!csgoEXE.boolean(ent + NetVarOffsets.bDidSmokeEffect)) return@forEntities
+        if (!ent.didEffect()) return@forEntities
 
-        val beginTick = csgoEXE.int(ent + nSmokeEffectTickBegin)
-        val diff = gvars.tickCount - beginTick
-        val seconds = (SMOKE_EFFECT_TIME - (diff * gvars.intervalPerTick)).toDouble().coerceAtLeast(0.0)
-        if (seconds == 0.0) return@forEntities
+        val seconds = ent.timeLeftToDisappear()
+        if (seconds <= 0.0) return@forEntities
         val vec = Vector()
         if (worldToScreen(ent.position(), vec)) {
             shapeRenderer.apply {

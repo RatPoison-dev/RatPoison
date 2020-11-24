@@ -100,11 +100,7 @@ fun boxEsp() {
 			//Return if not onscreen
 			if (!worldToScreen(ent.position(), Vector())) return@forEntities
 
-			if (curSettings["BOX_SMOKE_CHECK"].strToBool()) {
-				if (lineThroughSmoke(ent)) {
-					return@forEntities
-				}
-			}
+			if (curSettings["BOX_SMOKE_CHECK"].strToBool() && lineThroughSmoke(ent)) return@forEntities
 
 			var health = 0
 			if (isPlayer) {

@@ -52,6 +52,7 @@ fun uiUpdate() {
 }
 
 fun refreshMenu() {
+    if (uiRefreshing) return
     uiRefreshing = true
 
     mainTabbedPane.removeAll()

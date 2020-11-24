@@ -120,11 +120,9 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 			}
 
 			if (color != "NIL") {
-				if (curSettings["GLOW_SMOKE_CHECK"].strToBool()) {
-					if (lineThroughSmoke(entity)) {
-						glowAddress.glow(curSettings[color].strToColor(), -1)
-						return@forEntities
-					}
+				if (curSettings["GLOW_SMOKE_CHECK"].strToBool() && lineThroughSmoke(entity)) {
+					glowAddress.glow(curSettings[color].strToColor(), -1)
+					return@forEntities
 				}
 
 				if (color == "GLOW_HEALTH") {

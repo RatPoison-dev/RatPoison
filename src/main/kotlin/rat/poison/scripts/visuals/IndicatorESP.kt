@@ -33,11 +33,7 @@ fun indicatorEsp() = App {
             EntityType.CCSPlayer -> {
                 if (entity.dead() || entity == me || entity.dormant()) return@forEntities
 
-                if (curSettings["INDICATOR_SMOKE_CHECK"].strToBool()) {
-                    if (lineThroughSmoke(entity)) {
-                        return@forEntities
-                    }
-                }
+                if (curSettings["INDICATOR_SMOKE_CHECK"].strToBool() && lineThroughSmoke(entity)) return@forEntities
 
                 if (bEnt > 0 && bEnt == entity) { //This is the bomb carrier
                     if (curSettings["INDICATOR_SHOW_ENEMIES"].strToBool() && !onTeam) {

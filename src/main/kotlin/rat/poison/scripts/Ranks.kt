@@ -10,6 +10,7 @@ import rat.poison.ui.uiRefreshing
 import rat.poison.utils.RanksPlayer
 import rat.poison.utils.every
 import rat.poison.utils.extensions.roundNDecimals
+import rat.poison.utils.saving
 
 var ranksPlayerList = mutableListOf<RanksPlayer>()
 
@@ -50,7 +51,7 @@ fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every second
     }
     ranksPlayerList.sort()
 
-    if (!uiRefreshing) {
+    if (!uiRefreshing && !saving) {
         ranksTab.updateRanks()
     }
 }

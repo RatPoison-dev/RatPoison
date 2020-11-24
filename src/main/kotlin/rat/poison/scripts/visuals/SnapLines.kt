@@ -24,11 +24,7 @@ fun snapLines() = App {
             val entPos = it.entity.position()
             val vec = Vector()
 
-            if (curSettings["SNAPLINES_SMOKE_CHECK"].strToBool()) {
-                if (lineThroughSmoke(it.entity)) {
-                    return@forEntities
-                }
-            }
+            if (curSettings["SNAPLINES_SMOKE_CHECK"].strToBool() && lineThroughSmoke(it.entity)) return@forEntities
 
             if (!(entPos.x == 0F && entPos.y == 0F && entPos.z == 0F)) {
                 shapeRenderer.apply {
@@ -59,11 +55,7 @@ fun snapLines() = App {
         val entity = it.entity
         var colStr = ""
 
-        if (curSettings["SNAPLINES_SMOKE_CHECK"].strToBool()) {
-            if (lineThroughSmoke(entity)) {
-                return@forEntities
-            }
-        }
+        if (curSettings["SNAPLINES_SMOKE_CHECK"].strToBool() && lineThroughSmoke(entity)) return@forEntities
 
         when (it.type) {
             EntityType.CCSPlayer -> {

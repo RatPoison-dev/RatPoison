@@ -22,8 +22,10 @@ import rat.poison.ui.tabs.othersTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
+import rat.poison.ui.uiRefreshing
 import rat.poison.utils.generalUtil.boolToStr
 import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.saving
 import java.io.File
 
 data class MusicKit(var id: Int = 0, var name: String = "")
@@ -185,7 +187,7 @@ class OthersTab: Tab(false, false) {
         return table
     }
     fun updateHitSoundsList() {
-        if (opened) {
+        if (opened && !saving && !uiRefreshing) {
             val hitSoundFiles = Array<String>()
             File("$SETTINGS_DIRECTORY\\hitsounds").listFiles()?.forEach {
                 hitSoundFiles.add(it.name)
