@@ -59,11 +59,17 @@ You can launch the cheat at any time after launching CSGO.
     * CSGO needs to be borderless/windowed for the overlay to show up on top of CS, otherwise it's just an app in your taskbar
     * JDK 1.8 is also known to cause this problem, make sure you have JDK 12 or later installed
 
+* Console is being spammed with GLFW errors
+    * Usually a result of unsupported or misconfigured hardware
+    * In some cases <code>GLFW_PLATFORM_ERROR</code> can be fixed by [forcing dedicated GPU on java.exe process](https://github.com/libgdx/libgdx/issues/6048#issuecomment-660468942).
+    * If RatPoison 1.6 worked fine for you but 1.7 spams OpenGL errors, try editing [this](https://github.com/TheRatCode/RatPoison/blob/82f7a76e6115c8840e4188cffdb8f10b831ae385/src/main/kotlin/rat/poison/RatPoison.kt#L183) line to <code>useOpenGL3(true, 3, 2)</code> and rebuild the cheat.
+
 * Game looks framey despite having normal FPS (example 144hz/144fps, but looks like 60)
     * Lowering opengl fps to 30 helps
     * Enabling gsync & disabling vsync if supported
    
 * Cheat is stuck at launching? Make sure you have checked all of those steps:
+    * CS:GO is running
     * you are running currently most up-to-date version of RatPoison
     * you disabled all anti-cheat clients working on your computer
     * your RatPoison folder is placed somewhere with all running permissions
