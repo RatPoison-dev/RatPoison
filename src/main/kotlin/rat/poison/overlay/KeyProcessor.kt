@@ -15,6 +15,10 @@ class KeyProcessor: InputProcessor {
         return true
     }
 
+    fun removeCallback() {
+        callBack = { _: Int, _: String -> }
+    }
+
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
         if (needKeyPress) {
             callBack(button, "mouse")

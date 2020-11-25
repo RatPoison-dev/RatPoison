@@ -83,7 +83,6 @@ fun loadCFG(cfgFileName: String, deleteCfgAfterLoad: Boolean = false) {
                 uiUpdate()
                 updateWindows()
                 println("\nLoading Complete!\n")
-                saving = false
                 LOADED_CONFIG = cfgFileName
 
                 if (opened) {
@@ -91,6 +90,7 @@ fun loadCFG(cfgFileName: String, deleteCfgAfterLoad: Boolean = false) {
                     App.uiMenu.changeAlpha()
                 }
                 if (deleteCfgAfterLoad) { cfgFile.delete() }
+                saving = false
             }
         }
     } else {
@@ -115,10 +115,9 @@ fun saveWindows() {
 }
 
 fun saveCFG(cfgFileName: String) {
-    saveWindows()
-
     if (!saving) {
         saving = true
+        saveWindows()
 
         println("Saving!")
 

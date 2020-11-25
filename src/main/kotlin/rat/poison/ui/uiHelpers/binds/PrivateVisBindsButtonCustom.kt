@@ -12,6 +12,7 @@ class PrivateVisBindsButtonCustom(varName: String): VisTextButton("_") {
         update()
         changed { _, _ ->
             setText("_")
+            keyProcessor.removeCallback()
             keyProcessor.needKeyPress = true
             keyProcessor.callBack = { keycode, type ->
                 var newKey = if (type == "button") gdxToVk[keycode]!! else gdxButtons[keycode]!!

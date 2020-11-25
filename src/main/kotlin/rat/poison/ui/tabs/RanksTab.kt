@@ -9,6 +9,7 @@ import rat.poison.scripts.ranksPlayerList
 import rat.poison.toLocale
 import rat.poison.ui.uiRefreshing
 import rat.poison.utils.RanksPlayer
+import rat.poison.utils.saving
 
 class RanksTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -54,6 +55,7 @@ class RanksTab : Tab(false, false) {
     }
 
     fun updateRanks() {
+        if (uiRefreshing || saving) return
         teamsLabel.setText("Team".toLocale() + "  \n")
         namesLabel.setText("Name".toLocale())
         ranksLabel.setText("Rank".toLocale() + "  \n")
