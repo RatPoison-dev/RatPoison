@@ -5,6 +5,7 @@ import com.sun.jna.platform.win32.WinDef
 import org.jire.arrowhead.Module
 import org.jire.arrowhead.Process
 import org.jire.arrowhead.processByName
+import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.hooks.constructEntities
 import rat.poison.game.hooks.updateCursorEnable
@@ -52,7 +53,7 @@ object CSGO {
 
 		after(10000) {
 			if (!initialized) {
-				println("You are stuck at Launching...?\n" +
+				println("You are stuck at waiting for ${curSettings["MENU_APP"]}?\n" +
 						"Make sure you have checked all of those steps:\n" +
 						"- CS:GO is running \n" +
 						"- you are running currently most up-to-date version of RatPoison\n" +

@@ -78,6 +78,9 @@ fun triggerBot() = every(5, inGameCheck = true) {
                 trigQueueShot(useDelay, bAIMBOT, backtrack = false, backtrackFallback = false)
                 return@every
             }
+            else {
+                boneTrig = bAIMBOT
+            }
         }
 
         var canFOV = false
