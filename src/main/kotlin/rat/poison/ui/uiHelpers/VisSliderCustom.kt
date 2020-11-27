@@ -38,7 +38,12 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
             }
 
             curSettings[variableName] = sliderVal.toString()
-            sliderLabel.setText("${curLocale[variableName]}: $sliderVal")
+            if (curLocale[variableName] != "") {
+                sliderLabel.setText("${curLocale[variableName]}: $sliderVal")
+            }
+            else {
+                sliderLabel.setText("${labelText}: $sliderVal")
+            }
         }
 
         add(sliderLabel).width(w1)

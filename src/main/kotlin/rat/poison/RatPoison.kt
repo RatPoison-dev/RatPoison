@@ -117,7 +117,7 @@ fun main() {
         if (dbg) { println("[DEBUG] Initializing Draw Fov") }; drawFov()
         if (dbg) { println("[DEBUG] Initializing Spread Circle") }; spreadCircle()
         if (dbg) { println("[DEBUG] Initializing Draw Smokes") }; drawSmokes()
-        if (dbg) {println("[DEBUG] Initializing Far Radar") }; farRadar()
+        if (dbg) { println("[DEBUG] Initializing Far Radar") }; farRadar()
         //farEsp()
 
         drawDebug()

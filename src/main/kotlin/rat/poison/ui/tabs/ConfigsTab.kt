@@ -19,6 +19,7 @@ import rat.poison.utils.*
 import rat.poison.utils.generalUtil.loadLocale
 import rat.poison.utils.saveDefault
 import java.io.File
+import java.lang.Exception
 
 class ConfigsTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -121,6 +122,17 @@ class ConfigsTab : Tab(false, false) {
             true
         }
 
+        val openCfgFolder = VisTextButton("Open configs folder")
+        openCfgFolder.changed {_, _ ->
+            try {
+                Runtime.getRuntime().exec("cmd /c start ${SETTINGS_DIRECTORY}\\CFGS")
+            }
+            catch (e: Exception) {
+                println("Failed to open configs folder.")
+            }
+            true
+        }
+
         //Config name text input box
         cfgNameTextBox.changed { _, _ ->
             configListAdapter.selectionManager.deselectAll()
@@ -135,7 +147,6 @@ class ConfigsTab : Tab(false, false) {
         sldTable.add(saveCFGButton).width(80F)
         sldTable.add(loadCFGButton).width(80F)
         sldTable.add(deleteButton).width(80F).row()
-        sldTable.add(saveDefaultButton).width(80F).center()
 
         table.add(configLabel).left().width(240F)
         table.add(localeLabel).left().width(240F).row()
@@ -147,6 +158,8 @@ class ConfigsTab : Tab(false, false) {
         table.add(loadLocaleButton).width(240F).row()
 
         table.add(sldTable).left().row()
+        table.add(saveDefaultButton).width(240F).center().row()
+        table.add(openCfgFolder).width(240F).center().row()
     }
 
     override fun getContentTable(): Table? {

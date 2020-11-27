@@ -108,6 +108,7 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
         * Reworked current binds system
         * Fixed Hold Aim not updating in menu
         * Fixed snaplines not drawing to the bomb
+        * Snowball weapons were invalid to aimbot
         
     </details>    
 * Miscellaneous
@@ -116,6 +117,8 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
         * Changed default menu key to insert
         * Reworked options tab, moved configs to a separate tab
         * Default config now has everything disabled
+        * Replaced rendering weapons name with icons
+        * Bumped libgdx version to 1.9.12
         
     </details>
 

@@ -63,13 +63,10 @@ class OthersTab: Tab(false, false) {
             musicKitsAdapter.add(it.name)
         }
         postProcessingDisable.changed {_, _ ->
-            when (postProcessingDisable.isChecked) {
-                true -> {
-                    curSettings["ENABLE_NIGHTMODE"] = false
-                    miscVisualsTab.nightMode.update()
-                    miscVisualsTab.nightMode.disable(true)
-                }
-                false -> miscVisualsTab.nightMode.disable(false)
+            miscVisualsTab.nightMode.disable(!postProcessingDisable.isChecked)
+            if (postProcessingDisable.isChecked) {
+                curSettings["ENABLE_NIGHTMODE"] = false
+                miscVisualsTab.nightMode.update()
             }
             true
         }

@@ -44,6 +44,7 @@ BOX_ESP_NAME_POS = TOP
 //Enable box esp weapon text; Text position Top / Bottom
 BOX_ESP_WEAPON = false
 BOX_ESP_WEAPON_POS = BOTTOM
+BOX_ESP_WEAPON_SCALE = 2
 
 //Enable box esp ammo text; Text position Top / Bottom
 BOX_ESP_AMMO = false

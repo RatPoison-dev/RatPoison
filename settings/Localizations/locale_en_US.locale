@@ -66,6 +66,7 @@ SET = Set
 RELOADING_SETTINGS = Reloading settings
 
 // Weapons
+// Player's weapon name and weapon's names might differ
 DESERT_EAGLE = DESERT_EAGLE
 DEAGLE = DEAGLE
 
