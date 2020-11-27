@@ -132,8 +132,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	if (!curSettings["ENABLE_AIM"].strToBool()) return@every
 
 	val canFire = meCurWepEnt.canFire()
-
-	if (meCurWep.grenade || meCurWep.knife || meCurWep.miscEnt || meCurWep == Weapons.ZEUS_X27 || meCurWep.bomb) { //Invalid for aimbot
+	if (meCurWep.grenade || meCurWep.knife || meCurWep.miscEnt || meCurWep == Weapons.ZEUS_X27 || meCurWep.bomb || meCurWep == Weapons.NONE) { //Invalid for aimbot
 		reset()
 		return@every
 	}

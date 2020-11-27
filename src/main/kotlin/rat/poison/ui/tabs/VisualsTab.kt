@@ -202,6 +202,7 @@ fun updateDisableEsp() {
         boxEspTab.boxEnemyColor.disable(bool)
         boxEspTab.boxWeaponsColor.disable(bool)
         boxEspTab.boxDefuserColor.disable(bool)
+        boxEspTab.boxEspWeaponScale.disable(bool, col)
 
         snaplinesEspTab.enableSnaplines.disable(bool)
         snaplinesEspTab.snaplinesWidth.disable(bool, col)

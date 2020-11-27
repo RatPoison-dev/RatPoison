@@ -13,6 +13,7 @@ import rat.poison.settings.CLIENT_MODULE_NAME
 import rat.poison.settings.ENGINE_MODULE_NAME
 import rat.poison.settings.PROCESS_ACCESS_FLAGS
 import rat.poison.settings.PROCESS_NAME
+import rat.poison.utils.after
 import rat.poison.utils.every
 import rat.poison.utils.inBackground
 import rat.poison.utils.natives.CUser32
@@ -43,7 +44,27 @@ object CSGO {
 	var gameY: Int = 0
 		private set
 
+	var initialized: Boolean = false
+		private set
+
 	fun initialize() {
+
+
+		after(10000) {
+			if (!initialized) {
+				println("You are stuck at Launching...?\n" +
+						"Make sure you have checked all of those steps:\n" +
+						"- CS:GO is running \n" +
+						"- you are running currently most up-to-date version of RatPoison\n" +
+						"- you disabled all anti-cheat clients working on your computer\n" +
+						"- your RatPoison folder is placed somewhere with all running permissions\n" +
+						"- you don't use RatPoison with some other cheats running\n" +
+						"- you aren't currently running VAC bypass (running the bat file with administrator privileges should work)\n" +
+						"- you restarted your computer\n\n" +
+						"If nothing else works then you can try running the bat file as admin.")
+			}
+		}
+
 		retry(128) {
 			csgoEXE = processByName(PROCESS_NAME, PROCESS_ACCESS_FLAGS)!!
 		}
@@ -53,6 +74,7 @@ object CSGO {
 			engineDLL = csgoEXE.modules[ENGINE_MODULE_NAME]!!
 			clientDLL = csgoEXE.modules[CLIENT_MODULE_NAME]!!
 		}
+		initialized = true
 
 		val rect = WinDef.RECT()
 		val hwd = CUser32.FindWindowA(null, "Counter-Strike: Global Offensive")

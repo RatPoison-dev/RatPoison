@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.GL20.GL_BLEND
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -18,6 +19,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.CSGO
+import rat.poison.game.entity.shotsFired
 import rat.poison.game.me
 import rat.poison.game.updateViewMatrix
 import rat.poison.haltProcess
@@ -41,7 +43,6 @@ import java.util.concurrent.TimeUnit
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.system.measureNanoTime
-import rat.poison.game.entity.shotsFired
 
 var opened = false
 var overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
@@ -58,9 +59,14 @@ object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
-    private val overlay = Overlay(if (curSettings["APPLESS"].strToBool()) { "Counter-Strike: Global Offensive" } else { curSettings["MENU_APP"].replace("\"", "") }, "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
+    private val overlay = Overlay(if (curSettings["APPLESS"].strToBool()) {
+        "Counter-Strike: Global Offensive"
+    } else {
+        curSettings["MENU_APP"].replace("\"", "")
+    }, "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     lateinit var menuStage: Stage
     lateinit var keyProcessor: KeyProcessor
+    lateinit var layout: GlyphLayout
     private val bodies = ObjectArrayList<App.() -> Unit>()
     private lateinit var camera: OrthographicCamera
 
@@ -84,6 +90,7 @@ object App : ApplicationAdapter() {
 
         //Implemet key processor for menu
         keyProcessor = KeyProcessor()
+        layout = GlyphLayout()
 
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
 
@@ -180,6 +187,12 @@ object App : ApplicationAdapter() {
                         }, TimeUnit.NANOSECONDS)
 
                         try { //Draw menu last, on top
+                            if (sb.isDrawing) { //this is probably not working
+                                sb.end()
+                            }
+                            if (shapeRenderer.isDrawing) {
+                                shapeRenderer.end()
+                            }
                             menuStage.act(Gdx.graphics.deltaTime)
                             menuStage.draw()
                         } catch(e: Exception) { }
@@ -314,7 +327,7 @@ object App : ApplicationAdapter() {
 var variableYieldTime = 0.toLong()
 var lastSyncTime = 0.toLong()
 
-fun sync(fps : Int) {
+fun sync(fps: Int) {
     if (fps <= 0) {
         return
     }

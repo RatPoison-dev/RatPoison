@@ -8,6 +8,7 @@ import rat.poison.ui.tabs.boxEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSelectBoxCustom
+import rat.poison.ui.uiHelpers.VisSliderCustom
 
 //Swap VisSelectBoxCustom to showText false is mainText is " "
 class BoxEspTab: Tab(false, false) {
@@ -17,6 +18,7 @@ class BoxEspTab: Tab(false, false) {
     val skeletonEsp = VisCheckBoxCustom("Enable Skeleton", "SKELETON_ESP")
     val showTeamSkeleton = VisCheckBoxCustom("Teammates", "SKELETON_SHOW_TEAM")
     val showEnemiesSkeleton = VisCheckBoxCustom("Enemies", "SKELETON_SHOW_ENEMIES")
+    val boxEspWeaponScale = VisSliderCustom("Weapons Scale", "BOX_ESP_WEAPON_SCALE", 0.8F, 3F, 0.1F, false, barWidth = 120F, labelWidth = 150F)
 
     val boxEsp = VisCheckBoxCustom("Bounding Box", "ENABLE_BOX_ESP")
 
@@ -96,6 +98,7 @@ class BoxEspTab: Tab(false, false) {
         table.add(boxEspScopedPos).left().row()
         table.add(boxEspFlashed).left()
         table.add(boxEspFlashedPos).left().row()
+        table.add(boxEspWeaponScale).left().row()
 
         table.add(boxDetailColor).width(175F - boxDetailColor.width).left().row()
 
@@ -164,6 +167,7 @@ fun boxEspTabUpdate() {
         skeletonEsp.update()
         showTeamSkeleton.update()
         showEnemiesSkeleton.update()
+        boxEspWeaponScale.update()
         showTeamBox.update()
         showEnemiesBox.update()
         showDefusers.update()
