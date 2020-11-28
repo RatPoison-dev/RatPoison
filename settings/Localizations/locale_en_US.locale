@@ -755,3 +755,5 @@ Load = Load
 Delete = Delete
 SMOKE_WEAR_OFF_TIME_COLOR = Smokes timer
 BACKTRACK_VISUALIZE_SMOKE_CHECK = Backtrack Visualize Smoke Check
+BOX_ESP_WEAPON_SCALE = Icons Size
+BOX_ESP_USE_ICONS = Use Icons

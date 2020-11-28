@@ -1,4 +1,5 @@
 import java.nio.file.Files
+import org.apache.commons.io.FileUtils
 
 buildscript {
 	ext.kotlin_version = '1.3.72'
@@ -13,6 +14,7 @@ buildscript {
 	dependencies {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 		classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.2'
+		classpath "commons-io:commons-io:2.6"
 	}
 }
 
@@ -34,6 +36,7 @@ repositories {
 
 dependencies {
 	compile group: "org.jire.arrowhead", name: "arrowhead", version: "1.3.3"
+	compile "commons-io:commons-io:2.6"
 
 	compile "com.badlogicgames.gdx:gdx:$gdxVersion"
 	compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
@@ -96,25 +99,12 @@ task RatPoison {
 		def dirSettings = file(new File(dir, "settings"))
 		def settings = file("settings")
 		dirSettings.mkdirs()
-		settings.listFiles().each {previous ->
-			if (previous.isDirectory()) {
-				def tmpdir = (new File(dirSettings, previous.getName()))
-				tmpdir.mkdirs()
-				previous.listFiles().each {
-					Files.copy(it.toPath(), (new File(tmpdir, it.getName())).toPath())
-				}
-			}
-			else {
-				Files.copy(previous.toPath(), (new File(dirSettings, previous.getName())).toPath())
-			}
-		}
+		FileUtils.copyDirectory(settings, dirSettings);
 
 		def dirSkin = file(new File(dir, "skin"))
 		dirSkin.mkdirs()
 		def skins = file("skin")
-		skins.listFiles().each {
-			Files.copy(it.toPath(), (new File(dirSkin, it.getName())).toPath())
-		}
+		FileUtils.copyDirectory(skins, dirSkin)
 	}
 }
 

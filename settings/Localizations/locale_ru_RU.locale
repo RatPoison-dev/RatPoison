@@ -702,4 +702,5 @@ CONFIRM = Да
 CANCEL = Нет
 SMOKE_WEAR_OFF_TIME_COLOR = Таймер смоков
 BACKTRACK_VISUALIZE_SMOKE_CHECK = Проверка на смок (визуализация бэктрека)
-BOX_ESP_WEAPON_SCALE = Размер оружий
+BOX_ESP_WEAPON_SCALE = Размер иконок
+BOX_ESP_USE_ICONS = Использовать иконки

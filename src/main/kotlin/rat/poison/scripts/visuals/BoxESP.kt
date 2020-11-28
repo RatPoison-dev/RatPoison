@@ -1,6 +1,6 @@
 package rat.poison.scripts.visuals
 
-import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
@@ -22,16 +22,18 @@ import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
+import rat.poison.toLocale
 import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.inGame
-import java.io.File
 import kotlin.math.abs
 import kotlin.math.sign
 
 data class BoundingBox(var left: Float = -1F, var right: Float = -1F, var top: Float = -1F, var bottom: Float = -1F)
+
+data class DrawableTexture(var x: Float = -1F, var y: Float = -1F, var width: Float = -1F, var height: Float = -1F)
 
 //Just a bruh moment
 private var advancedBBox = false
@@ -50,7 +52,13 @@ private var bEspMoney = false; private var bEspMoneyPos = "BOTTOM"
 private var showTeam = false; private var showEnemy = false
 private var showWeapons = false
 private var showDefuseKits = false
+private var bEspUseIcons = false
 private var weaponsScale = 0F
+private var boxDetailsLeftText = StringBuilder("")
+private var boxDetailsRightText = StringBuilder("")
+private var boxDetailsTopText = StringBuilder("")
+private var boxDetailsBottomText = StringBuilder("")
+private var topShift = 0F
 
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
 fun boxEsp() {
@@ -88,6 +96,8 @@ fun boxEsp() {
 		showWeapons = curSettings["BOX_SHOW_WEAPONS"].strToBool()
 		showDefuseKits = curSettings["BOX_SHOW_DEFUSERS"].strToBool()
 		weaponsScale = curSettings["BOX_ESP_WEAPON_SCALE"].toFloat()
+
+		bEspUseIcons = curSettings["BOX_ESP_USE_ICONS"].strToBool()
 	}
 
 	App {
@@ -98,6 +108,16 @@ fun boxEsp() {
 			val isPlayer = it.type == EntityType.CCSPlayer
 			val isWeapon = it.type.weapon
 			val isDefuseKit = it.type == EntityType.CEconEntity
+
+			boxDetailsLeftText = StringBuilder("")
+			boxDetailsRightText = StringBuilder("")
+			boxDetailsTopText = StringBuilder("")
+			boxDetailsBottomText = StringBuilder("")
+
+			var leftShift = 2F
+			var bottomShift = 0F
+			var rightShift = 0F
+			topShift = 0F
 
 			if (ent <= 0) return@forEntities
 
@@ -129,8 +149,7 @@ fun boxEsp() {
 
 			val boxWidth = bbox.right - bbox.left
 			val boxHeight = bbox.bottom - bbox.top
-			val barWidth = clamp(boxWidth * .025F, 2F, 20F)
-			var bottomShift = 0F
+			var barWidth = clamp(boxWidth * .025F, 2F, 20F)
 
 			if (shapeRenderer.isDrawing) {
 				shapeRenderer.end()
@@ -170,10 +189,9 @@ fun boxEsp() {
 			//Set filled for bars
 			shapeRenderer.set(ShapeRenderer.ShapeType.Filled)
 
+			sb.begin()
+
 			//Draw possible left elements
-			var leftShift = 2F
-			val boxDetailsLeftText = StringBuilder()
-			boxDetailsLeftText.append("")
 
 			if (bEspHealth && bEspHealthPos == "LEFT" && isPlayer) {
 				shapeRenderer.color = Color.BLACK
@@ -195,55 +213,74 @@ fun boxEsp() {
 				leftShift += 2F
 			}
 
-			if (bEspHelmet && bEspHelmetPos == "LEFT" && isPlayer) {
-				boxDetailsLeftText.append(if (entityMemory.hasHelmet()) "H" else "")
-				if (!bEspKevlar || bEspKevlarPos == "RIGHT") {
-					boxDetailsLeftText.append("\n")
+			if (bEspName && isPlayer) {
+				addText(bEspNamePos, "${ent.name()}\n")
+			}
+
+			if (bEspMoney && isPlayer) {
+				addText(bEspMoneyPos, "$${entityMemory.money()}\n")
+			}
+
+			//if (bEspFlashed && isPlayer) {
+			//	addText(bEspFlashedPos, if (entityMemory.flashed()) "Flashed\n" else "")
+			//}
+
+			if (bEspFlashed) {
+				val texture = assetManager.get<Texture>("$SETTINGS_DIRECTORY/Assets/Images/flashed.png")
+			}
+
+			if (bEspScoped && isPlayer) {
+				addText(bEspScopedPos, if (entityMemory.isScoped()) "Scoped\n" else "")
+			}
+
+			if (bEspHelmet && isPlayer) {
+				addText(bEspHelmetPos, if (bEspKevlar && bEspKevlarPos == bEspHelmetPos) { if (entityMemory.hasHelmet()) "H" else "" } else { if (entityMemory.hasHelmet()) "H\n" else "" })
+			}
+
+			if (bEspKevlar && isPlayer) {
+				addText(bEspKevlarPos, if (entityMemory.armor() > 0) "K\n" else "")
+			}
+
+			if (bEspName && isWeapon) {
+				getTextureOrAddText(assetManager, bEspUseIcons, it.type.name.replace("CWeapon", ""), "${it.type.name.replace("CWeapon", "").toLocale()}\n", bEspNamePos) { texture ->
+					layout.setText(textRenderer, getStrBuilder(bEspNamePos))
+					val drawable = when (bEspNamePos) {
+						"LEFT" -> DrawableTexture((bbox.left - barWidth * leftShift - texture.width / weaponsScale), (bbox.top - (texture.height / weaponsScale)), texture.width / weaponsScale, texture.height / weaponsScale)
+						"RIGHT" -> DrawableTexture((bbox.right + (barWidth * rightShift)) + (weaponsScale / 2) + layout.width, bbox.top - (texture.height / weaponsScale), texture.width / weaponsScale, texture.height / weaponsScale)
+						"BOTTOM" -> DrawableTexture(((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.bottom - (texture.height / weaponsScale) - layout.height, texture.width / weaponsScale, texture.height / weaponsScale)
+						"TOP" -> DrawableTexture(((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.top + topShift + (texture.height / weaponsScale) + layout.height, texture.width / weaponsScale, texture.height / weaponsScale)
+						else -> DrawableTexture()
+					}
+					sb.draw(texture, drawable.x, drawable.y, drawable.width, drawable.height)
 				}
 			}
 
-			if (bEspKevlar && bEspKevlarPos == "LEFT" && isPlayer) {
-				boxDetailsLeftText.append(if (entityMemory.armor() > 0) "K\n" else "")
-			}
-
-			if (bEspWeapon && bEspWeaponPos == "LEFT" && isPlayer) {
-				val texture = getWeaponTexture(ent.weapon().name.toLowerCase())
-				sb.begin()
-				sb.draw(texture, (bbox.left - barWidth * leftShift - texture.width / weaponsScale), (bbox.top - (texture.height / weaponsScale)), texture.width / weaponsScale, texture.height / weaponsScale)
-				sb.end()
-				texture.dispose()
-				leftShift += (texture.width / weaponsScale).toInt()
-			}
-
-			if (bEspScoped && bEspScopedPos == "LEFT" && isPlayer) {
-				boxDetailsLeftText.append(if (entityMemory.isScoped()) "Scoped\n" else "")
-			}
-
-			if (bEspFlashed && bEspFlashedPos == "LEFT" && isPlayer) {
-				boxDetailsLeftText.append(if (entityMemory.flashed()) "Flashed" else "")
-			}
-
-			if (bEspName && bEspNamePos == "LEFT") {
-				if (isPlayer) {
-					boxDetailsLeftText.append("${ent.name()}\n")
-				} else {
-					val texture = getWeaponTexture(it.type.name.replace("CWeapon", "").toLowerCase())
-					sb.begin()
-					sb.draw(texture, (bbox.left - barWidth * leftShift - texture.width / weaponsScale), (bbox.top - (texture.height / weaponsScale)), texture.width / weaponsScale, texture.height / weaponsScale)
-					sb.end()
-					texture.dispose()
-					leftShift += texture.width / weaponsScale
+			if (bEspAmmo) {
+				val curAmmo = csgoEXE.int(ent + iClip1)
+				val maxAmmo = csgoEXE.int(ent + iPrimaryReserveAmmoCount)
+				if (curAmmo != -1 && maxAmmo > 0) {
+					addText(bEspAmmoPos, "[$curAmmo/$maxAmmo]\n")
 				}
 			}
 
-			if (bEspMoney && bEspMoneyPos == "LEFT" && isPlayer) {
-				boxDetailsLeftText.append("$${entityMemory.money()}\n")
+			if (bEspWeapon && isPlayer) {
+				getTextureOrAddText(assetManager, bEspUseIcons, ent.weapon().name, "${ent.weapon().name.toLocale()}\n", bEspWeaponPos) { texture ->
+					layout.setText(textRenderer, getStrBuilder(bEspWeaponPos))
+					val drawable = when (bEspWeaponPos) {
+						"LEFT" -> DrawableTexture((bbox.left - barWidth * leftShift - texture.width / weaponsScale), (bbox.top - (texture.height / weaponsScale) - layout.width), texture.width / weaponsScale, texture.height / weaponsScale)
+						"RIGHT" -> DrawableTexture((bbox.right + (barWidth * rightShift)) + (weaponsScale / 2) + layout.width, bbox.top - (texture.height / weaponsScale), texture.width / weaponsScale, texture.height / weaponsScale)
+						"BOTTOM" -> DrawableTexture(((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.bottom - layout.height, texture.width / weaponsScale, texture.height / weaponsScale)
+						"TOP" -> DrawableTexture(((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.top + topShift + (texture.height / weaponsScale), texture.width / weaponsScale, texture.height / weaponsScale)
+						else -> DrawableTexture()
+					}
+					sb.draw(texture, drawable.x, drawable.y, drawable.width, drawable.height)
+				}
 			}
+
+			sb.end()
+
 
 			//Draw possible right elements
-			var rightShift = 1
-			val boxDetailsRightText = StringBuilder()
-			boxDetailsRightText.append("")
 
 			if (bEspHealth && bEspHealthPos == "RIGHT" && isPlayer) {
 				shapeRenderer.color = Color.BLACK
@@ -267,178 +304,6 @@ fun boxEsp() {
 
 			shapeRenderer.end()
 
-			if (bEspHelmet && bEspHelmetPos == "RIGHT" && isPlayer) {
-				boxDetailsRightText.append(if (entityMemory.hasHelmet()) "H" else "")
-				if (!bEspKevlar || bEspKevlarPos == "LEFT") {
-					boxDetailsRightText.append("\n")
-				}
-			}
-
-			if (bEspKevlar && bEspKevlarPos == "RIGHT" && isPlayer) {
-				boxDetailsRightText.append(if (entityMemory.armor() > 0) "K\n" else "")
-			}
-
-			if (bEspScoped && bEspScopedPos == "RIGHT" && isPlayer) {
-				boxDetailsRightText.append(if (entityMemory.isScoped()) "Scoped\n" else "")
-			}
-
-			if (bEspFlashed && bEspFlashedPos == "RIGHT" && isPlayer) {
-				boxDetailsRightText.append(if (entityMemory.flashed()) "Flashed\n" else "")
-			}
-
-			if (bEspMoney && bEspMoneyPos == "RIGHT" && isPlayer) {
-				boxDetailsRightText.append("$${entityMemory.money()}\n")
-			}
-
-			if (bEspName && bEspNamePos == "RIGHT") {
-				if (isPlayer) {
-					boxDetailsRightText.append("${ent.name()}\n")
-				} else {
-					val texture = getWeaponTexture(it.type.name.replace("CWeapon", "").toLowerCase())
-					sb.begin()
-					layout.setText(textRenderer, boxDetailsRightText)
-					sb.draw(texture, (bbox.right + (barWidth * rightShift)) + (weaponsScale / 2) + layout.width, bbox.top - (texture.height / weaponsScale), texture.width / weaponsScale, texture.height / weaponsScale)
-					sb.end()
-					texture.dispose()
-				}
-			}
-
-			if (bEspWeapon && bEspWeaponPos == "RIGHT" && isPlayer) {
-				val texture = getWeaponTexture(ent.weapon().name.toLowerCase())
-				sb.begin()
-				layout.setText(textRenderer, boxDetailsRightText)
-				sb.draw(texture, (bbox.right + (barWidth * rightShift)) + (weaponsScale / 2) + layout.width, bbox.top - (texture.height / weaponsScale), texture.width / weaponsScale, texture.height / weaponsScale)
-				sb.end()
-				texture.dispose()
-			}
-
-
-			//Draw possible top elements
-			var topShift = 0F
-			val boxDetailsTopText = StringBuilder()
-			boxDetailsTopText.append("")
-
-			if (bEspName && bEspNamePos == "TOP") {
-				if (isPlayer) {
-					boxDetailsTopText.append("${ent.name()}\n")
-				} else {
-					val texture = getWeaponTexture(it.type.name.replace("CWeapon", "").toLowerCase())
-					sb.begin()
-					sb.draw(texture, ((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.top + topShift + (texture.height / weaponsScale), texture.width / weaponsScale, texture.height / weaponsScale)
-					sb.end()
-					texture.dispose()
-					topShift += texture.height / weaponsScale
-				}
-
-				topShift += 18
-			}
-
-			if (bEspMoney && bEspMoneyPos == "TOP" && isPlayer) {
-				boxDetailsTopText.append("$${entityMemory.money()}\n")
-				topShift += 18
-			}
-
-			if (bEspScoped && bEspScopedPos == "TOP" && isPlayer) {
-				if (entityMemory.isScoped()) {
-					boxDetailsTopText.append("Scoped\n")
-					topShift += 18
-				}
-			}
-
-			if (bEspFlashed && bEspFlashedPos == "TOP" && isPlayer) {
-				if (entityMemory.flashed()) {
-					boxDetailsTopText.append("Flashed\n")
-					topShift += 18
-				}
-			}
-
-			if (bEspWeapon && bEspWeaponPos == "TOP" && isPlayer) {
-				val texture = getWeaponTexture(ent.weapon().name.toLowerCase())
-				sb.begin()
-				sb.draw(texture, ((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.top + topShift - (texture.height / weaponsScale), texture.width / weaponsScale, texture.height / weaponsScale)
-				sb.end()
-				texture.dispose()
-				topShift += texture.height / weaponsScale
-			}
-
-			if (bEspAmmo && bEspAmmoPos == "TOP" && (isPlayer || isWeapon)) {
-				val curAmmo = csgoEXE.int(ent + iClip1)
-				val maxAmmo = csgoEXE.int(ent + iPrimaryReserveAmmoCount)
-
-				if (curAmmo != -1 && maxAmmo > 0) {
-					if (bEspWeapon) {
-						if (bEspWeaponPos == "TOP") {
-							boxDetailsTopText.append(" ")
-						} else {
-							topShift += 18
-						}
-					} else {
-						boxDetailsTopText.append("\n")
-						topShift += 18
-					}
-					boxDetailsTopText.append("[$curAmmo/$maxAmmo]")
-				}
-			}
-
-			//Draw possible bottom elements
-			val boxDetailsBottomText = StringBuilder()
-			boxDetailsBottomText.append("")
-			if (bEspWeapon && bEspWeaponPos == "BOTTOM" && isPlayer) {
-				val texture = getWeaponTexture(ent.weapon().name.toLowerCase())
-				if (sb.isDrawing) {
-					sb.end()
-				}
-				sb.begin()
-				sb.draw(texture, ((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.bottom - (texture.height / weaponsScale), texture.width / weaponsScale, texture.height / weaponsScale)
-				sb.end()
-				bottomShift += texture.height / weaponsScale
-				texture.dispose()
-			}
-
-			if (bEspName && bEspNamePos == "BOTTOM") {
-				if (isPlayer) {
-					boxDetailsBottomText.append("${ent.name()}\n")
-				} else {
-					val texture = getWeaponTexture(it.type.name.replace("CWeapon", "").toLowerCase())
-					if (sb.isDrawing) {
-						sb.end()
-					}
-					sb.begin()
-					sb.draw(texture, ((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.bottom - (texture.height / weaponsScale), texture.width / weaponsScale, texture.height / weaponsScale)
-					sb.end()
-					bottomShift += texture.height / weaponsScale
-					texture.dispose()
-				}
-			}
-
-			if (bEspMoney && bEspMoneyPos == "BOTTOM" && isPlayer) {
-				boxDetailsBottomText.append("$${entityMemory.money()}\n")
-			}
-
-			if (bEspScoped && bEspScopedPos == "BOTTOM" && isPlayer) {
-				boxDetailsBottomText.append(if (entityMemory.isScoped()) "Scoped\n" else "")
-			}
-
-			if (bEspFlashed && bEspFlashedPos == "BOTTOM" && isPlayer) {
-				boxDetailsBottomText.append(if (entityMemory.flashed()) "Flashed\n" else "")
-			}
-
-			if (bEspAmmo && bEspAmmoPos == "BOTTOM" && (isPlayer || isWeapon)) {
-				val curAmmo = csgoEXE.int(ent + iClip1)
-				val maxAmmo = csgoEXE.int(ent + iPrimaryReserveAmmoCount)
-
-				if (curAmmo != -1 && maxAmmo > 0) {
-					if (bEspWeapon) {
-						if (bEspWeaponPos == "BOTTOM") {
-							boxDetailsBottomText.append(" ")
-						}
-					} else {
-						boxDetailsBottomText.append("\n")
-					}
-					boxDetailsBottomText.append("[$curAmmo/$maxAmmo]")
-				}
-			}
-
 			if (!sb.isDrawing) {
 				sb.begin()
 			}
@@ -453,6 +318,31 @@ fun boxEsp() {
 		}
 	}
 }
+
+fun getStrBuilder(position: String): StringBuilder {
+	return when (position)  {
+		"LEFT" -> boxDetailsLeftText
+		"RIGHT" -> boxDetailsRightText
+		"TOP" -> boxDetailsTopText
+		"BOTTOM" -> boxDetailsBottomText
+		else -> StringBuilder("")
+	}
+}
+fun addText(position: String, str: String) {
+	val renderer = getStrBuilder(position)
+	renderer.append(str)
+	when (position) {
+		"TOP" -> topShift += 18F
+	}
+}
+
+fun getTextureOrAddText(assetManager: AssetManager, useIcons: Boolean, textureName: String, text: String, position: String, callback: (Texture) -> Unit) {
+	if (!useIcons) { addText(position, text); return }
+	val texture = getWeaponTexture(assetManager, textureName)
+	callback.invoke(texture)
+}
+
+
 
 //Create a fake accurate box using headpos
 fun setupFakeBox(ent: Entity): BoundingBox {
@@ -576,9 +466,10 @@ fun transformVector(vec: Vector, array: Array<FloatArray>): Vector {
 	return outVec
 }
 
-fun getWeaponTexture(name: String): Texture {
-	return when (File("$SETTINGS_DIRECTORY/Weapons/$name.png").exists()) {
-		true -> Texture(Gdx.files.internal("$SETTINGS_DIRECTORY/Weapons/$name.png"))
-		false -> Texture("$SETTINGS_DIRECTORY/Weapons/knife.png")
+fun getWeaponTexture(assetManager: AssetManager, name: String): Texture {
+	val assetName = "$SETTINGS_DIRECTORY/Assets/Images/${name.toLowerCase()}.png"
+	return when (assetManager.contains(assetName)) {
+		true -> assetManager.get(assetName)
+		false -> assetManager.get("$SETTINGS_DIRECTORY/Assets/Images/knife.png")
 	}
 }
