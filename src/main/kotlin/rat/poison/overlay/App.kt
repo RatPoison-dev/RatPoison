@@ -4,18 +4,23 @@ package rat.poison.overlay
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
+import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.GL20.GL_BLEND
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.Scaling
+import com.badlogic.gdx.utils.viewport.ScalingViewport
 import com.kotcrab.vis.ui.VisUI
 import com.sun.management.OperatingSystemMXBean
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
+import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.CSGO
@@ -38,6 +43,7 @@ import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
 import rat.poison.utils.keyPressed
 import rat.poison.utils.shouldPostProcess
+import java.io.File
 import java.lang.management.ManagementFactory
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
@@ -65,6 +71,9 @@ object App : ApplicationAdapter() {
         curSettings["MENU_APP"].replace("\"", "")
     }, "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     lateinit var menuStage: Stage
+    lateinit var assetManager: AssetManager
+    lateinit var menuBatch: SpriteBatch
+    lateinit var viewport: ScalingViewport
     lateinit var keyProcessor: KeyProcessor
     lateinit var layout: GlyphLayout
     private val bodies = ObjectArrayList<App.() -> Unit>()
@@ -85,12 +94,13 @@ object App : ApplicationAdapter() {
 
         VisUI.load(Gdx.files.internal("skin\\tinted.json"))
 
-        //Implement stage for menu
-        menuStage = Stage() //Main Menu Stage
-
-        //Implemet key processor for menu
+        //Implement key processor for menu
         keyProcessor = KeyProcessor()
         layout = GlyphLayout()
+
+        //Initialize asset manager and load assets
+        assetManager = AssetManager()
+        loadAssets()
 
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
 
@@ -100,16 +110,29 @@ object App : ApplicationAdapter() {
         uiAimOverridenWeapons = UIAimOverridenWeapons()
         uiKeybinds = UIKeybinds()
 
+        camera = OrthographicCamera()
+        sb = SpriteBatch()
+        menuBatch = SpriteBatch()
+        viewport = ScalingViewport(Scaling.stretch, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat(), camera)
+        menuStage = Stage(viewport, menuBatch) //Main Menu Stage
         menuStage.addActor(uiMenu)
 
         Gdx.input.inputProcessor = InputMultiplexer(menuStage, keyProcessor)
-
-        sb = SpriteBatch()
         textRenderer = BitmapFont(false)
         camera = OrthographicCamera()
         Gdx.gl.glClearColor(0F, 0F, 0F, 0F)
 
+        //Implement stage for menu
+
         overlay.start()
+    }
+
+    private fun loadAssets() {
+        File("$SETTINGS_DIRECTORY/Assets/Images").listFiles()?.forEach {
+            assetManager.load(it.toString(), Texture::class.java)
+        }
+
+        assetManager.finishLoading()
     }
 
     override fun render() {
@@ -187,11 +210,8 @@ object App : ApplicationAdapter() {
                         }, TimeUnit.NANOSECONDS)
 
                         try { //Draw menu last, on top
-                            if (sb.isDrawing) { //this is probably not working
-                                sb.end()
-                            }
-                            if (shapeRenderer.isDrawing) {
-                                shapeRenderer.end()
+                            if (menuBatch.isDrawing) {
+                                menuBatch.end()
                             }
                             menuStage.act(Gdx.graphics.deltaTime)
                             menuStage.draw()

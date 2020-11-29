@@ -1,5 +1,6 @@
 //Enable box esp
 ENABLE_BOX_ESP = false
+BOX_ESP_USE_ICONS = false
 
 ADVANCED_BOUNDING_BOX = false
 

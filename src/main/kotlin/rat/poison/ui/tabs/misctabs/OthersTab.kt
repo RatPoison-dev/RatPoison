@@ -31,7 +31,7 @@ import java.io.File
 data class MusicKit(var id: Int = 0, var name: String = "")
 
 class OthersTab: Tab(false, false) {
-    private val table = VisTable()
+    private val table = VisTable(false)
     val doorSpam = VisCheckBoxCustom("Door Spam", "D_SPAM")
     var doorSpamKey = VisBindTableCustom("Door Spam Key", "D_SPAM_KEY")
     val weaponSpam = VisCheckBoxCustom("Weapon Spam", "W_SPAM")
@@ -63,7 +63,7 @@ class OthersTab: Tab(false, false) {
             musicKitsAdapter.add(it.name)
         }
         postProcessingDisable.changed {_, _ ->
-            miscVisualsTab.nightMode.disable(!postProcessingDisable.isChecked)
+            miscVisualsTab.nightMode.disable(postProcessingDisable.isChecked)
             if (postProcessingDisable.isChecked) {
                 curSettings["ENABLE_NIGHTMODE"] = false
                 miscVisualsTab.nightMode.update()
@@ -76,22 +76,23 @@ class OthersTab: Tab(false, false) {
         //Crashing on adding separators with .colspan(2) (?)
         table.padLeft(25F)
         table.padRight(25F)
-
-        val hitSound = VisTable()
         updateHitSoundsList()
 
+        val hitSound = VisTable()
         hitSound.add(hitSoundCheckBox).left()
-        hitSound.add(hitSoundBox).padLeft(168F-hitSoundCheckBox.width).width(90F)
-
-        val tmpTable = VisTable()
-        tmpTable.add(killSoundCheckBox).left()
-        tmpTable.add(killSoundBox).padLeft(168F-killSoundCheckBox.width).width(90F)
+        hitSound.add(hitSoundBox).padLeft(226F-hitSoundCheckBox.width).width(90F)
         table.add(hitSound).left().row()
         table.add(hitSoundVolume).left().row()
         table.addSeparator().row()
-        table.add(tmpTable).left().row()
+
+        val killSound = VisTable()
+        killSound.add(killSoundCheckBox).left()
+        killSound.add(killSoundBox).padLeft(226F-killSoundCheckBox.width).width(90F)
+        table.add(killSound).left().row()
         table.add(killSoundVolume).left().row()
         table.addSeparator().row()
+
+
         table.add(enableReducedFlash).left().row()
         table.add(flashMaxAlpha).left().row()
         table.addSeparator().row()

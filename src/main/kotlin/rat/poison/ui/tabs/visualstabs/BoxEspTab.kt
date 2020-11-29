@@ -21,6 +21,7 @@ class BoxEspTab: Tab(false, false) {
     val boxEspWeaponScale = VisSliderCustom("Weapons Scale", "BOX_ESP_WEAPON_SCALE", 0.8F, 3F, 0.1F, false, barWidth = 120F, labelWidth = 150F)
 
     val boxEsp = VisCheckBoxCustom("Bounding Box", "ENABLE_BOX_ESP")
+    val boxEspUseIcons = VisCheckBoxCustom("Use Icons", "BOX_ESP_USE_ICONS")
 
     val advancedBBox = VisCheckBoxCustom("Advanced BBOX", "ADVANCED_BOUNDING_BOX")
 
@@ -41,11 +42,11 @@ class BoxEspTab: Tab(false, false) {
     val boxEspMoneyPos = VisSelectBoxCustom(" ", "BOX_ESP_MONEY_POS", false, false, "TOP", "BOTTOM", "LEFT", "RIGHT")
 
     val boxEspAmmo = VisCheckBoxCustom("Ammo", "BOX_ESP_AMMO")
-    val boxEspAmmoPos = VisSelectBoxCustom(" ", "BOX_ESP_AMMO_POS", false, false, "TOP", "BOTTOM")
+    val boxEspAmmoPos = VisSelectBoxCustom(" ", "BOX_ESP_AMMO_POS", false, false, "TOP", "BOTTOM", "LEFT", "RIGHT")
     val boxEspHelmet = VisCheckBoxCustom("Helmet", "BOX_ESP_HELMET")
-    val boxEspHelmetPos = VisSelectBoxCustom(" ", "BOX_ESP_HELMET_POS", false, false, "LEFT", "RIGHT")
+    val boxEspHelmetPos = VisSelectBoxCustom(" ", "BOX_ESP_HELMET_POS", false, false, "TOP", "BOTTOM", "LEFT", "RIGHT")
     val boxEspKevlar = VisCheckBoxCustom("Kevlar", "BOX_ESP_KEVLAR")
-    val boxEspKevlarPos = VisSelectBoxCustom(" ", "BOX_ESP_KEVLAR_POS", false, false, "LEFT", "RIGHT")
+    val boxEspKevlarPos = VisSelectBoxCustom(" ", "BOX_ESP_KEVLAR_POS", false, false, "TOP", "BOTTOM", "LEFT", "RIGHT")
     val boxEspScoped = VisCheckBoxCustom("Scoped", "BOX_ESP_SCOPED")
     val boxEspScopedPos = VisSelectBoxCustom(" ", "BOX_ESP_SCOPED_POS", false, false, "TOP", "BOTTOM", "LEFT", "RIGHT")
     val boxEspFlashed = VisCheckBoxCustom("Flashed", "BOX_ESP_FLASHED")
@@ -74,10 +75,12 @@ class BoxEspTab: Tab(false, false) {
         table.add(showEnemiesSkeleton).padRight(225F - showEnemiesSkeleton.width).left().row()//225
         table.addSeparator().colspan(2)
         table.add(boxEsp).left().row()
+        table.add(boxEspUseIcons).left().row()
         table.add(advancedBBox).left().row()
         table.add(boxSmokeCheck).left().row()
         table.add(farRadarBox).left().row()
         table.add(boxEspDetails).left().row()
+        table.addSeparator().colspan(2)
         table.add(boxEspName).left()
         table.add(boxEspNamePos).left().row()
         table.add(boxEspWeapon).left()
@@ -101,6 +104,8 @@ class BoxEspTab: Tab(false, false) {
         table.add(boxEspWeaponScale).left().row()
 
         table.add(boxDetailColor).width(175F - boxDetailColor.width).left().row()
+
+        table.addSeparator().colspan(2)
 
         var tmpTable = VisTable()
         tmpTable.add(showTeamBox)
@@ -139,6 +144,7 @@ class BoxEspTab: Tab(false, false) {
 fun boxEspTabUpdate() {
     boxEspTab.apply {
         boxEsp.update()
+        boxEspUseIcons.update()
         advancedBBox.update()
         boxSmokeCheck.update()
         farRadarBox.update()

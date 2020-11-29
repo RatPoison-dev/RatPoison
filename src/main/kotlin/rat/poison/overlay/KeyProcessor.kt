@@ -5,7 +5,7 @@ import com.badlogic.gdx.InputProcessor
 //rewrite to events
 class KeyProcessor: InputProcessor {
     var needKeyPress = false
-    var callBack: (_: Int, __: String) -> Unit = { _: Int, _: String -> }
+    lateinit var callBack : (Int, String) -> Unit
 
     override fun keyDown(keycode: Int): Boolean {
         if (needKeyPress) {
@@ -16,7 +16,7 @@ class KeyProcessor: InputProcessor {
     }
 
     fun removeCallback() {
-        callBack = { _: Int, _: String -> }
+        callBack = { _, _ -> }
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
