@@ -17,6 +17,7 @@ lateinit var specListText : VisLabel
 class UISpectatorList : VisWindow("Spectator-List".toLocale()) {
     init {
         defaults().left()
+        addCloseButton()
 
         specListText = VisLabel()
 
@@ -38,7 +39,7 @@ class UISpectatorList : VisWindow("Spectator-List".toLocale()) {
 
         setSize(300F, 350F)
         setPosition(curSettings["SPECTATOR_LIST_X"].toFloat(), curSettings["SPECTATOR_LIST_Y"].toFloat())
-        changeAlpha(curSettings["SPECTATOR_LIST_ALPHA"].toFloat())
+        updateAlpha()
         isResizable = false
     }
 
@@ -48,6 +49,14 @@ class UISpectatorList : VisWindow("Spectator-List".toLocale()) {
             curSettings["SPECTATOR_LIST_Y"] = uiSpecList.y
             super.positionChanged()
         }
+    }
+
+    override fun close() {
+        curSettings["SPECTATOR_LIST"] = "false"
+    }
+
+    fun updateAlpha() {
+        changeAlpha(curSettings["SPECTATOR_LIST_ALPHA"].toFloat())
     }
 
     fun changeAlpha(alpha: Float) {

@@ -1,8 +1,12 @@
+@file:Suppress("DEPRICATION")
+
 package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.math.Vector3
@@ -33,7 +37,7 @@ import kotlin.math.sign
 
 data class BoundingBox(var left: Float = -1F, var right: Float = -1F, var top: Float = -1F, var bottom: Float = -1F)
 
-data class DrawableTexture(var x: Float = -1F, var y: Float = -1F, var width: Float = -1F, var height: Float = -1F)
+data class DrawableTexture(var texture: Texture, var position: String = "")
 
 //Just a bruh moment
 private var advancedBBox = false
@@ -54,11 +58,12 @@ private var showWeapons = false
 private var showDefuseKits = false
 private var bEspUseIcons = false
 private var weaponsScale = 0F
-private var boxDetailsLeftText = StringBuilder("")
-private var boxDetailsRightText = StringBuilder("")
-private var boxDetailsTopText = StringBuilder("")
-private var boxDetailsBottomText = StringBuilder("")
+private var boxDetailsLeftText = StringBuilder()
+private var boxDetailsRightText = StringBuilder()
+private var boxDetailsTopText = StringBuilder()
+private var boxDetailsBottomText = StringBuilder()
 private var topShift = 0F
+private var textureBuilder = mutableListOf<DrawableTexture>()
 
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
 fun boxEsp() {
@@ -118,6 +123,7 @@ fun boxEsp() {
 			var bottomShift = 0F
 			var rightShift = 0F
 			topShift = 0F
+			textureBuilder.clear()
 
 			if (ent <= 0) return@forEntities
 
@@ -189,8 +195,6 @@ fun boxEsp() {
 			//Set filled for bars
 			shapeRenderer.set(ShapeRenderer.ShapeType.Filled)
 
-			sb.begin()
-
 			//Draw possible left elements
 
 			if (bEspHealth && bEspHealthPos == "LEFT" && isPlayer) {
@@ -221,34 +225,12 @@ fun boxEsp() {
 				addText(bEspMoneyPos, "$${entityMemory.money()}\n")
 			}
 
-			if (bEspFlashed && isPlayer) {
-				addText(bEspFlashedPos, if (entityMemory.flashed()) "Flashed\n" else "")
-			}
-
-			if (bEspScoped && isPlayer) {
-				addText(bEspScopedPos, if (entityMemory.isScoped()) "Scoped\n" else "")
-			}
-
-			if (bEspHelmet && isPlayer) {
+			if (bEspHelmet && isPlayer && !bEspUseIcons) {
 				addText(bEspHelmetPos, if (bEspKevlar && bEspKevlarPos == bEspHelmetPos) { if (entityMemory.hasHelmet()) "H" else "" } else { if (entityMemory.hasHelmet()) "H\n" else "" })
 			}
 
-			if (bEspKevlar && isPlayer) {
+			if (bEspKevlar && isPlayer && !bEspUseIcons) {
 				addText(bEspKevlarPos, if (entityMemory.armor() > 0) "K\n" else "")
-			}
-
-			if (bEspName && isWeapon) {
-				getTextureOrAddText(assetManager, bEspUseIcons, it.type.name.replace("CWeapon", ""), "${it.type.name.replace("CWeapon", "").toLocale()}\n", bEspNamePos) { texture ->
-					layout.setText(textRenderer, getStrBuilder(bEspNamePos))
-					val drawable = when (bEspNamePos) {
-						"LEFT" -> DrawableTexture((bbox.left - barWidth * leftShift - texture.width / weaponsScale), (bbox.top - (texture.height / weaponsScale)), texture.width / weaponsScale, texture.height / weaponsScale)
-						"RIGHT" -> DrawableTexture((bbox.right + (barWidth * rightShift)) + (weaponsScale / 2) + layout.width, bbox.top - (texture.height / weaponsScale), texture.width / weaponsScale, texture.height / weaponsScale)
-						"BOTTOM" -> DrawableTexture(((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.bottom - (texture.height / weaponsScale) - layout.height, texture.width / weaponsScale, texture.height / weaponsScale)
-						"TOP" -> DrawableTexture(((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.top + topShift + (texture.height / weaponsScale) + layout.height, texture.width / weaponsScale, texture.height / weaponsScale)
-						else -> DrawableTexture()
-					}
-					sb.draw(texture, drawable.x, drawable.y, drawable.width, drawable.height)
-				}
 			}
 
 			if (bEspAmmo) {
@@ -259,21 +241,29 @@ fun boxEsp() {
 				}
 			}
 
-			if (bEspWeapon && isPlayer) {
-				getTextureOrAddText(assetManager, bEspUseIcons, ent.weapon().name, "${ent.weapon().name.toLocale()}\n", bEspWeaponPos) { texture ->
-					layout.setText(textRenderer, getStrBuilder(bEspWeaponPos))
-					val drawable = when (bEspWeaponPos) {
-						"LEFT" -> DrawableTexture((bbox.left - barWidth * leftShift - texture.width / weaponsScale), (bbox.top - (texture.height / weaponsScale) - layout.width), texture.width / weaponsScale, texture.height / weaponsScale)
-						"RIGHT" -> DrawableTexture((bbox.right + (barWidth * rightShift)) + (weaponsScale / 2) + layout.width, bbox.top - (texture.height / weaponsScale), texture.width / weaponsScale, texture.height / weaponsScale)
-						"BOTTOM" -> DrawableTexture(((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.bottom - layout.height, texture.width / weaponsScale, texture.height / weaponsScale)
-						"TOP" -> DrawableTexture(((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.top + topShift + (texture.height / weaponsScale), texture.width / weaponsScale, texture.height / weaponsScale)
-						else -> DrawableTexture()
-					}
-					sb.draw(texture, drawable.x, drawable.y, drawable.width, drawable.height)
-				}
+			if (bEspName && isWeapon) {
+				addTextureOrText(assetManager, bEspUseIcons, it.type.name.replace("CWeapon", ""), "${it.type.name.replace("CWeapon", "").toLocale()}\n", bEspNamePos)
 			}
 
-			sb.end()
+			if (bEspFlashed && isPlayer && entityMemory.flashed()) {
+				addTextureOrText(assetManager, bEspUseIcons, "flashed", "Flashed\n", bEspFlashedPos)
+			}
+
+			if (bEspWeapon && isPlayer) {
+				addTextureOrText(assetManager, bEspUseIcons, ent.weapon().name, "${ent.weapon().name.toLocale()}\n", bEspWeaponPos)
+			}
+
+			if (bEspKevlar && isPlayer && bEspUseIcons && !entityMemory.hasHelmet() && entityMemory.armor() > 0) {
+				addTextureOrText(assetManager, bEspUseIcons, "kevlar", "K\n", bEspKevlarPos)
+			}
+
+			if (bEspKevlar && isPlayer && bEspUseIcons && bEspHelmet && entityMemory.hasHelmet() && entityMemory.armor() > 0) {
+				addTextureOrText(assetManager, bEspUseIcons, "assaultsuit", "K\n", bEspKevlarPos)
+			}
+
+			if (bEspScoped && isPlayer && entityMemory.isScoped()) {
+				addTextureOrText(assetManager, bEspUseIcons, "scoped", "Scoped\n", bEspScopedPos)
+			}
 
 
 			//Draw possible right elements
@@ -304,12 +294,42 @@ fun boxEsp() {
 				sb.begin()
 			}
 
+			//draw details first
 			val detailTextColor = curSettings["BOX_DETAILS_TEXT_COLOR"].strToColorGDX()
 			textRenderer.color = detailTextColor
 			textRenderer.draw(sb, boxDetailsLeftText, bbox.left - (barWidth * leftShift), bbox.top, 1F, Align.right, false)
 			textRenderer.draw(sb, boxDetailsRightText, bbox.right + (barWidth * rightShift), bbox.top, 1F, Align.left, false)
 			textRenderer.draw(sb, boxDetailsTopText, (bbox.left + bbox.right) / 2F, bbox.top + topShift, 1F, Align.center, false)
 			textRenderer.draw(sb, boxDetailsBottomText, (bbox.left + bbox.right) / 2F, bbox.bottom - bottomShift, 1F, Align.center, false)
+
+			var leftShiftY = 0F
+			var rightShiftY = 0F
+			textureBuilder.forEach { dr_texture ->
+				val texture = dr_texture.texture
+				val position = dr_texture.position
+				val realHeight = texture.height / weaponsScale
+				val realWidth = texture.width / weaponsScale
+				val (height, width) = getRealTextParams(textRenderer, getStrBuilder(position), layout)
+				when (position) {
+					"LEFT" -> {
+						sb.draw(texture, (bbox.left - (barWidth * leftShift) - realWidth - width), (bbox.top - realHeight - leftShiftY), realWidth, realHeight)
+						leftShiftY += realHeight
+					}
+					"RIGHT" -> {
+						sb.draw(texture, (bbox.right + (barWidth * rightShift)) + (weaponsScale / 2) + width, bbox.top - realHeight - rightShiftY, realWidth, realHeight)
+						rightShiftY += realHeight
+					}
+					"TOP" -> {
+						sb.draw(texture, ((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.top + topShift, realWidth, realHeight)
+						topShift += realHeight
+					}
+					"BOTTOM" -> {
+						sb.draw(texture, ((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.bottom - height - bottomShift, realWidth, realHeight)
+						bottomShift += realHeight
+					}
+				}
+			}
+
 			sb.end()
 		}
 	}
@@ -321,7 +341,7 @@ fun getStrBuilder(position: String): StringBuilder {
 		"RIGHT" -> boxDetailsRightText
 		"TOP" -> boxDetailsTopText
 		"BOTTOM" -> boxDetailsBottomText
-		else -> StringBuilder("")
+		else -> StringBuilder()
 	}
 }
 fun addText(position: String, str: String) {
@@ -332,13 +352,19 @@ fun addText(position: String, str: String) {
 	}
 }
 
-fun getTextureOrAddText(assetManager: AssetManager, useIcons: Boolean, textureName: String, text: String, position: String, callback: (Texture) -> Unit) {
+fun addTextureOrText(assetManager: AssetManager, useIcons: Boolean, textureName: String, text: String, position: String) {
 	if (!useIcons) { addText(position, text); return }
 	val texture = getWeaponTexture(assetManager, textureName)
-	callback.invoke(texture)
+	textureBuilder.add(DrawableTexture(texture, position))
 }
 
-
+fun getRealTextParams(font: BitmapFont, builder: StringBuilder, layout: GlyphLayout): Pair<Float, Float> {
+	layout.setText(font, builder)
+	if (builder.isEmpty()) {
+		return Pair(0F, 0F)
+	}
+	return Pair(layout.height, layout.width)
+}
 
 //Create a fake accurate box using headpos
 fun setupFakeBox(ent: Entity): BoundingBox {

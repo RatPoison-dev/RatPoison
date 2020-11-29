@@ -181,6 +181,7 @@ object App : ApplicationAdapter() {
 
                             if (curSettings["ENABLE_BOMB_TIMER"].strToBool() && curSettings["BOMB_TIMER_MENU"].strToBool() && curSettings["ENABLE_ESP"].strToBool()) {
                                 if (!menuStage.actors.contains(uiBombWindow)) {
+                                    uiBombWindow.updateAlpha()
                                     menuStage.addActor(uiBombWindow)
                                 }
                             } else if (menuStage.actors.contains(uiBombWindow)) {
@@ -189,6 +190,7 @@ object App : ApplicationAdapter() {
 
                             if (curSettings["SPECTATOR_LIST"].strToBool() && curSettings["ENABLE_ESP"].strToBool()) {
                                 if (!menuStage.actors.contains(uiSpecList)) {
+                                    uiSpecList.updateAlpha()
                                     menuStage.addActor(uiSpecList)
                                 }
                             } else if (menuStage.actors.contains(uiSpecList)) {

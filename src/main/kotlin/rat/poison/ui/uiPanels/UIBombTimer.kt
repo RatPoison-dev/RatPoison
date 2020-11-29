@@ -19,6 +19,7 @@ lateinit var bombText : VisLabel
 class UIBombTimer : VisWindow("Bomb-Timer".toLocale()) {
     init {
         defaults().left()
+        addCloseButton()
 
         bombText = VisLabel(bombState.toString())
 
@@ -39,7 +40,7 @@ class UIBombTimer : VisWindow("Bomb-Timer".toLocale()) {
 
         setSize(325F, 150F)
         setPosition(curSettings["BOMB_TIMER_X"].toFloat(), curSettings["BOMB_TIMER_Y"].toFloat())
-        changeAlpha(curSettings["BOMB_TIMER_ALPHA"].toFloat())
+        updateAlpha()
         isResizable = false
     }
 
@@ -49,6 +50,14 @@ class UIBombTimer : VisWindow("Bomb-Timer".toLocale()) {
             curSettings["BOMB_TIMER_Y"] = App.uiBombWindow.y
             super.positionChanged()
         }
+    }
+
+    override fun close() {
+        curSettings["BOMB_TIMER_MENU"] = "false"
+    }
+
+    fun updateAlpha() {
+        changeAlpha(curSettings["BOMB_TIMER_ALPHA"].toFloat())
     }
 
     fun changeAlpha(alpha: Float) {
