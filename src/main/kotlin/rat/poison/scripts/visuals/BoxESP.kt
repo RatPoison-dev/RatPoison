@@ -221,12 +221,8 @@ fun boxEsp() {
 				addText(bEspMoneyPos, "$${entityMemory.money()}\n")
 			}
 
-			//if (bEspFlashed && isPlayer) {
-			//	addText(bEspFlashedPos, if (entityMemory.flashed()) "Flashed\n" else "")
-			//}
-
-			if (bEspFlashed) {
-				val texture = assetManager.get<Texture>("$SETTINGS_DIRECTORY/Assets/Images/flashed.png")
+			if (bEspFlashed && isPlayer) {
+				addText(bEspFlashedPos, if (entityMemory.flashed()) "Flashed\n" else "")
 			}
 
 			if (bEspScoped && isPlayer) {
