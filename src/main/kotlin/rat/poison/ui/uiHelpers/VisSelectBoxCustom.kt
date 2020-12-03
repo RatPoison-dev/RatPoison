@@ -2,12 +2,16 @@ package rat.poison.ui.uiHelpers
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Array
-import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.widget.Tooltip
+import com.kotcrab.vis.ui.widget.VisLabel
+import com.kotcrab.vis.ui.widget.VisSelectBox
+import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.ui.changed
-import rat.poison.ui.tabs.*
+import rat.poison.ui.tabs.categorySelected
+import rat.poison.ui.tabs.updateDisableRCrosshair
 import rat.poison.utils.generalUtil.strToBool
 
 //Swap VisSelectBoxCustom to showText false is mainText is " "

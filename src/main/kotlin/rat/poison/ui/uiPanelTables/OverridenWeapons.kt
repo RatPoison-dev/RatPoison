@@ -7,11 +7,13 @@ import com.kotcrab.vis.ui.widget.CollapsibleWidget
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.*
+import rat.poison.curLocale
+import rat.poison.curSettings
+import rat.poison.dbg
 import rat.poison.settings.*
+import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
-import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisCheckBoxCustom
 import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisSliderCustom
 import rat.poison.ui.uiPanels.overridenWeapons

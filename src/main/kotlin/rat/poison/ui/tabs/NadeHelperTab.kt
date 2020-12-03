@@ -20,6 +20,8 @@ import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiPanels.nadeHelperTab
 import java.io.File
 
+var nadeHelperLoadedFileStr = "N/A"
+
 class NadeHelperTab : Tab(false, false) {
     private val table = VisTable(true)
 
@@ -130,5 +132,6 @@ fun nadeHelperTabUpdate() {
         enableNadeThrower.update()
         nadeThrowerKey.update()
         nadeThrowerSmooth.update()
+        nadeHelperLoadedFile.setText("Loaded: $nadeHelperLoadedFileStr")
     }
 }

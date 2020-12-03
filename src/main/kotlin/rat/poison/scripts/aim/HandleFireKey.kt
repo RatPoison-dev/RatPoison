@@ -4,7 +4,6 @@ import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.entity.*
-import rat.poison.game.entity.dead
 import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me

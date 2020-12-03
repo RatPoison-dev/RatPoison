@@ -4,14 +4,15 @@ import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Array
+import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.*
+import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.curSettings
 import rat.poison.scripts.changeName
-import rat.poison.scripts.visuals.disablePostProcessing
-import rat.poison.scripts.visuals.updateHitsound
-import rat.poison.scripts.nameChanger
 import rat.poison.scripts.selfNade
+import rat.poison.scripts.visuals.updateHitsound
+import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisInputFieldCustom
@@ -168,11 +169,13 @@ class MiscTab : Tab(false, false) {
     }
 
     fun updateHitSoundsList() {
-        val hitSoundFiles = Array<String>()
-        File("$SETTINGS_DIRECTORY\\hitsounds").listFiles()?.forEach {
-            hitSoundFiles.add(it.name)
+        if (VisUI.isLoaded()) {
+            val hitSoundFiles = Array<String>()
+            File("$SETTINGS_DIRECTORY\\hitsounds").listFiles()?.forEach {
+                hitSoundFiles.add(it.name)
+            }
+            hitSoundBox.items = hitSoundFiles
         }
-        hitSoundBox.items = hitSoundFiles
     }
 }
 

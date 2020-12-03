@@ -3,8 +3,6 @@ package rat.poison.scripts
 import com.badlogic.gdx.graphics.Color
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
-import rat.poison.game.entity.dead
-import rat.poison.game.me
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meCurWep

@@ -17,10 +17,12 @@ import rat.poison.game.w2sViewMatrix
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.overlay.App.menuStage
+import rat.poison.overlay.opened
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
+import rat.poison.ui.tabs.nadeHelperLoadedFileStr
 import rat.poison.ui.uiPanels.nadeHelperTab
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.cToDouble
@@ -208,7 +210,7 @@ fun loadPositions(file: String) {
         chunks.forEach { chunk ->
             var bNotEmpty = true
             chunk.forEach {
-                if (it.isEmpty()) {
+                if (it == "") {
                     bNotEmpty = false
                 }
             }
@@ -220,9 +222,10 @@ fun loadPositions(file: String) {
                 LoL = listOf(feetSpot, headPos, headLookPos)
                 nadeHelperArrayList.add(LoL)
 
-                if (curSettings["MENU"].strToBool()) {
+                if (opened) {
                     nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: $file")
                 }
+                nadeHelperLoadedFileStr = file
 
             } else {
                 println("[Error] $file is empty, not loading")
@@ -276,12 +279,12 @@ fun detectMap(mapName: String) {
     if (!curSettings["ENABLE_NADE_HELPER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return
 
     val newMapName = mapName.replace("maps\\", "").replace(".bsp", "")
-    File("$SETTINGS_DIRECTORY/NadeHelper").listFiles().forEach {
+    val dir = File("$SETTINGS_DIRECTORY/NadeHelper").listFiles()
+    dir?.forEach {
         val name = it.name
-        if (newMapName == name.replace(".txt", "")) {
+        if (newMapName.contains(name.replace(".txt", ""))) {
             loadPositions(name)
             return@forEach
         }
     }
 }
-

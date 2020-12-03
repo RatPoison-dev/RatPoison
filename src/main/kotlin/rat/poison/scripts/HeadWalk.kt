@@ -6,7 +6,6 @@ import rat.poison.game.angle
 import rat.poison.game.clientState
 import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.absPosition
-import rat.poison.game.entity.dead
 import rat.poison.game.entity.onGround
 import rat.poison.game.forEntities
 import rat.poison.game.hooks.cursorEnable

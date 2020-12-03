@@ -2,17 +2,13 @@ package rat.poison.scripts
 
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.entity.dead
 import rat.poison.game.entity.isScoped
-import rat.poison.game.entity.weapon
-import rat.poison.game.entity.weaponEntity
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_iDefaultFov
 import rat.poison.game.netvars.NetVarOffsets.m_zoomLevel
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meCurWepEnt
-import rat.poison.scripts.aim.meDead
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
 

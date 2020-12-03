@@ -10,7 +10,6 @@ import rat.poison.ui.uiPanels.ranksTab
 import rat.poison.ui.uiRefreshing
 import rat.poison.utils.every
 import rat.poison.utils.extensions.roundNDecimals
-import rat.poison.utils.inGame
 
 var teamList = mutableListOf<String>()
 var nameList = mutableListOf<String>()

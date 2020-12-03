@@ -2,7 +2,6 @@ package rat.poison.game
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap
-import rat.poison.dbg
 import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.Player
 import rat.poison.settings.MAX_ENTITIES

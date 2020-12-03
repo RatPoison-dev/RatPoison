@@ -11,7 +11,6 @@ import rat.poison.settingsLoaded
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toWeaponClass
-import rat.poison.utils.inGame
 
 var meCurWep = Weapons.AK47
 var meCurWepEnt = 0L

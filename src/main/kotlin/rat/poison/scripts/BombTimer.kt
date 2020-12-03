@@ -60,7 +60,7 @@ fun bombTimer() = App {
                 sb.begin()
 
                 val sbText = StringBuilder()
-                sbText.append(bombState.timeLeftToExplode)
+                sbText.append("${String.format("%.2f", bombState.timeLeftToExplode)} s")
 
                 textRenderer.color = Color.WHITE
                 textRenderer.draw(sb, sbText, (CSGO.gameWidth / 2F), 15f, 1F, Align.center, false)
@@ -84,7 +84,7 @@ fun bombUpdater() = every(15, inGameCheck = true) {
         planted = hasBomb && !bomb.defused() && timeLeftToExplode > 0
 
         if (planted) {
-            if (location.isEmpty()) location = bomb.plantLocation()
+            if (location == "") location = bomb.plantLocation()
 
             val defuser = bomb.defuser()
             timeLeftToDefuse = bomb.defuseTime() - time

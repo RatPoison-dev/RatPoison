@@ -14,7 +14,6 @@ import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inBackground
-import rat.poison.utils.inGame
 import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.VK_SPACE
 

@@ -16,7 +16,6 @@ import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiPanels.skinChangerTab
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.generalUtil.toSkinWeaponClass
-import java.io.File
 
 class SkinChangerTab : Tab(false, false) {
     private val table = VisTable(true)

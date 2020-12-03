@@ -1,21 +1,18 @@
 # This workflow will build a Java project with Gradle
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
 
-name: Pull Request
+name: Push
 
 on:
-  pull_request:
+  push:
     branches: "*"
 
 jobs:
   build:
-
     runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        ref: ${{ github.event.pull_request.head.sha }}
     - uses: suisei-cn/actions-download-file@v1
       id: downloadfile
       name: Download building script
@@ -25,4 +22,9 @@ jobs:
     - name: build
       id: build
       run: |
-        bruh/releaser.exe --tag="yeahdefinately"
+        bruh/releaser.exe --tag=${{github.run_id}}
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ steps.build.outputs.zip }}
+        path: ${{ steps.build.outputs.zip }}
