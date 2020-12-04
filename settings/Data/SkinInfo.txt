@@ -755,7 +755,7 @@ M4A1_SILENCER {
     Nightmare : 714 : 0.00 : 1.00
     Leaded Glass : 681 : 0.00 : 0.70
     Decimator : 644 : 0.00 : 0.85
-    Atomic ALloy : 301 : 0.00 : 0.90
+    Atomic Alloy : 301 : 0.00 : 0.90
     Guardian : 257 : 0.00 : 0.50
     Control Panel : 792 : 0.00 : 1.00
     Hot Rod : 445 : 0.00 : 0.08
