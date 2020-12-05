@@ -1,7 +1,7 @@
 package rat.poison.utils
 
-import com.badlogic.gdx.Input.Keys.*
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.Input.Keys.*
 
 const val blankKeycode = -1
 const val blankKey = "None"
@@ -13,14 +13,6 @@ val gdxToVk = mutableMapOf(Pair(A, 65), Pair(ALT_LEFT, 18), Pair(ALT_RIGHT, 18),
 val vkToButton = gdxToVk.entries.associateBy({ it.value }) { it.key }
 val vkToMouse =  gdxButtons.entries.associateBy({ it.value }) { it.key }
 val duplicationsMap = mutableMapOf(Pair(191, listOf(111, 191)), Pair(20, listOf(20, 145, 19, 44, 144)), Pair(145, listOf(145, 20, 19, 44, 144)), Pair(19, listOf(145, 20, 145, 44, 144)), Pair(44, listOf(145, 20, 145, 44, 144)), Pair(144, listOf(145, 20, 145, 44, 144)), Pair(107, listOf(107, 187)), Pair(187, listOf(107, 187)), Pair(110, listOf(110, 190)), Pair(190, listOf(110, 190)), Pair(189, listOf(189, 109)), Pair(109, listOf(189, 109)), Pair(91, listOf(91, 92)), Pair(92, listOf(91, 2)))
-
-fun keycodeToString(keycode: Int, type: String): String {
-    if (type == "button") {
-        if (keycode < 0 || keycode > 255) return blankKey
-        return toString(keycode)
-    }
-    else { return buttonsMap[keycode]!! }
-}
 
 fun vkKeycodeToString(keycode: Int): String {
     val tmp = vkToButton[keycode]
@@ -36,12 +28,12 @@ fun vkKeycodeToString(keycode: Int): String {
 }
 
 //uncomment when needed
-fun keysTest() {
-    while (true) {
-        for (i in 1..255) {
-            if (keyPressed(i)) {
-                println(i)
-            }
-        }
-    }
-}
+//fun keysTest() {
+//    while (true) {
+//        for (i in 1..255) {
+//            if (keyPressed(i)) {
+//                println(i)
+//            }
+//        }
+//    }
+//}

@@ -1,0 +1,14 @@
+FONT = "VisOpenSans"
+FONT_SIZE = 15
+FONT_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
+FONT_BORDER_WIDTH = 0
+FONT_GAMMA = 1.8
+FONT_BORDER_COLOR = Color(red=0, green=0, blue=0, alpha=1.0)
+FONT_BORDER_USE_STRAIGHT = false
+FONT_BORDER_GAMMA = 1.8
+FONT_SHADOW_OFFSET_X = 0
+FONT_SHADOW_OFFSET_Y = 0
+FONT_SHADOW_COLOR = Color(red=0, green=0, blue=0, 0.75)
+FONT_INCLUDE_KERNING = true
+FONT_FLIP = false
+FON_GEN_MIP_MAPS = false

@@ -14,7 +14,7 @@ class IndicatorEspTab : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     val indicatorEsp = VisCheckBoxCustom("Enable", "INDICATOR_ESP")
-    val indicatorDistance = VisSliderCustom("Indicator Distance", "INDICATOR_DISTANCE", 2F, 50F, .1F, false)
+    val indicatorDistance = VisSliderCustom("Indicator Distance", "INDICATOR_DISTANCE", 2F, 50F, 1F, false)
     val indicatorSize = VisSliderCustom("Indicator Size", "INDICATOR_SIZE", 5F, 25F, .5F, false)
 
     val indicatorSmokeCheck = VisCheckBoxCustom("Smoke Check", "INDICATOR_SMOKE_CHECK")

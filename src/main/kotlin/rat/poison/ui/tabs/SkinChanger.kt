@@ -16,7 +16,6 @@ import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiPanels.skinChangerTab
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.generalUtil.toSkinWeaponClass
-import java.io.File
 
 class SkinChangerTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -56,11 +55,13 @@ class SkinChangerTab : Tab(false, false) {
         //Create Category Selector Box
         val itemsArray = Array<String>()
         for (i in gunCategories) {
-            if (dbg && curLocale[i].isBlank()) {
-                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
+            if (curLocale[i].isBlank()) {
+                if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
+                itemsArray.add(i)
             }
-
-            itemsArray.add(curLocale[i])
+            else {
+                itemsArray.add(curLocale[i])
+            }
         }
 
         categorySelectionBox.items = itemsArray

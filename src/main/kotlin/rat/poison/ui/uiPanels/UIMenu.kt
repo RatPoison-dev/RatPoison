@@ -11,8 +11,8 @@ import rat.poison.*
 import rat.poison.game.CSGO
 import rat.poison.overlay.App.uiAimOverridenWeapons
 import rat.poison.overlay.opened
-import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.scripts.sendPacket
+import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.tabs.*
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.randInt
@@ -29,13 +29,14 @@ val mainTabbedPane = TabbedPane()
     var skinChangerTab = SkinChangerTab()
     var optionsTab = OptionsTab()
     var configsTab = ConfigsTab()
+    var fontsTab = FontsTab()
 
 private var uid = randInt(2, 999999)
 
 class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CONFIG - UID: $uid") {
     var wantedHeight = 565F
     var wantedWidth = 535F
-    val normHeight = 565F //Fuck you too
+    val normHeight = 600F //Fuck you too
     val normWidth = 535F
     private var isResizingHeight = false
     private var isResizingWidth = false
@@ -61,7 +62,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         val mainScrollPane = ScrollPane(mainTabbedPaneContent) //Init scroll pane containing main content pane
         mainScrollPane.setFlickScroll(false)
         mainScrollPane.setScrollbarsVisible(true)
-        mainScrollPane.setSize(565F, 535F)
+        mainScrollPane.setSize(565F, 600F)
 
         //Add tabs to the tab header
         mainTabbedPane.add(aimTab)
@@ -73,6 +74,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         mainTabbedPane.add(skinChangerTab)
         mainTabbedPane.add(optionsTab)
         mainTabbedPane.add(configsTab)
+        mainTabbedPane.add(fontsTab)
 
         //Set aim tab as the first (init) tab
         mainTabbedPane.switchTab(aimTab)
@@ -143,6 +145,13 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         changeHeight()
                         mainTabbedPaneContent.add(configsTab.contentTable).growX()
                     }
+                    fontsTab -> {
+                        wantedHeight = normHeight
+                        wantedWidth = normWidth
+                        changeWidth()
+                        changeHeight()
+                        mainTabbedPaneContent.add(fontsTab.contentTable).growX()
+                    }
                     skinChangerTab -> {
                         wantedHeight = if (CSGO.gameHeight < 1000F) {
                             CSGO.gameHeight.toFloat() - 100F
@@ -160,7 +169,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
 
         //Add tab pane & scroll pane to main ui window
         add(mainTabbedPane.table).growX().row()
-        add(mainScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.top).growY().row()
+        add(mainScrollPane).minSize(500F, 465F).prefSize(500F, 465F).align(Align.top).growY().row()
         pack()
         centerWindow()
 
@@ -180,7 +189,8 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         }
     }
 
-    override fun close() {
+    public override fun close() {
+        println("Close button pressed. Unloading...")
         haltProcess = true
         disableAllEsp()
         sendPacket(true)

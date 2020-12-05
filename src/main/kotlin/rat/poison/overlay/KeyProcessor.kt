@@ -1,27 +1,24 @@
 package rat.poison.overlay
 
 import com.badlogic.gdx.InputProcessor
+import rat.poison.interfaces.IOKeyProcessorListener
 
-//rewrite to events
+
 class KeyProcessor: InputProcessor {
     var needKeyPress = false
-    lateinit var callBack : (Int, String) -> Unit
+    var listener: IOKeyProcessorListener? = null
 
     override fun keyDown(keycode: Int): Boolean {
         if (needKeyPress) {
-            callBack(keycode, "button")
+            listener?.onPress(keycode, "button")
             needKeyPress = false
         }
         return true
     }
 
-    fun removeCallback() {
-        callBack = { _, _ -> }
-    }
-
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
         if (needKeyPress) {
-            callBack(button, "mouse")
+            listener?.onPress(button, "mouse")
             needKeyPress = false
         }
         return true

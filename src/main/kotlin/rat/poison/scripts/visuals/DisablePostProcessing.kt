@@ -5,7 +5,6 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.offsets.ClientOffsets.bOverridePostProcesing
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.inGame
 import rat.poison.utils.shouldPostProcess
 
 fun disablePostProcessing() = every(10000, true, inGameCheck = true) {

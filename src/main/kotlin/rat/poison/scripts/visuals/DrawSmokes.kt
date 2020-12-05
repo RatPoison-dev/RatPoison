@@ -4,7 +4,6 @@ import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
-import rat.poison.game.entity.position
 import rat.poison.game.forEntities
 import rat.poison.game.netvars.NetVarOffsets.bDidSmokeEffect
 import rat.poison.overlay.App

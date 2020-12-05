@@ -1,4 +1,7 @@
-// Global
+//Category: Misc
+Warning = Warning
+NONE = None
+Error = Error
 TEAMMATES = Teammates
 ENEMIES = Enemies
 HEALTH = Health
@@ -9,14 +12,12 @@ TARGET = Target
 WEAPON = Weapon
 WARNING = Warning
 SCOPE = Scope
-BONES = Bones
 AMMO = Ammo
 HELMET = Helmet
 KEVLAR = Kevlar
 SCOPED = Scoped
 FLASHED = Flashed
 WEAPONS = Weapons
-UNDEFINED = N/A
 T = T
 CT = CT
 BOMB = Bomb
@@ -24,58 +25,17 @@ BOMB_CARRIER = Bomb Carrier
 DEFUSERS = Defusers
 DEFUSER = DEFUSER
 SELF = Self
-HEALTH_BASED = Health Based
 ENABLE = Enable
-LINE_WIDTH = Line Width
 FOV = FOV
 
-/// Scanner
-TYPE_HELP = Type help for options
-FILE_NOT_FOUND_ERROR = File not found, use list to see current files
-INVALID_VARIABLE_OR_VALUE = Invalid variable/value
-DEFAULT_CONFIG_NAME = default
-
-// Commnands
-SCANNER_HELP_MESSAGE = Available commands: help [command], exit, ranks, reload, list, read [file name], write [file name] [variable name] = [value], save [default/cfgname], load [cfgname], delete [cfgname]
-HELP_COMMAND = help
-EXIT_COMMAND = exit
-RANKS_COMMAND = ranks
-RELOAD_COMMAND = reload
-LIST_COMMAND = list
-READ_COMMAND = read
-WRITE_COMMAND = write
-LOAD_COMMAND = load
-DELETE_COMMAND = delete
-SAVE_COMMAND = save
-
-// Help messages
-EXIT_HELP_MESSAGE = Closes program and cmd
-RANKS_COMMAND_HELP_MESSAGE = Shows players, ranks, kills, deaths, kd, and wins
-RELOAD_COMMAND_HELP_MESSAGE = Reloads all settings files, is done automatically on write
-LIST_COMMAND_HELP_MESSAGE = Lists all settings files
-READ_COMMAND_HELP_MESSAGE = Syntax: read [file name] ; Replace [file name] with the file name, viewable from the list command, excluding .kts. Example: read General
-WRITE_COMMAND_HELP_MESSAGE = Syntax: write [file name] [variable name] = [value] ; Replace [file name] with the file name, replace [variable name] with the name of the variable inside of the file from [file name], and replace [value] with the value for the variable
-SAVE_COMMAND_HELP_MESSAGE = Save to default settings or to a config
-LOAD_COMMAND_HELP_MESSAGE = Load config
-// List command
-SETTINGS_FILES = Settings Files
-CFGS = CFGS
-// Write command
-WRITING_TO = Writing to
-SET = Set
-RELOADING_SETTINGS = Reloading settings
-
-// Weapons
+//Category: Weapons
 // Player's weapon name and weapon's names might differ
 DESERT_EAGLE = DESERT_EAGLE
 DEAGLE = DEAGLE
-
 DUAL_BERETTA = DUAL_BERETTA
 ELITE = DUAL BERETTAS
-
 FIVE_SEVEN = FIVE_SEVEN
 FIVESEVEN = FIVE_SEVEN
-
 GLOCK = GLOCK
 AK47 = AK47
 M4A1 = M4A4
@@ -95,16 +55,12 @@ P90 = P90
 MP5 = MP5
 UMP45 = UMP45
 XM1014 = XM1014
-
 PP_BIZON = PP_BIZON
 BIZON = PP_BIZON
-
 MAG7 = MAG7
 NEGEV = NEGEV
-
 SAWED_OFF = SAWED_OFF
 SAWEDOFF = SAWED_OFF
-
 TEC9 = TEC9
 ZEUS_X27 = ZEUS_X27
 P2000 = P2000
@@ -113,11 +69,10 @@ MP9 = MP9
 NOVA = NOVA
 P250 = P250
 SCAR20 = SCAR20
-
 SG553 = SG553
 SG556 = SG553
-
 SSG08 = SSG08
+CECONENTITY = Defuse Kit
 KNIFE = KNIFE
 FLASH_GRENADE = FLASH_GRENADE
 EXPLOSIVE_GRENADE = EXPLOSIVE_GRENADE
@@ -158,7 +113,7 @@ KNIFE_STILETTO = KNIFE_STILETTO
 KNIFE_WIDOWMAKER = KNIFE_WIDOWMAKER
 KNIFE_SKELETON = KNIFE_SKELETON
 
-// Tooltips
+//Category: Tooltips
 ENABLE_BUNNY_HOP_TOOLTIP = Enable bunny hop
 _ENABLE_PATH_AIM_TOOLTIP = Uses mouse movement to aim
 _ENABLE_FLAT_AIM_TOOLTIP = Writes to game
@@ -265,8 +220,8 @@ _TRIGGER_INFOV_TOOLTIP = Shoot when target is in specified FOV around the crossh
 ENABLE_ESP_TOOLTIP = Main switch for all ESP
 ENABLE_FOOTSTEPS_TOOLTIP = Draws footsteps of running enemies
 Override-Weapons_TOOLTIP = Allows to configure aim settings for each weapon instead of weapon category
-LEGIT_RADAR_FOOTSTEPS_DISTANCE = Maximum distance where stepping enemies will be shown on legit radar
-FIRST-SHOT_TOOLIP = Delay before trigger will fire first shot
+LEGIT_RADAR_FOOTSTEPS_DISTANCE_TOOLTIP = Maximum distance where stepping enemies will be shown on legit radar
+FIRST-SHOT_TOOLTIP = Delay before trigger will fire first shot
 BETWEEN-SHOTS_TOOLTIP = Delay between trigger shots
 BOX_FAR_RADAR_TOOLTIP = Draws entities spotted by teammates that are far from you
 Aim-After-#_TOOLTIP = Activates aimbot after # of shots are fired
@@ -277,12 +232,101 @@ ENABLE_HITMARKER_TOOLTIP = Indicates when you hit someone
 CHAMS_ESP_TOOLTIP = Enable/disable chams ESP
 NADE_THROWER_SMOOTHNESS_TOOLTIP = Auto-thrower aim smoothness
 
-//New shit redux
+//Category: Aim
 GLOBAL_AUTO_WEP_DELAY = MS Interval
+ENABLE_AIM = Aim
+AIM_TOGGLE_KEY = Toggle Aim Key
+ACTIVATE_FROM_AIM_KEY = Activate From Fire Key
+TEAMMATES_ARE_ENEMIES = Teammates Are Enemies
+HOLD_AIM = Hold Aim
+FORCE_AIM_BONE_KEY = Force Aim Bone Key
+FORCE_AIM_KEY = Force Aim Key
+FORCE_AIM_ALWAYS = Force Aim Always
+FORCE_AIM_THROUGH_WALLS = Force Aim Through Walls
+GLOBAL_AUTOMATIC_WEAPONS = Automatic Weapons
+AIM_TARGET_SWAP_DELAY = Target Swap Delay
+SNIPER_ENABLE_SCOPED_ONLY = Scoped Only
+HEAD = HEAD
+NECK = NECK
+CHEST = CHEST
+STOMACH = STOMACH
+PELVIS = PELVIS
+NEAREST = NEAREST
+RANDOM = RANDOM
+FOV_TYPE = FOV Type
+DISTANCE = DISTANCE
+STATIC = STATIC
+Weapon-Category = Weapon Category
+_AIM_FOV = FOV
+_AIM_SPEED = Speed
+_AIM_SMOOTHNESS = Smoothness
+_AIM_AFTER_SHOTS = Aim After #
+_PERFECT_AIM_FOV = FOV
+_PERFECT_AIM_CHANCE = % Chance
+_RANDOM_X_VARIATION = Random X Variation
+_RANDOM_Y_VARIATION = Random Y Variation
+_VARIATION_DEADZONE = Variation Deadzone
+_AIM_RCS_X = RCS X
+_AIM_RCS_Y = RCS Y
+_AIM_RCS_VARIATION = RCS Variation
+_AIM_SPEED_DIVISOR = Speed Divisor
+Enable-Perfect-Aim = Enable Perfect Aim
+Advanced-Settings = Advanced Settings
+
+
+//Category: Trigger
+ENABLE_TRIGGER = Trigger Master Switch
+TRIGGER_ENABLE_KEY = Trigger On Key
+TRIGGER_KEY = Trigger Key
+_TRIGGER_FOV = FOV
+_TRIGGER_INIT_SHOT_DELAY = Init Shot Delay
+_TRIGGER = Enable
+_TRIGGER_BACKTRACK = Shoot Backtrack
+_TRIGGER_PER_SHOT_DELAY = Per Shot Delay
+
+//Category: Backtrack
+ENABLE_BACKTRACK = Backtrack Master Switch
+ENABLE_BACKTRACK_ON_KEY = Activate On Key
+BACKTRACK_KEY = Backtrack Key
+BACKTRACK_MS = MS
+BACKTRACK_SPOTTED = Spotted Only
+_BACKTRACK = Backtrack
+BACKTRACK_VISUALIZE_SMOKE_CHECK = Backtrack Visualize Smoke Check
+
+//Category: Misc Esp
 RADAR_ESP = Radar
+ENABLE_ESP = Enable
+VISUALS_TOGGLE_KEY = Visuals Toggle Key
+
+//Subcategory: Nightmode
+ENABLE_NIGHTMODE = Nightmode
+NIGHTMODE_VALUE = %
+
+//Subcategory: Draw FOV
+DRAW_AIM_FOV_COLOR = Draw Aim FOV
+DRAW_TRIGGER_FOV_COLOR = Draw Trigger FOV
 DRAW_AIM_FOV = Draw Aim FOV
 DRAW_TRIGGER_FOV = Draw Trigger FOV
 
+//Subcategory: Head LVL
+HEAD_LVL_COLOR = Head Level
+HEAD_LVL_DEADZONE = Deadzone
+
+//Subcategory: Legit Radar
+LEGIT_RADAR = Legit Radar
+LEGIT_RADAR_FOOTSTEPS_DISTANCE = Distance
+
+//Subcategory: Spread Circle
+SPREAD_CIRCLE_COLOR = Spread Circle
+SpreadCircle = SpreadCircle
+
+//Subcategory: Adrenaline
+ENABLE_ADRENALINE = Enable Adrenaline
+ADRENALINE_STRENGTH = Adrenaline Strength
+ADRENALINE_COOLDOWN = Adrenaline Cooldown
+ADRENALINE_BOMB_TIME = Use Bomb Time
+
+//Category: Glow Esp
 GLOW_ESP = Enable
 GLOW_SHOW_TEAM = Teammates
 GLOW_SHOW_ENEMIES = Enemies
@@ -306,15 +350,27 @@ GLOW_TARGET_TYPE = Target
 GLOW_GRENADE_TYPE = Grenades
 GLOW_BOMB_TYPE = Bomb
 GLOW_BOMB_CARRIER_TYPE = Bomb Carrier
-GLOW_TEAM_COLOR = Teammates
+NORMAL = NORMAL
+MODEL = MODEL
+VISIBLE = VISIBLE
+VISIBLE-FLICKER = VISIBLE FLICKER
+GLOW_TARGET_COLOR = Glow Target Color
+GLOW_SMOKE_CHECK = Smoke Check
 
+
+//Category: Chams ESP
+CHAMS_ESP = Enable
+CHAMS_SHOW_HEALTH = Show Health
+CHAMS_BRIGHTNESS = Brightness
 CHAMS_SHOW_TEAM = Teammates
 CHAMS_SHOW_ENEMIES = Enemies
 CHAMS_SHOW_SELF = Self
 CHAMS_TEAM_COLOR = Teammates
 CHAMS_ENEMY_COLOR = Enemies
 CHAMS_SELF_COLOR = Self
+CHAMS_TARGET_COLOR = Target
 
+//Category: Indicator ESP
 INDICATOR_ESP = Enable
 INDICATOR_SHOW_TEAM = Teammates
 INDICATOR_SHOW_ENEMIES = Enemies
@@ -329,7 +385,18 @@ INDICATOR_BOMB_CARRIER_COLOR = Bomb Carrier
 INDICATOR_DEFUSER_COLOR = Defusers
 INDICATOR_WEAPON_COLOR = Weapons
 INDICATOR_GRENADE_COLOR = Grenades
+INDICATOR_DISTANCE = Distance
+INDICATOR_SIZE = Size
+INDICATOR_SMOKE_CHECK = Smoke Check
 
+//Category: Box ESP
+ENABLE_BOX_ESP = Entity Box
+BOX_ESP_HELMET = Helmet
+BOX_ESP_KEVLAR = Kevlar
+BOX_ESP_AMMO = Ammo
+BOX_ESP_SCOPED = Scoped
+BOX_ESP_FLASHED = Flashed
+BOX_DETAILS_TEXT_COLOR = Text Color
 BOX_ESP_HEALTH = Health
 BOX_ESP_HEALTH_POS = Health
 BOX_ESP_ARMOR = Armor
@@ -351,11 +418,21 @@ BOX_ESP_DETAILS = Box Details
 BOX_TEAM_COLOR = Teammates
 BOX_ENEMY_COLOR = Enemies
 BOX_DEFUSER_COLOR = Defusers
-
 SKELETON_ESP = Skeleton
 SKELETON_SHOW_TEAM = Teammates
 SKELETON_SHOW_ENEMIES = Enemies
+LEFT = LEFT
+RIGHT = RIGHT
+TOP = TOP
+BOTTOM = BOTTOM
+ADVANCED_BOUNDING_BOX = Full Dynamic Box
+BOX_WEAPON_COLOR = Weapons
+BOX_SMOKE_CHECK = Smoke Check
+BOX_FAR_RADAR = Far Radar Box
+BOX_ESP_WEAPON_SCALE = Icons Size
+BOX_ESP_USE_ICONS = Use Icons
 
+//Category: Snaplines ESP
 ENABLE_SNAPLINES = Enable
 SNAPLINES_WIDTH = Width
 SNAPLINES_ENEMIES = Enemies
@@ -368,45 +445,83 @@ SNAPLINES_BOMB = Bomb
 SNAPLINES_BOMB_COLOR = Bomb
 SNAPLINES_BOMB_CARRIER = Bomb Carrier
 SNAPLINES_BOMB_CARRIER_COLOR = Bomb Carrier
+SNAPLINES_DEFUSE_KIT_COLOR = Defuse Kits
+SNAPLINES_SMOKE_CHECK = Smoke Check
 
-ENABLE_FOOTSTEPS = Enable
+
+//Category: Footsteps ESP
+ENABLE_FOOTSTEPS = Footsteps
 FOOTSTEP_TEAM = Teammates
 FOOTSTEP_TEAM_COLOR = Teammates
 FOOTSTEP_ENEMY = Enemies
 FOOTSTEP_ENEMY_COLOR = Enemies
+FOOTSTEP_UPDATE = Update Timer
+FOOTSTEP_TTL = TTL
+TEXT = TEXT
 
-ENABLE_HITMARKER = Enable
+//Category: Hitmarker ESP
+ENABLE_HITMARKER = HitMarker
 HITMARKER_WIDTH = Width
 HITMARKER_OUTLINE_COLOR = Outline Color
+HITMARKER_OUTLINE = Outline
+HITMARKER_COMBO = Combo
+HITMARKER_RECOIL_POSITION = Recoil Position
+HITMARKER_SPACING = Spacing
+HITMARKER_LENGTH = Length
+HITMARKER_COLOR = Color
+HITMARKER_COMBO_COLOR = Combo Color
 
-HEAD_LVL_COLOR = Head Level
-HEAD_LVL_DEADZONE = Deadzone
-HEAD_LVL_LINE_WIDTH = Line Width
-HeadLvl = HeadLvl
 
+//Category: Misc tab
+DISABLE_POST_PROCESSING = Disable Post Processing
 D_SPAM = Door Spam
 D_SPAM_KEY = Door Spam Key
 W_SPAM = Weapon Spam
 W_SPAM_KEY = Weapon Spam Key
 SPECTATOR_LIST = Spectator List
+ENABLE_HITSOUND = Hitsound
+Self-Nade = Self Nade
+KILL_BIND = Kill Bind
+KILL_BIND_KEY = Key
+Name-Change = Temporary Name Change
 
+//Category: Fonts
+LOAD_FONT = Load Font
+FONT_SIZE = Font Size
+FONT_BORDER_WIDTH = Border Width
+FONT_BORDER_USE_STRAIGHT = Border Straight
+FONT_BORDER_GAMMA = Border Gamma
+FONT_SHADOW_OFFSET_X = Shadow Offset X
+FONT_SHADOW_OFFSET_Y = Shadow Offset Y
+FONT_INCLUDE_KERNING = Kerning
+FONT_FLIP = Flip
+FON_GEN_MIP_MAPS = Generate mip maps
+FONT_COLOR = Font Color
+FONT_BORDER_COLOR = Border Color
+FONT_GAMMA = Gamma
+
+//Category: Skin Changer
 SKINCHANGER = Skinchanger
 FORCE_UPDATE_AUTO = Force Update
+Skin-ID = Skin ID
+StatTrak = StatTrak
+Wear = Wear
+Manual-Force-Update = Manual Force Update
+Auto-Force-Update = Auto Force Update
+
+
+//Category: Nades tab
 NADE_TRACER = Nade Tracer
+NADE_TRACER_UPDATE_TIME = Tracer Update Time
+NADE_TRACER_TIMEOUT = Timeout
+NADE_TRACER_COLOR = Nade Tracer Color
+VISUALIZE_SMOKES_COLOR = Draw Smokes
+VISUALIZE_SMOKES_POLYS = Poly Count
+VISUALIZE_SMOKES_WIDTH = Width
+VISUALIZE_SMOKES_HEIGHT = Height
+SMOKE_WEAR_OFF_TIME_COLOR = Smokes timer
 
-//Custom Glow
-NORMAL = NORMAL
-MODEL = MODEL
-VISIBLE = VISIBLE
-VISIBLE-FLICKER = VISIBLE FLICKER
-
-//Custom Box
-LEFT = LEFT
-RIGHT = RIGHT
-TOP = TOP
-BOTTOM = BOTTOM
-
-//Extensions
+//Category: Override weapons
 _AIM_BONE = Bone
 _AIM_FORCE_BONE = Force Bone
 _TRIGGER_INCROSS = InCross
@@ -416,54 +531,112 @@ _AIM_ONLY_ON_SHOT = On Shot
 _FACTOR_RECOIL = Factor Recoil
 _ENABLE_FLAT_AIM = Write Aim
 _ENABLE_PATH_AIM = Mouse Movements
+ENABLE_OVERRIDE = Enable Override
+tAutowep = Automatic Weapons
+tAutowepDelay = MS Interval
+tAimFov = FOV
+tAimSpeed = Speed
+tAimSmooth = Smoothness
+tAimAfterShots = Aim After #
+tPAimFov = FOV
+tPAimChance = % Chance
+tBTrigFov = FOV
+tBTrigInitDelay = Init Shot Delay
+tBTrigPerShotDelay = Per Shot Delay
+tBTMS = MS
+Force-Bone = Force Bone
+_BACKTRACK_MS = Backtrack
+tFRecoil = Factor Recoil
+tOnShot = On Shot
+tFlatAim = Write Aim
+tPathAim = Mouse Movements
+tScopedOnly = Scoped Only
+tBoneTrig = Enable Trigger
+tBTrigAim = Aimbot
+tBTrigInCross = InCross
+tBTrigInFov = InFov
+tBTrigBacktrack = Shoot Backtrack
+tBacktrack = Enable Backtrack
+tOverride = Enable Override
+tPerfectAim = Perfect Aim
+Bone = Bone
+Speed = Speed
+Smooth = Smooth
+Perfect-Aim = Perfect Aim
+Chance = Chance
+Override-Weapons = Override Weapons
 
-//Need organization
-ENABLE_ESP = Enable
-VISUALS_TOGGLE_KEY = Visuals Toggle Key
-ENABLE_NIGHTMODE = Nightmode
-NIGHTMODE_VALUE = %
-DRAW_AIM_FOV_COLOR = Draw Aim FOV
-DRAW_TRIGGER_FOV_COLOR = Draw Trigger FOV
-CHAMS_ESP = Enable
-CHAMS_SHOW_HEALTH = Show Health
-CHAMS_BRIGHTNESS = Brightness
-INDICATOR_DISTANCE = Distance
-INDICATOR_SIZE = Size
-ENABLE_BOX_ESP = Entity Box
-BOX_ESP_HELMET = Helmet
-BOX_ESP_KEVLAR = Kevlar
-BOX_ESP_AMMO = Ammo
-BOX_ESP_SCOPED = Scoped
-BOX_ESP_FLASHED = Flashed
-BOX_DETAILS_TEXT_COLOR = Text Color
-HITMARKER_OUTLINE = Outline
-HITMARKER_COMBO = Combo
-HITMARKER_RECOIL_POSITION = Recoil Position
-HITMARKER_SPACING = Spacing
-HITMARKER_LENGTH = Length
-HITMARKER_COLOR = Color
-HITMARKER_COMBO_COLOR = Combo Color
-NADE_TRACER_UPDATE_TIME = Tracer Update Time
-NADE_TRACER_TIMEOUT = Timeout
-FOOTSTEP_UPDATE = Update Timer
-FOOTSTEP_TTL = TTL
+
+
+//Category: Options tab
+MENU_KEY = Menu Key
+OPENGL_FPS = OpenGL FPS
+MENU_STAY_FOCUSED = Stay Focused
+DEBUG = Debug
+KEYBINDS = Keybinds
+GAUSSIAN_BLUR = Enable Menu Blur
+MENU_ALPHA = Menu Alpha
+Join-Discord = Join Discord
+Keybinds = Keybinds
+OVERLOAD_KEYBINDS = Disable Duplicate Binds
+
+//Category: Configs tab
+FILE_NOT_FOUND_ERROR = File was not found. Config:
+SAVING_NOW_ERROR = Wait for saving to finish first. Config:
+OVERWRITE_CONFIG = This action would overwrite config:
+SAVE_DEFAULT = Save Default
+CONFIRM = Confirm
+CANCEL = Cancel
+Locale = Locale
+Save = Save
+Load = Load
+Delete = Delete
+
+//Category: Movement tab
 ENABLE_BUNNY_HOP = Bunny Hop
+ENABLE_BUNNY_HOP_KEY = Bunny Hop Key
 AUTO_STRAFE = Auto Strafe
 STRAFE_BHOP_ONLY = BHop Only
 FAST_STOP = Fast Stop
 ENABLE_AUTO_KNIFE = Auto Knife
+HEAD_WALK = Head Walk
+SAME = SAME
+OPPOSITE = OPPOSITE
+BHOP_HITCHANCE = Hitchance
+
+//Category: FOV changer tab
 ENABLE_FOV_CHANGER = FOV Changer
 FOV_DEFAULT = Default FOV
 FOV_SMOOTH = Smooth FOV Changes
 FOV_SNIPER_DEFAULT = Sniper FOV
 FOV_ZOOM_1 = Sniper Zoom 1
 FOV_ZOOM_2 = Sniper Zoom 2
+
+//Category: Bomb Tab
 ENABLE_BOMB_TIMER = Bomb Timer
 BOMB_TIMER_MENU = Timer Menu
 BOMB_TIMER_BARS = Timer Bars
+LS_BOMB = Perfect Bomb Defuse
+BOMB_TIMER_BARS_SHOW_TTE = Time To Explode
+//Subcategory: Bomb Timer Text
+Bomb-Not-Planted! = Bomb Not Planted!
+Bomb-Planted! = Bomb Planted!
+Time-To-Explode: = Time To Explode:
+Location: = Location:
+Can-Defuse: = Can Defuse:
+Time-To-Defuse: Time To Defuse:
+Time-Left-After: = Time Left After:
+
+//Category: Misc tab
 ENABLE_REDUCED_FLASH = Enable Reduced Flash
 FLASH_MAX_ALPHA = Max Alpha
 HITSOUND_VOLUME = Volume
+ENABLE_KILLSOUND = Killsound
+MUSIC_KIT_SPOOFER = Music Kit Spoofer
+KILLSOUND_VOLUME = Volume
+CURRENTLY = Currently
+
+//Category: RCS tab
 ENABLE_RCS = Enable
 RCS_SMOOTHING_X = RCS X Accuracy
 RCS_SMOOTHING_Y = RCS Y Accuracy
@@ -473,85 +646,41 @@ ENABLE_SNIPER_CROSSHAIR = Scope Compatible
 RCROSSHAIR_WIDTH = Width
 RCROSSHAIR_LENGTH = Length
 RCROSSHAIR_XOFFSET = X Offset
+RCS_TYPE = RCS Type
+STABLE = STABLE
+LEGACY = LEGACY
 RCROSSHAIR_YOFFSET = Y Offset
 RCROSSHAIR_ALPHA = Alpha
 RCROSSHAIR_COLOR = Color
-ENABLE_TRIGGER = Trigger Master Switch
-TRIGGER_ENABLE_KEY = Trigger On Key
-TRIGGER_KEY = Trigger Key
-ENABLE_AIM = Enable
-AIM_TOGGLE_KEY = Toggle Aim Key
-ACTIVATE_FROM_AIM_KEY = Activate From Fire Key
-TEAMMATES_ARE_ENEMIES = Teammates Are Enemies
-HOLD_AIM = Hold Aim
-FORCE_AIM_BONE_KEY = Force Aim Bone Key
-FORCE_AIM_KEY = Force Aim Key
-FORCE_AIM_ALWAYS = Force Aim Always
-FORCE_AIM_THROUGH_WALLS = Force Aim Through Walls
-GLOBAL_AUTOMATIC_WEAPONS = Automatic Weapons
-AIM_TARGET_SWAP_DELAY = Target Swap Delay
-SNIPER_ENABLE_SCOPED_ONLY = Scoped Only
-ENABLE_NADE_HELPER = Enable
-HEAD = HEAD
-NECK = NECK
-CHEST = CHEST
-STOMACH = STOMACH
-PELVIS = PELVIS
-NEAREST = NEAREST
-RANDOM = RANDOM
-FOV_TYPE = FOV Type
-DISTANCE = DISTANCE
-STATIC = STATIC
+CIRCLE = CIRCLE
+CROSSHAIR = CROSSHAIR
+RCROSSHAIR_RADIUS = Radius
+RCROSSHAIR_TYPE = RCrosshair Type
 
-//New
-Weapon-Category = Weapon Category
-MENU_KEY = Menu Key
-ENABLE_OVERRIDE = Enable Override
-ENABLE_BACKTRACK = Backtrack Master Switch
-BACKTRACK_VISUALIZE = Backtrack Visualize
-ENABLE_BACKTRACK_ON_KEY = Activate On Key
-BACKTRACK_KEY = Backtrack Key
-BACKTRACK_FOV = FOV
-BACKTRACK_MS = MS
-BACKTRACK_PREFER_ACCURATE = Prefer Accurate
-BACKTRACK_SPOTTED = Spotted Only
-_BACKTRACK = Backtrack
-_BACKTRACK_NECK = Neck
-_BACKTRACK_CHEST = Chest
-_BACKTRACK_STOMACH = Stomach
-_BACKTRACK_PELVIS = Pelvis
-tAutowep = Automatic Weapons
-tAutowepDelay = MS Interval
-ENABLE_ADRENALINE = Enable Adrenaline
-GLOW_TARGET_COLOR = Glow Target Color
-NADE_TRACER_COLOR = Nade Tracer Color
-ENABLE_HITSOUND = Hitsound
-OPENGL_FPS = OpenGL FPS
-MENU_STAY_FOCUSED = Stay Focused
-DEBUG = Debug
-KEYBINDS = Keybinds
-GAUSSIAN_BLUR = Enable Menu Blur
+//Category: Nade Helper tab
+ENABLE_NADE_HELPER = Enable
+Loaded:-N/A = Loaded: N/A
+Create-Grenade-Position = Create Grenade Position
+Save-As-File = Save As File
+Load-From-File = Load From File
+Delete-Selected-File = Delete Selected File
+Clear-Currently-Loaded = Clear Currently Loaded
+Delete-At-Current-Position = Delete At Current Position
+NADE_THROWER_SMOOTHNESS = Smoothness
+NADE_ACCURACY_RADIUS = Accuracy radius
+ENABLE_NADE_THROWER = Auto throw
+NADE_THROWER_KEY = Key
+CLEAR_POSITIONS = Clear all currently loaded positions?
+
+
+//Category: Weapons Categories
 PISTOL = PISTOL
 RIFLE = RIFLE
 SMG = SMG
 SNIPER = SNIPER
 SHOTGUN = SHOTGUN
-_AIM_FOV = FOV
-_AIM_SPEED = Speed
-_AIM_SMOOTHNESS = Smoothness
-_AIM_AFTER_SHOTS = Aim After #
-_PERFECT_AIM_FOV = FOV
-_PERFECT_AIM_CHANCE = % Chance
-_RANDOM_X_VARIATION = Random X Variation
-_RANDOM_Y_VARIATION = Random Y Variation
-_VARIATION_DEADZONE = Variation Deadzone
-_AIM_RCS_X = RCS X
-_AIM_RCS_Y = RCS Y
-_AIM_RCS_VARIATION = RCS Variation
-_AIM_SPEED_DIVISOR = Speed Divisor
-_TRIGGER_FOV = FOV
-_TRIGGER_INIT_SHOT_DELAY = Init Shot Delay
-HEAD_WALK = Head Walk
+
+//Category: Ranks Tab
 Team = Team
 Name = Name
 Rank = Rank
@@ -560,11 +689,8 @@ Deaths = Deaths
 K/D = K/D
 Wins = Wins
 Money = Money
-Self-Nade = Self Nade
-LS_BOMB = Perfect Bomb Defuse
-MENU_ALPHA = Menu Alpha
 
-//menu tabs
+//Category: Menu tab names
 Misc = Misc
 Aim = Aim
 Visuals = Visuals
@@ -586,174 +712,8 @@ Bomb = Bomb
 FOV-Changer = FOV Changer
 Movement = Movement
 Others = Others
+Fonts = Fonts
 
-//grenade helper
-Loaded:-N/A = Loaded: N/A
-Create-Grenade-Position = Create Grenade Position
-Save-As-File = Save As File
-Load-From-File = Load From File
-Delete-Selected-File = Delete Selected File
-Clear-Currently-Loaded = Clear Currently Loaded
-Delete-At-Current-Position = Delete At Current Position
-NADE_THROWER_SMOOTHNESS = Smoothness
-NADE_ACCURACY_RADIUS = Accuracy radius
-
-//skin changer
-Skin-ID = Skin ID
-StatTrak = StatTrak
-Wear = Wear
-Manual-Force-Update = Manual Force Update
-Auto-Force-Update = Auto Force Update
-
-//options tab
-Join-Discord = Join Discord
-Load-Locale = Load Locale
-Save-CFG = Save CFG
-Load-CFG = Load CFG
-Delete-CFG = Delete CFG
-Save-Current-Config-To-Default-Settings = Save Current Config To Default Settings
-
-//aim tab
-Enable-Perfect-Aim = Enable Perfect Aim
-Advanced-Settings = Advanced Settings
-
-//overide weapons shit
-Enable-Override = Enable Override
-Factor-Recoil = Factor Recoil
-Flat-Aim = Write Angles
-Path-Aim = Mouse Movements
-Scoped-Only = Scoped Only
-Bone = Bone
-Speed = Speed
-Smooth = Smooth
-Aim-After-# = Aim After #
-Perfect-Aim = Perfect Aim
-Chance = Chance
-Override-Weapons = Override Weapons
-
-//Menu Titles
+//Category: VisWindows names
 Bomb-Timer = Bomb Timer
 Spectator-List = Spectator List
-
-//Bomb Timer
-Bomb-Not-Planted! = Bomb Not Planted!
-Bomb-Planted! = Bomb Planted!
-Time-To-Explode: = Time To Explode:
-Location: = Location:
-Can-Defuse: = Can Defuse:
-Time-To-Defuse: Time To Defuse:
-Time-Left-After: = Time Left After:
-
-//Footsteps
-TEXT = TEXT
-CIRCLE = CIRCLE
-
-//aim strafer
-SAME = SAME
-OPPOSITE = OPPOSITE
-
-//save config
-Enter-config-name = Enter config name
-
-//new shit
-LEGIT_RADAR = Legit Radar
-LEGIT_RADAR_FOOTSTEPS_DISTANCE = Distance
-ADRENALINE_STRENGTH = Adrenaline Strength
-SNAPLINES_DEFUSE_KIT_COLOR = Defuse Kits
-_TRIGGER = Enable
-_TRIGGER_BACKTRACK = Shoot Backtrack
-KILL_BIND = Kill Bind
-KILL_BIND_KEY = Key
-BHOP_HITCHANCE = Hitchance
-
-FIRST-SHOT = FIRST SHOT
-BETWEEN-SHOTS = BETWEEN SHOTS
-TRIGGER_DELAY_TYPE = Trigger Delay Type
-_TRIGGER_PER_SHOT_DELAY = Per Shot Delay
-NONE = None
-ADVANCED_BOUNDING_BOX = Full Dynamic Box
-BOX_WEAPON_COLOR = Weapons
-CECONENTITY = Defuse Kit
-DISABLE_POST_PROCESSING = Disable Post Processing
-ENABLE_NADE_THROWER = Auto throw
-NADE_THROWER_KEY = Key
-CIRCLE = CIRCLE
-CROSSHAIR = CROSSHAIR
-RCROSSHAIR_TYPE = RCrosshair Type
-SPREAD_CIRCLE_COLOR = Spread Circle
-SpreadCircle = SpreadCircle
-
-//RCS
-RCS_TYPE = RCS Type
-STABLE = STABLE
-LEGACY = LEGACY
-RCROSSHAIR_RADIUS = Radius
-
-//Override Shit
-tAimFov = FOV
-tAimSpeed = Speed
-tAimSmooth = Smoothness
-tAimAfterShots = Aim After #
-tPAimFov = FOV
-tPAimChance = % Chance
-tBTrigFov = FOV
-tBTrigInitDelay = Init Shot Delay
-tBTrigPerShotDelay = Per Shot Delay
-tBTMS = MS
-Force-Bone = Force Bone
-_BACKTRACK_MS = Backtrack
-
-VISUALIZE_SMOKES_COLOR = Draw Smokes
-VISUALIZE_SMOKES_POLYS = Poly Count
-VISUALIZE_SMOKES_WIDTH = Width
-VISUALIZE_SMOKES_HEIGHT = Height
-
-GLOW_SMOKE_CHECK = Smoke Check
-INDICATOR_SMOKE_CHECK = Smoke Check
-BOX_SMOKE_CHECK = Smoke Check
-SNAPLINES_SMOKE_CHECK = Smoke Check
-
-Keybinds = Keybinds
-
-CHAMS_TARGET_COLOR = Target
-BOX_FAR_RADAR = Far Radar Box
-ADRENALINE_COOLDOWN = Adrenaline Cooldown
-ADRENALINE_BOMB_TIME = Use Bomb Time
-Name-Change = Temporary Name Change
-Warning = Warning
-CLEAR_POSITIONS = Clear all currently loaded positions?
-tFRecoil = Factor Recoil
-tOnShot = On Shot
-tFlatAim = Write Aim
-tPathAim = Mouse Movements
-tScopedOnly = Scoped Only
-tBoneTrig = Enable Trigger
-tBTrigAim = Aimbot
-tBTrigInCross = InCross
-tBTrigInFov = InFov
-tBTrigBacktrack = Shoot Backtrack
-tBacktrack = Enable Backtrack
-tOverride = Enable Override
-tPerfectAim = Perfect Aim
-ENABLE_BUNNY_HOP_KEY = Bunny Hop Key
-BOMB_TIMER_BARS_SHOW_TTE = Time To Explode
-ENABLE_KILLSOUND = Killsound
-MUSIC_KIT_SPOOFER = Music Kit Spoofer
-KILLSOUND_VOLUME = Volume
-OVERLOAD_KEYBINDS = Disable Duplicate Binds
-CURRENTLY = Currently
-Error = Error
-FILE_NOT_FOUND_ERROR = File was not found. Config:
-SAVING_NOW_ERROR = Wait for saving to finish first. Config:
-OVERWRITE_CONFIG = This action would overwrite config:
-SAVE_DEFAULT = Save Default
-CONFIRM = Confirm
-CANCEL = Cancel
-Locale = Locale
-Save = Save
-Load = Load
-Delete = Delete
-SMOKE_WEAR_OFF_TIME_COLOR = Smokes timer
-BACKTRACK_VISUALIZE_SMOKE_CHECK = Backtrack Visualize Smoke Check
-BOX_ESP_WEAPON_SCALE = Icons Size
-BOX_ESP_USE_ICONS = Use Icons

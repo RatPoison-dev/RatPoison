@@ -1,8 +1,7 @@
-@file:Suppress("DEPRICATION")
+@file:Suppress("DEPRECATION")
 
 package rat.poison.scripts.visuals
 
-import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
@@ -27,6 +26,7 @@ import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
 import rat.poison.toLocale
+import rat.poison.utils.AssetManager
 import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
@@ -58,10 +58,10 @@ private var showWeapons = false
 private var showDefuseKits = false
 private var bEspUseIcons = false
 private var weaponsScale = 0F
-private var boxDetailsLeftText = StringBuilder()
-private var boxDetailsRightText = StringBuilder()
-private var boxDetailsTopText = StringBuilder()
-private var boxDetailsBottomText = StringBuilder()
+private var boxDetailsLeftText = StringBuilder("")
+private var boxDetailsRightText = StringBuilder("")
+private var boxDetailsTopText = StringBuilder("")
+private var boxDetailsBottomText = StringBuilder("")
 private var topShift = 0F
 private var textureBuilder = mutableListOf<DrawableTexture>()
 

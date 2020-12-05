@@ -17,9 +17,8 @@ import rat.poison.ui.refreshMenu
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.*
 import rat.poison.utils.generalUtil.loadLocale
-import rat.poison.utils.saveDefault
+import java.awt.Desktop
 import java.io.File
-import java.lang.Exception
 
 class ConfigsTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -67,9 +66,9 @@ class ConfigsTab : Tab(false, false) {
             if (cfgNameTextBox.text.isNullOrEmpty()) { //Save using list selection
                 val tmpSelection = configListAdapter.selection
                 if (tmpSelection.size > 0) { //Validate
-                    val tmpName = configListAdapter.selection[0] //Selection is an array
+                    val tmpName = tmpSelection[0] //Selection is an array
 
-                    Dialogs.showConfirmDialog(menuStage, "${"OVERWRITE_CONFIG".toLocale()}\n \"$tmpName\"", "", arrayOf("Confirm".toLocale(), "Cancel".toLocale()), arrayOf(1, 2)) { i ->
+                    Dialogs.showConfirmDialog(menuStage, "${"OVERWRITE_CONFIG".toLocale()}\n \"$tmpName\"", "", arrayOf("CONFIRM".toLocale(), "CANCEL".toLocale()), arrayOf(1, 2)) { i ->
                         if (i == 1) { //Confirm
                             saveCFG(tmpName)
                         }
@@ -124,11 +123,11 @@ class ConfigsTab : Tab(false, false) {
 
         val openCfgFolder = VisTextButton("Open configs folder")
         openCfgFolder.changed {_, _ ->
-            try {
-                Runtime.getRuntime().exec("cmd /c start ${SETTINGS_DIRECTORY}\\CFGS")
-            }
-            catch (e: Exception) {
-                println("Failed to open configs folder.")
+            if (Desktop.isDesktopSupported()) {
+                val desktop = Desktop.getDesktop()
+                if (desktop.isSupported(Desktop.Action.OPEN)) {
+                    desktop.open(File("$SETTINGS_DIRECTORY/CFGS"))
+                }
             }
             true
         }
@@ -162,11 +161,11 @@ class ConfigsTab : Tab(false, false) {
         table.add(openCfgFolder).width(240F).center().row()
     }
 
-    override fun getContentTable(): Table? {
+    override fun getContentTable(): Table {
         return table
     }
 
-    override fun getTabTitle(): String? {
+    override fun getTabTitle(): String {
         return "Configs".toLocale()
     }
 
@@ -175,8 +174,10 @@ class ConfigsTab : Tab(false, false) {
             configListAdapter.clear()
 
             File("$SETTINGS_DIRECTORY\\CFGS").listFiles()?.forEach {
-                val cfgName = it.name.replace(".cfg", "")
-                configListAdapter.add(cfgName)
+                if ((it.extension == "cfg")) {
+                    val cfgName = it.name.replace(".cfg", "")
+                    configListAdapter.add(cfgName)
+                }
             }
         }
     }
@@ -186,8 +187,10 @@ class ConfigsTab : Tab(false, false) {
             localeListAdapter.clear()
 
             File("$SETTINGS_DIRECTORY\\Localizations").listFiles()?.forEach {
-                val localeName = it.name.replace(".locale", "")
-                localeListAdapter.add(localeName)
+                if (it.extension == "locale") {
+                    val localeName = it.name.replace(".locale", "")
+                    localeListAdapter.add(localeName)
+                }
             }
         }
     }

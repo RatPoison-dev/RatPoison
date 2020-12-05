@@ -39,20 +39,6 @@ cursor
   orig: 3, 3
   offset: 0, 0
   index: -1
-default
-  rotate: false
-  xy: 1, 116
-  size: 254, 139
-  orig: 256, 256
-  offset: 0, 117
-  index: -1
-font-small
-  rotate: false
-  xy: 1, 10
-  size: 254, 105
-  orig: 256, 128
-  offset: 0, 22
-  index: -1
 icon-arrow-left
   rotate: false
   xy: 270, 215

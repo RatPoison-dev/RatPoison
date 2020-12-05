@@ -3,7 +3,10 @@ package rat.poison.ui.uiHelpers.tables
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.*
-import rat.poison.*
+import rat.poison.curLocale
+import rat.poison.curSettings
+import rat.poison.dbg
+import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.boneCategories
 import rat.poison.ui.tabs.categorySelected

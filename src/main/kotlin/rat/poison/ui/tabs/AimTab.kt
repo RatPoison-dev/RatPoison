@@ -5,11 +5,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.*
+import rat.poison.curLocale
+import rat.poison.curSettings
+import rat.poison.dbg
 import rat.poison.overlay.opened
-import rat.poison.ui.uiHelpers.tables.AimTriggerTable
+import rat.poison.toLocale
 import rat.poison.ui.uiHelpers.tables.AimBacktrackTable
 import rat.poison.ui.uiHelpers.tables.AimTable
+import rat.poison.ui.uiHelpers.tables.AimTriggerTable
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.utils.generalUtil.strToBool
 
