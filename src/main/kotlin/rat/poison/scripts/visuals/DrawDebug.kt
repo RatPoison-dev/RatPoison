@@ -5,10 +5,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.overlay.App
-import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.curWepCategory
 import rat.poison.scripts.aim.curWepOverride
 import rat.poison.scripts.aim.curWepSettings
+import rat.poison.scripts.aim.meCurWep
 import rat.poison.utils.generalUtil.strToBool
 
 fun drawDebug() = App {

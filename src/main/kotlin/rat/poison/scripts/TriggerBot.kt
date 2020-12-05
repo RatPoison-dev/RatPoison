@@ -10,13 +10,13 @@ import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.iCrossHairID
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
-import rat.poison.safeToInt
 import rat.poison.scripts.aim.*
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
+import rat.poison.utils.generalUtil.safeToInt
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
 import rat.poison.utils.keyPressed
@@ -78,9 +78,9 @@ fun triggerBot() = every(5, inGameCheck = true) {
                 trigQueueShot(useDelay, bAIMBOT, backtrack = false, backtrackFallback = false)
                 return@every
             }
-            else {
-                boneTrig = bAIMBOT
-            }
+            //else { // this is normal magnet trigger behaviour. improve later
+            //    boneTrig = bAIMBOT
+            //}
         }
 
         var canFOV = false

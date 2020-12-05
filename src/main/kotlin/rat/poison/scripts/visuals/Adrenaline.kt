@@ -3,7 +3,6 @@ package rat.poison.scripts.visuals
 import com.badlogic.gdx.math.MathUtils
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.entity.dead
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_flHealthShotBoostExpirationTime
 import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
@@ -12,7 +11,6 @@ import rat.poison.scripts.bombState
 import rat.poison.scripts.currentGameTicks
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.inGame
 
 private var totalHits = 0
 private var fl = 0F

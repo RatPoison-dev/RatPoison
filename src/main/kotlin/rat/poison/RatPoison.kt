@@ -46,7 +46,7 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Beta"
 const val F_VERSION = "1.8"
-const val M_VERSION = "1.8.3"
+const val M_VERSION = "1.8.4"
 var LOADED_CONFIG = "DEFAULT"
 
 //const val EXPERIMENTAL = false
@@ -213,15 +213,4 @@ fun String.toLocale(): String {
         return this
     }
     return curLocale[this]
-}
-
-fun String.safeToInt(identifier: String = ""): Int {
-    return try {
-        this.toInt()
-    } catch(e: Exception) {
-        if (dbg) {
-            println("[DEBUG] $identifier is invalid")
-        }
-        1
-    }
 }

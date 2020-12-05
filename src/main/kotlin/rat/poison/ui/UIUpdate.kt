@@ -42,6 +42,7 @@ fun uiUpdate() {
     updateTrig()
     updateAim()
     updateDisableEsp()
+    fontsTabUpdate()
 
     //Update windows
     uiAimOverridenWeapons.setPosition(uiMenu.x+uiMenu.width+4F, uiMenu.y)
@@ -66,6 +67,7 @@ fun refreshMenu() {
     skinChangerTab = SkinChangerTab()
     optionsTab = OptionsTab()
     configsTab = ConfigsTab()
+    fontsTab = FontsTab()
 
     mainTabbedPane.add(aimTab)
     mainTabbedPane.add(visualsTab)
@@ -76,6 +78,7 @@ fun refreshMenu() {
     mainTabbedPane.add(skinChangerTab)
     mainTabbedPane.add(optionsTab)
     mainTabbedPane.add(configsTab)
+    mainTabbedPane.add(fontsTab)
 
     espTabbedPane.removeAll()
     miscTabbedPane.removeAll()
@@ -123,6 +126,8 @@ fun refreshMenu() {
 
     uiKeybinds.remove()
     uiKeybinds = UIKeybinds()
+
+    mainTabbedPane.switchTab(configsTab)
 
     uiRefreshing = false
 }

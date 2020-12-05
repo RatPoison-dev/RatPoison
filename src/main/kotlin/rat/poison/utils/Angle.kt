@@ -3,7 +3,7 @@ package rat.poison.utils
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.math.Quaternion
-import java.lang.Math.abs
+import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
 

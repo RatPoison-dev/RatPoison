@@ -10,8 +10,8 @@ import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
-import rat.poison.utils.normalize
 import rat.poison.utils.inGame
+import rat.poison.utils.normalize
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.hypot

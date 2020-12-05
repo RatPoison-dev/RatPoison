@@ -9,7 +9,6 @@ import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.*
-import rat.poison.utils.distanceTo
 import rat.poison.utils.generalUtil.cToDouble
 import rat.poison.utils.generalUtil.cToFloat
 import rat.poison.utils.generalUtil.strToBool

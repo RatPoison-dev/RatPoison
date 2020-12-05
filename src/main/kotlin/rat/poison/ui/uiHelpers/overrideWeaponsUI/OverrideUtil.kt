@@ -3,7 +3,6 @@ package rat.poison.ui.uiHelpers.overrideWeaponsUI
 import rat.poison.curSettings
 import rat.poison.oWeapon
 import rat.poison.utils.generalUtil.pull
-import rat.poison.utils.generalUtil.stringToList
 
 fun splitOverrideString(curWep: String): MutableList<String> {
     var tStr = curWep

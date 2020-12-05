@@ -9,7 +9,6 @@ import rat.poison.overlay.opened
 import rat.poison.scripts.bombState
 import rat.poison.toLocale
 import rat.poison.ui.changed
-import rat.poison.utils.saveWindows
 import kotlin.math.round
 
 lateinit var bombText : VisLabel

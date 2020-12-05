@@ -4,12 +4,10 @@ package rat.poison.overlay
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
-import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.GL20.GL_BLEND
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -20,7 +18,6 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport
 import com.kotcrab.vis.ui.VisUI
 import com.sun.management.OperatingSystemMXBean
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.CSGO
@@ -36,14 +33,10 @@ import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.uiPanels.*
 import rat.poison.ui.uiUpdate
-import rat.poison.utils.ObservableBoolean
+import rat.poison.utils.*
 import rat.poison.utils.extensions.appendHumanReadableSize
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.inGame
-import rat.poison.utils.keyPressed
-import rat.poison.utils.shouldPostProcess
-import java.io.File
 import java.lang.management.ManagementFactory
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
@@ -92,15 +85,13 @@ object App : ApplicationAdapter() {
 
     override fun create() {
 
-        VisUI.load(Gdx.files.internal("skin\\tinted.json"))
+        assetManager = AssetManager()
+        assetManager.loadAssets()
+        assetManager.updateFonts()
 
         //Implement key processor for menu
         keyProcessor = KeyProcessor()
         layout = GlyphLayout()
-
-        //Initialize asset manager and load assets
-        assetManager = AssetManager()
-        loadAssets()
 
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
 
@@ -118,21 +109,12 @@ object App : ApplicationAdapter() {
         menuStage.addActor(uiMenu)
 
         Gdx.input.inputProcessor = InputMultiplexer(menuStage, keyProcessor)
-        textRenderer = BitmapFont(false)
         camera = OrthographicCamera()
         Gdx.gl.glClearColor(0F, 0F, 0F, 0F)
 
         //Implement stage for menu
 
         overlay.start()
-    }
-
-    private fun loadAssets() {
-        File("$SETTINGS_DIRECTORY/Assets/Images").listFiles()?.forEach {
-            assetManager.load(it.toString(), Texture::class.java)
-        }
-
-        assetManager.finishLoading()
     }
 
     override fun render() {
@@ -201,6 +183,7 @@ object App : ApplicationAdapter() {
 
                         sb.projectionMatrix = menuStage.camera.combined
                         shapeRenderer.projectionMatrix = menuStage.camera.combined
+                        menuBatch.projectionMatrix = menuStage.camera.combined
                         uiMenu.changeAlpha()
                         appTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
                             updateViewMatrix()
@@ -217,7 +200,9 @@ object App : ApplicationAdapter() {
                             }
                             menuStage.act(Gdx.graphics.deltaTime)
                             menuStage.draw()
-                        } catch(e: Exception) { }
+                        } catch(e: Exception) {
+                            e.printStackTrace()
+                        }
 
                         glFinish()
                     }, TimeUnit.NANOSECONDS)
@@ -259,7 +244,7 @@ object App : ApplicationAdapter() {
                             sbText.append("\n   Menu took: ").append((menuTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
                             sbText.append("\n   Apps took: ").append((appTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
                             sbText.append("\n      Glow took: ").append((glowTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
-                            sbText.append("\n      Bsp Vis Check took: ").append((bspVisTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
+                            //sbText.append("\n      Bsp Vis Check took: ").append((bspVisTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
                             timer = 0
                         }
 
@@ -327,6 +312,9 @@ object App : ApplicationAdapter() {
         overlay.listener = object : IOverlayListener {
             override fun onTargetAppWindowClosed(overlay: IOverlay) {
                 haveTarget = false
+                if (opened) {
+                    uiMenu.close()
+                }
             }
 
             override fun onAfterInit(overlay: IOverlay) {

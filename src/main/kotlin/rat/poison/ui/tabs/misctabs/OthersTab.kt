@@ -7,7 +7,6 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.MUSIC_KITS_FILE
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
-import rat.poison.game.hooks.cursorEnable
 import rat.poison.overlay.opened
 import rat.poison.scripts.changeName
 import rat.poison.scripts.selfNade
