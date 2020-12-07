@@ -8,7 +8,7 @@ SMG_ENABLE_FLAT_AIM = false
 
 //Enable path aim
 //Uses mouse movement to aim
-SMG_ENABLE_PATH_AIM = false
+SMG_ENABLE_PATH_AIM = true
 
 //Factor recoil when shooting
 SMG_FACTOR_RECOIL = false
@@ -34,7 +34,7 @@ SMG_AIM_SMOOTHNESS = 5.0
 SMG_AIM_FORCE_BONE = NEAREST
 
 //Aim after X shots
-SMG_AIM_AFTER_SHOTS = 10
+SMG_AIM_AFTER_SHOTS = 0
 
 //If the aimbot should only aim when you can shoot
 SMG_AIM_ONLY_ON_SHOT = false
