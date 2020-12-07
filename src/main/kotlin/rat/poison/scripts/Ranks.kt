@@ -5,19 +5,25 @@ import rat.poison.game.forEntities
 import rat.poison.game.rankName
 import rat.poison.overlay.App.haveTarget
 import rat.poison.overlay.opened
+import rat.poison.settings.MENUTOG
+import rat.poison.ui.tabs.updatingRanks
 import rat.poison.ui.uiPanels.ranksTab
 import rat.poison.ui.uiRefreshing
 import rat.poison.utils.RanksPlayer
 import rat.poison.utils.every
 import rat.poison.utils.extensions.roundNDecimals
+import rat.poison.utils.inBackground
 import rat.poison.utils.saving
 
 var ranksPlayerList = mutableListOf<RanksPlayer>()
 
+//works with every down to 30, if you ever crash due to this then dn
 fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every second
-    if (!opened || !haveTarget) return@every
+
+    if (!opened || !haveTarget || updatingRanks || !MENUTOG) return@every
 
     //Bruh -- fix later
+    updatingRanks = true
     ranksPlayerList.clear()
     forEntities(EntityType.CCSPlayer) {
         val entity = it.entity
@@ -50,6 +56,7 @@ fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every second
         ranksPlayerList.add(player)
     }
     ranksPlayerList.sort()
+    updatingRanks = false
 
     if (!uiRefreshing && !saving) {
         ranksTab.updateRanks()

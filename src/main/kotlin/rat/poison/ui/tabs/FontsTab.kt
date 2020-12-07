@@ -64,8 +64,8 @@ class FontsTab : Tab(false, false) {
 
         //left elements
         var leftTable = VisTable()
-        leftTable.add(fontLabel).left().row()
-        leftTable.add(fontSelectionList.mainTable).left().width(120F).height(180F).row()
+        leftTable.add(fontLabel).left().width(120F).padBottom(10F).row()
+        leftTable.add(fontSelectionList.mainTable).left().width(120F).height(225F).row()
         leftTable.add(loadFontButton).left().top()
 
         table.add(leftTable).left().colspan(2).top()

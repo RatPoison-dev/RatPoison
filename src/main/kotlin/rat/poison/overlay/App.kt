@@ -313,7 +313,7 @@ object App : ApplicationAdapter() {
             override fun onTargetAppWindowClosed(overlay: IOverlay) {
                 haveTarget = false
                 if (opened) {
-                    uiMenu.close()
+                    uiMenu.closeMenu()
                 }
             }
 

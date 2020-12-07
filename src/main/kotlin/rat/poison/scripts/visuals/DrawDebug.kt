@@ -85,6 +85,7 @@ fun drawDebug() = App {
     shapeRenderer.color = Color.BLACK
     shapeRenderer.set(ShapeRenderer.ShapeType.Filled)
     shapeRenderer.rect(1f, CSGO.gameHeight/4f+8f, 225f, 512f)
+    shapeRenderer.set(ShapeRenderer.ShapeType.Line)
     shapeRenderer.end()
 
     if (sb.isDrawing) {

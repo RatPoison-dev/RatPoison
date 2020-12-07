@@ -116,11 +116,11 @@ class NadeHelperTab : Tab(false, false) {
         updateNadeFileHelperList()
     }
 
-    override fun getContentTable(): Table? {
+    override fun getContentTable(): Table {
         return table
     }
 
-    override fun getTabTitle(): String? {
+    override fun getTabTitle(): String {
         return "Nade-Helper".toLocale()
     }
 }

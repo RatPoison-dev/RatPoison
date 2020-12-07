@@ -17,7 +17,7 @@ import rat.poison.utils.normalize
 
 private val lastAppliedRCS = Vector2()
 
-fun rcs() = every(4, inGameCheck = true) {
+fun rcs() = every(15, inGameCheck = true) {
 	if (me <= 0 || !curSettings["ENABLE_RCS"].strToBool() || meDead) return@every
 
 	val weapon = meCurWep

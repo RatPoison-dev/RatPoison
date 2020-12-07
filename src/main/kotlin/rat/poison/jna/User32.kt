@@ -8,13 +8,16 @@ import com.sun.jna.win32.StdCallLibrary
 import rat.poison.jna.structures.Rect
 import rat.poison.jna.structures.WindowCompositionAttributeData
 
-//TODO:convert to enum ffs
-const val AccentFlag_DrawLeftBorder = 0x20
-const val AccentFlag_DrawTopBorder = 0x40
-const val AccentFlag_DrawRightBorder = 0x80
-const val AccentFlag_DrawBottomBorder = 0x100
-const val AccentFlag_DrawAllBorders =
-        (AccentFlag_DrawLeftBorder or AccentFlag_DrawTopBorder or AccentFlag_DrawRightBorder or AccentFlag_DrawBottomBorder)
+class AccentFlags {
+    val Transparent = 2
+    val DrawLeftBorder = 0x20
+    val DrawTopBorder = 0x40
+    val DrawRightBorder = 0x80
+    val DrawBottomBorder = 0x100
+    val DrawAllBorders = (DrawLeftBorder or DrawTopBorder or DrawRightBorder or DrawBottomBorder)
+}
+
+val accentFlags = AccentFlags()
 
 
 const val WS_EX_TOOLWINDOW = 0x00000080

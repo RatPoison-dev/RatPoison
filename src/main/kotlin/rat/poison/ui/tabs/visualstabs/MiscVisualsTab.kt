@@ -98,11 +98,11 @@ class MiscVisualsTab : Tab(false, false) {
         table.add(headLevelDeadzone).row()
     }
 
-    override fun getContentTable(): Table? {
+    override fun getContentTable(): Table {
         return table
     }
 
-    override fun getTabTitle(): String? {
+    override fun getTabTitle(): String {
         return "Misc".toLocale()
     }
 }
