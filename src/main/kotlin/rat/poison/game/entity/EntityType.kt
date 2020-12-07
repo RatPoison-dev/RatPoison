@@ -3,6 +3,7 @@ package rat.poison.game.entity
 import org.jire.arrowhead.unsign
 import rat.poison.game.CSGO.csgoEXE
 
+//sv_dump_class_info
 enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false, val grenadeProjectile: Boolean = false, val bomb: Boolean = false) {
 	NULL,
 	CAIBaseNPC,
@@ -115,6 +116,7 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false,
 	CKnife,
 	CKnifeGG,
 	CLightGlow,
+	CMapVetoPickController,
 	CMaterialModifyControl,
 	CMelee,
 	CMolotovGrenade(grenade = true),
