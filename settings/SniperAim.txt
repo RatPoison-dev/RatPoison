@@ -8,7 +8,7 @@ SNIPER_ENABLE_FLAT_AIM = false
 
 //Enable path aim
 //Uses mouse movement to aim
-SNIPER_ENABLE_PATH_AIM = false
+SNIPER_ENABLE_PATH_AIM = true
 
 //Enable scoped only
 //Will only aimbot when scoped in

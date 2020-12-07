@@ -16,7 +16,7 @@ MENU_KEY = 45
 MENU_TOOLTIPS = true
 
 //Default locale
-CURRENT_LOCALE = en_US
+CURRENT_LOCALE = locale_en_US
 
 //FOV Type : DISTANCE or STATIC
 FOV_TYPE = STATIC
@@ -78,7 +78,7 @@ AIM_TARGET_SWAP_DELAY = 150
 ENABLE_OVERRIDE = false
 
 //Enable aimbot when aim key is pressed
-ACTIVATE_FROM_AIM_KEY = false
+ACTIVATE_FROM_AIM_KEY = true
 
 //Enables aimbot against teammates
 TEAMMATES_ARE_ENEMIES = false
@@ -118,9 +118,9 @@ AIM_SPEED = 10
 AIM_FOV = 0.5
 FACTOR_RECOIL = false
 ENABLE_FLAT_AIM = false
-ENABLE_PATH_AIM = false
+ENABLE_PATH_AIM = true
 ENABLE_SCOPED_ONLY = false
-AIM_AFTER_SHOTS = 10
+AIM_AFTER_SHOTS = 0
 AIM_ADVANCED = false
 AIM_RCS_X = 0.05
 AIM_RCS_Y = 0.05
