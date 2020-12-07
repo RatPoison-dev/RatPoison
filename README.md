@@ -96,6 +96,16 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 
 ## Recent update <a name = "update"></a>
 
+1.7.1.1
+
+* Added new operation skins
+* Fixed ESP showing wrong weapons due to a game update
+
+1.7.1
+
+* Fixed nadehelper crashes
+* Hitsounds no longer randomly play in menu
+
 1.7 Full Update
 * Important
 	* Added backtrack
