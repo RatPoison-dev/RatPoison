@@ -82,12 +82,12 @@ internal fun rcrosshair() = App {
                     rect(x - lO, y - wO, cL, cW)
                     //Vertical
                     rect(x - wO, y - lO, cW, cL)
+                    set(ShapeRenderer.ShapeType.Line)
                 } else {
                     circle(x, y, curSettings["RCROSSHAIR_RADIUS"].toFloat())
                 }
             }
 
-            set(ShapeRenderer.ShapeType.Line)
             end()
         }
     }

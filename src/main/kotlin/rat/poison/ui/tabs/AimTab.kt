@@ -37,11 +37,11 @@ class AimTab : Tab(true, false) { //Aim.kts tab
         table.add(tBacktrack).growX().row()
     }
 
-    override fun getContentTable(): Table? {
+    override fun getContentTable(): Table {
         return table
     }
 
-    override fun getTabTitle(): String? {
+    override fun getTabTitle(): String {
         return "Aim".toLocale()
     }
 }

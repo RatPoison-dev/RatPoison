@@ -11,6 +11,7 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
 import rat.poison.overlay.App.menuStage
+import rat.poison.overlay.opened
 import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.refreshMenu
@@ -170,7 +171,7 @@ class ConfigsTab : Tab(false, false) {
     }
 
     fun updateCFGList() {
-        if (VisUI.isLoaded()) {
+        if (VisUI.isLoaded() && !saving && opened) {
             configListAdapter.clear()
 
             File("$SETTINGS_DIRECTORY\\CFGS").listFiles()?.forEach {
@@ -183,7 +184,7 @@ class ConfigsTab : Tab(false, false) {
     }
 
     fun updateLocaleList() {
-        if (VisUI.isLoaded()) {
+        if (VisUI.isLoaded() && !saving && opened) {
             localeListAdapter.clear()
 
             File("$SETTINGS_DIRECTORY\\Localizations").listFiles()?.forEach {

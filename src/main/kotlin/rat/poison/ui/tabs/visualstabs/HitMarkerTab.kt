@@ -45,11 +45,11 @@ class HitMarkerTab : Tab(false, false) {
         table.add(colTab).width(444F).center()
     }
 
-    override fun getContentTable(): Table? {
+    override fun getContentTable(): Table {
         return table
     }
 
-    override fun getTabTitle(): String? {
+    override fun getTabTitle(): String {
         return "Hitmarker".toLocale()
     }
 }

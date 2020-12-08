@@ -291,6 +291,7 @@ BACKTRACK_KEY = Backtrack Key
 BACKTRACK_MS = MS
 BACKTRACK_SPOTTED = Spotted Only
 _BACKTRACK = Backtrack
+BACKTRACK_VISUALIZE = Backtrack Visualize
 BACKTRACK_VISUALIZE_SMOKE_CHECK = Backtrack Visualize Smoke Check
 
 //Category: Misc Esp
@@ -585,6 +586,7 @@ FILE_NOT_FOUND_ERROR = File was not found. Config:
 SAVING_NOW_ERROR = Wait for saving to finish first. Config:
 OVERWRITE_CONFIG = This action would overwrite config:
 SAVE_DEFAULT = Save Default
+Load-Locale = Load Locale
 CONFIRM = Confirm
 CANCEL = Cancel
 Locale = Locale

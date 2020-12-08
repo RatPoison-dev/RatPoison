@@ -5,11 +5,14 @@ import com.kotcrab.vis.ui.widget.LinkLabel
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import kotlinx.coroutines.runBlocking
 import rat.poison.scripts.ranksPlayerList
 import rat.poison.toLocale
 import rat.poison.ui.uiRefreshing
 import rat.poison.utils.RanksPlayer
 import rat.poison.utils.saving
+
+var updatingRanks = false
 
 class RanksTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -43,16 +46,17 @@ class RanksTab : Tab(false, false) {
         table.add(ranksListTable).left().maxWidth(500F)
     }
 
-    override fun getContentTable(): Table? {
+    override fun getContentTable(): Table {
         return table
     }
 
-    override fun getTabTitle(): String? {
+    override fun getTabTitle(): String {
         return "Ranks".toLocale()
     }
 
     fun updateRanks() {
-        if (uiRefreshing || saving) return
+        if (uiRefreshing || saving || updatingRanks) return
+        updatingRanks = true
         teamsLabel.setText("Team".toLocale() + "  \n")
         namesLabel.setText("Name".toLocale())
         ranksLabel.setText("Rank".toLocale() + "  \n")
@@ -62,12 +66,15 @@ class RanksTab : Tab(false, false) {
         winsLabel.setText("Wins".toLocale() + "  \n")
         moneyLabel.setText("Money".toLocale() + "  \n")
 
-        namesTable.reset()
+        namesTable.clear()
         namesTable.add(namesLabel).left().row()
 
-        ranksPlayerList.forEach {
-            constructRank(it)
+        runBlocking {
+            ranksPlayerList.forEach {
+                constructRank(it)
+            }
         }
+        updatingRanks = false
     }
 
     private fun constructRank(player: RanksPlayer) {

@@ -94,11 +94,11 @@ class IndicatorEspTab : Tab(false, false) {
         table.add(tmpTable).left()
     }
 
-    override fun getContentTable(): Table? {
+    override fun getContentTable(): Table {
         return table
     }
 
-    override fun getTabTitle(): String? {
+    override fun getTabTitle(): String {
         return "Indicator".toLocale()
     }
 }

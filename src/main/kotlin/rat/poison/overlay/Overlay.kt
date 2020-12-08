@@ -188,13 +188,16 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	}
 
 	private fun makeTransparent() = with(User32) {
-		SetWindowCompositionAttribute(
-			myHWND,
-			WindowCompositionAttributeData(
-					AccentState = AccentStates.ACCENT_ENABLE_TRANSPARENTGRADIENT,
-					AccentFlags = 2
+		if (System.getProperty("os.name").contains("windows 10", ignoreCase = true)) {
+			SetWindowCompositionAttribute(
+				myHWND,
+				WindowCompositionAttributeData(
+					AccentState = AccentStates.ACCENT_ENABLE_TRANSPARENTGRADIENT, AccentFlags = accentFlags.Transparent)
 			)
-		)
+		} else {
+			win7transparency(myHWND)
+		}
+		return@with
 	}
 
 	private fun makeBlurBehind() = with(User32) {
@@ -202,13 +205,13 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 			myHWND,
 			WindowCompositionAttributeData(
 					AccentState = accentStateWhenActive,
-					AccentFlags = 2
+					AccentFlags = accentFlags.Transparent
 			)
 		)
 	}
 
 	private fun makeOpaque() = with(User32) {
-		SetWindowCompositionAttribute(myHWND, WindowCompositionAttributeData(AccentState = AccentStates.ACCENT_DISABLED, AccentFlags = AccentFlag_DrawAllBorders))
+		SetWindowCompositionAttribute(myHWND, WindowCompositionAttributeData(AccentState = AccentStates.ACCENT_DISABLED, AccentFlags = accentFlags.Transparent))
 	}
 
 	private fun getWindowHWND(windowName: String, timeout: Long = 3000L): Long = with(User32) {

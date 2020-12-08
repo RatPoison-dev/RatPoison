@@ -119,11 +119,11 @@ class GlowEspTab: Tab(false, false) {
         ////////////////////FORMATTING
     }
 
-    override fun getContentTable(): Table? {
+    override fun getContentTable(): Table {
         return table
     }
 
-    override fun getTabTitle(): String? {
+    override fun getTabTitle(): String {
         return "Glow".toLocale()
     }
 }

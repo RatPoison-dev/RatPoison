@@ -5,6 +5,7 @@ package rat.poison
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
+import com.badlogic.gdx.graphics.glutils.GLVersion
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.lwjgl.glfw.GLFW.*
@@ -186,10 +187,10 @@ fun main() {
                 setWindowedMode(w, h)
 
                 if (curSettings["OPENGL_3"].strToBool()) {
-                    useOpenGL3(true, 4, 2)
+                    useOpenGL3(true, 4, 0)
                     if (dbg) { println("[DEBUG] Using GL3") }
                 } else {
-                    useOpenGL3(false, 2, 2)
+                    useOpenGL3(false, 2, 0)
                     if (dbg) { println("[DEBUG] Using GL2") }
                 }
 

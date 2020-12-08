@@ -189,12 +189,17 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         }
     }
 
-    public override fun close() {
-        println("Close button pressed. Unloading...")
+    fun closeMenu() {
         haltProcess = true
         disableAllEsp()
         sendPacket(true)
         exitProcess(0)
+    }
+
+
+    public override fun close() {
+        println("Close button pressed. Unloading...")
+        closeMenu()
     }
 
     internal fun changeAlpha(alpha: Float = curSettings["MENU_ALPHA"].toFloat()) {
