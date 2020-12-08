@@ -360,7 +360,7 @@ fun addTextureOrText(assetManager: AssetManager, useIcons: Boolean, textureName:
 
 fun getRealTextParams(font: BitmapFont, builder: StringBuilder, layout: GlyphLayout): Pair<Float, Float> {
 	layout.setText(font, builder)
-	if (builder.isEmpty) {
+	if (builder.length == 0) {
 		return Pair(0F, 0F)
 	}
 	return Pair(layout.height, layout.width)
