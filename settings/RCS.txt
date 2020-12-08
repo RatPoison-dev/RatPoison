@@ -2,7 +2,7 @@
 ENABLE_RCS = false
 
 //RCS type (calculation) LEGACY/STABLE
-RCS_TYPE = LEGACY
+RCS_TYPE = STABLE
 
 //RCS smoothing (0.1 - 1.0)
 //0.1 is the least accurate

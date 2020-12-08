@@ -8,7 +8,7 @@ SHOTGUN_ENABLE_FLAT_AIM = false
 
 //Enable path aim
 //Uses mouse movement to aim
-SHOTGUN_ENABLE_PATH_AIM = false
+SHOTGUN_ENABLE_PATH_AIM = true
 
 //Factor recoil when shooting
 SHOTGUN_FACTOR_RECOIL = false

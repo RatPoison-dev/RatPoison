@@ -8,7 +8,7 @@ RIFLE_ENABLE_FLAT_AIM = false
 
 //Enable path aim
 //Uses mouse movement to aim
-RIFLE_ENABLE_PATH_AIM = false
+RIFLE_ENABLE_PATH_AIM = true
 
 //Factor recoil when shooting
 RIFLE_FACTOR_RECOIL = false
@@ -34,7 +34,7 @@ RIFLE_AIM_SMOOTHNESS = 5.0
 RIFLE_AIM_FORCE_BONE = NEAREST
 
 //Aim after X shots
-RIFLE_AIM_AFTER_SHOTS = 10
+RIFLE_AIM_AFTER_SHOTS = 0
 
 //If the aimbot should only aim when you can shoot
 RIFLE_AIM_ONLY_ON_SHOT = false

@@ -30,7 +30,7 @@ class OptionsTab : Tab(false, false) {
     val keybinds = VisCheckBoxCustom("Keybinds", "KEYBINDS")
     val blur = VisCheckBoxCustom("Menu Blur", "GAUSSIAN_BLUR")
     val overloadKeybinds = VisCheckBoxCustom("Overload Keybinds", "OVERLOAD_KEYBINDS")
-    private val discordLink = LinkLabel("Join-Discord".toLocale(), "https://discord.gg/xkTteTM")
+    private val discordLink = LinkLabel("Join-Discord".toLocale(), "https://discord.gg/TGsp8SNcFZ")
 
     init {
         debug.changed { _, _ ->
