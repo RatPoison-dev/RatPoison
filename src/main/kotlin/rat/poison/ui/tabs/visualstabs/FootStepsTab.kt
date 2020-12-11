@@ -1,5 +1,6 @@
 package rat.poison.ui.tabs.visualstabs
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.VisSelectBox
@@ -92,4 +93,15 @@ fun footStepsEspTabUpdate() {
         footStepEnemyBox.update()
         footStepEnemyColor.update()
     }
+}
+
+fun footStepsEspTabDisable(bool: Boolean, col: Color) {
+    footStepsEspTab.enableFootSteps.disable(bool)
+    footStepsEspTab.footStepType.isDisabled = bool
+    footStepsEspTab.footStepUpdateTimer.disable(bool, col)
+    footStepsEspTab.footStepTTL.disable(bool, col)
+    footStepsEspTab.footStepTeamBox.disable(bool)
+    footStepsEspTab.footStepTeamColor.disable(bool)
+    footStepsEspTab.footStepEnemyBox.disable(bool)
+    footStepsEspTab.footStepEnemyColor.disable(bool)
 }

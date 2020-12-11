@@ -1,5 +1,6 @@
 package rat.poison.ui.tabs.visualstabs
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
@@ -67,4 +68,17 @@ fun hitMarkerTabUpdate() {
         hitMarkerOutlineColor.update()
         hitMarkerComboColor.update()
     }
+}
+
+fun hitMarkerTabDisable(bool: Boolean, col: Color) {
+    hitMarkerTab.hitMarker.disable(bool)
+    hitMarkerTab.hitMarkerOutline.disable(bool)
+    hitMarkerTab.hitMarkerCombo.disable(bool)
+    hitMarkerTab.hitMarkerRecoilPos.disable(bool)
+    hitMarkerTab.hitMarkerSpacing.disable(bool, col)
+    hitMarkerTab.hitMarkerLength.disable(bool, col)
+    hitMarkerTab.hitMarkerWidth.disable(bool, col)
+    hitMarkerTab.hitMarkerColor.disable(bool)
+    hitMarkerTab.hitMarkerOutlineColor.disable(bool)
+    hitMarkerTab.hitMarkerComboColor.disable(bool)
 }

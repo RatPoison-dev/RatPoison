@@ -4,13 +4,18 @@
 package rat.poison.overlay
 
 import com.sun.jna.platform.win32.WinUser
+import org.lwjgl.system.windows.User32.WS_MINIMIZEBOX
+import rat.poison.appless
 import rat.poison.curSettings
+import rat.poison.game.CSGO.clientDLL
+import rat.poison.game.offsets.ClientOffsets.dwForceAttack
 import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
 import rat.poison.jna.*
 import rat.poison.jna.enums.AccentStates
 import rat.poison.jna.structures.Rect
 import rat.poison.jna.structures.WindowCompositionAttributeData
+import rat.poison.overlay.App.uiMenu
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inBackground
 import kotlin.concurrent.thread
@@ -21,16 +26,19 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	private var targetAppHWND = HWND_ZERO
 	private val rcClient = Rect()
 	private val rcWindow = Rect()
-	private var x: Int = 0
-	private var y: Int = 0
-	var width: Int = 0
-	var height: Int = 0
+	private val myRcClient = Rect()
+	private val myRcWindow = Rect()
+	private var x: Int = curSettings["APPLESS_X"].toInt()
+	private var y: Int = curSettings["APPLESS_Y"].toInt()
+	var width: Int =     curSettings["APPLESS_WIDTH"].toInt()
+	var height: Int =    curSettings["APPLESS_HEIGHT"].toInt()
 	private var initialWidth: Int = 0
 	private var initialHeight: Int = 0
 	private var initialWindowStyle: Int = 0
 	private var initialWindowExStyle: Int = 0
 	var listener: IOverlayListener? = null
 	private var firstRun = true
+	private var useWin7 = System.getProperty("os.name").contains("windows 10", ignoreCase = true)
 
 	@Volatile
 	private var run = false
@@ -71,7 +79,11 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 				}
 			} catch (e: InterruptedException) { println("InterruptedException"); e.printStackTrace() } catch (e: Exception) { println("StandardException"); e.printStackTrace() }
 			run = false
+			if (clientDLL.int(dwForceAttack) == 5) {
+				clientDLL[dwForceAttack] = 4
+			}
 			println("${Thread.currentThread().name} died!")
+			uiMenu.closeMenu()
 		}
 	}
 
@@ -91,13 +103,13 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 
 		saveStyle()
 
-		if (!curSettings["APPLESS"].strToBool()) {
+		if (!appless) {
 			makeUndecorated()
 		}
 
 		beActive()
 
-		listener?.onAfterInit(this)
+		listener?.onAfterInit(this@Overlay)
 
 		println("Overlay initialized")
 	}
@@ -117,16 +129,30 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 		val oldX = x
 		val oldY = y
 
+
+		if (GetClientRect(myHWND, myRcClient) && GetClientRect(myHWND, myRcWindow)) {
+			if (appless) {
+				width = myRcClient.right - myRcClient.left
+				height = myRcClient.bottom - myRcClient.top
+				x = myRcWindow.left + (myRcWindow.right - myRcWindow.left - width) / 2
+				y = myRcWindow.top + myRcWindow.bottom - myRcWindow.top - height
+				if (IsWindowVisible(myHWND) && !IsWindowVisible(targetAppHWND)) {
+					ShowWindow(myHWND, WinUser.SW_HIDE)
+					listener?.onBackground(this@Overlay)
+				}
+			}
+		}
+
 		if (GetClientRect(targetAppHWND, rcClient) && GetWindowRect(targetAppHWND, rcWindow)) {
 			//shitty DWM does not draw background windows if the top window bounds is same
 			//as screen bounds. Doesn't matter whether the top window is layered or not,
 			//hence we broke the equation so our overlay won't go opaque with a black background...
-			width = rcClient.right - rcClient.left + 2
-			height = rcClient.bottom - rcClient.top + 2
-			x = rcWindow.left + (rcWindow.right - rcWindow.left - width) / 2 - 1
-			y = rcWindow.top + rcWindow.bottom - rcWindow.top - height - 1
+			if (!appless) {
+				width = rcClient.right - rcClient.left + 2
+				height = rcClient.bottom - rcClient.top + 2
+				x = rcWindow.left + (rcWindow.right - rcWindow.left - width) / 2 - 1
+				y = rcWindow.top + rcWindow.bottom - rcWindow.top - height - 1
 
-			if (!curSettings["APPLESS"].strToBool()) {
 				if (oldX != x || oldY != y || oldWidth != width || oldHeight != height) {
 					SetWindowPos(myHWND, HWND_TOPPOS, x, y, width, height, WinUser.SWP_NOSENDCHANGING or WinUser.SWP_NOZORDER or WinUser.SWP_DEFERERASE or WinUser.SWP_NOREDRAW or WinUser.SWP_ASYNCWINDOWPOS or WinUser.SWP_FRAMECHANGED)
 					listener?.onBoundsChange(this@Overlay, x, y, width, height)
@@ -153,7 +179,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 			listener?.onTargetAppWindowClosed(this@Overlay)
 			targetAppHWND = HWND_ZERO
 			inBackground = true
-			restoreStyle()
+			if (!appless) restoreStyle()
 			makeOpaque()
 		}
 	}
@@ -188,7 +214,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	}
 
 	private fun makeTransparent() = with(User32) {
-		if (System.getProperty("os.name").contains("windows 10", ignoreCase = true)) {
+		if (useWin7) {
 			SetWindowCompositionAttribute(
 				myHWND,
 				WindowCompositionAttributeData(
@@ -262,12 +288,12 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	}
 
 	private fun beActive() = with(User32) {
-		if (curSettings["GAUSSIAN_BLUR"].strToBool()) {
+		if (!appless && curSettings["GAUSSIAN_BLUR"].strToBool() ) {
 			makeBlurBehind()
 		}
 
 		if (targetAppHWND != HWND_ZERO) {
-			SetWindowLongA(myHWND, WinUser.GWL_EXSTYLE, WS_EX_TOOLWINDOW or WS_EX_TOPMOST)
+			if (appless) SetWindowLongA(myHWND, WinUser.GWL_EXSTYLE, WS_EX_TOPMOST or WS_MINIMIZEBOX) else SetWindowLongA(myHWND, WinUser.GWL_EXSTYLE, WS_EX_TOOLWINDOW or WS_EX_TOPMOST)
 
 			val dwCurrentThread = GetWindowThreadProcessId(myHWND, null)
 			val dwFGThread = GetWindowThreadProcessId(targetAppHWND, null)
@@ -279,7 +305,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 
 			AttachThreadInput(dwCurrentThread.toLong(), dwFGThread.toLong(), false)
 
-			if (!curSettings["APPLESS"].strToBool()) {
+			if (!appless) {
 				SetWindowPos(myHWND, HWND_TOPPOS, x, y, width, height, 0)
 			}
 
@@ -288,7 +314,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	}
 
 	private fun bePassive() = with(User32) {
-		if (!curSettings["APPLESS"].strToBool()) {
+		if (!appless) {
 			SetWindowLongA(myHWND, WinUser.GWL_EXSTYLE, WinUser.WS_EX_LAYERED or WinUser.WS_EX_TRANSPARENT or WS_EX_TOOLWINDOW or WS_EX_TOPMOST)
 			makeTransparent()
 		}

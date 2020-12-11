@@ -5,7 +5,6 @@ package rat.poison
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
-import com.badlogic.gdx.graphics.glutils.GLVersion
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.lwjgl.glfw.GLFW.*
@@ -49,6 +48,7 @@ const val BRANCH = "Beta"
 const val F_VERSION = "1.8"
 const val M_VERSION = "1.8.4"
 var LOADED_CONFIG = "DEFAULT"
+var oWeaponSize = oWeapon::class.java.declaredFields.size
 
 //const val EXPERIMENTAL = false
 const val SETTINGS_DIRECTORY = "settings" //Internal
@@ -62,6 +62,7 @@ val curSettings = Settings()
 val curLocale = Settings()
 
 var dbg: Boolean = false
+var appless: Boolean = false
 val robot = Robot().apply { this.autoDelay = 0 }
 
 var haltProcess = false
@@ -74,6 +75,7 @@ fun main() {
     detectLocale()
 
     dbg = curSettings["DEBUG"].strToBool()
+    appless = curSettings["APPLESS"].strToBool()
     if (dbg) println("DEBUG enabled")
 
     println("Waiting for ${curSettings["MENU_APP"]} process...")
@@ -135,7 +137,6 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Auto Knife") }; autoKnife()
     if (dbg) { println("[DEBUG] Initializing Reduced Flash") }; reducedFlash()
     if (dbg) { println("[DEBUG] Initializing ESPs") }; esp()
-    if (dbg) { println("[DEBUG] Initializing Esp Toggle") }; espToggle()
     if (dbg) { println("[DEBUG] Initializing Fast Stop") }; fastStop()
     if (dbg) { println("[DEBUG] Initializing Head Walk") }; headWalk()
     if (dbg) { println("[DEBUG] Initializing Adrenaline") }; adrenaline()
@@ -179,9 +180,14 @@ fun main() {
                 var w = CSGO.gameWidth
                 var h = CSGO.gameHeight
 
-                if ((w == 0 || h == 0) || curSettings["MENU_APP"] != "\"Counter-Strike: Global Offensive\"" || curSettings["APPLESS"].strToBool()) {
+                if ((w == 0 || h == 0) || curSettings["MENU_APP"] != "\"Counter-Strike: Global Offensive\"") {
                     w = curSettings["OVERLAY_WIDTH"].toInt()
                     h = curSettings["OVERLAY_HEIGHT"].toInt()
+                }
+
+                if (appless) {
+                    w = curSettings["APPLESS_WIDTH"].toInt()
+                    h = curSettings["APPLESS_HEIGHT"].toInt()
                 }
 
                 setWindowedMode(w, h)
@@ -195,8 +201,9 @@ fun main() {
                 }
 
                 //Required to fix W2S offset
-                setWindowPosition(CSGO.gameX, CSGO.gameY)
-                setDecorated(curSettings["APPLESS"].strToBool())
+                if (!appless) setWindowPosition(CSGO.gameX, CSGO.gameY) else setWindowPosition(curSettings["APPLESS_X"].toInt(), curSettings["APPLESS_Y"].toInt())
+                setResizable(false)
+                setDecorated(appless)
                 useVsync(false)
                 glfwSwapInterval(0)
                 glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE)

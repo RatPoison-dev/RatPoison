@@ -1,18 +1,23 @@
 package rat.poison.ui.tabs
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
+import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.overlay.opened
 import rat.poison.toLocale
-import rat.poison.ui.uiHelpers.tables.AimBacktrackTable
-import rat.poison.ui.uiHelpers.tables.AimTable
-import rat.poison.ui.uiHelpers.tables.AimTriggerTable
+import rat.poison.ui.tabs.aimtabs.BacktrackTab
+import rat.poison.ui.tabs.aimtabs.MainAimTab
+import rat.poison.ui.tabs.aimtabs.OverrideTab
+import rat.poison.ui.tabs.aimtabs.TriggerBotTab
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.utils.generalUtil.strToBool
 
@@ -25,16 +30,46 @@ var rifleCategory = arrayOf("AK47", "AUG", "FAMAS", "SG553", "GALIL", "M4A4", "M
 var sniperCategory = arrayOf("AWP", "G3SG1", "SCAR20", "SSG08")
 var shotgunCategory = arrayOf("XM1014", "MAG7", "SAWED_OFF", "NOVA")
 
+var aimTabbedPane = TabbedPane()
+var overridenWeapons = OverrideTab()
+var mainAimTab = MainAimTab()
+var triggerTab = TriggerBotTab()
+var backtrackTab = BacktrackTab()
+
 class AimTab : Tab(true, false) { //Aim.kts tab
     private val table = VisTable(false)
-    val tAim = AimTable()
-    val tTrig = AimTriggerTable()
-    val tBacktrack = AimBacktrackTable()
+    val tAim: MainAimTab = mainAimTab
+    val tTrig = triggerTab
+    val tBacktrack = backtrackTab
 
     init {
-        table.add(tAim).growX().row()
-        table.add(tTrig).growX().row()
-        table.add(tBacktrack).growX().row()
+        aimTabbedPane.add(tAim)
+        aimTabbedPane.add(triggerTab)
+        aimTabbedPane.add(backtrackTab)
+        aimTabbedPane.add(overridenWeapons)
+
+        aimTabbedPane.switchTab(tAim)
+        val aimTabbedPaneContent = VisTable()
+        aimTabbedPaneContent.padTop(10F)
+        aimTabbedPaneContent.padBottom(10F)
+        aimTabbedPaneContent.align(Align.top)
+        aimTabbedPaneContent.columnDefaults(1)
+        val aimScrollPane = ScrollPane(aimTabbedPaneContent)
+        aimScrollPane.setFlickScroll(false)
+        aimScrollPane.setSize(1000F, 1000F)
+        aimTabbedPaneContent.add(mainAimTab.contentTable).left().colspan(2).row()
+        aimTabbedPaneContent.addSeparator().colspan(2).padLeft(25F).padRight(25F)
+        aimTabbedPane.addListener(object : TabbedPaneAdapter() {
+            override fun switchedTab(tab: Tab?) {
+                if (tab == null) return
+                aimTabbedPaneContent.clear()
+                aimTabbedPaneContent.add(tab.contentTable).left().colspan(2).row()
+                aimTabbedPaneContent.addSeparator().colspan(2).padLeft(25F).padRight(25F)
+            }
+        })
+
+        table.add(aimTabbedPane.table).minWidth(500F).left().growX().row()
+        table.add(aimScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
     }
 
     override fun getContentTable(): Table {
@@ -55,12 +90,6 @@ fun updateDisableAim() {
         if (bool) {
             col = Color(105F, 105F, 105F, .2F)
         }
-        if (bool) {
-            weaponOverrideCheckBox.isChecked = !bool
-        } else {
-            weaponOverrideCheckBox.isChecked = curSettings["ENABLE_OVERRIDE"].strToBool()
-        }
-        weaponOverrideCheckBox.isDisabled = bool
         activateFromFireKey.disable(bool)
         teammatesAreEnemies.disable(bool)
         holdAim.disable(bool)
@@ -109,6 +138,7 @@ fun updateDisableAim() {
 }
 
 fun updateAim() {
+    overridenWeapons.weaponOverrideCheckBox.isChecked = curSettings["ENABLE_OVERRIDE"].strToBool()
     aimTab.tAim.apply {
         categorySelectLabel.setText("${"Weapon-Category".toLocale()}:") //Do not like this
         //Create Category Selector Box
@@ -138,8 +168,6 @@ fun updateAim() {
         targetSwapDelay.update()
 
         fovType.update()
-        //fovTypeBox.selected = curSettings["FOV_TYPE"].replace("\"", "")
-
         enableAimOnShot.update()
         enableFactorRecoil.update()
         enableFlatAim.update()

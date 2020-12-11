@@ -1,5 +1,6 @@
 package rat.poison.ui.tabs.visualstabs
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
@@ -101,4 +102,20 @@ fun snaplinesEspTabUpdate() {
         bombCarrierSnaplines.update()
         bombCarrierSnaplinesColor.update()
     }
+}
+
+fun snaplinesEspTabDisable(bool: Boolean, col: Color) {
+    snaplinesEspTab.enableSnaplines.disable(bool)
+    snaplinesEspTab.snaplinesWidth.disable(bool, col)
+    snaplinesEspTab.snaplinesSmokeCheck.disable(bool)
+    snaplinesEspTab.enemySnaplines.disable(bool)
+    snaplinesEspTab.enemySnaplinesColor.disable(bool)
+    snaplinesEspTab.teamSnaplines.disable(bool)
+    snaplinesEspTab.teamSnaplinesColor.disable(bool)
+    snaplinesEspTab.weaponSnaplines.disable(bool)
+    snaplinesEspTab.weaponSnaplinesColor.disable(bool)
+    snaplinesEspTab.bombSnaplines.disable(bool)
+    snaplinesEspTab.bombSnaplinesColor.disable(bool)
+    snaplinesEspTab.bombCarrierSnaplines.disable(bool)
+    snaplinesEspTab.bombCarrierSnaplinesColor.disable(bool)
 }

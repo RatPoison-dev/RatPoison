@@ -1,16 +1,16 @@
 package rat.poison.ui
 
-import rat.poison.overlay.App.uiAimOverridenWeapons
 import rat.poison.overlay.App.uiBombWindow
 import rat.poison.overlay.App.uiKeybinds
-import rat.poison.overlay.App.uiMenu
 import rat.poison.overlay.App.uiSpecList
 import rat.poison.overlay.opened
 import rat.poison.ui.tabs.*
+import rat.poison.ui.tabs.aimtabs.BacktrackTab
+import rat.poison.ui.tabs.aimtabs.MainAimTab
+import rat.poison.ui.tabs.aimtabs.OverrideTab
+import rat.poison.ui.tabs.aimtabs.overridenWeaponsUpdate
 import rat.poison.ui.tabs.misctabs.*
 import rat.poison.ui.tabs.visualstabs.*
-import rat.poison.ui.uiPanelTables.OverridenWeapons
-import rat.poison.ui.uiPanelTables.overridenWeaponsUpdate
 import rat.poison.ui.uiPanels.*
 
 var uiRefreshing = false
@@ -43,12 +43,12 @@ fun uiUpdate() {
     updateAim()
     updateDisableEsp()
     fontsTabUpdate()
+    keybindsUpdate(null)
 
     //Update windows
-    uiAimOverridenWeapons.setPosition(uiMenu.x+uiMenu.width+4F, uiMenu.y)
+
     //Update lists
-    configsTab.updateCFGList()
-    configsTab.updateLocaleList()
+    configsTabUpdate()
     nadeHelperTab.updateNadeFileHelperList()
 }
 
@@ -82,6 +82,7 @@ fun refreshMenu() {
 
     espTabbedPane.removeAll()
     miscTabbedPane.removeAll()
+    aimTabbedPane.removeAll()
 
     glowEspTab = GlowEspTab()
     chamsEspTab = ChamsEspTab()
@@ -98,6 +99,16 @@ fun refreshMenu() {
     bombTab = BombTab()
     othersTab = OthersTab()
 
+    mainAimTab = MainAimTab()
+    backtrackTab = BacktrackTab()
+    overridenWeapons = OverrideTab()
+
+
+    aimTabbedPane.add(mainAimTab)
+    aimTabbedPane.add(triggerTab)
+    aimTabbedPane.add(backtrackTab)
+    aimTabbedPane.add(overridenWeapons)
+
     espTabbedPane.add(glowEspTab)
     espTabbedPane.add(chamsEspTab)
     espTabbedPane.add(indicatorEspTab)
@@ -113,11 +124,6 @@ fun refreshMenu() {
     miscTabbedPane.add(bombTab)
     miscTabbedPane.add(othersTab)
 
-    uiAimOverridenWeapons.removeActor(overridenWeapons)
-    uiAimOverridenWeapons.remove()
-    overridenWeapons = OverridenWeapons()
-    uiAimOverridenWeapons = UIAimOverridenWeapons()
-
     uiSpecList.remove()
     uiSpecList = UISpectatorList()
 
@@ -127,6 +133,7 @@ fun refreshMenu() {
     uiKeybinds.remove()
     uiKeybinds = UIKeybinds()
 
+    aimTabbedPane.switchTab(mainAimTab)
     mainTabbedPane.switchTab(configsTab)
 
     uiRefreshing = false

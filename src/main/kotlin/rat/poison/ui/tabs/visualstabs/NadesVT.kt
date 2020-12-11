@@ -1,5 +1,6 @@
 package rat.poison.ui.tabs.visualstabs
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
@@ -82,5 +83,22 @@ fun nadesVTUpdate() {
         visualizeSmokesHeight.update()
         drawSmokesTime.update()
         drawSmokesTimeColor.update()
+    }
+}
+
+fun nadesVTabDisable(bool: Boolean, col: Color) {
+    nadesTab.apply {
+        nadeTracer.disable(bool)
+        nadeTracerColor.disable(bool)
+        nadeTracerUpdateTime.disable(bool, col)
+        nadeTracerTimeout.disable(bool, col)
+
+        visualizeSmokes.disable(bool)
+        visualizeSmokesColor.disable(bool)
+        visualizeSmokesPolys.disable(bool, col)
+        visualizeSmokesWidth.disable(bool, col)
+        visualizeSmokesHeight.disable(bool, col)
+        drawSmokesTime.disable(bool)
+        drawSmokesTimeColor.disable(bool)
     }
 }

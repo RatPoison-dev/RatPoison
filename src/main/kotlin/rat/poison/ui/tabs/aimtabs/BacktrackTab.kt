@@ -1,9 +1,11 @@
-package rat.poison.ui.uiHelpers.tables
+package rat.poison.ui.tabs.aimtabs
 
+import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
@@ -18,22 +20,16 @@ import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiUpdate
 
-class AimTriggerTable: VisTable(false) {
+class BacktrackTab: Tab(true, false) {
+    private val table = VisTable()
     //Init labels/sliders/boxes that show values here
-    val enableTrig = VisCheckBoxCustom("Enable Trigger", "ENABLE_TRIGGER") //Master switch
 
-    val boneTriggerEnableKey = VisCheckBoxCustom("Trigger On Key", "TRIGGER_ENABLE_KEY")
-    val boneTriggerKey = VisBindTableCustom("Trigger Key", "TRIGGER_KEY")
-
-    val trigEnable = ATabVisCheckBox("Enable", "_TRIGGER") //Per weapon category
-
-    val trigAimbot = ATabVisCheckBox("Aimbot", "_TRIGGER_AIMBOT")
-    val trigInCross = ATabVisCheckBox("InCross", "_TRIGGER_INCROSS")
-    val trigInFov = ATabVisCheckBox("InFov", "_TRIGGER_INFOV")
-    val trigFov = ATabVisSlider("FOV", "_TRIGGER_FOV", .1F, 90F, .5F, false)
-    val trigShootBacktrack = ATabVisCheckBox("Shoot Backtrack", "_TRIGGER_BACKTRACK")
-    val initTrigDelay = ATabVisSlider("First Shot Delay", "_TRIGGER_INIT_SHOT_DELAY", 0F, 500F, 10F, true)
-    val perShotTrigDelay = ATabVisSlider("Per Shot Delay", "_TRIGGER_PER_SHOT_DELAY", 0F, 500F, 10F, true)
+    val enableBacktrack = VisCheckBoxCustom("Master Switch", "ENABLE_BACKTRACK")
+    val backtrackEnableKey = VisCheckBoxCustom("Enable On Key", "ENABLE_BACKTRACK_ON_KEY")
+    val backtrackKey = VisBindTableCustom("Backtrack Key", "BACKTRACK_KEY")
+    val backtrackSpotted = VisCheckBoxCustom("Check Spotted", "BACKTRACK_SPOTTED")
+    val backtrackWeaponEnabled = ATabVisCheckBox("Weapon Backtrack", "_BACKTRACK")
+    val backtrackMS = ATabVisSlider("Backtrack MS", "_BACKTRACK_MS", 20f, 200f, 5f, true, width1 = 200F, width2 = 250F)
 
     //Override Weapon Checkbox & Selection Box
     private val categorySelection = VisTable()
@@ -72,26 +68,26 @@ class AimTriggerTable: VisTable(false) {
         //Sliders are 250
         //Leaves 25 for left and right side to center
         apply {
-            padLeft(25F)
-            padRight(25F)
-
+            table.padLeft(25F)
+            table.padRight(25F)
             //Add all items to label for tabbed pane content
+            table.add(enableBacktrack).left().row()
+            table.add(backtrackEnableKey).left().row()
+            table.add(backtrackKey).left().row()
 
-            add(enableTrig).left().row()
-            add(boneTriggerEnableKey).left().row()
-            add(boneTriggerKey).left().row()
-            add(categorySelection).left().row()
-            add(trigEnable).left().row()
+            table.add(backtrackSpotted).left().row()
 
-            add(trigAimbot).left().row()
-            add(trigInCross).left().row()
-            add(trigInFov).left().row()
-            add(trigShootBacktrack).left().row()
-            add(trigFov).left().row()
-            add(initTrigDelay).left().row()
-            add(perShotTrigDelay).left().row()
-
-            addSeparator()
+            table.add(categorySelection).left().row()
+            table.add(backtrackWeaponEnabled).left().row()
+            table.add(backtrackMS).left().row()
         }
+    }
+
+    override fun getTabTitle(): String {
+        return "Backtrack".toLocale()
+    }
+
+    override fun getContentTable(): Table {
+        return table
     }
 }

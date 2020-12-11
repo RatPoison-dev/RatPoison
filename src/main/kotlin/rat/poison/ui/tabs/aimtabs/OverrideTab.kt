@@ -1,12 +1,10 @@
-package rat.poison.ui.uiPanelTables
+package rat.poison.ui.tabs.aimtabs
 
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.utils.Align
+import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
-import com.kotcrab.vis.ui.widget.CollapsibleWidget
-import com.kotcrab.vis.ui.widget.VisLabel
-import com.kotcrab.vis.ui.widget.VisSelectBox
-import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
@@ -16,15 +14,15 @@ import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
 import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisCheckBoxCustom
 import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisSliderCustom
-import rat.poison.ui.uiPanels.overridenWeapons
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toWeaponClass
 
 var weaponOverrideSelected = "DESERT_EAGLE"
 
-class OverridenWeapons : VisTable(false) {
-    //private val table = VisTable(true)
+class OverrideTab: Tab(true, false) {
+    private val table = VisTable()
+    val weaponOverrideCheckBox = VisCheckBox("Override-Weapons".toLocale())
     var categorySelected = curSettings["DEFAULT_CATEGORY_SELECTED"]
     var weaponOverride = false
     var enableOverride = false
@@ -33,6 +31,7 @@ class OverridenWeapons : VisTable(false) {
 
     //Override Weapon Checkbox & Selection Box
     private val categorySelectLabel = VisLabel("${"Weapon-Category".toLocale()}:")
+    private val weaponSelectLabel = VisLabel("${"Weapon".toLocale()}:")
 
     private val weaponOverrideSelectionBox = VisSelectBox<String>()
     val weaponOverrideEnableCheckBox = OverrideVisCheckBoxCustom("Enable Override", "tOverride")
@@ -43,52 +42,61 @@ class OverridenWeapons : VisTable(false) {
     val enablePathAim = OverrideVisCheckBoxCustom("Path Aim", "tPathAim")
     val enableScopedOnly = OverrideVisCheckBoxCustom("Scoped Only", "tScopedOnly")
 
-    //TODO Labels might need locale updates?
     private val aimBoneLabel = VisLabel("Bone".toLocale())
     val aimBoneBox = VisSelectBox<String>()
     private val forceBoneLabel = VisLabel("Force-Bone".toLocale())
     val forceBoneBox = VisSelectBox<String>()
 
-    val aimFov = OverrideVisSliderCustom("FOV", "tAimFov", 0.5F, 90F, 0.5F, false, width1 = 225F, width2 = 125F)
-    val aimSpeed = OverrideVisSliderCustom("Speed", "tAimSpeed", 0F, 10F, 1F, true, width1 = 225F, width2 = 125F)
-    val aimSmoothness = OverrideVisSliderCustom("Smooth", "tAimSmooth", 1F, 10F, .1F, false, width1 = 225F, width2 = 125F)
-    val aimAfterShots = OverrideVisSliderCustom("Aim After #", "tAimAfterShots", 0F, 10F, 1F, true, width1 = 225F, width2 = 125F)
+    val aimFov = OverrideVisSliderCustom("FOV", "tAimFov", 0.5F, 90F, 0.5F, false, labelWidth = 225F, barWidth = 225F)
+    val aimSpeed = OverrideVisSliderCustom("Speed", "tAimSpeed", 0F, 10F, 1F, true, labelWidth = 225F, barWidth = 225F)
+    val aimSmoothness = OverrideVisSliderCustom("Smooth", "tAimSmooth", 1F, 5F, .5F, false, labelWidth = 225F, barWidth = 225F)
+    val aimAfterShots = OverrideVisSliderCustom("Aim After #", "tAimAfterShots", 0F, 10F, 1F, true, labelWidth = 225F, barWidth = 225F)
 
     //Perfect Aim Collapsible
     val perfectAimCheckBox = OverrideVisCheckBoxCustom("Perfect Aim", "tPerfectAim")
     private val perfectAimTable = VisTable()
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
-    val perfectAimFov = OverrideVisSliderCustom("FOV", "tPAimFov", 1F, 90F, .5F, false, width1 = 225F, width2 = 125F)
-    val perfectAimChance = OverrideVisSliderCustom("Chance", "tPAimChance", 1F, 100F, 1F, true, width1 = 225F, width2 = 125F)
+    val perfectAimFov = OverrideVisSliderCustom("FOV", "tPAimFov", 1F, 90F, .5F, false, labelWidth = 225F, barWidth = 225F)
+    val perfectAimChance = OverrideVisSliderCustom("Chance", "tPAimChance", 1F, 100F, 1F, true, labelWidth = 225F, barWidth = 225F)
 
     val trigEnable = OverrideVisCheckBoxCustom("Enable Trigger", "tBoneTrig")
     val trigAimbot = OverrideVisCheckBoxCustom("Aimbot", "tBTrigAim")
     val trigInCross = OverrideVisCheckBoxCustom("InCross", "tBTrigInCross")
     val trigInFov = OverrideVisCheckBoxCustom("InFov", "tBTrigInFov")
     val trigBacktrack = OverrideVisCheckBoxCustom("Shoot Backtrack", "tBTrigBacktrack")
-    val trigFov = OverrideVisSliderCustom("FOV", "tBTrigFov", 0.5F, 90F, 0.5F, false, width1 = 225F, width2 = 125F)
-    val trigInitDelay = OverrideVisSliderCustom("Init Shot Delay", "tBTrigInitDelay", 0F, 500F, 10F, true, width1 = 225F, width2 = 125F)
-    val trigPerShotDelay = OverrideVisSliderCustom("Per Shot Delay", "tBTrigPerShotDelay", 0F, 500F, 10F, true, width1 = 225F, width2 = 125F)
+    val trigFov = OverrideVisSliderCustom("FOV", "tBTrigFov", 0.5F, 90F, 0.5F, false, labelWidth = 225F, barWidth = 225F)
+    val trigInitDelay = OverrideVisSliderCustom("Init Shot Delay", "tBTrigInitDelay", 0F, 500F, 10F, true, labelWidth = 225F, barWidth = 225F)
+    val trigPerShotDelay = OverrideVisSliderCustom("Per Shot Delay", "tBTrigPerShotDelay", 0F, 500F, 10F, true, labelWidth = 225F, barWidth = 225F)
 
     val enableBacktrack = OverrideVisCheckBoxCustom("Enable Backtrack", "tBacktrack")
-    val backtrackMS = OverrideVisSliderCustom("Backtrack MS", "tBTMS", 20F, 200F, 5F, true, width1 = 225F, width2 = 125F)
+    val backtrackMS = OverrideVisSliderCustom("Backtrack MS", "tBTMS", 20F, 200F, 5F, true, labelWidth = 225F, barWidth = 225F)
 
     val autoWepCheckbox = OverrideVisCheckBoxCustom("Automatic Weapons", "tAutowep")
-    val autoWepDelay = OverrideVisSliderCustom("Delay", "tAutowepDelay", 0F, 1000F, 10F, true, width1 = 225F, width2 = 125F)
+    val autoWepDelay = OverrideVisSliderCustom("Delay", "tAutowepDelay", 0F, 1000F, 10F, true, labelWidth = 225F, barWidth = 225F)
 
     init {
-        align(Align.left)
+        table.padLeft(25F)
+        table.padRight(25F)
 
         categorySelectionBox.changed { _, _ ->
             categorySelected = gunCategories[categorySelectionBox.selectedIndex]
 
-            val tmpCategory = when (categorySelected)
-            {
-                "PISTOL" -> { weaponOverrideSelectionBox.clearItems(); pistolCategory }
-                "SMG" -> { weaponOverrideSelectionBox.clearItems(); smgCategory }
-                "RIFLE" -> { weaponOverrideSelectionBox.clearItems(); rifleCategory }
-                "SNIPER" -> { weaponOverrideSelectionBox.clearItems(); sniperCategory }
-                else -> { weaponOverrideSelectionBox.clearItems(); shotgunCategory }
+            val tmpCategory = when (categorySelected) {
+                "PISTOL" -> {
+                    weaponOverrideSelectionBox.clearItems(); pistolCategory
+                }
+                "SMG" -> {
+                    weaponOverrideSelectionBox.clearItems(); smgCategory
+                }
+                "RIFLE" -> {
+                    weaponOverrideSelectionBox.clearItems(); rifleCategory
+                }
+                "SNIPER" -> {
+                    weaponOverrideSelectionBox.clearItems(); sniperCategory
+                }
+                else -> {
+                    weaponOverrideSelectionBox.clearItems(); shotgunCategory
+                }
             }
 
             val itemsArray = Array<String>()
@@ -96,8 +104,7 @@ class OverridenWeapons : VisTable(false) {
                 if (curLocale[i].isBlank()) {
                     if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
                     itemsArray.add(i)
-                }
-                else {
+                } else {
                     itemsArray.add(curLocale[i])
                 }
             }
@@ -110,7 +117,7 @@ class OverridenWeapons : VisTable(false) {
             }
 
             if (categorySelected == "RIFLE" || categorySelected == "SMG") {
-                aimAfterShots.disable(false, Color(255F, 255F, 255F, 1F))
+                aimAfterShots.disable(false, Color(225F, 225F, 225F, 1F))
             } else {
                 aimAfterShots.disable(true, Color(105F, 105F, 105F, .2F))
             }
@@ -122,9 +129,10 @@ class OverridenWeapons : VisTable(false) {
 
         //Create Override Weapon Selector
         val weaponOverrideSelection = VisTable()
-        weaponOverrideSelection.add(weaponOverrideSelectionBox).width(125F).padLeft(225F)
+        weaponOverrideSelection.add(weaponSelectLabel).padRight(225F - weaponSelectLabel.width)
+        weaponOverrideSelection.add(weaponOverrideSelectionBox).width(225F)
 
-        weaponOverrideSelectionBox.setItems("DESERT_EAGLE", "DUAL_BERETTA", "FIVE_SEVEN", "GLOCK", "USP_SILENCER", "CZ75A", "R8_REVOLVER", "P2000", "TEC9", "P250")
+        weaponOverrideSelectionBox.setItems(*pistolCategory)
         weaponOverrideSelectionBox.changed { _, _ ->
             if (!weaponOverrideSelectionBox.selected.isNullOrEmpty()) {
                 weaponOverrideSelected = weaponOverrideSelectionBox.selected
@@ -150,8 +158,8 @@ class OverridenWeapons : VisTable(false) {
         categorySelectionBox.selectedIndex = 0
 
         categorySelected = gunCategories[categorySelectionBox.selectedIndex]
-        categorySelection.add(categorySelectLabel).padRight(225F-categorySelectLabel.width)
-        categorySelection.add(categorySelectionBox).width(125F)
+        categorySelection.add(categorySelectLabel).padRight(225F - categorySelectLabel.width)
+        categorySelection.add(categorySelectionBox).width(225F)
 
         //Create Enable Override Toggle
         weaponOverrideEnableCheckBox.changed { _, _ ->
@@ -171,15 +179,14 @@ class OverridenWeapons : VisTable(false) {
             if (curLocale[i].isBlank()) {
                 if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
                 boneArray.add(i)
-            }
-            else {
+            } else {
                 boneArray.add(curLocale[i])
             }
         }
         aimBoneBox.items = boneArray
         aimBoneBox.selectedIndex = boneCategories.indexOf(curSettings[categorySelected + "_AIM_BONE"].toUpperCase())
         aimBone.add(aimBoneLabel).width(225F)
-        aimBone.add(aimBoneBox).width(125F)
+        aimBone.add(aimBoneBox).width(225F)
 
         aimBoneBox.changed { _, _ ->
             val setBone = curSettings[boneCategories[aimBoneBox.selectedIndex] + "_BONE"]
@@ -198,7 +205,7 @@ class OverridenWeapons : VisTable(false) {
 
         forceBoneBox.selectedIndex = boneCategories.indexOf(curSettings[categorySelected + "_AIM_BONE"].toUpperCase())
         forceBone.add(forceBoneLabel).width(225F)
-        forceBone.add(forceBoneBox).width(125F)
+        forceBone.add(forceBoneBox).width(225F)
 
         forceBoneBox.changed { _, _ ->
             val setBone = curSettings[boneCategories[forceBoneBox.selectedIndex] + "_BONE"]
@@ -210,7 +217,7 @@ class OverridenWeapons : VisTable(false) {
         }
         //End Force Bone Selector Box
 
-        //Create Perfect Aim Collapsible Check Box
+
         perfectAimCollapsible.setCollapsed(!curSettings[categorySelected + "_PERFECT_AIM"].strToBool(), true)
 
         perfectAimTable.add(perfectAimFov).padLeft(20F).left().row()
@@ -219,48 +226,71 @@ class OverridenWeapons : VisTable(false) {
         perfectAimCheckBox.changed { _, _ ->
             perfectAimCollapsible.setCollapsed(!perfectAimCollapsible.isCollapsed, true)
         }
+
+        weaponOverrideCheckBox.isChecked = curSettings["ENABLE_OVERRIDE"].strToBool()
+
+        weaponOverride = weaponOverrideCheckBox.isChecked
+
+        weaponOverrideCheckBox.changed { _, _ ->
+            weaponOverride = weaponOverrideCheckBox.isChecked
+            curSettings["ENABLE_OVERRIDE"] = weaponOverrideCheckBox.isChecked.toString()
+
+            val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
+            enableOverride = curWep.tOverride
+
+            uiUpdate()
+            true
+        }
         //End Perfect Aim Collapsible Check Box
 
         //Add all items to label for tabbed pane content
-        add(categorySelection).left().row()
-        add(weaponOverrideSelection).left().row()
-        add(weaponOverrideEnableCheckBox).left().row()
-        add(enableFactorRecoil).left().row()
-        add(enableOnShot).left().row()
-        add(enableFlatAim).left().row()
-        add(enablePathAim).left().row()
-        add(enableScopedOnly).left().row()
-        add(aimBone).left().row()
-        add(forceBone).left().row()
-        add(aimSpeed).left().row()
-        add(aimFov).left().row()
-        add(aimSmoothness).left().row()
-        add(aimAfterShots).left().row()
-        add(perfectAimCheckBox).left().row()
-        add(perfectAimCollapsible).left().row()
+        table.add(weaponOverrideCheckBox).left().row()
+        table.add(categorySelection).left().row()
+        table.add(weaponOverrideSelection).left().row()
+        table.add(weaponOverrideEnableCheckBox).left().row()
+        table.add(enableFactorRecoil).left().row()
+        table.add(enableOnShot).left().row()
+        table.add(enableFlatAim).left().row()
+        table.add(enablePathAim).left().row()
+        table.add(enableScopedOnly).left().row()
+        table.add(aimBone).left().row()
+        table.add(forceBone).left().row()
+        table.add(aimSpeed).left().row()
+        table.add(aimFov).left().row()
+        table.add(aimSmoothness).left().row()
+        table.add(aimAfterShots).left().row()
+        table.add(perfectAimCheckBox).left().row()
+        table.add(perfectAimCollapsible).left().row()
 
-        addSeparator()
-        add(autoWepCheckbox).left().row()
-        add(autoWepDelay).left().row()
+        table.addSeparator()
+        table.add(autoWepCheckbox).left().row()
+        table.add(autoWepDelay).left().row()
 
-        addSeparator()
+        table.addSeparator()
 
-        add(trigEnable).left().row()
-        add(trigAimbot).left().row()
-        add(trigInCross).left().row()
-        add(trigInFov).left().row()
-        add(trigBacktrack).left().row()
-        add(trigFov).left().row()
-        add(trigInitDelay).left().row()
-        add(trigPerShotDelay).left().row()
+        table.add(trigEnable).left().row()
+        table.add(trigAimbot).left().row()
+        table.add(trigInCross).left().row()
+        table.add(trigInFov).left().row()
+        table.add(trigBacktrack).left().row()
+        table.add(trigFov).left().row()
+        table.add(trigInitDelay).left().row()
+        table.add(trigPerShotDelay).left().row()
 
-        addSeparator()
+        table.addSeparator()
 
-        add(enableBacktrack).left().row()
-        add(backtrackMS).left().row()
+        table.add(enableBacktrack).left().row()
+        table.add(backtrackMS).left().row()
+    }
+
+    override fun getTabTitle(): String {
+        return "Override".toLocale()
+    }
+
+    override fun getContentTable(): Table {
+        return table
     }
 }
-
 fun overridenWeaponsUpdate() {
     overridenWeapons.apply {
         val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
@@ -280,7 +310,7 @@ fun overridenWeaponsUpdate() {
         enableScopedOnly.update()
 
         if (categorySelected == "RIFLE" || categorySelected == "SMG") {
-            aimAfterShots.disable(false, Color(255F, 255F, 255F, 1F))
+            aimAfterShots.disable(false, Color(225F, 225F, 225F, 1F))
         } else {
             aimAfterShots.disable(true, Color(105F, 105F, 105F, .2F))
         }
@@ -324,6 +354,7 @@ fun overridenWeaponsUpdate() {
 
         aimSmoothness.update()
         aimAfterShots.update()
+         // issue is not here
 
         autoWepDelay.update()
         autoWepCheckbox.update()

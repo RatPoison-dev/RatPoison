@@ -2,8 +2,9 @@
 [![Release](https://img.shields.io/github/release/TheRatCode/RatPoison.svg)](https://github.com/TheRatCode/RatPoison/releases/)
 ![Code size](https://img.shields.io/github/languages/code-size/TheRatCode/RatPoison.svg)
 ![GitHub repo size](https://img.shields.io/github/repo-size/TheRatCode/RatPoison.svg)
-[![Discord](https://discord.com/api/guilds/741016380282896455/widget.png?style=shield)](https://discord.gg/TGsp8SNcFZ)
+[![Discord](https://discord.com/api/guilds/785830829439320095/widget.png?style=shield)](https://discord.gg/TGsp8SNcFZ)
 [![Downloads](https://img.shields.io/github/downloads/TheFuckingRat/RatPoison/total.svg)](https://github.com/TheRatCode/RatPoison/releases/latest)
+[![GitHub Actions build status](https://img.shields.io/github/workflow/status/TheRatCode/RatPoison/Push?label=GitHub%20Actions)](https://github.com/TheRatCode/RatPoison/actions?query=workflow%3APush+)
 ### [Support Ratto (Ratpoison)](https://www.patreon.com/ratto)
 
 ### Support Spravedlivo (Ratpoison + [Installer](https://github.com/SPRAVEDLIVO/RatInstaller/))

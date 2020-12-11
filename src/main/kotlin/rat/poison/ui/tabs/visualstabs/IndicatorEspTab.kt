@@ -1,5 +1,6 @@
 package rat.poison.ui.tabs.visualstabs
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
@@ -124,4 +125,24 @@ fun indicatorEspTabUpdate() {
         indicatorWeaponColor.update()
         indicatorGrenadeColor.update()
     }
+}
+
+fun indicatorEspTabDisable(bool: Boolean, col: Color) {
+    indicatorEspTab.indicatorEsp.disable(bool)
+    indicatorEspTab.indicatorDistance.disable(bool, col)
+    indicatorEspTab.indicatorSize.disable(bool, col)
+    indicatorEspTab.indicatorSmokeCheck.disable(bool)
+    indicatorEspTab.showTeam.disable(bool)
+    indicatorEspTab.showEnemies.disable(bool)
+    indicatorEspTab.showBomb.disable(bool)
+    indicatorEspTab.showBombCarrier.disable(bool)
+    indicatorEspTab.showWeapons.disable(bool)
+    indicatorEspTab.showGrenades.disable(bool)
+    indicatorEspTab.showDefusers.disable(bool)
+    indicatorEspTab.indicatorTeamColor.disable(bool)
+    indicatorEspTab.indicatorEnemyColor.disable(bool)
+    indicatorEspTab.indicatorBombColor.disable(bool)
+    indicatorEspTab.indicatorDefuserColor.disable(bool)
+    indicatorEspTab.indicatorWeaponColor.disable(bool)
+    indicatorEspTab.indicatorGrenadeColor.disable(bool)
 }

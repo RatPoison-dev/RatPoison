@@ -1,5 +1,6 @@
 package rat.poison.scripts.aim
 
+import rat.poison.appless
 import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.entity.*
@@ -26,39 +27,43 @@ fun handleFireKey() = every(1, continuous = true) {
         return@every
     }
 
-    if (MENUTOG || (me > 0L && meDead) || inBackground) {
+    if ((MENUTOG && !appless) || (me > 0L && meDead) || inBackground) {
         if (clientDLL.int(dwForceAttack) == 5) {
             clientDLL[dwForceAttack] = 4
         }
         return@every
     }
 
-    if (keyPressed(1)) {
-        boneTrig = false
-        if (!shouldShoot) {
-            punchCheck = 0
-            shouldShoot = true
-        }
-
-        Thread.sleep(10)
-        fireWeapon()
-    } else if (inTrigger) {
-        if (shouldShoot) { //Finish shooting...
-            if (clientDLL.int(dwForceAttack) == 5) {
-                clientDLL[dwForceAttack] = 4
+    when {
+        keyPressed(1) -> {
+            boneTrig = false
+            if (!shouldShoot) {
+                punchCheck = 0
+                shouldShoot = true
             }
+
+            Thread.sleep(10)
+            fireWeapon()
+        }
+        inTrigger -> {
+            if (shouldShoot) { //Finish shooting...
+                if (clientDLL.int(dwForceAttack) == 5) {
+                    clientDLL[dwForceAttack] = 4
+                }
+                shouldShoot = false
+                didShoot = false
+            }
+            punchCheck = 0
+            //Let trigger handle the rest
+        }
+        else -> {
+            clientDLL[dwForceAttack] = 4
+
             shouldShoot = false
             didShoot = false
+            punchCheck = 0
+            boneTrig = false
         }
-        punchCheck = 0
-        //Let trigger handle the rest
-    } else {
-        clientDLL[dwForceAttack] = 4
-
-        shouldShoot = false
-        didShoot = false
-        punchCheck = 0
-        boneTrig = false
     }
 }
 

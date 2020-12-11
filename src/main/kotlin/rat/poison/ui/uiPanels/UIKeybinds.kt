@@ -67,7 +67,7 @@ class UIKeybinds : VisWindow("Keybinds".toLocale()) {
     }
 }
 
-fun keybindsUpdate(neglect: Actor) {
+fun keybindsUpdate(neglect: Actor?) {
     uiKeybinds.apply {
         aimToggleKey.update(neglect)
         forceAimKey.update(neglect)

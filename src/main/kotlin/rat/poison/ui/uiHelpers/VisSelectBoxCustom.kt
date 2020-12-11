@@ -71,11 +71,8 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
             else {
                 boxLabel.setText("${curLocale[variableName]}:")
             }
-
-            selectBox.selectedIndex = boxItems.indexOf(curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }].toUpperCase())
-        } else {
-            selectBox.selected = curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }]
         }
+        selectBox.selectedIndex = boxItems.indexOf(curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }].toUpperCase())
 
         updateTooltip()
     }

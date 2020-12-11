@@ -18,7 +18,7 @@ class Settings : MutableMap<String, Any?> {
         return savedValues.containsValue(value)
     }
     override val entries: MutableSet<MutableMap.MutableEntry<String, Any?>>
-        get() = TODO("entries")
+        get() = mutableSetOf()
     override val keys: MutableSet<String>
         get() = savedValues.keys
     override val size: Int
