@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport
 import com.kotcrab.vis.ui.VisUI
 import com.sun.management.OperatingSystemMXBean
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
+import rat.poison.appless
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.CSGO
@@ -29,8 +30,10 @@ import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
 import rat.poison.jna.enums.AccentStates
 import rat.poison.scripts.aim.meDead
+import rat.poison.scripts.visuals.espToggleCallback
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
+import rat.poison.ui.tabs.updateDisableAim
 import rat.poison.ui.uiPanels.*
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.*
@@ -46,6 +49,8 @@ import kotlin.system.measureNanoTime
 var opened = false
 var overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
 var toggleAimKey = ObservableBoolean({ keyPressed(curSettings["AIM_TOGGLE_KEY"].toInt()) })
+var visualsToggleKey = ObservableBoolean({ keyPressed(curSettings["VISUALS_TOGGLE_KEY"].toInt()) })
+
 
 var syncTime = 0L
 var glowTime = 0L
@@ -58,14 +63,14 @@ object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
-    private val overlay = Overlay(if (curSettings["APPLESS"].strToBool()) {
+    private val overlay = Overlay(if (appless) {
         "Counter-Strike: Global Offensive"
     } else {
         curSettings["MENU_APP"].replace("\"", "")
     }, "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     lateinit var menuStage: Stage
     lateinit var assetManager: AssetManager
-    lateinit var menuBatch: SpriteBatch
+    private lateinit var menuBatch: SpriteBatch
     lateinit var viewport: ScalingViewport
     lateinit var keyProcessor: KeyProcessor
     lateinit var layout: GlyphLayout
@@ -75,7 +80,6 @@ object App : ApplicationAdapter() {
     lateinit var uiMenu: UIMenu
     lateinit var uiBombWindow: UIBombTimer
     lateinit var uiSpecList: UISpectatorList
-    lateinit var uiAimOverridenWeapons: UIAimOverridenWeapons
     lateinit var uiKeybinds: UIKeybinds
     private val sbText = StringBuilder()
 
@@ -98,7 +102,6 @@ object App : ApplicationAdapter() {
         uiMenu = UIMenu()
         uiBombWindow = UIBombTimer()
         uiSpecList = UISpectatorList()
-        uiAimOverridenWeapons = UIAimOverridenWeapons()
         uiKeybinds = UIKeybinds()
 
         camera = OrthographicCamera()
@@ -137,7 +140,7 @@ object App : ApplicationAdapter() {
 
                     overlayTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
                         menuTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
-                            if (MENUTOG) {
+                            if (MENUTOG || appless) {
                                 if (curSettings["KEYBINDS"].strToBool()) {
                                     if (!menuStage.actors.contains(uiKeybinds)) {
                                         menuStage.addActor(uiKeybinds)
@@ -146,18 +149,10 @@ object App : ApplicationAdapter() {
                                     menuStage.clear() //actors.remove at index doesnt work after 1 loop?
                                 }
 
-                                if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
-                                    if (!menuStage.actors.contains(uiAimOverridenWeapons)) {
-                                        menuStage.addActor(uiAimOverridenWeapons)
-                                    }
-                                } else if (menuStage.actors.contains(uiAimOverridenWeapons)) {
-                                    menuStage.clear() //actors.remove at index doesnt work after 1 loop?
-                                }
-
                                 if (!menuStage.actors.contains(uiMenu)) {
                                     menuStage.addActor(uiMenu)
                                 }
-                            } else if (menuStage.actors.contains(uiMenu) || menuStage.actors.contains(uiAimOverridenWeapons) || menuStage.actors.contains(uiKeybinds)) {
+                            } else if (menuStage.actors.contains(uiMenu) || menuStage.actors.contains(uiKeybinds)) {
                                 menuStage.clear()
                             }
 
@@ -186,10 +181,12 @@ object App : ApplicationAdapter() {
                         menuBatch.projectionMatrix = menuStage.camera.combined
                         uiMenu.changeAlpha()
                         appTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
-                            updateViewMatrix()
-                            if (!haltProcess) {
-                                for (i in 0 until bodies.size) {
-                                    bodies[i]()
+                            if (!appless) {
+                                updateViewMatrix()
+                                if (!haltProcess) {
+                                    for (i in 0 until bodies.size) {
+                                        bodies[i]()
+                                    }
                                 }
                             }
                         }, TimeUnit.NANOSECONDS)
@@ -267,15 +264,17 @@ object App : ApplicationAdapter() {
                 }
 
                 //Menu Key
-                overlayMenuKey.update()
-                if (overlayMenuKey.justBecameTrue) {
-                    MENUTOG = !MENUTOG
-                    overlay.clickThrough = !MENUTOG
+                if (!appless) {
+                    overlayMenuKey.update()
+                    if (overlayMenuKey.justBecameTrue) {
+                        MENUTOG = !MENUTOG
+                        overlay.clickThrough = !MENUTOG
 
-                    uiMenu.updateChilds()
-                    uiUpdate()
+                        //uiMenu.updateChilds()
+                        uiUpdate()
 
-                    if (dbg) println("[DEBUG] Menu Toggled")
+                        if (dbg) println("[DEBUG] Menu Toggled")
+                    }
                 }
 
                 //Aim Toggle Key
@@ -284,7 +283,13 @@ object App : ApplicationAdapter() {
                     aimTab.tAim.enableAim.isChecked = !aimTab.tAim.enableAim.isChecked
                 }
 
-                if (!curSettings["APPLESS"].strToBool()) {
+                visualsToggleKey.update()
+                if (visualsToggleKey.justBecameTrue) {
+                    espToggleCallback()
+                }
+
+
+                if (!appless) {
                     val w = overlay.width
                     val h = overlay.height
 
@@ -318,9 +323,10 @@ object App : ApplicationAdapter() {
             }
 
             override fun onAfterInit(overlay: IOverlay) {
-                overlay.clickThrough = true
+                overlay.clickThrough = !appless
                 overlay.protectAgainstScreenshots = false
                 haveTarget = true
+                updateDisableAim()
             }
 
             override fun onActive(overlay: IOverlay) {

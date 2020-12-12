@@ -1,5 +1,6 @@
 package rat.poison.scripts
 
+import rat.poison.appless
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.rankName
@@ -12,7 +13,6 @@ import rat.poison.ui.uiRefreshing
 import rat.poison.utils.RanksPlayer
 import rat.poison.utils.every
 import rat.poison.utils.extensions.roundNDecimals
-import rat.poison.utils.inBackground
 import rat.poison.utils.saving
 
 var ranksPlayerList = mutableListOf<RanksPlayer>()
@@ -20,7 +20,7 @@ var ranksPlayerList = mutableListOf<RanksPlayer>()
 //works with every down to 30, if you ever crash due to this then dn
 fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every second
 
-    if (!opened || !haveTarget || updatingRanks || !MENUTOG) return@every
+    if (!opened || !haveTarget || updatingRanks || (!MENUTOG && !appless)) return@every
 
     //Bruh -- fix later
     updatingRanks = true

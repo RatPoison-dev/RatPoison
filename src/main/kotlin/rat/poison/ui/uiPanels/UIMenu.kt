@@ -9,8 +9,6 @@ import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
 import rat.poison.*
 import rat.poison.game.CSGO
-import rat.poison.overlay.App.uiAimOverridenWeapons
-import rat.poison.overlay.opened
 import rat.poison.scripts.sendPacket
 import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.tabs.*
@@ -34,7 +32,7 @@ val mainTabbedPane = TabbedPane()
 private var uid = randInt(2, 999999)
 
 class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CONFIG - UID: $uid") {
-    var wantedHeight = 565F
+    var wantedHeight = 600F
     var wantedWidth = 535F
     val normHeight = 600F //Fuck you too
     val normWidth = 535F
@@ -62,7 +60,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         val mainScrollPane = ScrollPane(mainTabbedPaneContent) //Init scroll pane containing main content pane
         mainScrollPane.setFlickScroll(false)
         mainScrollPane.setScrollbarsVisible(true)
-        mainScrollPane.setSize(565F, 600F)
+        mainScrollPane.setSize(normWidth, normHeight)
 
         //Add tabs to the tab header
         mainTabbedPane.add(aimTab)
@@ -87,6 +85,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                 if (tab == null) return
 
                 mainTabbedPaneContent.clear()
+                if (appless) uiUpdate()
 
                 when (tab) { //Update table content to tab selected content
                     aimTab -> {
@@ -158,7 +157,16 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         } else {
                             1000F
                         }
+                        wantedHeight = when (appless) {
+                            true -> normHeight
+                            false -> if (CSGO.gameHeight < 1000F) {
+                                CSGO.gameHeight.toFloat() - 100F
+                            } else {
+                                1000F
+                            }
+                        }
                         wantedWidth = normWidth
+                        wantedHeight = normHeight
                         changeWidth()
                         changeHeight()
                         mainTabbedPaneContent.add(skinChangerTab.contentTable).growX()
@@ -179,15 +187,15 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         changeHeight()
     }
 
-    override fun positionChanged() {
-        updateChilds()
-    }
+    //override fun positionChanged() {
+    //    updateChilds()
+    //}
 
-    fun updateChilds() {
-        if (opened) {
-            uiAimOverridenWeapons.setPosition(x + width + 4F, y + height - uiAimOverridenWeapons.height)
-        }
-    }
+    //fun updateChilds() {
+    //    if (opened) {
+    //        uiAimOverridenWeapons.setPosition(x, y + height - uiAimOverridenWeapons.height)
+    //    }
+    //}
 
     fun closeMenu() {
         haltProcess = true
@@ -204,16 +212,15 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
 
     internal fun changeAlpha(alpha: Float = curSettings["MENU_ALPHA"].toFloat()) {
         color.a = alpha
-        uiAimOverridenWeapons.color.a = alpha
     }
 
     fun changeHeight() {
         if (!isResizingHeight) {
             isResizingHeight = true
-            Thread(Runnable {
+            Thread {
                 while (true) {
                     val difHeight = wantedHeight - height
-                    val dChange = sign(difHeight)*2
+                    val dChange = sign(difHeight) * 2
 
                     if (height in wantedHeight - 4..wantedHeight + 4) {
                         isResizingHeight = false
@@ -224,14 +231,14 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                     y -= dChange
                     Thread.sleep(1)
                 }
-            }).start()
+            }.start()
         }
     }
 
     fun changeWidth() {
         if (!isResizingWidth) {
             isResizingWidth = true
-            Thread(Runnable {
+            Thread {
                 while (true) {
                     val difWidth = wantedWidth - width
                     val dChange = sign(difWidth)
@@ -241,7 +248,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         break
                     }
 
-                    width += 2*dChange
+                    width += 2 * dChange
 
                     if (dChange > 0) { //This shit d u m b
                         x -= 1F
@@ -251,7 +258,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                     //x -= dChange/2F
                     Thread.sleep(1)
                 }
-            }).start()
+            }.start()
         }
     }
 

@@ -1,13 +1,16 @@
 package rat.poison.ui.tabs.visualstabs
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.curSettings
 import rat.poison.toLocale
 import rat.poison.ui.tabs.miscVisualsTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiPanels.visualsTab
 
 class MiscVisualsTab : Tab(false, false) {
     private val table = VisTable()
@@ -129,5 +132,47 @@ fun miscVisualTabUpdate() {
         enableHeadLevel.update()
         headLevelColor.update()
         headLevelDeadzone.update()
+    }
+}
+
+fun updateDisableDrawFOV() {
+    val bool = !visualsTab.enableEsp.isChecked
+
+    miscVisualsTab.apply {
+        if (curSettings["FOV_TYPE"].replace("\"", "") == "DISTANCE") {
+            showAimFov.disable(true)
+            showAimFovColor.disable(true)
+
+            showTriggerFov.disable(true)
+            showTriggerFovColor.disable(true)
+        } else {
+            showAimFov.disable(bool)
+            showAimFovColor.disable(bool)
+
+            showTriggerFov.disable(bool)
+            showTriggerFovColor.disable(bool)
+        }
+    }
+}
+
+fun miscVisualTabDisable(bool: Boolean, col: Color) {
+    updateDisableDrawFOV()
+    miscVisualsTab.apply {
+        radarEsp.disable(bool)
+        legitRadar.disable(bool)
+        legitRadarDistance.disable(bool, col)
+        visAdrenaline.disable(bool)
+        adrenalineBombTime.disable(bool)
+        adrenalineStrength.disable(bool, col)
+        adrenalineCooldown.disable(bool, col)
+        nightMode.disable(bool)
+        nightModeSlider.disable(bool, col)
+        backtrackVisualizeSmokeCheck.disable(bool)
+        backtrackVisualize.disable(bool)
+        enableSpreadCircle.disable(bool)
+        spreadCircleColor.disable(bool)
+        enableHeadLevel.disable(bool)
+        headLevelColor.disable(bool)
+        headLevelDeadzone.disable(bool, col)
     }
 }

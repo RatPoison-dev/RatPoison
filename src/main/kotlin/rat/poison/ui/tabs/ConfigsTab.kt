@@ -15,6 +15,7 @@ import rat.poison.overlay.opened
 import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.refreshMenu
+import rat.poison.ui.uiPanels.configsTab
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.*
 import rat.poison.utils.generalUtil.loadLocale
@@ -82,6 +83,7 @@ class ConfigsTab : Tab(false, false) {
             //Wipe text box and list selection
             configListAdapter.selectionManager.deselectAll()
             cfgNameTextBox.text = ""
+            updateCFGList()
 
             true
         }
@@ -171,7 +173,7 @@ class ConfigsTab : Tab(false, false) {
     }
 
     fun updateCFGList() {
-        if (VisUI.isLoaded() && !saving && opened) {
+        if (VisUI.isLoaded() && !saving && opened && !updatingRanks) {
             configListAdapter.clear()
 
             File("$SETTINGS_DIRECTORY\\CFGS").listFiles()?.forEach {
@@ -184,7 +186,7 @@ class ConfigsTab : Tab(false, false) {
     }
 
     fun updateLocaleList() {
-        if (VisUI.isLoaded() && !saving && opened) {
+        if (VisUI.isLoaded() && !saving && !updatingRanks) {
             localeListAdapter.clear()
 
             File("$SETTINGS_DIRECTORY\\Localizations").listFiles()?.forEach {
@@ -194,5 +196,12 @@ class ConfigsTab : Tab(false, false) {
                 }
             }
         }
+    }
+}
+
+fun configsTabUpdate() {
+    configsTab.apply {
+        updateCFGList()
+        updateLocaleList()
     }
 }

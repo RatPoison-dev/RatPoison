@@ -158,3 +158,24 @@ fun glowEspTabUpdate() {
         glowGrenadeColor.update()
     }
 }
+
+fun glowEspTabDisable(bool: Boolean) {
+    glowEspTab.glowEsp.disable(bool)
+    glowEspTab.glowShowHealth.disable(bool)
+    glowEspTab.glowSmokeCheck.disable(bool)
+    glowEspTab.showTeam.disable(bool)
+    glowEspTab.showEnemies.disable(bool)
+    glowEspTab.showBomb.disable(bool)
+    glowEspTab.showBombCarrier.disable(bool)
+    glowEspTab.showWeapons.disable(bool)
+    glowEspTab.showGrenades.disable(bool)
+    glowEspTab.showTarget.disable(bool)
+    glowEspTab.glowTeamColor.disable(bool)
+    glowEspTab.glowEnemyColor.disable(bool)
+    glowEspTab.glowBombColor.disable(bool)
+    glowEspTab.glowBombAdaptive.disable(bool)
+    glowEspTab.glowBombCarrierColor.disable(bool)
+    glowEspTab.glowWeaponColor.disable(bool)
+    glowEspTab.glowGrenadeColor.disable(bool)
+    glowEspTab.glowHighlightColor.disable(bool)
+}

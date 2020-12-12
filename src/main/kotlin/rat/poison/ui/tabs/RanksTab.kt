@@ -5,7 +5,6 @@ import com.kotcrab.vis.ui.widget.LinkLabel
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import kotlinx.coroutines.runBlocking
 import rat.poison.scripts.ranksPlayerList
 import rat.poison.toLocale
 import rat.poison.ui.uiRefreshing
@@ -14,21 +13,29 @@ import rat.poison.utils.saving
 
 var updatingRanks = false
 
+private class VisLabelExtension(mainText: String): VisLabel(mainText) {
+    override fun setText(newText: CharSequence?) {
+        if (this.text != newText) {
+            super.setText(newText)
+        }
+    }
+}
+
 class RanksTab : Tab(false, false) {
     private val table = VisTable(true)
 
     private var ranksListTable = VisTable()
-    private var teamsLabel = VisLabel()
+    private var teamsLabel = VisLabelExtension("Team".toLocale() + "  \n")
 
     private var namesTable = VisTable()
-    private var namesLabel = VisLabel()
+    private var namesLabel = VisLabelExtension("Name".toLocale() + "  \n")
 
-    private var ranksLabel = VisLabel()
-    private var killsLabel = VisLabel()
-    private var deathsLabel = VisLabel()
-    private var kdLabel = VisLabel()
-    private var winsLabel = VisLabel()
-    private var moneyLabel = VisLabel()
+    private var ranksLabel = VisLabelExtension("Rank".toLocale() + "  \n")
+    private var killsLabel = VisLabelExtension("Kills".toLocale() + "  \n")
+    private var deathsLabel = VisLabelExtension("Deaths".toLocale() + "  \n")
+    private var kdLabel = VisLabelExtension("K/D".toLocale() + "  \n")
+    private var winsLabel = VisLabelExtension("Wins".toLocale() + "  \n")
+    private var moneyLabel = VisLabelExtension("Money".toLocale() + "  \n")
 
     init {
         ranksListTable.add(teamsLabel)
@@ -55,7 +62,7 @@ class RanksTab : Tab(false, false) {
     }
 
     fun updateRanks() {
-        if (uiRefreshing || saving || updatingRanks) return
+        if (uiRefreshing || saving || updatingRanks || !isActiveTab) return
         updatingRanks = true
         teamsLabel.setText("Team".toLocale() + "  \n")
         namesLabel.setText("Name".toLocale())
@@ -69,10 +76,8 @@ class RanksTab : Tab(false, false) {
         namesTable.clear()
         namesTable.add(namesLabel).left().row()
 
-        runBlocking {
-            ranksPlayerList.forEach {
-                constructRank(it)
-            }
+        ranksPlayerList.forEach {
+            constructRank(it)
         }
         updatingRanks = false
     }

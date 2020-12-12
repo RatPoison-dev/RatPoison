@@ -504,13 +504,13 @@ LS_BOMB = Идеальный дефуз
 MENU_ALPHA = Прозрачность меню
 
 //Menu tabs
-Misc = Разное
+Misc = Миск
 Aim = Аим
 Visuals = Визуалы
-RCS = Отдача
+RCS = РКС
 Ranks = Ранги
 Nade-Helper = Нейды
-Skin-Changer = Скины
+Skins = Скины
 Options = Опции
 Configs = КФГ
 Glow = Глоу
@@ -526,6 +526,11 @@ FOV-Changer = Изменение FOV
 Movement = Мувы
 Others = Другое
 Fonts = Шрифты
+Aimbot = Аимбот
+Triggerbot = Тригербот
+Backtrack = Бектрек
+Override = Переопределение
+Weapon = Оружие
 
 //grenade helper
 Loaded:-N/A = Загружено: N/A

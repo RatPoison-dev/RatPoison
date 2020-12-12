@@ -1,5 +1,6 @@
 package rat.poison.ui.tabs.visualstabs
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
@@ -87,4 +88,14 @@ fun chamsEspTabUpdate() {
         chamsEnemyColor.update()
         chamsSelfColor.update()
     }
+}
+
+fun chamsEspTabDisable(bool: Boolean, col: Color) {
+    chamsEspTab.chamsEsp.disable(bool)
+    chamsEspTab.chamsShowHealth.disable(bool)
+    chamsEspTab.chamsBrightness.disable(bool, col)
+    chamsEspTab.showTeam.disable(bool)
+    chamsEspTab.showEnemies.disable(bool)
+    chamsEspTab.chamsTeamColor.disable(bool)
+    chamsEspTab.chamsEnemyColor.disable(bool)
 }

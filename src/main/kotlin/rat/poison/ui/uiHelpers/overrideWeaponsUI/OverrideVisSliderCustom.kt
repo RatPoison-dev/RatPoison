@@ -9,18 +9,18 @@ import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.oWeapon
 import rat.poison.ui.changed
-import rat.poison.ui.uiPanelTables.weaponOverrideSelected
+import rat.poison.ui.tabs.aimtabs.weaponOverrideSelected
 import kotlin.math.pow
 import kotlin.math.round
 
-class OverrideVisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, width1: Float = 225F, width2: Float = 225F) : VisTable() {
+class OverrideVisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, labelWidth: Float = 225F, barWidth: Float = 225F) : VisTable() {
     private val labelText = mainText
     private val variableName = varName
     private val varIdx = getOverrideVarIndex(oWeapon().toString(), variableName)
     private val isInt = intVal
     private val rnd = 10.0.pow(dec)
-    private val w1 = width1
-    private val w2 = width2
+    private val w1 = labelWidth
+    private val w2 = barWidth
 
     private val sliderLabel = VisLabel("$labelText: " + getOverrideVar(weaponOverrideSelected, varIdx))
     private val sliderBar = VisSlider(varMin, varMax, stepSize, false)
@@ -55,7 +55,7 @@ class OverrideVisSliderCustom(mainText: String, varName: String, varMin: Float, 
     }
 
     fun update() {
-        sliderBar.value = getOverrideVar(weaponOverrideSelected, varIdx).toString().toFloat()//curSettings[variableName].toFloat()
+        sliderBar.value = getOverrideVar(weaponOverrideSelected, varIdx).toString().toFloat()
 
         val sliderVal : Any = if (isInt) {
             sliderBar.value.toInt()

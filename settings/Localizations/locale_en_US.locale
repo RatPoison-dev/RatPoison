@@ -566,6 +566,7 @@ Smooth = Smooth
 Perfect-Aim = Perfect Aim
 Chance = Chance
 Override-Weapons = Override Weapons
+Weapon = Weapon
 
 
 
@@ -692,14 +693,14 @@ K/D = K/D
 Wins = Wins
 Money = Money
 
-//Category: Menu tab names
+//Category: Menu tabs names
 Misc = Misc
 Aim = Aim
 Visuals = Visuals
 RCS = RCS
 Ranks = Ranks
 Nade-Helper = Nades
-Skin-Changer = Skin Changer
+Skins = Skins
 Options = Options
 Configs = Configs
 Glow = Glow
@@ -715,6 +716,10 @@ FOV-Changer = FOV Changer
 Movement = Movement
 Others = Others
 Fonts = Fonts
+Aimbot = Aimbot
+Triggerbot = Triggerbot
+Backtrack = Backtrack
+Override = Override
 
 //Category: VisWindows names
 Bomb-Timer = Bomb Timer

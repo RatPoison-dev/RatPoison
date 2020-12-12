@@ -5,6 +5,7 @@ import rat.poison.curSettings
 import rat.poison.interfaces.IOKeyProcessorListener
 import rat.poison.overlay.App.keyProcessor
 import rat.poison.ui.changed
+import rat.poison.ui.uiPanels.keybindsUpdate
 import rat.poison.utils.gdxButtons
 import rat.poison.utils.gdxToVk
 import rat.poison.utils.vkKeycodeToString
@@ -22,6 +23,7 @@ class KeyProcessorListener : IOKeyProcessorListener {
             false -> -1
         }
         needKeyPressActor.update()
+        keybindsUpdate(needKeyPressActor)
     }
 }
 

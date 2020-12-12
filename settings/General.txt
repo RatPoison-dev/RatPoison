@@ -27,7 +27,13 @@ GAUSSIAN_BLUR = false
 //The title of the app to draw the overlay on
 //Ex "Untitled - Notepad"
 MENU_APP = "Counter-Strike: Global Offensive"
+
+//Appless settings
 APPLESS = false
+APPLESS_WIDTH = 630
+APPLESS_HEIGHT = 600
+APPLESS_X = 960
+APPLESS_Y = 100
 
 //Menu stays focused even when csgo isn't
 MENU_STAY_FOCUSED = false

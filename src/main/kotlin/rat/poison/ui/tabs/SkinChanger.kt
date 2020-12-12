@@ -207,7 +207,7 @@ class SkinChangerTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String {
-        return "Skin-Changer".toLocale()
+        return "Skins".toLocale()
     }
 }
 

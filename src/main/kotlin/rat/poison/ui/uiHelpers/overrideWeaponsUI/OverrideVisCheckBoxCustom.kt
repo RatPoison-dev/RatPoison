@@ -4,8 +4,8 @@ import com.kotcrab.vis.ui.widget.VisCheckBox
 import rat.poison.oWeapon
 import rat.poison.toLocale
 import rat.poison.ui.changed
-import rat.poison.ui.uiPanelTables.weaponOverrideSelected
-import rat.poison.ui.uiPanels.overridenWeapons
+import rat.poison.ui.tabs.aimtabs.weaponOverrideSelected
+import rat.poison.ui.tabs.overridenWeapons
 import rat.poison.utils.generalUtil.strToBool
 
 private val flatAimIdx = getOverrideVarIndex(oWeapon().toString(), "tFlatAim")

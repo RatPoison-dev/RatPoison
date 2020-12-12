@@ -30,9 +30,8 @@ fun drawFov() = App {
 
     val defaultFov = csgoEXE.int(me + m_iDefaultFov)
     val iFov = csgoEXE.int(me + m_iFOV)
-    val viewFov: Int
 
-    viewFov = if (iFov == 0) {
+    val viewFov: Int = if (iFov == 0) {
         defaultFov
     } else {
         iFov

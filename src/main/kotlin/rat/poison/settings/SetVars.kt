@@ -1,6 +1,7 @@
 package rat.poison.settings
 
 import com.sun.jna.platform.win32.WinNT
+import rat.poison.appless
 
 var GAME_PITCH = 0.022 // m_pitch
 var GAME_YAW = 0.022 // m_yaw
@@ -27,3 +28,6 @@ var SMOKE_EFFECT_TIME = 18
 
 var DANGER_ZONE = false
 var MENUTOG = false
+    set(value) {
+        field = if (!appless) value else false
+    }

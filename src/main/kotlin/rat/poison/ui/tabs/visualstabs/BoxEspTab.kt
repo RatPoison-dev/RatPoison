@@ -1,5 +1,6 @@
 package rat.poison.ui.tabs.visualstabs
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
@@ -183,4 +184,43 @@ fun boxEspTabUpdate() {
         boxDefuserColor.update()
         boxWeaponsColor.update()
     }
+}
+
+fun boxEspTabDisable(bool: Boolean, col: Color) {
+    boxEspTab.boxEsp.disable(bool)
+    boxEspTab.advancedBBox.disable(bool)
+    boxEspTab.advancedBBox.disable(bool)
+    boxEspTab.boxEspDetails.disable(bool)
+    boxEspTab.boxEspHealth.disable(bool)
+    boxEspTab.boxEspHealthPos.disable(bool, col)
+    boxEspTab.boxEspArmor.disable(bool)
+    boxEspTab.boxEspArmorPos.disable(bool, col)
+    boxEspTab.boxEspName.disable(bool)
+    boxEspTab.boxEspNamePos.disable(bool, col)
+    boxEspTab.boxEspWeapon.disable(bool)
+    boxEspTab.boxEspWeaponPos.disable(bool, col)
+    boxEspTab.boxEspMoney.disable(bool)
+    boxEspTab.boxEspMoneyPos.disable(bool, col)
+    boxEspTab.boxEspHelmet.disable(bool)
+    boxEspTab.boxEspHelmetPos.disable(bool, col)
+    boxEspTab.boxEspKevlar.disable(bool)
+    boxEspTab.boxEspKevlarPos.disable(bool, col)
+    boxEspTab.boxEspAmmo.disable(bool)
+    boxEspTab.boxEspAmmoPos.disable(bool, col)
+    boxEspTab.boxEspScoped.disable(bool)
+    boxEspTab.boxEspScopedPos.disable(bool, col)
+    boxEspTab.boxEspFlashed.disable(bool)
+    boxEspTab.boxEspFlashedPos.disable(bool, col)
+    boxEspTab.skeletonEsp.disable(bool)
+    boxEspTab.showTeamSkeleton.disable(bool)
+    boxEspTab.showEnemiesSkeleton.disable(bool)
+    boxEspTab.showTeamBox.disable(bool)
+    boxEspTab.showEnemiesBox.disable(bool)
+    boxEspTab.showDefusers.disable(bool)
+    boxEspTab.showWeapons.disable(bool)
+    boxEspTab.boxTeamColor.disable(bool)
+    boxEspTab.boxEnemyColor.disable(bool)
+    boxEspTab.boxWeaponsColor.disable(bool)
+    boxEspTab.boxDefuserColor.disable(bool)
+    boxEspTab.boxEspWeaponScale.disable(bool, col)
 }

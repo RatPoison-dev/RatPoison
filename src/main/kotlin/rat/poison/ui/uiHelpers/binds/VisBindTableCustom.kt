@@ -10,7 +10,7 @@ import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.utils.generalUtil.strToBool
 
-class VisBindTableCustom(mainText: String, varName: String, keyWidth: Float = 200F, spaceRight: Float = 6F): VisTable() {
+class VisBindTableCustom(mainText: String, varName: String, keyWidth: Float = 200F, spaceRight: Float = 6F, buttonWidth: Float = 50F): VisTable() {
     private val textLabel = mainText
     private val variableName = varName
     private val keyLabel = VisLabel("$textLabel:")
@@ -21,7 +21,7 @@ class VisBindTableCustom(mainText: String, varName: String, keyWidth: Float = 20
         update()
 
         add(keyLabel).width(keyWidth)
-        add(button).spaceRight(spaceRight).width(50F)
+        add(button).spaceRight(spaceRight).width(buttonWidth)
     }
 
     fun update(neglect: Actor? = null) {
