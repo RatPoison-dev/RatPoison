@@ -29,7 +29,7 @@ GAUSSIAN_BLUR = false
 MENU_APP = "Counter-Strike: Global Offensive"
 
 //Appless settings
-APPLESS = true
+APPLESS = false
 APPLESS_WIDTH = 630
 APPLESS_HEIGHT = 600
 APPLESS_X = 960
