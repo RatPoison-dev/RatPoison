@@ -58,6 +58,9 @@ You can launch the cheat at any time after launching CSGO.
 * How do I open menu?
     * Press <kbd>INSERT</kbd> while focused on CS:GO window.
 
+* I want to share/download a config, where can I find them?
+    * For these purposes, please use https://ratpoison.dimden.dev/
+
 * Overlay is black/doesn't go transparent/isn't showing up
     * The overlay only works on Windows 10, it doesn't turn transparent on W7
     * CSGO needs to be borderless/windowed for the overlay to show up on top of CS, otherwise it's just an app in your taskbar
