@@ -140,6 +140,7 @@ object App : ApplicationAdapter() {
 
                     overlayTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
                         menuTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
+                            assetManager.updateFonts()
                             if (MENUTOG || appless) {
                                 if (curSettings["KEYBINDS"].strToBool()) {
                                     if (!menuStage.actors.contains(uiKeybinds)) {

@@ -2,13 +2,14 @@
 [![Release](https://img.shields.io/github/release/TheRatCode/RatPoison.svg)](https://github.com/TheRatCode/RatPoison/releases/)
 ![Code size](https://img.shields.io/github/languages/code-size/TheRatCode/RatPoison.svg)
 ![GitHub repo size](https://img.shields.io/github/repo-size/TheRatCode/RatPoison.svg)
-[![Discord](https://discord.com/api/guilds/785830829439320095/widget.png?style=shield)](https://discord.gg/TGsp8SNcFZ)
+[![Discord](https://dimden.dev/ratpoisonwidget)](https://dimden.dev/ratpoisonowns)
 [![Downloads](https://img.shields.io/github/downloads/TheFuckingRat/RatPoison/total.svg)](https://github.com/TheRatCode/RatPoison/releases/latest)
 [![GitHub Actions build status](https://img.shields.io/github/workflow/status/TheRatCode/RatPoison/Push?label=GitHub%20Actions)](https://github.com/TheRatCode/RatPoison/actions?query=workflow%3APush+)
 ### [Support Ratto (Ratpoison)](https://www.patreon.com/ratto)
 
 ### Support Spravedlivo (Ratpoison + [Installer](https://github.com/SPRAVEDLIVO/RatInstaller/))
 * Donate with Bitcoin: bc1qmxkd2dalzwdy0dhhqh8v64m9xj0nz0g52l292e
+* Or with Patreon: https://www.patreon.com/spravedlivo
 
 ### Support Jire (Charlatano)
 * Donate with Bitcoin: 3ErbuRTxtFqvMQ7F2Z8SfpgAXjonsQs8Vc
@@ -43,7 +44,7 @@ The first step is to compile the source code into a usable cheat program.
 
 * Download this branch [zip archive](https://github.com/TheRatCode/RatPoison/archive/beta.zip)
 * Extract the contents from the archive to any folder (to your desktop, for example).
-* Double click on the "_installer_" (_installer.exe_) script and wait for it to complete.
+* Double click on the "_installer_" (_installer.bat_) script and wait for it to complete.
 
 Once those steps are complete, the usable cheat program can be found within the _build_
 directory, and will be in a directory called **RatPoison 1.8**.
