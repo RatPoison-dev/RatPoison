@@ -1,5 +1,7 @@
 package rat.poison.game
 
+import org.jire.kna.float
+import org.jire.kna.set
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.offsets.EngineOffsets.dwViewAngles
 import rat.poison.utils.Angle

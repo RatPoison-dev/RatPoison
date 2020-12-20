@@ -1,6 +1,7 @@
 package rat.poison.scripts
 
 import com.sun.jna.Memory
+import org.jire.kna.set
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.clientState
 import rat.poison.utils.every

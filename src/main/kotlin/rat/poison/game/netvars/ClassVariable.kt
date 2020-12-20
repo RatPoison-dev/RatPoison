@@ -1,6 +1,6 @@
 package rat.poison.game.netvars
 
-import org.jire.arrowhead.Addressed
+import org.jire.kna.Addressed
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.utils.extensions.toNetVarString
 import rat.poison.utils.extensions.uint
@@ -13,7 +13,7 @@ internal class ClassVariable(override val address: Long, private val addressOffs
 	val name by lazy(NONE) {
 		val bytes = ByteArray(32)
 		
-		val memory = csgoEXE.read(resolvedAddress, bytes.size)!!
+		val memory = csgoEXE.read(resolvedAddress, bytes.size.toLong())!!
 		memory.read(0, bytes, 0, bytes.size)
 		
 		bytes.toNetVarString()

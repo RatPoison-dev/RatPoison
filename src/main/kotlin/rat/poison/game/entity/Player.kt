@@ -5,7 +5,10 @@ import com.sun.jna.Memory
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
 import org.apache.commons.lang3.StringUtils
-import org.jire.arrowhead.unsign
+import org.jire.kna.boolean
+import org.jire.kna.byte
+import org.jire.kna.float
+import org.jire.kna.int
 import rat.poison.game.*
 import rat.poison.game.CSGO.ENTITY_SIZE
 import rat.poison.game.CSGO.clientDLL
@@ -42,6 +45,7 @@ import rat.poison.settings.SERVER_TICK_RATE
 import rat.poison.utils.Angle
 import rat.poison.utils.Vector
 import rat.poison.utils.extensions.uint
+import rat.poison.utils.extensions.unsign
 import rat.poison.utils.readCached
 import rat.poison.utils.to
 
@@ -127,7 +131,7 @@ internal fun Player.hasDefuser(): Boolean = csgoEXE.boolean(this + bHasDefuser)
 
 internal fun Player.time(): Double = csgoEXE.int(this + nTickBase) * (1.0 / SERVER_TICK_RATE)
 
-internal fun Player.location(): String = csgoEXE.read(this + NetVarOffsets.szLastPlaceName, 32, true)?.getString(0)
+internal fun Player.location(): String = csgoEXE.read(this + NetVarOffsets.szLastPlaceName, 32)?.getString(0)
 		?: ""
 
 internal fun Player.observerMode(): Int = csgoEXE.int(this + NetVarOffsets.m_iObserverMode)
@@ -300,7 +304,7 @@ internal fun Player.hltv(): Boolean {
 
 	csgoEXE.read(d, mem)
 
-	val hltvB = mem.getByte(0x13D).unsign() > 0
+	val hltvB = mem.getByte(0x13D).toInt().unsign() > 0
 	mem.clear()
 	return hltvB
 }

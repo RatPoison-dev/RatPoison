@@ -1,5 +1,6 @@
 package rat.poison.game.hooks
 
+import org.jire.kna.float
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.flFlashMaxAlpha

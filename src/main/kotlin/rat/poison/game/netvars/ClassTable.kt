@@ -1,6 +1,7 @@
 package rat.poison.game.netvars
 
-import org.jire.arrowhead.Addressed
+import org.jire.kna.Addressed
+import org.jire.kna.int
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.utils.extensions.readable
 import rat.poison.utils.extensions.toNetVarString
@@ -13,7 +14,7 @@ internal class ClassTable(override val address: Long, val offset: Long = 16) : A
 		val bytes = ByteArray(64)
 		
 		val memoryAddress = csgoEXE.uint(address + 12)
-		val memory = csgoEXE.read(memoryAddress, bytes.size)!!
+		val memory = csgoEXE.read(memoryAddress, bytes.size.toLong())!!
 		memory.read(0, bytes, 0, bytes.size)
 		
 		bytes.toNetVarString()
@@ -23,5 +24,5 @@ internal class ClassTable(override val address: Long, val offset: Long = 16) : A
 	
 	fun propForID(id: Int) = csgoEXE.uint(address) + id * 60
 	
-	fun readable() = csgoEXE.read(address, offset.toInt()).readable()
+	fun readable() = csgoEXE.read(address, offset).readable()
 }

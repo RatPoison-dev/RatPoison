@@ -1,5 +1,7 @@
 package rat.poison.game.entity
 
+import org.jire.kna.boolean
+import org.jire.kna.float
 import rat.poison.game.CSGO.ENTITY_SIZE
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE

@@ -1,6 +1,7 @@
 package rat.poison.scripts
 
 import com.badlogic.gdx.math.MathUtils.clamp
+import org.jire.kna.int
 import rat.poison.WEAPON_STATS_FILE
 import rat.poison.curSettings
 import rat.poison.game.CSGO

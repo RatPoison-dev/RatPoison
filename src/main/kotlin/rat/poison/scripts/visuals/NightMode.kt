@@ -1,5 +1,6 @@
 package rat.poison.scripts.visuals
 
+import org.jire.kna.set
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.hooks.toneMapController

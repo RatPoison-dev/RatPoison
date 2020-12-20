@@ -1,6 +1,7 @@
 package rat.poison.scripts.visuals
 
 import com.sun.jna.Memory
+import org.jire.kna.set
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.CSGO.csgoEXE

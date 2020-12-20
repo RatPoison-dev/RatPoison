@@ -2,9 +2,10 @@ package rat.poison.game
 
 import com.sun.jna.Pointer
 import com.sun.jna.platform.win32.WinDef
-import org.jire.arrowhead.Module
-import org.jire.arrowhead.Process
-import org.jire.arrowhead.processByName
+import org.jire.kna.attach.Attach
+import org.jire.kna.attach.AttachedModule
+import org.jire.kna.attach.AttachedProcess
+import org.jire.kna.attach.windows.WindowsAttachAccess
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.hooks.constructEntities
@@ -25,12 +26,12 @@ object CSGO {
 	const val ENTITY_SIZE = 16
 	const val GLOW_OBJECT_SIZE = 56
 
-	lateinit var csgoEXE: Process
+	lateinit var csgoEXE: AttachedProcess
 		private set
 
-	lateinit var clientDLL: Module
+	lateinit var clientDLL: AttachedModule
 		private set
-	lateinit var engineDLL: Module
+	lateinit var engineDLL: AttachedModule
 		private set
 
 	var gameHeight: Int = 0
@@ -67,13 +68,13 @@ object CSGO {
 		}
 
 		retry(128) {
-			csgoEXE = processByName(PROCESS_NAME, PROCESS_ACCESS_FLAGS)!!
+			csgoEXE = Attach.byName(PROCESS_NAME, WindowsAttachAccess(PROCESS_ACCESS_FLAGS))!!
 		}
 
 		retry(128) {
-			csgoEXE.loadModules()
-			engineDLL = csgoEXE.modules[ENGINE_MODULE_NAME]!!
-			clientDLL = csgoEXE.modules[CLIENT_MODULE_NAME]!!
+			val modules = csgoEXE.modules()
+			engineDLL = modules.byName(ENGINE_MODULE_NAME)!!
+			clientDLL = modules.byName(CLIENT_MODULE_NAME)!!
 		}
 		initialized = true
 

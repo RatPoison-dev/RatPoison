@@ -1,5 +1,8 @@
 package rat.poison.game.entity
 
+import org.jire.kna.boolean
+import org.jire.kna.float
+import org.jire.kna.short
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.Weapons
 import rat.poison.game.me

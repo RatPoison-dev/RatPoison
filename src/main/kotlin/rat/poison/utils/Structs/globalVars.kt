@@ -2,7 +2,6 @@ package rat.poison.utils.Structs
 
 import com.sun.jna.Memory
 import com.sun.jna.Structure
-import org.jire.arrowhead.Struct
 import rat.poison.scripts.gvars
 
 fun memToGlobalVars(mem: Memory): GlobalVars {

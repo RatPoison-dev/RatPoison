@@ -2,13 +2,13 @@ package rat.poison.utils.Structs
 
 import com.sun.jna.Memory
 import com.sun.jna.Structure
-import org.jire.arrowhead.Struct
+import org.jire.kna.set
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
 
 //This is me when kotlin doesnt have structs and my brain is extremely smooth
-fun userCMDToMem(ptr: Int, cmd: UserCMD) {
+fun userCMDToMem(ptr: Long, cmd: UserCMD) {
     csgoEXE[ptr] = cmd.ptr
 
     csgoEXE[ptr + 0x04] = cmd.iCmdNumber

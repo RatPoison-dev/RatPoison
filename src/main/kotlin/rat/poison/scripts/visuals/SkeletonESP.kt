@@ -2,7 +2,7 @@ package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.graphics.Color
 import com.sun.jna.Memory
-import org.jire.arrowhead.unsign
+import org.jire.kna.int
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
@@ -13,6 +13,7 @@ import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
 import rat.poison.utils.extensions.uint
+import rat.poison.utils.extensions.unsign
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
 

@@ -2,6 +2,7 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils.clamp
+import org.jire.kna.int
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.CSGO.csgoEXE

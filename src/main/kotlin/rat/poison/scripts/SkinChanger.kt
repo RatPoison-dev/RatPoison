@@ -1,6 +1,9 @@
 package rat.poison.scripts
 
 import org.apache.commons.lang3.StringUtils
+import org.jire.kna.float
+import org.jire.kna.int
+import org.jire.kna.set
 import rat.poison.curSettings
 import rat.poison.game.CSGO.ENTITY_SIZE
 import rat.poison.game.CSGO.clientDLL

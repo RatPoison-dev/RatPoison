@@ -1,6 +1,6 @@
 package rat.poison.game.netvars
 
-import org.jire.arrowhead.Addressed
+import org.jire.kna.Addressed
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.utils.extensions.readable
 import rat.poison.utils.extensions.uint

@@ -1,6 +1,7 @@
 package rat.poison.game
 
 import com.badlogic.gdx.math.MathUtils.clamp
+import org.jire.kna.float
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.Player

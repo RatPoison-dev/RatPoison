@@ -1,5 +1,6 @@
 package rat.poison.scripts
 
+import org.jire.kna.set
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.hooks.cursorEnable

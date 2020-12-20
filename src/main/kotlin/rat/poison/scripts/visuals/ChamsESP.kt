@@ -1,6 +1,7 @@
 package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.math.MathUtils.clamp
+import org.jire.kna.set
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.CSGO.clientDLL
