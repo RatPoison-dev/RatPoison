@@ -16,6 +16,7 @@ import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiPanels.fontsTab
+import rat.poison.utils.updateFonts
 
 class FontsTab : Tab(false, false) {
     val table = VisTable(true)
@@ -24,7 +25,7 @@ class FontsTab : Tab(false, false) {
     private var fontSelectionList = ListView(fontListAdapter)
     private val loadFontButton = VisTextButton("LOAD_FONT".toLocale())
     val fontSize = VisSliderCustom("Font Size", "FONT_SIZE", 3F, 40F, 1F, true, labelWidth = 150F, barWidth = 150F)
-    val borderWidth = VisSliderCustom("Border Width", "FONT_BORDER_WIDTH", 1F, 40F, 1F, true, labelWidth = 150F, barWidth = 150F)
+    val borderWidth = VisSliderCustom("Border Width", "FONT_BORDER_WIDTH", 0F, 40F, 1F, true, labelWidth = 150F, barWidth = 150F)
     val borderStraight = VisCheckBoxCustom("Border Straight", "FONT_BORDER_USE_STRAIGHT")
     val fontGamma = VisSliderCustom("Gamma", "FONT_GAMMA", 0F, 10F, 0.1F, false, labelWidth = 150F, barWidth = 150F)
     val borderGamma = VisSliderCustom("Border Gamma", "FONT_BORDER_GAMMA", 0F, 10F, 0.1F, false, labelWidth = 150F, barWidth = 150F)
@@ -49,18 +50,18 @@ class FontsTab : Tab(false, false) {
             true
         }
 
-        fontSize.changed { _, _ -> assetManager.updateFonts() }
-        borderWidth.changed { _, _ -> assetManager.updateFonts() }
-        borderStraight.changed { _, _ -> assetManager.updateFonts() }
-        fontGamma.changed { _, _ -> assetManager.updateFonts() }
-        borderGamma.changed { _, _ -> assetManager.updateFonts() }
-        shadowOffsetX.changed { _, _ -> assetManager.updateFonts() }
-        shadowOffsetY.changed { _, _ -> assetManager.updateFonts() }
-        fontKerning.changed { _, _ -> assetManager.updateFonts() }
-        fontFlip.changed { _, _ -> assetManager.updateFonts() }
-        genMipMaps.changed { _, _ -> assetManager.updateFonts() }
-        fontBorderColor.changed { _, _ -> assetManager.updateFonts() }
-        fontColor.changed { _, _ -> assetManager.updateFonts() }
+        fontSize.changed { _, _ -> updateFonts = true; true }
+        borderWidth.changed { _, _ -> updateFonts = true; true }
+        borderStraight.changed { _, _ -> updateFonts = true; true }
+        fontGamma.changed { _, _ -> updateFonts = true; true }
+        borderGamma.changed { _, _ -> updateFonts = true; true }
+        shadowOffsetX.changed { _, _ -> updateFonts = true; true }
+        shadowOffsetY.changed { _, _ -> updateFonts = true; true }
+        fontKerning.changed { _, _ -> updateFonts = true; true }
+        fontFlip.changed { _, _ -> updateFonts = true; true }
+        genMipMaps.changed { _, _ -> updateFonts = true; true }
+        fontBorderColor.changed { _, _ -> updateFonts = true; true }
+        fontColor.changed { _, _ -> updateFonts = true; true }
 
         //left elements
         var leftTable = VisTable()

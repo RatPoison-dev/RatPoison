@@ -15,6 +15,7 @@ import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColorGDX
 import java.io.File
 
+var updateFonts = true
 
 class AssetManager: AssetManager() {
     val fonts = mutableMapOf<String, FreeTypeFontGenerator>()
@@ -46,6 +47,8 @@ class AssetManager: AssetManager() {
 
     fun updateFonts() {
 
+        if (!updateFonts) return
+
         updateFontsList()
 
         val defaultFont = "$SETTINGS_DIRECTORY\\Assets\\Fonts\\${curSettings["FONT"].replace("\"", "")}.ttf"
@@ -75,17 +78,21 @@ class AssetManager: AssetManager() {
             parameter.gamma = curSettings["FONT_GAMMA"].toFloat()
 
             val skin = Skin()
+
             val generatedFont = font.generateFont(parameter)
             App.textRenderer = generatedFont
-            skin.add("default-font", generatedFont, BitmapFont::class.java)
-            skin.addRegions(TextureAtlas(Gdx.files.internal(("skin/tinted.atlas"))))
-            skin.load(Gdx.files.internal("skin/tinted.json"))
-            if (!VisUI.isLoaded()) VisUI.load(skin)
+            if (!VisUI.isLoaded()) {
+                skin.add("default-font", generatedFont, BitmapFont::class.java)
+                skin.addRegions(TextureAtlas(Gdx.files.internal(("skin/tinted.atlas"))))
+                skin.load(Gdx.files.internal("skin/tinted.json"))
+                VisUI.load(skin)
+            }
         }
         else {
             curSettings["FONT"] = "VisOpenSans"
             updateFonts()
         }
+        updateFonts = false
     }
 
 

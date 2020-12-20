@@ -581,6 +581,7 @@ MENU_ALPHA = Menu Alpha
 Join-Discord = Join Discord
 Keybinds = Keybinds
 OVERLOAD_KEYBINDS = Disable Duplicate Binds
+Join-The-Giveaway = Configs Website
 
 //Category: Configs tab
 FILE_NOT_FOUND_ERROR = File was not found. Config:

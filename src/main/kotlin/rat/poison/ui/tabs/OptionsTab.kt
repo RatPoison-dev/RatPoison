@@ -22,7 +22,7 @@ import rat.poison.ui.uiRefreshing
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
-    val menuKey = VisBindTableCustom("Menu Key", "MENU_KEY")
+    val menuKey = VisBindTableCustom("Menu Key", "MENU_KEY", 225F)
     val menuAlpha = VisSliderCustom("Menu Alpha", "MENU_ALPHA", .5F, 1F, .05F, false)
     val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true)
     val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")
@@ -30,7 +30,9 @@ class OptionsTab : Tab(false, false) {
     val keybinds = VisCheckBoxCustom("Keybinds", "KEYBINDS")
     val blur = VisCheckBoxCustom("Menu Blur", "GAUSSIAN_BLUR")
     val overloadKeybinds = VisCheckBoxCustom("Overload Keybinds", "OVERLOAD_KEYBINDS")
-    private val discordLink = LinkLabel("Join-Discord".toLocale(), "https://discord.gg/TGsp8SNcFZ")
+    private val discordLink = LinkLabel("Join-Discord".toLocale(), "https://dimden.dev/ratpoisonowns")
+    private val configsLink = LinkLabel("Join-The-Giveaway".toLocale(), "https://ratpoison.dimden.dev/")
+
 
     init {
         debug.changed { _, _ ->
@@ -49,7 +51,8 @@ class OptionsTab : Tab(false, false) {
 
         table.addSeparator()
 
-        table.add(discordLink)
+        table.add(discordLink).row()
+        table.add(configsLink)
     }
 
     override fun getContentTable(): Table {

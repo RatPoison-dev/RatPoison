@@ -130,20 +130,18 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 		val oldY = y
 
 
-		if (GetClientRect(myHWND, myRcClient) && GetClientRect(myHWND, myRcWindow)) {
-			if (appless) {
-				width = myRcClient.right - myRcClient.left
-				height = myRcClient.bottom - myRcClient.top
-				x = myRcWindow.left + (myRcWindow.right - myRcWindow.left - width) / 2
-				y = myRcWindow.top + myRcWindow.bottom - myRcWindow.top - height
-				if (IsWindowVisible(myHWND) && !IsWindowVisible(targetAppHWND)) {
-					ShowWindow(myHWND, WinUser.SW_HIDE)
-					listener?.onBackground(this@Overlay)
-				}
+		if (appless && GetClientRect(myHWND, myRcClient) && GetClientRect(myHWND, myRcWindow)) {
+			width = myRcClient.right - myRcClient.left
+			height = myRcClient.bottom - myRcClient.top
+			x = myRcWindow.left + (myRcWindow.right - myRcWindow.left - width) / 2
+			y = myRcWindow.top + myRcWindow.bottom - myRcWindow.top - height
+			if (IsWindowVisible(myHWND) && !IsWindowVisible(targetAppHWND)) {
+				ShowWindow(myHWND, WinUser.SW_HIDE)
+				listener?.onBackground(this@Overlay)
 			}
 		}
 
-		if (GetClientRect(targetAppHWND, rcClient) && GetWindowRect(targetAppHWND, rcWindow)) {
+		else if (!appless && GetClientRect(targetAppHWND, rcClient) && GetWindowRect(targetAppHWND, rcWindow)) {
 			//shitty DWM does not draw background windows if the top window bounds is same
 			//as screen bounds. Doesn't matter whether the top window is layered or not,
 			//hence we broke the equation so our overlay won't go opaque with a black background...
