@@ -1,5 +1,6 @@
 package rat.poison.scripts.visuals
 
+import org.jire.kna.set
 import rat.poison.game.CSGO
 import rat.poison.game.Color
 import rat.poison.game.entity.EntityType

@@ -2,6 +2,9 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.sun.jna.Memory
+import org.jire.kna.float
+import org.jire.kna.int
+import org.jire.kna.set
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.CSGO.clientDLL
@@ -71,9 +74,9 @@ fun attemptBacktrack(): Boolean {
 
         val input = memToInput(csgoEXE.read(clientDLL.address + dwInput, 253)!!)
 
-        val userCMDptr = input.pCommands + (curSequenceNumber % 150) * 0x64
-        val verifiedUserCMDptr = input.pVerifiedCommands + (curSequenceNumber % 150) * 0x68
-        val oldUserCMDptr = input.pCommands + ((curSequenceNumber - 1) % 150) * 0x64
+        val userCMDptr = input.pCommands + (curSequenceNumber % 150) * 0x64L
+        val verifiedUserCMDptr = input.pVerifiedCommands + (curSequenceNumber % 150) * 0x68L
+        val oldUserCMDptr = input.pCommands + ((curSequenceNumber - 1) % 150) * 0x64L
 
         while (csgoEXE.int(userCMDptr + 0x4) < curSequenceNumber) {
             Thread.sleep(1)

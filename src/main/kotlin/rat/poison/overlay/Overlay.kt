@@ -4,6 +4,8 @@
 package rat.poison.overlay
 
 import com.sun.jna.platform.win32.WinUser
+import org.jire.kna.int
+import org.jire.kna.set
 import org.lwjgl.system.windows.User32.WS_MINIMIZEBOX
 import rat.poison.appless
 import rat.poison.curSettings

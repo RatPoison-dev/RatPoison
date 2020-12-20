@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.Align
 import com.sun.jna.Memory
+import org.jire.kna.int
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE

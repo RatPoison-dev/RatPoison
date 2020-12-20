@@ -3,6 +3,8 @@ package rat.poison.scripts
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.utils.Align
+import org.jire.kna.int
+import org.jire.kna.set
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.CSGO.csgoEXE

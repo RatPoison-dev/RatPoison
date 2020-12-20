@@ -1,5 +1,6 @@
 package rat.poison.scripts.visuals
 
+import org.jire.kna.boolean
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE

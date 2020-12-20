@@ -3,7 +3,7 @@ package rat.poison.utils
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
-fun parseOffset(): Int {
+fun parseOffset(): Long {
     try {
         val connection = URL("https://raw.githubusercontent.com/Akandesh/blazedumper/master/csgo.json")
         val con = connection.openConnection() as HttpsURLConnection
@@ -15,7 +15,7 @@ fun parseOffset(): Int {
         lines.forEach { line ->
             if ("dwbSendPackets" in line) {
                 val regex = "\\d+".toRegex()
-                return regex.find(line)!!.value.toInt()
+                return regex.find(line)!!.value.toLong()
             }
         }
     }

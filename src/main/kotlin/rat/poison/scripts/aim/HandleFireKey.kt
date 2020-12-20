@@ -1,5 +1,7 @@
 package rat.poison.scripts.aim
 
+import org.jire.kna.int
+import org.jire.kna.set
 import rat.poison.appless
 import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL

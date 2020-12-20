@@ -3,10 +3,10 @@
 package rat.poison.game.offsets
 
 import it.unimi.dsi.fastutil.bytes.ByteArrayList
-import org.jire.arrowhead.Module
+import org.jire.kna.attach.AttachedModule
 import rat.poison.utils.RepeatedInt
 
-internal class ModuleScan(private val module: Module, private val patternOffset: Long,
+internal class ModuleScan(private val module: AttachedModule, private val patternOffset: Long,
                           private val addressOffset: Long, private val read: Boolean,
                           private val subtract: Boolean) {
 	

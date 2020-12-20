@@ -1,7 +1,7 @@
 package rat.poison.overlay
 
 import com.sun.jna.Native
-import org.jire.arrowhead.Struct
+import rat.poison.utils.Structs.Struct
 
 object DWM {
 

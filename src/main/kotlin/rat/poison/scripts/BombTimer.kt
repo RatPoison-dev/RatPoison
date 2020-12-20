@@ -3,6 +3,8 @@ package rat.poison.scripts
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.utils.Align
+import org.jire.kna.float
+import org.jire.kna.set
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.entity.*

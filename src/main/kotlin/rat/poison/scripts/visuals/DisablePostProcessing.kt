@@ -1,5 +1,7 @@
 package rat.poison.scripts.visuals
 
+import org.jire.kna.boolean
+import org.jire.kna.set
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.offsets.ClientOffsets.bOverridePostProcesing

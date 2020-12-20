@@ -1,5 +1,7 @@
 package rat.poison.scripts
 
+import org.jire.kna.int
+import org.jire.kna.set
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.isScoped

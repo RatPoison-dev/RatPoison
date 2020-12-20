@@ -1,5 +1,7 @@
 package rat.poison.game.entity
 
+import org.jire.kna.boolean
+import org.jire.kna.int
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.scripts.gvars

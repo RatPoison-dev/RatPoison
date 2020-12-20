@@ -3,22 +3,22 @@ package rat.poison.game.offsets
 import com.sun.jna.Memory
 import com.sun.jna.Pointer
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
-import org.jire.arrowhead.Addressed
-import org.jire.arrowhead.Module
+import org.jire.kna.Addressed
+import org.jire.kna.attach.AttachedModule
 import rat.poison.utils.extensions.uint
 import kotlin.LazyThreadSafetyMode.NONE
 import kotlin.reflect.KProperty
 
-class Offset(val module: Module, private val patternOffset: Long, private val addressOffset: Long,
+class Offset(val module: AttachedModule, private val patternOffset: Long, private val addressOffset: Long,
              val read: Boolean, private val subtract: Boolean, private val mask: ByteArray) : Addressed {
 	
 	companion object {
-		val memoryByModule = Object2ObjectArrayMap<Module, Memory>()
+		val memoryByModule = Object2ObjectArrayMap<AttachedModule, Memory>()
 		
 		private fun Offset.cachedMemory(): Memory {
 			var memory = memoryByModule[module]
 			if (memory == null) {
-				memory = module.read(0, module.size.toInt(), fromCache = false)!!
+				memory = module.read(0, module.size)!!
 				memoryByModule[module] = memory
 			}
 			return memory

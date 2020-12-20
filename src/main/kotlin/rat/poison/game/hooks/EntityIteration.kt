@@ -2,6 +2,8 @@ package rat.poison.game.hooks
 
 import com.sun.jna.Memory
 import com.sun.jna.platform.win32.WinNT
+import org.jire.kna.int
+import org.jire.kna.set
 import rat.poison.dbg
 import rat.poison.game.*
 import rat.poison.game.CSGO.GLOW_OBJECT_SIZE

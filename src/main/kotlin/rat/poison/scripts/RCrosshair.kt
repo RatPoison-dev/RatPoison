@@ -2,6 +2,7 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import org.jire.kna.int
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.gameHeight

@@ -3,7 +3,7 @@
 package rat.poison.scripts
 
 import com.badlogic.gdx.math.Vector3
-import org.jire.arrowhead.keyReleased
+import org.jire.kna.set
 import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.angle
@@ -25,6 +25,7 @@ import rat.poison.utils.Vector
 import rat.poison.utils.distanceTo
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.keyReleased
 import java.awt.event.MouseEvent
 
 private const val SwingDistance = 96f

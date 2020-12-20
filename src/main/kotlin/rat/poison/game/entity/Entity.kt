@@ -3,6 +3,9 @@ package rat.poison.game.entity
 import com.sun.jna.Memory
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
+import org.jire.kna.boolean
+import org.jire.kna.float
+import org.jire.kna.int
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.bSpottedByMask
