@@ -209,8 +209,12 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         println("Close button pressed. Unloading...")
         closeMenu()
     }
+    
+    private val defaultAlpha by lazy(LazyThreadSafetyMode.NONE) {
+        curSettings["MENU_ALPHA"].toFloat()
+    }
 
-    internal fun changeAlpha(alpha: Float = curSettings["MENU_ALPHA"].toFloat()) {
+    internal fun changeAlpha(alpha: Float = defaultAlpha) {
         color.a = alpha
     }
 
