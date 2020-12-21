@@ -67,8 +67,8 @@ jar {
 }
 
 shadowJar {
-	baseName = 'RatPoison'
-	classifier = null
+	archiveBaseName.set('RatPoison')
+	archiveClassifier.set(null)
 }
 
 task RatPoison {
@@ -115,10 +115,4 @@ sourceSets {
 	main.java.srcDirs += 'src/main/java'
 	main.java.srcDirs += 'src/main/kotlin'
 	main.java.srcDirs += 'settings'
-}
-
-compileKotlin {
-	kotlinOptions {
-		jvmTarget = "15"
-	}
 }
