@@ -22,5 +22,8 @@ internal operator fun AttachedModule.invoke(patternOffset: Long = 0, addressOffs
 		= Offset(this, patternOffset, addressOffset, read, subtract,
 		ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(offset.toInt()).array())
 
+fun WindowsAttachedModule.readForced(address: Long, buffer: Pointer, size: Int)
+		= (process as WindowsAttachedProcess).readForced(offset(address), buffer, size)
+
 fun WindowsAttachedModule.writeForced(address: Long, buffer: Pointer, size: Int)
 	= (process as WindowsAttachedProcess).writeForced(offset(address), buffer, size)

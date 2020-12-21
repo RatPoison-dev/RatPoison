@@ -5,8 +5,10 @@ import com.sun.jna.Pointer
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
 import org.jire.kna.Addressed
 import org.jire.kna.attach.AttachedModule
-import rat.poison.utils.extensions.uint
-import kotlin.LazyThreadSafetyMode.NONE
+import org.jire.kna.attach.windows.WindowsAttachedModule
+import org.jire.kna.attach.windows.WindowsAttachedProcess
+import rat.poison.utils.extensions.readForced
+import rat.poison.utils.extensions.unsign
 import kotlin.reflect.KProperty
 
 class Offset(val module: AttachedModule, private val patternOffset: Long, private val addressOffset: Long,
@@ -18,7 +20,10 @@ class Offset(val module: AttachedModule, private val patternOffset: Long, privat
 		private fun Offset.cachedMemory(): Memory {
 			var memory = memoryByModule[module]
 			if (memory == null) {
-				memory = module.read(0, module.size)!!
+				memory = Memory(module.size)
+				if (module is WindowsAttachedModule) {
+					module.readForced(0, memory, module.size.toInt())
+				}
 				memoryByModule[module] = memory
 			}
 			return memory
@@ -27,16 +32,21 @@ class Offset(val module: AttachedModule, private val patternOffset: Long, privat
 	
 	private val memory = cachedMemory()
 	
-	override val address by lazy(NONE) {
+	override val address: Long = run {
 		val offset = module.size - mask.size
+		val process = module.process as WindowsAttachedProcess
+		val readMemory = Memory(4)
 		
 		var currentAddress = 0L
 		while (currentAddress < offset) {
 			if (memory.mask(currentAddress, mask)) {
 				currentAddress += module.address + patternOffset
-				if (read) currentAddress = module.process.uint(currentAddress)
+				if (read) {
+					if (process.readForced(currentAddress, readMemory, 4) == 0L) throw IllegalStateException("Couldn't resolve currentAddress pointer")
+					currentAddress = readMemory.getInt(0).unsign()
+				}
 				if (subtract) currentAddress -= module.address
-				return@lazy currentAddress + addressOffset
+				return@run currentAddress + addressOffset
 			}
 			currentAddress++
 		}
