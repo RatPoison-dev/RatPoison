@@ -3,9 +3,8 @@ package rat.poison.game
 import com.sun.jna.Pointer
 import com.sun.jna.platform.win32.WinDef
 import org.jire.kna.attach.Attach
-import org.jire.kna.attach.AttachedModule
-import org.jire.kna.attach.AttachedProcess
 import org.jire.kna.attach.windows.WindowsAttachAccess
+import org.jire.kna.attach.windows.WindowsAttachedModule
 import org.jire.kna.attach.windows.WindowsAttachedProcess
 import rat.poison.curSettings
 import rat.poison.dbg
@@ -27,12 +26,12 @@ object CSGO {
 	const val ENTITY_SIZE = 16
 	const val GLOW_OBJECT_SIZE = 56
 
-	lateinit var csgoEXE: AttachedProcess
+	lateinit var csgoEXE: WindowsAttachedProcess
 		private set
 
-	lateinit var clientDLL: AttachedModule
+	lateinit var clientDLL: WindowsAttachedModule
 		private set
-	lateinit var engineDLL: AttachedModule
+	lateinit var engineDLL: WindowsAttachedModule
 		private set
 
 	var gameHeight: Int = 0
@@ -73,13 +72,13 @@ object CSGO {
 			if (csgoEXE is WindowsAttachedProcess) {
 				csgoEXE.kernel32Reads = true
 			}
-			CSGO.csgoEXE = csgoEXE
+			CSGO.csgoEXE = csgoEXE as WindowsAttachedProcess
 		}
 
 		retry(128) {
 			val modules = csgoEXE.modules()
-			engineDLL = modules.byName(ENGINE_MODULE_NAME)!!
-			clientDLL = modules.byName(CLIENT_MODULE_NAME)!!
+			engineDLL = modules.byName(ENGINE_MODULE_NAME) as WindowsAttachedModule
+			clientDLL = modules.byName(CLIENT_MODULE_NAME) as WindowsAttachedModule
 		}
 		initialized = true
 

@@ -2,7 +2,6 @@ package rat.poison.game.hooks
 
 import com.sun.jna.Memory
 import com.sun.jna.platform.win32.WinNT
-import org.jire.kna.attach.windows.WindowsAttachedModule
 import org.jire.kna.int
 import rat.poison.dbg
 import rat.poison.game.*
@@ -27,9 +26,7 @@ import rat.poison.scripts.nameChange
 import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.every
-import rat.poison.utils.extensions.uint
-import rat.poison.utils.extensions.unsign
-import rat.poison.utils.extensions.writeForced
+import rat.poison.utils.extensions.*
 import rat.poison.utils.inGame
 import rat.poison.utils.shouldPostProcess
 import java.util.concurrent.atomic.AtomicLong
@@ -91,8 +88,7 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
 
             val clientDLL = clientDLL
             if (ClientOffsets.dwGlowUpdate >= 0
-                && PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0
-                && clientDLL is WindowsAttachedModule) {
+                && PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0) {
                 clientDLL.writeForced(ClientOffsets.dwGlowUpdate, writeGlowMemory.get(), 1)
             }
 
@@ -119,13 +115,13 @@ fun updateCursorEnable() { //Call when needed
 
 var toneMapController = 0L
 
-val glowObjectMemory = Memory(14340L * 2)
+private val glowObjectMemory = Memory(14340L * 2)
 
 fun constructEntities() = every(500, continuous = true) {
     updateCursorEnable()
     clientState = engineDLL.uint(dwClientState)
     state = SignOnState[csgoEXE.int(clientState + dwSignOnState)]
-
+    
     me = clientDLL.uint(dwLocalPlayer)
     if (!inGame || me <= 0L) return@every
 
@@ -140,7 +136,7 @@ fun constructEntities() = every(500, continuous = true) {
     csgoEXE.read(glowObject, glowObjectMemory, glowMemorySize)
     for (glowIndex in 0..glowObjectCount) {
         val glowAddress = glowObject + (glowIndex * GLOW_OBJECT_SIZE)
-        val entity = glowObjectMemory.getInt(glowIndex * GLOW_OBJECT_SIZE.toLong()).unsign()
+        val entity = glowObjectMemory.uint(glowIndex * GLOW_OBJECT_SIZE.toLong())
 
         if (entity > 0L) {
             val type = EntityType.byEntityAddress(entity)
@@ -166,7 +162,7 @@ fun constructEntities() = every(500, continuous = true) {
     }
 
     val maxIndex = clientDLL.int(dwEntityList + 0x24) //Not right?
-
+    
     for (i in 64..maxIndex) {
         val entity = clientDLL.uint(dwEntityList + (i * 0x10) - 0x10)
 
