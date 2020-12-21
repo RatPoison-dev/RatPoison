@@ -1,6 +1,9 @@
 package rat.poison.utils.extensions
 
+import com.sun.jna.Pointer
 import org.jire.kna.attach.AttachedModule
+import org.jire.kna.attach.windows.WindowsAttachedModule
+import org.jire.kna.attach.windows.WindowsAttachedProcess
 import rat.poison.game.offsets.ModuleScan
 import rat.poison.game.offsets.Offset
 import java.nio.ByteBuffer
@@ -18,3 +21,6 @@ internal operator fun AttachedModule.invoke(patternOffset: Long = 0, addressOffs
                                     read: Boolean = true, subtract: Boolean = true, offset: Long)
 		= Offset(this, patternOffset, addressOffset, read, subtract,
 		ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(offset.toInt()).array())
+
+fun WindowsAttachedModule.writeForced(address: Long, buffer: Pointer, size: Int)
+	= (process as WindowsAttachedProcess).writeForced(offset(address), buffer, size)

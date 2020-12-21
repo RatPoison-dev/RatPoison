@@ -14,7 +14,7 @@ buildscript {
 	dependencies {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 		classpath 'com.github.jengelman.gradle.plugins:shadow:6.1.0'
-		classpath "commons-io:commons-io:2.6"
+		classpath "commons-io:commons-io:2.8.0"
 	}
 }
 
@@ -36,7 +36,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.jire:kna:0.1.5'
+	implementation 'org.jire:kna:0.2.0'
 
 	implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
 	implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
