@@ -28,6 +28,7 @@ import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
+import rat.poison.utils.extensions.unsign
 import rat.poison.utils.extensions.writeForced
 import rat.poison.utils.inGame
 import rat.poison.utils.shouldPostProcess
@@ -118,6 +119,8 @@ fun updateCursorEnable() { //Call when needed
 
 var toneMapController = 0L
 
+val glowObjectMemory = Memory(14340L * 2)
+
 fun constructEntities() = every(500, continuous = true) {
     updateCursorEnable()
     clientState = engineDLL.uint(dwClientState)
@@ -133,9 +136,11 @@ fun constructEntities() = every(500, continuous = true) {
 
     var dzMode = false
 
+    val glowMemorySize = 4L + (glowObjectCount * GLOW_OBJECT_SIZE)
+    csgoEXE.read(glowObject, glowObjectMemory, glowMemorySize)
     for (glowIndex in 0..glowObjectCount) {
         val glowAddress = glowObject + (glowIndex * GLOW_OBJECT_SIZE)
-        val entity = csgoEXE.uint(glowAddress)
+        val entity = glowObjectMemory.getInt(glowIndex * GLOW_OBJECT_SIZE.toLong()).unsign()
 
         if (entity > 0L) {
             val type = EntityType.byEntityAddress(entity)
