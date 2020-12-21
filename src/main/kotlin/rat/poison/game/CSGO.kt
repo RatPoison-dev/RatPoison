@@ -71,7 +71,7 @@ object CSGO {
 		retry(128) {
 			val csgoEXE = Attach.byName(PROCESS_NAME, WindowsAttachAccess(PROCESS_ACCESS_FLAGS))!!
 			if (csgoEXE is WindowsAttachedProcess) {
-				csgoEXE.kernel32Mode = true
+				csgoEXE.kernel32Reads = true
 			}
 			CSGO.csgoEXE = csgoEXE
 		}
