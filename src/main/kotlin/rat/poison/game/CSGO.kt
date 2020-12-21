@@ -6,6 +6,7 @@ import org.jire.kna.attach.Attach
 import org.jire.kna.attach.AttachedModule
 import org.jire.kna.attach.AttachedProcess
 import org.jire.kna.attach.windows.WindowsAttachAccess
+import org.jire.kna.attach.windows.WindowsAttachedProcess
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.hooks.constructEntities
@@ -68,7 +69,11 @@ object CSGO {
 		}
 
 		retry(128) {
-			csgoEXE = Attach.byName(PROCESS_NAME, WindowsAttachAccess(PROCESS_ACCESS_FLAGS))!!
+			val csgoEXE = Attach.byName(PROCESS_NAME, WindowsAttachAccess(PROCESS_ACCESS_FLAGS))!!
+			if (csgoEXE is WindowsAttachedProcess) {
+				csgoEXE.kernel32Mode = true
+			}
+			CSGO.csgoEXE = csgoEXE
 		}
 
 		retry(128) {
