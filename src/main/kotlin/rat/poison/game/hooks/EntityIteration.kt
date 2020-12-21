@@ -89,7 +89,9 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
             nameChange = ""
 
             val clientDLL = clientDLL
-            if (PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0 && clientDLL is WindowsAttachedModule) {
+            if (ClientOffsets.dwGlowUpdate >= 0
+                && PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0
+                && clientDLL is WindowsAttachedModule) {
                 clientDLL.writeForced(ClientOffsets.dwGlowUpdate, writeGlowMemory.get(), 1)
             }
 
