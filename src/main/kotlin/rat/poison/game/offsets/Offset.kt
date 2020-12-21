@@ -51,7 +51,8 @@ class Offset(val module: AttachedModule, private val patternOffset: Long, privat
 			currentAddress++
 		}
 		
-		throw IllegalStateException("Failed to resolve offset")
+		//IllegalStateException("Failed to resolve offset, module=$module, memory=$memory, read=$read, subtract=$subtract, currentAddress=$currentAddress").printStackTrace()
+		return@run currentAddress
 	}
 	
 	private var value = -1L
