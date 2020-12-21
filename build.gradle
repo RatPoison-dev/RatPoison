@@ -53,7 +53,7 @@ dependencies {
 	implementation group: 'org.jetbrains.kotlin', name: 'kotlin-script-util', version: kotlin_version
 	implementation group: 'org.jetbrains.kotlin', name: 'kotlin-compiler-embeddable', version: kotlin_version
 
-	implementation group: 'commons-io', name: 'commons-io', version: 2.6
+	implementation group: 'commons-io', name: 'commons-io', version: '2.8.0'
 	implementation 'com.github.ata4:ioutils:b1f26588b5'
 	implementation 'com.github.ata4:bspsrc:v1.3.24'
 	
