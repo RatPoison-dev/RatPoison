@@ -2,9 +2,10 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.sun.jna.Memory
+import org.jire.kna.MemoryCache
+import org.jire.kna.attach.windows.WindowsAttachedModule
 import org.jire.kna.float
 import org.jire.kna.int
-import org.jire.kna.set
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.CSGO.clientDLL
@@ -25,6 +26,7 @@ import rat.poison.utils.Structs.*
 import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
+import rat.poison.utils.extensions.writeForced
 import rat.poison.utils.generalUtil.strToBool
 import kotlin.math.abs
 import kotlin.math.atan
@@ -42,7 +44,13 @@ var gvars = GlobalVars()
 
 fun sendPacket(bool: Boolean) { //move outta here
     val byte = if (bool) 1.toByte() else 0.toByte()
-    engineDLL[dwbSendPackets] = byte //Bitch ass lil coder signature wont work
+    val memory = MemoryCache[1]
+    memory.setByte(0, byte)
+    
+    val engineDLL = engineDLL
+    if (engineDLL is WindowsAttachedModule) {
+        engineDLL.writeForced(dwbSendPackets, memory, 1)
+    }
 }
 
 fun updateGVars() = every(15, true, inGameCheck = true){
