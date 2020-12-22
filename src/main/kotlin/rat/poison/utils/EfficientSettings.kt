@@ -23,11 +23,8 @@ class EfficientSettings(val settings: Settings) {
 		
 		val settingsStr = settings[key]
 		val value = type.convert.invoke(settingsStr)
-		if (value != null) {
-			map[key] = value
-			return value as T
-		}
-		throw UnsupportedOperationException("Couldn't get key \"$key\" type=$type")
+		map[key] = value
+		return value as? T ?: throw UnsupportedOperationException("Couldn't get key \"$key\" type=$type")
 	}
 	
 	operator fun set(key: String, value: Any) {
