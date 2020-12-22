@@ -16,6 +16,7 @@ import rat.poison.utils.extensions.uint
 import rat.poison.utils.extensions.unsign
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
+import rat.poison.utils.threadLocalMemory
 
 private val bones = Array(2048) { Line() }
 private var currentIdx = 0
@@ -98,12 +99,13 @@ private val endBone = Vector()
 private val startDraw = Vector()
 private val endDraw = Vector()
 
+private val boneMemory = threadLocalMemory(4032)
+
 private fun drawBone(target: Player, start: Int, end: Int) {
 	//Reduce r/w
 	//Replace later
-	val boneMemory: Memory by lazy {
-		Memory(4032)
-	}
+	
+	val boneMemory = boneMemory.get()
 
 	csgoEXE.read(target.boneMatrix(), boneMemory)
 

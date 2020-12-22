@@ -19,10 +19,13 @@ import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
+import rat.poison.utils.threadLocalMemory
 import kotlin.math.abs
 
 data class FarPlayer(val pos: Vector = Vector(), var alpha: Float = 0F)
 private var farPlayerRecords = Array(64) { FarPlayer() }
+
+private val mem = threadLocalMemory(237)
 
 fun farRadar() = App {
     if (!inGame || !curSettings["BOX_FAR_RADAR"].strToBool() || meDead) return@App
@@ -30,6 +33,8 @@ fun farRadar() = App {
     var dwRadar = clientDLL.int(dwRadarBase)
     dwRadar = csgoEXE.int(dwRadar + 0x74L)
 
+    val mem = mem.get()
+    
     forEntities(EntityType.CCSPlayer) { //This will probably require more prechecks
         val ent = it.entity
 
@@ -38,7 +43,7 @@ fun farRadar() = App {
 
         val entID = csgoEXE.int(ent + ClientOffsets.dwIndex)
 
-        val mem = csgoEXE.read(dwRadar + (0x174 * (entID + 1)) - 0x3CL, 237) ?: return@forEntities
+        if (!csgoEXE.read(dwRadar + (0x174 * (entID + 1)) - 0x3CL, mem)) return@forEntities
 
         val pos = Vector(mem.getFloat(0), mem.getFloat(4), mem.getFloat(8))
         val health = mem.getInt(0x50)

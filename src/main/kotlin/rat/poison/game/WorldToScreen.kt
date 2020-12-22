@@ -6,19 +6,20 @@ import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.offsets.ClientOffsets.dwViewMatrix
 import rat.poison.utils.Vector
-import rat.poison.utils.generalUtil.strToBool
 
 val w2sViewMatrix = Array(4) { DoubleArray(4) }
 
-fun worldToScreen(from: Vector, vOut: Vector): Boolean {
-	if (!curSettings["MENU"].strToBool()) {
+fun worldToScreen(from: Vector, vOut: Vector) = worldToScreen(from.x, from.y, from.z, vOut)
+
+fun worldToScreen(fromX: Float, fromY: Float, fromZ: Float, vOut: Vector): Boolean {
+	if (!curSettings.bool["MENU"]) {
 		updateViewMatrix()
 	}
 
-	vOut.x = (w2sViewMatrix[0][0] * from.x + w2sViewMatrix[0][1] * from.y + w2sViewMatrix[0][2] * from.z + w2sViewMatrix[0][3]).toFloat()
-	vOut.y = (w2sViewMatrix[1][0] * from.x + w2sViewMatrix[1][1] * from.y + w2sViewMatrix[1][2] * from.z + w2sViewMatrix[1][3]).toFloat()
+	vOut.x = (w2sViewMatrix[0][0] * fromX + w2sViewMatrix[0][1] * fromY + w2sViewMatrix[0][2] * fromZ + w2sViewMatrix[0][3]).toFloat()
+	vOut.y = (w2sViewMatrix[1][0] * fromX + w2sViewMatrix[1][1] * fromY + w2sViewMatrix[1][2] * fromZ + w2sViewMatrix[1][3]).toFloat()
 
-	val w = (w2sViewMatrix[3][0] * from.x + w2sViewMatrix[3][1] * from.y + w2sViewMatrix[3][2] * from.z + w2sViewMatrix[3][3]).toFloat()
+	val w = (w2sViewMatrix[3][0] * fromX + w2sViewMatrix[3][1] * fromY + w2sViewMatrix[3][2] * fromZ + w2sViewMatrix[3][3]).toFloat()
 
 	val width = gameWidth
 	val height = gameHeight

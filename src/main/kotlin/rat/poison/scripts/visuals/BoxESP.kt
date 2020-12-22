@@ -27,11 +27,8 @@ import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
 import rat.poison.toLocale
-import rat.poison.utils.AssetManager
-import rat.poison.utils.Vector
-import rat.poison.utils.every
+import rat.poison.utils.*
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.inGame
 import kotlin.math.abs
 import kotlin.math.sign
 
@@ -65,6 +62,8 @@ private val boxDetailsBottomText = StringBuilder("")
 private var topShift = 0F
 private var textureBuilder = mutableListOf<DrawableTexture>()
 private var bottomTextureBuilder = mutableListOf<DrawableTexture>()
+
+private val entityMemory = threadLocalMemory(45948)
 
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
 fun boxEsp() {
@@ -108,7 +107,8 @@ fun boxEsp() {
 
 	App {
 		if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !curSettings["BOX_ESP_DETAILS"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@App
-
+		
+		val entityMemory = entityMemory.get()
 		forEntities { //Player & Weapon boxes
 			val ent = it.entity
 			val isPlayer = it.type == EntityType.CCSPlayer
@@ -194,7 +194,7 @@ fun boxEsp() {
 			if (!drawBoxDetails) return@forEntities
 
 			//Setup entity values
-			val entityMemory = csgoEXE.read(ent, 45948) ?: return@forEntities
+			if (!csgoEXE.read(ent, entityMemory)) return@forEntities
 
 			//Set filled for bars
 			shapeRenderer.set(ShapeRenderer.ShapeType.Filled)
@@ -391,11 +391,17 @@ fun getRealTextParams(font: BitmapFont, builder: StringBuilder, layout: GlyphLay
 	return Pair(layout.height, layout.width)
 }
 
+private val boneMemory = threadLocalMemory(3984)
+
 //Create a fake accurate box using headpos
 fun setupFakeBox(ent: Entity): BoundingBox {
 	val bbox = BoundingBox()
 
-	val boneMemory = csgoEXE.read(ent.boneMatrix(), 3984)!!
+	val boneMatrix = ent.boneMatrix()
+	val boneMemory = boneMemory.get()
+	if (!csgoEXE.read(boneMatrix, boneMemory)) {
+		throw IllegalStateException("Couldn't setupFakeBox for ent=$ent boneMatrix=$boneMatrix")
+	}
 
 	val headPos = Vector(boneMemory.getFloat(((0x30L * HEAD_BONE) + 0xC)),
 			boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x1C)),

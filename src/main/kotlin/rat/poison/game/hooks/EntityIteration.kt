@@ -29,6 +29,7 @@ import rat.poison.utils.every
 import rat.poison.utils.extensions.*
 import rat.poison.utils.inGame
 import rat.poison.utils.shouldPostProcess
+import rat.poison.utils.threadLocalMemory
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.concurrent.thread
 import kotlin.properties.Delegates
@@ -49,6 +50,8 @@ private fun reset() {
 
 private val writeGlowMemory = ThreadLocal.withInitial { Memory(1).apply { setByte(0, 0xEB.toByte()) } }
 
+private val strBuf = threadLocalMemory(128) //128 str?
+
 private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
     if (old != new) {
         if (new.name == SignOnState.IN_GAME.name) {
@@ -57,9 +60,7 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
                 shouldPostProcess = true
             }
 
-            val strBuf: Memory by lazy {
-                Memory(128) //128 str?
-            }
+            val strBuf = strBuf.get()
 
             csgoEXE.read(clientState + dwClientState_MapDirectory, strBuf)
             val mapName = strBuf.getString(0)

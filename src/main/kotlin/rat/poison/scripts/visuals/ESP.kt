@@ -1,6 +1,5 @@
 package rat.poison.scripts.visuals
 
-import com.sun.jna.Memory
 import org.jire.kna.set
 import rat.poison.curSettings
 import rat.poison.dbg
@@ -12,6 +11,7 @@ import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toInt
+import rat.poison.utils.threadLocalMemory
 
 var espTARGET = -1L
 
@@ -31,10 +31,10 @@ fun esp() {
 	if (dbg) { println("[DEBUG] Initializing Radar ESP") }; radarEsp()
 }
 
+private val glowMemory = threadLocalMemory(60)
+
 fun Entity.glow(color: Color, glowType: Int) {
-	val glowMemory: Memory by lazy {
-		Memory(60)
-	}
+	val glowMemory = glowMemory.get()
 
 	//Revalidate
 	val ent = csgoEXE.uint(this)

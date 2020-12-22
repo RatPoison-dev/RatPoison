@@ -42,12 +42,9 @@ import rat.poison.game.offsets.ClientOffsets.dwPlayerResource
 import rat.poison.game.offsets.EngineOffsets.dwClientState_PlayerInfo
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.SERVER_TICK_RATE
-import rat.poison.utils.Angle
-import rat.poison.utils.Vector
+import rat.poison.utils.*
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.extensions.unsign
-import rat.poison.utils.readCached
-import rat.poison.utils.to
 
 typealias Player = Long
 
@@ -140,6 +137,9 @@ internal fun Player.isSpectating(): Boolean = observerMode() > 0
 
 internal fun Player.isProtected(): Boolean = csgoEXE.boolean(this + bGunGameImmunity)
 
+private val modelMemory = threadLocalMemory(25000)
+private val boneMemory = threadLocalMemory(4032)
+
 internal fun Player.nearestBone(): Int {
 	val studioModel = csgoEXE.uint(studioHdr())
 	val boneOffset = csgoEXE.uint(studioModel + 0xA0)
@@ -149,13 +149,10 @@ internal fun Player.nearestBone(): Int {
 	val w2sRetVec = Vector(0F, 0F, 0F)
 
 	//Get actual size
-	val modelMemory: Memory by lazy {
-		Memory(25000) //Fuck you
-	}
-	val boneMemory: Memory by lazy {
-		Memory(4032)
-	}
-
+	
+	val modelMemory = modelMemory.get()
+	val boneMemory = boneMemory.get()
+	
 	csgoEXE.read(studioModel + boneOffset, modelMemory)
 	csgoEXE.read(boneMatrix, boneMemory)
 
