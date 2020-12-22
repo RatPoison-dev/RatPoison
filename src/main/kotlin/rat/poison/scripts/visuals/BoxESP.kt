@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.Align
 import com.sun.jna.Memory
+import it.unimi.dsi.fastutil.longs.LongArrayList
 import org.jire.kna.int
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
@@ -436,29 +437,33 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 	val vecMaxs = Vector(collisionMem.getFloat(20), collisionMem.getFloat(24), collisionMem.getFloat(28))
 
 	//Set OBB to loop
-	val pointsArray = mutableListOf<Vector>()
-	pointsArray.add(Vector(vecMins.x, vecMins.y, vecMins.z))
-	pointsArray.add(Vector(vecMins.x, vecMaxs.y, vecMins.z))
-	pointsArray.add(Vector(vecMaxs.x, vecMaxs.y, vecMins.z))
-	pointsArray.add(Vector(vecMaxs.x, vecMins.y, vecMins.z))
-	pointsArray.add(Vector(vecMaxs.x, vecMaxs.y, vecMaxs.z))
-	pointsArray.add(Vector(vecMins.x, vecMaxs.y, vecMaxs.z))
-	pointsArray.add(Vector(vecMins.x, vecMins.y, vecMaxs.z))
-	pointsArray.add(Vector(vecMaxs.x, vecMins.y, vecMaxs.z))
+	val pointsArray = longArrayOf(
+		Vector(vecMins.x, vecMins.y, vecMins.z).value,
+		Vector(vecMins.x, vecMaxs.y, vecMins.z).value,
+		Vector(vecMaxs.x, vecMaxs.y, vecMins.z).value,
+		Vector(vecMaxs.x, vecMins.y, vecMins.z).value,
+		Vector(vecMaxs.x, vecMaxs.y, vecMaxs.z).value,
+		Vector(vecMins.x, vecMaxs.y, vecMaxs.z).value,
+		Vector(vecMins.x, vecMins.y, vecMaxs.z).value,
+		Vector(vecMaxs.x, vecMins.y, vecMaxs.z).value
+	)
 
-	val screenPointsTransformedArray = mutableListOf<Vector>()
+	val screenPointsTransformedArray = LongArrayList()
 
 	for (i in pointsArray) {
-		val vecOut = worldToScreen(transformVector(i, frameMatrix))
-		screenPointsTransformedArray.add(vecOut)
+		val vecOut = worldToScreen(transformVector(Vector(i), frameMatrix))
+		screenPointsTransformedArray.add(vecOut.value)
 	}
 
-	var left = screenPointsTransformedArray[0].x
-	var top = screenPointsTransformedArray[0].y
-	var right = screenPointsTransformedArray[0].x
-	var bottom = screenPointsTransformedArray[0].y
+	val first = Vector(screenPointsTransformedArray[0])
+	var left = first.x
+	var top = first.y
+	var right = first.x
+	var bottom = first.y
 
-	for (i in screenPointsTransformedArray) {
+	for (l in screenPointsTransformedArray) {
+		val i = Vector(l)
+		
 		if (left > i.x) {
 			left = i.x
 		}
