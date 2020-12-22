@@ -10,6 +10,7 @@
 ### Support Spravedlivo (Ratpoison + [Installer](https://github.com/SPRAVEDLIVO/RatInstaller/))
 * Donate with Bitcoin: bc1qmxkd2dalzwdy0dhhqh8v64m9xj0nz0g52l292e
 * Or with Patreon: https://www.patreon.com/spravedlivo
+* Or with PayPal: wewestteam1@gmail.com
 
 ### Support Jire (Charlatano)
 * Donate with Bitcoin: 3ErbuRTxtFqvMQ7F2Z8SfpgAXjonsQs8Vc
@@ -58,6 +59,9 @@ You can launch the cheat at any time after launching CSGO.
 ## FAQ <a name = "FAQ"></a>
 * How do I open menu?
     * Press <kbd>INSERT</kbd> while focused on CS:GO window.
+
+* I pressed <kbd>INSERT</kbd>, and it just tabbed out me out of game
+    * Got to CS:GO -> Settings Menu -> Video -> Display Mode and set it to "FULLSCREEN WINDOWED". Click "Apply Changes".
 
 * I want to share/download a config, where can I find them?
     * For these purposes, please use https://ratpoison.dimden.dev/

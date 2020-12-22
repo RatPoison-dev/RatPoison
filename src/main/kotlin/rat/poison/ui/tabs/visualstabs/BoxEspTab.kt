@@ -17,12 +17,15 @@ class BoxEspTab: Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     val skeletonEsp = VisCheckBoxCustom("Enable Skeleton", "SKELETON_ESP")
+    val skeletonEspSmokeCheck = VisCheckBoxCustom("Smoke Check", "SKELETON_SMOKE_CHECK")
+    val skeletonEspAudible = VisCheckBoxCustom("Audible", "SKELETON_ESP_AUDIBLE")
     val showTeamSkeleton = VisCheckBoxCustom("Teammates", "SKELETON_SHOW_TEAM")
     val showEnemiesSkeleton = VisCheckBoxCustom("Enemies", "SKELETON_SHOW_ENEMIES")
     val boxEspWeaponScale = VisSliderCustom("Weapons Scale", "BOX_ESP_WEAPON_SCALE", 0.8F, 3F, 0.1F, false, barWidth = 120F, labelWidth = 150F)
 
     val boxEsp = VisCheckBoxCustom("Bounding Box", "ENABLE_BOX_ESP")
     val boxEspUseIcons = VisCheckBoxCustom("Use Icons", "BOX_ESP_USE_ICONS")
+    val boxEspAudible = VisCheckBoxCustom("Audible", "BOX_ESP_AUDIBLE")
 
     val advancedBBox = VisCheckBoxCustom("Advanced BBOX", "ADVANCED_BOUNDING_BOX")
 
@@ -72,11 +75,14 @@ class BoxEspTab: Tab(false, false) {
         table.padRight(25F)
 
         table.add(skeletonEsp).left().row()
+        table.add(skeletonEspSmokeCheck).left().row()
+        table.add(skeletonEspAudible).left().row()
         table.add(showTeamSkeleton).padRight(225F - showTeamSkeleton.width).left() //225
         table.add(showEnemiesSkeleton).padRight(225F - showEnemiesSkeleton.width).left().row()//225
         table.addSeparator().colspan(2)
         table.add(boxEsp).left().row()
         table.add(boxEspUseIcons).left().row()
+        table.add(boxEspAudible).left().row()
         table.add(advancedBBox).left().row()
         table.add(boxSmokeCheck).left().row()
         table.add(farRadarBox).left().row()
@@ -146,6 +152,7 @@ fun boxEspTabUpdate() {
     boxEspTab.apply {
         boxEsp.update()
         boxEspUseIcons.update()
+        boxEspAudible.update()
         advancedBBox.update()
         boxSmokeCheck.update()
         farRadarBox.update()
@@ -172,6 +179,8 @@ fun boxEspTabUpdate() {
         boxEspFlashedPos.update()
         boxDetailColor.update()
         skeletonEsp.update()
+        skeletonEspSmokeCheck.update()
+        skeletonEspAudible.update()
         showTeamSkeleton.update()
         showEnemiesSkeleton.update()
         boxEspWeaponScale.update()
@@ -212,6 +221,8 @@ fun boxEspTabDisable(bool: Boolean, col: Color) {
     boxEspTab.boxEspFlashed.disable(bool)
     boxEspTab.boxEspFlashedPos.disable(bool, col)
     boxEspTab.skeletonEsp.disable(bool)
+    boxEspTab.skeletonEspSmokeCheck.disable(bool)
+    boxEspTab.skeletonEspAudible.disable(bool)
     boxEspTab.showTeamSkeleton.disable(bool)
     boxEspTab.showEnemiesSkeleton.disable(bool)
     boxEspTab.showTeamBox.disable(bool)

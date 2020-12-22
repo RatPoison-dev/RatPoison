@@ -14,6 +14,7 @@ import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.toLocale
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
+import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
 import rat.poison.ui.uiPanels.visualsTab
 import rat.poison.utils.generalUtil.strToBool
@@ -23,6 +24,7 @@ var glowEspTab = GlowEspTab()
 var chamsEspTab = ChamsEspTab()
 var indicatorEspTab = IndicatorEspTab()
 var boxEspTab = BoxEspTab()
+var drawBacktrackTab = DrawBacktrackTab()
 var snaplinesEspTab = SnaplinesEspTab()
 var footStepsEspTab = FootstepsEspTab()
 var hitMarkerTab = HitMarkerTab()
@@ -36,6 +38,7 @@ class VisualsTab : Tab(false, false) {
     //Static Visuals Tab Items
     val enableEsp = VisCheckBoxCustom("Enable ESP", "ENABLE_ESP")
     val visualsToggleKey = VisBindTableCustom("Visuals Toggle Key", "VISUALS_TOGGLE_KEY")
+    val espAudibleDistance = VisSliderCustom("Audible ESP Range", "AUDIBLE_ESP_RANGE", 100F, 5000F, 100F, true)
 
     init {
         //ESP Tab
@@ -48,6 +51,7 @@ class VisualsTab : Tab(false, false) {
         espTabbedPane.add(hitMarkerTab)
         espTabbedPane.add(nadesTab)
         espTabbedPane.add(miscVisualsTab)
+        espTabbedPane.add(drawBacktrackTab)
 
         espTabbedPane.switchTab(glowEspTab)
 
@@ -79,7 +83,8 @@ class VisualsTab : Tab(false, false) {
 
         //Add all items to label for tabbed pane content
         table.add(enableEsp).padLeft(25F).left().row()
-        table.add(visualsToggleKey).padLeft(25F).left().padBottom(10F).row()
+        table.add(visualsToggleKey).padLeft(25F).left().row()
+        table.add(espAudibleDistance).padLeft(25F).left().padBottom(10F).row()
         table.add(espTabbedPane.table).minWidth(500F).left().growX().row()
         table.add(espScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
     }
@@ -105,6 +110,7 @@ fun updateDisableEsp() {
         }
 
         visualsToggleKey.disable(bool, col)
+        espAudibleDistance.disable(bool, col)
 
         val recTab = espTabbedPane.activeTab
 
@@ -117,6 +123,7 @@ fun updateDisableEsp() {
         espTabbedPane.disableTab(hitMarkerTab, bool)
         espTabbedPane.disableTab(nadesTab, bool)
         espTabbedPane.disableTab(miscVisualsTab, bool)
+        espTabbedPane.disableTab(drawBacktrackTab, bool)
 
         espTabbedPane.switchTab(recTab)
 
@@ -129,6 +136,7 @@ fun updateDisableEsp() {
         hitMarkerTabDisable(bool, col)
         miscVisualTabDisable(bool, col)
         nadesVTabDisable(bool, col)
+        drawBacktrackTabDisable(bool)
 
         if (!curSettings["ENABLE_ESP"].strToBool()) {
             disableAllEsp()
@@ -143,5 +151,6 @@ fun visualsTabUpdate() {
         enableEsp.update()
         visualsToggleKey.update()
         visualsToggleKey.update()
+        espAudibleDistance.update()
     }
 }

@@ -1,5 +1,6 @@
 //Enable snaplines
 ENABLE_SNAPLINES = false
+SNAPLINES_ESP_AUDIBLE = false
 
 //Line width
 SNAPLINES_WIDTH = 3.0

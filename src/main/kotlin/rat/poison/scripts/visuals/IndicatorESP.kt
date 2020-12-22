@@ -35,6 +35,8 @@ fun indicatorEsp() = App {
 
                 if (curSettings.bool["INDICATOR_SMOKE_CHECK"] && lineThroughSmoke(entity)) return@forEntities
 
+                if (curSettings.bool["INDICATOR_ESP_AUDIBLE"] && !inFootsteps(entity)) return@forEntities
+
                 if (bEnt > 0 && bEnt == entity) { //This is the bomb carrier
                     if (curSettings.bool["INDICATOR_SHOW_ENEMIES"] && !onTeam) {
                         color = when (curSettings["INDICATOR_SHOW_BOMB_CARRIER"].strToBool()) {

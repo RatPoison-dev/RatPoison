@@ -56,6 +56,8 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 			val glowAddress = it.glowAddress
 			if (glowAddress <= 0) return@forEntities
 
+			if (curSettings.bool["GLOW_ESP_AUDIBLE"] && !inFootsteps(entity)) return@forEntities
+
 			var health = 0
 			var color = "NIL"
 			var glowType = -1

@@ -38,6 +38,10 @@ internal fun skeletonEsp() = App {
 
 		if (entity == me || entity.dead() || dormCheck || enemyCheck || teamCheck) return@forEntities
 
+		if (curSettings.bool["SKELETON_SMOKE_CHECK"] && lineThroughSmoke(entity)) return@forEntities
+
+		if (curSettings.bool["SKELETON_ESP_AUDIBLE"] && !inFootsteps(entity)) return@forEntities
+
 		val entityBones = mutableListOf<Pair<Int, Int>>()
 
 		(entityBones).apply {

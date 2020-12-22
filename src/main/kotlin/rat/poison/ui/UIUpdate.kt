@@ -24,6 +24,7 @@ fun uiUpdate() {
     chamsEspTabUpdate()
     indicatorEspTabUpdate()
     boxEspTabUpdate()
+    drawBacktrackTabUpdate()
     hitMarkerTabUpdate()
     skinChangerTabUpdate()
     nadesVTUpdate()
@@ -88,6 +89,7 @@ fun refreshMenu() {
     chamsEspTab = ChamsEspTab()
     indicatorEspTab = IndicatorEspTab()
     boxEspTab = BoxEspTab()
+    drawBacktrackTab = DrawBacktrackTab()
     snaplinesEspTab = SnaplinesEspTab()
     footStepsEspTab = FootstepsEspTab()
     hitMarkerTab = HitMarkerTab()
@@ -118,6 +120,7 @@ fun refreshMenu() {
     espTabbedPane.add(hitMarkerTab)
     espTabbedPane.add(nadesTab)
     espTabbedPane.add(miscVisualsTab)
+    espTabbedPane.add(drawBacktrackTab)
 
     miscTabbedPane.add(movementTab)
     miscTabbedPane.add(fovChangerTab)

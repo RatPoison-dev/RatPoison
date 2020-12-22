@@ -9,7 +9,6 @@ import rat.poison.ui.uiPanels.keybindsUpdate
 import rat.poison.utils.gdxButtons
 import rat.poison.utils.gdxToVk
 import rat.poison.utils.vkKeycodeToString
-import kotlin.collections.set
 
 lateinit var needKeyPressVar : String
 lateinit var needKeyPressActor : PrivateVisBindsButtonCustom

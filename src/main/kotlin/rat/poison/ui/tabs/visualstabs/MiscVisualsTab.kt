@@ -30,9 +30,6 @@ class MiscVisualsTab : Tab(false, false) {
     val showAimFov = VisCheckBoxCustom(" ", "DRAW_AIM_FOV", false)
     val showAimFovColor = VisColorPickerCustom("Draw Aim FOV", "DRAW_AIM_FOV_COLOR")
 
-    val backtrackVisualize = VisCheckBoxCustom("Backtrack Visualize", "BACKTRACK_VISUALIZE")
-    val backtrackVisualizeSmokeCheck = VisCheckBoxCustom("Backtrack Visualize Smoke Check", "BACKTRACK_VISUALIZE_SMOKE_CHECK")
-
     val showTriggerFov = VisCheckBoxCustom(" ", "DRAW_TRIGGER_FOV", false)
     val showTriggerFovColor = VisColorPickerCustom("Draw Trigger FOV", "DRAW_TRIGGER_FOV_COLOR")
 
@@ -80,11 +77,6 @@ class MiscVisualsTab : Tab(false, false) {
 
         table.addSeparator()
 
-        table.add(backtrackVisualize).left().row()
-        table.add(backtrackVisualizeSmokeCheck).left().row()
-
-        table.addSeparator()
-
         var tmpTable = VisTable()
         tmpTable.add(enableSpreadCircle)
         tmpTable.add(spreadCircleColor).width(175F - enableSpreadCircle.width).padRight(50F)
@@ -124,8 +116,6 @@ fun miscVisualTabUpdate() {
         showAimFov.update()
         showAimFovColor.update()
         showTriggerFov.update()
-        backtrackVisualize.update()
-        backtrackVisualizeSmokeCheck.update()
         showTriggerFovColor.update()
         enableSpreadCircle.update()
         spreadCircleColor.update()
@@ -167,8 +157,6 @@ fun miscVisualTabDisable(bool: Boolean, col: Color) {
         adrenalineCooldown.disable(bool, col)
         nightMode.disable(bool)
         nightModeSlider.disable(bool, col)
-        backtrackVisualizeSmokeCheck.disable(bool)
-        backtrackVisualize.disable(bool)
         enableSpreadCircle.disable(bool)
         spreadCircleColor.disable(bool)
         enableHeadLevel.disable(bool)

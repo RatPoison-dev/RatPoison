@@ -136,6 +136,8 @@ fun boxEsp() {
 
 			if (curSettings.bool["BOX_SMOKE_CHECK"] && lineThroughSmoke(ent)) return@forEntities
 
+			if (curSettings.bool["BOX_ESP_AUDIBLE"] && !inFootsteps(ent)) return@forEntities
+
 			var health = 0
 			if (isPlayer) {
 				health = ent.health()

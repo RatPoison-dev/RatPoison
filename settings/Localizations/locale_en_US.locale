@@ -298,6 +298,7 @@ BACKTRACK_VISUALIZE_SMOKE_CHECK = Backtrack Visualize Smoke Check
 RADAR_ESP = Radar
 ENABLE_ESP = Enable
 VISUALS_TOGGLE_KEY = Visuals Toggle Key
+AUDIBLE_ESP_RANGE = Audible ESP Range
 
 //Subcategory: Nightmode
 ENABLE_NIGHTMODE = Nightmode
@@ -329,6 +330,7 @@ ADRENALINE_BOMB_TIME = Use Bomb Time
 
 //Category: Glow Esp
 GLOW_ESP = Enable
+GLOW_ESP_AUDIBLE = Audible
 GLOW_SHOW_TEAM = Teammates
 GLOW_SHOW_ENEMIES = Enemies
 GLOW_SHOW_BOMB = Bomb
@@ -373,6 +375,7 @@ CHAMS_TARGET_COLOR = Target
 
 //Category: Indicator ESP
 INDICATOR_ESP = Enable
+INDICATOR_ESP_AUDIBLE = Audible
 INDICATOR_SHOW_TEAM = Teammates
 INDICATOR_SHOW_ENEMIES = Enemies
 INDICATOR_SHOW_BOMB = Bomb
@@ -391,6 +394,7 @@ INDICATOR_SIZE = Size
 INDICATOR_SMOKE_CHECK = Smoke Check
 
 //Category: Box ESP
+BOX_ESP_AUDIBLE = Audible
 ENABLE_BOX_ESP = Entity Box
 BOX_ESP_HELMET = Helmet
 BOX_ESP_KEVLAR = Kevlar
@@ -420,6 +424,8 @@ BOX_TEAM_COLOR = Teammates
 BOX_ENEMY_COLOR = Enemies
 BOX_DEFUSER_COLOR = Defusers
 SKELETON_ESP = Skeleton
+SKELETON_SMOKE_CHECK = Smoke Check
+SKELETON_ESP_AUDIBLE = Audible
 SKELETON_SHOW_TEAM = Teammates
 SKELETON_SHOW_ENEMIES = Enemies
 LEFT = LEFT
@@ -448,6 +454,7 @@ SNAPLINES_BOMB_CARRIER = Bomb Carrier
 SNAPLINES_BOMB_CARRIER_COLOR = Bomb Carrier
 SNAPLINES_DEFUSE_KIT_COLOR = Defuse Kits
 SNAPLINES_SMOKE_CHECK = Smoke Check
+SNAPLINES_ESP_AUDIBLE = Audible
 
 
 //Category: Footsteps ESP
@@ -628,7 +635,7 @@ Bomb-Planted! = Bomb Planted!
 Time-To-Explode: = Time To Explode:
 Location: = Location:
 Can-Defuse: = Can Defuse:
-Time-To-Defuse: Time To Defuse:
+Time-To-Defuse: = Time To Defuse:
 Time-Left-After: = Time Left After:
 
 //Category: Misc tab
@@ -675,6 +682,12 @@ NADE_ACCURACY_RADIUS = Accuracy radius
 ENABLE_NADE_THROWER = Auto throw
 NADE_THROWER_KEY = Key
 CLEAR_POSITIONS = Clear all currently loaded positions?
+
+//Category: Backtrack tab
+BACKTRACK_VISUALIZE = Backtrack Visualize
+BACKTRACK_VISUALIZE_SMOKE_CHECK = Backtrack Visualize Smoke Check
+BACKTRACK_VISUALIZE_AUDIBLE = Backtrack Visualize Audible
+BACKTRACK_VISUALIZE_COLOR = Backtrack Visualize Color
 
 
 //Category: Weapons Categories

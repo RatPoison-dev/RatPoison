@@ -24,6 +24,8 @@ fun snapLines() = App {
 
             if (curSettings.bool["SNAPLINES_SMOKE_CHECK"] && lineThroughSmoke(it.entity)) return@forEntities
 
+            if (curSettings.bool["SNAPLINES_ESP_AUDIBLE"] && !inFootsteps(it.entity)) return@forEntities
+
             if (!(entPos.x == 0F && entPos.y == 0F && entPos.z == 0F)) {
                 shapeRenderer.apply {
                     if (shapeRenderer.isDrawing) {
@@ -54,6 +56,8 @@ fun snapLines() = App {
         var colStr = ""
 
         if (curSettings.bool["SNAPLINES_SMOKE_CHECK"] && lineThroughSmoke(entity)) return@forEntities
+
+        if (curSettings.bool["SNAPLINES_ESP_AUDIBLE"] && !inFootsteps(entity)) return@forEntities
 
         when (it.type) {
             EntityType.CCSPlayer -> {

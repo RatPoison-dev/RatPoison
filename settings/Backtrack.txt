@@ -10,6 +10,9 @@ BACKTRACK_KEY = -1
 
 //Show points
 BACKTRACK_VISUALIZE = false
+BACKTRACK_VISUALIZE_SMOKE_CHECK = false
+BACKTRACK_VISUALIZE_AUDIBLE = false
+BACKTRACK_VISUALIZE_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
 
 //Check if an entity is spotted before shooting
 BACKTRACK_SPOTTED = false

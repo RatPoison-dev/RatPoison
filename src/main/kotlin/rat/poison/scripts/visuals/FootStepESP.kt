@@ -10,11 +10,9 @@ import rat.poison.game.w2sViewMatrix
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.utils.Vector
+import rat.poison.utils.distanceTo
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.cToFloat
-import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColorGDX
-import rat.poison.utils.generalUtil.toMatrix4
+import rat.poison.utils.generalUtil.*
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -31,6 +29,16 @@ fun footStepEsp() {
     if (curSettings["MENU"].strToBool()) {
         runFootSteps()
     }
+}
+
+fun inFootsteps(to: Entity): Boolean {
+    val distance = curSettings["AUDIBLE_ESP_RANGE"].cToInt()
+    footSteps.forEach {
+        if (it.ent == to) {
+            return !it.open && it.ttl > 0 && Vector(it.x, it.y, it.z).distanceTo(me.position()) <= distance
+        }
+    }
+    return false
 }
 
 

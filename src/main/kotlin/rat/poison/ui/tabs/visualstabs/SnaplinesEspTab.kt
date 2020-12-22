@@ -19,6 +19,8 @@ class SnaplinesEspTab : Tab(false, false) {
 
     val snaplinesSmokeCheck = VisCheckBoxCustom("Smoke Check", "SNAPLINES_SMOKE_CHECK")
 
+    val snaplinesAudible = VisCheckBoxCustom("Audible", "SNAPLINES_ESP_AUDIBLE")
+
     val enemySnaplines = VisCheckBoxCustom(" ", "SNAPLINES_ENEMIES", false)
     val enemySnaplinesColor = VisColorPickerCustom("Enemies", "SNAPLINES_ENEMY_COLOR")
 
@@ -45,6 +47,8 @@ class SnaplinesEspTab : Tab(false, false) {
         table.add(snaplinesWidth).left().colspan(2).row()
 
         table.add(snaplinesSmokeCheck).left().row()
+
+        table.add(snaplinesAudible).left().row()
 
         var tmpTable = VisTable()
         tmpTable.add(enemySnaplines)
@@ -88,6 +92,7 @@ class SnaplinesEspTab : Tab(false, false) {
 
 fun snaplinesEspTabUpdate() {
     snaplinesEspTab.apply {
+        snaplinesAudible.update()
         enableSnaplines.update()
         snaplinesWidth.update()
         snaplinesSmokeCheck.update()
@@ -105,6 +110,7 @@ fun snaplinesEspTabUpdate() {
 }
 
 fun snaplinesEspTabDisable(bool: Boolean, col: Color) {
+    snaplinesEspTab.snaplinesAudible.disable(bool)
     snaplinesEspTab.enableSnaplines.disable(bool)
     snaplinesEspTab.snaplinesWidth.disable(bool, col)
     snaplinesEspTab.snaplinesSmokeCheck.disable(bool)

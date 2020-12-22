@@ -1,5 +1,6 @@
 //Global enable esp
 ENABLE_ESP = false
+AUDIBLE_ESP_RANGE = 1200
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles visibility of esp on/off
 //Default key is G
