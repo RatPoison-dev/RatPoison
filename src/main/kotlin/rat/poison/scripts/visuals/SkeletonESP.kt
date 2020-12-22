@@ -15,7 +15,6 @@ import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.*
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.extensions.unsign
-import rat.poison.utils.generalUtil.strToBool
 
 private val bones = Array(2048) { Line() }
 private var currentIdx = 0
@@ -25,7 +24,7 @@ val modelMemory: Memory by lazy(LazyThreadSafetyMode.NONE) {
 }
 
 internal fun skeletonEsp() = App {
-	if (!curSettings["SKELETON_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@App
+	if (!curSettings.bool["SKELETON_ESP"] || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
 	val meTeam = me.team()
 	forEntities(EntityType.CCSPlayer) {
@@ -33,8 +32,8 @@ internal fun skeletonEsp() = App {
 		val entTeam = entity.team()
 
 		val dormCheck = (entity.dormant() && !DANGER_ZONE)
-		val enemyCheck = ((!curSettings["SKELETON_SHOW_ENEMIES"].strToBool() && meTeam != entTeam) && !DANGER_ZONE)
-		val teamCheck = ((!curSettings["SKELETON_SHOW_TEAM"].strToBool() && meTeam == entTeam) && !DANGER_ZONE)
+		val enemyCheck = ((!curSettings.bool["SKELETON_SHOW_ENEMIES"] && meTeam != entTeam) && !DANGER_ZONE)
+		val teamCheck = ((!curSettings.bool["SKELETON_SHOW_TEAM"] && meTeam == entTeam) && !DANGER_ZONE)
 
 		if (entity == me || entity.dead() || dormCheck || enemyCheck || teamCheck) return@forEntities
 
@@ -88,18 +87,13 @@ private val colors: Array<Color> = Array(101) {
 	Color(red, green, 0f, 1f)
 }
 
-/*private val startBone = Vector()
-private val endBone = Vector()
-
-private val startDraw = Vector()
-private val endDraw = Vector()*/
+val boneMemory: Memory by lazy(LazyThreadSafetyMode.NONE) {
+	Memory(4032)
+}
 
 private fun drawBone(target: Player, start: Int, end: Int) {
 	//Reduce r/w
 	//Replace later
-	val boneMemory: Memory by lazy {
-		Memory(4032)
-	}
 
 	csgoEXE.read(target.boneMatrix(), boneMemory)
 

@@ -2,18 +2,20 @@ package rat.poison.utils
 
 import kotlin.math.abs
 
-interface Vector {
-	val value: Long
+inline class Vector(val value: Long) {
+	constructor(x: Float = 0F, y: Float = 0F, z: Float = 0F) : this(vectorLong(x, y, z))
 	
 	val x: Float
+		get() = toFloat(value ushr 32)
 	val y: Float
+		get() = toFloat((value ushr 16) and 0xFFFF)
 	val z: Float
+		get() = toFloat(value and 0xFFFF)
 	
-	fun set(x: Float, y: Float, z: Float = this.z): Vector
-	
-	fun x(x: Float): Vector
-	fun y(y: Float): Vector
-	fun z(z: Float): Vector
+	fun set(x: Float, y: Float, z: Float = 0F) = Vector(x, y, z)
+	fun x(x: Float) = Vector(x, y, z)
+	fun y(y: Float) = Vector(x, y, z)
+	fun z(z: Float) = Vector(x, y, z)
 	
 	fun invalid() = x == 0F && y == 0F && z == 0F
 	fun valid() = !invalid()
@@ -36,62 +38,17 @@ interface Vector {
 		if (y > 180) y = 180F
 		if (y < -180F) y = -180F
 		
-		set(x, y)
+		set(x, y, z)
 	}
 	
 	fun distanceTo(target: Vector) = abs(x - target.x) + abs(y - target.y) + abs(z - target.z)
 }
 
-inline class Angle(override val value: Long) : Vector {
-	constructor(x: Float = 0F, y: Float = 0F) : this(angleLong(x, y))
-	
-	override val x: Float
-		get() = (value ushr 32).toFloat()
-	override val y: Float
-		get() = (value and 0xFFFF).toFloat()
-	override val z: Float
-		get() = 0F
-	
-	override fun set(x: Float, y: Float, z: Float) = Angle(x, y)
-	override fun x(x: Float) = Angle(x, y)
-	override fun y(y: Float) = Angle(x, y)
-	override fun z(z: Float) = Angle(x, y)
-	
-	override fun isValid() = !(z != 0F
-			|| x < -89 || x > 180
-			|| y < -180 || y > 180
-			|| x.isNaN() || y.isNaN() || z.isNaN())
-}
+typealias Angle = Vector
 
-fun angle(x: Float = 0F, y: Float = 0F): Angle = Angle(x, y)
+fun angle(x: Float = 0F, y: Float = 0F): Angle = Vector(x, y)
 
-fun angleLong(x: Float = 0F, y: Float = 0F): Long {
-	var vector = x.toLong() shl 32
-	vector = vector or y.toLong()
-	return vector
-}
-
-inline class InlineVector(override val value: Long) : Vector {
-	constructor(x: Float = 0F, y: Float = 0F, z: Float = 0F) : this(vectorLong(x, y, z))
-	
-	override val x: Float
-		get() = toFloat(value ushr 32)
-	override val y: Float
-		get() = toFloat((value ushr 16) and 0xFFFF)
-	override val z: Float
-		get() = toFloat(value and 0xFFFF)
-	
-	override fun set(x: Float, y: Float, z: Float) = InlineVector(x, y, z)
-	override fun x(x: Float) = InlineVector(x, y, z)
-	override fun y(y: Float) = InlineVector(x, y, z)
-	override fun z(z: Float) = InlineVector(x, y, z)
-}
-
-fun Vector(value: Long): Vector = InlineVector(value)
-
-fun Vector(x: Float = 0F, y: Float = 0F, z: Float = 0F) = vector(x, y, z)
-
-fun vector(x: Float = 0F, y: Float = 0F, z: Float = 0F): Vector = InlineVector(vectorLong(x, y, z))
+fun vector(x: Float = 0F, y: Float = 0F, z: Float = 0F): Vector = Vector(vectorLong(x, y, z))
 
 fun vectorLong(x: Float = 0F, y: Float = 0F, z: Float = 0F): Long {
 	val x2 = toHalf(x)
