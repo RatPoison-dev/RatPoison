@@ -1,7 +1,6 @@
 package rat.poison.scripts
 
 import com.badlogic.gdx.math.MathUtils.clamp
-import com.sun.jna.Memory
 import org.jire.kna.MemoryCache
 import org.jire.kna.float
 import org.jire.kna.int
@@ -121,14 +120,14 @@ fun attemptBacktrack(): Boolean {
 	return false
 }
 
-private val boneMemory: Memory by lazy(LazyThreadSafetyMode.NONE) {
-	Memory(3984)
-}
+private val boneMemory = threadLocalMemory(3984)
 
 fun constructRecords() {
 	var bestFov = 5F
 	val clientAngle = clientState.angle()
 	val meTeam = me.team()
+	
+	val boneMemory = boneMemory.get()
 	
 	forEntities(EntityType.CCSPlayer) {
 		val ent = it.entity

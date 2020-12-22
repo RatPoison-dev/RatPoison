@@ -42,6 +42,15 @@ inline class Vector(val value: Long) {
 	}
 	
 	fun distanceTo(target: Vector) = abs(x - target.x) + abs(y - target.y) + abs(z - target.z)
+	
+	fun dot(x: Float, y: Float, z: Float): Float = this.x * x + this.y * y + this.z * z
+	
+	fun dst2(x: Float, y: Float, z: Float): Float {
+		val a = x - this.x
+		val b = y - this.y
+		val c = z - this.z
+		return a * a + b * b + c * c
+	}
 }
 
 typealias Angle = Vector

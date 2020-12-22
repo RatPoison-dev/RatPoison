@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
-import com.sun.jna.Memory
 import rat.poison.*
 import rat.poison.game.*
 import rat.poison.game.entity.absPosition
@@ -27,6 +26,7 @@ import rat.poison.utils.generalUtil.cToFloat
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toMatrix4
 import rat.poison.utils.inGame
+import rat.poison.utils.threadLocalMemory
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
@@ -148,10 +148,10 @@ fun nadeHelper() = App {
     }
 }
 
+private val boneMemory2 = threadLocalMemory(3984)
+
 fun createPosition() {
-    val boneMemory: Memory by lazy {
-        Memory(3984)
-    }
+    val boneMemory = boneMemory2.get()
 
     CSGO.csgoEXE.read(me.boneMatrix(), boneMemory)
     val xOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0xC)).toDouble()

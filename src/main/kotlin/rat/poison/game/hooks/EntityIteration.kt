@@ -49,6 +49,8 @@ private val writeGlowMemory by lazy(LazyThreadSafetyMode.NONE) {
     Memory(1).apply { setByte(0, 0xEB.toByte()) }
 }
 
+private val strBuf = threadLocalMemory(128) //128 str?
+
 private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
     if (old != new) {
         if (new.name == SignOnState.IN_GAME.name) {
@@ -57,10 +59,7 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
                 shouldPostProcess = true
             }
 
-            val strBuf: Memory by lazy {
-                Memory(128) //128 str?
-            }
-
+            val strBuf = strBuf.get()
             csgoEXE.read(clientState + dwClientState_MapDirectory, strBuf)
             val mapName = strBuf.getString(0)
 
@@ -115,7 +114,7 @@ fun updateCursorEnable() { //Call when needed
 
 var toneMapController = 0L
 
-private val glowObjectMemory = Memory(14340L * 2)
+private val glowObjectMemory = threadLocalMemory(14340L * 2)
 
 fun constructEntities() = every(500, continuous = true) {
     updateCursorEnable()
@@ -131,6 +130,8 @@ fun constructEntities() = every(500, continuous = true) {
     if (shouldReset()) reset()
 
     var dzMode = false
+    
+    val glowObjectMemory = glowObjectMemory.get()
 
     val glowMemorySize = 4L + (glowObjectCount * GLOW_OBJECT_SIZE)
     csgoEXE.read(glowObject, glowObjectMemory, glowMemorySize)

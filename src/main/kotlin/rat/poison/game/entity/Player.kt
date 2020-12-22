@@ -1,7 +1,6 @@
 package rat.poison.game.entity
 
 import com.badlogic.gdx.math.MathUtils
-import com.badlogic.gdx.math.Vector3
 import com.sun.jna.Memory
 import org.apache.commons.lang3.StringUtils
 import org.jire.kna.boolean
@@ -45,6 +44,7 @@ import rat.poison.utils.Angle
 import rat.poison.utils.Vector
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.extensions.unsign
+import rat.poison.utils.threadLocalMemory
 import rat.poison.utils.vector
 import kotlin.math.cos
 import kotlin.math.sin
@@ -153,6 +153,9 @@ internal fun Player.isSpectating(): Boolean = observerMode() > 0
 
 internal fun Player.isProtected(): Boolean = csgoEXE.boolean(this + bGunGameImmunity)
 
+val modelMemory = threadLocalMemory(25000)
+val boneMemory = threadLocalMemory(4032)
+
 internal fun Player.nearestBone(): Int {
 	val studioModel = csgoEXE.uint(studioHdr())
 	val boneOffset = csgoEXE.uint(studioModel + 0xA0)
@@ -160,13 +163,10 @@ internal fun Player.nearestBone(): Int {
 	val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
 	
 	//Get actual size
-	val modelMemory: Memory by lazy {
-		Memory(25000) //Fuck you
-	}
-	val boneMemory: Memory by lazy {
-		Memory(4032)
-	}
 	
+	val modelMemory = modelMemory.get()
+	val boneMemory = boneMemory.get()
+
 	csgoEXE.read(studioModel + boneOffset, modelMemory)
 	csgoEXE.read(boneMatrix, boneMemory)
 	
@@ -185,12 +185,10 @@ internal fun Player.nearestBone(): Int {
 				
 				val w2sRetVec = worldToScreen(boneMemory.vector(parent * 0x30L, 0x0C, 0x1C, 0x2C))
 				if (w2sRetVec.w2s()) {
-					val tempVec3 = Vector3(w2sRetVec.x, w2sRetVec.y, 0F)
-					
 					val tX = CSGO.gameWidth / 2 - ((CSGO.gameWidth / 95F) * tPunch.y)
 					val tY = CSGO.gameHeight / 2 - ((CSGO.gameHeight / 95F) * tPunch.x)
 					
-					val dst2 = tempVec3.dst2(tX, tY, 0F)
+					val dst2 = w2sRetVec.dst2(tX, tY, 0F)
 					
 					if (dst2 < closestDst2) {
 						closestDst2 = dst2
@@ -200,12 +198,11 @@ internal fun Player.nearestBone(): Int {
 				
 				val w2sRetVec2 = worldToScreen(boneMemory.vector(idx * 0x30L, 0x0C, 0x1C, 0x2C))
 				if (w2sRetVec2.w2s()) {
-					val tempVec3 = Vector3(w2sRetVec2.x, w2sRetVec2.y, 0F)
 					
 					val tX = CSGO.gameWidth / 2 - ((CSGO.gameWidth / 95F) * tPunch.y)
 					val tY = CSGO.gameHeight / 2 - ((CSGO.gameHeight / 95F) * tPunch.x)
 					
-					val dst2 = tempVec3.dst2(tX, tY, 0F)
+					val dst2 = w2sRetVec2.dst2(tX, tY, 0F)
 					
 					if (dst2 < closestDst2) {
 						closestDst2 = dst2
@@ -228,9 +225,7 @@ internal fun Memory.vector(addy: Long, xOff: Long, yOff: Long, zOff: Long): Vect
 	return vector(x, y, z)
 }
 
-private val nameMem: Memory by lazy(LazyThreadSafetyMode.NONE) {
-	Memory(320)
-}
+private val nameMem = threadLocalMemory(320)
 
 internal fun Player.name(): String {
 	val entID = csgoEXE.uint(this + dwIndex) - 1
@@ -239,6 +234,7 @@ internal fun Player.name(): String {
 	val c = csgoEXE.uint(b + 0x0C)
 	val d = csgoEXE.uint(c + 0x28 + entID * 0x34)
 	
+	val nameMem = nameMem.get()
 	csgoEXE.read(d, nameMem)
 	
 	val name = nameMem.getString(0x10)
@@ -246,9 +242,7 @@ internal fun Player.name(): String {
 	return name
 }
 
-private val mem: Memory by lazy(LazyThreadSafetyMode.NONE) {
-	Memory(0x140)
-}
+private val mem = threadLocalMemory(0x140)
 
 internal fun Player.steamID(): String {
 	val entID = csgoEXE.uint(this + dwIndex) - 1
@@ -258,6 +252,7 @@ internal fun Player.steamID(): String {
 	val c = csgoEXE.uint(b + 0x0C)
 	val d = csgoEXE.uint(c + 0x28 + entID * 0x34)
 	
+	val mem = mem.get()
 	csgoEXE.read(d, mem)
 	
 	val sID = mem.getString(0x94) //0x90 is int of steamID
@@ -302,9 +297,7 @@ internal fun Player.wins(): Int {
 	return (csgoEXE.int(clientDLL.uint(dwPlayerResource) + iCompetitiveWins + index * 4))
 }
 
-private val hltvmem: Memory by lazy(LazyThreadSafetyMode.NONE) {
-	Memory(0x140)
-}
+private val hltvmem = threadLocalMemory(0x140)
 
 internal fun Player.hltv(): Boolean {
 	val entID = csgoEXE.uint(this + dwIndex) - 1
@@ -314,6 +307,7 @@ internal fun Player.hltv(): Boolean {
 	val c = csgoEXE.uint(b + 0x0C)
 	val d = csgoEXE.uint(c + 0x28 + entID * 0x34)
 	
+	val hltvmem = hltvmem.get()
 	csgoEXE.read(d, hltvmem)
 	
 	val hltvB = hltvmem.getByte(0x13D).toInt().unsign() > 0
