@@ -52,8 +52,11 @@ open class Settings {
 	}
 	val colorGDX = XColorGDX()
 	
-	operator fun set(key: String, value: Any?): Any? {
-		return savedValues.put(key, value.toString())
+	operator fun set(key: String, value: Any): Any? {
+		val string = value.toString()
+		val r = savedValues.put(key, string)
+		efficient[key] = value
+		return r
 	}
 	
 }
