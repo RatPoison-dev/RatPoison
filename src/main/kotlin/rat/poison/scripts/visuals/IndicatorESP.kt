@@ -62,26 +62,26 @@ fun indicatorEsp() = App {
             }
 
             EntityType.CPlantedC4, EntityType.CC4 -> {
-                if (curSettings.x["INDICATOR_SHOW_BOMB"]) {
+                if (curSettings.bool["INDICATOR_SHOW_BOMB"]) {
                     color = "INDICATOR_BOMB_COLOR"
                 }
             }
 
             else -> {
-                if (curSettings.x["INDICATOR_SHOW_WEAPONS"] && it.type.weapon) {
+                if (curSettings.bool["INDICATOR_SHOW_WEAPONS"] && it.type.weapon) {
                     color = "INDICATOR_WEAPON_COLOR"
-                } else if (curSettings.x["INDICATOR_SHOW_GRENADES"] && it.type.grenade) {
+                } else if (curSettings.bool["INDICATOR_SHOW_GRENADES"] && it.type.grenade) {
                     color = "INDICATOR_GRENADE_COLOR"
                 }
             }
         }
 
         if (color != "") {
-            drawIndicator(entity, curSettings.x[color])
+            drawIndicator(entity, curSettings.color[color])
         }
     }
 
-    if (curSettings.x["INDICATOR_SHOW_DEFUSERS"]) {
+    if (curSettings.bool["INDICATOR_SHOW_DEFUSERS"]) {
         forEntities(EntityType.CEconEntity) {
             drawIndicator(it.entity, curSettings["INDICATOR_DEFUSER_COLOR"].strToColor())
         }

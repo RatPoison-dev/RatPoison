@@ -19,13 +19,10 @@ open class Settings {
 	
 	//inline operator fun <reified T> invoke(key: String): T = efficient[key]
 	
-	// this X shit is needed cuz of Kotlin compiler bug
+	// Kotlin compiler bug so can't use this yet
 	// https://youtrack.jetbrains.com/issue/KT-43923
-	inner class X {
-		inline operator fun <reified T> get(key: String): T = efficient[key]
-	}
 	
-	val x = X()
+	//inline operator fun <reified T> get(key: String): T = efficient[key]
 	
 	inner class XBool {
 		operator fun get(key: String): Boolean = efficient[key]

@@ -173,15 +173,15 @@ fun boxEsp() {
 						}
 
 						onTeam -> {
-							shapeRenderer.color = curSettings.x["BOX_TEAM_COLOR"]
+							shapeRenderer.color = curSettings.colorGDX["BOX_TEAM_COLOR"]
 						}
 
 						else -> {
-							shapeRenderer.color = curSettings.x["BOX_ENEMY_COLOR"]
+							shapeRenderer.color = curSettings.colorGDX["BOX_ENEMY_COLOR"]
 						}
 					}
 				} else {
-					shapeRenderer.color = curSettings.x["BOX_WEAPON_COLOR"]
+					shapeRenderer.color = curSettings.colorGDX["BOX_WEAPON_COLOR"]
 				}
 
 				shapeRenderer.rect(bbox.left, bbox.top, boxWidth, boxHeight)

@@ -32,14 +32,14 @@ fun snapLines() = App {
 
                     begin()
 
-                    val drawColor: rat.poison.game.Color = curSettings.x["SNAPLINES_DEFUSE_KIT_COLOR"]
+                    val drawColor: rat.poison.game.Color = curSettings.color["SNAPLINES_DEFUSE_KIT_COLOR"]
                     color = Color(drawColor.red/255F, drawColor.green/255F, drawColor.blue/255F, .5F)
 
                     set(ShapeRenderer.ShapeType.Filled)
                     if (worldToScreen(entPos, vec)) { //Onscreen
-                        rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, vec.y, curSettings.x["SNAPLINES_WIDTH"])
+                        rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, vec.y, curSettings.float["SNAPLINES_WIDTH"])
                     } else { //Offscreen
-                        rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, -vec.y, curSettings.x["SNAPLINES_WIDTH"])
+                        rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, -vec.y, curSettings.float["SNAPLINES_WIDTH"])
                     }
                     set(ShapeRenderer.ShapeType.Line)
 
@@ -104,7 +104,7 @@ fun snapLines() = App {
 
             begin()
 
-            val drawColor: rat.poison.game.Color = curSettings.x[colStr]
+            val drawColor: rat.poison.game.Color = curSettings.color[colStr]
             color = Color(drawColor.red/255F, drawColor.green/255F, drawColor.blue/255F, .5F)
 
             val entPos = entity.absPosition()
@@ -114,9 +114,9 @@ fun snapLines() = App {
 
             set(ShapeRenderer.ShapeType.Filled)
             if (worldToScreen(entPos, vec)) { //Onscreen
-                rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, vec.y, curSettings.x["SNAPLINES_WIDTH"])
+                rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, vec.y, curSettings.float["SNAPLINES_WIDTH"])
             } else { //Offscreen
-                rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, -vec.y, curSettings.x["SNAPLINES_WIDTH"])
+                rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, -vec.y, curSettings.float["SNAPLINES_WIDTH"])
             }
             set(ShapeRenderer.ShapeType.Line)
 
