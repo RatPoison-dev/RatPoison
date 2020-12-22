@@ -216,10 +216,12 @@ internal fun Memory.vector(addy: Long, xOff: Long, yOff: Long, zOff: Long): Vect
 	return Vector(x, y, z)
 }
 
+private val nameMem: Memory by lazy(LazyThreadSafetyMode.NONE) {
+	Memory(320)
+}
+
 internal fun Player.name(): String {
-	val nameMem: Memory by lazy {
-		Memory(320)
-	}
+	
 
 	val entID = csgoEXE.uint(this + dwIndex) - 1
 	val a = csgoEXE.uint(clientState + dwClientState_PlayerInfo)
@@ -234,11 +236,11 @@ internal fun Player.name(): String {
 	return name
 }
 
-internal fun Player.steamID(): String {
-	val mem: Memory by lazy {
-		Memory(0x140)
-	}
+private val mem: Memory by lazy(LazyThreadSafetyMode.NONE) {
+	Memory(0x140)
+}
 
+internal fun Player.steamID(): String {
 	val entID = csgoEXE.uint(this + dwIndex) - 1
 
 	val a = csgoEXE.uint(clientState + dwClientState_PlayerInfo)
@@ -290,11 +292,11 @@ internal fun Player.wins(): Int {
 	return (csgoEXE.int(clientDLL.uint(dwPlayerResource) + iCompetitiveWins + index * 4))
 }
 
-internal fun Player.hltv(): Boolean {
-	val mem: Memory by lazy {
-		Memory(0x140)
-	}
+private val hltvmem: Memory by lazy(LazyThreadSafetyMode.NONE) {
+	Memory(0x140)
+}
 
+internal fun Player.hltv(): Boolean {
 	val entID = csgoEXE.uint(this + dwIndex) - 1
 
 	val a = csgoEXE.uint(clientState + dwClientState_PlayerInfo)
@@ -302,9 +304,9 @@ internal fun Player.hltv(): Boolean {
 	val c = csgoEXE.uint(b + 0x0C)
 	val d = csgoEXE.uint(c + 0x28 + entID * 0x34)
 
-	csgoEXE.read(d, mem)
+	csgoEXE.read(d, hltvmem)
 
-	val hltvB = mem.getByte(0x13D).toInt().unsign() > 0
-	mem.clear()
+	val hltvB = hltvmem.getByte(0x13D).toInt().unsign() > 0
+	hltvmem.clear()
 	return hltvB
 }

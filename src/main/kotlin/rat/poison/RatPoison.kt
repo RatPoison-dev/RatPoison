@@ -24,7 +24,6 @@ import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.loadMigration
 import java.awt.Robot
 import java.io.File
-import kotlin.collections.set
 
 //Override Weapon
 data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = false,          var tOnShot: Boolean = false,
@@ -58,8 +57,8 @@ lateinit var SKIN_INFO_FILE: File
 lateinit var MUSIC_KITS_FILE: File
 
 var settingsLoaded = false
-val curSettings = Settings()
-val curLocale = Settings()
+object curSettings : Settings()
+object curLocale : Settings()
 
 var dbg: Boolean = false
 var appless: Boolean = false

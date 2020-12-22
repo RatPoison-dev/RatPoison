@@ -10,28 +10,27 @@ import rat.poison.scripts.aim.target
 import rat.poison.scripts.bombState
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColor
 import java.util.concurrent.TimeUnit
 import kotlin.system.measureNanoTime
 
 internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
-	if (!curSettings["GLOW_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return@every
+	if (!curSettings.bool["GLOW_ESP"] || !curSettings.bool["ENABLE_ESP"]) return@every
 
 	glowTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
 		val currentAngle = clientState.angle()
 		val position = me.position()
 
 		if (!meCurWep.knife && meCurWep != Weapons.ZEUS_X27) {
-			if (curSettings["ENABLE_AIM"].strToBool()) {
-				if (curSettings["GLOW_SHOW_TARGET"].strToBool() && target == -1L) {
-					val curTarg = findTarget(position, currentAngle, false, visCheck = !curSettings["FORCE_AIM_THROUGH_WALLS"].strToBool())
+			if (curSettings.bool["ENABLE_AIM"]) {
+				if (curSettings.bool["GLOW_SHOW_TARGET"] && target == -1L) {
+					val curTarg = findTarget(position, currentAngle, false, visCheck = !curSettings.bool["FORCE_AIM_THROUGH_WALLS"])
 					espTARGET = if (curTarg > 0) {
 						curTarg
 					} else {
 						-1
 					}
-				} else if (curSettings["GLOW_SHOW_TARGET"].strToBool()) {
+				} else if (curSettings.bool["GLOW_SHOW_TARGET"]) {
 					espTARGET = target
 				}
 			}
@@ -40,14 +39,14 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 		val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
 		val bEnt = bomb.carrier()
 
-		val showTarget = curSettings["GLOW_SHOW_TARGET"].strToBool()
-		val showEnemies = curSettings["GLOW_SHOW_ENEMIES"].strToBool()
-		val showTeam = curSettings["GLOW_SHOW_TEAM"].strToBool()
-		val glowHealth = curSettings["GLOW_SHOW_HEALTH"].strToBool()
-		val showBomb = curSettings["GLOW_SHOW_BOMB"].strToBool()
-		val showBombCarrier = curSettings["GLOW_SHOW_BOMB_CARRIER"].strToBool()
-		val showWeapons = curSettings["GLOW_SHOW_WEAPONS"].strToBool()
-		val showGrenades = curSettings["GLOW_SHOW_GRENADES"].strToBool()
+		val showTarget = curSettings.bool["GLOW_SHOW_TARGET"]
+		val showEnemies = curSettings.bool["GLOW_SHOW_ENEMIES"]
+		val showTeam = curSettings.bool["GLOW_SHOW_TEAM"]
+		val glowHealth = curSettings.bool["GLOW_SHOW_HEALTH"]
+		val showBomb = curSettings.bool["GLOW_SHOW_BOMB"]
+		val showBombCarrier = curSettings.bool["GLOW_SHOW_BOMB_CARRIER"]
+		val showWeapons = curSettings.bool["GLOW_SHOW_WEAPONS"]
+		val showGrenades = curSettings.bool["GLOW_SHOW_GRENADES"]
 
 		val meTeam = me.team()
 		forEntities {
@@ -95,7 +94,7 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 
 				EntityType.CPlantedC4, EntityType.CC4 -> if (showBomb) {
 					glowType = curSettings["GLOW_BOMB_TYPE"].toGlowNum()
-					color = when (curSettings["GLOW_BOMB_ADAPTIVE"].strToBool()) {
+					color = when (curSettings.bool["GLOW_BOMB_ADAPTIVE"]) {
 						true -> if (((bombState.timeLeftToExplode > 10) || (bombState.gettingDefused && bombState.canDefuse)) && bombState.planted) {
 							"GLOW_BOMB_ADAPTIVE_CAN_DEFUSE"
 						} else if (((bombState.timeLeftToExplode < 5) || (bombState.gettingDefused && !bombState.canDefuse)) && bombState.planted) {
@@ -120,7 +119,7 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 			}
 
 			if (color != "NIL") {
-				if (curSettings["GLOW_SMOKE_CHECK"].strToBool() && lineThroughSmoke(entity)) {
+				if (curSettings.bool["GLOW_SMOKE_CHECK"] && lineThroughSmoke(entity)) {
 					glowAddress.glow(curSettings[color].strToColor(), -1)
 					return@forEntities
 				}

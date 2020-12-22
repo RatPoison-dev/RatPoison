@@ -16,8 +16,6 @@ import rat.poison.scripts.aim.meCurWep
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.uiPanels.mainTabbedPane
 import rat.poison.ui.uiPanels.rcsTab
-import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColor
 import rat.poison.utils.inGame
 import java.lang.Math.toRadians
 import kotlin.math.atan
@@ -25,10 +23,10 @@ import kotlin.math.floor
 import kotlin.math.tan
 
 internal fun rcrosshair() = App {
-    if (!curSettings["ENABLE_ESP"].strToBool() || !inGame) return@App
+    if (!curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
-    val eRC = curSettings["ENABLE_RECOIL_CROSSHAIR"].strToBool()
-    val eSC = !curSettings["ENABLE_SNIPER_CROSSHAIR"].strToBool()
+    val eRC = curSettings.bool["ENABLE_RECOIL_CROSSHAIR"]
+    val eSC = !curSettings.bool["ENABLE_SNIPER_CROSSHAIR"]
 
     if (!eRC) return@App
 
@@ -36,12 +34,12 @@ internal fun rcrosshair() = App {
     val y: Float
 
     //Crosshair Length/Width
-    val cL = curSettings["RCROSSHAIR_LENGTH"].toFloat()
-    val cW = curSettings["RCROSSHAIR_WIDTH"].toFloat()
+    val cL = curSettings.float["RCROSSHAIR_LENGTH"]
+    val cW = curSettings.float["RCROSSHAIR_WIDTH"]
 
     //Crosshair X/Y offset
-    val rccXo = curSettings["RCROSSHAIR_XOFFSET"].toFloat()
-    val rccYo = curSettings["RCROSSHAIR_YOFFSET"].toFloat()
+    val rccXo = curSettings.float["RCROSSHAIR_XOFFSET"]
+    val rccYo = curSettings.float["RCROSSHAIR_YOFFSET"]
 
     //Crosshair FOV modifier
     val curFov = csgoEXE.int(me + NetVarOffsets.m_iDefaultFov)
@@ -71,8 +69,8 @@ internal fun rcrosshair() = App {
             }
 
             begin()
-            val col = curSettings["RCROSSHAIR_COLOR"].strToColor()
-            color = Color(col.red / 255F, col.green / 255F, col.blue / 255F, curSettings["RCROSSHAIR_ALPHA"].toFloat())
+            val col = curSettings.color["RCROSSHAIR_COLOR"]
+            color = Color(col.red / 255F, col.green / 255F, col.blue / 255F, curSettings.float["RCROSSHAIR_ALPHA"])
 
             val hasSniper = meCurWep.scope
 
@@ -85,7 +83,7 @@ internal fun rcrosshair() = App {
                     rect(x - wO, y - lO, cW, cL)
                     set(ShapeRenderer.ShapeType.Line)
                 } else {
-                    circle(x, y, curSettings["RCROSSHAIR_RADIUS"].toFloat())
+                    circle(x, y, curSettings.float["RCROSSHAIR_RADIUS"])
                 }
             }
 

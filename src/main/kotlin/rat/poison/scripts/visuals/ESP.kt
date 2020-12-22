@@ -60,7 +60,7 @@ fun Entity.glow(color: Color, glowType: Int) {
 				glowMemory.setByte(0x24, 1)
 				glowMemory.setByte(0x25, 0)
 
-				glowMemory.setByte(0x26, curSettings["INV_GLOW_ESP"].toBoolean().toInt().toByte())
+				glowMemory.setByte(0x26, curSettings.bool["INV_GLOW_ESP"].toInt().toByte())
 
 				glowMemory.setByte(0x2C, glowType.toByte())
 

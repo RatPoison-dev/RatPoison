@@ -20,6 +20,10 @@ import rat.poison.utils.inGame
 private val bones = Array(2048) { Line() }
 private var currentIdx = 0
 
+val modelMemory: Memory by lazy(LazyThreadSafetyMode.NONE) {
+	Memory(21332)
+}
+
 internal fun skeletonEsp() = App {
 	if (!curSettings["SKELETON_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@App
 
@@ -41,10 +45,6 @@ internal fun skeletonEsp() = App {
 				val studioModel = csgoEXE.uint(entity.studioHdr())
 				val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
 				val boneOffset = csgoEXE.uint(studioModel + 0xA0)
-
-				val modelMemory: Memory by lazy {
-					Memory(21332)
-				}
 
 				csgoEXE.read(studioModel + boneOffset, modelMemory)
 

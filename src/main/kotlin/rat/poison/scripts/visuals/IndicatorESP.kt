@@ -18,7 +18,7 @@ import kotlin.math.hypot
 import kotlin.math.sin
 
 fun indicatorEsp() = App {
-    if (!curSettings["ENABLE_ESP"].strToBool() || !curSettings["INDICATOR_ESP"].strToBool() || !inGame) return@App
+    if (!curSettings.bool["ENABLE_ESP"] || !curSettings.bool["INDICATOR_ESP"] || !inGame) return@App
 
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()
@@ -33,24 +33,24 @@ fun indicatorEsp() = App {
             EntityType.CCSPlayer -> {
                 if (entity.dead() || entity == me || entity.dormant()) return@forEntities
 
-                if (curSettings["INDICATOR_SMOKE_CHECK"].strToBool() && lineThroughSmoke(entity)) return@forEntities
+                if (curSettings.bool["INDICATOR_SMOKE_CHECK"] && lineThroughSmoke(entity)) return@forEntities
 
                 if (bEnt > 0 && bEnt == entity) { //This is the bomb carrier
-                    if (curSettings["INDICATOR_SHOW_ENEMIES"].strToBool() && !onTeam) {
+                    if (curSettings.bool["INDICATOR_SHOW_ENEMIES"] && !onTeam) {
                         color = when (curSettings["INDICATOR_SHOW_BOMB_CARRIER"].strToBool()) {
                             true -> "INDICATOR_BOMB_CARRIER_COLOR"
                             false -> "INDICATOR_ENEMY_COLOR"
                         }
-                    } else if (curSettings["INDICATOR_SHOW_TEAM"].strToBool() && onTeam) {
-                        color = when (curSettings["INDICATOR_SHOW_BOMB_CARRIER"].strToBool()) {
+                    } else if (curSettings.bool["INDICATOR_SHOW_TEAM"] && onTeam) {
+                        color = when (curSettings.bool["INDICATOR_SHOW_BOMB_CARRIER"]) {
                             true -> "INDICATOR_BOMB_CARRIER_COLOR"
                             false -> "INDICATOR_TEAM_COLOR"
                         }
                     }
                 } else {
-                    if (!curSettings["INDICATOR_SHOW_TEAM"].strToBool() && onTeam) {
+                    if (!curSettings.bool["INDICATOR_SHOW_TEAM"] && onTeam) {
                         return@forEntities
-                    } else if (!curSettings["INDICATOR_SHOW_ENEMIES"].strToBool()) {
+                    } else if (!curSettings.bool["INDICATOR_SHOW_ENEMIES"]) {
                         return@forEntities
                     } else {
                         color = when (!onTeam) {
@@ -62,26 +62,26 @@ fun indicatorEsp() = App {
             }
 
             EntityType.CPlantedC4, EntityType.CC4 -> {
-                if (curSettings["INDICATOR_SHOW_BOMB"].strToBool()) {
+                if (curSettings.x["INDICATOR_SHOW_BOMB"]) {
                     color = "INDICATOR_BOMB_COLOR"
                 }
             }
 
             else -> {
-                if (curSettings["INDICATOR_SHOW_WEAPONS"].strToBool() && it.type.weapon) {
+                if (curSettings.x["INDICATOR_SHOW_WEAPONS"] && it.type.weapon) {
                     color = "INDICATOR_WEAPON_COLOR"
-                } else if (curSettings["INDICATOR_SHOW_GRENADES"].strToBool() && it.type.grenade) {
+                } else if (curSettings.x["INDICATOR_SHOW_GRENADES"] && it.type.grenade) {
                     color = "INDICATOR_GRENADE_COLOR"
                 }
             }
         }
 
         if (color != "") {
-            drawIndicator(entity, curSettings[color].strToColor())
+            drawIndicator(entity, curSettings.x[color])
         }
     }
 
-    if (curSettings["INDICATOR_SHOW_DEFUSERS"].strToBool()) {
+    if (curSettings.x["INDICATOR_SHOW_DEFUSERS"]) {
         forEntities(EntityType.CEconEntity) {
             drawIndicator(it.entity, curSettings["INDICATOR_DEFUSER_COLOR"].strToColor())
         }

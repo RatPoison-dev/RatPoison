@@ -3,7 +3,6 @@ package rat.poison.scripts
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.sun.jna.Memory
 import org.jire.kna.MemoryCache
-import org.jire.kna.attach.windows.WindowsAttachedModule
 import org.jire.kna.float
 import org.jire.kna.int
 import rat.poison.curSettings
@@ -47,10 +46,7 @@ fun sendPacket(bool: Boolean) { //move outta here
     val memory = MemoryCache[1]
     memory.setByte(0, byte)
     
-    val engineDLL = engineDLL
-    if (engineDLL is WindowsAttachedModule) {
-        engineDLL.writeForced(dwbSendPackets, memory, 1)
-    }
+	engineDLL.writeForced(dwbSendPackets, memory, 1)
 }
 
 fun updateGVars() = every(15, true, inGameCheck = true){
@@ -120,6 +116,10 @@ fun attemptBacktrack(): Boolean {
     return false
 }
 
+private val boneMemory: Memory by lazy(LazyThreadSafetyMode.NONE) {
+	Memory(3984)
+}
+
 fun constructRecords() {
     var bestFov = 5F
     val clientAngle = clientState.angle()
@@ -164,10 +164,6 @@ fun constructRecords() {
 
         if (entID in 0..63 && tick < 13) {
             val record = btRecords[entID][tick]
-
-            val boneMemory: Memory by lazy {
-                Memory(3984)
-            }
 
             csgoEXE.read(ent.boneMatrix(), boneMemory)
             record.headPos = boneMemory.bones(8).apply {

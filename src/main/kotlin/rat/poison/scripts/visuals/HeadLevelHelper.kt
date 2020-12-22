@@ -13,8 +13,6 @@ import rat.poison.game.me
 import rat.poison.game.w2sViewMatrix
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meDead
-import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.generalUtil.toMatrix4
 import rat.poison.utils.inGame
 import kotlin.math.abs
@@ -25,10 +23,10 @@ fun headLevelHelper() = App {
     val mePos = me.position()
     val meAng = clientState.angle()
 
-    if (me.onGround() && curSettings["HEAD_LVL_ENABLE"].strToBool()) {
+    if (me.onGround() && curSettings.bool["HEAD_LVL_ENABLE"]) {
         val oldMatrix = Matrix4(shapeRenderer.projectionMatrix.values)
 
-        val deadZone = curSettings["HEAD_LVL_DEADZONE"].toFloat()
+        val deadZone = curSettings.float["HEAD_LVL_DEADZONE"]
 
         shapeRenderer.apply {
             val gameMatrix = w2sViewMatrix.toMatrix4()
@@ -43,7 +41,7 @@ fun headLevelHelper() = App {
 
             glEnable(GL20.GL_BLEND) //sb end resets...
 
-            val c = curSettings["HEAD_LVL_COLOR"].strToColorGDX()
+            val c = curSettings.colorGDX["HEAD_LVL_COLOR"]
             c.a = clamp((abs(meAng.x) - deadZone) / 5f, 0f, 1f)
 
             color = c

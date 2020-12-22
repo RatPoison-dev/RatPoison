@@ -31,7 +31,6 @@ import rat.poison.utils.AssetManager
 import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.inGame
 import kotlin.math.abs
 import kotlin.math.sign
@@ -59,10 +58,10 @@ private var showWeapons = false
 private var showDefuseKits = false
 private var bEspUseIcons = false
 private var weaponsScale = 0F
-private var boxDetailsLeftText = StringBuilder("")
-private var boxDetailsRightText = StringBuilder("")
-private var boxDetailsTopText = StringBuilder("")
-private var boxDetailsBottomText = StringBuilder("")
+private val boxDetailsLeftText = StringBuilder("")
+private val boxDetailsRightText = StringBuilder("")
+private val boxDetailsTopText = StringBuilder("")
+private val boxDetailsBottomText = StringBuilder("")
 private var topShift = 0F
 private var textureBuilder = mutableListOf<DrawableTexture>()
 
@@ -114,11 +113,11 @@ fun boxEsp() {
 			val isPlayer = it.type == EntityType.CCSPlayer
 			val isWeapon = it.type.weapon
 			val isDefuseKit = it.type == EntityType.CEconEntity
-
-			boxDetailsLeftText = StringBuilder("")
-			boxDetailsRightText = StringBuilder("")
-			boxDetailsTopText = StringBuilder("")
-			boxDetailsBottomText = StringBuilder("")
+			
+			boxDetailsLeftText.clear()
+			boxDetailsRightText.clear()
+			boxDetailsTopText.clear()
+			boxDetailsBottomText.clear()
 
 			var leftShift = 2F
 			var bottomShift = 0F
@@ -133,7 +132,7 @@ fun boxEsp() {
 			//Return if not onscreen
 			if (!worldToScreen(ent.position(), Vector())) return@forEntities
 
-			if (curSettings["BOX_SMOKE_CHECK"].strToBool() && lineThroughSmoke(ent)) return@forEntities
+			if (curSettings.bool["BOX_SMOKE_CHECK"] && lineThroughSmoke(ent)) return@forEntities
 
 			var health = 0
 			if (isPlayer) {
@@ -156,7 +155,7 @@ fun boxEsp() {
 
 			val boxWidth = bbox.right - bbox.left
 			val boxHeight = bbox.bottom - bbox.top
-			var barWidth = clamp(boxWidth * .025F, 2F, 20F)
+			val barWidth = clamp(boxWidth * .025F, 2F, 20F)
 
 			if (shapeRenderer.isDrawing) {
 				shapeRenderer.end()
@@ -169,20 +168,20 @@ fun boxEsp() {
 			if (drawBox) {
 				if (isPlayer) {
 					when {
-						curSettings["BOX_SHOW_HEALTH"].strToBool() -> {
+						curSettings.bool["BOX_SHOW_HEALTH"] -> {
 							shapeRenderer.setColor((255 - 2.55F * health) / 255F, (2.55F * health) / 255F, 0F, 1F)
 						}
 
 						onTeam -> {
-							shapeRenderer.color = curSettings["BOX_TEAM_COLOR"].strToColorGDX()
+							shapeRenderer.color = curSettings.x["BOX_TEAM_COLOR"]
 						}
 
 						else -> {
-							shapeRenderer.color = curSettings["BOX_ENEMY_COLOR"].strToColorGDX()
+							shapeRenderer.color = curSettings.x["BOX_ENEMY_COLOR"]
 						}
 					}
 				} else {
-					shapeRenderer.color = curSettings["BOX_WEAPON_COLOR"].strToColorGDX()
+					shapeRenderer.color = curSettings.x["BOX_WEAPON_COLOR"]
 				}
 
 				shapeRenderer.rect(bbox.left, bbox.top, boxWidth, boxHeight)
@@ -296,7 +295,7 @@ fun boxEsp() {
 			}
 
 			//draw details first
-			val detailTextColor = curSettings["BOX_DETAILS_TEXT_COLOR"].strToColorGDX()
+			val detailTextColor: Color = curSettings.colorGDX["BOX_DETAILS_TEXT_COLOR"]
 			textRenderer.color = detailTextColor
 			textRenderer.draw(sb, boxDetailsLeftText, bbox.left - (barWidth * leftShift), bbox.top, 1F, Align.right, false)
 			textRenderer.draw(sb, boxDetailsRightText, bbox.right + (barWidth * rightShift), bbox.top, 1F, Align.left, false)
@@ -409,6 +408,10 @@ fun setupFakeBox(ent: Entity): BoundingBox {
 	return bbox
 }
 
+private val collisionMem: Memory by lazy(LazyThreadSafetyMode.NONE) {
+	Memory(56) //Incorrect
+}
+
 //Create a real accurate box using vecMins & vecMaxs
 fun setupAccurateBox(ent: Entity): BoundingBox {
 	//Get frameMatrix
@@ -425,9 +428,6 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 		}
 	}
 
-	val collisionMem: Memory by lazy {
-		Memory(56) //Incorrect
-	}
 	csgoEXE.read(ent + m_Collision, collisionMem)
 
 	//Set min/max

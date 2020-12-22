@@ -143,7 +143,7 @@ fun validateSetting(settingName: String, value: String): Boolean {
     return valid
 }
 
-val validSettingsMap = Settings()
+object validSettingsMap : Settings()
 fun setupValidSettings() {
     validSettingsMap["SKIP"] = listOf("AIM_BONE", "FORCE_AIM_BONE")
     validSettingsMap["BONE"] = listOf("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "PELVIS", "RANDOM") //crashes when replacing to boneCategories

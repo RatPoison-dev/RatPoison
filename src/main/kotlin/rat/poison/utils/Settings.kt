@@ -1,33 +1,59 @@
 package rat.poison.utils
 
-class Settings : MutableMap<String, Any?> {
-    private val savedValues = mutableMapOf<String, String>()
+import it.unimi.dsi.fastutil.objects.Object2ObjectMap
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
+import rat.poison.game.Color
 
-    override fun get(key: String): String {
-        if (savedValues.containsKey(key)) {
-            return savedValues[key].toString()
-        }
-        return ""
-    }
-
-    override fun put(key: String, value: Any?): Any? {
-        return savedValues.put(key, value.toString())
-    }
-
-    override fun containsValue(value: Any?): Boolean {
-        return savedValues.containsValue(value)
-    }
-    override val entries: MutableSet<MutableMap.MutableEntry<String, Any?>>
-        get() = mutableSetOf()
-    override val keys: MutableSet<String>
-        get() = savedValues.keys
-    override val size: Int
-        get() = savedValues.size
-    override val values: MutableCollection<Any?>
-        get() = mutableListOf()
-    override fun clear() {}
-    override fun putAll(from: Map<out String, Any?>) {}
-    override fun remove(key: String): Any? {return false}
-    override fun isEmpty(): Boolean {return false}
-    override fun containsKey(key: String): Boolean {return false}
+open class Settings {
+	
+	private val savedValues: Object2ObjectMap<String, String> = Object2ObjectOpenHashMap()
+	
+	operator fun get(key: String): String {
+		if (savedValues.containsKey(key)) {
+			return savedValues[key].toString()
+		}
+		return ""
+	}
+	
+	val efficient = EfficientSettings(this)
+	
+	//inline operator fun <reified T> invoke(key: String): T = efficient[key]
+	
+	// this X shit is needed cuz of Kotlin compiler bug
+	// https://youtrack.jetbrains.com/issue/KT-43923
+	inner class X {
+		inline operator fun <reified T> get(key: String): T = efficient[key]
+	}
+	
+	val x = X()
+	
+	inner class XBool {
+		operator fun get(key: String): Boolean = efficient[key]
+	}
+	val bool = XBool()
+	
+	inner class XDouble {
+		operator fun get(key: String): Double = efficient[key]
+	}
+	val double = XDouble()
+	
+	inner class XFloat {
+		operator fun get(key: String): Float = efficient[key]
+	}
+	val float = XFloat()
+	
+	inner class XColor {
+		operator fun get(key: String): Color = efficient[key]
+	}
+	val color = XColor()
+	
+	inner class XColorGDX {
+		operator fun get(key: String): com.badlogic.gdx.graphics.Color = efficient[key]
+	}
+	val colorGDX = XColorGDX()
+	
+	operator fun set(key: String, value: Any?): Any? {
+		return savedValues.put(key, value.toString())
+	}
+	
 }
