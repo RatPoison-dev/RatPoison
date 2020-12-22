@@ -1,13 +1,8 @@
 package rat.poison.utils
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectMap
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
-
 // Jire is 200 IQ
 
 class EfficientSettings(val settings: Settings) {
-	
-	val types = Array<Object2ObjectMap<String, Any>>(EfficientSettingType.values.size) { Object2ObjectOpenHashMap() }
 	
 	inline operator fun <reified T> get(key: String): T {
 		val typeIndex = EfficientSettingType.typeIndex(T::class)
@@ -18,7 +13,7 @@ class EfficientSettings(val settings: Settings) {
 	
 	@Suppress("UNCHECKED_CAST")
 	operator fun <T> get(key: String, type: EfficientSettingType): T {
-		val map = types[type.ordinal]
+		val map = type.map
 		val cached = map[key]
 		if (cached != null) return cached as T
 		
@@ -28,11 +23,10 @@ class EfficientSettings(val settings: Settings) {
 		return value as? T ?: throw UnsupportedOperationException("Couldn't get key \"$key\" type=$type")
 	}
 	
-	operator fun set(key: String, value: Any) {
-		val typeIndex = EfficientSettingType.typeIndex(value::class)
-		if (typeIndex < 0) throw IllegalArgumentException("Can't determine type index for kClass: ${value::class}")
-		val map = types[typeIndex]
-		map[key] = value
+	fun update(key: String) {
+		for (type in EfficientSettingType.values) {
+			type.map.remove(key)
+		}
 	}
 	
 }
