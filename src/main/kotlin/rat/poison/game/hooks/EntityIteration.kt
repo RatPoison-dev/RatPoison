@@ -41,7 +41,7 @@ private fun shouldReset() = System.currentTimeMillis() - lastCleanup.get() >= CL
 
 private fun reset() {
     for (i in entitiesValues) {
-        i?.removeAll(i)
+        i?.clear()
     }
 
     lastCleanup.set(System.currentTimeMillis())
