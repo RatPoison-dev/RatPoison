@@ -45,7 +45,7 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Beta"
 const val F_VERSION = "1.8"
-const val M_VERSION = "1.8.4"
+const val M_VERSION = "1.8.5"
 var LOADED_CONFIG = "DEFAULT"
 var oWeaponSize = oWeapon::class.java.declaredFields.size
 
@@ -159,6 +159,7 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Kill Sound") }; killSoundEsp()
     if (dbg) { println("[DEBUG] Initializing MusicKit Spoofer") }; musicKitSpoofer()
     if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
+    christmasSpecial()
 
     //if (EXPERIMENTAL) {
         //rayTraceTest()
@@ -204,6 +205,7 @@ fun main() {
                 setResizable(false)
                 setDecorated(appless)
                 useVsync(false)
+                setWindowIcon("$SETTINGS_DIRECTORY/Assets/Images/icon.png")
                 glfwSwapInterval(0)
                 glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE)
                 setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings["OPENGL_MSAA_SAMPLES"].toInt())

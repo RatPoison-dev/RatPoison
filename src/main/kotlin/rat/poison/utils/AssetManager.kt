@@ -2,6 +2,7 @@ package rat.poison.utils
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
@@ -95,8 +96,15 @@ class AssetManager: AssetManager() {
         updateFonts = false
     }
 
+    fun loadMusic() {
+        File("$SETTINGS_DIRECTORY\\hitsounds\\").listFiles()?.forEach {
+            this.load(it.toString(), Sound::class.java)
+        }
+        this.finishLoading()
+    }
 
     fun loadAssets() {
+        loadMusic()
         File("$SETTINGS_DIRECTORY/Assets/Images").listFiles()?.forEach {
             this.load(it.toString(), Texture::class.java)
         }

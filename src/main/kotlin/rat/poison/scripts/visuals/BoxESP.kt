@@ -64,6 +64,7 @@ private val boxDetailsTopText = StringBuilder("")
 private val boxDetailsBottomText = StringBuilder("")
 private var topShift = 0F
 private var textureBuilder = mutableListOf<DrawableTexture>()
+private var bottomTextureBuilder = mutableListOf<DrawableTexture>()
 
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
 fun boxEsp() {
@@ -124,6 +125,7 @@ fun boxEsp() {
 			var rightShift = 0F
 			topShift = 0F
 			textureBuilder.clear()
+			bottomTextureBuilder.clear()
 
 			if (ent <= 0) return@forEntities
 
@@ -288,6 +290,10 @@ fun boxEsp() {
 				rightShift += 2
 			}
 
+			if (isPlayer) {
+				addTextureOrText(assetManager, true, "santa_hat", "", "TOP", true)
+			}
+
 			shapeRenderer.end()
 
 			if (!sb.isDrawing) {
@@ -296,6 +302,19 @@ fun boxEsp() {
 
 			//draw details first
 			val detailTextColor: Color = curSettings.colorGDX["BOX_DETAILS_TEXT_COLOR"]
+			bottomTextureBuilder.forEach { dr_texture ->
+				val texture = dr_texture.texture
+				val position = dr_texture.position
+				val realHeight = texture.height / weaponsScale
+				val realWidth = texture.width / weaponsScale
+				when (position) {
+					"TOP" -> {
+						sb.draw(texture, ((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.top, realWidth, realHeight)
+						topShift += realHeight
+					}
+				}
+			}
+
 			textRenderer.color = detailTextColor
 			textRenderer.draw(sb, boxDetailsLeftText, bbox.left - (barWidth * leftShift), bbox.top, 1F, Align.right, false)
 			textRenderer.draw(sb, boxDetailsRightText, bbox.right + (barWidth * rightShift), bbox.top, 1F, Align.left, false)
@@ -304,6 +323,7 @@ fun boxEsp() {
 
 			var leftShiftY = 0F
 			var rightShiftY = 0F
+
 			textureBuilder.forEach { dr_texture ->
 				val texture = dr_texture.texture
 				val position = dr_texture.position
@@ -352,15 +372,18 @@ fun addText(position: String, str: String) {
 	}
 }
 
-fun addTextureOrText(assetManager: AssetManager, useIcons: Boolean, textureName: String, text: String, position: String) {
+fun addTextureOrText(assetManager: AssetManager, useIcons: Boolean, textureName: String, text: String, position: String, bottom: Boolean = false) {
 	if (!useIcons) { addText(position, text); return }
 	val texture = getWeaponTexture(assetManager, textureName)
-	textureBuilder.add(DrawableTexture(texture, position))
+	when (!bottom) {
+		true -> textureBuilder.add(DrawableTexture(texture, position))
+		else -> bottomTextureBuilder.add(DrawableTexture(texture, position))
+	}
 }
 
 fun getRealTextParams(font: BitmapFont, builder: StringBuilder, layout: GlyphLayout): Pair<Float, Float> {
 	layout.setText(font, builder)
-	if (builder.length == 0) {
+	if (builder.isEmpty()) {
 		return Pair(0F, 0F)
 	}
 	return Pair(layout.height, layout.width)

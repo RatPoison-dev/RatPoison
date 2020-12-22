@@ -7,11 +7,10 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.MUSIC_KITS_FILE
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
+import rat.poison.overlay.App.assetManager
 import rat.poison.overlay.opened
 import rat.poison.scripts.changeName
 import rat.poison.scripts.selfNade
-import rat.poison.scripts.visuals.updateHitsound
-import rat.poison.scripts.visuals.updateKillSound
 import rat.poison.scripts.writeSpoof
 import rat.poison.toLocale
 import rat.poison.ui.changed
@@ -153,7 +152,7 @@ class OthersTab: Tab(false, false) {
         hitSoundBox.selected = curSettings["HITSOUND_FILE_NAME"].replace("\"", "")
 
         hitSoundBox.changed { _, _ ->
-            updateHitsound(hitSoundBox.selected)
+            assetManager.loadMusic()
             curSettings["HITSOUND_FILE_NAME"] = hitSoundBox.selected
             true
         }
@@ -170,7 +169,7 @@ class OthersTab: Tab(false, false) {
         killSoundBox.selected = curSettings["KILLSOUND_FILE_NAME"].replace("\"", "")
 
         killSoundBox.changed { _, _ ->
-            updateKillSound(killSoundBox.selected)
+            assetManager.loadMusic()
             curSettings["KILLSOUND_FILE_NAME"] = killSoundBox.selected
             true
         }
