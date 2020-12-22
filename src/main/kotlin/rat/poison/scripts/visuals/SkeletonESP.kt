@@ -8,14 +8,14 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.me
+import rat.poison.game.w2s
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.utils.Vector
+import rat.poison.utils.*
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.extensions.unsign
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.inGame
 
 private val bones = Array(2048) { Line() }
 private var currentIdx = 0
@@ -88,11 +88,11 @@ private val colors: Array<Color> = Array(101) {
 	Color(red, green, 0f, 1f)
 }
 
-private val startBone = Vector()
+/*private val startBone = Vector()
 private val endBone = Vector()
 
 private val startDraw = Vector()
-private val endDraw = Vector()
+private val endDraw = Vector()*/
 
 private fun drawBone(target: Player, start: Int, end: Int) {
 	//Reduce r/w
@@ -103,16 +103,18 @@ private fun drawBone(target: Player, start: Int, end: Int) {
 
 	csgoEXE.read(target.boneMatrix(), boneMemory)
 
-	startBone.set(
+	val startBone = vector(
 			boneMemory.getFloat(((0x30L * start) + 0xC)),
 			boneMemory.getFloat(((0x30L * start) + 0x1C)),
 			boneMemory.getFloat(((0x30L * start) + 0x2C)))
-	endBone.set(
+	val endBone = vector(
 			boneMemory.getFloat(((0x30L * end) + 0xC)),
 			boneMemory.getFloat(((0x30L * end) + 0x1C)),
 			boneMemory.getFloat(((0x30L * end) + 0x2C)))
 
-	if (worldToScreen(startBone, startDraw) && worldToScreen(endBone, endDraw)) {
+	val startDraw = worldToScreen(startBone)
+	val endDraw = worldToScreen(endBone)
+	if (startDraw.w2s() && endDraw.w2s()) {
 		bones[currentIdx].apply {
 			sX = startDraw.x.toInt()
 			sY = startDraw.y.toInt()

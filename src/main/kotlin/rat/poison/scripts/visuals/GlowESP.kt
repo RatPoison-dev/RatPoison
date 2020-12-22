@@ -10,7 +10,6 @@ import rat.poison.scripts.aim.target
 import rat.poison.scripts.bombState
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToColor
 import java.util.concurrent.TimeUnit
 import kotlin.system.measureNanoTime
 
@@ -120,20 +119,22 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 
 			if (color != "NIL") {
 				if (curSettings.bool["GLOW_SMOKE_CHECK"] && lineThroughSmoke(entity)) {
-					glowAddress.glow(curSettings[color].strToColor(), -1)
+					glowAddress.glow(curSettings.color[color], -1)
 					return@forEntities
 				}
 
 				if (color == "GLOW_HEALTH") {
 					glowAddress.glow(Color((255 - 2.55 * health).toInt(), (2.55 * health).toInt(), 0, 1.0), glowType)
 				} else {
-					glowAddress.glow(curSettings[color].strToColor(), glowType)
+					glowAddress.glow(curSettings.color[color], glowType)
 				}
 			} else {
-				glowAddress.glow(Color(255, 255, 255, 1.0), -1)
+				glowAddress.glow(DEFAULT_GLOW_COLOR, -1)
 			}
 
 			return@forEntities
 		}
 	}, TimeUnit.NANOSECONDS)
 }
+
+private val DEFAULT_GLOW_COLOR = Color(255, 255, 255, 1.0)

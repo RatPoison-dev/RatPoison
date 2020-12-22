@@ -26,7 +26,7 @@ val entities: Object2ObjectMap<EntityType, ResizingArrayIndex<EntityContext>> = 
 	}
 }
 
-fun entityByType(type: EntityType): EntityContext? = entities[type]?.firstOrNull()
+fun entityByType(type: EntityType): EntityContext? = entities[type]?.firstOrNullUnsafe()
 
 internal inline fun forEntities(
 	vararg types: EntityType,

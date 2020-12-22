@@ -16,8 +16,6 @@ import kotlin.math.atan2
 import kotlin.math.sqrt
 
 fun getCalculatedAngle(player: Player, dst: Vector): Angle {
-	val ang = Angle()
-
 	val myPunch = player.punch()
 	val myPosition = player.position()
 
@@ -30,34 +28,34 @@ fun getCalculatedAngle(player: Player, dst: Vector): Angle {
 	val rcsXVariation = curSettings.double["AIM_RCS_VARIATION"]
 	val rcsYVariation = curSettings.double["AIM_RCS_VARIATION"]
 
+	var ang: Angle
+	
 	if (curSettings.bool["FACTOR_RECOIL"]) {
-		if (curSettings.bool["AIM_ADVANCED"]) {
+		ang = if (curSettings.bool["AIM_ADVANCED"]) {
 			val randX = if (rcsXVariation > 0F) randDouble(0.0, rcsXVariation).toFloat() * randBoolean().toInt() else 0F
 			val randY = if (rcsYVariation > 0F) randDouble(0.0, rcsYVariation).toFloat() * randBoolean().toInt() else 0F
-			val calcX = toDegrees(atan(dZ / hyp).toDouble()) - myPunch.x * clamp(1F + curSettings["AIM_RCS_Y"].toFloat() + randX, 1F, 2F)
-			val calcY = toDegrees(atan(dY / dX).toDouble()) - myPunch.y * clamp(1F + curSettings["AIM_RCS_X"].toFloat() + randY, 1F, 2F)
-			ang.x = calcX.toFloat()
-			ang.y = calcY.toFloat()
+			val calcX = toDegrees(atan(dZ / hyp).toDouble()) - myPunch.x * clamp(1F + curSettings.float["AIM_RCS_Y"] + randX, 1F, 2F)
+			val calcY = toDegrees(atan(dY / dX).toDouble()) - myPunch.y * clamp(1F + curSettings.float["AIM_RCS_X"] + randY, 1F, 2F)
+			angle(calcX.toFloat(), calcY.toFloat())
 		} else {
-			ang.x = (toDegrees(atan(dZ / hyp).toDouble()) - myPunch.x * 2.0).toFloat() //Move these above IFs
-			ang.y = (toDegrees(atan(dY / dX).toDouble()) - myPunch.y * 2.0).toFloat()
+			angle (
+				(toDegrees(atan(dZ / hyp).toDouble()) - myPunch.x * 2.0).toFloat(), //Move these above IFs
+				(toDegrees(atan(dY / dX).toDouble()) - myPunch.y * 2.0).toFloat())
 		}
 	} else {
-		ang.x = toDegrees(atan(dZ / hyp).toDouble()).toFloat()//Move these above IFs
-		ang.y = toDegrees(atan(dY / dX).toDouble()).toFloat()
+		ang = angle(
+			toDegrees(atan(dZ / hyp).toDouble()).toFloat(), //Move these above IFs
+			toDegrees(atan(dY / dX).toDouble()).toFloat()
+		)
 	}
 
-	ang.z = 0F
-	if (dX >= 0.0) ang.y += 180
-
-	ang.normalize()
-
-	return ang
+	if (dX >= 0.0) ang = ang.y(ang.y + 180)
+	return ang.normalize() as Angle
 }
 
 fun realCalcAngle(player: Player, dst: Vector): Angle {
 	val playerPos = player.position()
-	val delta = Vector(dst.x - playerPos.x, dst.y - playerPos.y, dst.z - playerPos.z + csgoEXE.float(player + vecViewOffset))
+	val delta = vector(dst.x - playerPos.x, dst.y - playerPos.y, dst.z - playerPos.z + csgoEXE.float(player + vecViewOffset))
 	val myPunch = player.punch()
 
 	var aX = toDegrees(atan2(-delta.z, sqrt(delta.x*delta.x + delta.y*delta.y)).toDouble())
@@ -80,8 +78,5 @@ fun realCalcAngle(player: Player, dst: Vector): Angle {
 		}
 	} //else don't factor
 
-	val ang = Angle(aX.toFloat(), aY.toFloat(), 0F)
-	ang.normalize()
-
-	return ang
+	return angle(aX.toFloat(), aY.toFloat()).normalize() as Angle
 }

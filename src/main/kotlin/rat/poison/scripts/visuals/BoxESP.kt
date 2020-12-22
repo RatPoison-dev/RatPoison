@@ -22,6 +22,7 @@ import rat.poison.game.netvars.NetVarOffsets.iClip1
 import rat.poison.game.netvars.NetVarOffsets.iPrimaryReserveAmmoCount
 import rat.poison.game.netvars.NetVarOffsets.m_Collision
 import rat.poison.game.netvars.NetVarOffsets.rgflCoordinateFrame
+import rat.poison.game.w2s
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
@@ -106,7 +107,7 @@ fun boxEsp() {
 	}
 
 	App {
-		if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !curSettings["BOX_ESP_DETAILS"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@App
+		if ((!curSettings.bool["ENABLE_BOX_ESP"] && !curSettings.bool["BOX_ESP_DETAILS"]) || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
 		forEntities { //Player & Weapon boxes
 			val ent = it.entity
@@ -130,7 +131,7 @@ fun boxEsp() {
 			if (!isPlayer && !isWeapon && !isDefuseKit) return@forEntities
 
 			//Return if not onscreen
-			if (!worldToScreen(ent.position(), Vector())) return@forEntities
+			if (!worldToScreen(ent.position()).w2s()) return@forEntities
 
 			if (curSettings.bool["BOX_SMOKE_CHECK"] && lineThroughSmoke(ent)) return@forEntities
 
@@ -379,11 +380,11 @@ fun setupFakeBox(ent: Entity): BoundingBox {
 	val vHead = Vector(headPos.x, headPos.y, headPos.z + 9)
 	val vFeet = Vector(vHead.x, vHead.y, vHead.z - 75)
 
-	val vTop = Vector()
-	val vBottom = Vector()
+	val vTop = worldToScreen(vHead)
+	val vBottom = worldToScreen(vFeet)
 
-	if (worldToScreen(vHead, vTop) && worldToScreen(vFeet, vBottom)) {
-		val vMiddle = Vector((vTop.x + vBottom.x)/2F, (vTop.y + vBottom.y)/2F, (vTop.z + vBottom.z)/2F)
+	if (vTop.w2s() && vBottom.w2s()) {
+		val vMiddle = Vector((vTop.x + vBottom.x)/2F, (vTop.y + vBottom.y)/2F/*, (vTop.z + vBottom.z)/2F*/)
 		var boxH = vBottom.y - vTop.y
 		val sW = abs(((boxH / 5.0) * 2.0) / 2.0)
 		val sH = 2.0
@@ -448,8 +449,7 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 	val screenPointsTransformedArray = mutableListOf<Vector>()
 
 	for (i in pointsArray) {
-		val vecOut = Vector()
-		worldToScreen(transformVector(i, frameMatrix), vecOut)
+		val vecOut = worldToScreen(transformVector(i, frameMatrix))
 		screenPointsTransformedArray.add(vecOut)
 	}
 
@@ -480,13 +480,12 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 }
 
 fun transformVector(vec: Vector, array: Array<FloatArray>): Vector {
-	val outVec = Vector()
 	val thisVec = Vector3(vec.x, vec.y, vec.z)
-	outVec.x = (thisVec.dot(array[0][0], array[0][1], array[0][2]) + array[0][3])
-	outVec.y = (thisVec.dot(array[1][0], array[1][1], array[1][2]) + array[1][3])
-	outVec.z = (thisVec.dot(array[2][0], array[2][1], array[2][2]) + array[2][3])
-
-	return outVec
+	return Vector(
+		(thisVec.dot(array[0][0], array[0][1], array[0][2]) + array[0][3]),
+		(thisVec.dot(array[1][0], array[1][1], array[1][2]) + array[1][3]),
+		(thisVec.dot(array[2][0], array[2][1], array[2][2]) + array[2][3])
+	)
 }
 
 fun getWeaponTexture(assetManager: AssetManager, name: String): Texture {

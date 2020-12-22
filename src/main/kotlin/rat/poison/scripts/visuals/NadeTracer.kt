@@ -8,6 +8,7 @@ import rat.poison.curSettings
 import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.absPosition
 import rat.poison.game.forEntities
+import rat.poison.game.w2s
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.settings.MENUTOG
@@ -77,16 +78,16 @@ fun nadeTracer() = App {
         for (j in 0 until positionsList[i].size-1) {
             val pos1 = positionsList[i][j]
             val pos2 = positionsList[i][j+1]
-            val w2s1 = Vector()
-            val w2s2 = Vector()
 
             if (pos1.x in -2F..2F && pos1.y in -2F..2F && pos1.z in -2F..2F) {
                 continue
             } else if (pos2.x in -2F..2F && pos2.y in -2F..2F && pos2.z in -2F..2F) {
                 continue
             }
-
-            if (worldToScreen(pos1, w2s1) && worldToScreen(pos2, w2s2)) {
+    
+            val w2s1 = worldToScreen(pos1)
+            val w2s2 = worldToScreen(pos2)
+            if (w2s1.w2s() && w2s2.w2s()) {
                 shapeRenderer.apply {
                     if (isDrawing) {
                         end()

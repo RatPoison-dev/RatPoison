@@ -7,9 +7,9 @@ import rat.poison.game.entity.didEffect
 import rat.poison.game.entity.position
 import rat.poison.game.entity.timeLeftToDisappear
 import rat.poison.game.forEntities
+import rat.poison.game.w2s
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
-import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.inGame
@@ -25,8 +25,8 @@ fun nadesTimer() = App {
 
         val seconds = ent.timeLeftToDisappear()
         if (seconds <= 0.0) return@forEntities
-        val vec = Vector()
-        if (worldToScreen(ent.position(), vec)) {
+        val vec = worldToScreen(ent.position())
+        if (vec.w2s()) {
             shapeRenderer.apply {
                 if (isDrawing) {
                     end()

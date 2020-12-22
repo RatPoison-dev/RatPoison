@@ -16,14 +16,13 @@ import rat.poison.game.offsets.ClientOffsets.dwForceLeft
 import rat.poison.game.offsets.ClientOffsets.dwForceRight
 import rat.poison.scripts.aim.meDead
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.keyPressed
 import java.awt.event.KeyEvent.*
 import kotlin.math.cos
 import kotlin.math.sin
 
 internal fun fastStop() = every(4, inGameCheck = true) {
-    if (!curSettings["FAST_STOP"].strToBool() || meDead) return@every
+    if (!curSettings.bool["FAST_STOP"] || meDead) return@every
 
     updateCursorEnable()
     if (cursorEnable) return@every

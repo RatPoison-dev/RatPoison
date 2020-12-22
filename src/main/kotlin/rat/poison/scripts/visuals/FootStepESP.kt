@@ -3,11 +3,9 @@ package rat.poison.scripts.visuals
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.Align
 import rat.poison.*
+import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
-import rat.poison.game.me
-import rat.poison.game.w2sViewMatrix
-import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.utils.Vector
 import rat.poison.utils.every
@@ -55,8 +53,8 @@ fun runFootSteps() = App {
             if (curSettings["FOOTSTEP_TYPE"].toInt() == 1) {
                 //As text
                 val inVec = Vector(footSteps[i].x, footSteps[i].y, footSteps[i].z)
-                val outVec = Vector()
-                if (worldToScreen(inVec, outVec)) {
+                val outVec = worldToScreen(inVec)
+                if (outVec.w2s()) {
                     val sbText = StringBuilder("Step")
 
                     sb.begin()

@@ -121,15 +121,19 @@ interface Index<T> {
 	fun firstOrNull(): T? {
 		beginIteration()
 		try {
-			val values = getValues()
-			for (i in 0..values.lastIndex) {
-				val value = values[i]
-				if (value != null) {
-					return value
-				}
-			}
+			return firstOrNullUnsafe()
 		} finally {
 			endIteration()
+		}
+	}
+	
+	fun firstOrNullUnsafe(): T? {
+		val values = getValues()
+		for (i in 0..values.lastIndex) {
+			val value = values[i]
+			if (value != null) {
+				return value
+			}
 		}
 		return null
 	}

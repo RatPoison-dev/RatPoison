@@ -25,10 +25,8 @@ import rat.poison.scripts.detectMap
 import rat.poison.scripts.nameChange
 import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
-import rat.poison.utils.every
+import rat.poison.utils.*
 import rat.poison.utils.extensions.*
-import rat.poison.utils.inGame
-import rat.poison.utils.shouldPostProcess
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.concurrent.thread
 import kotlin.properties.Delegates
@@ -37,7 +35,7 @@ private val lastCleanup = AtomicLong(0L)
 
 private val contexts = Array(MAX_ENTITIES) { EntityContext() }
 
-private fun shouldReset() = System.currentTimeMillis() - lastCleanup.get() >= CLEANUP_TIME
+private fun shouldReset() = false//System.currentTimeMillis() - lastCleanup.get() >= CLEANUP_TIME
 
 private fun reset() {
     for (i in entitiesValues) {
@@ -47,7 +45,9 @@ private fun reset() {
     lastCleanup.set(System.currentTimeMillis())
 }
 
-private val writeGlowMemory = ThreadLocal.withInitial { Memory(1).apply { setByte(0, 0xEB.toByte()) } }
+private val writeGlowMemory by lazy(LazyThreadSafetyMode.NONE) {
+    Memory(1).apply { setByte(0, 0xEB.toByte()) }
+}
 
 private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
     if (old != new) {
@@ -89,7 +89,7 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
             val clientDLL = clientDLL
             if (ClientOffsets.dwGlowUpdate >= 0
                 && PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0) {
-                clientDLL.writeForced(ClientOffsets.dwGlowUpdate, writeGlowMemory.get(), 1)
+                clientDLL.writeForced(ClientOffsets.dwGlowUpdate, writeGlowMemory, 1)
             }
 
             if (GARBAGE_COLLECT_ON_MAP_START) {

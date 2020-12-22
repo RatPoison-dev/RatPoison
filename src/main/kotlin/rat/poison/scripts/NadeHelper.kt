@@ -8,13 +8,10 @@ import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
 import com.sun.jna.Memory
 import rat.poison.*
-import rat.poison.game.CSGO
+import rat.poison.game.*
 import rat.poison.game.entity.absPosition
 import rat.poison.game.entity.boneMatrix
 import rat.poison.game.entity.direction
-import rat.poison.game.me
-import rat.poison.game.w2sViewMatrix
-import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.overlay.App.menuStage
 import rat.poison.overlay.opened
@@ -96,17 +93,17 @@ fun nadeHelper() = App {
                         gameMatrix.translate(0F, 0F, -fSpot[2].cToFloat())
                         projectionMatrix = oldMatrix
 
-                        val vec2 = Vector()
-                        val vec3 = Vector()
+                        val vec2 = worldToScreen(Vector(hPos[0].cToFloat(), hPos[1].cToFloat(), hPos[2].cToFloat()))
+                        val vec3 = worldToScreen(Vector(hLPos[0].cToFloat(), hLPos[1].cToFloat(), hLPos[2].cToFloat()))
 
                         var t1 = false
                         var t2 = false
 
-                        if (worldToScreen(Vector(hPos[0].cToFloat(), hPos[1].cToFloat(), hPos[2].cToFloat()), vec2)) {
+                        if (vec2.w2s()) {
                             t1 = true
                         }
 
-                        if (worldToScreen(Vector(hLPos[0].cToFloat(), hLPos[1].cToFloat(), hLPos[2].cToFloat()), vec3)) {
+                        if (vec3.w2s()) {
                             set(ShapeRenderer.ShapeType.Filled)
                             circle(vec3.x, vec3.y - 2F, 4F)
                             set(ShapeRenderer.ShapeType.Line)

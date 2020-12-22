@@ -8,7 +8,6 @@ import rat.poison.game.entity.kills
 import rat.poison.game.me
 import rat.poison.scripts.aim.meDead
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
 
 lateinit var killSound: Sound
@@ -19,7 +18,7 @@ private var totalKills = when (inGame) {
 private var opened = false
 
 fun killSoundEsp() = every(50, inGameCheck = true) {
-    if (!curSettings["ENABLE_KILLSOUND"].strToBool() || meDead || me < 0 || !curSettings["ENABLE_ESP"].strToBool()) return@every
+    if (!curSettings.bool["ENABLE_KILLSOUND"] || meDead || me < 0 || !curSettings.bool["ENABLE_ESP"]) return@every
     val curKills = me.kills()
     if (!opened) {
         try {
@@ -32,7 +31,7 @@ fun killSoundEsp() = every(50, inGameCheck = true) {
     }
     else if (curKills != totalKills) {
         totalKills = curKills
-        killSound.play(curSettings["KILLSOUND_VOLUME"].toDouble().toFloat())
+        killSound.play(curSettings.double["KILLSOUND_VOLUME"].toFloat())
     }
 }
 

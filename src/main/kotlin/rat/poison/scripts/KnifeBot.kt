@@ -22,9 +22,7 @@ import rat.poison.scripts.aim.meDead
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
-import rat.poison.utils.distanceTo
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.keyReleased
 import java.awt.event.MouseEvent
 
@@ -32,8 +30,8 @@ private const val SwingDistance = 96f
 private const val StabDistance = 64f
 
 internal fun autoKnife() = every(10, inGameCheck = true) {
-    if (curSettings["MENU"].strToBool() && opened && App.haveTarget && !DANGER_ZONE && !meDead) {
-        if (curSettings["ENABLE_AUTO_KNIFE"].strToBool()) {
+    if (curSettings.bool["MENU"] && opened && App.haveTarget && !DANGER_ZONE && !meDead) {
+        if (curSettings.bool["ENABLE_AUTO_KNIFE"]) {
             if (meCurWep.knife) {
                 val currentAngle = clientState.angle()
                 val position = me.position()

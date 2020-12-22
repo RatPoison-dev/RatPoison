@@ -8,14 +8,12 @@ import rat.poison.overlay.App
 import rat.poison.overlay.App.shapeRenderer
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
-import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColor
 import rat.poison.utils.inGame
-import rat.poison.utils.normalize
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.hypot
 import kotlin.math.sin
+import com.badlogic.gdx.graphics.Color as ColorGDX
 
 fun indicatorEsp() = App {
     if (!curSettings.bool["ENABLE_ESP"] || !curSettings.bool["INDICATOR_ESP"] || !inGame) return@App
@@ -37,7 +35,7 @@ fun indicatorEsp() = App {
 
                 if (bEnt > 0 && bEnt == entity) { //This is the bomb carrier
                     if (curSettings.bool["INDICATOR_SHOW_ENEMIES"] && !onTeam) {
-                        color = when (curSettings["INDICATOR_SHOW_BOMB_CARRIER"].strToBool()) {
+                        color = when (curSettings.bool["INDICATOR_SHOW_BOMB_CARRIER"]) {
                             true -> "INDICATOR_BOMB_CARRIER_COLOR"
                             false -> "INDICATOR_ENEMY_COLOR"
                         }
@@ -83,17 +81,17 @@ fun indicatorEsp() = App {
 
     if (curSettings.bool["INDICATOR_SHOW_DEFUSERS"]) {
         forEntities(EntityType.CEconEntity) {
-            drawIndicator(it.entity, curSettings["INDICATOR_DEFUSER_COLOR"].strToColor())
+            drawIndicator(it.entity, curSettings.color["INDICATOR_DEFUSER_COLOR"])
         }
     }
 }
 
 fun calcAngle(src: Vector, dest: Vector, vAng: Vector): Vector {
     val delta = Vector(dest.x - src.x, dest.y - src.y, dest.z - src.z)
-    val angs =  Vector((Math.toDegrees(atan2(-delta.z, hypot(delta.x, delta.y)).toDouble()) - vAng.x).toFloat(), (Math.toDegrees(atan2(delta.y, delta.x).toDouble()) - vAng.y).toFloat(), 0F)
-    angs.normalize()
-
-    return angs
+    val angs =  Vector(
+        (Math.toDegrees(atan2(-delta.z, hypot(delta.x, delta.y)).toDouble()) - vAng.x).toFloat(),
+        (Math.toDegrees(atan2(delta.y, delta.x).toDouble()) - vAng.y).toFloat(), 0F)
+    return angs.normalize()
 }
 
 fun angVec(ang: Vector): Vector {
@@ -105,10 +103,12 @@ fun angVec(ang: Vector): Vector {
     return Vector((cp * cy).toFloat(), (cp * sy).toFloat(), (-sp).toFloat())
 }
 
+private val colorGDX: ThreadLocal<ColorGDX> = ThreadLocal.withInitial { ColorGDX() }
+
 fun drawIndicator(enemyEnt: Long, drawColor: Color)
 {
-    val dist = curSettings["INDICATOR_DISTANCE"].toFloat() * 10F
-    val size = curSettings["INDICATOR_SIZE"].toFloat()
+    val dist = curSettings.float["INDICATOR_DISTANCE"] * 10F
+    val size = curSettings.float["INDICATOR_SIZE"]
 
     val meEyeAngle = me.eyeAngle()
 
@@ -131,7 +131,12 @@ fun drawIndicator(enemyEnt: Long, drawColor: Color)
     }
 
     shapeRenderer.set(ShapeRenderer.ShapeType.Filled)
-    shapeRenderer.color = com.badlogic.gdx.graphics.Color(drawColor.red / 255F, drawColor.green / 255F, drawColor.blue / 255F, drawColor.alpha.toFloat())
+    shapeRenderer.color = colorGDX.get().apply {
+        r = drawColor.red / 255F
+        g = drawColor.green / 255F
+        b = drawColor.blue / 255F
+        a = drawColor.alpha.toFloat()
+    }
 
     val rot = -atan2(triangPos.x - tWidth/2.0, triangPos.y - tHeight/2.0)
 
@@ -154,7 +159,9 @@ fun drawIndicator(enemyEnt: Long, drawColor: Color)
 
     shapeRenderer.triangle(vert1x, vert1y, vert2x, vert2y, vert3x, vert3y)
 
-    shapeRenderer.color = com.badlogic.gdx.graphics.Color(255F, 255F, 255F, 1F)
+    shapeRenderer.color = END_LINE_COLOR
     shapeRenderer.set(ShapeRenderer.ShapeType.Line)
     shapeRenderer.end()
 }
+
+private val END_LINE_COLOR = ColorGDX(255F, 255F, 255F, 1F)

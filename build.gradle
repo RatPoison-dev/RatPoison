@@ -116,3 +116,9 @@ sourceSets {
 	main.java.srcDirs += 'src/main/kotlin'
 	main.java.srcDirs += 'settings'
 }
+
+compileKotlin {
+	kotlinOptions {
+		freeCompilerArgs = ["-Xinline-classes"]
+	}
+}

@@ -14,13 +14,8 @@ import rat.poison.settings.GAME_YAW
 import rat.poison.utils.extensions.refresh
 import kotlin.math.round
 
-private val delta = ThreadLocal.withInitial { Vector() }
-
-fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: Float, divisor: Int) = destinationAngle.apply {
-	x -= currentAngle.x
-	y -= currentAngle.y
-	z = 0F
-	normalize()
+fun applyFlatSmoothing(currentAngle: Vector, destinationAngle: Vector, smoothing: Float, divisor: Int) = destinationAngle.run {
+	val delta = set(x - currentAngle.x, y - currentAngle.y).normalize()
 
 	var smooth = smoothing
 
@@ -28,32 +23,28 @@ fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: 
 		smooth = 1F
 	}
 
-	var randX = if (curSettings["AIM_RANDOM_X_VARIATION"].toInt() > 0) randInt(0, curSettings["AIM_RANDOM_X_VARIATION"].toInt()) * randSign() else 0
-	var randY = if (curSettings["AIM_RANDOM_Y_VARIATION"].toInt() > 0) randInt(0, curSettings["AIM_RANDOM_Y_VARIATION"].toInt()) * randSign() else 0
-	val randDZ = curSettings["AIM_VARIATION_DEADZONE"].toInt() / 100F
+	var randX = if (curSettings.int["AIM_RANDOM_X_VARIATION"] > 0) randInt(0, curSettings.int["AIM_RANDOM_X_VARIATION"]) * randSign() else 0
+	var randY = if (curSettings.int["AIM_RANDOM_Y_VARIATION"] > 0) randInt(0, curSettings.int["AIM_RANDOM_Y_VARIATION"]) * randSign() else 0
+	val randDZ = curSettings.int["AIM_VARIATION_DEADZONE"] / 100F
 
-	if (x in -randDZ..randDZ && y in -randDZ..randDZ) {
+	if (delta.x in -randDZ..randDZ && delta.y in -randDZ..randDZ) {
 		randX = 0
 		randY = 0
 	}
 
-	x = currentAngle.x + (x + ((randX/10F) * (10F / smooth))) / 100F * (100F / smooth) / divisor
-	y = currentAngle.y + (y + ((randY/10F) * (10F / smooth))) / 100F * (100F / smooth) / divisor
-
-	normalize()
+	vector(currentAngle.x + (delta.x + ((randX/10F) * (10F / smooth))) / 100F * (100F / smooth) / divisor,
+		currentAngle.y + (delta.y + ((randY/10F) * (10F / smooth))) / 100F * (100F / smooth) / divisor).normalize()
 }
 
-fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Float, divisor: Int = 1, silent: Boolean = false) {
+fun writeAim(currentAngle: Vector, destinationAngle: Vector, smoothing: Float, divisor: Int = 1, silent: Boolean = false) {
 	if (!silent) {
 		val dAng = applyFlatSmoothing(currentAngle, destinationAngle, smoothing, divisor)
 		clientState.setAngle(dAng)
 	}
 }
 
-fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect: Boolean = false, checkOnScreen: Boolean = true, divisor: Int = 1) {
+fun pathAim(currentAngle: Vector, destinationAngle: Vector, aimSpeed: Int, perfect: Boolean = false, checkOnScreen: Boolean = true, divisor: Int = 1) {
 	if (!destinationAngle.isValid()) { return }
-
-	val delta = delta.get()
 
 	var xFix = currentAngle.y - destinationAngle.y
 
@@ -64,7 +55,7 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 	if (xFix > 180) xFix = 180F
 	if (xFix < -180F) xFix = -180F
 
-	delta.set(xFix, currentAngle.x - destinationAngle.x, 0F)
+	val delta = Vector(xFix, currentAngle.x - destinationAngle.x, 0F)
 
 	var sens = GAME_SENSITIVITY + .5
 	if (perfect) sens = 1.0
@@ -76,9 +67,9 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 
 	val target = POINT()
 
-	var randX = if (curSettings["AIM_RANDOM_X_VARIATION"].toInt() > 0) randInt(0, curSettings["AIM_RANDOM_X_VARIATION"].toInt()) * randSign() else 0
-	var randY = if (curSettings["AIM_RANDOM_Y_VARIATION"].toInt() > 0) randInt(0, curSettings["AIM_RANDOM_Y_VARIATION"].toInt()) * randSign() else 0
-	val randDZ = curSettings["AIM_VARIATION_DEADZONE"].toInt()
+	var randX = if (curSettings.int["AIM_RANDOM_X_VARIATION"] > 0) randInt(0, curSettings.int["AIM_RANDOM_X_VARIATION"]) * randSign() else 0
+	var randY = if (curSettings.int["AIM_RANDOM_Y_VARIATION"] > 0) randInt(0, curSettings.int["AIM_RANDOM_Y_VARIATION"]) * randSign() else 0
+	val randDZ = curSettings.int["AIM_VARIATION_DEADZONE"]
 
 	if (dx.toInt() in -randDZ..randDZ && dy.toInt() in -randDZ..randDZ) {
 		randX = 0

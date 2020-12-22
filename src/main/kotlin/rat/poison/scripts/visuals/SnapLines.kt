@@ -7,8 +7,13 @@ import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.utils.Vector
 import rat.poison.utils.inGame
+
+private val snapColor = Color()
+
+private fun Color.set(red: Float, green: Float, blue: Float, alpha: Float) = apply {
+    r = red; g = green; b = blue; a = alpha
+}
 
 //TODO god fix this eventually g
 fun snapLines() = App {
@@ -20,7 +25,6 @@ fun snapLines() = App {
     if (curSettings.bool["SNAPLINES_DEFUSE_KITS"]) {
         forEntities(EntityType.CEconEntity) {
             val entPos = it.entity.position()
-            val vec = Vector()
 
             if (curSettings.bool["SNAPLINES_SMOKE_CHECK"] && lineThroughSmoke(it.entity)) return@forEntities
 
@@ -33,10 +37,11 @@ fun snapLines() = App {
                     begin()
 
                     val drawColor: rat.poison.game.Color = curSettings.color["SNAPLINES_DEFUSE_KIT_COLOR"]
-                    color = Color(drawColor.red/255F, drawColor.green/255F, drawColor.blue/255F, .5F)
+                    color = snapColor.set(drawColor.red/255F, drawColor.green/255F, drawColor.blue/255F, .5F)
 
                     set(ShapeRenderer.ShapeType.Filled)
-                    if (worldToScreen(entPos, vec)) { //Onscreen
+                    val vec = worldToScreen(entPos)
+                    if (vec.w2s()) { //Onscreen
                         rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, vec.y, curSettings.float["SNAPLINES_WIDTH"])
                     } else { //Offscreen
                         rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, -vec.y, curSettings.float["SNAPLINES_WIDTH"])
@@ -51,7 +56,7 @@ fun snapLines() = App {
 
     forEntities {
         val entity = it.entity
-        var colStr = ""
+        var colStr: String? = null
 
         if (curSettings.bool["SNAPLINES_SMOKE_CHECK"] && lineThroughSmoke(entity)) return@forEntities
 
@@ -95,7 +100,7 @@ fun snapLines() = App {
                 }
         }
 
-        if (colStr.isBlank()) return@forEntities
+        if (colStr == null) return@forEntities
 
         shapeRenderer.apply {
             if (shapeRenderer.isDrawing) {
@@ -105,15 +110,16 @@ fun snapLines() = App {
             begin()
 
             val drawColor: rat.poison.game.Color = curSettings.color[colStr]
-            color = Color(drawColor.red/255F, drawColor.green/255F, drawColor.blue/255F, .5F)
+            color = snapColor.set(drawColor.red/255F, drawColor.green/255F, drawColor.blue/255F, .5F)
 
             val entPos = entity.absPosition()
-            val vec = Vector()
 
             if ((entPos.x == 0F && entPos.y == 0F && entPos.z == 0F)) return@forEntities
-
+    
+            val vec = worldToScreen(entPos)
+            
             set(ShapeRenderer.ShapeType.Filled)
-            if (worldToScreen(entPos, vec)) { //Onscreen
+            if (vec.w2s()) { //Onscreen
                 rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, vec.y, curSettings.float["SNAPLINES_WIDTH"])
             } else { //Offscreen
                 rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, -vec.y, curSettings.float["SNAPLINES_WIDTH"])

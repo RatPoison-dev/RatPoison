@@ -12,10 +12,9 @@ import rat.poison.overlay.opened
 import rat.poison.ui.uiPanels.specListText
 import rat.poison.utils.every
 import rat.poison.utils.extensions.readIndex
-import rat.poison.utils.generalUtil.strToBool
 
 internal fun spectatorList() = every(100, inGameCheck = true) {
-    if (!curSettings["SPECTATOR_LIST"].strToBool() || !curSettings["MENU"].strToBool()) {
+    if (!curSettings.bool["SPECTATOR_LIST"] || !curSettings.bool["MENU"]) {
         return@every
     }
 

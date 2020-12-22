@@ -10,14 +10,13 @@ import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToBool
 
 private var totalHits = 0
 private var opened = false
 lateinit var hitSound: Sound
 
 fun hitSoundEsp() = every(50, inGameCheck = true) {
-    if (!curSettings["ENABLE_HITSOUND"].strToBool() || MENUTOG || !curSettings["MENU"].strToBool() || me < 0) return@every
+    if (!curSettings.bool["ENABLE_HITSOUND"] || MENUTOG || !curSettings.bool["MENU"] || me < 0) return@every
 
     val curHits = csgoEXE.int(me + m_totalHitsOnServer)
     if (curHits < 0 || curHits > 255) return@every
@@ -34,7 +33,7 @@ fun hitSoundEsp() = every(50, inGameCheck = true) {
     }
     else if (totalHits != curHits)
     {
-        hitSound.play(curSettings["HITSOUND_VOLUME"].toDouble().toFloat())
+        hitSound.play(curSettings.double["HITSOUND_VOLUME"].toFloat())
         totalHits = curHits
     }
 }

@@ -18,7 +18,6 @@ import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.safeToInt
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
 import rat.poison.utils.keyPressed
 
@@ -27,7 +26,7 @@ private var triggerShots = 0
 
 fun triggerBot() = every(5, inGameCheck = true) {
     //Don't run if not needed
-    if (DANGER_ZONE || meDead || !inGame || MENUTOG || !meCurWep.gun || !curSettings["ENABLE_TRIGGER"].strToBool() || !haveAimSettings) { //Precheck
+    if (DANGER_ZONE || meDead || !inGame || MENUTOG || !meCurWep.gun || !curSettings.bool["ENABLE_TRIGGER"] || !haveAimSettings) { //Precheck
         inTrigger = false
         triggerShots = 0
         return@every
@@ -37,16 +36,16 @@ fun triggerBot() = every(5, inGameCheck = true) {
 
     val initDelay = if (curWepOverride) curWepSettings.tBTrigInitDelay else curSettings[curWepCategory + "_TRIGGER_INIT_SHOT_DELAY"].safeToInt("Trig init delay $curWepCategory")
     val shotDelay = if (curWepOverride) curWepSettings.tBTrigPerShotDelay else curSettings[curWepCategory + "_TRIGGER_PER_SHOT_DELAY"].safeToInt("Trig per delay $curWepCategory")
-    val bFOV = curSettings["TRIGGER_FOV"].toFloat()
-    val bINFOV = curSettings["TRIGGER_USE_FOV"].strToBool()
-    val bINCROSS = curSettings["TRIGGER_USE_INCROSS"].strToBool()
-    val bAIMBOT = curSettings["TRIGGER_USE_AIMBOT"].strToBool()
-    val bBACKTRACK = curSettings["TRIGGER_USE_BACKTRACK"].strToBool()
+    val bFOV = curSettings.float["TRIGGER_FOV"]
+    val bINFOV = curSettings.bool["TRIGGER_USE_FOV"]
+    val bINCROSS = curSettings.bool["TRIGGER_USE_INCROSS"]
+    val bAIMBOT = curSettings.bool["TRIGGER_USE_AIMBOT"]
+    val bBACKTRACK = curSettings.bool["TRIGGER_USE_BACKTRACK"]
 
-    if (curSettings[curWepCategory + "_TRIGGER"].strToBool() || (curWepOverride && curWepSettings.tBoneTrig)) { //If trigger is enabled for current weapon
+    if (curSettings.bool[curWepCategory + "_TRIGGER"] || (curWepOverride && curWepSettings.tBoneTrig)) { //If trigger is enabled for current weapon
         //Scope check
         if (curWepCategory == "SNIPER") { //If we are holding a sniper
-            if ((curSettings["ENABLE_SCOPED_ONLY"].strToBool() && !curWepOverride) || (curWepOverride && curWepSettings.tScopedOnly)) { //Scoped only check
+            if ((curSettings.bool["ENABLE_SCOPED_ONLY"] && !curWepOverride) || (curWepOverride && curWepSettings.tScopedOnly)) { //Scoped only check
                 if (!me.isScoped()) {
                     //Reset
                     inTrigger = false
@@ -66,7 +65,7 @@ fun triggerBot() = every(5, inGameCheck = true) {
         }
 
         //Trigger key check
-        if (curSettings["TRIGGER_ENABLE_KEY"].strToBool() && !keyPressed(curSettings["TRIGGER_KEY"].safeToInt("Trig key"))) {
+        if (curSettings.bool["TRIGGER_ENABLE_KEY"] && !keyPressed(curSettings["TRIGGER_KEY"].safeToInt("Trig key"))) {
             inTrigger = false
             triggerShots = 0
             return@every
@@ -126,7 +125,7 @@ private fun trigQueueShot(delay: Int, aimbot: Boolean = false, backtrack: Boolea
     }
 
     //Trigger key check
-    if (curSettings["TRIGGER_ENABLE_KEY"].strToBool() && !keyPressed(curSettings["TRIGGER_KEY"].toInt())) {
+    if (curSettings.bool["TRIGGER_ENABLE_KEY"] && !keyPressed(curSettings.int["TRIGGER_KEY"])) {
         inTrigger = false
         triggerShots = 0
         return

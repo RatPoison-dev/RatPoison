@@ -215,9 +215,10 @@ fun main() {
 }
 
 fun String.toLocale(): String {
-    if (curLocale[this].isBlank()) {
+    val locale = curLocale[this]
+    if (locale.isEmpty()) {
         if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $this is missing!")
         return this
     }
-    return curLocale[this]
+    return locale
 }
