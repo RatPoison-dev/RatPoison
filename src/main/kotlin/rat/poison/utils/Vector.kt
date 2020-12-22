@@ -1,5 +1,6 @@
 package rat.poison.utils
 
+import java.util.concurrent.ThreadLocalRandom
 import kotlin.math.abs
 
 inline class Vector(val value: Long) {
@@ -165,6 +166,15 @@ private const val FP32_DENORMAL_MAGIC = 126 shl 23
 private val FP32_DENORMAL_FLOAT = java.lang.Float.intBitsToFloat(FP32_DENORMAL_MAGIC)
 
 fun main() {
-	val v = vector(1.11F, 2.22F, 817.777F)
-	println("${v.x},${v.y},${v.z}")
+	val tlr = ThreadLocalRandom.current()
+	for (i in 0..1000000) {
+		val x = tlr.nextFloat()
+		val y = tlr.nextFloat()
+		val z = tlr.nextFloat()
+		
+		val v = vector(x, y, z)
+		if (abs(v.x - x) > 0.001 || abs(v.y - y) > 0.001 || abs(v.z - z) > 0.001) {
+			println("FAILED x $x should be ${v.x}, y $y should be ${v.y}, z $z should be ${v.z}")
+		}
+	}
 }

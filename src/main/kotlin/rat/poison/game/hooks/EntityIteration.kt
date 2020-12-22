@@ -35,11 +35,11 @@ private val lastCleanup = AtomicLong(0L)
 
 private val contexts = Array(MAX_ENTITIES) { EntityContext() }
 
-private fun shouldReset() = false//System.currentTimeMillis() - lastCleanup.get() >= CLEANUP_TIME
+private fun shouldReset() = System.currentTimeMillis() - lastCleanup.get() >= CLEANUP_TIME
 
 private fun reset() {
     for (i in entitiesValues) {
-        i?.clear()
+        i?.clearAfterIterating = true
     }
 
     lastCleanup.set(System.currentTimeMillis())

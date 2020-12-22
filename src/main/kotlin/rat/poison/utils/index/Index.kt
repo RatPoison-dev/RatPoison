@@ -118,6 +118,8 @@ interface Index<T> {
 	
 	fun isIterating(): Boolean
 	
+	var clearAfterIterating: Boolean
+	
 	fun firstOrNull(): T? {
 		beginIteration()
 		try {
