@@ -220,7 +220,9 @@ _TRIGGER_INFOV_TOOLTIP = Strzela gdy cel jest w polu zasięgu triggerbota
 ENABLE_ESP_TOOLTIP = Przełącza wszystkie efekty wizualne
 ENABLE_FOOTSTEPS_TOOLTIP = Rysuje kroki przeciwników wydających odgłos kroków
 Override-Weapons_TOOLTIP = Pozwala na nadpisanie ustawień aimbota dla wybranej broni zamiast używania ustawień kategorii
-LEGIT_RADAR_FOOTSTEPS_DISTANCE_TOOLTIP = Maximum distance where stepping enemies will be shown on legit radarFIRST-SHOT_TOOLTIP = Delay before trigger will fire first shotBETWEEN-SHOTS_TOOLTIP = Odstęp czasu pomiędzy strzałami triggerbota
+LEGIT_RADAR_FOOTSTEPS_DISTANCE_TOOLTIP = Maximum distance where stepping enemies will be shown on legit radar
+FIRST-SHOT_TOOLTIP = Delay before trigger will fire first shot
+BETWEEN-SHOTS_TOOLTIP =  Odstęp czasu pomiędzy strzałami triggerbota
 BOX_FAR_RADAR_TOOLTIP = Rysuje przeciwników, którzy zostali zauważeni przez członków twojej drużyny
 Aim-After-#_TOOLTIP = Aktywuje się po # ilości strzałów
 Join-Discord_TOOLTIP = Link do serwera Discord RatPoison
@@ -291,11 +293,13 @@ BACKTRACK_SPOTTED = Sprawdź czy widoczny
 _BACKTRACK = Backtrack
 BACKTRACK_VISUALIZE = Zobrazuj
 BACKTRACK_VISUALIZE_SMOKE_CHECK = Backtrack Visualize Smoke Check
+
 //Category: Misc Esp
 RADAR_ESP = Radar
 ENABLE_ESP = Włącz
 VISUALS_TOGGLE_KEY = Przycisk przełączenia efektów
 AUDIBLE_ESP_RANGE = Audible ESP Range
+
 //Subcategory: Nightmode
 ENABLE_NIGHTMODE = Jasność
 NIGHTMODE_VALUE = %
@@ -326,7 +330,9 @@ ADRENALINE_BOMB_TIME = Użyj czasu do wybuchu bomby
 
 //Category: Glow Esp
 GLOW_ESP = Włącz
-GLOW_ESP_AUDIBLE = AudibleGLOW_SHOW_TEAM = Sojusznicy
+GLOW_ESP_AUDIBLE = Audible
+GLOW_SHOW_TEAM = Sojusznicy
+GLOW_SHOW_TEAM = Teammates
 GLOW_SHOW_ENEMIES = Przeciwnicy
 GLOW_SHOW_BOMB = Bomba
 GLOW_BOMB_ADAPTIVE = Adaptacyjna poświata bomby
@@ -370,7 +376,9 @@ CHAMS_TARGET_COLOR = Cel
 
 //Category: Indicator ESP
 INDICATOR_ESP = Włącz
-INDICATOR_ESP_AUDIBLE = AudibleINDICATOR_SHOW_TEAM = Sojusznicy
+INDICATOR_ESP_AUDIBLE = Audible
+INDICATOR_SHOW_TEAM = Sojusznicy
+INDICATOR_SHOW_TEAM = Teammates
 INDICATOR_SHOW_ENEMIES = Przeciwnicy
 INDICATOR_SHOW_BOMB = Bomba
 INDICATOR_SHOW_BOMB_CARRIER = Niosący bombę
@@ -388,7 +396,8 @@ INDICATOR_SIZE = Rozmiar wskaźnika
 INDICATOR_SMOKE_CHECK = Widoczność przez dym
 
 //Category: Box ESP
-BOX_ESP_AUDIBLE = AudibleENABLE_BOX_ESP = Włącz Box
+BOX_ESP_AUDIBLE = Audible
+ENABLE_BOX_ESP Włącz Box
 BOX_ESP_HELMET = Hełm
 BOX_ESP_KEVLAR = Kamizelka
 BOX_ESP_AMMO = Amunicja
@@ -417,7 +426,9 @@ BOX_TEAM_COLOR = Sojusznicy
 BOX_ENEMY_COLOR = Przeciwnicy
 BOX_DEFUSER_COLOR = Zestawy do rozbrajania
 SKELETON_ESP = Szkielet
-SKELETON_SMOKE_CHECK = Smoke CheckSKELETON_ESP_AUDIBLE = AudibleSKELETON_SHOW_TEAM = Sojusznicy
+SKELETON_SMOKE_CHECK = Smoke Check
+SKELETON_ESP_AUDIBLE = Audible
+SKELETON_SHOW_TEAM = Sojusznicy
 SKELETON_SHOW_ENEMIES = Przeciwnicy
 LEFT = Lewo
 RIGHT = Prawo
@@ -427,7 +438,9 @@ ADVANCED_BOUNDING_BOX = Dynamiczny Box
 BOX_WEAPON_COLOR = Bronie
 BOX_SMOKE_CHECK = Widoczność przez dym
 BOX_FAR_RADAR = Box dalekiego radaru
-BOX_ESP_WEAPON_SCALE = Icons SizeBOX_ESP_USE_ICONS = Use Icons
+BOX_ESP_WEAPON_SCALE = Icons Size
+BOX_ESP_USE_ICONS = Use Icons
+
 //Category: Snaplines ESP
 ENABLE_SNAPLINES = Włącz
 SNAPLINES_WIDTH = Szerokość
@@ -444,6 +457,7 @@ SNAPLINES_BOMB_CARRIER_COLOR = Niosący bombę
 SNAPLINES_DEFUSE_KIT_COLOR = Zestaw do rozbrajania
 SNAPLINES_SMOKE_CHECK = Widoczność przez dym
 SNAPLINES_ESP_AUDIBLE = Audible
+
 
 //Category: Footsteps ESP
 ENABLE_FOOTSTEPS = Włącz
@@ -482,7 +496,20 @@ KILL_BIND_KEY = Przycisk
 Name-Change = Tymczasowa zmiana nicku
 
 //Category: Fonts
-LOAD_FONT = Load FontFONT_SIZE = Font SizeFONT_BORDER_WIDTH = Border WidthFONT_BORDER_USE_STRAIGHT = Border StraightFONT_BORDER_GAMMA = Border GammaFONT_SHADOW_OFFSET_X = Shadow Offset XFONT_SHADOW_OFFSET_Y = Shadow Offset YFONT_INCLUDE_KERNING = KerningFONT_FLIP = FlipFON_GEN_MIP_MAPS = Generate mip mapsFONT_COLOR = Font ColorFONT_BORDER_COLOR = Border ColorFONT_GAMMA = Gamma
+LOAD_FONT = Load Font
+FONT_SIZE = Font Size
+FONT_BORDER_WIDTH = Border Width
+FONT_BORDER_USE_STRAIGHT = Border Straight
+FONT_BORDER_GAMMA = Border Gamma
+FONT_SHADOW_OFFSET_X = Shadow Offset X
+FONT_SHADOW_OFFSET_Y = Shadow Offset Y
+FONT_INCLUDE_KERNING = Kerning
+FONT_FLIP = Flip
+FON_GEN_MIP_MAPS = Generate mip maps
+FONT_COLOR = Font Color
+FONT_BORDER_COLOR = Border Color
+FONT_GAMMA = Gamma
+
 //Category: Skin Changer
 SKINCHANGER = Włącz zmianę skinów
 FORCE_UPDATE_AUTO = Automatycznie aktualizuj skiny
@@ -503,6 +530,7 @@ VISUALIZE_SMOKES_POLYS = Ilość kątów
 VISUALIZE_SMOKES_WIDTH = Szerokość
 VISUALIZE_SMOKES_HEIGHT = Wysokość
 SMOKE_WEAR_OFF_TIME_COLOR = Smokes timer
+
 //Category: Override weapons
 _AIM_BONE = Kość
 _AIM_FORCE_BONE = Zastąp kość
@@ -514,7 +542,9 @@ _FACTOR_RECOIL = Kontroluj rozrzut
 _ENABLE_FLAT_AIM = Nadpisz kąt widzenia
 _ENABLE_PATH_AIM = Ruch kursorem
 ENABLE_OVERRIDE = Zastąp ustawienia	 							 
-tAutowep = Automatic WeaponstAutowepDelay = MS IntervaltAimFov = Pole zasięgu
+tAutowep = Automatic Weapons
+tAutowepDelay = MS Interval
+tAimFov = FOV
 tAimSpeed = Prędkość
 tAimSmooth = Płynność
 tAimAfterShots = Celuj po #
@@ -560,6 +590,7 @@ Join-Discord = Dołącz do Discorda [angielski]
 Keybinds = Klawisze
 OVERLOAD_KEYBINDS = Wyłącz zduplikowane bindy
 Join-The-Giveaway = Configs Website
+
 //Category: Configs tab
 FILE_NOT_FOUND_ERROR = Nie znaleziono pliku, wpisz list aby wyświetlić dostępne pliki
 SAVING_NOW_ERROR = Poczekaj na zakończenie zapisywania. CFG:
@@ -605,7 +636,8 @@ Bomb-Planted! = Bomba podłożona!
 Time-To-Explode: = Czas do wybuchu:
 Location: = Pozycja:
 Can-Defuse: = Czy można rozbroić na czas:
-Time-To-Defuse: = Time To Defuse:Time-Left-After: = Pozostały czas:
+Time-To-Defuse: = Time To Defuse:
+Time-Left-After: = Pozostały czas:
 
 //Category: Misc tab
 ENABLE_REDUCED_FLASH = Redukcja oślepienia
@@ -652,6 +684,12 @@ ENABLE_NADE_THROWER = Automatyczny rzut
 NADE_THROWER_KEY = Przycisk
 CLEAR_POSITIONS = Czy chcesz wyczyścić aktualnie załadowane pozycje?			  			 
 
+//Category: Backtrack tab
+BACKTRACK_VISUALIZE = Zobrazuj
+BACKTRACK_VISUALIZE_SMOKE_CHECK = Backtrack Visualize Smoke Check
+BACKTRACK_VISUALIZE_AUDIBLE = Backtrack Visualize Audible
+BACKTRACK_VISUALIZE_COLOR = Backtrack Visualize Color
+
 
 //Category: Weapons Categories
 PISTOL = PISTOLET
@@ -677,7 +715,8 @@ Visuals = Efekty
 RCS = RCS
 Ranks = Rangi
 Nade-Helper = Granaty
-Skins = SkinsOptions = Opcje
+Skins = SkinsOptions Opcje
+Options = Options
 Configs = CFG
 Glow = Poświata
 Chams = Kameleon
@@ -691,7 +730,12 @@ Bomb = Bomba
 FOV-Changer = Zmiana FOV
 Movement = Poruszanie się
 Others = Inne
-Fonts = FontsAimbot = AimbotTriggerbot = TriggerbotBacktrack = BacktrackOverride = Override
+Fonts = Fonts
+Aimbot = Aimbot
+Triggerbot = Triggerbot
+Backtrack = Backtrack
+Override = Override
+
 //Category: VisWindows names
 Bomb-Timer = Czas do wybuchu bomby
 Spectator-List = Lista widzów

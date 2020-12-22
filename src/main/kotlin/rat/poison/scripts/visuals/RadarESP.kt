@@ -20,7 +20,7 @@ internal fun radarEsp() = every(100, inGameCheck = true) {
 
             if (ent > 0L) {
                 entsChecked.add(ent)
-                if (!footSteps[i].open && footSteps[i].ttl > 0 && Vector(footSteps[i].x, footSteps[i].y, footSteps[i].z).distanceTo(me.position()) <= curSettings["LEGIT_RADAR_FOOTSTEPS_DISTANCE"].toInt()) {
+                if (!footSteps[i].open && footSteps[i].ttl > 0 && Vector(footSteps[i].x, footSteps[i].y, footSteps[i].z).distanceTo(me.position()) <= curSettings["AUDIBLE_ESP_RANGE"].toInt()) {
                     ent.showOnRadar()
                 } else {
                     ent.hideOnRadar()

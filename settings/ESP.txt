@@ -11,7 +11,6 @@ RADAR_ESP = false
 
 //Show enemies on radar when moving
 LEGIT_RADAR = false
-LEGIT_RADAR_FOOTSTEPS_DISTANCE = 1200
 
 //Enable audible hitsound
 //Activates on enemy hit

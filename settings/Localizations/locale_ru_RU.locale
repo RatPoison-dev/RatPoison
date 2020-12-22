@@ -33,17 +33,22 @@ FOV = FOV
 DESERT_EAGLE = DESERT_EAGLE
 DEAGLE = DEAGLE
 DUAL_BERETTA = DUAL_BERETTA
-ELITE = DUAL BERETTASFIVE_SEVEN = FIVE_SEVEN
-FIVESEVEN = FIVE_SEVENGLOCK = GLOCK
+ELITE = DUAL BERETTAS
+FIVE_SEVEN = FIVE_SEVEN
+FIVESEVEN = FIVE_SEVEN
+GLOCK = GLOCK
 AK47 = AK47
-M4A1 = M4A4CITEMHEALTHSHOT = Health shot
+M4A1 = M4A4
+CITEMHEALTHSHOT = Health shot
 CPROPDOORROTATING = Door stuck
-TASER = ZEUSAUG = AUG
+TASER = ZEUSAUG AUG
+AUG = AUG
 AWP = AWP
 FAMAS = FAMAS
 G3SG1 = G3SG1
 GALIL = GALIL
-GALILAR = GALILM249 = M249
+GALILAR = GALIL
+M249 = M249
 M4A4 = M4A4
 MAC10 = MAC10
 P90 = P90
@@ -51,10 +56,12 @@ MP5 = MP5
 UMP45 = UMP45
 XM1014 = XM1014
 PP_BIZON = PP_BIZON
-BIZON = PP_BIZONMAG7 = MAG7
+BIZON = PP_BIZON
+MAG7 = MAG7
 NEGEV = NEGEV
 SAWED_OFF = SAWED_OFF
-SAWEDOFF = SAWED_OFFTEC9 = TEC9
+SAWEDOFF = SAWED_OFF
+TEC9 = TEC9
 ZEUS_X27 = ZEUS_X27
 P2000 = P2000
 MP7 = MP7
@@ -63,7 +70,8 @@ NOVA = NOVA
 P250 = P250
 SCAR20 = SCAR20
 SG553 = SG553
-SG556 = SG553SSG08 = SSG08
+SG556 = SG553
+SSG08 = SSG08
 CECONENTITY = Дефуза
 KNIFE = KNIFE
 FLASH_GRENADE = FLASH_GRENADE
@@ -187,7 +195,8 @@ HITMARKER_RECOIL_POSITION_TOOLTIP = Включает/выключает пози
 INDICATOR_SIZE_TOOLTIP = Размер индикатора
 HOLD_AIM_TOOLTIP = Продолжать аимиться в цель, даже когда цель находится вне фова аима
 _VARIATION_DEADZONE_TOOLTIP = Вариация, где вариация не работает
-tPerfectAim_TOOLTIP = Snaps instantly to the chosen bone if within set FOVCLEAR_POSITIONS_TOOLTIP = Clears all currently loaded grenade positions INDICATOR_ESP_TOOLTIP = Arrows indicating where entities would be drawnBOX_ESP_HEALTH_TOOLTIP = Draw health level (as line)BOX_ESP_ARMOR_TOOLTIP = Draw armor level (as line)BOX_ESP_NAME_TOOLTIP = Draw entity's nameBOX_ESP_WEAPON_TOOLTIP = Draw weapons around the mapENABLE_SNAPLINES_TOOLTIP = Draw lines to entitiesHeadLvl_TOOLTIP = Draw the head level lineD_SPAM_KEY_TOOLTIP = Activate door spam (pressing E key) when key is pressedW_SPAM_KEY_TOOLTIP = Activate weapon spam (pressing right mouse key) when key is pressedKILL_BIND_TOOLTIP = Presses a specified key when you kill someoneBHOP_HITCHANCE_TOOLTIP = Chance to successfully hit a hop while bunnyhoppingGLOW_SMOKE_CHECK_TOOLTIP = Disable glow ESP when entity is covered by smokeAdvanced-Settings_TOOLTIP = Enable/disable advanced aim settings (RCS, Deadzone etc.) for current weapon categoryBOX_SMOKE_CHECK_TOOLTIP = Disable box ESP when entity is covered by smokeSNAPLINES_SMOKE_CHECK_TOOLTIP = Disable snaplines when entity is covered by smokeINDICATOR_SMOKE_CHECK_TOOLTIP = Disable indicators when entity is covered by smokeCHAMS_TARGET_COLOR_TOOLTIP = Chams will show aim targetLEGIT_RADAR_TOOLTIP = Shows enemies on radar that make step noises within a set distance_TRIGGER_INCROSS_TOOLTIP = Shoot when target is in crosshair position_TRIGGER_INFOV_TOOLTIP = Shoot when target is in specified FOV around the crosshairENABLE_ESP_TOOLTIP = Main switch for all ESPENABLE_FOOTSTEPS_TOOLTIP = Draws footsteps of running enemiesOverride-Weapons_TOOLTIP = Allows to configure aim settings for each weapon instead of weapon categoryLEGIT_RADAR_FOOTSTEPS_DISTANCE_TOOLTIP = Maximum distance where stepping enemies will be shown on legit radarFIRST-SHOT_TOOLTIP = Delay before trigger will fire first shotBETWEEN-SHOTS_TOOLTIP = Delay between trigger shotsBOX_FAR_RADAR_TOOLTIP = Draws entities spotted by teammates that are far from youAim-After-#_TOOLTIP = Activates aimbot after # of shots are firedJoin-Discord_TOOLTIP = Invite link to RatPoison Discord serverMENU_ALPHA_TOOLTIP = Modify transparency of menuGAUSSIAN_BLUR_TOOLTIP = Make blur behind menuENABLE_HITMARKER_TOOLTIP = Indicates when you hit someoneCHAMS_ESP_TOOLTIP = Enable/disable chams ESPNADE_THROWER_SMOOTHNESS_TOOLTIP = Auto-thrower aim smoothness
+tPerfectAim_TOOLTIP = Snaps instantly to the chosen bone if within set FOV
+
 //Category: Aim
 GLOBAL_AUTO_WEP_DELAY = Задержка
 ENABLE_AIM = Включено
@@ -247,6 +256,8 @@ BACKTRACK_KEY = Кнопка активации
 BACKTRACK_MS = МC
 BACKTRACK_SPOTTED = Проверка на видимость
 _BACKTRACK = Бэктрек
+BACKTRACK_VISUALIZE = Визуализировать бэктрек
+BACKTRACK_VISUALIZE_SMOKE_CHECK = Выключать в смоках
 
 //Category: Misc Esp
 RADAR_ESP = Радар
@@ -540,8 +551,10 @@ KEYBINDS = Бинды
 GAUSSIAN_BLUR = Включить размытие в меню
 MENU_ALPHA = Прозрачность меню
 Join-Discord = Discord
-Keybinds = KeybindsOVERLOAD_KEYBINDS = Отключить переопределение биндов
+Keybinds = Keybinds
+OVERLOAD_KEYBINDS = Disable Duplicate Binds
 Join-The-Giveaway = Configs Website
+
 //Category: Configs tab
 FILE_NOT_FOUND_ERROR = Файл не найден, использвуйте список чтобы увидеть все файлы
 SAVING_NOW_ERROR = Подождите окончания сохранения файла. КФГ:
@@ -587,7 +600,8 @@ Bomb-Planted! = Бомба установлена!
 Time-To-Explode: = Время до взрыва:
 Location: = Локация:
 Can-Defuse: = Возможность дефуза:
-Time-To-Defuse: = Time To Defuse:Time-Left-After: = Остается времени:
+Time-To-Defuse: = Time To Defuse:
+Time-Left-After: = Time Left After:
 
 //Category: Misc tab
 ENABLE_REDUCED_FLASH = Уменьшенное ослепление

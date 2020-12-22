@@ -17,7 +17,6 @@ class MiscVisualsTab : Tab(false, false) {
 
     val radarEsp = VisCheckBoxCustom("Radar Esp", "RADAR_ESP")
     val legitRadar = VisCheckBoxCustom("Legit Radar", "LEGIT_RADAR")
-    val legitRadarDistance = VisSliderCustom("Distance", "LEGIT_RADAR_FOOTSTEPS_DISTANCE", 100F, 5000F, 100F, true)
 
     val nightMode = VisCheckBoxCustom("Nightmode/Fullbright", "ENABLE_NIGHTMODE")
     val nightModeSlider = VisSliderCustom("%", "NIGHTMODE_VALUE", 0.05F, 5F, .05F, false)
@@ -56,7 +55,6 @@ class MiscVisualsTab : Tab(false, false) {
         //Add all items to label for tabbed pane content
         table.add(radarEsp).left().row()
         table.add(legitRadar).left().row()
-        table.add(legitRadarDistance).left().row()
 
         table.addSeparator()
 
@@ -106,7 +104,6 @@ fun miscVisualTabUpdate() {
     miscVisualsTab.apply {
         radarEsp.update()
         legitRadar.update()
-        legitRadarDistance.update()
         nightMode.update()
         nightModeSlider.update()
         visAdrenaline.update()
@@ -150,7 +147,6 @@ fun miscVisualTabDisable(bool: Boolean, col: Color) {
     miscVisualsTab.apply {
         radarEsp.disable(bool)
         legitRadar.disable(bool)
-        legitRadarDistance.disable(bool, col)
         visAdrenaline.disable(bool)
         adrenalineBombTime.disable(bool)
         adrenalineStrength.disable(bool, col)
