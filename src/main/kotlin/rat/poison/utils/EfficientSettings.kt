@@ -11,6 +11,7 @@ class EfficientSettings(val settings: Settings) {
 	
 	inline operator fun <reified T> get(key: String): T {
 		val typeIndex = EfficientSettingType.typeIndex(T::class)
+		if (typeIndex < 0) throw IllegalArgumentException("Can't determine type index for kClass: ${T::class}")
 		val type = EfficientSettingType.values[typeIndex]
 		return get(key, type)
 	}
@@ -29,6 +30,7 @@ class EfficientSettings(val settings: Settings) {
 	
 	operator fun set(key: String, value: Any) {
 		val typeIndex = EfficientSettingType.typeIndex(value::class)
+		if (typeIndex < 0) throw IllegalArgumentException("Can't determine type index for kClass: ${value::class}")
 		val map = types[typeIndex]
 		map[key] = value
 	}

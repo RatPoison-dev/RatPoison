@@ -55,7 +55,10 @@ open class Settings {
 	operator fun set(key: String, value: Any): Any? {
 		val string = value.toString()
 		val r = savedValues.put(key, string)
-		efficient[key] = value
+		val typeIndex = EfficientSettingType.typeIndex(value::class)
+		if (typeIndex >= 0) {
+			efficient[key] = value
+		}
 		return r
 	}
 	

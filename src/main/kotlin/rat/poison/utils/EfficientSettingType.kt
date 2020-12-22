@@ -24,7 +24,8 @@ enum class EfficientSettingType(val kClass: KClass<*>, val convert: (String) -> 
 		
 		fun typeIndex(kClass: KClass<*>): Int {
 			for (value in values) if (value.kClass == kClass) return value.ordinal
-			throw IllegalArgumentException("Can't determine type index for kClass: $kClass")
+			//throw IllegalArgumentException("Can't determine type index for kClass: $kClass")
+			return -1
 		}
 		
 		/* I don't use cleaner code because we need maximum speed. */
