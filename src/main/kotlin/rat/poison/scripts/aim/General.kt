@@ -44,12 +44,12 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			calcTarget(closestDelta, entity, position, angle, lockFOV, BONE)
 		}
 
-		val fov = arr[0] as Float
+		val fov = arr.fov
 
 		if (fov > 0F) {
 			closestFOV = fov
-			closestDelta = arr[1] as Float
-			closestPlayer = arr[2] as Long
+			closestDelta = arr.closestDelta
+			closestPlayer = arr.closestPlayer
 		}
 
 		return@forEntities
@@ -66,9 +66,19 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	return closestPlayer
 }
 
-fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Angle, curAngle: Angle, lockFOV: Float = curSettings["AIM_FOV"].toFloat(), BONE: Int, ovrStatic: Boolean = false): MutableList<Any> {
-	val retList = mutableListOf(-1F, 0F, 0L)
+class CalcTargetResult(var fov: Float = -1F, var closestDelta: Float = 0F, var closestPlayer: Long = 0L) {
+	fun reset() {
+		fov = -1F
+		closestDelta = 0F
+		closestPlayer = 0L
+	}
+}
+val calcTargetResult = ThreadLocal.withInitial { CalcTargetResult() }
 
+fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Angle, curAngle: Angle, lockFOV: Float = curSettings["AIM_FOV"].toFloat(), BONE: Int, ovrStatic: Boolean = false): CalcTargetResult {
+	val result = calcTargetResult.get()
+	result.reset()
+	
 	var ePos: Angle = entity.bones(BONE)
 
 	if (ovrStatic) {
@@ -91,9 +101,9 @@ fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Angle, curAngl
 		val delta = abs((sin(toRadians(pitchDiff.toDouble())) + sin(toRadians(yawDiff.toDouble()))) * distance)
 
 		if (delta <= lockFOV && delta <= calcClosestDelta) {
-			retList[0] = fov.toFloat()
-			retList[1] = delta.toFloat()
-			retList[2] = entity
+			result.fov = fov.toFloat()
+			result.closestDelta = delta.toFloat()
+			result.closestPlayer = entity
 		}
 	} else {
 		val calcAng = realCalcAngle(me, ePos)
@@ -104,13 +114,13 @@ fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Angle, curAngl
 		val fov = sqrt(delta.x.pow(2F) + delta.y.pow(2F))
 
 		if (fov <= lockFOV && fov <= calcClosestDelta) {
-			retList[0] = fov
-			retList[1] = fov
-			retList[2] = entity
+			result.fov = fov
+			result.closestDelta = fov
+			result.closestPlayer = entity
 		}
 	}
 
-	return retList.toMutableList()
+	return result
 }
 
 fun Entity.inMyTeam() =

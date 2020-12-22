@@ -149,7 +149,7 @@ fun constructRecords() {
 
         //Best target shit
         val pos = ent.bones(6)
-        val fov = calcTarget(bestFov, bestBacktrackTarget, pos, clientAngle, 5F, 6, ovrStatic = true)[0] as Float
+        val fov = calcTarget(bestFov, bestBacktrackTarget, pos, clientAngle, 5F, 6, ovrStatic = true).fov
         if (fov < bestFov && fov > 0) {
             bestFov = fov
             bestBacktrackTarget = ent
