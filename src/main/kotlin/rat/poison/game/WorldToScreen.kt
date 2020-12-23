@@ -10,13 +10,9 @@ import rat.poison.utils.threadLocalMemory
 
 val w2sViewMatrix = Array(4) { DoubleArray(4) }
 
-const val W2S_FAILED = Float.MAX_VALUE
+const val W2S_FAILED = -1F
 
-fun Vector.w2s(): Boolean {
-	val z = z
-	if (z == W2S_FAILED || z.isInfinite() || z.isNaN()) return false
-	return true
-}
+fun Vector.w2s() = z != W2S_FAILED
 
 fun worldToScreen(from: Vector): Vector {
 	if (!curSettings.bool["MENU"]) {
