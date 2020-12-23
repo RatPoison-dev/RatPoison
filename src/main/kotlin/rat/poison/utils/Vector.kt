@@ -24,7 +24,11 @@ inline class Vector(val value: Long) {
 		}
 	}
 	
-	fun set(x: Float, y: Float, z: Float = 0F) = Vector(x, y, z)
+	fun set(x: Float, y: Float, z: Float = 0F) = run {
+		release()
+		Vector(x, y, z)
+	}
+	
 	fun x(x: Float) = Vector(x, y, z)
 	fun y(y: Float) = Vector(x, y, z)
 	fun z(z: Float) = Vector(x, y, z)
@@ -37,6 +41,8 @@ inline class Vector(val value: Long) {
 	fun normalize() = run {
 		var x = x
 		var y = y
+		val z = z
+		release()
 		
 		if (x != x) x = 0F
 		if (y != y) y = 0F
@@ -50,7 +56,7 @@ inline class Vector(val value: Long) {
 		if (y > 180) y = 180F
 		if (y < -180F) y = -180F
 		
-		set(x, y, z)
+		Vector(x, y, z)
 	}
 	
 	fun distanceTo(target: Vector) = abs(x - target.x) + abs(y - target.y) + abs(z - target.z)

@@ -52,8 +52,12 @@ fun getCalculatedAngle(player: Player, dst: Vector): Angle {
 	
 	myPunch.release()
 	
-	if (dX >= 0.0) ang = ang.y(ang.y + 180)
-	return ang.normalize() as Angle
+	if (dX >= 0.0) {
+		val originalAng = ang
+		ang = ang.y(ang.y + 180)
+		originalAng.release()
+	}
+	return ang.normalize()
 }
 
 fun realCalcAngle(player: Player, dst: Vector): Angle {
