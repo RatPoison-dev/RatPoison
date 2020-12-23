@@ -1,5 +1,6 @@
 package rat.poison.scripts.visuals
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Sound
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings

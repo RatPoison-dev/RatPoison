@@ -9,8 +9,6 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.utils.Align
-import com.sun.jna.Memory
-import it.unimi.dsi.fastutil.longs.LongArrayList
 import org.jire.kna.int
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
@@ -138,7 +136,7 @@ fun boxEsp() {
 			topShift = 0F
 			textureBuilder.clear()
 			bottomTextureBuilder.clear()
-
+			
 			if (ent <= 0) return@forEntities
 			
 			if (!isPlayer && !isWeapon && !isDefuseKit) return@forEntities
@@ -147,9 +145,9 @@ fun boxEsp() {
 			if (!worldToScreen(ent.position()).w2s()) return@forEntities
 			
 			if (curSettings.bool["BOX_SMOKE_CHECK"] && lineThroughSmoke(ent)) return@forEntities
-
+			
 			if (curSettings.bool["BOX_ESP_AUDIBLE"] && !inFootsteps(ent)) return@forEntities
-
+			
 			var health = 0
 			if (isPlayer) {
 				health = ent.health()
@@ -208,7 +206,7 @@ fun boxEsp() {
 			
 			//Setup entity values
 			if (!csgoEXE.read(ent, entityMemory)) return@forEntities
-
+			
 			//Set filled for bars
 			shapeRenderer.set(ShapeRenderer.ShapeType.Filled)
 			
@@ -342,11 +340,11 @@ fun boxEsp() {
 				
 				rightShift += 2
 			}
-
+			
 			if (isPlayer) {
 				addTextureOrText(assetManager, true, "santa_hat", "", "TOP", true)
 			}
-
+			
 			shapeRenderer.end()
 			
 			if (!sb.isDrawing) {
@@ -362,12 +360,18 @@ fun boxEsp() {
 				val realWidth = texture.width / weaponsScale
 				when (position) {
 					"TOP" -> {
-						sb.draw(texture, ((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.top, realWidth, realHeight)
+						sb.draw(
+							texture,
+							((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)),
+							bbox.top,
+							realWidth,
+							realHeight
+						)
 						topShift += realHeight
 					}
 				}
 			}
-
+			
 			textRenderer.color = detailTextColor
 			textRenderer.draw(
 				sb,
@@ -408,7 +412,7 @@ fun boxEsp() {
 			
 			var leftShiftY = 0F
 			var rightShiftY = 0F
-
+			
 			textureBuilder.forEach { dr_texture ->
 				val texture = dr_texture.texture
 				val position = dr_texture.position
@@ -482,8 +486,17 @@ fun addText(position: String, str: String) {
 	}
 }
 
-fun addTextureOrText(assetManager: AssetManager, useIcons: Boolean, textureName: String, text: String, position: String, bottom: Boolean = false) {
-	if (!useIcons) { addText(position, text); return }
+fun addTextureOrText(
+	assetManager: AssetManager,
+	useIcons: Boolean,
+	textureName: String,
+	text: String,
+	position: String,
+	bottom: Boolean = false
+) {
+	if (!useIcons) {
+		addText(position, text); return
+	}
 	val texture = getWeaponTexture(assetManager, textureName)
 	when (!bottom) {
 		true -> textureBuilder.add(DrawableTexture(texture, position))
@@ -504,17 +517,19 @@ private val boneMemory = threadLocalMemory(3984)
 //Create a fake accurate box using headpos
 fun setupFakeBox(ent: Entity): BoundingBox {
 	val bbox = BoundingBox()
-
+	
 	val boneMatrix = ent.boneMatrix()
 	val boneMemory = boneMemory.get()
 	if (!csgoEXE.read(boneMatrix, boneMemory)) {
 		throw IllegalStateException("Couldn't setupFakeBox for ent=$ent boneMatrix=$boneMatrix")
 	}
-
-	val headPos = Vector(boneMemory.getFloat(((0x30L * HEAD_BONE) + 0xC)),
-			boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x1C)),
-			boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x2C)))
-
+	
+	val headPos = Vector(
+		boneMemory.getFloat(((0x30L * HEAD_BONE) + 0xC)),
+		boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x1C)),
+		boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x2C))
+	)
+	
 	val vHead = Vector(headPos.x, headPos.y, headPos.z + 9)
 	val vFeet = Vector(vHead.x, vHead.y, vHead.z - 75)
 	
@@ -575,21 +590,31 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 	csgoEXE.read(ent + m_Collision, collisionMem)
 	
 	//Set min/max
-	val vsx = collisionMem.getFloat(8); val vsy = collisionMem.getFloat(12); val vsz = collisionMem.getFloat(16)
-	val vbx = collisionMem.getFloat(20); val vby = collisionMem.getFloat(24); val vbz = collisionMem.getFloat(28)
+	val vsx = collisionMem.getFloat(8);
+	val vsy = collisionMem.getFloat(12);
+	val vsz = collisionMem.getFloat(16)
+	val vbx = collisionMem.getFloat(20);
+	val vby = collisionMem.getFloat(24);
+	val vbz = collisionMem.getFloat(28)
 	
 	//Set OBB to loop
 	val pointsArray = longArrayOf(
-		FastVector(vsx, vsy, vsz).value,
-		FastVector(vsx, vby, vsz).value,
-		FastVector(vbx, vby, vsz).value,
-		FastVector(vbx, vsy, vsz).value,
-		FastVector(vbx, vby, vbz).value,
-		FastVector(vsx, vby, vbz).value,
-		FastVector(vsx, vsy, vbz).value,
-		FastVector(vbx, vsy, vbz).value
+		vectorLong(vsx, vsy, vsz),
+		vectorLong(vsx, vby, vsz),
+		vectorLong(vbx, vby, vsz),
+		vectorLong(vbx, vsy, vsz),
+		vectorLong(vbx, vby, vbz),
+		vectorLong(vsx, vby, vbz),
+		vectorLong(vsx, vsy, vbz),
+		vectorLong(vbx, vsy, vbz)
 	)
-
+	
+	var first = true
+	var left = 0F
+	var top = 0F
+	var right = 0F
+	var bottom = 0F
+	
 	for (i in pointsArray) {
 		val vecOut = worldToScreen(transformVector(Vector(i), frameMatrix))
 		

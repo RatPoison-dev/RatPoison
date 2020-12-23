@@ -8,7 +8,6 @@ import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.overlay.App
 import rat.poison.utils.Vector
-import rat.poison.utils.distanceTo
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.*
 import kotlin.math.pow
