@@ -3,11 +3,9 @@ package rat.poison.scripts.visuals
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.Align
 import rat.poison.*
+import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
-import rat.poison.game.me
-import rat.poison.game.w2sViewMatrix
-import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.utils.Vector
 import rat.poison.utils.distanceTo
@@ -63,8 +61,8 @@ fun runFootSteps() = App {
             if (curSettings["FOOTSTEP_TYPE"].toInt() == 1) {
                 //As text
                 val inVec = Vector(footSteps[i].x, footSteps[i].y, footSteps[i].z)
-                val outVec = Vector()
-                if (worldToScreen(inVec, outVec)) {
+                val outVec = worldToScreen(inVec)
+                if (outVec.w2s()) {
                     val sbText = StringBuilder("Step")
 
                     sb.begin()
@@ -104,7 +102,7 @@ fun runFootSteps() = App {
 
 private fun constructSteps() = every(10) {
     stepTimer+= 1
-    if (stepTimer >= curSettings["FOOTSTEP_UPDATE"].toInt()) {
+    if (stepTimer >= curSettings.int["FOOTSTEP_UPDATE"]) {
         forEntities(EntityType.CCSPlayer) {
             val ent = it.entity
             if (ent == me || ent.dead() || ent.dormant()) return@forEntities
@@ -113,7 +111,8 @@ private fun constructSteps() = every(10) {
 
             val entVel = ent.velocity()
             val entMag = sqrt(entVel.x.pow(2F) + entVel.y.pow(2F) + entVel.z.pow(2F))
-
+            entVel.release()
+            
             if (entMag >= 150) {
                 val entPos = ent.absPosition()
 
@@ -123,12 +122,14 @@ private fun constructSteps() = every(10) {
                         x = entPos.x
                         y = entPos.y
                         z = entPos.z
-                        ttl = curSettings["FOOTSTEP_TTL"].toInt()
+                        ttl = curSettings.int["FOOTSTEP_TTL"]
                         open = false
                         myTeam = inMyTeam
                         this.ent = ent
                     }
                 }
+    
+                entPos.release()
             }
         }
 
@@ -139,7 +140,7 @@ private fun constructSteps() = every(10) {
                     x = 0F
                     y = 0F
                     z = 0F
-                    ttl = curSettings["FOOTSTEP_TTL"].toInt()
+                    ttl = curSettings.int["FOOTSTEP_TTL"]
                     open = true
                     this.ent = 0L
                 }

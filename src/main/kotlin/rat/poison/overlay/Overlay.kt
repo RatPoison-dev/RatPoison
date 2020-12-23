@@ -18,7 +18,6 @@ import rat.poison.jna.enums.AccentStates
 import rat.poison.jna.structures.Rect
 import rat.poison.jna.structures.WindowCompositionAttributeData
 import rat.poison.overlay.App.uiMenu
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inBackground
 import kotlin.concurrent.thread
 import kotlin.properties.Delegates
@@ -167,7 +166,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 				} else {
 					if (isMyWindowVisible) {
 						if (curSettings["MENU_APP"].replace("\"", "") == "Counter-Strike: Global Offensive") {
-							if (!curSettings["MENU_STAY_FOCUSED"].strToBool()) {
+							if (!curSettings.bool["MENU_STAY_FOCUSED"]) {
 								ShowWindow(myHWND, WinUser.SW_HIDE)
 								listener?.onBackground(this@Overlay)
 							}
@@ -288,7 +287,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	}
 
 	private fun beActive() = with(User32) {
-		if (!appless && curSettings["GAUSSIAN_BLUR"].strToBool() ) {
+		if (!appless && curSettings.bool["GAUSSIAN_BLUR"] ) {
 			makeBlurBehind()
 		}
 

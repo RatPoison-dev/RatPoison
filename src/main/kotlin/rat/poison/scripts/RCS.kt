@@ -12,13 +12,11 @@ import rat.poison.game.setAngle
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.normalize
 
 private val lastAppliedRCS = Vector2()
 
 fun rcs() = every(15, inGameCheck = true) {
-	if (me <= 0 || !curSettings["ENABLE_RCS"].strToBool() || meDead) return@every
+	if (me <= 0 || !curSettings.bool["ENABLE_RCS"] || meDead) return@every
 
 	val weapon = meCurWep
 	if (!weapon.automatic) { lastAppliedRCS.set(0F, 0F); return@every }
@@ -36,21 +34,16 @@ fun rcs() = every(15, inGameCheck = true) {
 			val realPunch = Vector2(p.x * 2, p.y * 2)
 
 			val punchToApply = Vector2(realPunch.x - lastAppliedRCS.x, realPunch.y - lastAppliedRCS.y)
-			punchToApply.scl(curSettings["RCS_SMOOTHING_Y"].toFloat(), curSettings["RCS_SMOOTHING_X"].toFloat())
+			punchToApply.scl(curSettings.float["RCS_SMOOTHING_Y"], curSettings.float["RCS_SMOOTHING_X"])
 
-			val angle = clientState.angle()
-			angle.apply {
-				x -= punchToApply.x
-				y -= punchToApply.y
-				normalize()
-			}
-
+			var angle = clientState.angle()
+			angle = angle.set(angle.x - punchToApply.x, angle.y - punchToApply.y).normalize()
 			clientState.setAngle(angle)
 
 			lastAppliedRCS.x += punchToApply.x
 			lastAppliedRCS.y += punchToApply.y
 
-			if (!curSettings["RCS_RETURNAIM"].strToBool() && forceSet) {
+			if (!curSettings.bool["RCS_RETURNAIM"] && forceSet) {
 				lastAppliedRCS.set(0F, 0F)
 			}
 		} else {
@@ -61,22 +54,20 @@ fun rcs() = every(15, inGameCheck = true) {
 			val playerPunch = Vector3(p.x, p.y, p.z) //Set playerPunch to current punch
 
 			val punchToApply = Vector2((playerPunch.x - lastAppliedRCS.x), (playerPunch.y - lastAppliedRCS.y)) //Set to our current punch and what our last punch was
-			punchToApply.scl(1F + curSettings["RCS_SMOOTHING_Y"].toFloat(), 1F + curSettings["RCS_SMOOTHING_X"].toFloat())
+			punchToApply.scl(1F + curSettings.float["RCS_SMOOTHING_Y"], 1F + curSettings.float["RCS_SMOOTHING_X"])
 
-			val angle = clientState.angle()
-			angle.apply {
-				x -= punchToApply.x
-				y -= punchToApply.y
-				normalize()
-			}
+			var angle = clientState.angle()
+			angle = angle.set(angle.x - punchToApply.x, angle.y - punchToApply.y).normalize()
 
 			clientState.setAngle(angle)
 			lastAppliedRCS.x = playerPunch.x
 			lastAppliedRCS.y = playerPunch.y
 
-			if (!curSettings["RCS_RETURNAIM"].strToBool() && forceSet) {
+			if (!curSettings.bool["RCS_RETURNAIM"] && forceSet) {
 				lastAppliedRCS.set(0F, 0F)
 			}
 		}
 	}
+	
+	p.release()
 }

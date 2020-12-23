@@ -18,7 +18,9 @@ import rat.poison.game.offsets.ClientOffsets.bDormant
 import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.game.offsets.ClientOffsets.pStudioHdr
 import rat.poison.utils.Angle
+import rat.poison.utils.Vector
 import rat.poison.utils.extensions.uint
+import rat.poison.utils.vector
 
 typealias Entity = Long
 
@@ -46,44 +48,22 @@ internal fun Entity.studioHdr(): Long = csgoEXE.uint(this + pStudioHdr)
 
 private val entity2Angle: Long2ObjectMap<Angle> = Long2ObjectOpenHashMap(255)
 
-internal fun Entity.position(): Angle {
-	val ent = this
-	val ang = Angle()
-	ang.apply {
-		x = csgoEXE.float(ent + vecOrigin)
-		y = csgoEXE.float(ent + vecOrigin + 4)
-		z = csgoEXE.float(ent + vecOrigin + 8) + csgoEXE.float(ent + vecViewOffset + 8)
-	}
-	return ang
-}
+internal fun Entity.position(): Vector = vector(
+		x = csgoEXE.float(this + vecOrigin),
+		y = csgoEXE.float(this + vecOrigin + 4),
+		z = csgoEXE.float(this + vecOrigin + 8) + csgoEXE.float(this + vecViewOffset + 8))
 
-fun Entity.absPosition(): Angle {
-	val ent = this
-	val ang = Angle()
-	ang.apply {
-		x = csgoEXE.float(ent + vecOrigin)
-		y = csgoEXE.float(ent + vecOrigin + 4)
-		z = csgoEXE.float(ent + vecOrigin + 8)
-	}
-	return ang
-}
+fun Entity.absPosition(): Vector = vector(
+		x = csgoEXE.float(this + vecOrigin),
+		y = csgoEXE.float(this + vecOrigin + 4),
+		z = csgoEXE.float(this + vecOrigin + 8))
 
-fun Entity.bones(boneID: Int): Angle {
-	val ang = Angle()
-	ang.apply {
-		x = bone(0xC, boneID)
-		y = bone(0x1C, boneID)
-		z = bone(0x2C, boneID)
-	}
-	return ang
-}
+fun Entity.bones(boneID: Int): Vector = vector(
+		x = bone(0xC, boneID),
+		y = bone(0x1C, boneID),
+		z = bone(0x2C, boneID))
 
-fun Memory.bones(boneID: Int): Angle {
-	val ang = Angle()
-	ang.apply {
-		x = getFloat(((0x30L * boneID) + 0xC))
-		y = getFloat(((0x30L * boneID) + 0x1C))
-		z = getFloat(((0x30L * boneID) + 0x2C))
-	}
-	return ang
-}
+fun Memory.bones(boneID: Int): Vector = vector(
+		x = getFloat(((0x30L * boneID) + 0xC)),
+		y = getFloat(((0x30L * boneID) + 0x1C)),
+		z = getFloat(((0x30L * boneID) + 0x2C)))

@@ -25,7 +25,7 @@ import rat.poison.scripts.detectMap
 import rat.poison.scripts.nameChange
 import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
-import rat.poison.utils.every
+import rat.poison.utils.*
 import rat.poison.utils.extensions.*
 import rat.poison.utils.inGame
 import rat.poison.utils.shouldPostProcess
@@ -42,13 +42,15 @@ private fun shouldReset() = System.currentTimeMillis() - lastCleanup.get() >= CL
 
 private fun reset() {
     for (i in entitiesValues) {
-        i?.clear()
+        i?.clearAfterIterating = true
     }
 
     lastCleanup.set(System.currentTimeMillis())
 }
 
-private val writeGlowMemory = ThreadLocal.withInitial { Memory(1).apply { setByte(0, 0xEB.toByte()) } }
+private val writeGlowMemory by lazy(LazyThreadSafetyMode.NONE) {
+    Memory(1).apply { setByte(0, 0xEB.toByte()) }
+}
 
 private val strBuf = threadLocalMemory(128) //128 str?
 
@@ -90,7 +92,7 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
             val clientDLL = clientDLL
             if (ClientOffsets.dwGlowUpdate >= 0
                 && PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0) {
-                clientDLL.writeForced(ClientOffsets.dwGlowUpdate, writeGlowMemory.get(), 1)
+                clientDLL.writeForced(ClientOffsets.dwGlowUpdate, writeGlowMemory, 1)
             }
 
             if (GARBAGE_COLLECT_ON_MAP_START) {
@@ -116,7 +118,7 @@ fun updateCursorEnable() { //Call when needed
 
 var toneMapController = 0L
 
-private val glowObjectMemory = Memory(14340L * 2)
+private val glowObjectMemory = threadLocalMemory(14340L * 2)
 
 fun constructEntities() = every(500, continuous = true) {
     updateCursorEnable()
@@ -132,6 +134,8 @@ fun constructEntities() = every(500, continuous = true) {
     if (shouldReset()) reset()
 
     var dzMode = false
+    
+    val glowObjectMemory = glowObjectMemory.get()
 
     val glowMemorySize = 4L + (glowObjectCount * GLOW_OBJECT_SIZE)
     csgoEXE.read(glowObject, glowObjectMemory, glowMemorySize)
@@ -144,7 +148,8 @@ fun constructEntities() = every(500, continuous = true) {
             if (type != EntityType.NULL) {
                 val tmpPos = entity.absPosition()
                 val check = (tmpPos.x in -2.0F..2.0F && tmpPos.y in -2.0F..2.0F && tmpPos.z in -2.0F..2.0F)
-
+                tmpPos.release()
+                
                 if (!check) {
                     val context = contexts[glowIndex].set(entity, glowAddress, glowIndex, type) //remove contexts[]
 

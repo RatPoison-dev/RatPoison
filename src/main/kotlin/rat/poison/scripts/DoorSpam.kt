@@ -8,16 +8,15 @@ import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.offsets.ClientOffsets.dwUse
 import rat.poison.scripts.aim.meDead
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.keyPressed
 
 fun doorSpam() = every(20, inGameCheck = true) {
-    if (!curSettings["D_SPAM"].strToBool() || meDead) return@every
+    if (!curSettings.bool["D_SPAM"] || meDead) return@every
 
     updateCursorEnable()
     if (cursorEnable) return@every
 
-    if (keyPressed(curSettings["D_SPAM_KEY"].toInt())) {
+    if (keyPressed(curSettings.int["D_SPAM_KEY"])) {
         Thread(Runnable {
             CSGO.clientDLL[dwUse] = 5
             Thread.sleep(20)

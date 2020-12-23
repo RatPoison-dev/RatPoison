@@ -5,15 +5,13 @@ import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.utils.Vector
-import rat.poison.utils.distanceTo
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.Vector
 
 internal fun radarEsp() = every(100, inGameCheck = true) {
-    if (!curSettings["RADAR_ESP"].strToBool() || DANGER_ZONE) return@every
+    if (!curSettings.bool["RADAR_ESP"] || DANGER_ZONE) return@every
 
-    if (curSettings["LEGIT_RADAR"].strToBool()) {
+    if (curSettings.bool["LEGIT_RADAR"]) {
         val entsChecked = mutableListOf<Long>()
         for (i in footSteps.indices) {
             val ent = footSteps[i].ent

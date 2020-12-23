@@ -12,12 +12,12 @@ import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwRadarBase
+import rat.poison.game.w2s
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
 import rat.poison.utils.threadLocalMemory
 import kotlin.math.abs
@@ -28,7 +28,7 @@ private var farPlayerRecords = Array(64) { FarPlayer() }
 private val mem = threadLocalMemory(237)
 
 fun farRadar() = App {
-    if (!inGame || !curSettings["BOX_FAR_RADAR"].strToBool() || meDead) return@App
+    if (!inGame || !curSettings.bool["BOX_FAR_RADAR"] || meDead) return@App
 
     var dwRadar = clientDLL.int(dwRadarBase)
     dwRadar = csgoEXE.int(dwRadar + 0x74L)
@@ -57,10 +57,10 @@ fun farRadar() = App {
 
     farPlayerRecords.forEach {
         if (it.alpha > 0F) {
-            val w2s1 = Vector()
-            val w2s2 = Vector()
+            val w2s1 = worldToScreen(it.pos)
+            val w2s2 = worldToScreen(Vector(it.pos.x, it.pos.y, it.pos.z - 75F))
 
-            if (worldToScreen(it.pos, w2s1) && worldToScreen(Vector(it.pos.x, it.pos.y, it.pos.z - 75F), w2s2)) {
+            if (w2s1.w2s() && w2s2.w2s()) {
                 if (shapeRenderer.isDrawing) shapeRenderer.end()
                 shapeRenderer.begin()
 

@@ -12,10 +12,8 @@ import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.robot
 import rat.poison.scripts.aim.meDead
-import rat.poison.utils.Angle
 import rat.poison.utils.Vector
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.keyPressed
 import java.awt.event.KeyEvent
 import kotlin.math.abs
@@ -29,11 +27,13 @@ private var onEnt = 0L
 //////Keeps up with crouching just fine, but not normal running usually
 ////////Doesn't predict, isn't accurate
 
+@Volatile
 var mePos = Vector()
+@Volatile
 var onEntPos = Vector()
 
 internal fun headWalk() = every(2, inGameCheck = true) {
-    if (!curSettings["HEAD_WALK"].strToBool() || meDead) return@every
+    if (!curSettings.bool["HEAD_WALK"] || meDead) return@every
 
     if (!keyPressed(KeyEvent.VK_W) && !keyPressed(KeyEvent.VK_A) && !keyPressed(KeyEvent.VK_S) && !keyPressed(KeyEvent.VK_D)) {
         mePos = me.absPosition()
@@ -42,12 +42,15 @@ internal fun headWalk() = every(2, inGameCheck = true) {
             if (cursorEnable) return@every
 
             val pos = Vector(mePos.x - onEntPos.x, mePos.y - onEntPos.y, mePos.z - onEntPos.z)
-            val yaw = clientState.angle().y
+            val angle = clientState.angle()
+            val yaw = angle.y
+            angle.release()
             val calcYaw = yaw/180*Math.PI
 
             //Is this even needed?
             val distX = (pos.x * cos(calcYaw) + pos.y * sin(calcYaw)).toInt()
             val distY = (pos.y * cos(calcYaw) - pos.x * sin(calcYaw)).toInt()
+            pos.release()
 
             //Gotta be a simpler way
             var wRelease = false
@@ -90,18 +93,19 @@ internal fun headWalk() = every(2, inGameCheck = true) {
                 robot.keyRelease(KeyEvent.VK_D)
             }
         }
+    
+        mePos.release()
     }
 }
 
 internal fun onPlayerHead() : Boolean {
-    var entPos : Angle
     onEnt = 0L
 
     forEntities(EntityType.CCSPlayer) {
         val entity = it.entity
         if (entity == me || !entity.onGround()) return@forEntities
 
-        entPos = entity.absPosition()
+        val entPos = entity.absPosition()
 
         val xDist = abs(mePos.x - entPos.x)
         val yDist = abs(mePos.y - entPos.y)
@@ -111,6 +115,8 @@ internal fun onPlayerHead() : Boolean {
             onEnt = entity
             onEntPos = entPos
         }
+    
+        entPos.release()
 
         if (onEnt != 0L) {
             return@forEntities

@@ -1,5 +1,6 @@
 package rat.poison.scripts.visuals
 
+import it.unimi.dsi.fastutil.longs.LongArrayList
 import org.jire.kna.boolean
 import rat.poison.curSettings
 import rat.poison.game.*
@@ -10,19 +11,16 @@ import rat.poison.game.netvars.NetVarOffsets.bDidSmokeEffect
 import rat.poison.overlay.App
 import rat.poison.overlay.App.shapeRenderer
 import rat.poison.utils.Vector
-import rat.poison.utils.distanceTo
-import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.inGame
 import kotlin.math.cos
 import kotlin.math.sin
 
 fun drawSmokes() = App {
-    if (!inGame || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["VISUALIZE_SMOKES"].strToBool() || !inGame) return@App
+    if (!inGame || !curSettings.bool["ENABLE_ESP"] || !curSettings.bool["VISUALIZE_SMOKES"] || !inGame) return@App
 
-    val smokePolys = curSettings["VISUALIZE_SMOKES_POLYS"].toInt()
-    val smokeHeight = curSettings["VISUALIZE_SMOKES_HEIGHT"].toInt()
-    val smokeWidth = curSettings["VISUALIZE_SMOKES_WIDTH"].toInt()
+    val smokePolys = curSettings.int["VISUALIZE_SMOKES_POLYS"]
+    val smokeHeight = curSettings.int["VISUALIZE_SMOKES_HEIGHT"]
+    val smokeWidth = curSettings.int["VISUALIZE_SMOKES_WIDTH"]
 
     forEntities(EntityType.CSmokeGrenadeProjectile) {
         val entity = it.entity
@@ -30,31 +28,40 @@ fun drawSmokes() = App {
         if (entity.timeLeftToDisappear() <= 0) return@forEntities
 
         val smokePos = it.entity.absPosition()
-        val points = mutableListOf<Vector>()
+        val points = LongArrayList()
 
         for (i in 0 until smokePolys) {
             val x = smokePos.x + smokeWidth * cos(Math.toRadians(360.0 / smokePolys * i))
             val y = smokePos.y + smokeWidth * sin(Math.toRadians(360.0 / smokePolys * i))
             val z = smokePos.z
-            points.add(Vector(x.toFloat(), y.toFloat(), z))
+            points.add(Vector(x.toFloat(), y.toFloat(), z).value)
         }
 
         for (i in 0 until smokePolys) {
             val x = smokePos.x + smokeWidth * cos(Math.toRadians(360.0 / smokePolys * i))
             val y = smokePos.y + smokeWidth * sin(Math.toRadians(360.0 / smokePolys * i))
             val z = smokePos.z + smokeHeight
-            points.add(Vector(x.toFloat(), y.toFloat(), z))
+            points.add(Vector(x.toFloat(), y.toFloat(), z).value)
         }
 
         if (points.size > 0) {
             for (i in 0 until smokePolys) {
-                connectPoints(points[i], points[(i+1) % smokePolys])
-                connectPoints(points[i + smokePolys], points[(i+1) % smokePolys + smokePolys])
-                connectPoints(points[i], points[i + smokePolys])
+                connectPoints(
+                    Vector(points.getLong(i)),
+                    Vector(points.getLong(i + 1 % smokePolys))
+                )
+                connectPoints(
+                    Vector(points.getLong(i + smokePolys)),
+                    Vector(points.getLong(i + 1 % smokePolys + smokePolys))
+                )
+                connectPoints(
+                    Vector(points.getLong(i)),
+                    Vector(points.getLong(i + smokePolys))
+                )
             }
         }
 
-        if (curSettings["DEBUG"].strToBool()) {
+        if (curSettings.bool["DEBUG"]) {
             val mePos = me.position()
             val meDir = me.direction()
             val maxPos = Vector(mePos.x + 500 * meDir.x, mePos.y + 500 * meDir.y, mePos.z)
@@ -62,12 +69,12 @@ fun drawSmokes() = App {
             val pX = -(maxPos.y - mePos.y)
             val pY = (maxPos.x - mePos.x)
 
-            val w2s1 = Vector()
-            val w2s2 = Vector()
+            val w2s1 = worldToScreen(Vector(smokePos.x + pX, smokePos.y + pY, smokePos.z))
+            val w2s2 = worldToScreen(Vector(smokePos.x - pX, smokePos.y - pY, smokePos.z))
 
             shapeRenderer.begin()
 
-            if (worldToScreen(Vector(smokePos.x + pX, smokePos.y + pY, smokePos.z), w2s1) && worldToScreen(Vector(smokePos.x - pX, smokePos.y - pY, smokePos.z), w2s2)) {
+            if (w2s1.w2s() && w2s2.w2s()) {
                 shapeRenderer.line(w2s1.x, w2s1.y, w2s2.x, w2s2.y)
             }
 
@@ -77,17 +84,17 @@ fun drawSmokes() = App {
 }
 
 fun connectPoints(vec1: Vector, vec2: Vector) {
-    val w2s1 = Vector()
-    val w2s2 = Vector()
+    val w2s1 = worldToScreen(vec1)
+    val w2s2 = worldToScreen(vec2)
 
-    if (worldToScreen(vec1, w2s1) && worldToScreen(vec2, w2s2)) {
+    if (w2s1.w2s() && w2s2.w2s()) {
         if (shapeRenderer.isDrawing) {
             shapeRenderer.end()
         }
 
         shapeRenderer.begin()
 
-        shapeRenderer.color = curSettings["VISUALIZE_SMOKES_COLOR"].strToColorGDX()
+        shapeRenderer.color = curSettings.colorGDX["VISUALIZE_SMOKES_COLOR"]
         shapeRenderer.line(w2s1.x, w2s1.y, w2s2.x, w2s2.y)
 
         shapeRenderer.end()

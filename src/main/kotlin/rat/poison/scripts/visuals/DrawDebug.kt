@@ -9,10 +9,9 @@ import rat.poison.scripts.aim.curWepCategory
 import rat.poison.scripts.aim.curWepOverride
 import rat.poison.scripts.aim.curWepSettings
 import rat.poison.scripts.aim.meCurWep
-import rat.poison.utils.generalUtil.strToBool
 
 fun drawDebug() = App {
-    if (!curSettings["DEBUG"].strToBool()) return@App
+    if (!curSettings.bool["DEBUG"]) return@App
 
     val txtString = StringBuilder()
 

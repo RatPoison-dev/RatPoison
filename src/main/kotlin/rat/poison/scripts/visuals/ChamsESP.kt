@@ -20,17 +20,15 @@ import rat.poison.scripts.aim.target
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColor
 import java.lang.Float.floatToIntBits
 
 fun chamsEsp() = every(100, true, inGameCheck = true) {
-    if (!curSettings["CHAMS_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return@every
+    if (!curSettings.bool["CHAMS_ESP"] || !curSettings.bool["ENABLE_ESP"]) return@every
 
     val myTeam = me.team()
 
-    val brightnessCounter = if (curSettings["CHAMS_BRIGHTNESS"].toInt() > 0) {
-        (255F / (curSettings["CHAMS_BRIGHTNESS"].toInt() / 10F)).toInt()
+    val brightnessCounter = if (curSettings.int["CHAMS_BRIGHTNESS"] > 0) {
+        (255F / (curSettings.int["CHAMS_BRIGHTNESS"] / 10F)).toInt()
     } else {
         255
     }
@@ -40,8 +38,8 @@ fun chamsEsp() = every(100, true, inGameCheck = true) {
         val clientVModEnt = csgoEXE.uint(clientDLL.address + dwEntityList + (((csgoEXE.uint(csgoEXE.uint(clientDLL.address + dwLocalPlayer) + m_hViewModel)) and 0xFFF) - 1) * 16)
 
         //Set VMod
-        val clientMColor = if (curSettings["CHAMS_SHOW_SELF"].strToBool()) {
-             curSettings["CHAMS_SELF_COLOR"].strToColor()
+        val clientMColor = if (curSettings.bool["CHAMS_SHOW_SELF"]) {
+             curSettings.color["CHAMS_SELF_COLOR"]
         } else {
             Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0)
         }
@@ -54,21 +52,21 @@ fun chamsEsp() = every(100, true, inGameCheck = true) {
     }
 
     //Set Cvar
-    engineDLL[dwModelAmbientMin] = floatToIntBits(curSettings["CHAMS_BRIGHTNESS"].toInt().toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
+    engineDLL[dwModelAmbientMin] = floatToIntBits(curSettings.int["CHAMS_BRIGHTNESS"].toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
 
     val currentAngle = clientState.angle()
     val position = me.position()
 
     if (!meCurWep.knife && meCurWep != Weapons.ZEUS_X27) {
-        if (curSettings["ENABLE_AIM"].strToBool()) {
-            if (curSettings["CHAMS_SHOW_TARGET"].strToBool() && target == -1L) {
-                val curTarg = findTarget(position, currentAngle, false, visCheck = !curSettings["FORCE_AIM_THROUGH_WALLS"].strToBool())
+        if (curSettings.bool["ENABLE_AIM"]) {
+            if (curSettings.bool["CHAMS_SHOW_TARGET"] && target == -1L) {
+                val curTarg = findTarget(position, currentAngle, false, visCheck = !curSettings.bool["FORCE_AIM_THROUGH_WALLS"])
                 espTARGET = if (curTarg > 0) {
                     curTarg
                 } else {
                     -1
                 }
-            } else if (curSettings["GLOW_SHOW_TARGET"].strToBool()) {
+            } else if (curSettings.bool["GLOW_SHOW_TARGET"]) {
                 espTARGET = target
             }
         }
@@ -84,18 +82,18 @@ fun chamsEsp() = every(100, true, inGameCheck = true) {
         val entityTeam = entity.team()
         val onTeam = !DANGER_ZONE && myTeam == entityTeam
 
-        if (curSettings["CHAMS_SHOW_TARGET"].strToBool() && entity == espTARGET && espTARGET > 0L && !espTARGET.dead()) {
-            entity.chams(curSettings["CHAMS_TARGET_COLOR"].strToColor())
-        } else if (curSettings["CHAMS_SHOW_ENEMIES"].strToBool() && !onTeam) { //Show enemies & is enemy
-            if (curSettings["CHAMS_SHOW_HEALTH"].strToBool()) {
+        if (curSettings.bool["CHAMS_SHOW_TARGET"] && entity == espTARGET && espTARGET > 0L && !espTARGET.dead()) {
+            entity.chams(curSettings.color["CHAMS_TARGET_COLOR"])
+        } else if (curSettings.bool["CHAMS_SHOW_ENEMIES"] && !onTeam) { //Show enemies & is enemy
+            if (curSettings.bool["CHAMS_SHOW_HEALTH"]) {
                 entity.chams(Color((255 - 2.55 * clamp(entity.health(), 0, 100)).toInt(), (2.55 * clamp(entity.health(), 0, 100)).toInt(), 0, 1.0))
             } else {
-                entity.chams(curSettings["CHAMS_ENEMY_COLOR"].strToColor())
+                entity.chams(curSettings.color["CHAMS_ENEMY_COLOR"])
             }
-        } else if (!curSettings["CHAMS_SHOW_ENEMIES"].strToBool() && !onTeam) { //Not show enemies
+        } else if (!curSettings.bool["CHAMS_SHOW_ENEMIES"] && !onTeam) { //Not show enemies
             entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
-        } else if (curSettings["CHAMS_SHOW_TEAM"].strToBool() && onTeam) { //Show team & is team
-            entity.chams(curSettings["CHAMS_TEAM_COLOR"].strToColor())
+        } else if (curSettings.bool["CHAMS_SHOW_TEAM"] && onTeam) { //Show team & is team
+            entity.chams(curSettings.color["CHAMS_TEAM_COLOR"])
         }
         else {
             entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))

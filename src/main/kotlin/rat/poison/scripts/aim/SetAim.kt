@@ -9,7 +9,6 @@ import rat.poison.oWeapon
 import rat.poison.settings.*
 import rat.poison.settingsLoaded
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toWeaponClass
 
 var meCurWep = Weapons.AK47
@@ -40,7 +39,7 @@ fun setAim() = every(500, true, inGameCheck = true) {
         }
 
         if (settingsLoaded) { //If we have settings to read
-            if (curSettings["ENABLE_OVERRIDE"].strToBool()) {
+            if (curSettings.bool["ENABLE_OVERRIDE"]) {
                 //V--Update aim settings for current weapons--V\\
                 if (meCurWep.rifle || meCurWep.smg || meCurWep.pistol || meCurWep.sniper || meCurWep.shotgun) {
                     curWepSettings = curSettings[meCurWep.name].toWeaponClass()
@@ -83,40 +82,40 @@ fun setAim() = every(500, true, inGameCheck = true) {
 
         if (!curWepOverride) { //If the current weapon isn't checked to override
             if (curWepCategory != "") {
-                curSettings["FACTOR_RECOIL"] = curSettings[curWepCategory + "_FACTOR_RECOIL"].strToBool()
+                curSettings["FACTOR_RECOIL"] = curSettings.bool[curWepCategory + "_FACTOR_RECOIL"]
                 curSettings["AIM_BONE"] = curSettings[curWepCategory + "_AIM_BONE"].boneToNum()
                 curSettings["FORCE_AIM_BONE"] = curSettings[curWepCategory + "_AIM_FORCE_BONE"].boneToNum()
-                curSettings["AIM_FOV"] = curSettings[curWepCategory + "_AIM_FOV"].toFloat()
-                curSettings["AIM_SPEED"] = curSettings[curWepCategory + "_AIM_SPEED"].toInt()
-                curSettings["AIM_SMOOTHNESS"] = curSettings[curWepCategory + "_AIM_SMOOTHNESS"].toDouble()
+                curSettings["AIM_FOV"] = curSettings.float[curWepCategory + "_AIM_FOV"]
+                curSettings["AIM_SPEED"] = curSettings.int[curWepCategory + "_AIM_SPEED"]
+                curSettings["AIM_SMOOTHNESS"] = curSettings.double[curWepCategory + "_AIM_SMOOTHNESS"]
 
-                curSettings["PERFECT_AIM"] = curSettings[curWepCategory + "_PERFECT_AIM"].strToBool()
-                curSettings["PERFECT_AIM_FOV"] = curSettings[curWepCategory + "_PERFECT_AIM_FOV"].toDouble()
-                curSettings["PERFECT_AIM_CHANCE"] = curSettings[curWepCategory + "_PERFECT_AIM_CHANCE"].toInt()
-                curSettings["ENABLE_FLAT_AIM"] = curSettings[curWepCategory + "_ENABLE_FLAT_AIM"].strToBool()
-                curSettings["ENABLE_PATH_AIM"] = curSettings[curWepCategory + "_ENABLE_PATH_AIM"].strToBool()
-                curSettings["ENABLE_SCOPED_ONLY"] = curSettings["SNIPER_ENABLE_SCOPED_ONLY"].strToBool()
+                curSettings["PERFECT_AIM"] = curSettings.bool[curWepCategory + "_PERFECT_AIM"]
+                curSettings["PERFECT_AIM_FOV"] = curSettings.double[curWepCategory + "_PERFECT_AIM_FOV"]
+                curSettings["PERFECT_AIM_CHANCE"] = curSettings.int[curWepCategory + "_PERFECT_AIM_CHANCE"]
+                curSettings["ENABLE_FLAT_AIM"] = curSettings.bool[curWepCategory + "_ENABLE_FLAT_AIM"]
+                curSettings["ENABLE_PATH_AIM"] = curSettings.bool[curWepCategory + "_ENABLE_PATH_AIM"]
+                curSettings["ENABLE_SCOPED_ONLY"] = curSettings.bool["SNIPER_ENABLE_SCOPED_ONLY"]
 
-                curSettings["AUTOMATIC_WEAPONS"] = curSettings["GLOBAL_AUTOMATIC_WEAPONS"].strToBool()
-                curSettings["AUTO_WEP_DELAY"] = curSettings["GLOBAL_AUTO_WEP_DELAY"].toInt()
+                curSettings["AUTOMATIC_WEAPONS"] = curSettings.bool["GLOBAL_AUTOMATIC_WEAPONS"]
+                curSettings["AUTO_WEP_DELAY"] = curSettings.int["GLOBAL_AUTO_WEP_DELAY"]
 
-                curSettings["AIM_ONLY_ON_SHOT"] = curSettings[curWepCategory + "_AIM_ONLY_ON_SHOT"].strToBool()
-                curSettings["AIM_AFTER_SHOTS"] = curSettings[curWepCategory + "_AIM_AFTER_SHOTS"].toInt()
+                curSettings["AIM_ONLY_ON_SHOT"] = curSettings.bool[curWepCategory + "_AIM_ONLY_ON_SHOT"]
+                curSettings["AIM_AFTER_SHOTS"] = curSettings.int[curWepCategory + "_AIM_AFTER_SHOTS"]
 
-                curSettings["AIM_ADVANCED"] = curSettings[curWepCategory + "_ADVANCED_SETTINGS"].strToBool()
-                curSettings["AIM_RCS_X"] = curSettings[curWepCategory + "_AIM_RCS_X"].toDouble()
-                curSettings["AIM_RCS_Y"] = curSettings[curWepCategory + "_AIM_RCS_Y"].toDouble()
-                curSettings["AIM_RCS_VARIATION"] = curSettings[curWepCategory + "_AIM_RCS_VARIATION"].toDouble()
-                curSettings["AIM_SPEED_DIVISOR"] = curSettings[curWepCategory + "_AIM_SPEED_DIVISOR"].toInt()
-                curSettings["AIM_RANDOM_X_VARIATION"] = curSettings[curWepCategory + "_RANDOM_X_VARIATION"].toInt()
-                curSettings["AIM_RANDOM_Y_VARIATION"] = curSettings[curWepCategory + "_RANDOM_Y_VARIATION"].toInt()
-                curSettings["AIM_VARIATION_DEADZONE"] = curSettings[curWepCategory + "_VARIATION_DEADZONE"].toInt()
+                curSettings["AIM_ADVANCED"] = curSettings.bool[curWepCategory + "_ADVANCED_SETTINGS"]
+                curSettings["AIM_RCS_X"] = curSettings.double[curWepCategory + "_AIM_RCS_X"]
+                curSettings["AIM_RCS_Y"] = curSettings.double[curWepCategory + "_AIM_RCS_Y"]
+                curSettings["AIM_RCS_VARIATION"] = curSettings.double[curWepCategory + "_AIM_RCS_VARIATION"]
+                curSettings["AIM_SPEED_DIVISOR"] = curSettings.int[curWepCategory + "_AIM_SPEED_DIVISOR"]
+                curSettings["AIM_RANDOM_X_VARIATION"] = curSettings.int[curWepCategory + "_RANDOM_X_VARIATION"]
+                curSettings["AIM_RANDOM_Y_VARIATION"] = curSettings.int[curWepCategory + "_RANDOM_Y_VARIATION"]
+                curSettings["AIM_VARIATION_DEADZONE"] = curSettings.int[curWepCategory + "_VARIATION_DEADZONE"]
 
-                curSettings["TRIGGER_FOV"] = curSettings[curWepCategory + "_TRIGGER_FOV"].toFloat()
-                curSettings["TRIGGER_USE_FOV"] = curSettings[curWepCategory + "_TRIGGER_INFOV"].strToBool()
-                curSettings["TRIGGER_USE_INCROSS"] = curSettings[curWepCategory + "_TRIGGER_INCROSS"].strToBool()
-                curSettings["TRIGGER_USE_AIMBOT"] = curSettings[curWepCategory + "_TRIGGER_AIMBOT"].strToBool()
-                curSettings["TRIGGER_USE_BACKTRACK"] = curSettings[curWepCategory + "_TRIGGER_BACKTRACK"].strToBool() && curSettings["ENABLE_BACKTRACK"].strToBool()
+                curSettings["TRIGGER_FOV"] = curSettings.float[curWepCategory + "_TRIGGER_FOV"]
+                curSettings["TRIGGER_USE_FOV"] = curSettings.bool[curWepCategory + "_TRIGGER_INFOV"]
+                curSettings["TRIGGER_USE_INCROSS"] = curSettings.bool[curWepCategory + "_TRIGGER_INCROSS"]
+                curSettings["TRIGGER_USE_AIMBOT"] = curSettings.bool[curWepCategory + "_TRIGGER_AIMBOT"]
+                curSettings["TRIGGER_USE_BACKTRACK"] = curSettings.bool[curWepCategory + "_TRIGGER_BACKTRACK"] && curSettings.bool["ENABLE_BACKTRACK"]
 
                 haveAimSettings = true
             }

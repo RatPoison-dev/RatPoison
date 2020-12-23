@@ -9,15 +9,13 @@ import rat.poison.game.entity.Entity
 import rat.poison.game.entity.EntityType
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toInt
 import rat.poison.utils.threadLocalMemory
 
 var espTARGET = -1L
 
-
 fun esp() {
-	if (curSettings["MENU"].strToBool()) { //Temp until app fix
+	if (curSettings.bool["MENU"]) { //Temp until app fix
 		if (dbg) { println("[DEBUG] Initializing Indicator ESP") }; indicatorEsp()
 		if (dbg) { println("[DEBUG] Initializing Box ESP") }; boxEsp()
 		if (dbg) { println("[DEBUG] Initializing Skeleton ESP") }; skeletonEsp()

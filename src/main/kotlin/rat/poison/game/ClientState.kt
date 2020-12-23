@@ -4,20 +4,18 @@ import org.jire.kna.float
 import org.jire.kna.set
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.offsets.EngineOffsets.dwViewAngles
-import rat.poison.utils.Angle
+import rat.poison.utils.Vector
+import rat.poison.utils.vector
 
 typealias ClientState = Long
 
-fun ClientState.angle(): Angle {
-	val tmpAng = Angle()
-	tmpAng.x = csgoEXE.float(this + dwViewAngles)
-	tmpAng.y = csgoEXE.float(this + dwViewAngles + 4)
-	tmpAng.z = csgoEXE.float(this + dwViewAngles + 8)
+fun ClientState.angle(): Vector = vector(
+	csgoEXE.float(this + dwViewAngles),
+	csgoEXE.float(this + dwViewAngles + 4),
+	csgoEXE.float(this + dwViewAngles + 8)
+)
 
-	return tmpAng
-}
-
-fun ClientState.setAngle(angle: Angle) {
+fun ClientState.setAngle(angle: Vector) {
 	if (angle.z != 0F || angle.x < -89 || angle.x > 180 || angle.y < -180 || angle.y > 180
 			|| angle.x.isNaN() || angle.y.isNaN() || angle.z.isNaN()) return
 	

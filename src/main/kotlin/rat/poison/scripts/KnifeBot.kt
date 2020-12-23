@@ -22,9 +22,7 @@ import rat.poison.scripts.aim.meDead
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
-import rat.poison.utils.distanceTo
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.keyReleased
 import java.awt.event.MouseEvent
 
@@ -32,8 +30,8 @@ private const val SwingDistance = 96f
 private const val StabDistance = 64f
 
 internal fun autoKnife() = every(10, inGameCheck = true) {
-    if (curSettings["MENU"].strToBool() && opened && App.haveTarget && !DANGER_ZONE && !meDead) {
-        if (curSettings["ENABLE_AUTO_KNIFE"].strToBool()) {
+    if (curSettings.bool["MENU"] && opened && App.haveTarget && !DANGER_ZONE && !meDead) {
+        if (curSettings.bool["ENABLE_AUTO_KNIFE"]) {
             if (meCurWep.knife) {
                 val currentAngle = clientState.angle()
                 val position = me.position()
@@ -66,13 +64,19 @@ internal fun autoKnife() = every(10, inGameCheck = true) {
                                         else -> KnifeAttackType.SLASH
                                     }
                                 } else {
-                                    if (imBehind
-                                            && Vector3.len2(me.velocity().x, me.velocity().y, me.velocity().z) > 0
-                                            && me.absPosition().distanceTo(targetPos) > StabDistance) {
-                                        //wait to get close enough to be able to back stab
-                                        KnifeAttackType.NONE
-                                    } else {
-                                        KnifeAttackType.SLASH
+                                    val velocity = me.velocity()
+                                    try {
+                                        if (imBehind
+                                            && Vector3.len2(velocity.x, velocity.y, velocity.z) > 0
+                                            && me.absPosition().distanceTo(targetPos) > StabDistance
+                                        ) {
+                                            //wait to get close enough to be able to back stab
+                                            KnifeAttackType.NONE
+                                        } else {
+                                            KnifeAttackType.SLASH
+                                        }
+                                    } finally {
+                                        velocity.release()
                                     }
                                 }
                                 attackType.attack()
@@ -88,15 +92,24 @@ internal fun autoKnife() = every(10, inGameCheck = true) {
 private val delta = Vector3()
 
 private fun isBehindMe(position: Vector): Boolean {
-    delta.set(me.absPosition().x, me.absPosition().y, me.absPosition().z)
+    me.absPosition().use {
+        delta.set(it.x, it.y, it.z)
             .sub(position.x, position.y, position.z)
+    }
     delta.nor()
-    return delta.dot(me.direction().x, me.direction().y, me.direction().z) > 0.475f
+    val dir = me.direction()
+    try {
+        return delta.dot(dir. x, dir.y, dir.z) > 0.475f
+    } finally {
+    	dir.release()
+    }
 }
 
 private fun canBackStab(position: Vector, direction: Vector): Boolean {
-    delta.set(position.x, position.y, position.z)
-            .sub(me.absPosition().x, me.absPosition().y, me.absPosition().z)
+    me.absPosition().use {
+        delta.set(position.x, position.y, position.z)
+            .sub(it.x, it.y, it.z)
+    }
     delta.nor()
     return delta.dot(direction.x, direction.y, direction.z) > 0.475f
 }

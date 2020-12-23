@@ -17,7 +17,6 @@ import rat.poison.settings.DANGER_ZONE
 import rat.poison.toLocale
 import rat.poison.ui.uiPanels.bombText
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toInt
 import rat.poison.utils.inGame
 
@@ -28,11 +27,11 @@ var bombState = BombState()
 private var lastSecDefusing = false
 
 fun bombTimer() = App {
-    if (DANGER_ZONE || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@App
+    if (DANGER_ZONE || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
-    if (curSettings["ENABLE_BOMB_TIMER"].strToBool()) {
+    if (curSettings.bool["ENABLE_BOMB_TIMER"]) {
         bombText.setText(bombState.toString()) //Update regardless of BOMB_TIMER_MENU
-        if (curSettings["BOMB_TIMER_BARS"].strToBool() && bombState.planted) {
+        if (curSettings.bool["BOMB_TIMER_BARS"] && bombState.planted) {
             val cColor = if ((me.team() == 3.toLong() && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) { //If player has time to defuse
                 Color(0F, 255F, 0F, .25F) //Green
             } else if ((me.team() == 3.toLong() && bombState.timeLeftToDefuse < bombState.timeLeftToExplode) || (me.team() == 2.toLong() && !bombState.gettingDefused)) { //If player is defusing with time left, or is terrorist and the bomb isn't being defused
@@ -58,7 +57,7 @@ fun bombTimer() = App {
                 color = Color(1F, 1F, 1F, 1F)
                 end()
             }
-            if (curSettings["BOMB_TIMER_BARS_SHOW_TTE"].strToBool()) {
+            if (curSettings.bool["BOMB_TIMER_BARS_SHOW_TTE"]) {
                 sb.begin()
 
                 val sbText = StringBuilder()
@@ -76,7 +75,7 @@ fun bombTimer() = App {
 fun currentGameTicks(): Float = CSGO.engineDLL.float(EngineOffsets.dwGlobalVars + 16)
 
 fun bombUpdater() = every(15, inGameCheck = true) {
-    if ((!curSettings["ENABLE_BOMB_TIMER"].strToBool() && !curSettings["GLOW_BOMB_ADAPTIVE"].strToBool()) || DANGER_ZONE) return@every
+    if ((!curSettings.bool["ENABLE_BOMB_TIMER"] && !curSettings.bool["GLOW_BOMB_ADAPTIVE"]) || DANGER_ZONE) return@every
     val time = currentGameTicks()
     val bomb: Entity = entityByType(EntityType.CPlantedC4)?.entity ?: -1L
 
@@ -102,7 +101,7 @@ fun bombUpdater() = every(15, inGameCheck = true) {
     val timeNeeded = 5.2 + ((!me.hasDefuser()).toInt() * 5)
 
     if (bombState.planted) { //If bomb is planted
-        if (curSettings["LS_BOMB"].strToBool()) { //If last second bomb defuse is enabled
+        if (curSettings.bool["LS_BOMB"]) { //If last second bomb defuse is enabled
             if (me.team() == 3L && bombState.timeLeftToExplode <= timeNeeded) { //If we are CT & should defuse
                 if (!lastSecDefusing) {
                     println(bombState.timeLeftToExplode)

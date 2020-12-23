@@ -2,6 +2,8 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import rat.poison.curSettings
+import rat.poison.game.me
+import rat.poison.game.w2s
 import rat.poison.game.CSGO
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.worldToScreen
@@ -20,14 +22,16 @@ import rat.poison.utils.keyPressed
 fun drawBacktrack() = App {
     if (MENUTOG) return@App
     if (meDead) return@App
-    if (!inGame || !curSettings["BACKTRACK_VISUALIZE"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["ENABLE_BACKTRACK"].strToBool()) return@App
+    if (!inGame || !curSettings.bool["BACKTRACK_VISUALIZE"] || !curSettings.bool["ENABLE_ESP"] || !curSettings.bool["ENABLE_BACKTRACK"]) return@App
 
-    val backtrackOnKey = curSettings["ENABLE_BACKTRACK_ON_KEY"].strToBool()
-    val backtrackKeyPressed = keyPressed(curSettings["BACKTRACK_KEY"].toInt())
+    val backtrackOnKey = curSettings.bool["ENABLE_BACKTRACK_ON_KEY"]
+    val backtrackKeyPressed = keyPressed(curSettings.int["BACKTRACK_KEY"])
 
     if (backtrackOnKey && !backtrackKeyPressed) return@App
 
     if (!meCurWep.gun) return@App
+
+    if (curSettings.bool["BACKTRACK_VISUALIZE_SMOKE_CHECK"] && lineThroughSmoke(me)) return@App
 
     for (i in 0 until 63) {
         if (btRecords[i][0].simtime == 0F) continue
@@ -38,17 +42,20 @@ fun drawBacktrack() = App {
 
         val minRecord = btRecords[i][minMaxIDX[0]]
         val maxRecord = btRecords[i][minMaxIDX[1]]
-
+    
         val entity = CSGO.clientDLL.uint(ClientOffsets.dwEntityList + ((i and 0xFFF) - 1L) * CSGO.ENTITY_SIZE)
         if (entity != 0L && curSettings["BACKTRACK_VISUALIZE_SMOKE_CHECK"].strToBool() && lineThroughSmoke(entity)) continue
         if (entity != 0L && curSettings["BACKTRACK_VISUALIZE_AUDIBLE"].strToBool() && !inFootsteps(entity)) continue
+    
+        val minHeadPos = worldToScreen(minRecord.headPos)
+        val maxHeadPos = worldToScreen(maxRecord.headPos)
+        val minAbsPos = worldToScreen(minRecord.absPos)
+        val maxAbsPos = worldToScreen(maxRecord.absPos)
 
-        val minHeadPos = Vector()
-        val maxHeadPos = Vector()
-        val minAbsPos = Vector()
-        val maxAbsPos = Vector()
-
-        if (worldToScreen(minRecord.headPos, minHeadPos) && worldToScreen(minRecord.absPos, minAbsPos) && worldToScreen(maxRecord.headPos, maxHeadPos) && worldToScreen(maxRecord.absPos, maxAbsPos)) {
+        if (minHeadPos.w2s()
+            && maxHeadPos.w2s()
+            && minAbsPos.w2s()
+            && maxAbsPos.w2s()) {
             val w = (minAbsPos.y - minHeadPos.y) / 4F
             val minMidX = (minAbsPos.x + minHeadPos.x) / 2F
             val maxMidX = (maxAbsPos.x + maxAbsPos.x) / 2F
@@ -59,11 +66,11 @@ fun drawBacktrack() = App {
                 sign = 1
             }
 
-            val topLeft = Vector(minHeadPos.x - (w / 3F) * sign, minHeadPos.y, minHeadPos.z)
-            val topRight = Vector(maxHeadPos.x + (w / 3F) * sign, maxHeadPos.y, maxHeadPos.z)
+            val topLeft = Vector(minHeadPos.x - (w / 3F) * sign, minHeadPos.y)
+            val topRight = Vector(maxHeadPos.x + (w / 3F) * sign, maxHeadPos.y)
 
-            val bottomLeft = Vector(minMidX - (w / 2F) * sign, minAbsPos.y+8F, minAbsPos.z)
-            val bottomRight = Vector(maxMidX + (w / 2F) * sign, maxAbsPos.y+8F, maxAbsPos.z)
+            val bottomLeft = Vector(minMidX - (w / 2F) * sign, minAbsPos.y+8F)
+            val bottomRight = Vector(maxMidX + (w / 2F) * sign, maxAbsPos.y+8F)
 
             shapeRenderer.apply {
                 if (shapeRenderer.isDrawing) {

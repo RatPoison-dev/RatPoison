@@ -56,4 +56,10 @@ open class Settings {
 	
 	val colorGDX = XColorGDX()
 	
+	val int = XInt()
+	
+	inner class XInt {
+		operator fun get(key: String): Int = efficient[key]
+	}
+	
 }

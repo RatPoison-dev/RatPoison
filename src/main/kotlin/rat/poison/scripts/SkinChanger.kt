@@ -22,7 +22,6 @@ import rat.poison.game.netvars.NetVarOffsets.m_nFallbackStatTrak
 import rat.poison.game.offsets.ClientOffsets.dwEntityList
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toSkinWeaponClass
 import rat.poison.utils.shouldPostProcess
 
@@ -31,7 +30,7 @@ import rat.poison.utils.shouldPostProcess
 private var shouldUpdate = false
 
 fun skinChanger() = every(1, continuous = true, inGameCheck = true) {
-    if ((!curSettings["SKINCHANGER"].strToBool() && !curSettings["KNIFECHANGER"].strToBool())) return@every
+    if ((!curSettings.bool["SKINCHANGER"] && !curSettings.bool["KNIFECHANGER"])) return@every
 
     try {
         val sID = me.steamID()
@@ -50,7 +49,7 @@ fun skinChanger() = every(1, continuous = true, inGameCheck = true) {
             val weaponEntity = clientDLL.uint(dwEntityList + (myWeapon - 1) * ENTITY_SIZE)
 
             if (weaponEntity.type().gun && myWeapon > 0 && weaponEntity > 0) {
-                if (curSettings["SKINCHANGER"].strToBool()) {
+                if (curSettings.bool["SKINCHANGER"]) {
                     val sWep = curSettings["SKIN_" + weaponEntity.type().name].toSkinWeaponClass()
 
                     //Change these to read weaponEntity kit to a mem and read from it
@@ -71,7 +70,7 @@ fun skinChanger() = every(1, continuous = true, inGameCheck = true) {
                         csgoEXE[weaponEntity + m_nFallbackStatTrak] = sWep.tStatTrak
                         csgoEXE[weaponEntity + m_iAccountID] = pID
 
-                        if (((curWepPaint != wantedWepPaint) || (curStatTrak != wantedStatTrak) || (curWear != wantedWear)) && curSettings["FORCE_UPDATE_AUTO"].strToBool()) {
+                        if (((curWepPaint != wantedWepPaint) || (curStatTrak != wantedStatTrak) || (curWear != wantedWear)) && curSettings.bool["FORCE_UPDATE_AUTO"]) {
                             shouldUpdate = true
                         }
                     }
@@ -92,7 +91,7 @@ fun skinChanger() = every(1, continuous = true, inGameCheck = true) {
                     val weaponEntity = clientDLL.uint(dwEntityList + (myWeapon - 1) * ENTITY_SIZE)
 
                     if (weaponEntity.type().gun && myWeapon > 0 && weaponEntity > 0) {
-                        if (curSettings["SKINCHANGER"].strToBool()) {
+                        if (curSettings.bool["SKINCHANGER"]) {
                             //Change these to read weaponEntity kit to a mem and read from it
                             val accountID = csgoEXE.int(weaponEntity + m_OriginalOwnerXuidLow)
 

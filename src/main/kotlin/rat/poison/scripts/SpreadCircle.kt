@@ -16,8 +16,6 @@ import rat.poison.scripts.aim.meCurWepEnt
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.inGame
 import java.lang.Math.toDegrees
 import java.lang.Math.toRadians
@@ -40,11 +38,12 @@ fun spreadCircle() {
     refreshWepData()
 
     App {
-        if (meDead || MENUTOG || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["SPREAD_CIRCLE"].strToBool() || !inGame) return@App
+        if (meDead || MENUTOG || !curSettings.bool["ENABLE_ESP"] || !curSettings.bool["SPREAD_CIRCLE"] || !inGame) return@App
 
         val vAbsVelocity = me.velocity()
         val flVelocity = sqrt(vAbsVelocity.x.pow(2F) + vAbsVelocity.y.pow(2F) + vAbsVelocity.z.pow(2F))
-
+        vAbsVelocity.release()
+        
         val realInaccuracyFire: Float
         val realSpread: Float
         val realInaccuracyMove: Float
@@ -75,8 +74,8 @@ fun spreadCircle() {
         val actualRadius = toDegrees(atan(radius / 2560.0 * tan(toRadians((2.0 * toDegrees(atan((16.0 / 9.0) * 0.75 * tan(toRadians(90 / 2.0))))) / 2.0)))) * 2.0
         val realFov = calcFovRadius(viewFov, actualRadius.toFloat())
 
-        val rccXo = curSettings["RCROSSHAIR_XOFFSET"].toFloat()
-        val rccYo = curSettings["RCROSSHAIR_YOFFSET"].toFloat()
+        val rccXo = curSettings.float["RCROSSHAIR_XOFFSET"]
+        val rccYo = curSettings.float["RCROSSHAIR_YOFFSET"]
         val x = CSGO.gameWidth / 2 + rccXo
         val y = CSGO.gameHeight / 2 + rccYo
 
@@ -87,7 +86,7 @@ fun spreadCircle() {
 
             begin()
 
-            color = curSettings["SPREAD_CIRCLE_COLOR"].strToColorGDX()
+            color = curSettings.colorGDX["SPREAD_CIRCLE_COLOR"]
             circle(x, y, realFov)
 
             end()

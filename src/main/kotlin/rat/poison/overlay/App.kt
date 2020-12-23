@@ -39,7 +39,6 @@ import rat.poison.ui.uiUpdate
 import rat.poison.utils.*
 import rat.poison.utils.extensions.appendHumanReadableSize
 import rat.poison.utils.extensions.roundNDecimals
-import rat.poison.utils.generalUtil.strToBool
 import java.lang.management.ManagementFactory
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
@@ -47,9 +46,9 @@ import kotlin.math.min
 import kotlin.system.measureNanoTime
 
 var opened = false
-var overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
-var toggleAimKey = ObservableBoolean({ keyPressed(curSettings["AIM_TOGGLE_KEY"].toInt()) })
-var visualsToggleKey = ObservableBoolean({ keyPressed(curSettings["VISUALS_TOGGLE_KEY"].toInt()) })
+var overlayMenuKey = ObservableBoolean({ keyPressed(curSettings.int["MENU_KEY"]) })
+var toggleAimKey = ObservableBoolean({ keyPressed(curSettings.int["AIM_TOGGLE_KEY"]) })
+var visualsToggleKey = ObservableBoolean({ keyPressed(curSettings.int["VISUALS_TOGGLE_KEY"]) })
 
 
 var syncTime = 0L
@@ -124,7 +123,7 @@ object App : ApplicationAdapter() {
         timer++
 
         syncTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
-            sync(curSettings["OPENGL_FPS"].toInt())
+            sync(curSettings.int["OPENGL_FPS"])
         }, TimeUnit.NANOSECONDS)
 
         if (VisUI.isLoaded()) {
@@ -142,7 +141,7 @@ object App : ApplicationAdapter() {
                         menuTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
                             assetManager.updateFonts()
                             if (MENUTOG || appless) {
-                                if (curSettings["KEYBINDS"].strToBool()) {
+                                if (curSettings.bool["KEYBINDS"]) {
                                     if (!menuStage.actors.contains(uiKeybinds)) {
                                         menuStage.addActor(uiKeybinds)
                                     }
@@ -157,7 +156,7 @@ object App : ApplicationAdapter() {
                                 menuStage.clear()
                             }
 
-                            if (curSettings["ENABLE_BOMB_TIMER"].strToBool() && curSettings["BOMB_TIMER_MENU"].strToBool() && curSettings["ENABLE_ESP"].strToBool()) {
+                            if (curSettings.bool["ENABLE_BOMB_TIMER"] && curSettings.bool["BOMB_TIMER_MENU"] && curSettings.bool["ENABLE_ESP"]) {
                                 if (!menuStage.actors.contains(uiBombWindow)) {
                                     uiBombWindow.updateAlpha()
                                     menuStage.addActor(uiBombWindow)
@@ -166,7 +165,7 @@ object App : ApplicationAdapter() {
                                 menuStage.clear() //actors.remove at index doesnt work after 1 loop?
                             }
 
-                            if (curSettings["SPECTATOR_LIST"].strToBool() && curSettings["ENABLE_ESP"].strToBool()) {
+                            if (curSettings.bool["SPECTATOR_LIST"] && curSettings.bool["ENABLE_ESP"]) {
                                 if (!menuStage.actors.contains(uiSpecList)) {
                                     uiSpecList.updateAlpha()
                                     menuStage.addActor(uiSpecList)
@@ -205,9 +204,9 @@ object App : ApplicationAdapter() {
                         glFinish()
                     }, TimeUnit.NANOSECONDS)
 
-                    if (curSettings["DEBUG"].strToBool()) { //Draw Debug
+                    if (curSettings.bool["DEBUG"]) { //Draw Debug
                         //Limit updates
-                        if (timer >= curSettings["OPENGL_FPS"].toInt()/4) {
+                        if (timer >= curSettings.int["OPENGL_FPS"]/4) {
                             val runtime = Runtime.getRuntime()
 
                             val totalMem = runtime.totalMemory()
