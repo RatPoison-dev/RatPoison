@@ -88,6 +88,8 @@ fun drawSmokes() = App {
             w2s1.release()
             w2s2.release()
         }
+    
+        smokePos.release()
     }
 }
 
