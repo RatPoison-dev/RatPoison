@@ -12,6 +12,7 @@ import rat.poison.overlay.App
 import rat.poison.overlay.App.shapeRenderer
 import rat.poison.utils.Vector
 import rat.poison.utils.inGame
+import rat.poison.utils.vectorLong
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -34,14 +35,14 @@ fun drawSmokes() = App {
             val x = smokePos.x + smokeWidth * cos(Math.toRadians(360.0 / smokePolys * i))
             val y = smokePos.y + smokeWidth * sin(Math.toRadians(360.0 / smokePolys * i))
             val z = smokePos.z
-            points.add(Vector(x.toFloat(), y.toFloat(), z).value)
+            points.add(vectorLong(x.toFloat(), y.toFloat(), z))
         }
 
         for (i in 0 until smokePolys) {
             val x = smokePos.x + smokeWidth * cos(Math.toRadians(360.0 / smokePolys * i))
             val y = smokePos.y + smokeWidth * sin(Math.toRadians(360.0 / smokePolys * i))
             val z = smokePos.z + smokeHeight
-            points.add(Vector(x.toFloat(), y.toFloat(), z).value)
+            points.add(vectorLong(x.toFloat(), y.toFloat(), z))
         }
 
         if (points.size > 0) {
@@ -68,6 +69,10 @@ fun drawSmokes() = App {
 
             val pX = -(maxPos.y - mePos.y)
             val pY = (maxPos.x - mePos.x)
+    
+            mePos.release()
+            meDir.release()
+            maxPos.release()
 
             val w2s1 = worldToScreen(Vector(smokePos.x + pX, smokePos.y + pY, smokePos.z))
             val w2s2 = worldToScreen(Vector(smokePos.x - pX, smokePos.y - pY, smokePos.z))
@@ -79,6 +84,9 @@ fun drawSmokes() = App {
             }
 
             shapeRenderer.end()
+    
+            w2s1.release()
+            w2s2.release()
         }
     }
 }
@@ -99,6 +107,9 @@ fun connectPoints(vec1: Vector, vec2: Vector) {
 
         shapeRenderer.end()
     }
+    
+    w2s1.release()
+    w2s2.release()
 }
 
 fun lineThroughSmoke(ent: Player): Boolean {
@@ -136,6 +147,12 @@ fun lineThroughSmoke(ent: Player): Boolean {
 
         //This is most likely not perfect...
         through = (pos.distanceTo(Vector(realX, realY, pos.z)) <= 175f && mePos.distanceTo(maxPos) > mePos.distanceTo(pos)) || mePos.distanceTo(pos) <= 175f
+    
+        pos.release()
     }
+    
+    mePos.release()
+    maxPos.release()
+    
     return through
 }
