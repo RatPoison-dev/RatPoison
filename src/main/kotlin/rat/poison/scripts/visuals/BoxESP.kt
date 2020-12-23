@@ -8,9 +8,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
-import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.Align
 import com.sun.jna.Memory
+import it.unimi.dsi.fastutil.longs.LongArrayList
 import org.jire.kna.int
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
@@ -462,46 +462,50 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 	csgoEXE.read(ent + m_Collision, collisionMem)
 
 	//Set min/max
-	val vecMins = Vector(collisionMem.getFloat(8), collisionMem.getFloat(12), collisionMem.getFloat(16))
-	val vecMaxs = Vector(collisionMem.getFloat(20), collisionMem.getFloat(24), collisionMem.getFloat(28))
-
+	val vsx = collisionMem.getFloat(8); val vsy = collisionMem.getFloat(12); val vsz = collisionMem.getFloat(16)
+	val vbx = collisionMem.getFloat(20); val vby = collisionMem.getFloat(24); val vbz = collisionMem.getFloat(28)
+	
 	//Set OBB to loop
-	val pointsArray = mutableListOf<Vector>()
-	pointsArray.add(Vector(vecMins.x, vecMins.y, vecMins.z))
-	pointsArray.add(Vector(vecMins.x, vecMaxs.y, vecMins.z))
-	pointsArray.add(Vector(vecMaxs.x, vecMaxs.y, vecMins.z))
-	pointsArray.add(Vector(vecMaxs.x, vecMins.y, vecMins.z))
-	pointsArray.add(Vector(vecMaxs.x, vecMaxs.y, vecMaxs.z))
-	pointsArray.add(Vector(vecMins.x, vecMaxs.y, vecMaxs.z))
-	pointsArray.add(Vector(vecMins.x, vecMins.y, vecMaxs.z))
-	pointsArray.add(Vector(vecMaxs.x, vecMins.y, vecMaxs.z))
+	val pointsArray = longArrayOf(
+		FastVector(vsx, vsy, vsz).value,
+		FastVector(vsx, vby, vsz).value,
+		FastVector(vbx, vby, vsz).value,
+		FastVector(vbx, vsy, vsz).value,
+		FastVector(vbx, vby, vbz).value,
+		FastVector(vsx, vby, vbz).value,
+		FastVector(vsx, vsy, vbz).value,
+		FastVector(vbx, vsy, vbz).value
+	)
 
-	val screenPointsTransformedArray = mutableListOf<Vector>()
+	val screenPointsTransformedArray = LongArrayList()
 
 	for (i in pointsArray) {
-		val vecOut = Vector()
-		worldToScreen(transformVector(i, frameMatrix), vecOut)
-		screenPointsTransformedArray.add(vecOut)
+		val vecOut = worldToScreen(transformVector(FastVector(i), frameMatrix))
+		screenPointsTransformedArray.add(vecOut.value)
 	}
 
-	var left = screenPointsTransformedArray[0].x
-	var top = screenPointsTransformedArray[0].y
-	var right = screenPointsTransformedArray[0].x
-	var bottom = screenPointsTransformedArray[0].y
-
-	for (i in screenPointsTransformedArray) {
+	val first = FastVector(screenPointsTransformedArray.getLong(0))
+	val fx = first.x; val fy = first.y
+	var left = fx
+	var top = fy
+	var right = fx
+	var bottom = fy
+	
+	val it = screenPointsTransformedArray.listIterator()
+	while (it.hasNext()) {
+		val i = FastVector(it.nextLong())
 		if (left > i.x) {
 			left = i.x
 		}
-
+		
 		if (top < i.y) {
 			top = i.y
 		}
-
+		
 		if (right < i.x) {
 			right = i.x
 		}
-
+		
 		if (bottom > i.y) {
 			bottom = i.y
 		}
@@ -510,15 +514,11 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 	return BoundingBox(left, right, top, bottom)
 }
 
-fun transformVector(vec: Vector, array: Array<FloatArray>): Vector {
-	val outVec = Vector()
-	val thisVec = Vector3(vec.x, vec.y, vec.z)
-	outVec.x = (thisVec.dot(array[0][0], array[0][1], array[0][2]) + array[0][3])
-	outVec.y = (thisVec.dot(array[1][0], array[1][1], array[1][2]) + array[1][3])
-	outVec.z = (thisVec.dot(array[2][0], array[2][1], array[2][2]) + array[2][3])
-
-	return outVec
-}
+fun transformVector(vec: FastVector, array: Array<FloatArray>) = FastVector(
+	(vec.dot(array[0][0], array[0][1], array[0][2]) + array[0][3]),
+	(vec.dot(array[1][0], array[1][1], array[1][2]) + array[1][3]),
+	(vec.dot(array[2][0], array[2][1], array[2][2]) + array[2][3])
+)
 
 fun getWeaponTexture(assetManager: AssetManager, name: String): Texture {
 	val assetName = "$SETTINGS_DIRECTORY/Assets/Images/${name.toLowerCase()}.png"

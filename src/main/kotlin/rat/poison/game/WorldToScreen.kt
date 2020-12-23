@@ -5,9 +5,18 @@ import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.offsets.ClientOffsets.dwViewMatrix
+import rat.poison.utils.FastVector
 import rat.poison.utils.Vector
 
 val w2sViewMatrix = Array(4) { DoubleArray(4) }
+
+private val w2sVector = ThreadLocal.withInitial { Vector() }
+
+fun worldToScreen(from: FastVector): FastVector {
+	val vOut = w2sVector.get()
+	worldToScreen(from.x, from.y, from.z, vOut)
+	return FastVector(vOut)
+}
 
 fun worldToScreen(from: Vector, vOut: Vector) = worldToScreen(from.x, from.y, from.z, vOut)
 

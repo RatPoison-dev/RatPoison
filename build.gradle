@@ -6,11 +6,11 @@ buildscript {
 	ext.jnaVersion = '5.6.0'
 	ext.gdxVersion = '1.9.13-SNAPSHOT'
 	ext.visuiVersion = "1.4.7"
-
+	
 	repositories {
 		jcenter()
 	}
-
+	
 	dependencies {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 		classpath 'com.github.jengelman.gradle.plugins:shadow:6.1.0'
@@ -37,7 +37,7 @@ repositories {
 
 dependencies {
 	implementation 'org.jire:kna:0.2.2'
-
+	
 	implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
 	implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
 	implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
@@ -52,7 +52,7 @@ dependencies {
 	implementation group: 'org.jetbrains.kotlin', name: 'kotlin-script-runtime', version: kotlin_version
 	implementation group: 'org.jetbrains.kotlin', name: 'kotlin-script-util', version: kotlin_version
 	implementation group: 'org.jetbrains.kotlin', name: 'kotlin-compiler-embeddable', version: kotlin_version
-
+	
 	implementation group: 'commons-io', name: 'commons-io', version: '2.8.0'
 	implementation 'com.github.ata4:ioutils:b1f26588b5'
 	implementation 'com.github.ata4:bspsrc:v1.3.24'
@@ -74,19 +74,19 @@ shadowJar {
 task RatPoison {
 	doLast {
 		def name = "RatPoison $version"
-
+		
 		def dir = file("build/$name/")
 		if (dir.exists()) {
 			dir.deleteDir()
 		}
 		dir.mkdirs()
-
+		
 		def jarName = "${name}.jar"
 		//noinspection GroovyAssignabilityCheck
 		def jar = file(new File(dir, jarName))
 		def allJar = file("build/libs/RatPoison-${version}.jar")
 		Files.copy(allJar.toPath(), jar.toPath())
-
+		
 		//noinspection GroovyAssignabilityCheck
 		def bat = file(new File(dir, "Start ${name}.bat"))
 		Files.write(bat.toPath(), """@echo off
@@ -95,12 +95,12 @@ task RatPoison {
 		title $name
 		java -Xmx512m -Xms32m -XX:+UseSerialGC -jar "$jarName" 
 		pause""".getBytes())
-
+		
 		def dirSettings = file(new File(dir, "settings"))
 		def settings = file("settings")
 		dirSettings.mkdirs()
 		FileUtils.copyDirectory(settings, dirSettings)
-
+		
 		def dirSkin = file(new File(dir, "skin"))
 		dirSkin.mkdirs()
 		def skins = file("skin")
@@ -115,4 +115,10 @@ sourceSets {
 	main.java.srcDirs += 'src/main/java'
 	main.java.srcDirs += 'src/main/kotlin'
 	main.java.srcDirs += 'settings'
+}
+
+compileKotlin {
+	kotlinOptions {
+		freeCompilerArgs = ["-Xinline-classes"]
+	}
 }
