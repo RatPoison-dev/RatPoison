@@ -529,14 +529,19 @@ fun setupFakeBox(ent: Entity): BoundingBox {
 }
 
 private val collisionMem = threadLocalMemory(56) //Incorrect
+private val frameMatrix = ThreadLocal.withInitial { Array(4) { FloatArray(4) } }
+private val bufferFloatArray = ThreadLocal.withInitial { FloatArray(16) }
 
 //Create a real accurate box using vecMins & vecMaxs
 fun setupAccurateBox(ent: Entity): BoundingBox {
 	//Get frameMatrix
-	val frameMatrix = Array(4) { FloatArray(4) }
+	val frameMatrix = frameMatrix.get()
+	
 	val buffer = csgoEXE.read(ent + rgflCoordinateFrame - 0x30, 4 * 4 * 4)
 	if (buffer != null) {
-		if (buffer.getFloatArray(0, 16).all(Float::isFinite)) {
+		val bufferFloatArray = bufferFloatArray.get()
+		buffer.read(0, bufferFloatArray, 0, 16)
+		if (bufferFloatArray.all(Float::isFinite)) {
 			var offset = 0
 			for (row in 0..3) for (col in 0..3) {
 				val value = buffer.getFloat(offset.toLong())
