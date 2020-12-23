@@ -16,6 +16,14 @@ inline class Vector(val value: Long) {
 	
 	fun release() = memory.freeMemory(value, 12)
 	
+	inline fun use(crossinline use: (Vector) -> Unit) {
+		try {
+			use(this)
+		} finally {
+			release()
+		}
+	}
+	
 	fun set(x: Float, y: Float, z: Float = 0F) = Vector(x, y, z)
 	fun x(x: Float) = Vector(x, y, z)
 	fun y(y: Float) = Vector(x, y, z)

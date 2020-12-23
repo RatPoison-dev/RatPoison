@@ -42,12 +42,15 @@ internal fun headWalk() = every(2, inGameCheck = true) {
             if (cursorEnable) return@every
 
             val pos = Vector(mePos.x - onEntPos.x, mePos.y - onEntPos.y, mePos.z - onEntPos.z)
-            val yaw = clientState.angle().y
+            val angle = clientState.angle()
+            val yaw = angle.y
+            angle.release()
             val calcYaw = yaw/180*Math.PI
 
             //Is this even needed?
             val distX = (pos.x * cos(calcYaw) + pos.y * sin(calcYaw)).toInt()
             val distY = (pos.y * cos(calcYaw) - pos.x * sin(calcYaw)).toInt()
+            pos.release()
 
             //Gotta be a simpler way
             var wRelease = false
@@ -90,18 +93,19 @@ internal fun headWalk() = every(2, inGameCheck = true) {
                 robot.keyRelease(KeyEvent.VK_D)
             }
         }
+    
+        mePos.release()
     }
 }
 
 internal fun onPlayerHead() : Boolean {
-    var entPos : Vector
     onEnt = 0L
 
     forEntities(EntityType.CCSPlayer) {
         val entity = it.entity
         if (entity == me || !entity.onGround()) return@forEntities
 
-        entPos = entity.absPosition()
+        val entPos = entity.absPosition()
 
         val xDist = abs(mePos.x - entPos.x)
         val yDist = abs(mePos.y - entPos.y)
@@ -111,6 +115,8 @@ internal fun onPlayerHead() : Boolean {
             onEnt = entity
             onEntPos = entPos
         }
+    
+        entPos.release()
 
         if (onEnt != 0L) {
             return@forEntities

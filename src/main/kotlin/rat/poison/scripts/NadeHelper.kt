@@ -185,6 +185,7 @@ fun createPosition() {
                     }
                     mPos = me.absPosition()
                     feetSpot = listOf(mPos.x, mPos.y, mPos.z, input, chosenNadeType, throwingNadeType)
+                    mPos.release()
                     headPos = listOf(xOff, yOff, zOff)
                     headLookPos = listOf(hLPx, hLPy, hLPz)
                     LoL = listOf(feetSpot, headPos, headLookPos)

@@ -28,12 +28,16 @@ internal fun fastStop() = every(4, inGameCheck = true) {
     if (cursorEnable) return@every
 
     val vel = me.velocity()
-    val yaw = clientState.angle().y
+    val angle = clientState.angle()
+    val yaw = angle.y
+    angle.release()
 
     //Velocity relative to player direction
     val x = (vel.x * cos(yaw / 180 * Math.PI) + vel.y * sin(yaw / 180 * Math.PI))
     val y = (vel.y * cos(yaw / 180 * Math.PI) - vel.x * sin(yaw / 180 * Math.PI))
-
+    
+    vel.release()
+    
     if (!keyPressed(VK_SPACE) && me.onGround()) {
         if (x != 0.0 && y != 0.0) {
             if (!keyPressed(VK_W) && !keyPressed(VK_S)) {

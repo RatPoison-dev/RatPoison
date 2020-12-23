@@ -119,8 +119,10 @@ fun drawIndicator(enemyEnt: Long, drawColor: Color)
     val entAbs = enemyEnt.absPosition()
 
     val src = Vector(meAbs.x, meAbs.y, 0F)
+    meAbs.release()
     val dest = Vector(entAbs.x, entAbs.y, 0F)
-
+    entAbs.release()
+    
     var tmpAng = calcAngle(src, dest, Vector(0F, 0F, 0F))
     tmpAng = angVec(Vector(-tmpAng.x , 90F - tmpAng.y + meEyeAngle.y, -tmpAng.z))
 

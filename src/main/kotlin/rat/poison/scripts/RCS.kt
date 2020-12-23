@@ -68,4 +68,6 @@ fun rcs() = every(15, inGameCheck = true) {
 			}
 		}
 	}
+	
+	p.release()
 }

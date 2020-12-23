@@ -55,7 +55,8 @@ fun hitMarker() = App {
             //Center
             x = CSGO.gameWidth / 2 - ((CSGO.gameWidth / 95F) * punch.y) + rccXo
             y = CSGO.gameHeight / 2 - ((CSGO.gameHeight / 95F) * punch.x) + rccYo
-
+    
+            punch.release()
         } else {
             //Center
             x = CSGO.gameWidth / 2 + rccXo

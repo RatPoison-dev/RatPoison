@@ -209,6 +209,8 @@ internal fun Player.nearestBone(): Int {
 						nearestBone = idx
 					}
 				}
+				
+				tPunch.release()
 			}
 		}
 		offset += 216

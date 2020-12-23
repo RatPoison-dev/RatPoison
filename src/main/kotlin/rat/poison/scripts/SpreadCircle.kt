@@ -42,7 +42,8 @@ fun spreadCircle() {
 
         val vAbsVelocity = me.velocity()
         val flVelocity = sqrt(vAbsVelocity.x.pow(2F) + vAbsVelocity.y.pow(2F) + vAbsVelocity.z.pow(2F))
-
+        vAbsVelocity.release()
+        
         val realInaccuracyFire: Float
         val realSpread: Float
         val realInaccuracyMove: Float

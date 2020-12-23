@@ -171,7 +171,9 @@ fun constructRecords() {
 			
 			csgoEXE.read(ent.boneMatrix(), boneMemory)
 			record.headPos = boneMemory.bones(8).run { z(z + 5) }
-			record.absPos = ent.absPosition().run { z(z - 5) }
+			val entPos = ent.absPosition()
+			record.absPos = entPos.run { z(z - 5) }
+			entPos.release()
 			
 			record.alpha = 100f
 			record.simtime = entSimTime
@@ -232,6 +234,8 @@ fun bestSimTime(): Float {
 		val centerX = (CSGO.gameWidth / 2) - tan(Math.toRadians(punch.y.toDouble())).toFloat() * rccFov2
 		val centerY = (CSGO.gameHeight / 2) - tan(Math.toRadians(punch.x.toDouble())).toFloat() * rccFov2
 		
+		punch.release()
+		
 		if (inRange(centerX, topLeft.x, topRight.x) && inRange(
 				centerY,
 				topLeft.y,
@@ -252,6 +256,9 @@ fun bestSimTime(): Float {
 				}
 			}
 		}
+		
+		topLeft.release()
+		topRight.release()
 	}
 	
 	return best

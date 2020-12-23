@@ -34,8 +34,10 @@ fun nadeTracer() = App {
             val ent = it.entity
             val entPos = ent.absPosition()
 
-            if (entPos.x in -2F..2F && entPos.y in -2F..2F && entPos.z in -2F..2F) {
-                return@forEntities
+            try {
+                if (entPos.x in -2F..2F && entPos.y in -2F..2F && entPos.z in -2F..2F) return@forEntities
+            } finally {
+                entPos.release()
             }
 
             if (!grenadeList.contains(ent)) {
@@ -63,6 +65,7 @@ fun nadeTracer() = App {
                     positionsList.removeAt(idx)
                 }
             }
+            entPos.release()
         }
         sync = 0 //Reset
     }

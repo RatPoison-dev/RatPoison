@@ -113,20 +113,35 @@ fun snapLines() = App {
             color = snapColor.set(drawColor.red/255F, drawColor.green/255F, drawColor.blue/255F, .5F)
 
             val entPos = entity.absPosition()
-
-            if ((entPos.x == 0F && entPos.y == 0F && entPos.z == 0F)) return@forEntities
+            try {
+                if ((entPos.x == 0F && entPos.y == 0F && entPos.z == 0F)) return@forEntities
     
-            val vec = worldToScreen(entPos)
-            
-            set(ShapeRenderer.ShapeType.Filled)
-            if (vec.w2s()) { //Onscreen
-                rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, vec.y, curSettings.float["SNAPLINES_WIDTH"])
-            } else { //Offscreen
-                rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, -vec.y, curSettings.float["SNAPLINES_WIDTH"])
+                val vec = worldToScreen(entPos)
+    
+                set(ShapeRenderer.ShapeType.Filled)
+                if (vec.w2s()) { //Onscreen
+                    rectLine(
+                        CSGO.gameWidth / 2F,
+                        CSGO.gameHeight / 4F,
+                        vec.x,
+                        vec.y,
+                        curSettings.float["SNAPLINES_WIDTH"]
+                    )
+                } else { //Offscreen
+                    rectLine(
+                        CSGO.gameWidth / 2F,
+                        CSGO.gameHeight / 4F,
+                        vec.x,
+                        -vec.y,
+                        curSettings.float["SNAPLINES_WIDTH"]
+                    )
+                }
+                set(ShapeRenderer.ShapeType.Line)
+    
+                end()
+            } finally {
+                entPos.release()
             }
-            set(ShapeRenderer.ShapeType.Line)
-
-            end()
         }
     }
 }
