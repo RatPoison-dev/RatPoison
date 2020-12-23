@@ -58,6 +58,8 @@ dependencies {
 	implementation 'com.github.ata4:bspsrc:v1.3.24'
 	
 	implementation group: 'it.unimi.dsi', name: 'fastutil', version: '8.4.4'
+	
+	implementation group: 'net.openhft', name: 'chronicle-core', version: '2.20.125'
 }
 
 jar {

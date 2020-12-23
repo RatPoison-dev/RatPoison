@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.utils.Align
-import it.unimi.dsi.fastutil.longs.LongArrayList
 import org.jire.kna.int
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
@@ -571,37 +570,28 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 		Vector(vecMaxs.x, vecMins.y, vecMaxs.z).value
 	)
 	
-	val screenPointsTransformedArray = LongArrayList()
-	
+	var first = true
+	var left = 0F
+	var top = 0F
+	var right = 0F
+	var bottom = 0F
 	for (i in pointsArray) {
 		val vecOut = worldToScreen(transformVector(Vector(i), frameMatrix))
-		screenPointsTransformedArray.add(vecOut.value)
-	}
-	
-	val first = Vector(screenPointsTransformedArray.getLong(0))
-	var left = first.x
-	var top = first.y
-	var right = first.x
-	var bottom = first.y
-	
-	val it = screenPointsTransformedArray.listIterator()
-	while (it.hasNext()) {
-		val i = Vector(it.nextLong())
-		if (left > i.x) {
-			left = i.x
+		
+		val x = vecOut.x
+		val y = vecOut.y
+		if (first) {
+			left = x
+			top = y
+			right = x
+			bottom = y
+			first = false
 		}
 		
-		if (top < i.y) {
-			top = i.y
-		}
-		
-		if (right < i.x) {
-			right = i.x
-		}
-		
-		if (bottom > i.y) {
-			bottom = i.y
-		}
+		if (left > x) left = x
+		if (top < y) top = y
+		if (right < x) right = x
+		if (bottom > y) bottom = y
 	}
 	
 	return BoundingBox(left, right, top, bottom)

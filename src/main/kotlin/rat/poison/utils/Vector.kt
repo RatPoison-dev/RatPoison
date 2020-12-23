@@ -1,17 +1,20 @@
 package rat.poison.utils
 
+import net.openhft.chronicle.core.OS
+import java.util.concurrent.ThreadLocalRandom
 import kotlin.math.abs
-import kotlin.math.roundToLong
 
 inline class Vector(val value: Long) {
 	constructor(x: Float = 0F, y: Float = 0F, z: Float = 0F) : this(vectorLong(x, y, z))
 	
 	val x: Float
-		get() = ((value ushr 42).toFloat() / FAST_VECTOR_PRECISION_DIV) - FAST_VECTOR_OFFSET
+		get() = memory.readFloat(value)
 	val y: Float
-		get() = (((value ushr 21) and FAST_VECTOR_BITMASK).toFloat() / FAST_VECTOR_PRECISION_DIV) - FAST_VECTOR_OFFSET
+		get() = memory.readFloat(value + 4)
 	val z: Float
-		get() = ((value and FAST_VECTOR_BITMASK).toFloat() / FAST_VECTOR_PRECISION_DIV) - FAST_VECTOR_OFFSET
+		get() = memory.readFloat(value + 8)
+	
+	fun release() = memory.freeMemory(value, 12)
 	
 	fun set(x: Float, y: Float, z: Float = 0F) = Vector(x, y, z)
 	fun x(x: Float) = Vector(x, y, z)
@@ -56,20 +59,14 @@ inline class Vector(val value: Long) {
 
 fun dot(x: Float, y: Float, z: Float, tx: Float, ty: Float, tz: Float): Float = tx * x + ty * y + tz * z
 
-const val FAST_VECTOR_OFFSET = 9999F
-const val FAST_VECTOR_PRECISION_MULT = 100.0
-const val FAST_VECTOR_PRECISION_DIV = FAST_VECTOR_PRECISION_MULT.toFloat()
-const val FAST_VECTOR_BITMASK = 0x1FFFFFL
+private val memory = OS.memory()
 
 fun vectorLong(x: Float = 0F, y: Float = 0F, z: Float = 0F): Long {
-	val x2 = ((x + FAST_VECTOR_OFFSET) * FAST_VECTOR_PRECISION_MULT).roundToLong() and FAST_VECTOR_BITMASK
-	val y2 = ((y + FAST_VECTOR_OFFSET) * FAST_VECTOR_PRECISION_MULT).roundToLong() and FAST_VECTOR_BITMASK
-	val z2 = ((z + FAST_VECTOR_OFFSET) * FAST_VECTOR_PRECISION_MULT).roundToLong() and FAST_VECTOR_BITMASK
-	
-	var vector = x2 shl 42
-	vector = vector or (y2 shl 21)
-	vector = vector or z2
-	return vector
+	val address = memory.allocate(12)
+	memory.writeVolatileFloat(address, x)
+	memory.writeVolatileFloat(address + 4, y)
+	memory.writeVolatileFloat(address + 8, z)
+	return address
 }
 
 typealias Angle = Vector
@@ -77,3 +74,17 @@ typealias Angle = Vector
 fun angle(x: Float = 0F, y: Float = 0F): Angle = Vector(x, y)
 
 fun vector(x: Float = 0F, y: Float = 0F, z: Float = 0F): Vector = Vector(vectorLong(x, y, z))
+
+fun main() {
+	val tlr = ThreadLocalRandom.current()
+	for (i in 0..100000) {
+		val x = tlr.nextFloat()
+		val y = tlr.nextFloat()
+		val z = tlr.nextFloat()
+		
+		val v = vector(x, y, z)
+		if (abs(v.x - x) > 0.001 || abs(v.y - y) > 0.001 || abs(v.z - z) > 0.001) {
+			println("FAILED x $x should be ${v.x}, y $y should be ${v.y}, z $z should be ${v.z}")
+		}
+	}
+}
