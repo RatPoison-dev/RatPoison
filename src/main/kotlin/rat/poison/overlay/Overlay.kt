@@ -29,10 +29,10 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	private val rcWindow = Rect()
 	private val myRcClient = Rect()
 	private val myRcWindow = Rect()
-	private var x: Int = curSettings["APPLESS_X"].toInt()
-	private var y: Int = curSettings["APPLESS_Y"].toInt()
-	var width: Int =     curSettings["APPLESS_WIDTH"].toInt()
-	var height: Int =    curSettings["APPLESS_HEIGHT"].toInt()
+	private var x: Int = curSettings.int["APPLESS_X"]
+	private var y: Int = curSettings.int["APPLESS_Y"]
+	var width: Int =     curSettings.int["APPLESS_WIDTH"]
+	var height: Int =    curSettings.int["APPLESS_HEIGHT"]
 	private var initialWidth: Int = 0
 	private var initialHeight: Int = 0
 	private var initialWindowStyle: Int = 0

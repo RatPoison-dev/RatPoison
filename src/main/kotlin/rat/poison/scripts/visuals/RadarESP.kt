@@ -5,8 +5,8 @@ import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.utils.every
 import rat.poison.utils.Vector
+import rat.poison.utils.every
 
 internal fun radarEsp() = every(100, inGameCheck = true) {
     if (!curSettings.bool["RADAR_ESP"] || DANGER_ZONE) return@every
@@ -18,7 +18,7 @@ internal fun radarEsp() = every(100, inGameCheck = true) {
 
             if (ent > 0L) {
                 entsChecked.add(ent)
-                if (!footSteps[i].open && footSteps[i].ttl > 0 && Vector(footSteps[i].x, footSteps[i].y, footSteps[i].z).distanceTo(me.position()) <= curSettings["AUDIBLE_ESP_RANGE"].toInt()) {
+                if (!footSteps[i].open && footSteps[i].ttl > 0 && Vector(footSteps[i].x, footSteps[i].y, footSteps[i].z).distanceTo(me.position()) <= curSettings.int["AUDIBLE_ESP_RANGE"]) {
                     ent.showOnRadar()
                 } else {
                     ent.hideOnRadar()

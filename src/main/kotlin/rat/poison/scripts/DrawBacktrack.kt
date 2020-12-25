@@ -2,10 +2,10 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import rat.poison.curSettings
-import rat.poison.game.me
-import rat.poison.game.w2s
 import rat.poison.game.CSGO
+import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets
+import rat.poison.game.w2s
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meCurWep
@@ -15,7 +15,6 @@ import rat.poison.scripts.visuals.lineThroughSmoke
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.Vector
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
 import rat.poison.utils.keyPressed
 
@@ -44,8 +43,8 @@ fun drawBacktrack() = App {
         val maxRecord = btRecords[i][minMaxIDX[1]]
     
         val entity = CSGO.clientDLL.uint(ClientOffsets.dwEntityList + ((i and 0xFFF) - 1L) * CSGO.ENTITY_SIZE)
-        if (entity != 0L && curSettings["BACKTRACK_VISUALIZE_SMOKE_CHECK"].strToBool() && lineThroughSmoke(entity)) continue
-        if (entity != 0L && curSettings["BACKTRACK_VISUALIZE_AUDIBLE"].strToBool() && !inFootsteps(entity)) continue
+        if (entity != 0L && curSettings.bool["BACKTRACK_VISUALIZE_SMOKE_CHECK"] && lineThroughSmoke(entity)) continue
+        if (entity != 0L && curSettings.bool["BACKTRACK_VISUALIZE_AUDIBLE"] && !inFootsteps(entity)) continue
     
         val minHeadPos = worldToScreen(minRecord.headPos)
         val maxHeadPos = worldToScreen(maxRecord.headPos)

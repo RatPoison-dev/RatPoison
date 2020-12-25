@@ -17,7 +17,7 @@ class KeyProcessorListener : IOKeyProcessorListener {
 
     override fun onPress(keycode: Int, type: String) {
         var newKey = if (type == "button") gdxToVk[keycode]!! else gdxButtons[keycode]!!
-        curSettings[needKeyPressVar] = when (newKey != 46 && newKey != 27 && newKey != curSettings["MENU_KEY"].toInt()) {
+        curSettings[needKeyPressVar] = when (newKey != 46 && newKey != 27 && newKey != curSettings.int["MENU_KEY"]) {
             true -> newKey
             false -> -1
         }

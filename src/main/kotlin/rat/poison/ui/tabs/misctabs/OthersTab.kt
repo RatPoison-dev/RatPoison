@@ -22,7 +22,6 @@ import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
 import rat.poison.ui.uiRefreshing
 import rat.poison.utils.generalUtil.boolToStr
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.saving
 import java.io.File
 
@@ -69,7 +68,7 @@ class OthersTab: Tab(false, false) {
             true
         }
 
-        val selected = musicKitArray.first { it.id == curSettings["MUSIC_KIT_ID"].toInt() }.name
+        val selected = musicKitArray.first { it.id == curSettings.int["MUSIC_KIT_ID"] }.name
         val currentlySelected = VisLabel("${"CURRENTLY".toLocale()}: $selected")
         //Crashing on adding separators with .colspan(2) (?)
         table.padLeft(25F)
@@ -126,7 +125,7 @@ class OthersTab: Tab(false, false) {
             if (!str.isNullOrEmpty()) {
                 val id = getMusicKitId(str)
                 curSettings["MUSIC_KIT_ID"] = id
-                if (curSettings["MUSIC_KIT_SPOOFER"].strToBool()) {
+                if (curSettings.bool["MUSIC_KIT_SPOOFER"]) {
                     writeSpoof()
                 }
                 currentlySelected.setText("${"CURRENTLY".toLocale()}: $str")
@@ -134,7 +133,7 @@ class OthersTab: Tab(false, false) {
         }
 
         //Create Hit Sound Toggle
-        if (curSettings["ENABLE_HITSOUND"].strToBool()) hitSoundCheckBox.toggle()
+        if (curSettings.bool["ENABLE_HITSOUND"]) hitSoundCheckBox.toggle()
         hitSoundCheckBox.changed { _, _ ->
             curSettings["ENABLE_HITSOUND"] = hitSoundCheckBox.isChecked.boolToStr()
             true
@@ -158,7 +157,7 @@ class OthersTab: Tab(false, false) {
         }
 
         //Create Kill Sound Toggle
-        if (curSettings["ENABLE_KILLSOUND"].strToBool()) killSoundCheckBox.toggle()
+        if (curSettings.bool["ENABLE_KILLSOUND"]) killSoundCheckBox.toggle()
         killSoundCheckBox.changed { _, _ ->
             curSettings["ENABLE_KILLSOUND"] = killSoundCheckBox.isChecked.boolToStr()
             true

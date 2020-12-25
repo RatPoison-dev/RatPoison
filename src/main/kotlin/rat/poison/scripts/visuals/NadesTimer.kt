@@ -10,14 +10,12 @@ import rat.poison.game.forEntities
 import rat.poison.game.w2s
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
-import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.inGame
 
 //https://github.com/WarezBox/aimware/blob/master/%5BLuaScript%20V5%5D%20Smoke%20timer%20ESP
 
 fun nadesTimer() = App {
-    if (!curSettings["SMOKE_WEAR_OFF_TIME"].strToBool() || !inGame) return@App
+    if (!curSettings.bool["SMOKE_WEAR_OFF_TIME"] || !inGame) return@App
 
     forEntities(EntityType.CSmokeGrenadeProjectile) {
         val ent = it.entity
@@ -32,7 +30,7 @@ fun nadesTimer() = App {
                     end()
                 }
                 sb.begin()
-                textRenderer.color = curSettings["SMOKE_WEAR_OFF_TIME_COLOR"].strToColorGDX()
+                textRenderer.color = curSettings.colorGDX["SMOKE_WEAR_OFF_TIME_COLOR"]
                 val sbText = StringBuilder()
                 sbText.append("SMOKE\n${String.format("%.2f", seconds)} s")
                 textRenderer.draw(sb, sbText, vec.x, vec.y, 1F, Align.left, false)

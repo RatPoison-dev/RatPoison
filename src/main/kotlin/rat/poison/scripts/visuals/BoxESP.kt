@@ -27,7 +27,6 @@ import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
 import rat.poison.toLocale
 import rat.poison.utils.*
-import rat.poison.utils.generalUtil.strToBool
 import kotlin.math.abs
 import kotlin.math.sign
 
@@ -37,8 +36,8 @@ data class DrawableTexture(var texture: Texture, var position: String = "")
 
 //Just a bruh moment
 private var advancedBBox = false
-private var drawBox = curSettings["ENABLE_BOX_ESP"].strToBool()
-private var drawBoxDetails = curSettings["BOX_ESP_DETAILS"].strToBool()
+private var drawBox = curSettings.bool["ENABLE_BOX_ESP"]
+private var drawBoxDetails = curSettings.bool["BOX_ESP_DETAILS"]
 private var bEspName = false;
 private var bEspNamePos = "BOTTOM"
 private var bEspWeapon = false;
@@ -78,41 +77,41 @@ private val entityMemory = threadLocalMemory(45948)
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
 fun boxEsp() {
 	every(1000, true) { //Update settings
-		if ((!curSettings["ENABLE_BOX_ESP"].strToBool() && !curSettings["BOX_ESP_DETAILS"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@every
+		if ((!curSettings.bool["ENABLE_BOX_ESP"] && !curSettings.bool["BOX_ESP_DETAILS"]) || !curSettings.bool["ENABLE_ESP"] || !inGame) return@every
 		
-		advancedBBox = curSettings["ADVANCED_BOUNDING_BOX"].strToBool()
+		advancedBBox = curSettings.bool["ADVANCED_BOUNDING_BOX"]
 		
-		drawBox = curSettings["ENABLE_BOX_ESP"].strToBool()
-		drawBoxDetails = curSettings["BOX_ESP_DETAILS"].strToBool()
+		drawBox = curSettings.bool["ENABLE_BOX_ESP"]
+		drawBoxDetails = curSettings.bool["BOX_ESP_DETAILS"]
 		
-		bEspName = curSettings["BOX_ESP_NAME"].strToBool()
+		bEspName = curSettings.bool["BOX_ESP_NAME"]
 		bEspNamePos = curSettings["BOX_ESP_NAME_POS"].replace("\"", "")
-		bEspWeapon = curSettings["BOX_ESP_WEAPON"].strToBool()
+		bEspWeapon = curSettings.bool["BOX_ESP_WEAPON"]
 		bEspWeaponPos = curSettings["BOX_ESP_WEAPON_POS"].replace("\"", "")
-		bEspHealth = curSettings["BOX_ESP_HEALTH"].strToBool()
+		bEspHealth = curSettings.bool["BOX_ESP_HEALTH"]
 		bEspHealthPos = curSettings["BOX_ESP_HEALTH_POS"].replace("\"", "")
-		bEspArmor = curSettings["BOX_ESP_ARMOR"].strToBool()
+		bEspArmor = curSettings.bool["BOX_ESP_ARMOR"]
 		bEspArmorPos = curSettings["BOX_ESP_ARMOR_POS"].replace("\"", "")
-		bEspAmmo = curSettings["BOX_ESP_AMMO"].strToBool()
+		bEspAmmo = curSettings.bool["BOX_ESP_AMMO"]
 		bEspAmmoPos = curSettings["BOX_ESP_AMMO_POS"].replace("\"", "")
-		bEspHelmet = curSettings["BOX_ESP_HELMET"].strToBool()
+		bEspHelmet = curSettings.bool["BOX_ESP_HELMET"]
 		bEspHelmetPos = curSettings["BOX_ESP_HELMET_POS"].replace("\"", "")
-		bEspKevlar = curSettings["BOX_ESP_KEVLAR"].strToBool()
+		bEspKevlar = curSettings.bool["BOX_ESP_KEVLAR"]
 		bEspKevlarPos = curSettings["BOX_ESP_KEVLAR_POS"].replace("\"", "")
-		bEspScoped = curSettings["BOX_ESP_SCOPED"].strToBool()
+		bEspScoped = curSettings.bool["BOX_ESP_SCOPED"]
 		bEspScopedPos = curSettings["BOX_ESP_SCOPED_POS"].replace("\"", "")
-		bEspFlashed = curSettings["BOX_ESP_FLASHED"].strToBool()
+		bEspFlashed = curSettings.bool["BOX_ESP_FLASHED"]
 		bEspFlashedPos = curSettings["BOX_ESP_FLASHED_POS"].replace("\"", "")
-		bEspMoney = curSettings["BOX_ESP_MONEY"].strToBool()
+		bEspMoney = curSettings.bool["BOX_ESP_MONEY"]
 		bEspMoneyPos = curSettings["BOX_ESP_MONEY_POS"].replace("\"", "")
 		
-		showTeam = curSettings["BOX_SHOW_TEAM"].strToBool()
-		showEnemy = curSettings["BOX_SHOW_ENEMIES"].strToBool()
-		showWeapons = curSettings["BOX_SHOW_WEAPONS"].strToBool()
-		showDefuseKits = curSettings["BOX_SHOW_DEFUSERS"].strToBool()
-		weaponsScale = curSettings["BOX_ESP_WEAPON_SCALE"].toFloat()
+		showTeam = curSettings.bool["BOX_SHOW_TEAM"]
+		showEnemy = curSettings.bool["BOX_SHOW_ENEMIES"]
+		showWeapons = curSettings.bool["BOX_SHOW_WEAPONS"]
+		showDefuseKits = curSettings.bool["BOX_SHOW_DEFUSERS"]
+		weaponsScale = curSettings.float["BOX_ESP_WEAPON_SCALE"]
 		
-		bEspUseIcons = curSettings["BOX_ESP_USE_ICONS"].strToBool()
+		bEspUseIcons = curSettings.bool["BOX_ESP_USE_ICONS"]
 	}
 	
 	App {

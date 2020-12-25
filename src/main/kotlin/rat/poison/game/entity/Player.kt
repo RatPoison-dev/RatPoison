@@ -40,7 +40,8 @@ import rat.poison.game.offsets.ClientOffsets.dwPlayerResource
 import rat.poison.game.offsets.EngineOffsets.dwClientState_PlayerInfo
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.SERVER_TICK_RATE
-import rat.poison.utils.*
+import rat.poison.utils.Angle
+import rat.poison.utils.Vector
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.extensions.unsign
 import rat.poison.utils.threadLocalMemory

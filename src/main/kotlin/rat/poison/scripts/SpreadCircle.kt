@@ -16,8 +16,6 @@ import rat.poison.scripts.aim.meCurWepEnt
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.inGame
 import java.lang.Math.toDegrees
 import java.lang.Math.toRadians
@@ -40,7 +38,7 @@ fun spreadCircle() {
     refreshWepData()
 
     App {
-        if (meDead || MENUTOG || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["SPREAD_CIRCLE"].strToBool() || !inGame) return@App
+        if (meDead || MENUTOG || !curSettings.bool["ENABLE_ESP"] || !curSettings.bool["SPREAD_CIRCLE"] || !inGame) return@App
 
         val vAbsVelocity = me.velocity()
         val flVelocity = sqrt(vAbsVelocity.x.pow(2F) + vAbsVelocity.y.pow(2F) + vAbsVelocity.z.pow(2F))

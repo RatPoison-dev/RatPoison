@@ -23,7 +23,6 @@ import rat.poison.ui.uiPanels.nadeHelperTab
 import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.cToDouble
 import rat.poison.utils.generalUtil.cToFloat
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toMatrix4
 import rat.poison.utils.inGame
 import rat.poison.utils.threadLocalMemory
@@ -42,7 +41,7 @@ private var mPos = Vector()
 var nadeHelperArrayList = arrayListOf<List<List<Any>>>()
 
 fun nadeHelper() = App {
-    if (!curSettings["ENABLE_NADE_HELPER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@App
+    if (!curSettings.bool["ENABLE_NADE_HELPER"] || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
     if (me <= 0L || MENUTOG || meDead) return@App
 
@@ -67,7 +66,7 @@ fun nadeHelper() = App {
             //If valid nade for nade held
             if (fSpot[4] == nadeToCheck || nadeToCheck == "Decoy") {
                 //If within X units of position's circle
-                val units = curSettings["NADE_ACCURACY_RADIUS"].toInt()
+                val units = curSettings.int["NADE_ACCURACY_RADIUS"]
                 if ((mPos.x in fSpot[0].cToDouble() - units..fSpot[0].cToDouble() + units) && (mPos.y in fSpot[1].cToDouble() - units..fSpot[1].cToDouble() + units)) {
 
                     val oldMatrix = Matrix4(shapeRenderer.projectionMatrix.values)
@@ -227,7 +226,7 @@ fun loadPositions(file: String) {
 
             } else {
                 println("[Error] $file is empty, not loading")
-                if (curSettings["MENU"].strToBool()) {
+                if (curSettings.bool["MENU"]) {
                     nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: N/A")
                 }
             }
@@ -274,7 +273,7 @@ fun deletePosition() {
 }
 
 fun detectMap(mapName: String) {
-    if (!curSettings["ENABLE_NADE_HELPER"].strToBool() || !curSettings["ENABLE_ESP"].strToBool()) return
+    if (!curSettings.bool["ENABLE_NADE_HELPER"] || !curSettings.bool["ENABLE_ESP"]) return
 
     val newMapName = mapName.replace("maps\\", "").replace(".bsp", "")
     val dir = File("$SETTINGS_DIRECTORY/NadeHelper").listFiles()

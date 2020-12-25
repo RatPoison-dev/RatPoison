@@ -12,7 +12,7 @@ private val keybindsSettings = listOf("AIM_TOGGLE_KEY", "FORCE_AIM_KEY", "FORCE_
 fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
     println("Loading settings... "  + if (specificFile) { fileDir } else "")
     setupValidSettings()
-    val overloadKeybinds = curSettings["OVERLOAD_KEYBINDS"].strToBool()
+    val overloadKeybinds = curSettings.bool["OVERLOAD_KEYBINDS"]
     settingsLoaded = false
     if (specificFile) {
         FileReader(File(fileDir)).readLines().forEach { line ->

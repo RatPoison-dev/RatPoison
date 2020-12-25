@@ -227,7 +227,7 @@ class OverrideTab: Tab(true, false) {
             perfectAimCollapsible.setCollapsed(!perfectAimCollapsible.isCollapsed, true)
         }
 
-        weaponOverrideCheckBox.isChecked = curSettings["ENABLE_OVERRIDE"].strToBool()
+        weaponOverrideCheckBox.isChecked = curSettings.bool["ENABLE_OVERRIDE"]
 
         weaponOverride = weaponOverrideCheckBox.isChecked
 

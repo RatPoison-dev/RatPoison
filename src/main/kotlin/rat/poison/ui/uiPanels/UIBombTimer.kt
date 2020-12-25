@@ -24,7 +24,7 @@ class UIBombTimer : VisWindow("Bomb-Timer".toLocale()) {
 
         //Create UI_Alpha Slider
         val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, false)
-        menuAlphaSlider.value = curSettings["BOMB_TIMER_ALPHA"].toFloat()
+        menuAlphaSlider.value = curSettings.float["BOMB_TIMER_ALPHA"]
         menuAlphaSlider.changed { _, _ ->
             val alp = (round(menuAlphaSlider.value * 100F) / 100F)
             changeAlpha(alp)
@@ -38,7 +38,7 @@ class UIBombTimer : VisWindow("Bomb-Timer".toLocale()) {
         pack()
 
         setSize(325F, 150F)
-        setPosition(curSettings["BOMB_TIMER_X"].toFloat(), curSettings["BOMB_TIMER_Y"].toFloat())
+        setPosition(curSettings.float["BOMB_TIMER_X"], curSettings.float["BOMB_TIMER_Y"])
         updateAlpha()
         isResizable = false
     }
@@ -56,7 +56,7 @@ class UIBombTimer : VisWindow("Bomb-Timer".toLocale()) {
     }
 
     fun updateAlpha() {
-        changeAlpha(curSettings["BOMB_TIMER_ALPHA"].toFloat())
+        changeAlpha(curSettings.float["BOMB_TIMER_ALPHA"])
     }
 
     fun changeAlpha(alpha: Float) {

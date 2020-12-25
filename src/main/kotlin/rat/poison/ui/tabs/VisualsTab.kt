@@ -17,7 +17,6 @@ import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
 import rat.poison.ui.uiPanels.visualsTab
-import rat.poison.utils.generalUtil.strToBool
 
 val espTabbedPane = TabbedPane()
 var glowEspTab = GlowEspTab()
@@ -138,9 +137,9 @@ fun updateDisableEsp() {
         nadesVTabDisable(bool, col)
         drawBacktrackTabDisable(bool)
 
-        if (!curSettings["ENABLE_ESP"].strToBool()) {
+        if (!curSettings.bool["ENABLE_ESP"]) {
             disableAllEsp()
-        } else if (!curSettings["CHAMS_ESP"].strToBool()) {
+        } else if (!curSettings.bool["CHAMS_ESP"]) {
             disableAllEsp()
         }
     }

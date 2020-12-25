@@ -12,8 +12,6 @@ import com.kotcrab.vis.ui.VisUI
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
 import rat.poison.overlay.App
-import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColorGDX
 import java.io.File
 
 var updateFonts = true
@@ -57,26 +55,26 @@ class AssetManager: AssetManager() {
         if (font != null) {
             //apply font settings
             val parameter = FreeTypeFontGenerator.FreeTypeFontParameter()
-            parameter.size = curSettings["FONT_SIZE"].toInt()
-            parameter.color = curSettings["FONT_COLOR"].strToColorGDX()
+            parameter.size = curSettings.int["FONT_SIZE"]
+            parameter.color = curSettings.colorGDX["FONT_COLOR"]
             //border
-            parameter.borderWidth = curSettings["FONT_BORDER_WIDTH"].toFloat()
-            parameter.borderColor = curSettings["FONT_BORDER_COLOR"].strToColorGDX()
-            parameter.borderStraight = curSettings["FONT_BORDER_USE_STRAIGHT"].strToBool()
+            parameter.borderWidth = curSettings.float["FONT_BORDER_WIDTH"]
+            parameter.borderColor = curSettings.colorGDX["FONT_BORDER_COLOR"]
+            parameter.borderStraight = curSettings.bool["FONT_BORDER_USE_STRAIGHT"]
             //shadow
-            parameter.shadowColor = curSettings["FONT_SHADOW_COLOR"].strToColorGDX()
-            parameter.shadowOffsetX = curSettings["FONT_SHADOW_OFFSET_X"].toInt()
-            parameter.shadowOffsetY = curSettings["FONT_SHADOW_OFFSET_Y"].toInt()
+            parameter.shadowColor = curSettings.colorGDX["FONT_SHADOW_COLOR"]
+            parameter.shadowOffsetX = curSettings.int["FONT_SHADOW_OFFSET_X"]
+            parameter.shadowOffsetY = curSettings.int["FONT_SHADOW_OFFSET_Y"]
 
-            parameter.kerning = curSettings["FONT_INCLUDE_KERNING"].strToBool()
+            parameter.kerning = curSettings.bool["FONT_INCLUDE_KERNING"]
 
             //just a bruh moment
             parameter.characters += "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
             parameter.characters += "aąbcćdeęfghijklłmnńoóprsśtuwyzźżAĄBCĆDEĘFGHIJKLŁMNŃOÓPRSŚTUWYZŹŻ"
 
-            parameter.flip = curSettings["FONT_FLIP"].strToBool()
-            parameter.genMipMaps = curSettings["FON_GEN_MIP_MAPS"].strToBool()
-            parameter.gamma = curSettings["FONT_GAMMA"].toFloat()
+            parameter.flip = curSettings.bool["FONT_FLIP"]
+            parameter.genMipMaps = curSettings.bool["FON_GEN_MIP_MAPS"]
+            parameter.gamma = curSettings.float["FONT_GAMMA"]
 
             val skin = Skin()
 

@@ -211,7 +211,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
     }
     
     private val defaultAlpha by lazy(LazyThreadSafetyMode.NONE) {
-        curSettings["MENU_ALPHA"].toFloat()
+        curSettings.float["MENU_ALPHA"]
     }
 
     internal fun changeAlpha(alpha: Float = defaultAlpha) {

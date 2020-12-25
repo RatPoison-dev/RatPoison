@@ -27,9 +27,6 @@ import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.*
 import rat.poison.utils.extensions.*
-import rat.poison.utils.inGame
-import rat.poison.utils.shouldPostProcess
-import rat.poison.utils.threadLocalMemory
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.concurrent.thread
 import kotlin.properties.Delegates

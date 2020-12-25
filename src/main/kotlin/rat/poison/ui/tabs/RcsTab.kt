@@ -12,7 +12,6 @@ import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSelectBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiPanels.rcsTab
-import rat.poison.utils.generalUtil.strToBool
 
 class RcsTab : Tab(false, false) {
     private val table = VisTable(false)
@@ -100,7 +99,7 @@ fun updateDisableRCrosshair() {
     rcsTab.apply {
         if (!opened) return
 
-        val bool = !(curSettings["ENABLE_RECOIL_CROSSHAIR"].strToBool() || curSettings["ENABLE_SNIPER_CROSSHAIR"].strToBool())
+        val bool = !(curSettings.bool["ENABLE_RECOIL_CROSSHAIR"] || curSettings.bool["ENABLE_SNIPER_CROSSHAIR"])
         var color = Color(255F, 255F, 255F, 1F)
         if (bool) {
             color = Color(105F, 105F, 105F, .2F)
@@ -174,7 +173,7 @@ fun updateDisableRcsSmoothing() {
     rcsTab.apply {
         if (!opened) return
 
-        val bool = !curSettings["ENABLE_RCS"].strToBool()
+        val bool = !curSettings.bool["ENABLE_RCS"]
         var color = Color(255F, 255F, 255F, 1F)
         if (bool) {
             color = Color(105F, 105F, 105F, .2F)

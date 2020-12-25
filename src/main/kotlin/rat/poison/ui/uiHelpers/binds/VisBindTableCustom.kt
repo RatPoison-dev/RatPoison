@@ -8,7 +8,6 @@ import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
-import rat.poison.utils.generalUtil.strToBool
 
 class VisBindTableCustom(mainText: String, varName: String, keyWidth: Float = 200F, spaceRight: Float = 6F, buttonWidth: Float = 50F): VisTable() {
     private val textLabel = mainText
@@ -41,7 +40,7 @@ class VisBindTableCustom(mainText: String, varName: String, keyWidth: Float = 20
         updateTooltip()
     }
     private fun updateTooltip() {
-        if (curSettings["MENU_TOOLTIPS"].strToBool()) {
+        if (curSettings.bool["MENU_TOOLTIPS"]) {
             if (curLocale["${variableName}_TOOLTIP"] != "") {
                 if (!hasTooltip) {
                     Tooltip.Builder(curLocale["${variableName}_TOOLTIP"]).target(this).build()

@@ -270,7 +270,7 @@ fun isValidTick(tick: Int): Boolean {
 	val delta = gvars.tickCount - tick
 	val deltaTime = delta * gvars.intervalPerTick
 	
-	var backtrackMS = curSettings["${curWepCategory}_BACKTRACK_MS"].toFloat()
+	var backtrackMS = curSettings.float["${curWepCategory}_BACKTRACK_MS"]
 	if (curWepOverride && curWepSettings.tBacktrack) {
 		backtrackMS = curWepSettings.tBTMS.toFloat()
 	}

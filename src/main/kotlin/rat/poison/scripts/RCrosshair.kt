@@ -1,6 +1,5 @@
 package rat.poison.scripts
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import org.jire.kna.int

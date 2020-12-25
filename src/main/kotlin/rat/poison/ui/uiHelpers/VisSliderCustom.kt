@@ -9,7 +9,6 @@ import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.ui.changed
-import rat.poison.utils.generalUtil.strToBool
 import kotlin.math.pow
 import kotlin.math.round
 
@@ -75,7 +74,7 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
     }
 
     private fun updateTooltip() {
-        if (curSettings["MENU_TOOLTIPS"].strToBool()) {
+        if (curSettings.bool["MENU_TOOLTIPS"]) {
             if (curLocale["${variableName}_TOOLTIP"] != "") {
                 if (!hasTooltip) {
                     Tooltip.Builder(curLocale["${variableName}_TOOLTIP"]).target(this).build()

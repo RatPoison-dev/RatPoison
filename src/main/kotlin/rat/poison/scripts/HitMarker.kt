@@ -15,7 +15,6 @@ import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.generalUtil.strToColor
 import rat.poison.utils.inGame
 
 var hitMarkerAlpha = 0F
@@ -89,7 +88,7 @@ fun hitMarker() = App {
                 }
 
 
-                col = curSettings["HITMARKER_COLOR"].strToColor()
+                col = curSettings.color["HITMARKER_COLOR"]
                 setColor(col.red / 255F, col.green / 255F, col.blue / 255F, hitMarkerAlpha)
 
                 rectLine(x + hMS, y + hMS, x + hMS + hMLL, y + hMS + hMLL, hMLW) //Top right

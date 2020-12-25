@@ -53,8 +53,8 @@ class UIKeybinds : VisWindow("Keybinds".toLocale()) {
         add(menuAlphaSlider).growX()
 
         setSize(325F, 325F)
-        setPosition(curSettings["KEYBINDS_X"].toFloat(), curSettings["KEYBINDS_Y"].toFloat())
-        color.a = curSettings["KEYBINDS_ALPHA"].toFloat()
+        setPosition(curSettings.float["KEYBINDS_X"], curSettings.float["KEYBINDS_Y"])
+        color.a = curSettings.float["KEYBINDS_ALPHA"]
         isResizable = false
     }
 

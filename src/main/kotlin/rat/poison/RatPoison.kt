@@ -20,7 +20,6 @@ import rat.poison.scripts.visuals.*
 import rat.poison.utils.Settings
 import rat.poison.utils.detectLocale
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.loadMigration
 import java.awt.Robot
 import java.io.File
@@ -73,8 +72,8 @@ fun main() {
 
     detectLocale()
 
-    dbg = curSettings["DEBUG"].strToBool()
-    appless = curSettings["APPLESS"].strToBool()
+    dbg = curSettings.bool["DEBUG"]
+    appless = curSettings.bool["APPLESS"]
     if (dbg) println("DEBUG enabled")
 
     println("Waiting for ${curSettings["MENU_APP"]} process...")
@@ -89,7 +88,7 @@ fun main() {
 
     if (dbg) println("[DEBUG] Initializing scripts...")
     //Init scripts
-    if (!curSettings["MENU"].strToBool()) { //If we aren't using the menu disable everything that uses the menu
+    if (!curSettings.bool["MENU"]) { //If we aren't using the menu disable everything that uses the menu
         if (dbg) println("[DEBUG] Menu disabled, disabling box, skeleton, rcrosshair, btimer, indicator, speclist, hitmarker, nade helper, nade tracer, draw fov, spread circle, visualize smokes")
 
         curSettings["ENABLE_BOX_ESP"] = "false"
@@ -166,7 +165,7 @@ fun main() {
         //drawMapWireframe()
     //}
     //Overlay check, not updated?
-    if (curSettings["MENU"].strToBool()) {
+    if (curSettings.bool["MENU"]) {
         println("Game found. Launching.")
 
         App.open()
@@ -181,18 +180,18 @@ fun main() {
                 var h = CSGO.gameHeight
 
                 if ((w == 0 || h == 0) || curSettings["MENU_APP"] != "\"Counter-Strike: Global Offensive\"") {
-                    w = curSettings["OVERLAY_WIDTH"].toInt()
-                    h = curSettings["OVERLAY_HEIGHT"].toInt()
+                    w = curSettings.int["OVERLAY_WIDTH"]
+                    h = curSettings.int["OVERLAY_HEIGHT"]
                 }
 
                 if (appless) {
-                    w = curSettings["APPLESS_WIDTH"].toInt()
-                    h = curSettings["APPLESS_HEIGHT"].toInt()
+                    w = curSettings.int["APPLESS_WIDTH"]
+                    h = curSettings.int["APPLESS_HEIGHT"]
                 }
 
                 setWindowedMode(w, h)
 
-                if (curSettings["OPENGL_3"].strToBool()) {
+                if (curSettings.bool["OPENGL_3"]) {
                     useOpenGL3(true, 4, 0)
                     if (dbg) { println("[DEBUG] Using GL3") }
                 } else {
@@ -201,14 +200,14 @@ fun main() {
                 }
 
                 //Required to fix W2S offset
-                if (!appless) setWindowPosition(CSGO.gameX, CSGO.gameY) else setWindowPosition(curSettings["APPLESS_X"].toInt(), curSettings["APPLESS_Y"].toInt())
+                if (!appless) setWindowPosition(CSGO.gameX, CSGO.gameY) else setWindowPosition(curSettings.int["APPLESS_X"], curSettings.int["APPLESS_Y"])
                 setResizable(false)
                 setDecorated(appless)
                 useVsync(false)
                 setWindowIcon("$SETTINGS_DIRECTORY/Assets/Images/icon.png")
                 glfwSwapInterval(0)
                 glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE)
-                setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings["OPENGL_MSAA_SAMPLES"].toInt())
+                setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings.int["OPENGL_MSAA_SAMPLES"])
             })
         }
     } else {

@@ -23,7 +23,7 @@ class UISpectatorList : VisWindow("Spectator-List".toLocale()) {
 
         //Create UI_Alpha Slider
         val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, true)
-        menuAlphaSlider.value = curSettings["SPECTATOR_LIST_ALPHA"].toFloat()
+        menuAlphaSlider.value = curSettings.float["SPECTATOR_LIST_ALPHA"]
         menuAlphaSlider.changed { _, _ ->
             val alp = (round(menuAlphaSlider.value * 100F) / 100F)
             changeAlpha(alp)
@@ -38,7 +38,7 @@ class UISpectatorList : VisWindow("Spectator-List".toLocale()) {
         pack()
 
         setSize(300F, 350F)
-        setPosition(curSettings["SPECTATOR_LIST_X"].toFloat(), curSettings["SPECTATOR_LIST_Y"].toFloat())
+        setPosition(curSettings.float["SPECTATOR_LIST_X"], curSettings.float["SPECTATOR_LIST_Y"])
         updateAlpha()
         isResizable = false
     }
@@ -56,7 +56,7 @@ class UISpectatorList : VisWindow("Spectator-List".toLocale()) {
     }
 
     fun updateAlpha() {
-        changeAlpha(curSettings["SPECTATOR_LIST_ALPHA"].toFloat())
+        changeAlpha(curSettings.float["SPECTATOR_LIST_ALPHA"])
     }
 
     fun changeAlpha(alpha: Float) {
