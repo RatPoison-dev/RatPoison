@@ -19,6 +19,7 @@ import rat.poison.utils.keyPressed
 
 private var shouldShoot = false
 var didShoot = false
+@Volatile
 var meDead = true
 
 fun handleFireKey() = every(1, continuous = true) {

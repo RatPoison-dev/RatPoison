@@ -1,6 +1,7 @@
 //Enable glow esp
 GLOW_ESP = false
 GLOW_ESP_AUDIBLE = false
+GLOW_ESP_DEAD = false
 
 //Type of glow on entities (enemies & teammates)
 GLOW_ENEMY_TYPE = NORMAL

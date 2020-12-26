@@ -6,6 +6,7 @@ import rat.poison.game.entity.*
 import rat.poison.overlay.glowTime
 import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.meCurWep
+import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.aim.target
 import rat.poison.scripts.bombState
 import rat.poison.settings.DANGER_ZONE
@@ -14,7 +15,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.system.measureNanoTime
 
 internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
-	if (!curSettings.bool["GLOW_ESP"] || !curSettings.bool["ENABLE_ESP"]) return@every
+	if (!curSettings.bool["GLOW_ESP"] || !curSettings.bool["ENABLE_ESP"] || (curSettings.bool["GLOW_ESP_DEAD"] && !meDead)) return@every
 
 	glowTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
 		val currentAngle = clientState.angle()

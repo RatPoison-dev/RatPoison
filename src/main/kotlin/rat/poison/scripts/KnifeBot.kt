@@ -23,69 +23,63 @@ import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
 import rat.poison.utils.every
-import rat.poison.utils.keyReleased
+import rat.poison.utils.keyPressed
 import java.awt.event.MouseEvent
 
 private const val SwingDistance = 96f
 private const val StabDistance = 64f
 
 internal fun autoKnife() = every(10, inGameCheck = true) {
-    if (curSettings.bool["MENU"] && opened && App.haveTarget && !DANGER_ZONE && !meDead) {
-        if (curSettings.bool["ENABLE_AUTO_KNIFE"]) {
-            if (meCurWep.knife) {
-                val currentAngle = clientState.angle()
-                val position = me.position()
-                val target = findTarget(position, currentAngle, false, 32F, -2)
-                if (target > 0) {
-                    if (keyReleased(AIM_KEY)) {
-                        val targetPos = target.absPosition()
-                        val mePos = me.absPosition()
-                        val dst = mePos.distanceTo(targetPos)
-                        if (dst <= SwingDistance) {
-                            val canStab = dst <= StabDistance
-                            if (!isBehindMe(targetPos)) {
-                                val imBehind = canBackStab(targetPos, target.direction())
-                                val attackType: KnifeAttackType = if (canStab) {
-                                    val health = target.health()
-                                    val hasArmor = target.armor() > 0
-                                    val swingDmg =
-                                            (if (meCurWepEnt.nextPrimaryAttack() + .4f < me.time()) KnifeAttackType.SWING else KnifeAttackType.SLASH).getDmg(imBehind, hasArmor)
-                                    val slashDmg = KnifeAttackType.SLASH.getDmg(imBehind, hasArmor)
-                                    val stabDmg = KnifeAttackType.STAB.getDmg(imBehind, hasArmor)
+    if (!opened || !App.haveTarget || DANGER_ZONE || meDead || !curSettings.bool["ENABLE_AUTO_KNIFE"] || !meCurWep.knife) return@every
+    val currentAngle = clientState.angle()
+    val position = me.position()
+    val target = findTarget(position, currentAngle, false, 32F, -2)
+    if (target <= 0 || keyPressed(AIM_KEY)) return@every
 
-                                    when {
-                                        // IF health lower than swing_dmg, do a swing
-                                        health <= swingDmg -> KnifeAttackType.SLASH
-                                        // IF health lower than stab_dmg, do a stab
-                                        health <= stabDmg -> KnifeAttackType.STAB
-                                        // IF health more than swing+swing+stab, do a stab
-                                        health > (swingDmg + slashDmg + stabDmg) -> KnifeAttackType.STAB
-                                        // ELSE swing (initiate swing+swing+stab)
-                                        else -> KnifeAttackType.SLASH
-                                    }
-                                } else {
-                                    val velocity = me.velocity()
-                                    try {
-                                        if (imBehind
-                                            && Vector3.len2(velocity.x, velocity.y, velocity.z) > 0
-                                            && me.absPosition().distanceTo(targetPos) > StabDistance
-                                        ) {
-                                            //wait to get close enough to be able to back stab
-                                            KnifeAttackType.NONE
-                                        } else {
-                                            KnifeAttackType.SLASH
-                                        }
-                                    } finally {
-                                        velocity.release()
-                                    }
-                                }
-                                attackType.attack()
-                            }
-                        }
-                    }
+    val targetPos = target.absPosition()
+    val mePos = me.absPosition()
+    val dst = mePos.distanceTo(targetPos)
+
+    if (dst > SwingDistance) return@every
+
+    val canStab = dst <= StabDistance
+    if (!isBehindMe(targetPos)) {
+        val imBehind = canBackStab(targetPos, target.direction())
+        val attackType: KnifeAttackType = if (canStab) {
+            val health = target.health()
+            val hasArmor = target.armor() > 0
+            val swingDmg =
+                    (if (meCurWepEnt.nextPrimaryAttack() + .4f < me.time()) KnifeAttackType.SWING else KnifeAttackType.SLASH).getDmg(imBehind, hasArmor)
+            val slashDmg = KnifeAttackType.SLASH.getDmg(imBehind, hasArmor)
+            val stabDmg = KnifeAttackType.STAB.getDmg(imBehind, hasArmor)
+
+            when {
+                // IF health lower than swing_dmg, do a swing
+                health <= swingDmg -> KnifeAttackType.SLASH
+                // IF health lower than stab_dmg, do a stab
+                health <= stabDmg -> KnifeAttackType.STAB
+                // IF health more than swing+swing+stab, do a stab
+                health > (swingDmg + slashDmg + stabDmg) -> KnifeAttackType.STAB
+                // ELSE swing (initiate swing+swing+stab)
+                else -> KnifeAttackType.SLASH
+            }
+        } else {
+            val velocity = me.velocity()
+            try {
+                if (imBehind
+                    && Vector3.len2(velocity.x, velocity.y, velocity.z) > 0
+                    && me.absPosition().distanceTo(targetPos) > StabDistance
+                ) {
+                    //wait to get close enough to be able to back stab
+                    KnifeAttackType.NONE
+                } else {
+                    KnifeAttackType.SLASH
                 }
+            } finally {
+                velocity.release()
             }
         }
+        attackType.attack()
     }
 }
 

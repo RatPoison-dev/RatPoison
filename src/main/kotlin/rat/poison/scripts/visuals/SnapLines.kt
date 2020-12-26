@@ -6,6 +6,7 @@ import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.overlay.App
+import rat.poison.scripts.aim.meDead
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.inGame
 
@@ -17,10 +18,18 @@ private fun Color.set(red: Float, green: Float, blue: Float, alpha: Float) = app
 
 //TODO god fix this eventually g
 fun snapLines() = App {
-    if (!curSettings.bool["ENABLE_SNAPLINES"] || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
+    if (!curSettings.bool["ENABLE_SNAPLINES"] || !curSettings.bool["ENABLE_ESP"] || !inGame || (curSettings.bool["SNAPLINES_ESP_DEAD"] && !meDead)) return@App
 
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()
+
+    val y: Float = when (curSettings["SNAPLINES_POSITION"]) {
+        "DEFAULT" -> CSGO.gameHeight / 4F
+        "CROSSHAIR" -> CSGO.gameHeight / 2F
+        "TOP" -> CSGO.gameHeight.toFloat()
+        "BOTTOM" -> 0F
+        else -> 0F
+    }
 
     if (curSettings.bool["SNAPLINES_DEFUSE_KITS"]) {
         forEntities(EntityType.CEconEntity) {
@@ -44,9 +53,9 @@ fun snapLines() = App {
                     set(ShapeRenderer.ShapeType.Filled)
                     val vec = worldToScreen(entPos)
                     if (vec.w2s()) { //Onscreen
-                        rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, vec.y, curSettings.float["SNAPLINES_WIDTH"])
+                        rectLine(CSGO.gameWidth / 2F, y, vec.x, vec.y, curSettings.float["SNAPLINES_WIDTH"])
                     } else { //Offscreen
-                        rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, -vec.y, curSettings.float["SNAPLINES_WIDTH"])
+                        rectLine(CSGO.gameWidth / 2F, y, vec.x, -vec.y, curSettings.float["SNAPLINES_WIDTH"])
                     }
                     set(ShapeRenderer.ShapeType.Line)
 
@@ -126,7 +135,7 @@ fun snapLines() = App {
                 if (vec.w2s()) { //Onscreen
                     rectLine(
                         CSGO.gameWidth / 2F,
-                        CSGO.gameHeight / 4F,
+                        y,
                         vec.x,
                         vec.y,
                         curSettings.float["SNAPLINES_WIDTH"]
@@ -134,7 +143,7 @@ fun snapLines() = App {
                 } else { //Offscreen
                     rectLine(
                         CSGO.gameWidth / 2F,
-                        CSGO.gameHeight / 4F,
+                        y,
                         vec.x,
                         -vec.y,
                         curSettings.float["SNAPLINES_WIDTH"]

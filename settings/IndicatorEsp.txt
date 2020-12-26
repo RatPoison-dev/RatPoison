@@ -2,6 +2,7 @@
 //Draws arrows pointing towards entities on screen
 INDICATOR_ESP = false
 INDICATOR_ESP_AUDIBLE = false
+INDICATOR_ESP_DEAD = false
 
 //Size of indicator arrows
 INDICATOR_SIZE = 10.0

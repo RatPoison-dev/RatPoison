@@ -23,9 +23,7 @@ private var stepTimer = 0
 fun footStepEsp() {
     constructSteps()
 
-    if (curSettings.bool["MENU"]) {
-        runFootSteps()
-    }
+    runFootSteps()
 }
 
 fun inFootsteps(to: Entity): Boolean {

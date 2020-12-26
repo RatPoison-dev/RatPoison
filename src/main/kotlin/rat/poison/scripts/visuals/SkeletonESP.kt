@@ -10,6 +10,7 @@ import rat.poison.game.me
 import rat.poison.game.w2s
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
+import rat.poison.scripts.aim.meDead
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.*
 import rat.poison.utils.extensions.uint
@@ -21,7 +22,7 @@ private var currentIdx = 0
 private val modelMemory = threadLocalMemory(21332)
 
 internal fun skeletonEsp() = App {
-	if (!curSettings.bool["SKELETON_ESP"] || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
+	if (!curSettings.bool["SKELETON_ESP"] || !curSettings.bool["ENABLE_ESP"] || !inGame || (curSettings.bool["SKELETON_ESP_DEAD"] && !meDead)) return@App
 	
 	val modelMemory = modelMemory.get()
 	
@@ -33,8 +34,9 @@ internal fun skeletonEsp() = App {
 		val dormCheck = (entity.dormant() && !DANGER_ZONE)
 		val enemyCheck = ((!curSettings.bool["SKELETON_SHOW_ENEMIES"] && meTeam != entTeam) && !DANGER_ZONE)
 		val teamCheck = ((!curSettings.bool["SKELETON_SHOW_TEAM"] && meTeam == entTeam) && !DANGER_ZONE)
+		val audibleCheck = curSettings.bool["SKELETON_ESP_AUDIBLE"] && !inFootsteps(entity)
 		
-		if (entity == me || entity.dead() || dormCheck || enemyCheck || teamCheck) return@forEntities
+		if (entity == me || entity.dead() || dormCheck || enemyCheck || teamCheck || audibleCheck) return@forEntities
 		
 		val studioModel = csgoEXE.uint(entity.studioHdr())
 		val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()

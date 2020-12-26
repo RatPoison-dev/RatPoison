@@ -2,6 +2,7 @@
 ENABLE_BOX_ESP = false
 BOX_ESP_USE_ICONS = false
 BOX_ESP_AUDIBLE = false
+BOX_ESP_DEAD = false
 
 ADVANCED_BOUNDING_BOX = false
 

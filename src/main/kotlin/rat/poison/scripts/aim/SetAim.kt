@@ -39,7 +39,7 @@ fun setAim() = every(500, true, inGameCheck = true) {
         }
 
         if (settingsLoaded) { //If we have settings to read
-            if (curSettings.bool["ENABLE_OVERRIDE"]) {
+            if (curWepOverride) {
                 //V--Update aim settings for current weapons--V\\
                 if (meCurWep.rifle || meCurWep.smg || meCurWep.pistol || meCurWep.sniper || meCurWep.shotgun) {
                     curWepSettings = curSettings[meCurWep.name].toWeaponClass()
@@ -132,5 +132,17 @@ fun String.boneToNum(): Int {
         "NEAREST" -> NEAREST_BONE
         "PELVIS" -> PELVIS_BONE
         else -> RANDOM_BONE
+    }
+}
+
+fun Int.numToBone(): String {
+    return when (this) {
+        HEAD_BONE -> "HEAD"
+        NECK_BONE -> "NECK"
+        CHEST_BONE -> "CHEST"
+        STOMACH_BONE -> "STOMACH"
+        NEAREST_BONE -> "NEAREST"
+        PELVIS_BONE -> "PELVIS"
+        else -> "RANDOM"
     }
 }

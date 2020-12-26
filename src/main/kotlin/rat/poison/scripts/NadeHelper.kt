@@ -226,9 +226,7 @@ fun loadPositions(file: String) {
 
             } else {
                 println("[Error] $file is empty, not loading")
-                if (curSettings.bool["MENU"]) {
-                    nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: N/A")
-                }
+                nadeHelperTab.nadeHelperLoadedFile.setText("Loaded: N/A")
             }
         }
     }

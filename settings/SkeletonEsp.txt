@@ -2,6 +2,7 @@
 SKELETON_ESP = false
 SKELETON_SMOKE_CHECK = false
 SKELETON_ESP_AUDIBLE = false
+SKELETON_ESP_DEAD = false
 
 //Enable skeleton esp on teammates
 SKELETON_SHOW_TEAM = false

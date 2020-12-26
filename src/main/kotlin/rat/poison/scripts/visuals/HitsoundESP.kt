@@ -17,7 +17,7 @@ private var opened = false
 lateinit var hitSound: Sound
 
 fun hitSoundEsp() = every(50, inGameCheck = true) {
-    if (!curSettings.bool["ENABLE_HITSOUND"] || MENUTOG || !curSettings.bool["MENU"] || me < 0) return@every
+    if (!curSettings.bool["ENABLE_HITSOUND"] || MENUTOG || me < 0) return@every
 
     val curHits = csgoEXE.int(me + m_totalHitsOnServer)
     if (curHits < 0 || curHits > 255) return@every

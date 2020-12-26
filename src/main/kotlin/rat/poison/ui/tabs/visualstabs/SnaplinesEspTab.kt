@@ -8,6 +8,7 @@ import rat.poison.toLocale
 import rat.poison.ui.tabs.snaplinesEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
+import rat.poison.ui.uiHelpers.VisSelectBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 
 class SnaplinesEspTab : Tab(false, false) {
@@ -16,10 +17,12 @@ class SnaplinesEspTab : Tab(false, false) {
     //Init labels/sliders/boxes that show values here
     val enableSnaplines = VisCheckBoxCustom("Enable", "ENABLE_SNAPLINES")
     val snaplinesWidth = VisSliderCustom("Line Width", "SNAPLINES_WIDTH", 1F, 10F, 1F, false)
+    val snaplinesPosition = VisSelectBoxCustom("Position", "SNAPLINES_POSITION", useCategory = false, showText = true, "TOP", "CROSSHAIR", "DEFAULT", "BOTTOM")
 
     val snaplinesSmokeCheck = VisCheckBoxCustom("Smoke Check", "SNAPLINES_SMOKE_CHECK")
 
     val snaplinesAudible = VisCheckBoxCustom("Audible", "SNAPLINES_ESP_AUDIBLE")
+    val snaplinesDeadOnly = VisCheckBoxCustom("Dead Only", "SNAPLINES_ESP_DEAD")
 
     val enemySnaplines = VisCheckBoxCustom(" ", "SNAPLINES_ENEMIES", false)
     val enemySnaplinesColor = VisColorPickerCustom("Enemies", "SNAPLINES_ENEMY_COLOR")
@@ -49,6 +52,9 @@ class SnaplinesEspTab : Tab(false, false) {
         table.add(snaplinesSmokeCheck).left().row()
 
         table.add(snaplinesAudible).left().row()
+        table.add(snaplinesDeadOnly).left().row()
+
+        table.add(snaplinesPosition).left().colspan(2).row()
 
         var tmpTable = VisTable()
         tmpTable.add(enemySnaplines)
@@ -93,6 +99,8 @@ class SnaplinesEspTab : Tab(false, false) {
 fun snaplinesEspTabUpdate() {
     snaplinesEspTab.apply {
         snaplinesAudible.update()
+        snaplinesPosition.update()
+        snaplinesDeadOnly.update()
         enableSnaplines.update()
         snaplinesWidth.update()
         snaplinesSmokeCheck.update()
@@ -112,7 +120,9 @@ fun snaplinesEspTabUpdate() {
 fun snaplinesEspTabDisable(bool: Boolean, col: Color) {
     snaplinesEspTab.snaplinesAudible.disable(bool)
     snaplinesEspTab.enableSnaplines.disable(bool)
+    snaplinesEspTab.snaplinesPosition.disable(bool, col)
     snaplinesEspTab.snaplinesWidth.disable(bool, col)
+    snaplinesEspTab.snaplinesDeadOnly.disable(bool)
     snaplinesEspTab.snaplinesSmokeCheck.disable(bool)
     snaplinesEspTab.enemySnaplines.disable(bool)
     snaplinesEspTab.enemySnaplinesColor.disable(bool)

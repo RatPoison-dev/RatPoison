@@ -18,6 +18,7 @@ class GlowEspTab: Tab(false, false) {
     val glowSmokeCheck = VisCheckBoxCustom("Smoke Check", "GLOW_SMOKE_CHECK")
 
     val glowAudible = VisCheckBoxCustom("Audible", "GLOW_ESP_AUDIBLE")
+    val glowEspDeadOnly = VisCheckBoxCustom("Dead Only", "GLOW_ESP_DEAD")
 
     //Visible flicker - is the bypass for now, issue in collecting settings
     var enemyGlowType = VisSelectBoxCustom(" ", "GLOW_ENEMY_TYPE", false, false,"NORMAL", "MODEL", "VISIBLE", "VISIBLE-FLICKER")
@@ -70,6 +71,7 @@ class GlowEspTab: Tab(false, false) {
         table.add(glowSmokeCheck).left().row()
         table.add(glowBombAdaptive).left().row()
         table.add(glowAudible).left().row()
+        table.add(glowEspDeadOnly).left().row()
 
         var tmpTable = VisTable()
         tmpTable.add(showTeam)
@@ -134,6 +136,7 @@ class GlowEspTab: Tab(false, false) {
 fun glowEspTabUpdate() {
     glowEspTab.apply {
         glowAudible.update()
+        glowEspDeadOnly.update()
         glowEsp.update()
         glowShowHealth.update()
         glowSmokeCheck.update()
@@ -170,6 +173,7 @@ fun glowEspTabDisable(bool: Boolean) {
     glowEspTab.glowSmokeCheck.disable(bool)
     glowEspTab.showTeam.disable(bool)
     glowEspTab.showEnemies.disable(bool)
+    glowEspTab.glowEspDeadOnly.disable(bool)
     glowEspTab.showBomb.disable(bool)
     glowEspTab.showBombCarrier.disable(bool)
     glowEspTab.showWeapons.disable(bool)

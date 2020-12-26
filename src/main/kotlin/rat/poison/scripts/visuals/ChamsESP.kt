@@ -23,7 +23,7 @@ import rat.poison.utils.extensions.uint
 import java.lang.Float.floatToIntBits
 
 fun chamsEsp() = every(100, true, inGameCheck = true) {
-    if (!curSettings.bool["CHAMS_ESP"] || !curSettings.bool["ENABLE_ESP"]) return@every
+    if (!curSettings.bool["CHAMS_ESP"] || !curSettings.bool["ENABLE_ESP"] || (curSettings.bool["CHAMS_ESP_DEAD"] && !meDead)) return@every
 
     val myTeam = me.team()
 

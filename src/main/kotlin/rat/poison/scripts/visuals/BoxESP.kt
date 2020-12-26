@@ -23,6 +23,7 @@ import rat.poison.game.netvars.NetVarOffsets.rgflCoordinateFrame
 import rat.poison.game.w2s
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
+import rat.poison.scripts.aim.meDead
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
 import rat.poison.toLocale
@@ -115,7 +116,7 @@ fun boxEsp() {
 	}
 	
 	App {
-		if ((!curSettings.bool["ENABLE_BOX_ESP"] && !curSettings.bool["BOX_ESP_DETAILS"]) || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
+		if ((!curSettings.bool["ENABLE_BOX_ESP"] && !curSettings.bool["BOX_ESP_DETAILS"]) || !curSettings.bool["ENABLE_ESP"] || !inGame || (curSettings.bool["BOX_ESP_DEAD"] && !meDead)) return@App
 		
 		val entityMemory = entityMemory.get()
 		forEntities { //Player & Weapon boxes

@@ -19,6 +19,7 @@ class BoxEspTab: Tab(false, false) {
     val skeletonEsp = VisCheckBoxCustom("Enable Skeleton", "SKELETON_ESP")
     val skeletonEspSmokeCheck = VisCheckBoxCustom("Smoke Check", "SKELETON_SMOKE_CHECK")
     val skeletonEspAudible = VisCheckBoxCustom("Audible", "SKELETON_ESP_AUDIBLE")
+    val skeletonEspDeadOnly = VisCheckBoxCustom("Dead only", "SKELETON_ESP_DEAD")
     val showTeamSkeleton = VisCheckBoxCustom("Teammates", "SKELETON_SHOW_TEAM")
     val showEnemiesSkeleton = VisCheckBoxCustom("Enemies", "SKELETON_SHOW_ENEMIES")
     val boxEspWeaponScale = VisSliderCustom("Weapons Scale", "BOX_ESP_WEAPON_SCALE", 0.8F, 3F, 0.1F, false, barWidth = 120F, labelWidth = 150F)
@@ -26,6 +27,7 @@ class BoxEspTab: Tab(false, false) {
     val boxEsp = VisCheckBoxCustom("Bounding Box", "ENABLE_BOX_ESP")
     val boxEspUseIcons = VisCheckBoxCustom("Use Icons", "BOX_ESP_USE_ICONS")
     val boxEspAudible = VisCheckBoxCustom("Audible", "BOX_ESP_AUDIBLE")
+    val boxEspDeadOnly = VisCheckBoxCustom("Dead only", "BOX_ESP_DEAD")
 
     val advancedBBox = VisCheckBoxCustom("Advanced BBOX", "ADVANCED_BOUNDING_BOX")
 
@@ -77,12 +79,14 @@ class BoxEspTab: Tab(false, false) {
         table.add(skeletonEsp).left().row()
         table.add(skeletonEspSmokeCheck).left().row()
         table.add(skeletonEspAudible).left().row()
+        table.add(skeletonEspDeadOnly).left().row()
         table.add(showTeamSkeleton).padRight(225F - showTeamSkeleton.width).left() //225
         table.add(showEnemiesSkeleton).padRight(225F - showEnemiesSkeleton.width).left().row()//225
         table.addSeparator().colspan(2)
         table.add(boxEsp).left().row()
         table.add(boxEspUseIcons).left().row()
         table.add(boxEspAudible).left().row()
+        table.add(boxEspDeadOnly).left().row()
         table.add(advancedBBox).left().row()
         table.add(boxSmokeCheck).left().row()
         table.add(farRadarBox).left().row()
@@ -150,6 +154,7 @@ class BoxEspTab: Tab(false, false) {
 
 fun boxEspTabUpdate() {
     boxEspTab.apply {
+        skeletonEspDeadOnly.update()
         boxEsp.update()
         boxEspUseIcons.update()
         boxEspAudible.update()
@@ -180,6 +185,7 @@ fun boxEspTabUpdate() {
         boxDetailColor.update()
         skeletonEsp.update()
         skeletonEspSmokeCheck.update()
+        boxEspDeadOnly.update()
         skeletonEspAudible.update()
         showTeamSkeleton.update()
         showEnemiesSkeleton.update()
@@ -209,7 +215,9 @@ fun boxEspTabDisable(bool: Boolean, col: Color) {
     boxEspTab.boxEspWeapon.disable(bool)
     boxEspTab.boxEspWeaponPos.disable(bool, col)
     boxEspTab.boxEspMoney.disable(bool)
+    boxEspTab.skeletonEspDeadOnly.disable(bool)
     boxEspTab.boxEspMoneyPos.disable(bool, col)
+    boxEspTab.boxEspDeadOnly.disable(bool)
     boxEspTab.boxEspHelmet.disable(bool)
     boxEspTab.boxEspHelmetPos.disable(bool, col)
     boxEspTab.boxEspKevlar.disable(bool)

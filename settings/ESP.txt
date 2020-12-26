@@ -8,6 +8,7 @@ VISUALS_TOGGLE_KEY = -1
 
 //Enable radar esp
 RADAR_ESP = false
+RADAR_ESP_DEAD = false
 
 //Show enemies on radar when moving
 LEGIT_RADAR = false

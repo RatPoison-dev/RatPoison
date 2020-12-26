@@ -15,12 +15,10 @@ import rat.poison.utils.threadLocalMemory
 var espTARGET = -1L
 
 fun esp() {
-	if (curSettings.bool["MENU"]) { //Temp until app fix
-		if (dbg) { println("[DEBUG] Initializing Indicator ESP") }; indicatorEsp()
-		if (dbg) { println("[DEBUG] Initializing Box ESP") }; boxEsp()
-		if (dbg) { println("[DEBUG] Initializing Skeleton ESP") }; skeletonEsp()
-		if (dbg) { println("[DEBUG] Initializing Snap Lines") }; snapLines()
-	}
+	if (dbg) { println("[DEBUG] Initializing Indicator ESP") }; indicatorEsp()
+	if (dbg) { println("[DEBUG] Initializing Box ESP") }; boxEsp()
+	if (dbg) { println("[DEBUG] Initializing Skeleton ESP") }; skeletonEsp()
+	if (dbg) { println("[DEBUG] Initializing Snap Lines") }; snapLines()
 
 	if (dbg) { println("[DEBUG] Menu disabled, using alternate glow esp") }; glowEspEvery()
 	if (dbg) { println("[DEBUG] Initializing Footstep ESP") }; footStepEsp() //Needed with & without menu

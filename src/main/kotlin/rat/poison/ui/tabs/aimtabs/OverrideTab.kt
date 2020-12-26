@@ -5,20 +5,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.curLocale
-import rat.poison.curSettings
-import rat.poison.dbg
-import rat.poison.settings.*
-import rat.poison.toLocale
+import rat.poison.*
+import rat.poison.scripts.aim.boneToNum
+import rat.poison.scripts.aim.numToBone
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
-import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisCheckBoxCustom
-import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisSliderCustom
+import rat.poison.ui.uiHelpers.overrideWeaponsUI.*
 import rat.poison.ui.uiUpdate
+import rat.poison.utils.generalUtil.cToInt
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toWeaponClass
 
 var weaponOverrideSelected = "DESERT_EAGLE"
+
+var aimToOverride = mapOf(Pair("_FACTOR_RECOIL", "tFRecoil"), Pair("_ENABLE_FLAT_AIM", "tFlatAim"), Pair("_ENABLE_PATH_AIM", "tPathAim"), Pair("_AIM_BONE", "tAimBone"), Pair("_AIM_FOV", "tAimFov"), Pair("_AIM_SPEED", "tAimSpeed"), Pair("_AIM_SMOOTHNESS", "tAimSmooth"), Pair("_AIM_FORCE_BONE", "tForceBone"), Pair("_AIM_ONLY_ON_SHOT", "tOnShot"), Pair("_AIM_AFTER_SHOTS", "tAimAfterShots"), Pair("_TRIGGER_FOV", "tBTrigFov"), Pair("_TRIGGER_INFOV", "tBTrigInFov"), Pair("_TRIGGER_INCROSS", "tBTrigInCross"), Pair("_TRIGGER_AIMBOT", "tBTrigAim"), Pair("_TRIGGER_BACKTRACK", "tBTrigBacktrack"), Pair("_BACKTRACK", "tBacktrack"), Pair("_BACKTRACK_MS", "tBTMS"), Pair("_PERFECT_AIM", "tPerfectAim"), Pair("_PERFECT_AIM_FOV", "tPAimFov"), Pair("_PERFECT_AIM_CHANCE", "tPAimChance"), Pair("_TRIGGER", "tBoneTrig"), Pair("_TRIGGER_INIT_SHOT_DELAY", "tBTrigInitDelay"), Pair("_TRIGGER_PER_SHOT_DELAY", "tBTrigPerShotDelay"), Pair("_SCOPED_ONLY", "tScopedOnly"))
 
 class OverrideTab: Tab(true, false) {
     private val table = VisTable()
@@ -28,6 +28,13 @@ class OverrideTab: Tab(true, false) {
     var enableOverride = false
 
     private val categorySelectionBox = VisSelectBox<String>()
+
+    private val copyToSelectionBox = VisSelectBox<String>()
+
+    private val copyFromSelectionBox = VisSelectBox<String>()
+
+    private val copyToButton = VisTextButton("Copy To")
+    private val copyFromButton = VisTextButton("Copy From")
 
     //Override Weapon Checkbox & Selection Box
     private val categorySelectLabel = VisLabel("${"Weapon-Category".toLocale()}:")
@@ -153,6 +160,40 @@ class OverrideTab: Tab(true, false) {
 
             itemsArray.add(curLocale[i])
         }
+
+        copyToSelectionBox.items = itemsArray
+        copyFromSelectionBox.items = itemsArray
+        var tmpTable = VisTable()
+        tmpTable.add(copyToButton).padRight(225F - copyToButton.width)
+        tmpTable.add(copyToSelectionBox)
+
+        copyToButton.changed {_, _ ->
+            val category = copyToSelectionBox.selected
+            aimToOverride.forEach { (k, v) ->
+                copyTo(category, k ,v)
+            }
+
+            updateAim()
+            true
+        }
+
+        table.add(tmpTable).left().row()
+
+        tmpTable = VisTable()
+        tmpTable.add(copyFromButton).padRight(225F - copyFromButton.width)
+        tmpTable.add(copyFromSelectionBox)
+
+        copyFromButton.changed {_, _ ->
+            val category = copyFromSelectionBox.selected
+            aimToOverride.forEach { (k, v) ->
+                copyFrom(category, k ,v)
+            }
+
+            overridenWeaponsUpdate()
+            true
+        }
+
+        table.add(tmpTable).left().row()
 
         categorySelectionBox.items = itemsArray
         categorySelectionBox.selectedIndex = 0
@@ -291,6 +332,26 @@ class OverrideTab: Tab(true, false) {
         return table
     }
 }
+
+
+fun copyTo(category: String, categoryVarName: String, myVarName: String) {
+    val varIdx = getOverrideVarIndex(oWeapon().toString(), myVarName)
+    val myVar = getOverrideVar(weaponOverrideSelected, varIdx)
+    curSettings[category + categoryVarName] = when (myVarName != "tAimBone" && myVarName != "tForceBone") {
+        true -> myVar
+        false -> {
+            myVar.cToInt().numToBone()
+        }
+    }
+}
+
+fun copyFrom(category: String, categoryVarName: String, myVarName: String) {
+    val setting = curSettings[category + categoryVarName]
+    val varIdx = getOverrideVarIndex(oWeapon().toString(), myVarName)
+
+    setOverrideVar(weaponOverrideSelected, varIdx, if (myVarName != "tAimBone" && myVarName != "tForceBone") setting else setting.boneToNum())
+}
+
 fun overridenWeaponsUpdate() {
     overridenWeapons.apply {
         val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
@@ -329,25 +390,9 @@ fun overridenWeaponsUpdate() {
             forceBoneBox.items = boneArray
         }
 
-        aimBoneBox.selectedIndex = boneCategories.indexOf(when (curWep.tAimBone) {
-            HEAD_BONE -> "HEAD"
-            NECK_BONE -> "NECK"
-            CHEST_BONE -> "CHEST"
-            STOMACH_BONE -> "STOMACH"
-            NEAREST_BONE -> "NEAREST"
-            PELVIS_BONE -> "PELVIS"
-            else -> "RANDOM"
-        })
+        aimBoneBox.selectedIndex = boneCategories.indexOf(curWep.tAimBone.numToBone())
 
-        forceBoneBox.selectedIndex = boneCategories.indexOf(when (curWep.tForceBone) {
-            HEAD_BONE -> "HEAD"
-            NECK_BONE -> "NECK"
-            CHEST_BONE -> "CHEST"
-            STOMACH_BONE -> "STOMACH"
-            NEAREST_BONE -> "NEAREST"
-            PELVIS_BONE -> "PELVIS"
-            else -> "RANDOM"
-        })
+        forceBoneBox.selectedIndex = boneCategories.indexOf(curWep.tForceBone.numToBone())
 
         aimFov.update()
         aimSpeed.update()

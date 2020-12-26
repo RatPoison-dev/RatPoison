@@ -88,41 +88,20 @@ fun main() {
 
     if (dbg) println("[DEBUG] Initializing scripts...")
     //Init scripts
-    if (!curSettings.bool["MENU"]) { //If we aren't using the menu disable everything that uses the menu
-        if (dbg) println("[DEBUG] Menu disabled, disabling box, skeleton, rcrosshair, btimer, indicator, speclist, hitmarker, nade helper, nade tracer, draw fov, spread circle, visualize smokes")
+    if (dbg) { println("[DEBUG] Initializing Ranks") }; ranks()
+    if (dbg) { println("[DEBUG] Initializing Spectator List") }; spectatorList()
+    if (dbg) { println("[DEBUG] Initializing Bomb Timer") }; bombTimer()
+    if (dbg) { println("[DEBUG] Initializing Recoil Crosshair") }; rcrosshair()
+    if (dbg) { println("[DEBUG] Initializing Hit Marker") }; hitMarker()
+    if (dbg) { println("[DEBUG] Initializing Nade Helper") }; nadeHelper()
+    if (dbg) { println("[DEBUG] Initializing Nade Tracer") }; nadeTracer()
+    if (dbg) { println("[DEBUG] Initializing Draw Fov") }; drawFov()
+    if (dbg) { println("[DEBUG] Initializing Spread Circle") }; spreadCircle()
+    if (dbg) { println("[DEBUG] Initializing Draw Smokes") }; drawSmokes()
+    if (dbg) { println("[DEBUG] Initializing Far Radar") }; farRadar()
+    //farEsp()
 
-        curSettings["ENABLE_BOX_ESP"] = "false"
-        curSettings["SKELETON_ESP"] = "false"
-        curSettings["ENABLE_RECOIL_CROSSHAIR"] = "false"
-        curSettings["ENABLE_BOMB_TIMER"] = "false"
-        curSettings["INDICATOR_ESP"] = "false"
-        curSettings["SPECTATOR_LIST"] = "false"
-        curSettings["ENABLE_HITMARKER"] = "false"
-        curSettings["SNAPLINES"] = "false"
-        curSettings["ENABLE_NADE_HELPER"] = "false"
-        curSettings["NADE_TRACER"] = "false"
-        curSettings["DRAW_AIM_FOV"] = "false"
-        curSettings["ENABLE_HITSOUND"] = "false"
-        curSettings["SPREAD_CIRCLE"] = "false"
-        curSettings["VISUALIZE_SMOKES"] = "false"
-    } else {
-        if (dbg) { println("[DEBUG] Initializing Recoil Ranks") }; ranks()
-
-        if (dbg) { println("[DEBUG] Initializing Recoil Spectator List") }; spectatorList()
-        if (dbg) { println("[DEBUG] Initializing Recoil Bomb Timer") }; bombTimer()
-
-        if (dbg) { println("[DEBUG] Initializing Recoil Crosshair") }; rcrosshair()
-        if (dbg) { println("[DEBUG] Initializing Hit Marker") }; hitMarker()
-        if (dbg) { println("[DEBUG] Initializing Nade Helper") }; nadeHelper()
-        if (dbg) { println("[DEBUG] Initializing Nade Tracer") }; nadeTracer()
-        if (dbg) { println("[DEBUG] Initializing Draw Fov") }; drawFov()
-        if (dbg) { println("[DEBUG] Initializing Spread Circle") }; spreadCircle()
-        if (dbg) { println("[DEBUG] Initializing Draw Smokes") }; drawSmokes()
-        if (dbg) { println("[DEBUG] Initializing Far Radar") }; farRadar()
-        //farEsp()
-
-        drawDebug()
-    }
+    if (dbg) { println("[DEBUG] Initializing Draw Debug") }; drawDebug()
 
     if (dbg) { println("[DEBUG] Initializing Bunny Hop") }; bunnyHop()
     if (dbg) { println("[DEBUG] Initializing Auto Strafe") }; strafeHelper()
@@ -165,53 +144,53 @@ fun main() {
         //drawMapWireframe()
     //}
     //Overlay check, not updated?
-    if (curSettings.bool["MENU"]) {
-        println("Game found. Launching.")
+    println("Game found. Launching.")
 
-        App.open()
+    App.open()
 
-        GlobalScope.launch {
-            glfwInit()
-
-            Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
-                setTitle("Rat Poison UI")
-
-                var w = CSGO.gameWidth
-                var h = CSGO.gameHeight
-
-                if ((w == 0 || h == 0) || curSettings["MENU_APP"] != "\"Counter-Strike: Global Offensive\"") {
-                    w = curSettings.int["OVERLAY_WIDTH"]
-                    h = curSettings.int["OVERLAY_HEIGHT"]
-                }
-
-                if (appless) {
-                    w = curSettings.int["APPLESS_WIDTH"]
-                    h = curSettings.int["APPLESS_HEIGHT"]
-                }
-
-                setWindowedMode(w, h)
-
-                if (curSettings.bool["OPENGL_3"]) {
-                    useOpenGL3(true, 4, 0)
-                    if (dbg) { println("[DEBUG] Using GL3") }
-                } else {
-                    useOpenGL3(false, 2, 0)
-                    if (dbg) { println("[DEBUG] Using GL2") }
-                }
-
-                //Required to fix W2S offset
-                if (!appless) setWindowPosition(CSGO.gameX, CSGO.gameY) else setWindowPosition(curSettings.int["APPLESS_X"], curSettings.int["APPLESS_Y"])
-                setResizable(false)
-                setDecorated(appless)
-                useVsync(false)
-                setWindowIcon("$SETTINGS_DIRECTORY/Assets/Images/icon.png")
-                glfwSwapInterval(0)
-                glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE)
-                setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings.int["OPENGL_MSAA_SAMPLES"])
-            })
-        }
-    } else {
+    Thread {
         scanner()
+    }.start()
+
+    GlobalScope.launch {
+        glfwInit()
+
+        Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
+            setTitle("Rat Poison UI")
+
+            var w = CSGO.gameWidth
+            var h = CSGO.gameHeight
+
+            if ((w == 0 || h == 0) || curSettings["MENU_APP"] != "\"Counter-Strike: Global Offensive\"") {
+                w = curSettings.int["OVERLAY_WIDTH"]
+                h = curSettings.int["OVERLAY_HEIGHT"]
+            }
+
+            if (appless) {
+                w = curSettings.int["APPLESS_WIDTH"]
+                h = curSettings.int["APPLESS_HEIGHT"]
+            }
+
+            setWindowedMode(w, h)
+
+            if (curSettings.bool["OPENGL_3"]) {
+                useOpenGL3(true, 4, 0)
+                if (dbg) { println("[DEBUG] Using GL3") }
+            } else {
+                useOpenGL3(false, 2, 0)
+                if (dbg) { println("[DEBUG] Using GL2") }
+            }
+
+            //Required to fix W2S offset
+            if (!appless) setWindowPosition(CSGO.gameX, CSGO.gameY) else setWindowPosition(curSettings.int["APPLESS_X"], curSettings.int["APPLESS_Y"])
+            setResizable(false)
+            setDecorated(appless)
+            useVsync(false)
+            setWindowIcon("$SETTINGS_DIRECTORY/Assets/Images/icon.png")
+            glfwSwapInterval(0)
+            glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE)
+            setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings.int["OPENGL_MSAA_SAMPLES"])
+        })
     }
 }
 

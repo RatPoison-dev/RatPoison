@@ -18,6 +18,7 @@ class IndicatorEspTab : Tab(false, false) {
     val indicatorDistance = VisSliderCustom("Indicator Distance", "INDICATOR_DISTANCE", 2F, 50F, 1F, false)
     val indicatorSize = VisSliderCustom("Indicator Size", "INDICATOR_SIZE", 5F, 25F, .5F, false)
     val indicatorAudible = VisCheckBoxCustom("Audible", "INDICATOR_ESP_AUDIBLE")
+    val indicatorDeadOnly = VisCheckBoxCustom("Dead Only", "INDICATOR_ESP_DEAD")
 
     val indicatorSmokeCheck = VisCheckBoxCustom("Smoke Check", "INDICATOR_SMOKE_CHECK")
 
@@ -51,6 +52,7 @@ class IndicatorEspTab : Tab(false, false) {
         table.add(indicatorDistance).left().colspan(2).row()
         table.add(indicatorSize).left().colspan(2).row()
         table.add(indicatorAudible).left().colspan(2).row()
+        table.add(indicatorDeadOnly).left().colspan(2).row()
 
         table.add(indicatorSmokeCheck).left().row()
 
@@ -110,6 +112,7 @@ fun indicatorEspTabUpdate() {
     indicatorEspTab.apply {
         indicatorAudible.update()
         indicatorEsp.update()
+        indicatorDeadOnly.update()
         indicatorDistance.update()
         indicatorSize.update()
         indicatorSmokeCheck.update()
@@ -133,6 +136,7 @@ fun indicatorEspTabUpdate() {
 fun indicatorEspTabDisable(bool: Boolean, col: Color) {
     indicatorEspTab.indicatorAudible.disable(bool)
     indicatorEspTab.indicatorEsp.disable(bool)
+    indicatorEspTab.indicatorDeadOnly.disable(bool)
     indicatorEspTab.indicatorDistance.disable(bool, col)
     indicatorEspTab.indicatorSize.disable(bool, col)
     indicatorEspTab.indicatorSmokeCheck.disable(bool)

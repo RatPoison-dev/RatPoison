@@ -1,6 +1,7 @@
 //Enable clrRender chams
 //This modifies a cvar that isn't currently checked, which can change at any time. Use at your own discretion.
 CHAMS_ESP = false
+CHAMS_ESP_DEAD = false
 
 //Color players based on their health, overrides entity color
 CHAMS_SHOW_HEALTH = false

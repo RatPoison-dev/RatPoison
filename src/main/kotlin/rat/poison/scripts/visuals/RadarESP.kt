@@ -4,12 +4,15 @@ import rat.poison.curSettings
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.me
+import rat.poison.scripts.aim.meDead
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
 import rat.poison.utils.every
 
 internal fun radarEsp() = every(100, inGameCheck = true) {
     if (!curSettings.bool["RADAR_ESP"] || DANGER_ZONE) return@every
+
+    if (curSettings.bool["RADAR_ESP_DEAD"] && !meDead) return@every
 
     if (curSettings.bool["LEGIT_RADAR"]) {
         val entsChecked = mutableListOf<Long>()

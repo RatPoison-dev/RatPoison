@@ -6,6 +6,7 @@ import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.overlay.App
 import rat.poison.overlay.App.shapeRenderer
+import rat.poison.scripts.aim.meDead
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
 import rat.poison.utils.inGame
@@ -16,7 +17,7 @@ import kotlin.math.sin
 import com.badlogic.gdx.graphics.Color as ColorGDX
 
 fun indicatorEsp() = App {
-    if (!curSettings.bool["ENABLE_ESP"] || !curSettings.bool["INDICATOR_ESP"] || !inGame) return@App
+    if (!curSettings.bool["ENABLE_ESP"] || !curSettings.bool["INDICATOR_ESP"] || !inGame || (curSettings.bool["INDICATOR_ESP_DEAD"] && !meDead)) return@App
 
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()

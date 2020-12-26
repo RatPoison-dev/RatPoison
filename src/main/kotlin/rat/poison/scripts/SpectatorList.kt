@@ -14,9 +14,7 @@ import rat.poison.utils.every
 import rat.poison.utils.extensions.readIndex
 
 internal fun spectatorList() = every(100, inGameCheck = true) {
-    if (!curSettings.bool["SPECTATOR_LIST"] || !curSettings.bool["MENU"]) {
-        return@every
-    }
+    if (!curSettings.bool["SPECTATOR_LIST"]) return@every
 
     var spectators = ""
     var entCount = 1

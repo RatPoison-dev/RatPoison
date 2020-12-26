@@ -15,6 +15,7 @@ class ChamsEspTab : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     val chamsEsp = VisCheckBoxCustom("Enable", "CHAMS_ESP")
+    val chamsEspDeadOnly = VisCheckBoxCustom("Dead Only", "CHAMS_ESP_DEAD")
     val chamsShowHealth = VisCheckBoxCustom("Chams Show Health", "CHAMS_SHOW_HEALTH")
     val chamsBrightness = VisSliderCustom("Chams Brightness", "CHAMS_BRIGHTNESS", 0F, 100F, 1F, true)
 
@@ -37,6 +38,7 @@ class ChamsEspTab : Tab(false, false) {
 
         table.add(chamsEsp).left()
         table.add(chamsShowHealth).left().row()
+        table.add(chamsEspDeadOnly).left().row()
         table.add(chamsBrightness).left().colspan(2).row()
 
         var tmpTable = VisTable()
@@ -80,6 +82,7 @@ fun chamsEspTabUpdate() {
     chamsEspTab.apply {
         chamsEsp.update()
         chamsShowHealth.update()
+        chamsEspDeadOnly.update()
         chamsBrightness.update()
         showTeam.update()
         showEnemies.update()
@@ -97,5 +100,6 @@ fun chamsEspTabDisable(bool: Boolean, col: Color) {
     chamsEspTab.showTeam.disable(bool)
     chamsEspTab.showEnemies.disable(bool)
     chamsEspTab.chamsTeamColor.disable(bool)
+    chamsEspTab.chamsEspDeadOnly.disable(bool)
     chamsEspTab.chamsEnemyColor.disable(bool)
 }

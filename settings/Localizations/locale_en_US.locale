@@ -296,6 +296,7 @@ BACKTRACK_VISUALIZE_SMOKE_CHECK = Backtrack Visualize Smoke Check
 
 //Category: Misc Esp
 RADAR_ESP = Radar
+RADAR_ESP_DEAD = Dead Only
 ENABLE_ESP = Enable
 VISUALS_TOGGLE_KEY = Visuals Toggle Key
 AUDIBLE_ESP_RANGE = Audible ESP Range
@@ -332,6 +333,7 @@ ADRENALINE_BOMB_TIME = Use Bomb Time
 //Category: Glow Esp
 GLOW_ESP = Enable
 GLOW_ESP_AUDIBLE = Audible
+GLOW_ESP_DEAD = Dead Only
 GLOW_SHOW_TEAM = Teammates
 GLOW_SHOW_ENEMIES = Enemies
 GLOW_SHOW_BOMB = Bomb
@@ -364,6 +366,7 @@ GLOW_SMOKE_CHECK = Smoke Check
 
 //Category: Chams ESP
 CHAMS_ESP = Enable
+CHAMS_ESP_DEAD = Dead Only
 CHAMS_SHOW_HEALTH = Show Health
 CHAMS_BRIGHTNESS = Brightness
 CHAMS_SHOW_TEAM = Teammates
@@ -377,6 +380,7 @@ CHAMS_TARGET_COLOR = Target
 //Category: Indicator ESP
 INDICATOR_ESP = Enable
 INDICATOR_ESP_AUDIBLE = Audible
+INDICATOR_ESP_DEAD = Dead Only
 INDICATOR_SHOW_TEAM = Teammates
 INDICATOR_SHOW_ENEMIES = Enemies
 INDICATOR_SHOW_BOMB = Bomb
@@ -396,6 +400,7 @@ INDICATOR_SMOKE_CHECK = Smoke Check
 
 //Category: Box ESP
 BOX_ESP_AUDIBLE = Audible
+BOX_ESP_DEAD = Dead Only
 ENABLE_BOX_ESP = Entity Box
 BOX_ESP_HELMET = Helmet
 BOX_ESP_KEVLAR = Kevlar
@@ -427,6 +432,7 @@ BOX_DEFUSER_COLOR = Defusers
 SKELETON_ESP = Skeleton
 SKELETON_SMOKE_CHECK = Smoke Check
 SKELETON_ESP_AUDIBLE = Audible
+SKELETON_ESP_DEAD = Dead Only
 SKELETON_SHOW_TEAM = Teammates
 SKELETON_SHOW_ENEMIES = Enemies
 LEFT = LEFT
@@ -456,6 +462,12 @@ SNAPLINES_BOMB_CARRIER_COLOR = Bomb Carrier
 SNAPLINES_DEFUSE_KIT_COLOR = Defuse Kits
 SNAPLINES_SMOKE_CHECK = Smoke Check
 SNAPLINES_ESP_AUDIBLE = Audible
+SNAPLINES_ESP_DEAD = Dead Only
+SNAPLINES_POSITION = Position
+TOP = Top
+CROSSHAIR = Crosshair
+DEFAULT = Default
+BOTTOM = Bottom
 
 
 //Category: Footsteps ESP

@@ -1,6 +1,7 @@
 //Enable snaplines
 ENABLE_SNAPLINES = false
 SNAPLINES_ESP_AUDIBLE = false
+SNAPLINES_ESP_DEAD = false
 
 //Line width
 SNAPLINES_WIDTH = 3.0
@@ -43,3 +44,5 @@ SNAPLINES_WEAPON_COLOR = Color(red=251, green=0, blue=255, alpha=1.0)
 
 //Snaplines defuse kit color
 SNAPLINES_DEFUSE_KIT_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
+
+SNAPLINES_POSITION = DEFAULT

@@ -1,6 +1,5 @@
 package rat.poison.game
 
-import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
@@ -15,9 +14,7 @@ const val W2S_FAILED = -1F
 fun Vector.w2s() = z != W2S_FAILED
 
 fun worldToScreen(from: Vector): Vector {
-	if (!curSettings.bool["MENU"]) {
-		updateViewMatrix()
-	}
+	updateViewMatrix()
 	
 	val w0 = w2sViewMatrix[0]
 	val w1 = w2sViewMatrix[1]

@@ -9,6 +9,7 @@ import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.appless
 import rat.poison.curSettings
 import rat.poison.overlay.App.menuStage
 import rat.poison.overlay.opened
@@ -90,8 +91,20 @@ class ConfigsTab : Tab(false, false) {
 
         val saveDefaultButton = VisTextButton("SAVE_DEFAULT".toLocale())
         saveDefaultButton.changed { _, _ ->
-            saveWindows()
-            saveDefault()
+            when ((appless == curSettings.bool["APPLESS"])) {
+                true -> {
+                    saveWindows()
+                    saveDefault()
+                }
+                false -> {
+                    Dialogs.showConfirmDialog(menuStage, "Settings Conflict", "Menu behaviour will be changed after cheat restart. Continue?", arrayOf("Yes", "No"), arrayOf(1, 2)) {
+                        if (it == 1) {
+                            saveWindows()
+                            saveDefault()
+                        }
+                    }
+                }
+            }
             true
         }
 
