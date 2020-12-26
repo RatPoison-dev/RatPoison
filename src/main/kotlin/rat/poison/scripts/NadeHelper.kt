@@ -75,6 +75,10 @@ fun nadeHelper() = App {
                         val gameMatrix = w2sViewMatrix.toMatrix4()
                         projectionMatrix = gameMatrix
 
+                        if (isDrawing) { //????????
+                            end()
+                        }
+
                         begin()
                         color = Color(1F, 1F, 1F, 1F)
                         var lineUp = false
