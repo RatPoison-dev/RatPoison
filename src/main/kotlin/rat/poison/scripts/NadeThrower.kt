@@ -25,7 +25,7 @@ private var clfSpot = listOf<Any>()
 fun autoThrowNade(eyeAng: Vector, fSpot: List<Any>, recoveredAngle: Vector) {
     calcRes = eyeAng.distanceTo(recoveredAngle)
     writeAim(eyeAng, recoveredAngle, curSettings.float["NADE_THROWER_SMOOTHNESS"])
-    recoveredAngle.release()
+    //recoveredAngle.release()
     if (calcRes < 0.1) {
         when (fSpot[5]) {
             "J+T" -> jumpAndThrow()
@@ -66,7 +66,6 @@ fun nadeThrower() = every(10, inGameCheck = true) {
                             closestAngleL = recoveredAngle.value
                             clfSpot = fSpot
                         }
-                        recoveredAngle.release()
                     }
                     else {
                         closestAngleL = vectorLong(90F, 90F, 90F)
