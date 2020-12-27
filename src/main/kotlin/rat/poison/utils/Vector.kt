@@ -8,16 +8,16 @@ inline class Vector(val value: Long) {
 	constructor(x: Float = 0F, y: Float = 0F, z: Float = 0F) : this(vectorLong(x, y, z))
 	
 	var x
-		get() = memory.readFloat(value)
-		set(value) = memory.writeFloat(this.value, value)
+		get() = OS.memory().readVolatileFloat(value)
+		set(value) = OS.memory().writeVolatileFloat(this.value, value)
 	var y
-		get() = memory.readFloat(value + 4)
-		set(value) = memory.writeFloat(this.value + 4, value)
+		get() = OS.memory().readVolatileFloat(value + 4)
+		set(value) = OS.memory().writeVolatileFloat(this.value + 4, value)
 	var z
-		get() = memory.readFloat(value + 8)
-		set(value) = memory.writeFloat(this.value + 8, value)
+		get() = OS.memory().readVolatileFloat(value + 8)
+		set(value) = OS.memory().writeVolatileFloat(this.value + 8, value)
 	
-	fun release() = memory.freeMemory(value, 12)
+	fun release() = OS.memory().freeMemory(value, 12)
 	
 	inline fun use(crossinline use: (Vector) -> Unit) {
 		try {
@@ -50,6 +50,8 @@ inline class Vector(val value: Long) {
 		
 		if (y > 180) y = 180F
 		if (y < -180F) y = -180F
+		
+		z = 0F
 	}
 	
 	fun distanceTo(target: Vector) = abs(x - target.x) + abs(y - target.y) + abs(z - target.z)
@@ -66,13 +68,11 @@ inline class Vector(val value: Long) {
 
 fun dot(x: Float, y: Float, z: Float, tx: Float, ty: Float, tz: Float): Float = tx * x + ty * y + tz * z
 
-private val memory = OS.memory()
-
 fun vectorLong(x: Float = 0F, y: Float = 0F, z: Float = 0F): Long {
-	val address = memory.allocate(12)
-	memory.writeFloat(address, x)
-	memory.writeFloat(address + 4, y)
-	memory.writeFloat(address + 8, z)
+	val address = OS.memory().allocate(12)
+	OS.memory().writeVolatileFloat(address, x)
+	OS.memory().writeVolatileFloat(address + 4, y)
+	OS.memory().writeVolatileFloat(address + 8, z)
 	return address
 }
 
