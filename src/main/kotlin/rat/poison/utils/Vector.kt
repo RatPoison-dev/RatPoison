@@ -7,12 +7,15 @@ import kotlin.math.abs
 inline class Vector(val value: Long) {
 	constructor(x: Float = 0F, y: Float = 0F, z: Float = 0F) : this(vectorLong(x, y, z))
 	
-	val x: Float
+	var x
 		get() = memory.readFloat(value)
-	val y: Float
+		set(value) = memory.writeFloat(this.value, value)
+	var y
 		get() = memory.readFloat(value + 4)
-	val z: Float
+		set(value) = memory.writeFloat(this.value + 4, value)
+	var z
 		get() = memory.readFloat(value + 8)
+		set(value) = memory.writeFloat(this.value + 8, value)
 	
 	fun release() = memory.freeMemory(value, 12)
 	
@@ -24,26 +27,18 @@ inline class Vector(val value: Long) {
 		}
 	}
 	
-	fun set(x: Float, y: Float, z: Float = 0F) = run {
-		release()
-		Vector(x, y, z)
+	fun set(x: Float, y: Float, z: Float = 0F) = apply {
+		this.x = x
+		this.y = y
+		this.z = z
 	}
-	
-	fun x(x: Float) = Vector(x, y, z)
-	fun y(y: Float) = Vector(x, y, z)
-	fun z(z: Float) = Vector(x, y, z)
 	
 	fun invalid() = x == 0F && y == 0F && z == 0F
 	fun valid() = !invalid()
 	
 	fun isValid() = true
 	
-	fun normalize() = run {
-		var x = x
-		var y = y
-		val z = z
-		release()
-		
+	fun normalize() = apply {
 		if (x != x) x = 0F
 		if (y != y) y = 0F
 		
@@ -55,8 +50,6 @@ inline class Vector(val value: Long) {
 		
 		if (y > 180) y = 180F
 		if (y < -180F) y = -180F
-		
-		Vector(x, y, z)
 	}
 	
 	fun distanceTo(target: Vector) = abs(x - target.x) + abs(y - target.y) + abs(z - target.z)
@@ -77,9 +70,9 @@ private val memory = OS.memory()
 
 fun vectorLong(x: Float = 0F, y: Float = 0F, z: Float = 0F): Long {
 	val address = memory.allocate(12)
-	memory.writeVolatileFloat(address, x)
-	memory.writeVolatileFloat(address + 4, y)
-	memory.writeVolatileFloat(address + 8, z)
+	memory.writeFloat(address, x)
+	memory.writeFloat(address + 4, y)
+	memory.writeFloat(address + 8, z)
 	return address
 }
 

@@ -170,10 +170,9 @@ fun constructRecords() {
 			val record = btRecords[entID][tick]
 			
 			csgoEXE.read(ent.boneMatrix(), boneMemory)
-			record.headPos = boneMemory.bones(8).run { z(z + 5) }
+			record.headPos = boneMemory.bones(8).apply { z += 5 }
 			val entPos = ent.absPosition()
-			record.absPos = entPos.run { z(z - 5) }
-			entPos.release()
+			record.absPos = entPos.apply { z -= 5 }
 			
 			record.alpha = 100f
 			record.simtime = entSimTime
