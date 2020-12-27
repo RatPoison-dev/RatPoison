@@ -56,12 +56,15 @@ fun worldToScreen(from: Vector): Vector {
 }
 
 private val viewMatrixMemory = threadLocalMemory(4 * 4 * 4)
+private val floatArray = ThreadLocal.withInitial { FloatArray(16) }
 
 fun updateViewMatrix() { //Call before using multiple world to screens
 	if (dwViewMatrix > 0L) {
 		val buffer = viewMatrixMemory.get()
 		if (clientDLL.read(dwViewMatrix, buffer)) {
-			if (buffer.getFloatArray(0, 16).all(Float::isFinite)) {
+			val floatArray = floatArray.get()
+			buffer.read(0, floatArray, 0, 16)
+			if (floatArray.all(Float::isFinite)) {
 				var offset = 0
 				for (row in 0..3) for (col in 0..3) {
 					val value = buffer.getFloat(offset.toLong())
