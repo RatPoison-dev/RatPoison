@@ -225,6 +225,7 @@ object App : ApplicationAdapter() {
                             sbText.append("\nMe: $me Dead: $meDead")
                             sbText.append("\nDanger Zone: $DANGER_ZONE")
                             sbText.append("\nShots fired: ${me.shotsFired()}")
+                            sbText.append("\nFSP: ${Gdx.graphics.framesPerSecond}")
                             sbText.append("\n")
                             sbText.append("\nTotal physical mem: ").appendHumanReadableSize(totalPhysMem)
                             sbText.append("\nFree physical mem: ").appendHumanReadableSize(freePhysMem)

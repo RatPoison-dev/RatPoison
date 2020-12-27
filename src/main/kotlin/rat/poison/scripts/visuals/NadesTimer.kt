@@ -37,5 +37,6 @@ fun nadesTimer() = App {
                 sb.end()
             }
         }
+        vec.release()
     }
 }
