@@ -14,29 +14,34 @@ import rat.poison.settings.GAME_YAW
 import rat.poison.utils.extensions.refresh
 import kotlin.math.round
 
-fun applyFlatSmoothing(currentAngle: Vector, destinationAngle: Vector, smoothing: Float, divisor: Int) = destinationAngle.run {
-	val delta = set(x - currentAngle.x, y - currentAngle.y).normalize()
-
+fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: Float, divisor: Int) = destinationAngle.apply {
+	x -= currentAngle.x
+	y -= currentAngle.y
+	z = 0F
+	normalize()
+	
 	var smooth = smoothing
-
+	
 	if (smooth == 0F) {
 		smooth = 1F
 	}
-
+	
 	var randX = if (curSettings.int["AIM_RANDOM_X_VARIATION"] > 0) randInt(0, curSettings.int["AIM_RANDOM_X_VARIATION"]) * randSign() else 0
 	var randY = if (curSettings.int["AIM_RANDOM_Y_VARIATION"] > 0) randInt(0, curSettings.int["AIM_RANDOM_Y_VARIATION"]) * randSign() else 0
 	val randDZ = curSettings.int["AIM_VARIATION_DEADZONE"] / 100F
-
-	if (delta.x in -randDZ..randDZ && delta.y in -randDZ..randDZ) {
+	
+	if (x in -randDZ..randDZ && y in -randDZ..randDZ) {
 		randX = 0
 		randY = 0
 	}
-
-	vector(currentAngle.x + (delta.x + ((randX/10F) * (10F / smooth))) / 100F * (100F / smooth) / divisor,
-		currentAngle.y + (delta.y + ((randY/10F) * (10F / smooth))) / 100F * (100F / smooth) / divisor).normalize()
+	
+	x = currentAngle.x + (x + ((randX/10F) * (10F / smooth))) / 100F * (100F / smooth) / divisor
+	y = currentAngle.y + (y + ((randY/10F) * (10F / smooth))) / 100F * (100F / smooth) / divisor
+	
+	normalize()
 }
 
-fun writeAim(currentAngle: Vector, destinationAngle: Vector, smoothing: Float, divisor: Int = 1, silent: Boolean = false) {
+fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Float, divisor: Int = 1, silent: Boolean = false) {
 	if (!silent) {
 		val dAng = applyFlatSmoothing(currentAngle, destinationAngle, smoothing, divisor)
 		clientState.setAngle(dAng)

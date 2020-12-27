@@ -12,23 +12,23 @@ import rat.poison.utils.*
 import rat.poison.utils.generalUtil.cToDouble
 import rat.poison.utils.generalUtil.cToFloat
 
-private var mPos = Vector()
 private var calcRes = 0F
-private var eyeAng = Angle(0F, 0F, 0F)
 
 private var closestAngle = Angle(90F, 90F, 90F)
 private var closestDistance = 100F
 private var clfSpot = listOf<Any>()
 
 fun autoThrowNade(fSpot: List<Any>, recoveredAngle: Angle) {
-    eyeAng = me.eyeAngle()
+    val eyeAng = me.eyeAngle()
     calcRes = eyeAng.distanceTo(recoveredAngle)
     writeAim(eyeAng, recoveredAngle, curSettings.float["NADE_THROWER_SMOOTHNESS"])
+    eyeAng.release()
     if (calcRes < 0.1) {
         when (fSpot[5]) {
             "J+T" -> jumpAndThrow()
             "S+T" -> standAndThrow()
         }
+        closestAngle.release()
         closestAngle = Angle(90F, 90F, 90F)
         closestDistance = 100F
         Thread.sleep(20)
@@ -37,7 +37,7 @@ fun autoThrowNade(fSpot: List<Any>, recoveredAngle: Angle) {
 
 fun nadeThrower() = every(10, inGameCheck = true) {
     if (!curSettings.bool["ENABLE_NADE_THROWER"] || !curSettings.bool["ENABLE_ESP"] || me <= 0L || MENUTOG || meDead) return@every
-    mPos = me.absPosition()
+    val mPos = me.absPosition()
     
     val nadeToCheck : String = when (meCurWep.name) {
         "FLASH_GRENADE" -> "Flash"
@@ -59,14 +59,16 @@ fun nadeThrower() = every(10, inGameCheck = true) {
                         val recoveredAngle = realCalcAngle(me, hLVec)
                         val eyeAngle = me.eyeAngle()
                         val dist = eyeAngle.distanceTo(recoveredAngle)
+                        eyeAngle.release()
                         if (dist < closestDistance) {
                             closestDistance = dist
+                            closestAngle.release()
                             closestAngle = recoveredAngle
                             clfSpot = fSpot
                         }
-                        eyeAngle.release()
                     }
                     else {
+                        closestAngle.release()
                         closestAngle = Angle(90F, 90F, 90F)
                         closestDistance = 100F
                     }
@@ -77,4 +79,6 @@ fun nadeThrower() = every(10, inGameCheck = true) {
             autoThrowNade(clfSpot, closestAngle)
         }
     }
+    
+    mPos.release()
 }
