@@ -66,6 +66,7 @@ fun realCalcAngle(player: Player, dst: Vector): Angle {
 
 	var aX = toDegrees(atan2(-delta.z, sqrt(delta.x*delta.x + delta.y*delta.y)).toDouble())
 	var aY = toDegrees(atan2(delta.y, delta.x).toDouble())
+	delta.release()
 
 	val rcsXVariation = curSettings.double["AIM_RCS_VARIATION"]
 	val rcsYVariation = curSettings.double["AIM_RCS_VARIATION"]
