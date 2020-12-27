@@ -8,69 +8,67 @@ import rat.poison.game.entity.Player
 import rat.poison.game.entity.position
 import rat.poison.game.entity.punch
 import rat.poison.game.netvars.NetVarOffsets.vecViewOffset
-import rat.poison.utils.*
+import rat.poison.utils.Angle
+import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.toInt
+import rat.poison.utils.randBoolean
+import rat.poison.utils.randDouble
 import java.lang.Math.toDegrees
 import kotlin.math.atan
 import kotlin.math.atan2
 import kotlin.math.sqrt
 
 fun getCalculatedAngle(player: Player, dst: Vector): Angle {
+	val ang = Angle()
+	
 	val myPunch = player.punch()
 	val myPosition = player.position()
-
+	
 	val dX = myPosition.x - dst.x
 	val dY = myPosition.y - dst.y
 	val dZ = myPosition.z + csgoEXE.float(player + vecViewOffset) - dst.z
-	myPosition.release()
-
+	
 	val hyp = sqrt((dX * dX) + (dY * dY))
-
+	
 	val rcsXVariation = curSettings.double["AIM_RCS_VARIATION"]
 	val rcsYVariation = curSettings.double["AIM_RCS_VARIATION"]
-
-	var ang: Angle
 	
 	if (curSettings.bool["FACTOR_RECOIL"]) {
-		ang = if (curSettings.bool["AIM_ADVANCED"]) {
+		if (curSettings.bool["AIM_ADVANCED"]) {
 			val randX = if (rcsXVariation > 0F) randDouble(0.0, rcsXVariation).toFloat() * randBoolean().toInt() else 0F
 			val randY = if (rcsYVariation > 0F) randDouble(0.0, rcsYVariation).toFloat() * randBoolean().toInt() else 0F
-			val calcX = toDegrees(atan(dZ / hyp).toDouble()) - myPunch.x * clamp(1F + curSettings.float["AIM_RCS_Y"] + randX, 1F, 2F)
-			val calcY = toDegrees(atan(dY / dX).toDouble()) - myPunch.y * clamp(1F + curSettings.float["AIM_RCS_X"] + randY, 1F, 2F)
-			angle(calcX.toFloat(), calcY.toFloat())
+			val calcX = toDegrees(atan(dZ / hyp).toDouble()) - myPunch.x * clamp(1F + curSettings["AIM_RCS_Y"].toFloat() + randX, 1F, 2F)
+			val calcY = toDegrees(atan(dY / dX).toDouble()) - myPunch.y * clamp(1F + curSettings["AIM_RCS_X"].toFloat() + randY, 1F, 2F)
+			ang.x = calcX.toFloat()
+			ang.y = calcY.toFloat()
 		} else {
-			angle (
-				(toDegrees(atan(dZ / hyp).toDouble()) - myPunch.x * 2.0).toFloat(), //Move these above IFs
-				(toDegrees(atan(dY / dX).toDouble()) - myPunch.y * 2.0).toFloat())
+			ang.x = (toDegrees(atan(dZ / hyp).toDouble()) - myPunch.x * 2.0).toFloat() //Move these above IFs
+			ang.y = (toDegrees(atan(dY / dX).toDouble()) - myPunch.y * 2.0).toFloat()
 		}
 	} else {
-		ang = angle(
-			toDegrees(atan(dZ / hyp).toDouble()).toFloat(), //Move these above IFs
-			toDegrees(atan(dY / dX).toDouble()).toFloat()
-		)
+		ang.x = toDegrees(atan(dZ / hyp).toDouble()).toFloat()//Move these above IFs
+		ang.y = toDegrees(atan(dY / dX).toDouble()).toFloat()
 	}
 	
-	myPunch.release()
+	ang.z = 0F
+	if (dX >= 0.0) ang.y += 180
 	
-	if (dX >= 0.0) {
-		ang.y += 180
-	}
-	return ang.normalize()
+	ang.normalize()
+	
+	return ang
 }
 
 fun realCalcAngle(player: Player, dst: Vector): Angle {
 	val playerPos = player.position()
-	val delta = vector(dst.x - playerPos.x, dst.y - playerPos.y, dst.z - playerPos.z + csgoEXE.float(player + vecViewOffset))
-	playerPos.release()
+	val delta = Vector(dst.x - playerPos.x, dst.y - playerPos.y, dst.z - playerPos.z + csgoEXE.float(player + vecViewOffset))
 	val myPunch = player.punch()
-
+	
 	var aX = toDegrees(atan2(-delta.z, sqrt(delta.x*delta.x + delta.y*delta.y)).toDouble())
 	var aY = toDegrees(atan2(delta.y, delta.x).toDouble())
-	delta.release()
-
+	
 	val rcsXVariation = curSettings.double["AIM_RCS_VARIATION"]
 	val rcsYVariation = curSettings.double["AIM_RCS_VARIATION"]
-
+	
 	if (curSettings.bool["FACTOR_RECOIL"]) {
 		if (curSettings.bool["AIM_ADVANCED"]) {
 			val randX = if (rcsXVariation > 0.0) randDouble(0.0, rcsXVariation) * randBoolean().toInt() else 0.0
@@ -84,7 +82,9 @@ fun realCalcAngle(player: Player, dst: Vector): Angle {
 			aY -= myPunch.y * 2F
 		}
 	} //else don't factor
-	myPunch.release()
 	
-	return angle(aX.toFloat(), aY.toFloat()).normalize()
+	val ang = Angle(aX.toFloat(), aY.toFloat(), 0F)
+	ang.normalize()
+	
+	return ang
 }

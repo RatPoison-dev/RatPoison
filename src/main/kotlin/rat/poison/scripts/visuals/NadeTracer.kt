@@ -8,7 +8,6 @@ import rat.poison.curSettings
 import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.absPosition
 import rat.poison.game.forEntities
-import rat.poison.game.w2s
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.settings.MENUTOG
@@ -28,16 +27,13 @@ fun nadeTracer() = App {
 	
 	if (sync >= (curSettings.int["NADE_TRACER_UPDATE_TIME"])) {
 		arraySize = clamp(curSettings.int["NADE_TRACER_TIMEOUT"], 1, 30)
-		forEntities(
-			EntityType.CSmokeGrenadeProjectile,
-			EntityType.CMolotovProjectile,
-			EntityType.CDecoyProjectile,
-			EntityType.CBaseCSGrenadeProjectile
-		) {
+		forEntities(EntityType.CSmokeGrenadeProjectile, EntityType.CMolotovProjectile, EntityType.CDecoyProjectile, EntityType.CBaseCSGrenadeProjectile) {
 			val ent = it.entity
 			val entPos = ent.absPosition()
 			
-			if (entPos.x in -2F..2F && entPos.y in -2F..2F && entPos.z in -2F..2F) return@forEntities
+			if (entPos.x in -2F..2F && entPos.y in -2F..2F && entPos.z in -2F..2F) {
+				return@forEntities
+			}
 			
 			if (!grenadeList.contains(ent)) {
 				grenadeList.add(ent)
@@ -47,8 +43,6 @@ fun nadeTracer() = App {
 			val idx = grenadeList.indexOf(ent)
 			
 			positionsList[idx].add(entPos)
-			
-			entPos.release()
 			
 			if (positionsList[idx].size > arraySize) {
 				positionsList[idx].removeAt(0)
@@ -66,7 +60,6 @@ fun nadeTracer() = App {
 					positionsList.removeAt(idx)
 				}
 			}
-			entPos.release()
 		}
 		sync = 0 //Reset
 	}
@@ -79,9 +72,11 @@ fun nadeTracer() = App {
 			continue
 		}
 		
-		for (j in 0 until positionsList[i].size - 1) {
+		for (j in 0 until positionsList[i].size-1) {
 			val pos1 = positionsList[i][j]
-			val pos2 = positionsList[i][j + 1]
+			val pos2 = positionsList[i][j+1]
+			val w2s1 = Vector()
+			val w2s2 = Vector()
 			
 			if (pos1.x in -2F..2F && pos1.y in -2F..2F && pos1.z in -2F..2F) {
 				continue
@@ -89,9 +84,7 @@ fun nadeTracer() = App {
 				continue
 			}
 			
-			val w2s1 = worldToScreen(pos1)
-			val w2s2 = worldToScreen(pos2)
-			if (w2s1.w2s() && w2s2.w2s()) {
+			if (worldToScreen(pos1, w2s1) && worldToScreen(pos2, w2s2)) {
 				shapeRenderer.apply {
 					if (isDrawing) {
 						end()
