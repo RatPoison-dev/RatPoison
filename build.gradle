@@ -52,9 +52,7 @@ dependencies {
 	implementation group: 'org.jetbrains.kotlin', name: 'kotlin-script-runtime', version: kotlin_version
 	implementation group: 'org.jetbrains.kotlin', name: 'kotlin-script-util', version: kotlin_version
 	implementation group: 'org.jetbrains.kotlin', name: 'kotlin-compiler-embeddable', version: kotlin_version
-	
-	implementation group: 'net.openhft', name: 'chronicle-core', version: '2.20.125'
-	
+
 	implementation group: 'commons-io', name: 'commons-io', version: 2.6
 	implementation 'com.github.ata4:ioutils:b1f26588b5'
 	implementation 'com.github.ata4:bspsrc:v1.3.24'
@@ -115,9 +113,4 @@ sourceSets {
 	main.java.srcDirs += 'src/main/java'
 	main.java.srcDirs += 'src/main/kotlin'
 	main.java.srcDirs += 'settings'
-}
-compileKotlin {
-	kotlinOptions {
-		freeCompilerArgs = ["-Xinline-classes"]
-	}
 }
