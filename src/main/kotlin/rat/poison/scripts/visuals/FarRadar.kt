@@ -42,6 +42,7 @@ fun farRadar() = App {
         if (ent == me || me.team() == ent.team() || DANGER_ZONE || !ent.dormant() || ent.dead()) return@forEntities
 
         val entID = csgoEXE.int(ent + ClientOffsets.dwIndex)
+        if (entID < 0) return@forEntities
 
         if (!csgoEXE.read(dwRadar + (0x174 * (entID + 1)) - 0x3CL, mem)) return@forEntities
 
