@@ -12,26 +12,24 @@ import rat.poison.utils.*
 import rat.poison.utils.generalUtil.cToDouble
 import rat.poison.utils.generalUtil.cToFloat
 
-@Volatile
+private var mPos = Vector()
 private var calcRes = 0F
+private var eyeAng = Angle(0F, 0F, 0F)
 
-@Volatile
-private var closestAngleL: Long = vectorLong(90F, 90F, 90F)
-@Volatile
+private var closestAngle = Angle(90F, 90F, 90F)
 private var closestDistance = 100F
-@Volatile
 private var clfSpot = listOf<Any>()
 
-fun autoThrowNade(eyeAng: Vector, fSpot: List<Any>, recoveredAngle: Vector) {
+fun autoThrowNade(fSpot: List<Any>, recoveredAngle: Angle) {
+    eyeAng = me.eyeAngle()
     calcRes = eyeAng.distanceTo(recoveredAngle)
     writeAim(eyeAng, recoveredAngle, curSettings.float["NADE_THROWER_SMOOTHNESS"])
-    //recoveredAngle.release()
     if (calcRes < 0.1) {
         when (fSpot[5]) {
             "J+T" -> jumpAndThrow()
             "S+T" -> standAndThrow()
         }
-        closestAngleL = vectorLong(90F, 90F, 90F)
+        closestAngle = Angle(90F, 90F, 90F)
         closestDistance = 100F
         Thread.sleep(20)
     }
@@ -39,9 +37,8 @@ fun autoThrowNade(eyeAng: Vector, fSpot: List<Any>, recoveredAngle: Vector) {
 
 fun nadeThrower() = every(10, inGameCheck = true) {
     if (!curSettings.bool["ENABLE_NADE_THROWER"] || !curSettings.bool["ENABLE_ESP"] || me <= 0L || MENUTOG || meDead) return@every
-    val mPos = me.absPosition()
-    val eyeAngle = me.eyeAngle()
-
+    mPos = me.absPosition()
+    
     val nadeToCheck : String = when (meCurWep.name) {
         "FLASH_GRENADE" -> "Flash"
         "SMOKE_GRENADE" -> "Smoke"
@@ -60,25 +57,24 @@ fun nadeThrower() = every(10, inGameCheck = true) {
                     if (keyPressed(curSettings.int["NADE_THROWER_KEY"])) {
                         val hLVec = Vector(hLPos[0].cToFloat(), hLPos[1].cToFloat(), hLPos[2].cToFloat())
                         val recoveredAngle = realCalcAngle(me, hLVec)
+                        val eyeAngle = me.eyeAngle()
                         val dist = eyeAngle.distanceTo(recoveredAngle)
                         if (dist < closestDistance) {
                             closestDistance = dist
-                            closestAngleL = recoveredAngle.value
+                            closestAngle = recoveredAngle
                             clfSpot = fSpot
                         }
+                        eyeAngle.release()
                     }
                     else {
-                        closestAngleL = vectorLong(90F, 90F, 90F)
+                        closestAngle = Angle(90F, 90F, 90F)
                         closestDistance = 100F
                     }
                 }
             }
         }
-        val closestAngle = Vector(closestAngleL)
         if (closestAngle.x != 90F || closestAngle.y != 90F || closestAngle.z != 90F) {
-            autoThrowNade(eyeAngle, clfSpot, closestAngle)
+            autoThrowNade(clfSpot, closestAngle)
         }
     }
-    mPos.release()
-    eyeAngle.release()
 }
