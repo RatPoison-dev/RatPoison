@@ -12,10 +12,7 @@ import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
 import rat.poison.scripts.*
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.every
-import rat.poison.utils.inBackground
-import rat.poison.utils.inGame
-import rat.poison.utils.keyPressed
+import rat.poison.utils.*
 
 private var shouldShoot = false
 var didShoot = false
@@ -29,7 +26,7 @@ fun handleFireKey() = every(1, continuous = true) {
         return@every
     }
 
-    if ((MENUTOG && !appless) || (me > 0L && meDead) || inBackground) {
+    if (!inFullscreen && ((MENUTOG && !appless) || (me > 0L && meDead) || inBackground)) {
         if (clientDLL.int(dwForceAttack) == 5) {
             clientDLL[dwForceAttack] = 4
         }

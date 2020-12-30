@@ -4,6 +4,7 @@
 package rat.poison.overlay
 
 import com.sun.jna.platform.win32.WinUser
+import com.sun.jna.ptr.LongByReference
 import org.jire.kna.int
 import org.jire.kna.set
 import org.lwjgl.system.windows.User32.WS_MINIMIZEBOX
@@ -19,6 +20,7 @@ import rat.poison.jna.structures.Rect
 import rat.poison.jna.structures.WindowCompositionAttributeData
 import rat.poison.overlay.App.uiMenu
 import rat.poison.utils.inBackground
+import rat.poison.utils.inFullscreen
 import kotlin.concurrent.thread
 import kotlin.properties.Delegates
 
@@ -156,6 +158,13 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 					SetWindowPos(myHWND, HWND_TOPPOS, x, y, width, height, WinUser.SWP_NOSENDCHANGING or WinUser.SWP_NOZORDER or WinUser.SWP_DEFERERASE or WinUser.SWP_NOREDRAW or WinUser.SWP_ASYNCWINDOWPOS or WinUser.SWP_FRAMECHANGED)
 					listener?.onBoundsChange(this@Overlay, x, y, width, height)
 				}
+
+				with (Shell32) {
+					val state = LongByReference()
+					SHQueryUserNotificationState(state)
+					inFullscreen = state.value == QUNS_RUNNING_D3D_FULL_SCREEN
+				}
+
 				val isMyWindowVisible = IsWindowVisible(myHWND)
 				if (getActiveWindow() == targetAppHWND) {
 					if (!isMyWindowVisible) {
