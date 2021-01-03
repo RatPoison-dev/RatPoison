@@ -1,6 +1,9 @@
 package rat.poison.game.offsets
 
+import com.sun.jna.Native
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
+import it.unimi.dsi.fastutil.objects.Object2ObjectMap
+import it.unimi.dsi.fastutil.objects.Object2ObjectMaps
 import org.jire.kna.Addressed
 import org.jire.kna.Pointer
 import org.jire.kna.attach.AttachedModule
@@ -16,20 +19,17 @@ class Offset(
 ) : Addressed {
 	
 	companion object {
-		val bytesByModule = Object2ObjectArrayMap<AttachedModule, ByteArray>()
+		val bytesByModule: Object2ObjectMap<AttachedModule, ByteArray> =
+			Object2ObjectMaps.synchronize(Object2ObjectArrayMap())
 		
 		private fun Offset.cachedBytes(): ByteArray {
 			val cached = bytesByModule[module]
 			if (cached != null) return cached
 			
 			val pointer = Pointer.alloc(module.size)
-			if (module !is WindowsAttachedModule || module.readForced(
-					0,
-					pointer,
-					module.size.toInt()
-				) == 0L
-			)
+			if (module !is WindowsAttachedModule || module.readForced(0, pointer, module.size.toInt()) == 0L) {
 				throw IllegalStateException()
+			}
 			
 			val array = pointer.jna.getByteArray(0, module.size.toInt())
 			bytesByModule[module] = array
@@ -43,29 +43,34 @@ class Offset(
 		val offset = module.size - mask.size
 		val process = module.process as WindowsAttachedProcess
 		val readMemory = Pointer.alloc(4)
-		var currentAddress = 0L
-		while (currentAddress < offset) {
-			if (bytes.mask(currentAddress, mask)) {
-				currentAddress += module.address + patternOffset
-				if (read) {
-					if (process.readForced(
-							currentAddress,
-							readMemory,
-							4
-						) == 0L
-					) throw IllegalStateException("Couldn't resolve currentAddress pointer")
-					currentAddress = readMemory.getInt(0).unsign()
+		try {
+			var currentAddress = 0L
+			while (currentAddress < offset) {
+				if (bytes.mask(currentAddress, mask)) {
+					currentAddress += module.address + patternOffset
+					if (read) {
+						if (process.readForced(
+								currentAddress,
+								readMemory,
+								4
+							) == 0L
+						) throw IllegalStateException("Couldn't resolve currentAddress pointer")
+						currentAddress = readMemory.getInt(0).unsign()
+					}
+					if (subtract) currentAddress -= module.address
+					return@run currentAddress + addressOffset
 				}
-				if (subtract) currentAddress -= module.address
-				return@run currentAddress + addressOffset
+				currentAddress++
 			}
-			currentAddress++
+			
+			//IllegalStateException("Failed to resolve offset, module=$module, memory=$memory, read=$read, subtract=$subtract, currentAddress=$currentAddress").printStackTrace()
+			return@run -1L
+		} finally {
+			Native.free(readMemory.address)
 		}
-		
-		//IllegalStateException("Failed to resolve offset, module=$module, memory=$memory, read=$read, subtract=$subtract, currentAddress=$currentAddress").printStackTrace()
-		return@run -1L
 	}
 	
+	@Volatile
 	private var value = -1L
 	
 	operator fun getValue(thisRef: Any?, property: KProperty<*>): Long {
