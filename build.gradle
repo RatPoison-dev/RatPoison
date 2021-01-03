@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.jire:kna:0.4.0'
+	implementation 'org.jire:kna:0.4.1'
 	
 	implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
 	implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"

@@ -167,8 +167,8 @@ internal fun Player.nearestBone(): Int {
 	val modelMemory = modelMemory.get()
 	val boneMemory = boneMemory.get()
 	
-	csgoEXE.read(studioModel + boneOffset, modelMemory, modelMemorySize)
-	csgoEXE.read(boneMatrix, boneMemory, boneMemorySize)
+	if (!csgoEXE.read(studioModel + boneOffset, modelMemory, modelMemorySize)) throw IllegalStateException()
+	if (!csgoEXE.read(boneMatrix, boneMemory, boneMemorySize)) throw IllegalStateException()
 	
 	var closestDst2 = Float.MAX_VALUE
 	var nearestBone = -999
@@ -241,7 +241,7 @@ internal fun Player.name(): String {
 	csgoEXE.read(d, nameMem, nameMemSize)
 	
 	val name = nameMem.getString(0x10)
-	//nameMem.clear()
+	nameMem.jna.setMemory(0, nameMemSize, 0)
 	return name
 }
 
@@ -257,10 +257,10 @@ internal fun Player.steamID(): String {
 	val d = csgoEXE.uint(c + 0x28 + entID * 0x34)
 	
 	val mem = mem.get()
-	csgoEXE.read(d, mem, memSize)
+	if (!csgoEXE.read(d, mem, memSize)) throw IllegalStateException()
 	
 	val sID = mem.getString(0x94) //0x90 is int of steamID
-	//mem.clear()
+	mem.jna.setMemory(0, memSize, 0)
 	return sID
 }
 
@@ -313,7 +313,7 @@ internal fun Player.hltv(): Boolean {
 	val d = csgoEXE.uint(c + 0x28 + entID * 0x34)
 	
 	val hltvmem = hltvmem.get()
-	csgoEXE.read(d, hltvmem, hltvmemSize)
+	if (!csgoEXE.read(d, hltvmem, hltvmemSize)) return false
 	
 	val hltvB = hltvmem.getByte(0x13D).toInt().unsign() > 0
 	//hltvmem.clear()

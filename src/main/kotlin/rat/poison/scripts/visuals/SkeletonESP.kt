@@ -43,7 +43,7 @@ internal fun skeletonEsp() = App {
 		val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
 		val boneOffset = csgoEXE.uint(studioModel + 0xA0)
 		
-		csgoEXE.read(studioModel + boneOffset, modelMemory, modelMemorySize)
+		if (!csgoEXE.read(studioModel + boneOffset, modelMemory, modelMemorySize)) throw IllegalStateException()
 		
 		var offset = 0
 		for (idx in 0 until numBones) {
@@ -90,7 +90,7 @@ private fun drawBone(target: Player, start: Int, end: Int) {
 	
 	val boneMemory = boneMemory.get()
 	
-	csgoEXE.read(target.boneMatrix(), boneMemory, boneMemorySize)
+	if (!csgoEXE.read(target.boneMatrix(), boneMemory, boneMemorySize)) throw IllegalStateException()
 	
 	val startBone = Vector(
 		boneMemory.getFloat(((0x30L * start) + 0xC)),

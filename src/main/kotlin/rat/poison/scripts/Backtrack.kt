@@ -170,7 +170,7 @@ fun constructRecords() {
 		if (entID in 0..63 && tick < 13) {
 			val record = btRecords[entID][tick]
 			
-			csgoEXE.read(ent.boneMatrix(), boneMemory, boneMemorySize)
+			if (!csgoEXE.read(ent.boneMatrix(), boneMemory, boneMemorySize)) throw IllegalStateException()
 			record.headPos = boneMemory.bones(8).apply { z += 5 }
 			val entPos = ent.absPosition()
 			record.absPos = entPos.apply { z -= 5 }

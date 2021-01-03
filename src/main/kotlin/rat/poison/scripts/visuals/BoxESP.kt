@@ -590,7 +590,7 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 	
 	val collisionMem = collisionMem.get()
 	
-	csgoEXE.read(ent + m_Collision, collisionMem, collisionMemSize)
+	if (!csgoEXE.read(ent + m_Collision, collisionMem, collisionMemSize)) throw IllegalStateException()
 	
 	//Set min/max
 	val vsx = collisionMem.getFloat(8);

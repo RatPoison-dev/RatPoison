@@ -38,7 +38,7 @@ fun Entity.glow(color: Color, glowType: Int) {
 	val entType = EntityType.byEntityAddress(ent)
 
 	if ((entType == EntityType.CCSPlayer || entType.weapon || entType.grenade || entType.bomb) && ent > 0) {
-		csgoEXE.read(this, glowMemory, glowMemorySize)
+		if (!csgoEXE.read(this, glowMemory, glowMemorySize)) throw IllegalStateException()
 
 		if (glowMemory.jna.getPointer(0) != null) {
 			if (glowType == -1) {

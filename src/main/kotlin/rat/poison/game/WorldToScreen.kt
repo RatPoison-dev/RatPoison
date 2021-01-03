@@ -110,7 +110,7 @@ private val floatArray = ThreadLocal.withInitial { FloatArray(16) }
 fun updateViewMatrix() { //Call before using multiple world to screens
 	if (dwViewMatrix > 0L) {
 		val buffer = viewMatrixMemory.get()
-		if (clientDLL.read(dwViewMatrix, buffer, viewMatrixMemorySize)) {
+		if (clientDLL.read(clientDLL.offset(dwViewMatrix), buffer, viewMatrixMemorySize)) {
 			val floatArray = floatArray.get()
 			buffer.jna.read(0, floatArray, 0, 16)
 			if (floatArray.all(Float::isFinite)) {

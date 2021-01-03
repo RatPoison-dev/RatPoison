@@ -157,7 +157,7 @@ private val boneMemory2 = threadLocalPointer(boneMemory2Size)
 fun createPosition() {
     val boneMemory = boneMemory2.get()
 
-    CSGO.csgoEXE.read(me.boneMatrix(), boneMemory, boneMemory2Size)
+    if (!CSGO.csgoEXE.read(me.boneMatrix(), boneMemory, boneMemory2Size)) throw IllegalStateException()
     val xOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0xC)).toDouble()
     val yOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x1C)).toDouble()
     val zOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x2C)).toDouble()

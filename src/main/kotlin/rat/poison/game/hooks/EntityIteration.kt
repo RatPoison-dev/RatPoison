@@ -60,10 +60,10 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
 			
 			val strBuf = strBuf.get()
 			
-			csgoEXE.read(clientState + dwClientState_MapDirectory, strBuf, strBufSize)
+			if (!csgoEXE.read(clientState + dwClientState_MapDirectory, strBuf, strBufSize)) throw IllegalStateException()
 			val mapName = strBuf.getString(0)
 			
-			engineDLL.read(dwGameDir, strBuf, strBufSize)
+			if (!engineDLL.read(engineDLL.offset(dwGameDir), strBuf, strBufSize)) throw IllegalStateException()
 			val gameDir = strBuf.getString(0)
 			
 			if (mapName.isNotBlank() && gameDir.isNotBlank()) {
@@ -140,7 +140,7 @@ fun constructEntities() = every(500, continuous = true) {
 	val glowObjectMemory = glowObjectMemory.get()
 	
 	val glowMemorySize = 4L + (glowObjectCount * GLOW_OBJECT_SIZE)
-	csgoEXE.read(glowObject, glowObjectMemory, glowMemorySize)
+	if (!csgoEXE.read(glowObject, glowObjectMemory, glowMemorySize)) throw IllegalStateException()
 	for (glowIndex in 0..glowObjectCount) {
 		val glowAddress = glowObject + (glowIndex * GLOW_OBJECT_SIZE)
 		val entity = glowObjectMemory.uint(glowIndex * GLOW_OBJECT_SIZE.toLong())
