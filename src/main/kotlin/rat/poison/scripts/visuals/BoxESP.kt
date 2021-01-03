@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.utils.Align
+import it.unimi.dsi.fastutil.objects.Object2ObjectMap
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import org.jire.kna.int
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
@@ -646,8 +648,15 @@ fun transformVector(vec: Vector, array: Array<FloatArray>): Vector = Vector(
 	(vec.dot(array[2][0], array[2][1], array[2][2]) + array[2][3])
 )
 
+private val nameHashToAssetName: Object2ObjectMap<String, String> = Object2ObjectOpenHashMap()
+
 fun getWeaponTexture(assetManager: AssetManager, name: String): Texture {
-	val assetName = "$SETTINGS_DIRECTORY/Assets/Images/${name.toLowerCase()}.png"
+	val assetName =
+		if (nameHashToAssetName.containsKey(name)) {
+			nameHashToAssetName[name]
+		} else "$SETTINGS_DIRECTORY/Assets/Images/${name.toLowerCase()}.png".apply {
+			nameHashToAssetName[name] = this
+		}
 	return when (assetManager.contains(assetName)) {
 		true -> assetManager.get(assetName)
 		false -> assetManager.get("$SETTINGS_DIRECTORY/Assets/Images/knife.png")
