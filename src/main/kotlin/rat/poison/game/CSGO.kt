@@ -23,6 +23,7 @@ import kotlin.system.exitProcess
 object CSGO {
 	const val ENTITY_SIZE = 16
 	const val GLOW_OBJECT_SIZE = 56
+	val CACHE_EXPIRE_MILLIS = 512L / SERVER_TICK_RATE
 	
 	lateinit var csgoEXE: WindowsAttachedProcess
 		private set
@@ -69,7 +70,7 @@ object CSGO {
 		
 		retry(128) {
 			val csgoEXE = Attach.byName(PROCESS_NAME, WindowsAttachAccess(PROCESS_ACCESS_FLAGS)) {
-				set(CachedReadableSource.CACHE_EXPIRATION_MILLIS, 512L / SERVER_TICK_RATE)
+				set(CachedReadableSource.CACHE_EXPIRATION_MILLIS, CACHE_EXPIRE_MILLIS)
 			}!!
 			CSGO.csgoEXE = csgoEXE as WindowsAttachedProcess
 		}

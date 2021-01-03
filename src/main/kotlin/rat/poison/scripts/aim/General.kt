@@ -6,10 +6,7 @@ import rat.poison.game.entity.*
 import rat.poison.settings.*
 import rat.poison.utils.*
 import java.lang.Math.toRadians
-import kotlin.math.abs
-import kotlin.math.pow
-import kotlin.math.sin
-import kotlin.math.sqrt
+import kotlin.math.*
 
 var target = -1L
 var canPerfect = false
@@ -240,7 +237,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 			val aimSpeed = curSettings.int["AIM_SPEED"]
 
 			val aimSpeedDivisor = if (curSettings.bool["AIM_ADVANCED"]) curSettings.int["AIM_SPEED_DIVISOR"] else 1
-			doAim(destinationAngle, currentAngle, aimSpeed, aimSpeedDivisor)
+			doAim(destinationAngle, currentAngle, aimSpeed / max(1, CSGO.CACHE_EXPIRE_MILLIS.toInt() / 4), aimSpeedDivisor)
 		} else {
 			doAim(destinationAngle, currentAngle, 1, 1)
 		}
