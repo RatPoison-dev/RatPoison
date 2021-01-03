@@ -15,6 +15,7 @@ var meCurWep = Weapons.AK47
 var meCurWepEnt = 0L
 var curWepOverride = false
 var curWepCategory = "PISTOL"
+var curWepCategoryBacktrackMs = "${curWepCategory}_BACKTRACK_MS"
 var curWepSettings = oWeapon()
 var haveAimSettings = false
 
@@ -37,6 +38,7 @@ fun setAim() = every(500, true, inGameCheck = true) {
             meCurWep.shotgun -> "SHOTGUN"
             else -> ""
         }
+        curWepCategoryBacktrackMs = "${curWepCategory}_BACKTRACK_MS"
 
         if (settingsLoaded) { //If we have settings to read
             if (curWepOverride) {
