@@ -1,6 +1,6 @@
 package rat.poison.utils.extensions
 
-import com.sun.jna.Pointer
+import org.jire.kna.Pointer
 import org.jire.kna.attach.AttachedModule
 import org.jire.kna.attach.windows.WindowsAttachedProcess
 import rat.poison.game.offsets.ModuleScan

@@ -1,7 +1,7 @@
 package rat.poison.scripts
 
 import com.badlogic.gdx.math.MathUtils.clamp
-import org.jire.kna.MemoryCache
+import org.jire.kna.PointerCache
 import org.jire.kna.float
 import org.jire.kna.int
 import rat.poison.curSettings
@@ -45,7 +45,7 @@ var gvars = GlobalVars()
 
 fun sendPacket(bool: Boolean) { //move outta here
 	val byte = if (bool) 1.toByte() else 0.toByte()
-	val memory = MemoryCache[1]
+	val memory = PointerCache[1]
 	memory.setByte(0, byte)
 	
 	engineDLL.writeForced(dwbSendPackets, memory, 1)
@@ -80,7 +80,7 @@ fun attemptBacktrack(): Boolean {
 		val curSequenceNumber = csgoEXE.int(clientState + dwClientState_LastOutgoingCommand) + 1
 		sendPacket(false)
 		
-		val input = memToInput(csgoEXE.read(clientDLL.address + dwInput, 253)!!)
+		val input = memToInput(csgoEXE.readPointer(clientDLL.address + dwInput, 253).ensureReadable())
 		
 		val userCMDptr = input.pCommands + (curSequenceNumber % 150) * 0x64L
 		val verifiedUserCMDptr = input.pVerifiedCommands + (curSequenceNumber % 150) * 0x68L
@@ -91,8 +91,8 @@ fun attemptBacktrack(): Boolean {
 		}
 		
 		//Check invalid?
-		val oldUserCMD = memToUserCMD(csgoEXE.read(oldUserCMDptr, 100)!!)
-		var userCMD = memToUserCMD(csgoEXE.read(userCMDptr, 100)!!)
+		val oldUserCMD = memToUserCMD(csgoEXE.readPointer(oldUserCMDptr, 100).ensureReadable())
+		var userCMD = memToUserCMD(csgoEXE.readPointer(userCMDptr, 100).ensureReadable())
 		
 		userCMD = fixUserCMD(userCMD, oldUserCMD)
 		
@@ -120,7 +120,8 @@ fun attemptBacktrack(): Boolean {
 	return false
 }
 
-private val boneMemory = threadLocalMemory(3984)
+private const val boneMemorySize = 3984L
+private val boneMemory = threadLocalPointer(boneMemorySize)
 
 fun constructRecords() {
 	var bestFov = 5F
@@ -169,7 +170,7 @@ fun constructRecords() {
 		if (entID in 0..63 && tick < 13) {
 			val record = btRecords[entID][tick]
 			
-			csgoEXE.read(ent.boneMatrix(), boneMemory)
+			csgoEXE.read(ent.boneMatrix(), boneMemory, boneMemorySize)
 			record.headPos = boneMemory.bones(8).apply { z += 5 }
 			val entPos = ent.absPosition()
 			record.absPos = entPos.apply { z -= 5 }
@@ -322,8 +323,8 @@ fun getValidRecords(entID: Int): List<Int> {
 }
 
 fun getGlobalVars(): GlobalVars? {
-	val mem = csgoEXE.read(engineDLL.address + dwGlobalVars, 64)
-	if (mem != null) {
+	val mem = csgoEXE.readPointer(engineDLL.address + dwGlobalVars, 64)
+	if (mem.readable()) {
 		return memToGlobalVars(mem)
 	}
 	

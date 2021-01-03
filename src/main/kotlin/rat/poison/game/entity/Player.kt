@@ -1,12 +1,8 @@
 package rat.poison.game.entity
 
 import com.badlogic.gdx.math.MathUtils
-import com.sun.jna.Memory
 import org.apache.commons.lang3.StringUtils
-import org.jire.kna.boolean
-import org.jire.kna.byte
-import org.jire.kna.float
-import org.jire.kna.int
+import org.jire.kna.*
 import rat.poison.game.*
 import rat.poison.game.CSGO.ENTITY_SIZE
 import rat.poison.game.CSGO.clientDLL
@@ -44,7 +40,7 @@ import rat.poison.utils.Angle
 import rat.poison.utils.Vector
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.extensions.unsign
-import rat.poison.utils.threadLocalMemory
+import rat.poison.utils.threadLocalPointer
 import rat.poison.utils.vector
 import kotlin.math.cos
 import kotlin.math.sin
@@ -68,19 +64,19 @@ internal fun Player.flags(): Int = csgoEXE.int(this + fFlags)
 internal fun Player.onGround(): Boolean = flags() and 1 == 1
 
 internal fun Player.health(): Int = csgoEXE.int(this + iHealth)
-internal fun Memory.health(): Int = this.getInt(iHealth)
+internal fun Pointer.health(): Int = this.getInt(iHealth)
 
 internal fun Player.money(): Int = csgoEXE.int(this + m_iAccount)
-internal fun Memory.money(): Int = this.getInt(m_iAccount)
+internal fun Pointer.money(): Int = this.getInt(m_iAccount)
 
 internal fun Player.armor(): Int = csgoEXE.int(this + ArmorValue)
-internal fun Memory.armor(): Int = this.getInt(ArmorValue)
+internal fun Pointer.armor(): Int = this.getInt(ArmorValue)
 
 internal fun Player.hasHelmet(): Boolean = csgoEXE.int(this + bHasHelmet) > 0
-internal fun Memory.hasHelmet(): Boolean = this.getInt(bHasHelmet) > 0
+internal fun Pointer.hasHelmet(): Boolean = this.getInt(bHasHelmet) > 0
 
 internal fun Player.flashed(): Boolean = csgoEXE.float(this + flFlashDuration) > 0.25f
-internal fun Memory.flashed(): Boolean = this.getFloat(flFlashDuration) > 0.25f
+internal fun Pointer.flashed(): Boolean = this.getFloat(flFlashDuration) > 0.25f
 
 internal fun Player.lifeState(): Int = csgoEXE.byte(this + lifeState).toInt()
 
@@ -138,14 +134,16 @@ internal fun Player.bone(offset: Int, boneID: Int = HEAD_BONE, boneMatrix: Long 
 	csgoEXE.float(boneMatrix + ((0x30 * boneID) + offset))
 
 internal fun Player.isScoped(): Boolean = csgoEXE.boolean(this + bIsScoped)
-internal fun Memory.isScoped(): Boolean = this.getByte(bIsScoped) > 0
+internal fun Pointer.isScoped(): Boolean = this.getByte(bIsScoped) > 0
 
 internal fun Player.hasDefuser(): Boolean = csgoEXE.boolean(this + bHasDefuser)
 
 internal fun Player.time(): Double = csgoEXE.int(this + nTickBase) * (1.0 / SERVER_TICK_RATE)
 
-internal fun Player.location(): String = csgoEXE.read(this + NetVarOffsets.szLastPlaceName, 32)?.getString(0)
-	?: ""
+internal fun Player.location(): String {
+	val location = csgoEXE.readPointer(this + NetVarOffsets.szLastPlaceName, 32)
+	return if (location.readable()) location.getString(0) else ""
+}
 
 internal fun Player.observerMode(): Int = csgoEXE.int(this + NetVarOffsets.m_iObserverMode)
 
@@ -153,8 +151,10 @@ internal fun Player.isSpectating(): Boolean = observerMode() > 0
 
 internal fun Player.isProtected(): Boolean = csgoEXE.boolean(this + bGunGameImmunity)
 
-private val modelMemory = threadLocalMemory(25000)
-private val boneMemory = threadLocalMemory(4032)
+private const val modelMemorySize = 25000L
+private val modelMemory = threadLocalPointer(modelMemorySize)
+private const val boneMemorySize = 4032L
+private val boneMemory = threadLocalPointer(boneMemorySize)
 
 internal fun Player.nearestBone(): Int {
 	val studioModel = csgoEXE.uint(studioHdr())
@@ -167,8 +167,8 @@ internal fun Player.nearestBone(): Int {
 	val modelMemory = modelMemory.get()
 	val boneMemory = boneMemory.get()
 	
-	csgoEXE.read(studioModel + boneOffset, modelMemory)
-	csgoEXE.read(boneMatrix, boneMemory)
+	csgoEXE.read(studioModel + boneOffset, modelMemory, modelMemorySize)
+	csgoEXE.read(boneMatrix, boneMemory, boneMemorySize)
 	
 	var closestDst2 = Float.MAX_VALUE
 	var nearestBone = -999
@@ -220,14 +220,15 @@ internal fun Player.nearestBone(): Int {
 	
 }
 
-internal fun Memory.vector(addy: Long, xOff: Long, yOff: Long, zOff: Long): Vector {
+internal fun Pointer.vector(addy: Long, xOff: Long, yOff: Long, zOff: Long): Vector {
 	val x = getFloat(addy + xOff)
 	val y = getFloat(addy + yOff)
 	val z = getFloat(addy + zOff)
 	return vector(x, y, z)
 }
 
-private val nameMem = threadLocalMemory(320)
+private const val nameMemSize = 320L
+private val nameMem = threadLocalPointer(nameMemSize)
 
 internal fun Player.name(): String {
 	val entID = csgoEXE.uint(this + dwIndex) - 1
@@ -237,14 +238,15 @@ internal fun Player.name(): String {
 	val d = csgoEXE.uint(c + 0x28 + entID * 0x34)
 	
 	val nameMem = nameMem.get()
-	csgoEXE.read(d, nameMem)
+	csgoEXE.read(d, nameMem, nameMemSize)
 	
 	val name = nameMem.getString(0x10)
-	nameMem.clear()
+	//nameMem.clear()
 	return name
 }
 
-private val mem = threadLocalMemory(0x140)
+private const val memSize = 0x140L
+private val mem = threadLocalPointer(memSize)
 
 internal fun Player.steamID(): String {
 	val entID = csgoEXE.uint(this + dwIndex) - 1
@@ -255,10 +257,10 @@ internal fun Player.steamID(): String {
 	val d = csgoEXE.uint(c + 0x28 + entID * 0x34)
 	
 	val mem = mem.get()
-	csgoEXE.read(d, mem)
+	csgoEXE.read(d, mem, memSize)
 	
 	val sID = mem.getString(0x94) //0x90 is int of steamID
-	mem.clear()
+	//mem.clear()
 	return sID
 }
 
@@ -299,7 +301,8 @@ internal fun Player.wins(): Int {
 	return (csgoEXE.int(clientDLL.uint(dwPlayerResource) + iCompetitiveWins + index * 4))
 }
 
-private val hltvmem = threadLocalMemory(0x140)
+private const val hltvmemSize = 0x140L
+private val hltvmem = threadLocalPointer(hltvmemSize)
 
 internal fun Player.hltv(): Boolean {
 	val entID = csgoEXE.uint(this + dwIndex) - 1
@@ -310,9 +313,9 @@ internal fun Player.hltv(): Boolean {
 	val d = csgoEXE.uint(c + 0x28 + entID * 0x34)
 	
 	val hltvmem = hltvmem.get()
-	csgoEXE.read(d, hltvmem)
+	csgoEXE.read(d, hltvmem, hltvmemSize)
 	
 	val hltvB = hltvmem.getByte(0x13D).toInt().unsign() > 0
-	hltvmem.clear()
+	//hltvmem.clear()
 	return hltvB
 }

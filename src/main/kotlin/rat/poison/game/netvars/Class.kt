@@ -2,7 +2,6 @@ package rat.poison.game.netvars
 
 import org.jire.kna.Addressed
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.utils.extensions.readable
 import rat.poison.utils.extensions.uint
 import kotlin.LazyThreadSafetyMode.NONE
 
@@ -14,6 +13,6 @@ internal class Class(override val address: Long) : Addressed {
 	
 	val table by lazy(NONE) { csgoEXE.uint(address + 12) }
 	
-	fun readable() = csgoEXE.read(address, 40).readable()
+	fun readable() = csgoEXE.readPointer(address, 40).readable()
 	
 }

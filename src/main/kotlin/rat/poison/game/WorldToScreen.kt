@@ -6,7 +6,7 @@ import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.offsets.ClientOffsets.dwViewMatrix
 import rat.poison.utils.Vector
-import rat.poison.utils.threadLocalMemory
+import rat.poison.utils.threadLocalPointer
 
 val w2sViewMatrix = Array(4) { DoubleArray(4) }
 
@@ -103,15 +103,16 @@ fun worldToScreen(from: Vector): Vector {
 	} else return Vector(z = W2S_FAILED)
 }
 
-private val viewMatrixMemory = threadLocalMemory(4 * 4 * 4)
+private const val viewMatrixMemorySize = 4L * 4L * 4L
+private val viewMatrixMemory = threadLocalPointer(viewMatrixMemorySize)
 private val floatArray = ThreadLocal.withInitial { FloatArray(16) }
 
 fun updateViewMatrix() { //Call before using multiple world to screens
 	if (dwViewMatrix > 0L) {
 		val buffer = viewMatrixMemory.get()
-		if (clientDLL.read(dwViewMatrix, buffer)) {
+		if (clientDLL.read(dwViewMatrix, buffer, viewMatrixMemorySize)) {
 			val floatArray = floatArray.get()
-			buffer.read(0, floatArray, 0, 16)
+			buffer.jna.read(0, floatArray, 0, 16)
 			if (floatArray.all(Float::isFinite)) {
 				var offset = 0
 				for (row in 0..3) for (col in 0..3) {

@@ -19,7 +19,8 @@ import rat.poison.utils.extensions.unsign
 private val bones = Array(2048) { Line() }
 private var currentIdx = 0
 
-private val modelMemory = threadLocalMemory(21332)
+private const val modelMemorySize = 21332L
+private val modelMemory = threadLocalPointer(modelMemorySize)
 
 internal fun skeletonEsp() = App {
 	if (!curSettings.bool["SKELETON_ESP"] || !curSettings.bool["ENABLE_ESP"] || !inGame || (curSettings.bool["SKELETON_ESP_DEAD"] && !meDead)) return@App
@@ -42,7 +43,7 @@ internal fun skeletonEsp() = App {
 		val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
 		val boneOffset = csgoEXE.uint(studioModel + 0xA0)
 		
-		csgoEXE.read(studioModel + boneOffset, modelMemory)
+		csgoEXE.read(studioModel + boneOffset, modelMemory, modelMemorySize)
 		
 		var offset = 0
 		for (idx in 0 until numBones) {
@@ -80,7 +81,8 @@ private val colors: Array<Color> = Array(101) {
 	Color(red, green, 0f, 1f)
 }
 
-private val boneMemory = threadLocalMemory(4032)
+private const val boneMemorySize = 4032L
+private val boneMemory = threadLocalPointer(boneMemorySize)
 
 private fun drawBone(target: Player, start: Int, end: Int) {
 	//Reduce r/w
@@ -88,7 +90,7 @@ private fun drawBone(target: Player, start: Int, end: Int) {
 	
 	val boneMemory = boneMemory.get()
 	
-	csgoEXE.read(target.boneMatrix(), boneMemory)
+	csgoEXE.read(target.boneMatrix(), boneMemory, boneMemorySize)
 	
 	val startBone = Vector(
 		boneMemory.getFloat(((0x30L * start) + 0xC)),

@@ -1,8 +1,8 @@
 package rat.poison.game.entity
 
-import com.sun.jna.Memory
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
+import org.jire.kna.Pointer
 import org.jire.kna.boolean
 import org.jire.kna.float
 import org.jire.kna.int
@@ -63,7 +63,7 @@ fun Entity.bones(boneID: Int): Vector = vector(
 		y = bone(0x1C, boneID),
 		z = bone(0x2C, boneID))
 
-fun Memory.bones(boneID: Int): Vector = vector(
+fun Pointer.bones(boneID: Int): Vector = vector(
 		x = getFloat(((0x30L * boneID) + 0xC)),
 		y = getFloat(((0x30L * boneID) + 0x1C)),
 		z = getFloat(((0x30L * boneID) + 0x2C)))

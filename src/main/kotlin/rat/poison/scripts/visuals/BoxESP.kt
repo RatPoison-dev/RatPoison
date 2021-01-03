@@ -73,7 +73,8 @@ private var topShift = 0F
 private var textureBuilder = mutableListOf<DrawableTexture>()
 private var bottomTextureBuilder = mutableListOf<DrawableTexture>()
 
-private val entityMemory = threadLocalMemory(45948)
+private const val entityMemorySize = 45948L
+private val entityMemory = threadLocalPointer(entityMemorySize)
 
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
 fun boxEsp() {
@@ -205,7 +206,7 @@ fun boxEsp() {
 			if (!drawBoxDetails) return@forEntities
 			
 			//Setup entity values
-			if (!csgoEXE.read(ent, entityMemory)) return@forEntities
+			if (!csgoEXE.read(ent, entityMemory, entityMemorySize)) return@forEntities
 			
 			//Set filled for bars
 			shapeRenderer.set(ShapeRenderer.ShapeType.Filled)
@@ -512,7 +513,8 @@ fun getRealTextParams(font: BitmapFont, builder: StringBuilder, layout: GlyphLay
 	return Pair(layout.height, layout.width)
 }
 
-private val boneMemory = threadLocalMemory(3984)
+private const val boneMemorySize = 3984L
+private val boneMemory = threadLocalPointer(boneMemorySize)
 
 //Create a fake accurate box using headpos
 fun setupFakeBox(ent: Entity): BoundingBox {
@@ -520,7 +522,7 @@ fun setupFakeBox(ent: Entity): BoundingBox {
 	
 	val boneMatrix = ent.boneMatrix()
 	val boneMemory = boneMemory.get()
-	if (!csgoEXE.read(boneMatrix, boneMemory)) {
+	if (!csgoEXE.read(boneMatrix, boneMemory, boneMemorySize)) {
 		throw IllegalStateException("Couldn't setupFakeBox for ent=$ent boneMatrix=$boneMatrix")
 	}
 	
@@ -562,7 +564,8 @@ fun setupFakeBox(ent: Entity): BoundingBox {
 	return bbox
 }
 
-private val collisionMem = threadLocalMemory(56) //Incorrect
+private const val collisionMemSize = 56L
+private val collisionMem = threadLocalPointer(collisionMemSize) //Incorrect
 private val frameMatrix = ThreadLocal.withInitial { Array(4) { FloatArray(4) } }
 private val bufferFloatArray = ThreadLocal.withInitial { FloatArray(16) }
 
@@ -571,10 +574,10 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 	//Get frameMatrix
 	val frameMatrix = frameMatrix.get()
 	
-	val buffer = csgoEXE.read(ent + rgflCoordinateFrame - 0x30, 4 * 4 * 4)
+	val buffer = csgoEXE.readPointer(ent + rgflCoordinateFrame - 0x30, 4 * 4 * 4)
 	if (buffer != null) {
 		val bufferFloatArray = bufferFloatArray.get()
-		buffer.read(0, bufferFloatArray, 0, 16)
+		buffer.jna.read(0, bufferFloatArray, 0, 16)
 		if (bufferFloatArray.all(Float::isFinite)) {
 			var offset = 0
 			for (row in 0..3) for (col in 0..3) {
@@ -587,7 +590,7 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 	
 	val collisionMem = collisionMem.get()
 	
-	csgoEXE.read(ent + m_Collision, collisionMem)
+	csgoEXE.read(ent + m_Collision, collisionMem, collisionMemSize)
 	
 	//Set min/max
 	val vsx = collisionMem.getFloat(8);

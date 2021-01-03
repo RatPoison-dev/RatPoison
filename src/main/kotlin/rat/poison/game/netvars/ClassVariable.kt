@@ -13,7 +13,7 @@ internal class ClassVariable(override val address: Long, private val addressOffs
 	val name by lazy(NONE) {
 		val bytes = ByteArray(32)
 		
-		val memory = csgoEXE.read(resolvedAddress, bytes.size.toLong())!!
+		val memory = csgoEXE.readPointer(resolvedAddress, bytes.size.toLong()).ensureReadable()
 		memory.read(0, bytes, 0, bytes.size)
 		
 		bytes.toNetVarString()

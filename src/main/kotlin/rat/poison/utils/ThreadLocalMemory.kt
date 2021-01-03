@@ -1,5 +1,5 @@
 package rat.poison.utils
 
-import com.sun.jna.Memory
+import org.jire.kna.Pointer
 
-fun threadLocalMemory(size: Long): ThreadLocal<Memory> = ThreadLocal.withInitial { Memory(size) }
+fun threadLocalPointer(size: Long): ThreadLocal<Pointer> = ThreadLocal.withInitial { Pointer.alloc(size) }

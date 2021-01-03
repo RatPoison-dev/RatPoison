@@ -1,8 +1,8 @@
 package rat.poison.game.offsets
 
-import com.sun.jna.Memory
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
 import org.jire.kna.Addressed
+import org.jire.kna.Pointer
 import org.jire.kna.attach.AttachedModule
 import org.jire.kna.attach.windows.WindowsAttachedModule
 import org.jire.kna.attach.windows.WindowsAttachedProcess
@@ -16,31 +16,36 @@ class Offset(
 ) : Addressed {
 	
 	companion object {
-		val memoryByModule = Object2ObjectArrayMap<AttachedModule, ByteArray>()
+		val bytesByModule = Object2ObjectArrayMap<AttachedModule, ByteArray>()
 		
-		private fun Offset.cachedMemory(): ByteArray {
-			val cached = memoryByModule[module]
+		private fun Offset.cachedBytes(): ByteArray {
+			val cached = bytesByModule[module]
 			if (cached != null) return cached
 			
-			val jnaMemory = Memory(module.size)
-			if (module !is WindowsAttachedModule || module.readForced(0, jnaMemory, module.size.toInt()) == 0L)
+			val pointer = Pointer.alloc(module.size)
+			if (module !is WindowsAttachedModule || module.readForced(
+					0,
+					pointer,
+					module.size.toInt()
+				) == 0L
+			)
 				throw IllegalStateException()
 			
-			val array = jnaMemory.getByteArray(0, module.size.toInt())
-			memoryByModule[module] = array
+			val array = pointer.jna.getByteArray(0, module.size.toInt())
+			bytesByModule[module] = array
 			return array
 		}
 	}
 	
-	private val memory = cachedMemory()
+	private val bytes = cachedBytes()
 	
 	override val address: Long = run {
 		val offset = module.size - mask.size
 		val process = module.process as WindowsAttachedProcess
-		val readMemory = Memory(4)
+		val readMemory = Pointer.alloc(4)
 		var currentAddress = 0L
 		while (currentAddress < offset) {
-			if (memory.mask(currentAddress, mask)) {
+			if (bytes.mask(currentAddress, mask)) {
 				currentAddress += module.address + patternOffset
 				if (read) {
 					if (process.readForced(

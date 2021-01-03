@@ -1,11 +1,11 @@
 package rat.poison.utils.Structs
 
-import com.sun.jna.Memory
 import com.sun.jna.Structure
+import org.jire.kna.Pointer
 import rat.poison.utils.Vector
 
 //All we need baby
-fun memToInput(mem: Memory): Input {
+fun memToInput(mem: Pointer): Input {
     val Input = Input()
 
     Input.pCommands = input_pCommands(mem)
@@ -60,10 +60,10 @@ class Input: Struct(), Structure.ByReference {
     var pVerifiedCommands: Int = 0
 }
 
-fun input_pCommands(mem: Memory): Int {
+fun input_pCommands(mem: Pointer): Int {
     return mem.getInt(0xF4) //0xEC
 }
 
-fun input_pVerifiedCommands(mem: Memory): Int {
+fun input_pVerifiedCommands(mem: Pointer): Int {
     return mem.getInt(0xF8)
 }

@@ -1,7 +1,7 @@
 package rat.poison.utils.Structs
 
-import com.sun.jna.Memory
 import com.sun.jna.Structure
+import org.jire.kna.Pointer
 import org.jire.kna.set
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.utils.Vector
@@ -59,7 +59,7 @@ fun fixUserCMD(cur: UserCMD, old: UserCMD): UserCMD {
     return cur
 }
 
-fun memToUserCMD(mem: Memory): UserCMD {
+fun memToUserCMD(mem: Pointer): UserCMD {
     val userCMD = UserCMD()
 
     userCMD.ptr = cmd_pTable(mem)
@@ -123,66 +123,66 @@ class verifiedUserCMD: Struct(), Structure.ByReference {
     var m_Crc = 0
 }
 
-fun cmd_pTable(mem: Memory): Int {
+fun cmd_pTable(mem: Pointer): Int {
     return mem.getInt(0x00)
 }
 
-fun cmd_iCmdNumber(mem: Memory): Int {
+fun cmd_iCmdNumber(mem: Pointer): Int {
     return mem.getInt(0x04)
 }
 
-fun cmd_iTickCount(mem: Memory): Int {
+fun cmd_iTickCount(mem: Pointer): Int {
     return mem.getInt(0x08)
 }
 
-fun cmd_vecViewAngles(mem: Memory): Vector {
+fun cmd_vecViewAngles(mem: Pointer): Vector {
     return Vector(mem.getFloat(0x0C), mem.getFloat(0x10), mem.getFloat(0x14))
 }
 
-fun cmd_vecAimDirection(mem: Memory): Vector {
+fun cmd_vecAimDirection(mem: Pointer): Vector {
     return Vector(mem.getFloat(0x18), mem.getFloat(0x1C), mem.getFloat(0x20))
 }
 
-fun cmd_flForwardmove(mem: Memory): Float {
+fun cmd_flForwardmove(mem: Pointer): Float {
     return mem.getFloat(0x24)
 }
 
-fun cmd_flSidemove(mem: Memory): Float {
+fun cmd_flSidemove(mem: Pointer): Float {
     return mem.getFloat(0x28)
 }
 
-fun cmd_flUpmove(mem: Memory): Float {
+fun cmd_flUpmove(mem: Pointer): Float {
     return mem.getFloat(0x2C)
 }
 
-fun cmd_iButtons(mem: Memory): Int {
+fun cmd_iButtons(mem: Pointer): Int {
     return mem.getInt(0x30)
 }
 
-fun cmd_bImpulse(mem: Memory): Int { //Byte
+fun cmd_bImpulse(mem: Pointer): Int { //Byte
     return mem.getByte(0x34).toInt()
 }
 
-fun cmd_iWeaponSelect(mem: Memory): Int {
+fun cmd_iWeaponSelect(mem: Pointer): Int {
     return mem.getInt(0x38)
 }
 
-fun cmd_iWeaponSubtype(mem: Memory): Int {
+fun cmd_iWeaponSubtype(mem: Pointer): Int {
     return mem.getInt(0x3C)
 }
 
-fun cmd_iRandomSeed(mem: Memory): Int {
+fun cmd_iRandomSeed(mem: Pointer): Int {
     return mem.getInt(0x40)
 }
 
-fun cmd_siMouseDx(mem: Memory): Int { //Short
+fun cmd_siMouseDx(mem: Pointer): Int { //Short
     return mem.getShort(0x44).toInt()
 }
 
-fun cmd_siMouseDy(mem: Memory): Int { //Short
+fun cmd_siMouseDy(mem: Pointer): Int { //Short
     return mem.getShort(0x46).toInt()
 }
 
-fun cmd_bHasBeenPredicted(mem: Memory): Boolean {
+fun cmd_bHasBeenPredicted(mem: Pointer): Boolean {
     return mem.getByte(0x48).toString().strToBool()
 }

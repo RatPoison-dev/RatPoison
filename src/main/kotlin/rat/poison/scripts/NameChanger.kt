@@ -1,16 +1,16 @@
 package rat.poison.scripts
 
-import com.sun.jna.Memory
+import org.jire.kna.Pointer
 import org.jire.kna.set
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.clientState
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 
+@Volatile
 var nameChange = ""
 
 //https://www.unknowncheats.me/forum/counterstrike-global-offensive/190477-csgo-name-changer.html
-
 
 fun nameChanger() = every(10, true, inGameCheck = true) {
     if (nameChange == "") return@every
@@ -28,10 +28,12 @@ fun nameChanger() = every(10, true, inGameCheck = true) {
 
     val curBit = final.size * 8
 
-    val mem = Memory(final.size.toLong())
-    mem.write(0, final, 0, final.size)
+    val memSize = final.size.toLong()
+    val mem = Pointer.alloc(memSize)
+    mem.jna.write(0, final, 0, final.size)
 
-    csgoEXE.write(voiceStream, mem)
+    csgoEXE.write(voiceStream, mem, memSize)
+    //Native.free(mem.address)
 
     csgoEXE[netChan + 0x84] = curBit.toByte()
 }

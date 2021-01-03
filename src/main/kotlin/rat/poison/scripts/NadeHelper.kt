@@ -25,7 +25,7 @@ import rat.poison.utils.generalUtil.cToDouble
 import rat.poison.utils.generalUtil.cToFloat
 import rat.poison.utils.generalUtil.toMatrix4
 import rat.poison.utils.inGame
-import rat.poison.utils.threadLocalMemory
+import rat.poison.utils.threadLocalPointer
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
@@ -151,12 +151,13 @@ fun nadeHelper() = App {
     }
 }
 
-private val boneMemory2 = threadLocalMemory(3984)
+private const val boneMemory2Size = 3984L
+private val boneMemory2 = threadLocalPointer(boneMemory2Size)
 
 fun createPosition() {
     val boneMemory = boneMemory2.get()
 
-    CSGO.csgoEXE.read(me.boneMatrix(), boneMemory)
+    CSGO.csgoEXE.read(me.boneMatrix(), boneMemory, boneMemory2Size)
     val xOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0xC)).toDouble()
     val yOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x1C)).toDouble()
     val zOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x2C)).toDouble()

@@ -10,7 +10,7 @@ import rat.poison.game.entity.EntityType
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.toInt
-import rat.poison.utils.threadLocalMemory
+import rat.poison.utils.threadLocalPointer
 
 var espTARGET = -1L
 
@@ -27,7 +27,8 @@ fun esp() {
 	if (dbg) { println("[DEBUG] Initializing Radar ESP") }; radarEsp()
 }
 
-private val glowMemory = threadLocalMemory(60)
+private const val glowMemorySize = 60L
+private val glowMemory = threadLocalPointer(glowMemorySize)
 
 fun Entity.glow(color: Color, glowType: Int) {
 	val glowMemory = glowMemory.get()
@@ -37,9 +38,9 @@ fun Entity.glow(color: Color, glowType: Int) {
 	val entType = EntityType.byEntityAddress(ent)
 
 	if ((entType == EntityType.CCSPlayer || entType.weapon || entType.grenade || entType.bomb) && ent > 0) {
-		csgoEXE.read(this, glowMemory)
+		csgoEXE.read(this, glowMemory, glowMemorySize)
 
-		if (glowMemory.getPointer(0) != null) {
+		if (glowMemory.jna.getPointer(0) != null) {
 			if (glowType == -1) {
 				glowMemory.setFloat(0x4, 0F)
 				glowMemory.setFloat(0x8, 0F)
@@ -47,7 +48,7 @@ fun Entity.glow(color: Color, glowType: Int) {
 
 				glowMemory.setByte(0x2C, glowType.toByte())
 
-				csgoEXE.write(this, glowMemory)
+				csgoEXE.write(this, glowMemory, glowMemorySize)
 			} else {
 				glowMemory.setFloat(0x4, color.red / 255F)
 				glowMemory.setFloat(0x8, color.green / 255F)
@@ -60,7 +61,7 @@ fun Entity.glow(color: Color, glowType: Int) {
 
 				glowMemory.setByte(0x2C, glowType.toByte())
 
-				csgoEXE.write(this, glowMemory)
+				csgoEXE.write(this, glowMemory, glowMemorySize)
 			}
 		}
 	}
