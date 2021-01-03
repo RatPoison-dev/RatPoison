@@ -1,7 +1,6 @@
 package rat.poison.game.offsets
 
 import com.sun.jna.Memory
-import com.sun.jna.Pointer
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
 import org.jire.kna.Addressed
 import org.jire.kna.attach.AttachedModule
@@ -11,22 +10,25 @@ import rat.poison.utils.extensions.readForced
 import rat.poison.utils.extensions.unsign
 import kotlin.reflect.KProperty
 
-class Offset(val module: AttachedModule, private val patternOffset: Long, private val addressOffset: Long,
-             val read: Boolean, private val subtract: Boolean, private val mask: ByteArray) : Addressed {
+class Offset(
+	val module: AttachedModule, private val patternOffset: Long, private val addressOffset: Long,
+	val read: Boolean, private val subtract: Boolean, private val mask: ByteArray
+) : Addressed {
 	
 	companion object {
-		val memoryByModule = Object2ObjectArrayMap<AttachedModule, Memory>()
+		val memoryByModule = Object2ObjectArrayMap<AttachedModule, ByteArray>()
 		
-		private fun Offset.cachedMemory(): Memory {
-			var memory = memoryByModule[module]
-			if (memory == null) {
-				memory = Memory(module.size)
-				if (module is WindowsAttachedModule) {
-					module.readForced(0, memory, module.size.toInt())
-				}
-				memoryByModule[module] = memory
-			}
-			return memory
+		private fun Offset.cachedMemory(): ByteArray {
+			val cached = memoryByModule[module]
+			if (cached != null) return cached
+			
+			val jnaMemory = Memory(module.size)
+			if (module !is WindowsAttachedModule || module.readForced(0, jnaMemory, module.size.toInt()) == 0L)
+				throw IllegalStateException()
+			
+			val array = jnaMemory.getByteArray(0, module.size.toInt())
+			memoryByModule[module] = array
+			return array
 		}
 	}
 	
@@ -36,13 +38,17 @@ class Offset(val module: AttachedModule, private val patternOffset: Long, privat
 		val offset = module.size - mask.size
 		val process = module.process as WindowsAttachedProcess
 		val readMemory = Memory(4)
-		
 		var currentAddress = 0L
 		while (currentAddress < offset) {
 			if (memory.mask(currentAddress, mask)) {
 				currentAddress += module.address + patternOffset
 				if (read) {
-					if (process.readForced(currentAddress, readMemory, 4) == 0L) throw IllegalStateException("Couldn't resolve currentAddress pointer")
+					if (process.readForced(
+							currentAddress,
+							readMemory,
+							4
+						) == 0L
+					) throw IllegalStateException("Couldn't resolve currentAddress pointer")
 					currentAddress = readMemory.getInt(0).unsign()
 				}
 				if (subtract) currentAddress -= module.address
@@ -69,11 +75,12 @@ class Offset(val module: AttachedModule, private val patternOffset: Long, privat
 	
 }
 
-fun Pointer.mask(offset: Long, mask: ByteArray, skipZero: Boolean = true): Boolean {
+fun ByteArray.mask(offset: Long, mask: ByteArray, skipZero: Boolean = true): Boolean {
+	val offsetI = offset.toInt()
 	for (i in 0..mask.lastIndex) {
 		val value = mask[i]
 		if (skipZero && 0 == value.toInt()) continue
-		if (value != getByte(offset + i))
+		if (value != this[offsetI + i])
 			return false
 	}
 	return true
