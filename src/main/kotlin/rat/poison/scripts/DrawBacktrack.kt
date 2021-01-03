@@ -89,7 +89,18 @@ fun drawBacktrack() = App {
 
                 end()
             }
+    
+            topLeft.release()
+            topRight.release()
+    
+            bottomLeft.release()
+            bottomRight.release()
         }
+    
+        minHeadPos.release()
+        maxHeadPos.release()
+        minAbsPos.release()
+        maxAbsPos.release()
 
         for (j in btRecords[i]) {
             j.alpha -= .5F

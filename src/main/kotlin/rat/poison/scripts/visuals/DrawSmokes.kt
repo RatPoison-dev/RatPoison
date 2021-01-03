@@ -74,8 +74,10 @@ fun drawSmokes() = App {
 			meDir.release()
 			maxPos.release()
 			
-			val w2s1 = worldToScreen(Vector(smokePos.x + pX, smokePos.y + pY, smokePos.z))
-			val w2s2 = worldToScreen(Vector(smokePos.x - pX, smokePos.y - pY, smokePos.z))
+			val w1 = Vector(smokePos.x + pX, smokePos.y + pY, smokePos.z)
+			val w2s1 = worldToScreen(w1)
+			val w2 = Vector(smokePos.x - pX, smokePos.y - pY, smokePos.z)
+			val w2s2 = worldToScreen(w2)
 			
 			shapeRenderer.begin()
 			
@@ -85,7 +87,9 @@ fun drawSmokes() = App {
 			
 			shapeRenderer.end()
 			
+			w1.release()
 			w2s1.release()
+			w2.release()
 			w2s2.release()
 		}
 		
@@ -110,6 +114,8 @@ fun connectPoints(vec1: Vector, vec2: Vector) {
 		shapeRenderer.end()
 	}
 	
+	vec1.release()
+	vec2.release()
 	w2s1.release()
 	w2s2.release()
 }

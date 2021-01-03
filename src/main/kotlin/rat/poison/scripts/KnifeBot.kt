@@ -65,10 +65,11 @@ internal fun autoKnife() = every(10, inGameCheck = true) {
             }
         } else {
             val velocity = me.velocity()
+            val absPos = me.absPosition()
             try {
                 if (imBehind
                     && Vector3.len2(velocity.x, velocity.y, velocity.z) > 0
-                    && me.absPosition().distanceTo(targetPos) > StabDistance
+                    && absPos.distanceTo(targetPos) > StabDistance
                 ) {
                     //wait to get close enough to be able to back stab
                     KnifeAttackType.NONE
@@ -77,10 +78,14 @@ internal fun autoKnife() = every(10, inGameCheck = true) {
                 }
             } finally {
                 velocity.release()
+                absPos.release()
             }
         }
         attackType.attack()
     }
+    
+    targetPos.release()
+    mePos.release()
 }
 
 private val delta = Vector3()

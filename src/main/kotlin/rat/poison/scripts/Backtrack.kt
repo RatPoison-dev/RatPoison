@@ -170,10 +170,15 @@ fun constructRecords() {
 		if (entID in 0..63 && tick < 13) {
 			val record = btRecords[entID][tick]
 			
-			if (!csgoEXE.read(ent.boneMatrix(), boneMemory, boneMemorySize)) throw IllegalStateException()
-			record.headPos = boneMemory.bones(8).apply { z += 5 }
+			val bm = ent.boneMatrix()
+			if (!csgoEXE.read(bm, boneMemory, boneMemorySize)) throw IllegalStateException()
+			val bones = boneMemory.bones(8)
+			record.headPos = bones.apply { z += 5 }
+			bones.release()
+			
 			val entPos = ent.absPosition()
 			record.absPos = entPos.apply { z -= 5 }
+			entPos.release()
 			
 			record.alpha = 100f
 			record.simtime = entSimTime
@@ -236,12 +241,8 @@ fun bestSimTime(): Float {
 		
 		punch.release()
 		
-		if (inRange(centerX, topLeft.x, topRight.x) && inRange(
-				centerY,
-				topLeft.y,
-				bottomLeft.y
-			)
-		) {//If middle of screen + recoil is inside polygon
+		//If middle of screen + recoil is inside polygon
+		if (inRange(centerX, topLeft.x, topRight.x) && inRange(centerY, topLeft.y, bottomLeft.y)) {
 			var bestMinX = Float.MAX_VALUE
 			
 			for (i in validRecords) {
@@ -249,6 +250,8 @@ fun bestSimTime(): Float {
 				val w2s = worldToScreen(record.headPos)
 				
 				val centerDist = abs(centerX - w2s.x)
+				w2s.release()
+				
 				if (centerDist < bestMinX) {
 					bestMinX = centerDist
 					
@@ -259,7 +262,15 @@ fun bestSimTime(): Float {
 		
 		topLeft.release()
 		topRight.release()
+		
+		bottomLeft.release()
+		//bottomRight.release()
 	}
+	
+	minHeadPos.release()
+	minAbsPos.release()
+	maxHeadPos.release()
+	maxAbsPos.release()
 	
 	return best
 }

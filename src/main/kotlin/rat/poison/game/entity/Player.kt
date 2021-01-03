@@ -195,6 +195,7 @@ internal fun Player.nearestBone(): Int {
 						nearestBone = parent
 					}
 				}
+				w2sRetVec.release()
 				
 				val w2sRetVec2 = worldToScreen(boneMemory.vector(idx * 0x30L, 0x0C, 0x1C, 0x2C))
 				if (w2sRetVec2.w2s()) {
@@ -209,6 +210,7 @@ internal fun Player.nearestBone(): Int {
 						nearestBone = idx
 					}
 				}
+				w2sRetVec2.release()
 				
 				tPunch.release()
 			}

@@ -69,6 +69,8 @@ fun runFootSteps() = App {
 
                     sb.end()
                 }
+                inVec.release()
+                outVec.release()
             } else {
                 //As circle
                 val oldMatrix = Matrix4(shapeRenderer.projectionMatrix.values)

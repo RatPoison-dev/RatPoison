@@ -57,11 +57,14 @@ fun snapLines() = App {
                     } else { //Offscreen
                         rectLine(CSGO.gameWidth / 2F, y, vec.x, -vec.y, curSettings.float["SNAPLINES_WIDTH"])
                     }
+                    vec.release()
                     set(ShapeRenderer.ShapeType.Line)
 
                     end()
                 }
             }
+    
+            entPos.release()
         }
     }
 
@@ -127,7 +130,9 @@ fun snapLines() = App {
 
             val entPos = entity.absPosition()
             try {
-                if ((entPos.x == 0F && entPos.y == 0F && entPos.z == 0F)) return@forEntities
+                if ((entPos.x == 0F && entPos.y == 0F && entPos.z == 0F)) {
+                    return@forEntities
+                }
     
                 val vec = worldToScreen(entPos)
     

@@ -60,7 +60,8 @@ fun farRadar() = App {
     farPlayerRecords.forEach {
         if (it.alpha > 0F) {
             val w2s1 = worldToScreen(it.pos)
-            val w2s2 = worldToScreen(Vector(it.pos.x, it.pos.y, it.pos.z - 75F))
+            val w2 = Vector(it.pos.x, it.pos.y, it.pos.z - 75F)
+            val w2s2 = worldToScreen(w2)
 
             if (w2s1.w2s() && w2s2.w2s()) {
                 if (shapeRenderer.isDrawing) shapeRenderer.end()
@@ -78,6 +79,10 @@ fun farRadar() = App {
             }
 
             it.alpha -= .01F
+    
+            w2s1.release()
+            w2.release()
+            w2s2.release()
         }
     }
 }

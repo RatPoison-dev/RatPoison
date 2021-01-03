@@ -52,4 +52,7 @@ fun headLevelHelper() = App {
         }
         shapeRenderer.projectionMatrix = oldMatrix
     }
+    
+    mePos.release()
+    meAng.release()
 }

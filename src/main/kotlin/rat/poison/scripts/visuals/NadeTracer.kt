@@ -32,6 +32,7 @@ fun nadeTracer() = App {
 			val entPos = ent.absPosition()
 			
 			if (entPos.x in -2F..2F && entPos.y in -2F..2F && entPos.z in -2F..2F) {
+				entPos.release()
 				return@forEntities
 			}
 			

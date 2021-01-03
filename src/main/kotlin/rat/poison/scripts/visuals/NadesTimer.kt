@@ -23,7 +23,9 @@ fun nadesTimer() = App {
 
         val seconds = ent.timeLeftToDisappear()
         if (seconds <= 0.0) return@forEntities
-        val vec = worldToScreen(ent.position())
+        val pos = ent.position()
+        val vec = worldToScreen(pos)
+        pos.release()
         if (vec.w2s()) {
             shapeRenderer.apply {
                 if (isDrawing) {

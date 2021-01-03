@@ -145,8 +145,17 @@ fun boxEsp() {
 			if (!isPlayer && !isWeapon && !isDefuseKit) return@forEntities
 			
 			//Return if not onscreen
-			if (!worldToScreen(ent.position()).w2s()) return@forEntities
-			
+			val pos = ent.position()
+			try {
+				val w2s = worldToScreen(pos)
+				try {
+					if (!w2s.w2s()) return@forEntities
+				} finally {
+					w2s.release()
+				}
+			} finally {
+				pos.release()
+			}
 			if (curSettings.bool["BOX_SMOKE_CHECK"] && lineThroughSmoke(ent)) return@forEntities
 			
 			if (curSettings.bool["BOX_ESP_AUDIBLE"] && !inFootsteps(ent)) return@forEntities
@@ -561,7 +570,12 @@ fun setupFakeBox(ent: Entity): BoundingBox {
 		
 		bbox.top = (vMiddle.y - boxH / 2.0 + sH).toFloat()
 		bbox.bottom = (vMiddle.y + boxH / 2.0 + sH).toFloat()
+		
+		vMiddle.release()
 	}
+	
+	vTop.release()
+	vBottom.release()
 	
 	return bbox
 }
@@ -621,10 +635,13 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 	var bottom = 0F
 	
 	for (i in pointsArray) {
-		val vecOut = worldToScreen(transformVector(Vector(i), frameMatrix))
+		val vector = Vector(i)
+		val vecOut = worldToScreen(transformVector(vector, frameMatrix))
+		vector.release()
 		
 		val x = vecOut.x
 		val y = vecOut.y
+		vecOut.release()
 		if (first) {
 			left = x
 			top = y

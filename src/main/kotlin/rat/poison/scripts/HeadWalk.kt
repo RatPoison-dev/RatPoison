@@ -36,6 +36,7 @@ internal fun headWalk() = every(2, inGameCheck = true) {
     if (!curSettings.bool["HEAD_WALK"] || meDead) return@every
 
     if (!keyPressed(KeyEvent.VK_W) && !keyPressed(KeyEvent.VK_A) && !keyPressed(KeyEvent.VK_S) && !keyPressed(KeyEvent.VK_D)) {
+        mePos.release()
         mePos = me.absPosition()
         if (onPlayerHead()) {
             updateCursorEnable()

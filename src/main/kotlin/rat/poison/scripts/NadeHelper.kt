@@ -45,6 +45,7 @@ fun nadeHelper() = App {
 
     if (me <= 0L || MENUTOG || meDead) return@App
 
+    mPos.release()
     mPos = me.absPosition()
 
     val nadeToCheck : String = when (meCurWep.name) {
@@ -96,8 +97,10 @@ fun nadeHelper() = App {
                         gameMatrix.translate(0F, 0F, -fSpot[2].cToFloat())
                         projectionMatrix = oldMatrix
 
-                        val vec2 = worldToScreen(Vector(hPos[0].cToFloat(), hPos[1].cToFloat(), hPos[2].cToFloat()))
-                        val vec3 = worldToScreen(Vector(hLPos[0].cToFloat(), hLPos[1].cToFloat(), hLPos[2].cToFloat()))
+                        val vec22 = Vector(hPos[0].cToFloat(), hPos[1].cToFloat(), hPos[2].cToFloat())
+                        val vec2 = worldToScreen(vec22)
+                        val vec33 = Vector(hLPos[0].cToFloat(), hLPos[1].cToFloat(), hLPos[2].cToFloat())
+                        val vec3 = worldToScreen(vec33)
 
                         var t1 = false
                         var t2 = false
@@ -140,6 +143,11 @@ fun nadeHelper() = App {
                                 line(CSGO.gameWidth / 2F, 0F, vec3.x, vec3.y - 2F)
                             }
                         }
+    
+                        vec22.release()
+                        vec2.release()
+                        vec33.release()
+                        vec3.release()
 
                         end()
                     }
@@ -187,9 +195,9 @@ fun createPosition() {
                         2 -> "S+T"
                         else -> "Other" //3
                     }
+                    mPos.release()
                     mPos = me.absPosition()
                     feetSpot = listOf(mPos.x, mPos.y, mPos.z, input, chosenNadeType, throwingNadeType)
-                    mPos.release()
                     headPos = listOf(xOff, yOff, zOff)
                     headLookPos = listOf(hLPx, hLPy, hLPz)
                     LoL = listOf(feetSpot, headPos, headLookPos)

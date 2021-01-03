@@ -104,7 +104,9 @@ private fun drawBone(target: Player, start: Int, end: Int) {
 	)
 	
 	val startDraw = worldToScreen(startBone)
+	startBone.release()
 	val endDraw = worldToScreen(endBone)
+	endBone.release()
 	if (startDraw.w2s() && endDraw.w2s()) {
 		bones[currentIdx].apply {
 			sX = startDraw.x.toInt()
@@ -118,6 +120,8 @@ private fun drawBone(target: Player, start: Int, end: Int) {
 		}
 		currentIdx++
 	}
+	startDraw.release()
+	endDraw.release()
 }
 
 private data class Line(
