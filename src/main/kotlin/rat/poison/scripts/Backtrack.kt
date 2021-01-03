@@ -284,10 +284,10 @@ fun timeToTicks(time: Float): Int {
 	return (.5f + time / gvars.intervalPerTick).toInt()
 }
 
-fun getRangeRecords(entID: Int, minIDX: Int = 0, maxIDX: Int = 13): Array<Int> {
+fun getRangeRecords(entID: Int, minIDX: Int = 0, maxIDX: Int = 13): IntArray {
 	var youngestSimtime = Float.MAX_VALUE
 	var oldestSimtime = 0F
-	val minMaxIDX = arrayOf(Int.MAX_VALUE, -1)
+	val minMaxIDX = intArrayOf(Int.MAX_VALUE, -1)
 	
 	for (i in minIDX until maxIDX) {
 		val record = btRecords[entID][i]
