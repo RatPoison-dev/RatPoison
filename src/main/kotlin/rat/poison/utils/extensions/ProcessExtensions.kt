@@ -6,7 +6,7 @@ import org.jire.kna.nativelib.windows.Kernel32
 
 fun WindowsAttachedProcess.readForced(address: Long, buffer: Pointer, size: Int) = Kernel32.ReadProcessMemory(
 	handle.pointer,
-	address,
+	offset(address),
 	buffer.address,
 	size,
 	0
@@ -14,7 +14,7 @@ fun WindowsAttachedProcess.readForced(address: Long, buffer: Pointer, size: Int)
 
 fun WindowsAttachedProcess.writeForced(address: Long, buffer: Pointer, size: Int) = Kernel32.WriteProcessMemory(
 	handle.pointer,
-	address,
+	offset(address),
 	buffer.address,
 	size,
 	0
