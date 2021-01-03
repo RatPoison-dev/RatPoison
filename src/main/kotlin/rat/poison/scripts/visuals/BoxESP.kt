@@ -575,7 +575,7 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 	val frameMatrix = frameMatrix.get()
 	
 	val buffer = csgoEXE.readPointer(ent + rgflCoordinateFrame - 0x30, 4 * 4 * 4)
-	if (buffer != null) {
+	if (buffer.readable()) {
 		val bufferFloatArray = bufferFloatArray.get()
 		buffer.jna.read(0, bufferFloatArray, 0, 16)
 		if (bufferFloatArray.all(Float::isFinite)) {
