@@ -173,12 +173,14 @@ fun constructRecords() {
 			val bm = ent.boneMatrix()
 			if (!csgoEXE.read(bm, boneMemory, boneMemorySize)) throw IllegalStateException()
 			val bones = boneMemory.bones(8)
+                        record.headPos.release()
 			record.headPos = bones.apply { z += 5 }
-			bones.release()
+			//bones.release()
 			
 			val entPos = ent.absPosition()
+                        record.absPos.release()
 			record.absPos = entPos.apply { z -= 5 }
-			entPos.release()
+			//entPos.release()
 			
 			record.alpha = 100f
 			record.simtime = entSimTime
