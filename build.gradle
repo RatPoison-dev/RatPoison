@@ -29,6 +29,9 @@ version "1.8.5"
 
 mainClassName = "rat.poison.RatPoison"
 
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
 repositories {
 	jcenter()
 	maven { url 'https://jitpack.io' }
@@ -36,7 +39,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.jire:kna:0.2.2'
+	implementation 'org.jire:kna:0.3.0'
 	
 	implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
 	implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
@@ -121,6 +124,7 @@ sourceSets {
 
 compileKotlin {
 	kotlinOptions {
+		jvmTarget = "1.8"
 		freeCompilerArgs = ["-Xinline-classes"]
 	}
 }
