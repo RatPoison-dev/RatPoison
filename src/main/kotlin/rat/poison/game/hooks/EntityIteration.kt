@@ -115,7 +115,7 @@ private val cursorEnableAddress by lazy(LazyThreadSafetyMode.NONE) { clientDLL.a
 private val cursorEnablePtr by lazy(LazyThreadSafetyMode.NONE) { clientDLL.address + ClientOffsets.dwMouseEnablePtr }
 
 fun updateCursorEnable() { //Call when needed
-	cursorEnable = csgoEXE.int(cursorEnableAddress) xor cursorEnablePtr.toInt() != 1
+	cursorEnable = MENUTOG || csgoEXE.int(cursorEnableAddress) xor cursorEnablePtr.toInt() != 1
 }
 
 var toneMapController = 0L
