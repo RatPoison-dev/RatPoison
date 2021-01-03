@@ -45,9 +45,7 @@ private fun reset() {
 	lastCleanup.set(System.currentTimeMillis())
 }
 
-private val writeGlowMemory by lazy(LazyThreadSafetyMode.NONE) {
-	Pointer.alloc(1).apply { setByte(0, 0xEB.toByte()) }
-}
+private val writeGlowMemory = ThreadLocal.withInitial { Pointer.alloc(1).apply { setByte(0, 0xEB.toByte()) } }
 
 private const val strBufSize = 128L
 private val strBuf = threadLocalPointer(strBufSize) //128 str?
@@ -88,10 +86,13 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
 			nameChange = ""
 			
 			val clientDLL = clientDLL
-			if (ClientOffsets.dwGlowUpdate >= 0
-				&& PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0
-			) {
-				clientDLL.writeForced(ClientOffsets.dwGlowUpdate, writeGlowMemory, 1)
+			val dwGlowUpdate = ClientOffsets.dwGlowUpdate
+			if (dwGlowUpdate >= 0 && PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0) {
+				clientDLL.writeForced(
+					dwGlowUpdate,
+					writeGlowMemory.get(),
+					1
+				)
 			}
 			
 			if (GARBAGE_COLLECT_ON_MAP_START) {
@@ -107,7 +108,9 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
 	}
 }
 
+@Volatile
 var cursorEnable = false
+
 private val cursorEnableAddress by lazy(LazyThreadSafetyMode.NONE) { clientDLL.address + ClientOffsets.dwMouseEnable }
 private val cursorEnablePtr by lazy(LazyThreadSafetyMode.NONE) { clientDLL.address + ClientOffsets.dwMouseEnablePtr }
 
