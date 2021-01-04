@@ -20,7 +20,8 @@ fun drawSmokes() = App {
 	if (!inGame || !curSettings.bool["ENABLE_ESP"] || !curSettings.bool["VISUALIZE_SMOKES"] || !inGame) return@App
 	
 	val smokePolys = curSettings.int["VISUALIZE_SMOKES_POLYS"]
-	val smokeHeight = curSettings.int["VISUALIZE_SMOKES_HEIGHT"]
+	if (smokePolys <= 0) return@App
+        val smokeHeight = curSettings.int["VISUALIZE_SMOKES_HEIGHT"]
 	val smokeWidth = curSettings.int["VISUALIZE_SMOKES_WIDTH"]
 	
 	forEntities(EntityType.CSmokeGrenadeProjectile) {
@@ -29,8 +30,8 @@ fun drawSmokes() = App {
 		if (entity.timeLeftToDisappear() <= 0) return@forEntities
 		
 		val smokePos = it.entity.absPosition()
-		val points = LongArrayList()
-		
+		val points = LongArrayList(smokePolys)
+
 		for (i in 0 until smokePolys) {
 			val x = smokePos.x + smokeWidth * cos(Math.toRadians(360.0 / smokePolys * i))
 			val y = smokePos.y + smokeWidth * sin(Math.toRadians(360.0 / smokePolys * i))
@@ -59,6 +60,10 @@ fun drawSmokes() = App {
 					Vector(points.getLong(i)),
 					Vector(points.getLong(i + smokePolys))
 				)
+			}
+ 
+			for (i in 0 until smokePolys) {
+				Vector(points.getLong(i)).release()
 			}
 		}
 		
@@ -114,8 +119,6 @@ fun connectPoints(vec1: Vector, vec2: Vector) {
 		shapeRenderer.end()
 	}
 	
-	vec1.release()
-	vec2.release()
 	w2s1.release()
 	w2s2.release()
 }
