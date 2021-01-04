@@ -94,8 +94,6 @@ internal fun headWalk() = every(2, inGameCheck = true) {
                 robot.keyRelease(KeyEvent.VK_D)
             }
         }
-    
-        mePos.release()
     }
 }
 
@@ -114,10 +112,9 @@ internal fun onPlayerHead() : Boolean {
 
         if (xDist <= 30 && yDist <= 30 && zDif in 50.0..75.0) {
             onEnt = entity
+            onEntPos.release()
             onEntPos = entPos
         }
-    
-        entPos.release()
 
         if (onEnt != 0L) {
             return@forEntities
