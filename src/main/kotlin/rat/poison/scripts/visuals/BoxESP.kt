@@ -438,7 +438,9 @@ fun boxEsp() {
 				val position = dr_texture.position
 				val realHeight = texture.height / weaponsScale
 				val realWidth = texture.width / weaponsScale
-				val (height, width) = getRealTextParams(textRenderer, getStrBuilder(position), layout)
+				val realTextParams = getRealTextParams(textRenderer, getStrBuilder(position), layout)
+				val height = ((realTextParams ushr 32) and 0xFFFFFFFF).toFloat()
+				val width = (realTextParams and 0xFFFFFFFF).toFloat()
 				when (position) {
 					"LEFT" -> {
 						sb.draw(
@@ -524,12 +526,12 @@ fun addTextureOrText(
 	}
 }
 
-fun getRealTextParams(font: BitmapFont, builder: StringBuilder, layout: GlyphLayout): Pair<Float, Float> {
+fun getRealTextParams(font: BitmapFont, builder: StringBuilder, layout: GlyphLayout): Long {
 	layout.setText(font, builder)
 	if (builder.isEmpty()) {
-		return Pair(0F, 0F)
+		return 0L//Pair(0F, 0F)
 	}
-	return Pair(layout.height, layout.width)
+	return ((layout.height.toLong() and 0xFFFFFFFF) shl 32) or (layout.width.toLong() and 0xFFFFFFFF)//Pair(layout.height, layout.width)
 }
 
 private const val boneMemorySize = 3984L
@@ -680,7 +682,9 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 		if (bottom > y) bottom = y
 	}
 	
-	return BoundingBox(System.currentTimeMillis(), left, right, top, bottom).apply { accurateBoxCache[ent] = this }
+	val bb = BoundingBox(System.currentTimeMillis(), left, right, top, bottom)
+	accurateBoxCache[ent] = bb
+	return bb
 }
 
 fun transformVector(vec: Vector, array: Array<FloatArray>): Vector = Vector(
