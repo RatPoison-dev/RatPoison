@@ -306,11 +306,12 @@ fun boxEsp() {
 			}
 			
 			if (bEspWeapon && isPlayer) {
+				val weaponName = ent.weapon().name
 				addTextureOrText(
 					assetManager,
 					bEspUseIcons,
-					ent.weapon().name,
-					"${ent.weapon().name.toLocale()}\n",
+					weaponName,
+					"${weaponName.toLocale()}\n",
 					bEspWeaponPos
 				)
 			}
