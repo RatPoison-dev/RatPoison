@@ -122,12 +122,56 @@ object App : ApplicationAdapter() {
 		overlay.start()
 	}
 	
+	private var variableYieldTime = 0L
+	private var lastTime = 0L
+	
+	/**
+	 * An accurate sync method that adapts automatically
+	 * to the system it runs on to provide reliable results.
+	 *
+	 * @param fps The desired frame rate, in frames per second
+	 * @author kappa (On the LWJGL Forums)
+	 */
+	private fun sync(fps: Int) {
+		if (fps <= 0) return
+		val sleepTime = (1000000000 / fps).toLong() // nanoseconds to sleep this frame
+		// yieldTime + remainder micro & nano seconds if smaller than sleepTime
+		val yieldTime = min(sleepTime, variableYieldTime + sleepTime % (1000 * 1000))
+		var overSleep: Long = 0 // time the sync goes over by
+		try {
+			while (true) {
+				val t: Long = System.nanoTime() - lastTime
+				if (t < sleepTime - yieldTime) {
+					Thread.sleep(1)
+				} else if (t < sleepTime) {
+					// burn the last few CPU cycles to ensure accuracy
+					Thread.yield()
+				} else {
+					overSleep = t - sleepTime
+					break // exit while loop
+				}
+			}
+		} catch (e: InterruptedException) {
+			e.printStackTrace()
+		} finally {
+			lastTime = System.nanoTime() - min(overSleep, sleepTime)
+			
+			// auto tune the time sync should yield
+			if (overSleep > variableYieldTime) {
+				// increase by 200 microseconds (1/5 a ms)
+				variableYieldTime = min(variableYieldTime + 200 * 1000, sleepTime)
+			} else if (overSleep < variableYieldTime - 200 * 1000) {
+				// decrease by 2 microseconds
+				variableYieldTime = max(variableYieldTime - 2 * 1000, 0)
+			}
+		}
+	}
+	
 	override fun render() {
 		timer++
-		
-		/*syncTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
+		syncTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
 			sync(curSettings.int["OPENGL_FPS"])
-		}, TimeUnit.NANOSECONDS)*/
+		}, TimeUnit.NANOSECONDS)
 		
 		if (VisUI.isLoaded()) {
 			if (Thread.interrupted()) return
@@ -351,52 +395,6 @@ object App : ApplicationAdapter() {
 			override fun onBackground(overlay: IOverlay) {}
 			override fun onForeground(overlay: IOverlay) {}
 			override fun onBoundsChange(overlay: IOverlay, x: Int, y: Int, width: Int, height: Int) {}
-		}
-	}
-}
-
-@Volatile
-var variableYieldTime = 0L
-
-@Volatile
-var lastSyncTime = 0L
-
-const val nanoSec = 1000000000L
-
-fun sync(fps: Int) {
-	if (fps <= 0) {
-		return
-	}
-	
-	var overSleep = 0L
-	val sleepTime = nanoSec / fps
-	val yieldTime = min(sleepTime, variableYieldTime + sleepTime % (1000000L))
-	
-	try {
-		while (true) {
-			val t = System.nanoTime() - lastSyncTime
-			
-			if (t < sleepTime - yieldTime) {
-				println("sleep here")
-				Thread.sleep(1)
-			} else if (t < sleepTime) {
-				println("yield")
-				Thread.yield()
-			} else {
-				println("oversleep")
-				overSleep = t - sleepTime
-				break
-			}
-		}
-	} catch (ex: InterruptedException) {
-		println("FPS Sync Failure")
-	} finally {
-		lastSyncTime = System.nanoTime() - min(overSleep, sleepTime)
-		
-		if (overSleep > variableYieldTime) {
-			variableYieldTime = min(variableYieldTime + 200 * 1000, sleepTime)
-		} else if (overSleep < variableYieldTime - 200 * 1000) {
-			variableYieldTime = max(variableYieldTime - 2 * 1000, 0)
 		}
 	}
 }
