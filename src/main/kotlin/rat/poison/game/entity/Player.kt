@@ -158,22 +158,29 @@ private val modelMemory = threadLocalPointer(modelMemorySize)
 private const val boneMemorySize = 4032L
 private val boneMemory = threadLocalPointer(boneMemorySize)
 
+const val NEAREST_BONE_DEFAULT = -999
+
 internal fun Player.nearestBone(): Int {
-	val studioModel = csgoEXE.uint(studioHdr())
+	val studioHdr = studioHdr()
+	if (studioHdr <= 0) return NEAREST_BONE_DEFAULT
+	val studioModel = csgoEXE.uint(studioHdr)
+	if (studioModel <= 0) return NEAREST_BONE_DEFAULT
 	val boneOffset = csgoEXE.uint(studioModel + 0xA0)
+	if (boneOffset <= 0) return NEAREST_BONE_DEFAULT
 	val boneMatrix = boneMatrix()
+	if (boneMatrix <= 0) return NEAREST_BONE_DEFAULT
 	val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
-	
+	if (numBones <= 0) return NEAREST_BONE_DEFAULT
 	//Get actual size
 	
 	val modelMemory = modelMemory.get()
 	val boneMemory = boneMemory.get()
 	
-	if (!csgoEXE.read(studioModel + boneOffset, modelMemory, modelMemorySize)) throw IllegalStateException()
-	if (!csgoEXE.read(boneMatrix, boneMemory, boneMemorySize)) throw IllegalStateException()
+	if (!csgoEXE.read(studioModel + boneOffset, modelMemory, modelMemorySize)) throw IllegalStateException("$studioModel / $boneOffset / $this")
+	if (!csgoEXE.read(boneMatrix, boneMemory, boneMemorySize)) throw IllegalStateException("$studioModel / $boneOffset / $this")
 	
 	var closestDst2 = Float.MAX_VALUE
-	var nearestBone = -999
+	var nearestBone = NEAREST_BONE_DEFAULT
 	
 	//Change to loop set amount of bones
 	var offset = 0
