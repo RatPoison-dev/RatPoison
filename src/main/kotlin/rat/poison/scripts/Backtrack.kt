@@ -173,6 +173,7 @@ fun constructRecords() {
 				val record = btRecords[entID][tick]
 				
 				val bm = ent.boneMatrix()
+				if (bm < Short.MAX_VALUE) return@forEntities
 				if (!csgoEXE.read(bm, boneMemory, boneMemorySize)) throw IllegalStateException("$ent / $entID / $bm / $tick")
 				val bones = boneMemory.bones(8)
 				record.headPos.release()

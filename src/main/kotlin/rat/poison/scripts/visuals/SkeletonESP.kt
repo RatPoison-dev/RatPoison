@@ -47,8 +47,11 @@ internal fun skeletonEsp() = App {
 		val boneOffset = csgoEXE.uint(studioModel + 0xA0)
 		if (boneOffset <= 0) return@forEntities
 		
+		val address = studioModel + boneOffset
+		if (address > Int.MAX_VALUE) return@forEntities
+		
 		if (!csgoEXE.read(
-				studioModel + boneOffset,
+				address,
 				modelMemory,
 				modelMemorySize
 			)
