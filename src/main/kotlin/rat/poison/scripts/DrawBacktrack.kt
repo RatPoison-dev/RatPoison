@@ -13,7 +13,6 @@ import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.visuals.inFootsteps
 import rat.poison.scripts.visuals.lineThroughSmoke
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.Vector
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.inGame
 import rat.poison.utils.keyPressed
@@ -65,11 +64,17 @@ fun drawBacktrack() = App {
                 sign = 1
             }
 
-            val topLeft = Vector(minHeadPos.x - (w / 3F) * sign, minHeadPos.y)
-            val topRight = Vector(maxHeadPos.x + (w / 3F) * sign, maxHeadPos.y)
+            val topLeftX = minHeadPos.x - (w / 3F) * sign
+            val topLeftY = minHeadPos.y
+            
+            val topRightX = maxHeadPos.x + (w / 3F) * sign
+            val topRightY = maxHeadPos.y
 
-            val bottomLeft = Vector(minMidX - (w / 2F) * sign, minAbsPos.y+8F)
-            val bottomRight = Vector(maxMidX + (w / 2F) * sign, maxAbsPos.y+8F)
+            val bottomLeftX = minMidX - (w / 2F) * sign
+            val bottomLeftY = minAbsPos.y+8F
+            
+            val bottomRightX = maxMidX + (w / 2F) * sign
+            val bottomRightY = maxAbsPos.y+8F
 
             shapeRenderer.apply {
                 if (shapeRenderer.isDrawing) {
@@ -80,21 +85,15 @@ fun drawBacktrack() = App {
 
                 color = curSettings.colorGDX["BACKTRACK_VISUALIZE_COLOR"]
 
-                line(topLeft.x, topLeft.y, topRight.x, topRight.y)
-                line(topRight.x, topRight.y, bottomRight.x, bottomRight.y)
-                line(bottomRight.x, bottomRight.y, bottomLeft.x, bottomLeft.y)
-                line(bottomLeft.x, bottomLeft.y, topLeft.x, topLeft.y)
+                line(topLeftX, topLeftY, topRightX, topRightY)
+                line(topRightX, topRightY, bottomRightX, bottomRightY)
+                line(bottomRightX, bottomRightY, bottomLeftX, bottomLeftY)
+                line(bottomLeftX, bottomLeftY, topLeftX, topLeftY)
 
                 color = Color.WHITE
 
                 end()
             }
-    
-            topLeft.release()
-            topRight.release()
-    
-            bottomLeft.release()
-            bottomRight.release()
         }
     
         minHeadPos.release()

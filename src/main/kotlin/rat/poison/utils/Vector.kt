@@ -70,6 +70,10 @@ inline class Vector(val value: Long) {
 		val c = z - this.z
 		return a * a + b * b + c * c
 	}
+	
+	companion object {
+		val DEFAULT = Vector(track = false)
+	}
 }
 
 fun dot(x: Float, y: Float, z: Float, tx: Float, ty: Float, tz: Float): Float = tx * x + ty * y + tz * z

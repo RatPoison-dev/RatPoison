@@ -20,7 +20,6 @@ private var currentIdx = 0
 
 private const val modelMemorySize = 21332L
 private val modelMemory = threadLocalPointer(modelMemorySize)
-var readit = false
 
 internal fun skeletonEsp() = App {
 	if (!curSettings.bool["SKELETON_ESP"] || !curSettings.bool["ENABLE_ESP"] || !inGame || (curSettings.bool["SKELETON_ESP_DEAD"] && !meDead)) return@App
@@ -39,14 +38,21 @@ internal fun skeletonEsp() = App {
 		
 		if (entity == me || entity.dead() || dormCheck || enemyCheck || teamCheck || audibleCheck) return@forEntities
 		
-		val studioModel = csgoEXE.uint(entity.studioHdr())
+		val studioHdr = entity.studioHdr()
+		if (studioHdr <= 0) return@forEntities
+		val studioModel = csgoEXE.uint(studioHdr)
+		if (studioModel <= 0) return@forEntities
 		val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
+		if (numBones <= 0) return@forEntities
 		val boneOffset = csgoEXE.uint(studioModel + 0xA0)
+		if (boneOffset <= 0) return@forEntities
 		
-		if (!readit) {
-			if (!csgoEXE.read(studioModel + boneOffset, modelMemory, modelMemorySize)) throw IllegalStateException()
-		}
-		readit = true
+		if (!csgoEXE.read(
+				studioModel + boneOffset,
+				modelMemory,
+				modelMemorySize
+			)
+		) throw IllegalStateException("$entity / $studioModel / $boneOffset")
 		
 		val boneMemory = boneMemory.get()
 		if (!csgoEXE.read(entity.boneMatrix(), boneMemory, boneMemorySize)) throw IllegalStateException()
@@ -79,7 +85,6 @@ internal fun skeletonEsp() = App {
 	}
 	
 	currentIdx = 0
-	readit = false
 }
 
 private val colors: Array<Color> = Array(101) {

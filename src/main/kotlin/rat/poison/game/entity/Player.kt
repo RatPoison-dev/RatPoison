@@ -1,6 +1,8 @@
 package rat.poison.game.entity
 
 import com.badlogic.gdx.math.MathUtils
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
 import org.apache.commons.lang3.StringUtils
 import org.jire.kna.*
 import rat.poison.game.*
@@ -232,7 +234,16 @@ internal fun Pointer.vector(addy: Long, xOff: Long, yOff: Long, zOff: Long): Vec
 private const val nameMemSize = 320L
 private val nameMem = threadLocalPointer(nameMemSize)
 
+private val entityToNameCache: Long2ObjectMap<Pair<Long, String>> = Long2ObjectOpenHashMap(128)
+
 internal fun Player.name(): String {
+	val now = System.currentTimeMillis()
+	if (entityToNameCache.containsKey(this)) {
+		val cached = entityToNameCache.get(this)
+		if (now - cached.first < 5000) {
+			return cached.second
+		}
+	}
 	val entID = csgoEXE.uint(this + dwIndex) - 1
 	val a = csgoEXE.uint(clientState + dwClientState_PlayerInfo)
 	val b = csgoEXE.uint(a + 0x40)
@@ -244,7 +255,7 @@ internal fun Player.name(): String {
 	
 	val name = nameMem.getString(0x10)
 	nameMem.jna.setMemory(0, nameMemSize, 0)
-	return name
+	return name.apply { entityToNameCache[this@name] = now to this }
 }
 
 private const val memSize = 0x140L
