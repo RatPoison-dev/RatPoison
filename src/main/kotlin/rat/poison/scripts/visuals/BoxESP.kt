@@ -636,8 +636,10 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 	
 	for (i in pointsArray) {
 		val vector = Vector(i)
-		val vecOut = worldToScreen(transformVector(vector, frameMatrix))
+		val tVec = transformVector(vector, frameMatrix)
 		vector.release()
+		val vecOut = worldToScreen(tVec)
+		tVec.release()
 		
 		val x = vecOut.x
 		val y = vecOut.y

@@ -71,6 +71,8 @@ fun chamsEsp() = every(100, true, inGameCheck = true) {
             }
         }
     }
+    currentAngle.release()
+    position.release()
 
     forEntities(EntityType.CCSPlayer) {
         val entity = it.entity

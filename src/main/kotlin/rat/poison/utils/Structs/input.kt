@@ -2,7 +2,6 @@ package rat.poison.utils.Structs
 
 import com.sun.jna.Structure
 import org.jire.kna.Pointer
-import rat.poison.utils.Vector
 
 //All we need baby
 fun memToInput(mem: Pointer): Input {
@@ -31,7 +30,7 @@ class Input: Struct(), Structure.ByReference {
     @JvmField
     var bCameraMovingWithMouse = false
 
-    var vecCameraOffset = Vector()
+    //var vecCameraOffset = Vector()
 
     @JvmField
     var bCameraDistanceMove = false
@@ -46,9 +45,9 @@ class Input: Struct(), Structure.ByReference {
     @JvmField
     var bCameraIsOrthographic = false
 
-    var vecPreviousViewAngles = Vector()
+/*    var vecPreviousViewAngles = Vector()
 
-    var vecPreviousViewAnglesTilt = Vector()
+    var vecPreviousViewAnglesTilt = Vector()*/
 
     @JvmField
     var flLastForwardMove = 0f

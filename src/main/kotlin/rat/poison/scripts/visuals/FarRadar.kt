@@ -22,7 +22,7 @@ import rat.poison.utils.inGame
 import rat.poison.utils.threadLocalPointer
 import kotlin.math.abs
 
-data class FarPlayer(val pos: Vector = Vector(), var alpha: Float = 0F)
+data class FarPlayer(val pos: Vector = Vector(track = false), var alpha: Float = 0F)
 private var farPlayerRecords = Array(64) { FarPlayer() }
 
 private const val memSize = 237L

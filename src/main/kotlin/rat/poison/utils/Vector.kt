@@ -1,11 +1,12 @@
 package rat.poison.utils
 
+import it.unimi.dsi.fastutil.longs.*
 import net.openhft.chronicle.core.OS
-import java.util.concurrent.ThreadLocalRandom
+import kotlin.concurrent.thread
 import kotlin.math.abs
 
 inline class Vector(val value: Long) {
-	constructor(x: Float = 0F, y: Float = 0F, z: Float = 0F) : this(vectorLong(x, y, z))
+	constructor(x: Float = 0F, y: Float = 0F, z: Float = 0F, track: Boolean = true) : this(vectorLong(x, y, z, track))
 	
 	var x
 		get() = OS.memory().readVolatileFloat(value)
@@ -17,7 +18,12 @@ inline class Vector(val value: Long) {
 		get() = OS.memory().readVolatileFloat(value + 8)
 		set(value) = OS.memory().writeVolatileFloat(this.value + 8, value)
 	
-	fun release() = OS.memory().freeMemory(value, 12)
+	fun release() {
+		OS.memory().freeMemory(value, 12)
+		if (trackedVectorsMillis != -1L) {
+			trackedVectors.remove(value)
+		}
+	}
 	
 	inline fun use(crossinline use: (Vector) -> Unit) {
 		try {
@@ -68,30 +74,54 @@ inline class Vector(val value: Long) {
 
 fun dot(x: Float, y: Float, z: Float, tx: Float, ty: Float, tz: Float): Float = tx * x + ty * y + tz * z
 
-fun vectorLong(x: Float = 0F, y: Float = 0F, z: Float = 0F): Long {
+lateinit var trackedVectors: Long2ObjectMap<Pair<Long, Exception>>
+var trackedVectorsMillis = -1L
+
+fun trackVectors(warnMinimumMillis: Long = 2000L) {
+	trackedVectors = Long2ObjectMaps.synchronize(Long2ObjectOpenHashMap(8192))
+	trackedVectorsMillis = warnMinimumMillis
+	thread(isDaemon = true) {
+		while (!Thread.interrupted()) {
+			try {
+				val toRemove: LongList = LongArrayList()
+				synchronized(trackedVectors) {
+					for ((k, v) in trackedVectors.long2ObjectEntrySet()) {
+						val (timeCreated, createdException) = v
+						if (System.currentTimeMillis() - timeCreated >= warnMinimumMillis) {
+							createdException.printStackTrace()
+							toRemove.add(k)
+						}
+					}
+				}
+				val it = toRemove.listIterator()
+				while (it.hasNext()) {
+					val next = it.nextLong()
+					trackedVectors.remove(next)
+				}
+			} catch (t: Throwable) {
+				t.printStackTrace()
+			}
+			Thread.sleep(warnMinimumMillis)
+		}
+	}
+}
+
+fun vectorLong(x: Float = 0F, y: Float = 0F, z: Float = 0F, track: Boolean = true): Long {
 	val address = OS.memory().allocate(12)
 	OS.memory().writeVolatileFloat(address, x)
 	OS.memory().writeVolatileFloat(address + 4, y)
 	OS.memory().writeVolatileFloat(address + 8, z)
+	if (trackedVectorsMillis != -1L && track) {
+		trackedVectors[address] =
+			System.currentTimeMillis() to Exception(
+				"Vector@$address took too long (> ${trackedVectorsMillis}ms) to be released."
+			)
+	}
 	return address
 }
 
 typealias Angle = Vector
 
-fun angle(x: Float = 0F, y: Float = 0F): Angle = Vector(x, y)
+fun angle(x: Float = 0F, y: Float = 0F, track: Boolean = true): Angle = Vector(x, y, track = track)
 
-fun vector(x: Float = 0F, y: Float = 0F, z: Float = 0F): Vector = Vector(vectorLong(x, y, z))
-
-fun main() {
-	val tlr = ThreadLocalRandom.current()
-	for (i in 0..100000) {
-		val x = tlr.nextFloat()
-		val y = tlr.nextFloat()
-		val z = tlr.nextFloat()
-		
-		val v = vector(x, y, z)
-		if (abs(v.x - x) > 0.001 || abs(v.y - y) > 0.001 || abs(v.z - z) > 0.001) {
-			println("FAILED x $x should be ${v.x}, y $y should be ${v.y}, z $z should be ${v.z}")
-		}
-	}
-}
+fun vector(x: Float = 0F, y: Float = 0F, z: Float = 0F, track: Boolean = true): Vector = Vector(vectorLong(x, y, z, track))

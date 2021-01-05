@@ -154,6 +154,7 @@ fun snapLines() = App {
                         curSettings.float["SNAPLINES_WIDTH"]
                     )
                 }
+                vec.release()
                 set(ShapeRenderer.ShapeType.Line)
     
                 end()

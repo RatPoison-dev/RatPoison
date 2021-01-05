@@ -75,11 +75,7 @@ fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Vector, curAng
 	val result = calcTargetResult.get()
 	result.reset()
 	
-	var ePos: Vector = entity.bones(BONE)
-
-	if (ovrStatic) {
-		ePos = position
-	}
+	val ePos: Vector = if (ovrStatic) position else entity.bones(BONE)
 
 	if (curSettings["FOV_TYPE"].replace("\"", "") == "DISTANCE" && !ovrStatic) {
 		val distance = position.distanceTo(ePos)
@@ -88,6 +84,8 @@ fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Vector, curAng
 
 		val pitchDiff = abs(curAngle.x - dest.x)
 		var yawDiff = abs(curAngle.y - dest.y)
+		
+		dest.release()
 
 		if (yawDiff > 180f) {
 			yawDiff = 360f - yawDiff
@@ -103,17 +101,17 @@ fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Vector, curAng
 		}
 	} else {
 		val calcAng = realCalcAngle(me, ePos)
-
 		val delta = Angle(curAngle.x - calcAng.x, curAngle.y - calcAng.y).normalize()
-
+		calcAng.release()
 		val fov = sqrt(delta.x.pow(2F) + delta.y.pow(2F))
-
+		delta.release()
 		if (fov <= lockFOV && fov <= calcClosestDelta) {
 			result.fov = fov
 			result.closestDelta = fov
 			result.closestPlayer = entity
 		}
 	}
+	if (!ovrStatic) ePos.release()
 
 	return result
 }
@@ -174,72 +172,102 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 
 	val currentAngle = clientState.angle()
 	val position = me.position()
-	val shouldVisCheck = !(forceAim && curSettings.bool["FORCE_AIM_THROUGH_WALLS"])
-
-	var aB = curSettings.int["AIM_BONE"]
-
-	if (keyPressed(curSettings.int["FORCE_AIM_BONE_KEY"])) {
-		aB = curSettings.int["FORCE_AIM_BONE"]
-	}
-
-	val bestTarget = findTarget(position, currentAngle, aim,
-			BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 3); destBone } else { destBone = aB; aB },
-			visCheck = shouldVisCheck) //Try to find new target
-
-	if (currentTarget <= 0) { //If target is invalid from last run
-		currentTarget = findTarget(position, currentAngle, aim,
-				BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 3); destBone } else { destBone = aB; aB },
-				visCheck = shouldVisCheck) //Try to find new target
-		if (currentTarget <= 0) { //End if we don't, can't loop because of thread blocking
+	try {
+		val shouldVisCheck = !(forceAim && curSettings.bool["FORCE_AIM_THROUGH_WALLS"])
+		
+		var aB = curSettings.int["AIM_BONE"]
+		
+		if (keyPressed(curSettings.int["FORCE_AIM_BONE_KEY"])) {
+			aB = curSettings.int["FORCE_AIM_BONE"]
+		}
+		
+		val bestTarget = findTarget(
+			position, currentAngle, aim,
+			BONE = if (aB == RANDOM_BONE) {
+				destBone = 5 + randInt(0, 3); destBone
+			} else {
+				destBone = aB; aB
+			},
+			visCheck = shouldVisCheck
+		) //Try to find new target
+		
+		if (currentTarget <= 0) { //If target is invalid from last run
+			currentTarget = findTarget(
+				position, currentAngle, aim,
+				BONE = if (aB == RANDOM_BONE) {
+					destBone = 5 + randInt(0, 3); destBone
+				} else {
+					destBone = aB; aB
+				},
+				visCheck = shouldVisCheck
+			) //Try to find new target
+			if (currentTarget <= 0) { //End if we don't, can't loop because of thread blocking
+				reset()
+				return@every
+			}
+			target = currentTarget
+		}
+		
+		//Set destination bone for calculating aim
+		if (aB == NEAREST_BONE) { //Nearest bone check
+			val nearestBone = currentTarget.nearestBone()
+			
+			if (nearestBone != -999) {
+				destBone = nearestBone
+			} else {
+				reset()
+				return@every
+			}
+		}
+		
+		if (bestTarget <= 0 && !curSettings.bool["HOLD_AIM"]) {
 			reset()
 			return@every
 		}
-		target = currentTarget
-	}
-
-	//Set destination bone for calculating aim
-	if (aB == NEAREST_BONE) { //Nearest bone check
-		val nearestBone = currentTarget.nearestBone()
-
-		if (nearestBone != -999) {
-			destBone = nearestBone
-		} else {
+		
+		var perfect = false
+		if (canPerfect) {
+			if (randInt(100 + 1) <= curSettings.int["PERFECT_AIM_CHANCE"]) {
+				perfect = true
+			}
+		}
+		
+		val swapTarget =
+			(bestTarget > 0 && currentTarget != bestTarget) && !curSettings.bool["HOLD_AIM"] && (meCurWep.automatic || curSettings.bool["AUTOMATIC_WEAPONS"])
+		
+		if (!currentTarget.canShoot(shouldVisCheck) || swapTarget) {
 			reset()
-			return@every
-		}
-	}
-
-	if (bestTarget <= 0 && !curSettings.bool["HOLD_AIM"]) {
-		reset()
-		return@every
-	}
-
-	var perfect = false
-	if (canPerfect) {
-		if (randInt(100+1) <= curSettings.int["PERFECT_AIM_CHANCE"]) {
-			perfect = true
-		}
-	}
-
-	val swapTarget = (bestTarget > 0 && currentTarget != bestTarget) && !curSettings.bool["HOLD_AIM"] && (meCurWep.automatic || curSettings.bool["AUTOMATIC_WEAPONS"])
-
-	if (!currentTarget.canShoot(shouldVisCheck) || swapTarget) {
-		reset()
-		Thread.sleep(curSettings.int["AIM_TARGET_SWAP_DELAY"].toLong())
-	} else {
-		val bonePosition = currentTarget.bones(destBone)
-
-		var destinationAngle = getCalculatedAngle(me, bonePosition) //Rename to current angle
-
-		if (!perfect) {
-			destinationAngle = destinationAngle.finalize(currentAngle, (1.1F - curSettings.float["AIM_SMOOTHNESS"] / 5F)) //10.0 is max smooth value
-
-			val aimSpeed = curSettings.int["AIM_SPEED"]
-
-			val aimSpeedDivisor = if (curSettings.bool["AIM_ADVANCED"]) curSettings.int["AIM_SPEED_DIVISOR"] else 1
-			doAim(destinationAngle, currentAngle, aimSpeed / max(1, CSGO.CACHE_EXPIRE_MILLIS.toInt() / 4), aimSpeedDivisor)
+			Thread.sleep(curSettings.int["AIM_TARGET_SWAP_DELAY"].toLong())
 		} else {
-			doAim(destinationAngle, currentAngle, 1, 1)
+			val bonePosition = currentTarget.bones(destBone)
+			
+			var destinationAngle = getCalculatedAngle(me, bonePosition) //Rename to current angle
+			bonePosition.release()
+			
+			if (!perfect) {
+				val finalized = destinationAngle.finalize(
+					currentAngle,
+					(1.1F - curSettings.float["AIM_SMOOTHNESS"] / 5F)
+				) //10.0 is max smooth value
+				destinationAngle.release()
+				destinationAngle = finalized
+				
+				val aimSpeed = curSettings.int["AIM_SPEED"]
+				
+				val aimSpeedDivisor = if (curSettings.bool["AIM_ADVANCED"]) curSettings.int["AIM_SPEED_DIVISOR"] else 1
+				doAim(
+					destinationAngle,
+					currentAngle,
+					aimSpeed / max(1, CSGO.CACHE_EXPIRE_MILLIS.toInt() / 4),
+					aimSpeedDivisor
+				)
+			} else {
+				doAim(destinationAngle, currentAngle, 1, 1)
+			}
+			destinationAngle.release()
 		}
+	} finally {
+		currentAngle.release()
+		position.release()
 	}
 }

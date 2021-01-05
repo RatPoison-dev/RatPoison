@@ -39,6 +39,7 @@ fun rcs() = every(15, inGameCheck = true) {
 			var angle = clientState.angle()
 			angle = angle.set(angle.x - punchToApply.x, angle.y - punchToApply.y).normalize()
 			clientState.setAngle(angle)
+			angle.release()
 
 			lastAppliedRCS.x += punchToApply.x
 			lastAppliedRCS.y += punchToApply.y
@@ -60,6 +61,7 @@ fun rcs() = every(15, inGameCheck = true) {
 			angle = angle.set(angle.x - punchToApply.x, angle.y - punchToApply.y).normalize()
 
 			clientState.setAngle(angle)
+			angle.release()
 			lastAppliedRCS.x = playerPunch.x
 			lastAppliedRCS.y = playerPunch.y
 

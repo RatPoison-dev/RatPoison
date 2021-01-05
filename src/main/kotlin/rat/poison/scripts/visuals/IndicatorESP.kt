@@ -94,6 +94,7 @@ fun calcAngle(src: Vector, dest: Vector, vAng: Vector): Vector {
     val angs =  Vector(
         (Math.toDegrees(atan2(-delta.z, hypot(delta.x, delta.y)).toDouble()) - vAng.x).toFloat(),
         (Math.toDegrees(atan2(delta.y, delta.x).toDouble()) - vAng.y).toFloat(), 0F)
+    delta.release()
     return angs.normalize()
 }
 
@@ -126,11 +127,22 @@ fun drawIndicator(enemyEnt: Long, drawColor: Color)
     val dest = Vector(entAbs.x, entAbs.y, 0F)
     entAbs.release()
     
-    var tmpAng = calcAngle(src, dest, Vector(0F, 0F, 0F))
-    tmpAng = angVec(Vector(-tmpAng.x , 90F - tmpAng.y + meEyeAngle.y, -tmpAng.z))
+    val vAng = Vector(0F, 0F, 0F)
+    var tmpAng = calcAngle(src, dest, vAng)
+    src.release()
+    dest.release()
+    vAng.release()
+    
+    val tmpVAng = Vector(-tmpAng.x , 90F - tmpAng.y + meEyeAngle.y, -tmpAng.z)
+    tmpAng.release()
+    meEyeAngle.release()
+    
+    tmpAng = angVec(tmpVAng)
+    tmpVAng.release()
 
     val triangPos = Vector((tWidth / 2F) + (-tmpAng.x * dist), (tHeight / 2F) + (tmpAng.y * dist), 0F + (tmpAng.z * dist))
-
+    tmpAng.release()
+    
     if (!shapeRenderer.isDrawing) {
         shapeRenderer.begin()
     }
@@ -148,6 +160,8 @@ fun drawIndicator(enemyEnt: Long, drawColor: Color)
     //Middle of triangle
     val triangX = triangPos.x
     val triangY = triangPos.y
+    
+    triangPos.release()
 
     val sin = size*sin(rot)
     val cos = size*cos(rot)

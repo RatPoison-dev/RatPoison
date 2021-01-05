@@ -91,8 +91,8 @@ class UserCMD: Struct(), Structure.ByReference {
     @JvmField
     var iTickCount = 0
 
-    var vecViewAngles = Vector()
-    var vecAimDirection = Vector()
+    var vecViewAngles = Vector(track = false)
+    var vecAimDirection = Vector(track = false)
 
     @JvmField
     var flForwardmove = 0f
@@ -136,11 +136,11 @@ fun cmd_iTickCount(mem: Pointer): Int {
 }
 
 fun cmd_vecViewAngles(mem: Pointer): Vector {
-    return Vector(mem.getFloat(0x0C), mem.getFloat(0x10), mem.getFloat(0x14))
+    return Vector(mem.getFloat(0x0C), mem.getFloat(0x10), mem.getFloat(0x14), track = false)
 }
 
 fun cmd_vecAimDirection(mem: Pointer): Vector {
-    return Vector(mem.getFloat(0x18), mem.getFloat(0x1C), mem.getFloat(0x20))
+    return Vector(mem.getFloat(0x18), mem.getFloat(0x1C), mem.getFloat(0x20), track = false)
 }
 
 fun cmd_flForwardmove(mem: Pointer): Float {

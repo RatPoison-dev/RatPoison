@@ -70,37 +70,40 @@ fun worldToScreen(from: Vector): Vector {
 		(w0[0] * from.x + w0[1] * from.y + w0[2] * from.z + w0[3]).toFloat(),
 		(w1[0] * from.x + w1[1] * from.y + w1[2] * from.z + w1[3]).toFloat()
 	)
-	
-	val w3 = w2sViewMatrix[3]
-	val w = (w3[0] * from.x + w3[1] * from.y + w3[2] * from.z + w3[3]).toFloat()
-	
-	val width = gameWidth
-	val height = gameHeight
-	
-	if (!w.isNaN() && w >= 0.01F) { //If infront (on screen)
-		val invw = 1F / w
-		vOut = vOut.set(vOut.x * invw, vOut.y * invw)
+	try {
+		val w3 = w2sViewMatrix[3]
+		val w = (w3[0] * from.x + w3[1] * from.y + w3[2] * from.z + w3[3]).toFloat()
 		
-		var x = width / 2.0F
-		var y = height / 2.0F
+		val width = gameWidth
+		val height = gameHeight
 		
-		x += 0.5F * vOut.x * width + 0.5F
-		y += 0.5F * vOut.y * height + 0.5F
-		
-		return Vector(x, y, 0F)
-	} else if (!w.isNaN() && w < 0.01F) { //If behind
-		val invw = -1F / w
-		
-		vOut = vOut.set(vOut.x * invw, vOut.y * invw)
-		
-		var x = width / 2F
-		var y = height / 2F
-		
-		x += 0.5F * vOut.x * width + 0.5F
-		y -= 0.5F * vOut.y * height + 0.5F
-		
-		return Vector(x, y, W2S_FAILED)
-	} else return Vector(z = W2S_FAILED)
+		if (!w.isNaN() && w >= 0.01F) { //If infront (on screen)
+			val invw = 1F / w
+			vOut = vOut.set(vOut.x * invw, vOut.y * invw)
+			
+			var x = width / 2.0F
+			var y = height / 2.0F
+			
+			x += 0.5F * vOut.x * width + 0.5F
+			y += 0.5F * vOut.y * height + 0.5F
+			
+			return Vector(x, y, 0F)
+		} else if (!w.isNaN() && w < 0.01F) { //If behind
+			val invw = -1F / w
+			
+			vOut = vOut.set(vOut.x * invw, vOut.y * invw)
+			
+			var x = width / 2F
+			var y = height / 2F
+			
+			x += 0.5F * vOut.x * width + 0.5F
+			y -= 0.5F * vOut.y * height + 0.5F
+			
+			return Vector(x, y, W2S_FAILED)
+		} else return Vector(z = W2S_FAILED)
+	} finally {
+		vOut.release()
+	}
 }
 
 private const val viewMatrixMemorySize = 4L * 4L * 4L

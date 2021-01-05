@@ -67,6 +67,8 @@ var haltProcess = false
 
 fun main() {
     System.setProperty("jna.nosys", "true")
+    
+    //trackVectors() // turn on to debug Vector memory leaks
 
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
 

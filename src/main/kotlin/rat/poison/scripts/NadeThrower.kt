@@ -14,7 +14,7 @@ import rat.poison.utils.generalUtil.cToFloat
 
 private var calcRes = 0F
 
-private var closestAngle = Angle(90F, 90F, 90F)
+private var closestAngle = Angle(90F, 90F, 90F, track = false)
 private var closestDistance = 100F
 private var clfSpot = listOf<Any>()
 

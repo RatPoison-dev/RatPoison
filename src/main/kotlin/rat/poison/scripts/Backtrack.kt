@@ -31,8 +31,8 @@ var btRecords = Array(64) { Array(13) { BacktrackTable() } }
 
 data class BacktrackTable(
 	var simtime: Float = 0f,
-	var headPos: Vector = vector(),
-	var absPos: Vector = vector(),
+	var headPos: Vector = vector(track = false),
+	var absPos: Vector = vector(track = false),
 	var alpha: Float = 100f
 )
 
@@ -130,65 +130,70 @@ fun constructRecords() {
 	
 	val boneMemory = boneMemory.get()
 	
-	forEntities(EntityType.CCSPlayer) {
-		val ent = it.entity
-		
-		if (ent.dead() || ent == me || ent.team() == meTeam) return@forEntities
-		
-		if (ent.dormant()) { //Reset that bitch
+	try {
+		forEntities(EntityType.CCSPlayer) {
+			val ent = it.entity
+			
+			if (ent.dead() || ent == me || ent.team() == meTeam) return@forEntities
+			
+			if (ent.dormant()) { //Reset that bitch
+				val entID = (csgoEXE.uint(ent + dwIndex) - 1).toInt()
+				
+				if (entID !in 0..64) return@forEntities
+				
+				for (i in 0 until 13) {
+					val record = btRecords[entID][i]
+					
+					record.simtime = 0f
+					record.alpha = 100f
+					
+					btRecords[entID][i] = record
+				}
+				
+				return@forEntities
+			}
+			
+			//Best target shit
+			val pos = ent.bones(6)
+			val fov = calcTarget(bestFov, bestBacktrackTarget, pos, clientAngle, 5F, 6, ovrStatic = true).fov
+			pos.release()
+			if (fov < bestFov && fov > 0) {
+				bestFov = fov
+				bestBacktrackTarget = ent
+			} else if (bestFov == 5F) {
+				bestBacktrackTarget = -1L
+			}
+			
+			//Create records
+			val entSimTime = csgoEXE.float(ent + flSimulationTime)
 			val entID = (csgoEXE.uint(ent + dwIndex) - 1).toInt()
+			val tick = gvars.tickCount % 13
 			
-			if (entID !in 0..64) return@forEntities
-			
-			for (i in 0 until 13) {
-				val record = btRecords[entID][i]
+			if (entID in 0..63 && tick < 13) {
+				val record = btRecords[entID][tick]
 				
-				record.simtime = 0f
+				val bm = ent.boneMatrix()
+				if (!csgoEXE.read(bm, boneMemory, boneMemorySize)) throw IllegalStateException()
+				val bones = boneMemory.bones(8)
+				record.headPos.release()
+				record.headPos = bones.apply { z += 5 }
+				//bones.release()
+				
+				val entPos = ent.absPosition()
+				record.absPos.release()
+				record.absPos = entPos.apply { z -= 5 }
+				//entPos.release()
+				
 				record.alpha = 100f
+				record.simtime = entSimTime
 				
-				btRecords[entID][i] = record
+				btRecords[entID][tick] = record
 			}
 			
 			return@forEntities
 		}
-		
-		//Best target shit
-		val pos = ent.bones(6)
-		val fov = calcTarget(bestFov, bestBacktrackTarget, pos, clientAngle, 5F, 6, ovrStatic = true).fov
-		if (fov < bestFov && fov > 0) {
-			bestFov = fov
-			bestBacktrackTarget = ent
-		} else if (bestFov == 5F) {
-			bestBacktrackTarget = -1L
-		}
-		
-		//Create records
-		val entSimTime = csgoEXE.float(ent + flSimulationTime)
-		val entID = (csgoEXE.uint(ent + dwIndex) - 1).toInt()
-		val tick = gvars.tickCount % 13
-		
-		if (entID in 0..63 && tick < 13) {
-			val record = btRecords[entID][tick]
-			
-			val bm = ent.boneMatrix()
-			if (!csgoEXE.read(bm, boneMemory, boneMemorySize)) throw IllegalStateException()
-			val bones = boneMemory.bones(8)
-                        record.headPos.release()
-			record.headPos = bones.apply { z += 5 }
-			//bones.release()
-			
-			val entPos = ent.absPosition()
-                        record.absPos.release()
-			record.absPos = entPos.apply { z -= 5 }
-			//entPos.release()
-			
-			record.alpha = 100f
-			record.simtime = entSimTime
-			
-			btRecords[entID][tick] = record
-		}
-		
-		return@forEntities
+	} finally {
+		clientAngle.release()
 	}
 }
 

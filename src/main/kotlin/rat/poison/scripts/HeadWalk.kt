@@ -28,9 +28,9 @@ private var onEnt = 0L
 ////////Doesn't predict, isn't accurate
 
 @Volatile
-var mePos = Vector()
+var mePos = Vector(track = false)
 @Volatile
-var onEntPos = Vector()
+var onEntPos = Vector(track = false)
 
 internal fun headWalk() = every(2, inGameCheck = true) {
     if (!curSettings.bool["HEAD_WALK"] || meDead) return@every

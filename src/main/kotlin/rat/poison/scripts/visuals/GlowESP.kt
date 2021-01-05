@@ -35,6 +35,8 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 				}
 			}
 		}
+		currentAngle.release()
+		position.release()
 
 		val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
 		val bEnt = bomb.carrier()

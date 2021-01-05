@@ -25,7 +25,9 @@ fun strafeHelper() = every(2, inGameCheck = true) {
 
     updateCursorEnable()
     if (cursorEnable) return@every
-    val curAngY = clientState.angle().y
+    val angle = clientState.angle()
+    val curAngY = angle.y
+    angle.release()
     val grounded = me.onGround()
 
     if ((curSettings.bool["STRAFE_BHOP_ONLY"] && keyPressed(VK_SPACE)) || (!curSettings.bool["STRAFE_BHOP_ONLY"])) {
