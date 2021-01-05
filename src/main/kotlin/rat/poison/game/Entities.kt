@@ -1,7 +1,7 @@
 package rat.poison.game
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import it.unimi.dsi.fastutil.objects.ObjectList
 import rat.poison.game.entity.EntityType
@@ -15,7 +15,7 @@ var me: Player = 0
 @Volatile
 var clientState: ClientState = 0
 
-typealias EntityList = Object2ObjectArrayMap<EntityType, ResizingArrayIndex<EntityContext>>
+typealias EntityList = Object2ObjectOpenHashMap<EntityType, ResizingArrayIndex<EntityContext>>
 
 var entitiesValues = arrayOfNulls<ResizingArrayIndex<EntityContext>>(MAX_ENTITIES)
 var entitiesValuesCounter = 0

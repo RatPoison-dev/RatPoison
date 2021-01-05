@@ -19,10 +19,13 @@ fun worldToScreen(from: Vector, vOut: Vector): Boolean {
 		updateViewMatrix()
 	}
 	
-	vOut.x = (w2sViewMatrix[0][0] * from.x + w2sViewMatrix[0][1] * from.y + w2sViewMatrix[0][2] * from.z + w2sViewMatrix[0][3]).toFloat()
-	vOut.y = (w2sViewMatrix[1][0] * from.x + w2sViewMatrix[1][1] * from.y + w2sViewMatrix[1][2] * from.z + w2sViewMatrix[1][3]).toFloat()
+	vOut.x =
+		(w2sViewMatrix[0][0] * from.x + w2sViewMatrix[0][1] * from.y + w2sViewMatrix[0][2] * from.z + w2sViewMatrix[0][3]).toFloat()
+	vOut.y =
+		(w2sViewMatrix[1][0] * from.x + w2sViewMatrix[1][1] * from.y + w2sViewMatrix[1][2] * from.z + w2sViewMatrix[1][3]).toFloat()
 	
-	val w = (w2sViewMatrix[3][0] * from.x + w2sViewMatrix[3][1] * from.y + w2sViewMatrix[3][2] * from.z + w2sViewMatrix[3][3]).toFloat()
+	val w =
+		(w2sViewMatrix[3][0] * from.x + w2sViewMatrix[3][1] * from.y + w2sViewMatrix[3][2] * from.z + w2sViewMatrix[3][3]).toFloat()
 	
 	val width = gameWidth
 	val height = gameHeight
@@ -110,19 +113,24 @@ private const val viewMatrixMemorySize = 4L * 4L * 4L
 private val viewMatrixMemory = threadLocalPointer(viewMatrixMemorySize)
 private val floatArray = ThreadLocal.withInitial { FloatArray(16) }
 
+@Volatile
+private var lastUpdateViewMatrix = -1L
+
 fun updateViewMatrix() { //Call before using multiple world to screens
-	if (dwViewMatrix > 0L) {
-		val buffer = viewMatrixMemory.get()
-		if (clientDLL.read(clientDLL.offset(dwViewMatrix), buffer, viewMatrixMemorySize)) {
-			val floatArray = floatArray.get()
-			buffer.jna.read(0, floatArray, 0, 16)
-			if (floatArray.all(Float::isFinite)) {
-				var offset = 0
-				for (row in 0..3) for (col in 0..3) {
-					val value = buffer.getFloat(offset.toLong())
-					w2sViewMatrix[row][col] = value.toDouble()
-					offset += 4 //Changed, error but not compd
-				}
+	if (dwViewMatrix <= 0L) return
+	if (lastUpdateViewMatrix != -1L && System.currentTimeMillis() - lastUpdateViewMatrix < 16) return
+	lastUpdateViewMatrix = System.currentTimeMillis()
+	
+	val buffer = viewMatrixMemory.get()
+	if (clientDLL.read(clientDLL.offset(dwViewMatrix), buffer, viewMatrixMemorySize)) {
+		val floatArray = floatArray.get()
+		buffer.jna.read(0, floatArray, 0, 16)
+		if (floatArray.all(Float::isFinite)) {
+			var offset = 0
+			for (row in 0..3) for (col in 0..3) {
+				val value = buffer.getFloat(offset.toLong())
+				w2sViewMatrix[row][col] = value.toDouble()
+				offset += 4 //Changed, error but not compd
 			}
 		}
 	}

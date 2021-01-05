@@ -1,6 +1,7 @@
 package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.graphics.Color
+import org.jire.kna.Pointer
 import org.jire.kna.int
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
@@ -45,12 +46,16 @@ internal fun skeletonEsp() = App {
 		
 		if (!csgoEXE.read(studioModel + boneOffset, modelMemory, modelMemorySize)) throw IllegalStateException()
 		
+		val boneMemory = boneMemory.get()
+		if (!csgoEXE.read(entity.boneMatrix(), boneMemory, boneMemorySize)) throw IllegalStateException()
+		val health = entity.health()
+		
 		var offset = 0
 		for (idx in 0 until numBones) {
 			val parent = csgoEXE.int(studioModel + boneOffset + 0x4 + offset)
 			if (parent != -1) {
 				val flags = modelMemory.getInt(0xA0L + offset).unsign() and 0x100
-				if (flags != 0L) drawBone(entity, parent, idx)//add(parent to idx)
+				if (flags != 0L) drawBone(boneMemory, health, parent, idx)//add(parent to idx)
 			}
 			
 			offset += 216
@@ -84,13 +89,9 @@ private val colors: Array<Color> = Array(101) {
 private const val boneMemorySize = 4032L
 private val boneMemory = threadLocalPointer(boneMemorySize)
 
-private fun drawBone(target: Player, start: Int, end: Int) {
+private fun drawBone(boneMemory: Pointer, targetHealth: Int, start: Int, end: Int) {
 	//Reduce r/w
 	//Replace later
-	
-	val boneMemory = boneMemory.get()
-	
-	if (!csgoEXE.read(target.boneMatrix(), boneMemory, boneMemorySize)) throw IllegalStateException()
 	
 	val startBone = Vector(
 		boneMemory.getFloat(((0x30L * start) + 0xC)),
@@ -113,7 +114,7 @@ private fun drawBone(target: Player, start: Int, end: Int) {
 			sY = startDraw.y.toInt()
 			eX = endDraw.x.toInt()
 			eY = endDraw.y.toInt()
-			val health = target.health()
+			val health = targetHealth
 			if (health > 0 && health < colors.size) {
 				color = colors[health]
 			}

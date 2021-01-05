@@ -30,4 +30,12 @@ open class ResizingArrayIndex<T>
 		return super.add(value)
 	}
 	
+	override fun hashCode(): Int {
+		return array.hashCode()
+	}
+	
+	override fun equals(other: Any?): Boolean {
+		return other is ResizingArrayIndex<*> && hashCode() == other.hashCode()
+	}
+	
 }

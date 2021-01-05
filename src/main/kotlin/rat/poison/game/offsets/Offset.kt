@@ -1,9 +1,9 @@
 package rat.poison.game.offsets
 
 import com.sun.jna.Native
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap
 import it.unimi.dsi.fastutil.objects.Object2ObjectMaps
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import org.jire.kna.Addressed
 import org.jire.kna.Pointer
 import org.jire.kna.attach.AttachedModule
@@ -20,7 +20,7 @@ class Offset(
 	
 	companion object {
 		val bytesByModule: Object2ObjectMap<AttachedModule, ByteArray> =
-			Object2ObjectMaps.synchronize(Object2ObjectArrayMap())
+			Object2ObjectMaps.synchronize(Object2ObjectOpenHashMap())
 		
 		private fun Offset.cachedBytes(): ByteArray {
 			val cached = bytesByModule[module]
