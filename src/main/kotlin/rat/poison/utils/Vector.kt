@@ -60,7 +60,9 @@ inline class Vector(val value: Long) {
 		z = 0F
 	}
 	
-	fun distanceTo(target: Vector) = abs(x - target.x) + abs(y - target.y) + abs(z - target.z)
+	fun distanceTo(target: Vector) = distanceTo(target.x, target.y, target.z)
+	
+	fun distanceTo(tx: Float, ty: Float, tz: Float) = abs(x - tx) + abs(y - ty) + abs(z - tz)
 	
 	fun dot(x: Float, y: Float, z: Float) = dot(x, y, z, this.x, this.y, this.z)
 	

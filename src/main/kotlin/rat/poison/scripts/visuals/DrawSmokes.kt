@@ -21,7 +21,7 @@ fun drawSmokes() = App {
 	
 	val smokePolys = curSettings.int["VISUALIZE_SMOKES_POLYS"]
 	if (smokePolys <= 0) return@App
-        val smokeHeight = curSettings.int["VISUALIZE_SMOKES_HEIGHT"]
+	val smokeHeight = curSettings.int["VISUALIZE_SMOKES_HEIGHT"]
 	val smokeWidth = curSettings.int["VISUALIZE_SMOKES_WIDTH"]
 	
 	forEntities(EntityType.CSmokeGrenadeProjectile) {
@@ -31,7 +31,7 @@ fun drawSmokes() = App {
 		
 		val smokePos = it.entity.absPosition()
 		val points = LongArrayList(smokePolys)
-
+		
 		for (i in 0 until smokePolys) {
 			val x = smokePos.x + smokeWidth * cos(Math.toRadians(360.0 / smokePolys * i))
 			val y = smokePos.y + smokeWidth * sin(Math.toRadians(360.0 / smokePolys * i))
@@ -61,7 +61,7 @@ fun drawSmokes() = App {
 					Vector(points.getLong(i + smokePolys))
 				)
 			}
- 
+			
 			for (i in 0 until smokePolys) {
 				Vector(points.getLong(i)).release()
 			}
@@ -158,11 +158,9 @@ fun lineThroughSmoke(ent: Player): Boolean {
 		
 		//This is most likely not perfect...
 		through = (pos.distanceTo(
-			Vector(
-				realX,
-				realY,
-				pos.z
-			)
+			realX,
+			realY,
+			pos.z
 		) <= 175f && mePos.distanceTo(maxPos) > mePos.distanceTo(pos)) || mePos.distanceTo(pos) <= 175f
 		
 		pos.release()
