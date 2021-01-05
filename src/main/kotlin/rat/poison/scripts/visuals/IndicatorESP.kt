@@ -21,10 +21,11 @@ fun indicatorEsp() = App {
 
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()
+    val myTeam = me.team()
 
     forEntities {
         val entity = it.entity
-        val onTeam = !DANGER_ZONE && me.team() == entity.team()
+        val onTeam = !DANGER_ZONE && myTeam == entity.team()
 
         var color = ""
 

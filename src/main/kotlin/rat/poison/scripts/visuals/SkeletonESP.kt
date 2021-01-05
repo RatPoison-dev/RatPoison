@@ -4,12 +4,10 @@ import com.badlogic.gdx.graphics.Color
 import org.jire.kna.Pointer
 import org.jire.kna.int
 import rat.poison.curSettings
+import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
-import rat.poison.game.me
-import rat.poison.game.w2s
-import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.DANGER_ZONE
@@ -22,6 +20,7 @@ private var currentIdx = 0
 
 private const val modelMemorySize = 21332L
 private val modelMemory = threadLocalPointer(modelMemorySize)
+var readit = false
 
 internal fun skeletonEsp() = App {
 	if (!curSettings.bool["SKELETON_ESP"] || !curSettings.bool["ENABLE_ESP"] || !inGame || (curSettings.bool["SKELETON_ESP_DEAD"] && !meDead)) return@App
@@ -44,7 +43,10 @@ internal fun skeletonEsp() = App {
 		val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
 		val boneOffset = csgoEXE.uint(studioModel + 0xA0)
 		
-		if (!csgoEXE.read(studioModel + boneOffset, modelMemory, modelMemorySize)) throw IllegalStateException()
+		if (!readit) {
+			if (!csgoEXE.read(studioModel + boneOffset, modelMemory, modelMemorySize)) throw IllegalStateException()
+		}
+		readit = true
 		
 		val boneMemory = boneMemory.get()
 		if (!csgoEXE.read(entity.boneMatrix(), boneMemory, boneMemorySize)) throw IllegalStateException()
@@ -77,6 +79,7 @@ internal fun skeletonEsp() = App {
 	}
 	
 	currentIdx = 0
+	readit = false
 }
 
 private val colors: Array<Color> = Array(101) {
@@ -93,36 +96,28 @@ private fun drawBone(boneMemory: Pointer, targetHealth: Int, start: Int, end: In
 	//Reduce r/w
 	//Replace later
 	
-	val startBone = Vector(
+	val startBone = worldToScreenLong(
 		boneMemory.getFloat(((0x30L * start) + 0xC)),
 		boneMemory.getFloat(((0x30L * start) + 0x1C)),
 		boneMemory.getFloat(((0x30L * start) + 0x2C))
 	)
-	val endBone = Vector(
+	val endBone = worldToScreenLong(
 		boneMemory.getFloat(((0x30L * end) + 0xC)),
 		boneMemory.getFloat(((0x30L * end) + 0x1C)),
 		boneMemory.getFloat(((0x30L * end) + 0x2C))
 	)
-	
-	val startDraw = worldToScreen(startBone)
-	startBone.release()
-	val endDraw = worldToScreen(endBone)
-	endBone.release()
-	if (startDraw.w2s() && endDraw.w2s()) {
+	if (startBone != -1L && endBone != -1L) {
 		bones[currentIdx].apply {
-			sX = startDraw.x.toInt()
-			sY = startDraw.y.toInt()
-			eX = endDraw.x.toInt()
-			eY = endDraw.y.toInt()
-			val health = targetHealth
-			if (health > 0 && health < colors.size) {
-				color = colors[health]
+			sX = ((startBone ushr 32) and 0xFFFFFFFFL).toInt()
+			sY = (startBone and 0xFFFFFFFFL).toInt()
+			eX = ((endBone ushr 32) and 0xFFFFFFFFL).toInt()
+			eY = (endBone and 0xFFFFFFFFL).toInt()
+			if (targetHealth > 0 && targetHealth < colors.size) {
+				color = colors[targetHealth]
 			}
 		}
 		currentIdx++
 	}
-	startDraw.release()
-	endDraw.release()
 }
 
 private data class Line(

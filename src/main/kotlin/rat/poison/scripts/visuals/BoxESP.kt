@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.utils.Align
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import org.jire.kna.int
@@ -33,7 +34,13 @@ import rat.poison.utils.*
 import kotlin.math.abs
 import kotlin.math.sign
 
-data class BoundingBox(var left: Float = -1F, var right: Float = -1F, var top: Float = -1F, var bottom: Float = -1F)
+data class BoundingBox(
+	var lastUpdated: Long = System.currentTimeMillis(),
+	var left: Float = -1F,
+	var right: Float = -1F,
+	var top: Float = -1F,
+	var bottom: Float = -1F
+)
 
 data class DrawableTexture(var texture: Texture, var position: String = "")
 
@@ -527,8 +534,15 @@ fun getRealTextParams(font: BitmapFont, builder: StringBuilder, layout: GlyphLay
 private const val boneMemorySize = 3984L
 private val boneMemory = threadLocalPointer(boneMemorySize)
 
+private val fakeBoxCache = Long2ObjectOpenHashMap<BoundingBox>()
+
 //Create a fake accurate box using headpos
 fun setupFakeBox(ent: Entity): BoundingBox {
+	if (fakeBoxCache.containsKey(ent)) {
+		val cached = fakeBoxCache.get(ent)
+		if (System.currentTimeMillis() - cached.lastUpdated < 16) return cached
+	}
+	
 	val bbox = BoundingBox()
 	
 	val boneMatrix = ent.boneMatrix()
@@ -577,7 +591,7 @@ fun setupFakeBox(ent: Entity): BoundingBox {
 	vTop.release()
 	vBottom.release()
 	
-	return bbox
+	return bbox.apply { fakeBoxCache[ent] = this }
 }
 
 private const val collisionMemSize = 56L
@@ -585,8 +599,15 @@ private val collisionMem = threadLocalPointer(collisionMemSize) //Incorrect
 private val frameMatrix = ThreadLocal.withInitial { Array(4) { FloatArray(4) } }
 private val bufferFloatArray = ThreadLocal.withInitial { FloatArray(16) }
 
+private val accurateBoxCache = Long2ObjectOpenHashMap<BoundingBox>()
+
 //Create a real accurate box using vecMins & vecMaxs
 fun setupAccurateBox(ent: Entity): BoundingBox {
+	if (accurateBoxCache.containsKey(ent)) {
+		val cached = accurateBoxCache.get(ent)
+		if (System.currentTimeMillis() - cached.lastUpdated < 16) return cached
+	}
+	
 	//Get frameMatrix
 	val frameMatrix = frameMatrix.get()
 	
@@ -658,7 +679,7 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 		if (bottom > y) bottom = y
 	}
 	
-	return BoundingBox(left, right, top, bottom)
+	return BoundingBox(System.currentTimeMillis(), left, right, top, bottom).apply { accurateBoxCache[ent] = this }
 }
 
 fun transformVector(vec: Vector, array: Array<FloatArray>): Vector = Vector(

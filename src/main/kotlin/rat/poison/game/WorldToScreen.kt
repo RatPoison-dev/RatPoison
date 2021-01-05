@@ -109,6 +109,46 @@ fun worldToScreen(from: Vector): Vector {
 	}
 }
 
+fun worldToScreenLong(fromx: Float, fromy: Float, fromz: Float): Long {
+	updateViewMatrix()
+	
+	val w0 = w2sViewMatrix[0]
+	val w1 = w2sViewMatrix[1]
+	var vOutX = (w0[0] * fromx + w0[1] * fromy + w0[2] * fromz + w0[3]).toFloat()
+	var vOutY = (w1[0] * fromx + w1[1] * fromy + w1[2] * fromz + w1[3]).toFloat()
+	val w3 = w2sViewMatrix[3]
+	val w = (w3[0] * fromx + w3[1] * fromy + w3[2] * fromz + w3[3]).toFloat()
+	
+	val width = gameWidth
+	val height = gameHeight
+	
+	if (!w.isNaN() && w >= 0.01F) { //If infront (on screen)
+		val invw = 1F / w
+		vOutX *= invw
+		vOutY *= invw
+		
+		var x = width / 2.0F
+		var y = height / 2.0F
+		
+		x += 0.5F * vOutX * width + 0.5F
+		y += 0.5F * vOutY * height + 0.5F
+		
+		return ((x.toLong() and 0xFFFFFFFF) shl 32) or (y.toLong() and 0xFFFFFFFF)
+	} else if (!w.isNaN() && w < 0.01F) { //If behind
+		val invw = -1F / w
+		vOutX *= invw
+		vOutY *= invw
+		
+		var x = width / 2F
+		var y = height / 2F
+		
+		x += 0.5F * vOutX * width + 0.5F
+		y -= 0.5F * vOutY * height + 0.5F
+		
+		return -1L
+	} else return -1L
+}
+
 private const val viewMatrixMemorySize = 4L * 4L * 4L
 private val viewMatrixMemory = threadLocalPointer(viewMatrixMemorySize)
 private val floatArray = ThreadLocal.withInitial { FloatArray(16) }
