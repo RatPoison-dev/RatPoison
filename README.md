@@ -14,8 +14,7 @@ Hundreds of hours have gone into developing Charlatano and RatPoison. Feel free 
 * **_[Spravedlivo](https://github.com/Spravedlivo)_** on [Patreon](https://www.patreon.com/spravedlivo)
     * Or with BTC: _bc1qmxkd2dalzwdy0dhhqh8v64m9xj0nz0g52l292e_
     * Or with PayPal: _wewestteam1@gmail.com_
-* **_[Jire](https://github.com/Jire)_** by
-  starring/watching [his Charlatano project](https://github.com/Jire/Charlatano)
+* **_[Jire](https://github.com/Jire)_** on [Patreon](https://www.patreon.com/Jire)
     * Or with BTC: _3ErbuRTxtFqvMQ7F2Z8SfpgAXjonsQs8Vc_
     * Or with CashApp: _jires_
 
