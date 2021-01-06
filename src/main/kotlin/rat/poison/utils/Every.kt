@@ -21,6 +21,8 @@ var shouldPostProcess = false
 @Volatile
 var inFullscreen = false
 
+private const val debugSlowTasks = false
+
 class Task(
 	val body: Boss.(Task) -> Unit,
 	val duration: Long,
@@ -80,7 +82,8 @@ abstract class Boss(
 				cycles++
 			}, TimeUnit.NANOSECONDS)
 			if (elapsed < 1) sleep(1L)
-			else if (cycles > 5000 && elapsed >= slowTimeout) println("WARNING: \"${threadGroupName}\" slow cycle (${elapsed}ms)")
+			else if (debugSlowTasks && cycles > 5000 && elapsed >= slowTimeout)
+				println("WARNING: \"${threadGroupName}\" slow cycle (${elapsed}ms)")
 		}
 	}
 	
@@ -105,7 +108,7 @@ abstract class Boss(
 							phaser.arriveAndDeregister()
 						}
 					}, TimeUnit.NANOSECONDS)
-					if (cycles > 5000 && elapsed > slowTimeout) {
+					if (debugSlowTasks && cycles > 5000 && elapsed > slowTimeout) {
 						Exception("Task took long! ${elapsed}ms", task.created).printStackTrace()
 					}
 				}
