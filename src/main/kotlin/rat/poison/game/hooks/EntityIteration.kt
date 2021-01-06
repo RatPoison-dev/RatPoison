@@ -51,7 +51,7 @@ private val writeGlowMemory = ThreadLocal.withInitial { Pointer.alloc(1).apply {
 private const val strBufSize = 128L
 private val strBuf = threadLocalPointer(strBufSize) //128 str?
 
-private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
+private var signOnState by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
 	if (old != new) {
 		if (new.name == SignOnState.IN_GAME.name) {
 			thread {
@@ -130,10 +130,10 @@ private val glowObjectMemory = threadLocalPointer(14340L * 2)
 
 private const val minPos = 5F
 
-fun constructEntities() = every(500, continuous = true) {
+fun constructEntities() = MedPriority.every(500, continuous = true) {
 	updateCursorEnable()
 	clientState = engineDLL.uint(dwClientState)
-	state = SignOnState[csgoEXE.int(clientState + dwSignOnState)]
+	signOnState = SignOnState[csgoEXE.int(clientState + dwSignOnState)]
 	
 	me = clientDLL.uint(dwLocalPlayer)
 	if (!inGame || me <= 0L) return@every

@@ -13,8 +13,8 @@ import rat.poison.game.hooks.constructEntities
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.netvars.NetVars
 import rat.poison.settings.*
+import rat.poison.utils.LowPriority
 import rat.poison.utils.after
-import rat.poison.utils.every
 import rat.poison.utils.inBackground
 import rat.poison.utils.natives.CUser32
 import rat.poison.utils.retry
@@ -94,7 +94,7 @@ object CSGO {
 		gameX = rect.left + (((rect.right - rect.left) - gameWidth) / 2)
 		gameY = rect.top + ((rect.bottom - rect.top) - gameHeight)
 		
-		every(1000) {
+		LowPriority.every(1000) {
 			if (!CUser32.GetClientRect(hwd, rect)) exitProcess(2)
 			gameWidth = rect.right - rect.left
 			gameHeight = rect.bottom - rect.top
@@ -104,7 +104,7 @@ object CSGO {
 			gameY = rect.top + ((rect.bottom - rect.top) - gameHeight)
 		}
 		
-		every(1000, continuous = true) {
+		LowPriority.every(1000, continuous = true) {
 			inBackground = Pointer.nativeValue(hwd.pointer) != CUser32.GetForegroundWindow()
 		}
 		
