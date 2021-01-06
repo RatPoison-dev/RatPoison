@@ -128,7 +128,7 @@ var toneMapController = 0L
 
 private val glowObjectMemory = threadLocalPointer(14340L * 2)
 
-private const val minPos = 2F
+private const val minPos = 5F
 
 fun constructEntities() = every(500, continuous = true) {
 	updateCursorEnable()
