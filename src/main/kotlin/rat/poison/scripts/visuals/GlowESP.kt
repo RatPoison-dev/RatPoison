@@ -10,11 +10,12 @@ import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.aim.target
 import rat.poison.scripts.bombState
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.utils.every
+import rat.poison.utils.MedPriority
+
 import java.util.concurrent.TimeUnit
 import kotlin.system.measureNanoTime
 
-internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
+internal fun glowEspEvery() = MedPriority.every(100, true, inGameCheck = true) {
 	if (!curSettings.bool["GLOW_ESP"] || !curSettings.bool["ENABLE_ESP"] || (curSettings.bool["GLOW_ESP_DEAD"] && !meDead)) return@every
 
 	glowTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {

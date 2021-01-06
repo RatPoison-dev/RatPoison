@@ -39,7 +39,8 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.jire:kna:0.4.1'
+	implementation group: 'org.jire', name: 'kna', version: '0.4.1'
+	implementation group: 'org.jire.strukt', name: 'strukt', version: '4.0.0'
 	
 	implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
 	implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"

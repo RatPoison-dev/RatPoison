@@ -10,15 +10,16 @@ import rat.poison.settings.MENUTOG
 import rat.poison.ui.tabs.updatingRanks
 import rat.poison.ui.uiPanels.ranksTab
 import rat.poison.ui.uiRefreshing
+import rat.poison.utils.LowPriority
 import rat.poison.utils.RanksPlayer
-import rat.poison.utils.every
+
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.saving
 
 var ranksPlayerList = mutableListOf<RanksPlayer>()
 
 //works with every down to 30, if you ever crash due to this then dn
-fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every second
+fun ranks() = LowPriority.every(5000, true, inGameCheck = true) { //Rebuild every second
 
     if (!opened || !haveTarget || updatingRanks || (!MENUTOG && !appless)) return@every
 

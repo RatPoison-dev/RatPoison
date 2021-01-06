@@ -146,12 +146,13 @@ fun Entity.canShoot(visCheck: Boolean = true) = ((if (DANGER_ZONE) {
 		&& !meDead)
 
 internal inline fun <R> aimScript(
-	duration: Int, crossinline precheck: () -> Boolean,
+	threadGroupName: String,
+	duration: Long, crossinline precheck: () -> Boolean,
 	crossinline doAim: (
 		destinationAngle: Angle,
 		currentAngle: Vector, aimSpeed: Int, aimSpeedDivisor: Int
 	) -> R
-) = every(duration) {
+) = IsolatedPriority(threadGroupName).every(duration) {
 	if (!precheck()) return@every
 	if (!curSettings.bool["ENABLE_AIM"]) return@every
 	
@@ -258,7 +259,7 @@ internal inline fun <R> aimScript(
 		
 		if (!currentTarget.canShoot(shouldVisCheck) || swapTarget) {
 			reset()
-			Thread.sleep(curSettings.int["AIM_TARGET_SWAP_DELAY"].toLong())
+			it.delayed(curSettings.int["AIM_TARGET_SWAP_DELAY"].toLong())
 		} else {
 			val bonePosition = currentTarget.bones(destBone)
 			val destinationAngle = getCalculatedAngle(me, bonePosition) //Rename to current angle

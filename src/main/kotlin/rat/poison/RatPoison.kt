@@ -17,12 +17,11 @@ import rat.poison.scripts.aim.handleFireKey
 import rat.poison.scripts.aim.pathAim
 import rat.poison.scripts.aim.setAim
 import rat.poison.scripts.visuals.*
-import rat.poison.utils.Settings
-import rat.poison.utils.detectLocale
+import rat.poison.utils.*
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
-import rat.poison.utils.loadMigration
 import java.awt.Robot
 import java.io.File
+import kotlin.concurrent.thread
 
 //Override Weapon
 data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = false,          var tOnShot: Boolean = false,
@@ -63,6 +62,7 @@ var dbg: Boolean = false
 var appless: Boolean = false
 val robot = Robot().apply { this.autoDelay = 0 }
 
+@Volatile
 var haltProcess = false
 
 fun main() {
@@ -150,9 +150,7 @@ fun main() {
 
     App.open()
 
-    Thread {
-        scanner()
-    }.start()
+    thread { scanner() }
 
     GlobalScope.launch {
         glfwInit()
@@ -194,6 +192,9 @@ fun main() {
             setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings.int["OPENGL_MSAA_SAMPLES"])
         })
     }
+	
+	LowPriority.start()
+    HighPriority.start()
 }
 
 fun String.toLocale(): String {

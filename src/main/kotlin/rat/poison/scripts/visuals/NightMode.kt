@@ -8,9 +8,9 @@ import rat.poison.game.netvars.NetVarOffsets.m_bUseCustomAutoExposureMax
 import rat.poison.game.netvars.NetVarOffsets.m_bUseCustomAutoExposureMin
 import rat.poison.game.netvars.NetVarOffsets.m_flCustomAutoExposureMax
 import rat.poison.game.netvars.NetVarOffsets.m_flCustomAutoExposureMin
-import rat.poison.utils.every
+import rat.poison.utils.LowPriority
 
-fun nightMode() = every(1000, inGameCheck = true) {
+fun nightMode() = LowPriority.every(1000, inGameCheck = true) {
     if (!curSettings.bool["ENABLE_ESP"]) return@every
 
     if (curSettings.bool["ENABLE_NIGHTMODE"]) {

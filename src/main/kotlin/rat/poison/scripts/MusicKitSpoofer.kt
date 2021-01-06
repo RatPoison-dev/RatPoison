@@ -7,12 +7,13 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.nMusicID
 import rat.poison.game.offsets.ClientOffsets
-import rat.poison.utils.every
+import rat.poison.utils.LowPriority
+
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.inGame
 
 //https://www.unknowncheats.me/forum/counterstrike-global-offensive/164236-spoofing-music-kit-casual-rank-via-netvar-patching.html
-fun musicKitSpoofer() = every(10000, true, inGameCheck = true) {
+fun musicKitSpoofer() = LowPriority.every(10000, true, inGameCheck = true) {
     if (curSettings.bool["MUSIC_KIT_SPOOFER"]) {
         writeSpoof()
     }

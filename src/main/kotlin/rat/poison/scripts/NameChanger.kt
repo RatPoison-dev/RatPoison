@@ -4,7 +4,8 @@ import org.jire.kna.Pointer
 import org.jire.kna.set
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.clientState
-import rat.poison.utils.every
+import rat.poison.utils.MedPriority
+
 import rat.poison.utils.extensions.uint
 
 @Volatile
@@ -12,7 +13,7 @@ var nameChange = ""
 
 //https://www.unknowncheats.me/forum/counterstrike-global-offensive/190477-csgo-name-changer.html
 
-fun nameChanger() = every(10, true, inGameCheck = true) {
+fun nameChanger() = MedPriority.every(10, true, inGameCheck = true) {
     if (nameChange == "") return@every
 
     val len = nameChange.length

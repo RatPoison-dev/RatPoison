@@ -20,7 +20,8 @@ import rat.poison.game.netvars.NetVarOffsets.m_iItemIDHigh
 import rat.poison.game.netvars.NetVarOffsets.m_nFallbackPaintKit
 import rat.poison.game.netvars.NetVarOffsets.m_nFallbackStatTrak
 import rat.poison.game.offsets.ClientOffsets.dwEntityList
-import rat.poison.utils.every
+import rat.poison.utils.HighPriority
+
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.toSkinWeaponClass
 import rat.poison.utils.shouldPostProcess
@@ -29,7 +30,7 @@ import rat.poison.utils.shouldPostProcess
 
 private var shouldUpdate = false
 
-fun skinChanger() = every(1, continuous = true, inGameCheck = true) {
+fun skinChanger() = HighPriority.every(1, continuous = true, inGameCheck = true) {
     if ((!curSettings.bool["SKINCHANGER"] && !curSettings.bool["KNIFECHANGER"])) return@every
 
     try {

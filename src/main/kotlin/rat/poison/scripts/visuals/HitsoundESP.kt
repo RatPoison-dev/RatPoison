@@ -10,13 +10,13 @@ import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
 import rat.poison.overlay.App.assetManager
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.every
+import rat.poison.utils.HighPriority
 
 private var totalHits = 0
 private var opened = false
 lateinit var hitSound: Sound
 
-fun hitSoundEsp() = every(50, inGameCheck = true) {
+fun hitSoundEsp() = HighPriority.every(50, inGameCheck = true) {
     if (!curSettings.bool["ENABLE_HITSOUND"] || MENUTOG || me < 0) return@every
 
     val curHits = csgoEXE.int(me + m_totalHitsOnServer)

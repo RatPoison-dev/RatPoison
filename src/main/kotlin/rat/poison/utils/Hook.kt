@@ -1,17 +1,17 @@
 package rat.poison.utils
 
-class Hook(val clauseDefault: Boolean, val durationDefault: Int,
+class Hook(val clauseDefault: Boolean, val durationDefault: Long,
            val predicate: () -> Boolean) {
 	
 	inline operator fun invoke(clause: Boolean = clauseDefault,
-	                           duration: Int = durationDefault,
+	                           duration: Long = durationDefault,
 	                           crossinline body: () -> Unit) {
-		if (!clause) every(duration) {
+		if (!clause) HighPriority.every(duration) {
 			if (predicate()) body()
 		} else if (predicate()) body()
 	}
 	
 }
 
-fun hook(durationDefault: Int = 8, clauseDefault: Boolean = false, predicate: () -> Boolean)
+fun hook(durationDefault: Long = 8, clauseDefault: Boolean = false, predicate: () -> Boolean)
 		= Hook(clauseDefault, durationDefault, predicate)

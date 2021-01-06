@@ -10,7 +10,8 @@ import rat.poison.game.me
 import rat.poison.robot
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.every
+import rat.poison.utils.HighPriority
+
 import rat.poison.utils.inBackground
 import rat.poison.utils.keyPressed
 import java.awt.event.KeyEvent
@@ -18,7 +19,7 @@ import java.awt.event.KeyEvent.VK_SPACE
 
 private var lastAngY = 0.0F
 
-fun strafeHelper() = every(2, inGameCheck = true) {
+fun strafeHelper() = HighPriority.every(2, inGameCheck = true) {
     if (MENUTOG || inBackground || meDead) return@every
 
     if (!curSettings.bool["AUTO_STRAFE"]) return@every

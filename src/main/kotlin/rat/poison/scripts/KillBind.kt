@@ -5,11 +5,11 @@ import rat.poison.game.entity.kills
 import rat.poison.game.me
 import rat.poison.robot
 import rat.poison.scripts.aim.meDead
-import rat.poison.utils.every
+import rat.poison.utils.LowPriority
 
 private var totalKills = me.kills()
 
-fun killBind() = every(600, inGameCheck = true) {
+fun killBind() = LowPriority.every(600, inGameCheck = true) {
 	if (!curSettings.bool["KILL_BIND"] || me <= 0 || meDead) return@every
 	val key = curSettings.int["KILL_BIND_KEY"]
 	if (key < 0) return@every

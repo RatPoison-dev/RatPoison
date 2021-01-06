@@ -16,7 +16,7 @@ import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.toLocale
 import rat.poison.ui.uiPanels.bombText
-import rat.poison.utils.every
+import rat.poison.utils.MedPriority
 import rat.poison.utils.generalUtil.toInt
 import rat.poison.utils.inGame
 
@@ -74,7 +74,7 @@ fun bombTimer() = App {
 
 fun currentGameTicks(): Float = CSGO.engineDLL.float(EngineOffsets.dwGlobalVars + 16)
 
-fun bombUpdater() = every(15, inGameCheck = true) {
+fun bombUpdater() = MedPriority.every(15, inGameCheck = true) {
     if ((!curSettings.bool["ENABLE_BOMB_TIMER"] && !curSettings.bool["GLOW_BOMB_ADAPTIVE"]) || DANGER_ZONE) return@every
     val time = currentGameTicks()
     val bomb: Entity = entityByType(EntityType.CPlantedC4)?.entity ?: -1L

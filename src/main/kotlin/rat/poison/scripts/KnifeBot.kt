@@ -21,15 +21,15 @@ import rat.poison.scripts.aim.meCurWepEnt
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
+import rat.poison.utils.HighPriority
 import rat.poison.utils.Vector
-import rat.poison.utils.every
 import rat.poison.utils.keyPressed
 import java.awt.event.MouseEvent
 
 private const val SwingDistance = 96f
 private const val StabDistance = 64f
 
-internal fun autoKnife() = every(10, inGameCheck = true) {
+internal fun autoKnife() = HighPriority.every(10, inGameCheck = true) {
     if (!opened || !App.haveTarget || DANGER_ZONE || meDead || !curSettings.bool["ENABLE_AUTO_KNIFE"] || !meCurWep.knife) return@every
     val currentAngle = clientState.angle()
     val position = me.position()

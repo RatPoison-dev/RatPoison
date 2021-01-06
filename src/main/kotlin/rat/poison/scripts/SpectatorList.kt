@@ -10,10 +10,11 @@ import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.overlay.App.haveTarget
 import rat.poison.overlay.opened
 import rat.poison.ui.uiPanels.specListText
-import rat.poison.utils.every
+import rat.poison.utils.MedPriority
+
 import rat.poison.utils.extensions.readIndex
 
-internal fun spectatorList() = every(100, inGameCheck = true) {
+internal fun spectatorList() = MedPriority.every(100, inGameCheck = true) {
     if (!curSettings.bool["SPECTATOR_LIST"]) return@every
 
     var spectators = ""

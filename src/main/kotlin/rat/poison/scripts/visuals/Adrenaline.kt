@@ -11,12 +11,12 @@ import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
 import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.bombState
 import rat.poison.scripts.currentGameTicks
-import rat.poison.utils.every
+import rat.poison.utils.HighPriority
 
 private var totalHits = 0
 private var fl = 0F
 
-fun adrenaline() = every(10, inGameCheck = true) {
+fun adrenaline() = HighPriority.every(10, inGameCheck = true) {
     if (!curSettings.bool["ENABLE_ADRENALINE"] || !curSettings.bool["ENABLE_ESP"] || meDead || me < 0) return@every
 
     val curHits = csgoEXE.int(me + m_totalHitsOnServer)

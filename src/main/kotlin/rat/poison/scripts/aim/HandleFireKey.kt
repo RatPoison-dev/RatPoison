@@ -19,7 +19,7 @@ var didShoot = false
 @Volatile
 var meDead = true
 
-fun handleFireKey() = every(1, continuous = true) {
+fun handleFireKey() = HighPriority.every(1, continuous = true) {
     if (inGame) {
         meDead = me.dead()
     } else {
@@ -41,8 +41,7 @@ fun handleFireKey() = every(1, continuous = true) {
                 shouldShoot = true
             }
 
-            Thread.sleep(10)
-            fireWeapon()
+            it.delayed(10) { fireWeapon() }
         }
         inTrigger -> {
             if (shouldShoot) { //Finish shooting...

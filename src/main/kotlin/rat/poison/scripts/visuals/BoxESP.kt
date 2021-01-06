@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.utils.Align
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
@@ -87,7 +88,7 @@ private val entityMemory = threadLocalPointer(entityMemorySize)
 
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
 fun boxEsp() {
-	every(1000, true) { //Update settings
+	LowPriority.every(1000, true) { //Update settings
 		if ((!curSettings.bool["ENABLE_BOX_ESP"] && !curSettings.bool["BOX_ESP_DETAILS"]) || !curSettings.bool["ENABLE_ESP"] || !inGame) return@every
 		
 		advancedBBox = curSettings.bool["ADVANCED_BOUNDING_BOX"]
@@ -602,7 +603,7 @@ private val collisionMem = threadLocalPointer(collisionMemSize) //Incorrect
 private val frameMatrix = ThreadLocal.withInitial { Array(4) { FloatArray(4) } }
 private val bufferFloatArray = ThreadLocal.withInitial { FloatArray(16) }
 
-private val accurateBoxCache = Long2ObjectOpenHashMap<BoundingBox>()
+private val accurateBoxCache: Long2ObjectMap<BoundingBox> = Long2ObjectOpenHashMap<BoundingBox>()
 
 //Create a real accurate box using vecMins & vecMaxs
 fun setupAccurateBox(ent: Entity): BoundingBox {
@@ -683,7 +684,7 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 	}
 	
 	val bb = BoundingBox(System.currentTimeMillis(), left, right, top, bottom)
-	accurateBoxCache[ent] = bb
+	accurateBoxCache.put(ent, bb)
 	return bb
 }
 

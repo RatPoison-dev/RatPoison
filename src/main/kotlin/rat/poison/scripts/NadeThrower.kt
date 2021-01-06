@@ -35,7 +35,7 @@ fun autoThrowNade(fSpot: List<Any>, recoveredAngle: Angle) {
     }
 }
 
-fun nadeThrower() = every(10, inGameCheck = true) {
+fun nadeThrower() = HighPriority.every(10, inGameCheck = true) {
     if (!curSettings.bool["ENABLE_NADE_THROWER"] || !curSettings.bool["ENABLE_ESP"] || me <= 0L || MENUTOG || meDead) return@every
     val mPos = me.absPosition()
     

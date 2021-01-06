@@ -51,7 +51,7 @@ fun sendPacket(bool: Boolean) { //move outta here
 	engineDLL.writeForced(dwbSendPackets, memory, 1)
 }
 
-fun updateGVars() = every(15, true, inGameCheck = true) {
+fun updateGVars() = HighPriority.every(15, true, inGameCheck = true) {
 	if (me <= 0) return@every
 	val tGvars = getGlobalVars()
 	if (tGvars != null) {
@@ -62,7 +62,7 @@ fun updateGVars() = every(15, true, inGameCheck = true) {
 	}
 }
 
-fun setupBacktrack() = every(4, true, inGameCheck = true) {
+fun setupBacktrack() = HighPriority.every(4, true, inGameCheck = true) {
 	if (!curSettings.bool["ENABLE_BACKTRACK"] || me <= 0 || !haveGvars) return@every
 	
 	constructRecords()

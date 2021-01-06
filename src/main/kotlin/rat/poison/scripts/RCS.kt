@@ -11,11 +11,11 @@ import rat.poison.game.me
 import rat.poison.game.setAngle
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
-import rat.poison.utils.every
+import rat.poison.utils.HighPriority
 
 private val lastAppliedRCS = Vector2()
 
-fun rcs() = every(15, inGameCheck = true) {
+fun rcs() = HighPriority.every(15, inGameCheck = true) {
 	if (me <= 0 || !curSettings.bool["ENABLE_RCS"] || meDead) return@every
 
 	val weapon = meCurWep

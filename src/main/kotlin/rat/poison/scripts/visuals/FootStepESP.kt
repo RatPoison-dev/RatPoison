@@ -7,8 +7,8 @@ import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.overlay.App
+import rat.poison.utils.HighPriority
 import rat.poison.utils.Vector
-import rat.poison.utils.every
 import rat.poison.utils.generalUtil.*
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -99,7 +99,7 @@ fun runFootSteps() = App {
     }
 }
 
-private fun constructSteps() = every(10) {
+private fun constructSteps() = HighPriority.every(10) {
     stepTimer+= 1
     if (stepTimer >= curSettings.int["FOOTSTEP_UPDATE"]) {
         forEntities(EntityType.CCSPlayer) {

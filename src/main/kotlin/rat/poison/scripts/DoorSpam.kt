@@ -7,10 +7,10 @@ import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.offsets.ClientOffsets.dwUse
 import rat.poison.scripts.aim.meDead
-import rat.poison.utils.every
+import rat.poison.utils.HighPriority
 import rat.poison.utils.keyPressed
 
-fun doorSpam() = every(20, inGameCheck = true) {
+fun doorSpam() = HighPriority.every(20, inGameCheck = true) {
     if (!curSettings.bool["D_SPAM"] || meDead) return@every
 
     updateCursorEnable()

@@ -12,8 +12,8 @@ import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.robot
 import rat.poison.scripts.aim.meDead
+import rat.poison.utils.HighPriority
 import rat.poison.utils.Vector
-import rat.poison.utils.every
 import rat.poison.utils.keyPressed
 import java.awt.event.KeyEvent
 import kotlin.math.abs
@@ -32,7 +32,7 @@ var mePos = Vector(track = false)
 @Volatile
 var onEntPos = Vector(track = false)
 
-internal fun headWalk() = every(2, inGameCheck = true) {
+internal fun headWalk() = HighPriority.every(2, inGameCheck = true) {
     if (!curSettings.bool["HEAD_WALK"] || meDead) return@every
 
     if (!keyPressed(KeyEvent.VK_W) && !keyPressed(KeyEvent.VK_A) && !keyPressed(KeyEvent.VK_S) && !keyPressed(KeyEvent.VK_D)) {

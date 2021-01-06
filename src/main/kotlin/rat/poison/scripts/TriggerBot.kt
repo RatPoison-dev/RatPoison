@@ -15,7 +15,8 @@ import rat.poison.scripts.aim.*
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.every
+import rat.poison.utils.HighPriority
+
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.safeToInt
 import rat.poison.utils.inGame
@@ -24,7 +25,7 @@ import rat.poison.utils.keyPressed
 var inTrigger = false
 private var triggerShots = 0
 
-fun triggerBot() = every(5, inGameCheck = true) {
+fun triggerBot() = HighPriority.every(5, inGameCheck = true) {
     //Don't run if not needed
     if (DANGER_ZONE || meDead || !inGame || MENUTOG || !meCurWep.gun || !curSettings.bool["ENABLE_TRIGGER"] || !haveAimSettings) { //Precheck
         inTrigger = false

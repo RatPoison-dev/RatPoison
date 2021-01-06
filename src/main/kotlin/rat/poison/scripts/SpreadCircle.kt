@@ -15,7 +15,8 @@ import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meCurWepEnt
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.every
+import rat.poison.utils.LowPriority
+
 import rat.poison.utils.inGame
 import java.lang.Math.toDegrees
 import java.lang.Math.toRadians
@@ -30,7 +31,7 @@ data class WeaponData(var maxPlayerSpeed: Int = 0, var spread: Float = 0f, var i
 
 var wepData = WeaponData()
 
-private fun refreshWepData() = every(1000) {
+private fun refreshWepData() = LowPriority.every(1000) {
     wepData = getWeaponData(meCurWep.name)
 }
 

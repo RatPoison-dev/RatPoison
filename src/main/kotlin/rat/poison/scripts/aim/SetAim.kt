@@ -8,7 +8,8 @@ import rat.poison.game.me
 import rat.poison.oWeapon
 import rat.poison.settings.*
 import rat.poison.settingsLoaded
-import rat.poison.utils.every
+import rat.poison.utils.LowPriority
+
 import rat.poison.utils.generalUtil.toWeaponClass
 
 var meCurWep = Weapons.AK47
@@ -19,7 +20,7 @@ var curWepCategoryBacktrackMs = "${curWepCategory}_BACKTRACK_MS"
 var curWepSettings = oWeapon()
 var haveAimSettings = false
 
-fun setAim() = every(500, true, inGameCheck = true) {
+fun setAim() = LowPriority.every(500, true, inGameCheck = true) {
     try {
         if (meDead) return@every
 

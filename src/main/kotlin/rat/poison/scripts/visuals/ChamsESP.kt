@@ -18,11 +18,11 @@ import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.aim.target
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.utils.every
+import rat.poison.utils.LowPriority
 import rat.poison.utils.extensions.uint
 import java.lang.Float.floatToIntBits
 
-fun chamsEsp() = every(100, true, inGameCheck = true) {
+fun chamsEsp() = LowPriority.every(100, true, inGameCheck = true) {
     if (!curSettings.bool["CHAMS_ESP"] || !curSettings.bool["ENABLE_ESP"] || (curSettings.bool["CHAMS_ESP_DEAD"] && !meDead)) return@every
 
     val myTeam = me.team()
