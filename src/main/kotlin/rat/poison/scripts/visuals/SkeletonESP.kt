@@ -66,7 +66,7 @@ internal fun skeletonEsp() = App {
 			val parent = csgoEXE.int(studioModel + boneOffset + 0x4 + offset)
 			if (parent != -1) {
 				val flags = modelMemory.getInt(0xA0L + offset).unsign() and 0x100
-				if (flags != 0L) drawBone(boneMemory, health, parent, idx)//add(parent to idx)
+				if (flags != 0L) drawBone(boneMemory, health, parent * 0x30L, idx * 0x30L)//add(parent to idx)
 			}
 			
 			offset += 216
@@ -100,19 +100,22 @@ private val colors: Array<Color> = Array(101) {
 private const val boneMemorySize = 4032L
 private val boneMemory = threadLocalPointer(boneMemorySize)
 
-private fun drawBone(boneMemory: Pointer, targetHealth: Int, start: Int, end: Int) {
+private fun drawBone(boneMemory: Pointer, targetHealth: Int, start: Long, end: Long) {
 	//Reduce r/w
 	//Replace later
+	val lastStart = start + 0x2C
+	val lastEnd = end + 0x2C
+	if (lastEnd >= boneMemorySize || lastStart >= boneMemorySize) return
 	
 	val startBone = worldToScreenLong(
-		boneMemory.getFloat(((0x30L * start) + 0xC)),
-		boneMemory.getFloat(((0x30L * start) + 0x1C)),
-		boneMemory.getFloat(((0x30L * start) + 0x2C))
+		boneMemory.getFloat(start + 0xC),
+		boneMemory.getFloat(start + 0x1C),
+		boneMemory.getFloat(lastStart)
 	)
 	val endBone = worldToScreenLong(
-		boneMemory.getFloat(((0x30L * end) + 0xC)),
-		boneMemory.getFloat(((0x30L * end) + 0x1C)),
-		boneMemory.getFloat(((0x30L * end) + 0x2C))
+		boneMemory.getFloat(end + 0xC),
+		boneMemory.getFloat(end + 0x1C),
+		boneMemory.getFloat(lastEnd)
 	)
 	if (startBone != -1L && endBone != -1L) {
 		bones[currentIdx].apply {

@@ -24,14 +24,19 @@ abstract class AbstractIndex<T> : Index<T> {
 			throw IllegalStateException("Can't end iteration because it was already ended.", iteratingThrowable)
 		}
 		iterating = false
+		checkShouldClear()
+	}
+	
+	override fun isIterating(): Boolean = iterating
+	
+	@Volatile
+	override var clearAfterIterating: Boolean = false
+	
+	fun checkShouldClear() {
 		if (clearAfterIterating) {
 			clearAfterIterating = false
 			clear()
 		}
 	}
-	
-	override fun isIterating(): Boolean = iterating
-	
-	override var clearAfterIterating: Boolean = false
 	
 }

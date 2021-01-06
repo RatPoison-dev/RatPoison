@@ -268,16 +268,22 @@ internal fun Player.name(): String {
 private const val memSize = 0x140L
 private val mem = threadLocalPointer(memSize)
 
-internal fun Player.steamID(): String {
+internal fun Player.steamID(): String? {
+	if (this <= 0) return null
 	val entID = csgoEXE.uint(this + dwIndex) - 1
+	if (entID <= 0) return null
 	
 	val a = csgoEXE.uint(clientState + dwClientState_PlayerInfo)
+	if (a <= 0) return null
 	val b = csgoEXE.uint(a + 0x40)
+	if (b <= 0) return null
 	val c = csgoEXE.uint(b + 0x0C)
+	if (c <= 0) return null
 	val d = csgoEXE.uint(c + 0x28 + entID * 0x34)
+	if (d <= 0) return null
 	
 	val mem = mem.get()
-	if (!csgoEXE.read(d, mem, memSize)) throw IllegalStateException()
+	if (!csgoEXE.read(d, mem, memSize)) throw IllegalStateException("$this / $entID / $a / $b / $c / $d")
 	
 	val sID = mem.getString(0x94) //0x90 is int of steamID
 	mem.jna.setMemory(0, memSize, 0)
@@ -285,7 +291,7 @@ internal fun Player.steamID(): String {
 }
 
 internal fun Player.getValidSteamID(): Int {
-	val entSteam = this.steamID()
+	val entSteam = this.steamID() ?: return 0
 	val split = entSteam.split(":")
 	if (entSteam == "BOT" || entSteam == "" || split.size < 3 || !StringUtils.isNumeric(split[2])) return 0
 	return (split[2].toInt() * 2) + split[1].toInt()

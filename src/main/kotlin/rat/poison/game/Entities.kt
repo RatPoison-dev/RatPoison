@@ -2,8 +2,6 @@ package rat.poison.game
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
-import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import it.unimi.dsi.fastutil.objects.ObjectList
 import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.Player
 import rat.poison.settings.MAX_ENTITIES
@@ -34,14 +32,12 @@ internal inline fun forEntities(
 	vararg types: EntityType,
 	crossinline body: (EntityContext) -> Unit
 ) {
-	val forEnts: ObjectList<EntityContext> = ObjectArrayList()
-	
 	if (types.isEmpty()) {
 		for (entType in EntityType.cachedValues) {
 			val let = entities[entType] ?: continue
 			try {
 				for (entity in let.getValues()) {
-					forEnts.add(entity ?: continue)
+					entity?.run(body)
 				}
 			} catch (e: Exception) {
 				println("forEntities error, report in discord")
@@ -54,7 +50,7 @@ internal inline fun forEntities(
 			val let = entities[entType] ?: continue
 			try {
 				for (entity in let.getValues()) {
-					forEnts.add(entity ?: continue)
+					entity?.run(body)
 				}
 			} catch (e: Exception) {
 				println("forEntities error, report in discord")
@@ -62,17 +58,5 @@ internal inline fun forEntities(
 				e.printStackTrace()
 			}
 		}
-	}
-	
-	//iterator later
-	try {
-		val iterator = forEnts.listIterator()
-		while (iterator.hasNext()) {
-			iterator.next()?.run(body)
-		}
-	} catch (e: Exception) {
-		println("forEntities error, report in discord")
-		println("$types")
-		e.printStackTrace()
 	}
 }

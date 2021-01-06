@@ -253,7 +253,7 @@ object App : ApplicationAdapter() {
 				
 				if (curSettings.bool["DEBUG"]) { //Draw Debug
 					//Limit updates
-					if (timer >= curSettings.int["OPENGL_FPS"] / 4) {
+					if (timer >= curSettings.int["OPENGL_FPS"] / 8) {
 						val runtime = Runtime.getRuntime()
 						
 						val totalMem = runtime.totalMemory()

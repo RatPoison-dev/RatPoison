@@ -40,7 +40,7 @@ private fun shouldReset() = System.currentTimeMillis() - lastCleanup.get() >= CL
 
 private fun reset() {
 	for (i in entitiesValues) {
-		i?.clearAfterIterating = true
+		i?.clear()
 	}
 	
 	lastCleanup.set(System.currentTimeMillis())
@@ -128,7 +128,7 @@ var toneMapController = 0L
 
 private val glowObjectMemory = threadLocalPointer(14340L * 2)
 
-private const val minPos = 5F
+private const val minPos = 2F
 
 fun constructEntities() = every(500, continuous = true) {
 	updateCursorEnable()
@@ -157,7 +157,7 @@ fun constructEntities() = every(500, continuous = true) {
 			val type = EntityType.byEntityAddress(entity)
 			if (type != EntityType.NULL) {
 				val tmpPos = entity.absPosition()
-				val check = abs(tmpPos.x) < minPos || abs(tmpPos.y) < minPos || abs(tmpPos.z) < minPos
+				val check = abs(tmpPos.x) < minPos && abs(tmpPos.y) < minPos && abs(tmpPos.z) < minPos
 				tmpPos.release()
 				
 				if (!check) {

@@ -33,7 +33,7 @@ fun skinChanger() = every(1, continuous = true, inGameCheck = true) {
     if ((!curSettings.bool["SKINCHANGER"] && !curSettings.bool["KNIFECHANGER"])) return@every
 
     try {
-        val sID = me.steamID()
+        val sID = me.steamID() ?: return@every
         val split = sID.split(":")
         if (split.size < 3 || !StringUtils.isNumeric(split[2]) || !StringUtils.isNumeric(split[1])) { //This SHOULD make try catch redundant, as toInt() is the only catch case...
             return@every

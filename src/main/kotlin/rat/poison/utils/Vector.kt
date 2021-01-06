@@ -2,26 +2,41 @@ package rat.poison.utils
 
 import it.unimi.dsi.fastutil.longs.*
 import net.openhft.chronicle.core.OS
+import org.jire.strukt.ElasticStrukts
+import org.jire.strukt.Strukt
+import org.jire.strukt.ThreadSafe
+import org.jire.strukt.ThreadSafeType
 import kotlin.concurrent.thread
 import kotlin.math.abs
 
-inline class Vector(val value: Long) {
+object Vectors : ElasticStrukts(Vector::class, 8192) {
+	@ThreadSafe(ThreadSafeType.VOLATILE)
+	val x by 0F
+	
+	@ThreadSafe(ThreadSafeType.VOLATILE)
+	val y by 0F
+	
+	@ThreadSafe(ThreadSafeType.VOLATILE)
+	val z by 0F
+}
+
+inline class Vector(override val address: Long = Vectors()) : Strukt {
 	constructor(x: Float = 0F, y: Float = 0F, z: Float = 0F, track: Boolean = true) : this(vectorLong(x, y, z, track))
 	
 	var x
-		get() = OS.memory().readVolatileFloat(value)
-		set(value) = OS.memory().writeVolatileFloat(this.value, value)
+		get() = Vectors.x(address)
+		set(x) = Vectors.x(address, x)
 	var y
-		get() = OS.memory().readVolatileFloat(value + 4)
-		set(value) = OS.memory().writeVolatileFloat(this.value + 4, value)
+		get() = Vectors.y(address)
+		set(y) = Vectors.y(address, y)
 	var z
-		get() = OS.memory().readVolatileFloat(value + 8)
-		set(value) = OS.memory().writeVolatileFloat(this.value + 8, value)
+		get() = Vectors.z(address)
+		set(z) = Vectors.z(address, z)
 	
 	fun release() {
-		OS.memory().freeMemory(value, 12)
+		Vectors.free(this.address)
 		if (trackedVectorsMillis != -1L) {
-			trackedVectors.remove(value)
+			trackedVectors.remove(address)
 		}
 	}
 	
@@ -130,4 +145,5 @@ typealias Angle = Vector
 
 fun angle(x: Float = 0F, y: Float = 0F, track: Boolean = true): Angle = Vector(x, y, track = track)
 
-fun vector(x: Float = 0F, y: Float = 0F, z: Float = 0F, track: Boolean = true): Vector = Vector(vectorLong(x, y, z, track))
+fun vector(x: Float = 0F, y: Float = 0F, z: Float = 0F, track: Boolean = true): Vector =
+	Vector(vectorLong(x, y, z, track))

@@ -51,11 +51,9 @@ fun getCalculatedAngle(player: Player, dst: Vector): Angle {
 		ang.y = toDegrees(atan(dY / dX).toDouble()).toFloat()
 	}
 	
-	ang.z = 0F
 	if (dX >= 0.0) ang.y += 180
 	
 	myPunch.release()
-	
 	
 	ang.normalize()
 	
