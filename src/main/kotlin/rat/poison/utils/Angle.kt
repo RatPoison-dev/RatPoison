@@ -1,10 +1,12 @@
 package rat.poison.utils
 
-internal fun Angle.finalize(orig: Vector, smoothness: Float): Angle {
-	val a = angle(x - orig.x, y - orig.y).normalize()
-	try {
-		return angle(orig.x + a.x * smoothness, orig.y + a.y * smoothness).normalize()
-	} finally {
-		a.release()
-	}
+internal fun Angle.finalize(orig: Angle, smoothness: Float) {
+	x -= orig.x
+	y -= orig.y
+	z = 0F
+	normalize()
+	
+	x = orig.x + x * smoothness
+	y = orig.y + y * smoothness
+	normalize()
 }
