@@ -32,31 +32,17 @@ internal inline fun forEntities(
 	vararg types: EntityType,
 	crossinline body: (EntityContext) -> Unit
 ) {
-	if (types.isEmpty()) {
-		for (entType in EntityType.cachedValues) {
+	val col = if (types.isEmpty()) EntityType.cachedValues else types
+	try {
+		for (entType in col) {
 			val let = entities[entType] ?: continue
-			try {
-				for (entity in let.getValues()) {
-					entity?.run(body)
-				}
-			} catch (e: Exception) {
-				println("forEntities error, report in discord")
-				println("$types")
-				e.printStackTrace()
+			for (entity in let.getValues()) {
+				entity?.run(body)
 			}
 		}
-	} else {
-		for (entType in types) {
-			val let = entities[entType] ?: continue
-			try {
-				for (entity in let.getValues()) {
-					entity?.run(body)
-				}
-			} catch (e: Exception) {
-				println("forEntities error, report in discord")
-				println("$types")
-				e.printStackTrace()
-			}
-		}
+	} catch (e: Exception) {
+		println("forEntities error, report in discord")
+		println("$types")
+		e.printStackTrace()
 	}
 }
