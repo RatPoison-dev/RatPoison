@@ -29,6 +29,7 @@ import rat.poison.utils.*
 import rat.poison.utils.extensions.*
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.concurrent.thread
+import kotlin.math.abs
 import kotlin.properties.Delegates
 
 private val lastCleanup = AtomicLong(0L)
@@ -60,7 +61,12 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
 			
 			val strBuf = strBuf.get()
 			
-			if (!csgoEXE.read(clientState + dwClientState_MapDirectory, strBuf, strBufSize)) throw IllegalStateException()
+			if (!csgoEXE.read(
+					clientState + dwClientState_MapDirectory,
+					strBuf,
+					strBufSize
+				)
+			) throw IllegalStateException()
 			val mapName = strBuf.getString(0)
 			
 			if (!engineDLL.read(engineDLL.offset(dwGameDir), strBuf, strBufSize)) throw IllegalStateException()
@@ -122,6 +128,8 @@ var toneMapController = 0L
 
 private val glowObjectMemory = threadLocalPointer(14340L * 2)
 
+private const val minPos = 5F
+
 fun constructEntities() = every(500, continuous = true) {
 	updateCursorEnable()
 	clientState = engineDLL.uint(dwClientState)
@@ -149,7 +157,7 @@ fun constructEntities() = every(500, continuous = true) {
 			val type = EntityType.byEntityAddress(entity)
 			if (type != EntityType.NULL) {
 				val tmpPos = entity.absPosition()
-				val check = (tmpPos.x in -2.0F..2.0F && tmpPos.y in -2.0F..2.0F && tmpPos.z in -2.0F..2.0F)
+				val check = abs(tmpPos.x) < minPos || abs(tmpPos.y) < minPos || abs(tmpPos.z) < minPos
 				tmpPos.release()
 				
 				if (!check) {
