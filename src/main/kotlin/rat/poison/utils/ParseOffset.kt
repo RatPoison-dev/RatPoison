@@ -5,7 +5,7 @@ import javax.net.ssl.HttpsURLConnection
 
 fun parseOffset(): Int {
     try {
-        val connection = URL("https://raw.githubusercontent.com/Akandesh/blazedumper/master/csgo.json")
+        val connection = URL("https://raw.githubusercontent.com/JokinAce/CSGO-Offsets/master/csgo.json") //fuck you
         val con = connection.openConnection() as HttpsURLConnection
         val text = connection.readText()
         con.disconnect()
