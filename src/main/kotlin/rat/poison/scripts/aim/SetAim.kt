@@ -55,6 +55,7 @@ fun setAim() = LowPriority.every(500, true, inGameCheck = true) {
                         curSettings["FORCE_AIM_BONE"] = curWepSettings.tForceBone
                         curSettings["AIM_FOV"] = curWepSettings.tAimFov
                         curSettings["AIM_SPEED"] = curWepSettings.tAimSpeed
+                        curSettings["AIM_ONLY_ON_SHOT"] = curWepSettings.tOnShot
                         curSettings["AIM_SMOOTHNESS"] = curWepSettings.tAimSmooth
                         curSettings["PERFECT_AIM"] = curWepSettings.tPerfectAim
                         curSettings["PERFECT_AIM_FOV"] = curWepSettings.tPAimFov

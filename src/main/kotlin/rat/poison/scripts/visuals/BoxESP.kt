@@ -81,7 +81,6 @@ private val boxDetailsTopText = StringBuilder("")
 private val boxDetailsBottomText = StringBuilder("")
 private var topShift = 0F
 private var textureBuilder = mutableListOf<DrawableTexture>()
-private var bottomTextureBuilder = mutableListOf<DrawableTexture>()
 
 private const val entityMemorySize = 45948L
 private val entityMemory = threadLocalPointer(entityMemorySize)
@@ -146,7 +145,6 @@ fun boxEsp() {
 			var rightShift = 0F
 			topShift = 0F
 			textureBuilder.clear()
-			bottomTextureBuilder.clear()
 			
 			if (ent <= 0) return@forEntities
 			
@@ -362,10 +360,6 @@ fun boxEsp() {
 				rightShift += 2
 			}
 			
-			if (isPlayer) {
-				addTextureOrText(assetManager, true, "santa_hat", "", "TOP", true)
-			}
-			
 			shapeRenderer.end()
 			
 			if (!sb.isDrawing) {
@@ -374,24 +368,6 @@ fun boxEsp() {
 			
 			//draw details first
 			val detailTextColor: Color = curSettings.colorGDX["BOX_DETAILS_TEXT_COLOR"]
-			bottomTextureBuilder.forEach { dr_texture ->
-				val texture = dr_texture.texture
-				val position = dr_texture.position
-				val realHeight = texture.height / weaponsScale
-				val realWidth = texture.width / weaponsScale
-				when (position) {
-					"TOP" -> {
-						sb.draw(
-							texture,
-							((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)),
-							bbox.top,
-							realWidth,
-							realHeight
-						)
-						topShift += realHeight
-					}
-				}
-			}
 			
 			textRenderer.color = detailTextColor
 			textRenderer.draw(
@@ -515,16 +491,12 @@ fun addTextureOrText(
 	textureName: String,
 	text: String,
 	position: String,
-	bottom: Boolean = false
 ) {
 	if (!useIcons) {
 		addText(position, text); return
 	}
 	val texture = getWeaponTexture(assetManager, textureName)
-	when (!bottom) {
-		true -> textureBuilder.add(DrawableTexture(texture, position))
-		else -> bottomTextureBuilder.add(DrawableTexture(texture, position))
-	}
+	textureBuilder.add(DrawableTexture(texture, position))
 }
 
 fun getRealTextParams(font: BitmapFont, builder: StringBuilder, layout: GlyphLayout): Long {

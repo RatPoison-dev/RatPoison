@@ -300,7 +300,6 @@ RADAR_ESP_DEAD = Dead Only
 ENABLE_ESP = Enable
 VISUALS_TOGGLE_KEY = Visuals Toggle Key
 AUDIBLE_ESP_RANGE = Audible ESP Range
-CHRISTMAS_RAT_OFFSET = Da rat offset
 
 //Subcategory: Nightmode
 ENABLE_NIGHTMODE = Nightmode

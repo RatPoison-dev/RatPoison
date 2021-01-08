@@ -39,7 +39,6 @@ class MiscVisualsTab : Tab(false, false) {
     val enableHeadLevel = VisCheckBoxCustom(" ", "HEAD_LVL_ENABLE", false)
     val headLevelColor = VisColorPickerCustom("Enable", "HEAD_LVL_COLOR")
     val headLevelDeadzone = VisSliderCustom("Deadzone", "HEAD_LVL_DEADZONE", .01F, 10F, .1F, false, labelWidth = 225F, barWidth = 225F)
-    val ratOffsetX = VisSliderCustom("Da rat offset", "CHRISTMAS_RAT_OFFSET", -100F, 1000F, 10F, true, labelWidth = 225F, barWidth = 225F)
 
 
     init {
@@ -58,7 +57,6 @@ class MiscVisualsTab : Tab(false, false) {
         table.add(radarEsp).left().row()
         table.add(legitRadar).left().row()
         table.add(radarEspDeadOnly).left().row()
-        table.add(ratOffsetX).left().row()
 
         table.addSeparator()
 
@@ -107,7 +105,6 @@ class MiscVisualsTab : Tab(false, false) {
 fun miscVisualTabUpdate() {
     miscVisualsTab.apply {
         radarEsp.update()
-        ratOffsetX.update()
         legitRadar.update()
         radarEspDeadOnly.update()
         nightMode.update()
@@ -155,7 +152,6 @@ fun miscVisualTabDisable(bool: Boolean, col: Color) {
         legitRadar.disable(bool)
         radarEspDeadOnly.disable(bool)
         visAdrenaline.disable(bool)
-        ratOffsetX.disable(bool, col)
         adrenalineBombTime.disable(bool)
         adrenalineStrength.disable(bool, col)
         adrenalineCooldown.disable(bool, col)

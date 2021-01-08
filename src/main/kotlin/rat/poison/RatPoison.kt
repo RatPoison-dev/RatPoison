@@ -139,7 +139,6 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Kill Sound") }; killSoundEsp()
     if (dbg) { println("[DEBUG] Initializing MusicKit Spoofer") }; musicKitSpoofer()
     if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
-    christmasSpecial()
 
     //if (EXPERIMENTAL) {
         //rayTraceTest()
@@ -186,7 +185,7 @@ fun main() {
             setResizable(false)
             setDecorated(appless)
             useVsync(false)
-            setWindowIcon("$SETTINGS_DIRECTORY/Assets/Images/icon.png")
+            //setWindowIcon("$SETTINGS_DIRECTORY/Assets/Images/icon.png") // replace with ratpoison logo
             glfwSwapInterval(0)
             glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE)
             setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings.int["OPENGL_MSAA_SAMPLES"])
