@@ -1,5 +1,6 @@
 package rat.poison.game
 
+import rat.poison.appless
 import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.gameHeight
@@ -11,7 +12,7 @@ import rat.poison.utils.generalUtil.strToBool
 val w2sViewMatrix = Array(4) { DoubleArray(4) }
 
 fun worldToScreen(from: Vector, vOut: Vector): Boolean {
-	if (!curSettings["MENU"].strToBool()) {
+	if (!curSettings["MENU"].strToBool() || appless) {
 		updateViewMatrix()
 	}
 

@@ -159,6 +159,8 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Name Changer") }; nameChanger()
     if (dbg) { println("[DEBUG] Initializing Kill Sound") }; killSoundEsp()
     if (dbg) { println("[DEBUG] Initializing MusicKit Spoofer") }; musicKitSpoofer()
+    if (dbg) { println("[DEBUG] Initializing Block Bot") }; blockBot()
+    if (dbg) { println("[DEBUG] Initializing Auto Accept") }; autoAccept()
     if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
 
     //if (EXPERIMENTAL) {

@@ -26,15 +26,14 @@ fun reset(resetTarget: Boolean = true) {
 }
 
 fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
-			   lockFOV: Float = curSettings["AIM_FOV"].toFloat(), BONE: Int = curSettings["AIM_BONE"].toInt(), visCheck: Boolean = true): Player {
+			   lockFOV: Float = curSettings["AIM_FOV"].toFloat(), BONE: Int = curSettings["AIM_BONE"].toInt(), visCheck: Boolean = true, teamCheck: Boolean = true): Player {
 	var closestFOV = Float.MAX_VALUE
 	var closestDelta = Float.MAX_VALUE
 	var closestPlayer = -1L
 
 	forEntities(EntityType.CCSPlayer) {
 		val entity = it.entity
-
-		if (entity <= 0 || entity == me || !entity.canShoot(visCheck)) {
+		if (entity <= 0 || entity == me || !entity.canShoot(visCheck, teamCheck)) {
 			return@forEntities
 		}
 
@@ -118,10 +117,10 @@ fun Entity.inMyTeam() =
 			me.survivalTeam().let { it > -1 && it == this.survivalTeam() }
 		} else me.team() == team()
 
-fun Entity.canShoot(visCheck: Boolean = true) = ((if (DANGER_ZONE) { true } else if (visCheck) { spotted() || (curSettings["TEAMMATES_ARE_ENEMIES"].strToBool() && team() == me.team()) } else { true })
+fun Entity.canShoot(visCheck: Boolean = true, teamCheck: Boolean = true) = ((if (DANGER_ZONE) { true } else if (visCheck) { spotted() || (curSettings["TEAMMATES_ARE_ENEMIES"].strToBool() && team() == me.team() || !teamCheck) } else { true })
 		&& !dormant()
 		&& !dead()
-		&& !inMyTeam()
+		&& (!inMyTeam() || !teamCheck)
 		&& !isProtected()
 		&& !meDead)
 

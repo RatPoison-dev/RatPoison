@@ -21,6 +21,8 @@ class MovementTab : Tab(false, false) {
     val fastStop = VisCheckBoxCustom("Fast Stop", "FAST_STOP")
     val headWalk = VisCheckBoxCustom("Head Walk", "HEAD_WALK")
     val knifeBot = VisCheckBoxCustom("Knife Bot", "ENABLE_AUTO_KNIFE")
+    val blockBot = VisCheckBoxCustom("Block Bot", "BLOCK_BOT")
+    val blockBotKey = VisBindTableCustom("Block Bot Key", "BLOCK_BOT_KEY")
 
     init {
         table.padLeft(25F)
@@ -35,6 +37,9 @@ class MovementTab : Tab(false, false) {
         table.add(fastStop).left().row()
         table.add(headWalk).left().row()
         table.add(knifeBot).left().row()
+        table.addSeparator().row()
+        table.add(blockBot).left().row()
+        table.add(blockBotKey).left().row()
     }
 
     override fun getTabTitle(): String {
@@ -56,5 +61,7 @@ fun movementTabUpdate() {
         fastStop.update()
         headWalk.update()
         knifeBot.update()
+        blockBot.update()
+        blockBotKey.update()
     }
 }

@@ -51,6 +51,8 @@ class OthersTab: Tab(false, false) {
     val postProcessingDisable = VisCheckBoxCustom("DISABLE_POST_PROCESSING".toLocale(), "DISABLE_POST_PROCESSING")
     val spectatorList = VisCheckBoxCustom("Spectator List", "SPECTATOR_LIST")
     val enableMusicKitSpoofer = VisCheckBoxCustom("Music Kit Spoofer", "MUSIC_KIT_SPOOFER")
+    val autoAccept = VisCheckBoxCustom("Auto Accept", "AUTOACCEPT")
+    val autoAcceptToggleKey = VisBindTableCustom("Auto Accept Toggle Key", "AUTOACCEPT_TOGGLE_KEY")
     // me when the suggestions
     private var musicKitsAdapter = ListAdapter(ArrayList())
     private var musicKitsSelection = ListView(musicKitsAdapter)
@@ -110,6 +112,9 @@ class OthersTab: Tab(false, false) {
         table.add(nameChange).left().padTop(2F).row()
         table.addSeparator().row()
         table.add(spectatorList).left().row()
+        table.addSeparator().row()
+        table.add(autoAccept).left().row()
+        table.add(autoAcceptToggleKey).left().row()
         table.addSeparator().row()
         table.add(enableMusicKitSpoofer).left().row()
         table.add(currentlySelected).left().row()
@@ -215,6 +220,8 @@ fun othersTabUpdate() {
         postProcessingDisable.update()
         spectatorList.update()
         enableMusicKitSpoofer.update()
+        autoAcceptToggleKey.update()
+        autoAccept.update()
         updateHitSoundsList()
     }
 }

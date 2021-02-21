@@ -33,6 +33,7 @@ import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.visuals.espToggleCallback
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
+import rat.poison.ui.tabs.othersTab
 import rat.poison.ui.tabs.updateDisableAim
 import rat.poison.ui.uiPanels.*
 import rat.poison.ui.uiUpdate
@@ -50,6 +51,7 @@ var opened = false
 var overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
 var toggleAimKey = ObservableBoolean({ keyPressed(curSettings["AIM_TOGGLE_KEY"].toInt()) })
 var visualsToggleKey = ObservableBoolean({ keyPressed(curSettings["VISUALS_TOGGLE_KEY"].toInt()) })
+var autoacceptToggleKey = ObservableBoolean({ keyPressed(curSettings["AUTOACCEPT_TOGGLE_KEY"].toInt()) })
 
 
 var syncTime = 0L
@@ -287,6 +289,11 @@ object App : ApplicationAdapter() {
                 visualsToggleKey.update()
                 if (visualsToggleKey.justBecameTrue) {
                     espToggleCallback()
+                }
+
+                autoacceptToggleKey.update()
+                if (autoacceptToggleKey.justBecameTrue) {
+                    othersTab.autoAccept.isChecked = !othersTab.autoAccept.isChecked
                 }
 
 
