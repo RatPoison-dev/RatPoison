@@ -48,6 +48,8 @@ object CSGO {
 	var initialized: Boolean = false
 		private set
 
+	lateinit var rect: WinDef.RECT
+
 	fun initialize() {
 
 
@@ -77,7 +79,7 @@ object CSGO {
 		}
 		initialized = true
 
-		val rect = WinDef.RECT()
+		rect = WinDef.RECT()
 		val hwd = CUser32.FindWindowA(null, "Counter-Strike: Global Offensive")
 
 		//Get initially

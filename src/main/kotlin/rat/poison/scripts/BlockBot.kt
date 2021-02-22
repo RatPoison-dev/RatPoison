@@ -50,7 +50,7 @@ fun blockBot() = every(2, inGameCheck = true) {
 
     val localAngles = me.eyeAngle()
     var myPosition = me.position()
-    val closestTarget = findTarget(myPosition, localAngles, false, 90F, 6, teamCheck = false)
+    val closestTarget = findTarget(myPosition, localAngles, false, 32F, -2, teamCheck = false)
 
     if (closestTarget == -1L) return@every
 
