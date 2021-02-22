@@ -23,6 +23,7 @@ class MovementTab : Tab(false, false) {
     val knifeBot = VisCheckBoxCustom("Knife Bot", "ENABLE_AUTO_KNIFE")
     val blockBot = VisCheckBoxCustom("Block Bot", "BLOCK_BOT")
     val blockBotKey = VisBindTableCustom("Block Bot Key", "BLOCK_BOT_KEY")
+    val blockBotDistance = VisSliderCustom("Block Bot Distance", "BLOCK_BOT_DISTANCE", 100F, 5000F, 100F, true)
 
     init {
         table.padLeft(25F)
@@ -40,6 +41,7 @@ class MovementTab : Tab(false, false) {
         table.addSeparator().row()
         table.add(blockBot).left().row()
         table.add(blockBotKey).left().row()
+        table.add(blockBotDistance).left().row()
     }
 
     override fun getTabTitle(): String {
@@ -63,5 +65,6 @@ fun movementTabUpdate() {
         knifeBot.update()
         blockBot.update()
         blockBotKey.update()
+        blockBotDistance.update()
     }
 }

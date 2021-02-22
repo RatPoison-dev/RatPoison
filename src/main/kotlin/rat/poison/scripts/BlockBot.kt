@@ -2,10 +2,11 @@ package rat.poison.scripts
 
 import rat.poison.curSettings
 import rat.poison.game.entity.*
+import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.robot
-import rat.poison.scripts.aim.findTarget
 import rat.poison.utils.Angle
+import rat.poison.utils.distanceTo
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.keyPressed
@@ -50,7 +51,21 @@ fun blockBot() = every(2, inGameCheck = true) {
 
     val localAngles = me.eyeAngle()
     var myPosition = me.position()
-    val closestTarget = findTarget(myPosition, localAngles, false, 32F, -2, teamCheck = false)
+
+    var closestDist = -1F
+    var closestTarget = -1L
+    val maxDist = curSettings["BLOCK_BOT_DISTANCE"].toInt()
+
+    forEntities(EntityType.CCSPlayer) {
+        val entity = it.entity
+        if (entity == me || entity.dead() || entity.dead()) return@forEntities
+
+        var myDistance = myPosition.distanceTo(entity.position())
+        if ((myDistance < closestDist || closestDist == -1F) && myDistance <= maxDist) {
+            closestDist = myDistance
+            closestTarget = entity
+        }
+    }
 
     if (closestTarget == -1L) return@every
 

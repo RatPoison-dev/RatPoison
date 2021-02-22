@@ -611,6 +611,7 @@ OPPOSITE = OPPOSITE
 BHOP_HITCHANCE = Hitchance
 BLOCK_BOT = Block Bot
 BLOCK_BOT_KEY = Block Bot Key
+BLOCK_BOT_DISTANCE = Block Bot Distance
 
 //Category: FOV changer tab
 ENABLE_FOV_CHANGER = FOV Changer
