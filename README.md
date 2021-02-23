@@ -4,15 +4,18 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/TheRatCode/RatPoison.svg)
 [![Discord](https://discord.com/api/guilds/785830829439320095/widget.png)](https://discord.gg/TGsp8SNcFZ)
 ![Downloads](https://img.shields.io/github/downloads/TheFuckingRat/RatPoison/total.svg)
-### [Support Ratto (Ratpoison)](https://www.patreon.com/ratto)
 
-### Support Spravedlivo (Ratpoison + [Installer](https://github.com/SPRAVEDLIVO/RatInstaller/))
-* Donate with Bitcoin: bc1qmxkd2dalzwdy0dhhqh8v64m9xj0nz0g52l292e
+## Support our Team
 
-### Support Jire (Charlatano)
-* Donate with Bitcoin: 3ErbuRTxtFqvMQ7F2Z8SfpgAXjonsQs8Vc
-* Or with PayPal: enisitysoft@gmail.com
-* Or with CashApp: $jires
+Hundreds of hours have gone into developing Charlatano and RatPoison. Feel free to show our team some love.
+
+* **_[Ratto](https://github.com/TheRatCode)_** on [Patreon](https://www.patreon.com/ratto)
+* **_[Spravedlivo](https://github.com/Spravedlivo)_** on [Patreon](https://www.patreon.com/spravedlivo)
+    * Or with BTC: _bc1qmxkd2dalzwdy0dhhqh8v64m9xj0nz0g52l292e_
+    * Or with PayPal: _wewestteam1@gmail.com_
+* **_[Jire](https://github.com/Jire)_** on [Patreon](https://www.patreon.com/Jire)
+    * Or with BTC: _3ErbuRTxtFqvMQ7F2Z8SfpgAXjonsQs8Vc_
+    * Or with CashApp: _jires_
 
 ---
 
@@ -95,6 +98,10 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 
 
 ## Recent update <a name = "update"></a>
+
+1.7.1.2
+
+* Changed dwbSendPackets repository to [JokinAce/CSGO-Offsets](https://github.com/JokinAce/CSGO-Offsets)
 
 1.7.1.1
 
