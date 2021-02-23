@@ -108,6 +108,7 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
         * Added music kit changer
         * Added pelvis to bone list
         * Added customizable automatic weapons delay
+        * Added option to use icons instead of weapon's name in Box ESP
         * Added open configs folder button
         * Added custom fonts support
         * Added smoke timer
@@ -137,7 +138,6 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
         * Reworked aimbot and misc tabs, now feature sub-tabs
         * Reworked options tab, moved configs to a separate tab
         * Default config now has everything disabled
-        * Replaced rendering weapons name with icons
         * Bumped libgdx version to 1.9.13-SNAPSHOT
         * Improved appless mode
         * Added installer.bat which downloads the installer.exe avoiding malware detection with first download
