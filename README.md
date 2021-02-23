@@ -98,32 +98,47 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 
 ## Recent update <a name = "update"></a>
 
-1.8 Full Update
-* New
+* **1.8 Full Update**
+
     <details>
+	<summary>New</summary>
     
         * Added music kit changer
         * Added pelvis to bone list
         * Added customizable automatic weapons delay
+        * Added open configs folder button
+        * Added custom fonts support
+        * Added smoke timer
+        * Added blockbot
+        * Added autoaccept
         
     </details>
-* Fixes
+
     <details>
-        
+        <summary>Fixes</summary>
+	
         * Reworked current binds system
         * Fixed Hold Aim not updating in menu
         * Fixed snaplines not drawing to the bomb
+        * Fixed being unable to change spectator list position 
         * Snowball weapons were invalid to aimbot
+        * Changed dwbSendPackets repository to hazedumper
+        * Fixed names in Ranks tab
+        * Fixed transparency in some Windows 7 cases
         
     </details>    
-* Miscellaneous
+
     <details>
+	<summary>Miscellaneous</summary>
     
         * Changed default menu key to insert
+        * Reworked aimbot and misc tabs, now feature sub-tabs
         * Reworked options tab, moved configs to a separate tab
         * Default config now has everything disabled
         * Replaced rendering weapons name with icons
-        * Bumped libgdx version to 1.9.12
+        * Bumped libgdx version to 1.9.13-SNAPSHOT
+        * Improved appless mode
+        * Added installer.bat which downloads the installer.exe avoiding malware detection with first download
         
     </details>
 
@@ -140,7 +155,8 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 *   **Misc** - miscellaneous features that dont' fix any of these categories
 
 <details>
-
+    <summary> Detailed list of features</summary>
+    
 * Menu (Windowed/Fullscreen Windowed only)
 	* Appless: Menu shows as an app on the taskbar
 
@@ -157,7 +173,7 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
     * RCS for all weapons, customizable X & Y accuracy
 	* Types: Legacy and Stable
     * Customizable recoil crosshair, type/width/length/positioning/color
-    * Apply RCS after # shots fired
+    * Optional sniper/scoped crosshair
 
 * Visuals
     * Radar
@@ -178,11 +194,9 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
         * Teammates, Enemies
 	* Hitmarker
 	* Nade tracer
-    * FOV Changer
     * Skin Changer
 	* Spread Circle
 	* Head Level Helper
-    * Player ESP
 
 * Bone Trigger
     * FOV, InCross
@@ -196,22 +210,30 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 * Danger Zone compatible
 
 * Misc
-    * Knife bot
-    * Hitsounds
-    * Bomb timer (Text Menu, Visual Bars)
-    * Spectator list (Text Menu)
-    * Optional sniper/scoped crosshair
-    * Reduced flash
-    * Bunny hop
-    * Auto strafe
-    * Fast stop
-    * Last second bomb defusal
-    * Door spam
-    * Weapon spam
-	* Nade helper
-    * Self nade
-	* Kill bind
-	* Disable Post Processing
-	* Temporary name change
-	* Music kit changer
+    * Movement
+        * Bunny hop
+        * Auto strafe
+        * Fast stop
+        * Head walk
+		* Auto knife
+		* Block Bot
+	* FOV Changer
+	* Bomb
+		* Bomb timer (Text Menu, Visual Bars)
+		* Timer menu
+		* Timer bars
+		* Time to explode
+		* Perfect bomb defuse
+	* Others
+	    * Hitsound
+        * Killsound
+        * Reduced flash
+        * Door Spam
+        * Weapon Spam
+        * Kill bind
+        * Disable post processing
+        * Temporary name change
+        * Spectator list
+        * Auto Accept
+        * Music kit spoofer
 </details>
