@@ -223,4 +223,7 @@ fun boxEspTabDisable(bool: Boolean, col: Color) {
     boxEspTab.boxWeaponsColor.disable(bool)
     boxEspTab.boxDefuserColor.disable(bool)
     boxEspTab.boxEspWeaponScale.disable(bool, col)
+    boxEspTab.boxEspUseIcons.disable(bool)
+    boxEspTab.boxSmokeCheck.disable(bool)
+    boxEspTab.farRadarBox.disable(bool)
 }

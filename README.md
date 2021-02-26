@@ -3,7 +3,7 @@
 ![Code size](https://img.shields.io/github/languages/code-size/TheRatCode/RatPoison.svg)
 ![GitHub repo size](https://img.shields.io/github/repo-size/TheRatCode/RatPoison.svg)
 [![Discord](https://dimden.dev/ratpoisonwidget)](https://dimden.dev/ratpoisonowns)
-[![Downloads](https://img.shields.io/github/downloads/TheFuckingRat/RatPoison/total.svg)](https://github.com/TheRatCode/RatPoison/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/TheRatCode/RatPoison/total.svg)](https://github.com/TheRatCode/RatPoison/releases/latest)
 [![GitHub Actions build status](https://img.shields.io/github/workflow/status/TheRatCode/RatPoison/Push?label=GitHub%20Actions)](https://github.com/TheRatCode/RatPoison/actions?query=workflow%3APush+)
 
 ## Support our Team
@@ -20,7 +20,7 @@ Hundreds of hours have gone into developing Charlatano and RatPoison. Feel free 
 
 ---
 
-This branch is being updated at [TheFuckingRat's Github Repository](https://github.com/TheFuckingRat/RatPoison)
+This branch is being updated at [TheRatCode's Github Repository](https://github.com/TheRatCode/RatPoison)
 
 The official branch (Charlatano) is located at [Jire's GitHub Repository](https://github.com/Jire/Charlatano).
 
@@ -154,7 +154,7 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 *   **Trigger** - automatically fires when crosshair is on enemy
 *   **Skin changer** - change weapon skins
 *   **Ranks** - reveal ranks of your enemies
-*   **Misc** - miscellaneous features that dont' fix any of these categories
+*   **Misc** - miscellaneous features that don't fix any of these categories
 
 <details>
     <summary> Detailed list of features</summary>

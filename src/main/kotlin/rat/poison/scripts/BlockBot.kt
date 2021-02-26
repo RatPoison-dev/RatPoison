@@ -58,7 +58,7 @@ fun blockBot() = every(2, inGameCheck = true) {
 
     forEntities(EntityType.CCSPlayer) {
         val entity = it.entity
-        if (entity == me || entity.dead() || entity.dead()) return@forEntities
+        if (entity == me || entity.dead() || entity.dead() || entity <= 0) return@forEntities
 
         var myDistance = myPosition.distanceTo(entity.position())
         if ((myDistance < closestDist || closestDist == -1F) && myDistance <= maxDist) {

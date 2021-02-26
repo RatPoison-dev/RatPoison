@@ -8,6 +8,7 @@ import java.io.FileReader
 import kotlin.text.Charsets.UTF_8
 
 private val keybindsSettings = listOf("AIM_TOGGLE_KEY", "FORCE_AIM_KEY", "FORCE_AIM_BONE_KEY", "TRIGGER_KEY", "VISUALS_TOGGLE_KEY", "D_SPAM_KEY", "W_SPAM_KEY", "MENU_KEY")
+private val DEFAULT_INVALID_LIST = listOf("")
 
 fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
     println("Loading settings... "  + if (specificFile) { fileDir } else "")
@@ -157,8 +158,10 @@ fun String.stringToList(): List<String> {
     val list = mutableListOf<String>()
     val strList = this.replace("[", "").replace("]", "").replace(",", "").split(" ")
 
-    for (i in strList) {
-        list.add(i)
+    if (strList != DEFAULT_INVALID_LIST) {
+        for (i in strList) {
+            list.add(i)
+        }
     }
 
     return list

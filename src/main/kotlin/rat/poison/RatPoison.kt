@@ -155,6 +155,7 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Nades Timer") }; nadesTimer()
 
     if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
+    if (dbg) { println("[DEBUG] Initializing Fake Lag") }; fakeLag()
     if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()
     if (dbg) { println("[DEBUG] Initializing Name Changer") }; nameChanger()
     if (dbg) { println("[DEBUG] Initializing Kill Sound") }; killSoundEsp()
