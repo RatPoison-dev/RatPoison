@@ -20,7 +20,7 @@ Hundreds of hours have gone into developing Charlatano and RatPoison. Feel free 
 
 ---
 
-This branch is being updated at [TheFuckingRat's Github Repository](https://github.com/TheFuckingRat/RatPoison)
+This branch is being updated at [TheRatCode's Github Repository](https://github.com/TheRatCode/RatPoison)
 
 The official branch (Charlatano) is located at [Jire's GitHub Repository](https://github.com/Jire/Charlatano).
 
