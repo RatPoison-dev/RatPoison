@@ -154,7 +154,7 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 *   **Trigger** - automatically fires when crosshair is on enemy
 *   **Skin changer** - change weapon skins
 *   **Ranks** - reveal ranks of your enemies
-*   **Misc** - miscellaneous features that dont' fix any of these categories
+*   **Misc** - miscellaneous features that don't fix any of these categories
 
 <details>
     <summary> Detailed list of features</summary>
