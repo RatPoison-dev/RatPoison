@@ -4,8 +4,9 @@ import org.apache.commons.io.FileUtils
 buildscript {
 	ext.kotlin_version = '1.3.72'
 	ext.jnaVersion = '5.2.0'
-	ext.gdxVersion = '1.9.15-SNAPSHOT'
+	ext.gdxVersion = '1.9.14'
 	ext.visuiVersion = "1.4.7"
+	ext.visuiVersion = "1.4.11"
 
 	repositories {
 		jcenter()

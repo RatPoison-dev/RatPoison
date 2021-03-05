@@ -8,10 +8,10 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
-import rat.poison.settings.*
 import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
+import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideCombobox
 import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisCheckBoxCustom
 import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisSliderCustom
 import rat.poison.ui.uiUpdate
@@ -42,10 +42,8 @@ class OverrideTab: Tab(true, false) {
     val enablePathAim = OverrideVisCheckBoxCustom("Path Aim", "tPathAim")
     val enableScopedOnly = OverrideVisCheckBoxCustom("Scoped Only", "tScopedOnly")
 
-    private val aimBoneLabel = VisLabel("Bone".toLocale())
-    val aimBoneBox = VisSelectBox<String>()
-    private val forceBoneLabel = VisLabel("Force-Bone".toLocale())
-    val forceBoneBox = VisSelectBox<String>()
+    val aimBoneBox = OverrideCombobox("Bone", "tAimBone", true, *boneCategories)
+    val forceBoneBox = OverrideCombobox("Force-Bone", "tForceBone", true, *boneCategories)
 
     val aimFov = OverrideVisSliderCustom("FOV", "tAimFov", 0.5F, 90F, 0.5F, false, labelWidth = 225F, barWidth = 225F)
     val aimSpeed = OverrideVisSliderCustom("Speed", "tAimSpeed", 0F, 10F, 1F, true, labelWidth = 225F, barWidth = 225F)
@@ -173,48 +171,12 @@ class OverrideTab: Tab(true, false) {
 
         //Create Aim Bone Selector Box
         val aimBone = VisTable()
-
-        val boneArray = Array<String>()
-        for (i in boneCategories) {
-            if (curLocale[i].isBlank()) {
-                if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
-                boneArray.add(i)
-            } else {
-                boneArray.add(curLocale[i])
-            }
-        }
-        aimBoneBox.items = boneArray
-        aimBoneBox.selectedIndex = boneCategories.indexOf(curSettings[categorySelected + "_AIM_BONE"].toUpperCase())
-        aimBone.add(aimBoneLabel).width(225F)
-        aimBone.add(aimBoneBox).width(225F)
-
-        aimBoneBox.changed { _, _ ->
-            val setBone = curSettings[boneCategories[aimBoneBox.selectedIndex] + "_BONE"]
-            if (weaponOverride) {
-                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-                curWep.tAimBone = setBone.toInt()
-                curSettings[weaponOverrideSelected] = curWep.toString()
-            }
-        }
+        aimBone.add(aimBoneBox)
         //End Aim Bone Selector Box
 
         //Create Force Bone Selector Box
         val forceBone = VisTable()
-
-        forceBoneBox.items = boneArray
-
-        forceBoneBox.selectedIndex = boneCategories.indexOf(curSettings[categorySelected + "_AIM_BONE"].toUpperCase())
-        forceBone.add(forceBoneLabel).width(225F)
-        forceBone.add(forceBoneBox).width(225F)
-
-        forceBoneBox.changed { _, _ ->
-            val setBone = curSettings[boneCategories[forceBoneBox.selectedIndex] + "_BONE"]
-            if (weaponOverride) {
-                val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
-                curWep.tForceBone = setBone.toInt()
-                curSettings[weaponOverrideSelected] = curWep.toString()
-            }
-        }
+        forceBone.add(forceBoneBox)
         //End Force Bone Selector Box
 
 
@@ -324,31 +286,6 @@ fun overridenWeaponsUpdate() {
             boneArray.add(curLocale[i])
         }
 
-        if (boneArray != Array<String>()) {
-            aimBoneBox.items = boneArray
-            forceBoneBox.items = boneArray
-        }
-
-        aimBoneBox.selectedIndex = boneCategories.indexOf(when (curWep.tAimBone) {
-            HEAD_BONE -> "HEAD"
-            NECK_BONE -> "NECK"
-            CHEST_BONE -> "CHEST"
-            STOMACH_BONE -> "STOMACH"
-            NEAREST_BONE -> "NEAREST"
-            PELVIS_BONE -> "PELVIS"
-            else -> "RANDOM"
-        })
-
-        forceBoneBox.selectedIndex = boneCategories.indexOf(when (curWep.tForceBone) {
-            HEAD_BONE -> "HEAD"
-            NECK_BONE -> "NECK"
-            CHEST_BONE -> "CHEST"
-            STOMACH_BONE -> "STOMACH"
-            NEAREST_BONE -> "NEAREST"
-            PELVIS_BONE -> "PELVIS"
-            else -> "RANDOM"
-        })
-
         aimFov.update()
         aimSpeed.update()
 
@@ -367,6 +304,8 @@ fun overridenWeaponsUpdate() {
         trigEnable.update()
         trigAimbot.update()
         trigInCross.update()
+        aimBoneBox.update()
+        forceBoneBox.update()
         trigInFov.update()
         trigBacktrack.update()
         trigFov.update()

@@ -1,4 +1,4 @@
-package rat.poison.ui.uiHelpers
+package rat.poison.ui.uiHelpers.overrideWeaponsUI
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Array
@@ -6,26 +6,23 @@ import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.curLocale
-import rat.poison.curSettings
-import rat.poison.dbg
+import rat.poison.*
 import rat.poison.ui.changed
-import rat.poison.ui.tabs.categorySelected
+import rat.poison.ui.tabs.aimtabs.weaponOverrideSelected
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.stringToList
 
-//r.rat
-class VisCombobox(mainText: String, varName: String, useCategory: Boolean = false, private val showText: Boolean = true, vararg items: String): VisTable() {
+class OverrideCombobox(mainText: String, varName: String, private val showText: Boolean = true, vararg items: String): VisTable() {
     private val textLabel = mainText
     private val variableName = varName
     private var hasTooltip = false
+    private val varIdx = getOverrideVarIndex(DEFAULT_OWEAPON_STR, variableName)
 
     private var boxLabel = VisLabel("$textLabel:")
     private val selectBox = VisSelectBox<String>()
 
     private val boxItems = items
     private var selectedList = mutableListOf<String>()
-    private val useGunCategory = useCategory
 
     init {
         update()
@@ -105,11 +102,12 @@ class VisCombobox(mainText: String, varName: String, useCategory: Boolean = fals
     }
 
     private fun writeToSettings() {
-        curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }] = selectedToString()
+        setOverrideVar(weaponOverrideSelected, varIdx, selectedToString())
     }
 
     private fun getBoxString(): String {
-        val myList = curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }].stringToList()
+        var myList = getOverrideVar(weaponOverrideSelected, varIdx).toString().replace(";", "; ").stringToList(";")
+
         return when (myList.isNotEmpty()) {
             true -> myList.joinToString(", ", ">")
             false -> "EMPTY"
@@ -118,7 +116,7 @@ class VisCombobox(mainText: String, varName: String, useCategory: Boolean = fals
 
     private fun selectedToString(): String {
         return when (selectedList.size == 1 && selectedList[0] == "EMPTY") {
-            false -> selectedList.joinToString(", ", prefix = "[", postfix = "]")
+            false -> selectedList.joinToString("; ", prefix = "[", postfix = "]")
             true -> "[]"
         }
     }

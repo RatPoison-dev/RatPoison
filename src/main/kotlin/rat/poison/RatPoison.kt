@@ -28,8 +28,8 @@ import kotlin.collections.set
 
 //Override Weapon
 data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = false,          var tOnShot: Boolean = false,
-                   var tFlatAim: Boolean = false,       var tPathAim: Boolean = false,          var tAimBone: Int = 0,
-                   var tForceBone: Int = 0,             var tAimFov: Float = 0F,                var tAimSpeed: Int = 0,
+                   var tFlatAim: Boolean = false,       var tPathAim: Boolean = false,          var tAimBone: List<String> = listOf(),
+                   var tForceBone: List<String> = listOf(),             var tAimFov: Float = 0F,                var tAimSpeed: Int = 0,
                    var tAimSmooth: Float = 0F,        var tPerfectAim: Boolean = false,       var tPAimFov: Float = 1F,
                    var tPAimChance: Int = 1,            var tScopedOnly: Boolean = false,       var tAimAfterShots: Int = 0,
 
@@ -46,7 +46,7 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Beta"
 const val F_VERSION = "1.8"
-const val M_VERSION = "1.8.4"
+const val M_VERSION = "1.8.5"
 var LOADED_CONFIG = "DEFAULT"
 var oWeaponSize = oWeapon::class.java.declaredFields.size
 
@@ -64,6 +64,9 @@ val curLocale = Settings()
 var dbg: Boolean = false
 var appless: Boolean = false
 val robot = Robot().apply { this.autoDelay = 0 }
+
+val DEFAULT_OWEAPON = oWeapon()
+val DEFAULT_OWEAPON_STR = DEFAULT_OWEAPON.toString()
 
 var haltProcess = false
 

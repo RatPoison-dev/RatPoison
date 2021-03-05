@@ -5,7 +5,9 @@ import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.settings.*
 import rat.poison.utils.*
+import rat.poison.utils.generalUtil.has
 import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.generalUtil.stringToIntList
 import java.lang.Math.toRadians
 import kotlin.math.abs
 import kotlin.math.pow
@@ -26,10 +28,15 @@ fun reset(resetTarget: Boolean = true) {
 }
 
 fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
-			   lockFOV: Float = curSettings["AIM_FOV"].toFloat(), BONE: Int = curSettings["AIM_BONE"].toInt(), visCheck: Boolean = true, teamCheck: Boolean = true): Player {
+			   lockFOV: Float = curSettings["AIM_FOV"].toFloat(), BONE: String = curSettings["AIM_BONE"], visCheck: Boolean = true, teamCheck: Boolean = true): MutableList<Any> {
+	val retList = mutableListOf(-1L, 0.toInt())
 	var closestFOV = Float.MAX_VALUE
 	var closestDelta = Float.MAX_VALUE
 	var closestPlayer = -1L
+	var closestBone = -1
+
+	var bones = BONE.stringToIntList()
+	val findNearest = bones.has { myMan -> myMan < 0 }
 
 	forEntities(EntityType.CCSPlayer) {
 		val entity = it.entity
@@ -37,32 +44,33 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			return@forEntities
 		}
 
-		val arr = if (BONE < 0) {
-			calcTarget(closestDelta, entity, position, angle, lockFOV, entity.nearestBone())
-		} else {
-			calcTarget(closestDelta, entity, position, angle, lockFOV, BONE)
+		if (findNearest) bones = mutableListOf(entity.nearestBone())
+		bones.forEach { bone ->
+
+			val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, bone)
+
+			val fov = arr[0] as Float
+
+			if (fov > 0F) {
+				closestFOV = fov
+				closestDelta = arr[1] as Float
+				closestPlayer = arr[2] as Long
+				closestBone = bone
+			}
 		}
-
-		val fov = arr[0] as Float
-
-		if (fov > 0F) {
-			closestFOV = fov
-			closestDelta = arr[1] as Float
-			closestPlayer = arr[2] as Long
-		}
-
-		return@forEntities
 	}
 
-	if (closestDelta == Float.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return -1
+	if (closestDelta == Float.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return retList
 
 	val randInt = randInt(1, 100)
 
 	if (curSettings["PERFECT_AIM"].strToBool() && allowPerfect && closestFOV <= curSettings["PERFECT_AIM_FOV"].toFloat() && randInt <= curSettings["PERFECT_AIM_CHANCE"].toInt()) {
 		canPerfect = true
 	}
+	retList[0] = closestPlayer
+	retList[1] = closestBone
 
-	return closestPlayer
+	return retList.toMutableList()
 }
 
 fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Angle, curAngle: Angle, lockFOV: Float = curSettings["AIM_FOV"].toFloat(), BONE: Int, ovrStatic: Boolean = false): MutableList<Any> {
@@ -170,30 +178,33 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	val position = me.position()
 	val shouldVisCheck = !(forceAim && curSettings["FORCE_AIM_THROUGH_WALLS"].strToBool())
 
-	var aB = curSettings["AIM_BONE"].toInt()
+	var aB = curSettings["AIM_BONE"]
 
-	if (keyPressed(curSettings["FORCE_AIM_BONE_KEY"].toInt())) {
-		aB = curSettings["FORCE_AIM_BONE"].toInt()
+	if (forceAim) {
+		aB = curSettings["FORCE_AIM_BONE"]
 	}
 
-	val bestTarget = findTarget(position, currentAngle, aim,
-			BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 3); destBone } else { destBone = aB; aB },
-			visCheck = shouldVisCheck) //Try to find new target
+	var abAsList = aB.stringToIntList()
+
+	val findTargetResList = findTarget(position, currentAngle, aim,
+		BONE = if (RANDOM_BONE in abAsList) { destBone = 5 + randInt(0, 3); destBone.toString() } else aB,
+		visCheck = shouldVisCheck)
+	val bestTarget = findTargetResList[0] as Long //Try to find new target
 
 	if (currentTarget <= 0) { //If target is invalid from last run
-		currentTarget = findTarget(position, currentAngle, aim,
-				BONE = if (aB == RANDOM_BONE) { destBone = 5 + randInt(0, 3); destBone } else { destBone = aB; aB },
-				visCheck = shouldVisCheck) //Try to find new target
+		currentTarget = findTargetResList[0] as Long //Try to find new target
+
 		if (currentTarget <= 0) { //End if we don't, can't loop because of thread blocking
 			reset()
 			return@every
 		}
 		target = currentTarget
 	}
+	destBone = findTargetResList[1] as Int
 
 	//Set destination bone for calculating aim
-	if (aB == NEAREST_BONE) { //Nearest bone check
-		val nearestBone = currentTarget.nearestBone()
+	if (NEAREST_BONE in abAsList) { //Nearest bone check
+		val nearestBone = findTargetResList[1] as Int
 
 		if (nearestBone != -999) {
 			destBone = nearestBone
@@ -217,7 +228,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 
 	val swapTarget = (bestTarget > 0 && currentTarget != bestTarget) && !curSettings["HOLD_AIM"].strToBool() && (meCurWep.automatic || curSettings["AUTOMATIC_WEAPONS"].strToBool())
 
-	if (!currentTarget.canShoot(shouldVisCheck) || swapTarget) {
+	if (swapTarget || !currentTarget.canShoot(shouldVisCheck)) {
 		reset()
 		Thread.sleep(curSettings["AIM_TARGET_SWAP_DELAY"].toInt().toLong())
 	} else {

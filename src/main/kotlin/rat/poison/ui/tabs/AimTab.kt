@@ -111,7 +111,7 @@ fun updateDisableAim() {
         enablePathAim.isDisabled = bool
         enableScopedOnly.isDisabled = bool
 
-        aimBone.disable(bool, col)
+        aimBones.disable(bool, col)
         forceAimBone.disable(bool, col)
 
         aimFov.disable(bool, col)
@@ -189,7 +189,7 @@ fun updateAim() {
             aimAfterShots.disable(true, Color(0F, 0F, 0F, 0F))
         }
 
-        aimBone.update()
+        aimBones.update()
         forceAimBone.update()
 
         aimFov.update()

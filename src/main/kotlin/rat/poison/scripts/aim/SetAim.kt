@@ -10,6 +10,7 @@ import rat.poison.settings.*
 import rat.poison.settingsLoaded
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.generalUtil.stringToList
 import rat.poison.utils.generalUtil.toWeaponClass
 
 var meCurWep = Weapons.AK47
@@ -49,8 +50,8 @@ fun setAim() = every(500, true, inGameCheck = true) {
                         curSettings["FACTOR_RECOIL"] = curWepSettings.tFRecoil
                         curSettings["ENABLE_FLAT_AIM"] = curWepSettings.tFlatAim
                         curSettings["ENABLE_PATH_AIM"] = curWepSettings.tPathAim
-                        curSettings["AIM_BONE"] = curWepSettings.tAimBone
-                        curSettings["FORCE_AIM_BONE"] = curWepSettings.tForceBone
+                        curSettings["AIM_BONE"] = curWepSettings.tAimBone.map { it.boneToNum() }
+                        curSettings["FORCE_AIM_BONE"] = curWepSettings.tForceBone.map { it.boneToNum() }
                         curSettings["AIM_FOV"] = curWepSettings.tAimFov
                         curSettings["AIM_SPEED"] = curWepSettings.tAimSpeed
                         curSettings["AIM_SMOOTHNESS"] = curWepSettings.tAimSmooth
@@ -84,8 +85,8 @@ fun setAim() = every(500, true, inGameCheck = true) {
         if (!curWepOverride) { //If the current weapon isn't checked to override
             if (curWepCategory != "") {
                 curSettings["FACTOR_RECOIL"] = curSettings[curWepCategory + "_FACTOR_RECOIL"].strToBool()
-                curSettings["AIM_BONE"] = curSettings[curWepCategory + "_AIM_BONE"].boneToNum()
-                curSettings["FORCE_AIM_BONE"] = curSettings[curWepCategory + "_AIM_FORCE_BONE"].boneToNum()
+                curSettings["AIM_BONE"] = curSettings[curWepCategory + "_AIM_BONE"].stringToList().map { it.boneToNum() }
+                curSettings["FORCE_AIM_BONE"] = curSettings[curWepCategory + "_AIM_FORCE_BONE"].stringToList().map { it.boneToNum() }
                 curSettings["AIM_FOV"] = curSettings[curWepCategory + "_AIM_FOV"].toFloat()
                 curSettings["AIM_SPEED"] = curSettings[curWepCategory + "_AIM_SPEED"].toInt()
                 curSettings["AIM_SMOOTHNESS"] = curSettings[curWepCategory + "_AIM_SMOOTHNESS"].toDouble()

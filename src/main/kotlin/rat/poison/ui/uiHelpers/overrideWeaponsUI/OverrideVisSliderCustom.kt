@@ -4,10 +4,7 @@ import com.badlogic.gdx.graphics.Color
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.curLocale
-import rat.poison.curSettings
-import rat.poison.dbg
-import rat.poison.oWeapon
+import rat.poison.*
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.aimtabs.weaponOverrideSelected
 import kotlin.math.pow
@@ -16,7 +13,7 @@ import kotlin.math.round
 class OverrideVisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, labelWidth: Float = 225F, barWidth: Float = 225F) : VisTable() {
     private val labelText = mainText
     private val variableName = varName
-    private val varIdx = getOverrideVarIndex(oWeapon().toString(), variableName)
+    private val varIdx = getOverrideVarIndex(DEFAULT_OWEAPON_STR, variableName)
     private val isInt = intVal
     private val rnd = 10.0.pow(dec)
     private val w1 = labelWidth

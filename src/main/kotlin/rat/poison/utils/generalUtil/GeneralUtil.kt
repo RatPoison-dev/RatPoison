@@ -58,7 +58,7 @@ fun String.toWeaponClass(): oWeapon {
     val size = tSA.size
     return when (size < oWeaponSize) { //this should never happen?
         true -> oWeapon()
-        false -> oWeapon(tOverride = tSA.pull(0).strToBool(), tFRecoil = tSA.pull(1).strToBool(), tOnShot = tSA.pull(2).strToBool(), tFlatAim = tSA.pull(3).strToBool(), tPathAim = tSA.pull(4).strToBool(), tAimBone = tSA.pull(5).toInt(), tForceBone = tSA.pull(6).toInt(), tAimFov = tSA.pull(7).toFloat(), tAimSpeed = tSA.pull(8).toInt(), tAimSmooth = tSA.pull(9).toFloat(), tPerfectAim = tSA.pull(10).strToBool(), tPAimFov = tSA.pull(11).toFloat(), tPAimChance = tSA.pull(12).toInt(), tScopedOnly = tSA.pull(13).strToBool(), tAimAfterShots = tSA.pull(14).toInt(), tBoneTrig = tSA.pull(15).strToBool(), tBTrigAim = tSA.pull(16).strToBool(), tBTrigInCross = tSA.pull(17).strToBool(), tBTrigInFov = tSA.pull(18).strToBool(), tBTrigBacktrack = tSA.pull(19).strToBool(), tBTrigFov = tSA.pull(20).toFloat(), tBTrigInitDelay = tSA.pull(21).toInt(), tBTrigPerShotDelay = tSA.pull(22).toInt(), tBacktrack = tSA.pull(23).strToBool(), tBTMS = tSA.pull(24).toInt(), tAutowep = tSA.pull(25).strToBool(), tAutowepDelay = tSA.pull(26).toInt())
+        false -> oWeapon(tOverride = tSA.pull(0).strToBool(), tFRecoil = tSA.pull(1).strToBool(), tOnShot = tSA.pull(2).strToBool(), tFlatAim = tSA.pull(3).strToBool(), tPathAim = tSA.pull(4).strToBool(), tAimBone = tSA.pull(5).stringToList(";"), tForceBone = tSA.pull(6).stringToList(";"), tAimFov = tSA.pull(7).toFloat(), tAimSpeed = tSA.pull(8).toInt(), tAimSmooth = tSA.pull(9).toFloat(), tPerfectAim = tSA.pull(10).strToBool(), tPAimFov = tSA.pull(11).toFloat(), tPAimChance = tSA.pull(12).toInt(), tScopedOnly = tSA.pull(13).strToBool(), tAimAfterShots = tSA.pull(14).toInt(), tBoneTrig = tSA.pull(15).strToBool(), tBTrigAim = tSA.pull(16).strToBool(), tBTrigInCross = tSA.pull(17).strToBool(), tBTrigInFov = tSA.pull(18).strToBool(), tBTrigBacktrack = tSA.pull(19).strToBool(), tBTrigFov = tSA.pull(20).toFloat(), tBTrigInitDelay = tSA.pull(21).toInt(), tBTrigPerShotDelay = tSA.pull(22).toInt(), tBacktrack = tSA.pull(23).strToBool(), tBTMS = tSA.pull(24).toInt(), tAutowep = tSA.pull(25).strToBool(), tAutowepDelay = tSA.pull(26).toInt())
     }
 }
 
@@ -73,6 +73,24 @@ fun List<String>.pull(idx: Int): String {
     val tStr = this[idx].replace(" ", "") //Remove spaces
     val split = tStr.split("=")
     return split[1]
+}
+
+fun List<Int>.has(predicate: (_: Int) -> Boolean): Boolean {
+    var hasItem = false
+    this.forEach {
+        if (predicate(it)) {
+            hasItem = true
+            return@forEach
+        }
+    }
+    return hasItem
+}
+
+fun List<Any>.containsAny(lst: List<Any>): Boolean {
+    lst.forEach {
+        if (!this.contains(it)) return false
+    }
+    return true
 }
 
 //Matrix 4 uses column-major order

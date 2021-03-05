@@ -12,7 +12,6 @@ private val DEFAULT_INVALID_LIST = listOf("")
 
 fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
     println("Loading settings... "  + if (specificFile) { fileDir } else "")
-    setupValidSettings()
     val overloadKeybinds = curSettings["OVERLOAD_KEYBINDS"].strToBool()
     settingsLoaded = false
     if (specificFile) {
@@ -78,21 +77,21 @@ fun validateSetting(settingName: String, value: String): Boolean {
     val inpValue = value.toUpperCase()
 
 
-    if (!validSettingsMap["SKIP"].stringToList().contains(settingName)) {
+    if (!validSettingsMap["SKIP"]!!.contains(settingName)) {
         if (settingName.contains("AIM") && settingName.contains("BONE") && !settingName.contains("KEY")) { //Bones
-            if (!validSettingsMap["BONE"].stringToList().contains(inpValue)) {
+            if (!validSettingsMap["BONE"]!!.containsAny(inpValue.stringToList())) {
                 valid = false
             }
         } else if (settingName.contains("BOX") && settingName.contains("POS")) {
-            if (!validSettingsMap["BOX_POS"].stringToList().contains(inpValue)) {
+            if (!validSettingsMap["BOX_POS"]!!.contains(inpValue)) {
                 valid = false
             }
         } else if (settingName.contains("GLOW") && settingName.contains("TYPE")) {
-            if (!validSettingsMap["GLOW_TYPE"].stringToList().contains(inpValue)) {
+            if (!validSettingsMap["GLOW_TYPE"]!!.contains(inpValue)) {
                 valid = false
             }
         } else if (settingName.contains("FOV_TYPE")) {
-            if (!validSettingsMap["FOV_TYPE"].stringToList().contains(inpValue)) {
+            if (!validSettingsMap["FOV_TYPE"]!!.contains(inpValue)) {
                 valid = false
             }
         } else if (value.contains("oWeapon")) {
@@ -109,8 +108,8 @@ fun validateSetting(settingName: String, value: String): Boolean {
                     tOnShot = if (size > 3) tSA.pull(2).safeToBool(defaultValue = tOnShot) else tOnShot
                     tFlatAim = if (size > 4) tSA.pull(3).safeToBool(defaultValue = tFlatAim) else tFlatAim
                     tPathAim = if (size > 5) tSA.pull(4).safeToBool(defaultValue = tPathAim) else tPathAim
-                    tAimBone = if (size > 6) tSA.pull(5).safeToInt(defaultValue = tAimBone) else tAimBone
-                    tForceBone = if (size > 7) tSA.pull(6).safeToInt(defaultValue = tForceBone) else tForceBone
+                    tAimBone = if (size > 6) tSA.pull(5).stringToList(";") else tAimBone
+                    tForceBone = if (size > 7) tSA.pull(6).stringToList(";") else tForceBone
                     tAimFov = if (size > 8) tSA.pull(7).safeToFloat(defaultValue = tAimFov) else tAimFov
                     tAimSpeed = if (size > 9) tSA.pull(8).safeToInt(defaultValue = tAimSpeed) else tAimSpeed
                     tAimSmooth = if (size > 10) tSA.pull(9).safeToFloat(defaultValue = tAimSmooth) else tAimSmooth
@@ -144,19 +143,25 @@ fun validateSetting(settingName: String, value: String): Boolean {
     return valid
 }
 
-val validSettingsMap = Settings()
-fun setupValidSettings() {
-    validSettingsMap["SKIP"] = listOf("AIM_BONE", "FORCE_AIM_BONE")
-    validSettingsMap["BONE"] = listOf("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "PELVIS", "RANDOM") //crashes when replacing to boneCategories
-    validSettingsMap["BOX_POS"] = listOf("LEFT", "RIGHT", "TOP", "BOTTOM")
-    validSettingsMap["GLOW_TYPE"] = listOf("NORMAL", "MODEL", "VISIBLE", "VISIBLE-FLICKER")
-    validSettingsMap["FOV_TYPE"] = listOf("STATIC", "DISTANCE")
+val validSettingsMap = mutableMapOf(Pair("SKIP", listOf("AIM_BONE", "FORCE_AIM_BONE")), Pair("BONE", listOf("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "PELVIS", "RANDOM")), Pair("BOX_POS", listOf("LEFT", "RIGHT", "TOP", "BOTTOM")), Pair("GLOW_TYPE", listOf("NORMAL", "MODEL", "VISIBLE", "VISIBLE-FLICKER")), Pair("FOV_TYPE", listOf("STATIC", "DISTANCE")))
+
+fun String.stringToIntList(): List<Int> {
+    val list = mutableListOf<Int>()
+    val strList = this.replace("[", "").replace("]", "").replace(",", "").split(" ")
+
+    if (strList != DEFAULT_INVALID_LIST) {
+        for (i in strList) {
+            list.add(i.toInt())
+        }
+    }
+
+    return list
 }
 
 //move elsewhere
-fun String.stringToList(): List<String> {
+fun String.stringToList(separator: String = ","): List<String> {
     val list = mutableListOf<String>()
-    val strList = this.replace("[", "").replace("]", "").replace(",", "").split(" ")
+    val strList = this.replace("[", "").replace("]", "").replace(separator, "").split(" ")
 
     if (strList != DEFAULT_INVALID_LIST) {
         for (i in strList) {

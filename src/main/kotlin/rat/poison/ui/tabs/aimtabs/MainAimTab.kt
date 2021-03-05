@@ -14,10 +14,7 @@ import rat.poison.ui.tabs.boneCategories
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.gunCategories
 import rat.poison.ui.tabs.visualstabs.updateDisableDrawFOV
-import rat.poison.ui.uiHelpers.VisCheckBoxCustom
-import rat.poison.ui.uiHelpers.VisInputFieldCustom
-import rat.poison.ui.uiHelpers.VisSelectBoxCustom
-import rat.poison.ui.uiHelpers.VisSliderCustom
+import rat.poison.ui.uiHelpers.*
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
 import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
@@ -58,12 +55,12 @@ class MainAimTab: Tab(true, false) {
     val enablePathAim = ATabVisCheckBox("Mouse Movement", "_ENABLE_PATH_AIM")
     val enableScopedOnly = VisCheckBoxCustom("Scoped Only", "SNIPER_ENABLE_SCOPED_ONLY")
 
-    val aimBone = VisSelectBoxCustom("Bone".toLocale(), "_AIM_BONE", useCategory = true, showText = true, items = *boneCategories)
-    val forceAimBone = VisSelectBoxCustom("Force-Bone".toLocale(), "_AIM_FORCE_BONE", useCategory = true, showText = true,items = *boneCategories)
+    val aimBones = VisCombobox("Bone", "_AIM_BONE", useCategory = true, showText = true, items = *boneCategories)
+    val forceAimBone = VisCombobox("Force-Bone", "_AIM_FORCE_BONE", useCategory = true, showText = true, items = *boneCategories)
 
     val aimFov = ATabVisSlider("Aim FOV", "_AIM_FOV", .5F, 90F, .5F, false)
     val aimSpeed = ATabVisSlider("Aim Speed", "_AIM_SPEED", 0F, 10F, 1F, true)
-    val aimSmooth = ATabVisSlider("Smoothness", "_AIM_SMOOTHNESS", 1F, 10F, .1F, false)
+    val aimSmooth = ATabVisSlider("Smoothness", "_AIM_SMOOTHNESS", 1F, 5F, .1F, false)
     val aimAfterShots = ATabVisSlider("Aim After #", "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true)
 
     //Perfect Aim Collapsible
@@ -206,7 +203,7 @@ class MainAimTab: Tab(true, false) {
         table.add(enableFlatAim).left().row()
         table.add(enablePathAim).left().row()
         table.add(enableScopedOnly).left().row() //SNIPER selection only
-        table.add(aimBone).left().row()
+        table.add(aimBones).left().row()
         table.add(forceAimBone).left().row()
         table.add(aimSpeed).left().row()
         table.add(aimFov).left().row()

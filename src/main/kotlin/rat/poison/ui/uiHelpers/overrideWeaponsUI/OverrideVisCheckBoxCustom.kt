@@ -1,6 +1,7 @@
 package rat.poison.ui.uiHelpers.overrideWeaponsUI
 
 import com.kotcrab.vis.ui.widget.VisCheckBox
+import rat.poison.DEFAULT_OWEAPON_STR
 import rat.poison.oWeapon
 import rat.poison.toLocale
 import rat.poison.ui.changed
@@ -8,13 +9,13 @@ import rat.poison.ui.tabs.aimtabs.weaponOverrideSelected
 import rat.poison.ui.tabs.overridenWeapons
 import rat.poison.utils.generalUtil.strToBool
 
-private val flatAimIdx = getOverrideVarIndex(oWeapon().toString(), "tFlatAim")
-private val pathAimIdx = getOverrideVarIndex(oWeapon().toString(), "tPathAim")
+private val flatAimIdx = getOverrideVarIndex(DEFAULT_OWEAPON_STR, "tFlatAim")
+private val pathAimIdx = getOverrideVarIndex(DEFAULT_OWEAPON_STR, "tPathAim")
 
 class OverrideVisCheckBoxCustom(mainText: String, varName: String) : VisCheckBox(mainText) {
     private val variableName = varName
     private val defaultText = mainText
-    private val varIdx = getOverrideVarIndex(oWeapon().toString(), variableName)
+    private val varIdx = getOverrideVarIndex(DEFAULT_OWEAPON_STR, variableName)
 
     init {
         update()
