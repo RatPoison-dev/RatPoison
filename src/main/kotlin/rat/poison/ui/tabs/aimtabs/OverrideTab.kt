@@ -5,29 +5,32 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.curLocale
-import rat.poison.curSettings
-import rat.poison.dbg
-import rat.poison.toLocale
+import rat.poison.*
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
-import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideCombobox
-import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisCheckBoxCustom
-import rat.poison.ui.uiHelpers.overrideWeaponsUI.OverrideVisSliderCustom
+import rat.poison.ui.uiHelpers.VisCheckBoxCustom
+import rat.poison.ui.uiHelpers.overrideWeaponsUI.*
 import rat.poison.ui.uiUpdate
-import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.generalUtil.toLocaleGdxArray
 import rat.poison.utils.generalUtil.toWeaponClass
 
 var weaponOverrideSelected = "DESERT_EAGLE"
+var aimToOverride = mapOf(Pair("_FACTOR_RECOIL", "tFRecoil"), Pair("_ENABLE_FLAT_AIM", "tFlatAim"), Pair("_ENABLE_PATH_AIM", "tPathAim"), Pair("_AIM_BONE", "tAimBone"), Pair("_AIM_FOV", "tAimFov"), Pair("_AIM_SPEED", "tAimSpeed"), Pair("_AIM_SMOOTHNESS", "tAimSmooth"), Pair("_AIM_FORCE_BONE", "tForceBone"), Pair("_AIM_ONLY_ON_SHOT", "tOnShot"), Pair("_AIM_AFTER_SHOTS", "tAimAfterShots"), Pair("_TRIGGER_FOV", "tBTrigFov"), Pair("_TRIGGER_INFOV", "tBTrigInFov"), Pair("_TRIGGER_INCROSS", "tBTrigInCross"), Pair("_TRIGGER_AIMBOT", "tBTrigAim"), Pair("_TRIGGER_BACKTRACK", "tBTrigBacktrack"), Pair("_BACKTRACK", "tBacktrack"), Pair("_BACKTRACK_MS", "tBTMS"), Pair("_PERFECT_AIM", "tPerfectAim"), Pair("_PERFECT_AIM_FOV", "tPAimFov"), Pair("_PERFECT_AIM_CHANCE", "tPAimChance"), Pair("_TRIGGER", "tBoneTrig"), Pair("_TRIGGER_INIT_SHOT_DELAY", "tBTrigInitDelay"), Pair("_TRIGGER_PER_SHOT_DELAY", "tBTrigPerShotDelay"), Pair("_SCOPED_ONLY", "tScopedOnly"))
 
 class OverrideTab: Tab(true, false) {
     private val table = VisTable()
-    val weaponOverrideCheckBox = VisCheckBox("Override-Weapons".toLocale())
+    val weaponOverrideCheckBox = VisCheckBoxCustom("Override Weapons", "ENABLE_OVERRIDE")
     var categorySelected = curSettings["DEFAULT_CATEGORY_SELECTED"]
-    var weaponOverride = false
     var enableOverride = false
 
     private val categorySelectionBox = VisSelectBox<String>()
+
+    private val copyToSelectionBox = VisSelectBox<String>()
+
+    private val copyFromSelectionBox = VisSelectBox<String>()
+
+    private val copyToButton = VisTextButton("Copy To")
+    private val copyFromButton = VisTextButton("Copy From")
 
     //Override Weapon Checkbox & Selection Box
     private val categorySelectLabel = VisLabel("${"Weapon-Category".toLocale()}:")
@@ -97,15 +100,7 @@ class OverrideTab: Tab(true, false) {
                 }
             }
 
-            val itemsArray = Array<String>()
-            for (i in tmpCategory) {
-                if (curLocale[i].isBlank()) {
-                    if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
-                    itemsArray.add(i)
-                } else {
-                    itemsArray.add(curLocale[i])
-                }
-            }
+            val itemsArray = tmpCategory.toLocaleGdxArray()
             weaponOverrideSelectionBox.items = itemsArray
 
             if (categorySelected == "SNIPER") {
@@ -122,6 +117,38 @@ class OverrideTab: Tab(true, false) {
 
             weaponOverrideSelectionBox.selected = weaponOverrideSelectionBox.items[0]
             uiUpdate()
+            true
+        }
+
+        val gunCategoryArray = gunCategories.toLocaleGdxArray()
+
+        copyToSelectionBox.items = gunCategoryArray
+        copyFromSelectionBox.items = gunCategoryArray
+        val copyToTable = VisTable()
+        copyToTable.add(copyToButton).padRight(225F - copyToButton.width)
+        copyToTable.add(copyToSelectionBox)
+
+        copyToButton.changed {_, _ ->
+            val category = copyToSelectionBox.selected
+            aimToOverride.forEach { (k, v) ->
+                copyTo(category, k ,v)
+            }
+
+            updateAim()
+            true
+        }
+
+        val copyFromTable = VisTable()
+        copyFromTable.add(copyFromButton).padRight(225F - copyFromButton.width)
+        copyFromTable.add(copyFromSelectionBox)
+
+        copyFromButton.changed {_, _ ->
+            val category = copyFromSelectionBox.selected
+            aimToOverride.forEach { (k, v) ->
+                copyFrom(category, k ,v)
+            }
+
+            overridenWeaponsUpdate()
             true
         }
 
@@ -143,16 +170,8 @@ class OverrideTab: Tab(true, false) {
         //Create Category Selector Box
         val categorySelection = VisTable()
         //Create Category Selector Box
-        val itemsArray = Array<String>()
-        for (i in gunCategories) {
-            if (dbg && curLocale[i].isBlank()) {
-                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
-            }
 
-            itemsArray.add(curLocale[i])
-        }
-
-        categorySelectionBox.items = itemsArray
+        categorySelectionBox.items = gunCategories.toLocaleGdxArray()
         categorySelectionBox.selectedIndex = 0
 
         categorySelected = gunCategories[categorySelectionBox.selectedIndex]
@@ -180,7 +199,7 @@ class OverrideTab: Tab(true, false) {
         //End Force Bone Selector Box
 
 
-        perfectAimCollapsible.setCollapsed(!curSettings[categorySelected + "_PERFECT_AIM"].strToBool(), true)
+        perfectAimCollapsible.setCollapsed(!curSettings.bool[categorySelected + "_PERFECT_AIM"], true)
 
         perfectAimTable.add(perfectAimFov).padLeft(20F).left().row()
         perfectAimTable.add(perfectAimChance).padLeft(20F).left().row()
@@ -189,14 +208,7 @@ class OverrideTab: Tab(true, false) {
             perfectAimCollapsible.setCollapsed(!perfectAimCollapsible.isCollapsed, true)
         }
 
-        weaponOverrideCheckBox.isChecked = curSettings["ENABLE_OVERRIDE"].strToBool()
-
-        weaponOverride = weaponOverrideCheckBox.isChecked
-
         weaponOverrideCheckBox.changed { _, _ ->
-            weaponOverride = weaponOverrideCheckBox.isChecked
-            curSettings["ENABLE_OVERRIDE"] = weaponOverrideCheckBox.isChecked.toString()
-
             val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
             enableOverride = curWep.tOverride
 
@@ -206,6 +218,9 @@ class OverrideTab: Tab(true, false) {
         //End Perfect Aim Collapsible Check Box
 
         //Add all items to label for tabbed pane content
+        table.add(copyToTable).left().row()
+        table.add(copyFromTable).left().row()
+        table.addSeparator().row()
         table.add(weaponOverrideCheckBox).left().row()
         table.add(categorySelection).left().row()
         table.add(weaponOverrideSelection).left().row()
@@ -253,6 +268,20 @@ class OverrideTab: Tab(true, false) {
         return table
     }
 }
+
+fun copyTo(category: String, categoryVarName: String, myVarName: String) {
+    val varIdx = getOverrideVarIndex(DEFAULT_OWEAPON_STR, myVarName)
+    val myVar = getOverrideVar(weaponOverrideSelected, varIdx)
+    curSettings[category + categoryVarName] = myVar
+}
+
+fun copyFrom(category: String, categoryVarName: String, myVarName: String) {
+    val setting = curSettings[category + categoryVarName]
+    val varIdx = getOverrideVarIndex(oWeapon().toString(), myVarName)
+
+    setOverrideVar(weaponOverrideSelected, varIdx, setting)
+}
+
 fun overridenWeaponsUpdate() {
     overridenWeapons.apply {
         val curWep = curSettings[weaponOverrideSelected].toWeaponClass()

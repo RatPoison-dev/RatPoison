@@ -12,8 +12,6 @@ import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.Vector
-import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.inGame
 import java.util.concurrent.ConcurrentLinkedQueue
 
@@ -25,10 +23,10 @@ private var sync = 0
 var arraySize = 5
 
 fun nadeTracer() = App {
-    if (!curSettings["NADE_TRACER"].strToBool() || MENUTOG || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@App
+    if (!curSettings.bool["NADE_TRACER"] || MENUTOG || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
-    if (sync >= (curSettings["NADE_TRACER_UPDATE_TIME"].toInt())) {
-        arraySize = clamp(curSettings["NADE_TRACER_TIMEOUT"].toInt(), 1, 30)
+    if (sync >= (curSettings.int["NADE_TRACER_UPDATE_TIME"])) {
+        arraySize = clamp(curSettings.int["NADE_TRACER_TIMEOUT"], 1, 30)
         forEntities(EntityType.CSmokeGrenadeProjectile, EntityType.CMolotovProjectile, EntityType.CDecoyProjectile, EntityType.CBaseCSGrenadeProjectile) {
             val ent = it.entity
             val entPos = ent.absPosition()
@@ -95,7 +93,7 @@ fun nadeTracer() = App {
                     begin()
                     glEnable(GL20.GL_BLEND)
 
-                    val c = curSettings["NADE_TRACER_COLOR"].strToColorGDX()
+                    val c = curSettings.colorGDX["NADE_TRACER_COLOR"]
                     c.a = 1F - alphaMin * j
 
                     color = c

@@ -1,6 +1,7 @@
 package rat.poison.ui.uiHelpers.aimTab
 
 import com.badlogic.gdx.graphics.Color
+import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisTable
@@ -20,6 +21,7 @@ class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMa
 
     private val w1 = width1
     private val w2 = width2
+    private var hasTooltip = false
 
     private val sliderLabel = VisLabel("${curLocale[variableExtension]}: " + curSettings[categorySelected + variableExtension])
     private val sliderBar = VisSlider(varMin, varMax, stepSize, false)
@@ -64,6 +66,27 @@ class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMa
                 println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableExtension is missing!")
             }
             sliderLabel.setText("${curLocale[variableExtension]}: ${curSettings[categorySelected + variableExtension]}")
+        }
+
+        updateTooltip()
+    }
+
+    private fun updateTooltip() {
+        if (curSettings.bool["MENU_TOOLTIPS"]) {
+            if (curLocale["${variableExtension}_TOOLTIP"] != "") {
+                if (!hasTooltip) {
+                    Tooltip.Builder(curLocale["${variableExtension}_TOOLTIP"]).target(this).build()
+                    hasTooltip = true
+                    if (dbg) {
+                        println("[DEBUG] Added tooltip to $variableExtension")
+                    }
+                }
+            }
+        } else {
+            if (hasTooltip) {
+                Tooltip.removeTooltip(this)
+                hasTooltip = false
+            }
         }
     }
 

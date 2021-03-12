@@ -12,7 +12,6 @@ import rat.poison.dbg
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.updateDisableRCrosshair
-import rat.poison.utils.generalUtil.strToBool
 
 //Swap VisSelectBoxCustom to showText false is mainText is " "
 class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean, private val showText: Boolean = true, vararg items: String) : VisTable() {
@@ -78,7 +77,7 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
     }
 
     private fun updateTooltip() {
-        if (curSettings["MENU_TOOLTIPS"].strToBool()) {
+        if (curSettings.bool["MENU_TOOLTIPS"]) {
             if (curLocale["${variableName}_TOOLTIP"] != "") {
                 if (!hasTooltip) {
                     Tooltip.Builder(curLocale["${variableName}_TOOLTIP"]).target(this).build()

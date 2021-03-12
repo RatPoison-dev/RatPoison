@@ -18,7 +18,7 @@ class NadesVT : Tab(false, false) {
     val nadeTracer = VisCheckBoxCustom(" ", "NADE_TRACER", false)
     val nadeTracerColor = VisColorPickerCustom("Tracer", "NADE_TRACER_COLOR")
 
-    val nadeTracerUpdateTime = VisSliderCustom("Tracer Update Time", "NADE_TRACER_UPDATE_TIME", 5F, curSettings["OPENGL_FPS"].toInt().toFloat(), 1F, true, labelWidth = 200F, barWidth = 250F)
+    val nadeTracerUpdateTime = VisSliderCustom("Tracer Update Time", "NADE_TRACER_UPDATE_TIME", 5F, curSettings.int["OPENGL_FPS"].toFloat(), 1F, true, labelWidth = 200F, barWidth = 250F)
     val nadeTracerTimeout = VisSliderCustom("Tracer Timeout", "NADE_TRACER_TIMEOUT", 1F, 30F, 1F, true, labelWidth = 200F, barWidth = 250F)
 
     val visualizeSmokes = VisCheckBoxCustom(" ", "VISUALIZE_SMOKES", false)

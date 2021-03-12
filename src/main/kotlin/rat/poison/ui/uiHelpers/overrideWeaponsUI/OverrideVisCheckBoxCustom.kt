@@ -2,7 +2,6 @@ package rat.poison.ui.uiHelpers.overrideWeaponsUI
 
 import com.kotcrab.vis.ui.widget.VisCheckBox
 import rat.poison.DEFAULT_OWEAPON_STR
-import rat.poison.oWeapon
 import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.aimtabs.weaponOverrideSelected

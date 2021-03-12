@@ -4,6 +4,7 @@
 package rat.poison.overlay
 
 import com.sun.jna.platform.win32.WinUser
+import com.sun.jna.ptr.LongByReference
 import org.lwjgl.system.windows.User32.WS_MINIMIZEBOX
 import rat.poison.appless
 import rat.poison.curSettings
@@ -16,8 +17,9 @@ import rat.poison.jna.enums.AccentStates
 import rat.poison.jna.structures.Rect
 import rat.poison.jna.structures.WindowCompositionAttributeData
 import rat.poison.overlay.App.uiMenu
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inBackground
+import rat.poison.utils.inFullscreen
+import rat.poison.utils.isActiveWindow
 import kotlin.concurrent.thread
 import kotlin.properties.Delegates
 
@@ -28,17 +30,17 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	private val rcWindow = Rect()
 	private val myRcClient = Rect()
 	private val myRcWindow = Rect()
-	private var x: Int = curSettings["APPLESS_X"].toInt()
-	private var y: Int = curSettings["APPLESS_Y"].toInt()
-	var width: Int =     curSettings["APPLESS_WIDTH"].toInt()
-	var height: Int =    curSettings["APPLESS_HEIGHT"].toInt()
+	private var x: Int = curSettings.int["APPLESS_X"]
+	private var y: Int = curSettings.int["APPLESS_Y"]
+	var width: Int =     curSettings.int["APPLESS_WIDTH"]
+	var height: Int =    curSettings.int["APPLESS_HEIGHT"]
 	private var initialWidth: Int = 0
 	private var initialHeight: Int = 0
 	private var initialWindowStyle: Int = 0
 	private var initialWindowExStyle: Int = 0
 	var listener: IOverlayListener? = null
 	private var firstRun = true
-	private var useWin7 = System.getProperty("os.name").contains("windows 10", ignoreCase = true)
+	private var useWin10 = System.getProperty("os.name").contains("windows 10", ignoreCase = true)
 
 	@Volatile
 	private var run = false
@@ -145,7 +147,6 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 			//shitty DWM does not draw background windows if the top window bounds is same
 			//as screen bounds. Doesn't matter whether the top window is layered or not,
 			//hence we broke the equation so our overlay won't go opaque with a black background...
-			if (!appless) {
 				width = rcClient.right - rcClient.left + 2
 				height = rcClient.bottom - rcClient.top + 2
 				x = rcWindow.left + (rcWindow.right - rcWindow.left - width) / 2 - 1
@@ -155,8 +156,17 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 					SetWindowPos(myHWND, HWND_TOPPOS, x, y, width, height, WinUser.SWP_NOSENDCHANGING or WinUser.SWP_NOZORDER or WinUser.SWP_DEFERERASE or WinUser.SWP_NOREDRAW or WinUser.SWP_ASYNCWINDOWPOS or WinUser.SWP_FRAMECHANGED)
 					listener?.onBoundsChange(this@Overlay, x, y, width, height)
 				}
+
+				with (Shell32) {
+					val state = LongByReference()
+					SHQueryUserNotificationState(state)
+					inFullscreen = state.value == QUNS_RUNNING_D3D_FULL_SCREEN
+				}
+
 				val isMyWindowVisible = IsWindowVisible(myHWND)
-				if (getActiveWindow() == targetAppHWND) {
+				val activeWindow = getActiveWindow()
+				isActiveWindow = activeWindow == myHWND || activeWindow == targetAppHWND
+				if (activeWindow == targetAppHWND) {
 					if (!isMyWindowVisible) {
 						ShowWindow(myHWND, WinUser.SW_SHOW)
 						listener?.onForeground(this@Overlay)
@@ -165,14 +175,13 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 				} else {
 					if (isMyWindowVisible) {
 						if (curSettings["MENU_APP"].replace("\"", "") == "Counter-Strike: Global Offensive") {
-							if (!curSettings["MENU_STAY_FOCUSED"].strToBool()) {
+							if (!curSettings.bool["MENU_STAY_FOCUSED"]) {
 								ShowWindow(myHWND, WinUser.SW_HIDE)
 								listener?.onBackground(this@Overlay)
 							}
 						}
 					}
 				}
-			}
 		} else {
 			listener?.onTargetAppWindowClosed(this@Overlay)
 			targetAppHWND = HWND_ZERO
@@ -212,7 +221,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	}
 
 	private fun makeTransparent() = with(User32) {
-		if (useWin7) {
+		if (useWin10) {
 			SetWindowCompositionAttribute(
 				myHWND,
 				WindowCompositionAttributeData(
@@ -286,7 +295,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	}
 
 	private fun beActive() = with(User32) {
-		if (!appless && curSettings["GAUSSIAN_BLUR"].strToBool() ) {
+		if (!appless && curSettings.bool["GAUSSIAN_BLUR"] ) {
 			makeBlurBehind()
 		}
 

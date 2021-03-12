@@ -10,7 +10,6 @@ import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
 import rat.poison.utils.generalUtil.boolToStr
-import rat.poison.utils.generalUtil.strToBool
 
 class VisCheckBoxCustom(mainText: String, varName: String, visibleText: Boolean = true) : VisCheckBox(mainText) {
     private val variableName = varName
@@ -20,8 +19,6 @@ class VisCheckBoxCustom(mainText: String, varName: String, visibleText: Boolean 
 
     init {
         update()
-
-        updateTooltip()
 
         changed { _, _ ->
             curSettings[variableName] = isChecked.boolToStr()
@@ -49,13 +46,13 @@ class VisCheckBoxCustom(mainText: String, varName: String, visibleText: Boolean 
             }
         }
 
-        isChecked = curSettings[variableName].strToBool()
+        isChecked = curSettings.bool[variableName]
 
         updateTooltip()
     }
 
     private fun updateTooltip() {
-        if (curSettings["MENU_TOOLTIPS"].strToBool()) {
+        if (curSettings.bool["MENU_TOOLTIPS"]) {
             if (curLocale["${variableName}_TOOLTIP"] != "") {
                 if (!hasTooltip) {
                     Tooltip.Builder(curLocale["${variableName}_TOOLTIP"]).target(this).build()

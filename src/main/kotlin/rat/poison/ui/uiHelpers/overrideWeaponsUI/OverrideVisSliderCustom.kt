@@ -4,7 +4,10 @@ import com.badlogic.gdx.graphics.Color
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.*
+import rat.poison.DEFAULT_OWEAPON_STR
+import rat.poison.curLocale
+import rat.poison.curSettings
+import rat.poison.dbg
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.aimtabs.weaponOverrideSelected
 import kotlin.math.pow

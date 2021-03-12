@@ -2,13 +2,12 @@ package rat.poison.utils.generalUtil
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Matrix4
-import rat.poison.dbg
-import rat.poison.oWeapon
-import rat.poison.oWeaponSize
-import rat.poison.sWeapon
+import rat.poison.*
 
 fun Any.strToBool() = this.toString().toLowerCase() == "true" || this == true || this == 1.0 || this == 1 || this == 1F
 fun Any.boolToStr() = this.toString()
+fun Any.cToInt() = this.toString().toInt()
+fun Any.cToLong() = this.toString().toLong()
 fun Any.strToColor() = convStrToColor(this.toString())
 fun Any.strToColorGDX() = convStrToColorGDX(this.toString())
 fun Any.cToDouble() = this.toString().toDouble()
@@ -91,6 +90,32 @@ fun List<Any>.containsAny(lst: List<Any>): Boolean {
         if (!this.contains(it)) return false
     }
     return true
+}
+
+fun Array<String>.toLocaleGdxArray(): com.badlogic.gdx.utils.Array<String> {
+    val itemsArray = com.badlogic.gdx.utils.Array<String>()
+    this.forEach {
+        if (curLocale[it].isBlank()) {
+            if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $it is missing!")
+            itemsArray.add(it)
+        }
+        else {
+            itemsArray.add(curLocale[it])
+        }
+    }
+    return itemsArray
+}
+
+fun String.stringToLocaleList(separator: String = ","): List<String> {
+    return stringToList(separator).map {
+        val localised = curLocale[it]
+        if (localised.isBlank()) {
+            if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $it is missing!")
+            return@map it
+        } else {
+            return@map localised
+        }
+    }
 }
 
 //Matrix 4 uses column-major order

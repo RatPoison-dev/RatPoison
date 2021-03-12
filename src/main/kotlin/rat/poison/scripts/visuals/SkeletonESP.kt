@@ -13,14 +13,13 @@ import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
 
 private val bones = Array(2048) { Line() }
 private var currentIdx = 0
 
 internal fun skeletonEsp() = App {
-	if (!curSettings["SKELETON_ESP"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !inGame) return@App
+	if (!curSettings.bool["SKELETON_ESP"] || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
 	val meTeam = me.team()
 	forEntities(EntityType.CCSPlayer) {
@@ -28,8 +27,8 @@ internal fun skeletonEsp() = App {
 		val entTeam = entity.team()
 
 		val dormCheck = (entity.dormant() && !DANGER_ZONE)
-		val enemyCheck = ((!curSettings["SKELETON_SHOW_ENEMIES"].strToBool() && meTeam != entTeam) && !DANGER_ZONE)
-		val teamCheck = ((!curSettings["SKELETON_SHOW_TEAM"].strToBool() && meTeam == entTeam) && !DANGER_ZONE)
+		val enemyCheck = ((!curSettings.bool["SKELETON_SHOW_ENEMIES"] && meTeam != entTeam) && !DANGER_ZONE)
+		val teamCheck = ((!curSettings.bool["SKELETON_SHOW_TEAM"] && meTeam == entTeam) && !DANGER_ZONE)
 
 		if (entity == me || entity.dead() || dormCheck || enemyCheck || teamCheck) return@forEntities
 

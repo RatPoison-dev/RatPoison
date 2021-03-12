@@ -15,7 +15,7 @@ import java.awt.event.MouseEvent
 fun selfNade() {
     Thread(Runnable {
         if (MENUTOG) {
-            robot.keyPress(curSettings["MENU_KEY"].toInt())
+            robot.keyPress(curSettings.int["MENU_KEY"])
         }
         Thread.sleep(50)
 

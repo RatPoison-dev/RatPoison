@@ -7,15 +7,14 @@ import rat.poison.robot
 import rat.poison.scripts.aim.meDead
 import rat.poison.utils.ObservableBoolean
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.keyPressed
 import java.awt.event.MouseEvent
 
 private var toggled = false
-var weaponSpamToggleKey = ObservableBoolean({keyPressed(curSettings["W_SPAM_KEY"].toInt())})
+var weaponSpamToggleKey = ObservableBoolean({keyPressed(curSettings.int["W_SPAM_KEY"])})
 
 fun weaponSpam() = every (20, inGameCheck = true) {
-    if (!curSettings["W_SPAM"].strToBool()) return@every
+    if (!curSettings.bool["W_SPAM"]) return@every
 
     updateCursorEnable()
     if (cursorEnable || meDead) return@every

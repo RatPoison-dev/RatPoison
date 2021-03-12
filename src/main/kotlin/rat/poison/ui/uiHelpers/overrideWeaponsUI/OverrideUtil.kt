@@ -2,7 +2,6 @@ package rat.poison.ui.uiHelpers.overrideWeaponsUI
 
 import rat.poison.DEFAULT_OWEAPON_STR
 import rat.poison.curSettings
-import rat.poison.oWeapon
 import rat.poison.utils.generalUtil.pull
 
 fun splitOverrideString(curWep: String): MutableList<String> {

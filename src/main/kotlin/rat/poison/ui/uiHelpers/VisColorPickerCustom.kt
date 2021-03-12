@@ -13,7 +13,6 @@ import rat.poison.dbg
 import rat.poison.overlay.App
 import rat.poison.toLocale
 import rat.poison.ui.changed
-import rat.poison.utils.generalUtil.strToColor
 import rat.poison.game.Color as rColor
 
 private val white = VisUI.getSkin().getDrawable("white")
@@ -30,7 +29,7 @@ class VisColorPickerCustom(mainText: String, varName: String) : VisTable() {
     init {
         colorPicker = ColorPicker(variableName.toLocale(), object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
-                curSettings[variableName] = rColor((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), 1.0).toString()
+                curSettings[variableName] = rColor((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble()).toString()
                 newCol.a = 1F
                 color = newCol
                 update()
@@ -48,8 +47,9 @@ class VisColorPickerCustom(mainText: String, varName: String) : VisTable() {
     }
 
     fun update() {
-        val col = curSettings[variableName].strToColor()
-        pickerImage.setColor(col.red/255F, col.green/255F, col.blue/255F, 1F)
+        val col = curSettings.colorGDX[variableName]
+        pickerImage.color = col
+        colorPicker.color = col
 
         if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
             if (curLocale[variableName].isBlank()) {

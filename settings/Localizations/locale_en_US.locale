@@ -219,7 +219,7 @@ _TRIGGER_INCROSS_TOOLTIP = Shoot when target is in crosshair position
 _TRIGGER_INFOV_TOOLTIP = Shoot when target is in specified FOV around the crosshair
 ENABLE_ESP_TOOLTIP = Main switch for all ESP
 ENABLE_FOOTSTEPS_TOOLTIP = Draws footsteps of running enemies
-Override-Weapons_TOOLTIP = Allows to configure aim settings for each weapon instead of weapon category
+ENABLE_OVERRIDE_TOOLTIP = Allows to configure aim settings for each weapon instead of weapon category
 LEGIT_RADAR_FOOTSTEPS_DISTANCE_TOOLTIP = Maximum distance where stepping enemies will be shown on legit radar
 FIRST-SHOT_TOOLTIP = Delay before trigger will fire first shot
 BETWEEN-SHOTS_TOOLTIP = Delay between trigger shots
@@ -253,6 +253,7 @@ STOMACH = STOMACH
 PELVIS = PELVIS
 NEAREST = NEAREST
 RANDOM = RANDOM
+EMPTY = EMPTY
 FOV_TYPE = FOV Type
 DISTANCE = DISTANCE
 STATIC = STATIC
@@ -487,6 +488,8 @@ KILL_BIND_KEY = Key
 Name-Change = Temporary Name Change
 AUTOACCEPT = Auto Accept
 AUTOACCEPT_TOGGLE_KEY = Auto Accept Toggle Key
+FAKE_LAG = Fake Lag
+FAKE_LAG_TICKS = Ticks
 
 //Category: Fonts
 LOAD_FONT = Load Font
@@ -539,6 +542,8 @@ tAutowep = Automatic Weapons
 tAutowepDelay = MS Interval
 tAimFov = FOV
 tAimSpeed = Speed
+tAimBone = Bone
+tForceBone = Force Bone
 tAimSmooth = Smoothness
 tAimAfterShots = Aim After #
 tPAimFov = FOV
@@ -597,6 +602,7 @@ Locale = Locale
 Save = Save
 Load = Load
 Delete = Delete
+Open-configs-folder = Open Configs Folder
 
 //Category: Movement tab
 ENABLE_BUNNY_HOP = Bunny Hop
@@ -665,6 +671,27 @@ CIRCLE = CIRCLE
 CROSSHAIR = CROSSHAIR
 RCROSSHAIR_RADIUS = Radius
 RCROSSHAIR_TYPE = RCrosshair Type
+
+//Subcategory: RCrosshair
+RCROSSHAIR_YOFFSET = Y Offset
+RCROSSHAIR_ALPHA = Alpha
+RCROSSHAIR_COLOR = Color
+CIRCLE = CIRCLE
+CROSSHAIR = CROSSHAIR
+RCROSSHAIR_RADIUS = Radius
+RCROSSHAIR_TYPE = RCrosshair Type
+RCROSSHAIR_GAP = Gap
+RCROSSHAIR_CENTER_DOT = Center Dot
+RCROSSHAIR_DOT_RADIUS = Center Dot Radius
+RCROSSHAIR_TOP = Top
+RCROSSHAIR_BOTTOM = Bottom
+RCROSSHAIR_LEFT = Left
+RCROSSHAIR_RIGHT = Right
+RCROSSHAIR_OUTLINE = Outline
+RCROSSHAIR_OUTLINE_WIDTH = Outline Width
+RCROSSHAIR_DYNAMIC = Dynamic
+RCROSSHAIR_MAX_SPREAD = Max Spread
+RCROSSHAIR_OUTLINE_COLOR = Outline Color
 
 //Category: Nade Helper tab
 ENABLE_NADE_HELPER = Enable

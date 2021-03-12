@@ -9,8 +9,8 @@ import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.*
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.aimtabs.weaponOverrideSelected
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.stringToList
+import rat.poison.utils.generalUtil.stringToLocaleList
 
 class OverrideCombobox(mainText: String, varName: String, private val showText: Boolean = true, vararg items: String): VisTable() {
     private val textLabel = mainText
@@ -28,7 +28,8 @@ class OverrideCombobox(mainText: String, varName: String, private val showText: 
         update()
 
         selectBox.changed { _, _ ->
-            val selected = selectBox.selected
+            if (selectBox.selectedIndex == 0) return@changed true
+            val selected = boxItems[selectBox.selectedIndex-1] // actual index
             val includes = selected in selectedList
             val inList = selected in boxItems
             if (includes && inList) {
@@ -68,7 +69,7 @@ class OverrideCombobox(mainText: String, varName: String, private val showText: 
     }
 
     private fun updateTooltip() {
-        if (curSettings["MENU_TOOLTIPS"].strToBool()) {
+        if (curSettings.bool["MENU_TOOLTIPS"]) {
             if (curLocale["${variableName}_TOOLTIP"] != "") {
                 if (!hasTooltip) {
                     Tooltip.Builder(curLocale["${variableName}_TOOLTIP"]).target(this).build()
@@ -106,11 +107,12 @@ class OverrideCombobox(mainText: String, varName: String, private val showText: 
     }
 
     private fun getBoxString(): String {
-        var myList = getOverrideVar(weaponOverrideSelected, varIdx).toString().replace(";", "; ").stringToList(";")
+        //my list when femboy
+        var myList = getOverrideVar(weaponOverrideSelected, varIdx).toString().replace(";", "; ").stringToLocaleList(";")
 
         return when (myList.isNotEmpty()) {
             true -> myList.joinToString(", ", ">")
-            false -> "EMPTY"
+            false -> "EMPTY".toLocale()
         }
     }
 
@@ -122,8 +124,9 @@ class OverrideCombobox(mainText: String, varName: String, private val showText: 
     }
 
     private fun selectedToMutableList(): MutableList<String> {
-        return when (selectBox.items[0] == "EMPTY") {
-            false -> selectBox.items[0].substring(1).stringToList().toMutableList()
+        val selected = getOverrideVar(weaponOverrideSelected, varIdx).toString().replace(";", "; ").stringToList(";")
+        return when (selected.isEmpty()) {
+            false -> selected.toMutableList()
             true -> mutableListOf()
         }
     }

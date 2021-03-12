@@ -88,7 +88,7 @@ class SkinChangerTab : Tab(false, false) {
             if (!weaponSelectionBox.selected.isNullOrEmpty()) {
                 weaponSelected = weaponSelectionBox.selected
 
-                val skinWep = curSettings["SKIN_$weaponSelected"].toSkinWeaponClass()
+                val skinWep = skSettings["SKIN_$weaponSelected"].toSkinWeaponClass()
 
                 skinIDInput.text = skinWep.tSkinID.toString()
                 skinStatTrak.text = skinWep.tStatTrak.toString()
@@ -104,7 +104,7 @@ class SkinChangerTab : Tab(false, false) {
 
         skinSelectionList.setItemClickListener { str ->
             if (!str.isNullOrEmpty()) {
-                val skinWep = curSettings["SKIN_$weaponSelected"].toSkinWeaponClass()
+                val skinWep = skSettings["SKIN_$weaponSelected"].toSkinWeaponClass()
                 skinIDInput.text = getSkinIDFromName(str, weaponSelected).toString()
                 //Dont need to edit stat trak value
                 minValue = getMinValueFromID(skinIDInput.text.toInt())
@@ -122,26 +122,26 @@ class SkinChangerTab : Tab(false, false) {
                     wearLabel.setText(maxValue.toString())
                 }
 
-                curSettings["SKIN_$weaponSelected"] = skinWep.toString()
+                skSettings["SKIN_$weaponSelected"] = skinWep.toString()
                 forcedUpdate()
             }
         }
 
         skinIDInput.changed { _, _ ->
-            val skinWep = curSettings["SKIN_$weaponSelected"].toSkinWeaponClass()
+            val skinWep = skSettings["SKIN_$weaponSelected"].toSkinWeaponClass()
             if (skinIDInput.isInputValid) {
                 skinWep.tSkinID = skinIDInput.text.toInt()
-                curSettings["SKIN_$weaponSelected"] = skinWep.toString()
+                skSettings["SKIN_$weaponSelected"] = skinWep.toString()
             }
 
             true
         }
 
         skinStatTrak.changed { _, _ ->
-            val skinWep = curSettings["SKIN_$weaponSelected"].toSkinWeaponClass()
+            val skinWep = skSettings["SKIN_$weaponSelected"].toSkinWeaponClass()
             if (skinStatTrak.isInputValid) {
                 skinWep.tStatTrak = skinStatTrak.text.toInt()
-                curSettings["SKIN_$weaponSelected"] = skinWep.toString()
+                skSettings["SKIN_$weaponSelected"] = skinWep.toString()
             }
         }
 
@@ -160,9 +160,9 @@ class SkinChangerTab : Tab(false, false) {
                 }
             }
 
-            val skinWep = curSettings["SKIN_$weaponSelected"].toSkinWeaponClass()
+            val skinWep = skSettings["SKIN_$weaponSelected"].toSkinWeaponClass()
             skinWep.tWear = skinWear.value
-            curSettings["SKIN_$weaponSelected"] = skinWep.toString()
+            skSettings["SKIN_$weaponSelected"] = skinWep.toString()
             true
         }
 

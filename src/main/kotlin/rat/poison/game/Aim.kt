@@ -8,7 +8,6 @@ import rat.poison.game.entity.position
 import rat.poison.game.entity.punch
 import rat.poison.game.netvars.NetVarOffsets.vecViewOffset
 import rat.poison.utils.*
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toInt
 import java.lang.Math.toDegrees
 import kotlin.math.atan
@@ -27,15 +26,15 @@ fun getCalculatedAngle(player: Player, dst: Vector): Angle {
 
 	val hyp = sqrt((dX * dX) + (dY * dY))
 
-	val rcsXVariation = curSettings["AIM_RCS_VARIATION"].toDouble()
-	val rcsYVariation = curSettings["AIM_RCS_VARIATION"].toDouble()
+	val rcsXVariation = curSettings.double["AIM_RCS_VARIATION"]
+	val rcsYVariation = curSettings.double["AIM_RCS_VARIATION"]
 
-	if (curSettings["FACTOR_RECOIL"].strToBool()) {
-		if (curSettings["AIM_ADVANCED"].strToBool()) {
+	if (curSettings.bool["FACTOR_RECOIL"]) {
+		if (curSettings.bool["AIM_ADVANCED"]) {
 			val randX = if (rcsXVariation > 0F) randDouble(0.0, rcsXVariation).toFloat() * randBoolean().toInt() else 0F
 			val randY = if (rcsYVariation > 0F) randDouble(0.0, rcsYVariation).toFloat() * randBoolean().toInt() else 0F
-			val calcX = toDegrees(atan(dZ / hyp).toDouble()) - myPunch.x * clamp(1F + curSettings["AIM_RCS_Y"].toFloat() + randX, 1F, 2F)
-			val calcY = toDegrees(atan(dY / dX).toDouble()) - myPunch.y * clamp(1F + curSettings["AIM_RCS_X"].toFloat() + randY, 1F, 2F)
+			val calcX = toDegrees(atan(dZ / hyp).toDouble()) - myPunch.x * clamp(1F + curSettings.float["AIM_RCS_Y"] + randX, 1F, 2F)
+			val calcY = toDegrees(atan(dY / dX).toDouble()) - myPunch.y * clamp(1F + curSettings.float["AIM_RCS_X"] + randY, 1F, 2F)
 			ang.x = calcX.toFloat()
 			ang.y = calcY.toFloat()
 		} else {
@@ -63,15 +62,15 @@ fun realCalcAngle(player: Player, dst: Vector): Angle {
 	var aX = toDegrees(atan2(-delta.z, sqrt(delta.x*delta.x + delta.y*delta.y)).toDouble())
 	var aY = toDegrees(atan2(delta.y, delta.x).toDouble())
 
-	val rcsXVariation = curSettings["AIM_RCS_VARIATION"].toDouble()
-	val rcsYVariation = curSettings["AIM_RCS_VARIATION"].toDouble()
+	val rcsXVariation = curSettings.double["AIM_RCS_VARIATION"]
+	val rcsYVariation = curSettings.double["AIM_RCS_VARIATION"]
 
-	if (curSettings["FACTOR_RECOIL"].strToBool()) {
-		if (curSettings["AIM_ADVANCED"].strToBool()) {
+	if (curSettings.bool["FACTOR_RECOIL"]) {
+		if (curSettings.bool["AIM_ADVANCED"]) {
 			val randX = if (rcsXVariation > 0.0) randDouble(0.0, rcsXVariation) * randBoolean().toInt() else 0.0
 			val randY = if (rcsYVariation > 0.0) randDouble(0.0, rcsYVariation) * randBoolean().toInt() else 0.0
-			val calcX = myPunch.x * clamp(1.0 + curSettings["AIM_RCS_Y"].toDouble() + randX, 1.0, 2.0)
-			val calcY = myPunch.y * clamp(1.0 + curSettings["AIM_RCS_X"].toDouble() + randY, 1.0, 2.0)
+			val calcX = myPunch.x * clamp(1.0 + curSettings.double["AIM_RCS_Y"] + randX, 1.0, 2.0)
+			val calcY = myPunch.y * clamp(1.0 + curSettings.double["AIM_RCS_X"] + randY, 1.0, 2.0)
 			aX -= calcX
 			aY -= calcY
 		} else {

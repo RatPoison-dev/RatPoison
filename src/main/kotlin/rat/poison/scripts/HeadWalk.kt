@@ -15,7 +15,6 @@ import rat.poison.scripts.aim.meDead
 import rat.poison.utils.Angle
 import rat.poison.utils.Vector
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.keyPressed
 import java.awt.event.KeyEvent
 import kotlin.math.abs
@@ -33,7 +32,7 @@ var mePos = Vector()
 var onEntPos = Vector()
 
 internal fun headWalk() = every(2, inGameCheck = true) {
-    if (!curSettings["HEAD_WALK"].strToBool() || meDead) return@every
+    if (!curSettings.bool["HEAD_WALK"] || meDead) return@every
 
     if (!keyPressed(KeyEvent.VK_W) && !keyPressed(KeyEvent.VK_A) && !keyPressed(KeyEvent.VK_S) && !keyPressed(KeyEvent.VK_D)) {
         mePos = me.absPosition()

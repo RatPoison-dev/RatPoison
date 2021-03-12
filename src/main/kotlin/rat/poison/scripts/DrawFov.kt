@@ -12,17 +12,15 @@ import rat.poison.overlay.App
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColor
 import rat.poison.utils.inGame
 import java.lang.Math.toDegrees
 import java.lang.Math.toRadians
 
 fun drawFov() = App {
-    if (!curSettings["ENABLE_ESP"].strToBool() || MENUTOG || !inGame || meDead)
+    if (!curSettings.bool["ENABLE_ESP"] || MENUTOG || !inGame || meDead)
         return@App
 
-    if (!curSettings["DRAW_AIM_FOV"].strToBool() && !curSettings["DRAW_TRIGGER_FOV"].strToBool())
+    if (!curSettings.bool["DRAW_AIM_FOV"] && !curSettings.bool["DRAW_TRIGGER_FOV"])
         return@App
 
     if (curSettings["FOV_TYPE"].replace("\"", "") != "STATIC")
@@ -43,15 +41,15 @@ fun drawFov() = App {
     var triggerRadius = -1F
 
     if (meCurWep.gun) { //Not 100% this applies to every 'gun'
-        bFOV = curSettings["TRIGGER_FOV"].toFloat()
-        bINFOV = curSettings["TRIGGER_USE_FOV"].strToBool()
+        bFOV = curSettings.float["TRIGGER_FOV"]
+        bINFOV = curSettings.bool["TRIGGER_USE_FOV"]
         triggerRadius = calcFovRadius(viewFov, bFOV)
     }
 
-    val aimRadius = calcFovRadius(viewFov, curSettings["AIM_FOV"].toFloat())
+    val aimRadius = calcFovRadius(viewFov, curSettings.float["AIM_FOV"])
 
-    val rccXo = curSettings["RCROSSHAIR_XOFFSET"].toFloat()
-    val rccYo = curSettings["RCROSSHAIR_YOFFSET"].toFloat()
+    val rccXo = curSettings.float["RCROSSHAIR_XOFFSET"]
+    val rccYo = curSettings.float["RCROSSHAIR_YOFFSET"]
     val x = CSGO.gameWidth / 2 + rccXo
     val y = CSGO.gameHeight / 2 + rccYo
 
@@ -62,14 +60,14 @@ fun drawFov() = App {
 
         begin()
 
-        if (curSettings["DRAW_AIM_FOV"].strToBool()) {
-            val col = curSettings["DRAW_AIM_FOV_COLOR"].strToColor()
+        if (curSettings.bool["DRAW_AIM_FOV"]) {
+            val col = curSettings.color["DRAW_AIM_FOV_COLOR"]
             setColor(col.red / 255F, col.green / 255F, col.blue / 255F, 1F)
             circle(x, y, clamp(aimRadius, 10F, 1000F))
         }
 
-        if (curSettings["ENABLE_TRIGGER"].strToBool() && curSettings["DRAW_TRIGGER_FOV"].strToBool() && triggerRadius != -1F && bINFOV) {
-            val col = curSettings["DRAW_TRIGGER_FOV_COLOR"].strToColor()
+        if (curSettings.bool["ENABLE_TRIGGER"] && curSettings.bool["DRAW_TRIGGER_FOV"] && triggerRadius != -1F && bINFOV) {
+            val col = curSettings.color["DRAW_TRIGGER_FOV_COLOR"]
             setColor(col.red / 255F, col.green / 255F, col.blue / 255F, 1F)
             circle(x, y, clamp(triggerRadius, 10F, 1000F))
         }

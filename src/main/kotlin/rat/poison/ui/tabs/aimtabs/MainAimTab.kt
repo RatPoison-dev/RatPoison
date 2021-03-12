@@ -21,7 +21,6 @@ import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
 import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.generalUtil.boolToStr
-import rat.poison.utils.generalUtil.strToBool
 
 class MainAimTab: Tab(true, false) {
     private val table = VisTable()
@@ -127,24 +126,24 @@ class MainAimTab: Tab(true, false) {
         aimAfterShots.disable(true, Color(255F, 255F, 255F, 0F))
 
         //Create Scoped Only Toggle
-        enableScopedOnly.isChecked = curSettings["SNIPER_ENABLE_SCOPED_ONLY"].strToBool()
+        enableScopedOnly.isChecked = curSettings.bool["SNIPER_ENABLE_SCOPED_ONLY"]
         enableScopedOnly.color = Color(255F, 255F, 255F, 0F)
         enableScopedOnly.isDisabled = true
 
         //Create Perfect Aim Collapsible Check Box
-        perfectAimCheckBox.isChecked = curSettings[categorySelected + "_PERFECT_AIM"].strToBool()
+        perfectAimCheckBox.isChecked = curSettings.bool[categorySelected + "_PERFECT_AIM"]
         perfectAimCheckBox.changed { _, _ ->
             curSettings[categorySelected + "_PERFECT_AIM"] = perfectAimCheckBox.isChecked.boolToStr()
             perfectAimCollapsible.setCollapsed(!perfectAimCollapsible.isCollapsed, true)
         }
 
-        perfectAimCollapsible.setCollapsed(!curSettings[categorySelected + "_PERFECT_AIM"].strToBool(), true)
+        perfectAimCollapsible.setCollapsed(!curSettings.bool[categorySelected + "_PERFECT_AIM"], true)
         perfectAimTable.add(perfectAimFov).left().row()
         perfectAimTable.add(perfectAimChance).left().row()
         //End Perfect Aim Collapsible Check Box
 
         //Create Advanced Aim Settings Collapsible
-        advancedSettingsCheckBox.isChecked = curSettings[categorySelected + "_ADVANCED_SETTINGS"].strToBool()
+        advancedSettingsCheckBox.isChecked = curSettings.bool[categorySelected + "_ADVANCED_SETTINGS"]
         advancedSettingsCheckBox.changed { _, _ ->
             curSettings[categorySelected + "_ADVANCED_SETTINGS"] = advancedSettingsCheckBox.isChecked.boolToStr()
             advancedSettingsCollapsible.setCollapsed(!advancedSettingsCollapsible.isCollapsed, true)
@@ -154,7 +153,7 @@ class MainAimTab: Tab(true, false) {
             updateDisableDrawFOV()
         }
 
-        advancedSettingsCollapsible.setCollapsed(!curSettings[categorySelected + "_ADVANCED_SETTINGS"].strToBool(), true)
+        advancedSettingsCollapsible.setCollapsed(!curSettings.bool[categorySelected + "_ADVANCED_SETTINGS"], true)
 
         advancedSettingsTable.add(randomizeX).left().row()
         advancedSettingsTable.add(randomizeY).left().row()

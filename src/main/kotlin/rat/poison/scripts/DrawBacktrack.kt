@@ -10,23 +10,22 @@ import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.visuals.lineThroughSmoke
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.Vector
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
 import rat.poison.utils.keyPressed
 
 fun drawBacktrack() = App {
     if (MENUTOG) return@App
     if (meDead) return@App
-    if (!inGame || !curSettings["BACKTRACK_VISUALIZE"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["ENABLE_BACKTRACK"].strToBool()) return@App
+    if (!inGame || !curSettings.bool["BACKTRACK_VISUALIZE"] || !curSettings.bool["ENABLE_ESP"] || !curSettings.bool["ENABLE_BACKTRACK"]) return@App
 
-    val backtrackOnKey = curSettings["ENABLE_BACKTRACK_ON_KEY"].strToBool()
-    val backtrackKeyPressed = keyPressed(curSettings["BACKTRACK_KEY"].toInt())
+    val backtrackOnKey = curSettings.bool["ENABLE_BACKTRACK_ON_KEY"]
+    val backtrackKeyPressed = keyPressed(curSettings.int["BACKTRACK_KEY"])
 
     if (backtrackOnKey && !backtrackKeyPressed) return@App
 
     if (!meCurWep.gun) return@App
 
-    if (curSettings["BACKTRACK_VISUALIZE_SMOKE_CHECK"].strToBool() && lineThroughSmoke(me)) return@App
+    if (curSettings.bool["BACKTRACK_VISUALIZE_SMOKE_CHECK"] && lineThroughSmoke(me)) return@App
 
     for (i in 0 until 63) {
         if (btRecords[i][0].simtime == 0F) continue

@@ -19,7 +19,6 @@ import rat.poison.ui.tabs.aimtabs.MainAimTab
 import rat.poison.ui.tabs.aimtabs.OverrideTab
 import rat.poison.ui.tabs.aimtabs.TriggerBotTab
 import rat.poison.ui.uiPanels.aimTab
-import rat.poison.utils.generalUtil.strToBool
 
 var categorySelected = "PISTOL"
 val gunCategories = arrayOf("PISTOL", "RIFLE", "SMG", "SNIPER", "SHOTGUN")
@@ -138,7 +137,7 @@ fun updateDisableAim() {
 }
 
 fun updateAim() {
-    overridenWeapons.weaponOverrideCheckBox.isChecked = curSettings["ENABLE_OVERRIDE"].strToBool()
+    overridenWeapons.weaponOverrideCheckBox.update()
     aimTab.tAim.apply {
         categorySelectLabel.setText("${"Weapon-Category".toLocale()}:") //Do not like this
         //Create Category Selector Box
@@ -196,16 +195,16 @@ fun updateAim() {
         aimSpeed.update()
         aimSmooth.update()
         aimAfterShots.update()
-        perfectAimCheckBox.isChecked = curSettings[categorySelected + "_PERFECT_AIM"].strToBool()
-        perfectAimCollapsible.isCollapsed = !curSettings[categorySelected + "_PERFECT_AIM"].strToBool()
+        perfectAimCheckBox.isChecked = curSettings.bool[categorySelected + "_PERFECT_AIM"]
+        perfectAimCollapsible.isCollapsed = !curSettings.bool[categorySelected + "_PERFECT_AIM"]
         perfectAimFov.update()
         perfectAimChance.update()
 
         randomizeX.update()
         randomizeY.update()
         randomizeDZ.update()
-        advancedSettingsCheckBox.isChecked = curSettings[categorySelected + "_ADVANCED_SETTINGS"].strToBool()
-        advancedSettingsCollapsible.isCollapsed = !curSettings[categorySelected + "_ADVANCED_SETTINGS"].strToBool()
+        advancedSettingsCheckBox.isChecked = curSettings.bool[categorySelected + "_ADVANCED_SETTINGS"]
+        advancedSettingsCollapsible.isCollapsed = !curSettings.bool[categorySelected + "_ADVANCED_SETTINGS"]
         advancedRcsX.update()
         advancedRcsY.update()
         advancedRcsVariation.update()

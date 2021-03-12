@@ -3,16 +3,16 @@ package rat.poison.scripts.visuals
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import rat.poison.curSettings
+import rat.poison.dbg
 import rat.poison.game.CSGO
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.curWepCategory
 import rat.poison.scripts.aim.curWepOverride
 import rat.poison.scripts.aim.curWepSettings
 import rat.poison.scripts.aim.meCurWep
-import rat.poison.utils.generalUtil.strToBool
 
 fun drawDebug() = App {
-    if (!curSettings["DEBUG"].strToBool()) return@App
+    if (!dbg) return@App
 
     val txtString = StringBuilder()
 

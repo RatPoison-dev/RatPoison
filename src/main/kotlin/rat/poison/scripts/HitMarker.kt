@@ -13,9 +13,6 @@ import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColor
-import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.inGame
 
 var hitMarkerAlpha = 0F
@@ -23,7 +20,7 @@ var hitMarkerCombo = 0
 private var totalHits = 0
 
 fun hitMarker() = App {
-    if ((!curSettings["ENABLE_HITMARKER"].strToBool() && !curSettings["HITMARKER_COMBO"].strToBool()) || !curSettings["ENABLE_ESP"].strToBool() || MENUTOG || meDead || !inGame) return@App
+    if ((!curSettings.bool["ENABLE_HITMARKER"] && !curSettings.bool["HITMARKER_COMBO"]) || !curSettings.bool["ENABLE_ESP"] || MENUTOG || meDead || !inGame) return@App
 
     val curHits = csgoEXE.int(me + m_totalHitsOnServer)
 
@@ -36,7 +33,7 @@ fun hitMarker() = App {
         hitMarkerCombo++
         totalHits = curHits
 
-        if (curSettings["ENABLE_ADRENALINE"].strToBool()) {
+        if (curSettings.bool["ENABLE_ADRENALINE"]) {
             val cGT = currentGameTicks()
             csgoEXE[me + m_flHealthShotBoostExpirationTime] = cGT + clamp((hitMarkerCombo * .5F), 0F, 2.5F)
         }
@@ -46,10 +43,10 @@ fun hitMarker() = App {
         val x: Float
         val y: Float
 
-        val rccXo = curSettings["RCROSSHAIR_XOFFSET"].toFloat()
-        val rccYo = curSettings["RCROSSHAIR_YOFFSET"].toFloat()
+        val rccXo = curSettings.float["RCROSSHAIR_XOFFSET"]
+        val rccYo = curSettings.float["RCROSSHAIR_YOFFSET"]
 
-        if (curSettings["HITMARKER_RECOIL_POSITION"].strToBool()) {
+        if (curSettings.bool["HITMARKER_RECOIL_POSITION"]) {
             val punch = me.punch()
 
             //Center
@@ -62,9 +59,9 @@ fun hitMarker() = App {
             y = CSGO.gameHeight / 2 + rccYo
         }
 
-        val hMS = curSettings["HITMARKER_SPACING"].toInt()
-        val hMLL = curSettings["HITMARKER_LENGTH"].toInt()
-        val hMLW = curSettings["HITMARKER_WIDTH"].toFloat()
+        val hMS = curSettings.int["HITMARKER_SPACING"]
+        val hMLL = curSettings.int["HITMARKER_LENGTH"]
+        val hMLW = curSettings.float["HITMARKER_WIDTH"]
 
         shapeRenderer.apply {
             if (isDrawing) {
@@ -76,9 +73,9 @@ fun hitMarker() = App {
 
             var col : rat.poison.game.Color
 
-            if (curSettings["ENABLE_HITMARKER"].strToBool()) {
-                if (curSettings["HITMARKER_OUTLINE"].strToBool()) { //Outline
-                    col = curSettings["HITMARKER_OUTLINE_COLOR"].strToColor()
+            if (curSettings.bool["ENABLE_HITMARKER"]) {
+                if (curSettings.bool["HITMARKER_OUTLINE"]) { //Outline
+                    col = curSettings.color["HITMARKER_OUTLINE_COLOR"]
                     setColor(col.red / 255F, col.green / 255F, col.blue / 255F, hitMarkerAlpha)
 
                     rectLine(x + hMS - 1F, y + hMS - 1F, x + hMS + hMLL + 1F, y + hMS + hMLL + 1F, hMLW + 2F) //Top right
@@ -88,7 +85,7 @@ fun hitMarker() = App {
                 }
 
 
-                col = curSettings["HITMARKER_COLOR"].strToColor()
+                col = curSettings.color["HITMARKER_COLOR"]
                 setColor(col.red / 255F, col.green / 255F, col.blue / 255F, hitMarkerAlpha)
 
                 rectLine(x + hMS, y + hMS, x + hMS + hMLL, y + hMS + hMLL, hMLW) //Top right
@@ -101,7 +98,7 @@ fun hitMarker() = App {
             end()
         }
 
-        if (curSettings["HITMARKER_COMBO"].strToBool()) {
+        if (curSettings.bool["HITMARKER_COMBO"]) {
             if (hitMarkerCombo >= 2) {
                 if (sb.isDrawing) {
                     sb.end()
@@ -113,7 +110,7 @@ fun hitMarker() = App {
 
                 hitMarkerComboSB.append("x$hitMarkerCombo")
 
-                val col = curSettings["HITMARKER_COMBO_COLOR"].strToColorGDX()
+                val col = curSettings.colorGDX["HITMARKER_COMBO_COLOR"]
                 col.a = hitMarkerAlpha
 
                 textRenderer.color = col

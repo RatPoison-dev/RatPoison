@@ -22,7 +22,6 @@ import rat.poison.utils.Structs.*
 import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.generalUtil.strToBool
 import kotlin.math.abs
 import kotlin.math.atan
 import kotlin.math.tan
@@ -54,13 +53,13 @@ fun updateGVars() = every(15, true, inGameCheck = true){
 }
 
 fun setupBacktrack() = every(4, true, inGameCheck = true) {
-    if (!curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0 || !haveGvars) return@every
+    if (!curSettings.bool["ENABLE_BACKTRACK"] || me <= 0 || !haveGvars) return@every
 
     constructRecords()
 }
 
 fun attemptBacktrack(): Boolean {
-    if (((curSettings["BACKTRACK_SPOTTED"].strToBool() && bestBacktrackTarget.spotted()) || !curSettings["BACKTRACK_SPOTTED"].strToBool()) && bestBacktrackTarget > 0L && haveGvars) {
+    if (((curSettings.bool["BACKTRACK_SPOTTED"] && bestBacktrackTarget.spotted()) || !curSettings.bool["BACKTRACK_SPOTTED"]) && bestBacktrackTarget > 0L && haveGvars) {
         inBacktrack = true
 
         //Get/set vars
@@ -138,7 +137,7 @@ fun constructRecords() {
 
         //Best target shit
         val pos = ent.bones(6)
-        val fov = calcTarget(bestFov, bestBacktrackTarget, pos, clientAngle, 5F, 6, ovrStatic = true)[0] as Float
+        val fov = calcTarget(bestFov, bestBacktrackTarget, pos, clientAngle, 5F, 6, ovrStatic = true).fov
         if (fov < bestFov && fov > 0) {
             bestFov = fov
             bestBacktrackTarget = ent
@@ -248,7 +247,7 @@ fun isValidTick(tick: Int): Boolean {
     val delta = gvars.tickCount - tick
     val deltaTime = delta * gvars.intervalPerTick
 
-    var backtrackMS = curSettings["${curWepCategory}_BACKTRACK_MS"].toFloat()
+    var backtrackMS = curSettings.float["${curWepCategory}_BACKTRACK_MS"]
     if (curWepOverride && curWepSettings.tBacktrack) {
         backtrackMS = curWepSettings.tBTMS.toFloat()
     }
@@ -262,10 +261,10 @@ fun timeToTicks(time: Float): Int {
     return (.5f + time / gvars.intervalPerTick).toInt()
 }
 
-fun getRangeRecords(entID: Int, minIDX: Int = 0, maxIDX: Int = 13): Array<Int> {
+fun getRangeRecords(entID: Int, minIDX: Int = 0, maxIDX: Int = 13): IntArray {
     var youngestSimtime = Float.MAX_VALUE
     var oldestSimtime = 0F
-    val minMaxIDX = arrayOf(Int.MAX_VALUE, -1)
+    val minMaxIDX = intArrayOf(Int.MAX_VALUE, -1)
 
     for (i in minIDX until maxIDX) {
         val record = btRecords[entID][i]

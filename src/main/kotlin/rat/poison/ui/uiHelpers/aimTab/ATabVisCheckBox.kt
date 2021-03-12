@@ -1,5 +1,6 @@
 package rat.poison.ui.uiHelpers.aimTab
 
+import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisCheckBox
 import rat.poison.curLocale
 import rat.poison.curSettings
@@ -14,9 +15,13 @@ import rat.poison.utils.generalUtil.strToBool
 class ATabVisCheckBox(text: String, varExtension: String) : VisCheckBox(text) {
     private val mainText = text
     private val variableExtension = varExtension
+    private var hasTooltip = false
 
     init {
         update()
+
+        updateTooltip()
+
         changed { _, _ ->
             curSettings[categorySelected + variableExtension] = isChecked.boolToStr()
 
@@ -50,6 +55,28 @@ class ATabVisCheckBox(text: String, varExtension: String) : VisCheckBox(text) {
             }
             else {
                 setText(curLocale[variableExtension])
+            }
+        }
+
+        updateTooltip()
+
+    }
+
+    private fun updateTooltip() {
+        if (curSettings.bool["MENU_TOOLTIPS"]) {
+            if (curLocale["${variableExtension}_TOOLTIP"] != "") {
+                if (!hasTooltip) {
+                    Tooltip.Builder(curLocale["${variableExtension}_TOOLTIP"]).target(this).build()
+                    hasTooltip = true
+                    if (dbg) {
+                        println("[DEBUG] Added tooltip to $variableExtension")
+                    }
+                }
+            }
+        } else {
+            if (hasTooltip) {
+                Tooltip.removeTooltip(this)
+                hasTooltip = false
             }
         }
     }

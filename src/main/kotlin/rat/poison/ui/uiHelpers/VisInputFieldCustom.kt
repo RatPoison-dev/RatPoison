@@ -9,7 +9,6 @@ import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.keybindsUpdate
-import rat.poison.utils.generalUtil.strToBool
 
 class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true, keyWidth: Float = 200F) : VisTable() {
     private val textLabel = mainText
@@ -64,7 +63,7 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
     }
 
     private fun updateTooltip() {
-        if (curSettings["MENU_TOOLTIPS"].strToBool()) {
+        if (curSettings.bool["MENU_TOOLTIPS"]) {
             if (curLocale["${variableName}_TOOLTIP"] != "") {
                 if (!hasTooltip) {
                     Tooltip.Builder(curLocale["${variableName}_TOOLTIP"]).target(this).build()

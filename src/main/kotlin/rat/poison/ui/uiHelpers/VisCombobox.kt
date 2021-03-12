@@ -9,10 +9,11 @@ import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
+import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.stringToList
+import rat.poison.utils.generalUtil.stringToLocaleList
 
 //r.rat
 class VisCombobox(mainText: String, varName: String, useCategory: Boolean = false, private val showText: Boolean = true, vararg items: String): VisTable() {
@@ -31,13 +32,13 @@ class VisCombobox(mainText: String, varName: String, useCategory: Boolean = fals
         update()
 
         selectBox.changed { _, _ ->
-            val selected = selectBox.selected
+            if (selectBox.selectedIndex == 0) return@changed true
+            val selected = boxItems[selectBox.selectedIndex-1] // actual index
             val includes = selected in selectedList
-            val inList = selected in boxItems
-            if (includes && inList) {
+            if (includes) {
                 selectedList.remove(selected)
             }
-            else if (!includes && inList) {
+            else if (!includes) {
                 selectedList.add(selected)
             }
             else {
@@ -71,7 +72,7 @@ class VisCombobox(mainText: String, varName: String, useCategory: Boolean = fals
     }
 
     private fun updateTooltip() {
-        if (curSettings["MENU_TOOLTIPS"].strToBool()) {
+        if (curSettings.bool["MENU_TOOLTIPS"]) {
             if (curLocale["${variableName}_TOOLTIP"] != "") {
                 if (!hasTooltip) {
                     Tooltip.Builder(curLocale["${variableName}_TOOLTIP"]).target(this).build()
@@ -109,10 +110,10 @@ class VisCombobox(mainText: String, varName: String, useCategory: Boolean = fals
     }
 
     private fun getBoxString(): String {
-        val myList = curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }].stringToList()
+        val myList = curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }].stringToLocaleList()
         return when (myList.isNotEmpty()) {
             true -> myList.joinToString(", ", ">")
-            false -> "EMPTY"
+            false -> "EMPTY".toLocale()
         }
     }
 
@@ -124,8 +125,9 @@ class VisCombobox(mainText: String, varName: String, useCategory: Boolean = fals
     }
 
     private fun selectedToMutableList(): MutableList<String> {
-        return when (selectBox.items[0] == "EMPTY") {
-            false -> selectBox.items[0].substring(1).stringToList().toMutableList()
+        val selected = curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }].stringToList()
+        return when (selected.isEmpty()) {
+            false -> selected.toMutableList()
             true -> mutableListOf()
         }
     }

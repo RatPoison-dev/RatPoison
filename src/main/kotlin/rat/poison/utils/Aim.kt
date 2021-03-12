@@ -28,9 +28,9 @@ fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: 
 		smooth = 1F
 	}
 
-	var randX = if (curSettings["AIM_RANDOM_X_VARIATION"].toInt() > 0) randInt(0, curSettings["AIM_RANDOM_X_VARIATION"].toInt()) * randSign() else 0
-	var randY = if (curSettings["AIM_RANDOM_Y_VARIATION"].toInt() > 0) randInt(0, curSettings["AIM_RANDOM_Y_VARIATION"].toInt()) * randSign() else 0
-	val randDZ = curSettings["AIM_VARIATION_DEADZONE"].toInt() / 100F
+	var randX = if (curSettings.int["AIM_RANDOM_X_VARIATION"] > 0) randInt(0, curSettings.int["AIM_RANDOM_X_VARIATION"]) * randSign() else 0
+	var randY = if (curSettings.int["AIM_RANDOM_Y_VARIATION"] > 0) randInt(0, curSettings.int["AIM_RANDOM_Y_VARIATION"]) * randSign() else 0
+	val randDZ = curSettings.int["AIM_VARIATION_DEADZONE"] / 100F
 
 	if (x in -randDZ..randDZ && y in -randDZ..randDZ) {
 		randX = 0
@@ -76,9 +76,9 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 
 	val target = POINT()
 
-	var randX = if (curSettings["AIM_RANDOM_X_VARIATION"].toInt() > 0) randInt(0, curSettings["AIM_RANDOM_X_VARIATION"].toInt()) * randSign() else 0
-	var randY = if (curSettings["AIM_RANDOM_Y_VARIATION"].toInt() > 0) randInt(0, curSettings["AIM_RANDOM_Y_VARIATION"].toInt()) * randSign() else 0
-	val randDZ = curSettings["AIM_VARIATION_DEADZONE"].toInt()
+	var randX = if (curSettings.int["AIM_RANDOM_X_VARIATION"] > 0) randInt(0, curSettings.int["AIM_RANDOM_X_VARIATION"]) * randSign() else 0
+	var randY = if (curSettings.int["AIM_RANDOM_Y_VARIATION"] > 0) randInt(0, curSettings.int["AIM_RANDOM_Y_VARIATION"]) * randSign() else 0
+	val randDZ = curSettings.int["AIM_VARIATION_DEADZONE"]
 
 	if (dx.toInt() in -randDZ..randDZ && dy.toInt() in -randDZ..randDZ) {
 		randX = 0

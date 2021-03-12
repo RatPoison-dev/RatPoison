@@ -15,7 +15,7 @@ fun automaticWeapons(): Boolean {
         updateCursorEnable()
         if (!cursorEnable && !meDead) {
             if (!meCurWep.automatic && !meCurWep.grenade && !meCurWep.bomb) {
-                val autoWepDelay = clamp(curSettings["AUTO_WEP_DELAY"].toInt(), 1, 5000)
+                val autoWepDelay = clamp(curSettings.int["AUTO_WEP_DELAY"], 1, 5000)
 
                 if (punchCheck >= autoWepDelay) {
                     punchCheck = 0

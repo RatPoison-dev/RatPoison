@@ -9,7 +9,6 @@ import rat.poison.ui.uiPanels.keybindsUpdate
 import rat.poison.utils.gdxButtons
 import rat.poison.utils.gdxToVk
 import rat.poison.utils.vkKeycodeToString
-import kotlin.collections.set
 
 lateinit var needKeyPressVar : String
 lateinit var needKeyPressActor : PrivateVisBindsButtonCustom
@@ -18,7 +17,7 @@ class KeyProcessorListener : IOKeyProcessorListener {
 
     override fun onPress(keycode: Int, type: String) {
         var newKey = if (type == "button") gdxToVk[keycode]!! else gdxButtons[keycode]!!
-        curSettings[needKeyPressVar] = when (newKey != 46 && newKey != 27 && newKey != curSettings["MENU_KEY"].toInt()) {
+        curSettings[needKeyPressVar] = when (newKey != 46 && newKey != 27 && newKey != curSettings.int["MENU_KEY"]) {
             true -> newKey
             false -> -1
         }
@@ -44,6 +43,6 @@ class PrivateVisBindsButtonCustom(varName: String): VisTextButton("_") {
     }
 
     fun update() {
-        this.setText(vkKeycodeToString(curSettings[variableName].toInt()))
+        this.setText(vkKeycodeToString(curSettings.int[variableName]))
     }
 }

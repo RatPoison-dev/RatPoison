@@ -8,8 +8,6 @@ import rat.poison.overlay.App
 import rat.poison.overlay.App.shapeRenderer
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
-import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColor
 import rat.poison.utils.inGame
 import rat.poison.utils.normalize
 import kotlin.math.atan2
@@ -18,7 +16,7 @@ import kotlin.math.hypot
 import kotlin.math.sin
 
 fun indicatorEsp() = App {
-    if (!curSettings["ENABLE_ESP"].strToBool() || !curSettings["INDICATOR_ESP"].strToBool() || !inGame) return@App
+    if (!curSettings.bool["ENABLE_ESP"] || !curSettings.bool["INDICATOR_ESP"] || !inGame) return@App
 
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()
@@ -33,24 +31,24 @@ fun indicatorEsp() = App {
             EntityType.CCSPlayer -> {
                 if (entity.dead() || entity == me || entity.dormant()) return@forEntities
 
-                if (curSettings["INDICATOR_SMOKE_CHECK"].strToBool() && lineThroughSmoke(entity)) return@forEntities
+                if (curSettings.bool["INDICATOR_SMOKE_CHECK"] && lineThroughSmoke(entity)) return@forEntities
 
                 if (bEnt > 0 && bEnt == entity) { //This is the bomb carrier
-                    if (curSettings["INDICATOR_SHOW_ENEMIES"].strToBool() && !onTeam) {
-                        color = when (curSettings["INDICATOR_SHOW_BOMB_CARRIER"].strToBool()) {
+                    if (curSettings.bool["INDICATOR_SHOW_ENEMIES"] && !onTeam) {
+                        color = when (curSettings.bool["INDICATOR_SHOW_BOMB_CARRIER"]) {
                             true -> "INDICATOR_BOMB_CARRIER_COLOR"
                             false -> "INDICATOR_ENEMY_COLOR"
                         }
-                    } else if (curSettings["INDICATOR_SHOW_TEAM"].strToBool() && onTeam) {
-                        color = when (curSettings["INDICATOR_SHOW_BOMB_CARRIER"].strToBool()) {
+                    } else if (curSettings.bool["INDICATOR_SHOW_TEAM"] && onTeam) {
+                        color = when (curSettings.bool["INDICATOR_SHOW_BOMB_CARRIER"]) {
                             true -> "INDICATOR_BOMB_CARRIER_COLOR"
                             false -> "INDICATOR_TEAM_COLOR"
                         }
                     }
                 } else {
-                    if (!curSettings["INDICATOR_SHOW_TEAM"].strToBool() && onTeam) {
+                    if (!curSettings.bool["INDICATOR_SHOW_TEAM"] && onTeam) {
                         return@forEntities
-                    } else if (!curSettings["INDICATOR_SHOW_ENEMIES"].strToBool()) {
+                    } else if (!curSettings.bool["INDICATOR_SHOW_ENEMIES"]) {
                         return@forEntities
                     } else {
                         color = when (!onTeam) {
@@ -62,28 +60,28 @@ fun indicatorEsp() = App {
             }
 
             EntityType.CPlantedC4, EntityType.CC4 -> {
-                if (curSettings["INDICATOR_SHOW_BOMB"].strToBool()) {
+                if (curSettings.bool["INDICATOR_SHOW_BOMB"]) {
                     color = "INDICATOR_BOMB_COLOR"
                 }
             }
 
             else -> {
-                if (curSettings["INDICATOR_SHOW_WEAPONS"].strToBool() && it.type.weapon) {
+                if (curSettings.bool["INDICATOR_SHOW_WEAPONS"] && it.type.weapon) {
                     color = "INDICATOR_WEAPON_COLOR"
-                } else if (curSettings["INDICATOR_SHOW_GRENADES"].strToBool() && it.type.grenade) {
+                } else if (curSettings.bool["INDICATOR_SHOW_GRENADES"] && it.type.grenade) {
                     color = "INDICATOR_GRENADE_COLOR"
                 }
             }
         }
 
         if (color != "") {
-            drawIndicator(entity, curSettings[color].strToColor())
+            drawIndicator(entity, curSettings.color[color])
         }
     }
 
-    if (curSettings["INDICATOR_SHOW_DEFUSERS"].strToBool()) {
+    if (curSettings.bool["INDICATOR_SHOW_DEFUSERS"]) {
         forEntities(EntityType.CEconEntity) {
-            drawIndicator(it.entity, curSettings["INDICATOR_DEFUSER_COLOR"].strToColor())
+            drawIndicator(it.entity, curSettings.color["INDICATOR_DEFUSER_COLOR"])
         }
     }
 }
@@ -107,8 +105,8 @@ fun angVec(ang: Vector): Vector {
 
 fun drawIndicator(enemyEnt: Long, drawColor: Color)
 {
-    val dist = curSettings["INDICATOR_DISTANCE"].toFloat() * 10F
-    val size = curSettings["INDICATOR_SIZE"].toFloat()
+    val dist = curSettings.float["INDICATOR_DISTANCE"] * 10F
+    val size = curSettings.float["INDICATOR_SIZE"]
 
     val meEyeAngle = me.eyeAngle()
 

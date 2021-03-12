@@ -7,12 +7,11 @@ import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.offsets.ClientOffsets.dwViewMatrix
 import rat.poison.utils.Vector
-import rat.poison.utils.generalUtil.strToBool
 
 val w2sViewMatrix = Array(4) { DoubleArray(4) }
 
 fun worldToScreen(from: Vector, vOut: Vector): Boolean {
-	if (!curSettings["MENU"].strToBool() || appless) {
+	if (!curSettings.bool["MENU"] || appless) {
 		updateViewMatrix()
 	}
 

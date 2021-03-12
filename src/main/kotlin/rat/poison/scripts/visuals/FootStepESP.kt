@@ -12,15 +12,13 @@ import rat.poison.overlay.App
 import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.cToFloat
-import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.generalUtil.toMatrix4
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 val footSteps = Array(256) { FootStep() }
 data class FootStep(var x: Float = 0F, var y: Float = 0F, var z: Float = 0F,
-                            var ttl: Int = curSettings["FOOTSTEP_TTL"].toInt(),
+                            var ttl: Int = curSettings.int["FOOTSTEP_TTL"],
                             var open: Boolean = true, var myTeam: Boolean = false,
                             var ent: Entity = 0L)
 private var stepTimer = 0
@@ -28,31 +26,31 @@ private var stepTimer = 0
 fun footStepEsp() {
     constructSteps()
 
-    if (curSettings["MENU"].strToBool()) {
+    if (curSettings.bool["MENU"]) {
         runFootSteps()
     }
 }
 
 
 fun runFootSteps() = App {
-    if (!curSettings["ENABLE_ESP"].strToBool()) return@App
+    if (!curSettings.bool["ENABLE_ESP"]) return@App
 
-    if (!curSettings["ENABLE_FOOTSTEPS"].strToBool()) return@App
+    if (!curSettings.bool["ENABLE_FOOTSTEPS"]) return@App
 
     for (i in footSteps.indices) {
         if (!footSteps[i].open) {
             val color = if (footSteps[i].myTeam) {
-                curSettings["FOOTSTEP_TEAM_COLOR"].strToColorGDX()
+                curSettings.colorGDX["FOOTSTEP_TEAM_COLOR"]
             } else {
-                curSettings["FOOTSTEP_ENEMY_COLOR"].strToColorGDX()
+                curSettings.colorGDX["FOOTSTEP_ENEMY_COLOR"]
             }
-            color.a = footSteps[i].ttl / curSettings["FOOTSTEP_TTL"].toFloat()
+            color.a = footSteps[i].ttl / curSettings.float["FOOTSTEP_TTL"]
 
-            if ((footSteps[i].myTeam && !curSettings["FOOTSTEP_TEAM"].strToBool()) || (!footSteps[i].myTeam && !curSettings["FOOTSTEP_ENEMY"].strToBool())) {
+            if ((footSteps[i].myTeam && !curSettings.bool["FOOTSTEP_TEAM"]) || (!footSteps[i].myTeam && !curSettings.bool["FOOTSTEP_ENEMY"])) {
                 continue
             }
 
-            if (curSettings["FOOTSTEP_TYPE"].toInt() == 1) {
+            if (curSettings.int["FOOTSTEP_TYPE"] == 1) {
                 //As text
                 val inVec = Vector(footSteps[i].x, footSteps[i].y, footSteps[i].z)
                 val outVec = Vector()
@@ -82,7 +80,7 @@ fun runFootSteps() = App {
                     //Circle at position
                     gameMatrix.translate(0F, 0F, footSteps[i].z.cToFloat())
                     projectionMatrix = gameMatrix
-                    circle(footSteps[i].x, footSteps[i].y, (curSettings["FOOTSTEP_TTL"].toFloat() - footSteps[i].ttl.toFloat()) + 10F)
+                    circle(footSteps[i].x, footSteps[i].y, (curSettings.float["FOOTSTEP_TTL"] - footSteps[i].ttl.toFloat()) + 10F)
                     gameMatrix.translate(0F, 0F, -footSteps[i].z.cToFloat())
 
                     end()
@@ -96,7 +94,7 @@ fun runFootSteps() = App {
 
 private fun constructSteps() = every(10) {
     stepTimer+= 1
-    if (stepTimer >= curSettings["FOOTSTEP_UPDATE"].toInt()) {
+    if (stepTimer >= curSettings.int["FOOTSTEP_UPDATE"]) {
         forEntities(EntityType.CCSPlayer) {
             val ent = it.entity
             if (ent == me || ent.dead() || ent.dormant()) return@forEntities
@@ -115,7 +113,7 @@ private fun constructSteps() = every(10) {
                         x = entPos.x
                         y = entPos.y
                         z = entPos.z
-                        ttl = curSettings["FOOTSTEP_TTL"].toInt()
+                        ttl = curSettings.int["FOOTSTEP_TTL"]
                         open = false
                         myTeam = inMyTeam
                         this.ent = ent
@@ -131,7 +129,7 @@ private fun constructSteps() = every(10) {
                     x = 0F
                     y = 0F
                     z = 0F
-                    ttl = curSettings["FOOTSTEP_TTL"].toInt()
+                    ttl = curSettings.int["FOOTSTEP_TTL"]
                     open = true
                     this.ent = 0L
                 }

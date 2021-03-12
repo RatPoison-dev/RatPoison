@@ -24,7 +24,7 @@ package rat.poison.scripts.bspHandling
 
 //fun rayTraceTest() = App {
 //    bspVisTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
-//        if (meDead || !curSettings["DEBUG"].strToBool() || !inGame) return@App
+//        if (meDead || !curSettings.bool["DEBUG"] || !inGame) return@App
 //
 //        var meVec = me.bones(8).toVector3()
 //        meVec = Vector3(meVec.x, meVec.y, meVec.z)

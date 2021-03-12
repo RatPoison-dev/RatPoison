@@ -4,16 +4,14 @@ import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import rat.poison.LOADED_CONFIG
-import rat.poison.SETTINGS_DIRECTORY
-import rat.poison.curSettings
+import rat.poison.*
 import rat.poison.overlay.App
 import rat.poison.overlay.opened
-import rat.poison.toLocale
 import rat.poison.ui.tabs.updateWindows
 import rat.poison.ui.uiPanels.configsTab
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
+import rat.poison.utils.generalUtil.loadSkinSettings
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
@@ -66,23 +64,45 @@ fun saveDefault() {
     }
 }
 
-
-
-fun loadCFG(cfgFileName: String, deleteCfgAfterLoad: Boolean = false) {
+fun loadSkinCFG(realCfgFileName: String) {
+    var cfgFileName = realCfgFileName
     if (!saving) {
-        cfgFileName.replace(".cfg", "")
+        cfgFileName = cfgFileName.replace(".cfg", "")
+        val cfgFile = File("$SETTINGS_DIRECTORY\\skinCFGS\\$cfgFileName.cfg")
+        if (!cfgFile.exists() && opened) {
+            Dialogs.showOKDialog(
+                App.menuStage,
+                "Error".toLocale(),
+                "${"FILE_NOT_FOUND_ERROR".toLocale()}\n \"${cfgFileName}\""
+            )
+        } else {
+            saving = true
+            println("\nLoading Skin Changer config\n")
+
+            loadSkinSettings("$SETTINGS_DIRECTORY\\skinCFGS\\$cfgFileName.cfg")
+
+            println("Loading Complete!\n")
+            saving = false
+        }
+    }
+}
+
+fun loadCFG(realCfgFileName: String, deleteCfgAfterLoad: Boolean = false) {
+    var cfgFileName = realCfgFileName
+    if (!saving) {
+        cfgFileName = cfgFileName.replace(".cfg", "")
 
         val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg")
-        if (!cfgFile.exists()) {
+        if (!cfgFile.exists() && opened) {
             Dialogs.showOKDialog(App.menuStage, "Error".toLocale(), "${"FILE_NOT_FOUND_ERROR".toLocale()}\n \"${cfgFileName}\"")
         } else {
             saving = true
+            println("Loading\n")
             GlobalScope.launch {
-                println("Loading\n")
                 loadSettingsFromFiles("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg", true)
                 uiUpdate()
                 updateWindows()
-                println("\nLoading Complete!\n")
+                println("Loading Complete!\n")
                 LOADED_CONFIG = cfgFileName
 
                 if (opened) {
@@ -111,6 +131,39 @@ fun saveWindows() {
         curSettings["KEYBINDS_X"] = App.uiKeybinds.x
         curSettings["KEYBINDS_Y"] = App.uiKeybinds.y
         curSettings["KEYBINDS_ALPHA"] = App.uiKeybinds.color.a
+    }
+}
+
+fun saveSkinCFG(cfgFileName: String) {
+    if (!saving) {
+        saving = true
+        println("\nSaving Skin Changer config!")
+        val skinCfgDir = File("$SETTINGS_DIRECTORY\\skinCFGS")
+        if (!skinCfgDir.exists()) {
+            Files.createDirectory(skinCfgDir.toPath())
+        }
+        val cfgFile = File("$SETTINGS_DIRECTORY\\skinCFGS\\$cfgFileName.cfg")
+        if (!cfgFile.exists()) {
+            cfgFile.createNewFile()
+        }
+
+        val sbLines = StringBuilder()
+        skSettings.savedValues.keys.forEach {
+            sbLines.append("$it = ${skSettings[it]}\n")
+        }
+
+        Files.delete(cfgFile.toPath()) //Replace with cfgFile. ??
+        Files.createFile(cfgFile.toPath())
+
+        var firstLine = false
+        sbLines.lines().forEach {cfgFile.appendText(if (!firstLine) { firstLine = true; it } else if (it.isNotBlank()) "\n" + it else "\n")}
+        sbLines.clear()
+
+        println("\nSaving Complete!\n")
+        if (VisUI.isLoaded()) {
+            configsTab.updateSkinCfgList()
+        }
+        saving = false
     }
 }
 
@@ -150,7 +203,7 @@ fun saveCFG(cfgFileName: String) {
         Files.createFile(cfgFile.toPath())
 
         var firstLine = false
-        sbLines.lines().forEach {cfgFile.appendText(if (!firstLine) { firstLine = true; it } else if (!it.isBlank()) "\n" + it else "\n")}
+        sbLines.lines().forEach {cfgFile.appendText(if (!firstLine) { firstLine = true; it } else if (it.isNotBlank()) "\n" + it else "\n")}
         sbLines.clear()
 
         println("\nSaving Complete!\n")
@@ -161,15 +214,15 @@ fun saveCFG(cfgFileName: String) {
     }
 }
 
-fun deleteCFG(cfgFileName: String) {
+fun deleteCFG(cfgFileName: String, skinCfg: Boolean = false) {
     cfgFileName.replace(".cfg", "")
 
-    val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg")
+    val cfgFile = if (!skinCfg) File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg") else File("$SETTINGS_DIRECTORY\\skinCFGS\\$cfgFileName.cfg")
     if (cfgFile.exists()) {
         cfgFile.delete()
     }
     if (VisUI.isLoaded()) {
-        configsTab.updateCFGList()
+        if (!skinCfg) configsTab.updateCFGList() else configsTab.updateSkinCfgList()
     }
     println("Deleted $cfgFileName\n")
 }

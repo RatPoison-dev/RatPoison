@@ -9,7 +9,6 @@ import rat.poison.game.netvars.NetVarOffsets.m_zoomLevel
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meCurWepEnt
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
 
 internal fun fovChanger() = App {
@@ -17,7 +16,7 @@ internal fun fovChanger() = App {
 
     val curFov = csgoEXE.int(me + m_iDefaultFov)
 
-    if (!curSettings["ENABLE_FOV_CHANGER"].strToBool()) {
+    if (!curSettings.bool["ENABLE_FOV_CHANGER"]) {
         if (curFov != 90) {
             csgoEXE[me + m_iDefaultFov] = 90
         }
@@ -35,28 +34,28 @@ internal fun fovChanger() = App {
             targetFov = when (zLevel) {
                 1 -> {
                     instantSwap = true
-                    curSettings["FOV_ZOOM_1"].toInt()
+                    curSettings.int["FOV_ZOOM_1"]
                 }
 
                 2 -> {
                     instantSwap = true
-                    curSettings["FOV_ZOOM_2"].toInt()
+                    curSettings.int["FOV_ZOOM_2"]
                 }
 
                 else -> {
                     instantSwap = true
-                    curSettings["FOV_SNIPER_DEFAULT"].toInt()
+                    curSettings.int["FOV_SNIPER_DEFAULT"]
                 }
             }
         } else {
-            targetFov = curSettings["FOV_SNIPER_DEFAULT"].toInt()
+            targetFov = curSettings.int["FOV_SNIPER_DEFAULT"]
 
             if (targetFov > curFov) {
                 instantSwap = true
             }
         }
     } else {
-        targetFov = curSettings["FOV_DEFAULT"].toInt()
+        targetFov = curSettings.int["FOV_DEFAULT"]
     }
 
     if (targetFov != -1) {
@@ -65,7 +64,7 @@ internal fun fovChanger() = App {
             return@App
         }
 
-        if (curSettings["FOV_SMOOTH"].strToBool()) {
+        if (curSettings.bool["FOV_SMOOTH"]) {
 
             if (curFov < targetFov) {
                 csgoEXE[me + m_iDefaultFov] = curFov + 1

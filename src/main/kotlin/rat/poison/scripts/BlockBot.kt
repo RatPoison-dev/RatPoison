@@ -8,7 +8,6 @@ import rat.poison.robot
 import rat.poison.utils.Angle
 import rat.poison.utils.distanceTo
 import rat.poison.utils.every
-import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.keyPressed
 import java.awt.event.KeyEvent
 import kotlin.math.atan2
@@ -44,7 +43,7 @@ fun unPress() {
 }
 
 fun blockBot() = every(2, inGameCheck = true) {
-    if (!curSettings["BLOCK_BOT"].strToBool() || !keyPressed(curSettings["BLOCK_BOT_KEY"].toInt())) {
+    if (!curSettings.bool["BLOCK_BOT"] || !keyPressed(curSettings.int["BLOCK_BOT_KEY"])) {
         unPress()
         return@every
     }
@@ -54,7 +53,7 @@ fun blockBot() = every(2, inGameCheck = true) {
 
     var closestDist = -1F
     var closestTarget = -1L
-    val maxDist = curSettings["BLOCK_BOT_DISTANCE"].toInt()
+    val maxDist = curSettings.int["BLOCK_BOT_DISTANCE"]
 
     forEntities(EntityType.CCSPlayer) {
         val entity = it.entity

@@ -1,7 +1,6 @@
 package rat.poison.utils.generalUtil
 
 import rat.poison.*
-import rat.poison.utils.Settings
 import rat.poison.utils.saving
 import java.io.File
 import java.io.FileReader
@@ -12,7 +11,7 @@ private val DEFAULT_INVALID_LIST = listOf("")
 
 fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
     println("Loading settings... "  + if (specificFile) { fileDir } else "")
-    val overloadKeybinds = curSettings["OVERLOAD_KEYBINDS"].strToBool()
+    val overloadKeybinds = curSettings.bool["OVERLOAD_KEYBINDS"]
     settingsLoaded = false
     if (specificFile) {
         FileReader(File(fileDir)).readLines().forEach { line ->
@@ -67,6 +66,21 @@ fun loadLocale(fileDir: String) {
         }
     }
     saving = false
+}
+
+fun loadSkinSettings(fileDir: String) {
+    File(fileDir).readLines(UTF_8).forEach { line ->
+        if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith("\"") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
+            val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
+
+            if (curLine.size == 3) {
+                skSettings[curLine[0]] = curLine[2]
+            } else {
+                println("Debug: Locale invalid -- $curLine")
+            }
+        }
+    }
+    skSettings
 }
 
 //fuck a beat i was tryna beat a case

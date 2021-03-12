@@ -43,7 +43,7 @@ class FootstepsEspTab : Tab(false, false) {
         }
         footStepType.items = itemsArray
 
-        footStepType.selectedIndex = footstepItems.indexOf(when (curSettings["FOOTSTEP_TYPE"].toInt()) {
+        footStepType.selectedIndex = footstepItems.indexOf(when (curSettings.int["FOOTSTEP_TYPE"]) {
             1 -> "TEXT"
             else -> "CIRCLE"
         })

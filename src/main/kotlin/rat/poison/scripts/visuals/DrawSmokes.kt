@@ -1,6 +1,7 @@
 package rat.poison.scripts.visuals
 
 import rat.poison.curSettings
+import rat.poison.dbg
 import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
@@ -10,18 +11,16 @@ import rat.poison.overlay.App
 import rat.poison.overlay.App.shapeRenderer
 import rat.poison.utils.Vector
 import rat.poison.utils.distanceTo
-import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.generalUtil.strToColorGDX
 import rat.poison.utils.inGame
 import kotlin.math.cos
 import kotlin.math.sin
 
 fun drawSmokes() = App {
-    if (!inGame || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["VISUALIZE_SMOKES"].strToBool() || !inGame) return@App
+    if (!inGame || !curSettings.bool["ENABLE_ESP"] || !curSettings.bool["VISUALIZE_SMOKES"] || !inGame) return@App
 
-    val smokePolys = curSettings["VISUALIZE_SMOKES_POLYS"].toInt()
-    val smokeHeight = curSettings["VISUALIZE_SMOKES_HEIGHT"].toInt()
-    val smokeWidth = curSettings["VISUALIZE_SMOKES_WIDTH"].toInt()
+    val smokePolys = curSettings.int["VISUALIZE_SMOKES_POLYS"]
+    val smokeHeight = curSettings.int["VISUALIZE_SMOKES_HEIGHT"]
+    val smokeWidth = curSettings.int["VISUALIZE_SMOKES_WIDTH"]
 
     forEntities(EntityType.CSmokeGrenadeProjectile) {
         val entity = it.entity
@@ -53,7 +52,7 @@ fun drawSmokes() = App {
             }
         }
 
-        if (curSettings["DEBUG"].strToBool()) {
+        if (dbg) {
             val mePos = me.position()
             val meDir = me.direction()
             val maxPos = Vector(mePos.x + 500 * meDir.x, mePos.y + 500 * meDir.y, mePos.z)
@@ -86,7 +85,7 @@ fun connectPoints(vec1: Vector, vec2: Vector) {
 
         shapeRenderer.begin()
 
-        shapeRenderer.color = curSettings["VISUALIZE_SMOKES_COLOR"].strToColorGDX()
+        shapeRenderer.color = curSettings.colorGDX["VISUALIZE_SMOKES_COLOR"]
         shapeRenderer.line(w2s1.x, w2s1.y, w2s2.x, w2s2.y)
 
         shapeRenderer.end()
