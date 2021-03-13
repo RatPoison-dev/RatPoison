@@ -307,22 +307,48 @@ fun boxEsp() {
 				val position = dr_texture.position
 				val realHeight = texture.height / weaponsScale
 				val realWidth = texture.width / weaponsScale
-				val (height, width) = getRealTextParams(textRenderer, getStrBuilder(position), layout)
+				val realTextParams = getRealTextParams(textRenderer, getStrBuilder(position), layout)
+				val height = ((realTextParams ushr 32) and 0xFFFFFFFF).toFloat()
+				val width = (realTextParams and 0xFFFFFFFF).toFloat()
 				when (position) {
 					"LEFT" -> {
-						sb.draw(texture, (bbox.left - (barWidth * leftShift) - realWidth - width), (bbox.top - realHeight - leftShiftY), realWidth, realHeight)
+						sb.draw(
+							texture,
+							(bbox.left - (barWidth * leftShift) - realWidth - width),
+							(bbox.top - realHeight - leftShiftY),
+							realWidth,
+							realHeight
+						)
 						leftShiftY += realHeight
 					}
 					"RIGHT" -> {
-						sb.draw(texture, (bbox.right + (barWidth * rightShift)) + (weaponsScale / 2) + width, bbox.top - realHeight - rightShiftY, realWidth, realHeight)
+						sb.draw(
+							texture,
+							(bbox.right + (barWidth * rightShift)) + (weaponsScale / 2) + width,
+							bbox.top - realHeight - rightShiftY,
+							realWidth,
+							realHeight
+						)
 						rightShiftY += realHeight
 					}
 					"TOP" -> {
-						sb.draw(texture, ((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.top + topShift, realWidth, realHeight)
+						sb.draw(
+							texture,
+							((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)),
+							bbox.top + topShift,
+							realWidth,
+							realHeight
+						)
 						topShift += realHeight
 					}
 					"BOTTOM" -> {
-						sb.draw(texture, ((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)), bbox.bottom - height - bottomShift, realWidth, realHeight)
+						sb.draw(
+							texture,
+							((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)),
+							bbox.bottom - height - bottomShift,
+							realWidth,
+							realHeight
+						)
 						bottomShift += realHeight
 					}
 				}
@@ -356,12 +382,12 @@ fun addTextureOrText(assetManager: AssetManager, useIcons: Boolean, textureName:
 	textureBuilder.add(DrawableTexture(texture, position))
 }
 
-fun getRealTextParams(font: BitmapFont, builder: StringBuilder, layout: GlyphLayout): Pair<Float, Float> {
+fun getRealTextParams(font: BitmapFont, builder: StringBuilder, layout: GlyphLayout): Long {
 	layout.setText(font, builder)
-	if (builder.length == 0) {
-		return Pair(0F, 0F)
+	if (builder.isEmpty()) {
+		return 0L
 	}
-	return Pair(layout.height, layout.width)
+	return ((layout.height.toLong() and 0xFFFFFFFF) shl 32) or (layout.width.toLong() and 0xFFFFFFFF)
 }
 
 //Create a fake accurate box using headpos

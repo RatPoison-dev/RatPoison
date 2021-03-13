@@ -10,8 +10,6 @@ var inGame = false
 var shouldPostProcess = false
 @Volatile
 var inFullscreen = false
-@Volatile
-var isActiveWindow = false
 
 inline fun every(duration: Int, continuous: Boolean = false, inGameCheck: Boolean = false, crossinline body: () -> Unit) = Thread(Runnable {
     while (!Thread.interrupted()) {

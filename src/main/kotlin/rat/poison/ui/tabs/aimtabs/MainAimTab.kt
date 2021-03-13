@@ -54,8 +54,8 @@ class MainAimTab: Tab(true, false) {
     val enablePathAim = ATabVisCheckBox("Mouse Movement", "_ENABLE_PATH_AIM")
     val enableScopedOnly = VisCheckBoxCustom("Scoped Only", "SNIPER_ENABLE_SCOPED_ONLY")
 
-    val aimBones = VisCombobox("Bone", "_AIM_BONE", useCategory = true, showText = true, items = *boneCategories)
-    val forceAimBone = VisCombobox("Force-Bone", "_AIM_FORCE_BONE", useCategory = true, showText = true, items = *boneCategories)
+    val aimBones = VisCombobox("Bone", "_AIM_BONE", useCategory = true, showText = true, items = boneCategories)
+    val forceAimBone = VisCombobox("Force-Bone", "_AIM_FORCE_BONE", useCategory = true, showText = true, items = boneCategories)
 
     val aimFov = ATabVisSlider("Aim FOV", "_AIM_FOV", .5F, 90F, .5F, false)
     val aimSpeed = ATabVisSlider("Aim Speed", "_AIM_SPEED", 0F, 10F, 1F, true)

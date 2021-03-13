@@ -74,7 +74,7 @@ fun List<String>.pull(idx: Int): String {
     return split[1]
 }
 
-fun List<Int>.has(predicate: (_: Int) -> Boolean): Boolean {
+fun List<Any>.has(predicate: (_: Any) -> Boolean): Boolean {
     var hasItem = false
     this.forEach {
         if (predicate(it)) {

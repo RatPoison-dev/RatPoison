@@ -4,7 +4,6 @@
 package rat.poison.overlay
 
 import com.sun.jna.platform.win32.WinUser
-import com.sun.jna.ptr.LongByReference
 import org.lwjgl.system.windows.User32.WS_MINIMIZEBOX
 import rat.poison.appless
 import rat.poison.curSettings
@@ -18,8 +17,6 @@ import rat.poison.jna.structures.Rect
 import rat.poison.jna.structures.WindowCompositionAttributeData
 import rat.poison.overlay.App.uiMenu
 import rat.poison.utils.inBackground
-import rat.poison.utils.inFullscreen
-import rat.poison.utils.isActiveWindow
 import kotlin.concurrent.thread
 import kotlin.properties.Delegates
 
@@ -30,6 +27,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	private val rcWindow = Rect()
 	private val myRcClient = Rect()
 	private val myRcWindow = Rect()
+	private val menuApp = curSettings["MENU_APP"].replace("\"", "")
 	private var x: Int = curSettings.int["APPLESS_X"]
 	private var y: Int = curSettings.int["APPLESS_Y"]
 	var width: Int =     curSettings.int["APPLESS_WIDTH"]
@@ -141,47 +139,40 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 				ShowWindow(myHWND, WinUser.SW_HIDE)
 				listener?.onBackground(this@Overlay)
 			}
+			return@with
 		}
 
-		else if (!appless && GetClientRect(targetAppHWND, rcClient) && GetWindowRect(targetAppHWND, rcWindow)) {
+		if (GetClientRect(targetAppHWND, rcClient) && GetWindowRect(targetAppHWND, rcWindow)) {
 			//shitty DWM does not draw background windows if the top window bounds is same
 			//as screen bounds. Doesn't matter whether the top window is layered or not,
 			//hence we broke the equation so our overlay won't go opaque with a black background...
-				width = rcClient.right - rcClient.left + 2
-				height = rcClient.bottom - rcClient.top + 2
-				x = rcWindow.left + (rcWindow.right - rcWindow.left - width) / 2 - 1
-				y = rcWindow.top + rcWindow.bottom - rcWindow.top - height - 1
+			width = rcClient.right - rcClient.left + 2
+			height = rcClient.bottom - rcClient.top + 2
+			x = rcWindow.left + (rcWindow.right - rcWindow.left - width) / 2 - 1
+			y = rcWindow.top + rcWindow.bottom - rcWindow.top - height - 1
 
-				if (oldX != x || oldY != y || oldWidth != width || oldHeight != height) {
-					SetWindowPos(myHWND, HWND_TOPPOS, x, y, width, height, WinUser.SWP_NOSENDCHANGING or WinUser.SWP_NOZORDER or WinUser.SWP_DEFERERASE or WinUser.SWP_NOREDRAW or WinUser.SWP_ASYNCWINDOWPOS or WinUser.SWP_FRAMECHANGED)
-					listener?.onBoundsChange(this@Overlay, x, y, width, height)
+			if (oldX != x || oldY != y || oldWidth != width || oldHeight != height) {
+				SetWindowPos(myHWND, HWND_TOPPOS, x, y, width, height, WinUser.SWP_NOSENDCHANGING or WinUser.SWP_NOZORDER or WinUser.SWP_DEFERERASE or WinUser.SWP_NOREDRAW or WinUser.SWP_ASYNCWINDOWPOS or WinUser.SWP_FRAMECHANGED)
+				listener?.onBoundsChange(this@Overlay, x, y, width, height)
+			}
+
+			val isMyWindowVisible = IsWindowVisible(myHWND)
+			if (getActiveWindow() == targetAppHWND) {
+				if (!isMyWindowVisible) {
+					ShowWindow(myHWND, WinUser.SW_SHOW)
+					listener?.onForeground(this@Overlay)
+					if (!clickThrough) beActive()
 				}
-
-				with (Shell32) {
-					val state = LongByReference()
-					SHQueryUserNotificationState(state)
-					inFullscreen = state.value == QUNS_RUNNING_D3D_FULL_SCREEN
-				}
-
-				val isMyWindowVisible = IsWindowVisible(myHWND)
-				val activeWindow = getActiveWindow()
-				isActiveWindow = activeWindow == myHWND || activeWindow == targetAppHWND
-				if (activeWindow == targetAppHWND) {
-					if (!isMyWindowVisible) {
-						ShowWindow(myHWND, WinUser.SW_SHOW)
-						listener?.onForeground(this@Overlay)
-						if (!clickThrough) beActive()
-					}
-				} else {
-					if (isMyWindowVisible) {
-						if (curSettings["MENU_APP"].replace("\"", "") == "Counter-Strike: Global Offensive") {
-							if (!curSettings.bool["MENU_STAY_FOCUSED"]) {
-								ShowWindow(myHWND, WinUser.SW_HIDE)
-								listener?.onBackground(this@Overlay)
-							}
+			} else {
+				if (isMyWindowVisible) {
+					if (menuApp == "Counter-Strike: Global Offensive") {
+						if (!curSettings.bool["MENU_STAY_FOCUSED"]) {
+							ShowWindow(myHWND, WinUser.SW_HIDE)
+							listener?.onBackground(this@Overlay)
 						}
 					}
 				}
+			}
 		} else {
 			listener?.onTargetAppWindowClosed(this@Overlay)
 			targetAppHWND = HWND_ZERO

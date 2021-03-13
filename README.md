@@ -113,7 +113,6 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
         * Added custom fonts support
         * Added smoke timer
         * Added blockbot
-        * Added autoaccept
         
     </details>
 

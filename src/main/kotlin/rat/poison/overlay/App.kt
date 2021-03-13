@@ -33,7 +33,6 @@ import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.visuals.espToggleCallback
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
-import rat.poison.ui.tabs.othersTab
 import rat.poison.ui.tabs.updateDisableAim
 import rat.poison.ui.uiPanels.*
 import rat.poison.ui.uiUpdate
@@ -50,7 +49,6 @@ var opened = false
 var overlayMenuKey = ObservableBoolean({ keyPressed(curSettings.int["MENU_KEY"]) })
 var toggleAimKey = ObservableBoolean({ keyPressed(curSettings.int["AIM_TOGGLE_KEY"]) })
 var visualsToggleKey = ObservableBoolean({ keyPressed(curSettings.int["VISUALS_TOGGLE_KEY"]) })
-var autoacceptToggleKey = ObservableBoolean({ keyPressed(curSettings.int["AUTOACCEPT_TOGGLE_KEY"]) })
 
 
 var syncTime = 0L
@@ -121,6 +119,50 @@ object App : ApplicationAdapter() {
         overlay.start()
     }
 
+    /**
+     * An accurate sync method that adapts automatically
+     * to the system it runs on to provide reliable results.
+     *
+     * @param fps The desired frame rate, in frames per second
+     * @author kappa (On the LWJGL Forums)
+     */
+    private var variableYieldTime = 0L
+    private var lastTime = 0L
+    private fun sync(fps: Int) {
+        if (fps <= 0) return
+        val sleepTime = (1000000000 / fps).toLong() // nanoseconds to sleep this frame
+        // yieldTime + remainder micro & nano seconds if smaller than sleepTime
+        val yieldTime = min(sleepTime, variableYieldTime + sleepTime % (1000 * 1000))
+        var overSleep: Long = 0 // time the sync goes over by
+        try {
+            while (true) {
+                val t: Long = System.nanoTime() - lastTime
+                if (t < sleepTime - yieldTime) {
+                    Thread.sleep(1)
+                } else if (t < sleepTime) {
+                    // burn the last few CPU cycles to ensure accuracy
+                    Thread.yield()
+                } else {
+                    overSleep = t - sleepTime
+                    break // exit while loop
+                }
+            }
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        } finally {
+            lastTime = System.nanoTime() - min(overSleep, sleepTime)
+
+            // auto tune the time sync should yield
+            if (overSleep > variableYieldTime) {
+                // increase by 200 microseconds (1/5 a ms)
+                variableYieldTime = min(variableYieldTime + 200 * 1000, sleepTime)
+            } else if (overSleep < variableYieldTime - 200 * 1000) {
+                // decrease by 2 microseconds
+                variableYieldTime = max(variableYieldTime - 2 * 1000, 0)
+            }
+        }
+    }
+
     override fun render() {
         timer++
 
@@ -183,12 +225,10 @@ object App : ApplicationAdapter() {
                         menuBatch.projectionMatrix = menuStage.camera.combined
                         uiMenu.changeAlpha()
                         appTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
-                            if (!appless) {
-                                updateViewMatrix()
-                                if (!haltProcess) {
-                                    for (i in 0 until bodies.size) {
-                                        bodies[i]()
-                                    }
+                            updateViewMatrix()
+                            if (!appless && !haltProcess) {
+                                for (i in 0 until bodies.size) {
+                                    bodies[i]()
                                 }
                             }
                         }, TimeUnit.NANOSECONDS)
@@ -290,12 +330,6 @@ object App : ApplicationAdapter() {
                     espToggleCallback()
                 }
 
-                autoacceptToggleKey.update()
-                if (autoacceptToggleKey.justBecameTrue) {
-                    othersTab.autoAccept.isChecked = !othersTab.autoAccept.isChecked
-                }
-
-
                 if (!appless) {
                     val w = overlay.width
                     val h = overlay.height
@@ -349,38 +383,3 @@ object App : ApplicationAdapter() {
 
 var variableYieldTime = 0.toLong()
 var lastSyncTime = 0.toLong()
-
-fun sync(fps: Int) {
-    if (fps <= 0) {
-        return
-    }
-
-    val nanoSec = 1000000000L
-
-    var overSleep = 0.toLong()
-    val sleepTime = nanoSec/fps
-    val yieldTime = min(sleepTime, variableYieldTime + sleepTime % (1000000L))
-
-    try {
-        while(true) {
-            val t = System.nanoTime() - lastSyncTime
-
-            if (t < sleepTime - yieldTime) {
-                Thread.sleep(1)
-            } else if (t < sleepTime) {
-                Thread.yield()
-            } else {
-                overSleep = t - sleepTime
-                break
-            }
-        }
-    } catch (ex: InterruptedException) { println("FPS Sync Failure") } finally {
-        lastSyncTime = System.nanoTime() - min(overSleep, sleepTime)
-
-        if (overSleep > variableYieldTime) {
-            variableYieldTime = min(variableYieldTime + 200 * 1000, sleepTime)
-        } else if (overSleep < variableYieldTime - 200 * 1000) {
-            variableYieldTime = max(variableYieldTime - 2 * 1000, 0)
-        }
-    }
-}

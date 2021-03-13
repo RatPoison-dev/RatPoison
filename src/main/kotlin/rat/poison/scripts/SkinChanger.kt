@@ -28,7 +28,7 @@ import rat.poison.utils.shouldPostProcess
 private var shouldUpdate = false
 
 fun skinChanger() = every(1, continuous = true, inGameCheck = true) {
-    if ((!curSettings.bool["SKINCHANGER"] && !curSettings.bool["KNIFECHANGER"])) return@every
+    if (!curSettings.bool["SKINCHANGER"]) return@every
 
     try {
         val sID = me.steamID()

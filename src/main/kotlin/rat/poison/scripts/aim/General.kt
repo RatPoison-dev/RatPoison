@@ -41,20 +41,20 @@ data class CalcTargetResult(var fov: Float = -1F, var delta: Float = -1F, var pl
 	}
 }
 
-val findTargetResult: ThreadLocal<FindTargetResult> = ThreadLocal.withInitial { FindTargetResult() }
-val calcTargetResult: ThreadLocal<CalcTargetResult> = ThreadLocal.withInitial { CalcTargetResult() }
+val findTargetResult = ThreadLocal.withInitial { FindTargetResult() }
+val calcTargetResult = ThreadLocal.withInitial { CalcTargetResult() }
 
 fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			   lockFOV: Float = curSettings.float["AIM_FOV"], BONE: String = curSettings["AIM_BONE"], visCheck: Boolean = true, teamCheck: Boolean = true): FindTargetResult {
-	val retList = findTargetResult.get()
-	retList.reset()
+	val result = findTargetResult.get()
+	result.reset()
 	var closestFOV = Float.MAX_VALUE
 	var closestDelta = Float.MAX_VALUE
 	var closestPlayer = -1L
 	var closestBone = -1
 
 	var bones = BONE.stringToIntList()
-	val findNearest = bones.has { myMan -> myMan < 0 }
+	val findNearest = bones.has { it as Int <= 0 }
 
 	forEntities(EntityType.CCSPlayer) {
 		val entity = it.entity
@@ -78,22 +78,22 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 		}
 	}
 
-	if (closestDelta == Float.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return retList
+	if (closestDelta == Float.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return result
 
 	val randInt = randInt(1, 100)
 
 	if (curSettings.bool["PERFECT_AIM"] && allowPerfect && closestFOV <= curSettings.float["PERFECT_AIM_FOV"] && randInt <= curSettings.int["PERFECT_AIM_CHANCE"]) {
 		canPerfect = true
 	}
-	retList.player = closestPlayer
-	retList.closestBone = closestBone
+	result.player = closestPlayer
+	result.closestBone = closestBone
 
-	return retList
+	return result
 }
 
 fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Angle, curAngle: Angle, lockFOV: Float = curSettings.float["AIM_FOV"], BONE: Int, ovrStatic: Boolean = false): CalcTargetResult {
-	val retList = calcTargetResult.get()
-	retList.reset()
+	val result = calcTargetResult.get()
+	result.reset()
 
 	var ePos: Angle = entity.bones(BONE)
 
@@ -117,9 +117,9 @@ fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Angle, curAngl
 		val delta = abs((sin(toRadians(pitchDiff.toDouble())) + sin(toRadians(yawDiff.toDouble()))) * distance)
 
 		if (delta <= lockFOV && delta <= calcClosestDelta) {
-			retList.fov = fov.toFloat()
-			retList.delta = delta.toFloat()
-			retList.player = entity
+			result.fov = fov.toFloat()
+			result.delta = delta.toFloat()
+			result.player = entity
 		}
 	} else {
 		val calcAng = realCalcAngle(me, ePos)
@@ -130,13 +130,13 @@ fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Angle, curAngl
 		val fov = sqrt(delta.x.pow(2F) + delta.y.pow(2F))
 
 		if (fov <= lockFOV && fov <= calcClosestDelta) {
-			retList.fov = fov
-			retList.delta = fov
-			retList.player = entity
+			result.fov = fov
+			result.delta = fov
+			result.player = entity
 		}
 	}
 
-	return retList
+	return result
 }
 
 fun Entity.inMyTeam() =
@@ -174,7 +174,8 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	}
 
 	val aim = curSettings.bool["ACTIVATE_FROM_AIM_KEY"] && keyPressed(AIM_KEY)
-	val forceAim = (keyPressed(curSettings.int["FORCE_AIM_KEY"]) || curSettings.bool["FORCE_AIM_ALWAYS"])
+	val pressedForceAimKey = keyPressed(curSettings.int["FORCE_AIM_KEY"])
+	val forceAim = pressedForceAimKey || curSettings.bool["FORCE_AIM_ALWAYS"]
 	val haveAmmo = meCurWepEnt.bullets() > 0
 
 	val pressed = ((aim || boneTrig) && !MENUTOG && haveAmmo) || forceAim
@@ -199,19 +200,20 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 
 	var aB = curSettings["AIM_BONE"]
 
-	if (forceAim) {
+	if (pressedForceAimKey) {
 		aB = curSettings["FORCE_AIM_BONE"]
 	}
 
-	var abAsList = aB.stringToIntList()
+	val abAsList = aB.stringToIntList()
 
 	val findTargetResList = findTarget(position, currentAngle, aim,
 		BONE = if (RANDOM_BONE in abAsList) { destBone = 5 + randInt(0, 3); destBone.toString() } else aB,
 		visCheck = shouldVisCheck)
 	val bestTarget = findTargetResList.player //Try to find new target
+	val bestBone = findTargetResList.closestBone
 
 	if (currentTarget <= 0) { //If target is invalid from last run
-		currentTarget = findTargetResList.player //Try to find new target
+		currentTarget = bestTarget //Try to find new target
 
 		if (currentTarget <= 0) { //End if we don't, can't loop because of thread blocking
 			reset()
@@ -219,21 +221,20 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		}
 		target = currentTarget
 	}
-	destBone = findTargetResList.closestBone
+	destBone = bestBone
 
 	//Set destination bone for calculating aim
 	if (NEAREST_BONE in abAsList) { //Nearest bone check
-		val nearestBone = findTargetResList.closestBone
 
-		if (nearestBone != -999) {
-			destBone = nearestBone
+		if (bestBone != -999) {
+			destBone = bestBone
 		} else {
 			reset()
 			return@every
 		}
 	}
 
-	if (bestTarget <= 0 && !curSettings.bool["HOLD_AIM"]) {
+	if (bestTarget <= 0 && !curSettings.bool["HOLD_AIM"] || bestTarget.dead()) {
 		reset()
 		return@every
 	}

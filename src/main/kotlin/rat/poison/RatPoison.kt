@@ -45,7 +45,7 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Beta"
 const val F_VERSION = "1.8"
-const val M_VERSION = "1.8.5"
+const val M_VERSION = "1.8.5.1"
 var LOADED_CONFIG = "DEFAULT"
 var oWeaponSize = oWeapon::class.java.declaredFields.size
 
@@ -165,7 +165,6 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Kill Sound") }; killSoundEsp()
     if (dbg) { println("[DEBUG] Initializing MusicKit Spoofer") }; musicKitSpoofer()
     if (dbg) { println("[DEBUG] Initializing Block Bot") }; blockBot()
-    if (dbg) { println("[DEBUG] Initializing Auto Accept") }; autoAccept()
     if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
 
     //if (EXPERIMENTAL) {

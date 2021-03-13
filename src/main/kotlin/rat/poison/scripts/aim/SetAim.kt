@@ -92,7 +92,7 @@ fun setAim() = every(500, true, inGameCheck = true) {
                 curSettings["AIM_SMOOTHNESS"] = curSettings.double[curWepCategory + "_AIM_SMOOTHNESS"]
 
                 curSettings["PERFECT_AIM"] = curSettings.bool[curWepCategory + "_PERFECT_AIM"]
-                curSettings["PERFECT_AIM_FOV"] = curSettings.bool[curWepCategory + "_PERFECT_AIM_FOV"]
+                curSettings["PERFECT_AIM_FOV"] = curSettings.float[curWepCategory + "_PERFECT_AIM_FOV"]
                 curSettings["PERFECT_AIM_CHANCE"] = curSettings.int[curWepCategory + "_PERFECT_AIM_CHANCE"]
                 curSettings["ENABLE_FLAT_AIM"] = curSettings.bool[curWepCategory + "_ENABLE_FLAT_AIM"]
                 curSettings["ENABLE_PATH_AIM"] = curSettings.bool[curWepCategory + "_ENABLE_PATH_AIM"]
@@ -134,5 +134,17 @@ fun String.boneToNum(): Int {
         "NEAREST" -> NEAREST_BONE
         "PELVIS" -> PELVIS_BONE
         else -> RANDOM_BONE
+    }
+}
+
+fun Int.numToBone(): String {
+    return when (this) {
+        HEAD_BONE -> "HEAD"
+        NECK_BONE -> "NECK"
+        CHEST_BONE -> "CHEST"
+        STOMACH_BONE -> "STOMACH"
+        NEAREST_BONE -> "NEAREST"
+        PELVIS_BONE -> "PELVIS"
+        else -> "RANDOM"
     }
 }

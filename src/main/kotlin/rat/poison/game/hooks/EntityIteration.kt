@@ -2,7 +2,6 @@ package rat.poison.game.hooks
 
 import com.sun.jna.Memory
 import com.sun.jna.platform.win32.WinNT
-import rat.poison.appless
 import rat.poison.dbg
 import rat.poison.game.*
 import rat.poison.game.CSGO.GLOW_OBJECT_SIZE
@@ -25,11 +24,8 @@ import rat.poison.scripts.detectMap
 import rat.poison.scripts.nameChange
 import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
-import rat.poison.utils.every
+import rat.poison.utils.*
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.inGame
-import rat.poison.utils.isActiveWindow
-import rat.poison.utils.shouldPostProcess
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.properties.Delegates
 
@@ -110,7 +106,7 @@ private val cursorEnableAddress by lazy(LazyThreadSafetyMode.NONE) { clientDLL.a
 private val cursorEnablePtr by lazy(LazyThreadSafetyMode.NONE) { clientDLL.address + ClientOffsets.dwMouseEnablePtr }
 
 fun updateCursorEnable() { //Call when needed
-    cursorEnable = MENUTOG || (!isActiveWindow && !appless) || csgoEXE.int(cursorEnableAddress) xor cursorEnablePtr.toInt() != 1
+    cursorEnable = MENUTOG || inBackground || csgoEXE.int(cursorEnableAddress) xor cursorEnablePtr.toInt() != 1
 }
 
 var toneMapController = 0L

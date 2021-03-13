@@ -486,8 +486,6 @@ Self-Nade = Self Nade
 KILL_BIND = Kill Bind
 KILL_BIND_KEY = Key
 Name-Change = Temporary Name Change
-AUTOACCEPT = Auto Accept
-AUTOACCEPT_TOGGLE_KEY = Auto Accept Toggle Key
 FAKE_LAG = Fake Lag
 FAKE_LAG_TICKS = Ticks
 
