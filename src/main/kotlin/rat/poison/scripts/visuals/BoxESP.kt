@@ -383,10 +383,10 @@ fun addTextureOrText(assetManager: AssetManager, useIcons: Boolean, textureName:
 }
 
 fun getRealTextParams(font: BitmapFont, builder: StringBuilder, layout: GlyphLayout): Long {
-	layout.setText(font, builder)
 	if (builder.isEmpty()) {
 		return 0L
 	}
+	layout.setText(font, builder)
 	return ((layout.height.toLong() and 0xFFFFFFFF) shl 32) or (layout.width.toLong() and 0xFFFFFFFF)
 }
 

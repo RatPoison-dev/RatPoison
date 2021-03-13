@@ -54,7 +54,7 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	var closestBone = -1
 
 	var bones = BONE.stringToIntList()
-	val findNearest = bones.has { it as Int <= 0 }
+	val findNearest = bones.has { 0 > it as Int }
 
 	forEntities(EntityType.CCSPlayer) {
 		val entity = it.entity
