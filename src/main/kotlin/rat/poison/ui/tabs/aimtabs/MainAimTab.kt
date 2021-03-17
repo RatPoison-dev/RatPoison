@@ -5,10 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
-import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.boneCategories
 import rat.poison.ui.tabs.categorySelected
@@ -46,7 +44,7 @@ class MainAimTab: Tab(true, false) {
     //Override Weapon Checkbox & Selection Box
     private val categorySelection = VisTable()
     val categorySelectionBox = VisSelectBox<String>()
-    val categorySelectLabel = VisLabel("${"Weapon-Category".toLocale()}:")
+    val categorySelectLabel = VisLabel("${"Weapon-Category"}:")
 
     val enableAimOnShot = ATabVisCheckBox("Aim On Shot", "_AIM_ONLY_ON_SHOT")
     val enableFactorRecoil = ATabVisCheckBox("Factor Recoil", "_FACTOR_RECOIL")
@@ -54,8 +52,8 @@ class MainAimTab: Tab(true, false) {
     val enablePathAim = ATabVisCheckBox("Mouse Movement", "_ENABLE_PATH_AIM")
     val enableScopedOnly = VisCheckBoxCustom("Scoped Only", "SNIPER_ENABLE_SCOPED_ONLY")
 
-    val aimBones = VisCombobox("Bone", "_AIM_BONE", useCategory = true, showText = true, items = boneCategories)
-    val forceAimBone = VisCombobox("Force-Bone", "_AIM_FORCE_BONE", useCategory = true, showText = true, items = boneCategories)
+    val aimBones = VisSelectBoxCustom("Bone", "_AIM_BONE", useCategory = true, showText = true, items = boneCategories)
+    val forceAimBone = VisSelectBoxCustom("Force-Bone", "_AIM_FORCE_BONE", useCategory = true, showText = true, items = boneCategories)
 
     val aimFov = ATabVisSlider("Aim FOV", "_AIM_FOV", .5F, 90F, .5F, false)
     val aimSpeed = ATabVisSlider("Aim Speed", "_AIM_SPEED", 0F, 10F, 1F, true)
@@ -63,14 +61,14 @@ class MainAimTab: Tab(true, false) {
     val aimAfterShots = ATabVisSlider("Aim After #", "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true)
 
     //Perfect Aim Collapsible
-    val perfectAimCheckBox = VisCheckBox("Enable-Perfect-Aim".toLocale())
+    val perfectAimCheckBox = VisCheckBox("Enable-Perfect-Aim")
     private val perfectAimTable = VisTable()
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
     val perfectAimFov = ATabVisSlider("FOV", "_PERFECT_AIM_FOV", 1F, 90F, .5F, false)
     val perfectAimChance = ATabVisSlider("Chance", "_PERFECT_AIM_CHANCE", 1F, 100F, 1F, true)
 
     //Advanced Settings Collapsible
-    val advancedSettingsCheckBox = VisCheckBox("Advanced-Settings".toLocale())
+    val advancedSettingsCheckBox = VisCheckBox("Advanced-Settings")
     private val advancedSettingsTable = VisTable()
     val advancedSettingsCollapsible = CollapsibleWidget(advancedSettingsTable)
     val randomizeX = ATabVisSlider("X Variation", "_RANDOM_X_VARIATION", 0F, 50F, 1F, true)
@@ -86,11 +84,7 @@ class MainAimTab: Tab(true, false) {
         //Create Category Selector Box
         val itemsArray = Array<String>()
         for (i in gunCategories) {
-            if (dbg && curLocale[i].isBlank()) {
-                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
-            }
-
-            itemsArray.add(curLocale[i])
+            itemsArray.add(i)
         }
         categorySelectionBox.items = itemsArray
 
@@ -214,7 +208,7 @@ class MainAimTab: Tab(true, false) {
         table.add(advancedSettingsCollapsible).left().row()
     }
     override fun getTabTitle(): String {
-        return "Aimbot".toLocale()
+        return "Aimbot"
     }
 
     override fun getContentTable(): Table {

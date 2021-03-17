@@ -7,7 +7,6 @@ import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
-import rat.poison.toLocale
 import rat.poison.ui.tabs.misctabs.BombTab
 import rat.poison.ui.tabs.misctabs.FOVChangerTab
 import rat.poison.ui.tabs.misctabs.MovementTab
@@ -58,7 +57,7 @@ class MiscTabs : Tab(false, false) {
         table.add(miscScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
     }
     override fun getTabTitle(): String {
-        return "Misc".toLocale()
+        return "Misc"
     }
 
     override fun getContentTable(): Table {

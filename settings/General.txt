@@ -10,13 +10,10 @@ MENU_ALPHA = 1.0
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles visibility of the menu on the overlay
 //Default key is INSERT
-MENU_KEY = 45
+MENU_KEY = 112
 
 //Show tooltips
 MENU_TOOLTIPS = true
-
-//Default locale
-CURRENT_LOCALE = locale_en_US
 
 //FOV Type : DISTANCE or STATIC
 FOV_TYPE = STATIC
@@ -118,8 +115,8 @@ RANDOM_BONE = -4
 PERFECT_AIM = false
 PERFECT_AIM_CHANCE = 1
 PERFECT_AIM_FOV = 1.0
-AIM_BONE = -1
-FORCE_AIM_BONE = -1
+AIM_BONE = [-1]
+FORCE_AIM_BONE = [-1]
 AIM_SPEED = 10
 AIM_FOV = 0.5
 FACTOR_RECOIL = false

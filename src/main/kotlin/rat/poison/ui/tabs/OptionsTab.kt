@@ -11,7 +11,6 @@ import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.overlay.App.uiBombWindow
 import rat.poison.overlay.App.uiSpecList
-import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
@@ -30,8 +29,8 @@ class OptionsTab : Tab(false, false) {
     val keybinds = VisCheckBoxCustom("Keybinds", "KEYBINDS")
     val blur = VisCheckBoxCustom("Menu Blur", "GAUSSIAN_BLUR")
     val overloadKeybinds = VisCheckBoxCustom("Overload Keybinds", "OVERLOAD_KEYBINDS")
-    private val discordLink = LinkLabel("Join-Discord".toLocale(), "https://dimden.dev/ratpoisonowns")
-    private val configsLink = LinkLabel("Join-The-Giveaway".toLocale(), "https://ratpoison.dimden.dev/")
+    private val discordLink = LinkLabel("Join-Discord", "https://dimden.dev/ratpoisonowns")
+    private val configsLink = LinkLabel("Join-The-Giveaway", "https://ratpoison.dimden.dev/")
 
 
     init {
@@ -60,7 +59,7 @@ class OptionsTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String {
-        return "Options".toLocale()
+        return "Options"
     }
 }
 

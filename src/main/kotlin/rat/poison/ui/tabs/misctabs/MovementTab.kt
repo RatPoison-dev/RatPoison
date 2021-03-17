@@ -3,7 +3,6 @@ package rat.poison.ui.tabs.misctabs
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.toLocale
 import rat.poison.ui.tabs.movementTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
@@ -45,7 +44,7 @@ class MovementTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String {
-        return "Movement".toLocale()
+        return "Movement"
     }
 
     override fun getContentTable(): Table {

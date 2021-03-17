@@ -7,7 +7,6 @@ import rat.poison.curSettings
 import rat.poison.overlay.App
 import rat.poison.overlay.opened
 import rat.poison.scripts.bombState
-import rat.poison.toLocale
 import rat.poison.ui.changed
 import kotlin.math.round
 
@@ -15,7 +14,7 @@ lateinit var bombText : VisLabel
 
 //Needs cleanup
 
-class UIBombTimer : VisWindow("Bomb-Timer".toLocale()) {
+class UIBombTimer : VisWindow("Bomb-Timer") {
     init {
         defaults().left()
         addCloseButton()

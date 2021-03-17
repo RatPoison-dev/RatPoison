@@ -30,16 +30,16 @@ class SkinChangerTab : Tab(false, false) {
     private var listAdapter = ListAdapter(strArray)
     private var skinSelectionList = ListView(listAdapter)
 
-    private var idLabel = VisLabel("Skin-ID".toLocale())
-    private var statTrakLabel = VisLabel("StatTrak".toLocale())
-    private var wearLabel = VisLabel("Wear".toLocale())
+    private var idLabel = VisLabel("Skin-ID")
+    private var statTrakLabel = VisLabel("StatTrak")
+    private var wearLabel = VisLabel("Wear")
 
     private var skinIDInput = VisValidatableTextField(Validators.INTEGERS)
     private var skinStatTrak = VisValidatableTextField(Validators.INTEGERS)
     private var skinWear = VisSlider(0.0F, 1.0F, .01F, false)
 
-    private var forceUpdate = VisTextButton("Manual-Force-Update".toLocale())
-    var autoForceUpdate = VisCheckBoxCustom("Auto-Force-Update".toLocale(), "FORCE_UPDATE_AUTO")
+    private var forceUpdate = VisTextButton("Manual-Force-Update")
+    var autoForceUpdate = VisCheckBoxCustom("Auto-Force-Update", "FORCE_UPDATE_AUTO")
 
     private var weaponSelected = "DESERT_EAGLE"
     private var minValue = 0.0F
@@ -55,13 +55,7 @@ class SkinChangerTab : Tab(false, false) {
         //Create Category Selector Box
         val itemsArray = Array<String>()
         for (i in gunCategories) {
-            if (curLocale[i].isBlank()) {
-                if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
-                itemsArray.add(i)
-            }
-            else {
-                itemsArray.add(curLocale[i])
-            }
+            itemsArray.add(i)
         }
 
         categorySelectionBox.items = itemsArray
@@ -149,14 +143,14 @@ class SkinChangerTab : Tab(false, false) {
             when {
                 skinWear.value < minValue -> {
                     skinWear.value = minValue.roundNDecimals(1)
-                    wearLabel.setText("${"Wear".toLocale()}: ${minValue.roundNDecimals(1)}")
+                    wearLabel.setText("${"Wear"}: ${minValue.roundNDecimals(1)}")
                 }
                 skinWear.value > maxValue -> {
                     skinWear.value = maxValue.roundNDecimals(1)
-                    wearLabel.setText("${"Wear".toLocale()}: ${maxValue.roundNDecimals(1)}")
+                    wearLabel.setText("${"Wear"}: ${maxValue.roundNDecimals(1)}")
                 }
                 else -> {
-                    wearLabel.setText("${"Wear".toLocale()}: ${skinWear.value.roundNDecimals(1)}")
+                    wearLabel.setText("${"Wear"}: ${skinWear.value.roundNDecimals(1)}")
                 }
             }
 
@@ -207,7 +201,7 @@ class SkinChangerTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String {
-        return "Skins".toLocale()
+        return "Skins"
     }
 }
 
@@ -220,13 +214,14 @@ class ListAdapter(array: ArrayList<String>?) : ArrayListAdapter<String, VisTable
         selectionMode = SelectionMode.SINGLE
     }
 
-    override fun createView(item: String): VisTable? {
+    override fun createView(item: String): VisTable {
         val label = VisLabel(item)
         label.setColor(1F, 1F, 1F, 1F)
+        label.setAlignment(Align.center)
 
         val table = VisTable()
         table.left()
-        table.add(label)
+        table.add(label).center().growX()
         return table
     }
 

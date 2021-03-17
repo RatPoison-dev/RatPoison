@@ -6,7 +6,6 @@ import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.curSettings
 import rat.poison.overlay.App.uiSpecList
 import rat.poison.overlay.opened
-import rat.poison.toLocale
 import rat.poison.ui.changed
 import kotlin.math.round
 
@@ -14,7 +13,7 @@ lateinit var specListText : VisLabel
 
 //Needs cleanup
 
-class UISpectatorList : VisWindow("Spectator-List".toLocale()) {
+class UISpectatorList : VisWindow("Spectator-List") {
     init {
         defaults().left()
         addCloseButton()

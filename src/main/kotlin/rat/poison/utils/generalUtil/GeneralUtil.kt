@@ -92,30 +92,12 @@ fun List<Any>.containsAny(lst: List<Any>): Boolean {
     return true
 }
 
-fun Array<String>.toLocaleGdxArray(): com.badlogic.gdx.utils.Array<String> {
+fun Array<String>.toGdxArray(): com.badlogic.gdx.utils.Array<String> {
     val itemsArray = com.badlogic.gdx.utils.Array<String>()
     this.forEach {
-        if (curLocale[it].isBlank()) {
-            if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $it is missing!")
-            itemsArray.add(it)
-        }
-        else {
-            itemsArray.add(curLocale[it])
-        }
+        itemsArray.add(it)
     }
     return itemsArray
-}
-
-fun String.stringToLocaleList(separator: String = ","): List<String> {
-    return stringToList(separator).map {
-        val localised = curLocale[it]
-        if (localised.isBlank()) {
-            if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $it is missing!")
-            return@map it
-        } else {
-            return@map localised
-        }
-    }
 }
 
 //Matrix 4 uses column-major order

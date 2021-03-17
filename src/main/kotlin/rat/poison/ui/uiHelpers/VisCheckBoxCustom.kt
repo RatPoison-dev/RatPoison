@@ -1,11 +1,8 @@
 package rat.poison.ui.uiHelpers
 
-import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.Tooltip.removeTooltip
 import com.kotcrab.vis.ui.widget.VisCheckBox
-import rat.poison.curLocale
 import rat.poison.curSettings
-import rat.poison.dbg
 import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
@@ -36,15 +33,7 @@ class VisCheckBoxCustom(mainText: String, varName: String, visibleText: Boolean 
     }
 
     fun update() {
-        if (curSettings["CURRENT_LOCALE"] != "" && showText) { //Only update locale if we have one
-            if (curLocale[variableName].isBlank()) {
-                if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
-                setText(labelText)
-            }
-            else {
-                setText(curLocale[variableName])
-            }
-        }
+        setText(labelText)
 
         isChecked = curSettings.bool[variableName]
 
@@ -53,15 +42,7 @@ class VisCheckBoxCustom(mainText: String, varName: String, visibleText: Boolean 
 
     private fun updateTooltip() {
         if (curSettings.bool["MENU_TOOLTIPS"]) {
-            if (curLocale["${variableName}_TOOLTIP"] != "") {
-                if (!hasTooltip) {
-                    Tooltip.Builder(curLocale["${variableName}_TOOLTIP"]).target(this).build()
-                    hasTooltip = true
-                    if (dbg) {
-                        println("[DEBUG] Added tooltip to $variableName")
-                    }
-                }
-            }
+            //TODO tooltip dickin
         } else {
             if (hasTooltip) {
                 removeTooltip(this)

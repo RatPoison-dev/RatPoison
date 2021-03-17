@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.toLocale
 import rat.poison.ui.tabs.chamsEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
@@ -72,7 +71,7 @@ class ChamsEspTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String {
-        return "Chams".toLocale()
+        return "Chams"
     }
 }
 

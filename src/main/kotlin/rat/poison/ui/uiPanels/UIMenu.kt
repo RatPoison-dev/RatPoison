@@ -27,7 +27,6 @@ val mainTabbedPane = TabbedPane()
     var skinChangerTab = SkinChangerTab()
     var optionsTab = OptionsTab()
     var configsTab = ConfigsTab()
-    var fontsTab = FontsTab()
 
 private var uid = randInt(2, 999999)
 
@@ -72,7 +71,6 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         mainTabbedPane.add(skinChangerTab)
         mainTabbedPane.add(optionsTab)
         mainTabbedPane.add(configsTab)
-        mainTabbedPane.add(fontsTab)
 
         //Set aim tab as the first (init) tab
         mainTabbedPane.switchTab(aimTab)
@@ -95,6 +93,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         changeHeight()
                         mainTabbedPaneContent.add(aimTab.contentTable).growX()
                     }
+
                     optionsTab -> {
                         wantedHeight = normHeight
                         wantedWidth = normWidth
@@ -102,6 +101,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         changeHeight()
                         mainTabbedPaneContent.add(optionsTab.contentTable).growX()
                     }
+
                     rcsTab -> {
                         wantedHeight = normHeight
                         wantedWidth = normWidth
@@ -109,6 +109,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         changeHeight()
                         mainTabbedPaneContent.add(rcsTab.contentTable).growX()
                     }
+
                     visualsTab -> {
                         wantedHeight = normHeight
                         wantedWidth = normWidth
@@ -123,6 +124,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         changeHeight()
                         mainTabbedPaneContent.add(miscTab.contentTable).growX()
                     }
+
                     ranksTab -> {
                         wantedHeight = normHeight
                         wantedWidth = normWidth
@@ -130,6 +132,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         changeHeight()
                         mainTabbedPaneContent.add(ranksTab.contentTable).growX()
                     }
+
                     nadeHelperTab -> {
                         wantedHeight = normHeight
                         wantedWidth = normWidth
@@ -137,6 +140,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         changeHeight()
                         mainTabbedPaneContent.add(nadeHelperTab.contentTable).growX()
                     }
+
                     configsTab -> {
                         wantedHeight = normHeight
                         wantedWidth = normWidth
@@ -144,13 +148,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         changeHeight()
                         mainTabbedPaneContent.add(configsTab.contentTable).growX()
                     }
-                    fontsTab -> {
-                        wantedHeight = normHeight
-                        wantedWidth = normWidth
-                        changeWidth()
-                        changeHeight()
-                        mainTabbedPaneContent.add(fontsTab.contentTable).growX()
-                    }
+
                     skinChangerTab -> {
                         wantedHeight = if (CSGO.gameHeight < 1000F) {
                             CSGO.gameHeight.toFloat() - 100F
@@ -176,8 +174,8 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         })
 
         //Add tab pane & scroll pane to main ui window
-        add(mainTabbedPane.table).growX().row()
-        add(mainScrollPane).minSize(500F, 465F).prefSize(500F, 465F).align(Align.top).growY().row()
+        add(mainTabbedPane.table).growX().fillY().top().minHeight(30F).row()
+        add(mainScrollPane).growX().fillY().top().minWidth(500F).row()
         pack()
         centerWindow()
 

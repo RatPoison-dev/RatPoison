@@ -53,23 +53,6 @@ fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
     println("Settings loaded")
 }
 
-fun loadLocale(fileDir: String) {
-    if (saving) return
-    saving = true
-    File(fileDir).readLines(UTF_8).forEach { line ->
-        if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith("\"") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
-            val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
-
-            if (curLine.size == 3) {
-                curLocale[curLine[0]] = curLine[2]
-            } else {
-                println("Debug: Locale invalid -- $curLine")
-            }
-        }
-    }
-    saving = false
-}
-
 fun loadSkinSettings(fileDir: String) {
     File(fileDir).readLines(UTF_8).forEach { line ->
         if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith("\"") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
@@ -78,7 +61,7 @@ fun loadSkinSettings(fileDir: String) {
             if (curLine.size == 3) {
                 skSettings[curLine[0]] = curLine[2]
             } else {
-                println("Debug: Locale invalid -- $curLine")
+                println("Debug: Skin invalid -- $curLine")
             }
         }
     }

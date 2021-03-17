@@ -18,7 +18,6 @@ import rat.poison.scripts.aim.pathAim
 import rat.poison.scripts.aim.setAim
 import rat.poison.scripts.visuals.*
 import rat.poison.utils.Settings
-import rat.poison.utils.detectLocale
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.loadSkinSettings
 import rat.poison.utils.loadMigration
@@ -43,9 +42,9 @@ data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = 
 data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var tSeed: Int)
 
 const val TITLE = "RatPoison"
-const val BRANCH = "Beta"
-const val F_VERSION = "1.8"
-const val M_VERSION = "1.8.5.1"
+const val BRANCH = "**"
+const val F_VERSION = "-.-"
+const val M_VERSION = "-.-"
 var LOADED_CONFIG = "DEFAULT"
 var oWeaponSize = oWeapon::class.java.declaredFields.size
 
@@ -58,7 +57,6 @@ lateinit var MUSIC_KITS_FILE: File
 
 var settingsLoaded = false
 val curSettings = Settings()
-val curLocale = Settings()
 val skSettings = Settings()
 
 var dbg: Boolean = false
@@ -75,8 +73,6 @@ fun main() {
 
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
     loadSkinSettings("$SETTINGS_DIRECTORY/skinCFGS/DefaultSettings.cfg")
-
-    detectLocale()
 
     dbg = curSettings.bool["DEBUG"]
     appless = curSettings.bool["APPLESS"]
@@ -219,12 +215,4 @@ fun main() {
     } else {
         scanner()
     }
-}
-
-fun String.toLocale(): String {
-    if (curLocale[this].isBlank()) {
-        if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $this is missing!")
-        return this
-    }
-    return curLocale[this]
 }

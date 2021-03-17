@@ -9,11 +9,8 @@ import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
-import rat.poison.curLocale
 import rat.poison.curSettings
-import rat.poison.dbg
 import rat.poison.overlay.opened
-import rat.poison.toLocale
 import rat.poison.ui.tabs.aimtabs.BacktrackTab
 import rat.poison.ui.tabs.aimtabs.MainAimTab
 import rat.poison.ui.tabs.aimtabs.OverrideTab
@@ -67,8 +64,8 @@ class AimTab : Tab(true, false) { //Aim.kts tab
             }
         })
 
-        table.add(aimTabbedPane.table).minWidth(500F).left().growX().row()
-        table.add(aimScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
+        table.add(aimTabbedPane.table).growX().fillY().top().minHeight(30F).row()
+        table.add(aimScrollPane).top().growX().growY().row()
     }
 
     override fun getContentTable(): Table {
@@ -76,7 +73,7 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     }
 
     override fun getTabTitle(): String {
-        return "Aim".toLocale()
+        return "Aim"
     }
 }
 
@@ -139,15 +136,11 @@ fun updateDisableAim() {
 fun updateAim() {
     overridenWeapons.weaponOverrideCheckBox.update()
     aimTab.tAim.apply {
-        categorySelectLabel.setText("${"Weapon-Category".toLocale()}:") //Do not like this
+        categorySelectLabel.setText("Weapon Category:") //Do not like this
         //Create Category Selector Box
         val itemsArray = Array<String>()
         for (i in gunCategories) {
-            if (dbg && curLocale[i].isBlank()) {
-                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
-            }
-
-            itemsArray.add(curLocale[i])
+            itemsArray.add(i)
         }
 
         categorySelectionBox.items = itemsArray
@@ -264,15 +257,11 @@ fun updateDisableTrig() {
 
 fun updateTrig() {
     aimTab.tTrig.apply {
-        categorySelectLabel.setText("${"Weapon-Category".toLocale()}:")
+        categorySelectLabel.setText("${"Weapon-Category"}:")
         //Create Category Selector Box
         val itemsArray = Array<String>()
         for (i in gunCategories) {
-            if (dbg && curLocale[i].isBlank()) {
-                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
-            }
-
-            itemsArray.add(curLocale[i])
+            itemsArray.add(i)
         }
 
         categorySelectionBox.items = itemsArray
@@ -322,15 +311,11 @@ fun updateBacktrack() {
     if (!opened) return
 
     aimTab.tBacktrack.apply {
-        categorySelectLabel.setText("${"Weapon-Category".toLocale()}:")
+        categorySelectLabel.setText("${"Weapon-Category"}:")
         //Create Category Selector Box
         val itemsArray = Array<String>()
         for (i in gunCategories) {
-            if (dbg && curLocale[i].isBlank()) {
-                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
-            }
-
-            itemsArray.add(curLocale[i])
+            itemsArray.add(i)
         }
 
         categorySelectionBox.items = itemsArray

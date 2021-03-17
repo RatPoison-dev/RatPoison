@@ -6,10 +6,6 @@ import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.curLocale
-import rat.poison.curSettings
-import rat.poison.dbg
-import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.gunCategories
@@ -41,17 +37,13 @@ class TriggerBotTab: Tab(true, false) {
     //Override Weapon Checkbox & Selection Box
     private val categorySelection = VisTable()
     val categorySelectionBox = VisSelectBox<String>()
-    val categorySelectLabel = VisLabel("${"Weapon-Category".toLocale()}:")
+    val categorySelectLabel = VisLabel("${"Weapon-Category"}:")
 
     init {
         //Create Category Selector Box
         val itemsArray = Array<String>()
         for (i in gunCategories) {
-            if (dbg && curLocale[i].isBlank()) {
-                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
-            }
-
-            itemsArray.add(curLocale[i])
+            itemsArray.add(i)
         }
 
         categorySelectionBox.items = itemsArray
@@ -97,7 +89,7 @@ class TriggerBotTab: Tab(true, false) {
     }
 
     override fun getTabTitle(): String {
-        return "Triggerbot".toLocale()
+        return "Triggerbot"
     }
 
     override fun getContentTable(): Table {

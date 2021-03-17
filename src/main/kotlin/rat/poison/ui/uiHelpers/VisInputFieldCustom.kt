@@ -4,9 +4,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.kotcrab.vis.ui.util.Validators
 import com.kotcrab.vis.ui.widget.*
-import rat.poison.curLocale
 import rat.poison.curSettings
-import rat.poison.dbg
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.keybindsUpdate
 
@@ -46,16 +44,7 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
 
     fun update(neglect: Actor? = null) {
         if (neglect != this) {
-            if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
-                if (curLocale[variableName].isBlank()) {
-                    if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
-                    keyLabel.setText(textLabel)
-                }
-                else {
-                    keyLabel.setText("${curLocale[variableName]}:")
-                }
-            }
-
+            keyLabel.setText(textLabel)
             keyField.text = curSettings[variableName]
         }
 
@@ -64,15 +53,7 @@ class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = 
 
     private fun updateTooltip() {
         if (curSettings.bool["MENU_TOOLTIPS"]) {
-            if (curLocale["${variableName}_TOOLTIP"] != "") {
-                if (!hasTooltip) {
-                    Tooltip.Builder(curLocale["${variableName}_TOOLTIP"]).target(this).build()
-                    hasTooltip = true
-                    if (dbg) {
-                        println("[DEBUG] Added tooltip to $variableName")
-                    }
-                }
-            }
+            //TODO tooltipin
         } else {
             if (hasTooltip) {
                 Tooltip.removeTooltip(this)

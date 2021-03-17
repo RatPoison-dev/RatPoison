@@ -5,7 +5,6 @@ import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.ui.changed
@@ -35,12 +34,7 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
             }
 
             curSettings[variableName] = sliderVal.toString()
-            if (curLocale[variableName] != "") {
-                sliderLabel.setText("${curLocale[variableName]}: $sliderVal")
-            }
-            else {
-                sliderLabel.setText("${labelText}: $sliderVal")
-            }
+            sliderLabel.setText("${labelText}: $sliderVal")
         }
 
         add(sliderLabel).width(w1)
@@ -56,32 +50,15 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
             round(sliderBar.value * rnd)/rnd
         }
 
-        if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
-            if (curLocale[variableName].isBlank()) {
-                if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
-                sliderLabel.setText("$labelText: $sliderVal")
-            }
-            else {
-                sliderLabel.setText("${curLocale[variableName]}: $sliderVal")
-            }
-        } else { //User our default input
-            sliderLabel.setText("$labelText: $sliderVal")
-        }
+
+        sliderLabel.setText("$labelText: $sliderVal")
 
         updateTooltip()
     }
 
     private fun updateTooltip() {
         if (curSettings.bool["MENU_TOOLTIPS"]) {
-            if (curLocale["${variableName}_TOOLTIP"] != "") {
-                if (!hasTooltip) {
-                    Tooltip.Builder(curLocale["${variableName}_TOOLTIP"]).target(this).build()
-                    hasTooltip = true
-                    if (dbg) {
-                        println("[DEBUG] Added tooltip to $variableName")
-                    }
-                }
-            }
+            //TODO tooltippin
         } else {
             if (hasTooltip) {
                 Tooltip.removeTooltip(this)

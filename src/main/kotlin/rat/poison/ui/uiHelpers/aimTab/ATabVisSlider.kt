@@ -5,7 +5,6 @@ import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.ui.changed
@@ -23,7 +22,7 @@ class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMa
     private val w2 = width2
     private var hasTooltip = false
 
-    private val sliderLabel = VisLabel("${curLocale[variableExtension]}: " + curSettings[categorySelected + variableExtension])
+    private val sliderLabel = VisLabel(": " + curSettings[categorySelected + variableExtension])
     private val sliderBar = VisSlider(varMin, varMax, stepSize, false)
 
     init {
@@ -37,7 +36,7 @@ class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMa
             }
 
             curSettings[categorySelected + variableExtension] = sliderVal.toString()
-            sliderLabel.setText("${curLocale[variableExtension]}: ${curSettings[categorySelected + variableExtension]}")
+            sliderLabel.setText(": ${curSettings[categorySelected + variableExtension]}")
         }
 
         add(sliderLabel).width(w1)
@@ -61,27 +60,16 @@ class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMa
             println("[Error] $categorySelected$variableExtension is empty")
         }
 
-        if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
-            if (dbg && curLocale[variableExtension].isBlank()) {
-                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableExtension is missing!")
-            }
-            sliderLabel.setText("${curLocale[variableExtension]}: ${curSettings[categorySelected + variableExtension]}")
-        }
+
+        sliderLabel.setText(": ${curSettings[categorySelected + variableExtension]}")
+
 
         updateTooltip()
     }
 
     private fun updateTooltip() {
         if (curSettings.bool["MENU_TOOLTIPS"]) {
-            if (curLocale["${variableExtension}_TOOLTIP"] != "") {
-                if (!hasTooltip) {
-                    Tooltip.Builder(curLocale["${variableExtension}_TOOLTIP"]).target(this).build()
-                    hasTooltip = true
-                    if (dbg) {
-                        println("[DEBUG] Added tooltip to $variableExtension")
-                    }
-                }
-            }
+            //TODO tippin tools
         } else {
             if (hasTooltip) {
                 Tooltip.removeTooltip(this)

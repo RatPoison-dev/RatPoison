@@ -6,7 +6,6 @@ import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.scripts.ranksPlayerList
-import rat.poison.toLocale
 import rat.poison.ui.uiRefreshing
 import rat.poison.utils.RanksPlayer
 import rat.poison.utils.saving
@@ -25,17 +24,17 @@ class RanksTab : Tab(false, false) {
     private val table = VisTable(true)
 
     private var ranksListTable = VisTable()
-    private var teamsLabel = VisLabelExtension("Team".toLocale() + "  \n")
+    private var teamsLabel = VisLabelExtension("Team" + "  \n")
 
     private var namesTable = VisTable()
-    private var namesLabel = VisLabelExtension("Name".toLocale() + "  \n")
+    private var namesLabel = VisLabelExtension("Name" + "  \n")
 
-    private var ranksLabel = VisLabelExtension("Rank".toLocale() + "  \n")
-    private var killsLabel = VisLabelExtension("Kills".toLocale() + "  \n")
-    private var deathsLabel = VisLabelExtension("Deaths".toLocale() + "  \n")
-    private var kdLabel = VisLabelExtension("K/D".toLocale() + "  \n")
-    private var winsLabel = VisLabelExtension("Wins".toLocale() + "  \n")
-    private var moneyLabel = VisLabelExtension("Money".toLocale() + "  \n")
+    private var ranksLabel = VisLabelExtension("Rank" + "  \n")
+    private var killsLabel = VisLabelExtension("Kills" + "  \n")
+    private var deathsLabel = VisLabelExtension("Deaths" + "  \n")
+    private var kdLabel = VisLabelExtension("K/D" + "  \n")
+    private var winsLabel = VisLabelExtension("Wins" + "  \n")
+    private var moneyLabel = VisLabelExtension("Money" + "  \n")
 
     init {
         ranksListTable.add(teamsLabel)
@@ -58,20 +57,20 @@ class RanksTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String {
-        return "Ranks".toLocale()
+        return "Ranks"
     }
 
     fun updateRanks() {
         if (uiRefreshing || saving || updatingRanks || !isActiveTab) return
         updatingRanks = true
-        teamsLabel.setText("Team".toLocale() + "  \n")
-        namesLabel.setText("Name".toLocale())
-        ranksLabel.setText("Rank".toLocale() + "  \n")
-        killsLabel.setText("Kills".toLocale() + "  \n")
-        deathsLabel.setText("Deaths".toLocale() + "  \n")
-        kdLabel.setText("K/D".toLocale() + "  \n")
-        winsLabel.setText("Wins".toLocale() + "  \n")
-        moneyLabel.setText("Money".toLocale() + "  \n")
+        teamsLabel.setText("Team" + "  \n")
+        namesLabel.setText("Name")
+        ranksLabel.setText("Rank" + "  \n")
+        killsLabel.setText("Kills" + "  \n")
+        deathsLabel.setText("Deaths" + "  \n")
+        kdLabel.setText("K/D" + "  \n")
+        winsLabel.setText("Wins" + "  \n")
+        moneyLabel.setText("Money" + "  \n")
 
         namesTable.clear()
         namesTable.add(namesLabel).left().row()
@@ -85,7 +84,7 @@ class RanksTab : Tab(false, false) {
     private fun constructRank(player: RanksPlayer) {
         if (uiRefreshing) return
 
-        teamsLabel.setText(teamsLabel.text.toString() + player.teamStr.toLocale() + "  \n")
+        teamsLabel.setText(teamsLabel.text.toString() + player.teamStr + "  \n")
 
         var tmpName = player.name
         tmpName = tmpName.substring(0, if (tmpName.length > 23) 23 else tmpName.length)

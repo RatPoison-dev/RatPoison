@@ -12,7 +12,6 @@ import rat.poison.overlay.opened
 import rat.poison.scripts.changeName
 import rat.poison.scripts.selfNade
 import rat.poison.scripts.writeSpoof
-import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.ListAdapter
 import rat.poison.ui.tabs.miscVisualsTab
@@ -41,12 +40,12 @@ class OthersTab: Tab(false, false) {
     val killSoundCheckBox = VisCheckBoxCustom("KillSound", "ENABLE_KILLSOUND")
     val killSoundBox = VisSelectBox<String>()
     val killSoundVolume = VisSliderCustom("Volume", "KILLSOUND_VOLUME", .1F, 1F, .1F, false)
-    val selfNade = VisTextButton("Self-Nade".toLocale())
+    val selfNade = VisTextButton("Self-Nade")
     val enableKillBind = VisCheckBoxCustom("Kill Bind", "KILL_BIND")
     val killBindKey = VisBindTableCustom("Key", "KILL_BIND_KEY")
     private val nameChangeInput = VisValidatableTextField()
-    private val nameChange = VisTextButton("Name-Change".toLocale())
-    val postProcessingDisable = VisCheckBoxCustom("DISABLE_POST_PROCESSING".toLocale(), "DISABLE_POST_PROCESSING")
+    private val nameChange = VisTextButton("Name-Change")
+    val postProcessingDisable = VisCheckBoxCustom("DISABLE_POST_PROCESSING", "DISABLE_POST_PROCESSING")
     val spectatorList = VisCheckBoxCustom("Spectator List", "SPECTATOR_LIST")
     val enableMusicKitSpoofer = VisCheckBoxCustom("Music Kit Spoofer", "MUSIC_KIT_SPOOFER")
     val fakeLag = VisCheckBoxCustom("Fake Lag", "FAKE_LAG")
@@ -71,7 +70,7 @@ class OthersTab: Tab(false, false) {
         }
 
         val selected = musicKitArray.first { it.id == curSettings.int["MUSIC_KIT_ID"] }.name
-        val currentlySelected = VisLabel("${"CURRENTLY".toLocale()}: $selected")
+        val currentlySelected = VisLabel("${"CURRENTLY"}: $selected")
         //Crashing on adding separators with .colspan(2) (?)
         table.padLeft(25F)
         table.padRight(25F)
@@ -134,7 +133,7 @@ class OthersTab: Tab(false, false) {
                 if (curSettings.bool["MUSIC_KIT_SPOOFER"]) {
                     writeSpoof()
                 }
-                currentlySelected.setText("${"CURRENTLY".toLocale()}: $str")
+                currentlySelected.setText("${"CURRENTLY"}: $str")
             }
         }
 
@@ -182,7 +181,7 @@ class OthersTab: Tab(false, false) {
 
     }
     override fun getTabTitle(): String {
-        return "Others".toLocale()
+        return "Others"
     }
 
     override fun getContentTable(): Table {
@@ -216,7 +215,7 @@ fun othersTabUpdate() {
         fakeLag.update()
         killSoundBox.selected = curSettings["KILLSOUND_FILE_NAME"].replace("\"", "")
         killSoundVolume.update()
-        selfNade.setText("Self-Nade".toLocale())
+        selfNade.setText("Self-Nade")
         killBindKey.update()
         enableKillBind.update()
         postProcessingDisable.update()

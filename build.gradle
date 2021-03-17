@@ -5,7 +5,7 @@ buildscript {
 	ext.kotlin_version = '1.4.21'
 	ext.jnaVersion = '5.6.0'
 	ext.gdxVersion = '1.9.14'
-	ext.visuiVersion = "1.4.7"
+	ext.visuiVersion = "1.5.0-SNAPSHOT"
 
 	repositories {
 		jcenter()

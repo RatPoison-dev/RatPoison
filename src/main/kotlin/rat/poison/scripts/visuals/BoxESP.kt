@@ -25,7 +25,6 @@ import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
-import rat.poison.toLocale
 import rat.poison.utils.AssetManager
 import rat.poison.utils.Vector
 import rat.poison.utils.every
@@ -153,7 +152,7 @@ fun boxEsp() {
 
 			val boxWidth = bbox.right - bbox.left
 			val boxHeight = bbox.bottom - bbox.top
-			var barWidth = clamp(boxWidth * .025F, 2F, 20F)
+			val barWidth = clamp(boxWidth * .025F, 2F, 20F)
 
 			if (shapeRenderer.isDrawing) {
 				shapeRenderer.end()
@@ -240,7 +239,7 @@ fun boxEsp() {
 			}
 
 			if (bEspName && isWeapon) {
-				addTextureOrText(assetManager, bEspUseIcons, it.type.name.replace("CWeapon", ""), "${it.type.name.replace("CWeapon", "").toLocale()}\n", bEspNamePos)
+				addTextureOrText(assetManager, bEspUseIcons, it.type.name.replace("CWeapon", ""), "${it.type.name.replace("CWeapon", "")}\n", bEspNamePos)
 			}
 
 			if (bEspFlashed && isPlayer && entityMemory.flashed()) {
@@ -248,7 +247,7 @@ fun boxEsp() {
 			}
 
 			if (bEspWeapon && isPlayer) {
-				addTextureOrText(assetManager, bEspUseIcons, ent.weapon().name, "${ent.weapon().name.toLocale()}\n", bEspWeaponPos)
+				addTextureOrText(assetManager, bEspUseIcons, ent.weapon().name, "${ent.weapon().name}\n", bEspWeaponPos)
 			}
 
 			if (bEspKevlar && isPlayer && bEspUseIcons && !entityMemory.hasHelmet() && entityMemory.armor() > 0) {

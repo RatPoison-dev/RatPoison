@@ -5,9 +5,6 @@ import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.DEFAULT_OWEAPON_STR
-import rat.poison.curLocale
-import rat.poison.curSettings
-import rat.poison.dbg
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.aimtabs.weaponOverrideSelected
 import kotlin.math.pow
@@ -37,17 +34,7 @@ class OverrideVisSliderCustom(mainText: String, varName: String, varMin: Float, 
 
             setOverrideVar(weaponOverrideSelected, varIdx, sliderVal)
 
-            if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
-                if (curLocale[variableName].isBlank()) {
-                    if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
-                    sliderLabel.setText("$labelText: $sliderVal")
-                }
-                else {
-                    sliderLabel.setText("${curLocale[variableName]}: $sliderVal")
-                }
-            } else { //User our default input
-                sliderLabel.setText("$labelText: $sliderVal")
-            }
+            sliderLabel.setText("$labelText: $sliderVal")
         }
 
         add(sliderLabel).width(w1)
@@ -63,14 +50,7 @@ class OverrideVisSliderCustom(mainText: String, varName: String, varMin: Float, 
             round(sliderBar.value * rnd)/rnd
         }
 
-        if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
-            if (dbg && curLocale[variableName].isBlank()) {
-                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
-            }
-            sliderLabel.setText("${curLocale[variableName]}: $sliderVal")
-        } else { //User our default input
-            sliderLabel.setText("$labelText: $sliderVal")
-        }
+        sliderLabel.setText("$labelText: $sliderVal")
     }
 
     fun disable(bool: Boolean, col: Color) {

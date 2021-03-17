@@ -2,6 +2,7 @@
 
 package rat.poison.ui.tabs
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.VisUI
@@ -9,16 +10,12 @@ import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.SETTINGS_DIRECTORY
-import rat.poison.curSettings
 import rat.poison.overlay.App.menuStage
 import rat.poison.overlay.opened
-import rat.poison.toLocale
+import rat.poison.scripts.skinChanger
 import rat.poison.ui.changed
-import rat.poison.ui.refreshMenu
 import rat.poison.ui.uiPanels.configsTab
-import rat.poison.ui.uiUpdate
 import rat.poison.utils.*
-import rat.poison.utils.generalUtil.loadLocale
 import java.awt.Desktop
 import java.io.File
 
@@ -27,23 +24,14 @@ class ConfigsTab : Tab(false, false) {
     private var cfgNameTextBox = VisTextField()
     private var skinCfgNameTextBox = VisTextField()
 
-    private var configLabel = VisLabel("Configs".toLocale(), Align.center)
-    private var localeLabel = VisLabel("Locale".toLocale(), Align.center)
-    private var skinChangerLabel = VisLabel("Skins".toLocale(), Align.center)
-
     private var configListAdapter = ListAdapter(ArrayList())
     private var configSelectionList = ListView(configListAdapter)
 
     private var skinChangerListAdapter = ListAdapter(ArrayList())
     private var skinChangerSelectionList = ListView(skinChangerListAdapter)
 
-    private var localeListAdapter = ListAdapter(ArrayList())
-    private var localeSelectionList = ListView(localeListAdapter)
-    private var loadLocaleButton = VisTextButton("Load-Locale".toLocale())
-
     init {
         configSelectionList.updatePolicy = ListView.UpdatePolicy.ON_DRAW
-        localeSelectionList.updatePolicy = ListView.UpdatePolicy.ON_DRAW
         skinChangerSelectionList.updatePolicy = ListView.UpdatePolicy.ON_DRAW
 
         configSelectionList.setItemClickListener { str ->
@@ -58,31 +46,15 @@ class ConfigsTab : Tab(false, false) {
             }
         }
 
-        loadLocaleButton.changed { _, _ ->
-            val tmpSelection = localeListAdapter.selection
-            if (tmpSelection.size > 0) { //Validate
-                val tmpName = localeListAdapter.selection[0] //Selection is an array
-
-                curSettings["CURRENT_LOCALE"] = tmpName
-                loadLocale("$SETTINGS_DIRECTORY\\Localizations\\${curSettings["CURRENT_LOCALE"]}.locale")
-
-                refreshMenu()
-
-                uiUpdate()
-            }
-
-            true
-        }
-
         //Create Save Button
-        val saveCFGButton = VisTextButton("Save".toLocale())
+        val saveCFGButton = VisTextButton("Save")
         saveCFGButton.changed { _, _ ->
             if (cfgNameTextBox.text.isNullOrEmpty()) { //Save using list selection
                 val tmpSelection = configListAdapter.selection
                 if (tmpSelection.size > 0) { //Validate
                     val tmpName = tmpSelection[0] //Selection is an array
 
-                    Dialogs.showConfirmDialog(menuStage, "${"OVERWRITE_CONFIG".toLocale()}\n \"$tmpName\"", "", arrayOf("CONFIRM".toLocale(), "CANCEL".toLocale()), arrayOf(1, 2)) { i ->
+                    Dialogs.showConfirmDialog(menuStage, "${"OVERWRITE_CONFIG"}\n \"$tmpName\"", "", arrayOf("CONFIRM", "CANCEL"), arrayOf(1, 2)) { i ->
                         if (i == 1) { //Confirm
                             saveCFG(tmpName)
                         }
@@ -100,14 +72,14 @@ class ConfigsTab : Tab(false, false) {
             true
         }
 
-        val saveSkinCfgButton = VisTextButton("Save".toLocale())
+        val saveSkinCfgButton = VisTextButton("Save")
         saveSkinCfgButton.changed { _, _ ->
             if (skinCfgNameTextBox.text.isNullOrEmpty()) { //Save using list selection
                 val tmpSelection = skinChangerListAdapter.selection
                 if (tmpSelection.size > 0) { //Validate
                     val tmpName = tmpSelection[0] //Selection is an array
 
-                    Dialogs.showConfirmDialog(menuStage, "${"OVERWRITE_CONFIG".toLocale()}\n \"$tmpName\"", "", arrayOf("CONFIRM".toLocale(), "CANCEL".toLocale()), arrayOf(1, 2)) { i ->
+                    Dialogs.showConfirmDialog(menuStage, "${"OVERWRITE_CONFIG"}\n \"$tmpName\"", "", arrayOf("CONFIRM", "CANCEL"), arrayOf(1, 2)) { i ->
                         if (i == 1) { //Confirm
                             saveSkinCFG(tmpName)
                         }
@@ -124,16 +96,16 @@ class ConfigsTab : Tab(false, false) {
             true
 
         }
-        val loadSkinCfgButton = VisTextButton("Load".toLocale())
+        val loadSkinCfgButton = VisTextButton("Load")
 
-        val saveDefaultButton = VisTextButton("SAVE_DEFAULT".toLocale())
+        val saveDefaultButton = VisTextButton("Save To Default")
         saveDefaultButton.changed { _, _ ->
             saveWindows()
             saveDefault()
             true
         }
 
-        val deleteSkinCfgButton = VisTextButton("Delete".toLocale())
+        val deleteSkinCfgButton = VisTextButton("Delete")
         deleteSkinCfgButton.changed { _, _ ->
             val tmpSelection = skinChangerListAdapter.selection
             if (tmpSelection.size > 0) { //Validate
@@ -146,7 +118,7 @@ class ConfigsTab : Tab(false, false) {
         }
 
         //Create Load Button
-        val loadCFGButton = VisTextButton("Load".toLocale())
+        val loadCFGButton = VisTextButton("Load")
         loadCFGButton.changed { _, _ ->
             if (cfgNameTextBox.text.isNullOrEmpty()) { //Save using list selection
                 val tmpSelection = configListAdapter.selection
@@ -176,7 +148,7 @@ class ConfigsTab : Tab(false, false) {
         }
 
         //Create Delete Button
-        val deleteButton = VisTextButton("Delete".toLocale())
+        val deleteButton = VisTextButton("Delete")
         deleteButton.changed { _, _ ->
             val tmpSelection = configListAdapter.selection
             if (tmpSelection.size > 0) { //Validate
@@ -188,7 +160,7 @@ class ConfigsTab : Tab(false, false) {
             true
         }
 
-        val openCfgFolder = VisTextButton("Open-configs-folder".toLocale())
+        val openCfgFolder = VisTextButton("Open Configs Folder")
         openCfgFolder.changed {_, _ ->
             if (Desktop.isDesktopSupported()) {
                 val desktop = Desktop.getDesktop()
@@ -206,41 +178,50 @@ class ConfigsTab : Tab(false, false) {
 
         //File Select Box
         updateCFGList()
-        updateLocaleList()
 
-        //Add everything to table
-        val sldTable = VisTable()
-        sldTable.add(saveCFGButton).width(80F)
-        sldTable.add(loadCFGButton).width(80F)
-        sldTable.add(deleteButton).width(80F).row()
-        val cfgTable2 = VisTable()
-        cfgTable2.add(saveDefaultButton).width(240F).row()
-        cfgTable2.add(openCfgFolder).width(240F).row()
+        val containerTable1 = VisTable()
+        with (containerTable1) {
+            val sldTable = VisTable()
+            sldTable.add(saveCFGButton).prefWidth(80F).growX()
+            sldTable.add(loadCFGButton).prefWidth(80F).growX()
+            sldTable.add(deleteButton).prefWidth(80F).growX().row()
 
-        table.add(configLabel).left().width(240F)
-        table.add(localeLabel).left().width(240F).row()
+            val label = VisLabel("Configs", Align.center)
+            label.setColor(.85F, .5F, .05F, 1F)
+            add(label).left().prefWidth(240F).growX().padBottom(10F).row()
 
-        table.add(configSelectionList.mainTable).left().top().width(240F).height(120F)
-        table.add(localeSelectionList.mainTable).right().top().width(240F).height(120F).row()
+            add(configSelectionList.mainTable).left().top().prefWidth(240F).prefHeight(120F).growX().row()
 
-        table.add(cfgNameTextBox).left().width(240F)
-        table.add(loadLocaleButton).width(240F).row()
+            add(cfgNameTextBox).left().prefWidth(240F).growX().row()
 
-        table.add(sldTable).left().row()
-        table.add(cfgTable2).left().row()
+            add(sldTable).left().growX().row()
 
-        val man = VisTable()
-        man.add(skinChangerLabel).top().center().left()
-        table.add(man).center().row()
-        table.add(skinChangerSelectionList.mainTable).left().top().width(240F).height(100F).row()
-        var tmpTable = VisTable()
-        tmpTable.add(skinCfgNameTextBox).left().width(240F).row()
-        table.add(tmpTable).left().row()
-        tmpTable = VisTable()
-        tmpTable.add(loadSkinCfgButton).left().width(80F)
-        tmpTable.add(saveSkinCfgButton).left().width(80F)
-        tmpTable.add(deleteSkinCfgButton).left().width(80F)
-        table.add(tmpTable).left().row()
+            add(saveDefaultButton).prefWidth(240F).growX().row()
+            add(openCfgFolder).prefWidth(240F).growX().row()
+        }
+
+        val containerTable2 = VisTable()
+        with (containerTable2) {
+            val sldTable = VisTable()
+            sldTable.add(saveSkinCfgButton).left().prefWidth(80f).growX()
+            sldTable.add(loadSkinCfgButton).left().prefWidth(80f).growX()
+            sldTable.add(deleteSkinCfgButton).left().prefWidth(80f).growX()
+
+            val label = VisLabel("Skins", Align.center)
+            label.setColor(.85F, .5F, .05F, 1F)
+            add(label).left().prefWidth(240F).growX().padBottom(10F).row()
+
+            add(skinChangerSelectionList.mainTable).left().top().prefWidth(240F).prefHeight(120F).growX().row()
+
+            add(skinCfgNameTextBox).left().prefWidth(240F).growX().row()
+
+            add(sldTable).left().growX().row()
+        }
+
+        table.add(containerTable1).top().growX()
+        table.addSeparator(true)
+        table.add(containerTable2).top().growX().row()
+        table.addSeparator().colspan(3)
     }
 
     override fun getContentTable(): Table {
@@ -248,7 +229,7 @@ class ConfigsTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String {
-        return "Configs".toLocale()
+        return "Configs"
     }
 
     fun updateCFGList() {
@@ -276,25 +257,11 @@ class ConfigsTab : Tab(false, false) {
             }
         }
     }
-
-    fun updateLocaleList() {
-        if (VisUI.isLoaded() && !saving && !updatingRanks) {
-            localeListAdapter.clear()
-
-            File("$SETTINGS_DIRECTORY\\Localizations").listFiles()?.forEach {
-                if (it.extension == "locale") {
-                    val localeName = it.name.replace(".locale", "")
-                    localeListAdapter.add(localeName)
-                }
-            }
-        }
-    }
 }
 
 fun configsTabUpdate() {
     configsTab.apply {
         updateCFGList()
-        updateLocaleList()
         updateSkinCfgList()
     }
 }

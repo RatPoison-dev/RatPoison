@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
-import rat.poison.toLocale
 import rat.poison.ui.tabs.nadesTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
@@ -66,7 +65,7 @@ class NadesVT : Tab(false, false) {
     }
 
     override fun getTabTitle(): String {
-        return "Nades".toLocale()
+        return "Nades"
     }
 }
 

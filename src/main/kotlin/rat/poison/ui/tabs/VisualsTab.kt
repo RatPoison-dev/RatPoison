@@ -11,7 +11,6 @@ import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
 import rat.poison.curSettings
 import rat.poison.overlay.opened
 import rat.poison.scripts.visuals.disableAllEsp
-import rat.poison.toLocale
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
@@ -88,7 +87,7 @@ class VisualsTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String {
-        return "Visuals".toLocale()
+        return "Visuals"
     }
 }
 

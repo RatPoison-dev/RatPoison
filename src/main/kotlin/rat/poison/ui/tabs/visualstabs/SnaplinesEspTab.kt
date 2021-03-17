@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.toLocale
 import rat.poison.ui.tabs.snaplinesEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
@@ -82,7 +81,7 @@ class SnaplinesEspTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String {
-        return "Snaplines".toLocale()
+        return "Snaplines"
     }
 }
 

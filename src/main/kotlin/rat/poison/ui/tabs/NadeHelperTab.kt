@@ -12,7 +12,6 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.overlay.App
 import rat.poison.scripts.*
-import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
@@ -26,9 +25,9 @@ class NadeHelperTab : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
-    val enableNadeHelper = VisCheckBoxCustom("Nade-Helper".toLocale(), "ENABLE_NADE_HELPER")
+    val enableNadeHelper = VisCheckBoxCustom("Nade-Helper", "ENABLE_NADE_HELPER")
     val accuracyRadius = VisSliderCustom("Accuracy radius", "NADE_ACCURACY_RADIUS", 100F, 5000F, 20F, true, 2, 175F, 100F)
-    val nadeHelperLoadedFile = VisLabel("Loaded:-N/A".toLocale())
+    val nadeHelperLoadedFile = VisLabel("Loaded:-N/A")
     val enableNadeThrower = VisCheckBoxCustom("Auto throw", "ENABLE_NADE_THROWER")
     val nadeThrowerKey = VisBindTableCustom("Key", "NADE_THROWER_KEY")
     val nadeThrowerSmooth = VisSliderCustom("Smoothness", "NADE_THROWER_SMOOTHNESS", 10F, 100F, 1F, true, 2, 150F, 100F)
@@ -36,41 +35,41 @@ class NadeHelperTab : Tab(false, false) {
 
     init {
         //Nade position create button
-        val addPosition = VisTextButton("Create-Grenade-Position".toLocale())
+        val addPosition = VisTextButton("Create-Grenade-Position")
         addPosition.changed { _, _ ->
             createPosition()
         }
 
-        val saveFileNadeHelper = VisTextButton("Save-As-File".toLocale())
+        val saveFileNadeHelper = VisTextButton("Save-As-File")
         saveFileNadeHelper.changed { _, _ ->
             savePositions()
         }
 
-        val loadFileNadeHelper = VisTextButton("Load-From-File".toLocale())
+        val loadFileNadeHelper = VisTextButton("Load-From-File")
         loadFileNadeHelper.changed { _, _ ->
             if (nadeHelperFileSelectBox.items.count() > 0) {
                 loadPositions(nadeHelperFileSelectBox.selected)
             }
         }
 
-        val deleteFileNadeHelper = VisTextButton("Delete-Selected-File".toLocale())
+        val deleteFileNadeHelper = VisTextButton("Delete-Selected-File")
         deleteFileNadeHelper.changed { _, _ ->
             if (nadeHelperFileSelectBox.items.count() > 0) {
                 deleteNadeHelperFile(nadeHelperFileSelectBox.selected)
             }
         }
 
-        val clearNadeHelper = VisTextButton("Clear-Currently-Loaded".toLocale())
+        val clearNadeHelper = VisTextButton("Clear-Currently-Loaded")
         clearNadeHelper.changed { _, _ ->
-            Dialogs.showOptionDialog(App.menuStage, "Warning".toLocale(), "CLEAR_POSITIONS".toLocale(), Dialogs.OptionDialogType.YES_NO, object: OptionDialogAdapter() {
+            Dialogs.showOptionDialog(App.menuStage, "Warning", "CLEAR_POSITIONS", Dialogs.OptionDialogType.YES_NO, object: OptionDialogAdapter() {
                 override fun yes() {
                     nadeHelperArrayList.clear()
-                    nadeHelperLoadedFile.setText("Loaded:-N/A".toLocale())
+                    nadeHelperLoadedFile.setText("Loaded:-N/A")
                 }
             })
         }
 
-        val deleteCurrentPositionHelper = VisTextButton("Delete-At-Current-Position".toLocale())
+        val deleteCurrentPositionHelper = VisTextButton("Delete-At-Current-Position")
         deleteCurrentPositionHelper.changed { _, _ ->
             deletePosition()
         }
@@ -121,7 +120,7 @@ class NadeHelperTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String {
-        return "Nade-Helper".toLocale()
+        return "Nade-Helper"
     }
 }
 

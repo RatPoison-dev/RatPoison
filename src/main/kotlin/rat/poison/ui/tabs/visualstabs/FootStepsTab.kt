@@ -6,10 +6,8 @@ import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
-import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.footStepsEspTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
@@ -35,11 +33,7 @@ class FootstepsEspTab : Tab(false, false) {
     init {
         val itemsArray = Array<String>()
         for (i in footstepItems) {
-            if (dbg && curLocale[i].isBlank()) {
-                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
-            }
-
-            itemsArray.add(curLocale[i])
+            itemsArray.add(i)
         }
         footStepType.items = itemsArray
 
@@ -79,7 +73,7 @@ class FootstepsEspTab : Tab(false, false) {
     }
 
     override fun getTabTitle(): String {
-        return "FootSteps".toLocale()
+        return "FootSteps"
     }
 }
 

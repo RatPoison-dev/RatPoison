@@ -42,7 +42,6 @@ fun uiUpdate() {
     updateTrig()
     updateAim()
     updateDisableEsp()
-    fontsTabUpdate()
     keybindsUpdate(null)
 
     //Update windows
@@ -67,7 +66,6 @@ fun refreshMenu() {
     skinChangerTab = SkinChangerTab()
     optionsTab = OptionsTab()
     configsTab = ConfigsTab()
-    fontsTab = FontsTab()
 
     mainTabbedPane.add(aimTab)
     mainTabbedPane.add(visualsTab)
@@ -78,7 +76,6 @@ fun refreshMenu() {
     mainTabbedPane.add(skinChangerTab)
     mainTabbedPane.add(optionsTab)
     mainTabbedPane.add(configsTab)
-    mainTabbedPane.add(fontsTab)
 
     espTabbedPane.removeAll()
     miscTabbedPane.removeAll()

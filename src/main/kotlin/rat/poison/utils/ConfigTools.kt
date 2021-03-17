@@ -72,8 +72,8 @@ fun loadSkinCFG(realCfgFileName: String) {
         if (!cfgFile.exists() && opened) {
             Dialogs.showOKDialog(
                 App.menuStage,
-                "Error".toLocale(),
-                "${"FILE_NOT_FOUND_ERROR".toLocale()}\n \"${cfgFileName}\""
+                "Error",
+                "${"FILE_NOT_FOUND_ERROR"}\n \"${cfgFileName}\""
             )
         } else {
             saving = true
@@ -94,7 +94,7 @@ fun loadCFG(realCfgFileName: String, deleteCfgAfterLoad: Boolean = false) {
 
         val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg")
         if (!cfgFile.exists() && opened) {
-            Dialogs.showOKDialog(App.menuStage, "Error".toLocale(), "${"FILE_NOT_FOUND_ERROR".toLocale()}\n \"${cfgFileName}\"")
+            Dialogs.showOKDialog(App.menuStage, "Error", "${"FILE_NOT_FOUND_ERROR"}\n \"${cfgFileName}\"")
         } else {
             saving = true
             println("Loading\n")
@@ -114,7 +114,7 @@ fun loadCFG(realCfgFileName: String, deleteCfgAfterLoad: Boolean = false) {
             }
         }
     } else {
-        Dialogs.showOKDialog(App.menuStage, "Error".toLocale(), "${"SAVING_NOW_ERROR".toLocale()}\n \"${cfgFileName}\"")
+        Dialogs.showOKDialog(App.menuStage, "Error", "${"SAVING_NOW_ERROR"}\n \"${cfgFileName}\"")
     }
 }
 

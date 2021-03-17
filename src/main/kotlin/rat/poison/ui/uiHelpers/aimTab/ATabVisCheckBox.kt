@@ -2,7 +2,6 @@ package rat.poison.ui.uiHelpers.aimTab
 
 import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisCheckBox
-import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.ui.changed
@@ -48,31 +47,13 @@ class ATabVisCheckBox(text: String, varExtension: String) : VisCheckBox(text) {
             println("[Error] $categorySelected$variableExtension is empty")
         }
 
-        if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
-            if (curLocale[variableExtension].isBlank()) {
-                if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableExtension is missing!")
-                setText(mainText)
-            }
-            else {
-                setText(curLocale[variableExtension])
-            }
-        }
-
         updateTooltip()
 
     }
 
     private fun updateTooltip() {
         if (curSettings.bool["MENU_TOOLTIPS"]) {
-            if (curLocale["${variableExtension}_TOOLTIP"] != "") {
-                if (!hasTooltip) {
-                    Tooltip.Builder(curLocale["${variableExtension}_TOOLTIP"]).target(this).build()
-                    hasTooltip = true
-                    if (dbg) {
-                        println("[DEBUG] Added tooltip to $variableExtension")
-                    }
-                }
-            }
+            //TODO tooltippipin
         } else {
             if (hasTooltip) {
                 Tooltip.removeTooltip(this)

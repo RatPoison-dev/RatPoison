@@ -7,11 +7,8 @@ import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.color.ColorPicker
 import com.kotcrab.vis.ui.widget.color.ColorPickerAdapter
-import rat.poison.curLocale
 import rat.poison.curSettings
-import rat.poison.dbg
 import rat.poison.overlay.App
-import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.game.Color as rColor
 
@@ -27,7 +24,7 @@ class VisColorPickerCustom(mainText: String, varName: String) : VisTable() {
     private var colorPicker : ColorPicker
 
     init {
-        colorPicker = ColorPicker(variableName.toLocale(), object : ColorPickerAdapter() {
+        colorPicker = ColorPicker(variableName, object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
                 curSettings[variableName] = rColor((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble()).toString()
                 newCol.a = 1F
@@ -51,17 +48,9 @@ class VisColorPickerCustom(mainText: String, varName: String) : VisTable() {
         pickerImage.color = col
         colorPicker.color = col
 
-        if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
-            if (curLocale[variableName].isBlank()) {
-                if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
-                pickerButton.setText(labelText)
-                colorPicker.titleLabel.setText(labelText)
-            }
-            else {
-                pickerButton.setText(curLocale[variableName])
-                colorPicker.titleLabel.setText(variableName.toLocale())
-            }
-        }
+
+        pickerButton.setText(labelText)
+        colorPicker.titleLabel.setText(labelText)
     }
 
     fun disable(bool: Boolean) {

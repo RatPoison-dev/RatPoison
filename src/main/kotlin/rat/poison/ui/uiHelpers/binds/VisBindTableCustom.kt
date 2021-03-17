@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.curLocale
 import rat.poison.curSettings
 import rat.poison.dbg
 
@@ -25,15 +24,6 @@ class VisBindTableCustom(mainText: String, varName: String, keyWidth: Float = 20
 
     fun update(neglect: Actor? = null) {
         if (neglect != this) {
-            if (curSettings["CURRENT_LOCALE"] != "") { //Only update locale if we have one
-                if (curLocale[variableName].isBlank()) {
-                    if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $variableName is missing!")
-                    keyLabel.setText("$textLabel:")
-                }
-                else {
-                    keyLabel.setText("${curLocale[variableName]}:")
-                }
-            }
             button.update()
         }
 
@@ -41,15 +31,7 @@ class VisBindTableCustom(mainText: String, varName: String, keyWidth: Float = 20
     }
     private fun updateTooltip() {
         if (curSettings.bool["MENU_TOOLTIPS"]) {
-            if (curLocale["${variableName}_TOOLTIP"] != "") {
-                if (!hasTooltip) {
-                    Tooltip.Builder(curLocale["${variableName}_TOOLTIP"]).target(this).build()
-                    hasTooltip = true
-                    if (dbg) {
-                        println("[DEBUG] Added tooltip to $variableName")
-                    }
-                }
-            }
+            //TODO tooltippin
         } else {
             if (hasTooltip) {
                 Tooltip.removeTooltip(this)

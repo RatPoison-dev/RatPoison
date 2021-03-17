@@ -12,7 +12,6 @@ import rat.poison.game.offsets.ClientOffsets.dwUse
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.toLocale
 import rat.poison.ui.uiPanels.bombText
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.toInt
@@ -104,13 +103,13 @@ fun bombUpdater() = every(15, inGameCheck = true) {
                 if (!lastSecDefusing) {
                     println(bombState.timeLeftToExplode)
                     CSGO.clientDLL[dwUse] = 5
-                    Thread(Runnable {
+                    Thread {
                         if (bombState.timeLeftToExplode.toLong() > 0) {
                             Thread.sleep(timeNeeded.toLong() * 1000) //In milliseconds
                         }
                         CSGO.clientDLL[dwUse] = 4
                         lastSecDefusing = false
-                    }).start()
+                    }.start()
                     lastSecDefusing = true
                 }
             }
@@ -132,21 +131,21 @@ data class BombState(var hasBomb: Boolean = false,
         sb.setLength(0)
 
         if (planted) {
-            sb.append("${"Bomb-Planted!".toLocale()}\n")
+            sb.append("${"Bomb-Planted!"}\n")
 
-            sb.append("${"Time-To-Explode:".toLocale()} ${formatFloat(timeLeftToExplode)} \n")
+            sb.append("${"Time-To-Explode:"} ${formatFloat(timeLeftToExplode)} \n")
 
             if (location.isNotBlank())
-                sb.append("${"Location:".toLocale()} $location\n")
+                sb.append("${"Location:"} $location\n")
             if (gettingDefused) {
-                sb.append("${"Can-Defuse:".toLocale()} $canDefuse\n")
+                sb.append("${"Can-Defuse:"} $canDefuse\n")
                 // Redundant as the UI already shows this, but may have a use case I'm missing
-                sb.append("${"Time-To-Defuse:".toLocale()} ${formatFloat(timeLeftToDefuse)}\n")
+                sb.append("${"Time-To-Defuse:"} ${formatFloat(timeLeftToDefuse)}\n")
 
-                sb.append("${"Time-Left-After:".toLocale()} ${timeLeftToExplode - timeLeftToDefuse}")
+                sb.append("${"Time-Left-After:"} ${timeLeftToExplode - timeLeftToDefuse}")
             }
         } else {
-            sb.append("${"Bomb-Not-Planted!".toLocale()}\n")
+            sb.append("${"Bomb-Not-Planted!"}\n")
         }
         return sb.toString()
     }

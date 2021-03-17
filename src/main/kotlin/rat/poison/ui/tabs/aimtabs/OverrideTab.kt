@@ -9,9 +9,10 @@ import rat.poison.*
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
+import rat.poison.ui.uiHelpers.VisSelectBoxCustom
 import rat.poison.ui.uiHelpers.overrideWeaponsUI.*
 import rat.poison.ui.uiUpdate
-import rat.poison.utils.generalUtil.toLocaleGdxArray
+import rat.poison.utils.generalUtil.toGdxArray
 import rat.poison.utils.generalUtil.toWeaponClass
 
 var weaponOverrideSelected = "DESERT_EAGLE"
@@ -33,8 +34,8 @@ class OverrideTab: Tab(true, false) {
     private val copyFromButton = VisTextButton("Copy From")
 
     //Override Weapon Checkbox & Selection Box
-    private val categorySelectLabel = VisLabel("${"Weapon-Category".toLocale()}:")
-    private val weaponSelectLabel = VisLabel("${"Weapon".toLocale()}:")
+    private val categorySelectLabel = VisLabel("${"Weapon-Category"}:")
+    private val weaponSelectLabel = VisLabel("${"Weapon"}:")
 
     private val weaponOverrideSelectionBox = VisSelectBox<String>()
     val weaponOverrideEnableCheckBox = OverrideVisCheckBoxCustom("Enable Override", "tOverride")
@@ -45,8 +46,8 @@ class OverrideTab: Tab(true, false) {
     val enablePathAim = OverrideVisCheckBoxCustom("Path Aim", "tPathAim")
     val enableScopedOnly = OverrideVisCheckBoxCustom("Scoped Only", "tScopedOnly")
 
-    val aimBoneBox = OverrideCombobox("Bone", "tAimBone", true, *boneCategories)
-    val forceBoneBox = OverrideCombobox("Force-Bone", "tForceBone", true, *boneCategories)
+    //val aimBoneBox = VisSelectBoxCustom("Bone", "tAimBone", true, *boneCategories)
+    //val forceBoneBox = OverrideCombobox("Force-Bone", "tForceBone", true, *boneCategories)
 
     val aimFov = OverrideVisSliderCustom("FOV", "tAimFov", 0.5F, 90F, 0.5F, false, labelWidth = 225F, barWidth = 225F)
     val aimSpeed = OverrideVisSliderCustom("Speed", "tAimSpeed", 0F, 10F, 1F, true, labelWidth = 225F, barWidth = 225F)
@@ -100,7 +101,7 @@ class OverrideTab: Tab(true, false) {
                 }
             }
 
-            val itemsArray = tmpCategory.toLocaleGdxArray()
+            val itemsArray = tmpCategory.toGdxArray()
             weaponOverrideSelectionBox.items = itemsArray
 
             if (categorySelected == "SNIPER") {
@@ -120,7 +121,7 @@ class OverrideTab: Tab(true, false) {
             true
         }
 
-        val gunCategoryArray = gunCategories.toLocaleGdxArray()
+        val gunCategoryArray = gunCategories.toGdxArray()
 
         copyToSelectionBox.items = gunCategoryArray
         copyFromSelectionBox.items = gunCategoryArray
@@ -171,7 +172,7 @@ class OverrideTab: Tab(true, false) {
         val categorySelection = VisTable()
         //Create Category Selector Box
 
-        categorySelectionBox.items = gunCategories.toLocaleGdxArray()
+        categorySelectionBox.items = gunCategories.toGdxArray()
         categorySelectionBox.selectedIndex = 0
 
         categorySelected = gunCategories[categorySelectionBox.selectedIndex]
@@ -189,13 +190,13 @@ class OverrideTab: Tab(true, false) {
         }
 
         //Create Aim Bone Selector Box
-        val aimBone = VisTable()
-        aimBone.add(aimBoneBox)
+        //val aimBone = VisTable()
+        //aimBone.add(aimBoneBox)
         //End Aim Bone Selector Box
 
         //Create Force Bone Selector Box
-        val forceBone = VisTable()
-        forceBone.add(forceBoneBox)
+        //val forceBone = VisTable()
+        //forceBone.add(forceBoneBox)
         //End Force Bone Selector Box
 
 
@@ -230,8 +231,8 @@ class OverrideTab: Tab(true, false) {
         table.add(enableFlatAim).left().row()
         table.add(enablePathAim).left().row()
         table.add(enableScopedOnly).left().row()
-        table.add(aimBone).left().row()
-        table.add(forceBone).left().row()
+        //table.add(aimBone).left().row()
+        //table.add(forceBone).left().row()
         table.add(aimSpeed).left().row()
         table.add(aimFov).left().row()
         table.add(aimSmoothness).left().row()
@@ -261,7 +262,7 @@ class OverrideTab: Tab(true, false) {
     }
 
     override fun getTabTitle(): String {
-        return "Override".toLocale()
+        return "Override"
     }
 
     override fun getContentTable(): Table {
@@ -308,11 +309,7 @@ fun overridenWeaponsUpdate() {
 
         val boneArray = Array<String>()
         for (i in boneCategories) {
-            if (dbg && curLocale[i].isBlank()) {
-                println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $i is missing!")
-            }
-
-            boneArray.add(curLocale[i])
+            boneArray.add(i)
         }
 
         aimFov.update()
@@ -333,8 +330,8 @@ fun overridenWeaponsUpdate() {
         trigEnable.update()
         trigAimbot.update()
         trigInCross.update()
-        aimBoneBox.update()
-        forceBoneBox.update()
+        //aimBoneBox.update()
+        //forceBoneBox.update()
         trigInFov.update()
         trigBacktrack.update()
         trigFov.update()
