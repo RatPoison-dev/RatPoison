@@ -33,7 +33,7 @@ APPLESS_X = 960
 APPLESS_Y = 100
 
 //Menu stays focused even when csgo isn't
-MENU_STAY_FOCUSED = false
+MENU_STAY_FOCUSED = true
 
 //Whether post processing is disabled or not
 DISABLE_POST_PROCESSING = false
@@ -69,7 +69,7 @@ W_SPAM = false
 W_SPAM_KEY = -1
 
 //Global enable aim
-ENABLE_AIM = false
+ENABLE_AIM = true
 
 //Hold target - If the aimbot should lock on a target as long as the aim key is pressed and the target is alive
 HOLD_TARGET = false
@@ -88,10 +88,10 @@ TEAMMATES_ARE_ENEMIES = false
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), enables aimbot when held
 //Default key is MOUSE_4
-FORCE_AIM_KEY = -1
+FORCE_AIM_KEY = 5
 
 //Enables specific bone when held
-FORCE_AIM_BONE_KEY = -1
+FORCE_AIM_BONE_KEY = 6
 
 //Always force aim if within FOV
 FORCE_AIM_ALWAYS = false
@@ -117,11 +117,11 @@ PERFECT_AIM_CHANCE = 1
 PERFECT_AIM_FOV = 1.0
 AIM_BONE = [-1]
 FORCE_AIM_BONE = [-1]
-AIM_SPEED = 10
-AIM_FOV = 0.5
-FACTOR_RECOIL = false
-ENABLE_FLAT_AIM = false
-ENABLE_PATH_AIM = true
+AIM_SPEED = 6
+AIM_FOV = 10.0
+FACTOR_RECOIL = true
+ENABLE_FLAT_AIM = true
+ENABLE_PATH_AIM = false
 ENABLE_SCOPED_ONLY = false
 AIM_AFTER_SHOTS = 0
 AIM_ADVANCED = false

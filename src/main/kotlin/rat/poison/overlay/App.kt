@@ -322,7 +322,7 @@ object App : ApplicationAdapter() {
                 //Aim Toggle Key
                 toggleAimKey.update()
                 if (toggleAimKey.justBecameTrue) {
-                    aimTab.tAim.enableAim.isChecked = !aimTab.tAim.enableAim.isChecked
+                    aimTab.tMain.enableAim.isChecked = !aimTab.tMain.enableAim.isChecked
                 }
 
                 visualsToggleKey.update()

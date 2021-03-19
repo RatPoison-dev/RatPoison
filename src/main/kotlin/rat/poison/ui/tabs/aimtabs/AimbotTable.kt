@@ -1,12 +1,9 @@
 package rat.poison.ui.tabs.aimtabs
 
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.*
-import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
-import rat.poison.dbg
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.boneCategories
 import rat.poison.ui.tabs.categorySelected
@@ -20,26 +17,9 @@ import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.generalUtil.boolToStr
 
-class MainAimTab: Tab(true, false) {
-    private val table = VisTable()
-    val enableAim = VisCheckBoxCustom("Enable Aim", "ENABLE_AIM")
-    val aimToggleKey = VisBindTableCustom("Toggle Aim Key", "AIM_TOGGLE_KEY")
-    val activateFromFireKey = VisCheckBoxCustom("Activate From Fire Key", "ACTIVATE_FROM_AIM_KEY")
-    val holdAim = VisCheckBoxCustom("Hold Aim", "HOLD_AIM")
-    val teammatesAreEnemies = VisCheckBoxCustom("Teammates Are Enemies", "TEAMMATES_ARE_ENEMIES")
-
-    val fovType = VisSelectBoxCustom("Fov Type", "FOV_TYPE", false, true, "DISTANCE", "STATIC")
-
-    val forceAimBoneKey = VisBindTableCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
-    val forceAimKey = VisBindTableCustom("Force Aim Key", "FORCE_AIM_KEY")
-    val forceAimAlways = VisCheckBoxCustom("Force Aim Always", "FORCE_AIM_ALWAYS")
-    val forceAimThroughWalls = VisCheckBoxCustom("Force Aim Through Walls", "FORCE_AIM_THROUGH_WALLS")
-
-    //Automatic Weapons Collapsible
-    val automaticWeaponsCheckBox = VisCheckBoxCustom("Automatic Weapons", "GLOBAL_AUTOMATIC_WEAPONS")
-    val automaticWeaponsInput = VisInputFieldCustom("MS Delay", "GLOBAL_AUTO_WEP_DELAY", false)
-
-    val targetSwapDelay = VisSliderCustom("Target Swap Delay", "AIM_TARGET_SWAP_DELAY", 0F, 500F, 10F, true, labelWidth = 200F, barWidth = 250F)
+class AimbotTable: VisTable(false) {
+    private val collapsibleTable = VisTable(false)
+    val collapsibleWidget = CollapsibleWidget(collapsibleTable)
 
     //Override Weapon Checkbox & Selection Box
     private val categorySelection = VisTable()
@@ -52,13 +32,13 @@ class MainAimTab: Tab(true, false) {
     val enablePathAim = ATabVisCheckBox("Mouse Movement", "_ENABLE_PATH_AIM")
     val enableScopedOnly = VisCheckBoxCustom("Scoped Only", "SNIPER_ENABLE_SCOPED_ONLY")
 
-    val aimBones = VisSelectBoxCustom("Bone", "_AIM_BONE", useCategory = true, showText = true, items = boneCategories)
-    val forceAimBone = VisSelectBoxCustom("Force-Bone", "_AIM_FORCE_BONE", useCategory = true, showText = true, items = boneCategories)
+    val aimBones = VisSelectBoxCustom("Aim Bone", "_AIM_BONE", useCategory = true, showText = true, items = boneCategories)
+    val forceAimBone = VisSelectBoxCustom("Force Aim Bone", "_AIM_FORCE_BONE", useCategory = true, showText = true, items = boneCategories)
 
     val aimFov = ATabVisSlider("Aim FOV", "_AIM_FOV", .5F, 90F, .5F, false)
     val aimSpeed = ATabVisSlider("Aim Speed", "_AIM_SPEED", 0F, 10F, 1F, true)
     val aimSmooth = ATabVisSlider("Smoothness", "_AIM_SMOOTHNESS", 1F, 5F, .1F, false)
-    val aimAfterShots = ATabVisSlider("Aim After #", "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true)
+    val aimAfterShots = ATabVisSlider("Aim After #", "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true, 0, 225F, 225F)
 
     //Perfect Aim Collapsible
     val perfectAimCheckBox = VisCheckBox("Enable-Perfect-Aim")
@@ -80,7 +60,6 @@ class MainAimTab: Tab(true, false) {
     val advancedSpeedDivisor = ATabVisSlider("Mouse Move Divisor", "_AIM_SPEED_DIVISOR", 1F, 10F, 1F, true)
 
     init {
-
         //Create Category Selector Box
         val itemsArray = Array<String>()
         for (i in gunCategories) {
@@ -90,13 +69,11 @@ class MainAimTab: Tab(true, false) {
 
         categorySelectionBox.selectedIndex = 0
         categorySelected = gunCategories[categorySelectionBox.selectedIndex]
-        categorySelection.add(categorySelectLabel).padRight(200F-categorySelectLabel.width)
-        categorySelection.add(categorySelectionBox)
+        categorySelection.add(categorySelectLabel).left().padRight(226F - categorySelectLabel.width)
+        categorySelection.add(categorySelectionBox).left()
 
         categorySelectionBox.changed { _, _ ->
             categorySelected = gunCategories[categorySelectionBox.selectedIndex]
-            aimTab.tTrig.categorySelectionBox.selectedIndex = gunCategories.indexOf(categorySelected)
-            aimTab.tBacktrack.categorySelectionBox.selectedIndex = gunCategories.indexOf(categorySelected)
 
             if (categorySelected == "SNIPER") {
                 enableScopedOnly.color = Color(255F, 255F, 255F, 1F)
@@ -143,10 +120,6 @@ class MainAimTab: Tab(true, false) {
             advancedSettingsCollapsible.setCollapsed(!advancedSettingsCollapsible.isCollapsed, true)
         }
 
-        fovType.changed {_, _ ->
-            updateDisableDrawFOV()
-        }
-
         advancedSettingsCollapsible.setCollapsed(!curSettings.bool[categorySelected + "_ADVANCED_SETTINGS"], true)
 
         advancedSettingsTable.add(randomizeX).left().row()
@@ -158,60 +131,38 @@ class MainAimTab: Tab(true, false) {
         advancedSettingsTable.add(advancedSpeedDivisor).left().row()
         //End
 
-        //Default menu size is 500
-        //Texts are 200
-        //Sliders are 250
-        //Leaves 25 for left and right side to center
-        table.padLeft(25F)
-        table.padRight(25F)
+        padLeft(25F)
+        padRight(25F)
 
-        //Add all items to label for tabbed pane content
+        collapsibleTable.apply {
+            add(categorySelection).left().row()
 
-        table.add(enableAim).left().row()
-        table.add(aimToggleKey).left().row()
+            var addTable = VisTable()
+            addTable.add(enableFactorRecoil).left().padRight(224F - enableFactorRecoil.width)
+            addTable.add(enableAimOnShot).left()
+            add(addTable).left().row()
 
-        table.add(activateFromFireKey).left().row()
-        table.add(teammatesAreEnemies).left().row()
-        table.add(holdAim).left().row()
-        table.add(targetSwapDelay).left().row()
-        table.add(fovType).left().row()
+            addTable = VisTable()
+            addTable.add(enableFlatAim).left().padRight(224F - enableFlatAim.width)
+            addTable.add(enablePathAim).left()
+            add(addTable).left().row()
 
-        table.addSeparator()
+            add(enableScopedOnly).left().row() //Sniper only
 
-        table.add(forceAimBoneKey).left().row()
-        table.add(forceAimKey).left().row()
-        table.add(forceAimAlways).left().row()
-        table.add(forceAimThroughWalls).left().row()
+            add(aimBones).left().row()
+            add(forceAimBone).left().row()
+            add(aimSpeed).left().row()
+            add(aimFov).left().row()
+            add(aimSmooth).left().row()
 
-        table.addSeparator()
+            add(aimAfterShots).left().row() //Rifle + Smg only
 
-        table.add(automaticWeaponsCheckBox).left().row()
-        table.add(automaticWeaponsInput).left().row()
+            add(perfectAimCheckBox).left().row()
+            add(perfectAimCollapsible).left().row()
+            add(advancedSettingsCheckBox).left().row()
+            add(advancedSettingsCollapsible).left().row()
+        }
 
-        table.addSeparator()
-
-        table.add(categorySelection).left().row()
-        table.add(enableFactorRecoil).left().row()
-        table.add(enableAimOnShot).left().row()
-        table.add(enableFlatAim).left().row()
-        table.add(enablePathAim).left().row()
-        table.add(enableScopedOnly).left().row() //SNIPER selection only
-        table.add(aimBones).left().row()
-        table.add(forceAimBone).left().row()
-        table.add(aimSpeed).left().row()
-        table.add(aimFov).left().row()
-        table.add(aimSmooth).left().row()
-        table.add(aimAfterShots).left().row() //RIFLE & SMG selection only
-        table.add(perfectAimCheckBox).left().row()
-        table.add(perfectAimCollapsible).left().row()
-        table.add(advancedSettingsCheckBox).left().row()
-        table.add(advancedSettingsCollapsible).left().row()
-    }
-    override fun getTabTitle(): String {
-        return "Aimbot"
-    }
-
-    override fun getContentTable(): Table {
-        return table
+        add(collapsibleWidget).prefWidth(450F).growX()
     }
 }

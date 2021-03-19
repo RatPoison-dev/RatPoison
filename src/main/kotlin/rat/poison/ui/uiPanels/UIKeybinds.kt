@@ -79,9 +79,9 @@ fun keybindsUpdate(neglect: Actor?) {
         nadeThrowerKey.update(neglect)
     }
 
-    aimTab.tAim.aimToggleKey.update(neglect)
-    aimTab.tAim.forceAimKey.update(neglect)
-    aimTab.tAim.forceAimBoneKey.update(neglect)
+    aimTab.tMain.aimToggleKey.update(neglect)
+    aimTab.tMain.forceAimKey.update(neglect)
+    aimTab.tMain.forceAimBoneKey.update(neglect)
     aimTab.tTrig.boneTriggerKey.update(neglect)
     visualsTab.visualsToggleKey.update(neglect)
     othersTab.doorSpamKey.update(neglect)

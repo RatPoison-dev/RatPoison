@@ -5,9 +5,9 @@ import rat.poison.overlay.App.uiKeybinds
 import rat.poison.overlay.App.uiSpecList
 import rat.poison.overlay.opened
 import rat.poison.ui.tabs.*
-import rat.poison.ui.tabs.aimtabs.BacktrackTab
-import rat.poison.ui.tabs.aimtabs.MainAimTab
-import rat.poison.ui.tabs.aimtabs.OverrideTab
+import rat.poison.ui.tabs.aimtabs.BacktrackTable
+import rat.poison.ui.tabs.aimtabs.MainAimTable
+import rat.poison.ui.tabs.aimtabs.OverrideTable
 import rat.poison.ui.tabs.aimtabs.overridenWeaponsUpdate
 import rat.poison.ui.tabs.misctabs.*
 import rat.poison.ui.tabs.visualstabs.*
@@ -79,7 +79,6 @@ fun refreshMenu() {
 
     espTabbedPane.removeAll()
     miscTabbedPane.removeAll()
-    aimTabbedPane.removeAll()
 
     glowEspTab = GlowEspTab()
     chamsEspTab = ChamsEspTab()
@@ -96,15 +95,15 @@ fun refreshMenu() {
     bombTab = BombTab()
     othersTab = OthersTab()
 
-    mainAimTab = MainAimTab()
-    backtrackTab = BacktrackTab()
-    overridenWeapons = OverrideTab()
+    mainAimTab = MainAimTable()
+    backtrackTab = BacktrackTable()
+    overridenWeapons = OverrideTable()
 
 
-    aimTabbedPane.add(mainAimTab)
-    aimTabbedPane.add(triggerTab)
-    aimTabbedPane.add(backtrackTab)
-    aimTabbedPane.add(overridenWeapons)
+    aimTab.contentTable.add(mainAimTab)
+    aimTab.contentTable.add(triggerTab)
+    aimTab.contentTable.add(backtrackTab)
+    aimTab.contentTable.add(overridenWeapons)
 
     espTabbedPane.add(glowEspTab)
     espTabbedPane.add(chamsEspTab)
@@ -130,7 +129,6 @@ fun refreshMenu() {
     uiKeybinds.remove()
     uiKeybinds = UIKeybinds()
 
-    aimTabbedPane.switchTab(mainAimTab)
     mainTabbedPane.switchTab(configsTab)
 
     uiRefreshing = false

@@ -31,10 +31,13 @@ val mainTabbedPane = TabbedPane()
 private var uid = randInt(2, 999999)
 
 class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CONFIG - UID: $uid") {
-    var wantedHeight = 600F
-    var wantedWidth = 535F
-    val normHeight = 600F //Fuck you too
-    val normWidth = 535F
+    val normHeight = 750F
+    val normWidth = 1000F
+
+    //Changed through runtime
+    var wantedHeight = normHeight
+    var wantedWidth = normWidth
+
     private var isResizingHeight = false
     private var isResizingWidth = false
 
@@ -163,8 +166,8 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                                 1000F
                             }
                         }
-                        wantedWidth = normWidth
-                        wantedHeight = normHeight
+                        //wantedWidth = normWidth
+                        //wantedHeight = normHeight
                         changeWidth()
                         changeHeight()
                         mainTabbedPaneContent.add(skinChangerTab.contentTable).growX()
@@ -250,14 +253,8 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         break
                     }
 
-                    width += 2 * dChange
-
-                    if (dChange > 0) { //This shit d u m b
-                        x -= 1F
-                    } else if (dChange < 0) {
-                        x += 1F
-                    }
-                    //x -= dChange/2F
+                    width += dChange * 2
+                    //x -= dChange*2
                     Thread.sleep(1)
                 }
             }.start()

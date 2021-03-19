@@ -22,7 +22,7 @@ class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMa
     private val w2 = width2
     private var hasTooltip = false
 
-    private val sliderLabel = VisLabel(": " + curSettings[categorySelected + variableExtension])
+    private val sliderLabel = VisLabel("$labelText: " + curSettings[categorySelected + variableExtension])
     private val sliderBar = VisSlider(varMin, varMax, stepSize, false)
 
     init {
@@ -36,7 +36,7 @@ class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMa
             }
 
             curSettings[categorySelected + variableExtension] = sliderVal.toString()
-            sliderLabel.setText(": ${curSettings[categorySelected + variableExtension]}")
+            sliderLabel.setText("$labelText: ${curSettings[categorySelected + variableExtension]}")
         }
 
         add(sliderLabel).width(w1)
@@ -59,10 +59,6 @@ class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMa
         } else {
             println("[Error] $categorySelected$variableExtension is empty")
         }
-
-
-        sliderLabel.setText(": ${curSettings[categorySelected + variableExtension]}")
-
 
         updateTooltip()
     }

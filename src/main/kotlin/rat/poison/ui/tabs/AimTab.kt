@@ -1,20 +1,13 @@
 package rat.poison.ui.tabs
 
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
-import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
 import rat.poison.curSettings
 import rat.poison.overlay.opened
-import rat.poison.ui.tabs.aimtabs.BacktrackTab
-import rat.poison.ui.tabs.aimtabs.MainAimTab
-import rat.poison.ui.tabs.aimtabs.OverrideTab
-import rat.poison.ui.tabs.aimtabs.TriggerBotTab
+import rat.poison.ui.tabs.aimtabs.*
 import rat.poison.ui.uiPanels.aimTab
 
 var categorySelected = "PISTOL"
@@ -26,46 +19,37 @@ var rifleCategory = arrayOf("AK47", "AUG", "FAMAS", "SG553", "GALIL", "M4A4", "M
 var sniperCategory = arrayOf("AWP", "G3SG1", "SCAR20", "SSG08")
 var shotgunCategory = arrayOf("XM1014", "MAG7", "SAWED_OFF", "NOVA")
 
-var aimTabbedPane = TabbedPane()
-var overridenWeapons = OverrideTab()
-var mainAimTab = MainAimTab()
-var triggerTab = TriggerBotTab()
-var backtrackTab = BacktrackTab()
+var overridenWeapons = OverrideTable()
+var mainAimTab = MainAimTable()
+var aimbotTab = AimbotTable()
+var triggerTab = TriggerBotTable()
+var backtrackTab = BacktrackTable()
 
 class AimTab : Tab(true, false) { //Aim.kts tab
     private val table = VisTable(false)
-    val tAim: MainAimTab = mainAimTab
+    val tMain = mainAimTab
+    val tAimbot = aimbotTab
     val tTrig = triggerTab
     val tBacktrack = backtrackTab
 
+    private val aimTabTable = VisTable(false)
+
     init {
-        aimTabbedPane.add(tAim)
-        aimTabbedPane.add(triggerTab)
-        aimTabbedPane.add(backtrackTab)
-        aimTabbedPane.add(overridenWeapons)
+        val aimTabTable2 = VisTable(false)
 
-        aimTabbedPane.switchTab(tAim)
-        val aimTabbedPaneContent = VisTable()
-        aimTabbedPaneContent.padTop(10F)
-        aimTabbedPaneContent.padBottom(10F)
-        aimTabbedPaneContent.align(Align.top)
-        aimTabbedPaneContent.columnDefaults(1)
-        val aimScrollPane = ScrollPane(aimTabbedPaneContent)
-        aimScrollPane.setFlickScroll(false)
-        aimScrollPane.setSize(1000F, 1000F)
-        aimTabbedPaneContent.add(mainAimTab.contentTable).left().colspan(2).row()
-        aimTabbedPaneContent.addSeparator().colspan(2).padLeft(25F).padRight(25F)
-        aimTabbedPane.addListener(object : TabbedPaneAdapter() {
-            override fun switchedTab(tab: Tab?) {
-                if (tab == null) return
-                aimTabbedPaneContent.clear()
-                aimTabbedPaneContent.add(tab.contentTable).left().colspan(2).row()
-                aimTabbedPaneContent.addSeparator().colspan(2).padLeft(25F).padRight(25F)
-            }
-        })
+        aimTabTable2.add(aimbotTab).top().row()
+        aimTabTable2.addSeparator()
+        aimTabTable2.add(triggerTab).top().padTop(8F).row()
+        aimTabTable2.addSeparator()
+        aimTabTable2.add(backtrackTab).top().padTop(8F)
 
-        table.add(aimTabbedPane.table).growX().fillY().top().minHeight(30F).row()
-        table.add(aimScrollPane).top().growX().growY().row()
+        aimTabTable.add(mainAimTab).top()
+        aimTabTable.addSeparator(true)
+        aimTabTable.add(aimTabTable2).top()
+
+        table.add(aimTabTable)
+
+        aimTabTable.setPosition(aimTabTable.x - 200F, aimTabTable.y)
     }
 
     override fun getContentTable(): Table {
@@ -80,12 +64,13 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 fun updateDisableAim() {
     if (!opened) return
 
-    aimTab.tAim.apply {
-        val bool = !enableAim.isChecked
-        var col = Color(255F, 255F, 255F, 1F)
-        if (bool) {
-            col = Color(105F, 105F, 105F, .2F)
-        }
+    val bool = !aimTab.tMain.enableAim.isChecked
+    var col = Color(255F, 255F, 255F, 1F)
+    if (bool) {
+        col = Color(105F, 105F, 105F, .2F)
+    }
+
+    aimTab.tMain.apply {
         activateFromFireKey.disable(bool)
         teammatesAreEnemies.disable(bool)
         holdAim.disable(bool)
@@ -93,12 +78,15 @@ fun updateDisableAim() {
         automaticWeaponsInput.disable(bool, col)
         targetSwapDelay.disable(bool, col)
 
-        fovType.update()
+        fovType.disable(bool, col)
 
         forceAimBoneKey.disable(bool, col)
         forceAimKey.disable(bool, col)
         forceAimAlways.disable(bool)
         forceAimThroughWalls.disable(bool)
+    }
+
+    aimTab.tAimbot.apply {
         categorySelectLabel.color = col
         categorySelectionBox.isDisabled = bool
         enableAimOnShot.isDisabled = bool
@@ -135,17 +123,7 @@ fun updateDisableAim() {
 
 fun updateAim() {
     overridenWeapons.weaponOverrideCheckBox.update()
-    aimTab.tAim.apply {
-        categorySelectLabel.setText("Weapon Category:") //Do not like this
-        //Create Category Selector Box
-        val itemsArray = Array<String>()
-        for (i in gunCategories) {
-            itemsArray.add(i)
-        }
-
-        categorySelectionBox.items = itemsArray
-        //categorySelectionBox.selectedIndex = 1
-
+    aimTab.tMain.apply {
         enableAim.update()
         aimToggleKey.update()
         activateFromFireKey.update()
@@ -160,6 +138,21 @@ fun updateAim() {
         targetSwapDelay.update()
 
         fovType.update()
+
+    }
+
+    aimTab.tAimbot.apply {
+        collapsibleWidget.isCollapsed = !aimTab.tMain.enableAim.isChecked
+
+        categorySelectLabel.setText("Weapon Category:")
+        //Create Category Selector Box
+        val itemsArray = Array<String>()
+        for (i in gunCategories) {
+            itemsArray.add(i)
+        }
+
+        categorySelectionBox.items = itemsArray
+
         enableAimOnShot.update()
         enableFactorRecoil.update()
         enableFlatAim.update()
@@ -210,24 +203,16 @@ fun updateAim() {
 fun updateDisableTrig() {
     if (!opened) return
 
+    var bool = !aimTab.tMain.enableTrig.isChecked
+
     aimTab.tTrig.apply {
-        var bool = if (!aimTab.tAim.enableAim.isChecked) {
-            //enableTrig.disable(true)
-            //true
-            enableTrig.disable(false)
-            !enableTrig.isChecked
-        } else {
-            enableTrig.disable(false)
-            !enableTrig.isChecked
-        }
         var col = Color(255F, 255F, 255F, 1F)
         if (bool) {
             col = Color(105F, 105F, 105F, .2F)
         }
+
         boneTriggerEnableKey.disable(bool)
         boneTriggerKey.disable(bool, col)
-        categorySelectLabel.color = col
-        categorySelectionBox.isDisabled = bool
         trigEnable.disable(bool)
 
         if (!trigEnable.isChecked) {
@@ -235,9 +220,9 @@ fun updateDisableTrig() {
             col = Color(105F, 105F, 105F, .2F)
         }
 
-        trigShootBacktrack.disable(if (!bool) { !aimTab.tBacktrack.enableBacktrack.isChecked } else { true })
+        trigShootBacktrack.disable(if (!bool) { !aimTab.tMain.enableBacktrack.isChecked } else { true })
 
-        if (!aimTab.tAim.enableAim.isChecked) {
+        if (!aimTab.tMain.enableAim.isChecked) {
             trigAimbot.disable(true)
         } else {
             trigAimbot.disable(bool)
@@ -256,19 +241,11 @@ fun updateDisableTrig() {
 }
 
 fun updateTrig() {
+    aimTab.tMain.enableTrig.update()
+
     aimTab.tTrig.apply {
-        categorySelectLabel.setText("${"Weapon-Category"}:")
-        //Create Category Selector Box
-        val itemsArray = Array<String>()
-        for (i in gunCategories) {
-            itemsArray.add(i)
-        }
+        collapsibleWidget.isCollapsed = !aimTab.tMain.enableTrig.isChecked
 
-        categorySelectionBox.items = itemsArray
-        //categorySelectionBox.selectedIndex = 1
-
-        enableTrig.update()
-        enableTrig.update()
         boneTriggerEnableKey.update()
         boneTriggerKey.update()
         trigEnable.update()
@@ -288,21 +265,18 @@ fun updateTrig() {
 fun updateDisableBacktrack() {
     if (!opened) return
 
-    aimTab.tBacktrack.apply {
-        val bool = !aimTab.tBacktrack.enableBacktrack.isChecked
+    val bool = !aimTab.tMain.enableBacktrack.isChecked
 
+    aimTab.tBacktrack.apply {
         var col = Color(255F, 255F, 255F, 1F)
         if (bool) {
             col = Color(105F, 105F, 105F, .2F)
         }
 
-        //enableBacktrack.disable(bool)
         backtrackEnableKey.disable(bool)
         backtrackKey.disable(bool, col)
         backtrackMS.disable(bool, col)
         backtrackSpotted.disable(bool)
-        categorySelectLabel.color = col
-        categorySelectionBox.isDisabled = bool
         backtrackWeaponEnabled.disable(bool)
     }
 }
@@ -310,17 +284,11 @@ fun updateDisableBacktrack() {
 fun updateBacktrack() {
     if (!opened) return
 
+    aimTab.tMain.enableBacktrack.update()
+
     aimTab.tBacktrack.apply {
-        categorySelectLabel.setText("${"Weapon-Category"}:")
-        //Create Category Selector Box
-        val itemsArray = Array<String>()
-        for (i in gunCategories) {
-            itemsArray.add(i)
-        }
+        collapsibleWidget.isCollapsed = !aimTab.tMain.enableBacktrack.isChecked
 
-        categorySelectionBox.items = itemsArray
-
-        enableBacktrack.update()
         backtrackEnableKey.update()
         backtrackKey.update()
         backtrackMS.update()

@@ -18,8 +18,7 @@ import rat.poison.utils.generalUtil.toWeaponClass
 var weaponOverrideSelected = "DESERT_EAGLE"
 var aimToOverride = mapOf(Pair("_FACTOR_RECOIL", "tFRecoil"), Pair("_ENABLE_FLAT_AIM", "tFlatAim"), Pair("_ENABLE_PATH_AIM", "tPathAim"), Pair("_AIM_BONE", "tAimBone"), Pair("_AIM_FOV", "tAimFov"), Pair("_AIM_SPEED", "tAimSpeed"), Pair("_AIM_SMOOTHNESS", "tAimSmooth"), Pair("_AIM_FORCE_BONE", "tForceBone"), Pair("_AIM_ONLY_ON_SHOT", "tOnShot"), Pair("_AIM_AFTER_SHOTS", "tAimAfterShots"), Pair("_TRIGGER_FOV", "tBTrigFov"), Pair("_TRIGGER_INFOV", "tBTrigInFov"), Pair("_TRIGGER_INCROSS", "tBTrigInCross"), Pair("_TRIGGER_AIMBOT", "tBTrigAim"), Pair("_TRIGGER_BACKTRACK", "tBTrigBacktrack"), Pair("_BACKTRACK", "tBacktrack"), Pair("_BACKTRACK_MS", "tBTMS"), Pair("_PERFECT_AIM", "tPerfectAim"), Pair("_PERFECT_AIM_FOV", "tPAimFov"), Pair("_PERFECT_AIM_CHANCE", "tPAimChance"), Pair("_TRIGGER", "tBoneTrig"), Pair("_TRIGGER_INIT_SHOT_DELAY", "tBTrigInitDelay"), Pair("_TRIGGER_PER_SHOT_DELAY", "tBTrigPerShotDelay"), Pair("_SCOPED_ONLY", "tScopedOnly"))
 
-class OverrideTab: Tab(true, false) {
-    private val table = VisTable()
+class OverrideTable: VisTable(false) {
     val weaponOverrideCheckBox = VisCheckBoxCustom("Override Weapons", "ENABLE_OVERRIDE")
     var categorySelected = curSettings["DEFAULT_CATEGORY_SELECTED"]
     var enableOverride = false
@@ -77,8 +76,8 @@ class OverrideTab: Tab(true, false) {
     val autoWepDelay = OverrideVisSliderCustom("Delay", "tAutowepDelay", 0F, 1000F, 10F, true, labelWidth = 225F, barWidth = 225F)
 
     init {
-        table.padLeft(25F)
-        table.padRight(25F)
+        padLeft(25F)
+        padRight(25F)
 
         categorySelectionBox.changed { _, _ ->
             categorySelected = gunCategories[categorySelectionBox.selectedIndex]
@@ -219,54 +218,46 @@ class OverrideTab: Tab(true, false) {
         //End Perfect Aim Collapsible Check Box
 
         //Add all items to label for tabbed pane content
-        table.add(copyToTable).left().row()
-        table.add(copyFromTable).left().row()
-        table.addSeparator().row()
-        table.add(weaponOverrideCheckBox).left().row()
-        table.add(categorySelection).left().row()
-        table.add(weaponOverrideSelection).left().row()
-        table.add(weaponOverrideEnableCheckBox).left().row()
-        table.add(enableFactorRecoil).left().row()
-        table.add(enableOnShot).left().row()
-        table.add(enableFlatAim).left().row()
-        table.add(enablePathAim).left().row()
-        table.add(enableScopedOnly).left().row()
-        //table.add(aimBone).left().row()
-        //table.add(forceBone).left().row()
-        table.add(aimSpeed).left().row()
-        table.add(aimFov).left().row()
-        table.add(aimSmoothness).left().row()
-        table.add(aimAfterShots).left().row()
-        table.add(perfectAimCheckBox).left().row()
-        table.add(perfectAimCollapsible).left().row()
+        add(copyToTable).left().row()
+        add(copyFromTable).left().row()
+        addSeparator().row()
+        add(weaponOverrideCheckBox).left().row()
+        add(categorySelection).left().row()
+        add(weaponOverrideSelection).left().row()
+        add(weaponOverrideEnableCheckBox).left().row()
+        add(enableFactorRecoil).left().row()
+        add(enableOnShot).left().row()
+        add(enableFlatAim).left().row()
+        add(enablePathAim).left().row()
+        add(enableScopedOnly).left().row()
+        //add(aimBone).left().row()
+        //add(forceBone).left().row()
+        add(aimSpeed).left().row()
+        add(aimFov).left().row()
+        add(aimSmoothness).left().row()
+        add(aimAfterShots).left().row()
+        add(perfectAimCheckBox).left().row()
+        add(perfectAimCollapsible).left().row()
 
-        table.addSeparator()
-        table.add(autoWepCheckbox).left().row()
-        table.add(autoWepDelay).left().row()
+        addSeparator()
+        add(autoWepCheckbox).left().row()
+        add(autoWepDelay).left().row()
 
-        table.addSeparator()
+        addSeparator()
 
-        table.add(trigEnable).left().row()
-        table.add(trigAimbot).left().row()
-        table.add(trigInCross).left().row()
-        table.add(trigInFov).left().row()
-        table.add(trigBacktrack).left().row()
-        table.add(trigFov).left().row()
-        table.add(trigInitDelay).left().row()
-        table.add(trigPerShotDelay).left().row()
+        add(trigEnable).left().row()
+        add(trigAimbot).left().row()
+        add(trigInCross).left().row()
+        add(trigInFov).left().row()
+        add(trigBacktrack).left().row()
+        add(trigFov).left().row()
+        add(trigInitDelay).left().row()
+        add(trigPerShotDelay).left().row()
 
-        table.addSeparator()
+        addSeparator()
 
-        table.add(enableBacktrack).left().row()
-        table.add(backtrackMS).left().row()
-    }
-
-    override fun getTabTitle(): String {
-        return "Override"
-    }
-
-    override fun getContentTable(): Table {
-        return table
+        add(enableBacktrack).left().row()
+        add(backtrackMS).left().row()
     }
 }
 

@@ -9,11 +9,18 @@ import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.target
 import rat.poison.scripts.bombState
 import rat.poison.settings.DANGER_ZONE
+import rat.poison.ui.uiPanels.aimTab
 import rat.poison.utils.every
+import rat.poison.utils.keyPressed
 import java.util.concurrent.TimeUnit
 import kotlin.system.measureNanoTime
 
 internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
+	//if (keyPressed(69)) {
+	//	println("hey we did")
+	//	aimTab.contentTable.setPosition(aimTab.contentTable.x - 504F, aimTab.contentTable.y)
+	//}
+
 	if (!curSettings.bool["GLOW_ESP"] || !curSettings.bool["ENABLE_ESP"]) return@every
 
 	glowTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {

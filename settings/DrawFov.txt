@@ -1,5 +1,5 @@
 //Draw FOV (static only)
-DRAW_AIM_FOV = false
+DRAW_AIM_FOV = true
 DRAW_TRIGGER_FOV = false
 
 //FOV Color
