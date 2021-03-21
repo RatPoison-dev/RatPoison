@@ -106,15 +106,11 @@ fun hitMarker() = App {
 
                 sb.begin()
 
-                val hitMarkerComboSB = StringBuilder()
-
-                hitMarkerComboSB.append("x$hitMarkerCombo")
-
                 val col = curSettings.colorGDX["HITMARKER_COMBO_COLOR"]
                 col.a = hitMarkerAlpha
 
                 textRenderer.color = col
-                textRenderer.draw(sb, hitMarkerComboSB, x + hMS + hMLL, y - hMS - hMLL, 1F, Align.center, false)
+                textRenderer.draw(sb, "x$hitMarkerCombo", x + hMS + hMLL, y - hMS - hMLL, 1F, Align.center, false)
 
                 sb.end()
             }

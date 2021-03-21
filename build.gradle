@@ -63,6 +63,8 @@ dependencies {
 	implementation group: 'it.unimi.dsi', name: 'fastutil', version: '8.4.4'
 
 	implementation group: 'net.openhft', name: 'chronicle-core', version: '2.20.125'
+	implementation "io.ktor:ktor-client-websockets:1.5.2"
+	implementation "io.ktor:ktor-client-okhttp:1.5.2"
 }
 
 jar {

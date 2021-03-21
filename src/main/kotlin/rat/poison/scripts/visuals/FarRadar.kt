@@ -9,6 +9,7 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.me
+import rat.poison.game.meTeam
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwRadarBase
 import rat.poison.game.worldToScreen
@@ -32,7 +33,7 @@ fun farRadar() = App {
         val ent = it.entity
 
         //Prechecks
-        if (ent == me || me.team() == ent.team() || DANGER_ZONE || !ent.dormant() || ent.dead()) return@forEntities
+        if (ent == me || meTeam == ent.team() || DANGER_ZONE || !ent.dormant() || ent.dead()) return@forEntities
 
         val entID = csgoEXE.int(ent + ClientOffsets.dwIndex)
 
@@ -68,7 +69,7 @@ fun farRadar() = App {
                 shapeRenderer.end()
             }
 
-            it.alpha -= .01F
+            it.alpha -= 0.01F
         }
     }
 }

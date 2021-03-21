@@ -1,7 +1,7 @@
 package rat.poison.game.hooks
 
-import com.sun.jna.Memory
 import com.sun.jna.platform.win32.WinNT
+import io.ktor.util.*
 import rat.poison.dbg
 import rat.poison.game.*
 import rat.poison.game.CSGO.GLOW_OBJECT_SIZE
@@ -10,6 +10,7 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.engineDLL
 import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.absPosition
+import rat.poison.game.entity.team
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwEntityList
 import rat.poison.game.offsets.ClientOffsets.dwGlowObject
@@ -43,17 +44,18 @@ private fun reset() {
     lastCleanup.set(System.currentTimeMillis())
 }
 
+
+private const val strBufMemorySize = 128
+private val strBufMemory = threadLocalPointer(strBufMemorySize)
+@KtorExperimentalAPI
 private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
     if (old != new) {
         if (new.name == SignOnState.IN_GAME.name) {
-            Thread(Runnable {
-                Thread.sleep(10000)
+            after(10000) {
                 shouldPostProcess = true
-            }).start()
-
-            val strBuf: Memory by lazy {
-                Memory(128) //128 str?
             }
+
+            val strBuf = strBufMemory.get()
 
             csgoEXE.read(clientState + dwClientState_MapDirectory, strBuf)
             val mapName = strBuf.getString(0)
@@ -93,6 +95,10 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
 
             sendPacket(true)
         } else {
+            if (new.name == SignOnState.MAIN_MENU.name) { //disconnected
+                WebSocket.createSendTask("deleteInfo")
+            }
+
             shouldPostProcess = false
             inGame = false
             sendPacket(true)
@@ -118,6 +124,7 @@ fun constructEntities() = every(500, continuous = true) {
 
     me = clientDLL.uint(dwLocalPlayer)
     if (!inGame || me <= 0L) return@every
+    meTeam = me.team()
 
     val glowObject = clientDLL.uint(dwGlowObject)
     val glowObjectCount = clientDLL.int(dwGlowObject + 4)

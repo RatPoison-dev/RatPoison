@@ -1,3 +1,4 @@
+@file:Suppress("unused")
 package rat.poison.ui.tabs
 
 import com.badlogic.gdx.graphics.Color
@@ -27,6 +28,7 @@ var footStepsEspTab = FootstepsEspTab()
 var hitMarkerTab = HitMarkerTab()
 var nadesTab = NadesVT()
 var miscVisualsTab = MiscVisualsTab()
+var farEspTab = FarEspTab()
 
 class VisualsTab : Tab(false, false) {
     private val table = VisTable()
@@ -47,6 +49,7 @@ class VisualsTab : Tab(false, false) {
         espTabbedPane.add(hitMarkerTab)
         espTabbedPane.add(nadesTab)
         espTabbedPane.add(miscVisualsTab)
+        espTabbedPane.add(farEspTab)
 
         espTabbedPane.switchTab(glowEspTab)
 
@@ -116,6 +119,7 @@ fun updateDisableEsp() {
         espTabbedPane.disableTab(hitMarkerTab, bool)
         espTabbedPane.disableTab(nadesTab, bool)
         espTabbedPane.disableTab(miscVisualsTab, bool)
+        espTabbedPane.disableTab(farEspTab, bool)
 
         espTabbedPane.switchTab(recTab)
 
@@ -128,6 +132,7 @@ fun updateDisableEsp() {
         hitMarkerTabDisable(bool, col)
         miscVisualTabDisable(bool, col)
         nadesVTabDisable(bool, col)
+        farEspTabDisable(bool, col)
 
         if (!curSettings.bool["ENABLE_ESP"]) {
             disableAllEsp()

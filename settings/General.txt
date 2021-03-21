@@ -35,6 +35,9 @@ APPLESS_HEIGHT = 600
 APPLESS_X = 960
 APPLESS_Y = 100
 
+//Web Sockets Server to connect
+WEBSOCKET_SERVER = 95.181.152.27
+
 //Menu stays focused even when csgo isn't
 MENU_STAY_FOCUSED = false
 

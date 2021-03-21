@@ -1,12 +1,10 @@
 package rat.poison.scripts
 
 import rat.poison.curSettings
+import rat.poison.game.*
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.angle
-import rat.poison.game.clientState
 import rat.poison.game.entity.*
-import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.iCrossHairID
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
@@ -86,7 +84,7 @@ fun triggerBot() = every(5, inGameCheck = true) {
         if (bINFOV) { //If we should check in fov
             val currentAngle = clientState.angle()
             val position = me.position()
-            val target = findTarget(position, currentAngle, false, bFOV, "-2").player
+            val target = findTarget(position, currentAngle, false, bFOV, "-2")[0] as Player
             if (target > 0) {
                 if (!target.dead() && !target.isProtected()) {
                     canFOV = true

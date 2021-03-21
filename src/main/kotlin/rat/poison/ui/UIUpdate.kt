@@ -29,6 +29,7 @@ fun uiUpdate() {
     nadesVTUpdate()
     snaplinesEspTabUpdate()
     footStepsEspTabUpdate()
+    farEspTabUpdate()
     movementTabUpdate()
     fovChangerTabUpdate()
     bombTabUpdate()
@@ -93,6 +94,7 @@ fun refreshMenu() {
     hitMarkerTab = HitMarkerTab()
     nadesTab = NadesVT()
     miscVisualsTab = MiscVisualsTab()
+    farEspTab = FarEspTab()
 
     movementTab = MovementTab()
     fovChangerTab = FOVChangerTab()
@@ -118,6 +120,7 @@ fun refreshMenu() {
     espTabbedPane.add(hitMarkerTab)
     espTabbedPane.add(nadesTab)
     espTabbedPane.add(miscVisualsTab)
+    espTabbedPane.add(farEspTab)
 
     miscTabbedPane.add(movementTab)
     miscTabbedPane.add(fovChangerTab)
@@ -135,6 +138,7 @@ fun refreshMenu() {
 
     aimTabbedPane.switchTab(mainAimTab)
     mainTabbedPane.switchTab(configsTab)
+    espTabbedPane.switchTab(glowEspTab)
 
     uiRefreshing = false
 }

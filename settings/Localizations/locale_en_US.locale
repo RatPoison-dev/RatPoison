@@ -430,7 +430,6 @@ BOTTOM = BOTTOM
 ADVANCED_BOUNDING_BOX = Full Dynamic Box
 BOX_WEAPON_COLOR = Weapons
 BOX_SMOKE_CHECK = Smoke Check
-BOX_FAR_RADAR = Far Radar Box
 BOX_ESP_WEAPON_SCALE = Icons Size
 BOX_ESP_USE_ICONS = Use Icons
 
@@ -472,6 +471,10 @@ HITMARKER_SPACING = Spacing
 HITMARKER_LENGTH = Length
 HITMARKER_COLOR = Color
 HITMARKER_COMBO_COLOR = Combo Color
+
+//Category: Far Esp tab
+BOX_FAR_RADAR = Far Radar Box
+SHARED_ESP = Shared Esp
 
 
 //Category: Others tab

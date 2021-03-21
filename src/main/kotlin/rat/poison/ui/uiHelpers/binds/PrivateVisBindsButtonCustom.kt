@@ -2,7 +2,7 @@ package rat.poison.ui.uiHelpers.binds
 
 import com.kotcrab.vis.ui.widget.VisTextButton
 import rat.poison.curSettings
-import rat.poison.interfaces.IOKeyProcessorListener
+import rat.poison.interfaces.IKeyProcessorListener
 import rat.poison.overlay.App.keyProcessor
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.keybindsUpdate
@@ -13,7 +13,7 @@ import rat.poison.utils.vkKeycodeToString
 lateinit var needKeyPressVar : String
 lateinit var needKeyPressActor : PrivateVisBindsButtonCustom
 
-class KeyProcessorListener : IOKeyProcessorListener {
+class KeyProcessorListener : IKeyProcessorListener {
 
     override fun onPress(keycode: Int, type: String) {
         var newKey = if (type == "button") gdxToVk[keycode]!! else gdxButtons[keycode]!!

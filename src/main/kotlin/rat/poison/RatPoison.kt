@@ -5,6 +5,7 @@ package rat.poison
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
+import io.ktor.util.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.lwjgl.glfw.GLFW.*
@@ -18,6 +19,7 @@ import rat.poison.scripts.aim.pathAim
 import rat.poison.scripts.aim.setAim
 import rat.poison.scripts.visuals.*
 import rat.poison.utils.Settings
+import rat.poison.utils.WebSocket
 import rat.poison.utils.detectLocale
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.loadSkinSettings
@@ -70,6 +72,7 @@ val DEFAULT_OWEAPON_STR = DEFAULT_OWEAPON.toString()
 
 var haltProcess = false
 
+@KtorExperimentalAPI
 fun main() {
     System.setProperty("jna.nosys", "true")
 
@@ -85,6 +88,7 @@ fun main() {
     println("Waiting for ${curSettings["MENU_APP"]} process...")
 
     CSGO.initialize()
+    WebSocket.initialize()
 
     WEAPON_STATS_FILE = File("$SETTINGS_DIRECTORY\\Data\\WeaponStats.txt")
     SKIN_INFO_FILE = File("$SETTINGS_DIRECTORY\\Data\\SkinInfo.txt")
@@ -157,6 +161,8 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Handle Fire Key") }; handleFireKey()
     if (dbg) { println("[DEBUG] Initializing GVars updater") }; updateGVars()
     if (dbg) { println("[DEBUG] Initializing Nades Timer") }; nadesTimer()
+    if (dbg) { println("[DEBUG] Initializing Shared Esp") }; sharedEsp()
+    //steamIDLogger()
 
     if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
     if (dbg) { println("[DEBUG] Initializing Fake Lag") }; fakeLag()

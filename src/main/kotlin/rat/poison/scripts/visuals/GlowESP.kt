@@ -23,7 +23,7 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 		if (!meCurWep.knife && meCurWep != Weapons.ZEUS_X27) {
 			if (curSettings.bool["ENABLE_AIM"]) {
 				if (curSettings.bool["GLOW_SHOW_TARGET"] && target == -1L) {
-					val curTarg = findTarget(position, currentAngle, false, visCheck = !curSettings.bool["FORCE_AIM_THROUGH_WALLS"]).player
+					val curTarg = findTarget(position, currentAngle, false, visCheck = !curSettings.bool["FORCE_AIM_THROUGH_WALLS"])[0] as Player
 					espTARGET = if (curTarg > 0) {
 						curTarg
 					} else {
@@ -47,7 +47,6 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 		val showWeapons = curSettings.bool["GLOW_SHOW_WEAPONS"]
 		val showGrenades = curSettings.bool["GLOW_SHOW_GRENADES"]
 
-		val meTeam = me.team()
 		forEntities {
 			val entity = it.entity
 			if (entity <= 0 || me == entity || entity.dormant()) return@forEntities

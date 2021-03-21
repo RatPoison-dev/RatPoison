@@ -12,10 +12,7 @@ import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.robot
 import rat.poison.scripts.aim.meDead
-import rat.poison.utils.Angle
-import rat.poison.utils.Vector
-import rat.poison.utils.every
-import rat.poison.utils.keyPressed
+import rat.poison.utils.*
 import java.awt.event.KeyEvent
 import kotlin.math.abs
 import kotlin.math.cos

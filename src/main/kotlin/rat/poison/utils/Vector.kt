@@ -12,3 +12,17 @@ data class Vector(var x: Float = 0.0F, var y: Float = 0.0F, var z: Float = 0.0F)
 	
 	private fun valid() = !invalid()
 }
+
+operator fun Vector.plus(v: Vector): Vector {
+	x += v.x
+	y += v.y
+	z += v.z
+	return this
+}
+
+fun Vector.scl(value: Float): Vector {
+	x *= value
+	y *= value
+	z *= value
+	return this
+}

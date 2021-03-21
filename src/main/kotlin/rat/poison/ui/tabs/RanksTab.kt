@@ -84,6 +84,7 @@ class RanksTab : Tab(false, false) {
 
     private fun constructRank(player: RanksPlayer) {
         if (uiRefreshing) return
+        if (player.teamStr == "NIL") return
 
         teamsLabel.setText(teamsLabel.text.toString() + player.teamStr.toLocale() + "  \n")
 

@@ -10,6 +10,8 @@ import rat.poison.settings.MAX_ENTITIES
 var me: Player = 0
 @Volatile
 var clientState: ClientState = 0
+@Volatile
+var meTeam: Long = 0
 
 typealias EntityList = Object2ObjectArrayMap<EntityType, MutableList<EntityContext>>
 

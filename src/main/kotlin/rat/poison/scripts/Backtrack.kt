@@ -108,10 +108,14 @@ fun attemptBacktrack(): Boolean {
     return false
 }
 
+private const val boneMemorySize = 3984
+private val boneMemory = ThreadLocal.withInitial { Memory(boneMemorySize.toLong()) }
+
 fun constructRecords() {
     var bestFov = 5F
     val clientAngle = clientState.angle()
-    val meTeam = me.team()
+
+    val boneMemory = boneMemory.get()
 
     forEntities(EntityType.CCSPlayer) {
         val ent = it.entity
@@ -121,7 +125,7 @@ fun constructRecords() {
         if (ent.dormant()) { //Reset that bitch
             val entID = (csgoEXE.uint(ent + dwIndex) - 1).toInt()
 
-            if (entID !in 0..64) return@forEntities
+            if (entID < 0 || entID > 63) return@forEntities
 
             for (i in 0 until 13) {
                 val record = btRecords[entID][i]
@@ -153,11 +157,7 @@ fun constructRecords() {
         if (entID in 0..63 && tick < 13) {
             val record = btRecords[entID][tick]
 
-            val boneMemory: Memory by lazy {
-                Memory(3984)
-            }
-
-            csgoEXE.read(ent.boneMatrix(), boneMemory)
+            csgoEXE.read(ent.boneMatrix(), boneMemory, boneMemorySize)
             record.headPos = boneMemory.bones(8).apply {
                 z += 5
             }

@@ -10,13 +10,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.Align
-import com.sun.jna.Memory
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.me
+import rat.poison.game.meTeam
 import rat.poison.game.netvars.NetVarOffsets.iClip1
 import rat.poison.game.netvars.NetVarOffsets.iPrimaryReserveAmmoCount
 import rat.poison.game.netvars.NetVarOffsets.m_Collision
@@ -26,10 +26,7 @@ import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
 import rat.poison.toLocale
-import rat.poison.utils.AssetManager
-import rat.poison.utils.Vector
-import rat.poison.utils.every
-import rat.poison.utils.inGame
+import rat.poison.utils.*
 import kotlin.math.abs
 import kotlin.math.sign
 
@@ -112,10 +109,10 @@ fun boxEsp() {
 			val isWeapon = it.type.weapon
 			val isDefuseKit = it.type == EntityType.CEconEntity
 
-			boxDetailsLeftText = StringBuilder("")
-			boxDetailsRightText = StringBuilder("")
-			boxDetailsTopText = StringBuilder("")
-			boxDetailsBottomText = StringBuilder("")
+			boxDetailsLeftText.clear()
+			boxDetailsRightText.clear()
+			boxDetailsTopText.clear()
+			boxDetailsBottomText.clear()
 
 			var leftShift = 2F
 			var bottomShift = 0F
@@ -136,7 +133,7 @@ fun boxEsp() {
 			if (isPlayer) {
 				health = ent.health()
 			}
-			val onTeam = !DANGER_ZONE && ent.team() == me.team()
+			val onTeam = !DANGER_ZONE && ent.team() == meTeam
 
 			//Team + Dormant + Dead + Self check
 			if (isPlayer && (ent == me || ent.dormant() || ent.dead() || (!showEnemy && !onTeam) || (!showTeam && onTeam))) return@forEntities
@@ -358,14 +355,17 @@ fun boxEsp() {
 		}
 	}
 }
-
+private val DEFAULT_STRING_BUILDER = StringBuilder()
 fun getStrBuilder(position: String): StringBuilder {
 	return when (position)  {
 		"LEFT" -> boxDetailsLeftText
 		"RIGHT" -> boxDetailsRightText
 		"TOP" -> boxDetailsTopText
 		"BOTTOM" -> boxDetailsBottomText
-		else -> StringBuilder()
+		else -> {
+			DEFAULT_STRING_BUILDER.clear()
+			DEFAULT_STRING_BUILDER
+		}
 	}
 }
 fun addText(position: String, str: String) {
@@ -391,10 +391,11 @@ fun getRealTextParams(font: BitmapFont, builder: StringBuilder, layout: GlyphLay
 }
 
 //Create a fake accurate box using headpos
+private val pointsArray = mutableListOf<Vector>()
 fun setupFakeBox(ent: Entity): BoundingBox {
 	val bbox = BoundingBox()
 
-	val boneMemory = csgoEXE.read(ent.boneMatrix(), 3984)!!
+	val boneMemory = csgoEXE.read(ent.boneMatrix(), 3984) ?: return bbox
 
 	val headPos = Vector(boneMemory.getFloat(((0x30L * HEAD_BONE) + 0xC)),
 			boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x1C)),
@@ -432,6 +433,10 @@ fun setupFakeBox(ent: Entity): BoundingBox {
 	return bbox
 }
 
+
+private const val collisionMemSize = 56
+private val collisionMem = threadLocalPointer(collisionMemSize)
+private val screenPointsTransformedArray = mutableListOf<Vector>()
 //Create a real accurate box using vecMins & vecMaxs
 fun setupAccurateBox(ent: Entity): BoundingBox {
 	//Get frameMatrix
@@ -448,9 +453,7 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 		}
 	}
 
-	val collisionMem: Memory by lazy {
-		Memory(56) //Incorrect
-	}
+	val collisionMem = collisionMem.get()
 	csgoEXE.read(ent + m_Collision, collisionMem)
 
 	//Set min/max
@@ -458,7 +461,7 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 	val vecMaxs = Vector(collisionMem.getFloat(20), collisionMem.getFloat(24), collisionMem.getFloat(28))
 
 	//Set OBB to loop
-	val pointsArray = mutableListOf<Vector>()
+	pointsArray.clear()
 	pointsArray.add(Vector(vecMins.x, vecMins.y, vecMins.z))
 	pointsArray.add(Vector(vecMins.x, vecMaxs.y, vecMins.z))
 	pointsArray.add(Vector(vecMaxs.x, vecMaxs.y, vecMins.z))
@@ -468,7 +471,7 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 	pointsArray.add(Vector(vecMins.x, vecMins.y, vecMaxs.z))
 	pointsArray.add(Vector(vecMaxs.x, vecMins.y, vecMaxs.z))
 
-	val screenPointsTransformedArray = mutableListOf<Vector>()
+	screenPointsTransformedArray.clear()
 
 	for (i in pointsArray) {
 		val vecOut = Vector()

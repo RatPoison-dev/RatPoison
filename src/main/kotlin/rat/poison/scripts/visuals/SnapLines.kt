@@ -58,7 +58,7 @@ fun snapLines() = App {
         when (it.type) {
             EntityType.CCSPlayer -> {
                 val dormCheck = entity.dormant()
-                val onTeam = !DANGER_ZONE && me.team() == entity.team()
+                val onTeam = !DANGER_ZONE && meTeam == entity.team()
                 val enemyCheck = (curSettings.bool["SNAPLINES_ENEMIES"] && !onTeam)
                 val teamCheck = (curSettings.bool["SNAPLINES_TEAMMATES"] && onTeam)
 

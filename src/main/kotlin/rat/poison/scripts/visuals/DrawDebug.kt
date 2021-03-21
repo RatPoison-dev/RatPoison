@@ -11,11 +11,10 @@ import rat.poison.scripts.aim.curWepOverride
 import rat.poison.scripts.aim.curWepSettings
 import rat.poison.scripts.aim.meCurWep
 
+private val txtString = StringBuilder()
 fun drawDebug() = App {
     if (!dbg) return@App
-
-    val txtString = StringBuilder()
-
+    txtString.clear()
     txtString.appendLine("Weapon Override: $curWepOverride")
 
     if (curWepOverride) {

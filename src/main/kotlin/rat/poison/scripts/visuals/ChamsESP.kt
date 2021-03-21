@@ -24,7 +24,7 @@ import java.lang.Float.floatToIntBits
 fun chamsEsp() = every(100, true, inGameCheck = true) {
     if (!curSettings.bool["CHAMS_ESP"] || !curSettings.bool["ENABLE_ESP"]) return@every
 
-    val myTeam = me.team()
+    val myTeam = meTeam
 
     val brightnessCounter = if (curSettings.int["CHAMS_BRIGHTNESS"] > 0) {
         (255F / (curSettings.int["CHAMS_BRIGHTNESS"] / 10F)).toInt()
@@ -59,7 +59,7 @@ fun chamsEsp() = every(100, true, inGameCheck = true) {
     if (!meCurWep.knife && meCurWep != Weapons.ZEUS_X27) {
         if (curSettings.bool["ENABLE_AIM"]) {
             if (curSettings.bool["CHAMS_SHOW_TARGET"] && target == -1L) {
-                val curTarg = findTarget(position, currentAngle, false, visCheck = !curSettings.bool["FORCE_AIM_THROUGH_WALLS"]).player
+                val curTarg = findTarget(position, currentAngle, false, visCheck = !curSettings.bool["FORCE_AIM_THROUGH_WALLS"])[0] as Player
                 espTARGET = if (curTarg > 0) {
                     curTarg
                 } else {

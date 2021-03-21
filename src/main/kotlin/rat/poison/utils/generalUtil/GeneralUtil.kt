@@ -3,6 +3,7 @@ package rat.poison.utils.generalUtil
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Matrix4
 import rat.poison.*
+import java.util.regex.Pattern
 
 fun Any.strToBool() = this.toString().toLowerCase() == "true" || this == true || this == 1.0 || this == 1 || this == 1F
 fun Any.boolToStr() = this.toString()
@@ -36,16 +37,21 @@ fun convStrToColor(input: String): rat.poison.game.Color { //Rat poison color
     }
 }
 
+private val arrayLine = Array(4) { "" }
+private val floatPatter = Pattern.compile("\\d+(\\.\\d+)?")
 fun convStrToColorGDX(input: String): Color {
-    var line = input
-    line = line.replace("Color(", "").replace(")", "").replace(",", "")
+    val match = floatPatter.matcher(input)
+    var idx = 0
 
-    val arrayLine = line.trim().split(" ".toRegex(), 4)
+    while (match.find()) {
+        arrayLine[idx] = match.group()
+        idx += 1
+    }
 
-    return if (arrayLine.size >= 4) Color(arrayLine[0].replace("red=", "").toFloat()/255F,
-            arrayLine[1].replace("green=", "").toFloat()/255F,
-            arrayLine[2].replace("blue=", "").toFloat()/255F,
-            arrayLine[3].replace("alpha=", "").toFloat()) else Color(255F, 255F, 255F, 1F)
+    return if (arrayLine.size >= 4) Color(arrayLine[0].toFloat()/255F,
+            arrayLine[1].toFloat()/255F,
+            arrayLine[2].toFloat()/255F,
+            arrayLine[3].toFloat()) else Color(1F, 1F, 1F, 1F)
 }
 
 

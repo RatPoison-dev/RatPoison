@@ -31,9 +31,7 @@ fun nadesTimer() = App {
                 }
                 sb.begin()
                 textRenderer.color = curSettings.colorGDX["SMOKE_WEAR_OFF_TIME_COLOR"]
-                val sbText = StringBuilder()
-                sbText.append("SMOKE\n${String.format("%.2f", seconds)} s")
-                textRenderer.draw(sb, sbText, vec.x, vec.y, 1F, Align.left, false)
+                textRenderer.draw(sb, "SMOKE\n${String.format("%.2f", seconds)} s", vec.x, vec.y, 1F, Align.left, false)
                 sb.end()
             }
         }

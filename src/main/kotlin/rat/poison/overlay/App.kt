@@ -57,12 +57,13 @@ var appTime = 0L
 var menuTime = 0L
 var overlayTime = 0L
 var bspVisTime = 0L
+var webSocketTime = 0L
 
 object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
-    private val overlay = Overlay(if (appless) {
+    val overlay = Overlay(if (appless) {
         "Counter-Strike: Global Offensive"
     } else {
         curSettings["MENU_APP"].replace("\"", "")
@@ -118,51 +119,6 @@ object App : ApplicationAdapter() {
 
         overlay.start()
     }
-
-    /**
-     * An accurate sync method that adapts automatically
-     * to the system it runs on to provide reliable results.
-     *
-     * @param fps The desired frame rate, in frames per second
-     * @author kappa (On the LWJGL Forums)
-     */
-    private var variableYieldTime = 0L
-    private var lastTime = 0L
-    private fun sync(fps: Int) {
-        if (fps <= 0) return
-        val sleepTime = (1000000000 / fps).toLong() // nanoseconds to sleep this frame
-        // yieldTime + remainder micro & nano seconds if smaller than sleepTime
-        val yieldTime = min(sleepTime, variableYieldTime + sleepTime % (1000 * 1000))
-        var overSleep: Long = 0 // time the sync goes over by
-        try {
-            while (true) {
-                val t: Long = System.nanoTime() - lastTime
-                if (t < sleepTime - yieldTime) {
-                    Thread.sleep(1)
-                } else if (t < sleepTime) {
-                    // burn the last few CPU cycles to ensure accuracy
-                    Thread.yield()
-                } else {
-                    overSleep = t - sleepTime
-                    break // exit while loop
-                }
-            }
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        } finally {
-            lastTime = System.nanoTime() - min(overSleep, sleepTime)
-
-            // auto tune the time sync should yield
-            if (overSleep > variableYieldTime) {
-                // increase by 200 microseconds (1/5 a ms)
-                variableYieldTime = min(variableYieldTime + 200 * 1000, sleepTime)
-            } else if (overSleep < variableYieldTime - 200 * 1000) {
-                // decrease by 2 microseconds
-                variableYieldTime = max(variableYieldTime - 2 * 1000, 0)
-            }
-        }
-    }
-
     override fun render() {
         timer++
 
@@ -281,6 +237,7 @@ object App : ApplicationAdapter() {
                             sbText.append("\n\nSync took: ").append((syncTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
                             sbText.append("\nOverlay took: ").append((overlayTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
                             sbText.append("\n   Menu took: ").append((menuTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
+                            sbText.append("\n   WebSockets took: ").append((webSocketTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
                             sbText.append("\n   Apps took: ").append((appTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
                             sbText.append("\n      Glow took: ").append((glowTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
                             //sbText.append("\n      Bsp Vis Check took: ").append((bspVisTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
@@ -312,7 +269,6 @@ object App : ApplicationAdapter() {
                         MENUTOG = !MENUTOG
                         overlay.clickThrough = !MENUTOG
 
-                        //uiMenu.updateChilds()
                         uiUpdate()
 
                         if (dbg) println("[DEBUG] Menu Toggled")
@@ -381,5 +337,39 @@ object App : ApplicationAdapter() {
     }
 }
 
-var variableYieldTime = 0.toLong()
-var lastSyncTime = 0.toLong()
+var variableYieldTime = 0L
+var lastSyncTime = 0L
+fun sync(fps : Int) {
+    if (fps <= 0) {
+        return
+    }
+
+    val nanoSec = 1000000000L
+
+    var overSleep = 0.toLong()
+    val sleepTime = nanoSec/fps
+    val yieldTime = min(sleepTime, variableYieldTime + sleepTime % (1000000L))
+
+    try {
+        while(true) {
+            val t = System.nanoTime() - lastSyncTime
+
+            if (t < sleepTime - yieldTime) {
+                Thread.sleep(1)
+            } else if (t < sleepTime) {
+                Thread.yield()
+            } else {
+                overSleep = t - sleepTime
+                break
+            }
+        }
+    } catch (ex: InterruptedException) { println("FPS Sync Failure") } finally {
+        lastSyncTime = System.nanoTime() - min(overSleep, sleepTime)
+
+        if (overSleep > variableYieldTime) {
+            variableYieldTime = min(variableYieldTime + 200 * 1000, sleepTime)
+        } else if (overSleep < variableYieldTime - 200 * 1000) {
+            variableYieldTime = max(variableYieldTime - 2 * 1000, 0)
+        }
+    }
+}

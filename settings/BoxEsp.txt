@@ -7,9 +7,6 @@ ADVANCED_BOUNDING_BOX = false
 //Disable through smoke
 BOX_SMOKE_CHECK = false
 
-//Enable far radar box
-BOX_FAR_RADAR = false
-
 //Enable box esp details
 //Shows optional extra details (Health/Armor bar, Name/Weapon text) for each enemy, configurable below
 BOX_ESP_DETAILS = false

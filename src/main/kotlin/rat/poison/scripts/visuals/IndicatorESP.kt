@@ -23,7 +23,7 @@ fun indicatorEsp() = App {
 
     forEntities {
         val entity = it.entity
-        val onTeam = !DANGER_ZONE && me.team() == entity.team()
+        val onTeam = !DANGER_ZONE && meTeam == entity.team()
 
         var color = ""
 

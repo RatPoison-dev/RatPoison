@@ -1,5 +1,5 @@
 package rat.poison.interfaces
 
-interface IOKeyProcessorListener {
+interface IKeyProcessorListener {
     fun onPress(keycode: Int, type: String)
 }

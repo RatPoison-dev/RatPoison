@@ -3,11 +3,9 @@ package rat.poison.scripts.visuals
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.Align
 import rat.poison.*
+import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
-import rat.poison.game.me
-import rat.poison.game.w2sViewMatrix
-import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.utils.Vector
 import rat.poison.utils.every
@@ -55,12 +53,10 @@ fun runFootSteps() = App {
                 val inVec = Vector(footSteps[i].x, footSteps[i].y, footSteps[i].z)
                 val outVec = Vector()
                 if (worldToScreen(inVec, outVec)) {
-                    val sbText = StringBuilder("Step")
-
                     sb.begin()
 
                     textRenderer.color = color
-                    textRenderer.draw(sb, sbText, outVec.x, outVec.y, 1F, Align.left, false)
+                    textRenderer.draw(sb, "Step", outVec.x, outVec.y, 1F, Align.left, false)
 
                     sb.end()
                 }
@@ -99,7 +95,7 @@ private fun constructSteps() = every(10) {
             val ent = it.entity
             if (ent == me || ent.dead() || ent.dormant()) return@forEntities
 
-            val inMyTeam = ent.team() == me.team()
+            val inMyTeam = ent.team() == meTeam
 
             val entVel = ent.velocity()
             val entMag = sqrt(entVel.x.pow(2F) + entVel.y.pow(2F) + entVel.z.pow(2F))

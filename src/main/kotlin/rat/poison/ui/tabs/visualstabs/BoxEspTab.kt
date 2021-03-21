@@ -28,8 +28,6 @@ class BoxEspTab: Tab(false, false) {
 
     val boxSmokeCheck = VisCheckBoxCustom("Smoke Check", "BOX_SMOKE_CHECK")
 
-    val farRadarBox = VisCheckBoxCustom("Far Radar Box", "BOX_FAR_RADAR")
-
     val boxEspDetails = VisCheckBoxCustom("Box Details", "BOX_ESP_DETAILS")
     val boxEspHealth = VisCheckBoxCustom("Health", "BOX_ESP_HEALTH")
     val boxEspHealthPos = VisSelectBoxCustom(" ", "BOX_ESP_HEALTH_POS", false, false, "LEFT", "RIGHT")
@@ -79,7 +77,6 @@ class BoxEspTab: Tab(false, false) {
         table.add(boxEspUseIcons).left().row()
         table.add(advancedBBox).left().row()
         table.add(boxSmokeCheck).left().row()
-        table.add(farRadarBox).left().row()
         table.add(boxEspDetails).left().row()
         table.addSeparator().colspan(2)
         table.add(boxEspName).left()
@@ -148,7 +145,6 @@ fun boxEspTabUpdate() {
         boxEspUseIcons.update()
         advancedBBox.update()
         boxSmokeCheck.update()
-        farRadarBox.update()
         boxEspDetails.update()
         boxEspHealth.update()
         boxEspHealthPos.update()
@@ -225,5 +221,4 @@ fun boxEspTabDisable(bool: Boolean, col: Color) {
     boxEspTab.boxEspWeaponScale.disable(bool, col)
     boxEspTab.boxEspUseIcons.disable(bool)
     boxEspTab.boxSmokeCheck.disable(bool)
-    boxEspTab.farRadarBox.disable(bool)
 }

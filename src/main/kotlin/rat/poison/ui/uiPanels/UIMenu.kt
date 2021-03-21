@@ -1,7 +1,11 @@
 package rat.poison.ui.uiPanels
 
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Align
+import com.kotcrab.vis.ui.VisUI
+import com.kotcrab.vis.ui.widget.VisImageButton
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.VisWindow
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
@@ -9,8 +13,12 @@ import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
 import rat.poison.*
 import rat.poison.game.CSGO
+import rat.poison.overlay.App
+import rat.poison.overlay.App.assetManager
 import rat.poison.scripts.sendPacket
 import rat.poison.scripts.visuals.disableAllEsp
+import rat.poison.settings.MENUTOG
+import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.randInt
@@ -31,6 +39,7 @@ val mainTabbedPane = TabbedPane()
 
 private var uid = randInt(2, 999999)
 
+
 class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CONFIG - UID: $uid") {
     var wantedHeight = 600F
     var wantedWidth = 535F
@@ -41,7 +50,18 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
 
     init {
         defaults().left()
+        val minimizeImage = VisImageButton(TextureRegionDrawable(assetManager.get<Texture>("$SETTINGS_DIRECTORY/Assets/Images/minimize.png")))
+        minimizeImage.color = VisUI.getSkin().getColor("t-medium")
+        minimizeImage.changed {_, _ ->
+            if (appless) return@changed true
+            MENUTOG = !MENUTOG
+            App.overlay.clickThrough = !MENUTOG
 
+            uiUpdate()
+
+            true
+        }
+        titleTable.add(minimizeImage)
         addCloseButton()
 
         //Main ui window settings
