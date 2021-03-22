@@ -158,7 +158,7 @@ internal fun Player.isProtected(): Boolean = csgoEXE.boolean(this + bGunGameImmu
 
 private const val modelMemorySize = 21332
 private var modelMemory = threadLocalPointer(modelMemorySize)
-private const val boneMemorySize = 21332
+private const val boneMemorySize = 4032
 private var boneMemory = threadLocalPointer(boneMemorySize)
 internal fun Player.nearestBone(): Int {
 	val studioModel = csgoEXE.uint(studioHdr())
