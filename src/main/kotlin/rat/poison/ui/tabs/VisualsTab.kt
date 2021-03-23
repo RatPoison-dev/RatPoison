@@ -32,47 +32,6 @@ class VisualsTab : Tab(false, false) {
     val visualsToggleKey = VisBindTableCustom("Visuals Toggle Key", "VISUALS_TOGGLE_KEY")
 
     init {
-        //ESP Tab
-//        espTabbedPane.add(glowEspTab)
-//        espTabbedPane.add(chamsEspTab)
-//        espTabbedPane.add(indicatorEspTab)
-//        espTabbedPane.add(boxEspTab)
-//        espTabbedPane.add(snaplinesEspTab)
-//        espTabbedPane.add(footStepsEspTab)
-//        espTabbedPane.add(hitMarkerTab)
-//        espTabbedPane.add(nadesTab)
-//        espTabbedPane.add(miscVisualsTab)
-//
-//        espTabbedPane.switchTab(glowEspTab)
-
-
-
-//        val espTabbedPaneContent = VisTable(false)
-//        espTabbedPaneContent.padTop(10F)
-//        espTabbedPaneContent.padBottom(10F)
-//        espTabbedPaneContent.align(Align.top)
-//        espTabbedPaneContent.columnDefaults(1)
-//
-//        val espScrollPane = ScrollPane(espTabbedPaneContent)
-//        espScrollPane.setFlickScroll(false)
-//        espScrollPane.setSize(1000F, 1000F)
-//
-//        espTabbedPaneContent.add(glowEspTab.contentTable).left().colspan(2).row()
-//
-//        espTabbedPaneContent.addSeparator().colspan(2).padLeft(25F).padRight(25F)
-//
-//        espTabbedPane.addListener(object : TabbedPaneAdapter() {
-//            override fun switchedTab(tab: Tab?) {
-//                if (tab == null) return
-//
-//                espTabbedPaneContent.clear()
-//
-//                espTabbedPaneContent.add(tab.contentTable).left().colspan(2).row()
-//
-//                espTabbedPaneContent.addSeparator().colspan(2).padLeft(25F).padRight(25F)
-//            }
-//        })
-
         val leftTable = VisTable(false)
         val middleTable = VisTable(false)
         val rightTable = VisTable(false)
@@ -80,49 +39,29 @@ class VisualsTab : Tab(false, false) {
         leftTable.add(enableEsp).left().row()
         leftTable.add(visualsToggleKey).left().row()
         leftTable.addSeparator()
-        leftTable.add(glowEspTable).left().maxWidth(300F).row()
+        leftTable.add(glowEspTable).left().width(310F).row()
         leftTable.addSeparator()
-        leftTable.add(chamsEspTable).left().maxWidth(300F).row()
+        leftTable.add(chamsEspTable).left().width(310F).row()
         leftTable.addSeparator()
-        //leftTable.add(indicatorEspTable).left().row()
 
-        table.add(leftTable).width(300F)
+        middleTable.add(indicatorEspTable).left().row()
+        middleTable.addSeparator()
+
+        table.add(leftTable).width(310F).top().expandX()
         table.addSeparator(true)
-        //table.add(middleTable).width(300F)
-        //table.addSeparator(true)
-        //table.add(rightTable).width(300F)
+        table.add(middleTable).width(310F).top().expandX()
+        table.addSeparator(true)
+        table.add(rightTable).width(310F).top().expandX()
 
 
 
-        //Add all items to label for tabbed pane content
 
-        //table.add(glowEspTable).left()
-
-//        espTabbedPane.add(indicatorEspTab)
 //        espTabbedPane.add(boxEspTab)
 //        espTabbedPane.add(snaplinesEspTab)
 //        espTabbedPane.add(footStepsEspTab)
 //        espTabbedPane.add(hitMarkerTab)
 //        espTabbedPane.add(nadesTab)
 //        espTabbedPane.add(miscVisualsTab)
-//
-//        espTabbedPane.switchTab(glowEspTab)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //table.add(espTabbedPane.table).minWidth(500F).left().growX().row()
-        //table.add(espScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
     }
 
     override fun getContentTable(): Table {

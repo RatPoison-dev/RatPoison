@@ -2,6 +2,7 @@ package rat.poison.ui.tabs.visualstabs
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.ui.tabs.indicatorEspTable
@@ -12,84 +13,64 @@ import rat.poison.ui.uiHelpers.VisSliderCustom
 class IndicatorEspTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
     val indicatorEsp = VisCheckBoxCustom("Enable", "INDICATOR_ESP")
-    val indicatorDistance = VisSliderCustom("Indicator Distance", "INDICATOR_DISTANCE", 2F, 50F, 1F, false)
-    val indicatorSize = VisSliderCustom("Indicator Size", "INDICATOR_SIZE", 5F, 25F, .5F, false)
+    val indicatorDistance = VisSliderCustom("Distance", "INDICATOR_DISTANCE", 2F, 50F, 1F, true, 0, 175F, 117F)
+    val indicatorSize = VisSliderCustom("Size", "INDICATOR_SIZE", 5F, 25F, .5F, false, 1, 175F, 117F)
 
     val indicatorSmokeCheck = VisCheckBoxCustom("Smoke Check", "INDICATOR_SMOKE_CHECK")
 
-    val showTeam = VisCheckBoxCustom(" ", "INDICATOR_SHOW_TEAM", false)
-    val indicatorTeamColor = VisColorPickerCustom("Teammates", "GLOW_TEAM_COLOR")
+    val showTeam = VisCheckBoxCustom("Teammates", "INDICATOR_SHOW_TEAM", false)
+    val indicatorTeamColor = VisColorPickerCustom("Indicator Teammate Color", "GLOW_TEAM_COLOR")
 
-    val showEnemies = VisCheckBoxCustom(" ", "INDICATOR_SHOW_ENEMIES", false)
-    val indicatorEnemyColor = VisColorPickerCustom("Enemies", "INDICATOR_ENEMY_COLOR")
+    val showEnemies = VisCheckBoxCustom("Enemies", "INDICATOR_SHOW_ENEMIES", false)
+    val indicatorEnemyColor = VisColorPickerCustom("Indicator Enemy Color", "INDICATOR_ENEMY_COLOR")
 
-    val showBomb = VisCheckBoxCustom(" ", "INDICATOR_SHOW_BOMB", false)
-    val indicatorBombColor = VisColorPickerCustom("Bomb", "INDICATOR_BOMB_COLOR")
+    val showBomb = VisCheckBoxCustom("Bomb", "INDICATOR_SHOW_BOMB", false)
+    val indicatorBombColor = VisColorPickerCustom("Indicator Bomb Color", "INDICATOR_BOMB_COLOR")
 
-    val showBombCarrier = VisCheckBoxCustom(" ", "INDICATOR_SHOW_BOMB_CARRIER", false)
-    val indicatorBombCarrierColor = VisColorPickerCustom("Bomb Carrier", "INDICATOR_BOMB_CARRIER_COLOR")
+    val showBombCarrier = VisCheckBoxCustom("Bomb Carrier", "INDICATOR_SHOW_BOMB_CARRIER", false)
+    val indicatorBombCarrierColor = VisColorPickerCustom("Indicator Bomb Carrier Color", "INDICATOR_BOMB_CARRIER_COLOR")
 
-    val showWeapons = VisCheckBoxCustom(" ", "INDICATOR_SHOW_WEAPONS", false)
-    val indicatorWeaponColor = VisColorPickerCustom("Weapons", "INDICATOR_WEAPON_COLOR")
+    val showWeapons = VisCheckBoxCustom("Weapons", "INDICATOR_SHOW_WEAPONS", false)
+    val indicatorWeaponColor = VisColorPickerCustom("Indicator Weapon Color", "INDICATOR_WEAPON_COLOR")
 
-    val showGrenades = VisCheckBoxCustom(" ", "INDICATOR_SHOW_GRENADES", false)
-    val indicatorGrenadeColor = VisColorPickerCustom("Grenades", "INDICATOR_GRENADE_COLOR")
+    val showGrenades = VisCheckBoxCustom("Grenades", "INDICATOR_SHOW_GRENADES", false)
+    val indicatorGrenadeColor = VisColorPickerCustom("Indicator Grenade Color", "INDICATOR_GRENADE_COLOR")
 
-    val showDefusers = VisCheckBoxCustom(" ", "INDICATOR_SHOW_DEFUSERS", false)
-    val indicatorDefuserColor = VisColorPickerCustom("Defusers", "INDICATOR_DEFUSER_COLOR")
+    val showDefusers = VisCheckBoxCustom("Defusers", "INDICATOR_SHOW_DEFUSERS", false)
+    val indicatorDefuserColor = VisColorPickerCustom("Indicator Defuser Color", "INDICATOR_DEFUSER_COLOR")
 
     init {
-        padLeft(25F)
-        padRight(25F)
+        val label = VisLabel("Indicators")
+        label.setColor(.85F, .5F, .05F, 1F)
 
-        //Add all items to label for tabbed pane content
-        add(indicatorEsp).left().row()
-        add(indicatorDistance).left().colspan(2).row()
-        add(indicatorSize).left().colspan(2).row()
+        add(label).colspan(2).padBottom(2F).expandX().row()
 
-        add(indicatorSmokeCheck).left().row()
+        add(indicatorEsp).colspan(2).left().row()
+        add(indicatorDistance).colspan(2).left().row()
+        //add(indicatorSize).colspan(2).left().row()
 
-        var tmpTable = VisTable(false)
-        tmpTable.add(showTeam)
-        tmpTable.add(indicatorTeamColor).width(175F - showTeam.width).padRight(50F)
+        //add(indicatorSmokeCheck).left().colspan(2).row()
 
-        add(tmpTable).left()
+        add(showTeam).left().padRight(175F - showTeam.width)
+        add(indicatorTeamColor).left().expandX().row()
 
-        tmpTable = VisTable(false)
-        tmpTable.add(showEnemies)
-        tmpTable.add(indicatorEnemyColor).width(175F - showEnemies.width).padRight(50F)
+        add(showEnemies).left().padRight(175F - showEnemies.width)
+        add(indicatorEnemyColor).left().expandX().row()
 
-        add(tmpTable).left().row()
+        add(showBomb).left().padRight(175F - showBomb.width)
+        add(indicatorBombColor).left().expandX().row()
 
-        tmpTable = VisTable(false)
-        tmpTable.add(showBomb)
-        tmpTable.add(indicatorBombColor).width(175F - showBomb.width).padRight(50F)
+        add(showBombCarrier).left().padRight(175F - showBombCarrier.width)
+        add(indicatorBombCarrierColor).left().expandX().row()
 
-        add(tmpTable).left()
+        add(showWeapons).left().padRight(175F - showWeapons.width)
+        add(indicatorWeaponColor).left().expandX().row()
 
-        tmpTable = VisTable(false)
-        tmpTable.add(showBombCarrier)
-        tmpTable.add(indicatorBombCarrierColor).width(175F - showBombCarrier.width).padRight(50F)
+        add(showGrenades).left().padRight(175F - showGrenades.width)
+        add(indicatorGrenadeColor).left().expandX().row()
 
-        add(tmpTable).left().row()
-
-        tmpTable = VisTable(false)
-        tmpTable.add(showWeapons)
-        tmpTable.add(indicatorWeaponColor).width(175F - showWeapons.width).padRight(50F)
-
-        add(tmpTable).left()
-
-        tmpTable = VisTable(false)
-        tmpTable.add(showGrenades)
-        tmpTable.add(indicatorGrenadeColor).width(175F - showGrenades.width).padRight(50F)
-
-        add(tmpTable).left().row()
-
-        tmpTable = VisTable(false)
-        tmpTable.add(showDefusers)
-        tmpTable.add(indicatorDefuserColor).width(175F - showDefusers.width).padRight(50F)
-
-        add(tmpTable).left()
+        add(showDefusers).left().padRight(175F - showTeam.width)
+        add(indicatorDefuserColor).left().expandX().row()
     }
 }
 

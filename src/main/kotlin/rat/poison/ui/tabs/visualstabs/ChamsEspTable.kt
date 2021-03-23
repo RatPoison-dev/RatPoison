@@ -32,22 +32,22 @@ class ChamsEspTable: VisTable(false) {
         val label = VisLabel("Chams")
         label.setColor(.85F, .5F, .05F, 1F)
 
-        add(label).colspan(2).padBottom(8F).row()
+        add(label).colspan(2).padBottom(8F).expandX().row()
 
-        add(chamsEsp).left().padRight(167F - chamsEsp.width)
-        add(chamsShowHealth).left().row()
+        add(chamsEsp).left().padRight(175F - chamsEsp.width)
+        add(chamsShowHealth).left().expandX().row()
 
-        add(showTeam).left().padRight(167F - showTeam.width)
-        add(chamsTeamColor).left().row()
+        add(showTeam).left().padRight(175F - showTeam.width)
+        add(chamsTeamColor).left().expandX().row()
 
-        add(showEnemies).left().left().padRight(167F - showEnemies.width)
-        add(chamsEnemyColor).left().row()
+        add(showEnemies).left().padRight(175F - showEnemies.width)
+        add(chamsEnemyColor).left().expandX().row()
 
-        add(showSelf).left().left().padRight(167F - showSelf.width)
-        add(chamsSelfColor).left().row()
+        add(showSelf).left().padRight(175F - showSelf.width)
+        add(chamsSelfColor).left().expandX().row()
 
-        add(showTarget).left().left().padRight(167F - showTarget.width)
-        add(chamsTargetColor).left().row()
+        add(showTarget).left().padRight(175F - showTarget.width)
+        add(chamsTargetColor).left().expandX().row()
 
         add(chamsBrightness).colspan(2).left().row()
     }

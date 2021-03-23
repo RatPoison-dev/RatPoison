@@ -52,38 +52,38 @@ class GlowEspTable: VisTable(false) {
         val label = VisLabel("Glow")
         label.setColor(.85F, .5F, .05F, 1F)
 
-        add(label).colspan(3).padBottom(8F).row()
+        add(label).colspan(3).padBottom(8F).expandX().row()
 
         add(glowEsp).left().padRight(175F - glowEsp.width)
-        add(glowShowHealth).colspan(2).left().row()
+        add(glowShowHealth).colspan(2).left().expandX().row()
 
         add(showTeam).left().padRight(175F - showTeam.width)
-        add(glowTeamColor).left()
-        add(teammateGlowType).left().row()
+        add(glowTeamColor).left().expandX()
+        add(teammateGlowType).left().expandX().row()
 
         add(showEnemies).left().padRight(175F - showEnemies.width)
-        add(glowEnemyColor).left()
-        add(enemyGlowType).left().row()
+        add(glowEnemyColor).left().expandX()
+        add(enemyGlowType).left().expandX().row()
 
         add(showBomb).left().padRight(175F - showBomb.width)
-        add(glowBombColor).left()
-        add(bombGlowType).left().row()
+        add(glowBombColor).left().expandX()
+        add(bombGlowType).left().expandX().row()
 
         add(showBombCarrier).left().padRight(175F - showBombCarrier.width)
-        add(glowBombCarrierColor).left()
-        add(bombCarrierGlowType).left().row()
+        add(glowBombCarrierColor).left().expandX()
+        add(bombCarrierGlowType).left().expandX().row()
 
         add(showWeapons).left().padRight(175F - showWeapons.width)
-        add(glowWeaponColor).left()
-        add(weaponGlowType).left().row()
+        add(glowWeaponColor).left().expandX()
+        add(weaponGlowType).left().expandX().row()
 
         add(showGrenades).left().padRight(175F - showGrenades.width)
-        add(glowGrenadeColor).left()
-        add(grenadeGlowType).left().row()
+        add(glowGrenadeColor).left().expandX()
+        add(grenadeGlowType).left().expandX().row()
 
         add(showTarget).left().padRight(175F - showTarget.width)
-        add(glowTargetColor).left()
-        add(targetGlowType).left().row()
+        add(glowTargetColor).left().expandX()
+        add(targetGlowType).left().expandX().row()
 
         add(glowSmokeCheck).colspan(3).left().row()
         add(glowBombAdaptive).colspan(3).left().row()

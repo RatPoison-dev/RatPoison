@@ -179,7 +179,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
 
         //Add tab pane & scroll pane to main ui window
         add(mainTabbedPane.table).growX().fillY().top().minHeight(30F).left().row()
-        add(mainScrollPane).left()
+        add(mainScrollPane).left().growX()
         pack()
         centerWindow()
 
