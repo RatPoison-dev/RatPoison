@@ -167,6 +167,32 @@ fun saveSkinCFG(cfgFileName: String) {
     }
 }
 
+fun saveCFG(cfgFileName: String, content: String) {
+    if (!saving) {
+        saving = true
+        println("Saving!")
+    }
+    val cfgDir = File("$SETTINGS_DIRECTORY\\CFGS")
+    if (!cfgDir.exists()) {
+        Files.createDirectory(cfgDir.toPath())
+    }
+
+    val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg")
+    if (!cfgFile.exists()) {
+        cfgFile.createNewFile()
+    }
+    else {
+        cfgFile.delete()
+        cfgDir.createNewFile()
+    }
+    cfgFile.writeText(content)
+    println("\nSaving Complete!\n")
+    if (VisUI.isLoaded()) {
+        configsTab.updateCFGList()
+    }
+    saving = false
+}
+
 fun saveCFG(cfgFileName: String) {
     if (!saving) {
         saving = true

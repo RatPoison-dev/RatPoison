@@ -5,6 +5,7 @@ package rat.poison
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
+import com.google.gson.Gson
 import io.ktor.util.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -62,6 +63,7 @@ var settingsLoaded = false
 val curSettings = Settings()
 val curLocale = Settings()
 val skSettings = Settings()
+val gson = Gson()
 
 var dbg: Boolean = false
 var appless: Boolean = false
@@ -162,7 +164,6 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing GVars updater") }; updateGVars()
     if (dbg) { println("[DEBUG] Initializing Nades Timer") }; nadesTimer()
     if (dbg) { println("[DEBUG] Initializing Shared Esp") }; sharedEsp()
-    //steamIDLogger()
 
     if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
     if (dbg) { println("[DEBUG] Initializing Fake Lag") }; fakeLag()

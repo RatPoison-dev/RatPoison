@@ -4,15 +4,14 @@ package rat.poison.ui.tabs
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
+import com.google.gson.reflect.TypeToken
 import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.SETTINGS_DIRECTORY
-import rat.poison.curSettings
+import rat.poison.*
 import rat.poison.overlay.App.menuStage
 import rat.poison.overlay.opened
-import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.refreshMenu
 import rat.poison.ui.uiPanels.configsTab
@@ -22,14 +21,28 @@ import rat.poison.utils.generalUtil.loadLocale
 import java.awt.Desktop
 import java.io.File
 
+//ronfig giveaway
+data class Config(
+    val name: String,
+    val tag1: String,
+    val tag2: String,
+    val size: Double
+) {
+    override fun toString(): String {
+        return this.name
+    }
+}
+
+private val configArrayType = object : TypeToken<Array<Config>>() {}.type
 class ConfigsTab : Tab(false, false) {
     private val table = VisTable(true)
     private var cfgNameTextBox = VisTextField()
     private var skinCfgNameTextBox = VisTextField()
 
-    private var configLabel = VisLabel("Configs".toLocale(), Align.center)
+    private var configLabel = VisLabel("Configs".toLocale())
     private var localeLabel = VisLabel("Locale".toLocale(), Align.center)
     private var skinChangerLabel = VisLabel("Skins".toLocale(), Align.center)
+    private var cloudConfigLabel = VisLabel("Cloud-Configs".toLocale(), Align.center)
 
     private var configListAdapter = ListAdapter(ArrayList())
     private var configSelectionList = ListView(configListAdapter)
@@ -41,10 +54,14 @@ class ConfigsTab : Tab(false, false) {
     private var localeSelectionList = ListView(localeListAdapter)
     private var loadLocaleButton = VisTextButton("Load-Locale".toLocale())
 
+    private var cloudConfigListAdapter = ListAdapter(ArrayList())
+    private var cloudConfigSelectionList = ListView(cloudConfigListAdapter)
+
     init {
         configSelectionList.updatePolicy = ListView.UpdatePolicy.ON_DRAW
         localeSelectionList.updatePolicy = ListView.UpdatePolicy.ON_DRAW
         skinChangerSelectionList.updatePolicy = ListView.UpdatePolicy.ON_DRAW
+        cloudConfigSelectionList.updatePolicy = ListView.UpdatePolicy.ON_DRAW
 
         configSelectionList.setItemClickListener { str ->
             if (!str.isNullOrEmpty()) {
@@ -133,6 +150,8 @@ class ConfigsTab : Tab(false, false) {
             true
         }
 
+        updateCloudConfigsList()
+
         val deleteSkinCfgButton = VisTextButton("Delete".toLocale())
         deleteSkinCfgButton.changed { _, _ ->
             val tmpSelection = skinChangerListAdapter.selection
@@ -151,7 +170,7 @@ class ConfigsTab : Tab(false, false) {
             if (cfgNameTextBox.text.isNullOrEmpty()) { //Save using list selection
                 val tmpSelection = configListAdapter.selection
                 if (tmpSelection.size > 0) { //Validate
-                    val tmpName = configListAdapter.selection[0] //Selection is an array
+                    val tmpName = tmpSelection[0] //Selection is an array
                     loadCFG(tmpName)
                 }
             } else {
@@ -204,43 +223,67 @@ class ConfigsTab : Tab(false, false) {
             configListAdapter.selectionManager.deselectAll()
         }
 
+        val refreshCloudConfigs = VisTextButton("Refresh".toLocale())
+        refreshCloudConfigs.changed {_, _ -> updateCloudConfigsList()}
+        val downloadCloudConfig = VisTextButton("Download".toLocale())
+        downloadCloudConfig.changed { _, _ ->
+            val tmpSelection = cloudConfigListAdapter.selection
+            if (tmpSelection.size > 0) {
+                val cfgName = tmpSelection[0]
+                val text = safeUrlRead("https://ratpoison.dimden.dev/", cfgName)
+                saveCFG(cfgName, text)
+
+            }
+        }
+
         //File Select Box
         updateCFGList()
         updateLocaleList()
 
         //Add everything to table
-        val sldTable = VisTable()
-        sldTable.add(saveCFGButton).width(80F)
-        sldTable.add(loadCFGButton).width(80F)
-        sldTable.add(deleteButton).width(80F).row()
-        val cfgTable2 = VisTable()
-        cfgTable2.add(saveDefaultButton).width(240F).row()
-        cfgTable2.add(openCfgFolder).width(240F).row()
+        val leftTopTable = VisTable(false)
+        leftTopTable.add(configLabel).center().row()
+        leftTopTable.add(configSelectionList.mainTable).left().top().width(240F).height(140F).row()
+        leftTopTable.add(cfgNameTextBox).left().width(240F).row()
+        val buttonsTable = VisTable()
+        buttonsTable.add(saveCFGButton).width(80F)
+        buttonsTable.add(loadCFGButton).width(80F)
+        buttonsTable.add(deleteButton).width(80F).row()
+        val buttonsTable2 = VisTable()
+        buttonsTable2.add(saveDefaultButton).width(240F).row()
+        buttonsTable2.add(openCfgFolder).width(240F).row()
+        leftTopTable.add(buttonsTable).row()
+        leftTopTable.add(buttonsTable2)
+        table.add(leftTopTable).left().top()
 
-        table.add(configLabel).left().width(240F)
-        table.add(localeLabel).left().width(240F).row()
+        val rightTopTable = VisTable(false)
+        rightTopTable.add(localeLabel).center().row()
+        rightTopTable.add(localeSelectionList.mainTable).left().top().width(240F).height(224F).row()
+        val buttonsLocaleTable = VisTable()
+        buttonsLocaleTable.add(loadLocaleButton).width(240F)
+        rightTopTable.add(buttonsLocaleTable).width(240F)
+        table.add(rightTopTable).right().top().row()
 
-        table.add(configSelectionList.mainTable).left().top().width(240F).height(120F)
-        table.add(localeSelectionList.mainTable).right().top().width(240F).height(120F).row()
+        val leftBottomTable = VisTable()
+        leftBottomTable.add(skinChangerLabel).center().row()
+        leftBottomTable.add(skinChangerSelectionList.mainTable).left().top().width(240F).height(140F).row()
+        leftBottomTable.add(skinCfgNameTextBox).left().width(240F).row()
+        val skinChangerButtonsTable = VisTable()
+        skinChangerButtonsTable.add(loadSkinCfgButton).width(80F)
+        skinChangerButtonsTable.add(saveSkinCfgButton).width(80F)
+        skinChangerButtonsTable.add(deleteSkinCfgButton).width(80F)
+        leftBottomTable.add(skinChangerButtonsTable)
+        table.add(leftBottomTable).left().bottom()
 
-        table.add(cfgNameTextBox).left().width(240F)
-        table.add(loadLocaleButton).width(240F).row()
+        val rightBottomTable = VisTable()
+        rightBottomTable.add(cloudConfigLabel).center().row()
+        rightBottomTable.add(cloudConfigSelectionList.mainTable).left().top().width(240F).height(180F).row()
+        val cloudConfigsButtonsTable = VisTable()
+        cloudConfigsButtonsTable.add(refreshCloudConfigs).width(120F)
+        cloudConfigsButtonsTable.add(downloadCloudConfig).width(120F)
+        rightBottomTable.add(cloudConfigsButtonsTable)
 
-        table.add(sldTable).left().row()
-        table.add(cfgTable2).left().row()
-
-        val man = VisTable()
-        man.add(skinChangerLabel).top().center().left()
-        table.add(man).center().row()
-        table.add(skinChangerSelectionList.mainTable).left().top().width(240F).height(100F).row()
-        var tmpTable = VisTable()
-        tmpTable.add(skinCfgNameTextBox).left().width(240F).row()
-        table.add(tmpTable).left().row()
-        tmpTable = VisTable()
-        tmpTable.add(loadSkinCfgButton).left().width(80F)
-        tmpTable.add(saveSkinCfgButton).left().width(80F)
-        tmpTable.add(deleteSkinCfgButton).left().width(80F)
-        table.add(tmpTable).left().row()
+        table.add(rightBottomTable).right().top()
     }
 
     override fun getContentTable(): Table {
@@ -252,7 +295,7 @@ class ConfigsTab : Tab(false, false) {
     }
 
     fun updateCFGList() {
-        if (VisUI.isLoaded() && !saving && opened && !updatingRanks) {
+        if (VisUI.isLoaded() && opened && !updatingRanks) {
             configListAdapter.clear()
 
             File("$SETTINGS_DIRECTORY\\CFGS").listFiles()?.forEach {
@@ -274,6 +317,16 @@ class ConfigsTab : Tab(false, false) {
                     skinChangerListAdapter.add(cfgName)
                 }
             }
+        }
+    }
+
+    private fun updateCloudConfigsList() {
+        val text = safeUrlRead("https://ratpoison.dimden.dev/api/configs")
+        if (text == "") return
+        val lst: Array<Config> = gson.fromJson(text, configArrayType)
+        cloudConfigListAdapter.clear()
+        lst.forEach {
+            if ((appless && it.tag2 == "appless") || (!appless && it.tag2 == "menu")) cloudConfigListAdapter.add(it.toString())
         }
     }
 

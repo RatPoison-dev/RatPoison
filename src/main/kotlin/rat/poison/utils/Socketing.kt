@@ -44,25 +44,23 @@ object WebSocket {
                 if (wsVersion != apiVersion) {
                     println("[WARNING] WebSocket Api Version is deprecated. Please update RatPoison")
                 }
-                while (true) {
-                     if (!haltProcess) {
-                         webSocketTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
-                             for (i in 0 until sendTasks.size) {
-                                 val thisStr = sendTasks[i]
-                                 webSocketSession.send(thisStr)
-                                 sendTasks.removeAt(i)
-                             }
-                             bodies.forEach {
-                                 if (!it.precheck()) return@forEach
-                                 val coroutine = async {
-                                     it.mainFunction.invoke(this@WebSocket, webSocketSession)
-                                 }
-                                 coroutine.start()
-                                 coroutine.await()
-                             }
-                         }, TimeUnit.NANOSECONDS)
-                         delay(minDelay())
-                     }
+                while (!haltProcess) {
+                    webSocketTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
+                        for (i in 0 until sendTasks.size) {
+                            val thisStr = sendTasks[i]
+                            webSocketSession.send(thisStr)
+                            sendTasks.removeAt(i)
+                        }
+                        bodies.forEach {
+                            if (!it.precheck()) return@forEach
+                            val coroutine = async {
+                                it.mainFunction.invoke(this@WebSocket, webSocketSession)
+                            }
+                            coroutine.start()
+                            coroutine.await()
+                        }
+                    }, TimeUnit.NANOSECONDS)
+                    delay(minDelay())
                 }
             }
         }

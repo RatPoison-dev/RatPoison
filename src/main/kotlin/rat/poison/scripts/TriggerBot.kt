@@ -84,7 +84,7 @@ fun triggerBot() = every(5, inGameCheck = true) {
         if (bINFOV) { //If we should check in fov
             val currentAngle = clientState.angle()
             val position = me.position()
-            val target = findTarget(position, currentAngle, false, bFOV, "-2")[0] as Player
+            val target = findTarget(position, currentAngle, false, bFOV, "-2").player
             if (target > 0) {
                 if (!target.dead() && !target.isProtected()) {
                     canFOV = true

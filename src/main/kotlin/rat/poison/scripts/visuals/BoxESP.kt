@@ -60,6 +60,9 @@ private var boxDetailsBottomText = StringBuilder("")
 private var topShift = 0F
 private var textureBuilder = mutableListOf<DrawableTexture>()
 
+private const val entityMemorySize = 45948
+private val entMemory = threadLocalPointer(entityMemorySize)
+
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
 fun boxEsp() {
 	every(1000, true) { //Update settings
@@ -103,6 +106,7 @@ fun boxEsp() {
 	App {
 		if ((!curSettings.bool["ENABLE_BOX_ESP"] && !curSettings.bool["BOX_ESP_DETAILS"]) || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
+		val entityMemory = entMemory.get()
 		forEntities { //Player & Weapon boxes
 			val ent = it.entity
 			val isPlayer = it.type == EntityType.CCSPlayer
@@ -185,7 +189,7 @@ fun boxEsp() {
 			if (!drawBoxDetails) return@forEntities
 
 			//Setup entity values
-			val entityMemory = csgoEXE.read(ent, 45948) ?: return@forEntities
+			csgoEXE.read(ent, entityMemory, entityMemorySize)
 
 			//Set filled for bars
 			shapeRenderer.set(ShapeRenderer.ShapeType.Filled)
@@ -245,7 +249,8 @@ fun boxEsp() {
 			}
 
 			if (bEspWeapon && isPlayer) {
-				addTextureOrText(assetManager, bEspUseIcons, ent.weapon().name, "${ent.weapon().name.toLocale()}\n", bEspWeaponPos)
+				val weaponName = ent.weapon().name
+				addTextureOrText(assetManager, bEspUseIcons, weaponName, "${weaponName.toLocale()}\n", bEspWeaponPos)
 			}
 
 			if (bEspKevlar && isPlayer && bEspUseIcons && !entityMemory.hasHelmet() && entityMemory.armor() > 0) {
@@ -391,6 +396,31 @@ fun getRealTextParams(font: BitmapFont, builder: StringBuilder, layout: GlyphLay
 }
 
 //Create a fake accurate box using headpos
+
+fun setupFakeBox(vTop: Vector, vBottom: Vector, bbox: BoundingBox = BoundingBox()): BoundingBox {
+	val vMiddle = Vector((vTop.x + vBottom.x)/2F, (vTop.y + vBottom.y)/2F, (vTop.z + vBottom.z)/2F)
+	var boxH = vBottom.y - vTop.y
+	val sW = abs(((boxH / 5.0) * 2.0) / 2.0)
+	val sH = 2.0
+
+	val midX = abs(abs(vTop.x) - abs(vBottom.x))
+	if (abs(boxH) < sW + midX) {
+		boxH = ((sW + midX) * sign(boxH)).toFloat()
+	}
+
+	if (vBottom.x > vTop.x) {
+		bbox.left = (vBottom.x + sW).toFloat()
+		bbox.right = (vTop.x - sW).toFloat()
+	} else {
+		bbox.left = (vTop.x + sW).toFloat()
+		bbox.right = (vBottom.x - sW).toFloat()
+	}
+
+	bbox.top = (vMiddle.y - boxH / 2.0 + sH).toFloat()
+	bbox.bottom = (vMiddle.y + boxH / 2.0 + sH).toFloat()
+	return bbox
+}
+
 private val pointsArray = mutableListOf<Vector>()
 fun setupFakeBox(ent: Entity): BoundingBox {
 	val bbox = BoundingBox()
@@ -408,26 +438,7 @@ fun setupFakeBox(ent: Entity): BoundingBox {
 	val vBottom = Vector()
 
 	if (worldToScreen(vHead, vTop) && worldToScreen(vFeet, vBottom)) {
-		val vMiddle = Vector((vTop.x + vBottom.x)/2F, (vTop.y + vBottom.y)/2F, (vTop.z + vBottom.z)/2F)
-		var boxH = vBottom.y - vTop.y
-		val sW = abs(((boxH / 5.0) * 2.0) / 2.0)
-		val sH = 2.0
-
-		val midX = abs(abs(vTop.x) - abs(vBottom.x))
-		if (abs(boxH) < sW + midX) {
-			boxH = ((sW + midX) * sign(boxH)).toFloat()
-		}
-
-		if (vBottom.x > vTop.x) {
-			bbox.left = (vBottom.x + sW).toFloat()
-			bbox.right = (vTop.x - sW).toFloat()
-		} else {
-			bbox.left = (vTop.x + sW).toFloat()
-			bbox.right = (vBottom.x - sW).toFloat()
-		}
-
-		bbox.top = (vMiddle.y - boxH / 2.0 + sH).toFloat()
-		bbox.bottom = (vMiddle.y + boxH / 2.0 + sH).toFloat()
+		setupFakeBox(vTop, vBottom, bbox)
 	}
 
 	return bbox

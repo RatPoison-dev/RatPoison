@@ -55,7 +55,7 @@ fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every second
             else -> "N/A"
         }
 
-        var entSteamID = entity.getValidSteamID()
+        val entSteamID = entity.getValidSteamID()
         ranksPlayerList[entID].apply {
             name = entName
             steamID = entSteamID

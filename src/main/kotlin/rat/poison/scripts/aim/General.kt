@@ -25,15 +25,25 @@ fun reset(resetTarget: Boolean = true) {
 	canPerfect = false
 }
 
+class FindTargetResult(var player: Player = -1L, var bone: Int = -1) {
+	fun reset() {
+		player = -1L
+		bone = -1
+	}
+}
+
+val findTargetResult = ThreadLocal.withInitial { FindTargetResult() }
+
 fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
-			   lockFOV: Float = curSettings.float["AIM_FOV"], BONE: String = curSettings["AIM_BONE"], visCheck: Boolean = true, teamCheck: Boolean = true): MutableList<Any> {
-	val result = mutableListOf<Any>(-1L, -1)
+			   lockFOV: Float = curSettings.float["AIM_FOV"], BONE: String = curSettings["AIM_BONE"], visCheck: Boolean = true, teamCheck: Boolean = true): FindTargetResult {
+	val result = findTargetResult.get()
+	result.reset()
 	var closestFOV = Float.MAX_VALUE
 	var closestDelta = Float.MAX_VALUE
 	var closestPlayer = -1L
 	var closestBone = -1
 
-	var bones = BONE.stringToIntList()
+	val bones = BONE.stringToIntList()
 	val findNearest = bones.has { 0 > it as Int }
 	val findRandom = bones.has { it as Int == RANDOM_BONE }
 
@@ -73,8 +83,8 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	if (curSettings.bool["PERFECT_AIM"] && allowPerfect && closestFOV <= curSettings.float["PERFECT_AIM_FOV"] && randInt <= curSettings.int["PERFECT_AIM_CHANCE"]) {
 		canPerfect = true
 	}
-	result[0] = closestPlayer
-	result[1] = closestBone
+	result.player = closestPlayer
+	result.bone = closestBone
 
 	return result
 }
@@ -204,8 +214,8 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	val findTargetResList = findTarget(position, currentAngle, aim,
 		BONE = aB,
 		visCheck = shouldVisCheck)
-	val bestTarget = findTargetResList[0] as Player //Try to find new target
-	val bestBone = findTargetResList[1] as Int
+	val bestTarget = findTargetResList.player //Try to find new target
+	val bestBone = findTargetResList.bone
 
 	if (currentTarget <= 0) { //If target is invalid from last run
 		currentTarget = bestTarget //Try to find new target

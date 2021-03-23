@@ -604,6 +604,9 @@ Save = Save
 Load = Load
 Delete = Delete
 Open-configs-folder = Open Configs Folder
+Refresh = Refresh
+Cloud-Configs = Cloud Configs
+Download = Download
 
 //Category: Movement tab
 ENABLE_BUNNY_HOP = Bunny Hop

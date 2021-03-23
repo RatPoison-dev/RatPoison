@@ -5,7 +5,7 @@ buildscript {
 	ext.kotlin_version = '1.4.21'
 	ext.jnaVersion = '5.6.0'
 	ext.gdxVersion = '1.9.14'
-	ext.visuiVersion = "1.4.7"
+	ext.visuiVersion = "1.5.0-SNAPSHOT"
 
 	repositories {
 		jcenter()
@@ -65,6 +65,7 @@ dependencies {
 	implementation group: 'net.openhft', name: 'chronicle-core', version: '2.20.125'
 	implementation "io.ktor:ktor-client-websockets:1.5.2"
 	implementation "io.ktor:ktor-client-okhttp:1.5.2"
+	implementation 'com.google.code.gson:gson:2.8.6'
 }
 
 jar {

@@ -23,7 +23,7 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 		if (!meCurWep.knife && meCurWep != Weapons.ZEUS_X27) {
 			if (curSettings.bool["ENABLE_AIM"]) {
 				if (curSettings.bool["GLOW_SHOW_TARGET"] && target == -1L) {
-					val curTarg = findTarget(position, currentAngle, false, visCheck = !curSettings.bool["FORCE_AIM_THROUGH_WALLS"])[0] as Player
+					val curTarg = findTarget(position, currentAngle, false, visCheck = !curSettings.bool["FORCE_AIM_THROUGH_WALLS"]).player
 					espTARGET = if (curTarg > 0) {
 						curTarg
 					} else {

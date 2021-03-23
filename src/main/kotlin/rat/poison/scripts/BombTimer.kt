@@ -31,9 +31,9 @@ fun bombTimer() = App {
     if (curSettings.bool["ENABLE_BOMB_TIMER"]) {
         bombText.setText(bombState.toString()) //Update regardless of BOMB_TIMER_MENU
         if (curSettings.bool["BOMB_TIMER_BARS"] && bombState.planted) {
-            val cColor = if ((meTeam == 3.toLong() && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) { //If player has time to defuse
+            val cColor = if ((meTeam == 3L && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) { //If player has time to defuse
                 Color(0F, 255F, 0F, .25F) //Green
-            } else if ((meTeam == 3.toLong() && bombState.timeLeftToDefuse < bombState.timeLeftToExplode) || (meTeam == 2.toLong() && !bombState.gettingDefused)) { //If player is defusing with time left, or is terrorist and the bomb isn't being defused
+            } else if ((meTeam == 3L && bombState.timeLeftToDefuse < bombState.timeLeftToExplode) || (meTeam == 2.toLong() && !bombState.gettingDefused)) { //If player is defusing with time left, or is terrorist and the bomb isn't being defused
                 Color(0F, 255F, 0F, .25F) //Red
             } else {
                 Color(255F, 0F, 0F, .25F) //Bomb is being defused/not enough time
