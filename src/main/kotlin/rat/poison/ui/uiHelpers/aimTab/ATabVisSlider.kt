@@ -12,7 +12,7 @@ import rat.poison.ui.tabs.categorySelected
 import kotlin.math.pow
 import kotlin.math.round
 
-class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, width1: Float = 200F, width2: Float = 250F) : VisTable() {
+class ATabVisSlider(mainText: String, varExtension: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, width1: Float = 200F, width2: Float = 250F) : VisTable(false) {
     private val labelText = mainText
     private val variableExtension = varExtension
     private val isInt = intVal

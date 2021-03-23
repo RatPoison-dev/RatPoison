@@ -10,7 +10,7 @@ import rat.poison.ui.tabs.aimtabs.weaponOverrideSelected
 import kotlin.math.pow
 import kotlin.math.round
 
-class OverrideVisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, labelWidth: Float = 225F, barWidth: Float = 225F) : VisTable() {
+class OverrideVisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, labelWidth: Float = 225F, barWidth: Float = 225F) : VisTable(false) {
     private val labelText = mainText
     private val variableName = varName
     private val varIdx = getOverrideVarIndex(DEFAULT_OWEAPON_STR, variableName)

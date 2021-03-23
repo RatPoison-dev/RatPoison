@@ -21,11 +21,6 @@ class AimbotTable: VisTable(false) {
     private val collapsibleTable = VisTable(false)
     val collapsibleWidget = CollapsibleWidget(collapsibleTable)
 
-    //Override Weapon Checkbox & Selection Box
-    private val categorySelection = VisTable()
-    val categorySelectionBox = VisSelectBox<String>()
-    val categorySelectLabel = VisLabel("${"Weapon-Category"}:")
-
     val enableAimOnShot = ATabVisCheckBox("Aim On Shot", "_AIM_ONLY_ON_SHOT")
     val enableFactorRecoil = ATabVisCheckBox("Factor Recoil", "_FACTOR_RECOIL")
     val enableFlatAim = ATabVisCheckBox("Write Angles", "_ENABLE_FLAT_AIM")
@@ -35,64 +30,31 @@ class AimbotTable: VisTable(false) {
     val aimBones = VisSelectBoxCustom("Aim Bone", "_AIM_BONE", useCategory = true, showText = true, items = boneCategories)
     val forceAimBone = VisSelectBoxCustom("Force Aim Bone", "_AIM_FORCE_BONE", useCategory = true, showText = true, items = boneCategories)
 
-    val aimFov = ATabVisSlider("Aim FOV", "_AIM_FOV", .5F, 90F, .5F, false)
-    val aimSpeed = ATabVisSlider("Aim Speed", "_AIM_SPEED", 0F, 10F, 1F, true)
-    val aimSmooth = ATabVisSlider("Smoothness", "_AIM_SMOOTHNESS", 1F, 5F, .1F, false)
-    val aimAfterShots = ATabVisSlider("Aim After #", "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true, 0, 225F, 225F)
+    val aimFov = ATabVisSlider("Aim FOV", "_AIM_FOV", .5F, 90F, .5F, false, 1, 200F, 200F)
+    val aimSpeed = ATabVisSlider("Aim Speed", "_AIM_SPEED", 0F, 10F, 1F, true, 0, 200F, 200F)
+    val aimSmooth = ATabVisSlider("Smoothness", "_AIM_SMOOTHNESS", 1F, 5F, .1F, false, 1, 200F, 200F)
+    val aimAfterShots = ATabVisSlider("Aim After #", "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true, 0, 200F, 200F)
 
     //Perfect Aim Collapsible
     val perfectAimCheckBox = VisCheckBox("Enable-Perfect-Aim")
-    private val perfectAimTable = VisTable()
+    private val perfectAimTable = VisTable(false)
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
-    val perfectAimFov = ATabVisSlider("FOV", "_PERFECT_AIM_FOV", 1F, 90F, .5F, false)
-    val perfectAimChance = ATabVisSlider("Chance", "_PERFECT_AIM_CHANCE", 1F, 100F, 1F, true)
+    val perfectAimFov = ATabVisSlider("FOV", "_PERFECT_AIM_FOV", 1F, 90F, .5F, false, 1, 200F, 200F)
+    val perfectAimChance = ATabVisSlider("Chance", "_PERFECT_AIM_CHANCE", 1F, 100F, 1F, true, 0, 200F, 200F)
 
     //Advanced Settings Collapsible
     val advancedSettingsCheckBox = VisCheckBox("Advanced-Settings")
-    private val advancedSettingsTable = VisTable()
+    private val advancedSettingsTable = VisTable(false)
     val advancedSettingsCollapsible = CollapsibleWidget(advancedSettingsTable)
-    val randomizeX = ATabVisSlider("X Variation", "_RANDOM_X_VARIATION", 0F, 50F, 1F, true)
-    val randomizeY = ATabVisSlider("Y Variation", "_RANDOM_Y_VARIATION", 0F, 50F, 1F, true)
-    val randomizeDZ = ATabVisSlider("Variation Deadzone", "_VARIATION_DEADZONE", 0F, 100F, 5F, true)
-    val advancedRcsX = ATabVisSlider("RCS X", "_AIM_RCS_X", 0.05F, 1F, 0.05F, false)
-    val advancedRcsY = ATabVisSlider("RCS Y", "_AIM_RCS_Y", 0.05F, 1F, 0.05F, false)
-    val advancedRcsVariation = ATabVisSlider("RCS Variation", "_AIM_RCS_VARIATION", 0F, 1F, 0.05F, false)
-    val advancedSpeedDivisor = ATabVisSlider("Mouse Move Divisor", "_AIM_SPEED_DIVISOR", 1F, 10F, 1F, true)
+    val randomizeX = ATabVisSlider("X Variation", "_RANDOM_X_VARIATION", 0F, 50F, 1F, true, 0, 200F, 200F)
+    val randomizeY = ATabVisSlider("Y Variation", "_RANDOM_Y_VARIATION", 0F, 50F, 1F, true, 0, 200F, 200F)
+    val randomizeDZ = ATabVisSlider("Variation Deadzone", "_VARIATION_DEADZONE", 0F, 100F, 5F, true, 0, 200F, 200F)
+    val advancedRcsX = ATabVisSlider("RCS X", "_AIM_RCS_X", 0.05F, 1F, 0.05F, false, 2, 200F, 200F)
+    val advancedRcsY = ATabVisSlider("RCS Y", "_AIM_RCS_Y", 0.05F, 1F, 0.05F, false, 2, 200F, 200F)
+    val advancedRcsVariation = ATabVisSlider("RCS Variation", "_AIM_RCS_VARIATION", 0F, 1F, 0.05F, false, 2, 200F, 200F)
+    val advancedSpeedDivisor = ATabVisSlider("Mouse Move Divisor", "_AIM_SPEED_DIVISOR", 1F, 10F, 1F, true, 0, 200F, 200F)
 
     init {
-        //Create Category Selector Box
-        val itemsArray = Array<String>()
-        for (i in gunCategories) {
-            itemsArray.add(i)
-        }
-        categorySelectionBox.items = itemsArray
-
-        categorySelectionBox.selectedIndex = 0
-        categorySelected = gunCategories[categorySelectionBox.selectedIndex]
-        categorySelection.add(categorySelectLabel).left().padRight(226F - categorySelectLabel.width)
-        categorySelection.add(categorySelectionBox).left()
-
-        categorySelectionBox.changed { _, _ ->
-            categorySelected = gunCategories[categorySelectionBox.selectedIndex]
-
-            if (categorySelected == "SNIPER") {
-                enableScopedOnly.color = Color(255F, 255F, 255F, 1F)
-                enableScopedOnly.isDisabled = false
-            } else {
-                enableScopedOnly.color = Color(255F, 255F, 255F, 0F)
-                enableScopedOnly.isDisabled = true
-            }
-
-            if (categorySelected == "RIFLE" || categorySelected == "SMG") {
-                aimAfterShots.disable(false, Color(255F, 255F, 255F, 1F))
-            } else {
-                aimAfterShots.disable(true, Color(255F, 255F, 255F, 0F))
-            }
-
-            uiUpdate()
-            true
-        }
-
         //Disable on start, default is pistol
         aimAfterShots.disable(true, Color(255F, 255F, 255F, 0F))
 
@@ -131,18 +93,13 @@ class AimbotTable: VisTable(false) {
         advancedSettingsTable.add(advancedSpeedDivisor).left().row()
         //End
 
-        padLeft(25F)
-        padRight(25F)
-
         collapsibleTable.apply {
-            add(categorySelection).left().row()
-
-            var addTable = VisTable()
+            var addTable = VisTable(false)
             addTable.add(enableFactorRecoil).left().padRight(224F - enableFactorRecoil.width)
             addTable.add(enableAimOnShot).left()
             add(addTable).left().row()
 
-            addTable = VisTable()
+            addTable = VisTable(false)
             addTable.add(enableFlatAim).left().padRight(224F - enableFlatAim.width)
             addTable.add(enablePathAim).left()
             add(addTable).left().row()
@@ -163,6 +120,6 @@ class AimbotTable: VisTable(false) {
             add(advancedSettingsCollapsible).left().row()
         }
 
-        add(collapsibleWidget).prefWidth(450F).growX()
+        add(collapsibleWidget).prefWidth(475F).growX()
     }
 }

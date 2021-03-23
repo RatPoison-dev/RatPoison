@@ -179,9 +179,9 @@ class ConfigsTab : Tab(false, false) {
         //File Select Box
         updateCFGList()
 
-        val containerTable1 = VisTable()
+        val containerTable1 = VisTable(false)
         with (containerTable1) {
-            val sldTable = VisTable()
+            val sldTable = VisTable(false)
             sldTable.add(saveCFGButton).prefWidth(80F).growX()
             sldTable.add(loadCFGButton).prefWidth(80F).growX()
             sldTable.add(deleteButton).prefWidth(80F).growX().row()
@@ -200,9 +200,9 @@ class ConfigsTab : Tab(false, false) {
             add(openCfgFolder).prefWidth(240F).growX().row()
         }
 
-        val containerTable2 = VisTable()
+        val containerTable2 = VisTable(false)
         with (containerTable2) {
-            val sldTable = VisTable()
+            val sldTable = VisTable(false)
             sldTable.add(saveSkinCfgButton).left().prefWidth(80f).growX()
             sldTable.add(loadSkinCfgButton).left().prefWidth(80f).growX()
             sldTable.add(deleteSkinCfgButton).left().prefWidth(80f).growX()

@@ -12,7 +12,7 @@ import rat.poison.ui.uiHelpers.VisSliderCustom
 
 //Swap VisSelectBoxCustom to showText false is mainText is " "
 class BoxEspTab: Tab(false, false) {
-    private val table = VisTable()
+    private val table = VisTable(false)
 
     //Init labels/sliders/boxes that show values here
     val skeletonEsp = VisCheckBoxCustom("Enable Skeleton", "SKELETON_ESP")
@@ -107,25 +107,25 @@ class BoxEspTab: Tab(false, false) {
 
         table.addSeparator().colspan(2)
 
-        var tmpTable = VisTable()
+        var tmpTable = VisTable(false)
         tmpTable.add(showTeamBox)
         tmpTable.add(boxTeamColor).width(175F - showTeamBox.width).padRight(50F)
 
         table.add(tmpTable).left()
 
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(showEnemiesBox)
         tmpTable.add(boxEnemyColor).width(175F - showEnemiesBox.width).padRight(50F)
 
         table.add(tmpTable).left().row()
 
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(showDefusers)
         tmpTable.add(boxDefuserColor).width(175F - showEnemiesBox.width).padRight(50F)
 
         table.add(tmpTable).left()
 
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(showWeapons)
         tmpTable.add(boxWeaponsColor).width(175F - showEnemiesBox.width).padRight(50F)
 

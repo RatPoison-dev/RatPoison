@@ -8,7 +8,7 @@ import rat.poison.curSettings
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.keybindsUpdate
 
-class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true, keyWidth: Float = 200F) : VisTable() {
+class VisInputFieldCustom(mainText: String, varName: String, addLink: Boolean = true, keyWidth: Float = 200F) : VisTable(false) {
     private val textLabel = mainText
     private val variableName = varName
     private var hasTooltip = false

@@ -8,7 +8,7 @@ import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curSettings
 import rat.poison.dbg
 
-class VisBindTableCustom(mainText: String, varName: String, keyWidth: Float = 200F, spaceRight: Float = 6F, buttonWidth: Float = 50F): VisTable() {
+class VisBindTableCustom(mainText: String, varName: String, keyWidth: Float = 200F, spaceRight: Float = 6F, buttonWidth: Float = 50F): VisTable(false) {
     private val textLabel = mainText
     private val variableName = varName
     private val keyLabel = VisLabel("$textLabel:")

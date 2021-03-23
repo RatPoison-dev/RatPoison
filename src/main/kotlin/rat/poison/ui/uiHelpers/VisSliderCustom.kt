@@ -11,7 +11,7 @@ import rat.poison.ui.changed
 import kotlin.math.pow
 import kotlin.math.round
 
-class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, labelWidth: Float = 225F, barWidth: Float = 225F) : VisTable() {
+class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: Float, stepSize: Float, intVal: Boolean, dec: Int = 2, labelWidth: Float = 225F, barWidth: Float = 225F) : VisTable(false) {
     private val labelText = mainText
     private val variableName = varName
     private var hasTooltip = false
@@ -20,7 +20,7 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
     private val w1 = labelWidth
     private val w2 = barWidth
 
-    private val sliderLabel = VisLabel("$labelText: " + curSettings[variableName])
+    private val sliderLabel = VisLabel("$labelText: $varMax")//VisLabel("$labelText: " + curSettings[variableName])
     private val sliderBar = VisSlider(varMin, varMax, stepSize, false)
 
     init {
@@ -37,8 +37,8 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
             sliderLabel.setText("${labelText}: $sliderVal")
         }
 
-        add(sliderLabel).width(w1)
-        add(sliderBar).width(w2)
+        add(sliderLabel).width(w1).left()
+        add(sliderBar).width(w2).left()
     }
 
     fun update() {

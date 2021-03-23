@@ -17,7 +17,7 @@ import rat.poison.ui.uiHelpers.VisSliderCustom
 val footstepItems = arrayOf("TEXT", "CIRCLE")
 
 class FootstepsEspTab : Tab(false, false) {
-    private val table = VisTable()
+    private val table = VisTable(false)
 
     val enableFootSteps = VisCheckBoxCustom("Enable", "ENABLE_FOOTSTEPS")
     val footStepType = VisSelectBox<String>()
@@ -55,13 +55,13 @@ class FootstepsEspTab : Tab(false, false) {
         table.add(footStepUpdateTimer).colspan(2).left().row()
         table.add(footStepTTL).colspan(2).left().row()
 
-        var tmpTable = VisTable()
+        var tmpTable = VisTable(false)
         tmpTable.add(footStepTeamBox)
         tmpTable.add(footStepTeamColor).width(175F - footStepTeamBox.width).padRight(50F)
 
         table.add(tmpTable).left()
 
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(footStepEnemyBox)
         tmpTable.add(footStepEnemyColor).width(175F - footStepEnemyBox.width).padRight(50F)
 

@@ -3,12 +3,16 @@ package rat.poison.ui.tabs
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
+import com.kotcrab.vis.ui.widget.VisLabel
+import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
 import rat.poison.overlay.opened
+import rat.poison.ui.changed
 import rat.poison.ui.tabs.aimtabs.*
 import rat.poison.ui.uiPanels.aimTab
+import rat.poison.ui.uiUpdate
 
 var categorySelected = "PISTOL"
 val gunCategories = arrayOf("PISTOL", "RIFLE", "SMG", "SNIPER", "SHOTGUN")
@@ -32,24 +36,58 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     val tTrig = triggerTab
     val tBacktrack = backtrackTab
 
-    private val aimTabTable = VisTable(false)
+    //Override Weapon Checkbox & Selection Box
+    private val categorySelection = VisTable(false)
+    val categorySelectionBox = VisSelectBox<String>()
+    val categorySelectLabel = VisLabel("${"Weapon-Category"}:")
 
     init {
+        //Create Category Selector Box
+        val itemsArray = Array<String>()
+        for (i in gunCategories) {
+            itemsArray.add(i)
+        }
+        categorySelectionBox.items = itemsArray
+
+        categorySelectionBox.selectedIndex = 0
+        categorySelected = gunCategories[categorySelectionBox.selectedIndex]
+        categorySelection.add(categorySelectLabel).left().padRight(225F - categorySelectLabel.width)
+        categorySelection.add(categorySelectionBox).left()
+
+        categorySelectionBox.changed { _, _ ->
+            categorySelected = gunCategories[categorySelectionBox.selectedIndex]
+
+            if (categorySelected == "SNIPER") {
+                aimbotTab.enableScopedOnly.color = Color(255F, 255F, 255F, 1F)
+                aimbotTab.enableScopedOnly.isDisabled = false
+            } else {
+                aimbotTab.enableScopedOnly.color = Color(255F, 255F, 255F, 0F)
+                aimbotTab.enableScopedOnly.isDisabled = true
+            }
+
+            if (categorySelected == "RIFLE" || categorySelected == "SMG") {
+                aimbotTab.aimAfterShots.disable(false, Color(255F, 255F, 255F, 1F))
+            } else {
+                aimbotTab.aimAfterShots.disable(true, Color(255F, 255F, 255F, 0F))
+            }
+
+            uiUpdate()
+            true
+        }
+
         val aimTabTable2 = VisTable(false)
 
-        aimTabTable2.add(aimbotTab).top().row()
+        aimTabTable2.add(categorySelection).padBottom(4F).row()
         aimTabTable2.addSeparator()
-        aimTabTable2.add(triggerTab).top().padTop(8F).row()
+        aimTabTable2.add(aimbotTab).top().padTop(2F).padLeft(6F).row()
         aimTabTable2.addSeparator()
-        aimTabTable2.add(backtrackTab).top().padTop(8F)
+        aimTabTable2.add(triggerTab).top().padTop(2F).padLeft(6F).row()
+        aimTabTable2.addSeparator()
+        aimTabTable2.add(backtrackTab).top().padTop(2F).padLeft(6F)
 
-        aimTabTable.add(mainAimTab).top()
-        aimTabTable.addSeparator(true)
-        aimTabTable.add(aimTabTable2).top()
-
-        table.add(aimTabTable)
-
-        aimTabTable.setPosition(aimTabTable.x - 200F, aimTabTable.y)
+        table.add(mainAimTab).width(470F).left().top()
+        table.addSeparator(true)
+        table.add(aimTabTable2).width(470F).left().top()
     }
 
     override fun getContentTable(): Table {
@@ -70,6 +108,14 @@ fun updateDisableAim() {
         col = Color(105F, 105F, 105F, .2F)
     }
 
+    if (!aimTab.tMain.enableAim.isChecked && !aimTab.tMain.enableBacktrack.isChecked && !aimTab.tMain.enableTrig.isChecked) {
+        aimTab.categorySelectLabel.color = Color(105F, 105F, 105F, .2F)
+        aimTab.categorySelectionBox.isDisabled = true
+    } else {
+        aimTab.categorySelectLabel.color = Color(255F, 255F, 255F, 1F)
+        aimTab.categorySelectionBox.isDisabled = false
+    }
+
     aimTab.tMain.apply {
         activateFromFireKey.disable(bool)
         teammatesAreEnemies.disable(bool)
@@ -87,8 +133,6 @@ fun updateDisableAim() {
     }
 
     aimTab.tAimbot.apply {
-        categorySelectLabel.color = col
-        categorySelectionBox.isDisabled = bool
         enableAimOnShot.isDisabled = bool
         enableFactorRecoil.isDisabled = bool
         enableFlatAim.isDisabled = bool
@@ -141,17 +185,17 @@ fun updateAim() {
 
     }
 
+    aimTab.categorySelectLabel.setText("Weapon Category:")
+    //Create Category Selector Box
+    val itemsArray = Array<String>()
+    for (i in gunCategories) {
+        itemsArray.add(i)
+    }
+
+    aimTab.categorySelectionBox.items = itemsArray
+
     aimTab.tAimbot.apply {
         collapsibleWidget.isCollapsed = !aimTab.tMain.enableAim.isChecked
-
-        categorySelectLabel.setText("Weapon Category:")
-        //Create Category Selector Box
-        val itemsArray = Array<String>()
-        for (i in gunCategories) {
-            itemsArray.add(i)
-        }
-
-        categorySelectionBox.items = itemsArray
 
         enableAimOnShot.update()
         enableFactorRecoil.update()

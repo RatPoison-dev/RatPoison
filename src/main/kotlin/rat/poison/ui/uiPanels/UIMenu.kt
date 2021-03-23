@@ -28,11 +28,11 @@ val mainTabbedPane = TabbedPane()
     var optionsTab = OptionsTab()
     var configsTab = ConfigsTab()
 
-private var uid = randInt(2, 999999)
+private var uid = 0//randInt(2, 999999)
 
 class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CONFIG - UID: $uid") {
     val normHeight = 750F
-    val normWidth = 1000F
+    val normWidth = 950F
 
     //Changed through runtime
     var wantedHeight = normHeight
@@ -53,7 +53,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         isResizable = true
 
         //Main content pane for all tabs
-        val mainTabbedPaneContent = VisTable()
+        val mainTabbedPaneContent = VisTable(false)
         mainTabbedPaneContent.padTop(10F)
         mainTabbedPaneContent.padBottom(10F)
         mainTabbedPaneContent.align(Align.top)
@@ -62,7 +62,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         val mainScrollPane = ScrollPane(mainTabbedPaneContent) //Init scroll pane containing main content pane
         mainScrollPane.setFlickScroll(false)
         mainScrollPane.setScrollbarsVisible(true)
-        mainScrollPane.setSize(normWidth, normHeight)
+        //mainScrollPane.setSize(normWidth + 10, normHeight)
 
         //Add tabs to the tab header
         mainTabbedPane.add(aimTab)
@@ -78,7 +78,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         //Set aim tab as the first (init) tab
         mainTabbedPane.switchTab(aimTab)
         //Add aim tab content to the table
-        mainTabbedPaneContent.add(aimTab.contentTable).growX()
+        mainTabbedPaneContent.add(aimTab.contentTable).left()
 
         //Tab switch listener
         mainTabbedPane.addListener(object : TabbedPaneAdapter() {
@@ -94,7 +94,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         wantedWidth = normWidth
                         changeWidth()
                         changeHeight()
-                        mainTabbedPaneContent.add(aimTab.contentTable).growX()
+                        mainTabbedPaneContent.add(aimTab.contentTable).left()
                     }
 
                     optionsTab -> {
@@ -102,7 +102,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         wantedWidth = normWidth
                         changeWidth()
                         changeHeight()
-                        mainTabbedPaneContent.add(optionsTab.contentTable).growX()
+                        mainTabbedPaneContent.add(optionsTab.contentTable).growX().left()
                     }
 
                     rcsTab -> {
@@ -110,7 +110,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         wantedWidth = normWidth
                         changeWidth()
                         changeHeight()
-                        mainTabbedPaneContent.add(rcsTab.contentTable).growX()
+                        mainTabbedPaneContent.add(rcsTab.contentTable).growX().left()
                     }
 
                     visualsTab -> {
@@ -118,14 +118,15 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         wantedWidth = normWidth
                         changeWidth()
                         changeHeight()
-                        mainTabbedPaneContent.add(visualsTab.contentTable).growX()
+                        mainTabbedPaneContent.add(visualsTab.contentTable).growX().left()
                     }
+
                     miscTab -> {
                         wantedHeight = normHeight
                         wantedWidth = normWidth
                         changeWidth()
                         changeHeight()
-                        mainTabbedPaneContent.add(miscTab.contentTable).growX()
+                        mainTabbedPaneContent.add(miscTab.contentTable).growX().left()
                     }
 
                     ranksTab -> {
@@ -133,7 +134,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         wantedWidth = normWidth
                         changeWidth()
                         changeHeight()
-                        mainTabbedPaneContent.add(ranksTab.contentTable).growX()
+                        mainTabbedPaneContent.add(ranksTab.contentTable).growX().left()
                     }
 
                     nadeHelperTab -> {
@@ -141,7 +142,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         wantedWidth = normWidth
                         changeWidth()
                         changeHeight()
-                        mainTabbedPaneContent.add(nadeHelperTab.contentTable).growX()
+                        mainTabbedPaneContent.add(nadeHelperTab.contentTable).growX().left()
                     }
 
                     configsTab -> {
@@ -149,7 +150,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         wantedWidth = normWidth
                         changeWidth()
                         changeHeight()
-                        mainTabbedPaneContent.add(configsTab.contentTable).growX()
+                        mainTabbedPaneContent.add(configsTab.contentTable).growX().left()
                     }
 
                     skinChangerTab -> {
@@ -177,8 +178,8 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         })
 
         //Add tab pane & scroll pane to main ui window
-        add(mainTabbedPane.table).growX().fillY().top().minHeight(30F).row()
-        add(mainScrollPane).growX().fillY().top().minWidth(500F).row()
+        add(mainTabbedPane.table).growX().fillY().top().minHeight(30F).left().row()
+        add(mainScrollPane).left()
         pack()
         centerWindow()
 

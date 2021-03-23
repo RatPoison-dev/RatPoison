@@ -55,7 +55,7 @@ class OverrideTable: VisTable(false) {
 
     //Perfect Aim Collapsible
     val perfectAimCheckBox = OverrideVisCheckBoxCustom("Perfect Aim", "tPerfectAim")
-    private val perfectAimTable = VisTable()
+    private val perfectAimTable = VisTable(false)
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
     val perfectAimFov = OverrideVisSliderCustom("FOV", "tPAimFov", 1F, 90F, .5F, false, labelWidth = 225F, barWidth = 225F)
     val perfectAimChance = OverrideVisSliderCustom("Chance", "tPAimChance", 1F, 100F, 1F, true, labelWidth = 225F, barWidth = 225F)
@@ -124,7 +124,7 @@ class OverrideTable: VisTable(false) {
 
         copyToSelectionBox.items = gunCategoryArray
         copyFromSelectionBox.items = gunCategoryArray
-        val copyToTable = VisTable()
+        val copyToTable = VisTable(false)
         copyToTable.add(copyToButton).padRight(225F - copyToButton.width)
         copyToTable.add(copyToSelectionBox)
 
@@ -138,7 +138,7 @@ class OverrideTable: VisTable(false) {
             true
         }
 
-        val copyFromTable = VisTable()
+        val copyFromTable = VisTable(false)
         copyFromTable.add(copyFromButton).padRight(225F - copyFromButton.width)
         copyFromTable.add(copyFromSelectionBox)
 
@@ -153,7 +153,7 @@ class OverrideTable: VisTable(false) {
         }
 
         //Create Override Weapon Selector
-        val weaponOverrideSelection = VisTable()
+        val weaponOverrideSelection = VisTable(false)
         weaponOverrideSelection.add(weaponSelectLabel).padRight(225F - weaponSelectLabel.width)
         weaponOverrideSelection.add(weaponOverrideSelectionBox).width(225F)
 
@@ -168,7 +168,7 @@ class OverrideTable: VisTable(false) {
         //End Override Weapon Selection Box
 
         //Create Category Selector Box
-        val categorySelection = VisTable()
+        val categorySelection = VisTable(false)
         //Create Category Selector Box
 
         categorySelectionBox.items = gunCategories.toGdxArray()
@@ -189,12 +189,12 @@ class OverrideTable: VisTable(false) {
         }
 
         //Create Aim Bone Selector Box
-        //val aimBone = VisTable()
+        //val aimBone = VisTable(false)
         //aimBone.add(aimBoneBox)
         //End Aim Bone Selector Box
 
         //Create Force Bone Selector Box
-        //val forceBone = VisTable()
+        //val forceBone = VisTable(false)
         //forceBone.add(forceBoneBox)
         //End Force Bone Selector Box
 

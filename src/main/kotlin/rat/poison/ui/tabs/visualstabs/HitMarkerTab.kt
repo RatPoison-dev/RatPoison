@@ -10,7 +10,7 @@ import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 
 class HitMarkerTab : Tab(false, false) {
-    private val table = VisTable()
+    private val table = VisTable(false)
 
     //Init labels/sliders/boxes that show values here
     val hitMarker = VisCheckBoxCustom("Enable", "ENABLE_HITMARKER")
@@ -30,7 +30,7 @@ class HitMarkerTab : Tab(false, false) {
         table.padLeft(25F)
         table.padRight(25F)
 
-        val colTab = VisTable()
+        val colTab = VisTable(false)
         colTab.add(hitMarkerColor).width(150F).padRight(2F)
         colTab.add(hitMarkerOutlineColor).width(150F).padRight(2F)
         colTab.add(hitMarkerComboColor).width(150F).padRight(2F)

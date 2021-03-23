@@ -10,7 +10,7 @@ import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 
 class SnaplinesEspTab : Tab(false, false) {
-    private val table = VisTable()
+    private val table = VisTable(false)
 
     //Init labels/sliders/boxes that show values here
     val enableSnaplines = VisCheckBoxCustom("Enable", "ENABLE_SNAPLINES")
@@ -45,32 +45,32 @@ class SnaplinesEspTab : Tab(false, false) {
 
         table.add(snaplinesSmokeCheck).left().row()
 
-        var tmpTable = VisTable()
+        var tmpTable = VisTable(false)
         tmpTable.add(enemySnaplines)
         tmpTable.add(enemySnaplinesColor).width(175F - enemySnaplines.width).padRight(50F)
         table.add(tmpTable)
 
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(teamSnaplines)
         tmpTable.add(teamSnaplinesColor).width(175F - teamSnaplines.width).padRight(50F).row()
         table.add(tmpTable).row()
 
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(weaponSnaplines)
         tmpTable.add(weaponSnaplinesColor).width(175F - weaponSnaplines.width).padRight(50F)
         table.add(tmpTable)
 
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(bombSnaplines)
         tmpTable.add(bombSnaplinesColor).width(175F - bombSnaplines.width).padRight(50F).row()
         table.add(tmpTable).row()
 
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(bombCarrierSnaplines)
         tmpTable.add(bombCarrierSnaplinesColor).width(175F - bombCarrierSnaplines.width).padRight(50F)
         table.add(tmpTable)
 
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(defuseKitSnaplines)
         tmpTable.add(defuseKitSnaplinesColor).width(175F - defuseKitSnaplines.width).padRight(50F)
         table.add(tmpTable)

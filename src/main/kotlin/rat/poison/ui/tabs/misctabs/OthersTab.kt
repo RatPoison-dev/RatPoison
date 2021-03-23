@@ -76,14 +76,14 @@ class OthersTab: Tab(false, false) {
         table.padRight(25F)
         updateHitSoundsList()
 
-        val hitSound = VisTable()
+        val hitSound = VisTable(false)
         hitSound.add(hitSoundCheckBox).left()
         hitSound.add(hitSoundBox).padLeft(226F-hitSoundCheckBox.width).width(90F)
         table.add(hitSound).left().row()
         table.add(hitSoundVolume).left().row()
         table.addSeparator().row()
 
-        val killSound = VisTable()
+        val killSound = VisTable(false)
         killSound.add(killSoundCheckBox).left()
         killSound.add(killSoundBox).padLeft(226F-killSoundCheckBox.width).width(90F)
         table.add(killSound).left().row()

@@ -28,7 +28,7 @@ class MainAimTable: VisTable(false) {
     val automaticWeaponsCheckBox = VisCheckBoxCustom("Automatic Weapons", "GLOBAL_AUTOMATIC_WEAPONS")
     val automaticWeaponsInput = VisInputFieldCustom("MS Delay", "GLOBAL_AUTO_WEP_DELAY", false)
 
-    val targetSwapDelay = VisSliderCustom("Target Swap Delay", "AIM_TARGET_SWAP_DELAY", 0F, 500F, 10F, true, labelWidth = 200F, barWidth = 250F)
+    val targetSwapDelay = VisSliderCustom("Target Swap Delay", "AIM_TARGET_SWAP_DELAY", 0F, 500F, 10F, true, labelWidth = 200F, barWidth = 200F)
 
     init {
         fovType.changed {_, _ ->
@@ -53,15 +53,6 @@ class MainAimTable: VisTable(false) {
         enableAim.backgroundImage.setColor(1F, .1F, .1F, 1F)
 
         //End
-
-        //Default menu size is 500
-        //Texts are 200
-        //Sliders are 250
-        //Leaves 25 for left and right side to center
-        padLeft(25F)
-        padRight(25F)
-
-        //Add all items to label for tabbed pane content
 
         add(enableAim).left().padBottom(8F).row()
         add(enableTrig).left().padBottom(8F).row()

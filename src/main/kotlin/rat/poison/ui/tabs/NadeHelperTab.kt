@@ -77,7 +77,7 @@ class NadeHelperTab : Tab(false, false) {
         updateNadeFileHelperList()
 
         //Add everything to table
-        val sldTable = VisTable()
+        val sldTable = VisTable(false)
         sldTable.add(saveFileNadeHelper).width(150F)
         sldTable.add(loadFileNadeHelper).padLeft(20F).padRight(20F).width(150F)
         sldTable.add(deleteFileNadeHelper).width(150F)

@@ -219,7 +219,7 @@ class ListAdapter(array: ArrayList<String>?) : ArrayListAdapter<String, VisTable
         label.setColor(1F, 1F, 1F, 1F)
         label.setAlignment(Align.center)
 
-        val table = VisTable()
+        val table = VisTable(false)
         table.left()
         table.add(label).center().growX()
         return table

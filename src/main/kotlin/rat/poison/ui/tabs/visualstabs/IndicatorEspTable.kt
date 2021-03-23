@@ -4,14 +4,12 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.ui.tabs.indicatorEspTab
+import rat.poison.ui.tabs.indicatorEspTable
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 
-class IndicatorEspTab : Tab(false, false) {
-    private val table = VisTable()
-
+class IndicatorEspTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
     val indicatorEsp = VisCheckBoxCustom("Enable", "INDICATOR_ESP")
     val indicatorDistance = VisSliderCustom("Indicator Distance", "INDICATOR_DISTANCE", 2F, 50F, 1F, false)
@@ -41,70 +39,62 @@ class IndicatorEspTab : Tab(false, false) {
     val indicatorDefuserColor = VisColorPickerCustom("Defusers", "INDICATOR_DEFUSER_COLOR")
 
     init {
-        table.padLeft(25F)
-        table.padRight(25F)
+        padLeft(25F)
+        padRight(25F)
 
         //Add all items to label for tabbed pane content
-        table.add(indicatorEsp).left().row()
-        table.add(indicatorDistance).left().colspan(2).row()
-        table.add(indicatorSize).left().colspan(2).row()
+        add(indicatorEsp).left().row()
+        add(indicatorDistance).left().colspan(2).row()
+        add(indicatorSize).left().colspan(2).row()
 
-        table.add(indicatorSmokeCheck).left().row()
+        add(indicatorSmokeCheck).left().row()
 
-        var tmpTable = VisTable()
+        var tmpTable = VisTable(false)
         tmpTable.add(showTeam)
         tmpTable.add(indicatorTeamColor).width(175F - showTeam.width).padRight(50F)
 
-        table.add(tmpTable).left()
+        add(tmpTable).left()
 
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(showEnemies)
         tmpTable.add(indicatorEnemyColor).width(175F - showEnemies.width).padRight(50F)
 
-        table.add(tmpTable).left().row()
+        add(tmpTable).left().row()
 
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(showBomb)
         tmpTable.add(indicatorBombColor).width(175F - showBomb.width).padRight(50F)
 
-        table.add(tmpTable).left()
+        add(tmpTable).left()
 
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(showBombCarrier)
         tmpTable.add(indicatorBombCarrierColor).width(175F - showBombCarrier.width).padRight(50F)
 
-        table.add(tmpTable).left().row()
+        add(tmpTable).left().row()
 
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(showWeapons)
         tmpTable.add(indicatorWeaponColor).width(175F - showWeapons.width).padRight(50F)
 
-        table.add(tmpTable).left()
+        add(tmpTable).left()
 
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(showGrenades)
         tmpTable.add(indicatorGrenadeColor).width(175F - showGrenades.width).padRight(50F)
 
-        table.add(tmpTable).left().row()
+        add(tmpTable).left().row()
 
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(showDefusers)
         tmpTable.add(indicatorDefuserColor).width(175F - showDefusers.width).padRight(50F)
 
-        table.add(tmpTable).left()
-    }
-
-    override fun getContentTable(): Table {
-        return table
-    }
-
-    override fun getTabTitle(): String {
-        return "Indicator"
+        add(tmpTable).left()
     }
 }
 
 fun indicatorEspTabUpdate() {
-    indicatorEspTab.apply {
+    indicatorEspTable.apply {
         indicatorEsp.update()
         indicatorDistance.update()
         indicatorSize.update()
@@ -127,21 +117,21 @@ fun indicatorEspTabUpdate() {
 }
 
 fun indicatorEspTabDisable(bool: Boolean, col: Color) {
-    indicatorEspTab.indicatorEsp.disable(bool)
-    indicatorEspTab.indicatorDistance.disable(bool, col)
-    indicatorEspTab.indicatorSize.disable(bool, col)
-    indicatorEspTab.indicatorSmokeCheck.disable(bool)
-    indicatorEspTab.showTeam.disable(bool)
-    indicatorEspTab.showEnemies.disable(bool)
-    indicatorEspTab.showBomb.disable(bool)
-    indicatorEspTab.showBombCarrier.disable(bool)
-    indicatorEspTab.showWeapons.disable(bool)
-    indicatorEspTab.showGrenades.disable(bool)
-    indicatorEspTab.showDefusers.disable(bool)
-    indicatorEspTab.indicatorTeamColor.disable(bool)
-    indicatorEspTab.indicatorEnemyColor.disable(bool)
-    indicatorEspTab.indicatorBombColor.disable(bool)
-    indicatorEspTab.indicatorDefuserColor.disable(bool)
-    indicatorEspTab.indicatorWeaponColor.disable(bool)
-    indicatorEspTab.indicatorGrenadeColor.disable(bool)
+    indicatorEspTable.indicatorEsp.disable(bool)
+    indicatorEspTable.indicatorDistance.disable(bool, col)
+    indicatorEspTable.indicatorSize.disable(bool, col)
+    indicatorEspTable.indicatorSmokeCheck.disable(bool)
+    indicatorEspTable.showTeam.disable(bool)
+    indicatorEspTable.showEnemies.disable(bool)
+    indicatorEspTable.showBomb.disable(bool)
+    indicatorEspTable.showBombCarrier.disable(bool)
+    indicatorEspTable.showWeapons.disable(bool)
+    indicatorEspTable.showGrenades.disable(bool)
+    indicatorEspTable.showDefusers.disable(bool)
+    indicatorEspTable.indicatorTeamColor.disable(bool)
+    indicatorEspTable.indicatorEnemyColor.disable(bool)
+    indicatorEspTable.indicatorBombColor.disable(bool)
+    indicatorEspTable.indicatorDefuserColor.disable(bool)
+    indicatorEspTable.indicatorWeaponColor.disable(bool)
+    indicatorEspTable.indicatorGrenadeColor.disable(bool)
 }

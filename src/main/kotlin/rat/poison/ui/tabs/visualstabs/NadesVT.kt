@@ -11,7 +11,7 @@ import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 
 class NadesVT : Tab(false, false) {
-    private val table = VisTable()
+    private val table = VisTable(false)
 
     //Init labels/sliders/boxes that show values here
     val nadeTracer = VisCheckBoxCustom(" ", "NADE_TRACER", false)
@@ -33,7 +33,7 @@ class NadesVT : Tab(false, false) {
         table.padLeft(25F)
         table.padRight(25F)
 
-        var tmpTable = VisTable()
+        var tmpTable = VisTable(false)
         tmpTable.add(nadeTracer)
         tmpTable.add(nadeTracerColor).width(175F - nadeTracer.width).padRight(50F)
 
@@ -43,7 +43,7 @@ class NadesVT : Tab(false, false) {
 
         table.addSeparator()
 
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(visualizeSmokes)
         tmpTable.add(visualizeSmokesColor).width(175F - visualizeSmokes.width).padRight(50F)
 
@@ -53,7 +53,7 @@ class NadesVT : Tab(false, false) {
         table.add(visualizeSmokesHeight).row()
 
         table.addSeparator()
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(drawSmokesTime)
         tmpTable.add(drawSmokesTimeColor).width(175F - drawSmokesTime.width).padRight(50F)
 

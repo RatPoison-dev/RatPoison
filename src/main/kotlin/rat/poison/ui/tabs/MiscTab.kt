@@ -19,7 +19,7 @@ var bombTab = BombTab()
 var othersTab = OthersTab()
 
 class MiscTabs : Tab(false, false) {
-    private val table = VisTable()
+    private val table = VisTable(false)
     init {
         miscTabbedPane.add(movementTab)
         miscTabbedPane.add(fovChangerTab)
@@ -28,7 +28,7 @@ class MiscTabs : Tab(false, false) {
 
         miscTabbedPane.switchTab(movementTab)
 
-        val miscTabbedPaneContent = VisTable()
+        val miscTabbedPaneContent = VisTable(false)
         miscTabbedPaneContent.padTop(10F)
         miscTabbedPaneContent.padBottom(10F)
         miscTabbedPaneContent.align(Align.top)

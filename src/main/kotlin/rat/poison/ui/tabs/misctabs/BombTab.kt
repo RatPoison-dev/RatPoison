@@ -7,7 +7,7 @@ import rat.poison.ui.tabs.bombTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 
 class BombTab: Tab(false, false) {
-    private val table = VisTable()
+    private val table = VisTable(false)
     val bombTimer = VisCheckBoxCustom("Bomb Timer", "ENABLE_BOMB_TIMER")
     val bombTimerEnableBars = VisCheckBoxCustom("Timer Bars", "BOMB_TIMER_BARS")
     val bombTimerEnableMenu = VisCheckBoxCustom("Timer Menu", "BOMB_TIMER_MENU")

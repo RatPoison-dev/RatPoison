@@ -14,11 +14,11 @@ import rat.poison.game.Color as rColor
 
 private val white = VisUI.getSkin().getDrawable("white")
 
-class VisColorPickerCustom(mainText: String, varName: String) : VisTable() {
+class VisColorPickerCustom(mainText: String, varName: String) : VisTable(false) {
     private val labelText = mainText
     private val variableName = varName
 
-    private val pickerButton = VisLabel(labelText)
+    //private val pickerButton = VisLabel(labelText)
     private val pickerImage = VisImageButton(white)
 
     private var colorPicker : ColorPicker
@@ -37,8 +37,7 @@ class VisColorPickerCustom(mainText: String, varName: String) : VisTable() {
             App.menuStage.addActor(colorPicker.fadeIn())
         }
 
-        this.add(pickerButton).growX()
-        this.add(pickerImage).size(24f).pad(3f)
+        this.add(pickerImage).width(25F)
 
         update()
     }
@@ -49,18 +48,11 @@ class VisColorPickerCustom(mainText: String, varName: String) : VisTable() {
         colorPicker.color = col
 
 
-        pickerButton.setText(labelText)
+        //pickerButton.setText(labelText)
         colorPicker.titleLabel.setText(labelText)
     }
 
     fun disable(bool: Boolean) {
-        val col = if (bool) {
-            Color(105F, 105F, 105F, .2F)
-        } else {
-            Color(255F, 255F, 255F, 1F)
-        }
-
-        pickerButton.color = col
         pickerImage.isDisabled = bool
     }
 }

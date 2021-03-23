@@ -8,7 +8,7 @@ import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
 import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
 
 class TriggerBotTable: VisTable(false) {
-    private val collapsibleTable = VisTable()
+    private val collapsibleTable = VisTable(false)
     val collapsibleWidget = CollapsibleWidget(collapsibleTable)
 
     //Init labels/sliders/boxes that show values here
@@ -20,15 +20,12 @@ class TriggerBotTable: VisTable(false) {
     val trigAimbot = ATabVisCheckBox("Aimbot", "_TRIGGER_AIMBOT")
     val trigInCross = ATabVisCheckBox("InCross", "_TRIGGER_INCROSS")
     val trigInFov = ATabVisCheckBox("InFov", "_TRIGGER_INFOV")
-    val trigFov = ATabVisSlider("FOV", "_TRIGGER_FOV", .1F, 90F, .5F, false)
+    val trigFov = ATabVisSlider("FOV", "_TRIGGER_FOV", .1F, 90F, .5F, false, 1, 200F, 200F)
     val trigShootBacktrack = ATabVisCheckBox("Shoot Backtrack", "_TRIGGER_BACKTRACK")
-    val initTrigDelay = ATabVisSlider("First Shot Delay", "_TRIGGER_INIT_SHOT_DELAY", 0F, 500F, 10F, true)
-    val perShotTrigDelay = ATabVisSlider("Per Shot Delay", "_TRIGGER_PER_SHOT_DELAY", 0F, 500F, 10F, true)
+    val initTrigDelay = ATabVisSlider("First Shot Delay", "_TRIGGER_INIT_SHOT_DELAY", 0F, 500F, 10F, true, 0, 200F, 200F)
+    val perShotTrigDelay = ATabVisSlider("Per Shot Delay", "_TRIGGER_PER_SHOT_DELAY", 0F, 500F, 10F, true, 0, 200F, 200F)
 
     init {
-        padLeft(25F)
-        padRight(25F)
-
         //Set specific colors
         trigAimbot.backgroundImage.setColor(1F, .1F, .1F, 1F)
 
@@ -46,6 +43,6 @@ class TriggerBotTable: VisTable(false) {
             add(perShotTrigDelay).left().row()
         }
 
-        add(collapsibleWidget)
+        add(collapsibleWidget).prefWidth(475F).growX()
     }
 }

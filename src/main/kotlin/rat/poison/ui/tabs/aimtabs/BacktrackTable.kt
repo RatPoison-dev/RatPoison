@@ -16,7 +16,7 @@ import rat.poison.ui.uiPanels.aimTab
 import rat.poison.ui.uiUpdate
 
 class BacktrackTable: VisTable(false) {
-    private val collapsibleTable = VisTable()
+    private val collapsibleTable = VisTable(false)
     val collapsibleWidget = CollapsibleWidget(collapsibleTable)
 
     //Init labels/sliders/boxes that show values here
@@ -24,12 +24,9 @@ class BacktrackTable: VisTable(false) {
     val backtrackKey = VisBindTableCustom("Backtrack Key", "BACKTRACK_KEY")
     val backtrackSpotted = VisCheckBoxCustom("Check Spotted", "BACKTRACK_SPOTTED")
     val backtrackWeaponEnabled = ATabVisCheckBox("Weapon Backtrack", "_BACKTRACK")
-    val backtrackMS = ATabVisSlider("Backtrack MS", "_BACKTRACK_MS", 20f, 200f, 5f, true, width1 = 200F, width2 = 250F)
+    val backtrackMS = ATabVisSlider("Backtrack MS", "_BACKTRACK_MS", 20f, 200f, 5f, true, width1 = 200F, width2 = 200F)
 
     init {
-        padLeft(25F)
-        padRight(25F)
-
         collapsibleTable.apply {
             add(backtrackEnableKey).left().row()
             add(backtrackKey).left().row()
@@ -40,6 +37,6 @@ class BacktrackTable: VisTable(false) {
             add(backtrackMS).left().row()
         }
 
-        add(collapsibleWidget)
+        add(collapsibleWidget).prefWidth(475F).growX()
     }
 }

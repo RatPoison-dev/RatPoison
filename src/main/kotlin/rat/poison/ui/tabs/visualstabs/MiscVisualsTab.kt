@@ -12,7 +12,7 @@ import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiPanels.visualsTab
 
 class MiscVisualsTab : Tab(false, false) {
-    private val table = VisTable()
+    private val table = VisTable(false)
 
     val radarEsp = VisCheckBoxCustom("Radar Esp", "RADAR_ESP")
     val legitRadar = VisCheckBoxCustom("Legit Radar", "LEGIT_RADAR")
@@ -47,11 +47,11 @@ class MiscVisualsTab : Tab(false, false) {
         table.padLeft(25F)
         table.padRight(25F)
 
-        val aimFov = VisTable()
+        val aimFov = VisTable(false)
         aimFov.add(showAimFov).left()
         aimFov.add(showAimFovColor).width(175F-showAimFov.width).left()
 
-        val triggerFov = VisTable()
+        val triggerFov = VisTable(false)
         triggerFov.add(showTriggerFov).left()
         triggerFov.add(showTriggerFovColor).width(175F-showTriggerFov.width).left()
 
@@ -84,7 +84,7 @@ class MiscVisualsTab : Tab(false, false) {
 
         table.addSeparator()
 
-        var tmpTable = VisTable()
+        var tmpTable = VisTable(false)
         tmpTable.add(enableSpreadCircle)
         tmpTable.add(spreadCircleColor).width(175F - enableSpreadCircle.width).padRight(50F)
 
@@ -92,7 +92,7 @@ class MiscVisualsTab : Tab(false, false) {
 
         table.addSeparator()
 
-        tmpTable = VisTable()
+        tmpTable = VisTable(false)
         tmpTable.add(enableHeadLevel)
         tmpTable.add(headLevelColor).width(175F - enableHeadLevel.width).padRight(50F)
 

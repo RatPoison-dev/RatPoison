@@ -23,10 +23,10 @@ private class VisLabelExtension(mainText: String): VisLabel(mainText) {
 class RanksTab : Tab(false, false) {
     private val table = VisTable(true)
 
-    private var ranksListTable = VisTable()
+    private var ranksListTable = VisTable(false)
     private var teamsLabel = VisLabelExtension("Team" + "  \n")
 
-    private var namesTable = VisTable()
+    private var namesTable = VisTable(false)
     private var namesLabel = VisLabelExtension("Name" + "  \n")
 
     private var ranksLabel = VisLabelExtension("Rank" + "  \n")

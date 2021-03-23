@@ -11,7 +11,7 @@ import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
 
 class MovementTab : Tab(false, false) {
 
-    private val table = VisTable()
+    private val table = VisTable(false)
     val bunnyHop = VisCheckBoxCustom("Bunny Hop", "ENABLE_BUNNY_HOP")
     val bunnyHopHitChance = VisSliderCustom("HitChance", "BHOP_HITCHANCE", 0F, 100F,  1F, true)
     val bunnyHopKey = VisBindTableCustom("Bunny Hop Key", "ENABLE_BUNNY_HOP_KEY", keyWidth = 225F)

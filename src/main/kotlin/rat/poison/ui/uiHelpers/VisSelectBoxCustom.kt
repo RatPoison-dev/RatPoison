@@ -12,11 +12,13 @@ import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.updateDisableRCrosshair
 
 //Swap VisSelectBoxCustom to showText false is mainText is " "
-class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean, showText: Boolean = true, vararg items: String) : VisTable() {
+class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean, showText: Boolean = true, vararg items: String, width: Float = 100F): VisTable(false) {
     private val textLabel = mainText
     private val variableName = varName
     private val useGunCategory = useCategory
     private var hasTooltip = false
+
+    private var dropDownWidth = width
 
     private var boxLabel = VisLabel("$textLabel:")
     private val selectBox = VisSelectBox<String>()
@@ -47,7 +49,7 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
             add(boxLabel).width(200F)
         }
 
-        add(selectBox).spaceRight(6F)
+        add(selectBox).width(dropDownWidth)
     }
 
     fun update() {
