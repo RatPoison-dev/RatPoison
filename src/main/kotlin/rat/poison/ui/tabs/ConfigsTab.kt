@@ -242,9 +242,11 @@ class ConfigsTab : Tab(false, false) {
             val tmpSelection = cloudConfigListAdapter.selection
             if (tmpSelection.size > 0) {
                 val cfgName = tmpSelection[0]
-                val text = safeUrlRead("https://ratpoison.dimden.dev/", cfgName)
+                val text = safeUrlRead("https://ratpoison.dimden.dev/api/configs/", cfgName)
+                if (text == "") return@changed true
                 saveCFG(cfgName, text)
             }
+            true
         }
 
         displayCloudConfigs.changed { _, _ -> shouldRefresh = displayCloudConfigs.isChecked; updateCloudConfigsList() }

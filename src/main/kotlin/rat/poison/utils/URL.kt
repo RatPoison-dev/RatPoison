@@ -10,7 +10,7 @@ fun safeUrlRead(vararg fromParts: String): String {
     var tmpUrl = ""
     var ret = ""
     fromParts.forEachIndexed { index, s ->
-        tmpUrl += if (index > 1) {
+        tmpUrl += if (index > 0) {
             encodeUrl(s)
         } else {
             s
