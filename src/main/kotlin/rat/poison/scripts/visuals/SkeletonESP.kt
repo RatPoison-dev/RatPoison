@@ -39,6 +39,7 @@ fun connectBones() {
 
 fun skeletonEsp() = App {
 	if (!curSettings.bool["SKELETON_ESP"] || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
+	bones.clear()
 	forEntities(EntityType.CCSPlayer) {
 		bones.clear()
 		val entity = it.entity

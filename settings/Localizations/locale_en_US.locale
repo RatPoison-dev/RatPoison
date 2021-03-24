@@ -607,6 +607,12 @@ Open-configs-folder = Open Configs Folder
 Refresh = Refresh
 Cloud-Configs = Cloud Configs
 Download = Download
+DISPLAY_CLOUD_CONFIGS = Display Cloud Configs
+DISPLAY_CLOUD_CONFIGS_CATEGORIES = Categories
+CLOSET = Closet
+LEGIT = Legit
+SEMI = Semi
+RAGE = Rage
 
 //Category: Movement tab
 ENABLE_BUNNY_HOP = Bunny Hop

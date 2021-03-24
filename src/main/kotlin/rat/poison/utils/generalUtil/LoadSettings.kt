@@ -177,7 +177,7 @@ fun String.stringToIntList(): MutableList<Int> {
 //move elsewhere
 fun String.stringToList(separator: String = ","): List<String> {
     val list = mutableListOf<String>()
-    val strList = this.replace("[", "").replace("]", "").replace(separator, "").split(" ")
+    val strList = this.replace("[", "").replace("]", "").replace(" ", "").split(separator)
 
     if (strList != DEFAULT_INVALID_LIST) {
         for (i in strList) {

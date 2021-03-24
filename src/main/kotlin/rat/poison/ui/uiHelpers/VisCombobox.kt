@@ -16,7 +16,7 @@ import rat.poison.utils.generalUtil.stringToList
 import rat.poison.utils.generalUtil.stringToLocaleList
 
 //r.rat
-class VisCombobox(mainText: String, varName: String, useCategory: Boolean = false, private val showText: Boolean = true, vararg items: String): VisTable() {
+class VisCombobox(mainText: String, varName: String, useCategory: Boolean = false, private val showText: Boolean = true, boxLabelWidth: Float = 200F, selectBoxWidth: Float =  200F, vararg items: String): VisTable() {
     private val textLabel = mainText
     private val variableName = varName
     private var hasTooltip = false
@@ -51,10 +51,10 @@ class VisCombobox(mainText: String, varName: String, useCategory: Boolean = fals
             true
         }
         if (showText) {
-            add(boxLabel).width(200F)
+            add(boxLabel).width(boxLabelWidth)
         }
 
-        add(selectBox).spaceRight(6F)
+        add(selectBox).width(selectBoxWidth).spaceRight(6F)
     }
 
     fun update() {
