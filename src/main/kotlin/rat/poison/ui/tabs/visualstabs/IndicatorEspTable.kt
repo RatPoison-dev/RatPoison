@@ -97,7 +97,7 @@ fun indicatorEspTabUpdate() {
     }
 }
 
-fun indicatorEspTabDisable(bool: Boolean, col: Color) {
+fun indicatorEspTableDisable(bool: Boolean, col: Color) {
     indicatorEspTable.indicatorEsp.disable(bool)
     indicatorEspTable.indicatorDistance.disable(bool, col)
     indicatorEspTable.indicatorSize.disable(bool, col)

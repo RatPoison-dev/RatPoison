@@ -38,6 +38,13 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
     var wantedHeight = normHeight
     var wantedWidth = normWidth
 
+    //Main content pane for all tabs
+    val mainTabbedPaneContent = VisTable(false)
+
+    //Scroll pane for the content pane, content pane goes inside
+    val mainScrollPane = ScrollPane(mainTabbedPaneContent) //Init scroll pane containing main content pane
+
+
     private var isResizingHeight = false
     private var isResizingWidth = false
 
@@ -46,23 +53,20 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
 
         addCloseButton()
 
+        mainTabbedPaneContent.padTop(10F)
+        mainTabbedPaneContent.padBottom(10F)
+        mainTabbedPaneContent.align(Align.top)
+
+        mainScrollPane.setFlickScroll(false)
+        mainScrollPane.setScrollbarsVisible(true)
+
+
         //Main ui window settings
         x = 960F
         y = 540F
         align(Align.topLeft)
         isResizable = true
 
-        //Main content pane for all tabs
-        val mainTabbedPaneContent = VisTable(false)
-        mainTabbedPaneContent.padTop(10F)
-        mainTabbedPaneContent.padBottom(10F)
-        mainTabbedPaneContent.align(Align.top)
-
-        //Scroll pane for the content pane, content pane goes inside
-        val mainScrollPane = ScrollPane(mainTabbedPaneContent) //Init scroll pane containing main content pane
-        mainScrollPane.setFlickScroll(false)
-        mainScrollPane.setScrollbarsVisible(true)
-        //mainScrollPane.setSize(normWidth + 10, normHeight)
 
         //Add tabs to the tab header
         mainTabbedPane.add(aimTab)

@@ -14,7 +14,7 @@ import rat.poison.scripts.selfNade
 import rat.poison.scripts.writeSpoof
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.ListAdapter
-import rat.poison.ui.tabs.miscVisualsTab
+import rat.poison.ui.tabs.miscVisualsTable
 import rat.poison.ui.tabs.othersTab
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
@@ -61,10 +61,10 @@ class OthersTab: Tab(false, false) {
             musicKitsAdapter.add(it.name)
         }
         postProcessingDisable.changed {_, _ ->
-            miscVisualsTab.nightMode.disable(postProcessingDisable.isChecked)
+            miscVisualsTable.nightMode.disable(postProcessingDisable.isChecked)
             if (postProcessingDisable.isChecked) {
                 curSettings["ENABLE_NIGHTMODE"] = false
-                miscVisualsTab.nightMode.update()
+                miscVisualsTable.nightMode.update()
             }
             true
         }

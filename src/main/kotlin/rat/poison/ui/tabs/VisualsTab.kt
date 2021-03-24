@@ -16,12 +16,13 @@ import rat.poison.ui.uiPanels.visualsTab
 var glowEspTable = GlowEspTable()
 var chamsEspTable = ChamsEspTable()
 var indicatorEspTable = IndicatorEspTable()
-var boxEspTab = BoxEspTab()
-var snaplinesEspTab = SnaplinesEspTab()
-var footStepsEspTab = FootstepsEspTab()
-var hitMarkerTab = HitMarkerTab()
-var nadesTab = NadesVT()
-var miscVisualsTab = MiscVisualsTab()
+var skeletonEspTable = SkeletonEspTable()
+var boxEspTable = BoxEspTable()
+var snaplinesEspTable = SnaplinesEspTable()
+var footStepsEspTable = FootstepsEspTable()
+var hitMarkerTable = HitMarkerTable()
+var nadesTable = NadesTable()
+var miscVisualsTable = MiscVisualsTable()
 
 class VisualsTab : Tab(false, false) {
     private val table = VisTable(false)
@@ -43,9 +44,26 @@ class VisualsTab : Tab(false, false) {
         leftTable.addSeparator()
         leftTable.add(chamsEspTable).left().width(310F).row()
         leftTable.addSeparator()
+        leftTable.add(footStepsEspTable).left().width(310F).row()
+        leftTable.addSeparator()
+        leftTable.add(nadesTable).left().width(310F).row()
+        leftTable.addSeparator()
 
-        middleTable.add(indicatorEspTable).left().row()
         middleTable.addSeparator()
+        middleTable.add(skeletonEspTable).width(310F).left().padLeft(4F).row()
+        middleTable.addSeparator()
+        middleTable.add(indicatorEspTable).width(310F).left().padLeft(4F).row()
+        middleTable.addSeparator()
+        middleTable.add(snaplinesEspTable).width(310F).left().padLeft(4F).row()
+        middleTable.addSeparator()
+        middleTable.add(hitMarkerTable).width(310F).left().padLeft(4F).row()
+        middleTable.addSeparator()
+
+        rightTable.addSeparator()
+        rightTable.add(boxEspTable).left().padLeft(4F).row()
+        rightTable.addSeparator()
+        rightTable.add(miscVisualsTable).left().padLeft(4F).row()
+        rightTable.addSeparator()
 
         table.add(leftTable).width(310F).top().expandX()
         table.addSeparator(true)
@@ -55,12 +73,6 @@ class VisualsTab : Tab(false, false) {
 
 
 
-
-//        espTabbedPane.add(boxEspTab)
-//        espTabbedPane.add(snaplinesEspTab)
-//        espTabbedPane.add(footStepsEspTab)
-//        espTabbedPane.add(hitMarkerTab)
-//        espTabbedPane.add(nadesTab)
 //        espTabbedPane.add(miscVisualsTab)
     }
 
@@ -86,29 +98,16 @@ fun updateDisableEsp() {
 
         visualsToggleKey.disable(bool, col)
 
-//        val recTab = espTabbedPane.activeTab
-//
-//        espTabbedPane.disableTab(glowEspTab, bool)
-//        espTabbedPane.disableTab(chamsEspTab, bool)
-//        espTabbedPane.disableTab(indicatorEspTab, bool)
-//        espTabbedPane.disableTab(boxEspTab, bool)
-//        espTabbedPane.disableTab(snaplinesEspTab, bool)
-//        espTabbedPane.disableTab(footStepsEspTab, bool)
-//        espTabbedPane.disableTab(hitMarkerTab, bool)
-//        espTabbedPane.disableTab(nadesTab, bool)
-//        espTabbedPane.disableTab(miscVisualsTab, bool)
-//
-//        espTabbedPane.switchTab(recTab)
-
-        glowEspTabDisable(bool)
-        chamsEspTabDisable(bool, col)
-        indicatorEspTabDisable(bool, col)
-        boxEspTabDisable(bool, col)
-        snaplinesEspTabDisable(bool, col)
-        footStepsEspTabDisable(bool, col)
-        hitMarkerTabDisable(bool, col)
-        miscVisualTabDisable(bool, col)
-        nadesVTabDisable(bool, col)
+        glowEspTableDisable(bool)
+        chamsEspTableDisable(bool, col)
+        indicatorEspTableDisable(bool, col)
+        skeletonEspTableDisable(bool)
+        boxEspTableDisable(bool, col)
+        snaplinesEspTableDisable(bool, col)
+        footStepsEspTableDisable(bool, col)
+        hitMarkerTableDisable(bool, col)
+        miscVisualTableDisable(bool, col)
+        nadesTableDisable(bool, col)
 
         if (!curSettings.bool["ENABLE_ESP"]) {
             disableAllEsp()

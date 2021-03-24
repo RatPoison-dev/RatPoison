@@ -77,6 +77,7 @@ object App : ApplicationAdapter() {
     private lateinit var camera: OrthographicCamera
 
     lateinit var uiMenu: UIMenu
+    lateinit var uiArrows: UIArrows
     lateinit var uiBombWindow: UIBombTimer
     lateinit var uiSpecList: UISpectatorList
     lateinit var uiKeybinds: UIKeybinds
@@ -99,6 +100,7 @@ object App : ApplicationAdapter() {
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
 
         uiMenu = UIMenu()
+        uiArrows = UIArrows()
         uiBombWindow = UIBombTimer()
         uiSpecList = UISpectatorList()
         uiKeybinds = UIKeybinds()
@@ -190,13 +192,19 @@ object App : ApplicationAdapter() {
                                         menuStage.addActor(uiKeybinds)
                                     }
                                 } else if (menuStage.actors.contains(uiKeybinds)) {
-                                    menuStage.clear() //actors.remove at index doesnt work after 1 loop?
+                                    menuStage.clear()
                                 }
 
                                 if (!menuStage.actors.contains(uiMenu)) {
                                     menuStage.addActor(uiMenu)
                                 }
-                            } else if (menuStage.actors.contains(uiMenu) || menuStage.actors.contains(uiKeybinds)) {
+
+                                if (!menuStage.actors.contains(uiArrows)) {
+                                    menuStage.addActor(uiArrows)
+                                } else {
+                                    uiArrows.setPosition(uiMenu.x + uiMenu.width + 8F, uiMenu.y)
+                                }
+                            } else if (menuStage.actors.contains(uiMenu) || menuStage.actors.contains(uiKeybinds) || menuStage.actors.contains(uiArrows)) {
                                 menuStage.clear()
                             }
 

@@ -67,7 +67,7 @@ fun chamsEspTabUpdate() {
     }
 }
 
-fun chamsEspTabDisable(bool: Boolean, col: Color) {
+fun chamsEspTableDisable(bool: Boolean, col: Color) {
     chamsEspTable.chamsEsp.disable(bool)
     chamsEspTable.chamsShowHealth.disable(bool)
     chamsEspTable.chamsBrightness.disable(bool, col)

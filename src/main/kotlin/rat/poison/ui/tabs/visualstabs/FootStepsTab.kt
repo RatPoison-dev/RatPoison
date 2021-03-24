@@ -3,32 +3,30 @@ package rat.poison.ui.tabs.visualstabs
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
+import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
-import rat.poison.dbg
 import rat.poison.ui.changed
-import rat.poison.ui.tabs.footStepsEspTab
+import rat.poison.ui.tabs.footStepsEspTable
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 
 val footstepItems = arrayOf("TEXT", "CIRCLE")
 
-class FootstepsEspTab : Tab(false, false) {
-    private val table = VisTable(false)
-
+class FootstepsEspTable: VisTable(false) {
     val enableFootSteps = VisCheckBoxCustom("Enable", "ENABLE_FOOTSTEPS")
     val footStepType = VisSelectBox<String>()
-    val footStepUpdateTimer = VisSliderCustom("Update Timer", "FOOTSTEP_UPDATE", 5F, 120F, 1F, true)
-    val footStepTTL = VisSliderCustom("TTL", "FOOTSTEP_TTL", 15F, 240F, 1F, true)
+    val footStepUpdateTimer = VisSliderCustom("Update Timer", "FOOTSTEP_UPDATE", 5F, 120F, 1F, true, 0, 175F, 117F)
+    val footStepTTL = VisSliderCustom("TTL", "FOOTSTEP_TTL", 15F, 240F, 1F, true, 0, 175F, 117F)
 
-    val footStepTeamBox = VisCheckBoxCustom(" ", "FOOTSTEP_TEAM", false)
-    val footStepTeamColor = VisColorPickerCustom("Teammates","FOOTSTEP_TEAM_COLOR")
+    val footStepTeamBox = VisCheckBoxCustom("Teammates", "FOOTSTEP_TEAM", false)
+    val footStepTeamColor = VisColorPickerCustom("Footstep Teammate Color","FOOTSTEP_TEAM_COLOR")
 
-    val footStepEnemyBox = VisCheckBoxCustom(" ", "FOOTSTEP_ENEMY", false)
-    val footStepEnemyColor = VisColorPickerCustom("Enemies", "FOOTSTEP_ENEMY_COLOR")
+    val footStepEnemyBox = VisCheckBoxCustom("Enemies", "FOOTSTEP_ENEMY", false)
+    val footStepEnemyColor = VisColorPickerCustom("Footstep Enemy Color", "FOOTSTEP_ENEMY_COLOR")
 
     init {
         val itemsArray = Array<String>()
@@ -47,38 +45,26 @@ class FootstepsEspTab : Tab(false, false) {
             true
         }
 
-        table.padLeft(25F)
-        table.padRight(25F)
+        val label = VisLabel("Footsteps")
+        label.setColor(.85F, .5F, .05F, 1F)
 
-        table.add(enableFootSteps).padRight(225F - enableFootSteps.width)
-        table.add(footStepType).padRight(225F - footStepType.width).row()
-        table.add(footStepUpdateTimer).colspan(2).left().row()
-        table.add(footStepTTL).colspan(2).left().row()
+        add(label).colspan(2).padBottom(8F).expandX().row()
 
-        var tmpTable = VisTable(false)
-        tmpTable.add(footStepTeamBox)
-        tmpTable.add(footStepTeamColor).width(175F - footStepTeamBox.width).padRight(50F)
+        add(enableFootSteps).left()
+        add(footStepType).left().row()
+        add(footStepUpdateTimer).colspan(2).left().row()
+        add(footStepTTL).colspan(2).left().row()
 
-        table.add(tmpTable).left()
+        add(footStepTeamBox).left().padRight(175F - footStepTeamBox.width)
+        add(footStepTeamColor).left().expandX().row()
 
-        tmpTable = VisTable(false)
-        tmpTable.add(footStepEnemyBox)
-        tmpTable.add(footStepEnemyColor).width(175F - footStepEnemyBox.width).padRight(50F)
-
-        table.add(tmpTable).left()
-    }
-
-    override fun getContentTable(): Table {
-        return table
-    }
-
-    override fun getTabTitle(): String {
-        return "FootSteps"
+        add(footStepEnemyBox).left().padRight(175F - footStepEnemyBox.width)
+        add(footStepEnemyColor).left().expandX().row()
     }
 }
 
 fun footStepsEspTabUpdate() {
-    footStepsEspTab.apply {
+    footStepsEspTable.apply {
         enableFootSteps.update()
         footStepUpdateTimer.update()
         footStepTTL.update()
@@ -89,13 +75,13 @@ fun footStepsEspTabUpdate() {
     }
 }
 
-fun footStepsEspTabDisable(bool: Boolean, col: Color) {
-    footStepsEspTab.enableFootSteps.disable(bool)
-    footStepsEspTab.footStepType.isDisabled = bool
-    footStepsEspTab.footStepUpdateTimer.disable(bool, col)
-    footStepsEspTab.footStepTTL.disable(bool, col)
-    footStepsEspTab.footStepTeamBox.disable(bool)
-    footStepsEspTab.footStepTeamColor.disable(bool)
-    footStepsEspTab.footStepEnemyBox.disable(bool)
-    footStepsEspTab.footStepEnemyColor.disable(bool)
+fun footStepsEspTableDisable(bool: Boolean, col: Color) {
+    footStepsEspTable.enableFootSteps.disable(bool)
+    footStepsEspTable.footStepType.isDisabled = bool
+    footStepsEspTable.footStepUpdateTimer.disable(bool, col)
+    footStepsEspTable.footStepTTL.disable(bool, col)
+    footStepsEspTable.footStepTeamBox.disable(bool)
+    footStepsEspTable.footStepTeamColor.disable(bool)
+    footStepsEspTable.footStepEnemyBox.disable(bool)
+    footStepsEspTable.footStepEnemyColor.disable(bool)
 }

@@ -121,7 +121,7 @@ fun glowEspTabUpdate() {
     }
 }
 
-fun glowEspTabDisable(bool: Boolean) {
+fun glowEspTableDisable(bool: Boolean) {
     glowEspTable.glowEsp.disable(bool)
     glowEspTable.glowShowHealth.disable(bool)
     glowEspTable.glowSmokeCheck.disable(bool)
