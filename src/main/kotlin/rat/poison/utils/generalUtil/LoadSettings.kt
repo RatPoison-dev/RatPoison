@@ -48,6 +48,16 @@ fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
             }
         }
     }
+
+    if (!curSettings["CROSSHAIR_ARRAY"].isBlank()) {
+        val str = curSettings["CROSSHAIR_ARRAY"]
+        val strList = str.replace("[", "").replace("]", "").split(", ")
+
+        strList.forEachIndexed { index, s ->
+            crosshairArray[index] = s.strToBool()
+        }
+    }
+
     curSettings["OVERLOAD_KEYBINDS"] = overloadKeybinds
     settingsLoaded = true
     println("Settings loaded")

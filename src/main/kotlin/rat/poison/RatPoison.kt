@@ -58,6 +58,7 @@ lateinit var MUSIC_KITS_FILE: File
 var settingsLoaded = false
 val curSettings = Settings()
 val skSettings = Settings()
+var crosshairArray = BooleanArray(81) //81 is max / 0
 
 var dbg: Boolean = false
 var appless: Boolean = false

@@ -23,6 +23,9 @@ fun saveDefault() {
         GlobalScope.launch {
             saving = true
             println("\nSaving!\n")
+
+            curSettings["CROSSHAIR_ARRAY"] = crosshairArray.contentToString()
+
             File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
                 val sbLines = StringBuilder()
                 if (!file.isDirectory) {
@@ -58,6 +61,7 @@ fun saveDefault() {
                     sbLines.clear()
                 }
             }
+
             println("\nSaving Complete!\n")
             saving = false
         }
@@ -198,6 +202,8 @@ fun saveCFG(cfgFileName: String) {
                 }
             }
         }
+
+        sbLines.append("CROSSHAIR_ARRAY = " + crosshairArray.contentToString())
 
         Files.delete(cfgFile.toPath()) //Replace with cfgFile. ??
         Files.createFile(cfgFile.toPath())

@@ -14,6 +14,7 @@ import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.tabs.*
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.randInt
+import rat.poison.utils.shouldPostProcess
 import kotlin.math.sign
 import kotlin.system.exitProcess
 
@@ -90,7 +91,6 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                 if (tab == null) return
 
                 mainTabbedPaneContent.clear()
-                if (appless) uiUpdate()
 
                 when (tab) { //Update table content to tab selected content
                     aimTab -> {
@@ -178,6 +178,11 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
                         mainTabbedPaneContent.add(skinChangerTab.contentTable).growX()
                     }
                 }
+
+                Thread {
+                    Thread.sleep(50)
+                    uiUpdate()
+                }.start()
             }
         })
 

@@ -20,7 +20,7 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
     private val w1 = labelWidth
     private val w2 = barWidth
 
-    private val sliderLabel = VisLabel("$labelText: $varMax")//VisLabel("$labelText: " + curSettings[variableName])
+    private val sliderLabel = VisLabel("$labelText: $varMax")
     private val sliderBar = VisSlider(varMin, varMax, stepSize, false)
 
     init {
