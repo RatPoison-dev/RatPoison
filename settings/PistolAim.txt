@@ -24,11 +24,11 @@ PISTOL_AIM_FOV = 1.0
 //Aim speed
 //MS delay between aiming steps
 //Lower is faster
-PISTOL_AIM_SPEED = 10
+PISTOL_AIM_SPEED = 5
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-PISTOL_AIM_SMOOTHNESS = 5.0
+PISTOL_AIM_SMOOTHNESS = 3.0
 
 //Force Bone
 PISTOL_AIM_FORCE_BONE = NEAREST

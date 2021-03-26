@@ -29,6 +29,6 @@ RCROSSHAIR_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
 
 //Crosshair Builder Customization
 RCROSSHAIR_BUILDER_RESOLUTION = 5
-RCROSSHAIR_BUILDER_SIZE = 8
+RCROSSHAIR_BUILDER_SIZE = 5
 
-CROSSHAIR_ARRAY = [false, false, false, false, false, false, false, true, false, false, false, true, false, true, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+CROSSHAIR_ARRAY = [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
