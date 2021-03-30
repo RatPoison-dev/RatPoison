@@ -1,5 +1,6 @@
 package rat.poison.ui.uiHelpers
 
+import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.widget.Tooltip.removeTooltip
 import com.kotcrab.vis.ui.widget.VisCheckBox
@@ -12,17 +13,11 @@ import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
 import rat.poison.utils.generalUtil.boolToStr
 
-private val white = VisUI.getSkin().getDrawable("white")
-
-class VisRCSBoxCustom(row: Int, column: Int): VisImageButton(white) {
+class VisRCSBoxCustom(row: Int, column: Int): VisTextButton("") {
     var bRow = row
     var bCol = column
 
     var buttonToggled = false
-
-    private var imagePosSet = false
-    private var imageX = 0F
-    private var imageY = 0F
 
     init {
         update()
@@ -38,9 +33,6 @@ class VisRCSBoxCustom(row: Int, column: Int): VisImageButton(white) {
 
             true
         }
-
-        image.setScale(25F)
-        image.setPosition(image.imageX-12.5F, image.imageY-12.5F)
     }
 
     fun update() {
@@ -48,18 +40,10 @@ class VisRCSBoxCustom(row: Int, column: Int): VisImageButton(white) {
         buttonToggled = crosshairArray[(bRow - 1) * builderRes + bCol - 1]
 
         if (buttonToggled) {
-            image.setColor(1F, 1F, 1F, 1F)
+            setColor(1F, 1F, 1F, 1F)
         } else {
-            image.setColor(.2F, .2F, .2F, 1F)
+            setColor(.2F, .2F, .2F, 1F)
         }
-
-        if (!imagePosSet) {
-            imageX = image.x
-            imageY = image.y
-            imagePosSet = true
-        }
-
-        image.setPosition(imageX, imageY)
     }
 
     fun disable(bool: Boolean) {

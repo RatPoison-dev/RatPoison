@@ -20,7 +20,6 @@ class AssetManager: AssetManager() {
     val fonts = mutableMapOf<String, FreeTypeFontGenerator>()
 
     fun find(name: String): Any? {
-
         return when {
             this.contains(name) -> {
                 this.get(name)
@@ -52,7 +51,6 @@ class AssetManager: AssetManager() {
     }
 
     fun updateFonts() {
-
         if (!updateFonts) return
 
         updateFontsList()
@@ -64,10 +62,12 @@ class AssetManager: AssetManager() {
             val parameter = FreeTypeFontGenerator.FreeTypeFontParameter()
             parameter.size = curSettings.int["FONT_SIZE"]
             parameter.color = curSettings.colorGDX["FONT_COLOR"]
+
             //border
             parameter.borderWidth = curSettings.float["FONT_BORDER_WIDTH"]
             parameter.borderColor = curSettings.colorGDX["FONT_BORDER_COLOR"]
             parameter.borderStraight = curSettings.bool["FONT_BORDER_USE_STRAIGHT"]
+
             //shadow
             parameter.shadowColor = curSettings.colorGDX["FONT_SHADOW_COLOR"]
             parameter.shadowOffsetX = curSettings.int["FONT_SHADOW_OFFSET_X"]

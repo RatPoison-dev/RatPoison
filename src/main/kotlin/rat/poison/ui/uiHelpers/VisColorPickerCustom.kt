@@ -5,6 +5,7 @@ import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.widget.VisImageButton
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.color.ColorPicker
 import com.kotcrab.vis.ui.widget.color.ColorPickerAdapter
 import rat.poison.curSettings
@@ -12,14 +13,11 @@ import rat.poison.overlay.App
 import rat.poison.ui.changed
 import rat.poison.game.Color as rColor
 
-private val white = VisUI.getSkin().getDrawable("white")
-
 class VisColorPickerCustom(mainText: String, varName: String) : VisTable(false) {
     private val labelText = mainText
     private val variableName = varName
 
-    //private val pickerButton = VisLabel(labelText)
-    private val pickerImage = VisImageButton(white)
+    private val pickerImage = VisTextButton("")
 
     private var colorPicker : ColorPicker
 

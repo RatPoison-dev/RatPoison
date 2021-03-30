@@ -43,6 +43,8 @@ class RcsTab : Tab(false, false) {
 
     init {
         rCrosshairBuilderResolution.changed { _, _ ->
+            crosshairArray = BooleanArray(81)
+
             buildTable()
 
             true
@@ -71,7 +73,6 @@ class RcsTab : Tab(false, false) {
 
         table.add(rCrosshairBuilderResolution).colspan(2).left().row()
         table.add(rCrosshairBuilderSize).colspan(2).left().row()
-
 
         table.add(enableSCrosshair).colspan(2).left().row()
         table.add(rCrosshairXOffset).colspan(2).left().row()
