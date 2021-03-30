@@ -50,9 +50,10 @@ class GlowEspTable: VisTable(false) {
 
     init {
         val label = VisLabel("Glow")
-        label.setColor(.85F, .5F, .05F, 1F)
+        label.setColor(1F, 1F, 1F, 1F)
 
-        add(label).colspan(3).padBottom(8F).expandX().row()
+        add(label).colspan(3).expandX().padTop(4F).row()
+        addSeparator().colspan(3).width(200F).top().height(2F).padBottom(8F)
 
         add(glowEsp).left().padRight(175F - glowEsp.width)
         add(glowShowHealth).colspan(2).left().expandX().row()

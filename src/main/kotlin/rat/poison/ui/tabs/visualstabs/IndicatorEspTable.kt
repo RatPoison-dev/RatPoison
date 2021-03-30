@@ -41,15 +41,14 @@ class IndicatorEspTable: VisTable(false) {
 
     init {
         val label = VisLabel("Indicators")
-        label.setColor(.85F, .5F, .05F, 1F)
+        label.setColor(1F, 1F, 1F, 1F)
 
-        add(label).colspan(2).padBottom(2F).expandX().row()
+        add(label).colspan(3).expandX().padTop(4F).row()
+        addSeparator().colspan(3).width(200F).top().height(2F).padBottom(8F)
 
         add(indicatorEsp).colspan(2).left().row()
         add(indicatorDistance).colspan(2).left().row()
-        //add(indicatorSize).colspan(2).left().row()
-
-        //add(indicatorSmokeCheck).left().colspan(2).row()
+        add(indicatorSize).colspan(2).left().row()
 
         add(showTeam).left().padRight(175F - showTeam.width)
         add(indicatorTeamColor).left().expandX().row()
@@ -71,6 +70,8 @@ class IndicatorEspTable: VisTable(false) {
 
         add(showDefusers).left().padRight(175F - showTeam.width)
         add(indicatorDefuserColor).left().expandX().row()
+
+        add(indicatorSmokeCheck).colspan(2).left().row()
     }
 }
 

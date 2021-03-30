@@ -35,7 +35,7 @@ class VisColorPickerCustom(mainText: String, varName: String) : VisTable(false) 
             App.menuStage.addActor(colorPicker.fadeIn())
         }
 
-        add(pickerImage).width(25F).left()
+        add(pickerImage).width(25F).height(16F).left()
 
         update()
     }

@@ -343,7 +343,6 @@ object App : ApplicationAdapter() {
                     val h = overlay.height
 
                     if (menuStage.viewport.screenWidth != w || menuStage.viewport.screenHeight != h) {
-                        resize(w, h)
                         menuStage.viewport.update(w, h)
                         if (dbg) println("[DEBUG] Resized Viewports")
                     }
