@@ -4,50 +4,50 @@
 
 //Enable flat aim
 //Writes to angles ingame
-SNIPER_ENABLE_FLAT_AIM = false
+SNIPER_ENABLE_FLAT_AIM = true
 
 //Enable path aim
 //Uses mouse movement to aim
-SNIPER_ENABLE_PATH_AIM = true
+SNIPER_ENABLE_PATH_AIM = false
 
 //Enable scoped only
 //Will only aimbot when scoped in
-SNIPER_ENABLE_SCOPED_ONLY = false
+SNIPER_ENABLE_SCOPED_ONLY = true
 
 //Factor recoil when shooting
 SNIPER_FACTOR_RECOIL = false
 
 //Aim Bone
 //Default bone to aim at
-SNIPER_AIM_BONE = NEAREST
+SNIPER_AIM_BONE = STOMACH
 
 //Aim FOV
 //Aims at entities inside this value
-SNIPER_AIM_FOV = 0.5
+SNIPER_AIM_FOV = 3.0
 
 //Aim speed
 //MS delay between aiming steps
 //Lower is faster
-SNIPER_AIM_SPEED = 10
+SNIPER_AIM_SPEED = 0
 
 //Force Bone
 SNIPER_AIM_FORCE_BONE = NEAREST
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-SNIPER_AIM_SMOOTHNESS = 5.0
+SNIPER_AIM_SMOOTHNESS = 1.0
 
 //If the aimbot should only aim when you can shoot
 SNIPER_AIM_ONLY_ON_SHOT = false
 
 //Advanced aim settings
-SNIPER_ADVANCED_SETTINGS = false
-SNIPER_AIM_RCS_X = 0.05
-SNIPER_AIM_RCS_Y = 0.05
+SNIPER_ADVANCED_SETTINGS = true
+SNIPER_AIM_RCS_X = 1.0
+SNIPER_AIM_RCS_Y = 1.0
 SNIPER_AIM_RCS_VARIATION = 0.0
 SNIPER_AIM_SPEED_DIVISOR = 1
-SNIPER_RANDOM_X_VARIATION = 0
-SNIPER_RANDOM_Y_VARIATION = 0
+SNIPER_RANDOM_X_VARIATION = 1
+SNIPER_RANDOM_Y_VARIATION = 1
 SNIPER_VARIATION_DEADZONE = 0
 
 

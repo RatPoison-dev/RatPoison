@@ -14,31 +14,32 @@
 		t-medium: {r: 0.3, g: 0.3, b: 0.3, a: 1 },
 		t-medium-dark: {r: 0.2, g: 0.2, b: 0.2, a: 1 },
 		t-dark: {r: 0.15, g: 0.15, b: 0.15, a: 1 },
-		t-very-dark: {r: 0.1, g: 0.1, b: 0.1, a: 1 },
+		t-very-dark: {r: 0.05, g: 0.05, b: 0.05, a: 1 },
 		t-alpha: {r: 0, g: 0, b: 0, a: 1 },
 		black: t-black,
 		white: t-white,
 		grey: t-light,
 		vis-blue: t-highlight,
 		vis-red: t-warn,
-		menuitem: t-medium-dark,
+		menuitem: t-very-dark,
 		link-label: t-highlight
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 		dialogDim: {name: t-dot, color: t-alpha },
+		tab-border: {name: t-border, color: t-white },
 		border: {name: t-border, color: t-highlight },
 		border-circle: {name: t-border-circle, color: t-highlight },
 		border-circle-error: {name: t-border-circle, color: t-warn },
 		border-dark-blue: {name: t-border, color: t-highlight-dark },
 		border-error: {name: t-border, color: t-warn },
 		button: {name: t-base, color: t-medium },
-		button-blue: {name: t-base, color: t-highlight },
+		button-blue: {name: t-base, color: t-white }, //tab bars
 		button-blue-down: {name: t-base, color: t-highlight-dark },
 		button-blue-over: {name: t-base, color: t-highlight-medium },
-		button-down: {name: t-base, color: t-highlight },
-		button-over: {name: t-base, color: t-light },
+		button-down: {name: t-base, color: t-highlight-dark },
+		button-over: {name: t-base, color: t-highlight-medium },
 		button-red: {name: t-base, color: t-warn },
-		button-window-bg: {name: t-base, color: t-dark },
+		button-window-bg: {name: t-base, color: t-very-dark },
 		check-off: {name: t-check, color: t-medium },
 		check-on: {name: t-check, color: t-highlight },
 		default-pane: {name: t-dot, color: t-medium },
@@ -47,7 +48,7 @@
 		default-select-selection: {name: t-dot, color: t-highlight-medium },
 		grey: {name: t-dot, color: t-medium },
 		list-selection: {name: t-dot, color: t-highlight },
-		menu-bg: {name: t-dot, color: t-medium-dark },
+		menu-bg: {name: t-dot, color: t-very-dark },
 		padded-list-selection: {name: t-hline, color: t-highlight },
 		progressbar: {name: t-vline, color: t-medium },
 		progressbar-filled: {name: t-vline, color: t-highlight },
@@ -186,9 +187,10 @@
 	},
 	com.kotcrab.vis.ui.widget.VisTextButton$VisTextButtonStyle: {
 		default: {focusBorder: border, down: button-down, up: button, over: button-over, disabled: button, font: default-font, fontColor: white, disabledFontColor: grey },
-		toggle: {focusBorder: border, checked: button-down, down: button-down, up: button, font: default-font, fontColor: white, over: button-over, disabled: button, disabledFontColor: grey },
-		blue: {focusBorder: border-dark-blue, down: button-blue-down, up: button-blue, over: button-blue-over, disabled: button, font: default-font, fontColor: white, disabledFontColor: grey },
-		menu-bar: {over: button-down, font: default-font, fontColor: white, down: button-down, up: button, disabled: button, disabledFontColor: grey }
+		toggle: {focusBorder: border, checked: button-down, down: button-down, up: button, font: default-font, fontColor: black, over: button-over, disabled: button, disabledFontColor: grey },
+		blue: {focusBorder: border, down: white, up: white, over: button-over, disabled: button, font: default-font, fontColor: black, disabledFontColor: grey },
+		menu-bar: {over: button-down, font: default-font, fontColor: black, down: button-down, up: button, disabled: button, disabledFontColor: grey },
+		tab-bar: {focusBorder: tab-border, down: button-down, up: button-blue, over: button-over, disabled: button, font: default-font, fontColor: white, disabledFontColor: grey },
 	},
 	com.kotcrab.vis.ui.widget.VisImageButton$VisImageButtonStyle: {
 		default: {down: button-down, up: button, over: button-over, disabled: button, focusBorder: border },
@@ -247,8 +249,8 @@
 		default: {fontColor: link-label, underline: white, font: default-font }
 	},
 	com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane$TabbedPaneStyle: {
-		default: {background: menu-bg, separatorBar: list-selection, vertical: false, buttonStyle: {down: button-down, up: button, checked: button-down, over: button-over, disabled: button, font: default-font, fontColor: white, disabledFontColor: grey} },
-		vertical: {vertical: true, background: menu-bg, separatorBar: list-selection, buttonStyle: {down: button-down, up: button, checked: button-down, over: button-over, disabled: button, font: default-font, fontColor: white, disabledFontColor: grey} }
+		default: {background: menu-bg, separatorBar: list-selection, vertical: false, buttonStyle: {down: button-down, up: button-blue, checked: button-down, over: button-over, disabled: button-down, font: default-font, fontColor: white, disabledFontColor: grey} },
+		vertical: {vertical: true, background: menu-bg, separatorBar: list-selection, buttonStyle: {down: button-down, up: button, checked: button-down, over: button-over, disabled: button-down, font: default-font, fontColor: white, disabledFontColor: grey} }
 	},
 	com.kotcrab.vis.ui.widget.spinner.Spinner$SpinnerStyle: {
 		default: {down: select-down, up: select-up }

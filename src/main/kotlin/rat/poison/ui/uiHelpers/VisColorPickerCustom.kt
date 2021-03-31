@@ -1,6 +1,7 @@
 package rat.poison.ui.uiHelpers
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.scenes.scene2d.ui.Button
 import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.widget.VisImageButton
 import com.kotcrab.vis.ui.widget.VisLabel
@@ -17,7 +18,7 @@ class VisColorPickerCustom(mainText: String, varName: String) : VisTable(false) 
     private val labelText = mainText
     private val variableName = varName
 
-    private val pickerImage = VisTextButton("")
+    private val pickerImage = VisTextButton("", "blue")
 
     private var colorPicker : ColorPicker
 
@@ -44,6 +45,8 @@ class VisColorPickerCustom(mainText: String, varName: String) : VisTable(false) 
         val col = curSettings.colorGDX[variableName]
         pickerImage.color = col
         colorPicker.color = col
+
+
 
 
         //pickerButton.setText(labelText)

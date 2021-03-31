@@ -66,8 +66,8 @@ class BoxEspTable: VisTable(false) {
         val label = VisLabel("Box")
         label.setColor(1F, 1F, 1F, 1F)
 
-        add(label).colspan(3).expandX().padTop(4F).row()
-        addSeparator().colspan(3).width(200F).top().height(2F).padBottom(8F)
+        add(label).colspan(2).expandX().padTop(4F).row()
+        addSeparator().colspan(2).width(200F).top().height(2F).padBottom(8F)
 
         add(boxEsp).colspan(2).left().row()
 
@@ -76,20 +76,20 @@ class BoxEspTable: VisTable(false) {
         add(boxSmokeCheck).colspan(2).left().row()
         add(farRadarBox).colspan(2).left().padBottom(8F).row()
 
-        add(showTeamBox).left()
-        add(boxTeamColor).left().row()
+        add(showTeamBox).left().padRight(175F - showTeamBox.width)
+        add(boxTeamColor).left().expandX().row()
 
-        add(showEnemiesBox).left()
-        add(boxEnemyColor).left().row()
+        add(showEnemiesBox).left().padRight(175F - showEnemiesBox.width)
+        add(boxEnemyColor).left().expandX().row()
 
-        add(showDefusers).left()
-        add(boxDefuserColor).left().row()
+        add(showDefusers).left().padRight(175F - showDefusers.width)
+        add(boxDefuserColor).left().expandX().row()
 
-        add(showWeapons).left().padBottom(8F)
-        add(boxWeaponsColor).left().row()
+        add(showWeapons).left().padRight(175F - showWeapons.width).padBottom(8F)
+        add(boxWeaponsColor).left().expandX().row()
 
         add(boxEspDetails).left()
-        add(boxDetailColor).left().row()
+        add(boxDetailColor).left().expandX().row()
 
         add(boxEspName).left()
         add(boxEspNamePos).left().row()

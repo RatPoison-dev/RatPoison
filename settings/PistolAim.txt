@@ -19,7 +19,7 @@ PISTOL_AIM_BONE = NEAREST
 
 //Aim FOV
 //Aims at entities inside this value
-PISTOL_AIM_FOV = 1.0
+PISTOL_AIM_FOV = 2.0
 
 //Aim speed
 //MS delay between aiming steps

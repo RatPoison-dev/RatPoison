@@ -32,8 +32,8 @@ class ChamsEspTable: VisTable(false) {
         val label = VisLabel("Chams")
         label.setColor(1F, 1F, 1F, 1F)
 
-        add(label).colspan(3).expandX().padTop(4F).row()
-        addSeparator().colspan(3).width(200F).top().height(2F).padBottom(8F)
+        add(label).colspan(2).expandX().padTop(4F).row()
+        addSeparator().colspan(2).width(200F).top().height(2F).padBottom(8F)
 
         add(chamsEsp).left().padRight(175F - chamsEsp.width)
         add(chamsShowHealth).left().expandX().row()

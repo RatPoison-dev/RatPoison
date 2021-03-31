@@ -3,6 +3,7 @@ package rat.poison.ui.uiPanels
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.VisWindow
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
@@ -11,6 +12,7 @@ import rat.poison.*
 import rat.poison.game.CSGO
 import rat.poison.scripts.sendPacket
 import rat.poison.scripts.visuals.disableAllEsp
+import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.randInt
@@ -32,19 +34,18 @@ val mainTabbedPane = TabbedPane()
 private var uid = 0//randInt(2, 999999)
 
 class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CONFIG - UID: $uid") {
-    val normHeight = 750F
-    val normWidth = 950F
+    private val normHeight = 750F
+    private val normWidth = 950F
 
     //Changed through runtime
     var wantedHeight = normHeight
     var wantedWidth = normWidth
 
     //Main content pane for all tabs
-    val mainTabbedPaneContent = VisTable(false)
+    private val mainTabbedPaneContent = VisTable(false)
 
     //Scroll pane for the content pane, content pane goes inside
     val mainScrollPane = ScrollPane(mainTabbedPaneContent) //Init scroll pane containing main content pane
-
 
     private var isResizingHeight = false
     private var isResizingWidth = false
@@ -61,13 +62,11 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         mainScrollPane.setFlickScroll(false)
         mainScrollPane.setScrollbarsVisible(true)
 
-
         //Main ui window settings
         x = 960F
         y = 540F
         align(Align.topLeft)
         isResizable = true
-
 
         //Add tabs to the tab header
         mainTabbedPane.add(aimTab)
@@ -85,110 +84,100 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         //Add aim tab content to the table
         mainTabbedPaneContent.add(aimTab.contentTable).left()
 
-        //Tab switch listener
-        mainTabbedPane.addListener(object : TabbedPaneAdapter() {
-            override fun switchedTab(tab: Tab?) {
-                if (tab == null) return
+        //AimButton
+        val aimButton = VisTextButton("Aim", "tab-bar")
+        aimButton.setColor(1F, 0.650F, 0.2F, 1F)
 
-                mainTabbedPaneContent.clear()
+        aimButton.changed { _, _ ->
+            mainTabbedPaneContent.clear()
+            mainTabbedPaneContent.add(aimTab.contentTable).growX().left()
+            true
+        }
 
-                when (tab) { //Update table content to tab selected content
-                    aimTab -> {
-                        wantedHeight = normHeight
-                        wantedWidth = normWidth
-                        changeWidth()
-                        changeHeight()
-                        mainTabbedPaneContent.add(aimTab.contentTable).left()
-                    }
+        //VisualsButton
+        val visualsButton = VisTextButton("Visuals", "tab-bar")
+        visualsButton.setColor(1F, 0.650F, 0.2F, 1F)
 
-                    optionsTab -> {
-                        wantedHeight = normHeight
-                        wantedWidth = normWidth
-                        changeWidth()
-                        changeHeight()
-                        mainTabbedPaneContent.add(optionsTab.contentTable).growX().left()
-                    }
+        visualsButton.changed { _, _ ->
+            mainTabbedPaneContent.clear()
+            mainTabbedPaneContent.add(visualsTab.contentTable).growX().left()
+        }
 
-                    rcsTab -> {
-                        wantedHeight = normHeight
-                        wantedWidth = normWidth
-                        changeWidth()
-                        changeHeight()
-                        mainTabbedPaneContent.add(rcsTab.contentTable).growX().left()
-                    }
+        //RcsButton
+        val rcsButton = VisTextButton("RCS", "tab-bar")
+        rcsButton.setColor(1F, 0.650F, 0.2F, 1F)
 
-                    visualsTab -> {
-                        wantedHeight = normHeight
-                        wantedWidth = normWidth
-                        changeWidth()
-                        changeHeight()
-                        mainTabbedPaneContent.add(visualsTab.contentTable).growX().left()
-                    }
+        rcsButton.changed { _, _ ->
+            mainTabbedPaneContent.clear()
+            mainTabbedPaneContent.add(rcsTab.contentTable).growX().left()
+        }
 
-                    miscTab -> {
-                        wantedHeight = normHeight
-                        wantedWidth = normWidth
-                        changeWidth()
-                        changeHeight()
-                        mainTabbedPaneContent.add(miscTab.contentTable).growX().left()
-                    }
+        //MiscButton
+        val miscButton = VisTextButton("Misc", "tab-bar")
+        miscButton.setColor(1F, 0.650F, 0.2F, 1F)
 
-                    ranksTab -> {
-                        wantedHeight = normHeight
-                        wantedWidth = normWidth
-                        changeWidth()
-                        changeHeight()
-                        mainTabbedPaneContent.add(ranksTab.contentTable).growX().left()
-                    }
+        miscButton.changed { _, _ ->
+            mainTabbedPaneContent.clear()
+            mainTabbedPaneContent.add(miscTab.contentTable).growX().left()
+        }
 
-                    nadeHelperTab -> {
-                        wantedHeight = normHeight
-                        wantedWidth = normWidth
-                        changeWidth()
-                        changeHeight()
-                        mainTabbedPaneContent.add(nadeHelperTab.contentTable).growX().left()
-                    }
+        //RanksButton
+        val ranksButton = VisTextButton("Ranks", "tab-bar")
+        ranksButton.setColor(1F, 0.650F, 0.2F, 1F)
 
-                    configsTab -> {
-                        wantedHeight = normHeight
-                        wantedWidth = normWidth
-                        changeWidth()
-                        changeHeight()
-                        mainTabbedPaneContent.add(configsTab.contentTable).growX().left()
-                    }
+        ranksButton.changed { _, _ ->
+            mainTabbedPaneContent.clear()
+            mainTabbedPaneContent.add(ranksTab.contentTable).growX().left()
+        }
 
-                    skinChangerTab -> {
-                        wantedHeight = if (CSGO.gameHeight < 1000F) {
-                            CSGO.gameHeight.toFloat() - 100F
-                        } else {
-                            1000F
-                        }
-                        wantedHeight = when (appless) {
-                            true -> normHeight
-                            false -> if (CSGO.gameHeight < 1000F) {
-                                CSGO.gameHeight.toFloat() - 100F
-                            } else {
-                                1000F
-                            }
-                        }
-                        //wantedWidth = normWidth
-                        //wantedHeight = normHeight
-                        changeWidth()
-                        changeHeight()
-                        mainTabbedPaneContent.add(skinChangerTab.contentTable).growX()
-                    }
-                }
+        //NadeHelperButton
+        val nadeHelperButton = VisTextButton("Nade Helper", "tab-bar")
+        nadeHelperButton.setColor(1F, 0.650F, 0.2F, 1F)
 
-                Thread {
-                    Thread.sleep(50)
-                    uiUpdate()
-                }.start()
-            }
-        })
+        nadeHelperButton.changed { _, _ ->
+            mainTabbedPaneContent.clear()
+            mainTabbedPaneContent.add(nadeHelperTab.contentTable).growX().left()
+        }
+
+        //SkinsButton
+        val skinsButton = VisTextButton("Skins", "tab-bar")
+        skinsButton.setColor(1F, 0.650F, 0.2F, 1F)
+
+        skinsButton.changed { _, _ ->
+            mainTabbedPaneContent.clear()
+            mainTabbedPaneContent.add(skinChangerTab.contentTable).growX().left()
+        }
+
+        //OptionsButton
+        val optionsButton = VisTextButton("Options", "tab-bar")
+        optionsButton.setColor(1F, 0.650F, 0.2F, 1F)
+
+        optionsButton.changed { _, _ ->
+            mainTabbedPaneContent.clear()
+            mainTabbedPaneContent.add(optionsTab.contentTable).growX().left()
+        }
+
+        //ConfigsButton
+        val configsButton = VisTextButton("Configs", "tab-bar")
+        configsButton.setColor(1F, 0.650F, 0.2F, 1F)
+
+        configsButton.changed { _, _ ->
+            mainTabbedPaneContent.clear()
+            mainTabbedPaneContent.add(configsTab.contentTable).growX().left()
+        }
+
 
         //Add tab pane & scroll pane to main ui window
-        add(mainTabbedPane.table).growX().fillY().top().minHeight(30F).left().row()
-        add(mainScrollPane).left().growX()
+        add(aimButton).growX().prefWidth(105F).left()
+        add(visualsButton).growX().prefWidth(105F).left()
+        add(rcsButton).growX().prefWidth(105F).left()
+        add(miscButton).growX().prefWidth(105F).left()
+        add(ranksButton).growX().prefWidth(105F).left()
+        add(nadeHelperButton).growX().prefWidth(105F).left()
+        add(skinsButton).growX().prefWidth(105F).left()
+        add(optionsButton).growX().prefWidth(105F).left()
+        add(configsButton).growX().prefWidth(105F).left().row()
+        add(mainScrollPane).left().growX().colspan(9)
         pack()
         centerWindow()
 
@@ -197,16 +186,6 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         changeWidth()
         changeHeight()
     }
-
-    //override fun positionChanged() {
-    //    updateChilds()
-    //}
-
-    //fun updateChilds() {
-    //    if (opened) {
-    //        uiAimOverridenWeapons.setPosition(x, y + height - uiAimOverridenWeapons.height)
-    //    }
-    //}
 
     fun closeMenu() {
         haltProcess = true
@@ -229,7 +208,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         color.a = alpha
     }
 
-    fun changeHeight() {
+    private fun changeHeight() {
         if (!isResizingHeight) {
             isResizingHeight = true
             Thread {
@@ -250,7 +229,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         }
     }
 
-    fun changeWidth() {
+    private fun changeWidth() {
         if (!isResizingWidth) {
             isResizingWidth = true
             Thread {
