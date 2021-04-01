@@ -1,5 +1,6 @@
 package rat.poison.ui.uiPanels
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.widget.VisTable
@@ -50,6 +51,8 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
     private var isResizingHeight = false
     private var isResizingWidth = false
 
+    var lastCheckedTab = VisTextButton("")
+
     init {
         defaults().left()
 
@@ -84,86 +87,124 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         //Add aim tab content to the table
         mainTabbedPaneContent.add(aimTab.contentTable).left()
 
+        val buttonColor = Color(.13F, 0.66F, 1F, 1F)
+        val buttonClicked = Color(.13F, 0.4F, 1F, 1F)
+
         //AimButton
         val aimButton = VisTextButton("Aim", "tab-bar")
-        aimButton.setColor(1F, 0.650F, 0.2F, 1F)
+        aimButton.setColor(buttonColor)
 
         aimButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
             mainTabbedPaneContent.add(aimTab.contentTable).growX().left()
+            lastCheckedTab.color = buttonColor
+            lastCheckedTab = aimButton
+            aimButton.color = buttonClicked
             true
         }
 
         //VisualsButton
         val visualsButton = VisTextButton("Visuals", "tab-bar")
-        visualsButton.setColor(1F, 0.650F, 0.2F, 1F)
+        visualsButton.setColor(buttonColor)
 
         visualsButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
             mainTabbedPaneContent.add(visualsTab.contentTable).growX().left()
+            lastCheckedTab.color = buttonColor
+            lastCheckedTab = visualsButton
+            visualsButton.color = buttonClicked
+            true
         }
 
         //RcsButton
         val rcsButton = VisTextButton("RCS", "tab-bar")
-        rcsButton.setColor(1F, 0.650F, 0.2F, 1F)
+        rcsButton.setColor(buttonColor)
 
         rcsButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
             mainTabbedPaneContent.add(rcsTab.contentTable).growX().left()
+            lastCheckedTab.color = buttonColor
+            lastCheckedTab = rcsButton
+            rcsButton.color = buttonClicked
+            true
         }
 
         //MiscButton
         val miscButton = VisTextButton("Misc", "tab-bar")
-        miscButton.setColor(1F, 0.650F, 0.2F, 1F)
+        miscButton.setColor(buttonColor)
 
         miscButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
             mainTabbedPaneContent.add(miscTab.contentTable).growX().left()
+            lastCheckedTab.color = buttonColor
+            lastCheckedTab = miscButton
+            miscButton.color = buttonClicked
+            true
         }
 
         //RanksButton
         val ranksButton = VisTextButton("Ranks", "tab-bar")
-        ranksButton.setColor(1F, 0.650F, 0.2F, 1F)
+        ranksButton.setColor(buttonColor)
 
         ranksButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
             mainTabbedPaneContent.add(ranksTab.contentTable).growX().left()
+            lastCheckedTab.color = buttonColor
+            lastCheckedTab = ranksButton
+            ranksButton.color = buttonClicked
+            true
         }
 
         //NadeHelperButton
         val nadeHelperButton = VisTextButton("Nade Helper", "tab-bar")
-        nadeHelperButton.setColor(1F, 0.650F, 0.2F, 1F)
+        nadeHelperButton.setColor(buttonColor)
 
         nadeHelperButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
             mainTabbedPaneContent.add(nadeHelperTab.contentTable).growX().left()
+            lastCheckedTab.color = buttonColor
+            lastCheckedTab = nadeHelperButton
+            nadeHelperButton.color = buttonClicked
+            true
         }
 
         //SkinsButton
         val skinsButton = VisTextButton("Skins", "tab-bar")
-        skinsButton.setColor(1F, 0.650F, 0.2F, 1F)
+        skinsButton.setColor(buttonColor)
 
         skinsButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
             mainTabbedPaneContent.add(skinChangerTab.contentTable).growX().left()
+            lastCheckedTab.color = buttonColor
+            lastCheckedTab = skinsButton
+            skinsButton.color = buttonClicked
+            true
         }
 
         //OptionsButton
         val optionsButton = VisTextButton("Options", "tab-bar")
-        optionsButton.setColor(1F, 0.650F, 0.2F, 1F)
+        optionsButton.setColor(buttonColor)
 
         optionsButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
             mainTabbedPaneContent.add(optionsTab.contentTable).growX().left()
+            lastCheckedTab.color = buttonColor
+            lastCheckedTab = optionsButton
+            optionsButton.color = buttonClicked
+            true
         }
 
         //ConfigsButton
         val configsButton = VisTextButton("Configs", "tab-bar")
-        configsButton.setColor(1F, 0.650F, 0.2F, 1F)
+        configsButton.setColor(buttonColor)
 
         configsButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
             mainTabbedPaneContent.add(configsTab.contentTable).growX().left()
+            lastCheckedTab.color = buttonColor
+            lastCheckedTab = configsButton
+            configsButton.color = buttonClicked
+            true
         }
 
 
