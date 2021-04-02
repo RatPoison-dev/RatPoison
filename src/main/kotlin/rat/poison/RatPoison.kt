@@ -46,7 +46,7 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Beta"
 const val F_VERSION = "1.8"
-const val M_VERSION = "1.8.5.4"
+const val M_VERSION = "1.8.5.5"
 var LOADED_CONFIG = "DEFAULT"
 var oWeaponSize = oWeapon::class.java.declaredFields.size
 
@@ -78,7 +78,6 @@ fun main() {
 
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
     loadSkinSettings("$SETTINGS_DIRECTORY/skinCFGS/DefaultSettings.cfg")
-    "[-1]".boneToNum()
 
     detectLocale()
 
