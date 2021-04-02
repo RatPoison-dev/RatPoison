@@ -19,6 +19,7 @@ import rat.poison.ui.uiHelpers.VisCombobox
 import rat.poison.ui.uiPanels.configsTab
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.*
+import rat.poison.utils.extensions.lower
 import rat.poison.utils.generalUtil.has
 import rat.poison.utils.generalUtil.loadLocale
 import rat.poison.utils.generalUtil.stringToList
@@ -339,6 +340,7 @@ class ConfigsTab : Tab(false, false) {
     }
 
     private fun updateCloudConfigsList() {
+        if (saving) return
         cloudConfigListAdapter.clear()
         if (!curSettings.bool["DISPLAY_CLOUD_CONFIGS"]) return
         val categoriesList = curSettings["DISPLAY_CLOUD_CONFIGS_CATEGORIES"].stringToList()
@@ -349,7 +351,7 @@ class ConfigsTab : Tab(false, false) {
             shouldRefresh = false
         }
         configsList.forEach { ronfig ->
-            if (((appless && ronfig.tag2 == "appless") || (!appless && ronfig.tag2 == "menu")) && categoriesList.has { (it as String).toLowerCase() == ronfig.tag1 }) cloudConfigListAdapter.add(ronfig.toString())
+            if (((appless && ronfig.tag2 == "appless") || (!appless && ronfig.tag2 == "menu")) && categoriesList.has { (it as String).lower() == ronfig.tag1 }) cloudConfigListAdapter.add(ronfig.toString())
         }
     }
 

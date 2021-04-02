@@ -12,6 +12,7 @@ import rat.poison.dbg
 import rat.poison.toLocale
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
+import rat.poison.utils.extensions.upper
 import rat.poison.utils.generalUtil.stringToList
 import rat.poison.utils.generalUtil.stringToLocaleList
 
@@ -33,7 +34,7 @@ class VisCombobox(mainText: String, varName: String, useCategory: Boolean = fals
 
         selectBox.changed { _, _ ->
             if (selectBox.selectedIndex == 0) return@changed true
-            val selected = boxItems[selectBox.selectedIndex-1] // actual index
+            val selected = boxItems[selectBox.selectedIndex-1].upper() // actual index
             val includes = selected in selectedList
             if (includes) {
                 selectedList.remove(selected)

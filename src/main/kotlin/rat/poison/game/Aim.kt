@@ -13,12 +13,16 @@ import java.lang.Math.toDegrees
 import kotlin.math.atan
 import kotlin.math.atan2
 import kotlin.math.sqrt
-
+private val positionVector = ThreadLocal.withInitial { Vector() }
+private val punchVector = ThreadLocal.withInitial { Vector() }
+private val ang2 = ThreadLocal.withInitial { Vector() }
 fun getCalculatedAngle(player: Player, dst: Vector): Angle {
-	val ang = Angle()
+	val ang = ang2.get()
+	val punchVector = punchVector.get()
+	val positionVector = positionVector.get()
 
-	val myPunch = player.punch()
-	val myPosition = player.position()
+	val myPunch = player.punch(punchVector)
+	val myPosition = player.position(positionVector)
 
 	val dX = myPosition.x - dst.x
 	val dY = myPosition.y - dst.y
@@ -53,11 +57,18 @@ fun getCalculatedAngle(player: Player, dst: Vector): Angle {
 
 	return ang
 }
-
+private val positionVector1 = ThreadLocal.withInitial { Vector() }
+private val playerPunch = ThreadLocal.withInitial { Vector() }
+private val deltaVec = ThreadLocal.withInitial { Vector() }
+private val ang = ThreadLocal.withInitial { Vector() }
 fun realCalcAngle(player: Player, dst: Vector): Angle {
-	val playerPos = player.position()
-	val delta = Vector(dst.x - playerPos.x, dst.y - playerPos.y, dst.z - playerPos.z + csgoEXE.float(player + vecViewOffset))
-	val myPunch = player.punch()
+	val positionVector1 = positionVector1.get()
+	val ang = ang.get()
+	val playerPos = player.position(positionVector1)
+	val deltaVec = deltaVec.get()
+	val playerPunch = playerPunch.get()
+	val delta = deltaVec.set(dst.x - playerPos.x, dst.y - playerPos.y, dst.z - playerPos.z + csgoEXE.float(player + vecViewOffset))
+	val myPunch = player.punch(playerPunch)
 
 	var aX = toDegrees(atan2(-delta.z, sqrt(delta.x*delta.x + delta.y*delta.y)).toDouble())
 	var aY = toDegrees(atan2(delta.y, delta.x).toDouble())
@@ -79,7 +90,7 @@ fun realCalcAngle(player: Player, dst: Vector): Angle {
 		}
 	} //else don't factor
 
-	val ang = Angle(aX.toFloat(), aY.toFloat(), 0F)
+	ang.set(aX.toFloat(), aY.toFloat(), 0F)
 	ang.normalize()
 
 	return ang

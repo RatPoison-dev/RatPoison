@@ -29,7 +29,9 @@ fun footStepEsp() {
     }
 }
 
-
+private val entPosVec = Vector()
+private val outVec = Vector()
+private val matrix = Matrix4()
 fun runFootSteps() = App {
     if (!curSettings.bool["ENABLE_ESP"]) return@App
 
@@ -50,9 +52,7 @@ fun runFootSteps() = App {
 
             if (curSettings.int["FOOTSTEP_TYPE"] == 1) {
                 //As text
-                val inVec = Vector(footSteps[i].x, footSteps[i].y, footSteps[i].z)
-                val outVec = Vector()
-                if (worldToScreen(inVec, outVec)) {
+                if (worldToScreen(footSteps[i].x, footSteps[i].y, footSteps[i].z, outVec)) {
                     sb.begin()
 
                     textRenderer.color = color
@@ -68,7 +68,7 @@ fun runFootSteps() = App {
                         end()
                     }
 
-                    val gameMatrix = w2sViewMatrix.toMatrix4()
+                    val gameMatrix = w2sViewMatrix.toMatrix4(matrix)
 
                     begin()
                     this.color = color
@@ -88,20 +88,22 @@ fun runFootSteps() = App {
     }
 }
 
+private val entVel = Vector()
+private const val id = "constructsteps"
 private fun constructSteps() = every(10) {
     stepTimer+= 1
     if (stepTimer >= curSettings.int["FOOTSTEP_UPDATE"]) {
-        forEntities(EntityType.CCSPlayer) {
+        forEntities(EntityType.CCSPlayer, identifier = id) {
             val ent = it.entity
             if (ent == me || ent.dead() || ent.dormant()) return@forEntities
 
             val inMyTeam = ent.team() == meTeam
 
-            val entVel = ent.velocity()
+            val entVel = ent.velocity(entVel)
             val entMag = sqrt(entVel.x.pow(2F) + entVel.y.pow(2F) + entVel.z.pow(2F))
 
             if (entMag >= 150) {
-                val entPos = ent.absPosition()
+                val entPos = ent.absPosition(entPosVec)
 
                 val idx = emptySlot()
                 if (idx != -1) {

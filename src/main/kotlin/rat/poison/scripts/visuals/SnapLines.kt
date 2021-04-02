@@ -1,6 +1,5 @@
 package rat.poison.scripts.visuals
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import rat.poison.curSettings
 import rat.poison.game.*
@@ -10,46 +9,18 @@ import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
 import rat.poison.utils.inGame
 
+private const val emptyString = ""
+private val positionVector = Vector()
+private const val id = "snaplines"
 //TODO god fix this eventually g
+private val w2sRet = Vector()
 fun snapLines() = App {
     if (!curSettings.bool["ENABLE_SNAPLINES"] || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()
 
-    if (curSettings.bool["SNAPLINES_DEFUSE_KITS"]) {
-        forEntities(EntityType.CEconEntity) {
-            val entPos = it.entity.position()
-            val vec = Vector()
-
-            if (curSettings.bool["SNAPLINES_SMOKE_CHECK"] && lineThroughSmoke(it.entity)) return@forEntities
-
-            if (!(entPos.x == 0F && entPos.y == 0F && entPos.z == 0F)) {
-                shapeRenderer.apply {
-                    if (shapeRenderer.isDrawing) {
-                        end()
-                    }
-
-                    begin()
-
-                    val drawColor = curSettings.color["SNAPLINES_DEFUSE_KIT_COLOR"]
-                    color = Color(drawColor.red/255F, drawColor.green/255F, drawColor.blue/255F, .5F)
-
-                    set(ShapeRenderer.ShapeType.Filled)
-                    if (worldToScreen(entPos, vec)) { //Onscreen
-                        rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, vec.y, curSettings.float["SNAPLINES_WIDTH"])
-                    } else { //Offscreen
-                        rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, -vec.y, curSettings.float["SNAPLINES_WIDTH"])
-                    }
-                    set(ShapeRenderer.ShapeType.Line)
-
-                    end()
-                }
-            }
-        }
-    }
-
-    forEntities {
+    forEntities(EntityType.CCSPlayer, EntityType.CPlantedC4, EntityType.CC4, EntityType.CEconEntity, iterateWeapons = true, identifier = id) {
         val entity = it.entity
         var colStr = ""
 
@@ -89,13 +60,17 @@ fun snapLines() = App {
                 colStr = "SNAPLINES_BOMB_COLOR"
             }
 
+            EntityType.CEconEntity -> if (curSettings.bool["SNAPLINES_DEFUSE_KITS"]) {
+                colStr = "SNAPLINES_DEFUSE_KIT_COLOR"
+            }
+
             else ->
-                if (curSettings.bool["SNAPLINES_WEAPONS"] && it.type.weapon) {
+                if (curSettings.bool["SNAPLINES_WEAPONS"]) {
                     colStr = "SNAPLINES_WEAPON_COLOR"
                 }
         }
 
-        if (colStr.isBlank()) return@forEntities
+        if (colStr == emptyString) return@forEntities
 
         shapeRenderer.apply {
             if (shapeRenderer.isDrawing) {
@@ -104,19 +79,17 @@ fun snapLines() = App {
 
             begin()
 
-            val drawColor = curSettings.color[colStr]
-            color = Color(drawColor.red/255F, drawColor.green/255F, drawColor.blue/255F, .5F)
+            color = curSettings.colorGDX[colStr]
 
-            val entPos = entity.absPosition()
-            val vec = Vector()
+            val entPos = entity.absPosition(positionVector)
 
             if ((entPos.x == 0F && entPos.y == 0F && entPos.z == 0F)) return@forEntities
 
             set(ShapeRenderer.ShapeType.Filled)
-            if (worldToScreen(entPos, vec)) { //Onscreen
-                rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, vec.y, curSettings.float["SNAPLINES_WIDTH"])
+            if (worldToScreen(entPos, w2sRet)) { //Onscreen
+                rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, w2sRet.x, w2sRet.y, curSettings.float["SNAPLINES_WIDTH"])
             } else { //Offscreen
-                rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, vec.x, -vec.y, curSettings.float["SNAPLINES_WIDTH"])
+                rectLine(CSGO.gameWidth / 2F, CSGO.gameHeight / 4F, w2sRet.x, -w2sRet.y, curSettings.float["SNAPLINES_WIDTH"])
             }
             set(ShapeRenderer.ShapeType.Line)
 

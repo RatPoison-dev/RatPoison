@@ -34,6 +34,7 @@ class FindTargetResult(var player: Player = -1L, var bone: Int = -1) {
 
 val findTargetResult = ThreadLocal.withInitial { FindTargetResult() }
 
+private const val id = "findtarget"
 fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			   lockFOV: Float = curSettings.float["AIM_FOV"], BONE: String = curSettings["AIM_BONE"], visCheck: Boolean = true, teamCheck: Boolean = true): FindTargetResult {
 	val result = findTargetResult.get()
@@ -42,28 +43,41 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	var closestDelta = Float.MAX_VALUE
 	var closestPlayer = -1L
 	var closestBone = -1
+	var forceSpecificBone = -1
 
 	val bones = BONE.stringToIntList()
-	val findNearest = bones.has { 0 > it as Int }
-	val findRandom = bones.has { it as Int == RANDOM_BONE }
+	val findNearest = bones.has { it == NEAREST_BONE }
+	val findRandom = bones.has { 0 > it as Int }
 
-	forEntities(EntityType.CCSPlayer) {
+	forEntities(EntityType.CCSPlayer, identifier = id) {
 		val entity = it.entity
 		if (entity <= 0 || entity == me || !entity.canShoot(visCheck, teamCheck)) {
 			return@forEntities
 		}
-		if (findRandom) {
-			bones.clear()
-			bones.add(5 + randInt(0, 3))
-		}
-		else if (findNearest) {
-			bones.clear()
+		if (findNearest) {
 			val nB = entity.nearestBone()
-			if (nB != INVALID_NEAREST_BONE) bones.add(nB)
+			if (nB != INVALID_NEAREST_BONE) forceSpecificBone = nB
 		}
-		bones.forEach { bone ->
+		else if (findRandom) {
+			forceSpecificBone = 5 + randInt(0, 3)
+		}
+		if (forceSpecificBone == -1) {
+			for (i in 0 until bones.size) {
+				val bone = bones[i]
+				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, bone)
 
-			val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, bone)
+				val fov = arr.fov
+
+				if (fov > 0F) {
+					closestFOV = fov
+					closestDelta = arr.delta
+					closestPlayer = arr.player
+					closestBone = bone
+				}
+			}
+		}
+		else {
+			val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, forceSpecificBone)
 
 			val fov = arr.fov
 
@@ -71,9 +85,10 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 				closestFOV = fov
 				closestDelta = arr.delta
 				closestPlayer = arr.player
-				closestBone = bone
+				closestBone = forceSpecificBone
 			}
 		}
+
 	}
 
 	if (closestDelta == Float.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return result
@@ -96,12 +111,13 @@ data class CalcTargetResult(var fov: Float = -1F, var delta: Float = -1F, var pl
 	}
 }
 val calcTargetResult = ThreadLocal.withInitial {CalcTargetResult()}
-
+private val boneVec = Vector()
+private val ang = Vector()
 fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Angle, curAngle: Angle, lockFOV: Float = curSettings.float["AIM_FOV"], BONE: Int, ovrStatic: Boolean = false): CalcTargetResult {
 	val result = calcTargetResult.get()
 	result.reset()
 
-	var ePos: Angle = entity.bones(BONE)
+	var ePos: Angle = entity.bones(BONE, boneVec)
 
 	if (ovrStatic) {
 		ePos = position
@@ -130,7 +146,7 @@ fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Angle, curAngl
 	} else {
 		val calcAng = realCalcAngle(me, ePos)
 
-		val delta = Angle(curAngle.x - calcAng.x, curAngle.y - calcAng.y, 0F)
+		val delta = ang.set(curAngle.x - calcAng.x, curAngle.y - calcAng.y, 0F)
 		delta.normalize()
 
 		val fov = sqrt(delta.x.pow(2F) + delta.y.pow(2F))
@@ -158,6 +174,9 @@ fun Entity.canShoot(visCheck: Boolean = true, teamCheck: Boolean = true) = ((if 
 		&& !meDead)
 
 const val INVALID_NEAREST_BONE = 999
+private val meAng = Vector()
+private val mePos = Vector()
+private val boneVec2 = Vector()
 internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boolean,
 								  crossinline doAim: (destinationAngle: Angle,
 													  currentAngle: Angle, aimSpeed: Int, aimSpeedDivisor: Int) -> R) = every(duration) {
@@ -201,8 +220,8 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 
 	var currentTarget = target
 
-	val currentAngle = clientState.angle()
-	val position = me.position()
+	val currentAngle = clientState.angle(meAng)
+	val position = me.position(mePos)
 	val shouldVisCheck = !(forceAim && curSettings.bool["FORCE_AIM_THROUGH_WALLS"])
 
 	var aB = curSettings["AIM_BONE"]
@@ -248,7 +267,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		reset()
 		Thread.sleep(curSettings.int["AIM_TARGET_SWAP_DELAY"].toLong())
 	} else {
-		var bonePosition = currentTarget.bones(destBone)
+		val bonePosition = currentTarget.bones(destBone, boneVec2)
 
 		//bonePosition += currentTarget.positionNextTick()
 

@@ -14,20 +14,23 @@ import rat.poison.game.offsets.ClientOffsets.dwForceForward
 import rat.poison.game.offsets.ClientOffsets.dwForceLeft
 import rat.poison.game.offsets.ClientOffsets.dwForceRight
 import rat.poison.scripts.aim.meDead
+import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.keyPressed
 import java.awt.event.KeyEvent.*
 import kotlin.math.cos
 import kotlin.math.sin
 
+private val meAng = Vector()
+private val meVel = Vector()
 internal fun fastStop() = every(4, inGameCheck = true) {
     if (!curSettings.bool["FAST_STOP"] || meDead) return@every
 
     updateCursorEnable()
     if (cursorEnable) return@every
 
-    val vel = me.velocity()
-    val yaw = clientState.angle().y
+    val vel = me.velocity(meVel)
+    val yaw = clientState.angle(meAng).y
 
     //Velocity relative to player direction
     val x = (vel.x * cos(yaw / 180 * Math.PI) + vel.y * sin(yaw / 180 * Math.PI))

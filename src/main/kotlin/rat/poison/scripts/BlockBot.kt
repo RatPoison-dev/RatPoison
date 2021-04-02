@@ -5,10 +5,7 @@ import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.robot
-import rat.poison.utils.Angle
-import rat.poison.utils.distanceTo
-import rat.poison.utils.every
-import rat.poison.utils.keyPressed
+import rat.poison.utils.*
 import java.awt.event.KeyEvent
 import kotlin.math.atan2
 
@@ -41,25 +38,28 @@ fun unPress() {
     unPressA()
     unPressD()
 }
-
+private val mePos = Vector()
+private val meAng = Vector()
+private val closestPos = Vector()
+private const val forEntsId = "blockbot"
 fun blockBot() = every(2, inGameCheck = true) {
     if (!curSettings.bool["BLOCK_BOT"] || !keyPressed(curSettings.int["BLOCK_BOT_KEY"])) {
         unPress()
         return@every
     }
 
-    val localAngles = me.eyeAngle()
-    var myPosition = me.position()
+    val localAngles = me.eyeAngle(meAng)
+    var myPosition = me.position(mePos)
 
     var closestDist = -1F
     var closestTarget = -1L
     val maxDist = curSettings.int["BLOCK_BOT_DISTANCE"]
 
-    forEntities(EntityType.CCSPlayer) {
+    forEntities(EntityType.CCSPlayer, identifier = forEntsId) {
         val entity = it.entity
         if (entity == me || entity.dead() || entity.dead() || entity <= 0) return@forEntities
 
-        var myDistance = myPosition.distanceTo(entity.position())
+        var myDistance = myPosition.distanceTo(entity.position(closestPos))
         if ((myDistance < closestDist || closestDist == -1F) && myDistance <= maxDist) {
             closestDist = myDistance
             closestTarget = entity
@@ -68,7 +68,7 @@ fun blockBot() = every(2, inGameCheck = true) {
 
     if (closestTarget == -1L) return@every
 
-    val vecForward = sub3(closestTarget.position(), myPosition)
+    val vecForward = sub3(closestPos, myPosition)
     val otherYaw = yaw3(vecForward)
     //val targetVelocity = closestTarget.velocity()
     //val targetSpeed = sqrt(targetVelocity.x * targetVelocity.x + targetVelocity.y * targetVelocity.y)

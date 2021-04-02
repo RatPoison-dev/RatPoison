@@ -3,14 +3,13 @@ package rat.poison.utils.generalUtil
 import org.apache.commons.lang3.StringUtils.isNumeric
 import rat.poison.*
 import rat.poison.scripts.aim.numToBone
+import rat.poison.utils.extensions.upper
 import rat.poison.utils.saving
 import java.io.File
 import java.io.FileReader
-import java.util.regex.Pattern
 import kotlin.text.Charsets.UTF_8
 
 private val keybindsSettings = listOf("AIM_TOGGLE_KEY", "FORCE_AIM_KEY", "FORCE_AIM_BONE_KEY", "TRIGGER_KEY", "VISUALS_TOGGLE_KEY", "D_SPAM_KEY", "W_SPAM_KEY", "MENU_KEY")
-private val DEFAULT_INVALID_LIST = listOf("")
 
 fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
     println("Loading settings... "  + if (specificFile) { fileDir } else "")
@@ -90,7 +89,7 @@ fun loadSkinSettings(fileDir: String) {
 //vroom
 fun validateSetting(settingName: String, value: String): Boolean {
     var valid = true
-    val inpValue = value.toUpperCase()
+    val inpValue = value.upper()
 
 
     if (!validSettingsMap["SKIP"]!!.contains(settingName)) {
@@ -117,11 +116,11 @@ fun validateSetting(settingName: String, value: String): Boolean {
             tStr = tStr.replace("oWeapon(", "").replace(")", "")
             val tSA = tStr.split(", ") //temp String Array
             val weapon = oWeapon()
-            if (size > 6 && tSA.pull(5).stringToList(";").has { isNumeric(it as String) }) {
-                weapon.tAimBone = tSA.pull(5).stringToIntList().map { it.numToBone() }
+            if (size > 6 && tSA.pull(5).stringToList(";").all { isNumeric(it) }) {
+                //weapon.tAimBone = tSA.pull(5).stringToIntList().map { it.numToBone() }
             }
-            if (size > 7 && tSA.pull(6).stringToList(";").has { isNumeric(it as String) }) {
-                weapon.tForceBone = tSA.pull(6).stringToIntList().map { it.numToBone() }
+            if (size > 7 && tSA.pull(6).stringToList(";").all { isNumeric(it) }) {
+                //weapon.tForceBone = tSA.pull(6).stringToIntList().map { it.numToBone() }
             }
             weapon.apply {
                 tOverride = if (size > 1) tSA.pull(0).safeToBool(defaultValue = tOverride) else tOverride
@@ -162,28 +161,3 @@ fun validateSetting(settingName: String, value: String): Boolean {
 }
 
 val validSettingsMap = mutableMapOf(Pair("SKIP", listOf("AIM_BONE", "FORCE_AIM_BONE")), Pair("BONE", listOf("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "PELVIS", "RANDOM")), Pair("BOX_POS", listOf("LEFT", "RIGHT", "TOP", "BOTTOM")), Pair("GLOW_TYPE", listOf("NORMAL", "MODEL", "VISIBLE", "VISIBLE-FLICKER")), Pair("FOV_TYPE", listOf("STATIC", "DISTANCE")))
-
-
-private val intPattern = Pattern.compile("-?\\d+")
-fun String.stringToIntList(): MutableList<Int> {
-    val list = mutableListOf<Int>()
-    val match = intPattern.matcher(this)
-    while (match.find()) {
-       list.add(match.group().toInt())
-    }
-    return list
-}
-
-//move elsewhere
-fun String.stringToList(separator: String = ","): List<String> {
-    val list = mutableListOf<String>()
-    val strList = this.replace("[", "").replace("]", "").replace(" ", "").split(separator)
-
-    if (strList != DEFAULT_INVALID_LIST) {
-        for (i in strList) {
-            list.add(i)
-        }
-    }
-
-    return list
-}

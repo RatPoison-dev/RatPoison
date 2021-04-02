@@ -8,7 +8,6 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.overlay.App
-import rat.poison.overlay.App.shapeRenderer
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.Vector
 import rat.poison.utils.extensions.uint
@@ -17,31 +16,18 @@ import rat.poison.utils.threadLocalPointer
 
 private const val modelMemorySize = 21332
 private var modelMemory = threadLocalPointer(modelMemorySize)
-private const val boneMemorySize = 21332
+private const val boneMemorySize = 5000
 private var boneMemory = threadLocalPointer(boneMemorySize)
-private var bones = mutableListOf<Vector>()
 private var health = -1
+private const val skeletonEspIdentifier = "skeletonesp"
 
-fun connectBones() {
-	bones.forEachIndexed { index, vector ->
-		if (index % 2 != 0) return@forEachIndexed
-		val nextVec = bones[index + 1]
-		val w2sRet1 = Vector()
-		val w2sRet2 = Vector()
-		if (worldToScreen(vector, w2sRet1) && worldToScreen(nextVec, w2sRet2)) {
-			shapeRenderer.begin()
-			shapeRenderer.color = Color(1F - (.01F * health), (.01F * health), 0F, 1F)
-			shapeRenderer.line(w2sRet1.x, w2sRet1.y, w2sRet2.x, w2sRet2.y)
-			shapeRenderer.end()
-		}
-	}
-}
-
+private val w2sRet1 = Vector()
+private val w2sRet2 = Vector()
+private val c = Color()
 fun skeletonEsp() = App {
 	if (!curSettings.bool["SKELETON_ESP"] || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
-	bones.clear()
-	forEntities(EntityType.CCSPlayer) {
-		bones.clear()
+	shapeRenderer.begin()
+	forEntities(EntityType.CCSPlayer, identifier = skeletonEspIdentifier) {
 		val entity = it.entity
 		val entTeam = entity.team()
 
@@ -55,6 +41,8 @@ fun skeletonEsp() = App {
 		val boneMatrix = entity.boneMatrix()
 		val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
 		health = entity.health()
+		c.set(1F - (.01F * health), (.01F * health), 0F, 1F)
+		shapeRenderer.color = c
 
 		//Get actual size
 		val modelMemory = modelMemory.get()
@@ -68,18 +56,17 @@ fun skeletonEsp() = App {
 			if (parent != -1) {
 				val flags = modelMemory.getInt(0xA0L + offset).unsign() and 0x100
 				if (flags != 0L) {
-					bones.add(Vector(
-						boneMemory.getFloat(((0x30L * parent) + 0xC)),
-						boneMemory.getFloat(((0x30L * parent) + 0x1C)),
-						boneMemory.getFloat(((0x30L * parent) + 0x2C))))
-					bones.add(Vector(
-						boneMemory.getFloat(((0x30L * idx) + 0xC)),
-						boneMemory.getFloat(((0x30L * idx) + 0x1C)),
-						boneMemory.getFloat(((0x30L * idx) + 0x2C))))
+					if (worldToScreen(boneMemory.getFloat(((0x30L * parent) + 0xC)),
+							boneMemory.getFloat(((0x30L * parent) + 0x1C)),
+							boneMemory.getFloat(((0x30L * parent) + 0x2C)), w2sRet1) && worldToScreen(boneMemory.getFloat(((0x30L * idx) + 0xC)),
+							boneMemory.getFloat(((0x30L * idx) + 0x1C)),
+							boneMemory.getFloat(((0x30L * idx) + 0x2C)), w2sRet2)) {
+						shapeRenderer.line(w2sRet1.x, w2sRet1.y, w2sRet2.x, w2sRet2.y)
+					}
 				}
 			}
 			offset += 216
 		}
-		connectBones()
 	}
+	shapeRenderer.end()
 }

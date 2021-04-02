@@ -12,6 +12,8 @@ import rat.poison.utils.pathAim
 import java.awt.event.KeyEvent
 import java.awt.event.MouseEvent
 
+private val meAng = Angle()
+private val ong = Angle()
 fun selfNade() {
     Thread(Runnable {
         if (MENUTOG) {
@@ -19,8 +21,8 @@ fun selfNade() {
         }
         Thread.sleep(50)
 
-        val curAng = clientState.angle()
-        val destAng = Angle() //= curAng doesnt work??
+        val curAng = clientState.angle(meAng)
+        val destAng = ong //= curAng doesnt work??
         destAng.set(-89F, curAng.y, curAng.z)
         destAng.normalize()
 

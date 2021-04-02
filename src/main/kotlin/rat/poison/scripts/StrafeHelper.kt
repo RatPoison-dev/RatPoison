@@ -10,6 +10,7 @@ import rat.poison.game.me
 import rat.poison.robot
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
+import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.inBackground
 import rat.poison.utils.keyPressed
@@ -17,6 +18,7 @@ import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.VK_SPACE
 
 private var lastAngY = 0.0F
+private val meAng = Vector()
 
 fun strafeHelper() = every(2, inGameCheck = true) {
     if (MENUTOG || inBackground || meDead) return@every
@@ -25,7 +27,7 @@ fun strafeHelper() = every(2, inGameCheck = true) {
 
     updateCursorEnable()
     if (cursorEnable) return@every
-    val curAngY = clientState.angle().y
+    val curAngY = clientState.angle(meAng).y
     val grounded = me.onGround()
 
     if ((curSettings.bool["STRAFE_BHOP_ONLY"] && keyPressed(VK_SPACE)) || (!curSettings.bool["STRAFE_BHOP_ONLY"])) {

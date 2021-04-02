@@ -20,7 +20,7 @@ class UIBombTimer : VisWindow("Bomb-Timer".toLocale()) {
         defaults().left()
         addCloseButton()
 
-        bombText = VisLabel(bombState.toString())
+        bombText = VisLabel(bombState.getString())
 
         //Create UI_Alpha Slider
         val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, false)

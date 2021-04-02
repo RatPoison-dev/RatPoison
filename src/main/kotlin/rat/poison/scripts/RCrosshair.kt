@@ -18,10 +18,14 @@ import rat.poison.scripts.aim.meCurWepEnt
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.uiPanels.mainTabbedPane
 import rat.poison.ui.uiPanels.rcsTab
+import rat.poison.utils.Vector
+import rat.poison.utils.extensions.upper
 import rat.poison.utils.inGame
 import java.lang.Math.toRadians
 import kotlin.math.*
 
+private val mePunchVec = Vector()
+private val meVelocity = Vector()
 internal fun rcrosshair() = App {
     if (!curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
@@ -54,7 +58,7 @@ internal fun rcrosshair() = App {
     val outlineEnabled = curSettings.bool["RCROSSHAIR_OUTLINE"]
 
     if (curSettings.bool["RCROSSHAIR_DYNAMIC"]) { //str8 up
-        val vAbsVelocity = me.velocity()
+        val vAbsVelocity = me.velocity(meVelocity)
         val flVelocity = sqrt(vAbsVelocity.x.pow(2F) + vAbsVelocity.y.pow(2F) + vAbsVelocity.z.pow(2F))
 
         val realInaccuracyFire: Float
@@ -79,7 +83,7 @@ internal fun rcrosshair() = App {
     }
 
     if (eRC && !(eSC && meCurWep.sniper)) {
-        val punch = me.punch()
+        val punch = me.punch(mePunchVec)
 
         //Center
         x = (gameWidth / 2) - tan(toRadians(punch.y.toDouble())).toFloat() * rccFov2 + rccXo
@@ -104,7 +108,7 @@ internal fun rcrosshair() = App {
             val hasSniper = meCurWep.scope
 
             if ((eSC && hasSniper && !me.isScoped()) || !eSC || (eRC && !hasSniper)) {
-                if (curSettings["RCROSSHAIR_TYPE"].toUpperCase() == "CROSSHAIR") {
+                if (curSettings["RCROSSHAIR_TYPE"].upper() == "CROSSHAIR") {
                     set(ShapeRenderer.ShapeType.Filled)
                     //Horizontal
                     if (curSettings.bool["RCROSSHAIR_LEFT"]) {

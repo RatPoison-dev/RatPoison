@@ -19,7 +19,7 @@ import rat.poison.utils.extensions.uint
 import rat.poison.utils.saving
 
 var ranksPlayerList = Array(64) { RanksPlayer() }
-
+private const val id = "ranks"
 //works with every down to 30, if you ever crash due to this then dn
 fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every second
 
@@ -28,7 +28,7 @@ fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every second
     //Bruh -- fix later
     updatingRanks = true
     var max = 0
-    forEntities(EntityType.CCSPlayer) {
+    forEntities(EntityType.CCSPlayer, identifier = id) {
         val entity = it.entity
         val entID = (CSGO.csgoEXE.uint(entity + ClientOffsets.dwIndex) - 1).toInt()
         if (entID > 64 || entID < 0) return@forEntities

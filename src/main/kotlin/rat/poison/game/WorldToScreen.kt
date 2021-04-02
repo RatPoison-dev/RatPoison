@@ -6,18 +6,19 @@ import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.offsets.ClientOffsets.dwViewMatrix
 import rat.poison.utils.Vector
+import rat.poison.utils.threadLocalPointer
+import rat.poison.utils.extensions.getFloatArray
 
 val w2sViewMatrix = Array(4) { DoubleArray(4) }
-
-fun worldToScreen(from: Vector, vOut: Vector): Boolean {
+private val DEFAULT_VECTOR = Vector()
+fun worldToScreen(fromx: Float, fromy: Float, fromz: Float, vOut: Vector = DEFAULT_VECTOR): Boolean {
 	if (!curSettings.bool["MENU"]) {
 		updateViewMatrix()
 	}
+	vOut.x = (w2sViewMatrix[0][0] * fromx + w2sViewMatrix[0][1] * fromy + w2sViewMatrix[0][2] * fromz + w2sViewMatrix[0][3]).toFloat()
+	vOut.y = (w2sViewMatrix[1][0] * fromx + w2sViewMatrix[1][1] * fromy + w2sViewMatrix[1][2] * fromz + w2sViewMatrix[1][3]).toFloat()
 
-	vOut.x = (w2sViewMatrix[0][0] * from.x + w2sViewMatrix[0][1] * from.y + w2sViewMatrix[0][2] * from.z + w2sViewMatrix[0][3]).toFloat()
-	vOut.y = (w2sViewMatrix[1][0] * from.x + w2sViewMatrix[1][1] * from.y + w2sViewMatrix[1][2] * from.z + w2sViewMatrix[1][3]).toFloat()
-
-	val w = (w2sViewMatrix[3][0] * from.x + w2sViewMatrix[3][1] * from.y + w2sViewMatrix[3][2] * from.z + w2sViewMatrix[3][3]).toFloat()
+	val w = (w2sViewMatrix[3][0] * fromx + w2sViewMatrix[3][1] * fromy + w2sViewMatrix[3][2] * fromz + w2sViewMatrix[3][3]).toFloat()
 
 	val width = gameWidth
 	val height = gameHeight
@@ -54,17 +55,24 @@ fun worldToScreen(from: Vector, vOut: Vector): Boolean {
 
 		return false
 	} else return false
-}
 
+}
+fun worldToScreen(from: Vector, vOut: Vector = DEFAULT_VECTOR): Boolean {
+	return worldToScreen(from.x, from.y, from.z, vOut)
+}
+private const val viewMatrixMemorySize = 4*4*4
+private val viewMatrixMemory = threadLocalPointer(viewMatrixMemorySize)
+private val floatArray = ThreadLocal.withInitial { FloatArray(16) }
 fun updateViewMatrix() { //Call before using multiple world to screens
 	if (dwViewMatrix > 0L) {
-		val buffer = clientDLL.read(dwViewMatrix, 4 * 4 * 4)
-
-		if (buffer != null) {
-			if (buffer.getFloatArray(0, 16).all(Float::isFinite)) {
+		val mem = viewMatrixMemory.get()
+		clientDLL.read(dwViewMatrix, mem, viewMatrixMemorySize)
+		if (mem != null) {
+			val floatArray = floatArray.get()
+			if (mem.getFloatArray(0, 16, floatArray).all(Float::isFinite)) {
 				var offset = 0
 				for (row in 0..3) for (col in 0..3) {
-					val value = buffer.getFloat(offset.toLong())
+					val value = mem.getFloat(offset.toLong())
 					w2sViewMatrix[row][col] = value.toDouble()
 					offset += 4 //Changed, error but not compd
 				}

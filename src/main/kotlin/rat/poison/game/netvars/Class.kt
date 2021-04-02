@@ -6,7 +6,7 @@ import rat.poison.utils.extensions.readable
 import rat.poison.utils.extensions.uint
 import kotlin.LazyThreadSafetyMode.NONE
 
-internal class Class(override val address: Long) : Addressed {
+internal class Class(override var address: Long = -1L) : Addressed {
 	
 	val id by lazy(NONE) { csgoEXE.uint(address + 20) }
 	
@@ -15,5 +15,10 @@ internal class Class(override val address: Long) : Addressed {
 	val table by lazy(NONE) { csgoEXE.uint(address + 12) }
 	
 	fun readable() = csgoEXE.read(address, 40).readable()
+
+	fun set(address: Long): Class {
+		this.address = address
+		return this
+	}
 	
 }

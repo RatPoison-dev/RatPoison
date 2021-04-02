@@ -14,16 +14,14 @@ import rat.poison.game.CSGO
 import rat.poison.game.offsets.EngineOffsets.dwbSendPackets
 import rat.poison.overlay.App
 import rat.poison.scripts.*
-import rat.poison.scripts.aim.flatAim
-import rat.poison.scripts.aim.handleFireKey
-import rat.poison.scripts.aim.pathAim
-import rat.poison.scripts.aim.setAim
+import rat.poison.scripts.aim.*
 import rat.poison.scripts.visuals.*
 import rat.poison.utils.Settings
 import rat.poison.utils.WebSocket
 import rat.poison.utils.detectLocale
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.loadSkinSettings
+import rat.poison.utils.generalUtil.stringToIntList
 import rat.poison.utils.loadMigration
 import java.awt.Robot
 import java.io.File
@@ -80,6 +78,7 @@ fun main() {
 
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
     loadSkinSettings("$SETTINGS_DIRECTORY/skinCFGS/DefaultSettings.cfg")
+    "[-1]".boneToNum()
 
     detectLocale()
 
@@ -227,11 +226,12 @@ fun main() {
         scanner()
     }
 }
-
+private const val emptyStr = ""
 fun String.toLocale(): String {
-    if (curLocale[this].isBlank()) {
+    val get = curLocale[this]
+    if (get == emptyStr) {
         if (dbg) println("[DEBUG] ${curSettings["CURRENT_LOCALE"]} $this is missing!")
         return this
     }
-    return curLocale[this]
+    return get
 }

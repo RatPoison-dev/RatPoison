@@ -47,8 +47,7 @@ private fun reset() {
 
 private const val strBufMemorySize = 128
 private val strBufMemory = threadLocalPointer(strBufMemorySize)
-@KtorExperimentalAPI
-private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
+private var signOnState by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
     if (old != new) {
         if (new.name == SignOnState.IN_GAME.name) {
             after(10000) {
@@ -83,9 +82,8 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
             nameChange = ""
 
             if (PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0) {
-                val write = 0xEB.toByte()
                 try {
-                    clientDLL[ClientOffsets.dwGlowUpdate] = write
+                    clientDLL[ClientOffsets.dwGlowUpdate] = 0xEB.toByte()
                 } catch (e: Exception) { }
             }
 
@@ -117,10 +115,11 @@ fun updateCursorEnable() { //Call when needed
 
 var toneMapController = 0L
 
+private val positionVector = Vector()
 fun constructEntities() = every(500, continuous = true) {
     updateCursorEnable()
     clientState = engineDLL.uint(dwClientState)
-    state = SignOnState[csgoEXE.int(clientState + dwSignOnState)]
+    signOnState = SignOnState[csgoEXE.int(clientState + dwSignOnState)]
 
     me = clientDLL.uint(dwLocalPlayer)
     if (!inGame || me <= 0L) return@every
@@ -140,7 +139,7 @@ fun constructEntities() = every(500, continuous = true) {
         if (entity > 0L) {
             val type = EntityType.byEntityAddress(entity)
             if (type != EntityType.NULL) {
-                val tmpPos = entity.absPosition()
+                val tmpPos = entity.absPosition(positionVector)
                 val check = (tmpPos.x in -2.0F..2.0F && tmpPos.y in -2.0F..2.0F && tmpPos.z in -2.0F..2.0F)
 
                 if (!check) {

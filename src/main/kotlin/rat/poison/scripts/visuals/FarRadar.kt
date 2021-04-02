@@ -22,14 +22,16 @@ import kotlin.math.abs
 
 data class FarPlayer(val pos: Vector = Vector(), var alpha: Float = 0F)
 private var farPlayerRecords = Array(64) { FarPlayer() }
-
+private val w2s1 = Vector()
+private val w2s2 = Vector()
+private const val id = "farradar"
 fun farRadar() = App {
     if (!inGame || !curSettings.bool["BOX_FAR_RADAR"] || meDead) return@App
 
     var dwRadar = clientDLL.int(dwRadarBase)
     dwRadar = csgoEXE.int(dwRadar + 0x74)
 
-    forEntities(EntityType.CCSPlayer) { //This will probably require more prechecks
+    forEntities(EntityType.CCSPlayer, identifier = id) { //This will probably require more prechecks
         val ent = it.entity
 
         //Prechecks
@@ -51,10 +53,8 @@ fun farRadar() = App {
 
     farPlayerRecords.forEach {
         if (it.alpha > 0F) {
-            val w2s1 = Vector()
-            val w2s2 = Vector()
 
-            if (worldToScreen(it.pos, w2s1) && worldToScreen(Vector(it.pos.x, it.pos.y, it.pos.z - 75F), w2s2)) {
+            if (worldToScreen(it.pos, w2s1) && worldToScreen(it.pos.x, it.pos.y, it.pos.z - 75F, w2s2)) {
                 if (shapeRenderer.isDrawing) shapeRenderer.end()
                 shapeRenderer.begin()
 

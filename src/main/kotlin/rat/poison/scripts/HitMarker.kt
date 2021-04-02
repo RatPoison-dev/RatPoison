@@ -1,8 +1,10 @@
 package rat.poison.scripts
 
+import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
 import com.badlogic.gdx.utils.Align
+import org.lwjgl.opengl.GL11
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.CSGO.csgoEXE
@@ -13,12 +15,14 @@ import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
+import rat.poison.utils.Vector
 import rat.poison.utils.inGame
 
 var hitMarkerAlpha = 0F
 var hitMarkerCombo = 0
 private var totalHits = 0
 
+private val punchVec = Vector()
 fun hitMarker() = App {
     if ((!curSettings.bool["ENABLE_HITMARKER"] && !curSettings.bool["HITMARKER_COMBO"]) || !curSettings.bool["ENABLE_ESP"] || MENUTOG || meDead || !inGame) return@App
 
@@ -47,7 +51,7 @@ fun hitMarker() = App {
         val rccYo = curSettings.float["RCROSSHAIR_YOFFSET"]
 
         if (curSettings.bool["HITMARKER_RECOIL_POSITION"]) {
-            val punch = me.punch()
+            val punch = me.punch(punchVec)
 
             //Center
             x = CSGO.gameWidth / 2 - ((CSGO.gameWidth / 95F) * punch.y) + rccXo
@@ -105,6 +109,8 @@ fun hitMarker() = App {
                 }
 
                 sb.begin()
+
+                GL11.glEnable(GL20.GL_BLEND)
 
                 val col = curSettings.colorGDX["HITMARKER_COMBO_COLOR"]
                 col.a = hitMarkerAlpha

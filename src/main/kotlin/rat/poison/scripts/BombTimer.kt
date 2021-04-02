@@ -29,7 +29,7 @@ fun bombTimer() = App {
     if (DANGER_ZONE || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
     if (curSettings.bool["ENABLE_BOMB_TIMER"]) {
-        bombText.setText(bombState.toString()) //Update regardless of BOMB_TIMER_MENU
+        bombText.setText(bombState.getString()) //Update regardless of BOMB_TIMER_MENU
         if (curSettings.bool["BOMB_TIMER_BARS"] && bombState.planted) {
             val cColor = if ((meTeam == 3L && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) { //If player has time to defuse
                 Color(0F, 255F, 0F, .25F) //Green
@@ -115,7 +115,7 @@ fun bombUpdater() = every(15, inGameCheck = true) {
         }
     }
 }
-
+private const val emptyString = ""
 data class BombState(var hasBomb: Boolean = false,
                      var planted: Boolean = false,
                      var canDefuse: Boolean = false,
@@ -126,27 +126,36 @@ data class BombState(var hasBomb: Boolean = false,
 
     private val sb = StringBuilder()
 
-    override fun toString(): String {
+    fun getString(): StringBuilder {
         sb.clear()
 
         if (planted) {
-            sb.append("${"Bomb-Planted!".toLocale()}\n")
+            sb.appendLine("Bomb-Planted!".toLocale())
 
-            sb.append("${"Time-To-Explode:".toLocale()} ${formatFloat(timeLeftToExplode)} \n")
-
-            if (location.isNotBlank())
-                sb.append("${"Location:".toLocale()} $location\n")
+            sb.append("Time-To-Explode:".toLocale())
+            sb.append(" ")
+            sb.appendLine(formatFloat(timeLeftToExplode))
+            if (location != emptyString) {
+                sb.append("Location:".toLocale())
+                sb.append(" ")
+                sb.appendLine(location)
+            }
             if (gettingDefused) {
-                sb.append("${"Can-Defuse:".toLocale()} $canDefuse\n")
-                // Redundant as the UI already shows this, but may have a use case I'm missing
-                sb.append("${"Time-To-Defuse:".toLocale()} ${formatFloat(timeLeftToDefuse)}\n")
+                sb.append("Can-Defuse:".toLocale())
+                sb.append(" ")
+                sb.appendLine(canDefuse)
+                sb.append("Time-To-Defuse:".toLocale())
+                sb.append(" ")
+                sb.appendLine(formatFloat(timeLeftToDefuse))
+                sb.append("Time-Left-After:".toLocale())
+                sb.append(" ")
+                sb.appendLine(timeLeftToExplode - timeLeftToDefuse)
 
-                sb.append("${"Time-Left-After:".toLocale()} ${timeLeftToExplode - timeLeftToDefuse}")
             }
         } else {
-            sb.append("${"Bomb-Not-Planted!".toLocale()}\n")
+            sb.appendLine("Bomb-Not-Planted!".toLocale())
         }
-        return sb.toString()
+        return sb
     }
 
 

@@ -9,16 +9,20 @@ import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.target
 import rat.poison.scripts.bombState
 import rat.poison.settings.DANGER_ZONE
+import rat.poison.utils.Vector
 import rat.poison.utils.every
 import java.util.concurrent.TimeUnit
 import kotlin.system.measureNanoTime
-
+private val mePosVec = Vector()
+private val meAng = Vector()
+private val cCol = Color()
+private const val id = "glowesp"
 internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 	if (!curSettings.bool["GLOW_ESP"] || !curSettings.bool["ENABLE_ESP"]) return@every
 
 	glowTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
-		val currentAngle = clientState.angle()
-		val position = me.position()
+		val currentAngle = clientState.angle(meAng)
+		val position = me.position(mePosVec)
 
 		if (!meCurWep.knife && meCurWep != Weapons.ZEUS_X27) {
 			if (curSettings.bool["ENABLE_AIM"]) {
@@ -47,7 +51,7 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 		val showWeapons = curSettings.bool["GLOW_SHOW_WEAPONS"]
 		val showGrenades = curSettings.bool["GLOW_SHOW_GRENADES"]
 
-		forEntities {
+		forEntities(EntityType.CCSPlayer, EntityType.CPlantedC4, EntityType.CC4, iterateWeapons = true, iterateGrenades = true, identifier = id) {
 			val entity = it.entity
 			if (entity <= 0 || me == entity || entity.dormant()) return@forEntities
 
@@ -123,12 +127,12 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 				}
 
 				if (color == "GLOW_HEALTH") {
-					glowAddress.glow(Color((255 - 2.55 * health).toInt(), (2.55 * health).toInt(), 0, 1.0), glowType)
+					glowAddress.glow(cCol.set((255 - 2.55 * health).toInt(), (2.55 * health).toInt(), 0, 1.0), glowType)
 				} else {
 					glowAddress.glow(curSettings.color[color], glowType)
 				}
 			} else {
-				glowAddress.glow(Color(255, 255, 255, 1.0), -1)
+				glowAddress.glow(cCol.set(255, 255, 255, 1.0), -1)
 			}
 
 			return@forEntities

@@ -1,7 +1,5 @@
 package rat.poison.scripts
 
-import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.math.Vector3
 import rat.poison.curSettings
 import rat.poison.game.angle
 import rat.poison.game.clientState
@@ -13,10 +11,17 @@ import rat.poison.game.setAngle
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meCurWepEnt
 import rat.poison.scripts.aim.meDead
+import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.normalize
 
-private val lastAppliedRCS = Vector2()
+private val lastAppliedRCS = Vector()
+private val punchVec = Vector()
+private val realPunchVec = Vector()
+private var realPunchX = 0F
+private var realPunchY = 0F
+private val meAng = Vector()
+private val vecSub = Vector()
 
 fun rcs() = every(15, inGameCheck = true) {
 	if (me <= 0 || !curSettings.bool["ENABLE_RCS"] || meDead) return@every
@@ -24,22 +29,25 @@ fun rcs() = every(15, inGameCheck = true) {
 	val weapon = meCurWep
 	if (!weapon.automatic) { lastAppliedRCS.set(0F, 0F); return@every }
 	val shotsFired = me.shotsFired()
-	val p = me.punch()
+	val p = me.punch(punchVec)
 
-	val forceSet = (shotsFired == 0 && !lastAppliedRCS.isZero || meCurWepEnt.bullets() <= 0)
+	val isZero = lastAppliedRCS.invalid()
+	val forceSet = (shotsFired == 0 && !isZero || meCurWepEnt.bullets() <= 0)
 
 	if (forceSet || /*!finishPunch ||*/ shotsFired > 1) {
+		realPunchX = p.x * 2
+		realPunchY = p.y * 2
 		if (curSettings["RCS_TYPE"] == "STABLE") {
-			if (lastAppliedRCS.isZero) {
-				lastAppliedRCS.set(p.x * 2, p.y * 2)
+			if (isZero) {
+				lastAppliedRCS.set(realPunchX, realPunchY)
 			}
 
-			val realPunch = Vector2(p.x * 2, p.y * 2)
+			val realPunch = realPunchVec.set(realPunchX, realPunchY)
 
-			val punchToApply = Vector2(realPunch.x - lastAppliedRCS.x, realPunch.y - lastAppliedRCS.y)
-			punchToApply.scl(curSettings.float["RCS_SMOOTHING_Y"], curSettings.float["RCS_SMOOTHING_X"])
+			val punchToApply = realPunch - lastAppliedRCS
+			punchToApply.scl(curSettings.float["RCS_SMOOTHING_X"], curSettings.float["RCS_SMOOTHING_Y"])
 
-			val angle = clientState.angle()
+			val angle = clientState.angle(meAng)
 			angle.apply {
 				x -= punchToApply.x
 				y -= punchToApply.y
@@ -55,25 +63,29 @@ fun rcs() = every(15, inGameCheck = true) {
 				lastAppliedRCS.set(0F, 0F)
 			}
 		} else {
-			if (lastAppliedRCS.isZero) {
+			if (isZero) {
 				lastAppliedRCS.set(p.x, p.y)
 			}
 
-			val playerPunch = Vector3(p.x, p.y, p.z) //Set playerPunch to current punch
+			vecSub.set(
+				p //Set playerPunch to current punch
+					.x - lastAppliedRCS.x, p //Set playerPunch to current punch
+					.y - lastAppliedRCS.y
+			)
+			vecSub.scl(1F + curSettings.float["RCS_SMOOTHING_Y"], 1F + curSettings.float["RCS_SMOOTHING_X"])
 
-			val punchToApply = Vector2((playerPunch.x - lastAppliedRCS.x), (playerPunch.y - lastAppliedRCS.y)) //Set to our current punch and what our last punch was
-			punchToApply.scl(1F + curSettings.float["RCS_SMOOTHING_Y"], 1F + curSettings.float["RCS_SMOOTHING_X"])
-
-			val angle = clientState.angle()
+			val angle = clientState.angle(meAng)
 			angle.apply {
-				x -= punchToApply.x
-				y -= punchToApply.y
+				x -= vecSub.x
+				y -= vecSub.y
 				normalize()
 			}
 
 			clientState.setAngle(angle)
-			lastAppliedRCS.x = playerPunch.x
-			lastAppliedRCS.y = playerPunch.y
+			lastAppliedRCS.x = p //Set playerPunch to current punch
+				.x
+			lastAppliedRCS.y = p //Set playerPunch to current punch
+				.y
 
 			if (!curSettings.bool["RCS_RETURNAIM"] && forceSet) {
 				lastAppliedRCS.set(0F, 0F)

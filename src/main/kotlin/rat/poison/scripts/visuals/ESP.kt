@@ -1,6 +1,5 @@
 package rat.poison.scripts.visuals
 
-import com.sun.jna.Memory
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.CSGO.csgoEXE
@@ -9,7 +8,9 @@ import rat.poison.game.entity.Entity
 import rat.poison.game.entity.EntityType
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.utils.extensions.uint
+import rat.poison.utils.extensions.upper
 import rat.poison.utils.generalUtil.toInt
+import rat.poison.utils.threadLocalPointer
 
 var espTARGET = -1L
 
@@ -29,17 +30,17 @@ fun esp() {
 	if (dbg) { println("[DEBUG] Initializing Radar ESP") }; radarEsp()
 }
 
+private const val glowMemorySize = 60
+private val glowMemory = threadLocalPointer(glowMemorySize)
 fun Entity.glow(color: Color, glowType: Int) {
-	val glowMemory: Memory by lazy {
-		Memory(60)
-	}
+	val glowMemory = glowMemory.get()
 
 	//Revalidate
 	val ent = csgoEXE.uint(this)
 	val entType = EntityType.byEntityAddress(ent)
 
 	if ((entType == EntityType.CCSPlayer || entType.weapon || entType.grenade || entType.bomb) && ent > 0) {
-		csgoEXE.read(this, glowMemory)
+		csgoEXE.read(this, glowMemory, glowMemorySize)
 
 		if (glowMemory.getPointer(0) != null) {
 			if (glowType == -1) {
@@ -85,7 +86,7 @@ fun Entity.hideOnRadar() {
 }
 
 fun String.toGlowNum(): Int {
-	return when(this.toUpperCase()) {
+	return when(this.upper()) {
 		"NORMAL" -> 0
 		"MODEL" -> 1
 		"VISIBLE" -> 2

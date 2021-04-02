@@ -1,8 +1,10 @@
 package rat.poison.utils
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap
+import it.unimi.dsi.fastutil.objects.Object2IntMap
 import it.unimi.dsi.fastutil.objects.Object2ObjectMaps
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
 import rat.poison.game.Color
 import rat.poison.utils.generalUtil.*
 import kotlin.reflect.KClass
@@ -25,12 +27,13 @@ enum class EfficientSettingType(val kClass: KClass<*>, val convert: (Any) -> Any
 
     companion object {
         val values = values()
+        private val classToIndex: Object2IntMap<KClass<*>> = Object2IntOpenHashMap()
 
-        fun typeIndex(kClass: KClass<*>): Int {
-            for (value in values) if (value.kClass == kClass) return value.ordinal
-            //throw IllegalArgumentException("Can't determine type index for kClass: $kClass")
-            return -1
+        init {
+            for (value in values) classToIndex[value.kClass] = value.ordinal
         }
+
+        fun typeIndex(kClass: KClass<*>) = classToIndex.getInt(kClass)
     }
 
 }

@@ -100,8 +100,6 @@ fun loadCFG(realCfgFileName: String, deleteCfgAfterLoad: Boolean = false) {
             println("Loading\n")
             GlobalScope.launch {
                 loadSettingsFromFiles("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg", true)
-                uiUpdate()
-                updateWindows()
                 println("Loading Complete!\n")
                 LOADED_CONFIG = cfgFileName
 
@@ -111,6 +109,7 @@ fun loadCFG(realCfgFileName: String, deleteCfgAfterLoad: Boolean = false) {
                 }
                 if (deleteCfgAfterLoad) { cfgFile.delete() }
                 saving = false
+                after(100) { uiUpdate(); updateWindows() }
             }
         }
     } else {

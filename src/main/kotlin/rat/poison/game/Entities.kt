@@ -1,7 +1,6 @@
 package rat.poison.game
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
-import it.unimi.dsi.fastutil.objects.Object2ObjectMap
 import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.Player
 import rat.poison.settings.MAX_ENTITIES
@@ -18,7 +17,7 @@ typealias EntityList = Object2ObjectArrayMap<EntityType, MutableList<EntityConte
 var entitiesValues = arrayOfNulls<MutableList<EntityContext>>(MAX_ENTITIES)
 var entitiesValuesCounter = 0
 
-val entities: Object2ObjectMap<EntityType, MutableList<EntityContext>> = EntityList(EntityType.size).apply {
+val entities: EntityList = EntityList(EntityType.size).apply {
 	for (type in EntityType.cachedValues) {
 		val list = mutableListOf<EntityContext>()
 		put(type, list)
@@ -27,29 +26,62 @@ val entities: Object2ObjectMap<EntityType, MutableList<EntityContext>> = EntityL
 }
 
 fun entityByType(type: EntityType): EntityContext? = entities[type]?.firstOrNull()
+data class EntityCache(var created: Long, var ents: ArrayList<EntityContext>, var iterating: Boolean = false)
+val entityCache = Object2ObjectArrayMap<String, EntityCache>()
+//private const val emptyString = ""
+internal inline fun forEntities(vararg types: EntityType, iterateWeapons: Boolean = false, iterateGrenades: Boolean = false, identifier: String = "", crossinline body: (EntityContext) -> Unit) {
+	var get = entityCache[identifier]
 
-internal inline fun forEntities(vararg types: EntityType, crossinline body: (EntityContext) -> Unit) {
-	val forEnts: ArrayList<EntityContext?> = ArrayList()
-
-	if (types.isEmpty()) {
-		for (entType in EntityType.values()) {
-			entities[entType]?.let { forEnts.addAll(it) }
+	if (get == null || System.currentTimeMillis() - get.created > 2000) {
+		if (get != null) {
+			get.ents.clear()
+			get.created = System.currentTimeMillis()
 		}
-	} else {
-		for (entType in types) {
-			entities[entType]?.let { forEnts.addAll(it) }
+		else {
+			val tmpClass = EntityCache(System.currentTimeMillis(), ArrayList())
+			get = tmpClass
+			entityCache[identifier] = tmpClass
+		}
+		val col = if (types.isEmpty()) EntityType.cachedValues else types
+		for (i in 0 until col.size) {
+			val entType = col[i]
+			val ents = entities[entType] ?: continue
+			for (i1 in 0 until ents.size) {
+				val ent = ents[i1]
+				get.ents.add(ent)
+				ent.run(body)
+			}
+		}
+		if (iterateWeapons) {
+			for (i in 0 until EntityType.weaponsTypes.size) {
+				val entType = EntityType.weaponsTypes[i]
+				val ents = entities[entType] ?: continue
+				for (i1 in 0 until ents.size) {
+					val ent = ents[i1]
+					get.ents.add(ent)
+					ent.run(body)
+				}
+			}
+		}
+		if (iterateGrenades) {
+			for (i in 0 until EntityType.grenadeTypes.size) {
+				val entType = EntityType.grenadeTypes[i]
+				val ents = entities[entType] ?: continue
+				for (i1 in 0 until ents.size) {
+					val ent = ents[i1]
+					get.ents.add(ent)
+					ent.run(body)
+				}
+			}
 		}
 	}
-
-	//iterator later
-	try {
-		val iterator = forEnts.listIterator()
-		while (iterator.hasNext()) {
-			iterator.next()?.run(body)
+	else {
+		if (!get.iterating) {
+			get.iterating = true
+			for (i in 0 until get.ents.size) {
+				get.ents[i].run(body)
+			}
+			get.iterating = false
 		}
-	} catch (e: Exception) {
-		println("forEntities error, report in discord")
-		println("$types")
-		e.printStackTrace()
 	}
 }

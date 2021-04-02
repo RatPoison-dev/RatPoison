@@ -2,7 +2,6 @@
 
 package rat.poison.scripts
 
-import com.badlogic.gdx.math.Vector3
 import org.jire.arrowhead.keyReleased
 import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
@@ -29,22 +28,28 @@ import java.awt.event.MouseEvent
 private const val SwingDistance = 96f
 private const val StabDistance = 64f
 
+private val mePositionVector = Vector()
+private val meAbsPositionVector = Vector()
+private val targetAbsPositionVector = Vector()
+private val velocityVec = Vector()
+private val meAng = Vector()
+private val targetDirectionVector = Vector()
 internal fun autoKnife() = every(10, inGameCheck = true) {
     if (curSettings.bool["MENU"] && opened && App.haveTarget && !DANGER_ZONE && !meDead) {
         if (curSettings.bool["ENABLE_AUTO_KNIFE"]) {
             if (meCurWep.knife) {
-                val currentAngle = clientState.angle()
-                val position = me.position()
+                val currentAngle = clientState.angle(meAng)
+                val position = me.position(mePositionVector)
                 val target = findTarget(position, currentAngle, false, 32F, "-2").player
                 if (target > 0) {
                     if (keyReleased(AIM_KEY)) {
-                        val targetPos = target.absPosition()
-                        val mePos = me.absPosition()
+                        val targetPos = target.absPosition(targetAbsPositionVector)
+                        val mePos = me.absPosition(meAbsPositionVector)
                         val dst = mePos.distanceTo(targetPos)
                         if (dst <= SwingDistance) {
                             val canStab = dst <= StabDistance
-                            if (!isBehindMe(targetPos)) {
-                                val imBehind = canBackStab(targetPos, target.direction())
+                            if (!isBehindMe(currentAngle, mePos, targetPos)) {
+                                val imBehind = canBackStab(targetPos, mePos, target.direction(targetDirectionVector))
                                 val attackType: KnifeAttackType = if (canStab) {
                                     val health = target.health()
                                     val hasArmor = target.armor() > 0
@@ -64,9 +69,10 @@ internal fun autoKnife() = every(10, inGameCheck = true) {
                                         else -> KnifeAttackType.SLASH
                                     }
                                 } else {
+                                    val velocityVec = me.velocity(velocityVec)
                                     if (imBehind
-                                            && Vector3.len2(me.velocity().x, me.velocity().y, me.velocity().z) > 0
-                                            && me.absPosition().distanceTo(targetPos) > StabDistance) {
+                                            && velocityVec.len2() > 0
+                                            && meAbsPositionVector.distanceTo(targetPos) > StabDistance) {
                                         //wait to get close enough to be able to back stab
                                         KnifeAttackType.NONE
                                     } else {
@@ -83,20 +89,14 @@ internal fun autoKnife() = every(10, inGameCheck = true) {
     }
 }
 
-private val delta = Vector3()
+private val directionVec = Vector()
 
-private fun isBehindMe(position: Vector): Boolean {
-    delta.set(me.absPosition().x, me.absPosition().y, me.absPosition().z)
-            .sub(position.x, position.y, position.z)
-    delta.nor()
-    return delta.dot(me.direction().x, me.direction().y, me.direction().z) > 0.475f
+private fun isBehindMe(eyeAngle: Vector, mePosition: Vector, position: Vector): Boolean {
+    return (mePosition - position).nor().dot(me.direction(directionVec, eyeAngle)) > 0.475f
 }
 
-private fun canBackStab(position: Vector, direction: Vector): Boolean {
-    delta.set(position.x, position.y, position.z)
-            .sub(me.absPosition().x, me.absPosition().y, me.absPosition().z)
-    delta.nor()
-    return delta.dot(direction.x, direction.y, direction.z) > 0.475f
+private fun canBackStab(position: Vector, mePosition: Vector, direction: Vector): Boolean {
+    return (position - mePosition).nor().dot(direction) > 0.475f
 }
 
 var TRIGGER_FORCE_VALUES = false

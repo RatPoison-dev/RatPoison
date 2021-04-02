@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
-import com.sun.jna.Memory
 import rat.poison.*
 import rat.poison.game.CSGO
 import rat.poison.game.entity.absPosition
@@ -29,6 +28,7 @@ import rat.poison.utils.generalUtil.cToDouble
 import rat.poison.utils.generalUtil.cToFloat
 import rat.poison.utils.generalUtil.toMatrix4
 import rat.poison.utils.inGame
+import rat.poison.utils.threadLocalPointer
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
@@ -42,13 +42,16 @@ private var LoL: List<List<Any>> = listOf(emptyList(), emptyList(), emptyList())
 private var mPos = Vector()
 
 var nadeHelperArrayList = arrayListOf<List<List<Any>>>()
-
+private val vec2 = Vector()
+private val vec3 = Vector()
+private val mePos = Vector()
+private val matrix = Matrix4()
 fun nadeHelper() = App {
     if (!curSettings.bool["ENABLE_NADE_HELPER"] || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
     if (me <= 0L || MENUTOG || meDead) return@App
 
-    mPos = me.absPosition()
+    mPos = me.absPosition(mePos)
 
     val nadeToCheck : String = when (meCurWep.name) {
         "FLASH_GRENADE" -> "Flash"
@@ -75,7 +78,7 @@ fun nadeHelper() = App {
                     val oldMatrix = Matrix4(shapeRenderer.projectionMatrix.values)
 
                     shapeRenderer.apply {
-                        val gameMatrix = w2sViewMatrix.toMatrix4()
+                        val gameMatrix = w2sViewMatrix.toMatrix4(matrix)
                         projectionMatrix = gameMatrix
 
                         begin()
@@ -95,17 +98,14 @@ fun nadeHelper() = App {
                         gameMatrix.translate(0F, 0F, -fSpot[2].cToFloat())
                         projectionMatrix = oldMatrix
 
-                        val vec2 = Vector()
-                        val vec3 = Vector()
-
                         var t1 = false
                         var t2 = false
 
-                        if (worldToScreen(Vector(hPos[0].cToFloat(), hPos[1].cToFloat(), hPos[2].cToFloat()), vec2)) {
+                        if (worldToScreen(hPos[0].cToFloat(), hPos[1].cToFloat(), hPos[2].cToFloat(), vec2)) {
                             t1 = true
                         }
 
-                        if (worldToScreen(Vector(hLPos[0].cToFloat(), hLPos[1].cToFloat(), hLPos[2].cToFloat()), vec3)) {
+                        if (worldToScreen(hLPos[0].cToFloat(), hLPos[1].cToFloat(), hLPos[2].cToFloat(), vec3)) {
                             set(ShapeRenderer.ShapeType.Filled)
                             circle(vec3.x, vec3.y - 2F, 4F)
                             set(ShapeRenderer.ShapeType.Line)
@@ -150,26 +150,29 @@ fun nadeHelper() = App {
     }
 }
 
+private const val boneMemorySize = 3984
+private val boneMemory = threadLocalPointer(boneMemorySize)
+private val meDirection = Vector()
+private val meAbsPos = Vector()
+private val chooseNadeArrayString = arrayOf("Flash", "Frag", "Molly", "Smoke")
+private val chooseNadeArrayInt = arrayOf(1, 2, 3, 4)
+private val thisCatJustJ = arrayOf("Jump + Throw", "Stand + Throw", "Other")
+private val intArr = arrayOf(1, 2, 3)
 fun createPosition() {
-    val boneMemory: Memory by lazy {
-        Memory(3984)
-    }
+    val boneMemory = boneMemory.get()
 
     CSGO.csgoEXE.read(me.boneMatrix(), boneMemory)
     val xOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0xC)).toDouble()
     val yOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x1C)).toDouble()
     val zOff = boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x2C)).toDouble()
 
-    val mDir = me.direction()
+    val mDir = me.direction(meDirection)
     val hLPx = xOff + 500 * mDir.x
     val hLPy = yOff + 500 * mDir.y
     val hLPz = zOff + 500 * mDir.z
 
     Dialogs.showInputDialog(menuStage, "Enter Position Name", "", object : InputDialogAdapter() {
         override fun finished(input: String) {
-
-            val chooseNadeArrayString = arrayOf("Flash", "Frag", "Molly", "Smoke")
-            val chooseNadeArrayInt = arrayOf(1, 2, 3, 4)
 
             Dialogs.showConfirmDialog(menuStage, "Choose Nade Type", "", chooseNadeArrayString, chooseNadeArrayInt) { int ->
                 val chosenNadeType = when (int) {
@@ -179,13 +182,13 @@ fun createPosition() {
                     else -> "Smoke" //4
                 }
                 //
-                Dialogs.showConfirmDialog(menuStage, "Choose Nade Throwing Type", "", arrayOf("Jump + Throw", "Stand + Throw", "Other"), arrayOf(1, 2, 3)) { i ->
+                Dialogs.showConfirmDialog(menuStage, "Choose Nade Throwing Type", "", thisCatJustJ, intArr) { i ->
                     val throwingNadeType = when (i) {
                         1 -> "J+T"
                         2 -> "S+T"
                         else -> "Other" //3
                     }
-                    mPos = me.absPosition()
+                    mPos = me.absPosition(meAbsPos)
                     feetSpot = listOf(mPos.x, mPos.y, mPos.z, input, chosenNadeType, throwingNadeType)
                     headPos = listOf(xOff, yOff, zOff)
                     headLookPos = listOf(hLPx, hLPy, hLPz)

@@ -294,7 +294,8 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false,
 	
 	companion object {
 		val cachedValues = values()
-		
+		val weaponsTypes = cachedValues.filter { it.weapon }
+		val grenadeTypes = cachedValues.filter { it.grenade }
 		val size = cachedValues.size
 		
 		private fun byID(id: Long) = cachedValues.firstOrNull { it.id == id }

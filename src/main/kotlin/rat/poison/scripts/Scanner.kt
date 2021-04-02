@@ -19,7 +19,7 @@ import java.nio.file.StandardOpenOption
 import java.util.*
 import javax.script.ScriptException
 import kotlin.system.exitProcess
-
+private const val id = "scanner"
 fun scanner() {
     println("Type help for options\n")
 
@@ -176,7 +176,7 @@ fun scanner() {
                 println("Team   Name                             Rank  Kills Deaths K/D  Wins  Money")
                 println("====== ================================ ===== ===== ====== ==== ===== =====")
                 try {
-                    forEntities(EntityType.CCSPlayer) {
+                    forEntities(EntityType.CCSPlayer, identifier = id) {
                         val entity = it.entity
                         var entTeam = when (entity.team()) {
                             3L -> "CT"

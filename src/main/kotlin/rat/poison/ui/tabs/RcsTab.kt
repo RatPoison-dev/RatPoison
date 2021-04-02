@@ -12,6 +12,7 @@ import rat.poison.ui.uiHelpers.VisColorPickerCustom
 import rat.poison.ui.uiHelpers.VisSelectBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiPanels.rcsTab
+import rat.poison.utils.extensions.upper
 
 class RcsTab : Tab(false, false) {
     private val table = VisTable(false)
@@ -126,7 +127,7 @@ fun updateDisableRCrosshair() {
             rCrosshairDynamic.disable(true)
             rCrosshairOutlineColor.disable(true)
         } else {
-            if (curSettings["RCROSSHAIR_TYPE"].toUpperCase() == "CROSSHAIR") {
+            if (curSettings["RCROSSHAIR_TYPE"].upper() == "CROSSHAIR") {
                 rCrosshairRadius.disable(true, Color(105F, 105F, 105F, .2F))
                 rCrosshairWidth.disable(false, Color(255F, 255F, 255F, 1F))
                 rCrosshairLength.disable(false, Color(255F, 255F, 255F, 1F))

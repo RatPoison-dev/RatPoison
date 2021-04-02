@@ -1,7 +1,6 @@
 package rat.poison.scripts.visuals
 
 import rat.poison.curSettings
-import rat.poison.dbg
 import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
@@ -15,20 +14,26 @@ import rat.poison.utils.inGame
 import kotlin.math.cos
 import kotlin.math.sin
 
+private val w2s1 = Vector()
+private val w2s2 = Vector()
+private val smokePos = Vector()
+private val points = mutableListOf<Vector>()
+private const val id = "drawsmokes"
 fun drawSmokes() = App {
     if (!inGame || !curSettings.bool["ENABLE_ESP"] || !curSettings.bool["VISUALIZE_SMOKES"] || !inGame) return@App
 
     val smokePolys = curSettings.int["VISUALIZE_SMOKES_POLYS"]
     val smokeHeight = curSettings.int["VISUALIZE_SMOKES_HEIGHT"]
     val smokeWidth = curSettings.int["VISUALIZE_SMOKES_WIDTH"]
+    points.clear()
 
-    forEntities(EntityType.CSmokeGrenadeProjectile) {
+    forEntities(EntityType.CSmokeGrenadeProjectile, identifier = id) {
+        points.clear()
         val entity = it.entity
         if (!entity.didEffect()) return@forEntities
         if (entity.timeLeftToDisappear() <= 0) return@forEntities
 
-        val smokePos = it.entity.absPosition()
-        val points = mutableListOf<Vector>()
+        val smokePos = it.entity.absPosition(smokePos)
 
         for (i in 0 until smokePolys) {
             val x = smokePos.x + smokeWidth * cos(Math.toRadians(360.0 / smokePolys * i))
@@ -43,6 +48,8 @@ fun drawSmokes() = App {
             val z = smokePos.z + smokeHeight
             points.add(Vector(x.toFloat(), y.toFloat(), z))
         }
+        shapeRenderer.begin()
+        shapeRenderer.color = curSettings.colorGDX["VISUALIZE_SMOKES_COLOR"]
 
         if (points.size > 0) {
             for (i in 0 until smokePolys) {
@@ -52,59 +59,54 @@ fun drawSmokes() = App {
             }
         }
 
-        if (dbg) {
-            val mePos = me.position()
-            val meDir = me.direction()
-            val maxPos = Vector(mePos.x + 500 * meDir.x, mePos.y + 500 * meDir.y, mePos.z)
+        shapeRenderer.end()
 
-            val pX = -(maxPos.y - mePos.y)
-            val pY = (maxPos.x - mePos.x)
-
-            val w2s1 = Vector()
-            val w2s2 = Vector()
-
-            shapeRenderer.begin()
-
-            if (worldToScreen(Vector(smokePos.x + pX, smokePos.y + pY, smokePos.z), w2s1) && worldToScreen(Vector(smokePos.x - pX, smokePos.y - pY, smokePos.z), w2s2)) {
-                shapeRenderer.line(w2s1.x, w2s1.y, w2s2.x, w2s2.y)
-            }
-
-            shapeRenderer.end()
-        }
+        //ratto do something with this ong
+        //if (dbg) {
+        //    val mePos = me.position()
+        //    val meDir = me.direction()
+        //    val maxPos = Vector(mePos.x + 500 * meDir.x, mePos.y + 500 * meDir.y, mePos.z)
+//
+        //    val pX = -(maxPos.y - mePos.y)
+        //    val pY = (maxPos.x - mePos.x)
+//
+        //    shapeRenderer.begin()
+//
+        //    if (worldToScreen(Vector(smokePos.x + pX, smokePos.y + pY, smokePos.z), w2s1) && worldToScreen(Vector(smokePos.x - pX, smokePos.y - pY, smokePos.z), w2s2)) {
+        //        shapeRenderer.line(w2s1.x, w2s1.y, w2s2.x, w2s2.y)
+        //    }
+//
+        //    shapeRenderer.end()
+        //}
     }
 }
 
 fun connectPoints(vec1: Vector, vec2: Vector) {
-    val w2s1 = Vector()
-    val w2s2 = Vector()
-
     if (worldToScreen(vec1, w2s1) && worldToScreen(vec2, w2s2)) {
-        if (shapeRenderer.isDrawing) {
-            shapeRenderer.end()
-        }
-
-        shapeRenderer.begin()
-
-        shapeRenderer.color = curSettings.colorGDX["VISUALIZE_SMOKES_COLOR"]
         shapeRenderer.line(w2s1.x, w2s1.y, w2s2.x, w2s2.y)
-
-        shapeRenderer.end()
     }
 }
 
+private val mePos = Vector()
+private val entPos = Vector()
+private val entPos2 = Vector()
+private var pX = -1F
+private var pY = -1F
+private var through = false
+private const val forEntsId = "linethroughsmoke"
 fun lineThroughSmoke(ent: Player): Boolean {
-    var through = false
+    through = false
 
-    val mePos = me.position()
-    val maxPos = ent.position()
+    val mePos = me.position(mePos)
+    val maxPos = ent.position(entPos)
 
-    val pX = -(maxPos.y - mePos.y)
-    val pY = (maxPos.x - mePos.x)
+    pX = -(maxPos.x - mePos.x)
+    pY = (maxPos.y - mePos.y)
 
-    forEntities(EntityType.CSmokeGrenadeProjectile) {
-        if (!csgoEXE.boolean(it.entity + bDidSmokeEffect) || through) return@forEntities
+    forEntities(EntityType.CSmokeGrenadeProjectile, identifier = forEntsId) {
+        if (through || !csgoEXE.boolean(it.entity + bDidSmokeEffect)) return@forEntities
 
-        val pos = it.entity.absPosition()
+        val pos = it.entity.absPosition(entPos2)
 
         //TODO crunch...
         val x3 = pos.x + pX

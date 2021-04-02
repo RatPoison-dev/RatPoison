@@ -12,6 +12,7 @@ import rat.poison.dbg
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.updateDisableRCrosshair
+import rat.poison.utils.extensions.upper
 
 //Swap VisSelectBoxCustom to showText false is mainText is " "
 class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean, private val showText: Boolean = true, vararg items: String) : VisTable() {
@@ -71,7 +72,7 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
                 boxLabel.setText("${curLocale[variableName]}:")
             }
         }
-        selectBox.selectedIndex = boxItems.indexOf(curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }].toUpperCase())
+        selectBox.selectedIndex = boxItems.indexOf(curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }].upper())
 
         updateTooltip()
     }
