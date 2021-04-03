@@ -7,7 +7,7 @@ import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.curSettings
 import rat.poison.overlay.App.uiKeybinds
 import rat.poison.ui.changed
-import rat.poison.ui.tabs.othersTab
+import rat.poison.ui.tabs.othersTable
 import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
 import kotlin.math.round
 
@@ -84,8 +84,8 @@ fun keybindsUpdate(neglect: Actor?) {
     aimTab.tMain.forceAimBoneKey.update(neglect)
     aimTab.tTrig.boneTriggerKey.update(neglect)
     visualsTab.visualsToggleKey.update(neglect)
-    othersTab.doorSpamKey.update(neglect)
-    othersTab.weaponSpamKey.update(neglect)
+    othersTable.doorSpamKey.update(neglect)
+    othersTable.weaponSpamKey.update(neglect)
     optionsTab.menuKey.update(neglect)
     nadeHelperTab.nadeThrowerKey.update(neglect)
 }

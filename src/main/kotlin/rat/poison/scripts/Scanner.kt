@@ -80,15 +80,6 @@ fun scanner() {
                     println("File not found, use list to see current files")
                 }
             }
-            line.startsWith("namechanger") -> {
-                println()
-                try {
-                    val name = line.trim().split(" ".toRegex(), 2)[1]
-                    changeName(name)
-                } catch (e: Exception) {
-                    println("Failed to parse input")
-                }
-            }
             line.startsWith("set") -> { //Set variable, instance use only
                 println()
                 try {

@@ -57,7 +57,7 @@ fun saveDefault() {
                     Files.delete(file.toPath())
                     Files.createFile(file.toPath())
                     var firstLine = false
-                    sbLines.lines().forEach {file.appendText(if (!firstLine) { firstLine = true; it } else if (!it.isBlank()) "\n" + it else "\n")}
+                    sbLines.lines().forEach {file.appendText(if (!firstLine) { firstLine = true; it } else if (!it.isEmpty()) "\n" + it else "\n")}
                     sbLines.clear()
                 }
             }

@@ -33,8 +33,15 @@ fun triggerBot() = every(5, inGameCheck = true) {
 
     inTrigger = false //go and do the 2 step
 
-    val initDelay = if (curWepOverride) curWepSettings.tBTrigInitDelay else curSettings[curWepCategory + "_TRIGGER_INIT_SHOT_DELAY"].safeToInt("Trig init delay $curWepCategory")
-    val shotDelay = if (curWepOverride) curWepSettings.tBTrigPerShotDelay else curSettings[curWepCategory + "_TRIGGER_PER_SHOT_DELAY"].safeToInt("Trig per delay $curWepCategory")
+    //Trigger key check
+    if (curSettings.bool["TRIGGER_ENABLE_KEY"] && !keyPressed(curSettings.int["TRIGGER_KEY"])) {
+        inTrigger = false
+        triggerShots = 0
+        return@every
+    }
+
+    val initDelay = if (curWepOverride) curWepSettings.tBTrigInitDelay else curSettings.int[curWepCategory + "_TRIGGER_INIT_SHOT_DELAY"]
+    val shotDelay = if (curWepOverride) curWepSettings.tBTrigPerShotDelay else curSettings.int[curWepCategory + "_TRIGGER_PER_SHOT_DELAY"]
     val bFOV = curSettings.float["TRIGGER_FOV"]
     val bINFOV = curSettings.bool["TRIGGER_USE_FOV"]
     val bINCROSS = curSettings.bool["TRIGGER_USE_INCROSS"]
@@ -58,13 +65,6 @@ fun triggerBot() = every(5, inGameCheck = true) {
 
         //Trigger precheck
         if (meCurWepEnt.bullets() <= 0 || keyPressed(AIM_KEY)) { //Can shoot check???
-            inTrigger = false
-            triggerShots = 0
-            return@every
-        }
-
-        //Trigger key check
-        if (curSettings.bool["TRIGGER_ENABLE_KEY"] && !keyPressed(curSettings["TRIGGER_KEY"].safeToInt("Trig key"))) {
             inTrigger = false
             triggerShots = 0
             return@every

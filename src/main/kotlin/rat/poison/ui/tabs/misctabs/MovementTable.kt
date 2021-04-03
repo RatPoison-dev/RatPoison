@@ -1,17 +1,13 @@
 package rat.poison.ui.tabs.misctabs
 
-import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.scenes.scene2d.ui.Value.prefWidth
 import com.kotcrab.vis.ui.widget.VisTable
-import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.ui.tabs.movementTab
+import rat.poison.ui.tabs.movementTable
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
 
-
-class MovementTab : Tab(false, false) {
-
-    private val table = VisTable(false)
+class MovementTable: VisTable(false) {
     val bunnyHop = VisCheckBoxCustom("Bunny Hop", "ENABLE_BUNNY_HOP")
     val bunnyHopHitChance = VisSliderCustom("HitChance", "BHOP_HITCHANCE", 0F, 100F,  1F, true)
     val bunnyHopKey = VisBindTableCustom("Bunny Hop Key", "ENABLE_BUNNY_HOP_KEY", keyWidth = 225F)
@@ -25,35 +21,24 @@ class MovementTab : Tab(false, false) {
     val blockBotDistance = VisSliderCustom("Block Bot Distance", "BLOCK_BOT_DISTANCE", 100F, 5000F, 100F, true)
 
     init {
-        table.padLeft(25F)
-        table.padRight(25F)
-
-        table.add(bunnyHop).left().row()
-        table.add(bunnyHopHitChance).left().padLeft(14F).row()
-        table.add(bunnyHopKey).left().padLeft(14F).row()
-        table.add(autoStrafe).left().padLeft(14F).row()
-        table.add(autoStrafeBHopOnly).left().padLeft(14F).row()
-        table.addSeparator().row()
-        table.add(fastStop).left().row()
-        table.add(headWalk).left().row()
-        table.add(knifeBot).left().row()
-        table.addSeparator().row()
-        table.add(blockBot).left().row()
-        table.add(blockBotKey).left().row()
-        table.add(blockBotDistance).left().row()
-    }
-
-    override fun getTabTitle(): String {
-        return "Movement"
-    }
-
-    override fun getContentTable(): Table {
-        return table
+        add(bunnyHop).expandX().left().row()
+        add(bunnyHopHitChance).expandX().left().row()
+        add(bunnyHopKey).expandX().left().row()
+        add(autoStrafe).expandX().left().row()
+        add(autoStrafeBHopOnly).expandX().left().row()
+        //addSeparator()
+        add(fastStop).expandX().left().row()
+        add(headWalk).expandX().left().row()
+        add(knifeBot).expandX().left().row()
+        //addSeparator()
+        add(blockBot).expandX().left().row()
+        add(blockBotKey).expandX().left().row()
+        add(blockBotDistance).expandX().left().row()
     }
 }
 
 fun movementTabUpdate() {
-    movementTab.apply {
+    movementTable.apply {
         bunnyHop.update()
         bunnyHopHitChance.update()
         bunnyHopKey.update()

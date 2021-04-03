@@ -49,7 +49,7 @@ fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
         }
     }
 
-    if (!curSettings["CROSSHAIR_ARRAY"].isBlank()) {
+    if (!curSettings["CROSSHAIR_ARRAY"].isEmpty()) {
         val str = curSettings["CROSSHAIR_ARRAY"]
         val strList = str.replace("[", "").replace("]", "").split(", ")
 

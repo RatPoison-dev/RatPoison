@@ -32,6 +32,9 @@ APPLESS_HEIGHT = 1000
 APPLESS_X = 960
 APPLESS_Y = 100
 
+//If watermark is enabled on menu
+UI_WATERMARK = true
+
 //Menu stays focused even when csgo isn't
 MENU_STAY_FOCUSED = true
 

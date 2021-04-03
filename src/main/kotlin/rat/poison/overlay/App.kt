@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.Scaling
 import com.badlogic.gdx.utils.viewport.ScalingViewport
 import com.kotcrab.vis.ui.VisUI
+import com.kotcrab.vis.ui.widget.VisLabel
+import com.kotcrab.vis.ui.widget.VisTable
 import com.sun.management.OperatingSystemMXBean
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import rat.poison.appless
@@ -56,9 +58,8 @@ var glowTime = 0L
 var appTime = 0L
 var menuTime = 0L
 var overlayTime = 0L
-var bspVisTime = 0L
 
-object App : ApplicationAdapter() {
+object App: ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
@@ -76,6 +77,7 @@ object App : ApplicationAdapter() {
     private val bodies = ObjectArrayList<App.() -> Unit>()
     private lateinit var camera: OrthographicCamera
 
+    lateinit var uiWatermark: UIWatermark
     lateinit var uiMenu: UIMenu
     lateinit var uiArrows: UIArrows
     lateinit var uiBombWindow: UIBombTimer
@@ -88,7 +90,6 @@ object App : ApplicationAdapter() {
     private var timer = 0
 
     override fun create() {
-
         assetManager = AssetManager()
         assetManager.loadAssets()
         assetManager.updateFonts()
@@ -99,6 +100,7 @@ object App : ApplicationAdapter() {
 
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
 
+        uiWatermark = UIWatermark()
         uiMenu = UIMenu()
         uiArrows = UIArrows()
         uiBombWindow = UIBombTimer()
@@ -208,6 +210,11 @@ object App : ApplicationAdapter() {
                                 menuStage.clear()
                             }
 
+                            if (!menuStage.actors.contains(uiWatermark)) {
+                                menuStage.addActor(uiWatermark)
+                                uiWatermark.setPosition(CSGO.gameX.toFloat() + CSGO.gameWidth - 8F, CSGO.gameY.toFloat() + CSGO.gameHeight)
+                            }
+
                             if (curSettings.bool["ENABLE_BOMB_TIMER"] && curSettings.bool["BOMB_TIMER_MENU"] && curSettings.bool["ENABLE_ESP"]) {
                                 if (!menuStage.actors.contains(uiBombWindow)) {
                                     uiBombWindow.updateAlpha()
@@ -226,7 +233,6 @@ object App : ApplicationAdapter() {
                                 menuStage.clear() //actors.remove at index doesnt work after 1 loop?
                             }
                         }, TimeUnit.NANOSECONDS)
-
 
                         sb.projectionMatrix = menuStage.camera.combined
                         shapeRenderer.projectionMatrix = menuStage.camera.combined

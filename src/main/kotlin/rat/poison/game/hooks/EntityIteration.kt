@@ -21,7 +21,6 @@ import rat.poison.game.offsets.EngineOffsets.dwClientState_MapDirectory
 import rat.poison.game.offsets.EngineOffsets.dwGameDir
 import rat.poison.game.offsets.EngineOffsets.dwSignOnState
 import rat.poison.scripts.detectMap
-import rat.poison.scripts.nameChange
 import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.*
@@ -46,10 +45,10 @@ private fun reset() {
 private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
     if (old != new) {
         if (new.name == SignOnState.IN_GAME.name) {
-            Thread(Runnable {
+            Thread {
                 Thread.sleep(10000)
                 shouldPostProcess = true
-            }).start()
+            }.start()
 
             val strBuf: Memory by lazy {
                 Memory(128) //128 str?
@@ -65,9 +64,8 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
                 if (dbg) {
                     println("[DEBUG] Detecting nade map at -- $gameDir\\$mapName")
                 }
-                detectMap(mapName)
 
-                //loadBsp("$gameDir\\$mapName")
+                detectMap(mapName)
             }
 
             //Find correct tonemap values
@@ -78,7 +76,6 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
 //        }
 
             inGame = true
-            nameChange = ""
 
             if (PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0) {
                 val write = 0xEB.toByte()

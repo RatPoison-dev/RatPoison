@@ -306,8 +306,5 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false,
 			val clsid = (csgoEXE.read(cls + 0x14, 4) ?: return NULL).getInt(0).unsign() //classid
 			return byID(clsid) ?: NULL
 		}
-		
-		//val ccsPlayer = arrayOf(CCSPlayer)
 	}
-	
 }

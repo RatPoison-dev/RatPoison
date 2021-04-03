@@ -14,67 +14,67 @@ import rat.poison.scripts.aim.meCurWep
 fun drawDebug() = App {
     if (!dbg) return@App
 
-    val txtString = StringBuilder()
+    var txtString = ""
 
-    txtString.appendLine("Weapon Override: $curWepOverride")
+    txtString += "Weapon Override: $curWepOverride\n"
 
     if (curWepOverride) {
-        txtString.appendLine("Current Override: $curWepCategory: ${meCurWep.name}")
+        txtString += "Current Override: $curWepCategory: ${meCurWep.name}\n"
 
-        txtString.appendLine("Factor Recoil: ${curWepSettings.tFRecoil}")
-        txtString.appendLine("On Shot: ${curWepSettings.tOnShot}")
-        txtString.appendLine("Flat Aim: ${curWepSettings.tFlatAim}")
-        txtString.appendLine("Path Aim: ${curWepSettings.tPathAim}")
-        txtString.appendLine("Aim Bone: ${curWepSettings.tAimBone}")
-        txtString.appendLine("Force Bone: ${curWepSettings.tForceBone}")
-        txtString.appendLine("Fov: ${curWepSettings.tAimFov}")
-        txtString.appendLine("Speed: ${curWepSettings.tAimSpeed}")
-        txtString.appendLine("Smooth: ${curWepSettings.tAimSmooth}")
-        txtString.appendLine("Perfect Aim: ${curWepSettings.tPerfectAim}")
-        txtString.appendLine("Perfect Fov: ${curWepSettings.tPAimFov}")
-        txtString.appendLine("Perfect Chance: ${curWepSettings.tPAimChance}")
-        txtString.appendLine("Scoped Only: ${curWepSettings.tScopedOnly}")
-        txtString.appendLine("Aim After #: ${curWepSettings.tAimAfterShots}")
-        txtString.appendLine()
-        txtString.appendLine("Trigger: ${curWepSettings.tBoneTrig}")
-        txtString.appendLine("Trigger Aimbot: ${curWepSettings.tBTrigAim}")
-        txtString.appendLine("Trigger Backtrack: ${curWepSettings.tBTrigBacktrack}")
-        txtString.appendLine("Trigger InCross: ${curWepSettings.tBTrigInCross}")
-        txtString.appendLine("Trigger InFov: ${curWepSettings.tBTrigInFov}")
-        txtString.appendLine("Trigger Fov: ${curWepSettings.tBTrigFov}")
-        txtString.appendLine("Trigger Init Delay: ${curWepSettings.tBTrigInitDelay}")
-        txtString.appendLine("Trigger Per Shot Delay: ${curWepSettings.tBTrigPerShotDelay}")
-        txtString.appendLine()
-        txtString.appendLine("Backtrack: ${curWepSettings.tBacktrack}")
-        txtString.appendLine("Backtrack MS: ${curWepSettings.tBTMS}")
+        txtString += "Factor Recoil: ${curWepSettings.tFRecoil}\n"
+        txtString += "On Shot: ${curWepSettings.tOnShot}\n"
+        txtString += "Flat Aim: ${curWepSettings.tFlatAim}\n"
+        txtString += "Path Aim: ${curWepSettings.tPathAim}\n"
+        txtString += "Aim Bone: ${curWepSettings.tAimBone}\n"
+        txtString += "Force Bone: ${curWepSettings.tForceBone}\n"
+        txtString += "Fov: ${curWepSettings.tAimFov}\n"
+        txtString += "Speed: ${curWepSettings.tAimSpeed}\n"
+        txtString += "Smooth: ${curWepSettings.tAimSmooth}\n"
+        txtString += "Perfect Aim: ${curWepSettings.tPerfectAim}\n"
+        txtString += "Perfect Fov: ${curWepSettings.tPAimFov}\n"
+        txtString += "Perfect Chance: ${curWepSettings.tPAimChance}\n"
+        txtString += "Scoped Only: ${curWepSettings.tScopedOnly}\n"
+        txtString += "Aim After #: ${curWepSettings.tAimAfterShots}\n"
+        txtString += "\n"
+        txtString += "Trigger: ${curWepSettings.tBoneTrig}\n"
+        txtString += "Trigger Aimbot: ${curWepSettings.tBTrigAim}\n"
+        txtString += "Trigger Backtrack: ${curWepSettings.tBTrigBacktrack}\n"
+        txtString += "Trigger InCross: ${curWepSettings.tBTrigInCross}\n"
+        txtString += "Trigger InFov: ${curWepSettings.tBTrigInFov}\n"
+        txtString += "Trigger Fov: ${curWepSettings.tBTrigFov}\n"
+        txtString += "Trigger Init Delay: ${curWepSettings.tBTrigInitDelay}\n"
+        txtString += "Trigger Per Shot Delay: ${curWepSettings.tBTrigPerShotDelay}\n"
+        txtString += "\n"
+        txtString += "Backtrack: ${curWepSettings.tBacktrack}\n"
+        txtString += "Backtrack MS: ${curWepSettings.tBTMS}\n"
     } else {
-        txtString.appendLine()
-        txtString.appendLine("Factor Recoil: " + curSettings["FACTOR_RECOIL"])
-        txtString.appendLine("On Shot: " + curSettings["AIM_ONLY_ON_SHOT"])
-        txtString.appendLine("Flat Aim: " + curSettings["ENABLE_FLAT_AIM"])
-        txtString.appendLine("Path Aim: " + curSettings["ENABLE_PATH_AIM"])
-        txtString.appendLine("Aim Bone: " + curSettings["AIM_BONE"])
-        txtString.appendLine("Force Bone: " + curSettings["FORCE_AIM_BONE"])
-        txtString.appendLine("Fov: " + curSettings["AIM_FOV"])
-        txtString.appendLine("Speed: " + curSettings["AIM_SPEED"])
-        txtString.appendLine("Smooth: " + curSettings["AIM_SMOOTHNESS"])
-        txtString.appendLine("Perfect Aim: " + curSettings["PERFECT_AIM"])
-        txtString.appendLine("Perfect Fov: " + curSettings["PERFECT_AIM_FOV"])
-        txtString.appendLine("Perfect Chance: " + curSettings["PERFECT_AIM_CHANCE"])
-        txtString.appendLine("Scoped Only: " + curSettings["ENABLE_SCOPED_ONLY"])
-        txtString.appendLine("Aim After #: " + curSettings["AIM_AFTER_SHOTS"])
-        txtString.appendLine()
-        txtString.appendLine("Trigger: " + curSettings["${curWepCategory}_TRIGGER"])
-        txtString.appendLine("Trigger Aimbot: " + curSettings["${curWepCategory}_TRIGGER_AIMBOT"])
-        txtString.appendLine("Trigger Backtrack: " + curSettings["${curWepCategory}_TRIGGER_BACKTRACK"])
-        txtString.appendLine("Trigger InCross: " + curSettings["${curWepCategory}_TRIGGER_INCROSS"])
-        txtString.appendLine("Trigger InFov: " + curSettings["${curWepCategory}_TRIGGER_INFOV"])
-        txtString.appendLine("Trigger Fov: " + curSettings["${curWepCategory}_TRIGGER_FOV"])
-        txtString.appendLine("Trigger Init Delay: " + curSettings["${curWepCategory}_TRIGGER_INIT_SHOT_DELAY"])
-        txtString.appendLine("Trigger Per Shot Delay: " + curSettings["${curWepCategory}_TRIGGER_PER_SHOT_DELAY"])
-        txtString.appendLine()
-        txtString.appendLine("Backtrack: " + curSettings["${curWepCategory}_BACKTRACK"])
-        txtString.appendLine("Backtrack MS: " + curSettings["${curWepCategory}_BACKTRACK_MS"])
+        txtString += "\n"
+        txtString += "Factor Recoil: " + curSettings["FACTOR_RECOIL"] + "\n"
+        txtString += "On Shot: " + curSettings["AIM_ONLY_ON_SHOT"] + "\n"
+        txtString += "Flat Aim: " + curSettings["ENABLE_FLAT_AIM"] + "\n"
+        txtString += "Path Aim: " + curSettings["ENABLE_PATH_AIM"] + "\n"
+        txtString += "Aim Bone: " + curSettings["AIM_BONE"] + "\n"
+        txtString += "Force Bone: " + curSettings["FORCE_AIM_BONE"] + "\n"
+        txtString += "Fov: " + curSettings["AIM_FOV"] + "\n"
+        txtString += "Speed: " + curSettings["AIM_SPEED"] + "\n"
+        txtString += "Smooth: " + curSettings["AIM_SMOOTHNESS"] + "\n"
+        txtString += "Perfect Aim: " + curSettings["PERFECT_AIM"] + "\n"
+        txtString += "Perfect Fov: " + curSettings["PERFECT_AIM_FOV"] + "\n"
+        txtString += "Perfect Chance: " + curSettings["PERFECT_AIM_CHANCE"] + "\n"
+        txtString += "Scoped Only: " + curSettings["ENABLE_SCOPED_ONLY"] + "\n"
+        txtString += "Aim After #: " + curSettings["AIM_AFTER_SHOTS"] + "\n"
+        txtString += "\n"
+        txtString += "Trigger: " + curSettings["${curWepCategory}_TRIGGER"] + "\n"
+        txtString += "Trigger Aimbot: " + curSettings["${curWepCategory}_TRIGGER_AIMBOT"] + "\n"
+        txtString += "Trigger Backtrack: " + curSettings["${curWepCategory}_TRIGGER_BACKTRACK"] + "\n"
+        txtString += "Trigger InCross: " + curSettings["${curWepCategory}_TRIGGER_INCROSS"] + "\n"
+        txtString += "Trigger InFov: " + curSettings["${curWepCategory}_TRIGGER_INFOV"] + "\n"
+        txtString += "Trigger Fov: " + curSettings["${curWepCategory}_TRIGGER_FOV"] + "\n"
+        txtString += "Trigger Init Delay: " + curSettings["${curWepCategory}_TRIGGER_INIT_SHOT_DELAY"] + "\n"
+        txtString += "Trigger Per Shot Delay: " + curSettings["${curWepCategory}_TRIGGER_PER_SHOT_DELAY"] + "\n"
+        txtString += "\n"
+        txtString += "Backtrack: " + curSettings["${curWepCategory}_BACKTRACK"] + "\n"
+        txtString += "Backtrack MS: " + curSettings["${curWepCategory}_BACKTRACK_MS"] + "\n"
     }
 
     if (shapeRenderer.isDrawing) {
@@ -84,7 +84,7 @@ fun drawDebug() = App {
     shapeRenderer.begin()
     shapeRenderer.color = Color.BLACK
     shapeRenderer.set(ShapeRenderer.ShapeType.Filled)
-    shapeRenderer.rect(1f, CSGO.gameHeight/4f+8f, 225f, 512f)
+    shapeRenderer.rect(1f, CSGO.gameHeight/4f - 48f, 225f, 564f)
     shapeRenderer.set(ShapeRenderer.ShapeType.Line)
     shapeRenderer.end()
 

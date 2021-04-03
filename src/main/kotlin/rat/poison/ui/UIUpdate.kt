@@ -78,9 +78,6 @@ fun refreshMenu() {
     mainTabbedPane.add(optionsTab)
     mainTabbedPane.add(configsTab)
 
-    //espTabbedPane.removeAll()
-    miscTabbedPane.removeAll()
-
     glowEspTable = GlowEspTable()
     chamsEspTable = ChamsEspTable()
     indicatorEspTable = IndicatorEspTable()
@@ -91,10 +88,10 @@ fun refreshMenu() {
     nadesTable = NadesTable()
     miscVisualsTable = MiscVisualsTable()
 
-    movementTab = MovementTab()
-    fovChangerTab = FOVChangerTab()
-    bombTab = BombTab()
-    othersTab = OthersTab()
+    movementTable = MovementTable()
+    fovChangerTable = FOVChangerTable()
+    bombTable = BombTable()
+    othersTable = OthersTable()
 
     mainAimTab = MainAimTable()
     backtrackTab = BacktrackTable()
@@ -115,11 +112,6 @@ fun refreshMenu() {
     //espTabbedPane.add(hitMarkerTab)
     //espTabbedPane.add(nadesTab)
     //espTabbedPane.add(miscVisualsTab)
-
-    miscTabbedPane.add(movementTab)
-    miscTabbedPane.add(fovChangerTab)
-    miscTabbedPane.add(bombTab)
-    miscTabbedPane.add(othersTab)
 
     uiSpecList.remove()
     uiSpecList = UISpectatorList()

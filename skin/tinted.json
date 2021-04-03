@@ -15,6 +15,7 @@
 		t-medium-dark: {r: 0.2, g: 0.2, b: 0.2, a: 1 },
 		t-dark: {r: 0.15, g: 0.15, b: 0.15, a: 1 },
 		t-very-dark: {r: 0.05, g: 0.05, b: 0.05, a: 1 },
+		t-very-dark-a: {r: 0.05, g: 0.05, b: 0.05, a: 0.75 },
 		t-alpha: {r: 0, g: 0, b: 0, a: 1 },
 		black: t-black,
 		white: t-white,
@@ -102,7 +103,8 @@
 		window-bg: {name: t-dot, color: t-very-dark },
 		window-border-bg: {name: t-dot, color: t-very-dark },
 		window-noborder: {name: t-window-border, color: t-very-dark },
-		window-resizable: {name: t-window-resize, color: t-very-dark }
+		window-resizable: {name: t-window-resize, color: t-very-dark },
+		window-semi-transparent: {name: t-window, color: t-very-dark-a }
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 		default: {down: button-down, up: button },
@@ -139,7 +141,9 @@
 		default: {titleFont: default-font, background: window, titleFontColor: white },
 		resizable: {background: window-resizable, titleFont: default-font, titleFontColor: white },
 		noborder: {background: window-noborder, titleFont: default-font, titleFontColor: white },
-		dialog: {stageBackground: dialogDim, titleFont: default-font, background: window, titleFontColor: white }
+		dialog: {stageBackground: dialogDim, titleFont: default-font, background: window, titleFontColor: white },
+
+		watermark: {background: window-semi-transparent, titleFont: default-font, titleFontColor: white }
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 		default-horizontal: {background: progressbar, knob: progressbar-filled, knobBefore: progressbar-filled },

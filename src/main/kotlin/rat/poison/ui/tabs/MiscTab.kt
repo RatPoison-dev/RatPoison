@@ -1,67 +1,46 @@
 package rat.poison.ui.tabs
 
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
-import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
-import rat.poison.ui.tabs.misctabs.BombTab
-import rat.poison.ui.tabs.misctabs.FOVChangerTab
-import rat.poison.ui.tabs.misctabs.MovementTab
-import rat.poison.ui.tabs.misctabs.OthersTab
+import rat.poison.ui.tabs.misctabs.BombTable
+import rat.poison.ui.tabs.misctabs.FOVChangerTable
+import rat.poison.ui.tabs.misctabs.MovementTable
+import rat.poison.ui.tabs.misctabs.OthersTable
 
-var miscTabbedPane = TabbedPane()
-var movementTab = MovementTab()
-var fovChangerTab = FOVChangerTab()
-var bombTab = BombTab()
-var othersTab = OthersTab()
+var movementTable = MovementTable()
+var fovChangerTable = FOVChangerTable()
+var bombTable = BombTable()
+var othersTable = OthersTable()
 
-class MiscTabs : Tab(false, false) {
+class MiscTabs: Tab(false, false) {
     private val table = VisTable(false)
+
     init {
-        miscTabbedPane.add(movementTab)
-        miscTabbedPane.add(fovChangerTab)
-        miscTabbedPane.add(bombTab)
-        miscTabbedPane.add(othersTab)
-
-        miscTabbedPane.switchTab(movementTab)
-
-        val miscTabbedPaneContent = VisTable(false)
-        miscTabbedPaneContent.padTop(10F)
-        miscTabbedPaneContent.padBottom(10F)
-        miscTabbedPaneContent.align(Align.top)
-        miscTabbedPaneContent.columnDefaults(1)
-
-        val miscScrollPane = ScrollPane(miscTabbedPaneContent)
-        miscScrollPane.setFlickScroll(false)
-        miscScrollPane.setSize(1000F, 1000F)
-
-        miscTabbedPaneContent.add(movementTab.contentTable).left().colspan(2).row()
-
-        miscTabbedPaneContent.addSeparator().colspan(2).padLeft(25F).padRight(25F)
-
-        miscTabbedPane.addListener(object : TabbedPaneAdapter() {
-            override fun switchedTab(tab: Tab?) {
-                if (tab == null) return
-
-                miscTabbedPaneContent.clear()
-
-                miscTabbedPaneContent.add(tab.contentTable).left().colspan(2).row()
-
-                miscTabbedPaneContent.addSeparator().colspan(2).padLeft(25F).padRight(25F)
-            }
-        })
-        table.add(miscTabbedPane.table).minWidth(500F).left().growX().row()
-        table.add(miscScrollPane).minSize(500F, 500F).prefSize(500F, 500F).align(Align.left).growX().growY().row()
+        buildTable()
     }
-    override fun getTabTitle(): String {
-        return "Misc"
+
+    private fun buildTable() {
+        table.clear()
+
+        val leftTable = VisTable()
+
+        leftTable.add(movementTable).width(470F).growX().left().row()
+        leftTable.addSeparator()
+        leftTable.add(fovChangerTable).width(470F).growX().top().padTop(2F).left().row()
+        leftTable.addSeparator()
+        leftTable.add(bombTable).width(470F).growX().top().padTop(2F).left()
+
+        table.add(leftTable).width(470F).left().top()
+        table.addSeparator(true)
+        table.add(othersTable).width(470F).left().top()
     }
 
     override fun getContentTable(): Table {
         return table
     }
 
+    override fun getTabTitle(): String {
+        return "Misc"
+    }
 }

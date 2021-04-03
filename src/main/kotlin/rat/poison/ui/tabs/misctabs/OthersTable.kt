@@ -1,21 +1,17 @@
 package rat.poison.ui.tabs.misctabs
 
-import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.*
-import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.MUSIC_KITS_FILE
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
 import rat.poison.overlay.App.assetManager
 import rat.poison.overlay.opened
-import rat.poison.scripts.changeName
-import rat.poison.scripts.selfNade
 import rat.poison.scripts.writeSpoof
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.ListAdapter
 import rat.poison.ui.tabs.miscVisualsTable
-import rat.poison.ui.tabs.othersTab
+import rat.poison.ui.tabs.othersTable
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisSliderCustom
 import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
@@ -26,34 +22,33 @@ import java.io.File
 
 data class MusicKit(var id: Int = 0, var name: String = "")
 
-class OthersTab: Tab(false, false) {
-    private val table = VisTable(false)
+class OthersTable: VisTable(false) {
     val doorSpam = VisCheckBoxCustom("Door Spam", "D_SPAM")
-    var doorSpamKey = VisBindTableCustom("Door Spam Key", "D_SPAM_KEY")
+    var doorSpamKey = VisBindTableCustom("Door Spam Key", "D_SPAM_KEY", keyWidth = 0F)
     val weaponSpam = VisCheckBoxCustom("Weapon Spam", "W_SPAM")
-    var weaponSpamKey = VisBindTableCustom("Weapon Spam Key", "W_SPAM_KEY")
-    val enableReducedFlash = VisCheckBoxCustom("Reduced Flash", "ENABLE_REDUCED_FLASH")
-    val flashMaxAlpha = VisSliderCustom("Max Alpha", "FLASH_MAX_ALPHA", 5F, 255F, 5F, true)
+    var weaponSpamKey = VisBindTableCustom("Weapon Spam Key", "W_SPAM_KEY", keyWidth = 0F)
+    val enableReducedFlash = VisCheckBoxCustom("No Flash", "ENABLE_REDUCED_FLASH")
+    val flashMaxAlpha = VisSliderCustom("Alpha", "FLASH_MAX_ALPHA", 5F, 255F, 5F, true, 0, 100F, 100F)
     val hitSoundCheckBox = VisCheckBoxCustom("HitSound", "ENABLE_HITSOUND")
     val hitSoundBox = VisSelectBox<String>()
-    val hitSoundVolume = VisSliderCustom("Volume", "HITSOUND_VOLUME", .1F, 1F, .1F, false)
+    val hitSoundVolume = VisSliderCustom("Volume", "HITSOUND_VOLUME", .1F, 1F, .1F, false, 1, 100F, 100F)
     val killSoundCheckBox = VisCheckBoxCustom("KillSound", "ENABLE_KILLSOUND")
     val killSoundBox = VisSelectBox<String>()
-    val killSoundVolume = VisSliderCustom("Volume", "KILLSOUND_VOLUME", .1F, 1F, .1F, false)
-    val selfNade = VisTextButton("Self-Nade")
+    val killSoundVolume = VisSliderCustom("Volume", "KILLSOUND_VOLUME", .1F, 1F, .1F, false, 1, 100F, 100F)
     val enableKillBind = VisCheckBoxCustom("Kill Bind", "KILL_BIND")
-    val killBindKey = VisBindTableCustom("Key", "KILL_BIND_KEY")
-    private val nameChangeInput = VisValidatableTextField()
-    private val nameChange = VisTextButton("Name-Change")
-    val postProcessingDisable = VisCheckBoxCustom("DISABLE_POST_PROCESSING", "DISABLE_POST_PROCESSING")
+    val killBindKey = VisBindTableCustom("Key", "KILL_BIND_KEY", keyWidth = 0F)
+
+    val postProcessingDisable = VisCheckBoxCustom("Disable Post Processing", "DISABLE_POST_PROCESSING")
     val spectatorList = VisCheckBoxCustom("Spectator List", "SPECTATOR_LIST")
     val enableMusicKitSpoofer = VisCheckBoxCustom("Music Kit Spoofer", "MUSIC_KIT_SPOOFER")
     val fakeLag = VisCheckBoxCustom("Fake Lag", "FAKE_LAG")
-    val fakeLagTicks = VisSliderCustom("Fake Lag Ticks", "FAKE_LAG_TICKS", 1F, 14F, 1F, true)
+    val fakeLagTicks = VisSliderCustom("Fake Lag Ticks", "FAKE_LAG_TICKS", 1F, 14F, 1F, true, 0, 250F, 200F)
+
     // me when the suggestions
     private var musicKitsAdapter = ListAdapter(ArrayList())
     private var musicKitsSelection = ListView(musicKitsAdapter)
     val musicKitArray = getMusicKitsArray()
+
     init {
         musicKitsSelection.updatePolicy = ListView.UpdatePolicy.ON_DRAW
 
@@ -72,59 +67,7 @@ class OthersTab: Tab(false, false) {
         val selected = musicKitArray.first { it.id == curSettings.int["MUSIC_KIT_ID"] }.name
         val currentlySelected = VisLabel("${"CURRENTLY"}: $selected")
         //Crashing on adding separators with .colspan(2) (?)
-        table.padLeft(25F)
-        table.padRight(25F)
         updateHitSoundsList()
-
-        val hitSound = VisTable(false)
-        hitSound.add(hitSoundCheckBox).left()
-        hitSound.add(hitSoundBox).padLeft(226F-hitSoundCheckBox.width).width(90F)
-        table.add(hitSound).left().row()
-        table.add(hitSoundVolume).left().row()
-        table.addSeparator().row()
-
-        val killSound = VisTable(false)
-        killSound.add(killSoundCheckBox).left()
-        killSound.add(killSoundBox).padLeft(226F-killSoundCheckBox.width).width(90F)
-        table.add(killSound).left().row()
-        table.add(killSoundVolume).left().row()
-        table.addSeparator().row()
-
-
-        table.add(enableReducedFlash).left().row()
-        table.add(flashMaxAlpha).left().row()
-        table.addSeparator().row()
-        table.add(doorSpam).left().row()
-        table.add(doorSpamKey).left().row()
-        table.addSeparator().row()
-        table.add(weaponSpam).left().row()
-        table.add(weaponSpamKey).left().row()
-        table.addSeparator().row()
-        table.add(selfNade).left().row()
-        table.add(enableKillBind).left().row()
-        table.add(killBindKey).left().row()
-        table.add(postProcessingDisable).left().row()
-        table.addSeparator().row()
-        table.add(nameChangeInput).left().row()
-        table.add(nameChange).left().padTop(2F).row()
-        table.addSeparator().row()
-        table.add(spectatorList).left().row()
-        table.addSeparator().row()
-        table.addSeparator().row()
-        table.add(fakeLag).left().row()
-        table.add(fakeLagTicks).left().row()
-        table.addSeparator().row()
-        table.add(enableMusicKitSpoofer).left().row()
-        table.add(currentlySelected).left().row()
-        table.add(musicKitsSelection.mainTable).left().height(120F).row()
-
-        selfNade.changed { _, _ ->
-            selfNade()
-        }
-
-        nameChange.changed { _, _ ->
-            changeName(nameChangeInput.text)
-        }
 
         musicKitsAdapter.setItemClickListener { str ->
             if (!str.isNullOrEmpty()) {
@@ -179,14 +122,38 @@ class OthersTab: Tab(false, false) {
             true
         }
 
-    }
-    override fun getTabTitle(): String {
-        return "Others"
+        add(hitSoundCheckBox).expandX().left()
+        add(hitSoundBox).expandX().left()
+        add(hitSoundVolume).expandX().left().row()
+
+        add(killSoundCheckBox).expandX().left()
+        add(killSoundBox).expandX().left()
+        add(killSoundVolume).expandX().left().row()
+
+        add(enableReducedFlash).colspan(2).expandX().left()
+        add(flashMaxAlpha).expandX().left().row()
+
+        add(doorSpam).colspan(2).expandX().left()
+        add(doorSpamKey).expandX().left().row()
+
+        add(weaponSpam).colspan(2).expandX().left()
+        add(weaponSpamKey).expandX().left().row()
+
+        add(enableKillBind).colspan(2).expandX().left()
+        add(killBindKey).expandX().left().row()
+
+        add(postProcessingDisable).colspan(3).left().row()
+
+        add(spectatorList).colspan(3).left().row()
+
+        //add(fakeLag).colspan(3).left().row()
+        //add(fakeLagTicks).colspan(3).left().row()
+
+        add(enableMusicKitSpoofer).colspan(3).left().row()
+        add(currentlySelected).colspan(3).left().row()
+        add(musicKitsSelection.mainTable).colspan(3).left().height(200F).row()
     }
 
-    override fun getContentTable(): Table {
-        return table
-    }
     fun updateHitSoundsList() {
         if (opened && !saving && !uiRefreshing) {
             val hitSoundFiles = Array<String>()
@@ -200,7 +167,7 @@ class OthersTab: Tab(false, false) {
 }
 
 fun othersTabUpdate() {
-    othersTab.apply {
+    othersTable.apply {
         doorSpam.update()
         doorSpamKey.update()
         weaponSpam.update()
@@ -215,7 +182,6 @@ fun othersTabUpdate() {
         fakeLag.update()
         killSoundBox.selected = curSettings["KILLSOUND_FILE_NAME"].replace("\"", "")
         killSoundVolume.update()
-        selfNade.setText("Self-Nade")
         killBindKey.update()
         enableKillBind.update()
         postProcessingDisable.update()
@@ -247,7 +213,7 @@ fun getMusicKitsArray(): Array<MusicKit> {
 }
 
 fun getMusicKitId(name: String): Int {
-    othersTab.musicKitArray.forEach {
+    othersTable.musicKitArray.forEach {
         if (it.name == name) return it.id
     }
     return 1

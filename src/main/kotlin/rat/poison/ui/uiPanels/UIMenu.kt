@@ -207,7 +207,6 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
             true
         }
 
-
         //Add tab pane & scroll pane to main ui window
         add(aimButton).growX().prefWidth(105F).left()
         add(visualsButton).growX().prefWidth(105F).left()

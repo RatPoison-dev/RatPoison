@@ -30,9 +30,7 @@ internal inline fun forEntities(vararg types: EntityType, crossinline body: (Ent
 	val forEnts: ArrayList<EntityContext?> = ArrayList()
 
 	if (types.isEmpty()) {
-		for (entType in EntityType.values()) {
-			entities[entType]?.let { forEnts.addAll(it) }
-		}
+		EntityType.values().forEach { i -> entities[i]?.let { j -> forEnts.addAll(j) }}
 	} else {
 		for (entType in types) {
 			entities[entType]?.let { forEnts.addAll(it) }

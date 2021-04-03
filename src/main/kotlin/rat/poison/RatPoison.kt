@@ -122,6 +122,8 @@ fun main() {
         if (dbg) { println("[DEBUG] Initializing Spread Circle") }; spreadCircle()
         if (dbg) { println("[DEBUG] Initializing Draw Smokes") }; drawSmokes()
         if (dbg) { println("[DEBUG] Initializing Far Radar") }; farRadar()
+
+        if (dbg) { println("[DEBUG] Initializing Show Keybinds") }; handleUIWatermark()
         //farEsp()
 
         drawDebug()
@@ -158,7 +160,6 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
     if (dbg) { println("[DEBUG] Initializing Fake Lag") }; fakeLag()
     if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()
-    if (dbg) { println("[DEBUG] Initializing Name Changer") }; nameChanger()
     if (dbg) { println("[DEBUG] Initializing Kill Sound") }; killSoundEsp()
     if (dbg) { println("[DEBUG] Initializing MusicKit Spoofer") }; musicKitSpoofer()
     if (dbg) { println("[DEBUG] Initializing Block Bot") }; blockBot()
