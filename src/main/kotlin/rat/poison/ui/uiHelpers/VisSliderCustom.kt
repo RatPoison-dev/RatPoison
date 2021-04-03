@@ -6,7 +6,6 @@ import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curSettings
-import rat.poison.dbg
 import rat.poison.ui.changed
 import kotlin.math.pow
 import kotlin.math.round

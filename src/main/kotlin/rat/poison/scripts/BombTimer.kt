@@ -8,6 +8,7 @@ import rat.poison.game.CSGO
 import rat.poison.game.entity.*
 import rat.poison.game.entityByType
 import rat.poison.game.me
+import rat.poison.game.meTeam
 import rat.poison.game.offsets.ClientOffsets.dwUse
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.overlay.App
@@ -27,11 +28,11 @@ fun bombTimer() = App {
     if (DANGER_ZONE || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
     if (curSettings.bool["ENABLE_BOMB_TIMER"]) {
-        bombText.setText(bombState.toString()) //Update regardless of BOMB_TIMER_MENU
+        bombText.setText(bombState.getString()) //Update regardless of BOMB_TIMER_MENU
         if (curSettings.bool["BOMB_TIMER_BARS"] && bombState.planted) {
-            val cColor = if ((me.team() == 3.toLong() && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) { //If player has time to defuse
+            val cColor = if ((meTeam == 3L && ((me.hasDefuser() && bombState.timeLeftToExplode > 5) || (!me.hasDefuser() && bombState.timeLeftToExplode > 10)))) { //If player has time to defuse
                 Color(0F, 255F, 0F, .25F) //Green
-            } else if ((me.team() == 3.toLong() && bombState.timeLeftToDefuse < bombState.timeLeftToExplode) || (me.team() == 2.toLong() && !bombState.gettingDefused)) { //If player is defusing with time left, or is terrorist and the bomb isn't being defused
+            } else if ((meTeam == 3L && bombState.timeLeftToDefuse < bombState.timeLeftToExplode) || (meTeam == 2.toLong() && !bombState.gettingDefused)) { //If player is defusing with time left, or is terrorist and the bomb isn't being defused
                 Color(0F, 255F, 0F, .25F) //Red
             } else {
                 Color(255F, 0F, 0F, .25F) //Bomb is being defused/not enough time
@@ -57,11 +58,8 @@ fun bombTimer() = App {
             if (curSettings.bool["BOMB_TIMER_BARS_SHOW_TTE"]) {
                 sb.begin()
 
-                val sbText = StringBuilder()
-                sbText.append("${String.format("%.2f", bombState.timeLeftToExplode)} s")
-
                 textRenderer.color = Color.WHITE
-                textRenderer.draw(sb, sbText, (CSGO.gameWidth / 2F), 15f, 1F, Align.center, false)
+                textRenderer.draw(sb, "${String.format("%.2f", bombState.timeLeftToExplode)} s", (CSGO.gameWidth / 2F), 15f, 1F, Align.center, false)
 
                 sb.end()
             }
@@ -99,24 +97,24 @@ fun bombUpdater() = every(15, inGameCheck = true) {
 
     if (bombState.planted) { //If bomb is planted
         if (curSettings.bool["LS_BOMB"]) { //If last second bomb defuse is enabled
-            if (me.team() == 3L && bombState.timeLeftToExplode <= timeNeeded) { //If we are CT & should defuse
+            if (meTeam == 3L && bombState.timeLeftToExplode <= timeNeeded) { //If we are CT & should defuse
                 if (!lastSecDefusing) {
                     println(bombState.timeLeftToExplode)
                     CSGO.clientDLL[dwUse] = 5
-                    Thread {
+                    Thread(Runnable {
                         if (bombState.timeLeftToExplode.toLong() > 0) {
                             Thread.sleep(timeNeeded.toLong() * 1000) //In milliseconds
                         }
                         CSGO.clientDLL[dwUse] = 4
                         lastSecDefusing = false
-                    }.start()
+                    }).start()
                     lastSecDefusing = true
                 }
             }
         }
     }
 }
-
+private const val emptyString = ""
 data class BombState(var hasBomb: Boolean = false,
                      var planted: Boolean = false,
                      var canDefuse: Boolean = false,
@@ -127,27 +125,36 @@ data class BombState(var hasBomb: Boolean = false,
 
     private val sb = StringBuilder()
 
-    override fun toString(): String {
-        sb.setLength(0)
+    fun getString(): StringBuilder {
+        sb.clear()
 
         if (planted) {
-            sb.append("${"Bomb-Planted!"}\n")
+            sb.appendLine("Bomb-Planted!")
 
-            sb.append("${"Time-To-Explode:"} ${formatFloat(timeLeftToExplode)} \n")
-
-            if (location.isNotBlank())
-                sb.append("${"Location:"} $location\n")
+            sb.append("Time-To-Explode:")
+            sb.append(" ")
+            sb.appendLine(formatFloat(timeLeftToExplode))
+            if (location != emptyString) {
+                sb.append("Location:")
+                sb.append(" ")
+                sb.appendLine(location)
+            }
             if (gettingDefused) {
-                sb.append("${"Can-Defuse:"} $canDefuse\n")
-                // Redundant as the UI already shows this, but may have a use case I'm missing
-                sb.append("${"Time-To-Defuse:"} ${formatFloat(timeLeftToDefuse)}\n")
+                sb.append("Can-Defuse:")
+                sb.append(" ")
+                sb.appendLine(canDefuse)
+                sb.append("Time-To-Defuse:")
+                sb.append(" ")
+                sb.appendLine(formatFloat(timeLeftToDefuse))
+                sb.append("Time-Left-After:")
+                sb.append(" ")
+                sb.appendLine(timeLeftToExplode - timeLeftToDefuse)
 
-                sb.append("${"Time-Left-After:"} ${timeLeftToExplode - timeLeftToDefuse}")
             }
         } else {
-            sb.append("${"Bomb-Not-Planted!"}\n")
+            sb.appendLine("Bomb-Not-Planted!")
         }
-        return sb.toString()
+        return sb
     }
 
 

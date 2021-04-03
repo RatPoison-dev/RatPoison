@@ -10,6 +10,7 @@ import rat.poison.curSettings
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.updateDisableRCrosshair
+import rat.poison.utils.extensions.upper
 
 //Swap VisSelectBoxCustom to showText false is mainText is " "
 class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean, showText: Boolean = true, vararg items: String, width: Float = 100F): VisTable(false) {
@@ -53,7 +54,7 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
     }
 
     fun update() {
-        selectBox.selectedIndex = boxItems.indexOf(curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }].toUpperCase())
+        selectBox.selectedIndex = boxItems.indexOf(curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }].upper())
 
         updateTooltip()
     }

@@ -1,8 +1,10 @@
 package rat.poison.scripts
 
 import rat.poison.appless
+import rat.poison.game.CSGO
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
+import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.rankName
 import rat.poison.overlay.App.haveTarget
 import rat.poison.overlay.opened
@@ -13,10 +15,11 @@ import rat.poison.ui.uiRefreshing
 import rat.poison.utils.RanksPlayer
 import rat.poison.utils.every
 import rat.poison.utils.extensions.roundNDecimals
+import rat.poison.utils.extensions.uint
 import rat.poison.utils.saving
 
-var ranksPlayerList = mutableListOf<RanksPlayer>()
-
+var ranksPlayerList = Array(64) { RanksPlayer() }
+private const val id = "ranks"
 //works with every down to 30, if you ever crash due to this then dn
 fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every second
 
@@ -24,10 +27,12 @@ fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every second
 
     //Bruh -- fix later
     updatingRanks = true
-    ranksPlayerList.clear()
-    forEntities(EntityType.CCSPlayer) {
+    var max = 0
+    forEntities(EntityType.CCSPlayer, identifier = id) {
         val entity = it.entity
-
+        val entID = (CSGO.csgoEXE.uint(entity + ClientOffsets.dwIndex) - 1).toInt()
+        if (entID > 64 || entID < 0) return@forEntities
+        if (entID > max) max = entID
         if (entity.hltv()) return@forEntities
 
         val entTeam = entity.team()
@@ -44,16 +49,29 @@ fun ranks() = every(5000, true, inGameCheck = true) { //Rebuild every second
         }
         val entWins = entity.wins().toString()
 
-        val teamStr = when (entTeam) { //Bruh
+        val entTeamStr = when (entTeam) { //Bruh
             3L -> "CT"
             2L -> "T"
             else -> "N/A"
         }
 
-        var steamID = entity.getValidSteamID()
-
-        val player = RanksPlayer(entName, steamID, entRank, teamStr, entKills, entDeaths, entKD, entWins, entMoney, entTeam, entScore)
-        ranksPlayerList.add(player)
+        val entSteamID = entity.getValidSteamID()
+        ranksPlayerList[entID].apply {
+            name = entName
+            steamID = entSteamID
+            rank = entRank
+            teamStr = entTeamStr
+            kills = entKills
+            deaths = entDeaths
+            KD = entKD
+            wins = entWins
+            money = entMoney
+            team = entTeam
+            score = entScore
+        }
+        for (i in max+1 until ranksPlayerList.size) {
+            ranksPlayerList[i].teamStr = "NIL"
+        }
     }
     ranksPlayerList.sort()
     updatingRanks = false

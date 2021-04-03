@@ -12,10 +12,7 @@ import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.robot
 import rat.poison.scripts.aim.meDead
-import rat.poison.utils.Angle
-import rat.poison.utils.Vector
-import rat.poison.utils.every
-import rat.poison.utils.keyPressed
+import rat.poison.utils.*
 import java.awt.event.KeyEvent
 import kotlin.math.abs
 import kotlin.math.cos
@@ -28,20 +25,22 @@ private var onEnt = 0L
 //////Keeps up with crouching just fine, but not normal running usually
 ////////Doesn't predict, isn't accurate
 
-var mePos = Vector()
-var onEntPos = Vector()
+private var mePos = Vector()
+private var onEntPos = Vector()
 
+private val positionVector = Vector()
+private val meAng = Vector()
 internal fun headWalk() = every(2, inGameCheck = true) {
     if (!curSettings.bool["HEAD_WALK"] || meDead) return@every
 
     if (!keyPressed(KeyEvent.VK_W) && !keyPressed(KeyEvent.VK_A) && !keyPressed(KeyEvent.VK_S) && !keyPressed(KeyEvent.VK_D)) {
-        mePos = me.absPosition()
+        val mePos = me.absPosition(mePos)
         if (onPlayerHead()) {
             updateCursorEnable()
             if (cursorEnable) return@every
 
             val pos = Vector(mePos.x - onEntPos.x, mePos.y - onEntPos.y, mePos.z - onEntPos.z)
-            val yaw = clientState.angle().y
+            val yaw = clientState.angle(meAng).y
             val calcYaw = yaw/180*Math.PI
 
             //Is this even needed?
@@ -92,15 +91,16 @@ internal fun headWalk() = every(2, inGameCheck = true) {
     }
 }
 
+private const val id = "headwalk"
 internal fun onPlayerHead() : Boolean {
     var entPos : Angle
     onEnt = 0L
 
-    forEntities(EntityType.CCSPlayer) {
+    forEntities(EntityType.CCSPlayer, identifier = id) {
         val entity = it.entity
         if (entity == me || !entity.onGround()) return@forEntities
 
-        entPos = entity.absPosition()
+        entPos = entity.absPosition(positionVector)
 
         val xDist = abs(mePos.x - entPos.x)
         val yDist = abs(mePos.y - entPos.y)

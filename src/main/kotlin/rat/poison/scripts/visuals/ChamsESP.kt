@@ -17,14 +17,18 @@ import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.aim.target
 import rat.poison.settings.DANGER_ZONE
+import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import java.lang.Float.floatToIntBits
-
+private val meAng = Vector()
+private val mePos = Vector()
+private val cCol = Color()
+private const val id = "chams"
 fun chamsEsp() = every(100, true, inGameCheck = true) {
     if (!curSettings.bool["CHAMS_ESP"] || !curSettings.bool["ENABLE_ESP"]) return@every
 
-    val myTeam = me.team()
+    val myTeam = meTeam
 
     val brightnessCounter = if (curSettings.int["CHAMS_BRIGHTNESS"] > 0) {
         (255F / (curSettings.int["CHAMS_BRIGHTNESS"] / 10F)).toInt()
@@ -38,9 +42,9 @@ fun chamsEsp() = every(100, true, inGameCheck = true) {
 
         //Set VMod
         val clientMColor = if (curSettings.bool["CHAMS_SHOW_SELF"]) {
-             curSettings.color["CHAMS_SELF_COLOR"]
+            curSettings.color["CHAMS_SELF_COLOR"]
         } else {
-            Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0)
+            cCol.set(brightnessCounter, brightnessCounter, brightnessCounter, 1.0)
         }
 
         if (clientVModEnt > 0) {
@@ -53,8 +57,8 @@ fun chamsEsp() = every(100, true, inGameCheck = true) {
     //Set Cvar
     engineDLL[dwModelAmbientMin] = floatToIntBits(curSettings.int["CHAMS_BRIGHTNESS"].toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
 
-    val currentAngle = clientState.angle()
-    val position = me.position()
+    val currentAngle = clientState.angle(meAng)
+    val position = me.position(mePos)
 
     if (!meCurWep.knife && meCurWep != Weapons.ZEUS_X27) {
         if (curSettings.bool["ENABLE_AIM"]) {
@@ -71,7 +75,7 @@ fun chamsEsp() = every(100, true, inGameCheck = true) {
         }
     }
 
-    forEntities(EntityType.CCSPlayer) {
+    forEntities(EntityType.CCSPlayer, identifier = id) {
         val entity = it.entity
         if (entity <= 0 || entity == me || entity.dormant() || entity.dead()) return@forEntities
 
@@ -85,17 +89,18 @@ fun chamsEsp() = every(100, true, inGameCheck = true) {
             entity.chams(curSettings.color["CHAMS_TARGET_COLOR"])
         } else if (curSettings.bool["CHAMS_SHOW_ENEMIES"] && !onTeam) { //Show enemies & is enemy
             if (curSettings.bool["CHAMS_SHOW_HEALTH"]) {
-                entity.chams(Color((255 - 2.55 * clamp(entity.health(), 0, 100)).toInt(), (2.55 * clamp(entity.health(), 0, 100)).toInt(), 0, 1.0))
+                val entHealth = entity.health()
+                entity.chams(cCol.set((255 - 2.55 * clamp(entHealth, 0, 100)).toInt(), (2.55 * clamp(entHealth, 0, 100)).toInt(), 0, 1.0))
             } else {
                 entity.chams(curSettings.color["CHAMS_ENEMY_COLOR"])
             }
         } else if (!curSettings.bool["CHAMS_SHOW_ENEMIES"] && !onTeam) { //Not show enemies
-            entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
+            entity.chams(cCol.set(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
         } else if (curSettings.bool["CHAMS_SHOW_TEAM"] && onTeam) { //Show team & is team
             entity.chams(curSettings.color["CHAMS_TEAM_COLOR"])
         }
         else {
-            entity.chams(Color(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
+            entity.chams(cCol.set(brightnessCounter, brightnessCounter, brightnessCounter, 1.0))
         }
 
         return@forEntities

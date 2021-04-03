@@ -3,7 +3,9 @@ package rat.poison.utils
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
+private var cached = -1
 fun parseOffset(): Int {
+    if (cached != -1) return cached
     try {
         val connection = URL("https://raw.githubusercontent.com/frk1/hazedumper/master/csgo.json") //fuck you
         val con = connection.openConnection() as HttpsURLConnection
@@ -15,7 +17,9 @@ fun parseOffset(): Int {
         lines.forEach { line ->
             if ("dwbSendPackets" in line) {
                 val regex = "\\d+".toRegex()
-                return regex.find(line)!!.value.toInt()
+                val offset = regex.find(line)!!.value.toInt()
+                cached = offset
+                return offset
             }
         }
     }

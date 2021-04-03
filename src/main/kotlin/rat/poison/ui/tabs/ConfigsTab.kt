@@ -2,7 +2,6 @@
 
 package rat.poison.ui.tabs
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.VisUI
@@ -12,7 +11,6 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.overlay.App.menuStage
 import rat.poison.overlay.opened
-import rat.poison.scripts.skinChanger
 import rat.poison.ui.changed
 import rat.poison.ui.uiPanels.configsTab
 import rat.poison.utils.*

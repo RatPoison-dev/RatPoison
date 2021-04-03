@@ -1,12 +1,12 @@
 package rat.poison.overlay
 
 import com.badlogic.gdx.InputProcessor
-import rat.poison.interfaces.IOKeyProcessorListener
+import rat.poison.interfaces.IKeyProcessorListener
 
 
 class KeyProcessor: InputProcessor {
     var needKeyPress = false
-    var listener: IOKeyProcessorListener? = null
+    var listener: IKeyProcessorListener? = null
 
     override fun keyDown(keycode: Int): Boolean {
         if (needKeyPress) {

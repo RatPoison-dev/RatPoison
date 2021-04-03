@@ -5,16 +5,17 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectMaps
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import rat.poison.game.Color
 
+private val sbBuilder = StringBuilder()
 open class Settings {
 
     val savedValues: Object2ObjectMap<String, String> =
-        Object2ObjectMaps.synchronize(Object2ObjectOpenHashMap())
+            Object2ObjectMaps.synchronize(Object2ObjectOpenHashMap())
 
     operator fun get(key: String) = savedValues[key] ?: ""
 
     operator fun set(key: String, value: Any): Any? {
-        val string = value.toString()
-        val r = savedValues.put(key, string)
+        sbBuilder.clear().append(value)
+        val r = savedValues.put(key, sbBuilder.toString())
         efficient.update(key)
         return r
     }

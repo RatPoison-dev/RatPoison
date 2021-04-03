@@ -17,7 +17,7 @@ fun toMilliseconds(ticks: Int): Long {
 fun recordingVoice(): Boolean = engineDLL.boolean(bVoiceRecording)
 
 fun fakeLag() = every(12, inGameCheck = true) {
-    if (meDead || me < 0 || !curSettings.bool["FAKE_LAG"] || keyPressed(AIM_KEY) || !me.canShoot() || recordingVoice()) return@every
+    if (meDead || me < 0 || !curSettings.bool["FAKE_LAG"] || keyPressed(AIM_KEY) || !me.canShoot(teamCheck = false) || recordingVoice()) return@every
     sendPacket(false)
     Thread.sleep(toMilliseconds(curSettings.int["FAKE_LAG_TICKS"]))
     sendPacket(true)

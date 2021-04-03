@@ -13,27 +13,29 @@ import rat.poison.utils.Vector
 import rat.poison.utils.inGame
 
 //https://github.com/WarezBox/aimware/blob/master/%5BLuaScript%20V5%5D%20Smoke%20timer%20ESP
-
+private val vec = Vector()
+private val positionVector = Vector()
+private val stringBuilder = StringBuilder()
+private const val id = "nadestimer"
 fun nadesTimer() = App {
     if (!curSettings.bool["SMOKE_WEAR_OFF_TIME"] || !inGame) return@App
 
-    forEntities(EntityType.CSmokeGrenadeProjectile) {
+    forEntities(EntityType.CSmokeGrenadeProjectile, identifier = id) {
         val ent = it.entity
         if (!ent.didEffect()) return@forEntities
 
         val seconds = ent.timeLeftToDisappear()
         if (seconds <= 0.0) return@forEntities
-        val vec = Vector()
-        if (worldToScreen(ent.position(), vec)) {
-            shapeRenderer.apply {
-                if (isDrawing) {
-                    end()
-                }
-                sb.begin()
+        if (worldToScreen(ent.position(positionVector), vec)) {
+            sb.apply {
+                if (!sb.isDrawing) sb.begin()
+
                 textRenderer.color = curSettings.colorGDX["SMOKE_WEAR_OFF_TIME_COLOR"]
-                val sbText = StringBuilder()
-                sbText.append("SMOKE\n${String.format("%.2f", seconds)} s")
-                textRenderer.draw(sb, sbText, vec.x, vec.y, 1F, Align.left, false)
+                stringBuilder.clear()
+                stringBuilder.appendLine("SMOKE")
+                stringBuilder.append(String.format("%.2f", seconds))
+                stringBuilder.append(" s")
+                textRenderer.draw(sb, stringBuilder, vec.x, vec.y, 1F, Align.left, false)
                 sb.end()
             }
         }

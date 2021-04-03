@@ -13,23 +13,28 @@ import rat.poison.game.me
 import rat.poison.game.w2sViewMatrix
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meDead
+import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.toMatrix4
 import rat.poison.utils.inGame
 import kotlin.math.abs
 
+private val mePos = Vector()
+private val matrix = Matrix4()
+private val meAng = Vector()
+private val oldMatrix = Matrix4()
 fun headLevelHelper() = App {
     if (!inGame || meDead) return@App
 
-    val mePos = me.position()
-    val meAng = clientState.angle()
+    val mePos = me.position(mePos)
+    val meAng = clientState.angle(meAng)
 
     if (me.onGround() && curSettings.bool["HEAD_LVL_ENABLE"]) {
-        val oldMatrix = Matrix4(shapeRenderer.projectionMatrix.values)
+        oldMatrix.set(shapeRenderer.projectionMatrix.values)
 
         val deadZone = curSettings.float["HEAD_LVL_DEADZONE"]
 
         shapeRenderer.apply {
-            val gameMatrix = w2sViewMatrix.toMatrix4()
+            val gameMatrix = w2sViewMatrix.toMatrix4(matrix)
             gameMatrix.translate(0f, 0f, mePos.z)
             projectionMatrix = gameMatrix
 

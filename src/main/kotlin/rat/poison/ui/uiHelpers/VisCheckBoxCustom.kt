@@ -1,10 +1,7 @@
 package rat.poison.ui.uiHelpers
 
-import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.widget.Tooltip.removeTooltip
 import com.kotcrab.vis.ui.widget.VisCheckBox
-import com.kotcrab.vis.ui.widget.VisRadioButton
-import com.kotcrab.vis.ui.widget.VisTextButton
 import rat.poison.curSettings
 import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.changed

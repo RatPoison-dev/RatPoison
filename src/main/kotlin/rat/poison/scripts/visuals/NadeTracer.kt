@@ -21,13 +21,16 @@ val positionsList = mutableListOf<MutableList<Vector>>()
 private var sync = 0
 
 var arraySize = 5
-
+private val w2s1 = Vector()
+private val w2s2 = Vector()
+private val positionVector2 = Vector()
+private const val id = "nadetracer"
 fun nadeTracer() = App {
     if (!curSettings.bool["NADE_TRACER"] || MENUTOG || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
     if (sync >= (curSettings.int["NADE_TRACER_UPDATE_TIME"])) {
         arraySize = clamp(curSettings.int["NADE_TRACER_TIMEOUT"], 1, 30)
-        forEntities(EntityType.CSmokeGrenadeProjectile, EntityType.CMolotovProjectile, EntityType.CDecoyProjectile, EntityType.CBaseCSGrenadeProjectile) {
+        forEntities(EntityType.CSmokeGrenadeProjectile, EntityType.CMolotovProjectile, EntityType.CDecoyProjectile, EntityType.CBaseCSGrenadeProjectile, identifier = id) {
             val ent = it.entity
             val entPos = ent.absPosition()
 
@@ -50,7 +53,7 @@ fun nadeTracer() = App {
         }
 
         grenadeList.forEach { i ->
-            val entPos = i.absPosition()
+            val entPos = i.absPosition(positionVector2)
             val idx = grenadeList.indexOf(i)
             if (entPos.x in -2F..2F && entPos.y in -2F..2F && entPos.z in -2F..2F) {
                 if (positionsList[idx].size > 2) {
@@ -75,8 +78,6 @@ fun nadeTracer() = App {
         for (j in 0 until positionsList[i].size-1) {
             val pos1 = positionsList[i][j]
             val pos2 = positionsList[i][j+1]
-            val w2s1 = Vector()
-            val w2s2 = Vector()
 
             if (pos1.x in -2F..2F && pos1.y in -2F..2F && pos1.z in -2F..2F) {
                 continue

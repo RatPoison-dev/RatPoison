@@ -1,15 +1,14 @@
 package rat.poison.ui.tabs.aimtabs
 
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.*
-import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.*
+import rat.poison.DEFAULT_OWEAPON_STR
+import rat.poison.curSettings
+import rat.poison.oWeapon
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
-import rat.poison.ui.uiHelpers.VisSelectBoxCustom
 import rat.poison.ui.uiHelpers.overrideWeaponsUI.*
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.generalUtil.toGdxArray

@@ -1,12 +1,10 @@
 package rat.poison.scripts
 
 import rat.poison.curSettings
+import rat.poison.game.*
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.angle
-import rat.poison.game.clientState
 import rat.poison.game.entity.*
-import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.iCrossHairID
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
@@ -14,15 +12,16 @@ import rat.poison.scripts.aim.*
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
+import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.generalUtil.safeToInt
 import rat.poison.utils.inGame
 import rat.poison.utils.keyPressed
 
 var inTrigger = false
 private var triggerShots = 0
-
+private val meAngle = Vector()
+private val mePosition = Vector()
 fun triggerBot() = every(5, inGameCheck = true) {
     //Don't run if not needed
     if (DANGER_ZONE || meDead || !inGame || MENUTOG || !meCurWep.gun || !curSettings.bool["ENABLE_TRIGGER"] || !haveAimSettings) { //Precheck
@@ -33,22 +32,15 @@ fun triggerBot() = every(5, inGameCheck = true) {
 
     inTrigger = false //go and do the 2 step
 
-    //Trigger key check
-    if (curSettings.bool["TRIGGER_ENABLE_KEY"] && !keyPressed(curSettings.int["TRIGGER_KEY"])) {
-        inTrigger = false
-        triggerShots = 0
-        return@every
-    }
-
-    val initDelay = if (curWepOverride) curWepSettings.tBTrigInitDelay else curSettings.int[curWepCategory + "_TRIGGER_INIT_SHOT_DELAY"]
-    val shotDelay = if (curWepOverride) curWepSettings.tBTrigPerShotDelay else curSettings.int[curWepCategory + "_TRIGGER_PER_SHOT_DELAY"]
+    val initDelay = curSettings.int["TRIGGER_INIT_SHOT_DELAY"]
+    val shotDelay = curSettings.int["TRIGGER_PER_SHOT_DELAY"]
     val bFOV = curSettings.float["TRIGGER_FOV"]
     val bINFOV = curSettings.bool["TRIGGER_USE_FOV"]
     val bINCROSS = curSettings.bool["TRIGGER_USE_INCROSS"]
     val bAIMBOT = curSettings.bool["TRIGGER_USE_AIMBOT"]
     val bBACKTRACK = curSettings.bool["TRIGGER_USE_BACKTRACK"]
 
-    if (curSettings.bool[curWepCategory + "_TRIGGER"] || (curWepOverride && curWepSettings.tBoneTrig)) { //If trigger is enabled for current weapon
+    if (curSettings.bool["TRIGGER_BOT"]) { //If trigger is enabled for current weapon
         //Scope check
         if (meCurWep.sniper) { //If we are holding a sniper
             if ((curSettings.bool["ENABLE_SCOPED_ONLY"] && !curWepOverride) || (curWepOverride && curWepSettings.tScopedOnly)) { //Scoped only check
@@ -84,8 +76,8 @@ fun triggerBot() = every(5, inGameCheck = true) {
 
         var canFOV = false
         if (bINFOV) { //If we should check in fov
-            val currentAngle = clientState.angle()
-            val position = me.position()
+            val currentAngle = clientState.angle(meAngle)
+            val position = me.position(mePosition)
             val target = findTarget(position, currentAngle, false, bFOV, "-2").player
             if (target > 0) {
                 if (!target.dead() && !target.isProtected()) {

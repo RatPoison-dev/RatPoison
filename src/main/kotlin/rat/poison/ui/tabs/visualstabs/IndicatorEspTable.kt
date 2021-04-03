@@ -1,10 +1,8 @@
 package rat.poison.ui.tabs.visualstabs
 
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
-import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.ui.tabs.indicatorEspTable
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.VisColorPickerCustom

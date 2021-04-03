@@ -1,29 +1,23 @@
 package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.badlogic.gdx.math.MathUtils.clamp
 import rat.poison.crosshairArray
 import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
-import rat.poison.game.entity.isScoped
 import rat.poison.game.entity.punch
-import rat.poison.game.entity.shotsFired
-import rat.poison.game.entity.velocity
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meCurWep
-import rat.poison.scripts.aim.meCurWepEnt
-import rat.poison.settings.MENUTOG
-import rat.poison.ui.uiPanels.mainTabbedPane
-import rat.poison.ui.uiPanels.rcsTab
+import rat.poison.utils.Vector
 import rat.poison.utils.generalUtil.cToFloat
 import rat.poison.utils.inGame
 import java.lang.Math.toRadians
 import kotlin.math.*
 
+private val mePunchVec = Vector()
 internal fun rcrosshair() = App {
     if (!curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
@@ -45,7 +39,7 @@ internal fun rcrosshair() = App {
     val yy: Float
 
     if (eRC && !(eSC && meCurWep.sniper)) {
-        val punch = me.punch()
+        val punch = me.punch(mePunchVec)
 
         //Center
         xx = (gameWidth / 2) - tan(toRadians(punch.y.toDouble())).toFloat() * rccFov2 + rccXo

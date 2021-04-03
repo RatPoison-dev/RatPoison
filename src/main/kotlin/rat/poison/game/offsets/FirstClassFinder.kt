@@ -1,5 +1,3 @@
-
-
 package rat.poison.game.offsets
 
 import rat.poison.game.CSGO.clientDLL
@@ -7,12 +5,13 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.offsets.ClientOffsets.decalname
 import rat.poison.utils.extensions.uint
 
+private val byteArray = ThreadLocal.withInitial { ByteArray(4) }
 fun findDecal(): Long {
-	val mask = ByteArray(4)
+	val mask = byteArray.get()
 	for (i in 0..3) mask[i] = (((decalname shr 8 * i)) and 0xFF).toByte()
-	
+
 	val memory = Offset.memoryByModule[clientDLL]!!
-	
+
 	var skipped = 0
 	var currentAddress = 0L
 	while (currentAddress < clientDLL.size - mask.size) {
@@ -26,7 +25,7 @@ fun findDecal(): Long {
 		}
 		currentAddress++
 	}
-	
+
 	return -1L
 }
 

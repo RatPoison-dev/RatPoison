@@ -289,16 +289,17 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false,
 	SmokeTrail,
 	SporeExplosion,
 	SporeTrail;
-	
+
 	open var id: Long = ordinal - 1L
-	
+
 	companion object {
 		val cachedValues = values()
-		
+		val weaponsTypes = cachedValues.filter { it.weapon }
+		val grenadeTypes = cachedValues.filter { it.grenade }
 		val size = cachedValues.size
-		
+
 		private fun byID(id: Long) = cachedValues.firstOrNull { it.id == id }
-		
+
 		fun byEntityAddress(address: Long): EntityType {
 			val vt = (csgoEXE.read(address + 0x8, 4) ?: return NULL).getInt(0).unsign() //iclientnetworkable vtable
 			val fn = (csgoEXE.read(vt + 2 * 0x4, 4) ?: return NULL).getInt(0).unsign() //3rd func

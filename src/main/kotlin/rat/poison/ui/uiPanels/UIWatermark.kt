@@ -1,7 +1,9 @@
 package rat.poison.ui.uiPanels
 
 import com.badlogic.gdx.utils.Align
-import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.widget.VisLabel
+import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.BRANCH
 
 class UIWatermark: VisWindow("", "watermark") {

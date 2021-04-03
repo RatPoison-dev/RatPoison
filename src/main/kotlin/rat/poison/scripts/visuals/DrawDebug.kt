@@ -6,85 +6,158 @@ import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.CSGO
 import rat.poison.overlay.App
-import rat.poison.scripts.aim.curWepCategory
-import rat.poison.scripts.aim.curWepOverride
-import rat.poison.scripts.aim.curWepSettings
-import rat.poison.scripts.aim.meCurWep
+import rat.poison.scripts.aim.*
 
+private val txtString = StringBuilder()
+private val concatStringBuilder = StringBuilder()
 fun drawDebug() = App {
     if (!dbg) return@App
+    txtString.clear()
+    concatStringBuilder.clear()
+    concatStringBuilder.append("Weapon Override: ")
+    concatStringBuilder.append(curWepOverride)
 
-    var txtString = ""
-
-    txtString += "Weapon Override: $curWepOverride\n"
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
 
     if (curWepOverride) {
-        txtString += "Current Override: $curWepCategory: ${meCurWep.name}\n"
+        concatStringBuilder.append("Current Override: ")
+        concatStringBuilder.append(curWepCategory)
+        concatStringBuilder.append(":")
+        concatStringBuilder.append(meCurWep.name)
+        txtString.appendLine(concatStringBuilder)
+        concatStringBuilder.clear()
+    }
+    concatStringBuilder.append("Factor Recoil: ")
+    concatStringBuilder.append(curSettings["FACTOR_RECOIL"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+    concatStringBuilder.append("On Shot: ")
+    concatStringBuilder.append(curSettings["AIM_ONLY_ON_SHOT"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
 
-        txtString += "Factor Recoil: ${curWepSettings.tFRecoil}\n"
-        txtString += "On Shot: ${curWepSettings.tOnShot}\n"
-        txtString += "Flat Aim: ${curWepSettings.tFlatAim}\n"
-        txtString += "Path Aim: ${curWepSettings.tPathAim}\n"
-        txtString += "Aim Bone: ${curWepSettings.tAimBone}\n"
-        txtString += "Force Bone: ${curWepSettings.tForceBone}\n"
-        txtString += "Fov: ${curWepSettings.tAimFov}\n"
-        txtString += "Speed: ${curWepSettings.tAimSpeed}\n"
-        txtString += "Smooth: ${curWepSettings.tAimSmooth}\n"
-        txtString += "Perfect Aim: ${curWepSettings.tPerfectAim}\n"
-        txtString += "Perfect Fov: ${curWepSettings.tPAimFov}\n"
-        txtString += "Perfect Chance: ${curWepSettings.tPAimChance}\n"
-        txtString += "Scoped Only: ${curWepSettings.tScopedOnly}\n"
-        txtString += "Aim After #: ${curWepSettings.tAimAfterShots}\n"
-        txtString += "\n"
-        txtString += "Trigger: ${curWepSettings.tBoneTrig}\n"
-        txtString += "Trigger Aimbot: ${curWepSettings.tBTrigAim}\n"
-        txtString += "Trigger Backtrack: ${curWepSettings.tBTrigBacktrack}\n"
-        txtString += "Trigger InCross: ${curWepSettings.tBTrigInCross}\n"
-        txtString += "Trigger InFov: ${curWepSettings.tBTrigInFov}\n"
-        txtString += "Trigger Fov: ${curWepSettings.tBTrigFov}\n"
-        txtString += "Trigger Init Delay: ${curWepSettings.tBTrigInitDelay}\n"
-        txtString += "Trigger Per Shot Delay: ${curWepSettings.tBTrigPerShotDelay}\n"
-        txtString += "\n"
-        txtString += "Backtrack: ${curWepSettings.tBacktrack}\n"
-        txtString += "Backtrack MS: ${curWepSettings.tBTMS}\n"
-    } else {
-        txtString += "\n"
-        txtString += "Factor Recoil: " + curSettings["FACTOR_RECOIL"] + "\n"
-        txtString += "On Shot: " + curSettings["AIM_ONLY_ON_SHOT"] + "\n"
-        txtString += "Flat Aim: " + curSettings["ENABLE_FLAT_AIM"] + "\n"
-        txtString += "Path Aim: " + curSettings["ENABLE_PATH_AIM"] + "\n"
-        txtString += "Aim Bone: " + curSettings["AIM_BONE"] + "\n"
-        txtString += "Force Bone: " + curSettings["FORCE_AIM_BONE"] + "\n"
-        txtString += "Fov: " + curSettings["AIM_FOV"] + "\n"
-        txtString += "Speed: " + curSettings["AIM_SPEED"] + "\n"
-        txtString += "Smooth: " + curSettings["AIM_SMOOTHNESS"] + "\n"
-        txtString += "Perfect Aim: " + curSettings["PERFECT_AIM"] + "\n"
-        txtString += "Perfect Fov: " + curSettings["PERFECT_AIM_FOV"] + "\n"
-        txtString += "Perfect Chance: " + curSettings["PERFECT_AIM_CHANCE"] + "\n"
-        txtString += "Scoped Only: " + curSettings["ENABLE_SCOPED_ONLY"] + "\n"
-        txtString += "Aim After #: " + curSettings["AIM_AFTER_SHOTS"] + "\n"
-        txtString += "\n"
-        txtString += "Trigger: " + curSettings["${curWepCategory}_TRIGGER"] + "\n"
-        txtString += "Trigger Aimbot: " + curSettings["${curWepCategory}_TRIGGER_AIMBOT"] + "\n"
-        txtString += "Trigger Backtrack: " + curSettings["${curWepCategory}_TRIGGER_BACKTRACK"] + "\n"
-        txtString += "Trigger InCross: " + curSettings["${curWepCategory}_TRIGGER_INCROSS"] + "\n"
-        txtString += "Trigger InFov: " + curSettings["${curWepCategory}_TRIGGER_INFOV"] + "\n"
-        txtString += "Trigger Fov: " + curSettings["${curWepCategory}_TRIGGER_FOV"] + "\n"
-        txtString += "Trigger Init Delay: " + curSettings["${curWepCategory}_TRIGGER_INIT_SHOT_DELAY"] + "\n"
-        txtString += "Trigger Per Shot Delay: " + curSettings["${curWepCategory}_TRIGGER_PER_SHOT_DELAY"] + "\n"
-        txtString += "\n"
-        txtString += "Backtrack: " + curSettings["${curWepCategory}_BACKTRACK"] + "\n"
-        txtString += "Backtrack MS: " + curSettings["${curWepCategory}_BACKTRACK_MS"] + "\n"
+    concatStringBuilder.append("Flat Aim: ")
+    concatStringBuilder.append(curSettings["ENABLE_FLAT_AIM"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Path Aim: ")
+    concatStringBuilder.append(curSettings["ENABLE_PATH_AIM"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Aim Bone: ")
+    concatStringBuilder.append(curSettings["AIM_BONE"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Force Bone: ")
+    concatStringBuilder.append(curSettings["FORCE_AIM_BONE"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Fov: ")
+    concatStringBuilder.append(curSettings["AIM_FOV"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Speed: ")
+    concatStringBuilder.append(curSettings["AIM_SPEED"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Smooth: ")
+    concatStringBuilder.append(curSettings["AIM_SMOOTHNESS"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Perfect Aim: ")
+    concatStringBuilder.append(curSettings["PERFECT_AIM"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Perfect Fov: ")
+    concatStringBuilder.append(curSettings["PERFECT_AIM_FOV"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Perfect Chance: ")
+    concatStringBuilder.append(curSettings["PERFECT_AIM_CHANCE"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Scoped Only: ")
+    concatStringBuilder.append(curSettings["ENABLE_SCOPED_ONLY"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Aim After #: ")
+    concatStringBuilder.append(curSettings["AIM_AFTER_SHOTS"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    txtString.appendLine()
+
+    concatStringBuilder.append("Trigger: ")
+    concatStringBuilder.append(curSettings["TRIGGER_BOT"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Trigger Aimbot: ")
+    concatStringBuilder.append(curSettings["TRIGGER_USE_AIMBOT"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Trigger Backtrack: ")
+    concatStringBuilder.append(curSettings["TRIGGER_USE_BACKTRACK"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Trigger InCross: ")
+    concatStringBuilder.append(curSettings["TRIGGER_USE_INCROSS"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Trigger InFov: ")
+    concatStringBuilder.append(curSettings["TRIGGER_USE_FOV"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Trigger Fov: ")
+    concatStringBuilder.append(curSettings["TRIGGER_FOV"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Trigger Init Delay: ")
+    concatStringBuilder.append(curSettings["TRIGGER_INIT_SHOT_DELAY"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Trigger Per Shot Delay: ")
+    concatStringBuilder.append(curSettings["TRIGGER_PER_SHOT_DELAY"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    txtString.appendLine()
+
+    concatStringBuilder.append("Backtrack: ")
+    concatStringBuilder.append(curSettings["BACKTRACK"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Backtrack MS: ")
+    concatStringBuilder.append(curSettings["BACKTRACK_MS"])
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    if (!shapeRenderer.isDrawing) {
+        shapeRenderer.begin()
     }
 
-    if (shapeRenderer.isDrawing) {
-        shapeRenderer.end()
-    }
-
-    shapeRenderer.begin()
     shapeRenderer.color = Color.BLACK
     shapeRenderer.set(ShapeRenderer.ShapeType.Filled)
-    shapeRenderer.rect(1f, CSGO.gameHeight/4f - 48f, 225f, 564f)
+    shapeRenderer.rect(1f, CSGO.gameHeight/4f+8f, 225f, 512f)
     shapeRenderer.set(ShapeRenderer.ShapeType.Line)
     shapeRenderer.end()
 

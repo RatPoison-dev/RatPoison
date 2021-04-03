@@ -3,11 +3,9 @@ package rat.poison.scripts.visuals
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.Align
 import rat.poison.*
+import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
-import rat.poison.game.me
-import rat.poison.game.w2sViewMatrix
-import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.utils.Vector
 import rat.poison.utils.every
@@ -18,9 +16,9 @@ import kotlin.math.sqrt
 
 val footSteps = Array(256) { FootStep() }
 data class FootStep(var x: Float = 0F, var y: Float = 0F, var z: Float = 0F,
-                            var ttl: Int = curSettings.int["FOOTSTEP_TTL"],
-                            var open: Boolean = true, var myTeam: Boolean = false,
-                            var ent: Entity = 0L)
+                    var ttl: Int = curSettings.int["FOOTSTEP_TTL"],
+                    var open: Boolean = true, var myTeam: Boolean = false,
+                    var ent: Entity = 0L)
 private var stepTimer = 0
 
 fun footStepEsp() {
@@ -31,7 +29,9 @@ fun footStepEsp() {
     }
 }
 
-
+private val entPosVec = Vector()
+private val outVec = Vector()
+private val matrix = Matrix4()
 fun runFootSteps() = App {
     if (!curSettings.bool["ENABLE_ESP"]) return@App
 
@@ -52,15 +52,11 @@ fun runFootSteps() = App {
 
             if (curSettings.int["FOOTSTEP_TYPE"] == 1) {
                 //As text
-                val inVec = Vector(footSteps[i].x, footSteps[i].y, footSteps[i].z)
-                val outVec = Vector()
-                if (worldToScreen(inVec, outVec)) {
-                    val sbText = StringBuilder("Step")
-
+                if (worldToScreen(footSteps[i].x, footSteps[i].y, footSteps[i].z, outVec)) {
                     sb.begin()
 
                     textRenderer.color = color
-                    textRenderer.draw(sb, sbText, outVec.x, outVec.y, 1F, Align.left, false)
+                    textRenderer.draw(sb, "Step", outVec.x, outVec.y, 1F, Align.left, false)
 
                     sb.end()
                 }
@@ -72,7 +68,7 @@ fun runFootSteps() = App {
                         end()
                     }
 
-                    val gameMatrix = w2sViewMatrix.toMatrix4()
+                    val gameMatrix = w2sViewMatrix.toMatrix4(matrix)
 
                     begin()
                     this.color = color
@@ -92,20 +88,22 @@ fun runFootSteps() = App {
     }
 }
 
+private val entVel = Vector()
+private const val id = "constructsteps"
 private fun constructSteps() = every(10) {
     stepTimer+= 1
     if (stepTimer >= curSettings.int["FOOTSTEP_UPDATE"]) {
-        forEntities(EntityType.CCSPlayer) {
+        forEntities(EntityType.CCSPlayer, identifier = id) {
             val ent = it.entity
             if (ent == me || ent.dead() || ent.dormant()) return@forEntities
 
-            val inMyTeam = ent.team() == me.team()
+            val inMyTeam = ent.team() == meTeam
 
-            val entVel = ent.velocity()
+            val entVel = ent.velocity(entVel)
             val entMag = sqrt(entVel.x.pow(2F) + entVel.y.pow(2F) + entVel.z.pow(2F))
 
             if (entMag >= 150) {
-                val entPos = ent.absPosition()
+                val entPos = ent.absPosition(entPosVec)
 
                 val idx = emptySlot()
                 if (idx != -1) {

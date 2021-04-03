@@ -9,15 +9,12 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.GL20.GL_BLEND
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.Scaling
 import com.badlogic.gdx.utils.viewport.ScalingViewport
 import com.kotcrab.vis.ui.VisUI
-import com.kotcrab.vis.ui.widget.VisLabel
-import com.kotcrab.vis.ui.widget.VisTable
 import com.sun.management.OperatingSystemMXBean
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import rat.poison.appless
@@ -73,7 +70,6 @@ object App: ApplicationAdapter() {
     private lateinit var menuBatch: SpriteBatch
     lateinit var viewport: ScalingViewport
     lateinit var keyProcessor: KeyProcessor
-    lateinit var layout: GlyphLayout
     private val bodies = ObjectArrayList<App.() -> Unit>()
     private lateinit var camera: OrthographicCamera
 
@@ -96,7 +92,6 @@ object App: ApplicationAdapter() {
 
         //Implement key processor for menu
         keyProcessor = KeyProcessor()
-        layout = GlyphLayout()
 
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
 
@@ -276,18 +271,28 @@ object App: ApplicationAdapter() {
                             val systemLoad = osBean.systemCpuLoad
 
                             sbText.clear()
-                            sbText.append("\nIn Game: $inGame")
-                            sbText.append("\nShouldPostProcess: $shouldPostProcess")
-                            sbText.append("\nMe: $me Dead: $meDead")
-                            sbText.append("\nDanger Zone: $DANGER_ZONE")
-                            sbText.append("\nShots fired: ${me.shotsFired()}")
-                            sbText.append("\n")
-                            sbText.append("\nTotal physical mem: ").appendHumanReadableSize(totalPhysMem)
-                            sbText.append("\nFree physical mem: ").appendHumanReadableSize(freePhysMem)
+                            sbText.append("In Game: ")
+                            sbText.appendLine(inGame)
+                            sbText.append("ShouldPostProcess: ")
+                            sbText.appendLine(shouldPostProcess)
+                            sbText.append("Me: ")
+                            sbText.append(me)
+                            sbText.append(" Dead: ")
+                            sbText.appendLine(meDead)
+                            sbText.append("Danger Zone: ")
+                            sbText.appendLine(DANGER_ZONE)
+                            sbText.append("Shots fired: ")
+                            sbText.appendLine(me.shotsFired())
+                            sbText.appendLine()
+                            sbText.append("Total physical mem: ")
+                            sbText.appendHumanReadableSize(totalPhysMem)
+                            sbText.appendLine()
+                            sbText.append("Free physical mem: ").appendHumanReadableSize(freePhysMem).appendLine()
 
-                            sbText.append("\nTotal allocated mem: ").appendHumanReadableSize(totalMem)
-                            sbText.append("\nFree allocated mem: ").appendHumanReadableSize(freeMem)
-                            sbText.append("\nUsed allocated mem: ").appendHumanReadableSize(usedMem)
+                            sbText.append("Total allocated mem: ").appendHumanReadableSize(totalMem).appendLine()
+
+                            sbText.append("Free allocated mem: ").appendHumanReadableSize(freeMem).appendLine()
+                            sbText.append("Used allocated mem: ").appendHumanReadableSize(usedMem).appendLine()
 
                             sbText.append("\nProcess load: ").append((processLoad.toFloat() * 100F).roundNDecimals(2)).append("%")
                             sbText.append("\nSystem load: ").append((systemLoad.toFloat() * 100F).roundNDecimals(2)).append("%")

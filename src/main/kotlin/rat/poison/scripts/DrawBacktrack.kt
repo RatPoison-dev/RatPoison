@@ -13,6 +13,15 @@ import rat.poison.utils.Vector
 import rat.poison.utils.inGame
 import rat.poison.utils.keyPressed
 
+private val minHeadPos = Vector()
+private val maxHeadPos = Vector()
+private val minAbsPos = Vector()
+private val maxAbsPos = Vector()
+private val topLeft = Vector()
+private val topRight = Vector()
+private val bottomLeft = Vector()
+private val bottomRight = Vector()
+
 fun drawBacktrack() = App {
     if (MENUTOG) return@App
     if (meDead) return@App
@@ -37,11 +46,6 @@ fun drawBacktrack() = App {
         val minRecord = btRecords[i][minMaxIDX[0]]
         val maxRecord = btRecords[i][minMaxIDX[1]]
 
-        val minHeadPos = Vector()
-        val maxHeadPos = Vector()
-        val minAbsPos = Vector()
-        val maxAbsPos = Vector()
-
         if (worldToScreen(minRecord.headPos, minHeadPos) && worldToScreen(minRecord.absPos, minAbsPos) && worldToScreen(maxRecord.headPos, maxHeadPos) && worldToScreen(maxRecord.absPos, maxAbsPos)) {
             val w = (minAbsPos.y - minHeadPos.y) / 4F
             val minMidX = (minAbsPos.x + minHeadPos.x) / 2F
@@ -53,20 +57,18 @@ fun drawBacktrack() = App {
                 sign = 1
             }
 
-            val topLeft = Vector(minHeadPos.x - (w / 3F) * sign, minHeadPos.y, minHeadPos.z)
-            val topRight = Vector(maxHeadPos.x + (w / 3F) * sign, maxHeadPos.y, maxHeadPos.z)
+            topLeft.set(minHeadPos.x - (w / 3F) * sign, minHeadPos.y, minHeadPos.z)
+            topRight.set(maxHeadPos.x + (w / 3F) * sign, maxHeadPos.y, maxHeadPos.z)
 
-            val bottomLeft = Vector(minMidX - (w / 2F) * sign, minAbsPos.y+8F, minAbsPos.z)
-            val bottomRight = Vector(maxMidX + (w / 2F) * sign, maxAbsPos.y+8F, maxAbsPos.z)
+            bottomLeft.set(minMidX - (w / 2F) * sign, minAbsPos.y+8F, minAbsPos.z)
+            bottomRight.set(maxMidX + (w / 2F) * sign, maxAbsPos.y+8F, maxAbsPos.z)
 
             shapeRenderer.apply {
-                if (shapeRenderer.isDrawing) {
-                    end()
+                if (!shapeRenderer.isDrawing) {
+                    begin()
                 }
 
-                begin()
-
-                color = Color(1F, 1F, 1F, 1F)
+                color = Color.WHITE
 
                 line(topLeft.x, topLeft.y, topRight.x, topRight.y)
                 line(topRight.x, topRight.y, bottomRight.x, bottomRight.y)

@@ -1,7 +1,6 @@
 package rat.poison.scripts
 
 import com.badlogic.gdx.math.MathUtils.clamp
-import com.sun.jna.Memory
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.CSGO.clientDLL
@@ -22,6 +21,7 @@ import rat.poison.utils.Structs.*
 import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
+import rat.poison.utils.threadLocalPointer
 import kotlin.math.abs
 import kotlin.math.atan
 import kotlin.math.tan
@@ -108,12 +108,20 @@ fun attemptBacktrack(): Boolean {
     return false
 }
 
+private const val boneMemorySize = 3984
+private val boneMemory = threadLocalPointer(boneMemorySize)
+private val meAngVec = Vector()
+private var bestFov = 5F
+private val boneVec = Vector()
+//private val positionVector = Vector()
+private const val id = "backtrack"
 fun constructRecords() {
-    var bestFov = 5F
-    val clientAngle = clientState.angle()
-    val meTeam = me.team()
+    bestFov = 5F
+    val clientAngle = clientState.angle(meAngVec)
 
-    forEntities(EntityType.CCSPlayer) {
+    val boneMemory = boneMemory.get()
+
+    forEntities(EntityType.CCSPlayer, identifier = id) {
         val ent = it.entity
 
         if (ent.dead() || ent == me || ent.team() == meTeam) return@forEntities
@@ -121,7 +129,7 @@ fun constructRecords() {
         if (ent.dormant()) { //Reset that bitch
             val entID = (csgoEXE.uint(ent + dwIndex) - 1).toInt()
 
-            if (entID !in 0..64) return@forEntities
+            if (entID < 0 || entID > 63) return@forEntities
 
             for (i in 0 until 13) {
                 val record = btRecords[entID][i]
@@ -136,7 +144,7 @@ fun constructRecords() {
         }
 
         //Best target shit
-        val pos = ent.bones(6)
+        val pos = ent.bones(6, boneVec)
         val fov = calcTarget(bestFov, bestBacktrackTarget, pos, clientAngle, 5F, 6, ovrStatic = true).fov
         if (fov < bestFov && fov > 0) {
             bestFov = fov
@@ -153,15 +161,11 @@ fun constructRecords() {
         if (entID in 0..63 && tick < 13) {
             val record = btRecords[entID][tick]
 
-            val boneMemory: Memory by lazy {
-                Memory(3984)
-            }
-
-            csgoEXE.read(ent.boneMatrix(), boneMemory)
-            record.headPos = boneMemory.bones(8).apply {
+            csgoEXE.read(ent.boneMatrix(), boneMemory, boneMemorySize)
+            record.headPos = boneMemory.bones(8, record.headPos).apply {
                 z += 5
             }
-            record.absPos = ent.absPosition().apply {
+            record.absPos = ent.absPosition(record.absPos).apply {
                 z -= 5
             }
 
@@ -174,7 +178,9 @@ fun constructRecords() {
         return@forEntities
     }
 }
-
+private val minHeadPos = Vector(); private val maxHeadPos = Vector(); private val minAbsPos = Vector(); private val maxAbsPos = Vector()
+private val w2s = Vector()
+private val punchVec = Vector()
 fun bestSimTime(): Float {
     if (bestBacktrackTarget <= 0L) {
         return -1f
@@ -193,8 +199,6 @@ fun bestSimTime(): Float {
     val minRecord = btRecords[targetID][minMaxIDX[0]]
     val maxRecord = btRecords[targetID][minMaxIDX[1]]
 
-    val minHeadPos = Vector(); val maxHeadPos = Vector(); val minAbsPos = Vector(); val maxAbsPos = Vector()
-
     if (worldToScreen(minRecord.headPos, minHeadPos) && worldToScreen(minRecord.absPos, minAbsPos) && worldToScreen(maxRecord.headPos, maxHeadPos) && worldToScreen(maxRecord.absPos, maxAbsPos)) {
         val w = (minAbsPos.y - minHeadPos.y) / 4F
         val minMidX = (minAbsPos.x + minHeadPos.x) / 2F
@@ -212,7 +216,7 @@ fun bestSimTime(): Float {
         val bottomLeft = Vector(minMidX - (w / 2F) * sign, minAbsPos.y+8F, minAbsPos.z)
         //val bottomRight = Vector(maxMidX + (w / 2F) * sign, maxAbsPos.y+8F, maxAbsPos.z)
 
-        val punch = me.punch()
+        val punch = me.punch(punchVec)
         val curFov = csgoEXE.int(me + NetVarOffsets.m_iDefaultFov)
         val rccFov1 = atan((CSGO.gameWidth.toFloat()/ CSGO.gameHeight.toFloat()) * 0.75 * tan(Math.toRadians(curFov/2.0)))
         val rccFov2 = (CSGO.gameWidth /2) / tan(rccFov1).toFloat()
@@ -225,7 +229,6 @@ fun bestSimTime(): Float {
 
             for (i in validRecords) {
                 val record = btRecords[targetID][i]
-                val w2s = Vector()
                 worldToScreen(record.headPos, w2s)
 
                 val centerDist = abs(centerX - w2s.x)
@@ -247,7 +250,7 @@ fun isValidTick(tick: Int): Boolean {
     val delta = gvars.tickCount - tick
     val deltaTime = delta * gvars.intervalPerTick
 
-    var backtrackMS = curSettings.float["${curWepCategory}_BACKTRACK_MS"]
+    var backtrackMS = curSettings.float[curWepCategoryBacktrackMs]
     if (curWepOverride && curWepSettings.tBacktrack) {
         backtrackMS = curWepSettings.tBTMS.toFloat()
     }
@@ -261,10 +264,12 @@ fun timeToTicks(time: Float): Int {
     return (.5f + time / gvars.intervalPerTick).toInt()
 }
 
+val minMaxIDX = intArrayOf(Int.MAX_VALUE, -1)
 fun getRangeRecords(entID: Int, minIDX: Int = 0, maxIDX: Int = 13): IntArray {
     var youngestSimtime = Float.MAX_VALUE
     var oldestSimtime = 0F
-    val minMaxIDX = intArrayOf(Int.MAX_VALUE, -1)
+    minMaxIDX[0] = Int.MAX_VALUE //reset
+    minMaxIDX[1] = -1
 
     for (i in minIDX until maxIDX) {
         val record = btRecords[entID][i]

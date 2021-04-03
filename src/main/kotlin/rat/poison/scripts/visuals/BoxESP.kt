@@ -4,37 +4,48 @@ package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.clamp
-import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.Align
-import com.sun.jna.Memory
+import it.unimi.dsi.fastutil.objects.Object2ObjectMap
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
+import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
-import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.iClip1
 import rat.poison.game.netvars.NetVarOffsets.iPrimaryReserveAmmoCount
 import rat.poison.game.netvars.NetVarOffsets.m_Collision
 import rat.poison.game.netvars.NetVarOffsets.rgflCoordinateFrame
-import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
+import rat.poison.overlay.App.sb
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
-import rat.poison.utils.AssetManager
-import rat.poison.utils.Vector
-import rat.poison.utils.every
-import rat.poison.utils.inGame
+import rat.poison.utils.*
+import rat.poison.utils.extensions.getFloatArray
+import rat.poison.utils.extensions.lower
 import kotlin.math.abs
 import kotlin.math.sign
 
-data class BoundingBox(var left: Float = -1F, var right: Float = -1F, var top: Float = -1F, var bottom: Float = -1F)
-
-data class DrawableTexture(var texture: Texture, var position: String = "")
+data class BoundingBox(var left: Float = -1F, var right: Float = -1F, var top: Float = -1F, var bottom: Float = -1F) {
+	fun set(left: Float, right: Float, top: Float, bottom: Float): BoundingBox {
+		this.left = left
+		this.right = right
+		this.top = top
+		this.bottom = bottom
+		return this
+	}
+	fun reset(): BoundingBox {
+		this.left = -1F
+		this.right = -1F
+		this.top = -1F
+		this.bottom = -1F
+		return this
+	}
+}
+private val bbox = ThreadLocal.withInitial { BoundingBox() }
 
 //Just a bruh moment
 private var advancedBBox = false
@@ -55,13 +66,24 @@ private var showWeapons = false
 private var showDefuseKits = false
 private var bEspUseIcons = false
 private var weaponsScale = 0F
-private var boxDetailsLeftText = StringBuilder("")
-private var boxDetailsRightText = StringBuilder("")
-private var boxDetailsTopText = StringBuilder("")
-private var boxDetailsBottomText = StringBuilder("")
+private var boxDetailsLeftText = StringBuilder()
+private var boxDetailsRightText = StringBuilder()
+private var boxDetailsTopText = StringBuilder()
+private var boxDetailsBottomText = StringBuilder()
+private var ammoStringBuilder = StringBuilder()
+private var moneyStringBuilder = StringBuilder()
 private var topShift = 0F
-private var textureBuilder = mutableListOf<DrawableTexture>()
+private var entPos = Vector()
+private var leftShift = 2F
+private var bottomShift = 0F
+private var rightShift = 0F
+private var leftShiftY = 0F
+private var rightShiftY = 0F
+private var barWidth = 0F
 
+private const val entityMemorySize = 45948
+private val entMemory = threadLocalPointer(entityMemorySize)
+private const val forEntsId = "boxesp"
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
 fun boxEsp() {
 	every(1000, true) { //Update settings
@@ -105,29 +127,33 @@ fun boxEsp() {
 	App {
 		if ((!curSettings.bool["ENABLE_BOX_ESP"] && !curSettings.bool["BOX_ESP_DETAILS"]) || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
-		forEntities { //Player & Weapon boxes
+		val entityMemory = entMemory.get()
+		boxDetailsLeftText.clear()
+		boxDetailsRightText.clear()
+		boxDetailsTopText.clear()
+		boxDetailsBottomText.clear()
+		forEntities(EntityType.CCSPlayer, EntityType.CEconEntity, iterateWeapons = true, identifier = forEntsId) { //Player & Weapon boxes
 			val ent = it.entity
 			val isPlayer = it.type == EntityType.CCSPlayer
 			val isWeapon = it.type.weapon
 			val isDefuseKit = it.type == EntityType.CEconEntity
 
-			boxDetailsLeftText = StringBuilder("")
-			boxDetailsRightText = StringBuilder("")
-			boxDetailsTopText = StringBuilder("")
-			boxDetailsBottomText = StringBuilder("")
+			boxDetailsLeftText.clear()
+			boxDetailsRightText.clear()
+			boxDetailsTopText.clear()
+			boxDetailsBottomText.clear()
 
-			var leftShift = 2F
-			var bottomShift = 0F
-			var rightShift = 0F
+			leftShift = 2F
+			bottomShift = 0F
+			rightShift = 0F
 			topShift = 0F
-			textureBuilder.clear()
 
 			if (ent <= 0) return@forEntities
 
 			if (!isPlayer && !isWeapon && !isDefuseKit) return@forEntities
 
 			//Return if not onscreen
-			if (!worldToScreen(ent.position(), Vector())) return@forEntities
+			if (!worldToScreen(ent.position(entPos))) return@forEntities
 
 			if (curSettings.bool["BOX_SMOKE_CHECK"] && lineThroughSmoke(ent)) return@forEntities
 
@@ -135,7 +161,7 @@ fun boxEsp() {
 			if (isPlayer) {
 				health = ent.health()
 			}
-			val onTeam = !DANGER_ZONE && ent.team() == me.team()
+			val onTeam = !DANGER_ZONE && ent.team() == meTeam
 
 			//Team + Dormant + Dead + Self check
 			if (isPlayer && (ent == me || ent.dormant() || ent.dead() || (!showEnemy && !onTeam) || (!showTeam && onTeam))) return@forEntities
@@ -152,7 +178,7 @@ fun boxEsp() {
 
 			val boxWidth = bbox.right - bbox.left
 			val boxHeight = bbox.bottom - bbox.top
-			val barWidth = clamp(boxWidth * .025F, 2F, 20F)
+			barWidth = clamp(boxWidth * .025F, 2F, 20F)
 
 			if (shapeRenderer.isDrawing) {
 				shapeRenderer.end()
@@ -166,7 +192,7 @@ fun boxEsp() {
 				if (isPlayer) {
 					when {
 						curSettings.bool["BOX_SHOW_HEALTH"] -> {
-							shapeRenderer.setColor((255 - 2.55F * health) / 255F, (2.55F * health) / 255F, 0F, 1F)
+							shapeRenderer.color.set((255 - 2.55F * health) / 255F, (2.55F * health) / 255F, 0F, 1F)
 						}
 
 						onTeam -> {
@@ -186,11 +212,14 @@ fun boxEsp() {
 
 			if (!drawBoxDetails) return@forEntities
 
+
 			//Setup entity values
-			val entityMemory = csgoEXE.read(ent, 45948) ?: return@forEntities
+			csgoEXE.read(ent, entityMemory, entityMemorySize)
 
 			//Set filled for bars
 			shapeRenderer.set(ShapeRenderer.ShapeType.Filled)
+			val armor = entityMemory.armor()
+			val hasHelmet = entityMemory.hasHelmet()
 
 			//Draw possible left elements
 
@@ -198,7 +227,7 @@ fun boxEsp() {
 				shapeRenderer.color = Color.BLACK
 				shapeRenderer.rect(bbox.left - (barWidth * leftShift), bbox.top, barWidth, boxHeight)
 
-				shapeRenderer.color = Color(1F - (.01F * health), (.01F * health), 0F, 1F)
+				shapeRenderer.color.set(1F - (.01F * health), (.01F * health), 0F, 1F)
 				shapeRenderer.rect(bbox.left - (barWidth * leftShift), bbox.bottom, barWidth, -(boxHeight * (health / 100F)))
 
 				leftShift += 2F
@@ -208,60 +237,11 @@ fun boxEsp() {
 				shapeRenderer.color = Color.BLACK
 				shapeRenderer.rect(bbox.left - (barWidth * leftShift), bbox.top, barWidth, boxHeight)
 
-				shapeRenderer.color = Color(0F, .3F, 1F, 1F)
-				shapeRenderer.rect(bbox.left - (barWidth * leftShift), bbox.bottom, barWidth, -(boxHeight * (entityMemory.armor() / 100F)))
+				shapeRenderer.color.set(0F, .3F, 1F, 1F)
+				shapeRenderer.rect(bbox.left - (barWidth * leftShift), bbox.bottom, barWidth, -(boxHeight * (armor / 100F)))
 
 				leftShift += 2F
 			}
-
-			if (bEspName && isPlayer) {
-				addText(bEspNamePos, "${ent.name()}\n")
-			}
-
-			if (bEspMoney && isPlayer) {
-				addText(bEspMoneyPos, "$${entityMemory.money()}\n")
-			}
-
-			if (bEspHelmet && isPlayer && !bEspUseIcons) {
-				addText(bEspHelmetPos, if (bEspKevlar && bEspKevlarPos == bEspHelmetPos) { if (entityMemory.hasHelmet()) "H" else "" } else { if (entityMemory.hasHelmet()) "H\n" else "" })
-			}
-
-			if (bEspKevlar && isPlayer && !bEspUseIcons) {
-				addText(bEspKevlarPos, if (entityMemory.armor() > 0) "K\n" else "")
-			}
-
-			if (bEspAmmo) {
-				val curAmmo = csgoEXE.int(ent + iClip1)
-				val maxAmmo = csgoEXE.int(ent + iPrimaryReserveAmmoCount)
-				if (curAmmo != -1 && maxAmmo > 0) {
-					addText(bEspAmmoPos, "[$curAmmo/$maxAmmo]\n")
-				}
-			}
-
-			if (bEspName && isWeapon) {
-				addTextureOrText(assetManager, bEspUseIcons, it.type.name.replace("CWeapon", ""), "${it.type.name.replace("CWeapon", "")}\n", bEspNamePos)
-			}
-
-			if (bEspFlashed && isPlayer && entityMemory.flashed()) {
-				addTextureOrText(assetManager, bEspUseIcons, "flashed", "Flashed\n", bEspFlashedPos)
-			}
-
-			if (bEspWeapon && isPlayer) {
-				addTextureOrText(assetManager, bEspUseIcons, ent.weapon().name, "${ent.weapon().name}\n", bEspWeaponPos)
-			}
-
-			if (bEspKevlar && isPlayer && bEspUseIcons && !entityMemory.hasHelmet() && entityMemory.armor() > 0) {
-				addTextureOrText(assetManager, bEspUseIcons, "kevlar", "K\n", bEspKevlarPos)
-			}
-
-			if (bEspKevlar && isPlayer && bEspUseIcons && bEspHelmet && entityMemory.hasHelmet() && entityMemory.armor() > 0) {
-				addTextureOrText(assetManager, bEspUseIcons, "assaultsuit", "K\n", bEspKevlarPos)
-			}
-
-			if (bEspScoped && isPlayer && entityMemory.isScoped()) {
-				addTextureOrText(assetManager, bEspUseIcons, "scoped", "Scoped\n", bEspScopedPos)
-			}
-
 
 			//Draw possible right elements
 
@@ -269,7 +249,7 @@ fun boxEsp() {
 				shapeRenderer.color = Color.BLACK
 				shapeRenderer.rect(bbox.right + (barWidth * rightShift), bbox.top, barWidth, boxHeight)
 
-				shapeRenderer.color = Color(1F - (.01F * health), (.01F * health), 0F, 1F)
+				shapeRenderer.color.set(1F - (.01F * health), (.01F * health), 0F, 1F)
 				shapeRenderer.rect(bbox.right + (barWidth * rightShift), bbox.bottom, barWidth, -(boxHeight * (health / 100F)))
 
 				rightShift += 2
@@ -279,10 +259,73 @@ fun boxEsp() {
 				shapeRenderer.color = Color.BLACK
 				shapeRenderer.rect(bbox.right + (barWidth * rightShift), bbox.top, barWidth, boxHeight)
 
-				shapeRenderer.color = Color(0F, .3F, 1F, 1F)
-				shapeRenderer.rect(bbox.right + (barWidth * rightShift), bbox.bottom, barWidth, -(boxHeight * (entityMemory.armor() / 100F)))
+				shapeRenderer.color.set(0F, .3F, 1F, 1F)
+				shapeRenderer.rect(bbox.right + (barWidth * rightShift), bbox.bottom, barWidth, -(boxHeight * (armor / 100F)))
 
 				rightShift += 2
+			}
+
+			leftShiftY = 0F
+			rightShiftY = 0F
+
+			if (bEspName && isWeapon) {
+				val name = it.type.name.replace("CWeapon", "")
+
+				drawTextureOrText(assetManager, bEspUseIcons, name, name, bEspNamePos, true)
+			}
+
+			if (bEspFlashed && isPlayer && entityMemory.flashed()) {
+				drawTextureOrText(assetManager, bEspUseIcons, "flashed", "Flashed", bEspFlashedPos, true)
+			}
+
+			if (bEspWeapon && isPlayer) {
+				val weaponName = ent.weapon().name
+				drawTextureOrText(assetManager, bEspUseIcons, weaponName, weaponName, bEspWeaponPos, true)
+			}
+
+			if (isPlayer && bEspKevlar && bEspUseIcons && (!hasHelmet && armor > 0 || !bEspHelmet || bEspHelmetPos != bEspKevlarPos)) {
+				drawTextureOrText(assetManager, bEspUseIcons, "kevlar", "K\n", bEspKevlarPos)
+			}
+
+			if (isPlayer && bEspHelmet && bEspUseIcons && (hasHelmet && armor > 0 || !bEspKevlar || bEspKevlarPos != bEspHelmetPos)) {
+				drawTextureOrText(assetManager, bEspUseIcons, "assaultsuit", "K\n", bEspHelmetPos)
+			}
+
+			if (bEspScoped && isPlayer && entityMemory.isScoped()) {
+				drawTextureOrText(assetManager, bEspUseIcons, "scoped", "Scoped", bEspScopedPos, true)
+			}
+
+			if (bEspName && isPlayer) {
+				addText(bEspNamePos, ent.name(), true)
+			}
+
+			if (bEspMoney && isPlayer) {
+				moneyStringBuilder.clear()
+				moneyStringBuilder.append("$")
+				moneyStringBuilder.append(entityMemory.money())
+				addText(bEspMoneyPos, moneyStringBuilder, true)
+			}
+
+			if (bEspHelmet && isPlayer && !bEspUseIcons) {
+				addText(bEspHelmetPos, if (bEspKevlar && bEspKevlarPos == bEspHelmetPos) { if (hasHelmet) "H" else "" } else { if (hasHelmet) "H\n" else "" })
+			}
+
+			if (bEspKevlar && isPlayer && !bEspUseIcons) {
+				addText(bEspKevlarPos, if (armor > 0) "K\n" else "")
+			}
+
+			if (bEspAmmo) {
+				val curAmmo = csgoEXE.int(ent + iClip1)
+				val maxAmmo = csgoEXE.int(ent + iPrimaryReserveAmmoCount)
+				if (curAmmo != -1 && maxAmmo > 0) {
+					ammoStringBuilder.clear()
+					ammoStringBuilder.append("[")
+					ammoStringBuilder.append(curAmmo)
+					ammoStringBuilder.append("/")
+					ammoStringBuilder.append(maxAmmo)
+					ammoStringBuilder.appendLine("]")
+					addText(bEspAmmoPos, ammoStringBuilder)
+				}
 			}
 
 			shapeRenderer.end()
@@ -298,181 +341,194 @@ fun boxEsp() {
 			textRenderer.draw(sb, boxDetailsRightText, bbox.right + (barWidth * rightShift), bbox.top, 1F, Align.left, false)
 			textRenderer.draw(sb, boxDetailsTopText, (bbox.left + bbox.right) / 2F, bbox.top + topShift, 1F, Align.center, false)
 			textRenderer.draw(sb, boxDetailsBottomText, (bbox.left + bbox.right) / 2F, bbox.bottom - bottomShift, 1F, Align.center, false)
-
-			var leftShiftY = 0F
-			var rightShiftY = 0F
-			textureBuilder.forEach { dr_texture ->
-				val texture = dr_texture.texture
-				val position = dr_texture.position
-				val realHeight = texture.height / weaponsScale
-				val realWidth = texture.width / weaponsScale
-				val realTextParams = getRealTextParams(textRenderer, getStrBuilder(position), layout)
-				val height = ((realTextParams ushr 32) and 0xFFFFFFFF).toFloat()
-				val width = (realTextParams and 0xFFFFFFFF).toFloat()
-				when (position) {
-					"LEFT" -> {
-						sb.draw(
-							texture,
-							(bbox.left - (barWidth * leftShift) - realWidth - width),
-							(bbox.top - realHeight - leftShiftY),
-							realWidth,
-							realHeight
-						)
-						leftShiftY += realHeight
-					}
-					"RIGHT" -> {
-						sb.draw(
-							texture,
-							(bbox.right + (barWidth * rightShift)) + (weaponsScale / 2) + width,
-							bbox.top - realHeight - rightShiftY,
-							realWidth,
-							realHeight
-						)
-						rightShiftY += realHeight
-					}
-					"TOP" -> {
-						sb.draw(
-							texture,
-							((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)),
-							bbox.top + topShift,
-							realWidth,
-							realHeight
-						)
-						topShift += realHeight
-					}
-					"BOTTOM" -> {
-						sb.draw(
-							texture,
-							((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)),
-							bbox.bottom - height - bottomShift,
-							realWidth,
-							realHeight
-						)
-						bottomShift += realHeight
-					}
-				}
-			}
-
 			sb.end()
 		}
 	}
 }
-
+private val DEFAULT_STRING_BUILDER = StringBuilder()
 fun getStrBuilder(position: String): StringBuilder {
 	return when (position)  {
 		"LEFT" -> boxDetailsLeftText
 		"RIGHT" -> boxDetailsRightText
 		"TOP" -> boxDetailsTopText
 		"BOTTOM" -> boxDetailsBottomText
-		else -> StringBuilder()
+		else -> {
+			DEFAULT_STRING_BUILDER.clear()
+			DEFAULT_STRING_BUILDER
+		}
 	}
 }
-fun addText(position: String, str: String) {
+fun addText(position: String, str: String, appendLine: Boolean = false) {
 	val renderer = getStrBuilder(position)
-	renderer.append(str)
+	if (appendLine) renderer.appendLine(str) else renderer.append(str)
 	when (position) {
 		"TOP" -> topShift += 18F
 	}
 }
 
-fun addTextureOrText(assetManager: AssetManager, useIcons: Boolean, textureName: String, text: String, position: String) {
-	if (!useIcons) { addText(position, text); return }
-	val texture = getWeaponTexture(assetManager, textureName)
-	textureBuilder.add(DrawableTexture(texture, position))
+fun addText(position: String, str: StringBuilder, appendLine: Boolean = false) {
+	val renderer = getStrBuilder(position)
+	if (appendLine) renderer.appendLine(str) else renderer.append(str)
+	when (position) {
+		"TOP" -> topShift += 18F
+	}
 }
 
-fun getRealTextParams(font: BitmapFont, builder: StringBuilder, layout: GlyphLayout): Long {
-	if (builder.isEmpty()) {
-		return 0L
+fun drawTextureOrText(assetManager: AssetManager, useIcons: Boolean, textureName: String, text: String, position: String, appendLine: Boolean = false) {
+	val bbox = bbox.get()
+	if (!useIcons) { addText(position, text, appendLine); return }
+	sb.begin()
+	val texture = getWeaponTexture(assetManager, textureName)
+	val realHeight = texture.height / weaponsScale
+	val realWidth = texture.width / weaponsScale
+	when (position) { //fix later
+		"LEFT" -> {
+			sb.draw(
+					texture,
+					(bbox.left - (barWidth * leftShift) - realWidth),
+					(bbox.top - realHeight - leftShiftY),
+					realWidth,
+					realHeight
+			)
+			leftShiftY += realHeight
+		}
+		"RIGHT" -> {
+			sb.draw(
+					texture,
+					(bbox.right + (barWidth * rightShift)) + (weaponsScale / 2),
+					bbox.top - realHeight - rightShiftY,
+					realWidth,
+					realHeight
+			)
+			rightShiftY += realHeight
+		}
+		"TOP" -> {
+			sb.draw(
+					texture,
+					((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)),
+					bbox.top + topShift,
+					realWidth,
+					realHeight
+			)
+			topShift += realHeight
+		}
+		"BOTTOM" -> {
+			sb.draw(
+					texture,
+					((bbox.left + bbox.right) / 2) - (texture.width / (weaponsScale * 2)),
+					bbox.bottom - realHeight - bottomShift,
+					realWidth,
+					realHeight
+			)
+			bottomShift += realHeight
+		}
 	}
-	layout.setText(font, builder)
-	return ((layout.height.toLong() and 0xFFFFFFFF) shl 32) or (layout.width.toLong() and 0xFFFFFFFF)
+	sb.end()
 }
 
 //Create a fake accurate box using headpos
+
+fun setupFakeBox(vTop: Vector, vBottom: Vector, bbox: BoundingBox = BoundingBox()): BoundingBox {
+	val vMiddleY = (vTop.y + vBottom.y)/2F
+	//val vMiddle = Vector((vTop.x + vBottom.x)/2F, (vTop.y + vBottom.y)/2F, (vTop.z + vBottom.z)/2F)
+	var boxH = vBottom.y - vTop.y
+	val sW = abs(((boxH / 5.0) * 2.0) / 2.0)
+	val sH = 2.0
+
+	val midX = abs(abs(vTop.x) - abs(vBottom.x))
+	if (abs(boxH) < sW + midX) {
+		boxH = ((sW + midX) * sign(boxH)).toFloat()
+	}
+
+	if (vBottom.x > vTop.x) {
+		bbox.left = (vBottom.x + sW).toFloat()
+		bbox.right = (vTop.x - sW).toFloat()
+	} else {
+		bbox.left = (vTop.x + sW).toFloat()
+		bbox.right = (vBottom.x - sW).toFloat()
+	}
+
+	bbox.top = (vMiddleY - boxH / 2.0 + sH).toFloat()
+	bbox.bottom = (vMiddleY + boxH / 2.0 + sH).toFloat()
+	return bbox
+}
+
+private val vBottom = Vector()
+private val vTop = Vector()
+private val vHead = Vector()
+private val vFeet = Vector()
 fun setupFakeBox(ent: Entity): BoundingBox {
-	val bbox = BoundingBox()
+	val bbox = bbox.get()
+	bbox.reset()
 
-	val boneMemory = csgoEXE.read(ent.boneMatrix(), 3984)!!
+	val boneMemory = csgoEXE.read(ent.boneMatrix(), 3984) ?: return bbox
 
-	val headPos = Vector(boneMemory.getFloat(((0x30L * HEAD_BONE) + 0xC)),
+	vHead.set(boneMemory.getFloat(((0x30L * HEAD_BONE) + 0xC)),
 			boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x1C)),
-			boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x2C)))
+			boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x2C)) + 9)
 
-	val vHead = Vector(headPos.x, headPos.y, headPos.z + 9)
-	val vFeet = Vector(vHead.x, vHead.y, vHead.z - 75)
-
-	val vTop = Vector()
-	val vBottom = Vector()
+	vFeet.set(vHead.x, vHead.y, vHead.z - 84)
 
 	if (worldToScreen(vHead, vTop) && worldToScreen(vFeet, vBottom)) {
-		val vMiddle = Vector((vTop.x + vBottom.x)/2F, (vTop.y + vBottom.y)/2F, (vTop.z + vBottom.z)/2F)
-		var boxH = vBottom.y - vTop.y
-		val sW = abs(((boxH / 5.0) * 2.0) / 2.0)
-		val sH = 2.0
-
-		val midX = abs(abs(vTop.x) - abs(vBottom.x))
-		if (abs(boxH) < sW + midX) {
-			boxH = ((sW + midX) * sign(boxH)).toFloat()
-		}
-
-		if (vBottom.x > vTop.x) {
-			bbox.left = (vBottom.x + sW).toFloat()
-			bbox.right = (vTop.x - sW).toFloat()
-		} else {
-			bbox.left = (vTop.x + sW).toFloat()
-			bbox.right = (vBottom.x - sW).toFloat()
-		}
-
-		bbox.top = (vMiddle.y - boxH / 2.0 + sH).toFloat()
-		bbox.bottom = (vMiddle.y + boxH / 2.0 + sH).toFloat()
+		setupFakeBox(vTop, vBottom, bbox)
 	}
 
 	return bbox
 }
 
+
+private const val collisionMemSize = 56
+private val collisionMem = threadLocalPointer(collisionMemSize)
+private val screenPointsTransformedArray = Array(8) { Vector() }
+private val frameMatrix = ThreadLocal.withInitial { Array(4) { FloatArray(4) } }
+private val vecOut = Vector()
+private val vecMins = Vector()
+private val vecMaxs = Vector()
+private val pointsArray = Array(8) { Vector() }
+private val floatArray = ThreadLocal.withInitial { FloatArray(16) }
+private const val frameMatrixMemorySize = 4*4*4
+private val frameMatrixMemory = threadLocalPointer(frameMatrixMemorySize)
 //Create a real accurate box using vecMins & vecMaxs
 fun setupAccurateBox(ent: Entity): BoundingBox {
+	val bbox = bbox.get()
+	bbox.reset()
 	//Get frameMatrix
-	val frameMatrix = Array(4) { FloatArray(4) }
-	val buffer = csgoEXE.read(ent + rgflCoordinateFrame - 0x30, 4 * 4 * 4)
-	if (buffer != null) {
-		if (buffer.getFloatArray(0, 16).all(Float::isFinite)) {
+	val frameMatrix = frameMatrix.get()
+	val frameMatrixMemory = frameMatrixMemory.get()
+	val floatArray = floatArray.get()
+	csgoEXE.read(ent + rgflCoordinateFrame - 0x30, frameMatrixMemory, frameMatrixMemorySize)
+	if (frameMatrixMemory != null) {
+		if (frameMatrixMemory.getFloatArray(0, 16, floatArray).all(Float::isFinite)) {
 			var offset = 0
 			for (row in 0..3) for (col in 0..3) {
-				val value = buffer.getFloat(offset.toLong())
+				val value = frameMatrixMemory.getFloat(offset.toLong())
 				frameMatrix[row][col] = value
 				offset += 4
 			}
 		}
 	}
 
-	val collisionMem: Memory by lazy {
-		Memory(56) //Incorrect
-	}
+	val collisionMem = collisionMem.get()
 	csgoEXE.read(ent + m_Collision, collisionMem)
 
 	//Set min/max
-	val vecMins = Vector(collisionMem.getFloat(8), collisionMem.getFloat(12), collisionMem.getFloat(16))
-	val vecMaxs = Vector(collisionMem.getFloat(20), collisionMem.getFloat(24), collisionMem.getFloat(28))
+	vecMins.set(collisionMem.getFloat(8), collisionMem.getFloat(12), collisionMem.getFloat(16))
+	vecMaxs.set(collisionMem.getFloat(20), collisionMem.getFloat(24), collisionMem.getFloat(28))
 
 	//Set OBB to loop
-	val pointsArray = mutableListOf<Vector>()
-	pointsArray.add(Vector(vecMins.x, vecMins.y, vecMins.z))
-	pointsArray.add(Vector(vecMins.x, vecMaxs.y, vecMins.z))
-	pointsArray.add(Vector(vecMaxs.x, vecMaxs.y, vecMins.z))
-	pointsArray.add(Vector(vecMaxs.x, vecMins.y, vecMins.z))
-	pointsArray.add(Vector(vecMaxs.x, vecMaxs.y, vecMaxs.z))
-	pointsArray.add(Vector(vecMins.x, vecMaxs.y, vecMaxs.z))
-	pointsArray.add(Vector(vecMins.x, vecMins.y, vecMaxs.z))
-	pointsArray.add(Vector(vecMaxs.x, vecMins.y, vecMaxs.z))
+	pointsArray[0].set(vecMins.x, vecMins.y, vecMins.z)
+	pointsArray[1].set(vecMins.x, vecMaxs.y, vecMins.z)
+	pointsArray[2].set(vecMaxs.x, vecMaxs.y, vecMins.z)
+	pointsArray[3].set(vecMaxs.x, vecMins.y, vecMins.z)
+	pointsArray[4].set(vecMaxs.x, vecMaxs.y, vecMaxs.z)
+	pointsArray[5].set(vecMins.x, vecMaxs.y, vecMaxs.z)
+	pointsArray[6].set(vecMins.x, vecMins.y, vecMaxs.z)
+	pointsArray[7].set(vecMaxs.x, vecMins.y, vecMaxs.z)
 
-	val screenPointsTransformedArray = mutableListOf<Vector>()
 
-	for (i in pointsArray) {
-		val vecOut = Vector()
+	pointsArray.forEachIndexed { index, i ->
 		worldToScreen(transformVector(i, frameMatrix), vecOut)
-		screenPointsTransformedArray.add(vecOut)
+		screenPointsTransformedArray[index].set(vecOut.x, vecOut.y, vecOut.z)
 	}
 
 	var left = screenPointsTransformedArray[0].x
@@ -498,21 +554,26 @@ fun setupAccurateBox(ent: Entity): BoundingBox {
 		}
 	}
 
-	return BoundingBox(left, right, top, bottom)
+	return bbox.set(left, right, top, bottom)
 }
 
 fun transformVector(vec: Vector, array: Array<FloatArray>): Vector {
-	val outVec = Vector()
-	val thisVec = Vector3(vec.x, vec.y, vec.z)
-	outVec.x = (thisVec.dot(array[0][0], array[0][1], array[0][2]) + array[0][3])
-	outVec.y = (thisVec.dot(array[1][0], array[1][1], array[1][2]) + array[1][3])
-	outVec.z = (thisVec.dot(array[2][0], array[2][1], array[2][2]) + array[2][3])
-
-	return outVec
+	vec.set(
+			(vec.dot(array[0][0], array[0][1], array[0][2]) + array[0][3]),
+			(vec.dot(array[1][0], array[1][1], array[1][2]) + array[1][3]),
+			(vec.dot(array[2][0], array[2][1], array[2][2]) + array[2][3])
+	)
+	return vec
 }
 
+private val nameHashToAssetName: Object2ObjectMap<String, String> = Object2ObjectOpenHashMap()
 fun getWeaponTexture(assetManager: AssetManager, name: String): Texture {
-	val assetName = "$SETTINGS_DIRECTORY/Assets/Images/${name.toLowerCase()}.png"
+	val assetName =
+			if (nameHashToAssetName.containsKey(name)) {
+				nameHashToAssetName[name]
+			} else "$SETTINGS_DIRECTORY/Assets/Images/${name.lower()}.png".apply {
+				nameHashToAssetName[name] = this
+			}
 	return when (assetManager.contains(assetName)) {
 		true -> assetManager.get(assetName)
 		false -> assetManager.get("$SETTINGS_DIRECTORY/Assets/Images/knife.png")

@@ -1,17 +1,9 @@
 package rat.poison.ui.uiHelpers
 
-import com.badlogic.gdx.utils.Align
-import com.kotcrab.vis.ui.VisUI
-import com.kotcrab.vis.ui.widget.Tooltip.removeTooltip
-import com.kotcrab.vis.ui.widget.VisCheckBox
-import com.kotcrab.vis.ui.widget.VisImageButton
 import com.kotcrab.vis.ui.widget.VisTextButton
 import rat.poison.crosshairArray
 import rat.poison.curSettings
-import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.changed
-import rat.poison.ui.tabs.*
-import rat.poison.utils.generalUtil.boolToStr
 
 class VisRCSBoxCustom(row: Int, column: Int): VisTextButton("") {
     var bRow = row

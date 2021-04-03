@@ -1,6 +1,6 @@
 package rat.poison.game.entity
 
-import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.math.MathUtils
 import com.sun.jna.Memory
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
@@ -37,13 +37,15 @@ import rat.poison.game.offsets.ClientOffsets.dwEntityList
 import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.game.offsets.ClientOffsets.dwPlayerResource
 import rat.poison.game.offsets.EngineOffsets.dwClientState_PlayerInfo
+import rat.poison.scripts.gvars
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.SERVER_TICK_RATE
-import rat.poison.utils.Angle
 import rat.poison.utils.Vector
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.readCached
-import rat.poison.utils.to
+import rat.poison.utils.threadLocalPointer
+import java.util.regex.Pattern
+import kotlin.math.cos
+import kotlin.math.sin
 
 typealias Player = Long
 
@@ -58,6 +60,8 @@ fun Player.weaponEntity(): Weapon {
 fun Player.weapon(weaponEntity: Weapon = weaponEntity()): Weapons {
 	return weaponEntity.type()
 }
+
+fun Player.positionNextTick(): Vector = velocity().scl(gvars.intervalPerTick)
 
 internal fun Player.flags(): Int = csgoEXE.int(this + fFlags)
 
@@ -83,39 +87,49 @@ internal fun Player.lifeState(): Int = csgoEXE.byte(this + lifeState).toInt()
 internal fun Player.dead(): Boolean = (lifeState() != 0 || health() <= 0)
 
 
-internal fun Player.punch(): Angle {
-	val tmpAng = Angle()
-	tmpAng.x = csgoEXE.float(this + aimPunchAngle)
-	tmpAng.y = csgoEXE.float(this + aimPunchAngle + 4)
-	tmpAng.z = 0F
-
-	return tmpAng
+internal fun Player.punch(vOut: Vector = Vector()): Vector {
+	vOut.set(csgoEXE.float(this + aimPunchAngle), csgoEXE.float(this + aimPunchAngle + 4), 0F)
+	return vOut
 }
 
 internal fun Player.shotsFired(): Int = csgoEXE.int(this + NetVarOffsets.iShotsFired)
 
-internal fun Player.viewOffset(): Angle = Vector(csgoEXE.float(this + vecViewOffset),
+internal fun Player.viewOffset(vOut: Vector = Vector()): Vector = vOut.set(csgoEXE.float(this + vecViewOffset),
 		csgoEXE.float(this + vecViewOffset + 4),
 		csgoEXE.float(this + vecViewOffset + 8))
 
-internal fun Player.velocity(): Angle = Vector(csgoEXE.float(this + vecVelocity),
-		csgoEXE.float(this + vecVelocity + 4),
-		csgoEXE.float(this + vecVelocity + 8))
+internal fun Player.velocity(vOut: Vector = Vector()): Vector = vOut.apply {
+	x = csgoEXE.float(this@velocity + vecVelocity)
+	y = csgoEXE.float(this@velocity + vecVelocity + 4)
+	z = csgoEXE.float(this@velocity + vecVelocity + 8)
+}
 
 
 private val angle2Vector: Long2ObjectMap<Vector> = Long2ObjectOpenHashMap()
 
-internal fun Player.eyeAngle(): Angle =
-		if (this == me) clientState.angle()
-		else Angle(csgoEXE.float(this + angEyeAngles),
-				csgoEXE.float(this + angEyeAngles + 4),
-				csgoEXE.float(this + angEyeAngles + 8))
+internal fun Player.eyeAngle(vOut: Vector = Vector()): Vector =
+		if (this == me) clientState.angle(vOut)
+		else vOut.apply {
+			x = csgoEXE.float(this@eyeAngle + angEyeAngles)
+			y = csgoEXE.float(this@eyeAngle + angEyeAngles + 4)
+			z = csgoEXE.float(this@eyeAngle + angEyeAngles + 8)
+		}
 
 
-internal fun Player.direction(): Vector = readCached(angle2Vector) {
-	eyeAngle().to(forward = this)
+internal fun Player.direction(vOut: Vector = Vector(), eyeAng: Vector = eyeAngle()): Vector {
+	val dp = eyeAng.x * MathUtils.degreesToRadians
+	val dy = eyeAng.y * MathUtils.degreesToRadians
+
+	val sp = sin(dp)
+	val cp = cos(dp)
+	val sy = sin(dy)
+	val cy = cos(dy)
+
+	val x = cp * cy
+	val y = cp * sy
+	val z = -sp
+	return vOut.set(x, y, z)
 }
-
 internal fun Player.boneMatrix() = csgoEXE.uint(this + dwBoneMatrix)
 
 internal fun Player.bone(offset: Int, boneID: Int = HEAD_BONE, boneMatrix: Long = boneMatrix()) = csgoEXE.float(boneMatrix + ((0x30 * boneID) + offset))
@@ -136,21 +150,23 @@ internal fun Player.isSpectating(): Boolean = observerMode() > 0
 
 internal fun Player.isProtected(): Boolean = csgoEXE.boolean(this + bGunGameImmunity)
 
+
+private const val modelMemorySize = 21332
+private var modelMemory = threadLocalPointer(modelMemorySize)
+private const val boneMemorySize = 4032
+private var boneMemory = threadLocalPointer(boneMemorySize)
+private val w2sRetVec = Vector()
+private val punch = Vector()
+private val boneVector = Vector()
 internal fun Player.nearestBone(): Int {
 	val studioModel = csgoEXE.uint(studioHdr())
 	val boneOffset = csgoEXE.uint(studioModel + 0xA0)
 	val boneMatrix = boneMatrix()
 	val numBones = csgoEXE.uint(studioModel + 0x9C).toInt()
 
-	val w2sRetVec = Vector(0F, 0F, 0F)
-
 	//Get actual size
-	val modelMemory: Memory by lazy {
-		Memory(25000) //Fuck you
-	}
-	val boneMemory: Memory by lazy {
-		Memory(4032)
-	}
+	val modelMemory = modelMemory.get()
+	val boneMemory = boneMemory.get()
 
 	csgoEXE.read(studioModel + boneOffset, modelMemory)
 	csgoEXE.read(boneMatrix, boneMemory)
@@ -166,15 +182,14 @@ internal fun Player.nearestBone(): Int {
 		if (parent != -1) {
 			val flags = modelMemory.getInt(0xA0L + offset).unsign() and 0x100
 			if (flags != 0L) {
-				val tPunch = me.punch()
+				val tPunch = me.punch(punch)
 
-				if (worldToScreen(boneMemory.vector(parent * 0x30L, 0x0C, 0x1C, 0x2C), w2sRetVec)) {
-					val tempVec3 = Vector3(w2sRetVec.x, w2sRetVec.y, w2sRetVec.z)
+				if (worldToScreen(boneMemory.vector(parent * 0x30L, 0x0C, 0x1C, 0x2C, boneVector), w2sRetVec)) {
 
 					val tX = CSGO.gameWidth / 2 - ((CSGO.gameWidth / 95F) * tPunch.y)
 					val tY = CSGO.gameHeight / 2 - ((CSGO.gameHeight / 95F) * tPunch.x)
 
-					val dst2 = tempVec3.dst2(tX, tY, 0F)
+					val dst2 = w2sRetVec.dst2(tX, tY, 0F)
 
 					if (dst2 < closestDst2) {
 						closestDst2 = dst2
@@ -182,13 +197,12 @@ internal fun Player.nearestBone(): Int {
 					}
 				}
 
-				if (worldToScreen(boneMemory.vector(idx * 0x30L, 0x0C, 0x1C, 0x2C), w2sRetVec)) {
-					val tempVec3 = Vector3(w2sRetVec.x, w2sRetVec.y, w2sRetVec.z)
+				if (worldToScreen(boneMemory.vector(idx * 0x30L, 0x0C, 0x1C, 0x2C, boneVector), w2sRetVec)) {
 
 					val tX = CSGO.gameWidth / 2 - ((CSGO.gameWidth / 95F) * tPunch.y)
 					val tY = CSGO.gameHeight / 2 - ((CSGO.gameHeight / 95F) * tPunch.x)
 
-					val dst2 = tempVec3.dst2(tX, tY, 0F)
+					val dst2 = w2sRetVec.dst2(tX, tY, 0F)
 
 					if (dst2 < closestDst2) {
 						closestDst2 = dst2
@@ -204,36 +218,45 @@ internal fun Player.nearestBone(): Int {
 
 }
 
-internal fun Memory.vector(addy: Long, xOff: Long, yOff: Long, zOff: Long): Vector {
+internal fun Memory.vector(addy: Long, xOff: Long, yOff: Long, zOff: Long, vOut: Vector = Vector()): Vector {
 	val x = getFloat(addy + xOff)
 	val y = getFloat(addy + yOff)
 	val z = getFloat(addy + zOff)
 
-	return Vector(x, y, z)
+	return vOut.set(x, y, z)
 }
 
-internal fun Player.name(): String {
-	val nameMem: Memory by lazy {
-		Memory(320)
-	}
+private const val nameMemorySize = 320
+private const val nameMemorySizeL = 320L
+private val nameMemory = threadLocalPointer(nameMemorySize)
+private val entityToNameCache: Long2ObjectMap<Pair<Long, String>> = Long2ObjectOpenHashMap(128)
 
+internal fun Player.name(): String {
+	val now = System.currentTimeMillis()
+	if (entityToNameCache.containsKey(this)) {
+		val cached = entityToNameCache.get(this)
+		if (now - cached.first < 5000) {
+			return cached.second
+		}
+	}
 	val entID = csgoEXE.uint(this + dwIndex) - 1
 	val a = csgoEXE.uint(clientState + dwClientState_PlayerInfo)
 	val b = csgoEXE.uint(a + 0x40)
 	val c = csgoEXE.uint(b + 0x0C)
 	val d = csgoEXE.uint(c + 0x28 + entID * 0x34)
 
-	csgoEXE.read(d, nameMem)
+	val nameMem = nameMemory.get()
+	csgoEXE.read(d, nameMem, nameMemorySize)
 
 	val name = nameMem.getString(0x10)
-	nameMem.clear()
-	return name
+	nameMem.setMemory(0, nameMemorySizeL, 0)
+	return name.apply { entityToNameCache[this@name] = now to this }
 }
 
+private const val steamIDMemorySize = 320
+private val steamIDMemory = threadLocalPointer(steamIDMemorySize)
 internal fun Player.steamID(): String {
-	val mem: Memory by lazy {
-		Memory(0x140)
-	}
+	val mem = steamIDMemory.get()
 
 	val entID = csgoEXE.uint(this + dwIndex) - 1
 
@@ -249,11 +272,30 @@ internal fun Player.steamID(): String {
 	return sID
 }
 
+private val intPattern = Pattern.compile("\\d+")
+private val tmpSplit = Array(3) { "" }
+fun validateSteamId(steamID: String): Boolean {
+	if (steamID == "BOT" || steamID == "") return false
+	val match = intPattern.matcher(steamID)
+	var idx = 0
+	while (match.find()) {
+		tmpSplit[idx] = (match.group())
+		idx += 1
+	}
+	return !tmpSplit.any { it == "" } && StringUtils.isNumeric(tmpSplit[2])
+}
+
 internal fun Player.getValidSteamID(): Int {
 	val entSteam = this.steamID()
-	val split = entSteam.split(":")
-	if (entSteam == "BOT" || entSteam == "" || split.size < 3 || !StringUtils.isNumeric(split[2])) return 0
-	return  (split[2].toInt() * 2) + split[1].toInt()
+	if (entSteam == "BOT" || entSteam == "") return 0
+	val match = intPattern.matcher(entSteam)
+	var idx = 0
+	while (match.find()) {
+		tmpSplit[idx] = (match.group())
+		idx += 1
+	}
+	if (tmpSplit.any { it == "" } || !StringUtils.isNumeric(tmpSplit[2])) return 0
+	return (tmpSplit[2].toInt() * 2) + tmpSplit[1].toInt()
 }
 
 internal fun Player.score(): Int {
@@ -286,10 +328,10 @@ internal fun Player.wins(): Int {
 	return (csgoEXE.int(clientDLL.uint(dwPlayerResource) + iCompetitiveWins + index * 4))
 }
 
+private const val hltvMemorySize = 0x140
+private val hltvMemory = threadLocalPointer(hltvMemorySize)
 internal fun Player.hltv(): Boolean {
-	val mem: Memory by lazy {
-		Memory(0x140)
-	}
+	val mem = hltvMemory.get()
 
 	val entID = csgoEXE.uint(this + dwIndex) - 1
 

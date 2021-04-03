@@ -1,15 +1,16 @@
 package rat.poison.utils.generalUtil
 
 import org.apache.commons.lang3.StringUtils.isNumeric
-import rat.poison.*
-import rat.poison.scripts.aim.numToBone
-import rat.poison.utils.saving
+import rat.poison.curSettings
+import rat.poison.oWeapon
+import rat.poison.settingsLoaded
+import rat.poison.skSettings
+import rat.poison.utils.extensions.upper
 import java.io.File
 import java.io.FileReader
 import kotlin.text.Charsets.UTF_8
 
 private val keybindsSettings = listOf("AIM_TOGGLE_KEY", "FORCE_AIM_KEY", "FORCE_AIM_BONE_KEY", "TRIGGER_KEY", "VISUALS_TOGGLE_KEY", "D_SPAM_KEY", "W_SPAM_KEY", "MENU_KEY")
-private val DEFAULT_INVALID_LIST = listOf("")
 
 fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
     println("Loading settings... "  + if (specificFile) { fileDir } else "")
@@ -48,16 +49,6 @@ fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
             }
         }
     }
-
-    if (!curSettings["CROSSHAIR_ARRAY"].isEmpty()) {
-        val str = curSettings["CROSSHAIR_ARRAY"]
-        val strList = str.replace("[", "").replace("]", "").split(", ")
-
-        strList.forEachIndexed { index, s ->
-            crosshairArray[index] = s.strToBool()
-        }
-    }
-
     curSettings["OVERLOAD_KEYBINDS"] = overloadKeybinds
     settingsLoaded = true
     println("Settings loaded")
@@ -71,7 +62,7 @@ fun loadSkinSettings(fileDir: String) {
             if (curLine.size == 3) {
                 skSettings[curLine[0]] = curLine[2]
             } else {
-                println("Debug: Skin invalid -- $curLine")
+                println("Debug: Locale invalid -- $curLine")
             }
         }
     }
@@ -82,7 +73,7 @@ fun loadSkinSettings(fileDir: String) {
 //vroom
 fun validateSetting(settingName: String, value: String): Boolean {
     var valid = true
-    val inpValue = value.toUpperCase()
+    val inpValue = value.upper()
 
 
     if (!validSettingsMap["SKIP"]!!.contains(settingName)) {
@@ -109,11 +100,11 @@ fun validateSetting(settingName: String, value: String): Boolean {
             tStr = tStr.replace("oWeapon(", "").replace(")", "")
             val tSA = tStr.split(", ") //temp String Array
             val weapon = oWeapon()
-            if (size > 6 && tSA.pull(5).stringToList(";").has { isNumeric(it as String) }) {
-                weapon.tAimBone = tSA.pull(5).stringToIntList(";").map { it.numToBone() }
+            if (size > 6 && tSA.pull(5).stringToList(";").all { isNumeric(it) }) {
+                //weapon.tAimBone = tSA.pull(5).stringToIntList().map { it.numToBone() }
             }
-            if (size > 7 && tSA.pull(6).stringToList(";").has { isNumeric(it as String) }) {
-                weapon.tForceBone = tSA.pull(6).stringToIntList(";").map { it.numToBone() }
+            if (size > 7 && tSA.pull(6).stringToList(";").all { isNumeric(it) }) {
+                //weapon.tForceBone = tSA.pull(6).stringToIntList().map { it.numToBone() }
             }
             weapon.apply {
                 tOverride = if (size > 1) tSA.pull(0).safeToBool(defaultValue = tOverride) else tOverride
@@ -154,30 +145,3 @@ fun validateSetting(settingName: String, value: String): Boolean {
 }
 
 val validSettingsMap = mutableMapOf(Pair("SKIP", listOf("AIM_BONE", "FORCE_AIM_BONE")), Pair("BONE", listOf("HEAD", "NECK", "CHEST", "STOMACH", "NEAREST", "PELVIS", "RANDOM")), Pair("BOX_POS", listOf("LEFT", "RIGHT", "TOP", "BOTTOM")), Pair("GLOW_TYPE", listOf("NORMAL", "MODEL", "VISIBLE", "VISIBLE-FLICKER")), Pair("FOV_TYPE", listOf("STATIC", "DISTANCE")))
-
-fun String.stringToIntList(separator: String = ","): List<Int> {
-    val list = mutableListOf<Int>()
-    val strList = this.replace("[", "").replace("]", "").replace(separator, "").split(" ")
-
-    if (strList != DEFAULT_INVALID_LIST) {
-        for (i in strList) {
-            list.add(i.toInt())
-        }
-    }
-
-    return list
-}
-
-//move elsewhere
-fun String.stringToList(separator: String = ","): List<String> {
-    val list = mutableListOf<String>()
-    val strList = this.replace("[", "").replace("]", "").replace(separator, "").split(" ")
-
-    if (strList != DEFAULT_INVALID_LIST) {
-        for (i in strList) {
-            list.add(i)
-        }
-    }
-
-    return list
-}

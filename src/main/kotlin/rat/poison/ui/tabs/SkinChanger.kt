@@ -8,9 +8,10 @@ import com.kotcrab.vis.ui.util.Validators
 import com.kotcrab.vis.ui.util.adapter.ArrayListAdapter
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.*
+import rat.poison.SKIN_INFO_FILE
 import rat.poison.scripts.forcedUpdate
 import rat.poison.scripts.skinChanger
+import rat.poison.skSettings
 import rat.poison.ui.changed
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiPanels.skinChangerTab

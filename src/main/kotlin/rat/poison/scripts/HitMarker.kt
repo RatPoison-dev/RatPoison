@@ -13,12 +13,15 @@ import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
+import rat.poison.utils.Vector
 import rat.poison.utils.inGame
 
 var hitMarkerAlpha = 0F
 var hitMarkerCombo = 0
 private var totalHits = 0
 
+private val punchVec = Vector()
+private val hitMarkerComboSB = StringBuilder()
 fun hitMarker() = App {
     if ((!curSettings.bool["ENABLE_HITMARKER"] && !curSettings.bool["HITMARKER_COMBO"]) || !curSettings.bool["ENABLE_ESP"] || MENUTOG || meDead || !inGame) return@App
 
@@ -47,7 +50,7 @@ fun hitMarker() = App {
         val rccYo = curSettings.float["RCROSSHAIR_YOFFSET"]
 
         if (curSettings.bool["HITMARKER_RECOIL_POSITION"]) {
-            val punch = me.punch()
+            val punch = me.punch(punchVec)
 
             //Center
             x = CSGO.gameWidth / 2 - ((CSGO.gameWidth / 95F) * punch.y) + rccXo
@@ -106,9 +109,7 @@ fun hitMarker() = App {
 
                 sb.begin()
 
-                val hitMarkerComboSB = StringBuilder()
-
-                hitMarkerComboSB.append("x$hitMarkerCombo")
+                hitMarkerComboSB.clear().append("x").append(hitMarkerCombo)
 
                 val col = curSettings.colorGDX["HITMARKER_COMBO_COLOR"]
                 col.a = hitMarkerAlpha

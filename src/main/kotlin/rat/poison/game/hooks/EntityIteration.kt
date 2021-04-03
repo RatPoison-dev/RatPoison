@@ -1,6 +1,5 @@
 package rat.poison.game.hooks
 
-import com.sun.jna.Memory
 import com.sun.jna.platform.win32.WinNT
 import rat.poison.dbg
 import rat.poison.game.*
@@ -10,6 +9,7 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.engineDLL
 import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.absPosition
+import rat.poison.game.entity.team
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwEntityList
 import rat.poison.game.offsets.ClientOffsets.dwGlowObject
@@ -42,17 +42,17 @@ private fun reset() {
     lastCleanup.set(System.currentTimeMillis())
 }
 
-private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
+
+private const val strBufMemorySize = 128
+private val strBufMemory = threadLocalPointer(strBufMemorySize)
+private var signOnState by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
     if (old != new) {
         if (new.name == SignOnState.IN_GAME.name) {
-            Thread {
-                Thread.sleep(10000)
+            after(10000) {
                 shouldPostProcess = true
-            }.start()
-
-            val strBuf: Memory by lazy {
-                Memory(128) //128 str?
             }
+
+            val strBuf = strBufMemory.get()
 
             csgoEXE.read(clientState + dwClientState_MapDirectory, strBuf)
             val mapName = strBuf.getString(0)
@@ -64,8 +64,9 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
                 if (dbg) {
                     println("[DEBUG] Detecting nade map at -- $gameDir\\$mapName")
                 }
-
                 detectMap(mapName)
+
+                //loadBsp("$gameDir\\$mapName")
             }
 
             //Find correct tonemap values
@@ -78,9 +79,8 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
             inGame = true
 
             if (PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0) {
-                val write = 0xEB.toByte()
                 try {
-                    clientDLL[ClientOffsets.dwGlowUpdate] = write
+                    clientDLL[ClientOffsets.dwGlowUpdate] = 0xEB.toByte()
                 } catch (e: Exception) { }
             }
 
@@ -108,13 +108,15 @@ fun updateCursorEnable() { //Call when needed
 
 var toneMapController = 0L
 
+private val positionVector = Vector()
 fun constructEntities() = every(500, continuous = true) {
     updateCursorEnable()
     clientState = engineDLL.uint(dwClientState)
-    state = SignOnState[csgoEXE.int(clientState + dwSignOnState)]
+    signOnState = SignOnState[csgoEXE.int(clientState + dwSignOnState)]
 
     me = clientDLL.uint(dwLocalPlayer)
     if (!inGame || me <= 0L) return@every
+    meTeam = me.team()
 
     val glowObject = clientDLL.uint(dwGlowObject)
     val glowObjectCount = clientDLL.int(dwGlowObject + 4)
@@ -130,7 +132,7 @@ fun constructEntities() = every(500, continuous = true) {
         if (entity > 0L) {
             val type = EntityType.byEntityAddress(entity)
             if (type != EntityType.NULL) {
-                val tmpPos = entity.absPosition()
+                val tmpPos = entity.absPosition(positionVector)
                 val check = (tmpPos.x in -2.0F..2.0F && tmpPos.y in -2.0F..2.0F && tmpPos.z in -2.0F..2.0F)
 
                 if (!check) {

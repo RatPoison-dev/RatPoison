@@ -6,18 +6,13 @@ import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.VisWindow
-import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
-import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
 import rat.poison.*
-import rat.poison.game.CSGO
 import rat.poison.scripts.sendPacket
 import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.*
 import rat.poison.ui.uiUpdate
-import rat.poison.utils.randInt
-import rat.poison.utils.shouldPostProcess
 import kotlin.math.sign
 import kotlin.system.exitProcess
 

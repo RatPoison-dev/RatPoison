@@ -1,10 +1,12 @@
 package rat.poison.scripts
 
 import com.badlogic.gdx.math.MathUtils.clamp
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
 import rat.poison.WEAPON_STATS_FILE
 import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.CSGO.csgoEXE
+import rat.poison.game.Weapons
 import rat.poison.game.entity.*
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets
@@ -14,6 +16,7 @@ import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meCurWepEnt
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
+import rat.poison.utils.Vector
 import rat.poison.utils.every
 import rat.poison.utils.inGame
 import java.lang.Math.toDegrees
@@ -24,22 +27,50 @@ import kotlin.math.sqrt
 import kotlin.math.tan
 
 data class WeaponData(var maxPlayerSpeed: Int = 0, var spread: Float = 0f, var inaccuracyFire: Float = 0f,
-                              var inaccuracyMove: Float = 0f, var inaccuracyFireAlt: Float = 0f, var inaccuracyMoveAlt: Float = 0f,
-                              var maxPlayerSpeedAlt: Int = 0, var spreadAlt: Float = 0f)
+                      var inaccuracyMove: Float = 0f, var inaccuracyFireAlt: Float = 0f, var inaccuracyMoveAlt: Float = 0f,
+                      var maxPlayerSpeedAlt: Int = 0, var spreadAlt: Float = 0f)
 
 var wepData = WeaponData()
 
+private val wepDataMap = Object2ObjectArrayMap<String, WeaponData>()
+
 private fun refreshWepData() = every(1000) {
-    wepData = getWeaponData(meCurWep.name)
+    val data = wepDataMap[meCurWep.name]
+    if (data != null) {
+        wepData = data
+    }
 }
 
+fun setupWeaponData() {
+    var strList: List<String>
+    WEAPON_STATS_FILE.forEachLine { line ->
+        strList = line.split(" : ")
+        val wepName = strList[0]
+        val myValue = Weapons.values().find { it.name.startsWith(wepName) }
+        if (myValue != null) {
+            val wepData = WeaponData()
+            wepData.maxPlayerSpeed = strList[1].toInt()
+            wepData.spread = strList[2].toFloat()
+            wepData.inaccuracyFire = strList[3].toFloat()
+            wepData.inaccuracyMove = strList[4].toFloat()
+            wepData.inaccuracyFireAlt = strList[5].toFloat()
+            wepData.inaccuracyMoveAlt = strList[6].toFloat()
+            wepData.maxPlayerSpeedAlt = strList[7].toInt()
+            wepData.spreadAlt = strList[8].toFloat()
+            wepDataMap[wepName] = wepData
+        }
+    }
+}
+
+private val meVel = Vector()
 fun spreadCircle() {
+    setupWeaponData()
     refreshWepData()
 
     App {
         if (meDead || MENUTOG || !curSettings.bool["ENABLE_ESP"] || !curSettings.bool["SPREAD_CIRCLE"] || !inGame) return@App
 
-        val vAbsVelocity = me.velocity()
+        val vAbsVelocity = me.velocity(meVel)
         val flVelocity = sqrt(vAbsVelocity.x.pow(2F) + vAbsVelocity.y.pow(2F) + vAbsVelocity.z.pow(2F))
 
         val realInaccuracyFire: Float
@@ -90,30 +121,4 @@ fun spreadCircle() {
             end()
         }
     }
-}
-
-private fun getWeaponData(wep: String): WeaponData {
-    val wepData = WeaponData()
-    var strList: List<String>
-
-    WEAPON_STATS_FILE.forEachLine { line->
-        if (line.startsWith(wep)) {
-            strList = line.split(" : ")
-
-            try {
-                wepData.maxPlayerSpeed = strList[1].toInt()
-                wepData.spread = strList[2].toFloat()
-                wepData.inaccuracyFire = strList[3].toFloat()
-                wepData.inaccuracyMove = strList[4].toFloat()
-                wepData.inaccuracyFireAlt = strList[5].toFloat()
-                wepData.inaccuracyMoveAlt = strList[6].toFloat()
-                wepData.maxPlayerSpeedAlt = strList[7].toInt()
-                wepData.spreadAlt = strList[8].toFloat()
-            } catch (e: Exception) {
-                println("$strList is FUCKING WRONG BROOOOOOOOO FUCK")
-            }
-        }
-    }
-
-    return wepData
 }

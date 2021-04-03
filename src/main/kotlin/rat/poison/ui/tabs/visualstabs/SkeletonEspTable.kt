@@ -1,16 +1,9 @@
 package rat.poison.ui.tabs.visualstabs
 
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
-import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.ui.tabs.boxEspTable
 import rat.poison.ui.tabs.skeletonEspTable
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
-import rat.poison.ui.uiHelpers.VisColorPickerCustom
-import rat.poison.ui.uiHelpers.VisSelectBoxCustom
-import rat.poison.ui.uiHelpers.VisSliderCustom
 
 //Swap VisSelectBoxCustom to showText false is mainText is " "
 class SkeletonEspTable: VisTable(false) {

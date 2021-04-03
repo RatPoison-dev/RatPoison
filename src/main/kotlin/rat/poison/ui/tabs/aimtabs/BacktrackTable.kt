@@ -1,19 +1,11 @@
 package rat.poison.ui.tabs.aimtabs
 
-import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.CollapsibleWidget
-import com.kotcrab.vis.ui.widget.VisLabel
-import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.ui.changed
-import rat.poison.ui.tabs.categorySelected
-import rat.poison.ui.tabs.gunCategories
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom
 import rat.poison.ui.uiHelpers.aimTab.ATabVisCheckBox
 import rat.poison.ui.uiHelpers.aimTab.ATabVisSlider
 import rat.poison.ui.uiHelpers.binds.VisBindTableCustom
-import rat.poison.ui.uiPanels.aimTab
-import rat.poison.ui.uiUpdate
 
 class BacktrackTable: VisTable(false) {
     private val collapsibleTable = VisTable(false)

@@ -1,6 +1,5 @@
 package rat.poison.ui.tabs.misctabs
 
-import com.badlogic.gdx.scenes.scene2d.ui.Value.prefWidth
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.ui.tabs.movementTable
 import rat.poison.ui.uiHelpers.VisCheckBoxCustom

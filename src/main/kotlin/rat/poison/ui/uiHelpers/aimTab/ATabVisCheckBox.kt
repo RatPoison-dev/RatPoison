@@ -3,7 +3,6 @@ package rat.poison.ui.uiHelpers.aimTab
 import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisCheckBox
 import rat.poison.curSettings
-import rat.poison.dbg
 import rat.poison.ui.changed
 import rat.poison.ui.tabs.categorySelected
 import rat.poison.ui.tabs.updateDisableAim

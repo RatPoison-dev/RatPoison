@@ -2,18 +2,15 @@ package rat.poison.ui.tabs
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.crosshairArray
 import rat.poison.curSettings
-import rat.poison.overlay.App.uiMenu
 import rat.poison.overlay.opened
 import rat.poison.ui.changed
-import rat.poison.ui.refreshMenu
 import rat.poison.ui.uiHelpers.*
 import rat.poison.ui.uiPanels.rcsTab
-import rat.poison.ui.uiUpdate
+import rat.poison.utils.extensions.upper
 
 class RcsTab : Tab(false, false) {
     private val table = VisTable(false)
@@ -122,7 +119,7 @@ fun updateDisableRCrosshair() {
         if (bool) {
             rCrosshairColor.disable(true)
         } else {
-            if (curSettings["RCROSSHAIR_TYPE"].toUpperCase() == "CROSSHAIR") {
+            if (curSettings["RCROSSHAIR_TYPE"].upper() == "CROSSHAIR") {
                 rCrosshairColor.disable(false)
             } else {
                 rCrosshairColor.disable(true)
