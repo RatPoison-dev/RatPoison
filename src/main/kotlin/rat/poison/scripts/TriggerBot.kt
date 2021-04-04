@@ -30,6 +30,13 @@ fun triggerBot() = every(5, inGameCheck = true) {
         return@every
     }
 
+    //Trigger key check
+    if (curSettings.bool["TRIGGER_ENABLE_KEY"] && !keyPressed(curSettings.int["TRIGGER_KEY"])) {
+        inTrigger = false
+        triggerShots = 0
+        return@every
+    }
+
     inTrigger = false //go and do the 2 step
 
     val initDelay = curSettings.int["TRIGGER_INIT_SHOT_DELAY"]
@@ -113,13 +120,6 @@ private fun trigQueueShot(delay: Int, aimbot: Boolean = false, backtrack: Boolea
 
     if (delay > 0) {
         Thread.sleep(delay.toLong())
-    }
-
-    //Trigger key check
-    if (curSettings.bool["TRIGGER_ENABLE_KEY"] && !keyPressed(curSettings.int["TRIGGER_KEY"])) {
-        inTrigger = false
-        triggerShots = 0
-        return
     }
 
     triggerShots++

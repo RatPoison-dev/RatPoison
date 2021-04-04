@@ -17,9 +17,7 @@ class UIKeybinds : VisWindow("Keybinds") {
     val forceAimBoneKey = VisBindTableCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
     val boneTriggerKey = VisBindTableCustom("Trigger Key", "TRIGGER_KEY")
     val visualsToggleKey = VisBindTableCustom("Visuals Toggle Key", "VISUALS_TOGGLE_KEY")
-    val doorSpamKey = VisBindTableCustom("Door Spam Key", "D_SPAM_KEY")
     val nadeThrowerKey = VisBindTableCustom("Nade Thrower Key", "NADE_THROWER_KEY")
-    val weaponSpamKey = VisBindTableCustom("Weapon Spam Key", "W_SPAM_KEY")
     val menuKeyField = VisBindTableCustom("Menu Key", "MENU_KEY")
 
     init {
@@ -45,8 +43,6 @@ class UIKeybinds : VisWindow("Keybinds") {
         add(forceAimBoneKey).left().row()
         add(boneTriggerKey).left().row()
         add(visualsToggleKey).left().row()
-        add(doorSpamKey).left().row()
-        add(weaponSpamKey).left().row()
         add(menuKeyField).left().row()
         add(nadeThrowerKey).left().row()
         add(menuAlphaSlider).growX()
@@ -73,8 +69,6 @@ fun keybindsUpdate(neglect: Actor?) {
         forceAimBoneKey.update(neglect)
         boneTriggerKey.update(neglect)
         visualsToggleKey.update(neglect)
-        doorSpamKey.update(neglect)
-        weaponSpamKey.update(neglect)
         menuKeyField.update(neglect)
         nadeThrowerKey.update(neglect)
     }
@@ -84,8 +78,6 @@ fun keybindsUpdate(neglect: Actor?) {
     aimTab.tMain.forceAimBoneKey.update(neglect)
     aimTab.tTrig.boneTriggerKey.update(neglect)
     visualsTab.visualsToggleKey.update(neglect)
-    othersTable.doorSpamKey.update(neglect)
-    othersTable.weaponSpamKey.update(neglect)
     optionsTab.menuKey.update(neglect)
     nadeHelperTab.nadeThrowerKey.update(neglect)
 }

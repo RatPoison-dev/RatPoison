@@ -26,10 +26,6 @@ import java.io.File
 data class MusicKit(var id: Int = 0, var name: String = "")
 
 class OthersTable: VisTable(false) {
-    val doorSpam = VisCheckBoxCustom("Door Spam", "D_SPAM")
-    var doorSpamKey = VisBindTableCustom("Door Spam Key", "D_SPAM_KEY", keyWidth = 0F)
-    val weaponSpam = VisCheckBoxCustom("Weapon Spam", "W_SPAM")
-    var weaponSpamKey = VisBindTableCustom("Weapon Spam Key", "W_SPAM_KEY", keyWidth = 0F)
     val enableReducedFlash = VisCheckBoxCustom("No Flash", "ENABLE_REDUCED_FLASH")
     val flashMaxAlpha = VisSliderCustom("Alpha", "FLASH_MAX_ALPHA", 5F, 255F, 5F, true, 0, 100F, 100F)
     val hitSoundCheckBox = VisCheckBoxCustom("HitSound", "ENABLE_HITSOUND")
@@ -136,12 +132,6 @@ class OthersTable: VisTable(false) {
         add(enableReducedFlash).colspan(2).expandX().left()
         add(flashMaxAlpha).expandX().left().row()
 
-        add(doorSpam).colspan(2).expandX().left()
-        add(doorSpamKey).expandX().left().row()
-
-        add(weaponSpam).colspan(2).expandX().left()
-        add(weaponSpamKey).expandX().left().row()
-
         add(enableKillBind).colspan(2).expandX().left()
         add(killBindKey).expandX().left().row()
 
@@ -152,9 +142,11 @@ class OthersTable: VisTable(false) {
         //add(fakeLag).colspan(3).left().row()
         //add(fakeLagTicks).colspan(3).left().row()
 
+        addSeparator().colspan(3)
+
         add(enableMusicKitSpoofer).colspan(3).left().row()
         add(currentlySelected).colspan(3).left().row()
-        add(musicKitsSelection.mainTable).colspan(3).left().height(200F).row()
+        add(musicKitsSelection.mainTable).colspan(3).fillX().height(250F).left().row()
     }
 
     fun updateHitSoundsList() {
@@ -171,10 +163,6 @@ class OthersTable: VisTable(false) {
 
 fun othersTabUpdate() {
     othersTable.apply {
-        doorSpam.update()
-        doorSpamKey.update()
-        weaponSpam.update()
-        weaponSpamKey.update()
         enableReducedFlash.update()
         flashMaxAlpha.update()
         hitSoundCheckBox.update()

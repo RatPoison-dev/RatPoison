@@ -29,9 +29,8 @@ class OptionsTab : Tab(false, false) {
     val keybinds = VisCheckBoxCustom("Keybinds", "KEYBINDS")
     val blur = VisCheckBoxCustom("Menu Blur", "GAUSSIAN_BLUR")
     val overloadKeybinds = VisCheckBoxCustom("Overload Keybinds", "OVERLOAD_KEYBINDS")
-    private val discordLink = LinkLabel("Join-Discord", "https://dimden.dev/ratpoisonowns")
-    private val configsLink = LinkLabel("Join-The-Giveaway", "https://ratpoison.dimden.dev/")
-
+    private val discordLink = LinkLabel("Join Discord", "https://dimden.dev/ratpoisonowns")
+    private val configsLink = LinkLabel("Join The Giveaway", "https://ratpoison.dimden.dev/")
 
     init {
         debug.changed { _, _ ->
