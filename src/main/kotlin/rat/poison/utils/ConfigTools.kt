@@ -7,8 +7,8 @@ import kotlinx.coroutines.launch
 import rat.poison.*
 import rat.poison.overlay.App
 import rat.poison.overlay.opened
-import rat.poison.ui.tabs.updateWindows
-import rat.poison.ui.uiPanels.configsTab
+import rat.poison.ui.uiTabs.updateWindows
+import rat.poison.ui.uiWindows.configsTab
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.loadSkinSettings

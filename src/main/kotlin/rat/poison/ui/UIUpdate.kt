@@ -4,14 +4,14 @@ import rat.poison.overlay.App.uiBombWindow
 import rat.poison.overlay.App.uiKeybinds
 import rat.poison.overlay.App.uiSpecList
 import rat.poison.overlay.opened
-import rat.poison.ui.tabs.*
-import rat.poison.ui.tabs.aimtabs.BacktrackTable
-import rat.poison.ui.tabs.aimtabs.MainAimTable
-import rat.poison.ui.tabs.aimtabs.OverrideTable
-import rat.poison.ui.tabs.aimtabs.overridenWeaponsUpdate
-import rat.poison.ui.tabs.misctabs.*
-import rat.poison.ui.tabs.visualstabs.*
-import rat.poison.ui.uiPanels.*
+import rat.poison.ui.uiTabs.*
+import rat.poison.ui.uiTabs.aimTables.BacktrackTable
+import rat.poison.ui.uiTabs.aimTables.MainAimTable
+import rat.poison.ui.uiTabs.aimTables.OverrideTable
+import rat.poison.ui.uiTabs.aimTables.overridenWeaponsUpdate
+import rat.poison.ui.uiTabs.miscTables.*
+import rat.poison.ui.uiTabs.visualsTables.*
+import rat.poison.ui.uiWindows.*
 
 var uiRefreshing = false
 
@@ -94,13 +94,13 @@ fun refreshMenu() {
     othersTable = OthersTable()
 
     mainAimTab = MainAimTable()
-    backtrackTab = BacktrackTable()
+    backtrackTable = BacktrackTable()
     overridenWeapons = OverrideTable()
 
 
     aimTab.contentTable.add(mainAimTab)
-    aimTab.contentTable.add(triggerTab)
-    aimTab.contentTable.add(backtrackTab)
+    aimTab.contentTable.add(triggerBotTable)
+    aimTab.contentTable.add(backtrackTable)
     aimTab.contentTable.add(overridenWeapons)
 
     //espTabbedPane.add(glowEspTable)

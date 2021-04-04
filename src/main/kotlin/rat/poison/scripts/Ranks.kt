@@ -9,8 +9,8 @@ import rat.poison.game.rankName
 import rat.poison.overlay.App.haveTarget
 import rat.poison.overlay.opened
 import rat.poison.settings.MENUTOG
-import rat.poison.ui.tabs.updatingRanks
-import rat.poison.ui.uiPanels.ranksTab
+import rat.poison.ui.uiTabs.updatingRanks
+import rat.poison.ui.uiWindows.ranksTab
 import rat.poison.ui.uiRefreshing
 import rat.poison.utils.RanksPlayer
 import rat.poison.utils.every

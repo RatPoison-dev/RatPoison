@@ -4,7 +4,7 @@ package rat.poison.game.offsets
 
 import it.unimi.dsi.fastutil.bytes.ByteArrayList
 import org.jire.arrowhead.Module
-import rat.poison.utils.RepeatedInt
+import rat.poison.utils.common.RepeatedInt
 
 internal class ModuleScan(private val module: Module, private val patternOffset: Long,
                           private val addressOffset: Long, private val read: Boolean,
@@ -15,7 +15,7 @@ internal class ModuleScan(private val module: Module, private val patternOffset:
 		
 		for (flag in mask) when (flag) {
 			is Number -> bytes.add(flag.toByte())
-			is RepeatedInt -> repeat(flag.repeats) { bytes.add(flag.value.toByte()) }  
+			is RepeatedInt -> repeat(flag.repeats) { bytes.add(flag.value.toByte()) }
 		}
 		
 		return Offset(module, patternOffset, addressOffset, read, subtract, bytes.toByteArray())

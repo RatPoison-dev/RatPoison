@@ -11,6 +11,8 @@ import rat.poison.game.setAngle
 import rat.poison.settings.GAME_PITCH
 import rat.poison.settings.GAME_SENSITIVITY
 import rat.poison.settings.GAME_YAW
+import rat.poison.utils.common.HumanMouse
+import rat.poison.utils.common.Vector
 import rat.poison.utils.extensions.refresh
 import kotlin.math.round
 

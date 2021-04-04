@@ -12,7 +12,7 @@ import rat.poison.scripts.aim.*
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.Vector
+import rat.poison.utils.common.Vector
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.inGame

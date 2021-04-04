@@ -1,5 +1,7 @@
 package rat.poison.utils
 
+import rat.poison.utils.common.Settings
+
 // Jire is 200 IQ
 
 class EfficientSettings(val settings: Settings) {

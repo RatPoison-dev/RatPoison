@@ -10,7 +10,7 @@ import rat.poison.game.me
 import rat.poison.robot
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.Vector
+import rat.poison.utils.common.Vector
 import rat.poison.utils.every
 import rat.poison.utils.inBackground
 import rat.poison.utils.keyPressed

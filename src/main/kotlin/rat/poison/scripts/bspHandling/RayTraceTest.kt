@@ -13,7 +13,7 @@ package rat.poison.scripts.bspHandling
 //import rat.poison.overlay.App
 //import rat.poison.overlay.bspVisTime
 //import rat.poison.scripts.aim.meDead
-//import rat.poison.utils.Vector
+//import rat.poison.utils.common.Vector
 //import rat.poison.utils.distanceTo
 //import rat.poison.utils.generalUtil.strToBool
 //import rat.poison.utils.generalUtil.toVector3

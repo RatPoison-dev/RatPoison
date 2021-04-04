@@ -13,6 +13,7 @@ import rat.poison.game.me
 import rat.poison.robot
 import rat.poison.scripts.aim.meDead
 import rat.poison.utils.*
+import rat.poison.utils.common.Vector
 import java.awt.event.KeyEvent
 import kotlin.math.abs
 import kotlin.math.cos

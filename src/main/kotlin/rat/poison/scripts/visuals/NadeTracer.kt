@@ -11,7 +11,7 @@ import rat.poison.game.forEntities
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.Vector
+import rat.poison.utils.common.Vector
 import rat.poison.utils.inGame
 import java.util.concurrent.ConcurrentLinkedQueue
 

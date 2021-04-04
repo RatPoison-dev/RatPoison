@@ -5,7 +5,7 @@ import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.offsets.ClientOffsets.dwViewMatrix
-import rat.poison.utils.Vector
+import rat.poison.utils.common.Vector
 import rat.poison.utils.extensions.getFloatArray
 import rat.poison.utils.threadLocalPointer
 

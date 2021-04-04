@@ -9,7 +9,7 @@ import rat.poison.game.netvars.NetVarOffsets.m_hObserverTarget
 import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.overlay.App.haveTarget
 import rat.poison.overlay.opened
-import rat.poison.ui.uiPanels.specListText
+import rat.poison.ui.uiWindows.specListText
 import rat.poison.utils.every
 import rat.poison.utils.extensions.readIndex
 private const val id = "spectatorlist"

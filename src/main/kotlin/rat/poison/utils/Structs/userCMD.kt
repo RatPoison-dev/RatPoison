@@ -4,7 +4,7 @@ import com.sun.jna.Memory
 import com.sun.jna.Structure
 import org.jire.arrowhead.Struct
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.utils.Vector
+import rat.poison.utils.common.Vector
 import rat.poison.utils.generalUtil.strToBool
 
 //This is me when kotlin doesnt have structs and my brain is extremely smooth

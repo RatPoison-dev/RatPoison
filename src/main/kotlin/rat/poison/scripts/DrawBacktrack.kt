@@ -9,7 +9,7 @@ import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.visuals.lineThroughSmoke
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.Vector
+import rat.poison.utils.common.Vector
 import rat.poison.utils.inGame
 import rat.poison.utils.keyPressed
 

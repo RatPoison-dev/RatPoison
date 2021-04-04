@@ -6,6 +6,7 @@ import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.robot
 import rat.poison.utils.*
+import rat.poison.utils.common.Vector
 import java.awt.event.KeyEvent
 import kotlin.math.atan2
 
@@ -49,7 +50,7 @@ fun blockBot() = every(2, inGameCheck = true) {
     }
 
     val localAngles = me.eyeAngle(meAng)
-    var myPosition = me.position(mePos)
+    val myPosition = me.position(mePos)
 
     var closestDist = -1F
     var closestTarget = -1L
@@ -59,7 +60,7 @@ fun blockBot() = every(2, inGameCheck = true) {
         val entity = it.entity
         if (entity == me || entity.dead() || entity.dead() || entity <= 0) return@forEntities
 
-        var myDistance = myPosition.distanceTo(entity.position(closestPos))
+        val myDistance = myPosition.distanceTo(entity.position(closestPos))
         if ((myDistance < closestDist || closestDist == -1F) && myDistance <= maxDist) {
             closestDist = myDistance
             closestTarget = entity

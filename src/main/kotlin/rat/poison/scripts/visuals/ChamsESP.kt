@@ -17,7 +17,7 @@ import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.aim.target
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.utils.Vector
+import rat.poison.utils.common.Vector
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import java.lang.Float.floatToIntBits

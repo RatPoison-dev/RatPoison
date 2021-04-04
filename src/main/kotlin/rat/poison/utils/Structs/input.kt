@@ -3,7 +3,7 @@ package rat.poison.utils.Structs
 import com.sun.jna.Memory
 import com.sun.jna.Structure
 import org.jire.arrowhead.Struct
-import rat.poison.utils.Vector
+import rat.poison.utils.common.Vector
 
 //All we need baby
 fun memToInput(mem: Memory): Input {

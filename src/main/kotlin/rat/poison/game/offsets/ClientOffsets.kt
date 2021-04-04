@@ -1,8 +1,8 @@
 package rat.poison.game.offsets
 
 import rat.poison.game.CSGO.clientDLL
+import rat.poison.utils.common.get
 import rat.poison.utils.extensions.invoke
-import rat.poison.utils.get
 
 object ClientOffsets {
 

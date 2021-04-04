@@ -24,6 +24,7 @@ import rat.poison.scripts.detectMap
 import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.*
+import rat.poison.utils.common.Vector
 import rat.poison.utils.extensions.uint
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.properties.Delegates

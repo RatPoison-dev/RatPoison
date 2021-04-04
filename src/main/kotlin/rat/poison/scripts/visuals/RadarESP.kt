@@ -6,7 +6,7 @@ import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.utils.Vector
+import rat.poison.utils.common.Vector
 import rat.poison.utils.distanceTo
 import rat.poison.utils.every
 

@@ -2,7 +2,7 @@ package rat.poison.utils.generalUtil
 
 import com.badlogic.gdx.math.Vector3
 import rat.poison.utils.Angle
-import rat.poison.utils.Vector
+import rat.poison.utils.common.Vector
 
 operator fun Vector3.minus(v: Vector3): Vector3 {
     x - v.x

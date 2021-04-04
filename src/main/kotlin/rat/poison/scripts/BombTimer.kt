@@ -13,7 +13,7 @@ import rat.poison.game.offsets.ClientOffsets.dwUse
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.ui.uiPanels.bombText
+import rat.poison.ui.uiWindows.bombText
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.toInt
 import rat.poison.utils.inGame
@@ -101,13 +101,13 @@ fun bombUpdater() = every(15, inGameCheck = true) {
                 if (!lastSecDefusing) {
                     println(bombState.timeLeftToExplode)
                     CSGO.clientDLL[dwUse] = 5
-                    Thread(Runnable {
+                    Thread {
                         if (bombState.timeLeftToExplode.toLong() > 0) {
                             Thread.sleep(timeNeeded.toLong() * 1000) //In milliseconds
                         }
                         CSGO.clientDLL[dwUse] = 4
                         lastSecDefusing = false
-                    }).start()
+                    }.start()
                     lastSecDefusing = true
                 }
             }

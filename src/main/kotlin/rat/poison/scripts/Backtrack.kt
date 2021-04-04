@@ -18,7 +18,7 @@ import rat.poison.game.offsets.EngineOffsets.dwbSendPackets
 import rat.poison.scripts.aim.*
 import rat.poison.utils.Angle
 import rat.poison.utils.Structs.*
-import rat.poison.utils.Vector
+import rat.poison.utils.common.Vector
 import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.threadLocalPointer

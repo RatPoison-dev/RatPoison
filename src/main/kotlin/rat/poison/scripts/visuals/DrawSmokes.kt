@@ -8,7 +8,7 @@ import rat.poison.game.forEntities
 import rat.poison.game.netvars.NetVarOffsets.bDidSmokeEffect
 import rat.poison.overlay.App
 import rat.poison.overlay.App.shapeRenderer
-import rat.poison.utils.Vector
+import rat.poison.utils.common.Vector
 import rat.poison.utils.distanceTo
 import rat.poison.utils.inGame
 import kotlin.math.cos

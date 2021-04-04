@@ -8,6 +8,7 @@ import rat.poison.game.entity.position
 import rat.poison.game.entity.punch
 import rat.poison.game.netvars.NetVarOffsets.vecViewOffset
 import rat.poison.utils.*
+import rat.poison.utils.common.Vector
 import rat.poison.utils.generalUtil.toInt
 import java.lang.Math.toDegrees
 import kotlin.math.atan

@@ -16,7 +16,7 @@ import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.utils.Vector
+import rat.poison.utils.common.Vector
 import rat.poison.utils.inGame
 import kotlin.math.abs
 

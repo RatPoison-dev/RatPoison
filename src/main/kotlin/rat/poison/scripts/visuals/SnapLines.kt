@@ -6,7 +6,7 @@ import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
-import rat.poison.utils.Vector
+import rat.poison.utils.common.Vector
 import rat.poison.utils.inGame
 
 private const val emptyString = ""
