@@ -11,7 +11,7 @@ import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.common.Vector
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.inGame
+import rat.poison.utils.common.inGame
 import rat.poison.utils.threadLocalPointer
 
 private const val modelMemorySize = 21332

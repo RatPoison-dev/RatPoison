@@ -22,7 +22,7 @@ import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.common.Vector
 import rat.poison.utils.distanceTo
-import rat.poison.utils.every
+import rat.poison.utils.common.every
 import java.awt.event.MouseEvent
 
 private const val SwingDistance = 96f

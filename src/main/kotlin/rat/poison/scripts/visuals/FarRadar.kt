@@ -17,7 +17,7 @@ import rat.poison.overlay.App
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.common.Vector
-import rat.poison.utils.inGame
+import rat.poison.utils.common.inGame
 import kotlin.math.abs
 
 data class FarPlayer(val pos: Vector = Vector(), var alpha: Float = 0F)

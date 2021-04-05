@@ -15,7 +15,7 @@ import rat.poison.overlay.App
 import rat.poison.scripts.aim.meDead
 import rat.poison.utils.common.Vector
 import rat.poison.utils.generalUtil.toMatrix4
-import rat.poison.utils.inGame
+import rat.poison.utils.common.inGame
 import kotlin.math.abs
 
 private val mePos = Vector()

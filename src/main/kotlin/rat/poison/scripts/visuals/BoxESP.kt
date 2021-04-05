@@ -25,6 +25,8 @@ import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
 import rat.poison.utils.*
 import rat.poison.utils.common.Vector
+import rat.poison.utils.common.every
+import rat.poison.utils.common.inGame
 import rat.poison.utils.extensions.getFloatArray
 import rat.poison.utils.extensions.lower
 import kotlin.math.abs

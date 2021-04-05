@@ -29,6 +29,8 @@ fun entityByType(type: EntityType): EntityContext? = entities[type]?.firstOrNull
 data class EntityCache(var created: Long, var ents: ArrayList<EntityContext>, var iterating: Boolean = false)
 val entityCache = Object2ObjectArrayMap<String, EntityCache>()
 //private const val emptyString = ""
+
+//TODO bruh
 internal inline fun forEntities(vararg types: EntityType, iterateWeapons: Boolean = false, iterateGrenades: Boolean = false, identifier: String = "", crossinline body: (EntityContext) -> Unit) {
 	var get = entityCache[identifier]
 
@@ -43,19 +45,19 @@ internal inline fun forEntities(vararg types: EntityType, iterateWeapons: Boolea
 			entityCache[identifier] = tmpClass
 		}
 		val col = if (types.isEmpty()) EntityType.cachedValues else types
-		for (i in 0 until col.size) {
-			val entType = col[i]
-			val ents = entities[entType] ?: continue
+
+		for (element in col) {
+			val ents = entities[element] ?: continue
 			for (i1 in 0 until ents.size) {
 				val ent = ents[i1]
 				get.ents.add(ent)
 				ent.run(body)
 			}
 		}
+
 		if (iterateWeapons) {
-			for (i in 0 until EntityType.weaponsTypes.size) {
-				val entType = EntityType.weaponsTypes[i]
-				val ents = entities[entType] ?: continue
+			for (element in EntityType.weaponsTypes) {
+				val ents = entities[element] ?: continue
 				for (i1 in 0 until ents.size) {
 					val ent = ents[i1]
 					get.ents.add(ent)
@@ -63,10 +65,10 @@ internal inline fun forEntities(vararg types: EntityType, iterateWeapons: Boolea
 				}
 			}
 		}
+
 		if (iterateGrenades) {
-			for (i in 0 until EntityType.grenadeTypes.size) {
-				val entType = EntityType.grenadeTypes[i]
-				val ents = entities[entType] ?: continue
+			for (element in EntityType.grenadeTypes) {
+				val ents = entities[element] ?: continue
 				for (i1 in 0 until ents.size) {
 					val ent = ents[i1]
 					get.ents.add(ent)

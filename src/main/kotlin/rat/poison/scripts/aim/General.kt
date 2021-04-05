@@ -6,6 +6,7 @@ import rat.poison.game.entity.*
 import rat.poison.settings.*
 import rat.poison.utils.*
 import rat.poison.utils.common.Vector
+import rat.poison.utils.common.every
 import rat.poison.utils.generalUtil.*
 import java.lang.Math.toRadians
 import kotlin.math.abs
@@ -37,7 +38,7 @@ val findTargetResult = ThreadLocal.withInitial { FindTargetResult() }
 
 private const val id = "findtarget"
 fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
-			   lockFOV: Float = curSettings.float["AIM_FOV"], BONE: String = curSettings["AIM_BONE"], visCheck: Boolean = true, teamCheck: Boolean = true): FindTargetResult {
+			   lockFOV: Float = AIM_FOV, BONE: String = curSettings["AIM_BONE"], visCheck: Boolean = true, teamCheck: Boolean = true): FindTargetResult {
 	val result = findTargetResult.get()
 	result.reset()
 	var closestFOV = Float.MAX_VALUE
@@ -96,7 +97,7 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 
 	val randInt = randInt(1, 100)
 
-	if (curSettings.bool["PERFECT_AIM"] && allowPerfect && closestFOV <= curSettings.float["PERFECT_AIM_FOV"] && randInt <= curSettings.int["PERFECT_AIM_CHANCE"]) {
+	if (PERFECT_AIM && allowPerfect && closestFOV <= PERFECT_AIM_FOV && randInt <= PERFECT_AIM_CHANCE) {
 		canPerfect = true
 	}
 	result.player = closestPlayer
@@ -114,7 +115,7 @@ data class CalcTargetResult(var fov: Float = -1F, var delta: Float = -1F, var pl
 val calcTargetResult = ThreadLocal.withInitial {CalcTargetResult()}
 private val boneVec = Vector()
 private val ang = Vector()
-fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Angle, curAngle: Angle, lockFOV: Float = curSettings.float["AIM_FOV"], BONE: Int, ovrStatic: Boolean = false): CalcTargetResult {
+fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Angle, curAngle: Angle, lockFOV: Float = AIM_FOV, BONE: Int, ovrStatic: Boolean = false): CalcTargetResult {
 	val result = calcTargetResult.get()
 	result.reset()
 
@@ -190,12 +191,12 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		return@every
 	}
 
-	if (curSettings.bool["AIM_ONLY_ON_SHOT"] && (!canFire || (didShoot && !meCurWep.automatic && !curSettings.bool["AUTOMATIC_WEAPONS"]))) { //Onshot
+	if (AIM_ONLY_ON_SHOT && (!canFire || (didShoot && !meCurWep.automatic && !AUTOMATIC_WEAPONS))) { //Onshot
 		reset(false)
 		return@every
 	}
 
-	if (meCurWep.sniper && !me.isScoped() && curSettings.bool["ENABLE_SCOPED_ONLY"]) { //Scoped only
+	if (meCurWep.sniper && !me.isScoped() && ENABLE_SCOPED_ONLY) { //Scoped only
 		reset()
 		return@every
 	}
@@ -213,7 +214,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	}
 
 	if (meCurWep.rifle || meCurWep.smg) {
-		if (me.shotsFired() < curSettings.int["AIM_AFTER_SHOTS"]) {
+		if (me.shotsFired() < AIM_AFTER_SHOTS) {
 			reset()
 			return@every
 		}
@@ -257,12 +258,12 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 
 	var perfect = false
 	if (canPerfect) {
-		if (randInt(100+1) <= curSettings.int["PERFECT_AIM_CHANCE"]) {
+		if (randInt(100+1) <= PERFECT_AIM_CHANCE) {
 			perfect = true
 		}
 	}
 
-	val swapTarget = (bestTarget > 0 && currentTarget != bestTarget) && !curSettings.bool["HOLD_AIM"] && (meCurWep.automatic || curSettings.bool["AUTOMATIC_WEAPONS"])
+	val swapTarget = (bestTarget > 0 && currentTarget != bestTarget) && !curSettings.bool["HOLD_AIM"] && (meCurWep.automatic || AUTOMATIC_WEAPONS)
 
 	if (swapTarget || !currentTarget.canShoot(shouldVisCheck)) {
 		reset()
@@ -275,12 +276,10 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		val destinationAngle = getCalculatedAngle(me, bonePosition) //Rename to current rat.poison.game.angle
 
 		if (!perfect) {
-			destinationAngle.finalize(currentAngle, (1.1F - curSettings.float["AIM_SMOOTHNESS"] / 5F)) //10.0 is max smooth value
+			destinationAngle.finalize(currentAngle, (1.1F - AIM_SMOOTHNESS / 5F)) //10.0 is max smooth value
 
-			val aimSpeed = curSettings.int["AIM_SPEED"]
-
-			val aimSpeedDivisor = if (curSettings.bool["AIM_ADVANCED"]) curSettings.int["AIM_SPEED_DIVISOR"] else 1
-			doAim(destinationAngle, currentAngle, aimSpeed, aimSpeedDivisor)
+			val aimSpeedDivisor = if (AIM_ADVANCED) AIM_SPEED_DIVISOR else 1
+			doAim(destinationAngle, currentAngle, AIM_SPEED, aimSpeedDivisor)
 		} else {
 			doAim(destinationAngle, currentAngle, 1, 1)
 		}

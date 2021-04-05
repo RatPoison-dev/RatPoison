@@ -11,8 +11,8 @@ import rat.poison.robot
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.common.Vector
-import rat.poison.utils.every
-import rat.poison.utils.inBackground
+import rat.poison.utils.common.every
+import rat.poison.utils.common.inBackground
 import rat.poison.utils.keyPressed
 import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.VK_SPACE

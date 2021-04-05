@@ -9,8 +9,14 @@ import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
 import rat.poison.scripts.*
+import rat.poison.settings.AUTOMATIC_WEAPONS
+import rat.poison.settings.BACKTRACK
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.*
+import rat.poison.utils.common.every
+import rat.poison.utils.common.inBackground
+import rat.poison.utils.common.inFullscreen
+import rat.poison.utils.common.inGame
 
 private var shouldShoot = false
 var didShoot = false
@@ -74,7 +80,7 @@ fun fireWeapon() {
 
     var shouldAuto = false
 
-    if (curSettings.bool["AUTOMATIC_WEAPONS"] && !meCurWep.automatic && meCurWep.gun) {
+    if (AUTOMATIC_WEAPONS && !meCurWep.automatic && meCurWep.gun) {
         shouldAuto = automaticWeapons()
 
         if (!didShoot) { //Skip first delay
@@ -93,7 +99,7 @@ fun fireWeapon() {
     val backtrackOnKey = curSettings.bool["ENABLE_BACKTRACK_ON_KEY"]
     val backtrackKeyPressed = keyPressed(curSettings.int["BACKTRACK_KEY"])
 
-    if (curSettings.bool["BACKTRACK"] && ((!backtrackOnKey || (backtrackOnKey && backtrackKeyPressed)))) {
+    if (BACKTRACK && ((!backtrackOnKey || (backtrackOnKey && backtrackKeyPressed)))) {
         if (shouldAuto || (!shouldAuto && !didShoot) || meCurWep.automatic) {
             if (attemptBacktrack()) {
                 if (!shouldAuto) {

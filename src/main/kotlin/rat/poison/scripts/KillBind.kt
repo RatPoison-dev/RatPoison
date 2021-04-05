@@ -5,7 +5,7 @@ import rat.poison.game.entity.kills
 import rat.poison.game.me
 import rat.poison.robot
 import rat.poison.scripts.aim.meDead
-import rat.poison.utils.every
+import rat.poison.utils.common.every
 
 private var totalKills = me.kills()
 

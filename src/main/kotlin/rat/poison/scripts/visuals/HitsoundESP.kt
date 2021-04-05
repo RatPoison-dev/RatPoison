@@ -8,7 +8,7 @@ import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
 import rat.poison.overlay.App.assetManager
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.every
+import rat.poison.utils.common.every
 
 private var totalHits = 0
 

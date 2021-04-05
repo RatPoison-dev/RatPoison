@@ -10,7 +10,7 @@ import rat.poison.game.forEntities
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.utils.common.Vector
-import rat.poison.utils.inGame
+import rat.poison.utils.common.inGame
 
 //https://github.com/WarezBox/aimware/blob/master/%5BLuaScript%20V5%5D%20Smoke%20timer%20ESP
 private val vec = Vector()

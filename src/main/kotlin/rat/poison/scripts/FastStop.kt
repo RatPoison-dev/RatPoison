@@ -15,7 +15,7 @@ import rat.poison.game.offsets.ClientOffsets.dwForceLeft
 import rat.poison.game.offsets.ClientOffsets.dwForceRight
 import rat.poison.scripts.aim.meDead
 import rat.poison.utils.common.Vector
-import rat.poison.utils.every
+import rat.poison.utils.common.every
 import rat.poison.utils.keyPressed
 import java.awt.event.KeyEvent.*
 import kotlin.math.cos

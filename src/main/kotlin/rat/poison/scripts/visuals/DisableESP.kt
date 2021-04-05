@@ -9,7 +9,7 @@ import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.inGame
+import rat.poison.utils.common.inGame
 import java.lang.Float.floatToIntBits
 
 //Change to construct entities at call to prevent crashing?

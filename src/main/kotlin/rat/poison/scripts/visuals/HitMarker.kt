@@ -14,7 +14,7 @@ import rat.poison.overlay.App
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.common.Vector
-import rat.poison.utils.inGame
+import rat.poison.utils.common.inGame
 
 var hitMarkerAlpha = 0F
 var hitMarkerCombo = 0

@@ -13,7 +13,7 @@ import rat.poison.ui.uiTabs.updatingRanks
 import rat.poison.ui.uiWindows.ranksTab
 import rat.poison.ui.uiRefreshing
 import rat.poison.utils.RanksPlayer
-import rat.poison.utils.every
+import rat.poison.utils.common.every
 import rat.poison.utils.extensions.roundNDecimals
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.saving

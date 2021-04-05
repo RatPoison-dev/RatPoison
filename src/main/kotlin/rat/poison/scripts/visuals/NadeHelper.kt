@@ -27,7 +27,7 @@ import rat.poison.utils.common.Vector
 import rat.poison.utils.generalUtil.cToDouble
 import rat.poison.utils.generalUtil.cToFloat
 import rat.poison.utils.generalUtil.toMatrix4
-import rat.poison.utils.inGame
+import rat.poison.utils.common.inGame
 import rat.poison.utils.threadLocalPointer
 import java.io.File
 import java.io.FileReader

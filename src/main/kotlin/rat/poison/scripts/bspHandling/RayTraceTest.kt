@@ -17,7 +17,7 @@ package rat.poison.scripts.bspHandling
 //import rat.poison.utils.distanceTo
 //import rat.poison.utils.generalUtil.strToBool
 //import rat.poison.utils.generalUtil.toVector3
-//import rat.poison.utils.inGame
+//import rat.poison.utils.common.getInGame
 //import java.util.concurrent.TimeUnit
 //import kotlin.math.abs
 //import kotlin.system.measureNanoTime

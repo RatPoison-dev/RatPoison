@@ -19,7 +19,7 @@ import rat.poison.scripts.aim.*
 import rat.poison.utils.Angle
 import rat.poison.utils.Structs.*
 import rat.poison.utils.common.Vector
-import rat.poison.utils.every
+import rat.poison.utils.common.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.threadLocalPointer
 import kotlin.math.abs
@@ -115,6 +115,7 @@ private var bestFov = 5F
 private val boneVec = Vector()
 //private val positionVector = Vector()
 private const val id = "backtrack"
+
 fun constructRecords() {
     bestFov = 5F
     val clientAngle = clientState.angle(meAngVec)

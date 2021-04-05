@@ -9,7 +9,7 @@ import rat.poison.game.netvars.NetVarOffsets.m_zoomLevel
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meCurWepEnt
-import rat.poison.utils.inGame
+import rat.poison.utils.common.inGame
 
 internal fun fovChanger() = App {
     if (!inGame) return@App

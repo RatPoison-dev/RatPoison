@@ -8,7 +8,7 @@ import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.overlay.App
 import rat.poison.utils.common.Vector
-import rat.poison.utils.every
+import rat.poison.utils.common.every
 import rat.poison.utils.generalUtil.cToFloat
 import rat.poison.utils.generalUtil.toMatrix4
 import kotlin.math.pow

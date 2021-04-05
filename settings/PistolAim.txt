@@ -4,11 +4,11 @@
 
 //Enable flat aim
 //Writes to angles ingame
-PISTOL_ENABLE_FLAT_AIM = false
+PISTOL_ENABLE_FLAT_AIM = true
 
 //Enable path aim
 //Uses mouse movement to aim
-PISTOL_ENABLE_PATH_AIM = true
+PISTOL_ENABLE_PATH_AIM = false
 
 //Factor recoil when shooting
 PISTOL_FACTOR_RECOIL = false

@@ -7,7 +7,7 @@ import rat.poison.game.entity.*
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.common.Vector
-import rat.poison.utils.inGame
+import rat.poison.utils.common.inGame
 
 private const val emptyString = ""
 private val positionVector = Vector()

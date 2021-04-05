@@ -10,7 +10,7 @@ import rat.poison.overlay.App
 import rat.poison.overlay.App.shapeRenderer
 import rat.poison.utils.common.Vector
 import rat.poison.utils.distanceTo
-import rat.poison.utils.inGame
+import rat.poison.utils.common.inGame
 import kotlin.math.cos
 import kotlin.math.sin
 

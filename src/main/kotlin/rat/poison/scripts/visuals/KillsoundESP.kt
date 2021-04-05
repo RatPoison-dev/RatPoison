@@ -7,8 +7,8 @@ import rat.poison.game.entity.kills
 import rat.poison.game.me
 import rat.poison.overlay.App.assetManager
 import rat.poison.scripts.aim.meDead
-import rat.poison.utils.every
-import rat.poison.utils.inGame
+import rat.poison.utils.common.every
+import rat.poison.utils.common.inGame
 
 private var totalKills = when (inGame) {
     true -> me.kills()

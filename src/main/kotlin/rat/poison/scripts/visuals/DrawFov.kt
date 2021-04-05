@@ -11,8 +11,11 @@ import rat.poison.game.netvars.NetVarOffsets.m_iFOV
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
+import rat.poison.settings.AIM_FOV
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.inGame
+import rat.poison.settings.TRIGGER_FOV
+import rat.poison.settings.TRIGGER_USE_FOV
+import rat.poison.utils.common.inGame
 import java.lang.Math.toDegrees
 import java.lang.Math.toRadians
 
@@ -40,13 +43,13 @@ fun drawFov() = App {
 
     var triggerRadius = -1F
 
-    if (meCurWep.gun) { //Not 100% this applies to every 'gun'
-        bFOV = curSettings.float["TRIGGER_FOV"]
-        bINFOV = curSettings.bool["TRIGGER_USE_FOV"]
+    if (meCurWep.gun) {
+        bFOV = TRIGGER_FOV
+        bINFOV = TRIGGER_USE_FOV
         triggerRadius = calcFovRadius(viewFov, bFOV)
     }
 
-    val aimRadius = calcFovRadius(viewFov, curSettings.float["AIM_FOV"])
+    val aimRadius = calcFovRadius(viewFov, AIM_FOV)
 
     val rccXo = curSettings.float["RCROSSHAIR_XOFFSET"]
     val rccYo = curSettings.float["RCROSSHAIR_YOFFSET"]

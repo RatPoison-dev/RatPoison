@@ -7,7 +7,7 @@ import rat.poison.game.offsets.EngineOffsets.bVoiceRecording
 import rat.poison.scripts.aim.canShoot
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.AIM_KEY
-import rat.poison.utils.every
+import rat.poison.utils.common.every
 import rat.poison.utils.keyPressed
 
 fun toMilliseconds(ticks: Int): Long {

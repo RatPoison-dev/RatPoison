@@ -10,7 +10,7 @@ import rat.poison.scripts.aim.target
 import rat.poison.scripts.bombState
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.common.Vector
-import rat.poison.utils.every
+import rat.poison.utils.common.every
 import java.util.concurrent.TimeUnit
 import kotlin.system.measureNanoTime
 private val mePosVec = Vector()

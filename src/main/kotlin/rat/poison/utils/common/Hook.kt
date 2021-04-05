@@ -1,7 +1,5 @@
 package rat.poison.utils.common
 
-import rat.poison.utils.every
-
 class Hook(val clauseDefault: Boolean, val durationDefault: Int,
            val predicate: () -> Boolean) {
 	

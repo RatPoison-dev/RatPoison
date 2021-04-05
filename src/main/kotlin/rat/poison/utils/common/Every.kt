@@ -1,4 +1,4 @@
-package rat.poison.utils
+package rat.poison.utils.common
 
 import rat.poison.haltProcess
 
@@ -11,7 +11,7 @@ var shouldPostProcess = false
 @Volatile
 var inFullscreen = false
 
-inline fun every(duration: Int, continuous: Boolean = false, inGameCheck: Boolean = false, crossinline body: () -> Unit) = Thread(Runnable {
+inline fun every(duration: Int, continuous: Boolean = false, inGameCheck: Boolean = false, crossinline body: () -> Unit) = Thread {
     while (!Thread.interrupted()) {
         if ((continuous || !inBackground) && !haltProcess && ((inGameCheck && inGame) || !inGameCheck)) {
             try {
@@ -23,4 +23,4 @@ inline fun every(duration: Int, continuous: Boolean = false, inGameCheck: Boolea
 
         Thread.sleep(duration.toLong())
     }
-}).start()
+}.start()

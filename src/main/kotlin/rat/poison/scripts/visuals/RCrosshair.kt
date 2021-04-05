@@ -13,7 +13,7 @@ import rat.poison.overlay.App
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.utils.common.Vector
 import rat.poison.utils.generalUtil.cToFloat
-import rat.poison.utils.inGame
+import rat.poison.utils.common.inGame
 import java.lang.Math.toRadians
 import kotlin.math.*
 

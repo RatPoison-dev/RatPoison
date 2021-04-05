@@ -18,8 +18,8 @@ import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.calcFovRadius
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.common.Vector
-import rat.poison.utils.every
-import rat.poison.utils.inGame
+import rat.poison.utils.common.every
+import rat.poison.utils.common.inGame
 import java.lang.Math.toDegrees
 import java.lang.Math.toRadians
 import kotlin.math.atan

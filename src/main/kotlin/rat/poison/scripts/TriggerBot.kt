@@ -9,13 +9,11 @@ import rat.poison.game.netvars.NetVarOffsets.iCrossHairID
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
 import rat.poison.scripts.aim.*
-import rat.poison.settings.AIM_KEY
-import rat.poison.settings.DANGER_ZONE
-import rat.poison.settings.MENUTOG
+import rat.poison.settings.*
 import rat.poison.utils.common.Vector
-import rat.poison.utils.every
+import rat.poison.utils.common.every
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.inGame
+import rat.poison.utils.common.inGame
 import rat.poison.utils.keyPressed
 
 var inTrigger = false
@@ -39,18 +37,18 @@ fun triggerBot() = every(5, inGameCheck = true) {
 
     inTrigger = false //go and do the 2 step
 
-    val initDelay = curSettings.int["TRIGGER_INIT_SHOT_DELAY"]
-    val shotDelay = curSettings.int["TRIGGER_PER_SHOT_DELAY"]
-    val bFOV = curSettings.float["TRIGGER_FOV"]
-    val bINFOV = curSettings.bool["TRIGGER_USE_FOV"]
-    val bINCROSS = curSettings.bool["TRIGGER_USE_INCROSS"]
-    val bAIMBOT = curSettings.bool["TRIGGER_USE_AIMBOT"]
-    val bBACKTRACK = curSettings.bool["TRIGGER_USE_BACKTRACK"]
+    val initDelay = TRIGGER_INIT_SHOT_DELAY
+    val shotDelay = TRIGGER_PER_SHOT_DELAY
+    val bFOV = TRIGGER_FOV
+    val bINFOV = TRIGGER_USE_FOV
+    val bINCROSS = TRIGGER_USE_INCROSS
+    val bAIMBOT = TRIGGER_USE_AIMBOT
+    val bBACKTRACK = TRIGGER_USE_BACKTRACK
 
-    if (curSettings.bool["TRIGGER_BOT"]) { //If trigger is enabled for current weapon
+    if (TRIGGER_BOT) { //If trigger is enabled for current weapon
         //Scope check
         if (meCurWep.sniper) { //If we are holding a sniper
-            if ((curSettings.bool["ENABLE_SCOPED_ONLY"] && !curWepOverride) || (curWepOverride && curWepSettings.tScopedOnly)) { //Scoped only check
+            if ((ENABLE_SCOPED_ONLY && !curWepOverride) || (curWepOverride && curWepSettings.tScopedOnly)) { //Scoped only check
                 if (!me.isScoped()) {
                     //Reset
                     inTrigger = false

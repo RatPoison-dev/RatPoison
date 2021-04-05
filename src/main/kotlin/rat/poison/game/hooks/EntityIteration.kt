@@ -24,8 +24,9 @@ import rat.poison.scripts.detectMap
 import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.*
-import rat.poison.utils.common.Vector
+import rat.poison.utils.common.*
 import rat.poison.utils.extensions.uint
+import java.lang.Float
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.properties.Delegates
 
@@ -178,5 +179,5 @@ fun constructEntities() = every(500, continuous = true) {
     }
 
     DANGER_ZONE = dzMode
-    GAME_SENSITIVITY = java.lang.Float.intBitsToFloat((clientDLL.uint(dwSensitivity) xor (clientDLL.address + dwSensitivityPtr)).toInt()).toDouble()
+    GAME_SENSITIVITY = Float.intBitsToFloat((clientDLL.uint(dwSensitivity) xor (clientDLL.address + dwSensitivityPtr)).toInt()).toDouble()
 }

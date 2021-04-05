@@ -8,9 +8,7 @@ import rat.poison.game.CSGO.gameX
 import rat.poison.game.CSGO.gameY
 import rat.poison.game.clientState
 import rat.poison.game.setAngle
-import rat.poison.settings.GAME_PITCH
-import rat.poison.settings.GAME_SENSITIVITY
-import rat.poison.settings.GAME_YAW
+import rat.poison.settings.*
 import rat.poison.utils.common.HumanMouse
 import rat.poison.utils.common.Vector
 import rat.poison.utils.extensions.refresh
@@ -30,9 +28,9 @@ fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: 
 		smooth = 1F
 	}
 
-	var randX = if (curSettings.int["AIM_RANDOM_X_VARIATION"] > 0) randInt(0, curSettings.int["AIM_RANDOM_X_VARIATION"]) * randSign() else 0
-	var randY = if (curSettings.int["AIM_RANDOM_Y_VARIATION"] > 0) randInt(0, curSettings.int["AIM_RANDOM_Y_VARIATION"]) * randSign() else 0
-	val randDZ = curSettings.int["AIM_VARIATION_DEADZONE"] / 100F
+	var randX = if (AIM_RANDOM_X_VARIATION > 0) randInt(0, AIM_RANDOM_X_VARIATION) * randSign() else 0
+	var randY = if (AIM_RANDOM_Y_VARIATION > 0) randInt(0, AIM_RANDOM_Y_VARIATION) * randSign() else 0
+	val randDZ = AIM_VARIATION_DEADZONE / 100F
 
 	if (x in -randDZ..randDZ && y in -randDZ..randDZ) {
 		randX = 0
@@ -78,9 +76,9 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 
 	val target = POINT()
 
-	var randX = if (curSettings.int["AIM_RANDOM_X_VARIATION"] > 0) randInt(0, curSettings.int["AIM_RANDOM_X_VARIATION"]) * randSign() else 0
-	var randY = if (curSettings.int["AIM_RANDOM_Y_VARIATION"] > 0) randInt(0, curSettings.int["AIM_RANDOM_Y_VARIATION"]) * randSign() else 0
-	val randDZ = curSettings.int["AIM_VARIATION_DEADZONE"]
+	var randX = if (AIM_RANDOM_X_VARIATION > 0) randInt(0, AIM_RANDOM_X_VARIATION) * randSign() else 0
+	var randY = if (AIM_RANDOM_Y_VARIATION > 0) randInt(0, AIM_RANDOM_Y_VARIATION) * randSign() else 0
+	val randDZ = AIM_VARIATION_DEADZONE
 
 	if (dx.toInt() in -randDZ..randDZ && dy.toInt() in -randDZ..randDZ) {
 		randX = 0

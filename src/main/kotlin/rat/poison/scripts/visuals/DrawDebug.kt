@@ -7,9 +7,13 @@ import rat.poison.dbg
 import rat.poison.game.CSGO
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.*
+import rat.poison.settings.*
 
 private val txtString = StringBuilder()
 private val concatStringBuilder = StringBuilder()
+
+//todo bruh
+
 fun drawDebug() = App {
     if (!dbg) return@App
     txtString.clear()
@@ -28,22 +32,20 @@ fun drawDebug() = App {
         txtString.appendLine(concatStringBuilder)
         concatStringBuilder.clear()
     }
-    concatStringBuilder.append("Factor Recoil: ")
-    concatStringBuilder.append(curSettings["FACTOR_RECOIL"])
-    txtString.appendLine(concatStringBuilder)
-    concatStringBuilder.clear()
-    concatStringBuilder.append("On Shot: ")
-    concatStringBuilder.append(curSettings["AIM_ONLY_ON_SHOT"])
+
+    concatStringBuilder.append("Factor Recoil: $FACTOR_RECOIL")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Flat Aim: ")
-    concatStringBuilder.append(curSettings["ENABLE_FLAT_AIM"])
+    concatStringBuilder.append("On Shot: $AIM_ONLY_ON_SHOT")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Path Aim: ")
-    concatStringBuilder.append(curSettings["ENABLE_PATH_AIM"])
+    concatStringBuilder.append("Flat Aim: $ENABLE_FLAT_AIM")
+    txtString.appendLine(concatStringBuilder)
+    concatStringBuilder.clear()
+
+    concatStringBuilder.append("Path Aim: $ENABLE_PATH_AIM")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
@@ -57,97 +59,79 @@ fun drawDebug() = App {
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Fov: ")
-    concatStringBuilder.append(curSettings["AIM_FOV"])
+    concatStringBuilder.append("Fov: $AIM_FOV")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Speed: ")
-    concatStringBuilder.append(curSettings["AIM_SPEED"])
+    concatStringBuilder.append("Speed: $AIM_SPEED")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Smooth: ")
-    concatStringBuilder.append(curSettings["AIM_SMOOTHNESS"])
+    concatStringBuilder.append("Smooth: $AIM_SMOOTHNESS")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Perfect Aim: ")
-    concatStringBuilder.append(curSettings["PERFECT_AIM"])
+    concatStringBuilder.append("Perfect Aim: $PERFECT_AIM")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Perfect Fov: ")
-    concatStringBuilder.append(curSettings["PERFECT_AIM_FOV"])
+    concatStringBuilder.append("Perfect Fov: $PERFECT_AIM_FOV")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Perfect Chance: ")
-    concatStringBuilder.append(curSettings["PERFECT_AIM_CHANCE"])
+    concatStringBuilder.append("Perfect Chance: $PERFECT_AIM_CHANCE")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Scoped Only: ")
-    concatStringBuilder.append(curSettings["ENABLE_SCOPED_ONLY"])
+    concatStringBuilder.append("Scoped Only: $ENABLE_SCOPED_ONLY")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Aim After #: ")
-    concatStringBuilder.append(curSettings["AIM_AFTER_SHOTS"])
+    concatStringBuilder.append("Aim After #: $AIM_AFTER_SHOTS")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
     txtString.appendLine()
 
-    concatStringBuilder.append("Trigger: ")
-    concatStringBuilder.append(curSettings["TRIGGER_BOT"])
+    concatStringBuilder.append("Trigger: $TRIGGER_BOT")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Trigger Aimbot: ")
-    concatStringBuilder.append(curSettings["TRIGGER_USE_AIMBOT"])
+    concatStringBuilder.append("Trigger Aimbot: $TRIGGER_USE_AIMBOT")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Trigger Backtrack: ")
-    concatStringBuilder.append(curSettings["TRIGGER_USE_BACKTRACK"])
+    concatStringBuilder.append("Trigger Backtrack: $TRIGGER_USE_BACKTRACK")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Trigger InCross: ")
-    concatStringBuilder.append(curSettings["TRIGGER_USE_INCROSS"])
+    concatStringBuilder.append("Trigger InCross: $TRIGGER_USE_INCROSS")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Trigger InFov: ")
-    concatStringBuilder.append(curSettings["TRIGGER_USE_FOV"])
+    concatStringBuilder.append("Trigger InFov: $TRIGGER_USE_FOV")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Trigger Fov: ")
-    concatStringBuilder.append(curSettings["TRIGGER_FOV"])
+    concatStringBuilder.append("Trigger Fov: $TRIGGER_FOV")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Trigger Init Delay: ")
-    concatStringBuilder.append(curSettings["TRIGGER_INIT_SHOT_DELAY"])
+    concatStringBuilder.append("Trigger Init Delay: $TRIGGER_INIT_SHOT_DELAY")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Trigger Per Shot Delay: ")
-    concatStringBuilder.append(curSettings["TRIGGER_PER_SHOT_DELAY"])
+    concatStringBuilder.append("Trigger Per Shot Delay: $TRIGGER_PER_SHOT_DELAY")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
     txtString.appendLine()
 
-    concatStringBuilder.append("Backtrack: ")
-    concatStringBuilder.append(curSettings["BACKTRACK"])
+    concatStringBuilder.append("Backtrack: $BACKTRACK")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 
-    concatStringBuilder.append("Backtrack MS: ")
-    concatStringBuilder.append(curSettings["BACKTRACK_MS"])
+    concatStringBuilder.append("Backtrack MS: $BACKTRACK_MS")
     txtString.appendLine(concatStringBuilder)
     concatStringBuilder.clear()
 

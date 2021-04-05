@@ -37,6 +37,8 @@ import rat.poison.ui.uiWindows.*
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.*
 import rat.poison.utils.common.ObservableBoolean
+import rat.poison.utils.common.inGame
+import rat.poison.utils.common.shouldPostProcess
 import rat.poison.utils.extensions.appendHumanReadableSize
 import rat.poison.utils.extensions.roundNDecimals
 import java.lang.management.ManagementFactory

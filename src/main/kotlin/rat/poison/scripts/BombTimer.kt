@@ -14,9 +14,9 @@ import rat.poison.game.offsets.EngineOffsets
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.ui.uiWindows.bombText
-import rat.poison.utils.every
+import rat.poison.utils.common.every
 import rat.poison.utils.generalUtil.toInt
-import rat.poison.utils.inGame
+import rat.poison.utils.common.inGame
 
 //ent_create planted_c4_training
 //ent_fire planted_c4_training ActivateSetTimerLength 20

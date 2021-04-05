@@ -16,7 +16,7 @@ import rat.poison.jna.enums.AccentStates
 import rat.poison.jna.structures.Rect
 import rat.poison.jna.structures.WindowCompositionAttributeData
 import rat.poison.overlay.App.uiMenu
-import rat.poison.utils.inBackground
+import rat.poison.utils.common.inBackground
 import kotlin.concurrent.thread
 import kotlin.properties.Delegates
 
