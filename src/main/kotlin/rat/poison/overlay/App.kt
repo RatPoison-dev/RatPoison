@@ -208,9 +208,15 @@ object App: ApplicationAdapter() {
                                 menuStage.clear()
                             }
 
-                            if (!menuStage.actors.contains(uiWatermark)) {
-                                menuStage.addActor(uiWatermark)
-                                uiWatermark.setPosition(CSGO.gameX.toFloat() + CSGO.gameWidth - 8F, CSGO.gameY.toFloat() + CSGO.gameHeight)
+                            if (curSettings.bool["ENABLE_WATERMARK"]) {
+                                if (!menuStage.actors.contains(uiWatermark)) {
+                                    menuStage.addActor(uiWatermark)
+                                    uiWatermark.setPosition(curSettings.float["UI_WATERMARK_X"], curSettings.float["UI_WATERMARK_Y"])
+                                }
+                            } else {
+                                if (menuStage.actors.contains(uiWatermark)) {
+                                    menuStage.clear()
+                                }
                             }
 
                             if (curSettings.bool["ENABLE_BOMB_TIMER"] && curSettings.bool["BOMB_TIMER_MENU"] && curSettings.bool["ENABLE_ESP"]) {

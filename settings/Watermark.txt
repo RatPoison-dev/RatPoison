@@ -1,0 +1,5 @@
+//Enable watermark
+ENABLE_WATERMARK = true
+
+UI_WATERMARK_X = 500
+UI_WATERMARK_Y = 500

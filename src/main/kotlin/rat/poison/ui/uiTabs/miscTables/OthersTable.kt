@@ -39,6 +39,7 @@ class OthersTable: VisTable(false) {
 
     val postProcessingDisable = VisCheckBoxCustom("Disable Post Processing", "DISABLE_POST_PROCESSING")
     val spectatorList = VisCheckBoxCustom("Spectator List", "SPECTATOR_LIST")
+    val watermark = VisCheckBoxCustom("Watermark", "ENABLE_WATERMARK")
     val enableMusicKitSpoofer = VisCheckBoxCustom("Music Kit Spoofer", "MUSIC_KIT_SPOOFER")
     val fakeLag = VisCheckBoxCustom("Fake Lag", "FAKE_LAG")
     val fakeLagTicks = VisSliderCustom("Fake Lag Ticks", "FAKE_LAG_TICKS", 1F, 14F, 1F, true, 0, 250F, 200F)
@@ -139,6 +140,8 @@ class OthersTable: VisTable(false) {
 
         add(spectatorList).colspan(3).left().row()
 
+        add(watermark).colspan(3).left().row()
+
         //add(fakeLag).colspan(3).left().row()
         //add(fakeLagTicks).colspan(3).left().row()
 
@@ -177,6 +180,7 @@ fun othersTabUpdate() {
         enableKillBind.update()
         postProcessingDisable.update()
         spectatorList.update()
+        watermark.update()
         enableMusicKitSpoofer.update()
         updateHitSoundsList()
     }

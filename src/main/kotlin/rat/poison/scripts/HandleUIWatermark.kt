@@ -13,7 +13,6 @@ import kotlin.text.StringBuilder
 val keybindNames = mutableListOf<Pair<String, String>>()
 private val concatSb = StringBuilder()
 
-
 fun handleUIWatermark() = App {
     val calendar = Calendar.getInstance()
     uiWatermark.keybindText.setText(getKeybinds())
