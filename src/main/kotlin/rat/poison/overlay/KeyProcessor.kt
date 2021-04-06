@@ -3,7 +3,6 @@ package rat.poison.overlay
 import com.badlogic.gdx.InputProcessor
 import rat.poison.interfaces.IKeyProcessorListener
 
-
 class KeyProcessor: InputProcessor {
     var needKeyPress = false
     var listener: IKeyProcessorListener? = null

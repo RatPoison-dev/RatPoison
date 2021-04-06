@@ -121,6 +121,9 @@ object App: ApplicationAdapter() {
         overlay.start()
     }
 
+    private var variableYieldTime = 0L
+    private var lastTime = 0L
+
     /**
      * An accurate sync method that adapts automatically
      * to the system it runs on to provide reliable results.
@@ -128,8 +131,6 @@ object App: ApplicationAdapter() {
      * @param fps The desired frame rate, in frames per second
      * @author kappa (On the LWJGL Forums)
      */
-    private var variableYieldTime = 0L
-    private var lastTime = 0L
     private fun sync(fps: Int) {
         if (fps <= 0) return
         val sleepTime = (1000000000 / fps).toLong() // nanoseconds to sleep this frame
