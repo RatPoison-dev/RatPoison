@@ -12,6 +12,7 @@ import rat.poison.settings.MENUTOG
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.inGame
 import rat.poison.utils.keyPressed
+import rat.poison.utils.keybindEval
 
 private val minHeadPos = Vector()
 private val maxHeadPos = Vector()
@@ -28,7 +29,7 @@ fun drawBacktrack() = App {
     if (!inGame || !curSettings.bool["BACKTRACK_VISUALIZE"] || !curSettings.bool["ENABLE_ESP"] || !curSettings.bool["ENABLE_BACKTRACK"]) return@App
 
     val backtrackOnKey = curSettings.bool["ENABLE_BACKTRACK_ON_KEY"]
-    val backtrackKeyPressed = keyPressed(curSettings.int["BACKTRACK_KEY"])
+    val backtrackKeyPressed = keybindEval("BACKTRACK_KEY")
 
     if (backtrackOnKey && !backtrackKeyPressed) return@App
 

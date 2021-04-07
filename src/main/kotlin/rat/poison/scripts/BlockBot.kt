@@ -45,7 +45,7 @@ private val meAng = Vector()
 private val closestPos = Vector()
 private const val forEntsId = "blockbot"
 fun blockBot() = every(2, inGameCheck = true) {
-    if (!curSettings.bool["BLOCK_BOT"] || !keyPressed(curSettings.int["BLOCK_BOT_KEY"])) {
+    if (!curSettings.bool["BLOCK_BOT"] || !keybindEval("BLOCK_BOT_KEY")) {
         unPress()
         return@every
     }

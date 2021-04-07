@@ -15,6 +15,7 @@ import rat.poison.utils.common.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.common.inGame
 import rat.poison.utils.keyPressed
+import rat.poison.utils.keybindEval
 
 var inTrigger = false
 private var triggerShots = 0
@@ -29,7 +30,7 @@ fun triggerBot() = every(5, inGameCheck = true) {
     }
 
     //Trigger key check
-    if (curSettings.bool["TRIGGER_ENABLE_KEY"] && !keyPressed(curSettings.int["TRIGGER_KEY"])) {
+    if (curSettings.bool["TRIGGER_ENABLE_KEY"] && !keybindEval("TRIGGER_KEY")) {
         inTrigger = false
         triggerShots = 0
         return@every

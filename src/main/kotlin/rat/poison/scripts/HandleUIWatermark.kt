@@ -4,13 +4,15 @@ import org.jire.arrowhead.keyPressed
 import rat.poison.BRANCH
 import rat.poison.curSettings
 import rat.poison.overlay.App
+import rat.poison.ui.text
+import rat.poison.utils.keyEvalMap
 import java.util.Calendar
 import kotlin.text.StringBuilder
 
 //TODO hey redo this or smthn sexual
 
 //Builds from UI class VisBindTableCustom.kt
-val keybindNames = mutableListOf<Pair<String, String>>()
+//val keybindNames = mutableListOf<Pair<String, String>>()
 private val concatSb = StringBuilder()
 
 fun handleUIWatermark() = App {
@@ -25,10 +27,11 @@ private val stringList = StringBuilder()
 fun getKeybinds(): StringBuilder {
     stringList.clear()
 
-    for (key in keybindNames) {
-        if (keyPressed(curSettings.int[key.second])) {
-            stringList.append(key.first).appendLine(" [Holding]")
+    keyEvalMap.forEach {
+        if (it.value.third) { //Active
+            stringList.append(it.key).appendLine(" ${it.value.first.text()}")
         }
+
     }
 
     return stringList

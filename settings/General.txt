@@ -92,9 +92,11 @@ TEAMMATES_ARE_ENEMIES = false
 //VK Key Code (http://cherrytree.at/misc/vk.htm), enables aimbot when held
 //Default key is MOUSE_4
 FORCE_AIM_KEY = 5
+FORCE_AIM_KEY_TYPE = ON_HOTKEY
 
 //Enables specific bone when held
 FORCE_AIM_BONE_KEY = 6
+FORCE_AIM_BONE_KEY_TYPE = ON_HOTKEY
 
 //Always force aim if within FOV
 FORCE_AIM_ALWAYS = false
@@ -126,3 +128,8 @@ KEYBINDS_ALPHA = 1.0
 PISTOL_AIM_AFTER_SHOTS = 0
 SHOTGUN_AIM_AFTER_SHOTS = 0
 SNIPER_AIM_AFTER_SHOTS = 0
+
+//The dont touch rn
+MENU_KEY_TYPE = ON_HOTKEY
+VISUALS_TOGGLE_KEY_TYPE = ON_HOTKEY
+AIM_TOGGLE_KEY_TYPE = ON_HOTKEY

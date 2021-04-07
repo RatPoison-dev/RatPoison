@@ -1,33 +1,27 @@
 package rat.poison.ui.uiElements.binds
 
-import com.badlogic.gdx.Input
-import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.scenes.scene2d.Actor
-import com.badlogic.gdx.scenes.scene2d.InputEvent
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
-import com.kotcrab.vis.ui.widget.VisLabel
+import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.VisTextButton
-import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.curSettings
 import rat.poison.overlay.App.keyProcessor
-import rat.poison.overlay.App.menuStage
-import rat.poison.ui.KeyProcessorListener
-import rat.poison.ui.changed
-import rat.poison.ui.needKeyPressActor
-import rat.poison.ui.needKeyPressVar
+import rat.poison.ui.*
+import rat.poison.ui.uiElements.VisSelectBoxCustom
+import rat.poison.utils.keybindRegister
 import rat.poison.utils.vkKeycodeToString
 
-class InputBindBox(varName: String): VisTextButton("_") {
+class InputBindBox(mainText: String, varName: String): VisTextButton("_") {
+    private val textLabel = mainText
     private val variableName = varName
     private val keyListener = KeyProcessorListener()
 
     var contextMenuOpen = false
-    val contextMenu = ContextMenu(this)
+    private lateinit var contextMenu: ContextMenu
 
     init {
-        keyProcessor.listener = keyListener
+        initContextTable()
 
-        addListener(TestListener(this))
+        keyProcessor.listener = keyListener
+        addListener(RightClickListener { onRightClick() })
 
         update()
         changed { _, _ ->
@@ -43,58 +37,25 @@ class InputBindBox(varName: String): VisTextButton("_") {
     fun update() {
         setText(vkKeycodeToString(curSettings.int[variableName]))
     }
-}
 
-private class TestListener(var the: InputBindBox): ClickListener() {
-    val actor = the
+    private fun onRightClick() {
+        contextMenuOpen = contextMenu.open()
+    }
 
-    override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
-        if (button == Input.Buttons.RIGHT) {
-            if (!actor.contextMenuOpen) {
-                val pos = actor.realPos()
+    private fun initContextTable() {
+        val contextTable = VisTable(false)
 
-                menuStage.addActor(actor.contextMenu)
-                actor.contextMenu.setPosition(pos.x + actor.width, pos.y)
+        val keybindTypeSelectBox = VisSelectBoxCustom("Key Type", "${variableName}_TYPE", false, textWidth = 75F, boxWidth = 75F, items = arrayOf("ON_HOTKEY", "OFF_HOTKEY", "TOGGLE", "ALWAYS_ON"))
 
-                actor.contextMenuOpen = true
-            } else {
-                actor.contextMenu.remove()
-                actor.contextMenuOpen = false
-            }
+        keybindTypeSelectBox.changed { _, _ ->
+            curSettings["${variableName}_TYPE"] = keybindTypeSelectBox.selected
+            keybindRegister(variableName, curSettings.int[variableName])
         }
 
-        return super.touchDown(event, x, y, pointer, button)
+        contextTable.apply {
+            add(keybindTypeSelectBox).left()
+        }
+
+        contextMenu = ContextMenu(this, contextTable, 150F, 150F, textLabel)
     }
-}
-
-//TODO border style...
-class ContextMenu(var actor: Actor): VisWindow("Context") {
-    private val parentActor = actor as InputBindBox
-
-    init {
-        addCloseButton()
-
-        add(VisLabel("the"))
-    }
-
-    override fun close() {
-        parentActor.contextMenuOpen = false
-
-        super.close()
-    }
-}
-
-fun Actor.realPos(): Vector2 { //fuck nigga gon add me up
-    val v2 = Vector2()
-
-    var parent: Actor = this
-
-    while (parent.parent != null) {
-        v2.x += parent.x
-        v2.y += parent.y
-
-        parent = parent.parent
-    }
-
-    return v2
 }

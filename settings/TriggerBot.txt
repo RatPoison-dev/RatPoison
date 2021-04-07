@@ -69,3 +69,4 @@ TRIGGER_ENABLE_KEY = true
 //VK Key Code (http://cherrytree.at/misc/vk.htm), enables bone trigger when held
 //Default key is F
 TRIGGER_KEY = 69
+TRIGGER_KEY_TYPE = ON_HOTKEY

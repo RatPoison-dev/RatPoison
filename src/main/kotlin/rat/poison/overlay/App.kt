@@ -48,10 +48,11 @@ import kotlin.math.min
 import kotlin.system.measureNanoTime
 
 var opened = false
+
+//exceptions to la rule
 var overlayMenuKey = ObservableBoolean({ keyPressed(curSettings.int["MENU_KEY"]) })
 var toggleAimKey = ObservableBoolean({ keyPressed(curSettings.int["AIM_TOGGLE_KEY"]) })
 var visualsToggleKey = ObservableBoolean({ keyPressed(curSettings.int["VISUALS_TOGGLE_KEY"]) })
-
 
 var syncTime = 0L
 var glowTime = 0L

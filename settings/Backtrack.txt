@@ -7,6 +7,7 @@ ENABLE_BACKTRACK_ON_KEY = false
 //VK Key Code (http://cherrytree.at/misc/vk.htm),
 //Default key is Mouse5
 BACKTRACK_KEY = -1
+BACKTRACK_KEY_TYPE = ON_HOTKEY
 
 //Show points
 BACKTRACK_VISUALIZE = false

@@ -9,6 +9,7 @@ import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
 import rat.poison.scripts.*
+import rat.poison.settings.AIM_KEY
 import rat.poison.settings.AUTOMATIC_WEAPONS
 import rat.poison.settings.BACKTRACK
 import rat.poison.settings.MENUTOG
@@ -37,7 +38,7 @@ fun handleFireKey() = every(1, continuous = true) {
     }
 
     when {
-        keyPressed(1) -> {
+        keyPressed(AIM_KEY) -> {
             boneTrig = false
             if (!shouldShoot) {
                 punchCheck = 0
@@ -97,7 +98,7 @@ fun fireWeapon() {
     }
 
     val backtrackOnKey = curSettings.bool["ENABLE_BACKTRACK_ON_KEY"]
-    val backtrackKeyPressed = keyPressed(curSettings.int["BACKTRACK_KEY"])
+    val backtrackKeyPressed = keybindEval("BACKTRACK_KEY")
 
     if (BACKTRACK && ((!backtrackOnKey || (backtrackOnKey && backtrackKeyPressed)))) {
         if (shouldAuto || (!shouldAuto && !didShoot) || meCurWep.automatic) {

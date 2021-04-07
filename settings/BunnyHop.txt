@@ -2,6 +2,7 @@
 ENABLE_BUNNY_HOP = false
 BHOP_HITCHANCE = 100
 ENABLE_BUNNY_HOP_KEY = 32
+ENABLE_BUNNY_HOP_KEY_TYPE = ON_HOTKEY
 
 //Enable auto strafe when bunny hopping
 //This will auto press left/right synchronizing with your mouse movement

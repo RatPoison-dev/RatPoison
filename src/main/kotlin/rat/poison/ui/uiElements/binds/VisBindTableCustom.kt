@@ -6,22 +6,16 @@ import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curSettings
-import rat.poison.scripts.keybindNames
+import rat.poison.ui.KeybindType
 
 class VisBindTableCustom(mainText: String, varName: String, keyWidth: Float = 200F, spaceRight: Float = 6F, buttonWidth: Float = 50F): VisTable(false) {
     private val textLabel = mainText
-    private val variableName = varName
     private val keyLabel = VisLabel("$textLabel:")
-    private val button = InputBindBox(varName)
+    private val button = InputBindBox(mainText, varName)
     private var hasTooltip = false
 
     init {
         update()
-
-        val pair = Pair(textLabel, variableName)
-        if (!keybindNames.contains(pair)) {
-            keybindNames.add(Pair(textLabel, variableName))
-        }
 
         if (keyWidth > 0F) {
             add(keyLabel).width(keyWidth)

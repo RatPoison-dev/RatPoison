@@ -202,7 +202,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	}
 
 	val aim = curSettings.bool["ACTIVATE_FROM_AIM_KEY"] && keyPressed(AIM_KEY)
-	val pressedForceAimKey = keyPressed(curSettings.int["FORCE_AIM_KEY"])
+	val pressedForceAimKey = keybindEval("FORCE_AIM_KEY")
 	val forceAim = pressedForceAimKey || curSettings.bool["FORCE_AIM_ALWAYS"]
 	val haveAmmo = meCurWepEnt.bullets() > 0
 

@@ -1,5 +1,6 @@
 package rat.poison.ui
 
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener
@@ -27,6 +28,21 @@ fun Actor.dragged(callback: (InputEvent, Float, Float, Int) -> Any?): DragListen
     }
     this.addListener(listener)
     return listener
+}
+
+fun Actor.realPos(): Vector2 { //fuck nigga gon add me up
+    val v2 = Vector2()
+
+    var parent: Actor = this
+
+    while (parent.parent != null) {
+        v2.x += parent.x
+        v2.y += parent.y
+
+        parent = parent.parent
+    }
+
+    return v2
 }
 
 fun splitOverrideString(curWep: String): MutableList<String> {
