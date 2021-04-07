@@ -1,9 +1,9 @@
 package rat.poison.ui.uiTabs.miscTables
 
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.ui.uiTabs.fovChangerTable
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.VisSliderCustom
+import rat.poison.ui.uiTabs.fovChangerTable
 
 class FOVChangerTable: VisTable(false) {
     val fovChanger = VisCheckBoxCustom("Fov Changer", "ENABLE_FOV_CHANGER")

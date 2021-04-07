@@ -13,8 +13,10 @@ import rat.poison.game.me
 import rat.poison.robot
 import rat.poison.scripts.aim.meDead
 import rat.poison.utils.*
+import rat.poison.utils.common.Angle
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.every
+import rat.poison.utils.common.keyPressed
 import java.awt.event.KeyEvent
 import kotlin.math.abs
 import kotlin.math.cos

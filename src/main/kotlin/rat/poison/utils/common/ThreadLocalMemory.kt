@@ -1,4 +1,4 @@
-package rat.poison.utils
+package rat.poison.utils.common
 
 import com.sun.jna.Memory
 

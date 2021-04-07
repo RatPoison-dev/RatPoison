@@ -3,10 +3,10 @@ package rat.poison.ui.uiTabs.visualsTables
 import com.badlogic.gdx.graphics.Color
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.ui.uiTabs.chamsEspTable
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.VisColorPickerCustom
 import rat.poison.ui.uiElements.VisSliderCustom
+import rat.poison.ui.uiTabs.chamsEspTable
 
 class ChamsEspTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here

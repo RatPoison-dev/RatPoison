@@ -19,9 +19,9 @@ import rat.poison.game.netvars.NetVarOffsets.m_nFallbackStatTrak
 import rat.poison.game.offsets.ClientOffsets.dwEntityList
 import rat.poison.skSettings
 import rat.poison.utils.common.every
+import rat.poison.utils.common.shouldPostProcess
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.toSkinWeaponClass
-import rat.poison.utils.common.shouldPostProcess
 
 //https://github.com/0xf1a/xSkins
 

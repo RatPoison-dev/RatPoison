@@ -14,7 +14,7 @@ import rat.poison.game.netvars.NetVarOffsets.vecViewOffset
 import rat.poison.game.offsets.ClientOffsets.bDormant
 import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.game.offsets.ClientOffsets.pStudioHdr
-import rat.poison.utils.Angle
+import rat.poison.utils.common.Angle
 import rat.poison.utils.common.Vector
 import rat.poison.utils.extensions.uint
 

@@ -17,10 +17,7 @@ import rat.poison.settings.CLIENT_MODULE_NAME
 import rat.poison.settings.ENGINE_MODULE_NAME
 import rat.poison.settings.PROCESS_ACCESS_FLAGS
 import rat.poison.settings.PROCESS_NAME
-import rat.poison.utils.*
-import rat.poison.utils.common.every
-import rat.poison.utils.common.inBackground
-import rat.poison.utils.common.inFullscreen
+import rat.poison.utils.common.*
 import rat.poison.utils.natives.CUser32
 import kotlin.system.exitProcess
 

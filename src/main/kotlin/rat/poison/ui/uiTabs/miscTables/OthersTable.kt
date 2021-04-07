@@ -12,13 +12,13 @@ import rat.poison.overlay.App.assetManager
 import rat.poison.overlay.opened
 import rat.poison.scripts.writeSpoof
 import rat.poison.ui.changed
-import rat.poison.ui.uiTabs.ListAdapter
-import rat.poison.ui.uiTabs.miscVisualsTable
-import rat.poison.ui.uiTabs.othersTable
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.VisSliderCustom
 import rat.poison.ui.uiElements.binds.VisBindTableCustom
 import rat.poison.ui.uiRefreshing
+import rat.poison.ui.uiTabs.ListAdapter
+import rat.poison.ui.uiTabs.miscVisualsTable
+import rat.poison.ui.uiTabs.othersTable
 import rat.poison.utils.generalUtil.boolToStr
 import rat.poison.utils.saving
 import java.io.File

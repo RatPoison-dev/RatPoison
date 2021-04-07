@@ -6,7 +6,9 @@ import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.robot
 import rat.poison.utils.*
+import rat.poison.utils.common.Angle
 import rat.poison.utils.common.Vector
+import rat.poison.utils.common.distanceTo
 import rat.poison.utils.common.every
 import java.awt.event.KeyEvent
 import kotlin.math.atan2

@@ -4,7 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.overlay.App
-import rat.poison.ui.uiElements.binds.InputBindBox
 
 //TODO border style...
 class ContextMenu(var actor: Actor, var table: VisTable, width: Float = 100F, height: Float = 100F, title: String): VisWindow(title) {

@@ -2,10 +2,10 @@ package rat.poison.ui.uiTabs.visualsTables
 
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.ui.uiTabs.glowEspTable
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.VisColorPickerCustom
 import rat.poison.ui.uiElements.VisSelectBoxCustom
+import rat.poison.ui.uiTabs.glowEspTable
 
 class GlowEspTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here

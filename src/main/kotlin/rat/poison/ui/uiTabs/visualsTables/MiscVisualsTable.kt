@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Color
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curSettings
-import rat.poison.ui.uiTabs.miscVisualsTable
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.VisColorPickerCustom
 import rat.poison.ui.uiElements.VisSliderCustom
+import rat.poison.ui.uiTabs.miscVisualsTable
 import rat.poison.ui.uiWindows.visualsTab
 
 class MiscVisualsTable: VisTable(false) {

@@ -13,7 +13,7 @@ import rat.poison.scripts.aim.meCurWepEnt
 import rat.poison.scripts.aim.meDead
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.every
-import rat.poison.utils.normalize
+import rat.poison.utils.common.normalize
 
 private val lastAppliedRCS = Vector()
 private val punchVec = Vector()

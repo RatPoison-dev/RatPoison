@@ -1,13 +1,9 @@
 package rat.poison.scripts
 
-import org.jire.arrowhead.keyPressed
 import rat.poison.BRANCH
-import rat.poison.curSettings
 import rat.poison.overlay.App
-import rat.poison.ui.text
 import rat.poison.utils.keyEvalMap
-import java.util.Calendar
-import kotlin.text.StringBuilder
+import java.util.*
 
 //TODO hey redo this or smthn sexual
 
@@ -15,8 +11,10 @@ import kotlin.text.StringBuilder
 //val keybindNames = mutableListOf<Pair<String, String>>()
 private val concatSb = StringBuilder()
 
+private val calendar = Calendar.getInstance()
+
 fun handleUIWatermark() = App {
-    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = System.currentTimeMillis()
     uiWatermark.keybindText.setText(getKeybinds())
     uiWatermark.watermarkText.setText(concatSb.clear().append("RatPoison [").append(BRANCH).append("] - ").append(calendar.get(Calendar.HOUR_OF_DAY)).append(":").append(calendar.get(Calendar.MINUTE)).append(":").append(calendar.get(Calendar.SECOND)))
     //the uh the fuck the uh % usage moment the
@@ -29,10 +27,8 @@ fun getKeybinds(): StringBuilder {
 
     keyEvalMap.forEach {
         if (it.value.third) { //Active
-            stringList.append(it.key).appendLine(" ${it.value.first.text()}")
+            stringList.append(it.key).append(" ").appendLine(it.value.first.prettyPrint)
         }
-
     }
-
     return stringList
 }

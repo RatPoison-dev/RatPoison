@@ -3,11 +3,11 @@ package rat.poison.ui.uiTabs.visualsTables
 import com.badlogic.gdx.graphics.Color
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.ui.uiTabs.boxEspTable
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.VisColorPickerCustom
 import rat.poison.ui.uiElements.VisSelectBoxCustom
 import rat.poison.ui.uiElements.VisSliderCustom
+import rat.poison.ui.uiTabs.boxEspTable
 
 //Swap VisSelectBoxCustom to showText false is mainText is " "
 class BoxEspTable: VisTable(false) {

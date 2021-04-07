@@ -7,7 +7,6 @@ import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.BRANCH
 import rat.poison.curSettings
-import java.lang.Math.abs
 
 class UIWatermark: VisWindow("", "watermark") {
     val table = VisTable(false)

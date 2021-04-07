@@ -7,10 +7,10 @@ import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curSettings
 import rat.poison.ui.changed
-import rat.poison.ui.uiTabs.footStepsEspTable
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.VisColorPickerCustom
 import rat.poison.ui.uiElements.VisSliderCustom
+import rat.poison.ui.uiTabs.footStepsEspTable
 
 val footstepItems = arrayOf("TEXT", "CIRCLE")
 

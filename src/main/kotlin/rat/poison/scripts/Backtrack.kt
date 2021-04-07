@@ -16,12 +16,12 @@ import rat.poison.game.offsets.EngineOffsets.dwClientState_LastOutgoingCommand
 import rat.poison.game.offsets.EngineOffsets.dwGlobalVars
 import rat.poison.game.offsets.EngineOffsets.dwbSendPackets
 import rat.poison.scripts.aim.*
-import rat.poison.utils.Angle
 import rat.poison.utils.Structs.*
+import rat.poison.utils.common.Angle
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.every
+import rat.poison.utils.common.threadLocalPointer
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.threadLocalPointer
 import kotlin.math.abs
 import kotlin.math.atan
 import kotlin.math.tan
@@ -58,6 +58,8 @@ fun setupBacktrack() = every(4, true, inGameCheck = true) {
     constructRecords()
 }
 
+private const val inputMemorySize = 253
+private val inputMemory = threadLocalPointer(inputMemorySize)
 fun attemptBacktrack(): Boolean {
     if (((curSettings.bool["BACKTRACK_SPOTTED"] && bestBacktrackTarget.spotted()) || !curSettings.bool["BACKTRACK_SPOTTED"]) && bestBacktrackTarget > 0L && haveGvars) {
         inBacktrack = true
@@ -67,8 +69,9 @@ fun attemptBacktrack(): Boolean {
 
         val curSequenceNumber = csgoEXE.int(clientState + dwClientState_LastOutgoingCommand) + 1
         sendPacket(false)
-
-        val input = memToInput(csgoEXE.read(clientDLL.address + dwInput, 253)!!)
+        val inputMemory = inputMemory.get()
+        csgoEXE.read(clientDLL.address + dwInput, inputMemory, inputMemorySize)
+        val input = memToInput(inputMemory)
 
         val userCMDptr = input.pCommands + (curSequenceNumber % 150) * 0x64
         val verifiedUserCMDptr = input.pVerifiedCommands + (curSequenceNumber % 150) * 0x68

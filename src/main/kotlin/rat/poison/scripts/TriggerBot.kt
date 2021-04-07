@@ -12,9 +12,9 @@ import rat.poison.scripts.aim.*
 import rat.poison.settings.*
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.every
-import rat.poison.utils.extensions.uint
 import rat.poison.utils.common.inGame
-import rat.poison.utils.keyPressed
+import rat.poison.utils.common.keyPressed
+import rat.poison.utils.extensions.uint
 import rat.poison.utils.keybindEval
 
 var inTrigger = false

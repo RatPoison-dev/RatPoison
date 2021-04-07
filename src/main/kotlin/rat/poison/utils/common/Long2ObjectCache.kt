@@ -1,4 +1,4 @@
-package rat.poison.utils
+package rat.poison.utils.common
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap
 

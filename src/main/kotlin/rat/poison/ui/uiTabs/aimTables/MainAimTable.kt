@@ -2,12 +2,12 @@ package rat.poison.ui.uiTabs.aimTables
 
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.ui.changed
-import rat.poison.ui.uiTabs.visualsTables.updateDisableDrawFOV
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.VisInputFieldCustom
 import rat.poison.ui.uiElements.VisSelectBoxCustom
 import rat.poison.ui.uiElements.VisSliderCustom
 import rat.poison.ui.uiElements.binds.VisBindTableCustom
+import rat.poison.ui.uiTabs.visualsTables.updateDisableDrawFOV
 import rat.poison.ui.uiWindows.aimTab
 
 class MainAimTable: VisTable(false) {

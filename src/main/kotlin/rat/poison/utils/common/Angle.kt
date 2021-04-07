@@ -1,9 +1,8 @@
-package rat.poison.utils
+package rat.poison.utils.common
 
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.math.Quaternion
-import rat.poison.utils.common.Vector
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin

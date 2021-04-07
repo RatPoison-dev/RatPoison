@@ -24,11 +24,11 @@ import rat.poison.settings.MENUTOG
 import rat.poison.ui.uiTabs.nadeHelperLoadedFileStr
 import rat.poison.ui.uiWindows.nadeHelperTab
 import rat.poison.utils.common.Vector
+import rat.poison.utils.common.inGame
+import rat.poison.utils.common.threadLocalPointer
 import rat.poison.utils.generalUtil.cToDouble
 import rat.poison.utils.generalUtil.cToFloat
 import rat.poison.utils.generalUtil.toMatrix4
-import rat.poison.utils.common.inGame
-import rat.poison.utils.threadLocalPointer
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files

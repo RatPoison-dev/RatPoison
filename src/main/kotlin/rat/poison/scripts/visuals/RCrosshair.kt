@@ -12,7 +12,6 @@ import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.utils.common.Vector
-import rat.poison.utils.generalUtil.cToFloat
 import rat.poison.utils.common.inGame
 import java.lang.Math.toRadians
 import kotlin.math.*
@@ -57,8 +56,8 @@ internal fun rcrosshair() = App {
     shapeRenderer.set(ShapeRenderer.ShapeType.Filled)
     shapeRenderer.color = curSettings.colorGDX["RCROSSHAIR_COLOR"]
 
-    val rCrosshairBuilderRes = curSettings["RCROSSHAIR_BUILDER_RESOLUTION"].toInt()
-    val rCrosshairBoxSize = curSettings["RCROSSHAIR_BUILDER_SIZE"].cToFloat()
+    val rCrosshairBuilderRes = curSettings.int["RCROSSHAIR_BUILDER_RESOLUTION"]
+    val rCrosshairBoxSize = curSettings.float["RCROSSHAIR_BUILDER_SIZE"]
     val halfXY = (rCrosshairBoxSize * rCrosshairBuilderRes) / 2F
 
     for (i in 0 until rCrosshairBuilderRes) { //row

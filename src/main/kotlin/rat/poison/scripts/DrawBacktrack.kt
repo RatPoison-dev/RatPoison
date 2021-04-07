@@ -11,7 +11,6 @@ import rat.poison.scripts.visuals.lineThroughSmoke
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.inGame
-import rat.poison.utils.keyPressed
 import rat.poison.utils.keybindEval
 
 private val minHeadPos = Vector()

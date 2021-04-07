@@ -14,10 +14,7 @@ import rat.poison.settings.AUTOMATIC_WEAPONS
 import rat.poison.settings.BACKTRACK
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.*
-import rat.poison.utils.common.every
-import rat.poison.utils.common.inBackground
-import rat.poison.utils.common.inFullscreen
-import rat.poison.utils.common.inGame
+import rat.poison.utils.common.*
 
 private var shouldShoot = false
 var didShoot = false

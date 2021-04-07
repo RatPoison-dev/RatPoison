@@ -1,10 +1,10 @@
 package rat.poison.ui.uiTabs.miscTables
 
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.ui.uiTabs.movementTable
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.VisSliderCustom
 import rat.poison.ui.uiElements.binds.VisBindTableCustom
+import rat.poison.ui.uiTabs.movementTable
 
 class MovementTable: VisTable(false) {
     val bunnyHop = VisCheckBoxCustom("Bunny Hop", "ENABLE_BUNNY_HOP")

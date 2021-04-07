@@ -10,7 +10,7 @@ import rat.poison.overlay.App.shapeRenderer
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.inGame
-import rat.poison.utils.normalize
+import rat.poison.utils.common.normalize
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.hypot

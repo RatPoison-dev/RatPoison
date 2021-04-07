@@ -1,8 +1,8 @@
 package rat.poison.ui.uiTabs.miscTables
 
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.ui.uiTabs.bombTable
 import rat.poison.ui.uiElements.VisCheckBoxCustom
+import rat.poison.ui.uiTabs.bombTable
 
 class BombTable: VisTable(false) {
     val bombTimer = VisCheckBoxCustom("Bomb Timer", "ENABLE_BOMB_TIMER")

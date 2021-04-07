@@ -1,4 +1,4 @@
-package rat.poison.utils
+package rat.poison.utils.common
 
 inline fun <R> after(duration: Long = 1000, crossinline body: () -> R) = Thread {
     if (!Thread.interrupted()) {

@@ -6,12 +6,12 @@ import com.kotcrab.vis.ui.widget.VisCheckBox
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curSettings
 import rat.poison.ui.changed
-import rat.poison.ui.uiTabs.boneCategories
-import rat.poison.ui.uiTabs.categorySelected
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.VisSelectBoxCustom
 import rat.poison.ui.uiElements.aim.AimVisCheckBox
 import rat.poison.ui.uiElements.aim.AimVisSlider
+import rat.poison.ui.uiTabs.boneCategories
+import rat.poison.ui.uiTabs.categorySelected
 import rat.poison.utils.generalUtil.boolToStr
 
 class LegitBotTable: VisTable(false) {

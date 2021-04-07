@@ -6,8 +6,8 @@ import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.offsets.ClientOffsets.dwViewMatrix
 import rat.poison.utils.common.Vector
+import rat.poison.utils.common.threadLocalPointer
 import rat.poison.utils.extensions.getFloatArray
-import rat.poison.utils.threadLocalPointer
 
 val w2sViewMatrix = Array(4) { DoubleArray(4) }
 private val DEFAULT_VECTOR = Vector()

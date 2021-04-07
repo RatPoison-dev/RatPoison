@@ -15,8 +15,8 @@ import rat.poison.ui.changed
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.VisSliderCustom
 import rat.poison.ui.uiElements.binds.VisBindTableCustom
-import rat.poison.ui.uiWindows.optionsTab
 import rat.poison.ui.uiRefreshing
+import rat.poison.ui.uiWindows.optionsTab
 
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)

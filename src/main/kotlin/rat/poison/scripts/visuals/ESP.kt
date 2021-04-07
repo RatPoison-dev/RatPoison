@@ -7,10 +7,10 @@ import rat.poison.game.Color
 import rat.poison.game.entity.Entity
 import rat.poison.game.entity.EntityType
 import rat.poison.game.netvars.NetVarOffsets
+import rat.poison.utils.common.threadLocalPointer
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.extensions.upper
 import rat.poison.utils.generalUtil.toInt
-import rat.poison.utils.threadLocalPointer
 
 var espTARGET = -1L
 

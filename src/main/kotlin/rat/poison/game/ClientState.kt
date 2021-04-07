@@ -2,7 +2,7 @@ package rat.poison.game
 
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.offsets.EngineOffsets.dwViewAngles
-import rat.poison.utils.Angle
+import rat.poison.utils.common.Angle
 import rat.poison.utils.common.Vector
 
 typealias ClientState = Long

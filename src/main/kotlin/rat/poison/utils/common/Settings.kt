@@ -21,6 +21,12 @@ open class Settings {
         return r
     }
 
+    operator fun set(key: String, value: String): Any? {
+        val r = savedValues.put(key, value)
+        efficient.update(key)
+        return r
+    }
+
     val efficient = EfficientSettings(this)
 
     // Kotlin compiler bug so can't use this yet

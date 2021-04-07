@@ -11,8 +11,8 @@ import rat.poison.curSettings
 import rat.poison.overlay.opened
 import rat.poison.ui.changed
 import rat.poison.ui.uiTabs.aimTables.*
-import rat.poison.ui.uiWindows.aimTab
 import rat.poison.ui.uiUpdate
+import rat.poison.ui.uiWindows.aimTab
 
 var categorySelected = "PISTOL"
 val gunCategories = arrayOf("PISTOL", "RIFLE", "SMG", "SNIPER", "SHOTGUN")

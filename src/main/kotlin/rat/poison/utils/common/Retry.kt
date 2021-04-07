@@ -1,4 +1,4 @@
-package rat.poison.utils
+package rat.poison.utils.common
 
 inline fun <R> retry(duration: Long = 1000, noinline exceptionHandler: ((Throwable) -> Unit)? = null, body: () -> R) {
 	while (!Thread.interrupted()) {

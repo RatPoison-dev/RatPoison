@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Color
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curSettings
-import rat.poison.ui.uiTabs.nadesTable
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.VisColorPickerCustom
 import rat.poison.ui.uiElements.VisSliderCustom
+import rat.poison.ui.uiTabs.nadesTable
 
 class NadesTable: VisTable(false) {
     val nadeTracer = VisCheckBoxCustom("Nade Tracer", "NADE_TRACER", false)

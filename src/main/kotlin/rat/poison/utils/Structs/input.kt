@@ -6,13 +6,13 @@ import org.jire.arrowhead.Struct
 import rat.poison.utils.common.Vector
 
 //All we need baby
+private val input = Input()
 fun memToInput(mem: Memory): Input {
-    val Input = Input()
 
-    Input.pCommands = input_pCommands(mem)
-    Input.pVerifiedCommands = input_pVerifiedCommands(mem)
+    input.pCommands = input_pCommands(mem)
+    input.pVerifiedCommands = input_pVerifiedCommands(mem)
 
-    return Input
+    return input
 }
 
 class Input: Struct(), Structure.ByReference {

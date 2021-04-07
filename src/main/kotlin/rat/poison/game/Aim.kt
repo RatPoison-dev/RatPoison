@@ -1,20 +1,23 @@
 package rat.poison.game
 
 import com.badlogic.gdx.math.MathUtils.clamp
-import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.Player
 import rat.poison.game.entity.position
 import rat.poison.game.entity.punch
 import rat.poison.game.netvars.NetVarOffsets.vecViewOffset
 import rat.poison.settings.*
-import rat.poison.utils.*
+import rat.poison.utils.common.Angle
 import rat.poison.utils.common.Vector
+import rat.poison.utils.common.normalize
 import rat.poison.utils.generalUtil.toInt
+import rat.poison.utils.randBoolean
+import rat.poison.utils.randDouble
 import java.lang.Math.toDegrees
 import kotlin.math.atan
 import kotlin.math.atan2
 import kotlin.math.sqrt
+
 private val positionVector = ThreadLocal.withInitial { Vector() }
 private val punchVector = ThreadLocal.withInitial { Vector() }
 private val ang2 = ThreadLocal.withInitial { Vector() }

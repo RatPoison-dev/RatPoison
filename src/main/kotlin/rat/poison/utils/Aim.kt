@@ -1,7 +1,6 @@
 package rat.poison.utils
 
 import com.sun.jna.platform.win32.WinDef.POINT
-import rat.poison.curSettings
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.CSGO.gameX
@@ -9,8 +8,7 @@ import rat.poison.game.CSGO.gameY
 import rat.poison.game.clientState
 import rat.poison.game.setAngle
 import rat.poison.settings.*
-import rat.poison.utils.common.HumanMouse
-import rat.poison.utils.common.Vector
+import rat.poison.utils.common.*
 import rat.poison.utils.extensions.refresh
 import kotlin.math.round
 

@@ -41,8 +41,8 @@ import rat.poison.scripts.gvars
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.SERVER_TICK_RATE
 import rat.poison.utils.common.Vector
+import rat.poison.utils.common.threadLocalPointer
 import rat.poison.utils.extensions.uint
-import rat.poison.utils.threadLocalPointer
 import java.util.regex.Pattern
 import kotlin.math.cos
 import kotlin.math.sin

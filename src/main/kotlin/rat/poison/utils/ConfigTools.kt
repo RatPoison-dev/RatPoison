@@ -8,8 +8,8 @@ import rat.poison.*
 import rat.poison.overlay.App
 import rat.poison.overlay.opened
 import rat.poison.ui.uiTabs.updateWindows
-import rat.poison.ui.uiWindows.configsTab
 import rat.poison.ui.uiUpdate
+import rat.poison.ui.uiWindows.configsTab
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.loadSkinSettings
 import java.io.File

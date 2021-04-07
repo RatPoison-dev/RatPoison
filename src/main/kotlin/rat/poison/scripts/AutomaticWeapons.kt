@@ -1,7 +1,6 @@
 package rat.poison.scripts
 
 import com.badlogic.gdx.math.MathUtils.clamp
-import rat.poison.curSettings
 import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.scripts.aim.meCurWep

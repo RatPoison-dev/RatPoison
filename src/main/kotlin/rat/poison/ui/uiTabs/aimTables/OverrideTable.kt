@@ -7,9 +7,10 @@ import rat.poison.DEFAULT_OWEAPON_STR
 import rat.poison.curSettings
 import rat.poison.oWeapon
 import rat.poison.ui.*
-import rat.poison.ui.uiTabs.*
 import rat.poison.ui.uiElements.VisCheckBoxCustom
-import rat.poison.ui.uiElements.override.*
+import rat.poison.ui.uiElements.override.OverrideVisCheckBoxCustom
+import rat.poison.ui.uiElements.override.OverrideVisSliderCustom
+import rat.poison.ui.uiTabs.*
 import rat.poison.utils.generalUtil.toGdxArray
 import rat.poison.utils.generalUtil.toWeaponClass
 

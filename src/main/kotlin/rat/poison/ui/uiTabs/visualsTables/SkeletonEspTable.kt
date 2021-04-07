@@ -2,8 +2,8 @@ package rat.poison.ui.uiTabs.visualsTables
 
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
-import rat.poison.ui.uiTabs.skeletonEspTable
 import rat.poison.ui.uiElements.VisCheckBoxCustom
+import rat.poison.ui.uiTabs.skeletonEspTable
 
 //Swap VisSelectBoxCustom to showText false is mainText is " "
 class SkeletonEspTable: VisTable(false) {
