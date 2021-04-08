@@ -24,10 +24,11 @@ private val stringList = StringBuilder()
 //the the uh fhthe uht htme uh the mf uh the tuhthut
 fun getKeybinds(): StringBuilder {
     stringList.clear()
-
-    keyEvalMap.forEach {
-        if (it.value.third) { //Active
-            stringList.append(it.key).append(" ").appendLine(it.value.first.prettyPrint)
+    for (i in 0 until keyEvalMap.keys.size) {
+        val value = keyEvalMap.values[i]
+        val key = keyEvalMap.keys[i]
+        if (value.third) { //Active
+            stringList.append(key).append(" ").appendLine(value.first.prettyPrint)
         }
     }
     return stringList

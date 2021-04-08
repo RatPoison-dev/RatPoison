@@ -26,7 +26,7 @@ import rat.poison.settings.*
 import rat.poison.utils.*
 import rat.poison.utils.common.*
 import rat.poison.utils.extensions.uint
-import java.lang.Float
+import java.lang.Float.intBitsToFloat
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.properties.Delegates
 
@@ -109,7 +109,7 @@ fun updateCursorEnable() { //Call when needed
 }
 
 var toneMapController = 0L
-
+var constructingEntities = false
 private val positionVector = Vector()
 fun constructEntities() = every(500, continuous = true) {
     updateCursorEnable()
@@ -126,7 +126,7 @@ fun constructEntities() = every(500, continuous = true) {
     if (shouldReset()) reset()
 
     var dzMode = false
-
+    constructingEntities = true
     for (glowIndex in 0..glowObjectCount) {
         val glowAddress = glowObject + (glowIndex * GLOW_OBJECT_SIZE)
         val entity = csgoEXE.uint(glowAddress)
@@ -177,7 +177,7 @@ fun constructEntities() = every(500, continuous = true) {
             }
         }
     }
-
+    constructingEntities = false
     DANGER_ZONE = dzMode
-    GAME_SENSITIVITY = Float.intBitsToFloat((clientDLL.uint(dwSensitivity) xor (clientDLL.address + dwSensitivityPtr)).toInt()).toDouble()
+    GAME_SENSITIVITY = intBitsToFloat((clientDLL.uint(dwSensitivity) xor (clientDLL.address + dwSensitivityPtr)).toInt()).toDouble()
 }

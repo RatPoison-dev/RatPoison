@@ -27,7 +27,7 @@ import kotlin.math.atan
 import kotlin.math.tan
 
 var btRecords = Array(64) { Array(13) { BacktrackTable() } }
-data class BacktrackTable(var simtime: Float = 0f, var headPos: Angle = Angle(), var absPos: Angle = Angle(), var alpha: Float = 100f)
+data class BacktrackTable(var simtime: Float = 0f, var headPos: Angle = Angle(), var absPos: Angle = Angle(), var alpha: Float = 100f, var entity: Long = -1)
 
 var bestBacktrackTarget = -1L
 
@@ -60,6 +60,12 @@ fun setupBacktrack() = every(4, true, inGameCheck = true) {
 
 private const val inputMemorySize = 253
 private val inputMemory = threadLocalPointer(inputMemorySize)
+private const val oldUserCmdMemorySize = 100
+private const val newUserCmdMemorySize = 100
+private val oldUserCmdMemory = threadLocalPointer(oldUserCmdMemorySize)
+private val newUserCMDMemory = threadLocalPointer(newUserCmdMemorySize)
+private val oldUserCMD = UserCMD()
+private val newUserCMD = UserCMD()
 fun attemptBacktrack(): Boolean {
     if (((curSettings.bool["BACKTRACK_SPOTTED"] && bestBacktrackTarget.spotted()) || !curSettings.bool["BACKTRACK_SPOTTED"]) && bestBacktrackTarget > 0L && haveGvars) {
         inBacktrack = true
@@ -82,8 +88,12 @@ fun attemptBacktrack(): Boolean {
         }
 
         //Check invalid?
-        val oldUserCMD = memToUserCMD(csgoEXE.read(oldUserCMDptr, 100)!!)
-        var userCMD = memToUserCMD(csgoEXE.read(userCMDptr, 100)!!)
+        val oldUserCmdMemory = oldUserCmdMemory.get()
+        csgoEXE.read(oldUserCMDptr, oldUserCmdMemory, oldUserCmdMemorySize)
+        val oldUserCMD = memToUserCMD(oldUserCmdMemory, oldUserCMD)
+        val newUserCmdMemory = newUserCMDMemory.get()
+        csgoEXE.read(oldUserCMDptr, newUserCmdMemory, newUserCmdMemorySize)
+        var userCMD = memToUserCMD(newUserCmdMemory, newUserCMD)
 
         userCMD = fixUserCMD(userCMD, oldUserCMD)
 
@@ -175,6 +185,7 @@ fun constructRecords() {
 
             record.alpha = 100f
             record.simtime = entSimTime
+            record.entity = ent
 
             btRecords[entID][tick] = record
         }

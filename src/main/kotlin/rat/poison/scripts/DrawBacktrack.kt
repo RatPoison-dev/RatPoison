@@ -2,6 +2,7 @@ package rat.poison.scripts
 
 import com.badlogic.gdx.graphics.Color
 import rat.poison.curSettings
+import rat.poison.game.entity.dead
 import rat.poison.game.me
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
@@ -37,7 +38,7 @@ fun drawBacktrack() = App {
     if (curSettings.bool["BACKTRACK_VISUALIZE_SMOKE_CHECK"] && lineThroughSmoke(me)) return@App
 
     for (i in 0 until 63) {
-        if (btRecords[i][0].simtime == 0F) continue
+        if (btRecords[i][0].simtime == 0F || btRecords[i][0].entity.dead()) continue
 
         val minMaxIDX = getRangeRecords(i)
 

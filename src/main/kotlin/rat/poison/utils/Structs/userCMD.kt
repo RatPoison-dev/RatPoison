@@ -59,9 +59,7 @@ fun fixUserCMD(cur: UserCMD, old: UserCMD): UserCMD {
     return cur
 }
 
-fun memToUserCMD(mem: Memory): UserCMD {
-    val userCMD = UserCMD()
-
+fun memToUserCMD(mem: Memory, userCMD: UserCMD = UserCMD(), ): UserCMD {
     userCMD.ptr = cmd_pTable(mem)
     userCMD.iCmdNumber = cmd_iCmdNumber(mem)
     userCMD.iTickCount = cmd_iTickCount(mem)

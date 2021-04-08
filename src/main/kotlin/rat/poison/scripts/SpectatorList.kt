@@ -13,12 +13,12 @@ import rat.poison.ui.uiWindows.specListText
 import rat.poison.utils.common.every
 import rat.poison.utils.extensions.readIndex
 private const val id = "spectatorlist"
+private val sb = StringBuilder()
 internal fun spectatorList() = every(100, inGameCheck = true) {
     if (!curSettings.bool["SPECTATOR_LIST"] || !curSettings.bool["MENU"]) {
         return@every
     }
 
-    var spectators = ""
     var entCount = 1
 
     val playerSpecTarget = csgoEXE.readIndex(me + dwIndex)
@@ -31,8 +31,8 @@ internal fun spectatorList() = every(100, inGameCheck = true) {
             val entName = entity.name()
 
             if (entSpecTarget > -1 && entSpecTarget == playerSpecTarget) {
-                if (!spectators.contains(entName)) {
-                    spectators += "$entCount. $entName\n"
+                if (!sb.contains(entName)) {
+                    sb.append(entCount).append(". ").append(entName)
                     entCount++
                 }
             }
@@ -41,7 +41,7 @@ internal fun spectatorList() = every(100, inGameCheck = true) {
     }
 
     if (opened && haveTarget) {
-        specListText.setText(spectators)
+        specListText.setText(sb)
     }
 }
 
