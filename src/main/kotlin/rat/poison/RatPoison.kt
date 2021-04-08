@@ -25,18 +25,18 @@ import java.awt.Robot
 import java.io.File
 
 //Override Weapon
-data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = false,          var tOnShot: Boolean = false,
-                   var tFlatAim: Boolean = false,       var tPathAim: Boolean = false,          var tAimBone: List<String> = listOf(),
-                   var tForceBone: List<String> = listOf(),             var tAimFov: Float = 0F,                var tAimSpeed: Int = 0,
-                   var tAimSmooth: Float = 0F,        var tPerfectAim: Boolean = false,       var tPAimFov: Float = 1F,
-                   var tPAimChance: Int = 1,            var tScopedOnly: Boolean = false,       var tAimAfterShots: Int = 0,
+data class oWeapon(var tOverride: Boolean = false,          var tFRecoil: Boolean = false,          var tOnShot: Boolean = false,
+                   var tFlatAim: Boolean = false,           var tPathAim: Boolean = false,          var tAimBone: List<String> = listOf(),
+                   var tForceBone: List<String> = listOf(), var tAimFov: Float = 0F,                var tAimSmooth: Int = 0,
+                   var tPerfectAim: Boolean = false,        var tPAimFov: Float = 1F,               var tPAimChance: Int = 1,
+                   var tScopedOnly: Boolean = false,        var tAimAfterShots: Int = 0,
 
-                   var tBoneTrig: Boolean = false,     var tBTrigAim: Boolean = false,          var tBTrigInCross: Boolean = false,
-                   var tBTrigInFov: Boolean = false,   var tBTrigBacktrack: Boolean = false,    var tBTrigFov: Float = 0F,
-                   var tBTrigInitDelay: Int = 0,       var tBTrigPerShotDelay: Int = 0,
+                   var tBoneTrig: Boolean = false,          var tBTrigAim: Boolean = false,         var tBTrigInCross: Boolean = false,
+                   var tBTrigInFov: Boolean = false,        var tBTrigBacktrack: Boolean = false,   var tBTrigFov: Float = 0F,
+                   var tBTrigInitDelay: Int = 0,            var tBTrigPerShotDelay: Int = 0,
 
-                   var tBacktrack: Boolean = false,    var tBTMS: Int = 0,
-                   var tAutowep: Boolean = false,      var tAutowepDelay: Int = 0)
+                   var tBacktrack: Boolean = false,         var tBTMS: Int = 0,
+                   var tAutowep: Boolean = false,           var tAutowepDelay: Int = 0)
 
 //Skinned Weapon
 data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var tSeed: Int)
@@ -114,7 +114,7 @@ fun main() {
         if (dbg) { println("[DEBUG] Initializing Recoil Spectator List") }; spectatorList()
         if (dbg) { println("[DEBUG] Initializing Recoil Bomb Timer") }; bombTimer()
 
-        if (dbg) { println("[DEBUG] Initializing Recoil Crosshair") }; rcrosshair()
+        if (dbg) { println("[DEBUG] Initializing Recoil Crosshair") }; rCrosshair()
         if (dbg) { println("[DEBUG] Initializing Hit Marker") }; hitMarker()
         if (dbg) { println("[DEBUG] Initializing Nade Helper") }; nadeHelper()
         if (dbg) { println("[DEBUG] Initializing Nade Tracer") }; nadeTracer()

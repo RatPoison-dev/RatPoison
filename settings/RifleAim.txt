@@ -21,11 +21,6 @@ RIFLE_AIM_BONE = NEAREST
 //Aims at entities inside this value
 RIFLE_AIM_FOV = 10.0
 
-//Aim speed
-//MS delay between aiming steps
-//Lower is faster
-RIFLE_AIM_SPEED = 6
-
 //Aim smoothness
 //Lower is less smooth (faster snapping)
 RIFLE_AIM_SMOOTHNESS = 4.0
@@ -44,7 +39,6 @@ RIFLE_ADVANCED_SETTINGS = false
 RIFLE_AIM_RCS_X = 0.05
 RIFLE_AIM_RCS_Y = 0.05
 RIFLE_AIM_RCS_VARIATION = 0.0
-RIFLE_AIM_SPEED_DIVISOR = 1
 RIFLE_RANDOM_X_VARIATION = 0
 RIFLE_RANDOM_Y_VARIATION = 0
 RIFLE_VARIATION_DEADZONE = 0

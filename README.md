@@ -166,7 +166,7 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
     * Path aim: Mouse movement
     * Group aimbot settings (Pistol/Rifle/Sniper/Shotgun/SMG)
     * Individual aimbot settings (AK/M4/etc)
-    * Aim bone, force bone, aim on shot, speed, FOV, strictness, smoothness
+    * Aim bone, force bone, aim on shot, FOV, strictness, smoothness
     * (non-silent) Perfect aim, customizable FOV and % chance to activate
 	* Backtrack: Shoot enemies up to 200 ms back in time
 

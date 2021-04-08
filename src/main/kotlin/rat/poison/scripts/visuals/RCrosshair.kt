@@ -1,4 +1,4 @@
-package rat.poison.scripts
+package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import rat.poison.crosshairArray
@@ -17,7 +17,7 @@ import java.lang.Math.toRadians
 import kotlin.math.*
 
 private val mePunchVec = Vector()
-internal fun rcrosshair() = App {
+internal fun rCrosshair() = App {
     if (!curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
     val eRC = curSettings.bool["ENABLE_RECOIL_CROSSHAIR"]

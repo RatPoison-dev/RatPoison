@@ -10,6 +10,7 @@ import rat.poison.scripts.aim.*
 import rat.poison.settings.*
 
 private val txtString = StringBuilder()
+private val concatStringBuilder = StringBuilder()
 
 //todo bruh
 
@@ -41,8 +42,6 @@ fun drawDebug() = App {
     txtString.append(curSettings["FORCE_AIM_BONE"])
 
     txtString.append("Fov: ").appendLine(AIM_FOV)
-
-    txtString.append("Speed: ").append(AIM_SPEED)
 
     txtString.append("Smooth: ").appendLine(AIM_SMOOTHNESS)
 

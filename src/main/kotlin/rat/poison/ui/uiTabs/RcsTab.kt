@@ -20,8 +20,8 @@ class RcsTab : Tab(false, false) {
 
     val rcsType = VisSelectBoxCustom("RCS Type", "RCS_TYPE", false, true, "STABLE", "LEGACY")
 
-    val rcsSmoothingX = VisSliderCustom("RCS X Accuracy", "RCS_SMOOTHING_X", .02F, 1F, .02F, false, labelWidth = 100F, barWidth = 150F)
-    val rcsSmoothingY = VisSliderCustom("RCS Y Accuracy", "RCS_SMOOTHING_Y", .02F, 1F, .02F, false, labelWidth = 100F, barWidth = 150F)
+    val rcsSmoothingX = VisSliderCustom("X Accuracy", "RCS_SMOOTHING_X", .02F, 1F, .02F, false, labelWidth = 125F, barWidth = 125F)
+    val rcsSmoothingY = VisSliderCustom("Y Accuracy", "RCS_SMOOTHING_Y", .02F, 1F, .02F, false, labelWidth = 125F, barWidth = 125F)
 
     val rcsReturnAim = VisCheckBoxCustom("Return Aim", "RCS_RETURNAIM")
 

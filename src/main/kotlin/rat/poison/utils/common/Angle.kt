@@ -38,8 +38,14 @@ internal fun Angle.finalize(orig: Angle, smoothness: Float) {
     z = 0F
     normalize()
 
-    x = orig.x + x * smoothness
-    y = orig.y + y * smoothness
+    var smooth = smoothness
+
+    if (smooth <= 0) {
+        smooth = 1F
+    }
+
+    x = orig.x + x * smooth
+    y = orig.y + y * smooth
     normalize()
 }
 

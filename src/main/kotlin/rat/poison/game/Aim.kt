@@ -21,6 +21,8 @@ import kotlin.math.sqrt
 private val positionVector = ThreadLocal.withInitial { Vector() }
 private val punchVector = ThreadLocal.withInitial { Vector() }
 private val ang2 = ThreadLocal.withInitial { Vector() }
+
+//TODO smoke this func prolly
 fun getCalculatedAngle(player: Player, dst: Vector): Angle {
 	val ang = ang2.get()
 	val punchVector = punchVector.get()

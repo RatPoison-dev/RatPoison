@@ -30,7 +30,7 @@ private val eyeAngVec = Vector()
 fun autoThrowNade(fSpot: List<Any>, recoveredAngle: Angle) {
     eyeAng = me.eyeAngle(eyeAngVec)
     calcRes = eyeAng.distanceTo(recoveredAngle)
-    writeAim(eyeAng, recoveredAngle, curSettings.float["NADE_THROWER_SMOOTHNESS"])
+    writeAim(eyeAng, recoveredAngle, curSettings.int["NADE_THROWER_SMOOTHNESS"])
     if (calcRes < 0.1) {
         when (fSpot[5]) {
             "J+T" -> jumpAndThrow()

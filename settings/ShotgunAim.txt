@@ -21,11 +21,6 @@ SHOTGUN_AIM_BONE = NEAREST
 //Aims at entities inside this value
 SHOTGUN_AIM_FOV = 0.5
 
-//Aim speed
-//MS delay between aiming steps
-//Lower is faster
-SHOTGUN_AIM_SPEED = 10
-
 //Aim smoothness
 //Lower is less smooth (faster snapping)
 SHOTGUN_AIM_SMOOTHNESS = 5.0
@@ -41,7 +36,6 @@ SHOTGUN_ADVANCED_SETTINGS = false
 SHOTGUN_AIM_RCS_X = 0.05
 SHOTGUN_AIM_RCS_Y = 0.05
 SHOTGUN_AIM_RCS_VARIATION = 0.0
-SHOTGUN_AIM_SPEED_DIVISOR = 1
 SHOTGUN_RANDOM_X_VARIATION = 0
 SHOTGUN_RANDOM_Y_VARIATION = 0
 SHOTGUN_VARIATION_DEADZONE = 0

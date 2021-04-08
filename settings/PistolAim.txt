@@ -21,11 +21,6 @@ PISTOL_AIM_BONE = NEAREST
 //Aims at entities inside this value
 PISTOL_AIM_FOV = 2.0
 
-//Aim speed
-//MS delay between aiming steps
-//Lower is faster
-PISTOL_AIM_SPEED = 5
-
 //Aim smoothness
 //Lower is less smooth (faster snapping)
 PISTOL_AIM_SMOOTHNESS = 3.0
@@ -41,7 +36,6 @@ PISTOL_ADVANCED_SETTINGS = false
 PISTOL_AIM_RCS_X = 0.05
 PISTOL_AIM_RCS_Y = 0.05
 PISTOL_AIM_RCS_VARIATION = 0.0
-PISTOL_AIM_SPEED_DIVISOR = 1
 PISTOL_RANDOM_X_VARIATION = 0
 PISTOL_RANDOM_Y_VARIATION = 0
 PISTOL_VARIATION_DEADZONE = 0

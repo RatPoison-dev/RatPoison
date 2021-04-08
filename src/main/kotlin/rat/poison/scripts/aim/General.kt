@@ -127,10 +127,10 @@ fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Angle, curAngl
 	if (curSettings["FOV_TYPE"].replace("\"", "") == "DISTANCE" && !ovrStatic) {
 		val distance = position.distanceTo(ePos)
 
-		val dest = getCalculatedAngle(me, ePos)
+		val calcAng = realCalcAngle(me, ePos)//getCalculatedAngle(me, ePos)
 
-		val pitchDiff = abs(curAngle.x - dest.x)
-		var yawDiff = abs(curAngle.y - dest.y)
+		val pitchDiff = abs(curAngle.x - calcAng.x)
+		var yawDiff = abs(curAngle.y - calcAng.y)
 
 		if (yawDiff > 180f) {
 			yawDiff = 360f - yawDiff
@@ -180,7 +180,7 @@ private val mePos = Vector()
 private val boneVec2 = Vector()
 internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boolean,
 								  crossinline doAim: (destinationAngle: Angle,
-													  currentAngle: Angle, aimSpeed: Int, aimSpeedDivisor: Int) -> R) = every(duration) {
+													  currentAngle: Angle, smoothing: Int) -> R) = every(duration) {
 	if (!precheck()) return@every
 	if (!curSettings.bool["ENABLE_AIM"]) return@every
 
@@ -272,15 +272,14 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 
 		//bonePosition += currentTarget.positionNextTick()
 
-		val destinationAngle = getCalculatedAngle(me, bonePosition) //Rename to current rat.poison.game.angle
+		val destinationAngle = realCalcAngle(me, bonePosition)//getCalculatedAngle(me, bonePosition) //Rename to current rat.poison.game.angle
 
 		if (!perfect) {
-			destinationAngle.finalize(currentAngle, (1.1F - AIM_SMOOTHNESS / 5F)) //10.0 is max smooth value
+			destinationAngle.finalize(currentAngle, (1F - AIM_SMOOTHNESS / 100.1F))
 
-			val aimSpeedDivisor = if (AIM_ADVANCED) AIM_SPEED_DIVISOR else 1
-			doAim(destinationAngle, currentAngle, AIM_SPEED, aimSpeedDivisor)
+			doAim(destinationAngle, currentAngle, AIM_SMOOTHNESS)
 		} else {
-			doAim(destinationAngle, currentAngle, 1, 1)
+			doAim(destinationAngle, currentAngle, 1)
 		}
 	}
 }

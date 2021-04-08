@@ -28,8 +28,7 @@ class LegitBotTable: VisTable(false) {
     val forceAimBone = VisSelectBoxCustom("Force Aim Bone", "_AIM_FORCE_BONE", useCategory = true, showText = true, items = boneCategories)
 
     val aimFov = AimVisSlider("Aim FOV", "_AIM_FOV", .5F, 90F, .5F, false, 1, 200F, 200F)
-    val aimSpeed = AimVisSlider("Aim Speed", "_AIM_SPEED", 0F, 10F, 1F, true, 0, 200F, 200F)
-    val aimSmooth = AimVisSlider("Smoothness", "_AIM_SMOOTHNESS", 1F, 5F, .1F, false, 1, 200F, 200F)
+    val aimSmooth = AimVisSlider("Smoothness", "_AIM_SMOOTHNESS", 1F, 100F, 1F, true, 0, 200F, 200F)
     val aimAfterShots = AimVisSlider("Aim After #", "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true, 0, 200F, 200F)
 
     //Perfect Aim Collapsible
@@ -49,7 +48,6 @@ class LegitBotTable: VisTable(false) {
     val advancedRcsX = AimVisSlider("RCS X", "_AIM_RCS_X", 0.05F, 1F, 0.05F, false, 2, 200F, 200F)
     val advancedRcsY = AimVisSlider("RCS Y", "_AIM_RCS_Y", 0.05F, 1F, 0.05F, false, 2, 200F, 200F)
     val advancedRcsVariation = AimVisSlider("RCS Variation", "_AIM_RCS_VARIATION", 0F, 1F, 0.05F, false, 2, 200F, 200F)
-    val advancedSpeedDivisor = AimVisSlider("Mouse Move Divisor", "_AIM_SPEED_DIVISOR", 1F, 10F, 1F, true, 0, 200F, 200F)
 
     init {
         //Disable on start, default is pistol
@@ -87,7 +85,6 @@ class LegitBotTable: VisTable(false) {
         advancedSettingsTable.add(advancedRcsX).left().row()
         advancedSettingsTable.add(advancedRcsY).left().row()
         advancedSettingsTable.add(advancedRcsVariation).left().row()
-        advancedSettingsTable.add(advancedSpeedDivisor).left().row()
         //End
 
         collapsibleTable.apply {
@@ -105,7 +102,6 @@ class LegitBotTable: VisTable(false) {
 
             add(aimBones).left().row()
             add(forceAimBone).left().row()
-            add(aimSpeed).left().row()
             add(aimFov).left().row()
             add(aimSmooth).left().row()
 

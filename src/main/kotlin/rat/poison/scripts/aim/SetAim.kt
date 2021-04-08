@@ -14,6 +14,7 @@ import rat.poison.utils.extensions.upper
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.stringToList
 import rat.poison.utils.generalUtil.toWeaponClass
+import kotlin.math.floor
 
 var meCurWep = Weapons.AK47
 var meCurWepEnt = 0L
@@ -62,7 +63,6 @@ fun setAim() = every(500, true, inGameCheck = true) {
                         curSettings["AIM_BONE"] = curWepSettings.tAimBone.toBoneList()
                         curSettings["FORCE_AIM_BONE"] = curWepSettings.tForceBone.toBoneList()
                         AIM_FOV = curWepSettings.tAimFov
-                        AIM_SPEED = curWepSettings.tAimSpeed
                         AIM_SMOOTHNESS = curWepSettings.tAimSmooth
                         PERFECT_AIM = curWepSettings.tPerfectAim
                         PERFECT_AIM_FOV = curWepSettings.tPAimFov
@@ -103,8 +103,7 @@ fun setAim() = every(500, true, inGameCheck = true) {
                 curSettings["AIM_BONE"] = curSettings[stringBuilder.clear().append(curWepCategory).append("_AIM_BONE").toString()].stringToBoneList()
                 curSettings["FORCE_AIM_BONE"] = curSettings[stringBuilder.clear().append(curWepCategory).append("_AIM_FORCE_BONE").toString()].stringToBoneList()
                 AIM_FOV = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_AIM_FOV").toString()]
-                AIM_SPEED = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_AIM_SPEED").toString()]
-                AIM_SMOOTHNESS = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_AIM_SMOOTHNESS").toString()]
+                AIM_SMOOTHNESS = floor(curSettings.float[stringBuilder.clear().append(curWepCategory).append("_AIM_SMOOTHNESS").toString()]).toInt()
 
                 PERFECT_AIM = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_PERFECT_AIM").toString()]
                 PERFECT_AIM_FOV = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_PERFECT_AIM_FOV").toString()]
@@ -123,7 +122,6 @@ fun setAim() = every(500, true, inGameCheck = true) {
                 AIM_RCS_X = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_AIM_RCS_X").toString()]
                 AIM_RCS_Y = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_AIM_RCS_Y").toString()]
                 AIM_RCS_VARIATION = curSettings.double[stringBuilder.clear().append(curWepCategory).append("_AIM_RCS_VARIATION").toString()]
-                AIM_SPEED_DIVISOR = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_AIM_SPEED_DIVISOR").toString()]
                 AIM_RANDOM_X_VARIATION = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_RANDOM_X_VARIATION").toString()]
                 AIM_RANDOM_Y_VARIATION = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_RANDOM_Y_VARIATION").toString()]
                 AIM_VARIATION_DEADZONE = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_VARIATION_DEADZONE").toString()]

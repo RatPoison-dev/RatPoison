@@ -21,11 +21,6 @@ SMG_AIM_BONE = NEAREST
 //Aims at entities inside this value
 SMG_AIM_FOV = 0.5
 
-//Aim speed
-//MS delay between aiming steps
-//Lower is faster
-SMG_AIM_SPEED = 10
-
 //Aim smoothness
 //Lower is less smooth (faster snapping)
 SMG_AIM_SMOOTHNESS = 5.0
@@ -44,7 +39,6 @@ SMG_ADVANCED_SETTINGS = false
 SMG_AIM_RCS_X = 0.05
 SMG_AIM_RCS_Y = 0.05
 SMG_AIM_RCS_VARIATION = 0.0
-SMG_AIM_SPEED_DIVISOR = 1
 SMG_RANDOM_X_VARIATION = 0
 SMG_RANDOM_Y_VARIATION = 0
 SMG_VARIATION_DEADZONE = 0

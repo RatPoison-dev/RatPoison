@@ -1,6 +1,7 @@
 package rat.poison.utils
 
 import com.sun.jna.platform.win32.WinDef.POINT
+import rat.poison.curSettings
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.CSGO.gameX
@@ -10,22 +11,23 @@ import rat.poison.game.setAngle
 import rat.poison.settings.*
 import rat.poison.utils.common.*
 import rat.poison.utils.extensions.refresh
-import kotlin.math.round
+import kotlin.math.*
 
 private val delta = ThreadLocal.withInitial { Vector() }
 
-fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: Float, divisor: Int) = destinationAngle.apply {
+fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: Int) = destinationAngle.apply {
 	x -= currentAngle.x
 	y -= currentAngle.y
 	z = 0F
 	normalize()
 
-	var smooth = smoothing
+	var smooth = smoothing.toFloat()
 
 	if (smooth == 0F) {
 		smooth = 1F
 	}
 
+	//TODO readd lazy
 	var randX = if (AIM_RANDOM_X_VARIATION > 0) randInt(0, AIM_RANDOM_X_VARIATION) * randSign() else 0
 	var randY = if (AIM_RANDOM_Y_VARIATION > 0) randInt(0, AIM_RANDOM_Y_VARIATION) * randSign() else 0
 	val randDZ = AIM_VARIATION_DEADZONE / 100F
@@ -35,23 +37,26 @@ fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: 
 		randY = 0
 	}
 
-	x = currentAngle.x + (x + ((randX/10F) * (10F / smooth))) / 100F * (100F / smooth) / divisor
-	y = currentAngle.y + (y + ((randY/10F) * (10F / smooth))) / 100F * (100F / smooth) / divisor
+	//x = currentAngle.x + (x + ((randX/10F) * (10F / smooth))) / 100F * (100F / smooth) / divisor
+	//y = currentAngle.y + (y + ((randY/10F) * (10F / smooth))) / 100F * (100F / smooth) / divisor
+
+	x = currentAngle.x + x / 100 * (100 / smooth)
+	y = currentAngle.y + y / 100 * (100 / smooth)
 
 	normalize()
 }
 
-fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Float, divisor: Int = 1, silent: Boolean = false) {
+fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Int, silent: Boolean = false) {
 	if (!silent) {
-		val dAng = applyFlatSmoothing(currentAngle, destinationAngle, smoothing, divisor)
+		val dAng = applyFlatSmoothing(currentAngle, destinationAngle, smoothing)
 		clientState.setAngle(dAng)
 	}
 }
 
-fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect: Boolean = false, checkOnScreen: Boolean = true, divisor: Int = 1) {
+fun pathAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Int, checkOnScreen: Boolean = true) {
 	if (!destinationAngle.isValid()) { return }
 
-	val delta = delta.get()
+	val perfect = smoothing <= 0
 
 	var xFix = currentAngle.y - destinationAngle.y
 
@@ -62,15 +67,16 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 	if (xFix > 180) xFix = 180F
 	if (xFix < -180F) xFix = -180F
 
+	val delta = delta.get()
 	delta.set(xFix, currentAngle.x - destinationAngle.x, 0F)
 
-	var sens = GAME_SENSITIVITY + .5
+	var sens = GAME_SENSITIVITY
 	if (perfect) sens = 1.0
 
 	val dx = round(delta.x / (sens * GAME_PITCH))
 	val dy = round(-delta.y / (sens * GAME_YAW))
 
-	var mousePos = POINT().refresh()
+	val mousePos = POINT().refresh()
 
 	val target = POINT()
 
@@ -83,8 +89,8 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 		randY = 0
 	}
 
-	target.x = (mousePos.x + dx / divisor).toInt() + randX
-	target.y = (mousePos.y + dy / divisor).toInt() + randY
+	target.x = (mousePos.x + dx).toInt() + randX
+	target.y = (mousePos.y + dy).toInt() + randY
 
 	if (checkOnScreen) {
 		if (target.x <= 0 || target.x >= gameX + gameWidth || target.y <= 0 || target.y >= gameY + gameHeight) {
@@ -92,20 +98,63 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 		}
 	}
 
-	if (perfect) {
-		writeAim(currentAngle, destinationAngle, 1F)
-		Thread.sleep(50)
-	} else HumanMouse.fastSteps(mousePos, target) { steps, _ ->
-		mousePos = mousePos.refresh()
+	mousePos.refresh()
 
-		val tx = target.x - mousePos.x
-		val ty = target.y - mousePos.y
+	val deadzone = 2F
 
-		var halfIndex = steps / 2
-		if (halfIndex == 0) halfIndex = 1
+	val distX: Float = (target.x - mousePos.x).toFloat()
+	val distY: Float = (target.y - mousePos.y).toFloat()
 
-		mouseMove(tx / halfIndex, ty / halfIndex)
+	var totalX: Float = abs(distX)
+	var totalY: Float = abs(distY)
 
-		Thread.sleep(aimSpeed.toLong())
+	val fracX: Float = (totalX / smoothing) * sign(distX)
+	val fracY: Float = (totalY / smoothing) * sign(distY)
+
+	var toAddX = 0F
+	var toAddY = 0F
+
+	for (step in 1..smoothing) {
+		var tx = fracX
+		var ty = fracY
+
+		if (totalX <= deadzone) {
+			totalX = 0F
+			tx = 0F
+		}
+
+		if (totalY <= deadzone) {
+			totalY = 0F
+			ty = 0F
+		}
+
+		var setX = 0F
+		var setY = 0F
+
+		toAddX += tx
+		toAddY += ty
+
+		if (abs(toAddX) >= 1F) {
+			setX = if (toAddX > 0) {
+				ceil(toAddX)
+			} else {
+				floor(toAddX)
+			}
+			totalX -= abs(setX)
+			toAddX -= setX
+		}
+
+		if (abs(toAddY) >= 1F) {
+			setY = if (toAddY > 0) {
+				ceil(toAddY)
+			} else {
+				floor(toAddY)
+			}
+			totalY -= abs(setY)
+			toAddY -= setY
+		}
+
+		mouseMove(setX.toInt(), setY.toInt())
+		Thread.sleep(1)
 	}
 }

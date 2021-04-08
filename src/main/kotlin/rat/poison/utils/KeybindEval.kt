@@ -3,7 +3,6 @@ package rat.poison.utils
 import rat.poison.curSettings
 import rat.poison.ui.KeybindType
 import rat.poison.utils.common.ObservableBoolean
-import rat.poison.utils.common.keyPressed
 
 data class MutableTripple<KeybindType, ObservableBoolean, Boolean>(var first: KeybindType, var second: ObservableBoolean, var third: Boolean)
 var keyEvalMap = mutableMapOf<String, MutableTripple<KeybindType, ObservableBoolean, Boolean>>() //////////// <VARIABLE_NAME, <KeybindType, ObservableBoolean, Toggled>
@@ -22,7 +21,9 @@ fun keybindEval(varName: String): Boolean {
         keybindRegister(varName, keyCode)
     }
 
-    val map = keyEvalMap[varName]!!
+    val map = keyEvalMap[varName]
+
+    if (map == null) return false
 
     return when (map.first) {
         KeybindType.ON_HOTKEY -> {

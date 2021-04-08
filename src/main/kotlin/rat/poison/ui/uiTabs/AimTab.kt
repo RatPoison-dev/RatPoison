@@ -143,7 +143,6 @@ fun updateDisableAim() {
         forceAimBone.disable(bool, col)
 
         aimFov.disable(bool, col)
-        aimSpeed.disable(bool, col)
         aimSmooth.disable(bool, col)
         if (!aimAfterShots.isDisabled()) {
             aimAfterShots.disable(bool, col)
@@ -161,7 +160,6 @@ fun updateDisableAim() {
         advancedRcsX.disable(bool, col)
         advancedRcsY.disable(bool, col)
         advancedRcsVariation.disable(bool, col)
-        advancedSpeedDivisor.disable(bool, col)
     }
 }
 
@@ -222,7 +220,6 @@ fun updateAim() {
         forceAimBone.update()
 
         aimFov.update()
-        aimSpeed.update()
         aimSmooth.update()
         aimAfterShots.update()
         perfectAimCheckBox.isChecked = curSettings.bool[categorySelected + "_PERFECT_AIM"]
@@ -238,7 +235,6 @@ fun updateAim() {
         advancedRcsX.update()
         advancedRcsY.update()
         advancedRcsVariation.update()
-        advancedSpeedDivisor.update()
 
         updateDisableAim()
     }
