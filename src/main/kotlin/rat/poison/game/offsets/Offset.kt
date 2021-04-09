@@ -2,7 +2,7 @@ package rat.poison.game.offsets
 
 import com.sun.jna.Memory
 import com.sun.jna.Pointer
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import org.jire.arrowhead.Addressed
 import org.jire.arrowhead.Module
 import rat.poison.utils.extensions.uint
@@ -13,7 +13,7 @@ class Offset(val module: Module, private val patternOffset: Long, private val ad
              val read: Boolean, private val subtract: Boolean, private val mask: ByteArray) : Addressed {
 	
 	companion object {
-		val memoryByModule = Object2ObjectArrayMap<Module, Memory>()
+		val memoryByModule = Object2ObjectOpenHashMap<Module, Memory>()
 		
 		private fun Offset.cachedMemory(): Memory {
 			var memory = memoryByModule[module]

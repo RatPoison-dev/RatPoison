@@ -2,6 +2,7 @@ package rat.poison.game.entity
 
 import org.jire.arrowhead.unsign
 import rat.poison.game.CSGO.csgoEXE
+import rat.poison.utils.common.threadLocalPointer
 
 //sv_dump_class_info
 enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false, val grenadeProjectile: Boolean = false, val bomb: Boolean = false) {
@@ -299,12 +300,24 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false,
 		val size = cachedValues.size
 
 		private fun byID(id: Long) = cachedValues.firstOrNull { it.id == id }
+		private val vtMemory = threadLocalPointer(4)
+		private val fnMemory = threadLocalPointer(4)
+		private val clsMemory = threadLocalPointer(4)
+		private val clsidMemory = threadLocalPointer(4)
 
 		fun byEntityAddress(address: Long): EntityType {
-			val vt = (csgoEXE.read(address + 0x8, 4) ?: return NULL).getInt(0).unsign() //iclientnetworkable vtable
-			val fn = (csgoEXE.read(vt + 2 * 0x4, 4) ?: return NULL).getInt(0).unsign() //3rd func
-			val cls = (csgoEXE.read(fn + 0x1, 4) ?: return NULL).getInt(0).unsign() //clientclass
-			val clsid = (csgoEXE.read(cls + 0x14, 4) ?: return NULL).getInt(0).unsign() //classid
+			val vtMem = vtMemory.get()
+			csgoEXE.read(address + 0x8, vtMem, 4) ?: return NULL
+			val vt = (vtMem ?: return NULL).getInt(0).unsign() //iclientnetworkable vtable
+			val fnMemory = fnMemory.get()
+			csgoEXE.read(vt + 2 * 0x4, fnMemory, 4)
+			val fn = (fnMemory ?: return NULL).getInt(0).unsign() //3rd func
+			val clsMemory = clsMemory.get()
+			csgoEXE.read(fn + 0x1, clsMemory, 4)
+			val cls = (clsMemory ?: return NULL).getInt(0).unsign() //clientclass
+			val clsidMemory = clsidMemory.get()
+			csgoEXE.read(cls + 0x14, clsidMemory, 4)
+			val clsid = (clsidMemory ?: return NULL).getInt(0).unsign() //classid
 			return byID(clsid) ?: NULL
 		}
 	}

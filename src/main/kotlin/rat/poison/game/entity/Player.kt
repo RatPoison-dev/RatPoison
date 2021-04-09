@@ -141,8 +141,16 @@ internal fun Player.hasDefuser(): Boolean = csgoEXE.boolean(this + bHasDefuser)
 
 internal fun Player.time(): Double = csgoEXE.int(this + nTickBase) * (1.0 / SERVER_TICK_RATE)
 
-internal fun Player.location(): String = csgoEXE.read(this + NetVarOffsets.szLastPlaceName, 32, true)?.getString(0)
-		?: ""
+private const val locationMemorySize = 32
+private val locationMemory = threadLocalPointer(locationMemorySize)
+internal fun Player.location(): String {
+	val mem = locationMemory.get()
+	csgoEXE.read(this + NetVarOffsets.szLastPlaceName, mem, locationMemorySize)
+	return when (mem == null) {
+		true -> ""
+		false -> mem.getString(0)
+	}
+}
 
 internal fun Player.observerMode(): Int = csgoEXE.int(this + NetVarOffsets.m_iObserverMode)
 

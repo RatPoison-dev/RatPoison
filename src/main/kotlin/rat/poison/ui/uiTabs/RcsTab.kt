@@ -40,7 +40,7 @@ class RcsTab : Tab(false, false) {
 
     init {
         rCrosshairBuilderResolution.changed { _, _ ->
-            crosshairArray = BooleanArray(81)
+            crosshairArray.clear()
 
             buildTable()
 

@@ -23,6 +23,7 @@ import rat.poison.utils.generalUtil.loadSkinSettings
 import rat.poison.utils.loadMigration
 import java.awt.Robot
 import java.io.File
+import java.util.*
 
 //Override Weapon
 data class oWeapon(var tOverride: Boolean = false,          var tFRecoil: Boolean = false,          var tOnShot: Boolean = false,
@@ -58,7 +59,7 @@ lateinit var MUSIC_KITS_FILE: File
 var settingsLoaded = false
 val curSettings = Settings()
 val skSettings = Settings()
-var crosshairArray = BooleanArray(81) //81 is max / 0 //CROSSHAIR_ARRAY
+var crosshairArray = BitSet(81) //81 is max / 0 //CROSSHAIR_ARRAY
 
 var dbg: Boolean = false
 var appless: Boolean = false

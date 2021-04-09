@@ -3,7 +3,13 @@ package rat.poison.utils.common
 import kotlin.math.sqrt
 
 data class VectorLong(var x: Long = 0, var y: Long = 0, var z: Long = 0)
-data class VectorInt(var x: Int = 0, var y: Int = 0, var z: Int = 0)
+data class VectorInt(var x: Int = 0, var y: Int = 0, var z: Int = 0) {
+	fun reset() {
+		this.x = 0
+		this.y = y
+		this.z = z
+	}
+}
 
 data class Vector(var x: Float = 0.0F, var y: Float = 0.0F, var z: Float = 0.0F) {
 

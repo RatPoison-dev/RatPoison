@@ -20,19 +20,20 @@ import rat.poison.game.offsets.ClientOffsets.dwEntityList
 import rat.poison.skSettings
 import rat.poison.utils.common.every
 import rat.poison.utils.common.shouldPostProcess
+import rat.poison.utils.extensions.splitCached
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.toSkinWeaponClass
+
 
 //https://github.com/0xf1a/xSkins
 
 private var shouldUpdate = false
-
 fun skinChanger() = every(1, continuous = true, inGameCheck = true) {
     if (!curSettings.bool["SKINCHANGER"]) return@every
 
     try {
         val sID = me.steamID()
-        val split = sID.split(":")
+        val split = sID.splitCached(":")
         if (split.size < 3 || !StringUtils.isNumeric(split[2]) || !StringUtils.isNumeric(split[1])) { //This SHOULD make try catch redundant, as toInt() is the only catch case...
             return@every
         }
@@ -48,7 +49,7 @@ fun skinChanger() = every(1, continuous = true, inGameCheck = true) {
 
             if (weaponEntity.type().gun && myWeapon > 0 && weaponEntity > 0) {
                 if (curSettings.bool["SKINCHANGER"]) {
-                    val sWep = skSettings["SKIN_" + weaponEntity.type().name].toSkinWeaponClass()
+                    val sWep = skSettings[weaponEntity.type().name].toSkinWeaponClass()
 
                     //Change these to read weaponEntity kit to a mem and read from it
                     val accountID = csgoEXE.int(weaponEntity + m_OriginalOwnerXuidLow)

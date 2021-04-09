@@ -1,10 +1,7 @@
 package rat.poison.utils.generalUtil
 
 import org.apache.commons.lang3.StringUtils.isNumeric
-import rat.poison.curSettings
-import rat.poison.oWeapon
-import rat.poison.settingsLoaded
-import rat.poison.skSettings
+import rat.poison.*
 import rat.poison.utils.extensions.upper
 import java.io.File
 import java.io.FileReader
@@ -48,6 +45,10 @@ fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
                 }
             }
         }
+    }
+    val arr = curSettings["CROSSHAIR_ARRAY"]
+    for (i in arr.indices) {
+        crosshairArray[i] = arr[i].strToBool()
     }
     curSettings["OVERLOAD_KEYBINDS"] = overloadKeybinds
     settingsLoaded = true

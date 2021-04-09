@@ -1,6 +1,6 @@
 package rat.poison.game.netvars
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.offsets.ClientOffsets.dwFirstClass
 import rat.poison.utils.extensions.readable
@@ -8,7 +8,7 @@ import rat.poison.utils.extensions.uint
 
 object NetVars {
 
-	internal val map = Object2ObjectArrayMap<StringBuilder, ClassOffset>(20_000) // Cover us for a while with 20K
+	internal val map = Object2ObjectOpenHashMap<StringBuilder, ClassOffset>(20_000) // Cover us for a while with 20K
 
 	private fun scanTable( table: Long, offset: Long, name: String) {
 		for (i in 0 until csgoEXE.int(table + 4)) { //propCount
@@ -40,11 +40,11 @@ object NetVars {
 			clientClass = csgoEXE.uint(clientClass + 16) //next
 		}
 	}
-	private val classNameToStringBuilderArrayMap = Object2ObjectArrayMap<String, Object2ObjectArrayMap<String, StringBuilder>>()
+	private val classNameToStringBuilderArrayMap = Object2ObjectOpenHashMap<String, Object2ObjectOpenHashMap<String, StringBuilder>>()
 	internal fun hashClassAndVar(className: String, varName: String): StringBuilder {
 		var getClass = classNameToStringBuilderArrayMap[className]
 		if (getClass == null) {
-			val builtMap = Object2ObjectArrayMap<String, StringBuilder>()
+			val builtMap = Object2ObjectOpenHashMap<String, StringBuilder>()
 			classNameToStringBuilderArrayMap[className] = builtMap
 			getClass = builtMap
 		}

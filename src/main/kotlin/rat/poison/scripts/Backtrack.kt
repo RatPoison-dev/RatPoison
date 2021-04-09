@@ -318,11 +318,14 @@ fun getValidRecords(entID: Int): List<Int> {
 
     return recordsList
 }
+private const val gVarsMemorySize = 64
+private val gVarsMemory = threadLocalPointer(gVarsMemorySize)
 
 fun getGlobalVars(): GlobalVars? {
-    val mem = csgoEXE.read(engineDLL.address + dwGlobalVars, 64)
-    if (mem != null) {
-        return memToGlobalVars(mem)
+    val memory = gVarsMemory.get()
+    csgoEXE.read(engineDLL.address + dwGlobalVars, memory, gVarsMemorySize)
+    if (memory != null) {
+        return memToGlobalVars(memory)
     }
 
     return null

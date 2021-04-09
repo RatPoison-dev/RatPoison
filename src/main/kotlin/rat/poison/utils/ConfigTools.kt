@@ -10,6 +10,7 @@ import rat.poison.overlay.opened
 import rat.poison.ui.uiTabs.updateWindows
 import rat.poison.ui.uiUpdate
 import rat.poison.ui.uiWindows.configsTab
+import rat.poison.utils.extensions.toBitString
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.loadSkinSettings
 import java.io.File
@@ -23,8 +24,7 @@ fun saveDefault() {
         GlobalScope.launch {
             saving = true
             println("\nSaving!\n")
-
-            curSettings["CROSSHAIR_ARRAY"] = crosshairArray.contentToString()
+            curSettings["CROSSHAIR_ARRAY"] = crosshairArray.toString()
 
             File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
                 val sbLines = StringBuilder()
@@ -196,14 +196,17 @@ fun saveCFG(cfgFileName: String) {
                 FileReader(file).readLines().forEach { line ->
                     if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                         val tempCurLine = line.trim().split(" ".toRegex(), 3) //Separate line into 'VARIABLE=VALUE' //no spaces bc of trim()
-
+                        if (tempCurLine[0] == "CROSSHAIR_ARRAY") return@forEach
                         sbLines.append(tempCurLine[0] + " = " + curSettings[tempCurLine[0]] + "\n") //add spaces back
                     }
                 }
             }
         }
-
-        sbLines.append("CROSSHAIR_ARRAY = " + crosshairArray.contentToString())
+        sbLines.append("CROSSHAIR_ARRAY = ")
+        for (i in 0..crosshairArray.length()) {
+            sbLines.append(crosshairArray[i].toBitString())
+        }
+        sbLines.append("\n")
 
         Files.delete(cfgFile.toPath()) //Replace with cfgFile. ??
         Files.createFile(cfgFile.toPath())

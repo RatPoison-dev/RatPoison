@@ -2,12 +2,18 @@ package rat.poison.utils.generalUtil
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Matrix4
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
-import rat.poison.*
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
+import rat.poison.dbg
+import rat.poison.oWeapon
+import rat.poison.oWeaponSize
+import rat.poison.sWeapon
 import rat.poison.utils.extensions.lower
 import java.util.regex.Pattern
 
-fun Any.strToBool() = this.toString().lower() == "true" || this == true || this == 1.0 || this == 1 || this == 1F
+fun Any.strToBool(): Boolean {
+    val stringRepr = this.toString().lower()
+    return stringRepr == "true" || this == true || this == 1.0 || this == 1 || this == 1F || stringRepr == "1"
+}
 fun Any.boolToStr() = this.toString()
 fun Any.cToInt() = this.toString().toInt()
 fun Any.cToLong() = this.toString().toLong()
@@ -58,7 +64,7 @@ fun convStrToColorGDX(input: String): Color {
 }
 
 
-private var stringToWeaponClassCache = Object2ObjectArrayMap<String, oWeapon>()
+private var stringToWeaponClassCache = Object2ObjectOpenHashMap<String, oWeapon>()
 fun String.toWeaponClass(): oWeapon {
     val get = stringToWeaponClassCache[this]
     return when (get == null) {
@@ -78,7 +84,7 @@ fun String.toWeaponClass(): oWeapon {
     }
 }
 
-private var stringToSkinWeaponClassCache = Object2ObjectArrayMap<String, sWeapon>()
+private var stringToSkinWeaponClassCache = Object2ObjectOpenHashMap<String, sWeapon>()
 fun String.toSkinWeaponClass(): sWeapon {
     val get = stringToSkinWeaponClassCache[this]
     return when (get == null) {
@@ -131,7 +137,7 @@ fun Array<String>.toGdxArray(): com.badlogic.gdx.utils.Array<String> {
 }
 
 private val intPattern = Pattern.compile("-?\\d+")
-private val stringToIntListCache = Object2ObjectArrayMap<String, MutableList<Int>>()
+private val stringToIntListCache = Object2ObjectOpenHashMap<String, MutableList<Int>>()
 fun String.stringToIntList(listOut: MutableList<Int> = mutableListOf()): MutableList<Int> {
     val get = stringToIntListCache[this]
     return if (get == null) {
@@ -148,7 +154,7 @@ fun String.stringToIntList(listOut: MutableList<Int> = mutableListOf()): Mutable
 }
 
 private val DEFAULT_INVALID_LIST = listOf("")
-private val stringToListCache = Object2ObjectArrayMap<String, List<String>>()
+private val stringToListCache = Object2ObjectOpenHashMap<String, List<String>>()
 fun String.stringToList(separator: String = ",", listOut: MutableList<String> = mutableListOf()): List<String> {
     val get = stringToListCache[this]
     return if (get == null) {

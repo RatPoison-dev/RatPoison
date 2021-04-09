@@ -1,6 +1,6 @@
 package rat.poison.scripts.aim
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import rat.poison.DEFAULT_OWEAPON
 import rat.poison.curSettings
 import rat.poison.game.Weapons
@@ -154,7 +154,7 @@ fun String.boneToNum(): Int {
     }
 }
 
-private val listStringToBoneListMap = Object2ObjectArrayMap<List<String>, List<Int>>()
+private val listStringToBoneListMap = Object2ObjectOpenHashMap<List<String>, List<Int>>()
 fun List<String>.toBoneList(): List<Int> {
     val get = listStringToBoneListMap[this]
     return when (get == null) {
@@ -167,7 +167,7 @@ fun List<String>.toBoneList(): List<Int> {
     }
 }
 
-private val stringToBoneListMap = Object2ObjectArrayMap<String, List<Int>>()
+private val stringToBoneListMap = Object2ObjectOpenHashMap<String, List<Int>>()
 fun String.stringToBoneList(separator: String = ","): List<Int> {
     val get = stringToBoneListMap[this]
     return when (get == null) {

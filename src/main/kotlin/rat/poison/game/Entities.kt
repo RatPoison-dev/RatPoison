@@ -1,6 +1,6 @@
 package rat.poison.game
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.Player
 import rat.poison.game.hooks.constructingEntities
@@ -13,7 +13,7 @@ var clientState: ClientState = 0
 @Volatile
 var meTeam: Long = 0
 
-typealias EntityList = Object2ObjectArrayMap<EntityType, MutableList<EntityContext>>
+typealias EntityList = Object2ObjectOpenHashMap<EntityType, MutableList<EntityContext>>
 
 var entitiesValues = arrayOfNulls<MutableList<EntityContext>>(MAX_ENTITIES)
 var entitiesValuesCounter = 0
@@ -28,9 +28,8 @@ val entities: EntityList = EntityList(EntityType.size).apply {
 
 fun entityByType(type: EntityType): EntityContext? = entities[type]?.firstOrNull()
 data class EntityCache(var created: Long, var ents: ArrayList<EntityContext>, var iterating: Boolean = false)
-val entityCache = Object2ObjectArrayMap<String, EntityCache>()
+val entityCache = Object2ObjectOpenHashMap<String, EntityCache>()
 
-//TODO array[entityType] being allocated here with every call
 internal inline fun forEntities(types: Array<EntityType>, iterateWeapons: Boolean = false, iterateGrenades: Boolean = false, identifier: String, crossinline body: (EntityContext) -> Unit) {
 	var get = entityCache[identifier]
 
@@ -44,10 +43,8 @@ internal inline fun forEntities(types: Array<EntityType>, iterateWeapons: Boolea
 		get.ents.clear()
 		get.created = System.currentTimeMillis()
 
-		val col = types
-
-		for (i in 0 until col.size) {
-			val element = col[i]
+		for (i in 0 until types.size) {
+			val element = types[i]
 			val ents = entities[element] ?: continue
 			for (i1 in 0 until ents.size) {
 				val ent = ents[i1]

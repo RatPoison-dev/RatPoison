@@ -13,9 +13,8 @@ import rat.poison.overlay.App
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.inGame
-import java.util.concurrent.ConcurrentLinkedQueue
 
-val grenadeList = ConcurrentLinkedQueue<Long>()
+val grenadeList = mutableListOf<Long>()
 val positionsList = mutableListOf<MutableList<Vector>>()
 
 private var sync = 0
@@ -53,7 +52,8 @@ fun nadeTracer() = App {
             }
         }
 
-        grenadeList.forEach { i ->
+        for (it in 0 until grenadeList.size) {
+            val i = grenadeList[it]
             val entPos = i.absPosition(positionVector2)
             val idx = grenadeList.indexOf(i)
             if (entPos.x in -2F..2F && entPos.y in -2F..2F && entPos.z in -2F..2F) {

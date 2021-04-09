@@ -1,7 +1,6 @@
 package rat.poison.utils
 
 import com.sun.jna.platform.win32.WinDef.POINT
-import rat.poison.curSettings
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
 import rat.poison.game.CSGO.gameX
@@ -53,6 +52,8 @@ fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Int, silen
 	}
 }
 
+private val point1 = ThreadLocal.withInitial { POINT() }
+private val point2 = ThreadLocal.withInitial { VectorInt() }
 fun pathAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Int, checkOnScreen: Boolean = true) {
 	if (!destinationAngle.isValid()) { return }
 
@@ -76,9 +77,10 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Int, checkO
 	val dx = round(delta.x / (sens * GAME_PITCH))
 	val dy = round(-delta.y / (sens * GAME_YAW))
 
-	val mousePos = POINT().refresh()
+	val mousePos = point1.get().refresh()
 
-	val target = POINT()
+	val target = point2.get()
+	target.reset()
 
 	var randX = if (AIM_RANDOM_X_VARIATION > 0) randInt(0, AIM_RANDOM_X_VARIATION) * randSign() else 0
 	var randY = if (AIM_RANDOM_Y_VARIATION > 0) randInt(0, AIM_RANDOM_Y_VARIATION) * randSign() else 0

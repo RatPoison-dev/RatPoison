@@ -1,7 +1,7 @@
 package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.math.MathUtils.clamp
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import rat.poison.WEAPON_STATS_FILE
 import rat.poison.curSettings
 import rat.poison.game.CSGO
@@ -33,7 +33,7 @@ data class WeaponData(var maxPlayerSpeed: Int = 0, var spread: Float = 0f, var i
 
 var wepData = WeaponData()
 
-private val wepDataMap = Object2ObjectArrayMap<String, WeaponData>()
+private val wepDataMap = Object2ObjectOpenHashMap<String, WeaponData>()
 
 private fun refreshWepData() = every(1000) {
     val data = wepDataMap[meCurWep.name]

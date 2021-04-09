@@ -40,7 +40,7 @@ internal fun autoKnife() = every(10, inGameCheck = true) {
             if (meCurWep.knife) {
                 val currentAngle = clientState.angle(meAng)
                 val position = me.position(mePositionVector)
-                val target = findTarget(position, currentAngle, false, 32F, "-2").player
+                val target = findTarget(position, currentAngle, false, 32F, "-2")
                 if (target > 0) {
                     if (keyReleased(AIM_KEY)) {
                         val targetPos = target.absPosition(targetAbsPositionVector)

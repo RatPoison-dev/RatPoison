@@ -462,11 +462,14 @@ private val vBottom = Vector()
 private val vTop = Vector()
 private val vHead = Vector()
 private val vFeet = Vector()
+private const val boneMemorySize = 3984
+private val boneMemory = threadLocalPointer(boneMemorySize)
 fun setupFakeBox(ent: Entity): BoundingBox {
 	val bbox = bbox.get()
 	bbox.reset()
-
-	val boneMemory = csgoEXE.read(ent.boneMatrix(), 3984) ?: return bbox
+	val mem = boneMemory.get()
+	csgoEXE.read(ent.boneMatrix(), mem, boneMemorySize)
+	val boneMemory = mem ?: return bbox
 
 	vHead.set(boneMemory.getFloat(((0x30L * HEAD_BONE) + 0xC)),
 			boneMemory.getFloat(((0x30L * HEAD_BONE) + 0x1C)),

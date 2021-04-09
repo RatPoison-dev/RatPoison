@@ -33,6 +33,7 @@ fun esp() {
 private const val glowMemorySize = 60
 private val glowMemory = threadLocalPointer(glowMemorySize)
 fun Entity.glow(color: Color, glowType: Int) {
+
 	val glowMemory = glowMemory.get()
 
 	//Revalidate
@@ -42,7 +43,7 @@ fun Entity.glow(color: Color, glowType: Int) {
 	if ((entType == EntityType.CCSPlayer || entType.weapon || entType.grenade || entType.bomb) && ent > 0) {
 		csgoEXE.read(this, glowMemory, glowMemorySize)
 
-		if (glowMemory.getPointer(0) != null) {
+		if (glowMemory != null) {
 			if (glowType == -1) {
 				glowMemory.setFloat(0x4, 0F)
 				glowMemory.setFloat(0x8, 0F)
