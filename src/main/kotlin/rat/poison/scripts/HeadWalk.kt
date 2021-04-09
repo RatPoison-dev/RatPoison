@@ -96,11 +96,12 @@ internal fun headWalk() = every(2, inGameCheck = true) {
 }
 
 private const val id = "headwalk"
+private val forEnts = arrayOf(EntityType.CCSPlayer)
 internal fun onPlayerHead() : Boolean {
     var entPos : Angle
     onEnt = 0L
 
-    forEntities(EntityType.CCSPlayer, identifier = id) {
+    forEntities(forEnts, identifier = id) {
         val entity = it.entity
         if (entity == me || !entity.onGround()) return@forEntities
 

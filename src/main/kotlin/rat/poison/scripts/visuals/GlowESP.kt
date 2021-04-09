@@ -17,6 +17,7 @@ private val mePosVec = Vector()
 private val meAng = Vector()
 private val cCol = Color()
 private const val id = "glowesp"
+private val forEnts = arrayOf(EntityType.CCSPlayer, EntityType.CPlantedC4, EntityType.CC4)
 internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 	if (!curSettings.bool["GLOW_ESP"] || !curSettings.bool["ENABLE_ESP"]) return@every
 
@@ -51,7 +52,7 @@ internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
 		val showWeapons = curSettings.bool["GLOW_SHOW_WEAPONS"]
 		val showGrenades = curSettings.bool["GLOW_SHOW_GRENADES"]
 
-		forEntities(EntityType.CCSPlayer, EntityType.CPlantedC4, EntityType.CC4, iterateWeapons = true, iterateGrenades = true, identifier = id) {
+		forEntities(forEnts, iterateWeapons = true, iterateGrenades = true, identifier = id) {
 			val entity = it.entity
 			if (entity <= 0 || me == entity || entity.dormant()) return@forEntities
 

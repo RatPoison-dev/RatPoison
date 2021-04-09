@@ -14,13 +14,14 @@ private val positionVector = Vector()
 private const val id = "snaplines"
 //TODO god fix this eventually g
 private val w2sRet = Vector()
+private val forEnts = arrayOf(EntityType.CCSPlayer, EntityType.CPlantedC4, EntityType.CC4, EntityType.CEconEntity)
 fun snapLines() = App {
     if (!curSettings.bool["ENABLE_SNAPLINES"] || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()
 
-    forEntities(EntityType.CCSPlayer, EntityType.CPlantedC4, EntityType.CC4, EntityType.CEconEntity, iterateWeapons = true, identifier = id) {
+    forEntities(forEnts, iterateWeapons = true, identifier = id) {
         val entity = it.entity
         var colStr = ""
 

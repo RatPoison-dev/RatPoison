@@ -90,10 +90,11 @@ fun runFootSteps() = App {
 
 private val entVel = Vector()
 private const val id = "constructsteps"
+private val forEnts = arrayOf(EntityType.CCSPlayer)
 private fun constructSteps() = every(10) {
     stepTimer+= 1
     if (stepTimer >= curSettings.int["FOOTSTEP_UPDATE"]) {
-        forEntities(EntityType.CCSPlayer, identifier = id) {
+        forEntities(forEnts, identifier = id) {
             val ent = it.entity
             if (ent == me || ent.dead() || ent.dormant()) return@forEntities
 

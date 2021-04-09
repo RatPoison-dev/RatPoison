@@ -104,17 +104,19 @@ fun List<String>.pull(idx: Int): String {
 
 fun List<Any>.has(predicate: (_: Any) -> Boolean): Boolean {
     var hasItem = false
-    this.forEach {
+    for (i in 0 until this.size) {
+        val it = this[i]
         if (predicate(it) || hasItem) {
             hasItem = true
-            return@forEach
+            break
         }
     }
     return hasItem
 }
 
 fun List<Any>.containsAny(lst: List<Any>): Boolean {
-    lst.forEach {
+    for (i in 0 until lst.size) {
+        val it = lst[i]
         if (!this.contains(it)) return false
     }
     return true

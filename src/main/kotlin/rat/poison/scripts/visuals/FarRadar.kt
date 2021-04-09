@@ -25,13 +25,14 @@ private var farPlayerRecords = Array(64) { FarPlayer() }
 private val w2s1 = Vector()
 private val w2s2 = Vector()
 private const val id = "farradar"
+private val forEnts = arrayOf(EntityType.CCSPlayer)
 fun farRadar() = App {
     if (!inGame || !curSettings.bool["BOX_FAR_RADAR"] || meDead) return@App
 
     var dwRadar = clientDLL.int(dwRadarBase)
     dwRadar = csgoEXE.int(dwRadar + 0x74)
 
-    forEntities(EntityType.CCSPlayer, identifier = id) { //This will probably require more prechecks
+    forEntities(forEnts, identifier = id) { //This will probably require more prechecks
         val ent = it.entity
 
         //Prechecks

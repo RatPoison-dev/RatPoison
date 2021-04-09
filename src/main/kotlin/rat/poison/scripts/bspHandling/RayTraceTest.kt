@@ -21,7 +21,7 @@ package rat.poison.scripts.bspHandling
 //import java.util.concurrent.TimeUnit
 //import kotlin.math.abs
 //import kotlin.system.measureNanoTime
-
+//private val forEnts = arrayOf(EntityType.CCSPlayer)
 //fun rayTraceTest() = App {
 //    bspVisTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
 //        if (meDead || !curSettings.bool["DEBUG"] || !inGame) return@App
@@ -29,7 +29,7 @@ package rat.poison.scripts.bspHandling
 //        var meVec = me.bones(8).toVector3()
 //        meVec = Vector3(meVec.x, meVec.y, meVec.z)
 //
-//        forEntities(EntityType.CCSPlayer) {
+//        forEntities(forEnts) {
 //            val ent = it.entity
 //            if (ent == me || !ent.onGround()) return@forEntities
 //

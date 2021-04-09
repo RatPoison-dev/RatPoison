@@ -24,10 +24,11 @@ private const val skeletonEspIdentifier = "skeletonesp"
 private val w2sRet1 = Vector()
 private val w2sRet2 = Vector()
 private val c = Color()
+private val forEnts = arrayOf(EntityType.CCSPlayer)
 fun skeletonEsp() = App {
 	if (!curSettings.bool["SKELETON_ESP"] || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 	shapeRenderer.begin()
-	forEntities(EntityType.CCSPlayer, identifier = skeletonEspIdentifier) {
+	forEntities(forEnts, identifier = skeletonEspIdentifier) {
 		val entity = it.entity
 		val entTeam = entity.team()
 

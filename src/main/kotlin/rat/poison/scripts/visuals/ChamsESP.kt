@@ -24,6 +24,7 @@ import java.lang.Float.floatToIntBits
 private val meAng = Vector()
 private val mePos = Vector()
 private val cCol = Color()
+private val forEnts = arrayOf(EntityType.CCSPlayer)
 private const val id = "chams"
 fun chamsEsp() = every(100, true, inGameCheck = true) {
     if (!curSettings.bool["CHAMS_ESP"] || !curSettings.bool["ENABLE_ESP"]) return@every
@@ -75,7 +76,7 @@ fun chamsEsp() = every(100, true, inGameCheck = true) {
         }
     }
 
-    forEntities(EntityType.CCSPlayer, identifier = id) {
+    forEntities(forEnts, identifier = id) {
         val entity = it.entity
         if (entity <= 0 || entity == me || entity.dormant() || entity.dead()) return@forEntities
 

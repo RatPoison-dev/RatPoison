@@ -31,7 +31,7 @@ data class EntityCache(var created: Long, var ents: ArrayList<EntityContext>, va
 val entityCache = Object2ObjectArrayMap<String, EntityCache>()
 
 //TODO array[entityType] being allocated here with every call
-internal inline fun forEntities(vararg types: EntityType, iterateWeapons: Boolean = false, iterateGrenades: Boolean = false, identifier: String, crossinline body: (EntityContext) -> Unit) {
+internal inline fun forEntities(types: Array<EntityType>, iterateWeapons: Boolean = false, iterateGrenades: Boolean = false, identifier: String, crossinline body: (EntityContext) -> Unit) {
 	var get = entityCache[identifier]
 
 	if (get == null) {
@@ -44,7 +44,7 @@ internal inline fun forEntities(vararg types: EntityType, iterateWeapons: Boolea
 		get.ents.clear()
 		get.created = System.currentTimeMillis()
 
-		val col = if (types.isEmpty()) EntityType.cachedValues else types
+		val col = types
 
 		for (i in 0 until col.size) {
 			val element = col[i]

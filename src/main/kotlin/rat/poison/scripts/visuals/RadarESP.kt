@@ -14,6 +14,7 @@ private val positionVector = Vector()
 private val footstepsVec = Vector()
 private val entsChecked = LongArrayList()
 private const val id = "radaresp"
+private val forEnts = arrayOf(EntityType.CCSPlayer)
 internal fun radarEsp() = every(100, inGameCheck = true) {
     if (!curSettings.bool["RADAR_ESP"] || DANGER_ZONE) return@every
 
@@ -32,13 +33,13 @@ internal fun radarEsp() = every(100, inGameCheck = true) {
             }
         }
 
-        forEntities(EntityType.CCSPlayer, identifier = id) {
+        forEntities(forEnts, identifier = id) {
             if (!entsChecked.contains(it.entity)) {
                 it.entity.hideOnRadar()
             }
         }
     } else {
-        forEntities(EntityType.CCSPlayer, identifier = id) {
+        forEntities(forEnts, identifier = id) {
             val entity = it.entity
 
             if (entity.dead() || entity == me || entity.dormant()) return@forEntities
