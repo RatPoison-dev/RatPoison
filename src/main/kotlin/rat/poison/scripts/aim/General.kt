@@ -127,7 +127,7 @@ fun calcTarget(calcClosestDelta: Float, entity: Entity, position: Angle, curAngl
 	if (curSettings["FOV_TYPE"].replace("\"", "") == "DISTANCE" && !ovrStatic) {
 		val distance = position.distanceTo(ePos)
 
-		val calcAng = realCalcAngle(me, ePos)//getCalculatedAngle(me, ePos)
+		val calcAng = getCalculatedAngle(me, ePos)
 
 		val pitchDiff = abs(curAngle.x - calcAng.x)
 		var yawDiff = abs(curAngle.y - calcAng.y)
