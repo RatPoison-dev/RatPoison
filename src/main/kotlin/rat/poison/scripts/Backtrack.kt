@@ -62,10 +62,10 @@ private const val inputMemorySize = 253
 private val inputMemory = threadLocalPointer(inputMemorySize)
 private const val oldUserCmdMemorySize = 100
 private const val newUserCmdMemorySize = 100
-private val oldUserCmdMemory = threadLocalPointer(oldUserCmdMemorySize)
-private val newUserCMDMemory = threadLocalPointer(newUserCmdMemorySize)
-private val oldUserCMD = UserCMD()
-private val newUserCMD = UserCMD()
+//private val oldUserCmdMemory = threadLocalPointer(oldUserCmdMemorySize)
+//private val newUserCMDMemory = threadLocalPointer(newUserCmdMemorySize)
+//private val oldUserCMD = UserCMD()
+//private val newUserCMD = UserCMD()
 fun attemptBacktrack(): Boolean {
     if (((curSettings.bool["BACKTRACK_SPOTTED"] && bestBacktrackTarget.spotted()) || !curSettings.bool["BACKTRACK_SPOTTED"]) && bestBacktrackTarget > 0L && haveGvars) {
         inBacktrack = true
@@ -88,12 +88,8 @@ fun attemptBacktrack(): Boolean {
         }
 
         //Check invalid?
-        val oldUserCmdMemory = oldUserCmdMemory.get()
-        csgoEXE.read(oldUserCMDptr, oldUserCmdMemory, oldUserCmdMemorySize)
-        val oldUserCMD = memToUserCMD(oldUserCmdMemory, oldUserCMD)
-        val newUserCmdMemory = newUserCMDMemory.get()
-        csgoEXE.read(oldUserCMDptr, newUserCmdMemory, newUserCmdMemorySize)
-        var userCMD = memToUserCMD(newUserCmdMemory, newUserCMD)
+        val oldUserCMD = memToUserCMD(csgoEXE.read(oldUserCMDptr, 100)!!) //TODO what
+        var userCMD = memToUserCMD(csgoEXE.read(userCMDptr, 100)!!)
 
         userCMD = fixUserCMD(userCMD, oldUserCMD)
 
@@ -126,7 +122,6 @@ private val boneMemory = threadLocalPointer(boneMemorySize)
 private val meAngVec = Vector()
 private var bestFov = 5F
 private val boneVec = Vector()
-//private val positionVector = Vector()
 private const val id = "backtrack"
 private val forEnts = arrayOf(EntityType.CCSPlayer)
 fun constructRecords() {

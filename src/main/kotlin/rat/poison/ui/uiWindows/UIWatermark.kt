@@ -21,7 +21,7 @@ class UIWatermark: VisWindow("", "watermark") {
         add(Separator()).growX().row()
         add(keybindText).expandX().height(64F).right()
 
-        width = 250F
+        width = 300F
         height = 100F
     }
 
