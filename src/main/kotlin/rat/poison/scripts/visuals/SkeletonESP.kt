@@ -53,6 +53,7 @@ fun skeletonEsp() = App {
 		csgoEXE.read(boneMatrix, boneMemory)
 		var offset = 0
 		for (idx in 0 until numBones) {
+			if (offset+4 > modelMemorySize) return@forEntities
 			val parent = modelMemory.getInt(0x4L + offset)
 			if (parent != -1) {
 				val flags = modelMemory.getInt(0xA0L + offset).unsign() and 0x100

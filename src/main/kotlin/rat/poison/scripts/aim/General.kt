@@ -37,7 +37,6 @@ val findTargetResult = ThreadLocal.withInitial { FindTargetResult() }
 
 private const val id = "findtarget"
 private val forEnts = arrayOf(EntityType.CCSPlayer)
-private val outList = ThreadLocal.withInitial { mutableListOf<Int>() }
 fun aimFindTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			   lockFOV: Float = AIM_FOV, BONE: String = curSettings["AIM_BONE"], visCheck: Boolean = true, teamCheck: Boolean = true): FindTargetResult {
 	val result = findTargetResult.get()
@@ -48,7 +47,7 @@ fun aimFindTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	var closestBone = -1
 	var forceSpecificBone = -1
 
-	val bones = BONE.stringToIntList(outList.get())
+	val bones = BONE.stringToIntList()
 	val findNearest = bones.has { it == NEAREST_BONE }
 	val findRandom = bones.has { 0 > it as Int }
 
@@ -115,7 +114,7 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	var closestPlayer = -1L
 	var forceSpecificBone = -1
 
-	val bones = BONE.stringToIntList(thisCatJustJ.get())
+	val bones = BONE.stringToIntList()
 	val findNearest = bones.has { it == NEAREST_BONE }
 	val findRandom = bones.has { 0 > it as Int }
 

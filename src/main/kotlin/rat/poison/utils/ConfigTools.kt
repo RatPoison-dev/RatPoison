@@ -24,7 +24,6 @@ fun saveDefault() {
         GlobalScope.launch {
             saving = true
             println("\nSaving!\n")
-            curSettings["CROSSHAIR_ARRAY"] = crosshairArray.toString()
 
             File(SETTINGS_DIRECTORY).listFiles()?.forEach { file ->
                 val sbLines = StringBuilder()
@@ -44,16 +43,22 @@ fun saveDefault() {
                                 }
 
                                 else -> {
+                                    if (curLine[0] == "CROSSHAIR_ARRAY") return@forEach
                                     sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
                                 }
                             }
 
                         }
-                        else
-                        {
+                        else {
                             sbLines.append(line + "\n")
                         }
                     }
+                    sbLines.append("CROSSHAIR_ARRAY = ")
+                    for (i in 0..crosshairArray.length()) {
+                        sbLines.append(crosshairArray[i].toBitString())
+                    }
+                    sbLines.append("\n")
+
                     Files.delete(file.toPath())
                     Files.createFile(file.toPath())
                     var firstLine = false

@@ -32,7 +32,7 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
                 round(sliderBar.value * rnd)/rnd
             }
 
-            curSettings[variableName] = sliderVal.toString()
+            curSettings[variableName] = sliderVal
             sliderLabel.setText("${labelText}: $sliderVal")
         }
 

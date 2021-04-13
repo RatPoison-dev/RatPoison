@@ -21,7 +21,7 @@ class VisColorPickerCustom(mainText: String, varName: String) : VisTable(false) 
     init {
         colorPicker = ColorPicker(variableName, object : ColorPickerAdapter() {
             override fun finished(newCol: Color) {
-                curSettings[variableName] = rColor((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble()).toString()
+                curSettings[variableName] = rColor((newCol.r*255F).toInt(), (newCol.g*255F).toInt(), (newCol.b*255F).toInt(), newCol.a.toDouble())
                 newCol.a = 1F
                 color = newCol
                 update()

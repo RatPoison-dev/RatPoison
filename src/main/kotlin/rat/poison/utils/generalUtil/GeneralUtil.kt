@@ -7,6 +7,7 @@ import rat.poison.dbg
 import rat.poison.oWeapon
 import rat.poison.oWeaponSize
 import rat.poison.sWeapon
+import rat.poison.utils.common.OneTimeMap
 import rat.poison.utils.extensions.lower
 import java.util.regex.Pattern
 
@@ -64,7 +65,7 @@ fun convStrToColorGDX(input: String): Color {
 }
 
 
-private var stringToWeaponClassCache = Object2ObjectOpenHashMap<String, oWeapon>()
+private var stringToWeaponClassCache = OneTimeMap<String, oWeapon>()
 fun String.toWeaponClass(): oWeapon {
     val get = stringToWeaponClassCache[this]
     return when (get == null) {
@@ -84,7 +85,7 @@ fun String.toWeaponClass(): oWeapon {
     }
 }
 
-private var stringToSkinWeaponClassCache = Object2ObjectOpenHashMap<String, sWeapon>()
+private var stringToSkinWeaponClassCache = OneTimeMap<String, sWeapon>()
 fun String.toSkinWeaponClass(): sWeapon {
     val get = stringToSkinWeaponClassCache[this]
     return when (get == null) {
@@ -137,10 +138,11 @@ fun Array<String>.toGdxArray(): com.badlogic.gdx.utils.Array<String> {
 }
 
 private val intPattern = Pattern.compile("-?\\d+")
-private val stringToIntListCache = Object2ObjectOpenHashMap<String, MutableList<Int>>()
-fun String.stringToIntList(listOut: MutableList<Int> = mutableListOf()): MutableList<Int> {
+private val stringToIntListCache = OneTimeMap<String, List<Int>>()
+fun String.stringToIntList(): List<Int> {
     val get = stringToIntListCache[this]
     return if (get == null) {
+        val listOut = mutableListOf<Int>()
         val match = intPattern.matcher(this)
         while (match.find()) {
             listOut.add(match.group().toInt())
@@ -154,12 +156,12 @@ fun String.stringToIntList(listOut: MutableList<Int> = mutableListOf()): Mutable
 }
 
 private val DEFAULT_INVALID_LIST = listOf("")
-private val stringToListCache = Object2ObjectOpenHashMap<String, List<String>>()
-fun String.stringToList(separator: String = ",", listOut: MutableList<String> = mutableListOf()): List<String> {
+private val stringToListCache = OneTimeMap<String, List<String>>()
+fun String.stringToList(separator: String = ","): List<String> {
     val get = stringToListCache[this]
     return if (get == null) {
         val strList = this.replace("[", "").replace("]", "").replace(" ", "").split(separator)
-
+        val listOut = mutableListOf<String>()
         if (strList != DEFAULT_INVALID_LIST) {
             for (i in strList) {
                 listOut.add(i)

@@ -3,7 +3,6 @@ package rat.poison.game
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.Player
-import rat.poison.game.hooks.constructingEntities
 import rat.poison.settings.MAX_ENTITIES
 
 @Volatile
@@ -39,7 +38,7 @@ internal inline fun forEntities(types: Array<EntityType>, iterateWeapons: Boolea
 		entityCache[identifier] = tmpClass
 	}
 
-	if (!constructingEntities && System.currentTimeMillis() - get.created > 2000) {
+	if (System.currentTimeMillis() - get.created > 2000) {
 		get.ents.clear()
 		get.created = System.currentTimeMillis()
 

@@ -21,6 +21,7 @@ import rat.poison.game.netvars.NetVarOffsets.m_Collision
 import rat.poison.game.netvars.NetVarOffsets.rgflCoordinateFrame
 import rat.poison.overlay.App
 import rat.poison.overlay.App.sb
+import rat.poison.scripts.aim.meCurWepEnt
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
 import rat.poison.utils.*
@@ -322,7 +323,7 @@ fun boxEsp() {
 			if (bEspAmmo) {
 				val curAmmo = csgoEXE.int(ent + iClip1)
 				val maxAmmo = csgoEXE.int(ent + iPrimaryReserveAmmoCount)
-				if (curAmmo != -1 && maxAmmo > 0) {
+				if (maxAmmo > 0 && curAmmo > 0) {
 					ammoStringBuilder.clear()
 					ammoStringBuilder.append("[")
 					ammoStringBuilder.append(curAmmo)
