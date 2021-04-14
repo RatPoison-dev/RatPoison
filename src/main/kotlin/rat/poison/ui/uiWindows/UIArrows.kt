@@ -11,7 +11,8 @@ class UIArrows : VisWindow("") {
     var downButton = VisTextButton("DOWN")
 
     init {
-        setSize(100F, 100F)
+        padTop(0F)
+        setSize(100F, 60F)
 
         this.
 
@@ -27,7 +28,7 @@ class UIArrows : VisWindow("") {
             true
         }
 
-        add(upButton).width(100F).row()
-        add(downButton).width(100F)
+        add(upButton).width(100F).height(25F).row()
+        add(downButton).width(100F).height(25F)
     }
 }

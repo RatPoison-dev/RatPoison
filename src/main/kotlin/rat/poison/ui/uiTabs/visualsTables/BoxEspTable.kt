@@ -12,7 +12,7 @@ import rat.poison.ui.uiTabs.boxEspTable
 //Swap VisSelectBoxCustom to showText false is mainText is " "
 class BoxEspTable: VisTable(false) {
     //Init labels/sliders/boxes that show values here
-    val boxEspWeaponScale = VisSliderCustom("Weapons Scale", "BOX_ESP_WEAPON_SCALE", 0.8F, 3F, 0.1F, false, barWidth = 120F, labelWidth = 150F)
+    val boxEspWeaponScale = VisSliderCustom("Weapons Scale", "BOX_ESP_WEAPON_SCALE", 0.8F, 3F, 0.1F, false, labelWidth = 175F, barWidth = 125F)
 
     val boxEsp = VisCheckBoxCustom("Enable", "ENABLE_BOX_ESP")
     val boxEspUseIcons = VisCheckBoxCustom("Use Icons", "BOX_ESP_USE_ICONS")
@@ -72,7 +72,7 @@ class BoxEspTable: VisTable(false) {
         add(boxEspUseIcons).colspan(2).left().row()
         add(advancedBBox).colspan(2).left().row()
         add(boxSmokeCheck).colspan(2).left().row()
-        add(farRadarBox).colspan(2).left().padBottom(8F).row()
+        add(farRadarBox).colspan(2).left().row()
 
         add(showTeamBox).left().padRight(175F - showTeamBox.width)
         add(boxTeamColor).left().expandX().row()
@@ -83,34 +83,34 @@ class BoxEspTable: VisTable(false) {
         add(showDefusers).left().padRight(175F - showDefusers.width)
         add(boxDefuserColor).left().expandX().row()
 
-        add(showWeapons).left().padRight(175F - showWeapons.width).padBottom(8F)
+        add(showWeapons).left().padRight(175F - showWeapons.width)
         add(boxWeaponsColor).left().expandX().row()
 
         add(boxEspDetails).left()
         add(boxDetailColor).left().expandX().row()
 
         add(boxEspName).left()
-        add(boxEspNamePos).left().row()
+        add(boxEspNamePos).padLeft(25F).left().row()
         add(boxEspWeapon).left()
-        add(boxEspWeaponPos).left().row()
+        add(boxEspWeaponPos).padLeft(25F).left().row()
         add(boxEspMoney).left()
-        add(boxEspMoneyPos).left().row()
+        add(boxEspMoneyPos).padLeft(25F).left().row()
         add(boxEspAmmo).left()
-        add(boxEspAmmoPos).left().row()
+        add(boxEspAmmoPos).padLeft(25F).left().row()
         add(boxEspHealth).left()
-        add(boxEspHealthPos).left().row()
+        add(boxEspHealthPos).padLeft(25F).left().row()
         add(boxEspArmor).left()
-        add(boxEspArmorPos).left().row()
+        add(boxEspArmorPos).padLeft(25F).left().row()
         add(boxEspHelmet).left()
-        add(boxEspHelmetPos).left().row()
+        add(boxEspHelmetPos).padLeft(25F).left().row()
         add(boxEspKevlar).left()
-        add(boxEspKevlarPos).left().row()
+        add(boxEspKevlarPos).padLeft(25F).left().row()
         add(boxEspScoped).left()
-        add(boxEspScopedPos).left().row()
+        add(boxEspScopedPos).padLeft(25F).left().row()
         add(boxEspFlashed).left()
-        add(boxEspFlashedPos).left().row()
-//        add(boxEspWeaponScale).left().row()
-//
+        add(boxEspFlashedPos).padLeft(25F).left().row()
+        add(boxEspWeaponScale).left().colspan(2)
+
     }
 }
 

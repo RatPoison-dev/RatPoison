@@ -24,12 +24,12 @@ class LegitBotTable: VisTable(false) {
     val enablePathAim = AimVisCheckBox("Mouse Movement", "_ENABLE_PATH_AIM")
     val enableScopedOnly = VisCheckBoxCustom("Scoped Only", "SNIPER_ENABLE_SCOPED_ONLY")
 
-    val aimBones = VisSelectBoxCustom("Aim Bone", "_AIM_BONE", useCategory = true, showText = true, items = boneCategories)
-    val forceAimBone = VisSelectBoxCustom("Force Aim Bone", "_AIM_FORCE_BONE", useCategory = true, showText = true, items = boneCategories)
+    val aimBones = VisSelectBoxCustom("Aim Bone", "_AIM_BONE", useCategory = true, showText = true, textWidth = 225F, items = boneCategories)
+    val forceAimBone = VisSelectBoxCustom("Force Aim Bone", "_AIM_FORCE_BONE", useCategory = true, showText = true, textWidth = 225F, items = boneCategories)
 
-    val aimFov = AimVisSlider("Aim FOV", "_AIM_FOV", .5F, 90F, .5F, false, 1, 200F, 200F)
-    val aimSmooth = AimVisSlider("Smoothness", "_AIM_SMOOTHNESS", 1F, 100F, 1F, true, 0, 200F, 200F)
-    val aimAfterShots = AimVisSlider("Aim After #", "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true, 0, 200F, 200F)
+    val aimFov = AimVisSlider("Aim FOV", "_AIM_FOV", .5F, 90F, .5F, false, 1, 225F, 225F)
+    val aimSmooth = AimVisSlider("Smoothness", "_AIM_SMOOTHNESS", 1F, 100F, 1F, true, 0, 225F, 225F)
+    val aimAfterShots = AimVisSlider("Aim After #", "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true, 0, 225F, 225F)
 
     //Perfect Aim Collapsible
     val perfectAimCheckBox = VisCheckBox("Enable-Perfect-Aim")

@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
 import rat.poison.overlay.opened
@@ -23,7 +24,7 @@ var rifleCategory = arrayOf("AK47", "AUG", "FAMAS", "SG553", "GALIL", "M4A4", "M
 var sniperCategory = arrayOf("AWP", "G3SG1", "SCAR20", "SSG08")
 var shotgunCategory = arrayOf("XM1014", "MAG7", "SAWED_OFF", "NOVA")
 
-var overridenWeapons = OverrideTable()
+var overrideTable = OverrideTable()
 var mainAimTab = MainAimTable()
 var legitBotTable = LegitBotTable()
 var triggerBotTable = TriggerBotTable()
@@ -39,9 +40,18 @@ class AimTab : Tab(true, false) { //Aim.kts tab
     //Override Weapon Checkbox & Selection Box
     private val categorySelection = VisTable(false)
     val categorySelectionBox = VisSelectBox<String>()
-    val categorySelectLabel = VisLabel("${"Weapon-Category"}:")
+    val categorySelectLabel = VisLabel("Weapon Category: ")
+
+    var toggleTable = false
+    val overrideButton = VisTextButton("Override")
 
     init {
+        overrideButton.changed { _, _ ->
+            toggleTable = !toggleTable
+
+            buildTable(toggleTable)
+        }
+
         //Create Category Selector Box
         val itemsArray = Array<String>()
         for (i in gunCategories) {
@@ -51,8 +61,9 @@ class AimTab : Tab(true, false) { //Aim.kts tab
 
         categorySelectionBox.selectedIndex = 0
         categorySelected = gunCategories[categorySelectionBox.selectedIndex]
-        categorySelection.add(categorySelectLabel).left().padRight(225F - categorySelectLabel.width)
-        categorySelection.add(categorySelectionBox).left()
+        categorySelection.add(categorySelectLabel).width(267F).left()
+        categorySelection.add(categorySelectionBox).width(100F).left()
+        categorySelection.add(overrideButton).width(100F).right()
 
         categorySelectionBox.changed { _, _ ->
             categorySelected = gunCategories[categorySelectionBox.selectedIndex]
@@ -74,20 +85,35 @@ class AimTab : Tab(true, false) { //Aim.kts tab
             uiUpdate()
             true
         }
+        
+        buildTable()
+    }
+
+    fun buildTable(override: Boolean = false) {
+        table.clear()
 
         val aimTabTable2 = VisTable(false)
 
-        aimTabTable2.add(categorySelection).padBottom(4F).row()
+        aimTabTable2.add(categorySelection).left().padLeft(6F).padBottom(4F).row()
         aimTabTable2.addSeparator()
-        aimTabTable2.add(legitBotTable).top().padTop(2F).padLeft(6F).row()
-        aimTabTable2.addSeparator()
-        aimTabTable2.add(triggerBotTable).top().padTop(2F).padLeft(6F).row()
-        aimTabTable2.addSeparator()
-        aimTabTable2.add(backtrackTable).top().padTop(2F).padLeft(6F)
 
-        table.add(mainAimTab).width(470F).left().top()
-        table.addSeparator(true)
-        table.add(aimTabTable2).width(470F).left().top()
+        if (override) {
+            aimTabTable2.add(overrideTable).top().padTop(2F).padLeft(6F)
+
+            table.add(mainAimTab).width(470F).left().top()
+            table.addSeparator(true)
+            table.add(aimTabTable2).width(470F).left().top()
+        } else {
+            aimTabTable2.add(legitBotTable).top().padTop(2F).padLeft(6F).row()
+            aimTabTable2.addSeparator()
+            aimTabTable2.add(triggerBotTable).top().padTop(2F).padLeft(6F).row()
+            aimTabTable2.addSeparator()
+            aimTabTable2.add(backtrackTable).top().padTop(2F).padLeft(6F)
+
+            table.add(mainAimTab).width(470F).left().top()
+            table.addSeparator(true)
+            table.add(aimTabTable2).width(470F).left().top()
+        }
     }
 
     override fun getContentTable(): Table {
@@ -164,7 +190,7 @@ fun updateDisableAim() {
 }
 
 fun updateAim() {
-    overridenWeapons.weaponOverrideCheckBox.update()
+    overrideTable.weaponOverrideCheckBox.update()
     aimTab.tMain.apply {
         enableAim.update()
         aimToggleKey.update()

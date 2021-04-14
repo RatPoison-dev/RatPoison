@@ -152,7 +152,6 @@ fun main() {
 
     if (dbg) { println("[DEBUG] Initializing Backtrack") }; setupBacktrack()
     if (dbg) { println("[DEBUG] Initializing Draw Backtrack") }; drawBacktrack()
-    if (dbg) { println("[DEBUG] Initializing Handle Fire Key") }; handleFireKey()
     if (dbg) { println("[DEBUG] Initializing GVars updater") }; updateGVars()
     if (dbg) { println("[DEBUG] Initializing Nades Timer") }; nadesTimer()
 
@@ -163,6 +162,9 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing MusicKit Spoofer") }; musicKitSpoofer()
     if (dbg) { println("[DEBUG] Initializing Block Bot") }; blockBot()
     if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
+
+    if (dbg) { println("[DEBUG] Initializing Handle Fire Key") }; handleFireKey()
+    handleUCMD()
 
     //if (EXPERIMENTAL) {
         //rayTraceTest()

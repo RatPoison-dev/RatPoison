@@ -1,11 +1,15 @@
-package rat.poison.scripts
+package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils.clamp
+import com.badlogic.gdx.utils.Align
 import rat.poison.curSettings
-import rat.poison.game.CSGO
+import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.me
+import rat.poison.game.entity.EntityType
+import rat.poison.game.entity.bones
+import rat.poison.game.entity.position
+import rat.poison.game.forEntities
 import rat.poison.game.netvars.NetVarOffsets.m_iDefaultFov
 import rat.poison.game.netvars.NetVarOffsets.m_iFOV
 import rat.poison.overlay.App
@@ -15,11 +19,60 @@ import rat.poison.settings.AIM_FOV
 import rat.poison.settings.MENUTOG
 import rat.poison.settings.TRIGGER_FOV
 import rat.poison.settings.TRIGGER_USE_FOV
+import rat.poison.utils.common.Angle
+import rat.poison.utils.common.Vector
+import rat.poison.utils.common.distanceTo
 import rat.poison.utils.common.inGame
 import java.lang.Math.toDegrees
 import java.lang.Math.toRadians
+import kotlin.math.abs
+import kotlin.math.roundToInt
+import kotlin.math.sin
+
+private const val id = "drawfov"
+private val forEnts = arrayOf(EntityType.CCSPlayer)
 
 fun drawFov() = App {
+//    forEntities(forEnts, identifier = id) {
+//        if (it.entity == me) return@forEntities
+//
+//        val position = me.position()
+//        val curAngle = clientState.angle()
+//
+//        val vec = Vector()
+//        val ePos: Angle = it.entity.bones(8, vec)
+//
+//        val distance = position.distanceTo(ePos)
+//
+//        val calcAng = getCalculatedAngle(me, ePos)
+//
+//        val pitchDiff = abs(curAngle.x - calcAng.x)
+//        var yawDiff = abs(curAngle.y - calcAng.y)
+//
+//        if (yawDiff > 180f) {
+//            yawDiff = 360f - yawDiff
+//        }
+//
+//        val fov = abs(sin(toRadians(yawDiff.toDouble())) * distance)
+//        val delta = abs((sin(toRadians(pitchDiff.toDouble())) + sin(toRadians(yawDiff.toDouble()))) * distance).roundToInt()
+//
+//        val entPos = Vector()
+//
+//        if (worldToScreen(ePos, entPos)) {
+//            if (!sb.isDrawing) {
+//                sb.begin()
+//            }
+//
+//            //draw details first
+//            val detailTextColor = curSettings.colorGDX["BOX_DETAILS_TEXT_COLOR"]
+//            textRenderer.color = detailTextColor
+//
+//            textRenderer.draw(sb, delta.toString(), entPos.x, entPos.y, 1F, Align.right, false)
+//
+//            sb.end()
+//        }
+//    }
+
     if (!curSettings.bool["ENABLE_ESP"] || MENUTOG || !inGame || meDead)
         return@App
 

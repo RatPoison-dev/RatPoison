@@ -7,6 +7,7 @@ import rat.poison.game.CSGO.gameX
 import rat.poison.game.CSGO.gameY
 import rat.poison.game.clientState
 import rat.poison.game.setAngle
+import rat.poison.scripts.shootSilent
 import rat.poison.settings.*
 import rat.poison.utils.common.*
 import rat.poison.utils.extensions.refresh
@@ -49,6 +50,8 @@ fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Int, silen
 	if (!silent) {
 		val dAng = applyFlatSmoothing(currentAngle, destinationAngle, smoothing)
 		clientState.setAngle(dAng)
+	} else {
+		shootSilent(destinationAngle)
 	}
 }
 

@@ -32,8 +32,8 @@ class OverrideTable: VisTable(false) {
     private val copyFromButton = VisTextButton("Copy From")
 
     //Override Weapon Checkbox & Selection Box
-    private val categorySelectLabel = VisLabel("${"Weapon-Category"}:")
-    private val weaponSelectLabel = VisLabel("${"Weapon"}:")
+    private val categorySelectLabel = VisLabel("Weapon Category: ")
+    private val weaponSelectLabel = VisLabel("Weapon: ")
 
     private val weaponOverrideSelectionBox = VisSelectBox<String>()
     val weaponOverrideEnableCheckBox = OverrideVisCheckBoxCustom("Enable Override", "tOverride")
@@ -74,9 +74,6 @@ class OverrideTable: VisTable(false) {
     val autoWepDelay = OverrideVisSliderCustom("Delay", "tAutowepDelay", 0F, 1000F, 10F, true, labelWidth = 225F, barWidth = 225F)
 
     init {
-        padLeft(25F)
-        padRight(25F)
-
         categorySelectionBox.changed { _, _ ->
             categorySelected = gunCategories[categorySelectionBox.selectedIndex]
 
@@ -272,10 +269,10 @@ fun copyFrom(category: String, categoryVarName: String, myVarName: String) {
 }
 
 fun overridenWeaponsUpdate() {
-    overridenWeapons.apply {
+    overrideTable.apply {
         val curWep = curSettings[weaponOverrideSelected].toWeaponClass()
 
-        overridenWeapons.weaponOverrideEnableCheckBox.isChecked = curWep.tOverride
+        overrideTable.weaponOverrideEnableCheckBox.isChecked = curWep.tOverride
 
         if (categorySelected == "SNIPER") {
             enableScopedOnly.disable(false)

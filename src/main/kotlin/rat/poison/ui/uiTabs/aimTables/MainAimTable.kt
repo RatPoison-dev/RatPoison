@@ -15,23 +15,23 @@ class MainAimTable: VisTable(false) {
     val enableTrig = VisCheckBoxCustom("Trigger Master Switch", "ENABLE_TRIGGER") //Master switch
     val enableBacktrack = VisCheckBoxCustom("Backtrack Master Switch", "ENABLE_BACKTRACK")
 
-    val aimToggleKey = VisBindTableCustom("Toggle Aim Key", "AIM_TOGGLE_KEY")
+    val aimToggleKey = VisBindTableCustom("Toggle Aim Key", "AIM_TOGGLE_KEY", keyWidth = 225F)
     val activateFromFireKey = VisCheckBoxCustom("Activate From Fire Key", "ACTIVATE_FROM_AIM_KEY")
     val holdAim = VisCheckBoxCustom("Hold Aim", "HOLD_AIM")
     val teammatesAreEnemies = VisCheckBoxCustom("Teammates Are Enemies", "TEAMMATES_ARE_ENEMIES")
 
-    val fovType = VisSelectBoxCustom("Fov Type", "FOV_TYPE", false, true, "DISTANCE", "STATIC")
+    val fovType = VisSelectBoxCustom("Fov Type", "FOV_TYPE", false, true, "DISTANCE", "STATIC", textWidth = 225F)
 
-    val forceAimBoneKey = VisBindTableCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY")
-    val forceAimKey = VisBindTableCustom("Force Aim Key", "FORCE_AIM_KEY")
+    val forceAimBoneKey = VisBindTableCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY", keyWidth = 225F)
+    val forceAimKey = VisBindTableCustom("Force Aim Key", "FORCE_AIM_KEY", keyWidth = 225F)
     val forceAimAlways = VisCheckBoxCustom("Force Aim Always", "FORCE_AIM_ALWAYS")
     val forceAimThroughWalls = VisCheckBoxCustom("Force Aim Through Walls", "FORCE_AIM_THROUGH_WALLS")
 
     //Automatic Weapons Collapsible
     val automaticWeaponsCheckBox = VisCheckBoxCustom("Automatic Weapons", "GLOBAL_AUTOMATIC_WEAPONS")
-    val automaticWeaponsInput = VisInputFieldCustom("MS Delay", "GLOBAL_AUTO_WEP_DELAY", false)
+    val automaticWeaponsInput = VisInputFieldCustom("MS Delay", "GLOBAL_AUTO_WEP_DELAY", false, keyWidth = 225F)
 
-    val targetSwapDelay = VisSliderCustom("Target Swap Delay", "AIM_TARGET_SWAP_DELAY", 0F, 500F, 10F, true, labelWidth = 200F, barWidth = 200F)
+    val targetSwapDelay = VisSliderCustom("Target Swap Delay", "AIM_TARGET_SWAP_DELAY", 0F, 500F, 10F, true, labelWidth = 225F, barWidth = 225F)
 
     init {
         fovType.changed {_, _ ->
@@ -60,6 +60,7 @@ class MainAimTable: VisTable(false) {
         add(enableAim).left().padBottom(8F).row()
         add(enableTrig).left().padBottom(8F).row()
         add(enableBacktrack).left().padBottom(8F).row()
+        addSeparator()
         add(aimToggleKey).left().row()
 
         add(activateFromFireKey).left().row()

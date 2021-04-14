@@ -95,13 +95,13 @@ fun refreshMenu() {
 
     mainAimTab = MainAimTable()
     backtrackTable = BacktrackTable()
-    overridenWeapons = OverrideTable()
+    overrideTable = OverrideTable()
 
 
     aimTab.contentTable.add(mainAimTab)
     aimTab.contentTable.add(triggerBotTable)
     aimTab.contentTable.add(backtrackTable)
-    aimTab.contentTable.add(overridenWeapons)
+    aimTab.contentTable.add(overrideTable)
 
     //espTabbedPane.add(glowEspTable)
     //espTabbedPane.add(chamsEspTab)
