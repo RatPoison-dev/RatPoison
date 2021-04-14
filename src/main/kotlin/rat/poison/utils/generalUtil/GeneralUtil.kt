@@ -2,12 +2,11 @@ package rat.poison.utils.generalUtil
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Matrix4
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import rat.poison.dbg
 import rat.poison.oWeapon
 import rat.poison.oWeaponSize
 import rat.poison.sWeapon
-import rat.poison.utils.common.OneTimeMap
+import rat.poison.utils.maps.OneTimeMap
 import rat.poison.utils.extensions.lower
 import java.util.regex.Pattern
 

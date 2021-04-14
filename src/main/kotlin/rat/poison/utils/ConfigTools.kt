@@ -157,7 +157,7 @@ fun saveSkinCFG(cfgFileName: String) {
         }
 
         val sbLines = StringBuilder()
-        skSettings.savedValues.keys.forEach {
+        skSettings.savedValues.longToStringMap.values.forEach {
             sbLines.append("$it = ${skSettings[it]}\n")
         }
 

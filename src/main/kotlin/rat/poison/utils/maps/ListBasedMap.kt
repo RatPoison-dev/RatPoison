@@ -1,4 +1,4 @@
-package rat.poison.utils.common
+package rat.poison.utils.maps
 
 class ListBasedMap<T, R> {
     var keys = mutableListOf<T>()

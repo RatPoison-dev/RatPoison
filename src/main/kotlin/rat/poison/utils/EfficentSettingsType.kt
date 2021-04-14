@@ -4,6 +4,7 @@ package rat.poison.utils
 import it.unimi.dsi.fastutil.objects.*
 import rat.poison.game.Color
 import rat.poison.utils.generalUtil.*
+import rat.poison.utils.maps.StringToAnyMap
 import kotlin.reflect.KClass
 import com.badlogic.gdx.graphics.Color as ColorGDX
 
@@ -20,7 +21,7 @@ enum class EfficientSettingType(val kClass: KClass<*>, val convert: (Any) -> Any
     COLOR(Color::class, { it.strToColor() }),
     COLOR_GDX(ColorGDX::class, { it.strToColorGDX() });
 
-    val map: Object2ObjectMap<String, Any> = Object2ObjectMaps.synchronize(Object2ObjectOpenHashMap())
+    val map = StringToAnyMap<Any>()
 
     companion object {
         val values = values()

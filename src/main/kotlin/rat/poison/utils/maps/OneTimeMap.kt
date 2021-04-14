@@ -1,4 +1,4 @@
-package rat.poison.utils.common
+package rat.poison.utils.maps
 
 class OneTimeMap<K, V> {
     private val cachedValues = mutableMapOf<K, V>()

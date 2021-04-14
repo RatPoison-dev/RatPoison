@@ -99,43 +99,43 @@ fun setAim() = every(500, true, inGameCheck = true) {
 
         if (!curWepOverride) { //If the current weapon isn't checked to override
             if (curWepCategory != "") {
-                FACTOR_RECOIL = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_FACTOR_RECOIL").toString()]
-                curSettings["AIM_BONE"] = curSettings[stringBuilder.clear().append(curWepCategory).append("_AIM_BONE").toString()].stringToBoneList()
-                curSettings["FORCE_AIM_BONE"] = curSettings[stringBuilder.clear().append(curWepCategory).append("_AIM_FORCE_BONE").toString()].stringToBoneList()
-                AIM_FOV = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_AIM_FOV").toString()]
-                AIM_SMOOTHNESS = floor(curSettings.float[stringBuilder.clear().append(curWepCategory).append("_AIM_SMOOTHNESS").toString()]).toInt()
+                FACTOR_RECOIL = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_FACTOR_RECOIL")]
+                curSettings["AIM_BONE"] = curSettings[stringBuilder.clear().append(curWepCategory).append("_AIM_BONE")].stringToBoneList()
+                curSettings["FORCE_AIM_BONE"] = curSettings[stringBuilder.clear().append(curWepCategory).append("_AIM_FORCE_BONE")].stringToBoneList()
+                AIM_FOV = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_AIM_FOV")]
+                AIM_SMOOTHNESS = floor(curSettings.float[stringBuilder.clear().append(curWepCategory).append("_AIM_SMOOTHNESS")]).toInt()
 
-                PERFECT_AIM = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_PERFECT_AIM").toString()]
-                PERFECT_AIM_FOV = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_PERFECT_AIM_FOV").toString()]
-                PERFECT_AIM_CHANCE = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_PERFECT_AIM_CHANCE").toString()]
-                ENABLE_FLAT_AIM = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_ENABLE_FLAT_AIM").toString()]
-                ENABLE_PATH_AIM = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_ENABLE_PATH_AIM").toString()]
+                PERFECT_AIM = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_PERFECT_AIM")]
+                PERFECT_AIM_FOV = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_PERFECT_AIM_FOV")]
+                PERFECT_AIM_CHANCE = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_PERFECT_AIM_CHANCE")]
+                ENABLE_FLAT_AIM = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_ENABLE_FLAT_AIM")]
+                ENABLE_PATH_AIM = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_ENABLE_PATH_AIM")]
                 ENABLE_SCOPED_ONLY = curSettings.bool["SNIPER_ENABLE_SCOPED_ONLY"]
 
                 AUTOMATIC_WEAPONS = curSettings.bool["GLOBAL_AUTOMATIC_WEAPONS"]
                 AUTO_WEP_DELAY = curSettings.int["GLOBAL_AUTO_WEP_DELAY"]
 
-                AIM_ONLY_ON_SHOT = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_AIM_ONLY_ON_SHOT").toString()]
-                AIM_AFTER_SHOTS = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_AIM_AFTER_SHOTS").toString()]
+                AIM_ONLY_ON_SHOT = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_AIM_ONLY_ON_SHOT")]
+                AIM_AFTER_SHOTS = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_AIM_AFTER_SHOTS")]
 
-                AIM_ADVANCED = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_ADVANCED_SETTINGS").toString()]
-                AIM_RCS_X = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_AIM_RCS_X").toString()]
-                AIM_RCS_Y = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_AIM_RCS_Y").toString()]
-                AIM_RCS_VARIATION = curSettings.double[stringBuilder.clear().append(curWepCategory).append("_AIM_RCS_VARIATION").toString()]
-                AIM_RANDOM_X_VARIATION = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_RANDOM_X_VARIATION").toString()]
-                AIM_RANDOM_Y_VARIATION = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_RANDOM_Y_VARIATION").toString()]
-                AIM_VARIATION_DEADZONE = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_VARIATION_DEADZONE").toString()]
+                AIM_ADVANCED = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_ADVANCED_SETTINGS")]
+                AIM_RCS_X = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_AIM_RCS_X")]
+                AIM_RCS_Y = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_AIM_RCS_Y")]
+                AIM_RCS_VARIATION = curSettings.double[stringBuilder.clear().append(curWepCategory).append("_AIM_RCS_VARIATION")]
+                AIM_RANDOM_X_VARIATION = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_RANDOM_X_VARIATION")]
+                AIM_RANDOM_Y_VARIATION = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_RANDOM_Y_VARIATION")]
+                AIM_VARIATION_DEADZONE = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_VARIATION_DEADZONE")]
 
-                TRIGGER_BOT = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_TRIGGER").toString()]
-                TRIGGER_INIT_SHOT_DELAY = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_TRIGGER_INIT_SHOT_DELAY").toString()]
-                TRIGGER_PER_SHOT_DELAY = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_TRIGGER_PER_SHOT_DELAY").toString()]
-                TRIGGER_FOV = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_TRIGGER_FOV").toString()]
-                TRIGGER_USE_FOV = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_TRIGGER_INFOV").toString()]
-                TRIGGER_USE_INCROSS = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_TRIGGER_INCROSS").toString()]
-                TRIGGER_USE_AIMBOT = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_TRIGGER_AIMBOT").toString()]
-                TRIGGER_USE_BACKTRACK = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_TRIGGER_BACKTRACK").toString()] && curSettings.bool["ENABLE_BACKTRACK"]
-                BACKTRACK = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_BACKTRACK").toString()]
-                BACKTRACK_MS = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_BACKTRACK_MS").toString()]
+                TRIGGER_BOT = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_TRIGGER")]
+                TRIGGER_INIT_SHOT_DELAY = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_TRIGGER_INIT_SHOT_DELAY")]
+                TRIGGER_PER_SHOT_DELAY = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_TRIGGER_PER_SHOT_DELAY")]
+                TRIGGER_FOV = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_TRIGGER_FOV")]
+                TRIGGER_USE_FOV = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_TRIGGER_INFOV")]
+                TRIGGER_USE_INCROSS = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_TRIGGER_INCROSS")]
+                TRIGGER_USE_AIMBOT = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_TRIGGER_AIMBOT")]
+                TRIGGER_USE_BACKTRACK = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_TRIGGER_BACKTRACK")] && curSettings.bool["ENABLE_BACKTRACK"]
+                BACKTRACK = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_BACKTRACK")]
+                BACKTRACK_MS = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_BACKTRACK_MS")]
                 haveAimSettings = true
             }
         }
