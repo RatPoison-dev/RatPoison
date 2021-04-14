@@ -20,8 +20,6 @@ import rat.poison.game.offsets.EngineOffsets.dwClientState
 import rat.poison.game.offsets.EngineOffsets.dwClientState_MapDirectory
 import rat.poison.game.offsets.EngineOffsets.dwGameDir
 import rat.poison.game.offsets.EngineOffsets.dwSignOnState
-import rat.poison.scripts.detectMap
-import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.*
 import rat.poison.utils.common.*
@@ -66,7 +64,6 @@ private var signOnState by Delegates.observable(SignOnState.MAIN_MENU) { _, old,
                 if (dbg) {
                     println("[DEBUG] Detecting nade map at -- $gameDir\\$mapName")
                 }
-                detectMap(mapName)
 
                 //loadBsp("$gameDir\\$mapName")
             }
@@ -90,11 +87,9 @@ private var signOnState by Delegates.observable(SignOnState.MAIN_MENU) { _, old,
                 System.gc()
             }
 
-            sendPacket(true)
         } else {
             shouldPostProcess = false
             inGame = false
-            sendPacket(true)
         }
     }
 }

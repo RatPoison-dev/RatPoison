@@ -78,5 +78,4 @@ fun keybindsUpdate(neglect: Actor?) {
     aimTab.tTrig.boneTriggerKey.update(neglect)
     visualsTab.visualsToggleKey.update(neglect)
     optionsTab.menuKey.update(neglect)
-    nadeHelperTab.nadeThrowerKey.update(neglect)
 }

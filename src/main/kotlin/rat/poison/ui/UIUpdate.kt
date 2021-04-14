@@ -1,8 +1,6 @@
 package rat.poison.ui
 
-import rat.poison.overlay.App.uiBombWindow
 import rat.poison.overlay.App.uiKeybinds
-import rat.poison.overlay.App.uiSpecList
 import rat.poison.overlay.opened
 import rat.poison.ui.uiTabs.*
 import rat.poison.ui.uiTabs.aimTables.BacktrackTable
@@ -33,11 +31,9 @@ fun uiUpdate() {
     movementTabUpdate()
     fovChangerTabUpdate()
     bombTabUpdate()
-    othersTabUpdate()
     rcsTabUpdate()
     miscVisualTabUpdate()
     optionsTabUpdate()
-    nadeHelperTabUpdate()
     updateBacktrack()
     optionsTabUpdate()
     updateTrig()
@@ -49,7 +45,6 @@ fun uiUpdate() {
 
     //Update lists
     configsTabUpdate()
-    nadeHelperTab.updateNadeFileHelperList()
 }
 
 fun refreshMenu() {
@@ -63,7 +58,6 @@ fun refreshMenu() {
     rcsTab = RcsTab()
     miscTab = MiscTabs()
     ranksTab = RanksTab()
-    nadeHelperTab = NadeHelperTab()
     skinChangerTab = SkinChangerTab()
     optionsTab = OptionsTab()
     configsTab = ConfigsTab()
@@ -73,7 +67,6 @@ fun refreshMenu() {
     mainTabbedPane.add(rcsTab)
     mainTabbedPane.add(miscTab)
     mainTabbedPane.add(ranksTab)
-    mainTabbedPane.add(nadeHelperTab)
     mainTabbedPane.add(skinChangerTab)
     mainTabbedPane.add(optionsTab)
     mainTabbedPane.add(configsTab)
@@ -91,7 +84,6 @@ fun refreshMenu() {
     movementTable = MovementTable()
     fovChangerTable = FOVChangerTable()
     bombTable = BombTable()
-    othersTable = OthersTable()
 
     mainAimTab = MainAimTable()
     backtrackTable = BacktrackTable()
@@ -102,22 +94,6 @@ fun refreshMenu() {
     aimTab.contentTable.add(triggerBotTable)
     aimTab.contentTable.add(backtrackTable)
     aimTab.contentTable.add(overrideTable)
-
-    //espTabbedPane.add(glowEspTable)
-    //espTabbedPane.add(chamsEspTab)
-    //espTabbedPane.add(indicatorEspTab)
-    //espTabbedPane.add(boxEspTab)
-    //espTabbedPane.add(snaplinesEspTab)
-    //espTabbedPane.add(footStepsEspTab)
-    //espTabbedPane.add(hitMarkerTab)
-    //espTabbedPane.add(nadesTab)
-    //espTabbedPane.add(miscVisualsTab)
-
-    uiSpecList.remove()
-    uiSpecList = UISpectatorList()
-
-    uiBombWindow.remove()
-    uiBombWindow = UIBombTimer()
 
     uiKeybinds.remove()
     uiKeybinds = UIKeybinds()

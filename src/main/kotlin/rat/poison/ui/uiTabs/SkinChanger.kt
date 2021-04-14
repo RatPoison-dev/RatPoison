@@ -9,8 +9,6 @@ import com.kotcrab.vis.ui.util.adapter.ArrayListAdapter
 import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.SKIN_INFO_FILE
-import rat.poison.scripts.forcedUpdate
-import rat.poison.scripts.skinChanger
 import rat.poison.skSettings
 import rat.poison.ui.changed
 import rat.poison.ui.uiElements.VisCheckBoxCustom
@@ -118,7 +116,6 @@ class SkinChangerTab : Tab(false, false) {
                 }
 
                 skSettings[weaponSelected] = skinWep.toString()
-                forcedUpdate()
             }
         }
 
@@ -161,13 +158,7 @@ class SkinChangerTab : Tab(false, false) {
             true
         }
 
-        enableSkinChanger.changed { _, _ ->
-            skinChanger()
-        }
-
         forceUpdate.changed { _, _ ->
-            forcedUpdate()
-
             true
         }
         ////////////////////FORMATTING

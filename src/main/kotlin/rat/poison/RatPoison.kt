@@ -9,14 +9,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.lwjgl.glfw.GLFW.*
 import rat.poison.game.CSGO
-import rat.poison.game.offsets.EngineOffsets.dwbSendPackets
 import rat.poison.overlay.App
 import rat.poison.scripts.*
-import rat.poison.scripts.aim.flatAim
-import rat.poison.scripts.aim.handleFireKey
-import rat.poison.scripts.aim.pathAim
-import rat.poison.scripts.aim.setAim
-import rat.poison.scripts.visuals.*
 import rat.poison.utils.common.Settings
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.loadSkinSettings
@@ -109,62 +103,7 @@ fun main() {
         curSettings["ENABLE_HITSOUND"] = "false"
         curSettings["SPREAD_CIRCLE"] = "false"
         curSettings["VISUALIZE_SMOKES"] = "false"
-    } else {
-        if (dbg) { println("[DEBUG] Initializing Recoil Ranks") }; ranks()
-
-        if (dbg) { println("[DEBUG] Initializing Recoil Spectator List") }; spectatorList()
-        if (dbg) { println("[DEBUG] Initializing Recoil Bomb Timer") }; bombTimer()
-
-        if (dbg) { println("[DEBUG] Initializing Recoil Crosshair") }; rCrosshair()
-        if (dbg) { println("[DEBUG] Initializing Hit Marker") }; hitMarker()
-        if (dbg) { println("[DEBUG] Initializing Nade Helper") }; nadeHelper()
-        if (dbg) { println("[DEBUG] Initializing Nade Tracer") }; nadeTracer()
-        if (dbg) { println("[DEBUG] Initializing Draw Fov") }; drawFov()
-        if (dbg) { println("[DEBUG] Initializing Spread Circle") }; spreadCircle()
-        if (dbg) { println("[DEBUG] Initializing Draw Smokes") }; drawSmokes()
-        if (dbg) { println("[DEBUG] Initializing Far Radar") }; farRadar()
-
-        if (dbg) { println("[DEBUG] Initializing Show Keybinds") }; handleUIWatermark()
-        //farEsp()
-
-        drawDebug()
     }
-
-    if (dbg) { println("[DEBUG] Initializing Bunny Hop") }; bunnyHop()
-    if (dbg) { println("[DEBUG] Initializing Auto Strafe") }; strafeHelper()
-    if (dbg) { println("[DEBUG] Initializing Kill Bind") }; killBind()
-    if (dbg) { println("[DEBUG] Initializing RCS") }; rcs()
-    if (dbg) { println("[DEBUG] Initializing Flat Aim") }; flatAim()
-    if (dbg) { println("[DEBUG] Initializing Path Aim") }; pathAim()
-    if (dbg) { println("[DEBUG] Initializing Set Aim") }; setAim()
-    if (dbg) { println("[DEBUG] Initializing Bone Trigger") }; triggerBot()
-    if (dbg) { println("[DEBUG] Initializing Auto Knife") }; autoKnife()
-    if (dbg) { println("[DEBUG] Initializing Reduced Flash") }; reducedFlash()
-    if (dbg) { println("[DEBUG] Initializing ESPs") }; esp()
-    if (dbg) { println("[DEBUG] Initializing Fast Stop") }; fastStop()
-    if (dbg) { println("[DEBUG] Initializing Head Walk") }; headWalk()
-    if (dbg) { println("[DEBUG] Initializing Adrenaline") }; adrenaline()
-    if (dbg) { println("[DEBUG] Initializing FovChanger") }; fovChanger()
-    if (dbg) { println("[DEBUG] Disabling Post Processing") }; disablePostProcessing()
-    if (dbg) { println("[DEBUG] Initializing Weapon Changer") }; skinChanger()
-    if (dbg) { println("[DEBUG] Initializing NightMode/FullBright") }; nightMode()
-    if (dbg) { println("[DEBUG] Initializing Bomb Updater")}; bombUpdater()
-
-    if (dbg) { println("[DEBUG] Initializing Backtrack") }; setupBacktrack()
-    if (dbg) { println("[DEBUG] Initializing Draw Backtrack") }; drawBacktrack()
-    if (dbg) { println("[DEBUG] Initializing GVars updater") }; updateGVars()
-    if (dbg) { println("[DEBUG] Initializing Nades Timer") }; nadesTimer()
-
-    if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
-    if (dbg) { println("[DEBUG] Initializing Fake Lag") }; fakeLag()
-    if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()
-    if (dbg) { println("[DEBUG] Initializing Kill Sound") }; killSoundEsp()
-    if (dbg) { println("[DEBUG] Initializing MusicKit Spoofer") }; musicKitSpoofer()
-    if (dbg) { println("[DEBUG] Initializing Block Bot") }; blockBot()
-    if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
-
-    if (dbg) { println("[DEBUG] Initializing Handle Fire Key") }; handleFireKey()
-    handleUCMD()
 
     //if (EXPERIMENTAL) {
         //rayTraceTest()
@@ -215,7 +154,5 @@ fun main() {
                 setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings.int["OPENGL_MSAA_SAMPLES"])
             })
         }
-    } else {
-        scanner()
     }
 }

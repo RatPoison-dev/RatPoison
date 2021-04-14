@@ -6,7 +6,6 @@ import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
 import rat.poison.overlay.opened
-import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.binds.VisBindTableCustom
 import rat.poison.ui.uiTabs.visualsTables.*
@@ -104,12 +103,6 @@ fun updateDisableEsp() {
         hitMarkerTableDisable(bool, col)
         miscVisualTableDisable(bool, col)
         nadesTableDisable(bool, col)
-
-        if (!curSettings.bool["ENABLE_ESP"]) {
-            disableAllEsp()
-        } else if (!curSettings.bool["CHAMS_ESP"]) {
-            disableAllEsp()
-        }
     }
 }
 

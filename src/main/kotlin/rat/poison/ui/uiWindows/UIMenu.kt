@@ -8,8 +8,6 @@ import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.VisWindow
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import rat.poison.*
-import rat.poison.scripts.sendPacket
-import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.changed
 import rat.poison.ui.uiTabs.*
 import rat.poison.ui.uiUpdate
@@ -22,7 +20,6 @@ val mainTabbedPane = TabbedPane()
     var rcsTab = RcsTab()
     var miscTab = MiscTabs()
     var ranksTab = RanksTab()
-    var nadeHelperTab = NadeHelperTab()
     var skinChangerTab = SkinChangerTab()
     var optionsTab = OptionsTab()
     var configsTab = ConfigsTab()
@@ -72,7 +69,6 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         mainTabbedPane.add(rcsTab)
         mainTabbedPane.add(miscTab)
         mainTabbedPane.add(ranksTab)
-        mainTabbedPane.add(nadeHelperTab)
         mainTabbedPane.add(skinChangerTab)
         mainTabbedPane.add(optionsTab)
         mainTabbedPane.add(configsTab)
@@ -156,7 +152,6 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
 
         nadeHelperButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
-            mainTabbedPaneContent.add(nadeHelperTab.contentTable).growX().left()
             lastCheckedTab.color = buttonColor
             lastCheckedTab = nadeHelperButton
             nadeHelperButton.color = buttonClicked
@@ -224,8 +219,6 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
 
     fun closeMenu() {
         haltProcess = true
-        disableAllEsp()
-        sendPacket(true)
         exitProcess(0)
     }
 

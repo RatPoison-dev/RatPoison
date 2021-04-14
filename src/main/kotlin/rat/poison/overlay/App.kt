@@ -28,8 +28,6 @@ import rat.poison.haltProcess
 import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
 import rat.poison.jna.enums.AccentStates
-import rat.poison.scripts.aim.meDead
-import rat.poison.scripts.visuals.espToggleCallback
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.uiTabs.updateDisableAim
@@ -52,9 +50,6 @@ var opened = false
 
 //exceptions to la rule
 var overlayMenuKey = ObservableBoolean({ keyPressed(curSettings.int["MENU_KEY"]) })
-var toggleAimKey = ObservableBoolean({ keyPressed(curSettings.int["AIM_TOGGLE_KEY"]) })
-var visualsToggleKey = ObservableBoolean({ keyPressed(curSettings.int["VISUALS_TOGGLE_KEY"]) })
-
 var syncTime = 0L
 var glowTime = 0L
 var appTime = 0L
@@ -81,8 +76,6 @@ object App: ApplicationAdapter() {
     lateinit var uiWatermark: UIWatermark
     lateinit var uiMenu: UIMenu
     lateinit var uiArrows: UIArrows
-    lateinit var uiBombWindow: UIBombTimer
-    lateinit var uiSpecList: UISpectatorList
     lateinit var uiKeybinds: UIKeybinds
     private val sbText = StringBuilder()
 
@@ -103,8 +96,6 @@ object App: ApplicationAdapter() {
         uiWatermark = UIWatermark()
         uiMenu = UIMenu()
         uiArrows = UIArrows()
-        uiBombWindow = UIBombTimer()
-        uiSpecList = UISpectatorList()
         uiKeybinds = UIKeybinds()
 
         camera = OrthographicCamera()
@@ -221,24 +212,6 @@ object App: ApplicationAdapter() {
                                     menuStage.clear()
                                 }
                             }
-
-                            if (curSettings.bool["ENABLE_BOMB_TIMER"] && curSettings.bool["BOMB_TIMER_MENU"] && curSettings.bool["ENABLE_ESP"]) {
-                                if (!menuStage.actors.contains(uiBombWindow)) {
-                                    uiBombWindow.updateAlpha()
-                                    menuStage.addActor(uiBombWindow)
-                                }
-                            } else if (menuStage.actors.contains(uiBombWindow)) {
-                                menuStage.clear() //actors.remove at index doesnt work after 1 loop?
-                            }
-
-                            if (curSettings.bool["SPECTATOR_LIST"] && curSettings.bool["ENABLE_ESP"]) {
-                                if (!menuStage.actors.contains(uiSpecList)) {
-                                    uiSpecList.updateAlpha()
-                                    menuStage.addActor(uiSpecList)
-                                }
-                            } else if (menuStage.actors.contains(uiSpecList)) {
-                                menuStage.clear() //actors.remove at index doesnt work after 1 loop?
-                            }
                         }, TimeUnit.NANOSECONDS)
 
                         sb.projectionMatrix = menuStage.camera.combined
@@ -290,7 +263,6 @@ object App: ApplicationAdapter() {
                             sbText.append("Me: ")
                             sbText.append(me)
                             sbText.append(" Dead: ")
-                            sbText.appendLine(meDead)
                             sbText.append("Danger Zone: ")
                             sbText.appendLine(DANGER_ZONE)
                             sbText.append("Shots fired: ")
@@ -348,17 +320,6 @@ object App: ApplicationAdapter() {
 
                         if (dbg) println("[DEBUG] Menu Toggled")
                     }
-                }
-
-                //Aim Toggle Key
-                toggleAimKey.update()
-                if (toggleAimKey.justBecameTrue) {
-                    aimTab.tMain.enableAim.isChecked = !aimTab.tMain.enableAim.isChecked
-                }
-
-                visualsToggleKey.update()
-                if (visualsToggleKey.justBecameTrue) {
-                    espToggleCallback()
                 }
 
                 if (!appless) {

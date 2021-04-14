@@ -5,7 +5,6 @@ import com.kotcrab.vis.ui.widget.LinkLabel
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.scripts.ranksPlayerList
 import rat.poison.ui.uiRefreshing
 import rat.poison.utils.RanksPlayer
 import rat.poison.utils.saving
@@ -75,9 +74,6 @@ class RanksTab : Tab(false, false) {
         namesTable.clear()
         namesTable.add(namesLabel).left().row()
 
-        ranksPlayerList.forEach {
-            constructRank(it)
-        }
         updatingRanks = false
     }
 

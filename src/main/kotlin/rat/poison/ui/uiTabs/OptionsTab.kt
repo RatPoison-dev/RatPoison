@@ -9,8 +9,6 @@ import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
 import rat.poison.dbg
-import rat.poison.overlay.App.uiBombWindow
-import rat.poison.overlay.App.uiSpecList
 import rat.poison.ui.changed
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.VisSliderCustom
@@ -62,15 +60,6 @@ class OptionsTab : Tab(false, false) {
     }
 }
 
-fun updateWindows() {
-    if (VisUI.isLoaded()) {
-        uiBombWindow.updatePosition(curSettings.float["BOMB_TIMER_X"], curSettings.float["BOMB_TIMER_Y"])
-        uiBombWindow.changeAlpha(curSettings.float["BOMB_TIMER_ALPHA"])
-        uiSpecList.updatePosition(curSettings.float["SPECTATOR_LIST_X"], curSettings.float["SPECTATOR_LIST_Y"])
-        uiSpecList.changeAlpha(curSettings.float["SPECTATOR_LIST_ALPHA"])
-    }
-}
-
 fun optionsTabUpdate() {
     if (uiRefreshing) return
 
@@ -84,6 +73,4 @@ fun optionsTabUpdate() {
         keybinds.update()
         blur.update()
     }
-
-    updateWindows()
 }

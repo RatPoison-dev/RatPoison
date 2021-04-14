@@ -7,7 +7,6 @@ import kotlinx.coroutines.launch
 import rat.poison.*
 import rat.poison.overlay.App
 import rat.poison.overlay.opened
-import rat.poison.ui.uiTabs.updateWindows
 import rat.poison.ui.uiUpdate
 import rat.poison.ui.uiWindows.configsTab
 import rat.poison.utils.extensions.toBitString
@@ -110,7 +109,6 @@ fun loadCFG(realCfgFileName: String, deleteCfgAfterLoad: Boolean = false) {
             GlobalScope.launch {
                 loadSettingsFromFiles("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg", true)
                 uiUpdate()
-                updateWindows()
                 println("Loading Complete!\n")
                 LOADED_CONFIG = cfgFileName
 
@@ -129,14 +127,6 @@ fun loadCFG(realCfgFileName: String, deleteCfgAfterLoad: Boolean = false) {
 
 fun saveWindows() {
     if (VisUI.isLoaded()) {
-        curSettings["BOMB_TIMER_X"] = App.uiBombWindow.x
-        curSettings["BOMB_TIMER_Y"] = App.uiBombWindow.y
-        curSettings["BOMB_TIMER_ALPHA"] = App.uiBombWindow.color.a
-
-        curSettings["SPECTATOR_LIST_X"] = App.uiSpecList.x
-        curSettings["SPECTATOR_LIST_Y"] = App.uiSpecList.y
-        curSettings["SPECTATOR_LIST_ALPHA"] = App.uiSpecList.color.a
-
         curSettings["KEYBINDS_X"] = App.uiKeybinds.x
         curSettings["KEYBINDS_Y"] = App.uiKeybinds.y
         curSettings["KEYBINDS_ALPHA"] = App.uiKeybinds.color.a

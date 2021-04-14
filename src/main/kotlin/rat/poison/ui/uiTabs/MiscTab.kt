@@ -6,13 +6,10 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.ui.uiTabs.miscTables.BombTable
 import rat.poison.ui.uiTabs.miscTables.FOVChangerTable
 import rat.poison.ui.uiTabs.miscTables.MovementTable
-import rat.poison.ui.uiTabs.miscTables.OthersTable
 
 var movementTable = MovementTable()
 var fovChangerTable = FOVChangerTable()
 var bombTable = BombTable()
-var othersTable = OthersTable()
-
 class MiscTabs: Tab(false, false) {
     private val table = VisTable(false)
 
@@ -33,7 +30,6 @@ class MiscTabs: Tab(false, false) {
 
         table.add(leftTable).width(470F).left().top()
         table.addSeparator(true)
-        table.add(othersTable).width(470F).left().top()
     }
 
     override fun getContentTable(): Table {
