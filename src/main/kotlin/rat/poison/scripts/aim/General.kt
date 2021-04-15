@@ -38,7 +38,7 @@ val findTargetResult = ThreadLocal.withInitial { FindTargetResult() }
 private const val id = "findtarget"
 private val forEnts = arrayOf(EntityType.CCSPlayer)
 
-fun aimFindTarget(position: Angle, angle: Angle, allowPerfect: Boolean, lockFOV: Float = AIM_FOV, BONE: String = curSettings["AIM_BONE"], visCheck: Boolean = true, teamCheck: Boolean = true): FindTargetResult {
+fun aimFindTarget(position: Angle, angle: Angle, allowPerfect: Boolean, lockFOV: Float = AIM_FOV, BONE: List<Int> = AIM_BONE, visCheck: Boolean = true, teamCheck: Boolean = true): FindTargetResult {
 	val result = findTargetResult.get()
 	result.reset()
 	var closestFOV = Float.MAX_VALUE
@@ -47,9 +47,8 @@ fun aimFindTarget(position: Angle, angle: Angle, allowPerfect: Boolean, lockFOV:
 	var closestBone = -1
 	var forceSpecificBone = -1
 
-	val bones = BONE.stringToIntList()
-	val findNearest = bones.has { it == NEAREST_BONE }
-	val findRandom = bones.has { 0 > it as Int }
+	val findNearest = BONE.has { it == NEAREST_BONE }
+	val findRandom = BONE.has { 0 > it as Int }
 
 	forEntities(forEnts, identifier = id) {
 		val entity = it.entity
@@ -64,8 +63,8 @@ fun aimFindTarget(position: Angle, angle: Angle, allowPerfect: Boolean, lockFOV:
 			forceSpecificBone = 5 + randInt(0, 3)
 		}
 		if (forceSpecificBone == -1) {
-			for (i in 0 until bones.size) {
-				val bone = bones[i]
+			for (i in 0 until BONE.size) {
+				val bone = BONE[i]
 				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, bone)
 
 				val fov = arr.fov
@@ -106,17 +105,16 @@ fun aimFindTarget(position: Angle, angle: Angle, allowPerfect: Boolean, lockFOV:
 	return result
 }
 
-private val thisCatJustJ = ThreadLocal.withInitial { mutableListOf<Int>() }
+
 fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
-				  lockFOV: Float = AIM_FOV, BONE: String = curSettings["AIM_BONE"], visCheck: Boolean = true, teamCheck: Boolean = true): Long {
+				  lockFOV: Float = AIM_FOV, BONE: List<Int> = AIM_BONE, visCheck: Boolean = true, teamCheck: Boolean = true): Long {
 	var closestFOV = Float.MAX_VALUE
 	var closestDelta = Float.MAX_VALUE
 	var closestPlayer = -1L
 	var forceSpecificBone = -1
 
-	val bones = BONE.stringToIntList()
-	val findNearest = bones.has { it == NEAREST_BONE }
-	val findRandom = bones.has { 0 > it as Int }
+	val findNearest = BONE.has { it == NEAREST_BONE }
+	val findRandom = BONE.has { 0 > it as Int }
 
 	forEntities(forEnts, identifier = id) {
 		val entity = it.entity
@@ -133,8 +131,8 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 		}
 
 		if (forceSpecificBone == -1) {
-			for (i in 0 until bones.size) {
-				val bone = bones[i]
+			for (i in 0 until BONE.size) {
+				val bone = BONE[i]
 				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, bone)
 
 				val fov = arr.fov
@@ -294,10 +292,10 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	val position = me.position(mePos)
 	val shouldVisCheck = !(forceAim && curSettings.bool["FORCE_AIM_THROUGH_WALLS"])
 
-	var aB = curSettings["AIM_BONE"]
+	var aB = AIM_BONE
 
 	if (pressedForceAimKey) {
-		aB = curSettings["FORCE_AIM_BONE"]
+		aB = FORCE_AIM_BONE
 	}
 
 	val findTargetResList = aimFindTarget(position, currentAngle, aim, BONE = aB, visCheck = shouldVisCheck)

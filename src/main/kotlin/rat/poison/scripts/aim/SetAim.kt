@@ -60,8 +60,8 @@ fun setAim() = every(500, true, inGameCheck = true) {
                         FACTOR_RECOIL = curWepSettings.tFRecoil
                         ENABLE_FLAT_AIM = curWepSettings.tFlatAim
                         ENABLE_PATH_AIM = curWepSettings.tPathAim
-                        curSettings["AIM_BONE"] = curWepSettings.tAimBone.toBoneList()
-                        curSettings["FORCE_AIM_BONE"] = curWepSettings.tForceBone.toBoneList()
+                        AIM_BONE = curWepSettings.tAimBone.toBoneList()
+                        FORCE_AIM_BONE = curWepSettings.tForceBone.toBoneList()
                         AIM_FOV = curWepSettings.tAimFov
                         AIM_SMOOTHNESS = curWepSettings.tAimSmooth
                         PERFECT_AIM = curWepSettings.tPerfectAim
@@ -100,8 +100,8 @@ fun setAim() = every(500, true, inGameCheck = true) {
         if (!curWepOverride) { //If the current weapon isn't checked to override
             if (curWepCategory != "") {
                 FACTOR_RECOIL = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_FACTOR_RECOIL")]
-                curSettings["AIM_BONE"] = curSettings[stringBuilder.clear().append(curWepCategory).append("_AIM_BONE")].stringToBoneList()
-                curSettings["FORCE_AIM_BONE"] = curSettings[stringBuilder.clear().append(curWepCategory).append("_AIM_FORCE_BONE")].stringToBoneList()
+                AIM_BONE = curSettings[stringBuilder.clear().append(curWepCategory).append("_AIM_BONE")].stringToBoneList()
+                FORCE_AIM_BONE = curSettings[stringBuilder.clear().append(curWepCategory).append("_AIM_FORCE_BONE")].stringToBoneList()
                 AIM_FOV = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_AIM_FOV")]
                 AIM_SMOOTHNESS = floor(curSettings.float[stringBuilder.clear().append(curWepCategory).append("_AIM_SMOOTHNESS")]).toInt()
 

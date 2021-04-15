@@ -21,6 +21,7 @@ var inTrigger = false
 private var triggerShots = 0
 private val meAngle = Vector()
 private val mePosition = Vector()
+private val boneList = listOf(-2)
 fun triggerBot() = every(5, inGameCheck = true) {
     //Don't run if not needed
     if (DANGER_ZONE || meDead || !inGame || MENUTOG || !meCurWep.gun || !curSettings.bool["ENABLE_TRIGGER"] || !haveAimSettings) { //Precheck
@@ -84,7 +85,7 @@ fun triggerBot() = every(5, inGameCheck = true) {
         if (bINFOV) { //If we should check in fov
             val currentAngle = clientState.angle(meAngle)
             val position = me.position(mePosition)
-            val target = findTarget(position, currentAngle, false, bFOV, "-2")
+            val target = findTarget(position, currentAngle, false, bFOV, boneList)
             if (target > 0) {
                 if (!target.dead() && !target.isProtected()) {
                     canFOV = true
