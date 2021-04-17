@@ -154,10 +154,10 @@ fun userCMDAim() {
     val position = me.position(mePos)
     val shouldVisCheck = !(forceAim && curSettings.bool["FORCE_AIM_THROUGH_WALLS"])
 
-    var aB = curSettings["AIM_BONE"]
+    var aB = AIM_BONE
 
     if (pressedForceAimKey) {
-        aB = curSettings["FORCE_AIM_BONE"]
+        aB = FORCE_AIM_BONE
     }
 
     val findTargetResList = aimFindTarget(position, currentAngle, aim, BONE = aB, visCheck = shouldVisCheck)

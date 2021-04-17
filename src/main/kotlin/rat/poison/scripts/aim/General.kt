@@ -66,7 +66,7 @@ fun aimFindTarget(position: Angle, angle: Angle, allowPerfect: Boolean, lockFOV:
 		}
 
 		if (forceSpecificBone == -1) {
-			for (element in bones) {
+			for (element in BONE) {
 				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, element)
 
 				val fov = arr.delta
@@ -291,10 +291,10 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	val position = me.position(mePos)
 	val shouldVisCheck = !(forceAim && curSettings.bool["FORCE_AIM_THROUGH_WALLS"])
 
-	var aB = curSettings["AIM_BONE"]
+	var aB = AIM_BONE
 
 	if (pressedForceAimKey) {
-		aB = curSettings["FORCE_AIM_BONE"]
+		aB = FORCE_AIM_BONE
 	}
 
 	val findTargetResList = aimFindTarget(position, currentAngle, aim, BONE = aB, visCheck = shouldVisCheck)
