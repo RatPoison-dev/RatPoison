@@ -34,13 +34,14 @@ private val targetAbsPositionVector = Vector()
 private val velocityVec = Vector()
 private val meAng = Vector()
 private val targetDirectionVector = Vector()
+private val boneList = listOf(-2)
 internal fun autoKnife() = every(10, inGameCheck = true) {
     if (curSettings.bool["MENU"] && opened && App.haveTarget && !DANGER_ZONE && !meDead) {
         if (curSettings.bool["ENABLE_AUTO_KNIFE"]) {
             if (meCurWep.knife) {
                 val currentAngle = clientState.angle(meAng)
                 val position = me.position(mePositionVector)
-                val target = findTarget(position, currentAngle, false, 32F, "-2")
+                val target = findTarget(position, currentAngle, false, 32F, boneList)
                 if (target > 0) {
                     if (keyReleased(AIM_KEY)) {
                         val targetPos = target.absPosition(targetAbsPositionVector)

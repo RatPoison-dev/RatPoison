@@ -2,7 +2,7 @@ package rat.poison.utils
 
 import rat.poison.curSettings
 import rat.poison.ui.KeybindType
-import rat.poison.utils.common.ListBasedMap
+import rat.poison.utils.maps.ListBasedMap
 import rat.poison.utils.common.ObservableBoolean
 import rat.poison.utils.common.keyPressed
 

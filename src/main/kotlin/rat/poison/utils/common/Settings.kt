@@ -1,18 +1,16 @@
 package rat.poison.utils.common
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectMap
-import it.unimi.dsi.fastutil.objects.Object2ObjectMaps
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import rat.poison.game.Color
 import rat.poison.utils.EfficientSettings
+import rat.poison.utils.maps.StringToAnyMap
 
 private val sbBuilder = StringBuilder()
 open class Settings {
 
-    val savedValues: Object2ObjectMap<String, String> =
-            Object2ObjectMaps.synchronize(Object2ObjectOpenHashMap())
+    val savedValues = StringToAnyMap<String>()
 
     operator fun get(key: String) = savedValues[key] ?: ""
+    operator fun get(key: StringBuilder) = savedValues[key] ?: ""
 
     operator fun set(key: String, value: Any): Any? {
         sbBuilder.clear().append(value)
@@ -20,8 +18,19 @@ open class Settings {
         efficient.update(key)
         return r
     }
+    operator fun set(key: StringBuilder, value: Any): Any? {
+        sbBuilder.clear().append(value)
+        val r = savedValues.put(key, sbBuilder.toString())
+        efficient.update(key)
+        return r
+    }
 
     operator fun set(key: String, value: String): Any? {
+        val r = savedValues.put(key, value)
+        efficient.update(key)
+        return r
+    }
+    operator fun set(key: StringBuilder, value: String): Any? {
         val r = savedValues.put(key, value)
         efficient.update(key)
         return r
@@ -36,30 +45,35 @@ open class Settings {
 
     inner class XBool {
         operator fun get(key: String): Boolean = efficient[key]
+        operator fun get(key: StringBuilder): Boolean = efficient[key]
     }
 
     val bool = XBool()
 
     inner class XDouble {
         operator fun get(key: String): Double = efficient[key]
+        operator fun get(key: StringBuilder): Double = efficient[key]
     }
 
     val double = XDouble()
 
     inner class XFloat {
         operator fun get(key: String): Float = efficient[key]
+        operator fun get(key: StringBuilder): Float = efficient[key]
     }
 
     val float = XFloat()
 
     inner class XColor {
         operator fun get(key: String): Color = efficient[key]
+        operator fun get(key: StringBuilder): Color = efficient[key]
     }
 
     val color = XColor()
 
     inner class XColorGDX {
         operator fun get(key: String): com.badlogic.gdx.graphics.Color = efficient[key]
+        operator fun get(key: StringBuilder): com.badlogic.gdx.graphics.Color = efficient[key]
     }
 
     val colorGDX = XColorGDX()
@@ -68,6 +82,7 @@ open class Settings {
 
     inner class XInt {
         operator fun get(key: String): Int = efficient[key]
+        operator fun get(key: StringBuilder): Int = efficient[key]
     }
 
 }

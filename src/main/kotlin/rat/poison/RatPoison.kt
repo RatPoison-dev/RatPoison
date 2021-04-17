@@ -5,8 +5,10 @@ package rat.poison
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import net.openhft.hashing.LongHashFunction
 import org.lwjgl.glfw.GLFW.*
 import rat.poison.game.CSGO
 import rat.poison.game.offsets.EngineOffsets.dwbSendPackets
