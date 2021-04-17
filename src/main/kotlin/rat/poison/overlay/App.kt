@@ -32,6 +32,7 @@ import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.visuals.espToggleCallback
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.MENUTOG
+import rat.poison.ui.MenuStage
 import rat.poison.ui.uiTabs.updateDisableAim
 import rat.poison.ui.uiUpdate
 import rat.poison.ui.uiWindows.*
@@ -70,7 +71,7 @@ object App: ApplicationAdapter() {
     } else {
         curSettings["MENU_APP"].replace("\"", "")
     }, "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
-    lateinit var menuStage: Stage
+    lateinit var menuStage: MenuStage
     lateinit var assetManager: AssetManager
     private lateinit var menuBatch: SpriteBatch
     lateinit var viewport: ScalingViewport
@@ -78,17 +79,16 @@ object App: ApplicationAdapter() {
     private val bodies = ObjectArrayList<App.() -> Unit>()
     private lateinit var camera: OrthographicCamera
 
+    lateinit var uiDebug: UIDebug
     lateinit var uiWatermark: UIWatermark
     lateinit var uiMenu: UIMenu
     lateinit var uiArrows: UIArrows
     lateinit var uiBombWindow: UIBombTimer
     lateinit var uiSpecList: UISpectatorList
     lateinit var uiKeybinds: UIKeybinds
-    private val sbText = StringBuilder()
 
-    private val osBean = ManagementFactory.getOperatingSystemMXBean() as OperatingSystemMXBean
+    val osBean = ManagementFactory.getOperatingSystemMXBean() as OperatingSystemMXBean
     var haveTarget = false
-    private var timer = 0
 
     override fun create() {
         assetManager = AssetManager()
@@ -100,6 +100,7 @@ object App: ApplicationAdapter() {
 
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
 
+        uiDebug = UIDebug()
         uiWatermark = UIWatermark()
         uiMenu = UIMenu()
         uiArrows = UIArrows()
@@ -111,7 +112,8 @@ object App: ApplicationAdapter() {
         sb = SpriteBatch()
         menuBatch = SpriteBatch()
         viewport = ScalingViewport(Scaling.stretch, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat(), camera)
-        menuStage = Stage(viewport, menuBatch) //Main Menu Stage
+
+        menuStage = MenuStage(viewport, menuBatch) //Main Menu Stage
         menuStage.addActor(uiMenu)
 
         Gdx.input.inputProcessor = InputMultiplexer(menuStage, keyProcessor)
@@ -169,8 +171,6 @@ object App: ApplicationAdapter() {
     }
 
     override fun render() {
-        timer++
-
         syncTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
             sync(curSettings.int["OPENGL_FPS"])
         }, TimeUnit.NANOSECONDS)
@@ -191,51 +191,44 @@ object App: ApplicationAdapter() {
                             assetManager.updateFonts()
                             if (MENUTOG || appless) {
                                 if (curSettings.bool["KEYBINDS"]) {
-                                    if (!menuStage.actors.contains(uiKeybinds)) {
-                                        menuStage.addActor(uiKeybinds)
-                                    }
+                                    menuStage.add(uiKeybinds)
                                 } else if (menuStage.actors.contains(uiKeybinds)) {
                                     menuStage.clear()
                                 }
 
-                                if (!menuStage.actors.contains(uiMenu)) {
-                                    menuStage.addActor(uiMenu)
+                                menuStage.add(uiMenu)
+
+                                menuStage.add(uiArrows)
+                                uiArrows.setPosition(uiMenu.x + uiMenu.width + 8F, uiMenu.y)
+
+                                if (curSettings.bool["DEBUG"]) {
+                                    menuStage.add(uiDebug)
+                                    uiDebug.setPosition(uiMenu.x + uiMenu.width + 8F, uiMenu.y + uiMenu.height - uiDebug.height)
+                                } else {
+                                    menuStage.clear(uiDebug)
                                 }
 
-                                if (!menuStage.actors.contains(uiArrows)) {
-                                    menuStage.addActor(uiArrows)
-                                } else {
-                                    uiArrows.setPosition(uiMenu.x + uiMenu.width + 8F, uiMenu.y)
-                                }
-                            } else if (menuStage.actors.contains(uiMenu) || menuStage.actors.contains(uiKeybinds) || menuStage.actors.contains(uiArrows)) {
+                            } else if (menuStage.actors.contains(uiMenu) || menuStage.actors.contains(uiKeybinds) || menuStage.actors.contains(uiArrows) || menuStage.actors.contains(uiDebug)) { //damn i hate being sober
                                 menuStage.clear()
                             }
 
                             if (curSettings.bool["ENABLE_WATERMARK"]) {
-                                if (!menuStage.actors.contains(uiWatermark)) {
-                                    menuStage.addActor(uiWatermark)
-                                    uiWatermark.setPosition(curSettings.float["UI_WATERMARK_X"], curSettings.float["UI_WATERMARK_Y"])
-                                }
+                                menuStage.add(uiWatermark)
+                                uiWatermark.setPosition(curSettings.float["UI_WATERMARK_X"], curSettings.float["UI_WATERMARK_Y"])
                             } else {
-                                if (menuStage.actors.contains(uiWatermark)) {
-                                    menuStage.clear()
-                                }
+                                menuStage.clear(uiWatermark)
                             }
 
                             if (curSettings.bool["ENABLE_BOMB_TIMER"] && curSettings.bool["BOMB_TIMER_MENU"] && curSettings.bool["ENABLE_ESP"]) {
-                                if (!menuStage.actors.contains(uiBombWindow)) {
-                                    uiBombWindow.updateAlpha()
-                                    menuStage.addActor(uiBombWindow)
-                                }
-                            } else if (menuStage.actors.contains(uiBombWindow)) {
-                                menuStage.clear() //actors.remove at index doesnt work after 1 loop?
+                                menuStage.add(uiBombWindow)
+                                uiBombWindow.updateAlpha()
+                            } else {
+                                menuStage.clear(uiBombWindow)
                             }
 
                             if (curSettings.bool["SPECTATOR_LIST"] && curSettings.bool["ENABLE_ESP"]) {
-                                if (!menuStage.actors.contains(uiSpecList)) {
-                                    uiSpecList.updateAlpha()
-                                    menuStage.addActor(uiSpecList)
-                                }
+                                menuStage.add(uiSpecList)
+                                uiSpecList.updateAlpha()
                             } else if (menuStage.actors.contains(uiSpecList)) {
                                 menuStage.clear() //actors.remove at index doesnt work after 1 loop?
                             }
@@ -269,54 +262,7 @@ object App: ApplicationAdapter() {
 
                     if (dbg) { //Draw Debug
                         //Limit updates
-                        if (timer >= curSettings.int["OPENGL_FPS"]/4) {
-                            val runtime = Runtime.getRuntime()
 
-                            val totalMem = runtime.totalMemory()
-                            val freeMem = runtime.freeMemory()
-                            val usedMem = totalMem - freeMem
-
-                            val totalPhysMem = osBean.totalPhysicalMemorySize
-                            val freePhysMem = osBean.freePhysicalMemorySize
-
-                            val processLoad = osBean.processCpuLoad
-                            val systemLoad = osBean.systemCpuLoad
-
-                            sbText.clear()
-                            sbText.append("In Game: ")
-                            sbText.appendLine(inGame)
-                            sbText.append("ShouldPostProcess: ")
-                            sbText.appendLine(shouldPostProcess)
-                            sbText.append("Me: ")
-                            sbText.append(me)
-                            sbText.append(" Dead: ")
-                            sbText.appendLine(meDead)
-                            sbText.append("Danger Zone: ")
-                            sbText.appendLine(DANGER_ZONE)
-                            sbText.append("Shots fired: ")
-                            sbText.appendLine(me.shotsFired())
-                            sbText.appendLine()
-                            sbText.append("Total physical mem: ")
-                            sbText.appendHumanReadableSize(totalPhysMem)
-                            sbText.appendLine()
-                            sbText.append("Free physical mem: ").appendHumanReadableSize(freePhysMem).appendLine()
-
-                            sbText.append("Total allocated mem: ").appendHumanReadableSize(totalMem).appendLine()
-
-                            sbText.append("Free allocated mem: ").appendHumanReadableSize(freeMem).appendLine()
-                            sbText.append("Used allocated mem: ").appendHumanReadableSize(usedMem).appendLine()
-
-                            sbText.append("\nProcess load: ").append((processLoad.toFloat() * 100F).roundNDecimals(2)).append("%")
-                            sbText.append("\nSystem load: ").append((systemLoad.toFloat() * 100F).roundNDecimals(2)).append("%")
-
-                            sbText.append("\n\nSync took: ").append((syncTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
-                            sbText.append("\nOverlay took: ").append((overlayTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
-                            sbText.append("\n   Menu took: ").append((menuTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
-                            sbText.append("\n   Apps took: ").append((appTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
-                            sbText.append("\n      Glow took: ").append((glowTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
-                            //sbText.append("\n      Bsp Vis Check took: ").append((bspVisTime.toFloat() * 0.000001F).roundNDecimals(4)).append(" ms")
-                            timer = 0
-                        }
 
 
                         try { //TODO fuck
@@ -329,7 +275,7 @@ object App: ApplicationAdapter() {
 
                             textRenderer.color = Color.WHITE
                             sb.color = Color.WHITE
-                            textRenderer.draw(sb, sbText, CSGO.gameWidth / 3F, CSGO.gameHeight - 100F)
+                            //textRenderer.draw(sb, sbText, CSGO.gameWidth / 3F, CSGO.gameHeight - 100F)
 
                             sb.end()
                         } catch (e: Exception) {}

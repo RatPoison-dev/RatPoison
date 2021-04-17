@@ -1,4 +1,4 @@
-package rat.poison.scripts
+package rat.poison.scripts.ui
 
 import rat.poison.BRANCH
 import rat.poison.overlay.App

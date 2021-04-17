@@ -12,7 +12,9 @@ import rat.poison.utils.saving
 
 var updatingRanks = false
 
-private class VisLabelExtension(mainText: String): VisLabel(mainText) {
+
+//TODO move
+class VisLabelExtension(mainText: String): VisLabel(mainText) {
     override fun setText(newText: CharSequence?) {
         if (this.text != newText) {
             super.setText(newText)

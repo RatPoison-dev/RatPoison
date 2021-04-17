@@ -33,7 +33,7 @@ class FindTargetResult(var player: Player = -1L, var bone: Int = -1) {
 	}
 }
 
-val findTargetResult = ThreadLocal.withInitial { FindTargetResult() }
+val findTargetResult: ThreadLocal<FindTargetResult> = ThreadLocal.withInitial { FindTargetResult() }
 
 private const val id = "findtarget"
 private val forEnts = arrayOf(EntityType.CCSPlayer)
@@ -53,9 +53,11 @@ fun aimFindTarget(position: Angle, angle: Angle, allowPerfect: Boolean, lockFOV:
 
 	forEntities(forEnts, identifier = id) {
 		val entity = it.entity
+
 		if (entity <= 0 || entity == me || !entity.canShoot(visCheck, teamCheck)) {
 			return@forEntities
 		}
+
 		if (findNearest) {
 			val nB = entity.nearestBone()
 			if (nB != INVALID_NEAREST_BONE) forceSpecificBone = nB
@@ -63,27 +65,27 @@ fun aimFindTarget(position: Angle, angle: Angle, allowPerfect: Boolean, lockFOV:
 		else if (findRandom) {
 			forceSpecificBone = 5 + randInt(0, 3)
 		}
+
 		if (forceSpecificBone == -1) {
-			for (i in 0 until bones.size) {
-				val bone = bones[i]
-				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, bone)
+			for (element in bones) {
+				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, element)
 
-				val fov = arr.fov
+				val fov = arr.delta
 
-				if (fov > 0F) {
+				if (fov > 0F && fov < closestFOV) {
 					closestFOV = fov
 					closestDelta = arr.delta
 					closestPlayer = arr.player
-					closestBone = bone
+					closestBone = element
 				}
 			}
 		}
 		else {
 			val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, forceSpecificBone)
 
-			val fov = arr.fov
+			val fov = arr.delta
 
-			if (fov > 0F) {
+			if (fov > 0F && fov < closestFOV) {
 				closestFOV = fov
 				closestDelta = arr.delta
 				closestPlayer = arr.player
@@ -106,7 +108,6 @@ fun aimFindTarget(position: Angle, angle: Angle, allowPerfect: Boolean, lockFOV:
 	return result
 }
 
-private val thisCatJustJ = ThreadLocal.withInitial { mutableListOf<Int>() }
 fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 				  lockFOV: Float = AIM_FOV, BONE: String = curSettings["AIM_BONE"], visCheck: Boolean = true, teamCheck: Boolean = true): Long {
 	var closestFOV = Float.MAX_VALUE
@@ -133,13 +134,12 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 		}
 
 		if (forceSpecificBone == -1) {
-			for (i in 0 until bones.size) {
-				val bone = bones[i]
-				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, bone)
+			for (element in bones) {
+				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, element)
 
-				val fov = arr.fov
+				val fov = arr.delta
 
-				if (fov > 0F) {
+				if (fov > 0F && fov < closestFOV) {
 					closestFOV = fov
 					closestDelta = arr.delta
 					closestPlayer = arr.player
@@ -149,15 +149,14 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 		else {
 			val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, forceSpecificBone)
 
-			val fov = arr.fov
+			val fov = arr.delta
 
-			if (fov > 0F) {
+			if (fov > 0F && fov < closestFOV) {
 				closestFOV = fov
 				closestDelta = arr.delta
 				closestPlayer = arr.player
 			}
 		}
-
 	}
 
 	if (closestDelta == Float.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return -1
@@ -174,11 +173,11 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 data class CalcTargetResult(var fov: Float = -1F, var delta: Float = -1F, var player: Player = -1L) {
 	fun reset() {
 		fov = -1F
-		delta -1F
+		delta = -1F
 		player = -1L
 	}
 }
-val calcTargetResult = ThreadLocal.withInitial {CalcTargetResult()}
+val calcTargetResult: ThreadLocal<CalcTargetResult> = ThreadLocal.withInitial {CalcTargetResult()}
 private val boneVec = ThreadLocal.withInitial { Vector() }
 private val ang = ThreadLocal.withInitial { Vector() }
 

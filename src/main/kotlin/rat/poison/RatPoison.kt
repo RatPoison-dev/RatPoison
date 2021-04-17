@@ -16,6 +16,8 @@ import rat.poison.scripts.aim.flatAim
 import rat.poison.scripts.aim.handleFireKey
 import rat.poison.scripts.aim.pathAim
 import rat.poison.scripts.aim.setAim
+import rat.poison.scripts.ui.handleUIDebug
+import rat.poison.scripts.ui.handleUIWatermark
 import rat.poison.scripts.visuals.*
 import rat.poison.utils.common.Settings
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
@@ -124,10 +126,9 @@ fun main() {
         if (dbg) { println("[DEBUG] Initializing Draw Smokes") }; drawSmokes()
         if (dbg) { println("[DEBUG] Initializing Far Radar") }; farRadar()
 
-        if (dbg) { println("[DEBUG] Initializing Show Keybinds") }; handleUIWatermark()
+        if (dbg) { println("[DEBUG] Initializing Handle UI Watermark") }; handleUIWatermark()
+        if (dbg) { println("[DEBUG] Initializing Handle UI Debug") }; handleUIDebug()
         //farEsp()
-
-        drawDebug()
     }
 
     if (dbg) { println("[DEBUG] Initializing Bunny Hop") }; bunnyHop()
@@ -164,7 +165,7 @@ fun main() {
     if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
 
     if (dbg) { println("[DEBUG] Initializing Handle Fire Key") }; handleFireKey()
-    handleUCMD()
+    //handleUCMD()
 
     //if (EXPERIMENTAL) {
         //rayTraceTest()

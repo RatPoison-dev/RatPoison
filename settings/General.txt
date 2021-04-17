@@ -1,5 +1,5 @@
 //Enable DEBUG
-DEBUG = false
+DEBUG = true
 
 //Enable the overlay, menu
 //Any settings/scripts reliant on drawing on the overlay won't enable

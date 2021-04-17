@@ -116,6 +116,25 @@ class UserCMD: Struct(), Structure.ByReference {
     var bHasBeenPredicted = false
 }
 
+fun UserCMD.reset() {
+    ptr = 0
+    iCmdNumber = 0
+    iTickCount = 0
+    vecViewAngles = Vector()
+    vecAimDirection = Vector()
+    flForwardmove = 0f
+    flSidemove = 0f
+    flUpmove = 0f
+    iButtons = 0
+    bImpulse = 0
+    iWeaponSelect = 0
+    iWeaponSubtype = 0
+    iRandomSeed = 0
+    siMouseDx = 0
+    siMouseDy = 0
+    bHasBeenPredicted = false
+}
+
 class verifiedUserCMD: Struct(), Structure.ByReference {
     var m_Command = UserCMD()
     var m_Crc = 0
