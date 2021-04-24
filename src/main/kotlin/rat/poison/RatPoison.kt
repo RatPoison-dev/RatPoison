@@ -167,11 +167,11 @@ fun main() {
     if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
 
     if (dbg) { println("[DEBUG] Initializing Handle Fire Key") }; handleFireKey()
-    //handleUCMD()
+    handleUCMD()
 
     //if (EXPERIMENTAL) {
         //rayTraceTest()
-        //drawMapWireframe()
+        //drawMapWireframe()l
     //}
     //Overlay check, not updated?
     if (curSettings.bool["MENU"]) {

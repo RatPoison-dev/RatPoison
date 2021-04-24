@@ -8,6 +8,7 @@ import rat.poison.scripts.aim.curWepCategory
 import rat.poison.scripts.aim.curWepOverride
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
+import rat.poison.scripts.chokedCommands
 import rat.poison.settings.*
 import rat.poison.utils.common.inGame
 import rat.poison.utils.common.shouldPostProcess
@@ -45,6 +46,7 @@ fun handleUIDebug() = App {
         sbText.appendLine(DANGER_ZONE)
         sbText.append("Shots fired: ")
         sbText.appendLine(me.shotsFired())
+        sbText.appendLine("Choked packets: $chokedCommands")
         sbText.appendLine()
         sbText.append("Total physical mem: ")
         sbText.appendHumanReadableSize(totalPhysMem)
@@ -99,19 +101,6 @@ fun handleUIDebug() = App {
         sbText.appendLine("Trigger Per Shot Delay: $TRIGGER_PER_SHOT_DELAY")
         sbText.appendLine("Backtrack: $BACKTRACK")
         sbText.appendLine("Backtrack MS: $BACKTRACK_MS")
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         uiDebug.contentLabelRight.setText(sbText.toString())
 

@@ -80,3 +80,8 @@ var MENUTOG = false
     set(value) {
         field = if (!appless) value else false
     }
+
+var DEBUGTOG = false
+    set(value) {
+        field = if(!appless) value else false
+    }

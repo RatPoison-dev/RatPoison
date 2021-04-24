@@ -34,7 +34,6 @@ fun setAim() = every(500, true, inGameCheck = true) {
         meCurWepEnt = me.weaponEntity()
         meCurWep = me.weapon(meCurWepEnt)
 
-
         if (meCurWep.grenade || meCurWep.knife || meCurWep.miscEnt || meCurWep == Weapons.ZEUS_X27 || meCurWep.bomb) {
             return@every
         }

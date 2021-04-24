@@ -27,10 +27,7 @@ fun handleFireKey() = every(1, continuous = true) {
         return@every
     }
 
-    if (!inFullscreen && ((MENUTOG && !appless) || (me > 0L && meDead) || inBackground)) {
-        if (clientDLL.int(dwForceAttack) == 5) {
-            clientDLL[dwForceAttack] = 4
-        }
+    if (curSettings.bool["SILENT_AIM"]) {
         return@every
     }
 
@@ -42,8 +39,10 @@ fun handleFireKey() = every(1, continuous = true) {
                 shouldShoot = true
             }
 
-            Thread.sleep(10)
-            fireWeapon()
+            if (!curSettings.bool["SILENT_AIM"]) {
+                Thread.sleep(10)
+                fireWeapon()
+            }
         }
         inTrigger -> {
             if (shouldShoot) { //Finish shooting...

@@ -42,11 +42,15 @@ internal inline fun forEntities(types: Array<EntityType>, iterateWeapons: Boolea
 		get.ents.clear()
 		get.created = System.currentTimeMillis()
 
-		for (i in 0 until types.size) {
-			val element = types[i]
-			val ents = entities[element] ?: continue
-			for (i1 in 0 until ents.size) {
-				val ent = ents[i1]
+		for (element in types) {
+//			val ents = entities[element] ?: continue
+//			for (i1 in 0 until ents.size) {
+//				val ent = ents[i1]
+//				get.ents.add(ent)
+//				ent.run(body)
+//			}
+
+			entities[element]?.forEach { ent ->
 				get.ents.add(ent)
 				ent.run(body)
 			}

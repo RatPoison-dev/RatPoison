@@ -31,6 +31,7 @@ import rat.poison.jna.enums.AccentStates
 import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.visuals.espToggleCallback
 import rat.poison.settings.DANGER_ZONE
+import rat.poison.settings.DEBUGTOG
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.MenuStage
 import rat.poison.ui.uiTabs.updateDisableAim
@@ -200,21 +201,23 @@ object App: ApplicationAdapter() {
 
                                 menuStage.add(uiArrows)
                                 uiArrows.setPosition(uiMenu.x + uiMenu.width + 8F, uiMenu.y)
-
-                                if (curSettings.bool["DEBUG"]) {
-                                    menuStage.add(uiDebug)
-                                    uiDebug.setPosition(uiMenu.x + uiMenu.width + 8F, uiMenu.y + uiMenu.height - uiDebug.height)
-                                } else {
-                                    menuStage.clear(uiDebug)
-                                }
-
                             } else if (menuStage.actors.contains(uiMenu) || menuStage.actors.contains(uiKeybinds) || menuStage.actors.contains(uiArrows) || menuStage.actors.contains(uiDebug)) { //damn i hate being sober
                                 menuStage.clear()
                             }
 
+                            if ((MENUTOG && curSettings.bool["DEBUG"]) || DEBUGTOG) {
+                                menuStage.add(uiDebug)
+
+                                if (!DEBUGTOG) {
+                                    uiDebug.setPosition(uiMenu.x + uiMenu.width + 8F, uiMenu.y + uiMenu.height - uiDebug.height)
+                                }
+                            } else {
+                                menuStage.clear(uiDebug)
+                            }
+
                             if (curSettings.bool["ENABLE_WATERMARK"]) {
                                 menuStage.add(uiWatermark)
-                                uiWatermark.setPosition(curSettings.float["UI_WATERMARK_X"], curSettings.float["UI_WATERMARK_Y"])
+                                //uiWatermark.setPosition(curSettings.float["UI_WATERMARK_X"], curSettings.float["UI_WATERMARK_Y"])
                             } else {
                                 menuStage.clear(uiWatermark)
                             }
@@ -262,9 +265,6 @@ object App: ApplicationAdapter() {
 
                     if (dbg) { //Draw Debug
                         //Limit updates
-
-
-
                         try { //TODO fuck
                             if (sb.isDrawing) {
                                 sb.end()

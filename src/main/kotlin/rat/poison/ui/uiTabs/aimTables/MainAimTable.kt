@@ -1,5 +1,6 @@
 package rat.poison.ui.uiTabs.aimTables
 
+import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.ui.changed
 import rat.poison.ui.uiElements.VisCheckBoxCustom
@@ -24,7 +25,6 @@ class MainAimTable: VisTable(false) {
 
     val forceAimBoneKey = VisBindTableCustom("Force Aim Bone Key", "FORCE_AIM_BONE_KEY", keyWidth = 225F)
     val forceAimKey = VisBindTableCustom("Force Aim Key", "FORCE_AIM_KEY", keyWidth = 225F)
-    val forceAimAlways = VisCheckBoxCustom("Force Aim Always", "FORCE_AIM_ALWAYS")
     val forceAimThroughWalls = VisCheckBoxCustom("Force Aim Through Walls", "FORCE_AIM_THROUGH_WALLS")
 
     //Automatic Weapons Collapsible
@@ -32,6 +32,10 @@ class MainAimTable: VisTable(false) {
     val automaticWeaponsInput = VisInputFieldCustom("MS Delay", "GLOBAL_AUTO_WEP_DELAY", false, keyWidth = 225F)
 
     val targetSwapDelay = VisSliderCustom("Target Swap Delay", "AIM_TARGET_SWAP_DELAY", 0F, 500F, 10F, true, labelWidth = 225F, barWidth = 225F)
+
+    val experimentalLabel = VisLabel("Experimental")
+    val userCMD = VisCheckBoxCustom("User CMD", "USER_CMD")
+    val silentAim = VisCheckBoxCustom("Silent Aim", "SILENT_AIM")
 
     init {
         fovType.changed {_, _ ->
@@ -73,7 +77,6 @@ class MainAimTable: VisTable(false) {
 
         add(forceAimBoneKey).left().row()
         add(forceAimKey).left().row()
-        add(forceAimAlways).left().row()
         add(forceAimThroughWalls).left().row()
 
         addSeparator()
@@ -82,5 +85,9 @@ class MainAimTable: VisTable(false) {
         add(automaticWeaponsInput).left().row()
 
         addSeparator()
+
+        add(experimentalLabel).left().row()
+        add(userCMD).left().row()
+        add(silentAim).left().row()
     }
 }

@@ -46,13 +46,13 @@ fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: 
 	normalize()
 }
 
-fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Int, silent: Boolean = false) {
-	if (!silent) {
+fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Int) {
+	//if (!silent) {
 		val dAng = applyFlatSmoothing(currentAngle, destinationAngle, smoothing)
 		clientState.setAngle(dAng)
-	} else {
-		cmdSetAngles(destinationAngle)
-	}
+	//} else {
+		//cmdSetAngles(dAng)
+	//}
 }
 
 private val point1 = ThreadLocal.withInitial { POINT() }

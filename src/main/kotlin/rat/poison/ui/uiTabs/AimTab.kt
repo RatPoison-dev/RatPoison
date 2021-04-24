@@ -154,7 +154,6 @@ fun updateDisableAim() {
 
         forceAimBoneKey.disable(bool, col)
         forceAimKey.disable(bool, col)
-        forceAimAlways.disable(bool)
         forceAimThroughWalls.disable(bool)
     }
 
@@ -199,7 +198,6 @@ fun updateAim() {
         holdAim.update()
         forceAimBoneKey.update()
         forceAimKey.update()
-        forceAimAlways.update()
         forceAimThroughWalls.update()
         automaticWeaponsCheckBox.update()
         automaticWeaponsInput.update()

@@ -98,14 +98,16 @@ FORCE_AIM_KEY_TYPE = ON_HOTKEY
 FORCE_AIM_BONE_KEY = 6
 FORCE_AIM_BONE_KEY_TYPE = ON_HOTKEY
 
-//Always force aim if within FOV
-FORCE_AIM_ALWAYS = false
-
 //If force aim works through walls (no vis check)
 FORCE_AIM_THROUGH_WALLS = false
 
 //MS Delay between when aimbot paths are recalculated
 AIM_DURATION = 1
+
+//Silent Aim
+SILENT_AIM = false
+
+USER_CMD = false
 
 //Bone IDs of bones used
 HEAD_BONE = 8
