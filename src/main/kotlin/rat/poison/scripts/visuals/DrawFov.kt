@@ -2,32 +2,22 @@ package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils.clamp
-import com.badlogic.gdx.utils.Align
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.EntityType
-import rat.poison.game.entity.bones
-import rat.poison.game.entity.position
-import rat.poison.game.forEntities
 import rat.poison.game.netvars.NetVarOffsets.m_iDefaultFov
 import rat.poison.game.netvars.NetVarOffsets.m_iFOV
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meCurWep
-import rat.poison.scripts.aim.meDead
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.settings.AIM_FOV
 import rat.poison.settings.MENUTOG
 import rat.poison.settings.TRIGGER_FOV
 import rat.poison.settings.TRIGGER_USE_FOV
-import rat.poison.utils.common.Angle
-import rat.poison.utils.common.Vector
-import rat.poison.utils.common.distanceTo
 import rat.poison.utils.common.inGame
 import java.lang.Math.toDegrees
 import java.lang.Math.toRadians
-import kotlin.math.abs
-import kotlin.math.roundToInt
-import kotlin.math.sin
 
 private const val id = "drawfov"
 private val forEnts = arrayOf(EntityType.CCSPlayer)

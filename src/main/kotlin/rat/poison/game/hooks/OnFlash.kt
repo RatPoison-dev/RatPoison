@@ -3,7 +3,7 @@ package rat.poison.game.hooks
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.flFlashMaxAlpha
-import rat.poison.scripts.aim.meDead
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.utils.common.hook
 import rat.poison.utils.common.inGame
 

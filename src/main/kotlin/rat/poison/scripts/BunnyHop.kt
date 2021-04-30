@@ -7,7 +7,7 @@ import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets.dwForceJump
-import rat.poison.scripts.aim.meDead
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.utils.common.every
 import rat.poison.utils.keybindEval
 import rat.poison.utils.randInt

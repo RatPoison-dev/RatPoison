@@ -24,6 +24,7 @@ object EngineOffsets {
 
     val dwClientState_ChokedCommands by engineDLL(2, subtract = false)(0x8B, 0x87, 0[4], 0x41)
 
+
     val dwClientState_PlayerInfo by engineDLL(2, subtract = false)(0x8B, 0x89, 0[4], 0x85, 0xC9, 0x0F, 0x84, 0[4], 0x8B, 0x01)
     val dwClientState_State by engineDLL(2, subtract = false)(0x83, 0xB8, 0[5], 0x0F, 0x94, 0xC0, 0xC3)
     val dwClientState_MapDirectory by engineDLL(7, subtract = false)(0xB8, 0[4], 0xC3, 0x05, 0[4], 0xC3)

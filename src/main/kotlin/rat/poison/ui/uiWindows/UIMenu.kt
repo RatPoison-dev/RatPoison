@@ -8,7 +8,7 @@ import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.VisWindow
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import rat.poison.*
-import rat.poison.scripts.sendPacket
+import rat.poison.scripts.misc.sendPacket
 import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.changed
 import rat.poison.ui.uiTabs.*

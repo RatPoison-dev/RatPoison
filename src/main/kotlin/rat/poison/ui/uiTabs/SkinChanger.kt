@@ -161,10 +161,6 @@ class SkinChangerTab : Tab(false, false) {
             true
         }
 
-        enableSkinChanger.changed { _, _ ->
-            skinChanger()
-        }
-
         forceUpdate.changed { _, _ ->
             forcedUpdate()
 

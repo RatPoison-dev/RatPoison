@@ -13,7 +13,7 @@ import rat.poison.game.offsets.ClientOffsets.dwForceBackward
 import rat.poison.game.offsets.ClientOffsets.dwForceForward
 import rat.poison.game.offsets.ClientOffsets.dwForceLeft
 import rat.poison.game.offsets.ClientOffsets.dwForceRight
-import rat.poison.scripts.aim.meDead
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.every
 import rat.poison.utils.common.keyPressed

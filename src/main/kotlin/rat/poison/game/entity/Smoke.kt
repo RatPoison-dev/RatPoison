@@ -2,7 +2,7 @@ package rat.poison.game.entity
 
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.netvars.NetVarOffsets
-import rat.poison.scripts.gvars
+import rat.poison.scripts.misc.gvars
 import rat.poison.settings.SMOKE_EFFECT_TIME
 
 typealias Smoke = Long

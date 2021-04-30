@@ -9,6 +9,7 @@ import rat.poison.game.netvars.NetVarOffsets.iCrossHairID
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
 import rat.poison.scripts.aim.*
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.settings.*
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.every
@@ -127,16 +128,16 @@ private fun trigQueueShot(delay: Int, aimbot: Boolean = false, backtrack: Boolea
 }
 
 private fun triggerShoot(aimbot: Boolean = false, backtrack: Boolean = false, backtrackFallback: Boolean = false) {
-    var didBacktrack = false
+    val didBacktrack = false
 
     if (backtrack) {
-        didBacktrack = attemptBacktrack()
+        //didBacktrack = attemptBacktrack()
         boneTrig = didBacktrack
     }
 
     if (!backtrack || (backtrack && !didBacktrack && backtrackFallback)) {
         boneTrig = aimbot
-        clientDLL[dwForceAttack] = 6 //HandleFireKey.kt
+        clientDLL[dwForceAttack] = 6
     }
 
     Thread.sleep(10)

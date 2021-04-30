@@ -10,7 +10,7 @@ import rat.poison.game.me
 import rat.poison.game.setAngle
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meCurWepEnt
-import rat.poison.scripts.aim.meDead
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.every
 import rat.poison.utils.common.normalize

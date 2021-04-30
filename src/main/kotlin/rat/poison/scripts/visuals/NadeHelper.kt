@@ -18,7 +18,7 @@ import rat.poison.overlay.App
 import rat.poison.overlay.App.menuStage
 import rat.poison.overlay.opened
 import rat.poison.scripts.aim.meCurWep
-import rat.poison.scripts.aim.meDead
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.uiTabs.nadeHelperLoadedFileStr

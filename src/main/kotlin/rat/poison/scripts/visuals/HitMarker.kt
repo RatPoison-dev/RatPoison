@@ -11,7 +11,7 @@ import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_flHealthShotBoostExpirationTime
 import rat.poison.game.netvars.NetVarOffsets.m_totalHitsOnServer
 import rat.poison.overlay.App
-import rat.poison.scripts.aim.meDead
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.inGame

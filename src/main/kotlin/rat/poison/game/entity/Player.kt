@@ -37,7 +37,7 @@ import rat.poison.game.offsets.ClientOffsets.dwEntityList
 import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.game.offsets.ClientOffsets.dwPlayerResource
 import rat.poison.game.offsets.EngineOffsets.dwClientState_PlayerInfo
-import rat.poison.scripts.gvars
+import rat.poison.scripts.misc.gvars
 import rat.poison.settings.HEAD_BONE
 import rat.poison.settings.SERVER_TICK_RATE
 import rat.poison.utils.common.Vector

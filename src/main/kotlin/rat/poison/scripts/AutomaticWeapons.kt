@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.MathUtils.clamp
 import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.scripts.aim.meCurWep
-import rat.poison.scripts.aim.meDead
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.settings.AUTO_WEP_DELAY
 import rat.poison.settings.MENUTOG
 

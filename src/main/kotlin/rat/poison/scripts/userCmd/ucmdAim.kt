@@ -4,36 +4,33 @@ import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.scripts.aim.*
-import rat.poison.scripts.cmdSetAngles
 import rat.poison.settings.*
 import rat.poison.utils.common.Vector
-import rat.poison.utils.common.finalize
 import rat.poison.utils.common.keyPressed
 import rat.poison.utils.keybindEval
-import rat.poison.utils.randInt
-import rat.poison.utils.writeAim
 
 private val meAng = Vector()
 private val mePos = Vector()
 private val boneVec2 = Vector()
 
-fun userCmdAim() {
-    if (!curSettings.bool["ENABLE_AIM"]) return
+fun ucmdAim(): Boolean {
+    if (!curSettings.bool["ENABLE_AIM"]) return false
 
     val canFire = meCurWepEnt.canFire()
     if (meCurWep.grenade || meCurWep.knife || meCurWep.miscEnt || meCurWep == Weapons.ZEUS_X27 || meCurWep.bomb || meCurWep == Weapons.NONE) { //Invalid for aimbot
         reset()
-        return
+        return false
     }
 
-    if (AIM_ONLY_ON_SHOT && (!canFire || (didShoot && !meCurWep.automatic && !AUTOMATIC_WEAPONS))) { //Onshot
+    //TODO                                 didShoot &&
+    if (AIM_ONLY_ON_SHOT && (!canFire || (!meCurWep.automatic && !AUTOMATIC_WEAPONS))) { //Onshot
         reset(false)
-        return
+        return false
     }
 
     if (meCurWep.sniper && !me.isScoped() && ENABLE_SCOPED_ONLY) { //Scoped only
         reset()
-        return
+        return false
     }
 
     val aim = curSettings.bool["ACTIVATE_FROM_AIM_KEY"] && keyPressed(AIM_KEY)
@@ -44,13 +41,13 @@ fun userCmdAim() {
 
     if (!pressed) {
         reset()
-        return
+        return false
     }
 
     if (meCurWep.rifle || meCurWep.smg) {
         if (me.shotsFired() < AIM_AFTER_SHOTS) {
             reset()
-            return
+            return false
         }
     }
 
@@ -75,7 +72,7 @@ fun userCmdAim() {
 
         if (currentTarget <= 0) { //End if we don't, can't loop because of thread blocking
             reset()
-            return
+            return false
         }
         target = currentTarget
     }
@@ -85,7 +82,7 @@ fun userCmdAim() {
 
     if (bestTarget <= 0 && !curSettings.bool["HOLD_AIM"] || bestTarget.dead()) {
         reset()
-        return
+        return false
     }
 //
 //    var perfect = false
@@ -99,16 +96,18 @@ fun userCmdAim() {
 
     if (swapTarget) {
         reset()
-        return
+        return false
     } else if (!currentTarget.canShoot(shouldVisCheck)) {
         Thread.sleep(curSettings.int["AIM_TARGET_SWAP_DELAY"].toLong()) //tested cool breezy
         reset()
-        return
+        return false
     } else {
         val bonePosition = currentTarget.bones(destBone, boneVec2)
 
         val destinationAngle = realCalcAngle(me, bonePosition)
 
         cmdSetAngles(destinationAngle)
+
+        return true
     }
 }

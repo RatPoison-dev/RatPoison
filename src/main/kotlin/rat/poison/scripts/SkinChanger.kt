@@ -101,7 +101,7 @@ fun skinChanger() = every(1, continuous = true, inGameCheck = true) {
                     }
                 }
 
-                Thread.sleep(500)
+                Thread.sleep(100)
             }
         }
     } catch (e: Exception) {

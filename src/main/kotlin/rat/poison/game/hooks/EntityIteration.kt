@@ -21,7 +21,7 @@ import rat.poison.game.offsets.EngineOffsets.dwClientState_MapDirectory
 import rat.poison.game.offsets.EngineOffsets.dwGameDir
 import rat.poison.game.offsets.EngineOffsets.dwSignOnState
 import rat.poison.scripts.detectMap
-import rat.poison.scripts.sendPacket
+import rat.poison.scripts.misc.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.*
 import rat.poison.utils.common.*

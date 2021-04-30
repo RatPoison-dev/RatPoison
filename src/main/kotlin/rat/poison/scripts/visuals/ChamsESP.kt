@@ -14,8 +14,8 @@ import rat.poison.game.offsets.ClientOffsets.dwLocalPlayer
 import rat.poison.game.offsets.EngineOffsets.dwModelAmbientMin
 import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.meCurWep
-import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.aim.target
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.every

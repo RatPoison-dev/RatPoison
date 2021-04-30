@@ -3,6 +3,7 @@ package rat.poison.scripts.aim
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.settings.*
 import rat.poison.utils.*
 import rat.poison.utils.common.*
@@ -264,7 +265,8 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		return@every
 	}
 
-	if (AIM_ONLY_ON_SHOT && (!canFire || (didShoot && !meCurWep.automatic && !AUTOMATIC_WEAPONS))) { //Onshot
+		//TODO                            didShoot &&
+	if (AIM_ONLY_ON_SHOT && (!canFire || (!meCurWep.automatic && !AUTOMATIC_WEAPONS))) { //Onshot
 		reset(false)
 		return@every
 	}

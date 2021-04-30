@@ -5,7 +5,9 @@ import rat.poison.game.CSGO.engineDLL
 import rat.poison.game.me
 import rat.poison.game.offsets.EngineOffsets.bVoiceRecording
 import rat.poison.scripts.aim.canShoot
-import rat.poison.scripts.aim.meDead
+import rat.poison.scripts.misc.gvars
+import rat.poison.scripts.misc.sendPacket
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.settings.AIM_KEY
 import rat.poison.utils.common.every
 import rat.poison.utils.common.keyPressed

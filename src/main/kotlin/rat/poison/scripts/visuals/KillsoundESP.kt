@@ -6,7 +6,7 @@ import rat.poison.curSettings
 import rat.poison.game.entity.kills
 import rat.poison.game.me
 import rat.poison.overlay.App.assetManager
-import rat.poison.scripts.aim.meDead
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.utils.common.every
 import rat.poison.utils.common.inGame
 

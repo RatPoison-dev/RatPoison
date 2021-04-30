@@ -20,17 +20,12 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import rat.poison.appless
 import rat.poison.curSettings
 import rat.poison.dbg
-import rat.poison.game.CSGO
-import rat.poison.game.entity.shotsFired
-import rat.poison.game.me
 import rat.poison.game.updateViewMatrix
 import rat.poison.haltProcess
 import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
 import rat.poison.jna.enums.AccentStates
-import rat.poison.scripts.aim.meDead
 import rat.poison.scripts.visuals.espToggleCallback
-import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.DEBUGTOG
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.MenuStage
@@ -80,6 +75,7 @@ object App: ApplicationAdapter() {
     private val bodies = ObjectArrayList<App.() -> Unit>()
     private lateinit var camera: OrthographicCamera
 
+    lateinit var uiWarning: UIWarning
     lateinit var uiDebug: UIDebug
     lateinit var uiWatermark: UIWatermark
     lateinit var uiMenu: UIMenu
@@ -101,6 +97,7 @@ object App: ApplicationAdapter() {
 
         shapeRenderer = ShapeRenderer().apply { setAutoShapeType(true) }
 
+        uiWarning = UIWarning()
         uiDebug = UIDebug()
         uiWatermark = UIWatermark()
         uiMenu = UIMenu()
@@ -199,9 +196,12 @@ object App: ApplicationAdapter() {
 
                                 menuStage.add(uiMenu)
 
+                                menuStage.add(uiWarning)
+                                uiWarning.setPosition(uiMenu.x, uiMenu.y + uiMenu.height + 8F)
+
                                 menuStage.add(uiArrows)
                                 uiArrows.setPosition(uiMenu.x + uiMenu.width + 8F, uiMenu.y)
-                            } else if (menuStage.actors.contains(uiMenu) || menuStage.actors.contains(uiKeybinds) || menuStage.actors.contains(uiArrows) || menuStage.actors.contains(uiDebug)) { //damn i hate being sober
+                            } else if (menuStage.actors.contains(uiMenu) || menuStage.actors.contains(uiKeybinds) || menuStage.actors.contains(uiArrows) || menuStage.actors.contains(uiDebug) || menuStage.actors.contains(uiWarning)) { //damn i hate being sober
                                 menuStage.clear()
                             }
 

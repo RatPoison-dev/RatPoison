@@ -7,6 +7,7 @@ import rat.poison.game.Weapons
 import rat.poison.game.entity.weapon
 import rat.poison.game.entity.weaponEntity
 import rat.poison.game.me
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.settings.*
 import rat.poison.settingsLoaded
 import rat.poison.utils.common.every

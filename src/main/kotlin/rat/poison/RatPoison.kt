@@ -5,21 +5,20 @@ package rat.poison
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import net.openhft.hashing.LongHashFunction
 import org.lwjgl.glfw.GLFW.*
 import rat.poison.game.CSGO
 import rat.poison.game.offsets.EngineOffsets.dwbSendPackets
 import rat.poison.overlay.App
 import rat.poison.scripts.*
 import rat.poison.scripts.aim.flatAim
-import rat.poison.scripts.aim.handleFireKey
 import rat.poison.scripts.aim.pathAim
 import rat.poison.scripts.aim.setAim
+import rat.poison.scripts.misc.updateGVars
 import rat.poison.scripts.ui.handleUIDebug
 import rat.poison.scripts.ui.handleUIWatermark
+import rat.poison.scripts.userCmd.handleUCMD
 import rat.poison.scripts.visuals.*
 import rat.poison.utils.common.Settings
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
@@ -155,7 +154,7 @@ fun main() {
 
     if (dbg) { println("[DEBUG] Initializing Backtrack") }; setupBacktrack()
     if (dbg) { println("[DEBUG] Initializing Draw Backtrack") }; drawBacktrack()
-    if (dbg) { println("[DEBUG] Initializing GVars updater") }; updateGVars()
+    if (dbg) { println("[DEBUG] Initializing GVars Updater") }; updateGVars()
     if (dbg) { println("[DEBUG] Initializing Nades Timer") }; nadesTimer()
 
     if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
@@ -166,7 +165,6 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Block Bot") }; blockBot()
     if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
 
-    if (dbg) { println("[DEBUG] Initializing Handle Fire Key") }; handleFireKey()
     handleUCMD()
 
     //if (EXPERIMENTAL) {

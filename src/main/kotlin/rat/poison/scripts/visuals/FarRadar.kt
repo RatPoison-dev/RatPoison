@@ -14,7 +14,7 @@ import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwRadarBase
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
-import rat.poison.scripts.aim.meDead
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.inGame

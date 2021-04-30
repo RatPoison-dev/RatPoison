@@ -14,8 +14,10 @@ import rat.poison.game.offsets.ClientOffsets.dwIndex
 import rat.poison.game.offsets.ClientOffsets.dwInput
 import rat.poison.game.offsets.EngineOffsets.dwClientState_LastOutgoingCommand
 import rat.poison.game.offsets.EngineOffsets.dwGlobalVars
-import rat.poison.game.offsets.EngineOffsets.dwbSendPackets
 import rat.poison.scripts.aim.*
+import rat.poison.scripts.misc.gvars
+import rat.poison.scripts.misc.haveGvars
+import rat.poison.scripts.misc.sendPacket
 import rat.poison.utils.Structs.*
 import rat.poison.utils.common.Angle
 import rat.poison.utils.common.Vector
@@ -33,25 +35,6 @@ var bestBacktrackTarget = -1L
 
 private var inBacktrack = false
 
-private var haveGvars = false
-var gvars = GlobalVars()
-
-fun sendPacket(bool: Boolean) { //move outta here
-    val byte = if (bool) 1.toByte() else 0.toByte()
-    engineDLL[dwbSendPackets] = byte //Bitch ass lil coder signature wont work
-}
-
-fun updateGVars() = every(15, true, inGameCheck = true){
-    if (me <= 0) return@every
-    val tGvars = getGlobalVars()
-    if (tGvars != null) {
-        gvars = tGvars
-        haveGvars = true
-    } else {
-        haveGvars = false
-    }
-}
-
 fun setupBacktrack() = every(4, true, inGameCheck = true) {
     if (!curSettings.bool["ENABLE_BACKTRACK"] || me <= 0 || !haveGvars) return@every
 
@@ -66,36 +49,37 @@ private val oldUserCmdMemory = threadLocalPointer(oldUserCmdMemorySize)
 private val newUserCMDMemory = threadLocalPointer(newUserCmdMemorySize)
 private val oldUserCMD = UserCMD()
 private val newUserCMD = UserCMD()
-fun attemptBacktrack(): Boolean {
+
+fun attemptBacktrack(userCMD: UserCMD): Boolean {
     if (((curSettings.bool["BACKTRACK_SPOTTED"] && bestBacktrackTarget.spotted()) || !curSettings.bool["BACKTRACK_SPOTTED"]) && bestBacktrackTarget > 0L && haveGvars) {
         inBacktrack = true
 
         //Get/set vars
         if (!meCurWep.gun || !meCurWepEnt.canFire()) { inBacktrack = false; return false }
 
-        val curSequenceNumber = csgoEXE.int(clientState + dwClientState_LastOutgoingCommand) + 1
-        sendPacket(false)
-        val inputMemory = inputMemory.get()
-        csgoEXE.read(clientDLL.address + dwInput, inputMemory, inputMemorySize)
-        val input = memToInput(inputMemory)
+        //val curSequenceNumber = csgoEXE.int(clientState + dwClientState_LastOutgoingCommand) + 1
+        //sendPacket(false)
+        //val inputMemory = inputMemory.get()
+        //csgoEXE.read(clientDLL.address + dwInput, inputMemory, inputMemorySize)
+        //val input = memToInput(inputMemory)
 
-        val userCMDptr = input.pCommands + (curSequenceNumber % 150) * 0x64
-        val verifiedUserCMDptr = input.pVerifiedCommands + (curSequenceNumber % 150) * 0x68
-        val oldUserCMDptr = input.pCommands + ((curSequenceNumber - 1) % 150) * 0x64
+        //val userCMDptr = input.pCommands + (curSequenceNumber % 150) * 0x64
+        //val verifiedUserCMDptr = input.pVerifiedCommands + (curSequenceNumber % 150) * 0x68
+        //val oldUserCMDptr = input.pCommands + ((curSequenceNumber - 1) % 150) * 0x64
 
-        while (csgoEXE.int(userCMDptr + 0x4) < curSequenceNumber) {
-            Thread.sleep(1)
-        }
+        //while (csgoEXE.int(userCMDptr + 0x4) < curSequenceNumber) {
+        //    Thread.sleep(1)
+        //}
 
         //Check invalid?
-        val oldUserCmdMemory = oldUserCmdMemory.get()
-        csgoEXE.read(oldUserCMDptr, oldUserCmdMemory, oldUserCmdMemorySize)
-        val oldUserCMD = memToUserCMD(oldUserCmdMemory, oldUserCMD)
-        val newUserCmdMemory = newUserCMDMemory.get()
-        csgoEXE.read(userCMDptr, newUserCmdMemory, newUserCmdMemorySize)
-        var userCMD = memToUserCMD(newUserCmdMemory, newUserCMD)
+        //val oldUserCmdMemory = oldUserCmdMemory.get()
+        //csgoEXE.read(oldUserCMDptr, oldUserCmdMemory, oldUserCmdMemorySize)
+        //val oldUserCMD = memToUserCMD(oldUserCmdMemory, oldUserCMD)
+        //val newUserCmdMemory = newUserCMDMemory.get()
+        //csgoEXE.read(userCMDptr, newUserCmdMemory, newUserCmdMemorySize)
+        //var userCMD = memToUserCMD(newUserCmdMemory, newUserCMD)
 
-        userCMD = fixUserCMD(userCMD, oldUserCMD)
+        //userCMD = fixUserCMD(userCMD, oldUserCMD)
 
         val bestTime = bestSimTime()
 
@@ -105,15 +89,10 @@ fun attemptBacktrack(): Boolean {
             return false
         }
 
-        userCMD.iButtons = userCMD.iButtons or 1 // << 1 =|= IN_ATTACK
+        //userCMD.iButtons = userCMD.iButtons or 1 // << 1 =|= IN_ATTACK
         userCMD.iTickCount = timeToTicks(bestTime)
 
-        userCMDToMem(userCMDptr, userCMD)
-        userCMDToMem(verifiedUserCMDptr, userCMD)
-
-        sendPacket(true)
         inBacktrack = false
-        Thread.sleep(4)
         return true
     }
 

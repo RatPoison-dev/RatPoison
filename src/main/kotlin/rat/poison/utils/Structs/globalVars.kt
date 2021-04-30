@@ -3,15 +3,15 @@ package rat.poison.utils.Structs
 import com.sun.jna.Memory
 import com.sun.jna.Structure
 import org.jire.arrowhead.Struct
-import rat.poison.scripts.gvars
+import rat.poison.scripts.misc.gvars
 
 fun memToGlobalVars(mem: Memory): GlobalVars {
-    val tmp_gvars = gvars
+    val tmpGVars = gvars
 
-    tmp_gvars.tickCount = gvar_tickCount(mem)
-    tmp_gvars.intervalPerTick = gvar_intervalPerTick(mem)
+    tmpGVars.tickCount = gvar_tickCount(mem)
+    tmpGVars.intervalPerTick = gvar_intervalPerTick(mem)
 
-    return tmp_gvars
+    return tmpGVars
 }
 
 class GlobalVars: Struct(), Structure.ByReference {

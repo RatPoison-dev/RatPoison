@@ -7,7 +7,7 @@ import rat.poison.game.me
 import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meCurWep
-import rat.poison.scripts.aim.meDead
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.scripts.visuals.lineThroughSmoke
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.common.Vector

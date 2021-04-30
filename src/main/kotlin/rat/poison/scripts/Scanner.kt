@@ -5,6 +5,7 @@ import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.rankName
 import rat.poison.haltProcess
+import rat.poison.scripts.misc.sendPacket
 import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.utils.deleteCFG
 import rat.poison.utils.extensions.roundNDecimals

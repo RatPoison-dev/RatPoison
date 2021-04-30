@@ -12,7 +12,7 @@ import rat.poison.game.entity.position
 import rat.poison.game.me
 import rat.poison.game.w2sViewMatrix
 import rat.poison.overlay.App
-import rat.poison.scripts.aim.meDead
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.inGame
 import rat.poison.utils.generalUtil.toMatrix4

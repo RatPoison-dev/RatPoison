@@ -1,17 +1,19 @@
-package rat.poison.scripts
+package rat.poison.scripts.userCmd
 
-import rat.poison.appless
 import rat.poison.curSettings
 import rat.poison.game.*
+import rat.poison.game.CSGO.clientDLL
+import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.EngineOffsets
+import rat.poison.game.offsets.EngineOffsets.dwClientStateNetChannel
 import rat.poison.scripts.aim.*
-import rat.poison.scripts.userCmd.userCmdAim
+import rat.poison.scripts.attemptBacktrack
+import rat.poison.scripts.misc.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.Structs.*
 import rat.poison.utils.common.*
-import rat.poison.utils.keybindEval
 import java.lang.Thread.yield
 
 var lastCMDNumber = 0
@@ -20,44 +22,53 @@ var chokedCommands = 0
 private const val inputMemorySize = 253
 private val inputMemory = threadLocalPointer(inputMemorySize)
 
+var meDead = true
+
+var silentHaveTarget = false
+
 fun handleUCMD() = every(1) {
+    meDead = me.dead()
+
     if (!curSettings.bool["USER_CMD"]) return@every
 
     val inputMemory = inputMemory.get()
-
-    val lastCommand = CSGO.csgoEXE.int(clientState + EngineOffsets.dwClientState_LastOutgoingCommand)
+    val lastCommand = csgoEXE.int(clientState + EngineOffsets.dwClientState_LastOutgoingCommand)
 
     if (lastCMDNumber != lastCommand) {
         sendPacket(false)
 
-        val currentCommandNumber = CSGO.csgoEXE.int(clientState + EngineOffsets.dwClientState_LastOutgoingCommand) + 2
+        val currentCommandNumber = csgoEXE.int(clientState + EngineOffsets.dwClientState_LastOutgoingCommand) + 2
 
-        CSGO.csgoEXE.read(CSGO.clientDLL.address + ClientOffsets.dwInput, inputMemory, inputMemorySize)
+        csgoEXE.read(clientDLL.address + ClientOffsets.dwInput, inputMemory, inputMemorySize)
+
         val input = memToInput(inputMemory)
-        val pUCMD = input.pCommands + (currentCommandNumber % 150) * 0x64
+        //val pUCMD = input.pCommands + (currentCommandNumber % 150) * 0x64
+        val pNetChannel = csgoEXE.int(clientState + dwClientStateNetChannel)
 
         second@while (true) {
-            val curCMDNumber = CSGO.csgoEXE.int(pUCMD + 0x4)
-            chokedCommands = CSGO.csgoEXE.int(clientState + EngineOffsets.dwClientState_ChokedCommands) - 1
+            val curCMDNumber = csgoEXE.int(pNetChannel + 0x18) //find out what 0x18 supposd b
+            chokedCommands = csgoEXE.int(clientState + EngineOffsets.dwClientState_ChokedCommands) - 1
             if (chokedCommands < 0) chokedCommands = 0
 
             //Aimbot : Do all the stuff, priority 1
             if (curSettings.bool["SILENT_AIM"]) {
-                userCmdAim()
+                silentHaveTarget = ucmdAim()
             }
 
-            //Trigger : Do all the stuff, priority 2
-
-            //Backtrack : Do all the stuff, priority 3
-
-            //Slidewalk
-
-            if (curCMDNumber >= currentCommandNumber || chokedCommands >= 4) {
+            if (curCMDNumber >= currentCommandNumber || chokedCommands >= 7) {
                 val oldUserCMDptr = input.pCommands + ((currentCommandNumber-1) % 150) * 0x64
                 val verifiedOldUserCMDptr = input.pVerifiedCommands + ((currentCommandNumber-1) % 150) * 0x68
 
-                sendUserCMD(currentCommandNumber, oldUserCMDptr, verifiedOldUserCMDptr)
+                val oldUserCmdMemory = oldUserCmdMemory.get()
+                csgoEXE.read(oldUserCMDptr, oldUserCmdMemory, oldUserCmdMemorySize)
+                memToUserCMD(oldUserCmdMemory, oldUserCMD)
 
+                //Trigger : Do all the stuff, priority 2
+
+                //Backtrack : Do all the stuff, priority 3
+                attemptBacktrack(oldUserCMD)
+
+                sendUserCMD(oldUserCMD, oldUserCMDptr, verifiedOldUserCMDptr)
                 sendPacket(true)
 
                 Thread.sleep(10) //pas one down s
@@ -75,29 +86,31 @@ private val oldUserCmdMemory = threadLocalPointer(oldUserCmdMemorySize)
 private val oldUserCMD = UserCMD()
 var nextCMD = UserCMD()
 
-fun sendUserCMD(commandNumber: Int, oldPtr: Int, oldVerifiedPtr: Int) {
-    val oldUserCmdMemory = oldUserCmdMemory.get()
-    CSGO.csgoEXE.read(oldPtr, oldUserCmdMemory, oldUserCmdMemorySize)
-    val oldUserCMD = memToUserCMD(oldUserCmdMemory, oldUserCMD)
-
+fun sendUserCMD(userCmd: UserCMD, oldPtr: Int, oldVerifiedPtr: Int) {
     var shouldSendCmd = false
 
     if (!canSetCmdAngles) { //Queued
-        oldUserCMD.vecViewAngles = nextCMD.vecViewAngles
+        userCmd.vecViewAngles = nextCMD.vecViewAngles
         canSetCmdAngles = true
 
         shouldSendCmd = true
     }
 
     //Aim Key
-    if (keyPressed(1) && !(!inFullscreen && ((MENUTOG && !appless) || (me > 0L && meDead) || inBackground))) {
+    if (keyPressed(1) && !meDead && !inBackground && inGame) {
         //Shoot
-        oldUserCMD.iButtons = oldUserCMD.iButtons or 1
+        userCmd.iButtons = userCmd.iButtons or 1
+
+        if (curSettings.bool["SILENT_AIM"] && curSettings.bool["SILENT_REQUIRE_TARGET"] && !silentHaveTarget) {
+            return
+        }
+
+        shouldSendCmd = true
     }
 
     if (shouldSendCmd) {
-        userCMDToMem(oldPtr, oldUserCMD)
-        userCMDToMem(oldVerifiedPtr, oldUserCMD)
+        userCMDToMem(oldPtr, userCmd)
+        userCMDToMem(oldVerifiedPtr, userCmd)
     }
 
     nextCMD.reset()

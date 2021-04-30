@@ -106,6 +106,7 @@ AIM_DURATION = 1
 
 //Silent Aim
 SILENT_AIM = false
+SILENT_REQUIRE_TARGET = true
 
 USER_CMD = false
 

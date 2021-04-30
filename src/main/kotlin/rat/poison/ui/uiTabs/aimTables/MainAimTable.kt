@@ -36,6 +36,7 @@ class MainAimTable: VisTable(false) {
     val experimentalLabel = VisLabel("Experimental")
     val userCMD = VisCheckBoxCustom("User CMD", "USER_CMD")
     val silentAim = VisCheckBoxCustom("Silent Aim", "SILENT_AIM")
+    val silentRequireTarget = VisCheckBoxCustom("Require Target", "SILENT_REQUIRE_TARGET")
 
     init {
         fovType.changed {_, _ ->
@@ -88,6 +89,11 @@ class MainAimTable: VisTable(false) {
 
         add(experimentalLabel).left().row()
         add(userCMD).left().row()
-        add(silentAim).left().row()
+
+        val tmpTable = VisTable(false)
+        tmpTable.add(silentAim).left().padRight(224F - silentAim.width)
+        tmpTable.add(silentRequireTarget).left()
+
+        add(tmpTable).left()
     }
 }

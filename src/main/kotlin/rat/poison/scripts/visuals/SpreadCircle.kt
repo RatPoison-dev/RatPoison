@@ -14,7 +14,7 @@ import rat.poison.game.netvars.NetVarOffsets.m_weaponMode
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meCurWepEnt
-import rat.poison.scripts.aim.meDead
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.every
