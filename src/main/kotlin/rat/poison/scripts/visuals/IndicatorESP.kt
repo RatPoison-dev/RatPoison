@@ -18,7 +18,7 @@ import kotlin.math.sin
 private const val id = "indicator"
 private val forEnts = arrayOf(EntityType.CCSPlayer, EntityType.CPlantedC4, EntityType.CC4)
 fun indicatorEsp() = App {
-    if (!curSettings.bool["ENABLE_ESP"] || !curSettings.bool["INDICATOR_ESP"] || !inGame) return@App
+    if (!curSettings.bool["ENABLE_VISUALS"] || !curSettings.bool["INDICATOR_ESP"] || !inGame) return@App
 
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()

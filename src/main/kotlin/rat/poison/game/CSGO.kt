@@ -51,20 +51,18 @@ object CSGO {
 	lateinit var rect: WinDef.RECT
 
 	fun initialize() {
-
-
 		after(10000) {
 			if (!initialized) {
-				println("You are stuck at waiting for ${curSettings["MENU_APP"]}?\n" +
-						"Make sure you have checked all of those steps:\n" +
+				println("Are you stuck waiting for ${curSettings["MENU_APP"]}?\n" +
+						"Make sure you have checked these steps:\n" +
 						"- CS:GO is running \n" +
-						"- you are running currently most up-to-date version of RatPoison\n" +
-						"- you disabled all anti-cheat clients working on your computer\n" +
-						"- your RatPoison folder is placed somewhere with all running permissions\n" +
-						"- you don't use RatPoison with some other cheats running\n" +
-						"- you aren't currently running VAC bypass (running the bat file with administrator privileges should work)\n" +
-						"- you restarted your computer\n\n" +
-						"If nothing else works then you can try running the bat file as admin.")
+						"- You are running the most up-to-date version of RatPoison\n" +
+						"- All active anti-cheat clients are disabled\n" +
+						"- Your RatPoison folder is somewhere with all running permissions\n" +
+						"- You don't use RatPoison with other cheats running\n" +
+						"- You aren't currently using VAC bypass (running the bat file with administrator privileges should work)\n" +
+						"- You have restarted your computer after installation\n\n" +
+						"If nothing else works try running the bat file as admin.")
 			}
 		}
 

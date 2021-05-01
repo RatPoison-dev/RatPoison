@@ -5,6 +5,7 @@ import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.DEFAULT_OWEAPON_STR
+import rat.poison.oWeapon
 import rat.poison.ui.changed
 import rat.poison.ui.getOverrideVar
 import rat.poison.ui.getOverrideVarIndex

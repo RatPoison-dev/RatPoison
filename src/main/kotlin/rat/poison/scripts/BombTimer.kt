@@ -25,7 +25,7 @@ var bombState = BombState()
 private var lastSecDefusing = false
 
 fun bombTimer() = App {
-    if (DANGER_ZONE || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
+    if (DANGER_ZONE || !curSettings.bool["ENABLE_VISUALS"] || !inGame) return@App
 
     if (curSettings.bool["ENABLE_BOMB_TIMER"]) {
         bombText.setText(bombState.getString()) //Update regardless of BOMB_TIMER_MENU

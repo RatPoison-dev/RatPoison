@@ -1,2 +1,0 @@
-SPREAD_CIRCLE = false
-SPREAD_CIRCLE_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)

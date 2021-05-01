@@ -1,0 +1,572 @@
+//Visuals master switch
+ENABLE_VISUALS = true
+
+//VK Key Code (http://cherrytree.at/misc/vk.htm), toggles visibility of esp on/off
+//Default key is G
+VISUALS_TOGGLE_KEY = -1
+
+//////////////////////////////////////////////////
+////////// NIGHTMODE/FULLBRIGHT
+//////////////////////////////////////////////////
+
+ENABLE_NIGHTMODE = false
+
+NIGHTMODE_VALUE = 1.0
+
+//////////////////////////////////////////////////
+////////// BOX
+//////////////////////////////////////////////////
+
+//Enable box esp
+ENABLE_BOX_ESP = false
+BOX_ESP_USE_ICONS = false
+
+ADVANCED_BOUNDING_BOX = false
+
+//Disable through smoke
+BOX_SMOKE_CHECK = false
+
+//Enable far radar box
+BOX_FAR_RADAR = false
+
+//Enable box esp details
+//Shows optional extra details (Health/Armor bar, Name/Weapon text) for each enemy, configurable below
+BOX_ESP_DETAILS = false
+
+//Enable box esp health bar; Bar position Left / Right
+BOX_ESP_HEALTH = false
+BOX_ESP_HEALTH_POS = LEFT
+
+//Enable box esp armor bar; Bar position Left / Right
+BOX_ESP_ARMOR = false
+BOX_ESP_ARMOR_POS = LEFT
+
+//Enable box esp helmet text; Text position Left / Right
+BOX_ESP_HELMET = false
+BOX_ESP_HELMET_POS = RIGHT
+
+//Enable box esp helmet text; Text position Left / Right
+BOX_ESP_KEVLAR = false
+BOX_ESP_KEVLAR_POS = RIGHT
+
+//Enable box esp helmet text; Text position Left / Right
+BOX_ESP_SCOPED = false
+BOX_ESP_SCOPED_POS = RIGHT
+
+//Enable box esp flashed text; Text position Left / Right
+BOX_ESP_FLASHED = false
+BOX_ESP_FLASHED_POS = RIGHT
+
+//Enable box esp name text; Text position Top / Bottom
+BOX_ESP_NAME = false
+BOX_ESP_NAME_POS = TOP
+
+//Enable box esp weapon text; Text position Top / Bottom
+BOX_ESP_WEAPON = false
+BOX_ESP_WEAPON_POS = BOTTOM
+BOX_ESP_WEAPON_SCALE = 2
+
+//Enable box esp ammo text; Text position Top / Bottom
+BOX_ESP_AMMO = false
+BOX_ESP_AMMO_POS = BOTTOM
+
+//Enable box esp money text; Text position Top / Bottom
+BOX_ESP_MONEY = false
+BOX_ESP_MONEY_POS = BOTTOM
+
+//Enable box esp scope text; Text position Top / Bottom
+BOX_ESP_SCOPED = false
+BOX_ESP_SCOPED_POS = RIGHT
+
+//Enable box esp on teammates
+BOX_SHOW_TEAM = false
+
+//Box color will depends on player health
+BOX_SHOW_HEALTH = false
+
+//Enable box esp on enemies
+BOX_SHOW_ENEMIES = false
+
+//Enable box esp on defuse kits
+BOX_SHOW_DEFUSERS = false
+
+//Enable box esp on weapons
+BOX_SHOW_WEAPONS = false
+
+BOX_DETAILS_TEXT_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
+
+//Color of your teammates box
+BOX_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
+
+//Color of your enemies box
+BOX_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
+
+//Color of the defuse kit box
+BOX_DEFUSER_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)
+
+//Color of the weapons box
+BOX_WEAPON_COLOR = Color(red=200, green=0, blue=255, alpha=1.0)
+
+//////////////////////////////////////////////////
+////////// FOOTSTEPS
+//////////////////////////////////////////////////
+
+//Enable footstep visuals
+ENABLE_FOOTSTEPS = false
+
+//Footstep type (1 = text, 2 = circle, anything else = circle)
+FOOTSTEP_TYPE = 1
+
+//Footstep update timer (in relation to overlay fps)
+FOOTSTEP_UPDATE = 30
+
+//Footstep time to live
+FOOTSTEP_TTL = 15
+
+//Enable for teammates
+FOOTSTEP_TEAM = false
+
+//Enable for enemies
+FOOTSTEP_ENEMY = false
+
+//Team footsteps color
+FOOTSTEP_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
+
+//Team enemy color
+FOOTSTEP_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=1.0)
+
+//////////////////////////////////////////////////
+////////// RADAR
+//////////////////////////////////////////////////
+
+//Show non-visible enemies on radar
+
+//Enable radar esp
+RADAR_ESP = false
+
+//Show enemies only when moving
+LEGIT_RADAR = false
+LEGIT_RADAR_FOOTSTEPS_DISTANCE = 1200
+
+//////////////////////////////////////////////////
+////////// SKELETON
+//////////////////////////////////////////////////
+
+//Enable skeleton esp
+SKELETON_ESP = false
+
+//Enable skeleton esp on teammates
+SKELETON_SHOW_TEAM = false
+
+//Enable skeleton esp on enemies
+SKELETON_SHOW_ENEMIES = false
+
+//////////////////////////////////////////////////
+////////// GLOW
+//////////////////////////////////////////////////
+
+//Enable glow esp
+GLOW_ESP = true
+
+//Type of glow on entities (enemies & teammates)
+GLOW_ENEMY_TYPE = NORMAL
+GLOW_TEAMMATE_TYPE = NORMAL
+GLOW_GRENADE_TYPE = NORMAL
+GLOW_WEAPON_TYPE = NORMAL
+GLOW_BOMB_CARRIER_TYPE = NORMAL
+GLOW_BOMB_TYPE = NORMAL
+GLOW_TARGET_TYPE = NORMAL
+
+//Disable through smoke
+GLOW_SMOKE_CHECK = false
+
+//Enable glow esp on teammates
+GLOW_SHOW_TEAM = false
+
+//Glow color will depends on player health
+GLOW_SHOW_HEALTH = false
+
+//Enable glow esp on enemies
+GLOW_SHOW_ENEMIES = true
+
+//Enable glow esp on bomb
+GLOW_SHOW_BOMB = false
+GLOW_BOMB_ADAPTIVE = false
+GLOW_BOMB_ADAPTIVE_CAN_DEFUSE = Color(red=0, green=255, blue=0, alpha=1.0)
+GLOW_BOMB_ADAPTIVE_CANT_DEFUSE = Color(red=255, green=0, blue=0, alpha=1.0)
+GLOW_BOMB_ADAPTIVE_LITTLE_TIME = Color(red=255, green=255, blue=0, alpha=1.0)
+
+//Enable glow esp on bomb carrier
+GLOW_SHOW_BOMB_CARRIER = false
+
+//Enable glow esp on dropped weapons
+GLOW_SHOW_WEAPONS = false
+
+//Enable glow esp on dropped/thrown grenades
+GLOW_SHOW_GRENADES = false
+
+//Enable glow esp on visible, in aimbot FOV players
+GLOW_SHOW_TARGET = true
+
+//Color of your teammates
+GLOW_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
+
+//Color of your enemies
+GLOW_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
+
+//Color of the bomb
+GLOW_BOMB_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
+
+//Color of the bomb carrier
+GLOW_BOMB_CARRIER_COLOR = Color(red=255, green=140, blue=0, alpha=1.0)
+
+//Color of the defuse kit
+GLOW_DEFUSER_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)
+
+//Color of dropped weapons
+GLOW_WEAPON_COLOR = Color(red=255, green=153, blue=0, alpha=1.0)
+
+//Color of thrown grenades
+GLOW_GRENADE_COLOR = Color(red=224, green=224, blue=224, alpha=1.0)
+
+//Color of visible, in aimbot FOV players
+GLOW_TARGET_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
+
+//////////////////////////////////////////////////
+////////// CHAMS
+//////////////////////////////////////////////////
+
+//Enable clrRender chams
+//This modifies a cvar that isn't currently checked, which can change at any time. Use at your own discretion.
+CHAMS_ESP = false
+
+//Color players based on their health, overrides entity color
+CHAMS_SHOW_HEALTH = false
+
+//clrRender brightness (0 - 1000)
+CHAMS_BRIGHTNESS = 0
+
+//Enable chams esp on teammates
+CHAMS_SHOW_TEAM = false
+
+//Enable chams esp on enemies
+CHAMS_SHOW_ENEMIES = false
+
+//Enable chams on yourself (guns and hand)
+CHAMS_SHOW_SELF = false
+
+CHAMS_SHOW_TARGET = false
+
+//Color of your teammates
+CHAMS_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
+
+//Color of your enemies
+CHAMS_ENEMY_COLOR = Color(red=255, green=0, blue=4, alpha=1.0)
+
+//Color of your hands/weapon
+CHAMS_SELF_COLOR = Color(red=255, green=94, blue=0, alpha=1.0)
+
+CHAMS_TARGET_COLOR = Color(red=0, green=174, blue=255, alpha=1.0)
+
+//////////////////////////////////////////////////
+////////// NADES
+//////////////////////////////////////////////////
+
+//Enable nade helper
+ENABLE_NADE_HELPER = false
+
+//Enable nade tracer (shows path of an already thrown grenade) - not throw prediction
+NADE_TRACER = true
+
+//The update speed of thrown nades - # out of OPENGL_FPS, per second with FPS of 60 is 60, recommended lowest is 5
+NADE_TRACER_UPDATE_TIME = 5
+
+//How many positions are stored at a time
+NADE_TRACER_TIMEOUT = 15
+
+//Color of the grenade tracer line
+NADE_TRACER_COLOR = Color(red=4, green=255, blue=0, alpha=1.0)
+
+ENABLE_NADE_THROWER = false
+NADE_THROWER_SMOOTHNESS = 20
+NADE_ACCURACY_RADIUS = 500
+NADE_THROWER_KEY = -1
+NADE_THROWER_KEY_TYPE = ON_HOTKEY
+
+//Visualize smoke grenades
+VISUALIZE_SMOKES = true
+
+VISUALIZE_SMOKES_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
+
+VISUALIZE_SMOKES_POLYS = 8
+
+VISUALIZE_SMOKES_WIDTH = 150
+
+VISUALIZE_SMOKES_HEIGHT = 125
+
+SMOKE_WEAR_OFF_TIME = true
+SMOKE_WEAR_OFF_TIME_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
+
+//////////////////////////////////////////////////
+////////// ADRENALINE
+//////////////////////////////////////////////////
+
+//Enable full screen visual effect
+ENABLE_ADRENALINE = false
+
+//Strength of added adrenaline per shot
+ADRENALINE_STRENGTH = 0.2
+
+//How much adrenaline loses each update
+ADRENALINE_COOLDOWN = 0.01
+
+//Use bomb time left to account for adrenaline
+ADRENALINE_BOMB_TIME = false
+
+//////////////////////////////////////////////////
+////////// HITMARKER
+//////////////////////////////////////////////////
+
+//Enable visual hitmarker
+//Activates on enemy hit
+//Relies on the RCrosshairs X/Y Offset for center position
+ENABLE_HITMARKER = false
+
+//If hitmarker appears at your ingame crosshair, or where your recoil is spraying
+HITMARKER_RECOIL_POSITION = false
+
+//Display number of hits while crosshair is visible
+HITMARKER_COMBO = false
+
+//Visible hitmarker outline
+HITMARKER_OUTLINE = false
+
+//Spacing of lines from the center
+HITMARKER_SPACING = 5
+
+//Line length for hitmarker
+HITMARKER_LENGTH = 15
+
+//Line width for hitmarker
+HITMARKER_WIDTH = 3F
+
+//Color of hitmarker combo text
+HITMARKER_COMBO_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
+
+//Color of hitmarker
+HITMARKER_COLOR = Color(red=255, green=0, blue=0, alpha=1.0)
+
+//Color of hitmarker outline
+HITMARKER_OUTLINE_COLOR = Color(red=0, green=0, blue=0, alpha=1.0)
+
+//////////////////////////////////////////////////
+////////// DRAW FOV
+//////////////////////////////////////////////////
+
+//Draw FOV (static only)
+DRAW_AIM_FOV = true
+DRAW_TRIGGER_FOV = true
+
+//FOV Color
+DRAW_AIM_FOV_COLOR = Color(red=0, green=255, blue=13, alpha=1.0)
+DRAW_TRIGGER_FOV_COLOR = Color(red=0, green=230, blue=255, alpha=1.0)
+
+//////////////////////////////////////////////////
+////////// REDUCED FLASH
+//////////////////////////////////////////////////
+
+//Enable reduced flash
+ENABLE_REDUCED_FLASH = false
+
+//Max alpha of the flash (0.0F - 255.0F)
+//255 is fully flashed, 0 is no flash
+FLASH_MAX_ALPHA = 255F
+
+//////////////////////////////////////////////////
+////////// HITSOUND / KILLSOUND
+//////////////////////////////////////////////////
+
+//Enable audible hitsounds & killsounds
+
+//Activates on enemy hit
+ENABLE_HITSOUND = false
+
+//The file name of the hitsound
+HITSOUND_FILE_NAME = "COD.wav"
+
+//The volume of the hitsound (0.0 - 1.0)
+HITSOUND_VOLUME = 0.1
+
+//Activates on enemy killed
+ENABLE_KILLSOUND = false
+
+//The volume of the hitsound (0.0 - 1.0)
+KILLSOUND_VOLUME = 0.1
+
+//////////////////////////////////////////////////
+////////// RECOIL CROSSHAIR
+//////////////////////////////////////////////////
+
+//Customizable crosshair that shows your recoil as you spray
+
+//Enable recoil crosshair
+ENABLE_RCROSSHAIR = true
+RCROSSHAIR_TYPE = CROSSHAIR
+
+RCROSSHAIR_SCOPE_COMPATIBLE = false
+
+//Center screen X offset of the crosshair
+RCROSSHAIR_XOFFSET = 1
+
+//Center screen Y offset of the crosshair
+RCROSSHAIR_YOFFSET = -2
+
+//Color of the crosshair
+RCROSSHAIR_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
+
+//Crosshair Builder Customization
+RCROSSHAIR_BUILDER_RESOLUTION = 5
+RCROSSHAIR_BUILDER_SIZE = 5
+RCROSSHAIR_BUILDER_ARRAY = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+
+//////////////////////////////////////////////////
+////////// SPREAD CIRCLE
+//////////////////////////////////////////////////
+
+SPREAD_CIRCLE = false
+SPREAD_CIRCLE_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
+
+//////////////////////////////////////////////////
+////////// INDICATORS
+//////////////////////////////////////////////////
+
+//Top down on screen radar to point at out of fov/enemies behind you
+
+//Enable indicator esp
+//Draws arrows pointing towards entities on screen
+INDICATOR_ESP = false
+
+//Size of indicator arrows
+INDICATOR_SIZE = 10.0
+
+//Distance from the center of arrows pointing towards entities off screen
+INDICATOR_DISTANCE = 25.0
+
+//Disable through smoke
+INDICATOR_SMOKE_CHECK = false
+
+//Enable indicator esp on teammates
+INDICATOR_SHOW_TEAM = false
+
+//Enable indicator esp on enemies
+INDICATOR_SHOW_ENEMIES = false
+
+//Enable indicator esp on bomb
+INDICATOR_SHOW_BOMB = false
+
+//Enable defuser esp on defuse kits
+INDICATOR_SHOW_DEFUSERS = false
+
+//Enable indicator esp on bomb carrier
+INDICATOR_SHOW_BOMB_CARRIER = false
+
+//Enable indicator esp on weapons
+INDICATOR_SHOW_WEAPONS = false
+
+//Enable indicator esp on grenades
+INDICATOR_SHOW_GRENADES = false
+
+//Color of your teammates
+INDICATOR_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
+
+//Color of your enemies
+INDICATOR_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=0.6)
+
+//Color of the bomb
+INDICATOR_BOMB_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
+
+//Color of the bomb carrier
+INDICATOR_BOMB_CARRIER_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
+
+//Color of the defuse kit
+INDICATOR_DEFUSER_COLOR = Color(red=145, green=0, blue=90, alpha=1.0)
+
+//Color of dropped weapons
+INDICATOR_WEAPON_COLOR = Color(red=251, green=0, blue=255, alpha=0.5)
+
+//Color of thrown grenades
+INDICATOR_GRENADE_COLOR = Color(red=0, green=255, blue=0, alpha=1.0)
+
+//////////////////////////////////////////////////
+////////// FOV CHANGER
+//////////////////////////////////////////////////
+
+//Enable Fov Changer
+ENABLE_FOV_CHANGER = false
+
+//Default FOV for each gun
+FOV_DEFAULT = 90
+
+//Default FOV for snipers
+FOV_SNIPER_DEFAULT = 90
+
+//Enable smooth FOV transitioning (where possible)
+FOV_SMOOTH = false
+
+//These are defaulted for invisible scope blur
+//Default FOV for zoom lvl 1 (snipers only)
+FOV_ZOOM_1 = 40
+
+//Default FOV for zoom lvl 2 (snipers only)
+FOV_ZOOM_2 = 25
+
+//////////////////////////////////////////////////
+////////// SNAPLINES
+//////////////////////////////////////////////////
+
+//Enable snaplines
+ENABLE_SNAPLINES = true
+
+//Line width
+SNAPLINES_WIDTH = 3.0
+
+//Disable through smoke
+SNAPLINES_SMOKE_CHECK = false
+
+//Enable snap lines for enemies
+SNAPLINES_ENEMIES = true
+
+//Enable snaplines for teammates
+SNAPLINES_TEAMMATES = false
+
+//Enable snapline for bomb
+SNAPLINES_BOMB = false
+
+//Enable snapline for bomb carrier
+SNAPLINES_BOMB_CARRIER = false
+
+//Enable snaplines for weapons
+SNAPLINES_WEAPONS = false
+
+//Enable snaplines for defuse kits
+SNAPLINES_DEFUSE_KITS = false
+
+//Snaplines enemy color
+SNAPLINES_ENEMY_COLOR = Color(red=255, green=0, blue=0, alpha=1.0)
+
+//Snaplines teammates color
+SNAPLINES_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
+
+//Snaplines bomb color
+SNAPLINES_BOMB_COLOR = Color(red=255, green=255, blue=0, alpha=1.0)
+
+//Snaplines enemy color
+SNAPLINES_BOMB_CARRIER_COLOR = Color(red=255, green=140, blue=0, alpha=1.0)
+
+//Snaplines weapon color
+SNAPLINES_WEAPON_COLOR = Color(red=251, green=0, blue=255, alpha=1.0)
+
+//Snaplines defuse kit color
+SNAPLINES_DEFUSE_KIT_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
+
+

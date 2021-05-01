@@ -17,7 +17,7 @@ private var totalKills = when (inGame) {
 private var opened = false
 
 fun killSoundEsp() = every(50, inGameCheck = true) {
-    if (!curSettings.bool["ENABLE_KILLSOUND"] || meDead || me < 0 || !curSettings.bool["ENABLE_ESP"]) return@every
+    if (!curSettings.bool["ENABLE_KILLSOUND"] || meDead || me < 0 || !curSettings.bool["ENABLE_VISUALS"]) return@every
     val curKills = me.kills()
     if (curKills != totalKills) {
         val killSound = assetManager.get<Sound>("$SETTINGS_DIRECTORY/hitsounds/${curSettings["KILLSOUND_FILE_NAME"].replace("\"", "")}")

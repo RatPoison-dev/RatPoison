@@ -3,11 +3,14 @@ package rat.poison.ui.uiWindows
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Align
+import com.kotcrab.vis.ui.util.dialog.Dialogs
+import com.kotcrab.vis.ui.util.dialog.OptionDialogAdapter
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.VisWindow
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import rat.poison.*
+import rat.poison.overlay.App
 import rat.poison.scripts.misc.sendPacket
 import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.changed
@@ -87,7 +90,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
 
         //AimButton
         val aimButton = VisTextButton("Aim", "tab-bar")
-        aimButton.setColor(buttonColor)
+        aimButton.color = buttonColor
 
         aimButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
@@ -100,7 +103,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
 
         //VisualsButton
         val visualsButton = VisTextButton("Visuals", "tab-bar")
-        visualsButton.setColor(buttonColor)
+        visualsButton.color = buttonColor
 
         visualsButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
@@ -113,7 +116,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
 
         //RcsButton
         val rcsButton = VisTextButton("RCS", "tab-bar")
-        rcsButton.setColor(buttonColor)
+        rcsButton.color = buttonColor
 
         rcsButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
@@ -126,7 +129,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
 
         //MiscButton
         val miscButton = VisTextButton("Misc", "tab-bar")
-        miscButton.setColor(buttonColor)
+        miscButton.color = buttonColor
 
         miscButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
@@ -139,7 +142,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
 
         //RanksButton
         val ranksButton = VisTextButton("Ranks", "tab-bar")
-        ranksButton.setColor(buttonColor)
+        ranksButton.color = buttonColor
 
         ranksButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
@@ -152,7 +155,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
 
         //NadeHelperButton
         val nadeHelperButton = VisTextButton("Nade Helper", "tab-bar")
-        nadeHelperButton.setColor(buttonColor)
+        nadeHelperButton.color = buttonColor
 
         nadeHelperButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
@@ -165,7 +168,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
 
         //SkinsButton
         val skinsButton = VisTextButton("Skins", "tab-bar")
-        skinsButton.setColor(buttonColor)
+        skinsButton.color = buttonColor
 
         skinsButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
@@ -178,7 +181,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
 
         //OptionsButton
         val optionsButton = VisTextButton("Options", "tab-bar")
-        optionsButton.setColor(buttonColor)
+        optionsButton.color = buttonColor
 
         optionsButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
@@ -191,7 +194,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
 
         //ConfigsButton
         val configsButton = VisTextButton("Configs", "tab-bar")
-        configsButton.setColor(buttonColor)
+        configsButton.color = buttonColor
 
         configsButton.changed { _, _ ->
             mainTabbedPaneContent.clear()
@@ -212,9 +215,9 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         add(skinsButton).growX().prefWidth(105F).left()
         add(optionsButton).growX().prefWidth(105F).left()
         add(configsButton).growX().prefWidth(105F).left().row()
-        add(mainScrollPane).left().growX().colspan(9)
-        pack()
+        add(mainScrollPane).left().growX().prefWidth(950F).colspan(9)
         centerWindow()
+        pack()
 
         //Update all tab content
         uiUpdate()
@@ -226,13 +229,18 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         haltProcess = true
         disableAllEsp()
         sendPacket(true)
+        App.open()
         exitProcess(0)
     }
 
 
     public override fun close() {
-        println("Close button pressed. Unloading...")
-        closeMenu()
+        Dialogs.showOptionDialog(App.menuStage, "Warning", "Are you sure you want to close RatPoison?", Dialogs.OptionDialogType.YES_NO, object: OptionDialogAdapter() {
+            override fun yes() {
+                println("Close button pressed. Unloading...")
+                closeMenu()
+            }
+        })
     }
 
     private val defaultAlpha by lazy(LazyThreadSafetyMode.NONE) {

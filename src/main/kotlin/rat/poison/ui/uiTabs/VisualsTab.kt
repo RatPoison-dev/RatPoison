@@ -29,7 +29,7 @@ class VisualsTab : Tab(false, false) {
 
     //Init labels/sliders/boxes that show values here
     //Static Visuals Tab Items
-    val enableEsp = VisCheckBoxCustom("Enable ESP", "ENABLE_ESP")
+    val enableEsp = VisCheckBoxCustom("Enable ESP", "ENABLE_VISUALS")
     val visualsToggleKey = VisBindTableCustom("Visuals Toggle Key", "VISUALS_TOGGLE_KEY")
 
     init {
@@ -105,7 +105,7 @@ fun updateDisableEsp() {
         miscVisualTableDisable(bool, col)
         nadesTableDisable(bool, col)
 
-        if (!curSettings.bool["ENABLE_ESP"]) {
+        if (!curSettings.bool["ENABLE_VISUALS"]) {
             disableAllEsp()
         } else if (!curSettings.bool["CHAMS_ESP"]) {
             disableAllEsp()

@@ -1,6 +1,7 @@
 package rat.poison.ui.uiWindows
 
 import com.kotcrab.vis.ui.widget.*
+import rat.poison.overlay.App.uiMenu
 import rat.poison.ui.uiTabs.VisLabelExtension
 
 class UIWarning: VisWindow("") {

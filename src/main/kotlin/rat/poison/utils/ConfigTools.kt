@@ -43,8 +43,9 @@ fun saveDefault() {
                                 }
 
                                 else -> {
-                                    if (curLine[0] == "CROSSHAIR_ARRAY") return@forEach
-                                    sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
+                                    if (curLine[0] != "RCROSSHAIR_BUILDER_ARRAY") {
+                                        sbLines.append(curLine[0] + " = " + curSettings[curLine[0]] + "\n")
+                                    }
                                 }
                             }
 
@@ -53,7 +54,7 @@ fun saveDefault() {
                             sbLines.append(line + "\n")
                         }
                     }
-                    sbLines.append("CROSSHAIR_ARRAY = ")
+                    sbLines.append("RCROSSHAIR_BUILDER_ARRAY = ")
                     for (i in 0..crosshairArray.length()) {
                         sbLines.append(crosshairArray[i].toBitString())
                     }
@@ -201,13 +202,14 @@ fun saveCFG(cfgFileName: String) {
                 FileReader(file).readLines().forEach { line ->
                     if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                         val tempCurLine = line.trim().split(" ".toRegex(), 3) //Separate line into 'VARIABLE=VALUE' //no spaces bc of trim()
-                        if (tempCurLine[0] == "CROSSHAIR_ARRAY") return@forEach
-                        sbLines.append(tempCurLine[0] + " = " + curSettings[tempCurLine[0]] + "\n") //add spaces back
+                        if (tempCurLine[0] != "RCROSSHAIR_BUILDER_ARRAY") {
+                            sbLines.append(tempCurLine[0] + " = " + curSettings[tempCurLine[0]] + "\n") //add spaces back
+                        }
                     }
                 }
             }
         }
-        sbLines.append("CROSSHAIR_ARRAY = ")
+        sbLines.append("RCROSSHAIR_BUILDER_ARRAY = ")
         for (i in 0..crosshairArray.length()) {
             sbLines.append(crosshairArray[i].toBitString())
         }

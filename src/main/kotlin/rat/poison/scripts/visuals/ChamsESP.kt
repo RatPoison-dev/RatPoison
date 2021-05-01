@@ -27,7 +27,7 @@ private val cCol = Color()
 private val forEnts = arrayOf(EntityType.CCSPlayer)
 private const val id = "chams"
 fun chamsEsp() = every(100, true, inGameCheck = true) {
-    if (!curSettings.bool["CHAMS_ESP"] || !curSettings.bool["ENABLE_ESP"]) return@every
+    if (!curSettings.bool["CHAMS_ESP"] || !curSettings.bool["ENABLE_VISUALS"]) return@every
 
     val myTeam = meTeam
 

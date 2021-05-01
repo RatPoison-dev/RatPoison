@@ -18,10 +18,10 @@ import kotlin.math.*
 
 private val mePunchVec = Vector()
 internal fun rCrosshair() = App {
-    if (!curSettings.bool["ENABLE_ESP"] || !inGame) return@App
+    if (!curSettings.bool["ENABLE_VISUALS"] || !inGame) return@App
 
-    val eRC = curSettings.bool["ENABLE_RECOIL_CROSSHAIR"]
-    val eSC = !curSettings.bool["ENABLE_SNIPER_CROSSHAIR"]
+    val eRC = curSettings.bool["ENABLE_RCROSSHAIR"]
+    val eSC = !curSettings.bool["RCROSSHAIR_SCOPE_COMPATIBLE"]
 
     if (!eRC) return@App
 

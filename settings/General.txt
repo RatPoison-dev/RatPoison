@@ -1,6 +1,9 @@
 //Enable DEBUG
 DEBUG = true
 
+//Close with csgo
+CLOSE_WITH_CSGO = true
+
 //Enable the overlay, menu
 //Any settings/scripts reliant on drawing on the overlay won't enable
 MENU = true

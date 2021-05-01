@@ -26,7 +26,7 @@ private val bottomRight = Vector()
 fun drawBacktrack() = App {
     if (MENUTOG) return@App
     if (meDead) return@App
-    if (!inGame || !curSettings.bool["BACKTRACK_VISUALIZE"] || !curSettings.bool["ENABLE_ESP"] || !curSettings.bool["ENABLE_BACKTRACK"]) return@App
+    if (!inGame || !curSettings.bool["BACKTRACK_VISUALIZE"] || !curSettings.bool["ENABLE_VISUALS"] || !curSettings.bool["ENABLE_BACKTRACK"]) return@App
 
     val backtrackOnKey = curSettings.bool["ENABLE_BACKTRACK_ON_KEY"]
     val backtrackKeyPressed = keybindEval("BACKTRACK_KEY")

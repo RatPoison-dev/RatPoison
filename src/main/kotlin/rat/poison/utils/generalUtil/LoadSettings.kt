@@ -2,6 +2,7 @@ package rat.poison.utils.generalUtil
 
 import org.apache.commons.lang3.StringUtils.isNumeric
 import rat.poison.*
+import rat.poison.scripts.aim.numToBone
 import rat.poison.utils.extensions.upper
 import java.io.File
 import java.io.FileReader
@@ -46,7 +47,7 @@ fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
             }
         }
     }
-    val arr = curSettings["CROSSHAIR_ARRAY"]
+    val arr = curSettings["RCROSSHAIR_BUILDER_ARRAY"]
     for (i in arr.indices) {
         crosshairArray[i] = arr[i].strToBool()
     }
@@ -102,13 +103,14 @@ fun validateSetting(settingName: String, value: String): Boolean {
             val tSA = tStr.split(", ") //temp String Array
             val weapon = oWeapon()
 
-            //no idea wtf goin on here but  i dont remember and idc rn
             if (size > 6 && tSA.pull(5).stringToList(";").all { isNumeric(it) }) {
-                //weapon.tAimBone = tSA.pull(5).stringToIntList().map { it.numToBone() }
+                weapon.tAimBone = tSA.pull(5).stringToIntList().map { it.numToBone() }
             }
+
             if (size > 7 && tSA.pull(6).stringToList(";").all { isNumeric(it) }) {
-                //weapon.tForceBone = tSA.pull(6).stringToIntList().map { it.numToBone() }
+                weapon.tForceBone = tSA.pull(6).stringToIntList().map { it.numToBone() }
             }
+
             weapon.apply {
                 tOverride = if (size > 1) tSA.pull(0).safeToBool(defaultValue = tOverride) else tOverride
                 tFRecoil = if (size > 2) tSA.pull(1).safeToBool(defaultValue = tFRecoil) else tFRecoil

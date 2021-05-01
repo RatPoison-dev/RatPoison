@@ -26,8 +26,11 @@ var meDead = true
 
 var silentHaveTarget = false
 
-fun handleUCMD() = every(1) {
+fun handleUCMD() = every(1, true) {
     meDead = me.dead()
+
+    //TODO prechecks
+    if (meDead || !inGame || inBackground) return@every
 
     if (!curSettings.bool["USER_CMD"]) return@every
 
@@ -47,7 +50,7 @@ fun handleUCMD() = every(1) {
 
         second@while (true) {
             val curCMDNumber = csgoEXE.int(pNetChannel + 0x18) //find out what 0x18 supposd b
-            chokedCommands = csgoEXE.int(clientState + EngineOffsets.dwClientState_ChokedCommands) - 1
+            chokedCommands = csgoEXE.int(clientState + EngineOffsets.dwClientState_ChokedCommands) - 1 //TODO is this supposed to be - 1?
             if (chokedCommands < 0) chokedCommands = 0
 
             //Aimbot : Do all the stuff, priority 1

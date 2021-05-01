@@ -36,8 +36,7 @@ class OverrideVisCheckBoxCustom(mainText: String, varName: String) : VisCheckBox
     }
 
     fun update() {
-        val tmpText = variableName
-        setText(if (tmpText.isEmpty()) defaultText else tmpText )
+        setText(defaultText)
         isChecked = getOverrideVar(weaponOverrideSelected, varIdx).strToBool()
     }
 

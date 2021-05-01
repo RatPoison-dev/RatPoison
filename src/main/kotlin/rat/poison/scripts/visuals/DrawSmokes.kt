@@ -21,7 +21,7 @@ private val points = mutableListOf<Vector>()
 private const val id = "drawsmokes"
 private val forEnts = arrayOf(EntityType.CSmokeGrenadeProjectile)
 fun drawSmokes() = App {
-    if (!inGame || !curSettings.bool["ENABLE_ESP"] || !curSettings.bool["VISUALIZE_SMOKES"] || !inGame) return@App
+    if (!inGame || !curSettings.bool["ENABLE_VISUALS"] || !curSettings.bool["VISUALIZE_SMOKES"] || !inGame) return@App
 
     val smokePolys = curSettings.int["VISUALIZE_SMOKES_POLYS"]
     val smokeHeight = curSettings.int["VISUALIZE_SMOKES_HEIGHT"]

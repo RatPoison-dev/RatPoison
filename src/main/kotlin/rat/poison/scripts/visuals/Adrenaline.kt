@@ -15,7 +15,7 @@ private var totalHits = 0
 private var fl = 0F
 
 fun adrenaline() = every(10, inGameCheck = true) {
-    if (!curSettings.bool["ENABLE_ADRENALINE"] || !curSettings.bool["ENABLE_ESP"] || meDead || me < 0) return@every
+    if (!curSettings.bool["ENABLE_ADRENALINE"] || !curSettings.bool["ENABLE_VISUALS"] || meDead || me < 0) return@every
 
     val curHits = csgoEXE.int(me + m_totalHitsOnServer)
     if (curHits < 0 || curHits > 255) return@every

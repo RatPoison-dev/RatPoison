@@ -33,7 +33,7 @@ private val entPosVec = Vector()
 private val outVec = Vector()
 private val matrix = Matrix4()
 fun runFootSteps() = App {
-    if (!curSettings.bool["ENABLE_ESP"]) return@App
+    if (!curSettings.bool["ENABLE_VISUALS"]) return@App
 
     if (!curSettings.bool["ENABLE_FOOTSTEPS"]) return@App
 

@@ -120,7 +120,7 @@ class OverrideTable: VisTable(false) {
         copyToSelectionBox.items = gunCategoryArray
         copyFromSelectionBox.items = gunCategoryArray
         val copyToTable = VisTable(false)
-        copyToTable.add(copyToButton).padRight(225F - copyToButton.width)
+        copyToTable.add(copyToButton).padRight(224F - copyToButton.width)
         copyToTable.add(copyToSelectionBox)
 
         copyToButton.changed {_, _ ->
@@ -134,7 +134,7 @@ class OverrideTable: VisTable(false) {
         }
 
         val copyFromTable = VisTable(false)
-        copyFromTable.add(copyFromButton).padRight(225F - copyFromButton.width)
+        copyFromTable.add(copyFromButton).padRight(224F - copyFromButton.width)
         copyFromTable.add(copyFromSelectionBox)
 
         copyFromButton.changed {_, _ ->
@@ -149,8 +149,8 @@ class OverrideTable: VisTable(false) {
 
         //Create Override Weapon Selector
         val weaponOverrideSelection = VisTable(false)
-        weaponOverrideSelection.add(weaponSelectLabel).padRight(225F - weaponSelectLabel.width)
-        weaponOverrideSelection.add(weaponOverrideSelectionBox).width(225F)
+        weaponOverrideSelection.add(weaponSelectLabel).padRight(224F - weaponSelectLabel.width)
+        weaponOverrideSelection.add(weaponOverrideSelectionBox).width(224F)
 
         weaponOverrideSelectionBox.setItems(*pistolCategory)
         weaponOverrideSelectionBox.changed { _, _ ->
@@ -170,8 +170,8 @@ class OverrideTable: VisTable(false) {
         categorySelectionBox.selectedIndex = 0
 
         categorySelected = gunCategories[categorySelectionBox.selectedIndex]
-        categorySelection.add(categorySelectLabel).padRight(225F - categorySelectLabel.width)
-        categorySelection.add(categorySelectionBox).width(225F)
+        categorySelection.add(categorySelectLabel).padRight(224F - categorySelectLabel.width)
+        categorySelection.add(categorySelectionBox).width(224F)
 
         //Create Enable Override Toggle
         weaponOverrideEnableCheckBox.changed { _, _ ->

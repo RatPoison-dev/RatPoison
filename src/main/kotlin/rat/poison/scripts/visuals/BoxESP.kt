@@ -93,7 +93,7 @@ private val forEntsList = arrayOf(EntityType.CCSPlayer, EntityType.CEconEntity)
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
 fun boxEsp() {
 	every(1000, true) { //Update settings
-		if ((!curSettings.bool["ENABLE_BOX_ESP"] && !curSettings.bool["BOX_ESP_DETAILS"]) || !curSettings.bool["ENABLE_ESP"] || !inGame) return@every
+		if ((!curSettings.bool["ENABLE_BOX_ESP"] && !curSettings.bool["BOX_ESP_DETAILS"]) || !curSettings.bool["ENABLE_VISUALS"] || !inGame) return@every
 
 		advancedBBox = curSettings.bool["ADVANCED_BOUNDING_BOX"]
 
@@ -131,7 +131,7 @@ fun boxEsp() {
 	}
 
 	App {
-		if ((!curSettings.bool["ENABLE_BOX_ESP"] && !curSettings.bool["BOX_ESP_DETAILS"]) || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
+		if ((!curSettings.bool["ENABLE_BOX_ESP"] && !curSettings.bool["BOX_ESP_DETAILS"]) || !curSettings.bool["ENABLE_VISUALS"] || !inGame) return@App
 
 		val entityMemory = entMemory.get()
 		boxDetailsLeftText.clear()

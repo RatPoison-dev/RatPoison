@@ -16,7 +16,7 @@ private const val id = "snaplines"
 private val w2sRet = Vector()
 private val forEnts = arrayOf(EntityType.CCSPlayer, EntityType.CPlantedC4, EntityType.CC4, EntityType.CEconEntity)
 fun snapLines() = App {
-    if (!curSettings.bool["ENABLE_SNAPLINES"] || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
+    if (!curSettings.bool["ENABLE_SNAPLINES"] || !curSettings.bool["ENABLE_VISUALS"] || !inGame) return@App
 
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()

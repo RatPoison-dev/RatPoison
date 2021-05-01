@@ -116,11 +116,15 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 
 	private fun monitorTargetApp() = with(User32) {
 		if (targetAppHWND == HWND_ZERO) {
-			println("Waiting for App")
+			println("Waiting for App ${curSettings["MENU_APP"]}")
+
+			bePassive()
+
 			targetAppHWND = getWindowHWND(targetAppTitle, Long.MAX_VALUE)
 			if (targetAppHWND == HWND_ZERO) {
 				return@with
 			}
+
 			init()
 		}
 
@@ -211,13 +215,9 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 		SetWindowLongA(myHWND, WinUser.GWL_STYLE, gwl)
 	}
 
-	private fun makeTransparent() = with(User32) {
+	fun makeTransparent() = with(User32) {
 		if (useWin10) {
-			SetWindowCompositionAttribute(
-				myHWND,
-				WindowCompositionAttributeData(
-					AccentState = AccentStates.ACCENT_ENABLE_TRANSPARENTGRADIENT, AccentFlags = accentFlags.Transparent)
-			)
+			SetWindowCompositionAttribute(myHWND, WindowCompositionAttributeData(AccentState = AccentStates.ACCENT_ENABLE_TRANSPARENTGRADIENT, AccentFlags = accentFlags.Transparent))
 		} else {
 			win7transparency(myHWND)
 		}
@@ -285,7 +285,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 		activeWindowCallback.activeWindowHWND
 	}
 
-	private fun beActive() = with(User32) {
+	fun beActive() = with(User32) {
 		if (!appless && curSettings.bool["GAUSSIAN_BLUR"] ) {
 			makeBlurBehind()
 		}
@@ -311,7 +311,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 		}
 	}
 
-	private fun bePassive() = with(User32) {
+	fun bePassive() = with(User32) {
 		if (!appless) {
 			SetWindowLongA(myHWND, WinUser.GWL_EXSTYLE, WinUser.WS_EX_LAYERED or WinUser.WS_EX_TRANSPARENT or WS_EX_TOOLWINDOW or WS_EX_TOPMOST)
 			makeTransparent()

@@ -12,9 +12,11 @@ class MenuStage(viewport: Viewport, batch: Batch): Stage(viewport, batch) {
         }
     }
 
-    fun clear(actor: Actor) {
-        if (actors.contains(actor)) {
-            clear()
+    fun remove(vararg actors: Actor) {
+        actors.forEach { actor ->
+            if (this.actors.contains(actor)) {
+                root.removeActor(actor)
+            }
         }
     }
 }

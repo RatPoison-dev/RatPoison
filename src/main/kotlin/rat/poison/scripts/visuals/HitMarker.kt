@@ -23,7 +23,7 @@ private var totalHits = 0
 private val punchVec = Vector()
 private val hitMarkerComboSB = StringBuilder()
 fun hitMarker() = App {
-    if ((!curSettings.bool["ENABLE_HITMARKER"] && !curSettings.bool["HITMARKER_COMBO"]) || !curSettings.bool["ENABLE_ESP"] || MENUTOG || meDead || !inGame) return@App
+    if ((!curSettings.bool["ENABLE_HITMARKER"] && !curSettings.bool["HITMARKER_COMBO"]) || !curSettings.bool["ENABLE_VISUALS"] || MENUTOG || meDead || !inGame) return@App
 
     val curHits = csgoEXE.int(me + m_totalHitsOnServer)
 

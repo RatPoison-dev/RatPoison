@@ -62,14 +62,14 @@ lateinit var MUSIC_KITS_FILE: File
 var settingsLoaded = false
 val curSettings = Settings()
 val skSettings = Settings()
-var crosshairArray = BitSet(81) //81 is max / 0 //CROSSHAIR_ARRAY
+var crosshairArray = BitSet(81) //81 is max / 0 //RCROSSHAIR_BUILDER_ARRAY
+
+val DEFAULT_OWEAPON = oWeapon()
+val DEFAULT_OWEAPON_STR = DEFAULT_OWEAPON.toString()
 
 var dbg: Boolean = false
 var appless: Boolean = false
 val robot = Robot().apply { this.autoDelay = 0 }
-
-val DEFAULT_OWEAPON = oWeapon()
-val DEFAULT_OWEAPON_STR = DEFAULT_OWEAPON.toString()
 
 var haltProcess = false
 
@@ -100,7 +100,7 @@ fun main() {
 
         curSettings["ENABLE_BOX_ESP"] = "false"
         curSettings["SKELETON_ESP"] = "false"
-        curSettings["ENABLE_RECOIL_CROSSHAIR"] = "false"
+        curSettings["ENABLE_RCROSSHAIR"] = "false"
         curSettings["ENABLE_BOMB_TIMER"] = "false"
         curSettings["INDICATOR_ESP"] = "false"
         curSettings["SPECTATOR_LIST"] = "false"

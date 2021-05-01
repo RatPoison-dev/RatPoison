@@ -25,8 +25,8 @@ class RcsTab : Tab(false, false) {
 
     val rcsReturnAim = VisCheckBoxCustom("Return Aim", "RCS_RETURNAIM")
 
-    val enableRCrosshair = VisCheckBoxCustom("Recoil Crosshair", "ENABLE_RECOIL_CROSSHAIR")
-    val enableSCrosshair = VisCheckBoxCustom("Scope Compatible", "ENABLE_SNIPER_CROSSHAIR")
+    val enableRCrosshair = VisCheckBoxCustom("Recoil Crosshair", "ENABLE_RCROSSHAIR")
+    val enableSCrosshair = VisCheckBoxCustom("Scope Compatible", "RCROSSHAIR_SCOPE_COMPATIBLE")
 
     val rCrosshairXOffset = VisSliderCustom("X Offset", "RCROSSHAIR_XOFFSET", -48F, 48F, 1F, true, labelWidth = 100F, barWidth = 150F)
     val rCrosshairYOffset = VisSliderCustom("Y Offset", "RCROSSHAIR_YOFFSET", -48F, 48F, 1F, true, labelWidth = 100F, barWidth = 150F)
@@ -108,7 +108,7 @@ fun updateDisableRCrosshair() {
     rcsTab.apply {
         if (!opened) return
 
-        val bool = !(curSettings.bool["ENABLE_RECOIL_CROSSHAIR"] || curSettings.bool["ENABLE_SNIPER_CROSSHAIR"])
+        val bool = !(curSettings.bool["ENABLE_RCROSSHAIR"] || curSettings.bool["RCROSSHAIR_SCOPE_COMPATIBLE"])
         var color = Color(255F, 255F, 255F, 1F)
         if (bool) {
             color = Color(105F, 105F, 105F, .2F)

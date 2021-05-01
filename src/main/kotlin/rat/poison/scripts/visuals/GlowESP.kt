@@ -19,7 +19,7 @@ private val cCol = Color()
 private const val id = "glowesp"
 private val forEnts = arrayOf(EntityType.CCSPlayer, EntityType.CPlantedC4, EntityType.CC4)
 internal fun glowEspEvery() = every(100, true, inGameCheck = true) {
-	if (!curSettings.bool["GLOW_ESP"] || !curSettings.bool["ENABLE_ESP"]) return@every
+	if (!curSettings.bool["GLOW_ESP"] || !curSettings.bool["ENABLE_VISUALS"]) return@every
 
 	glowTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
 		val currentAngle = clientState.angle(meAng)

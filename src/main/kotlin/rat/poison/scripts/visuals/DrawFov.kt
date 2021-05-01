@@ -63,7 +63,7 @@ fun drawFov() = App {
 //        }
 //    }
 
-    if (!curSettings.bool["ENABLE_ESP"] || MENUTOG || !inGame || meDead)
+    if (!curSettings.bool["ENABLE_VISUALS"] || MENUTOG || !inGame || meDead)
         return@App
 
     if (!curSettings.bool["DRAW_AIM_FOV"] && !curSettings.bool["DRAW_TRIGGER_FOV"])

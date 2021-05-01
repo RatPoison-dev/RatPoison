@@ -10,7 +10,7 @@ import rat.poison.game.netvars.NetVarOffsets.m_flCustomAutoExposureMin
 import rat.poison.utils.common.every
 
 fun nightMode() = every(1000, inGameCheck = true) {
-    if (!curSettings.bool["ENABLE_ESP"]) return@every
+    if (!curSettings.bool["ENABLE_VISUALS"]) return@every
 
     if (curSettings.bool["ENABLE_NIGHTMODE"]) {
         if (toneMapController != 0L) {

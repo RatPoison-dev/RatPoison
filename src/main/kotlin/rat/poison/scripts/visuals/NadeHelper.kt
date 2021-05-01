@@ -47,7 +47,7 @@ private val vec3 = Vector()
 private val mePos = Vector()
 private val matrix = Matrix4()
 fun nadeHelper() = App {
-    if (!curSettings.bool["ENABLE_NADE_HELPER"] || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
+    if (!curSettings.bool["ENABLE_NADE_HELPER"] || !curSettings.bool["ENABLE_VISUALS"] || !inGame) return@App
 
     if (me <= 0L || MENUTOG || meDead) return@App
 
@@ -278,7 +278,7 @@ fun deletePosition() {
 }
 
 fun detectMap(mapName: String) {
-    if (!curSettings.bool["ENABLE_NADE_HELPER"] || !curSettings.bool["ENABLE_ESP"]) return
+    if (!curSettings.bool["ENABLE_NADE_HELPER"] || !curSettings.bool["ENABLE_VISUALS"]) return
 
     val newMapName = mapName.replace("maps\\", "").replace(".bsp", "")
     val dir = File("$SETTINGS_DIRECTORY/NadeHelper").listFiles()

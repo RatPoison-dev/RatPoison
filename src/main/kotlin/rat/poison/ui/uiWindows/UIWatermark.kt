@@ -31,4 +31,13 @@ class UIWatermark: VisWindow("", "watermark") {
 
         super.positionChanged()
     }
+
+    fun update() {
+        if (!dragging) {
+            setPosition(curSettings.float["UI_WATERMARK_X"], curSettings.float["UI_WATERMARK_Y"])
+        } else {
+            curSettings["UI_WATERMARK_X"] = x
+            curSettings["UI_WATERMARK_Y"] = y
+        }
+    }
 }

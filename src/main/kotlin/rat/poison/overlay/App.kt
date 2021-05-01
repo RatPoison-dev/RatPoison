@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.Scaling
 import com.badlogic.gdx.utils.viewport.ScalingViewport
 import com.kotcrab.vis.ui.VisUI
@@ -30,15 +29,10 @@ import rat.poison.settings.DEBUGTOG
 import rat.poison.settings.MENUTOG
 import rat.poison.ui.MenuStage
 import rat.poison.ui.uiTabs.updateDisableAim
-import rat.poison.ui.uiUpdate
 import rat.poison.ui.uiWindows.*
 import rat.poison.utils.AssetManager
 import rat.poison.utils.common.ObservableBoolean
-import rat.poison.utils.common.inGame
 import rat.poison.utils.common.keyPressed
-import rat.poison.utils.common.shouldPostProcess
-import rat.poison.utils.extensions.appendHumanReadableSize
-import rat.poison.utils.extensions.roundNDecimals
 import java.lang.management.ManagementFactory
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
@@ -62,7 +56,7 @@ object App: ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
-    private val overlay = Overlay(if (appless) {
+    private val appOverlay = Overlay(if (appless) {
         "Counter-Strike: Global Offensive"
     } else {
         curSettings["MENU_APP"].replace("\"", "")
@@ -70,7 +64,7 @@ object App: ApplicationAdapter() {
     lateinit var menuStage: MenuStage
     lateinit var assetManager: AssetManager
     private lateinit var menuBatch: SpriteBatch
-    lateinit var viewport: ScalingViewport
+    private lateinit var viewport: ScalingViewport
     lateinit var keyProcessor: KeyProcessor
     private val bodies = ObjectArrayList<App.() -> Unit>()
     private lateinit var camera: OrthographicCamera
@@ -120,7 +114,7 @@ object App: ApplicationAdapter() {
 
         //Implement stage for menu
 
-        overlay.start()
+        appOverlay.start()
     }
 
     private var variableYieldTime = 0L
@@ -187,22 +181,10 @@ object App: ApplicationAdapter() {
                     overlayTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
                         menuTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
                             assetManager.updateFonts()
-                            if (MENUTOG || appless) {
-                                if (curSettings.bool["KEYBINDS"]) {
-                                    menuStage.add(uiKeybinds)
-                                } else if (menuStage.actors.contains(uiKeybinds)) {
-                                    menuStage.clear()
-                                }
 
-                                menuStage.add(uiMenu)
-
-                                menuStage.add(uiWarning)
+                            if (MENUTOG) {
                                 uiWarning.setPosition(uiMenu.x, uiMenu.y + uiMenu.height + 8F)
-
-                                menuStage.add(uiArrows)
                                 uiArrows.setPosition(uiMenu.x + uiMenu.width + 8F, uiMenu.y)
-                            } else if (menuStage.actors.contains(uiMenu) || menuStage.actors.contains(uiKeybinds) || menuStage.actors.contains(uiArrows) || menuStage.actors.contains(uiDebug) || menuStage.actors.contains(uiWarning)) { //damn i hate being sober
-                                menuStage.clear()
                             }
 
                             if ((MENUTOG && curSettings.bool["DEBUG"]) || DEBUGTOG) {
@@ -212,28 +194,28 @@ object App: ApplicationAdapter() {
                                     uiDebug.setPosition(uiMenu.x + uiMenu.width + 8F, uiMenu.y + uiMenu.height - uiDebug.height)
                                 }
                             } else {
-                                menuStage.clear(uiDebug)
+                                menuStage.remove(uiDebug)
                             }
 
                             if (curSettings.bool["ENABLE_WATERMARK"]) {
                                 menuStage.add(uiWatermark)
-                                //uiWatermark.setPosition(curSettings.float["UI_WATERMARK_X"], curSettings.float["UI_WATERMARK_Y"])
+                                uiWatermark.update()
                             } else {
-                                menuStage.clear(uiWatermark)
+                                menuStage.remove(uiWatermark)
                             }
 
-                            if (curSettings.bool["ENABLE_BOMB_TIMER"] && curSettings.bool["BOMB_TIMER_MENU"] && curSettings.bool["ENABLE_ESP"]) {
+                            if (curSettings.bool["ENABLE_BOMB_TIMER"] && curSettings.bool["BOMB_TIMER_MENU"] && curSettings.bool["ENABLE_VISUALS"]) {
                                 menuStage.add(uiBombWindow)
                                 uiBombWindow.updateAlpha()
                             } else {
-                                menuStage.clear(uiBombWindow)
+                                menuStage.remove(uiBombWindow)
                             }
 
-                            if (curSettings.bool["SPECTATOR_LIST"] && curSettings.bool["ENABLE_ESP"]) {
+                            if (curSettings.bool["SPECTATOR_LIST"] && curSettings.bool["ENABLE_VISUALS"]) {
                                 menuStage.add(uiSpecList)
                                 uiSpecList.updateAlpha()
                             } else if (menuStage.actors.contains(uiSpecList)) {
-                                menuStage.clear() //actors.remove at index doesnt work after 1 loop?
+                                menuStage.remove(uiSpecList)
                             }
                         }, TimeUnit.NANOSECONDS)
 
@@ -250,15 +232,11 @@ object App: ApplicationAdapter() {
                             }
                         }, TimeUnit.NANOSECONDS)
 
-                        try { //Draw menu last, on top
-                            if (menuBatch.isDrawing) {
-                                menuBatch.end()
-                            }
-                            menuStage.act(Gdx.graphics.deltaTime)
-                            menuStage.draw()
-                        } catch(e: Exception) {
-                            e.printStackTrace()
+                        if (menuBatch.isDrawing) {
+                            menuBatch.end()
                         }
+                        menuStage.act(Gdx.graphics.deltaTime)
+                        menuStage.draw()
 
                         glFinish()
                     }, TimeUnit.NANOSECONDS)
@@ -285,12 +263,10 @@ object App: ApplicationAdapter() {
                 //Menu Key
                 if (!appless) {
                     overlayMenuKey.update()
+
                     if (overlayMenuKey.justBecameTrue) {
                         MENUTOG = !MENUTOG
-                        overlay.clickThrough = !MENUTOG
-
-                        //uiMenu.updateChilds()
-                        uiUpdate()
+                        appOverlay.clickThrough = !MENUTOG
 
                         if (dbg) println("[DEBUG] Menu Toggled")
                     }
@@ -308,8 +284,8 @@ object App: ApplicationAdapter() {
                 }
 
                 if (!appless) {
-                    val w = overlay.width
-                    val h = overlay.height
+                    val w = appOverlay.width
+                    val h = appOverlay.height
 
                     if (menuStage.viewport.screenWidth != w || menuStage.viewport.screenHeight != h) {
                         menuStage.viewport.update(w, h)
@@ -323,7 +299,7 @@ object App: ApplicationAdapter() {
     }
 
     override fun dispose() {
-        overlay.stop()
+        appOverlay.stop()
     }
 
     operator fun invoke(body: App.() -> Unit) {
@@ -331,11 +307,13 @@ object App: ApplicationAdapter() {
     }
 
     fun open() {
-        overlay.listener = object : IOverlayListener {
+        appOverlay.listener = object: IOverlayListener {
             override fun onTargetAppWindowClosed(overlay: IOverlay) {
-                haveTarget = false
-                if (opened) {
-                    uiMenu.closeMenu()
+                if (curSettings.bool["CLOSE_WITH_CSGO"]) {
+                    haveTarget = false
+                    if (opened) {
+                        uiMenu.closeMenu()
+                    }
                 }
             }
 
@@ -347,15 +325,29 @@ object App: ApplicationAdapter() {
             }
 
             override fun onActive(overlay: IOverlay) {
-                MENUTOG = true}
+                if (curSettings.bool["KEYBINDS"]) {
+                    menuStage.add(uiKeybinds)
+                } else if (menuStage.actors.contains(uiKeybinds)) {
+                    menuStage.clear()
+                }
+
+                menuStage.add(uiMenu)
+
+                menuStage.add(uiWarning)
+                uiWarning.width = uiMenu.width //TODO FUCK pack()
+                uiWarning.setPosition(uiMenu.x, uiMenu.y + uiMenu.height + 8F)
+
+                menuStage.add(uiArrows)
+                uiArrows.setPosition(uiMenu.x + uiMenu.width + 8F, uiMenu.y)
+            }
+
             override fun onPassive(overlay: IOverlay) {
-                MENUTOG = false}
+                menuStage.remove(uiMenu, uiKeybinds, uiDebug, uiWarning, uiArrows)
+            }
+
             override fun onBackground(overlay: IOverlay) {}
             override fun onForeground(overlay: IOverlay) {}
             override fun onBoundsChange(overlay: IOverlay, x: Int, y: Int, width: Int, height: Int) {}
         }
     }
 }
-
-var variableYieldTime = 0.toLong()
-var lastSyncTime = 0.toLong()

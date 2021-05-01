@@ -44,7 +44,7 @@ fun autoThrowNade(fSpot: List<Any>, recoveredAngle: Angle) {
 
 private val vOut = Vector()
 fun nadeThrower() = every(10, inGameCheck = true) {
-    if (!curSettings.bool["ENABLE_NADE_THROWER"] || !curSettings.bool["ENABLE_ESP"] || me <= 0L || MENUTOG || meDead) return@every
+    if (!curSettings.bool["ENABLE_NADE_THROWER"] || !curSettings.bool["ENABLE_VISUALS"] || me <= 0L || MENUTOG || meDead) return@every
     mPos = me.absPosition(mPos)
 
     val nadeToCheck : String = when (meCurWep.name) {
