@@ -21,7 +21,7 @@ fun hitSoundEsp() = every(50, inGameCheck = true) {
 
     if (totalHits != curHits) {
         totalHits = curHits
-        val hitSound = assetManager.get<Sound>("$SETTINGS_DIRECTORY/hitsounds/${curSettings["KILLSOUND_FILE_NAME"].replace("\"", "")}")
+        val hitSound = assetManager.get<Sound>("$SETTINGS_DIRECTORY/hitsounds/${curSettings["HITSOUND_FILE_NAME"].replace("\"", "")}")
         hitSound.play(curSettings.float["HITSOUND_VOLUME"])
         totalHits = curHits
     }

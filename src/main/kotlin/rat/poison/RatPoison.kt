@@ -46,7 +46,7 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Beta"
 const val F_VERSION = "1.8"
-const val M_VERSION = "1.8.5.5"
+const val M_VERSION = "1.8.5.6"
 var LOADED_CONFIG = "DEFAULT"
 var oWeaponSize = oWeapon::class.java.declaredFields.size
 

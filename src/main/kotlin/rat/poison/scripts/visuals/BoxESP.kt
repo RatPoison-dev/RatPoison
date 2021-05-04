@@ -82,7 +82,7 @@ private var leftShiftY = 0F
 private var rightShiftY = 0F
 private var barWidth = 0F
 
-private const val entityMemorySize = 45948
+private const val entityMemorySize = 45952
 private val entMemory = threadLocalPointer(entityMemorySize)
 private const val forEntsId = "boxesp"
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
