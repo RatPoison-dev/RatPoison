@@ -1,4 +1,5 @@
 CZ75A {
+	Circaetus : 1036 : 0.00 : 0.90
 	Silver : 32 : 0.00 : 0.08
 	Jungle Dashed : 147 : 0.06 : 0.80
 	Vendetta : 976 : 0.00 : 1.00
@@ -30,6 +31,7 @@ CZ75A {
 }
 
 DESERT_EAGLE {
+	Trigger Discipline : 1050 : 0.00 : 0.97
 	Night Heist : 1006 : 0.00 : 0.65
 	The Bronze : 992 : 0.00 : 0.30
     Printstream : 962 : 0.00 : 0.80
@@ -129,6 +131,7 @@ FIVE_SEVEN {
 }
 
 GLOCK {
+	Clear Polymer : 1039 : 0.00 : 1.00
 	Franklin : 1016 : 0.00 : 0.40
 	Neo-Noir : 988 : 0.00 : 1.00
     Vogue : 963 : 0.00 : 0.75
@@ -195,6 +198,7 @@ P2000 {
 }
 
 P250 {
+	Cyber Shell : 1044 : 0.00 : 0.85
 	Bengal Tiger : 1030 : 0.06 : 0.80
 	Forest Night : 78 : 0.06 : 0.80
 	Contaminant : 982 : 0.00 : 0.70
@@ -238,6 +242,7 @@ P250 {
 }
 
 R8_REVOLVER {
+	Junk Yard : 1047 : 0.00 : 1.00
 	Night : 40 : 0.06 : 0.80
 	Phoenix Marker : 1011 : 0.00 : 0.60
     Bone Forged : 952 : 0.00 : 0.60
@@ -294,6 +299,7 @@ TEC9 {
 }
 
 USP_SILENCER {
+	The Traitor : 1040 : 0.00 : 1.00
 	Ancient Visions : 1031 : 0.00 : 0.45
 	Target Acquired : 1027 : 0.00 : 0.50
 	Monster Mashup : 991 : 0.00 : 0.70
@@ -324,6 +330,7 @@ USP_SILENCER {
 }
 
 MAC10 {
+	Button Masher : 1045 : 0.00 : 1.00
 	Gold Brick : 1025 : 0.00 : 0.70
 	Hot Snakes : 1009 : 0.00 : 1.00
     Allure : 965 : 0.00 : 1.00
@@ -409,6 +416,7 @@ MP7 {
 }
 
 MP9 {
+	Food Chain : 1037 : 0.00 : 1.00
 	Army Sheen : 298 : 0.00 : 0.30
     Hydra : 910 : 0.00 : 1.00
     Airlock : 609 : 0.00 : 1.00
@@ -509,6 +517,7 @@ P90 {
 }
 
 UMP45 {
+	Oscillator : 1049 : 0.00 : 0.50
 	Houndstooth : 1008 : 0.00 : 0.60
 	Crime Scene : 1003 : 0.00 : 0.75
 	Gold Bismuth : 990 : 0.00 : 0.70
@@ -542,6 +551,7 @@ UMP45 {
 }
 
 AK47 {
+	Slate : 1035 : 0.00 : 1.00
 	Panthera onca : 1018 : 0.00 : 1.00
 	X-Ray : 1004 : 0.00 : 1.00
     Legion of Anubis : 959 : 0.00 : 0.70
@@ -711,6 +721,7 @@ G3SG1 {
 }
 
 GALIL {
+	Chromatic Aberration : 1038 : 0.00 : 1.00
 	Dusk Ruins : 1032 : 0.00 : 0.60
 	Phoenix Blacklight : 1013 : 0.00 : 0.70
 	Vandal : 981 : 0.00 : 1.00
@@ -775,6 +786,7 @@ M4A1_SILENCER {
 }
 
 M4A4 {
+	In Living Color : 1041 : 0.00 : 0.79
 	Global Offensive : 993 : 0.00 : 0.70
 	Cyber Security : 985 : 0.00 : 0.98
     Tooth Fairy : 971 : 0.00 : 0.73
@@ -837,6 +849,7 @@ SCAR20 {
 }
 
 SG553 {
+	Heavy Metal : 1048 : 0.00 : 1.00
 	Lush Ruins : 1022 : 0.00 : 0.70
 	Hypnotic : 61 : 0.00 : 0.08
     Ol' Rusty : 966 : 0.00 : 0.70
@@ -927,6 +940,7 @@ MAG7  {
 }
 
 NOVA {
+	Windblown : 1051 : 0.00 : 0.50
 	Army Sheen : 298 : 0.00 : 0.30
 	Rust Coat : 323 : 0.00 : 0.80
 	Clear Polymer : 987 : 0.00 : 1.00
@@ -992,6 +1006,7 @@ SAWED_OFF {
 }
 
 XM1014 {
+	XOXO : 1046 : 0.00 : 0.90
 	Ancient Lore : 1021 : 0.00 : 0.50
 	Charter : 994 : 0.00 : 0.65
     Entombed : 970 : 0.00 : 0.50
@@ -1023,6 +1038,7 @@ XM1014 {
 }
 
 M249 {
+	O.S.I.P.R. : 1042 : 0.00 : 0.70
 	Predator : 170 : 0.06 : 0.80
 	Deep Relief : 983 : 0.00 : 1.00
     Aztec : 902 : 0.00 : 0.75
@@ -1042,6 +1058,7 @@ M249 {
 }
 
 NEGEV {
+	dev_texture : 1043 : 0.00 : 0.65
 	Phoenix Stencil : 1012 : 0.00 : 0.65
     Ultralight : 958 : 0.00 : 0.79
     Prototype : 950 : 0.00 : 0.70
