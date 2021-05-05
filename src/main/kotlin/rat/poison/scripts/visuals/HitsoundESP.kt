@@ -11,7 +11,7 @@ import rat.poison.settings.MENUTOG
 import rat.poison.utils.common.every
 
 private var totalHits = 0
-
+private val emptyStr = ""
 fun hitSoundEsp() = every(50, inGameCheck = true) {
     if (!curSettings.bool["ENABLE_HITSOUND"] || MENUTOG || !curSettings.bool["MENU"] || me < 0) return@every
 
@@ -21,8 +21,11 @@ fun hitSoundEsp() = every(50, inGameCheck = true) {
 
     if (totalHits != curHits) {
         totalHits = curHits
-        val hitSound = assetManager.get<Sound>("$SETTINGS_DIRECTORY/hitsounds/${curSettings["KILLSOUND_FILE_NAME"].replace("\"", "")}")
-        hitSound.play(curSettings.float["HITSOUND_VOLUME"])
+        val setting = curSettings["HITSOUND_FILE_NAME"].replace("\"", "")
+        if (setting != emptyStr) {
+            val hitSound = assetManager.get<Sound>("$SETTINGS_DIRECTORY/hitsounds/${setting}")
+            hitSound.play(curSettings.float["HITSOUND_VOLUME"])
+        }
         totalHits = curHits
     }
 }

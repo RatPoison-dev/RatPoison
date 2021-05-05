@@ -197,6 +197,8 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         configsButton.color = buttonColor
 
         configsButton.changed { _, _ ->
+            configsTab.updateCFGList()
+            configsTab.updateSkinCfgList()
             mainTabbedPaneContent.clear()
             mainTabbedPaneContent.add(configsTab.contentTable).growX().left()
             lastCheckedTab.color = buttonColor
