@@ -39,13 +39,14 @@ fun ucmdTrigger(userCMD: UserCMD): Boolean {
     val bBACKTRACK = TRIGGER_USE_BACKTRACK
 
     if (trigQueuedShotTime > 0) {
-
+        keybindEval("TRIGGER_KEY")
         return false
     }
 
     //Don't run if not needed
     if (DANGER_ZONE || meDead || !inGame || MENUTOG || !meCurWep.gun || !curSettings.bool["ENABLE_TRIGGER"] || !haveAimSettings) { //Precheck
         reset()
+        keybindEval("TRIGGER_KEY")
         return false
     }
 

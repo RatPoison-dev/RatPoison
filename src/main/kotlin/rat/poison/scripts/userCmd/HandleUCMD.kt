@@ -94,11 +94,6 @@ fun handleUCMD() = every(1, true) {
             }
 
             yield()
-
-            if (!curSettings.bool["USER_CMD"]) {
-                println("broke loop")
-                return@every
-            }
         }
     }
 }
@@ -116,12 +111,6 @@ fun sendUserCMD(userCMD: UserCMD, oldPtr: Int, oldVerifiedPtr: Int) {
         canSetCmdAngles = true
 
         shouldSendNextCMD = true
-
-        if (dbg) {
-            if (userCMD.vecViewAngles.isZero()) {
-                println("[DEBUG] Set usercmd viewangles to 0...")
-            }
-        }
     }
 
     //Aim Key
@@ -147,7 +136,6 @@ fun sendUserCMD(userCMD: UserCMD, oldPtr: Int, oldVerifiedPtr: Int) {
 
     //Trigger
     if (trigQueuedShotTime > 0 && curTime >= trigQueuedShotTime) {
-        println("trig queued shots hit popped in cmd $trigEnt")
         ucmdTriggerAim(curSettings.bool["UCMD_SILENT_AIM"], trigEnt)
         cmdShoot(userCMD)
         trigQueuedShotTime = -1F
@@ -155,10 +143,6 @@ fun sendUserCMD(userCMD: UserCMD, oldPtr: Int, oldVerifiedPtr: Int) {
     }
 
     if (shouldSendNextCMD) {
-        if (userCMD.vecViewAngles.isZero()) {
-            println("sent usercmd with 0 angles")
-        }
-
         userCMDToMem(oldPtr, userCMD)
         userCMDToMem(oldVerifiedPtr, userCMD)
 

@@ -16,26 +16,35 @@ private val meAng = Vector()
 private val boneVec2 = Vector()
 
 fun ucmdTriggerAim(silent: Boolean, trigEnt: Long): Boolean {
-    if (!curSettings.bool["ENABLE_AIM"]) return false
+    if (!curSettings.bool["ENABLE_AIM"]) {
+        keybindEval("FORCE_AIM_KEY")
+        return false
+    }
 
-    if (!canSetCmdAngles) return false
+    if (!canSetCmdAngles) {
+        keybindEval("FORCE_AIM_KEY")
+        return false
+    }
 
     val canFire = meCurWepEnt.canFire()
     if (meCurWep.grenade || meCurWep.knife || meCurWep.miscEnt || meCurWep == Weapons.ZEUS_X27 || meCurWep.bomb || meCurWep == Weapons.NONE) { //Invalid for aimbot
-        reset()
+        keybindEval("FORCE_AIM_KEY")
         return false
     }
 
     //TODO                                 didShoot &&
     if (AIM_ONLY_ON_SHOT && (!canFire || (!meCurWep.automatic && !AUTOMATIC_WEAPONS))) { //Onshot
+        keybindEval("FORCE_AIM_KEY")
         return false
     }
 
     if (meCurWep.sniper && !me.isScoped() && ENABLE_SCOPED_ONLY) { //Scoped only
+        keybindEval("FORCE_AIM_KEY")
         return false
     }
 
     if (!trigEnt.canShoot()) {
+        keybindEval("FORCE_AIM_KEY")
         return false
     }
 
