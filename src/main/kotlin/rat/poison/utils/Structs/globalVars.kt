@@ -9,6 +9,7 @@ fun memToGlobalVars(mem: Memory): GlobalVars {
     val tmpGVars = gvars
 
     tmpGVars.tickCount = gvar_tickCount(mem)
+    tmpGVars.curTime = gvar_curTime(mem)
     tmpGVars.intervalPerTick = gvar_intervalPerTick(mem)
 
     return tmpGVars
@@ -51,6 +52,10 @@ class GlobalVars: Struct(), Structure.ByReference {
 
 fun gvar_tickCount(mem: Memory): Int {
     return mem.getInt(0x1C)
+}
+
+fun gvar_curTime(mem: Memory): Float {
+    return mem.getFloat(0x10)
 }
 
 fun gvar_intervalPerTick(mem: Memory): Float {

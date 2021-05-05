@@ -16,7 +16,6 @@ import kotlin.math.sqrt
 
 var target = -1L
 var canPerfect = false
-var boneTrig = false
 var destBone = -1
 
 fun reset(resetTarget: Boolean = true) {
@@ -51,56 +50,45 @@ fun aimFindTarget(position: Angle, angle: Angle, allowPerfect: Boolean, lockFOV:
 	val findNearest = BONE.has { it == NEAREST_BONE }
 	val findRandom = BONE.has { 0 > it as Int }
 
-	try {
+	forEntities(forEnts, identifier = id) {
+		val entity = it.entity
 
-		forEntities(forEnts, identifier = id) {
-			try {
-				val entity = it.entity
-
-				if (entity <= 0 || entity == me || !entity.canShoot(visCheck, teamCheck)) {
-					return@forEntities
-				}
-
-				if (findNearest) {
-					val nB = entity.nearestBone()
-					if (nB != INVALID_NEAREST_BONE) forceSpecificBone = nB
-				} else if (findRandom) {
-					forceSpecificBone = 5 + randInt(0, 3)
-				}
-
-				if (forceSpecificBone == -1) {
-					for (element in BONE) {
-						val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, element)
-
-						val fov = arr.delta
-
-						if (fov > 0F && fov < closestFOV) {
-							closestFOV = fov
-							closestDelta = arr.delta
-							closestPlayer = arr.player
-							closestBone = element
-						}
-					}
-				} else {
-					val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, forceSpecificBone)
-
-					val fov = arr.delta
-
-					if (fov > 0F && fov < closestFOV) {
-						closestFOV = fov
-						closestDelta = arr.delta
-						closestPlayer = arr.player
-						closestBone = forceSpecificBone
-					}
-				}
-
-			} catch (e: Exception) {
-				e.printStackTrace()
-			}
+		if (entity <= 0 || entity == me || !entity.canShoot(visCheck, teamCheck)) {
+			return@forEntities
 		}
 
-	} catch (e: Exception) {
-		e.printStackTrace()
+		if (findNearest) {
+			val nB = entity.nearestBone()
+			if (nB != INVALID_NEAREST_BONE) forceSpecificBone = nB
+		} else if (findRandom) {
+			forceSpecificBone = 5 + randInt(0, 3)
+		}
+
+		if (forceSpecificBone == -1) {
+			for (element in BONE) {
+				val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, element)
+
+				val fov = arr.delta
+
+				if (fov > 0F && fov < closestFOV) {
+					closestFOV = fov
+					closestDelta = arr.delta
+					closestPlayer = arr.player
+					closestBone = element
+				}
+			}
+		} else {
+			val arr = calcTarget(closestDelta, entity, position, angle, lockFOV, forceSpecificBone)
+
+			val fov = arr.delta
+
+			if (fov > 0F && fov < closestFOV) {
+				closestFOV = fov
+				closestDelta = arr.delta
+				closestPlayer = arr.player
+				closestBone = forceSpecificBone
+			}
+		}
 	}
 
 	if (closestDelta == Float.MAX_VALUE || closestDelta < 0 || closestPlayer < 0) return result
@@ -247,7 +235,8 @@ fun Entity.canShoot(visCheck: Boolean = true, teamCheck: Boolean = true) = ((if 
 		&& !dead()
 		&& (!inMyTeam() || !teamCheck)
 		&& !isProtected()
-		&& !meDead)
+		&& !meDead
+		&& this > 0L)
 
 const val INVALID_NEAREST_BONE = 999
 private val meAng = Vector()
@@ -280,8 +269,8 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 	val pressedForceAimKey = keybindEval("FORCE_AIM_KEY")
 	val forceAim = pressedForceAimKey
 	val haveAmmo = meCurWepEnt.bullets() > 0
-
-	val pressed = ((aim || boneTrig) && !MENUTOG && haveAmmo) || forceAim
+					// || boneTrig
+	val pressed = ((aim) && !MENUTOG && haveAmmo) || forceAim
 
 	if (!pressed) {
 		reset()
@@ -331,7 +320,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 
 	var perfect = false
 	if (canPerfect) {
-		if (randInt(100+1) <= PERFECT_AIM_CHANCE) {
+		if (randInt(101) <= PERFECT_AIM_CHANCE) {
 			perfect = true
 		}
 	}

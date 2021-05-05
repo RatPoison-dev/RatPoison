@@ -40,7 +40,9 @@ internal fun Angle.finalize(orig: Angle, smoothness: Float) {
 
     var smooth = smoothness
 
-    if (smooth <= 0) {
+    if (smooth < 0F) {
+        smooth = 0F
+    } else if (smooth > 1F) {
         smooth = 1F
     }
 

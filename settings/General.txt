@@ -107,12 +107,6 @@ FORCE_AIM_THROUGH_WALLS = false
 //MS Delay between when aimbot paths are recalculated
 AIM_DURATION = 1
 
-//Silent Aim
-SILENT_AIM = false
-SILENT_REQUIRE_TARGET = true
-
-USER_CMD = false
-
 //Bone IDs of bones used
 HEAD_BONE = 8
 NECK_BONE = 7

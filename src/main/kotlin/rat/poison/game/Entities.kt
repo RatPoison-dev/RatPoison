@@ -79,8 +79,7 @@ internal inline fun forEntities(types: Array<EntityType>, iterateWeapons: Boolea
 				}
 			}
 		}
-	}
-	else {
+	} else {
 		if (!get.iterating) {
 			get.iterating = true
 			for (i in 0 until get.ents.size) {

@@ -37,15 +37,11 @@ fun getCalculatedAngle(player: Player, dst: Vector): Angle {
 
 	val hyp = sqrt((dX * dX) + (dY * dY))
 
-	val rcsXVariation = AIM_RCS_VARIATION
-	val rcsYVariation = AIM_RCS_VARIATION
 
 	if (FACTOR_RECOIL) {
 		if (AIM_ADVANCED) {
-			val randX = if (rcsXVariation > 0F) randDouble(0.0, rcsXVariation).toFloat() * randBoolean().toInt() else 0F
-			val randY = if (rcsYVariation > 0F) randDouble(0.0, rcsYVariation).toFloat() * randBoolean().toInt() else 0F
-			val calcX = toDegrees(atan(dZ / hyp).toDouble()) - myPunch.x * clamp(1F + AIM_RCS_Y + randX, 1F, 2F)
-			val calcY = toDegrees(atan(dY / dX).toDouble()) - myPunch.y * clamp(1F + AIM_RCS_X + randY, 1F, 2F)
+			val calcX = toDegrees(atan(dZ / hyp).toDouble()) - myPunch.x * clamp(1F + AIM_RCS_Y, 1F, 2F)
+			val calcY = toDegrees(atan(dY / dX).toDouble()) - myPunch.y * clamp(1F + AIM_RCS_X, 1F, 2F)
 			ang.x = calcX.toFloat()
 			ang.y = calcY.toFloat()
 		} else {
@@ -80,15 +76,10 @@ fun realCalcAngle(player: Player, dst: Vector): Angle {
 	var aX = toDegrees(atan2(-delta.z, sqrt(delta.x*delta.x + delta.y*delta.y)).toDouble())
 	var aY = toDegrees(atan2(delta.y, delta.x).toDouble())
 
-	val rcsXVariation = AIM_RANDOM_X_VARIATION.toDouble()
-	val rcsYVariation = AIM_RANDOM_Y_VARIATION.toDouble()
-
 	if (FACTOR_RECOIL) {
 		if (AIM_ADVANCED) {
-			val randX = if (rcsXVariation > 0.0) randDouble(0.0, rcsXVariation) * randBoolean().toInt() else 0.0
-			val randY = if (rcsYVariation > 0.0) randDouble(0.0, rcsYVariation) * randBoolean().toInt() else 0.0
-			val calcX = myPunch.x * clamp(1.0 + AIM_RCS_Y + randX, 1.0, 2.0)
-			val calcY = myPunch.y * clamp(1.0 + AIM_RCS_X + randY, 1.0, 2.0)
+			val calcX = myPunch.x * clamp(1.0 + AIM_RCS_Y, 1.0, 2.0)
+			val calcY = myPunch.y * clamp(1.0 + AIM_RCS_X, 1.0, 2.0)
 			aX -= calcX
 			aY -= calcY
 		} else {

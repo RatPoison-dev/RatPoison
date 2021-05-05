@@ -23,7 +23,12 @@ private var triggerShots = 0
 private val meAngle = Vector()
 private val mePosition = Vector()
 private val boneList = listOf(-2)
+
 fun triggerBot() = every(5, inGameCheck = true) {
+    if (curSettings.bool["UCMD_HANDLE_TRIGGER"]) {
+        return@every
+    }
+
     //Don't run if not needed
     if (DANGER_ZONE || meDead || !inGame || MENUTOG || !meCurWep.gun || !curSettings.bool["ENABLE_TRIGGER"] || !haveAimSettings) { //Precheck
         inTrigger = false
@@ -77,9 +82,6 @@ fun triggerBot() = every(5, inGameCheck = true) {
                 trigQueueShot(useDelay, bAIMBOT, backtrack = false, backtrackFallback = false)
                 return@every
             }
-            else {
-                boneTrig = bAIMBOT
-            }
         }
 
         var canFOV = false
@@ -132,11 +134,11 @@ private fun triggerShoot(aimbot: Boolean = false, backtrack: Boolean = false, ba
 
     if (backtrack) {
         //didBacktrack = attemptBacktrack()
-        boneTrig = didBacktrack
+        //boneTrig = didBacktrack
     }
 
     if (!backtrack || (backtrack && !didBacktrack && backtrackFallback)) {
-        boneTrig = aimbot
+        //boneTrig = aimbot
         clientDLL[dwForceAttack] = 6
     }
 

@@ -121,10 +121,6 @@ fun setAim() = every(500, true, inGameCheck = true) {
                 AIM_ADVANCED = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_ADVANCED_SETTINGS")]
                 AIM_RCS_X = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_AIM_RCS_X")]
                 AIM_RCS_Y = curSettings.float[stringBuilder.clear().append(curWepCategory).append("_AIM_RCS_Y")]
-                AIM_RCS_VARIATION = curSettings.double[stringBuilder.clear().append(curWepCategory).append("_AIM_RCS_VARIATION")]
-                AIM_RANDOM_X_VARIATION = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_RANDOM_X_VARIATION")]
-                AIM_RANDOM_Y_VARIATION = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_RANDOM_Y_VARIATION")]
-                AIM_VARIATION_DEADZONE = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_VARIATION_DEADZONE")]
 
                 TRIGGER_BOT = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_TRIGGER")]
                 TRIGGER_INIT_SHOT_DELAY = curSettings.int[stringBuilder.clear().append(curWepCategory).append("_TRIGGER_INIT_SHOT_DELAY")]

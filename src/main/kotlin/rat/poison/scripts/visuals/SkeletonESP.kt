@@ -27,7 +27,11 @@ private val c = Color()
 private val forEnts = arrayOf(EntityType.CCSPlayer)
 fun skeletonEsp() = App {
 	if (!curSettings.bool["SKELETON_ESP"] || !curSettings.bool["ENABLE_VISUALS"] || !inGame) return@App
-	shapeRenderer.begin()
+
+	if (!shapeRenderer.isDrawing) {
+		shapeRenderer.begin()
+	}
+
 	forEntities(forEnts, identifier = skeletonEspIdentifier) {
 		val entity = it.entity
 		val entTeam = entity.team()

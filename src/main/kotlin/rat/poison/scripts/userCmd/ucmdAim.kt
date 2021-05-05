@@ -6,15 +6,30 @@ import rat.poison.game.entity.*
 import rat.poison.scripts.aim.*
 import rat.poison.settings.*
 import rat.poison.utils.common.Vector
+import rat.poison.utils.common.finalize
 import rat.poison.utils.common.keyPressed
 import rat.poison.utils.keybindEval
+import rat.poison.utils.randInt
+import rat.poison.utils.writeAim
 
 private val meAng = Vector()
 private val mePos = Vector()
 private val boneVec2 = Vector()
 
-fun ucmdAim(): Boolean {
+fun ucmdAim(silent: Boolean = false, trigger: Boolean = false, trigEnt: Long = 0L): Boolean {
     if (!curSettings.bool["ENABLE_AIM"]) return false
+
+    if (!canSetCmdAngles) return false
+
+    if (!trigger) {
+        if (aimTargetSwapTime > 0) {
+            if (curTime >= aimTargetSwapTime) {
+                aimTargetSwapTime = -1F
+            } else {
+                return false
+            }
+        }
+    }
 
     val canFire = meCurWepEnt.canFire()
     if (meCurWep.grenade || meCurWep.knife || meCurWep.miscEnt || meCurWep == Weapons.ZEUS_X27 || meCurWep.bomb || meCurWep == Weapons.NONE) { //Invalid for aimbot
@@ -37,7 +52,7 @@ fun ucmdAim(): Boolean {
     val pressedForceAimKey = keybindEval("FORCE_AIM_KEY")
     val haveAmmo = meCurWepEnt.bullets() > 0
 
-    val pressed = ((aim || boneTrig) && !MENUTOG && haveAmmo) || pressedForceAimKey
+    val pressed = ((aim || trigger) && !MENUTOG && haveAmmo) || pressedForceAimKey
 
     if (!pressed) {
         reset()
@@ -84,29 +99,75 @@ fun ucmdAim(): Boolean {
         reset()
         return false
     }
-//
-//    var perfect = false
-//    if (canPerfect) {
-//        if (randInt(100+1) <= PERFECT_AIM_CHANCE) {
-//            perfect = true
-//        }
-//    }
 
-    val swapTarget = (bestTarget > 0 && currentTarget != bestTarget) && !curSettings.bool["HOLD_AIM"] && (meCurWep.automatic || AUTOMATIC_WEAPONS)
+    var perfect = false
+    if (canPerfect) {
+        if (randInt(101) <= PERFECT_AIM_CHANCE) {
+            perfect = true
+        }
+    }
 
-    if (swapTarget) {
-        reset()
-        return false
-    } else if (!currentTarget.canShoot(shouldVisCheck)) {
-        Thread.sleep(curSettings.int["AIM_TARGET_SWAP_DELAY"].toLong()) //tested cool breezy
-        reset()
-        return false
+    if (!trigger) {
+        ////NORMAL AIM
+
+        val swapTarget = (bestTarget > 0 && currentTarget != bestTarget) && !curSettings.bool["HOLD_AIM"] && (meCurWep.automatic || AUTOMATIC_WEAPONS)
+
+        if (swapTarget) {
+            reset()
+            return false
+        } else if (!currentTarget.canShoot(shouldVisCheck)) {
+            aimTargetSwapTime = curTime + curSettings.int["AIM_TARGET_SWAP_DELAY"] / 1000F
+            reset()
+            return false
+        } else {
+            val bonePosition = currentTarget.bones(destBone, boneVec2)
+
+            val destinationAngle = realCalcAngle(me, bonePosition)
+
+            if (silent) {
+                silentHaveTarget = true
+                cmdSetAngles(destinationAngle)
+            } else {
+                silentHaveTarget = false
+
+                if (!perfect) {
+                    destinationAngle.finalize(currentAngle, (1F - AIM_SMOOTHNESS / 100.1F))
+
+                    writeAim(destinationAngle, currentAngle, AIM_SMOOTHNESS)
+                } else {
+                    writeAim(destinationAngle, currentAngle, 1)
+                }
+            }
+
+            return true
+        }
     } else {
         val bonePosition = currentTarget.bones(destBone, boneVec2)
 
         val destinationAngle = realCalcAngle(me, bonePosition)
 
-        cmdSetAngles(destinationAngle)
+        if (destinationAngle.isZero()) {
+            println("trigger destination is zero brosephhhh")
+        }
+
+        if (currentAngle.isZero()) {
+            println("trigger destination current angleio is zero bresphsphsph")
+        }
+
+        if (silent) {
+            silentHaveTarget = true
+            cmdSetAngles(destinationAngle)
+        } else {
+            silentHaveTarget = false
+
+            if (!perfect) {
+                //destinationAngle.finalize(currentAngle, (1.001F - AIM_SMOOTHNESS / 100F))
+
+                writeAim(destinationAngle, currentAngle, 1)
+            } else {
+                writeAim(destinationAngle, currentAngle, 1)
+            }
+        }
 
         return true
     }

@@ -120,8 +120,19 @@ fun UserCMD.reset() {
     ptr = 0
     iCmdNumber = 0
     iTickCount = 0
-    vecViewAngles = Vector()
-    vecAimDirection = Vector()
+
+    vecViewAngles.apply {
+        x = 0f
+        y = 0f
+        z = 0f
+    }
+
+    vecAimDirection.apply {
+        x = 0f
+        y = 0f
+        z = 0f
+    }
+
     flForwardmove = 0f
     flSidemove = 0f
     flUpmove = 0f

@@ -1,0 +1,12 @@
+//Edit UserCMDs
+USER_CMD = false
+
+//Whether usercmd handles mouse 1 inpu
+UCMD_HANDLE_FIRE_KEY = true
+
+//Activate trigger through ucmd
+UCMD_HANDLE_TRIGGER = true
+
+//Silent Aim
+UCMD_SILENT_AIM = false
+UCMD_SILENT_REQUIRE_TARGET = true

@@ -27,6 +27,7 @@ import rat.poison.jna.enums.AccentStates
 import rat.poison.scripts.visuals.espToggleCallback
 import rat.poison.settings.DEBUGTOG
 import rat.poison.settings.MENUTOG
+import rat.poison.settings.WARNINGTOG
 import rat.poison.ui.MenuStage
 import rat.poison.ui.uiTabs.updateDisableAim
 import rat.poison.ui.uiWindows.*
@@ -183,7 +184,11 @@ object App: ApplicationAdapter() {
                             assetManager.updateFonts()
 
                             if (MENUTOG) {
-                                uiWarning.setPosition(uiMenu.x, uiMenu.y + uiMenu.height + 8F)
+                                if (!WARNINGTOG) {
+                                    menuStage.remove(uiWarning)
+                                } else {
+                                    uiWarning.setPosition(uiMenu.x, uiMenu.y + uiMenu.height + 8F)
+                                }
                                 uiArrows.setPosition(uiMenu.x + uiMenu.width + 8F, uiMenu.y)
                             }
 

@@ -177,9 +177,6 @@ fun updateDisableAim() {
         perfectAimChance.disable(bool, col)
         perfectAimFov.disable(bool, col)
 
-        randomizeX.disable(bool, col)
-        randomizeY.disable(bool, col)
-        randomizeDZ.disable(bool, col)
         advancedSettingsCollapsible.isCollapsed = !advancedSettingsCheckBox.isChecked
         advancedSettingsCheckBox.isDisabled = bool
         advancedRcsX.disable(bool, col)
@@ -251,9 +248,6 @@ fun updateAim() {
         perfectAimFov.update()
         perfectAimChance.update()
 
-        randomizeX.update()
-        randomizeY.update()
-        randomizeDZ.update()
         advancedSettingsCheckBox.isChecked = curSettings.bool[categorySelected + "_ADVANCED_SETTINGS"]
         advancedSettingsCollapsible.isCollapsed = !curSettings.bool[categorySelected + "_ADVANCED_SETTINGS"]
         advancedRcsX.update()

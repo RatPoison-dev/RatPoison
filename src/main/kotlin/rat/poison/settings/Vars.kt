@@ -15,10 +15,6 @@ var FORCE_AIM_BONE = listOf<Int>()
 var AIM_ADVANCED = false
 var AIM_RCS_X = 0.05F
 var AIM_RCS_Y = 0.05F
-var AIM_RANDOM_X_VARIATION = 0
-var AIM_RANDOM_Y_VARIATION = 0
-var AIM_RCS_VARIATION = 0.0
-var AIM_VARIATION_DEADZONE = 0
 var ENABLE_FLAT_AIM = false
 var ENABLE_PATH_AIM = false
 var TRIGGER_USE_FOV = false
@@ -39,18 +35,6 @@ var AIM_SMOOTHNESS = 0
 
 var BACKTRACK = false
 var BACKTRACK_MS = 0
-
-
-
-
-
-
-
-
-
-
-
-
 
 var GAME_PITCH = 0.022 // m_pitch
 var GAME_YAW = 0.022 // m_yaw
@@ -85,3 +69,5 @@ var DEBUGTOG = false
     set(value) {
         field = if(!appless) value else false
     }
+
+var WARNINGTOG = true

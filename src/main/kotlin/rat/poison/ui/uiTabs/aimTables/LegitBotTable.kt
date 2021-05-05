@@ -42,9 +42,6 @@ class LegitBotTable: VisTable(false) {
     val advancedSettingsCheckBox = VisCheckBox("Advanced-Settings")
     private val advancedSettingsTable = VisTable(false)
     val advancedSettingsCollapsible = CollapsibleWidget(advancedSettingsTable)
-    val randomizeX = AimVisSlider("X Variation", "_RANDOM_X_VARIATION", 0F, 50F, 1F, true, 0, 200F, 200F)
-    val randomizeY = AimVisSlider("Y Variation", "_RANDOM_Y_VARIATION", 0F, 50F, 1F, true, 0, 200F, 200F)
-    val randomizeDZ = AimVisSlider("Variation Deadzone", "_VARIATION_DEADZONE", 0F, 100F, 5F, true, 0, 200F, 200F)
     val advancedRcsX = AimVisSlider("RCS X", "_AIM_RCS_X", 0.05F, 1F, 0.05F, false, 2, 200F, 200F)
     val advancedRcsY = AimVisSlider("RCS Y", "_AIM_RCS_Y", 0.05F, 1F, 0.05F, false, 2, 200F, 200F)
     val advancedRcsVariation = AimVisSlider("RCS Variation", "_AIM_RCS_VARIATION", 0F, 1F, 0.05F, false, 2, 200F, 200F)
@@ -79,9 +76,6 @@ class LegitBotTable: VisTable(false) {
 
         advancedSettingsCollapsible.setCollapsed(!curSettings.bool[categorySelected + "_ADVANCED_SETTINGS"], true)
 
-        advancedSettingsTable.add(randomizeX).left().row()
-        advancedSettingsTable.add(randomizeY).left().row()
-        advancedSettingsTable.add(randomizeDZ).left().row()
         advancedSettingsTable.add(advancedRcsX).left().row()
         advancedSettingsTable.add(advancedRcsY).left().row()
         advancedSettingsTable.add(advancedRcsVariation).left().row()

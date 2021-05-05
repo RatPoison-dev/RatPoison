@@ -1,6 +1,7 @@
 package rat.poison.scripts.userCmd
 
 import rat.poison.curSettings
+import rat.poison.dbg
 import rat.poison.game.*
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
@@ -10,6 +11,7 @@ import rat.poison.game.offsets.EngineOffsets
 import rat.poison.game.offsets.EngineOffsets.dwClientStateNetChannel
 import rat.poison.scripts.aim.*
 import rat.poison.scripts.attemptBacktrack
+import rat.poison.scripts.misc.gvars
 import rat.poison.scripts.misc.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.Structs.*
@@ -26,8 +28,17 @@ var meDead = true
 
 var silentHaveTarget = false
 
+var curTime = 0F
+
+var trigEnt = 0L
+var trigQueuedShotTime = -1F
+
+var aimTargetSwapTime = -1F
+
 fun handleUCMD() = every(1, true) {
     meDead = me.dead()
+
+    curTime = gvars.curTime
 
     //TODO prechecks
     if (meDead || !inGame || inBackground) return@every
@@ -48,14 +59,19 @@ fun handleUCMD() = every(1, true) {
         //val pUCMD = input.pCommands + (currentCommandNumber % 150) * 0x64
         val pNetChannel = csgoEXE.int(clientState + dwClientStateNetChannel)
 
-        second@while (true) {
+        loop@while (true) {
             val curCMDNumber = csgoEXE.int(pNetChannel + 0x18) //find out what 0x18 supposd b
             chokedCommands = csgoEXE.int(clientState + EngineOffsets.dwClientState_ChokedCommands) - 1 //TODO is this supposed to be - 1?
             if (chokedCommands < 0) chokedCommands = 0
 
             //Aimbot : Do all the stuff, priority 1
-            if (curSettings.bool["SILENT_AIM"]) {
-                silentHaveTarget = ucmdAim()
+            if (curSettings.bool["UCMD_SILENT_AIM"]) {
+                ucmdAim(true)
+            }
+
+            //Trigger : Do all the stuff, priority 2
+            if (curSettings.bool["UCMD_HANDLE_TRIGGER"]) {
+                ucmdTrigger(oldUserCMD)
             }
 
             if (curCMDNumber >= currentCommandNumber || chokedCommands >= 7) {
@@ -66,20 +82,23 @@ fun handleUCMD() = every(1, true) {
                 csgoEXE.read(oldUserCMDptr, oldUserCmdMemory, oldUserCmdMemorySize)
                 memToUserCMD(oldUserCmdMemory, oldUserCMD)
 
-                //Trigger : Do all the stuff, priority 2
-
                 //Backtrack : Do all the stuff, priority 3
                 attemptBacktrack(oldUserCMD)
 
                 sendUserCMD(oldUserCMD, oldUserCMDptr, verifiedOldUserCMDptr)
                 sendPacket(true)
 
-                Thread.sleep(10) //pas one down s
+                Thread.sleep(8) //pas one down s
 
-                break@second
+                break@loop
             }
 
             yield()
+
+            if (!curSettings.bool["USER_CMD"]) {
+                println("broke loop")
+                return@every
+            }
         }
     }
 }
@@ -89,34 +108,65 @@ private val oldUserCmdMemory = threadLocalPointer(oldUserCmdMemorySize)
 private val oldUserCMD = UserCMD()
 var nextCMD = UserCMD()
 
-fun sendUserCMD(userCmd: UserCMD, oldPtr: Int, oldVerifiedPtr: Int) {
-    var shouldSendCmd = false
+var shouldSendNextCMD = false
 
+fun sendUserCMD(userCMD: UserCMD, oldPtr: Int, oldVerifiedPtr: Int) {
     if (!canSetCmdAngles) { //Queued
-        userCmd.vecViewAngles = nextCMD.vecViewAngles
+        userCMD.vecViewAngles = nextCMD.vecViewAngles
         canSetCmdAngles = true
 
-        shouldSendCmd = true
+        shouldSendNextCMD = true
+
+        if (dbg) {
+            if (userCMD.vecViewAngles.isZero()) {
+                println("[DEBUG] Set usercmd viewangles to 0...")
+            }
+        }
     }
 
     //Aim Key
-    if (keyPressed(1) && !meDead && !inBackground && inGame) {
-        //Shoot
-        userCmd.iButtons = userCmd.iButtons or 1
+    if (curSettings.bool["UCMD_HANDLE_FIRE_KEY"]) {
+        if (keyPressed(1) && !meDead && !inBackground && inGame) {
+            if (curSettings.bool["UCMD_SILENT_AIM"]) {
+                if (curSettings.bool["UCMD_SILENT_REQUIRE_TARGET"] && !silentHaveTarget) {
+                    //Nothin
+                } else {
+                    //Shoot
+                    cmdShoot(userCMD)
 
-        if (curSettings.bool["SILENT_AIM"] && curSettings.bool["SILENT_REQUIRE_TARGET"] && !silentHaveTarget) {
-            return
+                    shouldSendNextCMD = true
+                }
+            } else {
+                //Shoot
+                cmdShoot(userCMD)
+
+                shouldSendNextCMD = true
+            }
         }
-
-        shouldSendCmd = true
     }
 
-    if (shouldSendCmd) {
-        userCMDToMem(oldPtr, userCmd)
-        userCMDToMem(oldVerifiedPtr, userCmd)
+    //Trigger
+    if (trigQueuedShotTime > 0 && curTime >= trigQueuedShotTime) {
+        println("trig queued shots hit popped in cmd $trigEnt")
+        ucmdTriggerAim(curSettings.bool["UCMD_SILENT_AIM"], trigEnt)
+        cmdShoot(userCMD)
+        trigQueuedShotTime = -1F
+        shouldSendNextCMD = true
+    }
+
+    if (shouldSendNextCMD) {
+        if (userCMD.vecViewAngles.isZero()) {
+            println("sent usercmd with 0 angles")
+        }
+
+        userCMDToMem(oldPtr, userCMD)
+        userCMDToMem(oldVerifiedPtr, userCMD)
+
+        shouldSendNextCMD = false
     }
 
     nextCMD.reset()
+    silentHaveTarget = false
 }
 
 //yuh yuh yah fuck this tho ong fr fr breezy
@@ -127,4 +177,8 @@ fun cmdSetAngles(viewAngles: Vector) {
 
         canSetCmdAngles = false
     }
+}
+
+fun cmdShoot(cmd: UserCMD) {
+    cmd.iButtons = cmd.iButtons or 1
 }

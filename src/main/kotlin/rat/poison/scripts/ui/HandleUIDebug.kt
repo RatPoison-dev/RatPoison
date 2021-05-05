@@ -9,6 +9,7 @@ import rat.poison.scripts.aim.curWepOverride
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.userCmd.chokedCommands
 import rat.poison.scripts.userCmd.meDead
+import rat.poison.scripts.userCmd.trigQueuedShotTime
 import rat.poison.settings.*
 import rat.poison.utils.common.inGame
 import rat.poison.utils.common.shouldPostProcess
@@ -38,6 +39,8 @@ fun handleUIDebug() = App {
         sbText.appendLine(inGame)
         sbText.append("ShouldPostProcess: ")
         sbText.appendLine(shouldPostProcess)
+        sbText.append("triggerTime: ")
+        sbText.appendLine(trigQueuedShotTime)
         sbText.append("Me: ")
         sbText.append(me)
         sbText.append(" Dead: ")
@@ -72,7 +75,7 @@ fun handleUIDebug() = App {
 
         sbText.clear()
 
-        sbText.appendLine("Weapon Override: ").appendLine(curWepOverride)
+        sbText.appendLine("Weapon Override: ").append(curWepOverride)
 
         if (curWepOverride) {
             sbText.append("Current Override: ").append(curWepCategory).append(meCurWep.name)

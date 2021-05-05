@@ -133,9 +133,8 @@ fun constructEntities() = every(500, continuous = true) {
             val type = EntityType.byEntityAddress(entity)
             if (type != EntityType.NULL) {
                 val tmpPos = entity.absPosition(positionVector)
-                val check = (tmpPos.x in -2.0F..2.0F && tmpPos.y in -2.0F..2.0F && tmpPos.z in -2.0F..2.0F)
 
-                if (!check) {
+                if (!tmpPos.isZero()) {
                     val context = contexts[glowIndex].set(entity, glowAddress, glowIndex, type) //remove contexts[]
 
                     with(entities[type]!!) {

@@ -15,43 +15,27 @@ import kotlin.math.*
 private val delta = ThreadLocal.withInitial { Vector() }
 
 fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: Int) = destinationAngle.apply {
+	var smooth = smoothing.toFloat()
+
+	if (smooth < 1) {
+		smooth = 1F
+	} else if (smooth > 100) {
+		smooth = 100F
+	}
+
 	x -= currentAngle.x
 	y -= currentAngle.y
 	z = 0F
 	normalize()
 
-	var smooth = smoothing.toFloat()
-
-	if (smooth == 0F) {
-		smooth = 1F
-	}
-
-	//TODO readd lazy
-	var randX = if (AIM_RANDOM_X_VARIATION > 0) randInt(0, AIM_RANDOM_X_VARIATION) * randSign() else 0
-	var randY = if (AIM_RANDOM_Y_VARIATION > 0) randInt(0, AIM_RANDOM_Y_VARIATION) * randSign() else 0
-	val randDZ = AIM_VARIATION_DEADZONE / 100F
-
-	if (x in -randDZ..randDZ && y in -randDZ..randDZ) {
-		randX = 0
-		randY = 0
-	}
-
-	//x = currentAngle.x + (x + ((randX/10F) * (10F / smooth))) / 100F * (100F / smooth) / divisor
-	//y = currentAngle.y + (y + ((randY/10F) * (10F / smooth))) / 100F * (100F / smooth) / divisor
-
-	x = currentAngle.x + x / 100 * (100 / smooth)
-	y = currentAngle.y + y / 100 * (100 / smooth)
-
+	x = currentAngle.x + (x / 100) * (smooth)
+	y = currentAngle.y + (y / 100) * (smooth)
 	normalize()
 }
 
 fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Int) {
-	//if (!silent) {
-		val dAng = applyFlatSmoothing(currentAngle, destinationAngle, smoothing)
-		clientState.setAngle(dAng)
-	//} else {
-		//cmdSetAngles(dAng)
-	//}
+	val dAng = applyFlatSmoothing(currentAngle, destinationAngle, smoothing)
+	clientState.setAngle(dAng)
 }
 
 private val point1 = ThreadLocal.withInitial { POINT() }
@@ -84,17 +68,8 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Int, checkO
 	val target = point2.get()
 	target.reset()
 
-	var randX = if (AIM_RANDOM_X_VARIATION > 0) randInt(0, AIM_RANDOM_X_VARIATION) * randSign() else 0
-	var randY = if (AIM_RANDOM_Y_VARIATION > 0) randInt(0, AIM_RANDOM_Y_VARIATION) * randSign() else 0
-	val randDZ = AIM_VARIATION_DEADZONE
-
-	if (dx.toInt() in -randDZ..randDZ && dy.toInt() in -randDZ..randDZ) {
-		randX = 0
-		randY = 0
-	}
-
-	target.x = (mousePos.x + dx).toInt() + randX
-	target.y = (mousePos.y + dy).toInt() + randY
+	target.x = (mousePos.x + dx).toInt()
+	target.y = (mousePos.y + dy).toInt()
 
 	if (checkOnScreen) {
 		if (target.x <= 0 || target.x >= gameX + gameWidth || target.y <= 0 || target.y >= gameY + gameHeight) {
