@@ -23,14 +23,13 @@ var arraySize = 5
 private val w2s1 = Vector()
 private val w2s2 = Vector()
 private val positionVector2 = Vector()
-private const val id = "nadetracer"
 private val forEnts = arrayOf(EntityType.CSmokeGrenadeProjectile, EntityType.CMolotovProjectile, EntityType.CDecoyProjectile, EntityType.CBaseCSGrenadeProjectile)
 fun nadeTracer() = App {
     if (!curSettings.bool["NADE_TRACER"] || MENUTOG || !curSettings.bool["ENABLE_VISUALS"] || !inGame) return@App
 
     if (sync >= (curSettings.int["NADE_TRACER_UPDATE_TIME"])) {
         arraySize = clamp(curSettings.int["NADE_TRACER_TIMEOUT"], 1, 30)
-        forEntities(forEnts, identifier = id) {
+        forEntities(forEnts) {
             val ent = it.entity
             val entPos = ent.absPosition()
 

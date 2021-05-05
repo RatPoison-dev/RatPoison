@@ -15,7 +15,6 @@ import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.hypot
 import kotlin.math.sin
-private const val id = "indicator"
 private val forEnts = arrayOf(EntityType.CCSPlayer, EntityType.CPlantedC4, EntityType.CC4)
 fun indicatorEsp() = App {
     if (!curSettings.bool["ENABLE_VISUALS"] || !curSettings.bool["INDICATOR_ESP"] || !inGame) return@App
@@ -23,7 +22,7 @@ fun indicatorEsp() = App {
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()
 
-    forEntities(forEnts, iterateWeapons = true, iterateGrenades = true, identifier = id) {
+    forEntities(forEnts, iterateWeapons = true, iterateGrenades = true) {
         val entity = it.entity
         val onTeam = !DANGER_ZONE && meTeam == entity.team()
 

@@ -88,7 +88,6 @@ private var barWidth = 0F
 
 private const val entityMemorySize = 45952
 private val entMemory = threadLocalPointer(entityMemorySize)
-private const val forEntsId = "boxesp"
 private val forEntsList = arrayOf(EntityType.CCSPlayer, EntityType.CEconEntity)
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
 fun boxEsp() {
@@ -138,7 +137,7 @@ fun boxEsp() {
 		boxDetailsRightText.clear()
 		boxDetailsTopText.clear()
 		boxDetailsBottomText.clear()
-		forEntities(forEntsList, iterateWeapons = true, identifier = forEntsId) { //Player & Weapon boxes
+		forEntities(forEntsList, iterateWeapons = true) { //Player & Weapon boxes
 			val ent = it.entity
 			val isPlayer = it.type == EntityType.CCSPlayer
 			val isWeapon = it.type.weapon

@@ -110,32 +110,31 @@ fun validateSetting(settingName: String, value: String): Boolean {
             if (size > 7 && tSA.pull(6).stringToList(";").all { isNumeric(it) }) {
                 weapon.tForceBone = tSA.pull(6).stringToIntList().map { it.numToBone() }
             }
-
             weapon.apply {
                 tOverride = if (size > 1) tSA.pull(0).safeToBool(defaultValue = tOverride) else tOverride
                 tFRecoil = if (size > 2) tSA.pull(1).safeToBool(defaultValue = tFRecoil) else tFRecoil
                 tOnShot = if (size > 3) tSA.pull(2).safeToBool(defaultValue = tOnShot) else tOnShot
                 tFlatAim = if (size > 4) tSA.pull(3).safeToBool(defaultValue = tFlatAim) else tFlatAim
                 tPathAim = if (size > 5) tSA.pull(4).safeToBool(defaultValue = tPathAim) else tPathAim
-                tAimFov = if (size > 7) tSA.pull(6).safeToFloat(defaultValue = tAimFov) else tAimFov
-                tAimSmooth = if (size > 8) tSA.pull(7).safeToInt(defaultValue = tAimSmooth) else tAimSmooth
-                tPerfectAim = if (size > 9) tSA.pull(8).safeToBool(defaultValue = tPerfectAim) else tPerfectAim
-                tPAimFov = if (size > 10) tSA.pull(9).safeToFloat(defaultValue = tPAimFov) else tPAimFov
-                tPAimChance = if (size > 11) tSA.pull(10).safeToInt(defaultValue = tPAimChance) else tPAimChance
-                tScopedOnly = if (size > 12) tSA.pull(11).safeToBool(defaultValue = tScopedOnly) else tScopedOnly
-                tAimAfterShots = if (size > 13) tSA.pull(12).safeToInt(defaultValue = tAimAfterShots) else tAimAfterShots
-                tBoneTrig = if (size > 14) tSA.pull(13).safeToBool(defaultValue = tBoneTrig) else tBoneTrig
-                tBTrigAim = if (size > 15) tSA.pull(14).safeToBool(defaultValue = tBTrigAim) else tBTrigAim
-                tBTrigInCross = if (size > 16) tSA.pull(15).safeToBool(defaultValue = tBTrigInCross) else tBTrigInCross
-                tBTrigInFov = if (size > 17) tSA.pull(16).safeToBool(defaultValue = tBTrigInFov) else tBTrigInFov
-                tBTrigBacktrack = if (size > 18) tSA.pull(17).safeToBool(defaultValue = tBTrigBacktrack) else tBTrigBacktrack
-                tBTrigFov = if (size > 19) tSA.pull(18).safeToFloat(defaultValue = tBTrigFov) else tBTrigFov
-                tBTrigInitDelay = if (size > 20) tSA.pull(19).safeToInt(defaultValue = tBTrigInitDelay) else tBTrigInitDelay
-                tBTrigPerShotDelay = if (size > 21) tSA.pull(20).safeToInt(defaultValue = tBTrigPerShotDelay) else tBTrigPerShotDelay
-                tBacktrack = if (size > 22) tSA.pull(21).safeToBool(defaultValue = tBacktrack) else tBacktrack
-                tBTMS = if (size > 23) tSA.pull(22).safeToInt(defaultValue = tBTMS) else tBTMS
-                tAutowep = if (size > 24) tSA.pull(23).safeToBool(defaultValue = tAutowep) else tAutowep
-                tAutowepDelay = if (size >= 25) tSA.pull(24).safeToInt(defaultValue = tAutowepDelay) else tAutowepDelay
+                tAimFov = if (size > 8) tSA.pull(7).safeToFloat(defaultValue = tAimFov) else tAimFov
+                tAimSmooth = if (size > 9) tSA.pull(8).safeToInt(defaultValue = tAimSmooth) else tAimSmooth
+                tPerfectAim = if (size > 10) tSA.pull(9).safeToBool(defaultValue = tPerfectAim) else tPerfectAim
+                tPAimFov = if (size > 11) tSA.pull(10).safeToFloat(defaultValue = tPAimFov) else tPAimFov
+                tPAimChance = if (size > 12) tSA.pull(11).safeToInt(defaultValue = tPAimChance) else tPAimChance
+                tScopedOnly = if (size > 13) tSA.pull(12).safeToBool(defaultValue = tScopedOnly) else tScopedOnly
+                tAimAfterShots = if (size > 14) tSA.pull(13).safeToInt(defaultValue = tAimAfterShots) else tAimAfterShots
+                tBoneTrig = if (size > 15) tSA.pull(14).safeToBool(defaultValue = tBoneTrig) else tBoneTrig
+                tBTrigAim = if (size > 16) tSA.pull(15).safeToBool(defaultValue = tBTrigAim) else tBTrigAim
+                tBTrigInCross = if (size > 17) tSA.pull(16).safeToBool(defaultValue = tBTrigInCross) else tBTrigInCross
+                tBTrigInFov = if (size > 18) tSA.pull(17).safeToBool(defaultValue = tBTrigInFov) else tBTrigInFov
+                tBTrigBacktrack = if (size > 19) tSA.pull(18).safeToBool(defaultValue = tBTrigBacktrack) else tBTrigBacktrack
+                tBTrigFov = if (size > 20) tSA.pull(19).safeToFloat(defaultValue = tBTrigFov) else tBTrigFov
+                tBTrigInitDelay = if (size > 21) tSA.pull(20).safeToInt(defaultValue = tBTrigInitDelay) else tBTrigInitDelay
+                tBTrigPerShotDelay = if (size > 22) tSA.pull(21).safeToInt(defaultValue = tBTrigPerShotDelay) else tBTrigPerShotDelay
+                tBacktrack = if (size > 23) tSA.pull(22).safeToBool(defaultValue = tBacktrack) else tBacktrack
+                tBTMS = if (size > 24) tSA.pull(23).safeToInt(defaultValue = tBTMS) else tBTMS
+                tAutowep = if (size > 25) tSA.pull(24).safeToBool(defaultValue = tAutowep) else tAutowep
+                tAutowepDelay = if (size >= 26) tSA.pull(25).safeToInt(defaultValue = tAutowepDelay) else tAutowepDelay
             }
             curSettings[settingName] = weapon.toString()
             return false

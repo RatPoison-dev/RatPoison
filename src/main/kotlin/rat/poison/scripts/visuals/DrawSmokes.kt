@@ -18,7 +18,6 @@ private val w2s1 = Vector()
 private val w2s2 = Vector()
 private val smokePos = Vector()
 private val points = mutableListOf<Vector>()
-private const val id = "drawsmokes"
 private val forEnts = arrayOf(EntityType.CSmokeGrenadeProjectile)
 fun drawSmokes() = App {
     if (!inGame || !curSettings.bool["ENABLE_VISUALS"] || !curSettings.bool["VISUALIZE_SMOKES"] || !inGame) return@App
@@ -28,7 +27,7 @@ fun drawSmokes() = App {
     val smokeWidth = curSettings.int["VISUALIZE_SMOKES_WIDTH"]
     points.clear()
 
-    forEntities(forEnts, identifier = id) {
+    forEntities(forEnts) {
         points.clear()
         val entity = it.entity
         if (!entity.didEffect()) return@forEntities
@@ -94,7 +93,6 @@ private val entPos2 = Vector()
 private var pX = -1F
 private var pY = -1F
 private var through = false
-private const val forEntsId = "linethroughsmoke"
 private val forEnts2 = arrayOf(EntityType.CSmokeGrenadeProjectile)
 fun lineThroughSmoke(ent: Player): Boolean {
     through = false
@@ -105,7 +103,7 @@ fun lineThroughSmoke(ent: Player): Boolean {
     pX = -(maxPos.x - mePos.x)
     pY = (maxPos.y - mePos.y)
 
-    forEntities(forEnts2, identifier = forEntsId) {
+    forEntities(forEnts2) {
         if (through || !csgoEXE.boolean(it.entity + bDidSmokeEffect)) return@forEntities
 
         val pos = it.entity.absPosition(entPos2)

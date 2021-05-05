@@ -13,7 +13,6 @@ import rat.poison.utils.common.every
 private val positionVector = Vector()
 private val footstepsVec = Vector()
 private val entsChecked = LongArrayList()
-private const val id = "radaresp"
 private val forEnts = arrayOf(EntityType.CCSPlayer)
 internal fun radarEsp() = every(100, inGameCheck = true) {
     if (!curSettings.bool["RADAR_ESP"] || DANGER_ZONE) return@every
@@ -33,13 +32,13 @@ internal fun radarEsp() = every(100, inGameCheck = true) {
             }
         }
 
-        forEntities(forEnts, identifier = id) {
+        forEntities(forEnts) {
             if (!entsChecked.contains(it.entity)) {
                 it.entity.hideOnRadar()
             }
         }
     } else {
-        forEntities(forEnts, identifier = id) {
+        forEntities(forEnts) {
             val entity = it.entity
 
             if (entity.dead() || entity == me || entity.dormant()) return@forEntities

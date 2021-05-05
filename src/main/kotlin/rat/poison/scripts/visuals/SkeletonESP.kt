@@ -19,7 +19,6 @@ private var modelMemory = threadLocalPointer(modelMemorySize)
 private const val boneMemorySize = 5000
 private var boneMemory = threadLocalPointer(boneMemorySize)
 private var health = -1
-private const val skeletonEspIdentifier = "skeletonesp"
 
 private val w2sRet1 = Vector()
 private val w2sRet2 = Vector()
@@ -32,7 +31,7 @@ fun skeletonEsp() = App {
 		shapeRenderer.begin()
 	}
 
-	forEntities(forEnts, identifier = skeletonEspIdentifier) {
+	forEntities(forEnts) {
 		val entity = it.entity
 		val entTeam = entity.team()
 

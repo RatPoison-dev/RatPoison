@@ -17,11 +17,10 @@ private val vec = Vector()
 private val positionVector = Vector()
 private val stringBuilder = StringBuilder()
 private val forEnts = arrayOf(EntityType.CSmokeGrenadeProjectile)
-private const val id = "nadestimer"
 fun nadesTimer() = App {
     if (!curSettings.bool["SMOKE_WEAR_OFF_TIME"] || !inGame) return@App
 
-    forEntities(forEnts, identifier = id) {
+    forEntities(forEnts) {
         val ent = it.entity
         if (!ent.didEffect()) return@forEntities
 

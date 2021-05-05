@@ -25,7 +25,6 @@ private val meAng = Vector()
 private val mePos = Vector()
 private val cCol = Color()
 private val forEnts = arrayOf(EntityType.CCSPlayer)
-private const val id = "chams"
 fun chamsEsp() = every(100, true, inGameCheck = true) {
     if (!curSettings.bool["CHAMS_ESP"] || !curSettings.bool["ENABLE_VISUALS"]) return@every
 
@@ -76,7 +75,7 @@ fun chamsEsp() = every(100, true, inGameCheck = true) {
         }
     }
 
-    forEntities(forEnts, identifier = id) {
+    forEntities(forEnts) {
         val entity = it.entity
         if (entity <= 0 || entity == me || entity.dormant() || entity.dead()) return@forEntities
 

@@ -25,7 +25,6 @@ data class FarPlayer(val pos: Vector = Vector(), var alpha: Float = 0F)
 private var farPlayerRecords = Array(64) { FarPlayer() }
 private val w2s1 = Vector()
 private val w2s2 = Vector()
-private const val id = "farradar"
 private val forEnts = arrayOf(EntityType.CCSPlayer)
 private const val dwRadarMemorySize = 237
 private val dwRadarMemory = threadLocalPointer(dwRadarMemorySize)
@@ -35,7 +34,7 @@ fun farRadar() = App {
     var dwRadar = clientDLL.int(dwRadarBase)
     dwRadar = csgoEXE.int(dwRadar + 0x74)
 
-    forEntities(forEnts, identifier = id) { //This will probably require more prechecks
+    forEntities(forEnts) { //This will probably require more prechecks
         val ent = it.entity
 
         //Prechecks

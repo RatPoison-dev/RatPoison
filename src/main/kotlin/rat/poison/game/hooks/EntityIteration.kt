@@ -50,6 +50,7 @@ private val strBufMemory = threadLocalPointer(strBufMemorySize)
 private var signOnState by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
     if (old != new) {
         if (new.name == SignOnState.IN_GAME.name) {
+            reset()
             after(10000) {
                 shouldPostProcess = true
             }

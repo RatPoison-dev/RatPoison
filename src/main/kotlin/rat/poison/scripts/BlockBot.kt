@@ -45,7 +45,6 @@ fun unPress() {
 private val mePos = Vector()
 private val meAng = Vector()
 private val closestPos = Vector()
-private const val forEntsId = "blockbot"
 private val forEnts = arrayOf(EntityType.CCSPlayer)
 fun blockBot() = every(2, inGameCheck = true) {
     if (!curSettings.bool["BLOCK_BOT"] || !keybindEval("BLOCK_BOT_KEY")) {
@@ -60,7 +59,7 @@ fun blockBot() = every(2, inGameCheck = true) {
     var closestTarget = -1L
     val maxDist = curSettings.int["BLOCK_BOT_DISTANCE"]
 
-    forEntities(forEnts, identifier = forEntsId) {
+    forEntities(forEnts) {
         val entity = it.entity
         if (entity == me || entity.dead() || entity.dead() || entity <= 0) return@forEntities
 

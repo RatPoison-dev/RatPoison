@@ -169,7 +169,7 @@ fun scanner() {
                 println("Team   Name                             Rank  Kills Deaths K/D  Wins  Money")
                 println("====== ================================ ===== ===== ====== ==== ===== =====")
                 try {
-                    forEntities(forEnts, identifier = "scanner") {
+                    forEntities(forEnts) {
                         val entity = it.entity
                         var entTeam = when (entity.team()) {
                             3L -> "CT"

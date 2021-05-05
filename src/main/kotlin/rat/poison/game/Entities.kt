@@ -26,66 +26,35 @@ val entities: EntityList = EntityList(EntityType.size).apply {
 }
 
 fun entityByType(type: EntityType): EntityContext? = entities[type]?.firstOrNull()
-data class EntityCache(var created: Long, var ents: ArrayList<EntityContext>, var iterating: Boolean = false)
-val entityCache = Object2ObjectOpenHashMap<String, EntityCache>()
 
-internal inline fun forEntities(types: Array<EntityType>, iterateWeapons: Boolean = false, iterateGrenades: Boolean = false, identifier: String, crossinline body: (EntityContext) -> Unit) {
-	var get = entityCache[identifier]
+internal inline fun forEntities(types: Array<EntityType>, iterateWeapons: Boolean = false, iterateGrenades: Boolean = false, crossinline body: (EntityContext) -> Unit) {
+	val forEnts = ArrayList<EntityContext>()
 
-	if (get == null) {
-		val tmpClass = EntityCache(System.currentTimeMillis(), ArrayList())
-		get = tmpClass
-		entityCache[identifier] = tmpClass
+	for (entType in types) {
+		entities[entType]?.let { forEnts.addAll(it) }
 	}
 
-	if (System.currentTimeMillis() - get.created > 2000) {
-		get.ents.clear()
-		get.created = System.currentTimeMillis()
-
-		for (element in types) {
-//			val ents = entities[element] ?: continue
-//			for (i1 in 0 until ents.size) {
-//				val ent = ents[i1]
-//				get.ents.add(ent)
-//				ent.run(body)
-//			}
-
-			entities[element]?.forEach { ent ->
-				get.ents.add(ent)
-				ent.run(body)
-			}
+	if (iterateWeapons) {
+		for (element in EntityType.weaponsTypes) {
+			entities[element]?.let { forEnts.addAll(it) }
 		}
+	}
 
-		if (iterateWeapons) {
-			for (i in 0 until EntityType.weaponsTypes.size) {
-				val element = EntityType.weaponsTypes[i]
-				val ents = entities[element] ?: continue
-				for (i1 in 0 until ents.size) {
-					val ent = ents[i1]
-					get.ents.add(ent)
-					ent.run(body)
-				}
-			}
+	if (iterateGrenades) {
+		for (element in EntityType.grenadeTypes) {
+			entities[element]?.let { forEnts.addAll(it) }
 		}
+	}
 
-		if (iterateGrenades) {
-			for (i in 0 until EntityType.grenadeTypes.size) {
-				val element = EntityType.weaponsTypes[i]
-				val ents = entities[element] ?: continue
-				for (i1 in 0 until ents.size) {
-					val ent = ents[i1]
-					get.ents.add(ent)
-					ent.run(body)
-				}
-			}
+	//iterator later
+	try {
+		val iterator = forEnts.listIterator()
+		while (iterator.hasNext()) {
+			iterator.next().run(body)
 		}
-	} else {
-		if (!get.iterating) {
-			get.iterating = true
-			for (i in 0 until get.ents.size) {
-				get.ents[i].run(body)
-			}
-			get.iterating = false
-		}
+	} catch (e: Exception) {
+		println("forEntities error, report in discord")
+		println("$types")
+		e.printStackTrace()
 	}
 }

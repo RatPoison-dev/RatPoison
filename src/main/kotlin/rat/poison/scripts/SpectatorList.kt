@@ -12,7 +12,6 @@ import rat.poison.overlay.opened
 import rat.poison.ui.uiWindows.specListText
 import rat.poison.utils.common.every
 import rat.poison.utils.extensions.readIndex
-private const val id = "spectatorlist"
 private val sb = StringBuilder()
 private val forEnts = arrayOf(EntityType.CCSPlayer)
 internal fun spectatorList() = every(100, inGameCheck = true) {
@@ -24,7 +23,7 @@ internal fun spectatorList() = every(100, inGameCheck = true) {
 
     val playerSpecTarget = csgoEXE.readIndex(me + dwIndex)
 
-    forEntities(forEnts, identifier = id) {
+    forEntities(forEnts) {
         val entity = it.entity
 
         if (entity.isSpectating() && !entity.hltv() && !entity.dormant()) {

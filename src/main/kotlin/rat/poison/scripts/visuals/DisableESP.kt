@@ -13,7 +13,6 @@ import rat.poison.utils.extensions.uint
 import java.lang.Float.floatToIntBits
 
 //Change to construct entities at call to prevent crashing?
-private const val id = "disableesp"
 private val forEnts = arrayOf(EntityType.CCSPlayer, EntityType.CPlantedC4, EntityType.CC4)
 internal fun disableAllEsp() {
     if (!inGame) return
@@ -26,7 +25,7 @@ internal fun disableAllEsp() {
     CSGO.csgoEXE[clientVModEnt + 0x72] = 255.toByte()
     CSGO.engineDLL[EngineOffsets.dwModelAmbientMin] = floatToIntBits(0F) xor (CSGO.engineDLL.address + EngineOffsets.dwModelAmbientMin - 0x2C).toInt()
 
-    forEntities(forEnts, iterateGrenades = true, iterateWeapons = true, identifier = id) {
+    forEntities(forEnts, iterateGrenades = true, iterateWeapons = true) {
         val entity = it.entity
         val type = it.type
         val glowAddress = it.glowAddress

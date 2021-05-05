@@ -19,11 +19,10 @@ import rat.poison.utils.common.inGame
 import java.lang.Math.toDegrees
 import java.lang.Math.toRadians
 
-private const val id = "drawfov"
 private val forEnts = arrayOf(EntityType.CCSPlayer)
 
 fun drawFov() = App {
-//    forEntities(forEnts, identifier = id) {
+//    forEntities(forEnts) {
 //        if (it.entity == me) return@forEntities
 //
 //        val position = me.position()
