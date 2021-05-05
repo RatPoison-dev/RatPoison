@@ -13,10 +13,20 @@ private val concatSb = StringBuilder()
 
 private val calendar = Calendar.getInstance()
 
+fun StringBuilder.padValue(value: Int): StringBuilder {
+    if (value < 10) {
+        this.append("0").append(value)
+    }
+    else {
+        this.append(value)
+    }
+    return this
+}
+
 fun handleUIWatermark() = App {
     calendar.timeInMillis = System.currentTimeMillis()
     uiWatermark.keybindText.setText(getKeybinds())
-    uiWatermark.watermarkText.setText(concatSb.clear().append("RatPoison [").append(BRANCH).append("] - ").append(calendar.get(Calendar.HOUR_OF_DAY)).append(":").append(calendar.get(Calendar.MINUTE)).append(":").append(calendar.get(Calendar.SECOND)))
+    uiWatermark.watermarkText.setText(concatSb.clear().append("RatPoison [").append(BRANCH).append("] - ").padValue(calendar.get(Calendar.HOUR_OF_DAY)).append(":").padValue(calendar.get(Calendar.MINUTE)).append(":").padValue(calendar.get(Calendar.SECOND)))
     //the uh the fuck the uh % usage moment the
 }
 
