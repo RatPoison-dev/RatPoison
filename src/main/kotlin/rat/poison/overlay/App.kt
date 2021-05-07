@@ -347,7 +347,7 @@ object App: ApplicationAdapter() {
             }
 
             override fun onPassive(overlay: IOverlay) {
-                menuStage.remove(uiMenu, uiKeybinds, uiDebug, uiWarning, uiArrows)
+                menuStage.removeVisWindows()
             }
 
             override fun onBackground(overlay: IOverlay) {}

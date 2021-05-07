@@ -38,11 +38,13 @@ private fun shouldReset() = System.currentTimeMillis() - lastCleanup.get() >= CL
 
 private fun reset() {
     for (i in entitiesValues) {
-        i?.removeAll(i)
+        i?.clear()
     }
 
     lastCleanup.set(System.currentTimeMillis())
 }
+
+var forceResetIteration = false
 
 
 private const val strBufMemorySize = 128
@@ -50,7 +52,10 @@ private val strBufMemory = threadLocalPointer(strBufMemorySize)
 private var signOnState by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
     if (old != new) {
         if (new.name == SignOnState.IN_GAME.name) {
-            reset()
+            forceResetIteration = true
+            after(1000) {
+                forceResetIteration = false
+            }
             after(10000) {
                 shouldPostProcess = true
             }

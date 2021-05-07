@@ -3,7 +3,9 @@ package rat.poison.game
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.Player
+import rat.poison.game.hooks.forceResetIteration
 import rat.poison.settings.MAX_ENTITIES
+import rat.poison.utils.lists.ForEntitiesList
 
 @Volatile
 var me: Player = 0
@@ -12,14 +14,14 @@ var clientState: ClientState = 0
 @Volatile
 var meTeam: Long = 0
 
-typealias EntityList = Object2ObjectOpenHashMap<EntityType, MutableList<EntityContext>>
+typealias EntityList = Object2ObjectOpenHashMap<EntityType, ForEntitiesList>
 
-var entitiesValues = arrayOfNulls<MutableList<EntityContext>>(MAX_ENTITIES)
+var entitiesValues = arrayOfNulls<ForEntitiesList>(MAX_ENTITIES)
 var entitiesValuesCounter = 0
 
 val entities: EntityList = EntityList(EntityType.size).apply {
 	for (type in EntityType.cachedValues) {
-		val list = mutableListOf<EntityContext>()
+		val list = ForEntitiesList()
 		put(type, list)
 		entitiesValues[entitiesValuesCounter++] = list
 	}
@@ -27,34 +29,31 @@ val entities: EntityList = EntityList(EntityType.size).apply {
 
 fun entityByType(type: EntityType): EntityContext? = entities[type]?.firstOrNull()
 
+internal inline fun iterateByTypes(types: Array<EntityType>, crossinline body: (EntityContext) -> Unit) {
+	for (typeIdx in 0 until types.size) {
+		if (forceResetIteration) {
+			break
+		}
+		val let = entities[types[typeIdx]] ?: continue
+		let.completeTasks()
+		let.iterating = true
+		for (entIdx in 0 until let.cachedValues.size) {
+			if (forceResetIteration) {
+				break
+			}
+			val ent = let.getOrNull(entIdx) ?: continue
+			ent.run(body)
+		}
+		let.iterating = false
+	}
+}
+
 internal inline fun forEntities(types: Array<EntityType>, iterateWeapons: Boolean = false, iterateGrenades: Boolean = false, crossinline body: (EntityContext) -> Unit) {
-	val forEnts = ArrayList<EntityContext>()
-
-	for (entType in types) {
-		entities[entType]?.let { forEnts.addAll(it) }
-	}
-
-	if (iterateWeapons) {
-		for (element in EntityType.weaponsTypes) {
-			entities[element]?.let { forEnts.addAll(it) }
-		}
-	}
-
+	iterateByTypes(types, body)
 	if (iterateGrenades) {
-		for (element in EntityType.grenadeTypes) {
-			entities[element]?.let { forEnts.addAll(it) }
-		}
+		iterateByTypes(EntityType.grenadeTypes, body)
 	}
-
-	//iterator later
-	try {
-		val iterator = forEnts.listIterator()
-		while (iterator.hasNext()) {
-			iterator.next().run(body)
-		}
-	} catch (e: Exception) {
-		println("forEntities error, report in discord")
-		println("$types")
-		e.printStackTrace()
+	if (iterateWeapons) {
+		iterateByTypes(EntityType.weaponsTypes, body)
 	}
 }
