@@ -11,7 +11,7 @@ import rat.poison.utils.inGame
 
 private const val emptyString = ""
 private val positionVector = Vector()
-private const val id = "snaplines"
+private val forEntsList = arrayOf(EntityType.CCSPlayer, EntityType.CPlantedC4, EntityType.CC4, EntityType.CEconEntity)
 //TODO god fix this eventually g
 private val w2sRet = Vector()
 fun snapLines() = App {
@@ -20,7 +20,7 @@ fun snapLines() = App {
     val bomb: Entity = entityByType(EntityType.CC4)?.entity ?: -1L
     val bEnt = bomb.carrier()
 
-    forEntities(EntityType.CCSPlayer, EntityType.CPlantedC4, EntityType.CC4, EntityType.CEconEntity, iterateWeapons = true, identifier = id) {
+    forEntities(forEntsList, iterateWeapons = true) {
         val entity = it.entity
         var colStr = ""
 

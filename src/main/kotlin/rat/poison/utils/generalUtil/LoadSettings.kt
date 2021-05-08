@@ -2,7 +2,6 @@ package rat.poison.utils.generalUtil
 
 import org.apache.commons.lang3.StringUtils.isNumeric
 import rat.poison.*
-import rat.poison.scripts.aim.numToBone
 import rat.poison.utils.extensions.upper
 import rat.poison.utils.saving
 import java.io.File

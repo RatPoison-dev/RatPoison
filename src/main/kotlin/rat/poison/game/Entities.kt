@@ -1,9 +1,11 @@
 package rat.poison.game
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.Player
+import rat.poison.game.hooks.forceResetIteration
 import rat.poison.settings.MAX_ENTITIES
+import rat.poison.utils.lists.ForEntitiesList
 
 @Volatile
 var me: Player = 0
@@ -12,76 +14,46 @@ var clientState: ClientState = 0
 @Volatile
 var meTeam: Long = 0
 
-typealias EntityList = Object2ObjectArrayMap<EntityType, MutableList<EntityContext>>
+typealias EntityList = Object2ObjectOpenHashMap<EntityType, ForEntitiesList>
 
-var entitiesValues = arrayOfNulls<MutableList<EntityContext>>(MAX_ENTITIES)
+var entitiesValues = arrayOfNulls<ForEntitiesList>(MAX_ENTITIES)
 var entitiesValuesCounter = 0
 
 val entities: EntityList = EntityList(EntityType.size).apply {
 	for (type in EntityType.cachedValues) {
-		val list = mutableListOf<EntityContext>()
+		val list = ForEntitiesList()
 		put(type, list)
 		entitiesValues[entitiesValuesCounter++] = list
 	}
 }
 
 fun entityByType(type: EntityType): EntityContext? = entities[type]?.firstOrNull()
-data class EntityCache(var created: Long, var ents: ArrayList<EntityContext>, var iterating: Boolean = false)
-val entityCache = Object2ObjectArrayMap<String, EntityCache>()
-//private const val emptyString = ""
-internal inline fun forEntities(vararg types: EntityType, iterateWeapons: Boolean = false, iterateGrenades: Boolean = false, identifier: String = "", crossinline body: (EntityContext) -> Unit) {
-	var get = entityCache[identifier]
 
-	if (get == null || System.currentTimeMillis() - get.created > 2000) {
-		if (get != null) {
-			get.ents.clear()
-			get.created = System.currentTimeMillis()
+internal inline fun iterateByTypes(types: Array<EntityType>, crossinline body: (EntityContext) -> Unit) {
+	for (typeIdx in 0 until types.size) {
+		if (forceResetIteration) {
+			break
 		}
-		else {
-			val tmpClass = EntityCache(System.currentTimeMillis(), ArrayList())
-			get = tmpClass
-			entityCache[identifier] = tmpClass
-		}
-		val col = if (types.isEmpty()) EntityType.cachedValues else types
-		for (i in 0 until col.size) {
-			val entType = col[i]
-			val ents = entities[entType] ?: continue
-			for (i1 in 0 until ents.size) {
-				val ent = ents[i1]
-				get.ents.add(ent)
-				ent.run(body)
+		val let = entities[types[typeIdx]] ?: continue
+		let.completeTasks()
+		let.iterating = true
+		for (entIdx in 0 until let.cachedValues.size) {
+			if (forceResetIteration) {
+				break
 			}
+			val ent = let.getOrNull(entIdx) ?: continue
+			ent.run(body)
 		}
-		if (iterateWeapons) {
-			for (i in 0 until EntityType.weaponsTypes.size) {
-				val entType = EntityType.weaponsTypes[i]
-				val ents = entities[entType] ?: continue
-				for (i1 in 0 until ents.size) {
-					val ent = ents[i1]
-					get.ents.add(ent)
-					ent.run(body)
-				}
-			}
-		}
-		if (iterateGrenades) {
-			for (i in 0 until EntityType.grenadeTypes.size) {
-				val entType = EntityType.grenadeTypes[i]
-				val ents = entities[entType] ?: continue
-				for (i1 in 0 until ents.size) {
-					val ent = ents[i1]
-					get.ents.add(ent)
-					ent.run(body)
-				}
-			}
-		}
+		let.iterating = false
 	}
-	else {
-		if (!get.iterating) {
-			get.iterating = true
-			for (i in 0 until get.ents.size) {
-				get.ents[i].run(body)
-			}
-			get.iterating = false
-		}
+}
+
+internal inline fun forEntities(types: Array<EntityType>, iterateWeapons: Boolean = false, iterateGrenades: Boolean = false, crossinline body: (EntityContext) -> Unit) {
+	iterateByTypes(types, body)
+	if (iterateGrenades) {
+		iterateByTypes(EntityType.grenadeTypes, body)
+	}
+	if (iterateWeapons) {
+		iterateByTypes(EntityType.weaponsTypes, body)
 	}
 }

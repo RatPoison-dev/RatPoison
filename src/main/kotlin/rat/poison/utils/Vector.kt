@@ -9,10 +9,10 @@ data class Vector(var x: Float = 0.0F, var y: Float = 0.0F, var z: Float = 0.0F)
 		this.y = y
 		this.z = z
 	}
-	
-	fun invalid() = x == 0.0F && y == 0.0F && z == 0.0F
-	
-	fun valid() = !invalid()
+
+	fun isZero() = (x < 0.01F && x > -0.01F) && (y < 0.01F && y > -0.01F) && (z < 0.01F && z > -0.01F)
+
+	fun valid() = !isZero()
 
 	fun dst2 (x: Float, y: Float, z: Float): Float {
 		val a = x - this.x;

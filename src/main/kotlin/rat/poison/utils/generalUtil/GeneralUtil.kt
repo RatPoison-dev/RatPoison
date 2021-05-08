@@ -2,13 +2,15 @@ package rat.poison.utils.generalUtil
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Matrix4
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
 import rat.poison.*
 import rat.poison.utils.extensions.lower
-import java.util.concurrent.ConcurrentLinkedQueue
+import rat.poison.utils.maps.OneTimeMap
 import java.util.regex.Pattern
 
-fun Any.strToBool() = this.toString().lower() == "true" || this == true || this == 1.0 || this == 1 || this == 1F
+fun Any.strToBool(): Boolean {
+    val stringRepr = this.toString().lower()
+    return stringRepr == "true" || this == true || this == 1.0 || this == 1 || this == 1F || stringRepr == "1"
+}
 fun Any.boolToStr() = this.toString()
 fun Any.cToInt() = this.toString().toInt()
 fun Any.cToLong() = this.toString().toLong()
@@ -16,6 +18,7 @@ fun Any.strToColor() = convStrToColor(this.toString())
 fun Any.strToColorGDX() = convStrToColorGDX(this.toString())
 fun Any.cToDouble() = this.toString().toDouble()
 fun Any.cToFloat() = this.toString().toFloat()
+
 fun Boolean.toFloat() = if (this) 1F else 0F
 fun Boolean.toDouble() = if (this) 1.0 else 0.0
 fun Boolean.toInt() = if (this) 1 else 0
@@ -28,9 +31,9 @@ fun convStrToColor(input: String): rat.poison.game.Color { //Rat poison color
         val arrayLine = line.trim().split(" ", ignoreCase = true, limit = 4)
 
         return rat.poison.game.Color(arrayLine[0].replace("red=", "").toInt(),
-                arrayLine[1].replace("green=", "").toInt(),
-                arrayLine[2].replace("blue=", "").toInt(),
-                arrayLine[3].replace("alpha=", "").toDouble())
+            arrayLine[1].replace("green=", "").toInt(),
+            arrayLine[2].replace("blue=", "").toInt(),
+            arrayLine[3].replace("alpha=", "").toDouble())
     } catch (e: Exception) {
         if (dbg) {
             println("[DEBUG] $input Color is invalid, using white")
@@ -52,13 +55,13 @@ fun convStrToColorGDX(input: String): Color {
     }
 
     return if (arrayLine.size >= 4) Color(arrayLine[0].toFloat()/255F,
-            arrayLine[1].toFloat()/255F,
-            arrayLine[2].toFloat()/255F,
-            arrayLine[3].toFloat()) else Color(1F, 1F, 1F, 1F)
+        arrayLine[1].toFloat()/255F,
+        arrayLine[2].toFloat()/255F,
+        arrayLine[3].toFloat()) else Color(1F, 1F, 1F, 1F)
 }
 
 
-private var stringToWeaponClassCache = Object2ObjectArrayMap<String, oWeapon>()
+private var stringToWeaponClassCache = OneTimeMap<String, oWeapon>()
 fun String.toWeaponClass(): oWeapon {
     val get = stringToWeaponClassCache[this]
     return when (get == null) {
@@ -78,7 +81,7 @@ fun String.toWeaponClass(): oWeapon {
     }
 }
 
-private var stringToSkinWeaponClassCache = Object2ObjectArrayMap<String, sWeapon>()
+private var stringToSkinWeaponClassCache = OneTimeMap<String, sWeapon>()
 fun String.toSkinWeaponClass(): sWeapon {
     val get = stringToSkinWeaponClassCache[this]
     return when (get == null) {
@@ -104,17 +107,19 @@ fun List<String>.pull(idx: Int): String {
 
 fun List<Any>.has(predicate: (_: Any) -> Boolean): Boolean {
     var hasItem = false
-    this.forEach {
+    for (i in 0 until this.size) {
+        val it = this[i]
         if (predicate(it) || hasItem) {
             hasItem = true
-            return@forEach
+            break
         }
     }
     return hasItem
 }
 
 fun List<Any>.containsAny(lst: List<Any>): Boolean {
-    lst.forEach {
+    for (i in 0 until lst.size) {
+        val it = lst[i]
         if (!this.contains(it)) return false
     }
     return true
@@ -146,21 +151,12 @@ fun String.stringToLocaleList(separator: String = ","): List<String> {
     }
 }
 
-fun ConcurrentLinkedQueue<Int>.has(predicate: (_: Int) -> Boolean): Boolean {
-    var hasItem = false
-    this.forEach {
-        if (predicate(it)) {
-            hasItem = true
-            return@forEach
-        }
-    }
-    return hasItem
-}
 private val intPattern = Pattern.compile("-?\\d+")
-private val stringToIntListCache = Object2ObjectArrayMap<String, MutableList<Int>>()
-fun String.stringToIntList(listOut: MutableList<Int> = mutableListOf()): MutableList<Int> {
+private val stringToIntListCache = OneTimeMap<String, List<Int>>()
+fun String.stringToIntList(): List<Int> {
     val get = stringToIntListCache[this]
     return if (get == null) {
+        val listOut = mutableListOf<Int>()
         val match = intPattern.matcher(this)
         while (match.find()) {
             listOut.add(match.group().toInt())
@@ -174,12 +170,12 @@ fun String.stringToIntList(listOut: MutableList<Int> = mutableListOf()): Mutable
 }
 
 private val DEFAULT_INVALID_LIST = listOf("")
-private val stringToListCache = Object2ObjectArrayMap<String, List<String>>()
-fun String.stringToList(separator: String = ",", listOut: MutableList<String> = mutableListOf()): List<String> {
+private val stringToListCache = OneTimeMap<String, List<String>>()
+fun String.stringToList(separator: String = ","): List<String> {
     val get = stringToListCache[this]
     return if (get == null) {
         val strList = this.replace("[", "").replace("]", "").replace(" ", "").split(separator)
-
+        val listOut = mutableListOf<String>()
         if (strList != DEFAULT_INVALID_LIST) {
             for (i in strList) {
                 listOut.add(i)

@@ -19,15 +19,17 @@ private var modelMemory = threadLocalPointer(modelMemorySize)
 private const val boneMemorySize = 5000
 private var boneMemory = threadLocalPointer(boneMemorySize)
 private var health = -1
-private const val skeletonEspIdentifier = "skeletonesp"
+private val forEntsList = arrayOf(EntityType.CCSPlayer)
 
 private val w2sRet1 = Vector()
 private val w2sRet2 = Vector()
 private val c = Color()
 fun skeletonEsp() = App {
 	if (!curSettings.bool["SKELETON_ESP"] || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
-	shapeRenderer.begin()
-	forEntities(EntityType.CCSPlayer, identifier = skeletonEspIdentifier) {
+	if (!shapeRenderer.isDrawing) {
+		shapeRenderer.begin()
+	}
+	forEntities(forEntsList) {
 		val entity = it.entity
 		val entTeam = entity.team()
 
@@ -52,6 +54,7 @@ fun skeletonEsp() = App {
 		csgoEXE.read(boneMatrix, boneMemory)
 		var offset = 0
 		for (idx in 0 until numBones) {
+			if (offset+4 > modelMemorySize) return@forEntities
 			val parent = modelMemory.getInt(0x4L + offset)
 			if (parent != -1) {
 				val flags = modelMemory.getInt(0xA0L + offset).unsign() and 0x100

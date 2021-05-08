@@ -1,7 +1,6 @@
 package rat.poison.game.hooks
 
 import com.sun.jna.platform.win32.WinNT
-import io.ktor.util.*
 import rat.poison.dbg
 import rat.poison.game.*
 import rat.poison.game.CSGO.GLOW_OBJECT_SIZE
@@ -22,11 +21,11 @@ import rat.poison.game.offsets.EngineOffsets.dwClientState_MapDirectory
 import rat.poison.game.offsets.EngineOffsets.dwGameDir
 import rat.poison.game.offsets.EngineOffsets.dwSignOnState
 import rat.poison.scripts.detectMap
-import rat.poison.scripts.nameChange
 import rat.poison.scripts.sendPacket
 import rat.poison.settings.*
 import rat.poison.utils.*
 import rat.poison.utils.extensions.uint
+import java.lang.Float.intBitsToFloat
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.properties.Delegates
 
@@ -38,11 +37,13 @@ private fun shouldReset() = System.currentTimeMillis() - lastCleanup.get() >= CL
 
 private fun reset() {
     for (i in entitiesValues) {
-        i?.removeAll(i)
+        i?.clear()
     }
 
     lastCleanup.set(System.currentTimeMillis())
 }
+
+var forceResetIteration = false
 
 
 private const val strBufMemorySize = 128
@@ -50,6 +51,10 @@ private val strBufMemory = threadLocalPointer(strBufMemorySize)
 private var signOnState by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
     if (old != new) {
         if (new.name == SignOnState.IN_GAME.name) {
+            forceResetIteration = true
+            after(1000) {
+                forceResetIteration = false
+            }
             after(10000) {
                 shouldPostProcess = true
             }
@@ -79,7 +84,6 @@ private var signOnState by Delegates.observable(SignOnState.MAIN_MENU) { _, old,
 //        }
 
             inGame = true
-            nameChange = ""
 
             if (PROCESS_ACCESS_FLAGS and WinNT.PROCESS_VM_OPERATION > 0) {
                 try {
@@ -93,10 +97,6 @@ private var signOnState by Delegates.observable(SignOnState.MAIN_MENU) { _, old,
 
             sendPacket(true)
         } else {
-            if (new.name == SignOnState.MAIN_MENU.name) { //disconnected
-                WebSocket.createSendTask("deleteInfo")
-            }
-
             shouldPostProcess = false
             inGame = false
             sendPacket(true)
@@ -114,7 +114,6 @@ fun updateCursorEnable() { //Call when needed
 }
 
 var toneMapController = 0L
-
 private val positionVector = Vector()
 fun constructEntities() = every(500, continuous = true) {
     updateCursorEnable()
@@ -131,7 +130,6 @@ fun constructEntities() = every(500, continuous = true) {
     if (shouldReset()) reset()
 
     var dzMode = false
-
     for (glowIndex in 0..glowObjectCount) {
         val glowAddress = glowObject + (glowIndex * GLOW_OBJECT_SIZE)
         val entity = csgoEXE.uint(glowAddress)
@@ -140,9 +138,8 @@ fun constructEntities() = every(500, continuous = true) {
             val type = EntityType.byEntityAddress(entity)
             if (type != EntityType.NULL) {
                 val tmpPos = entity.absPosition(positionVector)
-                val check = (tmpPos.x in -2.0F..2.0F && tmpPos.y in -2.0F..2.0F && tmpPos.z in -2.0F..2.0F)
 
-                if (!check) {
+                if (!tmpPos.isZero()) {
                     val context = contexts[glowIndex].set(entity, glowAddress, glowIndex, type) //remove contexts[]
 
                     with(entities[type]!!) {
@@ -182,7 +179,6 @@ fun constructEntities() = every(500, continuous = true) {
             }
         }
     }
-
     DANGER_ZONE = dzMode
-    GAME_SENSITIVITY = java.lang.Float.intBitsToFloat((clientDLL.uint(dwSensitivity) xor (clientDLL.address + dwSensitivityPtr)).toInt()).toDouble()
+    GAME_SENSITIVITY = intBitsToFloat((clientDLL.uint(dwSensitivity) xor (clientDLL.address + dwSensitivityPtr)).toInt()).toDouble()
 }

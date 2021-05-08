@@ -34,7 +34,7 @@ class FindTargetResult(var player: Player = -1L, var bone: Int = -1) {
 
 val findTargetResult = ThreadLocal.withInitial { FindTargetResult() }
 
-private const val id = "findtarget"
+private val forEntsList = arrayOf(EntityType.CCSPlayer)
 fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 			   lockFOV: Float = curSettings.float["AIM_FOV"], BONE: String = curSettings["AIM_BONE"], visCheck: Boolean = true, teamCheck: Boolean = true): FindTargetResult {
 	val result = findTargetResult.get()
@@ -49,7 +49,7 @@ fun findTarget(position: Angle, angle: Angle, allowPerfect: Boolean,
 	val findNearest = bones.has { it == NEAREST_BONE }
 	val findRandom = bones.has { 0 > it as Int }
 
-	forEntities(EntityType.CCSPlayer, identifier = id) {
+	forEntities(forEntsList) {
 		val entity = it.entity
 		if (entity <= 0 || entity == me || !entity.canShoot(visCheck, teamCheck)) {
 			return@forEntities

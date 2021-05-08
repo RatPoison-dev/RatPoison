@@ -31,7 +31,7 @@ fun rcs() = every(15, inGameCheck = true) {
 	val shotsFired = me.shotsFired()
 	val p = me.punch(punchVec)
 
-	val isZero = lastAppliedRCS.invalid()
+	val isZero = lastAppliedRCS.isZero()
 	val forceSet = (shotsFired == 0 && !isZero || meCurWepEnt.bullets() <= 0)
 
 	if (forceSet || /*!finishPunch ||*/ shotsFired > 1) {

@@ -2,7 +2,6 @@ package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.math.MathUtils.clamp
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap
 import org.lwjgl.opengl.GL11.glDisable
 import org.lwjgl.opengl.GL11.glEnable
 import rat.poison.curSettings
@@ -25,13 +24,13 @@ var arraySize = 5
 private val w2s1 = Vector()
 private val w2s2 = Vector()
 private val positionVector2 = Vector()
-private const val id = "nadetracer"
+private val forEntsList = arrayOf(EntityType.CSmokeGrenadeProjectile, EntityType.CMolotovProjectile, EntityType.CDecoyProjectile, EntityType.CBaseCSGrenadeProjectile)
 fun nadeTracer() = App {
     if (!curSettings.bool["NADE_TRACER"] || MENUTOG || !curSettings.bool["ENABLE_ESP"] || !inGame) return@App
 
     if (sync >= (curSettings.int["NADE_TRACER_UPDATE_TIME"])) {
         arraySize = clamp(curSettings.int["NADE_TRACER_TIMEOUT"], 1, 30)
-        forEntities(EntityType.CSmokeGrenadeProjectile, EntityType.CMolotovProjectile, EntityType.CDecoyProjectile, EntityType.CBaseCSGrenadeProjectile, identifier = id) {
+        forEntities(forEntsList) {
             val ent = it.entity
             val entPos = ent.absPosition()
 

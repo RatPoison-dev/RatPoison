@@ -25,10 +25,10 @@ import rat.poison.settings.DANGER_ZONE
 import rat.poison.settings.HEAD_BONE
 import rat.poison.toLocale
 import rat.poison.utils.*
-import kotlin.math.abs
-import kotlin.math.sign
 import rat.poison.utils.extensions.getFloatArray
 import rat.poison.utils.extensions.lower
+import kotlin.math.abs
+import kotlin.math.sign
 
 data class BoundingBox(var left: Float = -1F, var right: Float = -1F, var top: Float = -1F, var bottom: Float = -1F) {
 	fun set(left: Float, right: Float, top: Float, bottom: Float): BoundingBox {
@@ -84,7 +84,7 @@ private var barWidth = 0F
 
 private const val entityMemorySize = 45952
 private val entMemory = threadLocalPointer(entityMemorySize)
-private const val forEntsId = "boxesp"
+private val forEntsList = arrayOf(EntityType.CCSPlayer, EntityType.CEconEntity)
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
 fun boxEsp() {
 	every(1000, true) { //Update settings
@@ -133,7 +133,7 @@ fun boxEsp() {
 		boxDetailsRightText.clear()
 		boxDetailsTopText.clear()
 		boxDetailsBottomText.clear()
-		forEntities(EntityType.CCSPlayer, EntityType.CEconEntity, iterateWeapons = true, identifier = forEntsId) { //Player & Weapon boxes
+		forEntities(forEntsList, iterateWeapons = true) { //Player & Weapon boxes
 			val ent = it.entity
 			val isPlayer = it.type == EntityType.CCSPlayer
 			val isWeapon = it.type.weapon

@@ -2,7 +2,6 @@ package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.utils.Align
 import io.ktor.client.*
 import io.ktor.client.features.websocket.*
 import io.ktor.http.*
@@ -31,7 +30,7 @@ private var metEntityList = mutableListOf<Int>()
 private val w2s1 = Vector()
 private val w2s2 = Vector()
 private val entPosVec = Vector()
-private const val id = "sharedesp"
+private val forEntsList = arrayOf(EntityType.CCSPlayer)
 private val bbox = BoundingBox()
 @KtorExperimentalAPI
 fun sharedEsp() {
@@ -43,7 +42,7 @@ fun sharedEsp() {
 
         //send what we have to server
         var s = "iterateEntities:${mySid}:${meTeam}:"
-        forEntities(EntityType.CCSPlayer, identifier = id) {
+        forEntities(forEntsList) {
             val ent = it.entity
             if (ent.dormant() || ent.dead() || ent <= 0 || ent == me) return@forEntities
             //sharedPlayerRecords[allocSharedPlayerRecord(0)].apply {

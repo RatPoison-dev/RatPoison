@@ -16,11 +16,11 @@ import rat.poison.utils.inGame
 private val vec = Vector()
 private val positionVector = Vector()
 private val stringBuilder = StringBuilder()
-private const val id = "nadestimer"
+private val forEntsList = arrayOf(EntityType.CSmokeGrenadeProjectile)
 fun nadesTimer() = App {
     if (!curSettings.bool["SMOKE_WEAR_OFF_TIME"] || !inGame) return@App
 
-    forEntities(EntityType.CSmokeGrenadeProjectile, identifier = id) {
+    forEntities(forEntsList) {
         val ent = it.entity
         if (!ent.didEffect()) return@forEntities
 

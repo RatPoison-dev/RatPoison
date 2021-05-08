@@ -113,15 +113,15 @@ private val boneMemory = threadLocalPointer(boneMemorySize)
 private val meAngVec = Vector()
 private var bestFov = 5F
 private val boneVec = Vector()
-//private val positionVector = Vector()
-private const val id = "backtrack"
+private val forEntsList = arrayOf(EntityType.CCSPlayer)
+
 fun constructRecords() {
     bestFov = 5F
     val clientAngle = clientState.angle(meAngVec)
 
     val boneMemory = boneMemory.get()
 
-    forEntities(EntityType.CCSPlayer, identifier = id) {
+    forEntities(forEntsList) {
         val ent = it.entity
 
         if (ent.dead() || ent == me || ent.team() == meTeam) return@forEntities

@@ -14,14 +14,16 @@ import rat.poison.game.CSGO
 import rat.poison.game.offsets.EngineOffsets.dwbSendPackets
 import rat.poison.overlay.App
 import rat.poison.scripts.*
-import rat.poison.scripts.aim.*
+import rat.poison.scripts.aim.flatAim
+import rat.poison.scripts.aim.handleFireKey
+import rat.poison.scripts.aim.pathAim
+import rat.poison.scripts.aim.setAim
 import rat.poison.scripts.visuals.*
 import rat.poison.utils.Settings
 import rat.poison.utils.WebSocket
 import rat.poison.utils.detectLocale
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.loadSkinSettings
-import rat.poison.utils.generalUtil.stringToIntList
 import rat.poison.utils.loadMigration
 import java.awt.Robot
 import java.io.File
@@ -46,7 +48,7 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Beta"
 const val F_VERSION = "1.8"
-const val M_VERSION = "1.8.5.6"
+const val M_VERSION = "1.8.5.7"
 var LOADED_CONFIG = "DEFAULT"
 var oWeaponSize = oWeapon::class.java.declaredFields.size
 
