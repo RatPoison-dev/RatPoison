@@ -1,12 +1,9 @@
 package rat.poison.ui.uiWindows
 
-import com.badlogic.gdx.utils.Align
-import com.kotcrab.vis.ui.building.utilities.Alignment
 import com.kotcrab.vis.ui.widget.*
-import rat.poison.curSettings
 import rat.poison.settings.DEBUGTOG
 import rat.poison.ui.changed
-import rat.poison.ui.uiTabs.VisLabelExtension
+import rat.poison.utils.extensions.VisLabelExtension
 
 class UIDebug: VisWindow("") {
     val table = VisTable(false)

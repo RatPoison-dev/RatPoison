@@ -1,10 +1,9 @@
 package rat.poison.ui.uiWindows
 
 import com.kotcrab.vis.ui.widget.*
-import rat.poison.overlay.App.uiMenu
 import rat.poison.settings.WARNINGTOG
 import rat.poison.ui.changed
-import rat.poison.ui.uiTabs.VisLabelExtension
+import rat.poison.utils.extensions.VisLabelExtension
 
 class UIWarning: VisWindow("") {
     val table = VisTable(false)

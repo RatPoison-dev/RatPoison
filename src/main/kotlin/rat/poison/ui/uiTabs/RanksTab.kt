@@ -5,22 +5,16 @@ import com.kotcrab.vis.ui.widget.LinkLabel
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.overlay.App.uiMenu
 import rat.poison.scripts.ranksPlayerList
 import rat.poison.ui.uiRefreshing
+import rat.poison.ui.uiWindows.mainTabbedPane
+import rat.poison.ui.uiWindows.ranksTab
 import rat.poison.utils.RanksPlayer
+import rat.poison.utils.extensions.VisLabelExtension
 import rat.poison.utils.saving
 
 var updatingRanks = false
-
-
-//TODO move
-class VisLabelExtension(mainText: String): VisLabel(mainText) {
-    override fun setText(newText: CharSequence?) {
-        if (this.text != newText) {
-            super.setText(newText)
-        }
-    }
-}
 
 class RanksTab : Tab(false, false) {
     private val table = VisTable(true)
@@ -63,7 +57,7 @@ class RanksTab : Tab(false, false) {
     }
 
     fun updateRanks() {
-        if (uiRefreshing || saving || updatingRanks || !isActiveTab) return
+        if (uiRefreshing || saving || updatingRanks || uiMenu.activeTab != ranksTab) return
         updatingRanks = true
         teamsLabel.setText("Team" + "  \n")
         namesLabel.setText("Name")
