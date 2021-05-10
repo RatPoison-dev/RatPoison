@@ -62,7 +62,7 @@ class OverrideTable: VisTable(false) {
     val trigAimbot = OverrideVisCheckBoxCustom("Aimbot", "tBTrigAim")
     val trigInCross = OverrideVisCheckBoxCustom("InCross", "tBTrigInCross")
     val trigInFov = OverrideVisCheckBoxCustom("InFov", "tBTrigInFov")
-    val trigBacktrack = OverrideVisCheckBoxCustom("Shoot Backtrack", "tBTrigBacktrack")
+    val trigBacktrack = OverrideVisCheckBoxCustom("Enable Backtrack", "tBTrigBacktrack")
     val trigFov = OverrideVisSliderCustom("FOV", "tBTrigFov", 0.5F, 90F, 0.5F, false, labelWidth = 225F, barWidth = 225F)
     val trigInitDelay = OverrideVisSliderCustom("Init Shot Delay", "tBTrigInitDelay", 0F, 500F, 10F, true, labelWidth = 225F, barWidth = 225F)
     val trigPerShotDelay = OverrideVisSliderCustom("Per Shot Delay", "tBTrigPerShotDelay", 0F, 500F, 10F, true, labelWidth = 225F, barWidth = 225F)

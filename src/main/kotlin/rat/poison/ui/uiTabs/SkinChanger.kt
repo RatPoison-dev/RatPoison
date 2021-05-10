@@ -39,8 +39,8 @@ class SkinChangerTab : Tab(false, false) {
     private var skinStatTrak = VisValidatableTextField(Validators.INTEGERS)
     private var skinWear = VisSlider(0.0F, 1.0F, .01F, false)
 
-    private var forceUpdate = VisTextButton("Manual-Force-Update")
-    var autoForceUpdate = VisCheckBoxCustom("Auto-Force-Update", "FORCE_UPDATE_AUTO")
+    private var forceUpdate = VisTextButton("Manual Force Update")
+    var autoForceUpdate = VisCheckBoxCustom("Auto Force Update", "FORCE_UPDATE_AUTO")
 
     private var weaponSelected = "DESERT_EAGLE"
     private var minValue = 0.0F

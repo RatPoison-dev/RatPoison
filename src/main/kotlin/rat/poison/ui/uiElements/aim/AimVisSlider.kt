@@ -8,6 +8,7 @@ import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curSettings
 import rat.poison.ui.changed
 import rat.poison.ui.uiTabs.categorySelected
+import rat.poison.utils.locale
 import kotlin.math.pow
 import kotlin.math.round
 
@@ -34,8 +35,10 @@ class AimVisSlider(mainText: String, varExtension: String, varMin: Float, varMax
                 round(sliderBar.value * rnd) /rnd
             }
 
+            val sliderText = "L$variableExtension".locale(labelText)
+
             curSettings[categorySelected + variableExtension] = sliderVal.toString()
-            sliderLabel.setText("$labelText: ${curSettings[categorySelected + variableExtension]}")
+            sliderLabel.setText("$sliderText: ${curSettings[categorySelected + variableExtension]}")
         }
 
         add(sliderLabel).width(w1)
@@ -54,7 +57,9 @@ class AimVisSlider(mainText: String, varExtension: String, varMin: Float, varMax
                 round(sliderBar.value * rnd) / rnd
             }
 
-            sliderLabel.setText("$labelText: $sliderVal")
+            val sliderText: String = "L$variableExtension".locale(labelText)
+
+            sliderLabel.setText("$sliderText: $sliderVal")
         } else {
             println("[Error] $categorySelected$variableExtension is empty")
         }

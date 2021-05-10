@@ -11,7 +11,7 @@ import rat.poison.ui.uiTabs.miscVisualsTable
 import rat.poison.ui.uiWindows.visualsTab
 
 class MiscVisualsTable: VisTable(false) {
-    val radarEsp = VisCheckBoxCustom("Radar Esp", "RADAR_ESP")
+    val radarEsp = VisCheckBoxCustom("Radar ESP", "RADAR_ESP")
     val legitRadar = VisCheckBoxCustom("Legit Radar", "LEGIT_RADAR")
     val legitRadarDistance = VisSliderCustom("Distance", "LEGIT_RADAR_FOOTSTEPS_DISTANCE", 100F, 5000F, 100F, true, 0, 175F, 117F)
 

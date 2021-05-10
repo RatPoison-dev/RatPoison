@@ -1,5 +1,5 @@
 //Enable DEBUG
-DEBUG = true
+DEBUG = false
 
 //Close with csgo
 CLOSE_WITH_CSGO = true

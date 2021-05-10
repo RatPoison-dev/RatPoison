@@ -23,6 +23,7 @@ import rat.poison.scripts.visuals.*
 import rat.poison.utils.common.Settings
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.loadSkinSettings
+import rat.poison.utils.loadLocale
 import rat.poison.utils.loadMigration
 import java.awt.Robot
 import java.io.File
@@ -62,6 +63,7 @@ lateinit var MUSIC_KITS_FILE: File
 var settingsLoaded = false
 val curSettings = Settings()
 val skSettings = Settings()
+val curLocale = Settings()
 var crosshairArray = BitSet(81) //81 is max / 0 //RCROSSHAIR_BUILDER_ARRAY
 
 val DEFAULT_OWEAPON = oWeapon()
@@ -73,8 +75,16 @@ val robot = Robot().apply { this.autoDelay = 0 }
 
 var haltProcess = false
 
+fun dbgLog(str: String) {
+    if (dbg) {
+        println("[DEBUG] $str")
+    }
+}
+
 fun main() {
     System.setProperty("jna.nosys", "true")
+
+    //loadLocale()
 
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
     loadSkinSettings("$SETTINGS_DIRECTORY/skinCFGS/DefaultSettings.cfg")
@@ -113,65 +123,120 @@ fun main() {
         curSettings["SPREAD_CIRCLE"] = "false"
         curSettings["VISUALIZE_SMOKES"] = "false"
     } else {
-        if (dbg) { println("[DEBUG] Initializing Recoil Ranks") }; ranks()
+        dbgLog("[DEBUG] Initializing Recoil Ranks"); ranks()
 
-        if (dbg) { println("[DEBUG] Initializing Recoil Spectator List") }; spectatorList()
-        if (dbg) { println("[DEBUG] Initializing Recoil Bomb Timer") }; bombTimer()
+        dbgLog("[DEBUG] Initializing Recoil Spectator List"); spectatorList()
+        dbgLog("[DEBUG] Initializing Recoil Bomb Timer"); bombTimer()
 
-        if (dbg) { println("[DEBUG] Initializing Recoil Crosshair") }; rCrosshair()
-        if (dbg) { println("[DEBUG] Initializing Hit Marker") }; hitMarker()
-        if (dbg) { println("[DEBUG] Initializing Nade Helper") }; nadeHelper()
-        if (dbg) { println("[DEBUG] Initializing Nade Tracer") }; nadeTracer()
-        if (dbg) { println("[DEBUG] Initializing Draw Fov") }; drawFov()
-        if (dbg) { println("[DEBUG] Initializing Spread Circle") }; spreadCircle()
-        if (dbg) { println("[DEBUG] Initializing Draw Smokes") }; drawSmokes()
-        if (dbg) { println("[DEBUG] Initializing Far Radar") }; farRadar()
-
-        if (dbg) { println("[DEBUG] Initializing Handle UI Watermark") }; handleUIWatermark()
-        if (dbg) { println("[DEBUG] Initializing Handle UI Debug") }; handleUIDebug()
-        //farEsp()
+        dbgLog("[DEBUG] Initializing Recoil Crosshair"); rCrosshair()
+        dbgLog("[DEBUG] Initializing Hit Marker"); hitMarker()
+        dbgLog("[DEBUG] Initializing Nade Helper"); nadeHelper()
+        dbgLog("[DEBUG] Initializing Nade Tracer"); nadeTracer()
+        dbgLog("[DEBUG] Initializing Draw Fov"); drawFov()
+        dbgLog("[DEBUG] Initializing Spread Circle"); spreadCircle()
+        dbgLog("[DEBUG] Initializing Draw Smokes"); drawSmokes()
     }
+        
+            dbgLog("[DEBUG] Initializing Far Radar"); farRadar()
+            dbgLog("[DEBUG] Initializing Handle UI Watermark"); handleUIWatermark()
+            dbgLog("[DEBUG] Initializing Handle UI Debug"); handleUIDebug()
+            println("[DEBUG] Initializing Bunny Hop"); bunnyHop()
+        
+            println("[DEBUG] Initializing Auto Strafe"); strafeHelper()
+        
+            println("[DEBUG] Initializing Kill Bind")
+        killBind()
+        
+            println("[DEBUG] Initializing RCS")
+        rcs()
+        
+            println("[DEBUG] Initializing Flat Aim")
+        flatAim()
+        
+            println("[DEBUG] Initializing Path Aim")
+        pathAim()
+        
+            println("[DEBUG] Initializing Set Aim")
+        setAim()
+        
+            println("[DEBUG] Initializing Bone Trigger")
+        triggerBot()
+        
+            println("[DEBUG] Initializing Auto Knife")
+        autoKnife()
+        
+            println("[DEBUG] Initializing Reduced Flash")
+        reducedFlash()
+        
+            println("[DEBUG] Initializing ESPs")
+        esp()
+        
+            println("[DEBUG] Initializing Fast Stop")
+        fastStop()
+        
+            println("[DEBUG] Initializing Head Walk")
+        headWalk()
+        
+            println("[DEBUG] Initializing Adrenaline")
+        adrenaline()
+        
+            println("[DEBUG] Initializing FovChanger")
+        fovChanger()
+        
+            println("[DEBUG] Disabling Post Processing")
+        disablePostProcessing()
+        
+            println("[DEBUG] Initializing Weapon Changer")
+        skinChanger()
+        
+            println("[DEBUG] Initializing NightMode/FullBright")
+        nightMode()
+        
+            println("[DEBUG] Initializing Bomb Updater")
+        bombUpdater()
 
-    if (dbg) { println("[DEBUG] Initializing Bunny Hop") }; bunnyHop()
-    if (dbg) { println("[DEBUG] Initializing Auto Strafe") }; strafeHelper()
-    if (dbg) { println("[DEBUG] Initializing Kill Bind") }; killBind()
-    if (dbg) { println("[DEBUG] Initializing RCS") }; rcs()
-    if (dbg) { println("[DEBUG] Initializing Flat Aim") }; flatAim()
-    if (dbg) { println("[DEBUG] Initializing Path Aim") }; pathAim()
-    if (dbg) { println("[DEBUG] Initializing Set Aim") }; setAim()
-    if (dbg) { println("[DEBUG] Initializing Bone Trigger") }; triggerBot()
-    if (dbg) { println("[DEBUG] Initializing Auto Knife") }; autoKnife()
-    if (dbg) { println("[DEBUG] Initializing Reduced Flash") }; reducedFlash()
-    if (dbg) { println("[DEBUG] Initializing ESPs") }; esp()
-    if (dbg) { println("[DEBUG] Initializing Fast Stop") }; fastStop()
-    if (dbg) { println("[DEBUG] Initializing Head Walk") }; headWalk()
-    if (dbg) { println("[DEBUG] Initializing Adrenaline") }; adrenaline()
-    if (dbg) { println("[DEBUG] Initializing FovChanger") }; fovChanger()
-    if (dbg) { println("[DEBUG] Disabling Post Processing") }; disablePostProcessing()
-    if (dbg) { println("[DEBUG] Initializing Weapon Changer") }; skinChanger()
-    if (dbg) { println("[DEBUG] Initializing NightMode/FullBright") }; nightMode()
-    if (dbg) { println("[DEBUG] Initializing Bomb Updater")}; bombUpdater()
+        
+            println("[DEBUG] Initializing Backtrack")
+        setupBacktrack()
+        
+            println("[DEBUG] Initializing Draw Backtrack")
+         drawBacktrack()
+        
+            println("[DEBUG] Initializing GVars Updater")
+         updateGVars()
+        
+            println("[DEBUG] Initializing Nades Timer")
+        nadesTimer()
 
-    if (dbg) { println("[DEBUG] Initializing Backtrack") }; setupBacktrack()
-    if (dbg) { println("[DEBUG] Initializing Draw Backtrack") }; drawBacktrack()
-    if (dbg) { println("[DEBUG] Initializing GVars Updater") }; updateGVars()
-    if (dbg) { println("[DEBUG] Initializing Nades Timer") }; nadesTimer()
+        
+            println("[DEBUG] Initializing Head Level Helper")
+         headLevelHelper()
+        
+            println("[DEBUG] Initializing Fake Lag")
+         fakeLag()
+        
+            println("[DEBUG] Initializing Nade Thrower")
+         nadeThrower()
+        
+            println("[DEBUG] Initializing Kill Sound")
+         killSoundEsp()
+        
+            println("[DEBUG] Initializing MusicKit Spoofer")
+         musicKitSpoofer()
+        
+            println("[DEBUG] Initializing Block Bot")
+         blockBot()
 
-    if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
-    if (dbg) { println("[DEBUG] Initializing Fake Lag") }; fakeLag()
-    if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()
-    if (dbg) { println("[DEBUG] Initializing Kill Sound") }; killSoundEsp()
-    if (dbg) { println("[DEBUG] Initializing MusicKit Spoofer") }; musicKitSpoofer()
-    if (dbg) { println("[DEBUG] Initializing Block Bot") }; blockBot()
-    if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
+    println("[DEBUG] dwbSendPackets: $dwbSendPackets")
 
-    handleUCMD()
 
-    //if (EXPERIMENTAL) {
+        handleUCMD()
+
+        //if (EXPERIMENTAL) {
         //rayTraceTest()
         //drawMapWireframe()l
-    //}
-    //Overlay check, not updated?
+        //}
+        //Overlay check, not updated?
     if (curSettings.bool["MENU"]) {
         println("Game found. Launching.")
 
@@ -200,10 +265,14 @@ fun main() {
 
                 if (curSettings.bool["OPENGL_3"]) {
                     useOpenGL3(true, 4, 0)
-                    if (dbg) { println("[DEBUG] Using GL3") }
+                    if (dbg) {
+                        println("[DEBUG] Using GL3")
+                    }
                 } else {
                     useOpenGL3(false, 2, 0)
-                    if (dbg) { println("[DEBUG] Using GL2") }
+                    if (dbg) {
+                        println("[DEBUG] Using GL2")
+                    }
                 }
 
                 //Required to fix W2S offset

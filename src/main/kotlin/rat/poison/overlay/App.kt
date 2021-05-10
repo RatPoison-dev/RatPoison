@@ -30,6 +30,7 @@ import rat.poison.settings.MENUTOG
 import rat.poison.settings.WARNINGTOG
 import rat.poison.ui.MenuStage
 import rat.poison.ui.uiTabs.updateDisableAim
+import rat.poison.ui.uiUpdate
 import rat.poison.ui.uiWindows.*
 import rat.poison.utils.AssetManager
 import rat.poison.utils.common.ObservableBoolean
@@ -116,6 +117,8 @@ object App: ApplicationAdapter() {
         //Implement stage for menu
 
         appOverlay.start()
+
+        uiUpdate()
     }
 
     private var variableYieldTime = 0L

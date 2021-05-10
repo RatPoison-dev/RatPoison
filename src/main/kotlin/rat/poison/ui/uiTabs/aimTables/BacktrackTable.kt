@@ -12,10 +12,10 @@ class BacktrackTable: VisTable(false) {
     val collapsibleWidget = CollapsibleWidget(collapsibleTable)
 
     //Init labels/sliders/boxes that show values here
-    val backtrackEnableKey = VisCheckBoxCustom("Enable On Key", "ENABLE_BACKTRACK_ON_KEY")
+    val backtrackEnableKey = VisCheckBoxCustom("Backtrack On Key", "ENABLE_BACKTRACK_ON_KEY")
     val backtrackKey = VisBindTableCustom("Backtrack Key", "BACKTRACK_KEY", keyWidth = 225F)
     val backtrackSpotted = VisCheckBoxCustom("Check Spotted", "BACKTRACK_SPOTTED")
-    val backtrackWeaponEnabled = AimVisCheckBox("Weapon Backtrack", "_BACKTRACK")
+    val backtrackWeaponEnabled = AimVisCheckBox("Enable Backtrack", "_BACKTRACK")
     val backtrackMS = AimVisSlider("Backtrack MS", "_BACKTRACK_MS", 20f, 200f, 5f, true, width1 = 225F, width2 = 225F)
 
     init {

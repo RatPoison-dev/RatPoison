@@ -9,6 +9,7 @@ import rat.poison.ui.uiTabs.updateDisableAim
 import rat.poison.ui.uiUpdate
 import rat.poison.utils.generalUtil.boolToStr
 import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.locale
 
 class AimVisCheckBox(text: String, varExtension: String) : VisCheckBox(text) {
     private val mainText = text
@@ -45,6 +46,8 @@ class AimVisCheckBox(text: String, varExtension: String) : VisCheckBox(text) {
         } else {
             println("[Error] $categorySelected$variableExtension is empty")
         }
+
+        setText("L$variableExtension".locale(mainText)) //TODO store in vars
 
         updateTooltip()
 

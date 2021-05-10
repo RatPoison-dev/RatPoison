@@ -11,6 +11,7 @@ import rat.poison.ui.getOverrideVar
 import rat.poison.ui.getOverrideVarIndex
 import rat.poison.ui.setOverrideVar
 import rat.poison.ui.uiTabs.aimTables.weaponOverrideSelected
+import rat.poison.utils.locale
 import kotlin.math.pow
 import kotlin.math.round
 
@@ -54,7 +55,9 @@ class OverrideVisSliderCustom(mainText: String, varName: String, varMin: Float, 
             round(sliderBar.value * rnd)/rnd
         }
 
-        sliderLabel.setText("$labelText: $sliderVal")
+        val sliderText = "L_$variableName".locale(labelText)
+
+        sliderLabel.setText("$sliderText: $sliderVal")
     }
 
     fun disable(bool: Boolean, col: Color) {

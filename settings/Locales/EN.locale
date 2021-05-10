@@ -1,0 +1,393 @@
+//Menu Warning
+L_WARNING = WARNING
+L_WARNING_TEXT = This is a debug build and is prone to bugs and various config issues, use at your own risk.
+L_HIDE = Hide
+
+//Aim Checkboxes
+L_AIM_ONLY_ON_SHOT = Aim On Shot
+L_FACTOR_RECOIL = Factor Recoil
+L_ENABLE_FLAT_AIM = Write Angles
+L_ENABLE_PATH_AIM = Mouse Movement
+L_TRIGGER = Enable Trigger
+L_TRIGGER_AIMBOT = Use Aim
+L_TRIGGER_INCROSS = Check In Cross
+L_TRIGGER_INFOV = Check In Fov
+L_TRIGGER_BACKTRACK = Shoot Backtrack
+L_BACKTRACK = Enable Backtrack
+
+//Aim Sliders
+L_AIM_FOV = Aim FOV
+L_AIM_SMOOTHNESS = Aim Smoothness
+L_AIM_AFTER_SHOTS = Aim After #
+L_PERFECT_AIM_FOV = Perfect FOV
+L_PERFECT_AIM_CHANCE = Perfect Chance
+L_AIM_RCS_X = RCS X
+L_AIM_RCS_Y = RCS Y
+L_AIM_RCS_VARIATION = RCS Variation
+L_TRIGGER_FOV = Trigger FOV
+L_TRIGGER_INIT_SHOT_DELAY = First Shot Delay
+L_TRIGGER_PER_SHOT_DELAY = Per Shot Delay
+L_BACKTRACK_MS = Backtrack MS
+
+//Main Aim
+L_ENABLE_OVERRIDE = Override Weapons
+L_ENABLE_AIM = Aimbot Master Switch
+L_ENABLE_TRIGGER = Trigger Master Switch
+L_ENABLE_BACKTRACK = Backtrack Master Switch
+L_ACTIVATE_FROM_AIM_KEY = Activate From Fire Key
+L_HOLD_AIM = Hold Aim
+L_TEAMMATES_ARE_ENEMIES = Teammates Are Enemies
+L_FORCE_AIM_THROUGH_WALLS = Force Aim Through Walls
+L_GLOBAL_AUTOMATIC_WEAPONS = Automatic Weapons
+
+//User CMD
+L_USER_CMD = Enable User CMD
+L_UCMD_HANDLE_FIRE_KEY = UCMD Handle Fire Key
+L_UCMD_HANDLE_TRIGGER = UCMD Handle Trigger
+L_UCMD_SILENT_AIM = UCMD Silent Aim
+L_UCMD_SILENT_REQUIRE_TARGET = Require Aim Target
+
+//Aim
+L_SNIPER_ENABLE_SCOPED_ONLY = Scoped Only
+
+//Trigger
+L_TRIGGER_ENABLE_KEY = Trigger On Key
+
+//Backtrack
+L_ENABLE_BACKTRACK_ON_KEY = Backtrack On Key
+L_BACKTRACK_SPOTTED = Check Spotted
+
+//Enable Visuals
+L_ENABLE_VISUALS = Enable Visuals
+
+//Glow
+L_GLOW_ESP = Enable
+L_GLOW_SMOKE_CHECK = Smoke Check
+L_GLOW_SHOW_HEALTH = Show Health
+L_GLOW_SHOW_TEAM = Teammates
+L_GLOW_SHOW_ENEMIES = Enemies
+L_GLOW_SHOW_BOMB = Bomb
+L_GLOW_BOMB_ADAPTIVE = Bomb Glow
+L_GLOW_SHOW_BOMB_CARRIER = Bomb Carrier
+L_GLOW_SHOW_WEAPONS = Weapons
+L_GLOW_SHOW_GRENADES = Grenades
+L_GLOW_SHOW_TARGET = Aim Target
+
+//Chams
+L_CHAMS_ESP = Enable
+L_CHAMS_SHOW_HEALTH = Show Health
+L_CHAMS_SHOW_TEAM = Teammates
+L_CHAMS_SHOW_ENEMIES = Enemies
+L_CHAMS_SHOW_SELF = Self
+L_CHAMS_SHOW_TARGET = Aim Target
+
+//Indicators
+L_INDICATOR_ESP = Enable
+L_INDICATOR_SMOKE_CHECK = Smoke Check
+L_INDICATOR_SHOW_TEAM = Teammates
+L_INDICATOR_SHOW_ENEMIES = Enemies
+L_INDICATOR_SHOW_BOMB = Bomb
+L_INDICATOR_SHOW_BOMB_CARRIER = Bomb Carrier
+L_INDICATOR_SHOW_WEAPONS = Weapons
+L_INDICATOR_SHOW_GRENADES = Grenades
+L_INDICATOR_SHOW_DEFUSERS = Defusers
+
+//Skeleton
+L_SKELETON_ESP = Enable
+L_SKELETON_SHOW_TEAM = Teammates
+L_SKELETON_SHOW_ENEMIES = Enemies
+
+//Box
+L_ENABLE_BOX_ESP = Enable
+L_BOX_ESP_USE_ICONS = Use Icons
+L_ADVANCED_BOUNDING_BOX = Advanced BBOX
+L_BOX_SMOKE_CHECK = Smoke Check
+L_BOX_FAR_RADAR = Far Radar Box
+L_BOX_ESP_DETAILS = Box Details
+L_BOX_ESP_HEALTH = Health
+L_BOX_ESP_ARMOR = Armor
+L_BOX_ESP_NAME = Name
+L_BOX_ESP_WEAPON = Weapons
+L_BOX_ESP_MONEY = Money
+L_BOX_ESP_AMMO = Ammo
+L_BOX_ESP_HELMET = Helmet
+L_BOX_ESP_KEVLAR = Kevlar
+L_BOX_ESP_SCOPED = Scoped
+L_BOX_ESP_FLASHED = Flashed
+L_BOX_SHOW_TEAM  = Teammates
+L_BOX_SHOW_ENEMIES = Enemies
+L_BOX_SHOW_DEFUSERS = Defusers
+L_BOX_SHOW_WEAPONS = Weapons
+
+//Snaplines
+L_ENABLE_SNAPLINES = Enable
+L_SNAPLINES_SMOKE_CHECK = Smoke Check
+L_SNAPLINES_TEAMMATES = Teammates
+L_SNAPLINES_ENEMIES = Enemies
+L_SNAPLINES_WEAPONS = Weapons
+L_SNAPLINES_BOMB = Bomb
+L_SNAPLINES_BOMB_CARRIER = Bomb Carrier
+L_SNAPLINES_DEFUSE_KITS = Defuse Kits
+
+//Footsteps
+L_ENABLE_FOOTSTEPS = Enable
+L_FOOTSTEP_TEAM = Teammates
+L_FOOTSTEP_ENEMY = Enemies
+
+//Hitmarker
+L_ENABLE_HITMARKER = Enable
+L_HITMARKER_OUTLINE = Outline
+L_HITMARKER_COMBO = Combo #
+L_HITMARKER_RECOIL_POSITION = Recoil Position
+
+//Nadetracer
+L_NADE_TRACER = Nade Tracer
+L_VISUALIZE_SMOKES = Visualize Smokes
+L_SMOKE_WEAR_OFF_TIME = Smoke Time
+
+//Miscellaneous
+L_RADAR_ESP = Radar ESP
+L_LEGIT_RADAR = Legit Radar
+L_ENABLE_NIGHTMODE = Nightmode/Fullbright
+L_ENABLE_ADRENALINE = Adrenaline
+L_ADRENALINE_BOMB_TIME = Adr. Bomb Time
+L_DRAW_AIM_FOV = Draw Aim FOV
+L_BACKTRACK_VISUALIZE = Visualize Backtrack
+L_BACKTRACK_VISUALIZE_SMOKE_CHECK = Visualize Backtrack Smoke Check
+L_DRAW_TRIGGER_FOV = Draw Trigger FOV
+L_SPREAD_CIRCLE = Spread Circle
+L_HEAD_LVL_ENABLE = Head Line
+L_UI_WATERMARK = UI Watermark
+
+//RCS
+L_ENABLE_RCS = Enable RCS
+L_RCS_RETURNAIM = Return Aim
+L_ENABLE_RCROSSHAIR = Recoil Crosshair
+L_RCROSSHAIR_SCOPE_COMPATIBLE = Scope Compatible
+
+//Misc
+L_ENABLE_BUNNY_HOP = Bunny Hop
+L_AUTO_STRAFE = Auto Strafe
+L_STRAFE_BHOP_ONLY = BHop Only
+L_FAST_STOP = Fast Stop
+L_HEAD_WALK = Head Walk
+L_ENABLE_AUTO_KNIFE = Knife Bot
+L_BLOCK_BOT = Block Bot
+L_ENABLE_FOV_CHANGER = FOV Changer
+L_FOV_SMOOTH = Smooth FOV Changes
+L_ENABLE_BOMB_TIMER = Bomb Timer
+L_BOMB_TIMER_BARS = Timer Menu
+L_BOMB_TIMER_MENU = Timer Bars
+L_BOMB_TIMER_BARS_SHOW_TTE = Time To Explode
+L_LS_BOMB = Perfect Bomb Defuse
+L_ENABLE_REDUCED_FLASH = No Flash
+L_ENABLE_HITSOUND = HitSound
+L_ENABLE_KILLSOUND = KillSound
+L_KILL_BIND = Kill Bind
+L_DISABLE_POST_PROCESSING = Disable Post Processing
+L_SPECTATOR_LIST = Spectator List
+L_ENABLE_WATERMARK = Watermark
+L_MUSIC_KIT_SPOOFER = Music Kit Spoofer
+L_FAKE_LAG = Fake Lag
+
+//Nadehelper
+L_ENABLE_NADE_HELPER = Nade Helper
+L_ENABLE_NADE_THROWER = Auto Throw
+
+//Skinchanger
+L_SKINCHANGER = Enable Skinchanger
+L_FORCE_UPDATE_AUTO = Auto Force Update
+
+//Options
+L_MENU_STAY_FOCUSED = Stay Focused
+L_CLOSE_WITH_CSGO = Close With CSGO
+L_DEBUG = Debug
+L_KEYBINDS = Keybinds
+L_GAUSSIAN_BLUR = Menu Blur
+L_OVERLOAD_KEYBINDS = Overload Keybinds
+
+//Sliders
+L_AIM_TOGGLE_KEY_TYPE = Toggle Aim Key
+L_FOV_TYPE = Fov Type
+L_FORCE_AIM_BONE_KEY_TYPE = Force Aim Bone Key
+L_FORCE_AIM_KEY_TYPE = Force Aim Key
+L__AIM_BONE = Aim Bone
+L__AIM_FORCE_BONE = Force Aim Bone
+L_TRIGGER_KEY_TYPE = Key Type
+L_BACKTRACK_KEY_TYPE = Backtrack Key
+L_VISUALS_TOGGLE_KEY_TYPE = Key Type
+L_GLOW_ENEMY_TYPE = Enemy Glow Color
+L_GLOW_TEAMMATE_TYPE = Teammate Glow Color
+L_GLOW_WEAPON_TYPE = Weapon Glow Color
+L_GLOW_GRENADE_TYPE = Grenade Glow Color
+L_GLOW_TARGET_TYPE = Target Glow Color
+L_GLOW_BOMB_CARRIER_TYPE = Bomb Carrier Glow Color
+L_GLOW_BOMB_TYPE = Bomb Glower Color
+L_BOX_ESP_HEALTH_POS = Health
+L_BOX_ESP_ARMOR_POS = Armor
+L_BOX_ESP_NAME_POS = Name
+L_BOX_ESP_WEAPON_POS = Weapon
+L_BOX_ESP_MONEY_POS = Money
+L_BOX_ESP_AMMO_POS = Ammo
+L_BOX_ESP_HELMET_POS = Helmet
+L_BOX_ESP_KEVLAR_POS = Kevlar
+L_BOX_ESP_SCOPED_POS = Scoped
+L_BOX_ESP_FLASHED_POS = Flashed
+L_RCS_TYPE = RCS Type
+L_ENABLE_BUNNY_HOP_KEY_TYPE = Bunny Hop Key
+L_BLOCK_BOT_KEY_TYPE = Key Type
+L_KILL_BIND_KEY_TYPE = Key Type
+L_NADE_THROWER_KEY_TYPE = Key Type
+L_MENU_KEY_TYPE = Key Type
+L_AIM_BONE = Aim Bone
+L_AIM_FORCE_BONE = Force Aim Bone
+
+//Keys
+L_AIM_TOGGLE_KEY = Toggle Aim Key
+L_FORCE_AIM_BONE_KEY = Force Aim Bone Key
+L_FORCE_AIM_KEY = Force Aim Key
+L_TRIGGER_KEY = Trigger Key
+L_BACKTRACK_KEY = Backtrack Key
+L_VISUALS_TOGGLE_KEY = Visuals Toggle Key
+L_ENABLE_BUNNY_HOP_KEY = Bunny Hop Key
+L_BLOCK_BOT_KEY = Block Bot Key
+L_KILL_BIND_KEY = KillBind
+L_NADE_THROWER_KEY = Nade Thrower
+L_MENU_KEY = Menu Key
+
+//Select Box Items
+L_ON_HOTKEY = On Hotkey
+L_OFF_HOTKEY = Off Hotkey
+L_TOGGLE = Toggle
+L_ALWAYS_ON = Always On
+L_DISTANCE = Distance
+L_STATIC = Static
+L_HEAD = Head
+L_NECK = Neck
+L_CHEST = Chest
+L_STOMACH = Stomach
+L_PELVIS = Pelvis
+L_NEAREST = Nearest
+L_RANDOM = Random
+L_NORMAL = Normal
+L_MODEL = Model
+L_VISIBLE = Visible
+L_VISIBLE-FLICKER = Visible Flicker
+L_LEFT = Left
+L_RIGHT = Right
+L_TOP = Top
+L_BOTTOM = Bottom
+L_STABLE = Stable
+L_LEGACY = Legacy
+
+//Override
+L_tOverride = Enable Override
+L_tFRecoil = Factor Recoil
+L_tOnShot = On Shot
+L_tFlatAim = Flat Aim
+L_tPathAim = Path Aim
+L_tScopedOnly = Scoped Only
+L_tPerfectAim = Perfect Aim
+L_tBoneTrig = Enable Trigger
+L_tBTrigAim = Aimbot
+L_tBTrigInCross = InCross
+L_tBTrigInFov = InFov
+L_tBTrigBacktrack = Enable Backtrack
+L_tBacktrack = Enable Backtrack
+L_tAutowep = Automatic Weapons
+L_tAimFov = FOV
+L_tAimSmooth = Smooth
+L_tAimAfterShots = Aim After #
+L_tPAimFov = FOV
+L_tPAimChance = Chance
+L_tBTrigFov = FOV
+L_tBTrigInitDelay = Init Shot Delay
+L_tBTrigPerShotDelay = Per Shot Delay
+L_tBTMS = Backtrack MS
+L_tAutowepDelay = Delay
+
+//Colors
+L_GLOW_TEAM_COLOR = Glow Teammate Color
+L_GLOW_ENEMY_COLOR = Glow Enemies Color
+L_GLOW_BOMB_COLOR = Glow Bomb Color
+L_GLOW_BOMB_CARRIER_COLOR = Glow Bomb Carrier Color
+L_GLOW_WEAPON_COLOR = Glow Weapons Color
+L_GLOW_GRENADE_COLOR = Glow Grenades Color
+L_GLOW_TARGET_COLOR = Glow Target Color
+L_CHAMS_TEAM_COLOR = Chams Teammates Color
+L_CHAMS_ENEMY_COLOR = Chams Enemies Color
+L_CHAMS_SELF_COLOR = Chams Self Color
+L_CHAMS_TARGET_COLOR = Chams Target Color
+L_INDICATOR_ENEMY_COLOR = Indicator Enemies Color
+L_INDICATOR_BOMB_COLOR = Indicator Bomb Color
+L_INDICATOR_BOMB_CARRIER_COLOR = Indicator Bomb Carrier Color
+L_INDICATOR_WEAPON_COLOR = Indicator Weapons Color
+L_INDICATOR_GRENADE_COLOR = Indicator Grenades Color
+L_INDICATOR_DEFUSER_COLOR = Indicator Defusers Color
+L_BOX_DETAILS_TEXT_COLOR = Box Details Text Color
+L_BOX_TEAM_COLOR = Box Teammates Color
+L_BOX_ENEMY_COLOR = Box Enemies Color
+L_BOX_DEFUSER_COLOR = Box Defusers Color
+L_BOX_WEAPON_COLOR = Box Weapons Color
+L_SNAPLINES_TEAM_COLOR = Snaplines Teammates Color
+L_SNAPLINES_ENEMY_COLOR = Snaplines Enemies Color
+L_SNAPLINES_WEAPON_COLOR = Snaplines Weapons Colors
+L_SNAPLINES_BOMB_COLOR = Snaplines Bomb Color
+L_SNAPLINES_BOMB_CARRIER_COLOR = Snaplines Bomb Carrier Color
+L_SNAPLINES_DEFUSE_KIT_COLOR = Snaplines Defuse Kit Color
+L_FOOTSTEP_TEAM_COLOR = Footstep Teammates Color
+L_FOOTSTEP_ENEMY_COLOR = Footstep Enemies Color
+L_HITMARKER_COLOR = Hitmarker Color
+L_HITMARKER_OUTLINE_COLOR = Hitmarker Outline Color
+L_HITMARKER_COMBO_COLOR = Hitmarker Combo Color
+L_NADE_TRACER_COLOR = Nade Tracer Color
+L_VISUALIZE_SMOKES_COLOR = Visualize Smokes Color
+L_SMOKE_WEAR_OFF_TIME_COLOR = Smoke Trail Color
+L_DRAW_AIM_FOV_COLOR = Aim FOV Color
+L_DRAW_TRIGGER_FOV_COLOR = Trigger FOV Color
+L_SPREAD_CIRCLE_COLOR = Spread Circle Color
+L_HEAD_LVL_COLOR = Head Line Color
+L_RCROSSHAIR_COLOR = Recoil Crosshair Color
+
+//Sliders
+L_AIM_TARGET_SWAP_DELAY = Target Swap Delay
+L_CHAMS_BRIGHTNESS = Brightness
+L_INDICATOR_DISTANCE = Distance
+L_INDICATOR_SIZE = Size
+L_BOX_ESP_WEAPON_SCALE = Weapon Scale
+L_SNAPLINES_WIDTH = Line Width
+L_FOOTSTEP_UPDATE = Update Timer
+L_FOOTSTEP_TTL = TTL
+L_HITMARKER_SPACING = Spacing
+L_HITMARKER_LENGTH = Line Length
+L_HITMARKER_WIDTH = Line Width
+L_NADE_TRACER_UPDATE_TIME = Update Time
+L_NADE_TRACER_TIMEOUT = Timeout
+L_VISUALIZE_SMOKES_POLYS = Smoke Poly Count
+L_VISUALIZE_SMOKES_WIDTH = Smoke Width
+L_VISUALIZE_SMOKES_HEIGHT = Smoke Height
+L_LEGIT_RADAR_FOOTSTEPS_DISTANCE = Distance
+L_NIGHTMODE_VALUE = %
+L_ADRENALINE_STRENGTH = Adren. Strength
+L_ADRENALINE_COOLDOWN = Adren. Cooldown
+L_HEAD_LVL_DEADZONE = Deadzone
+L_RCS_SMOOTHING_X = X Accuracy
+L_RCS_SMOOTHING_Y = Y Accuracy
+L_RCROSSHAIR_XOFFSET = X Offset
+L_RCROSSHAIR_YOFFSET = Y Offset
+L_RCROSSHAIR_BUILDER_RESOLUTION = Resolution
+L_RCROSSHAIR_BUILDER_SIZE = Box Size
+L_BHOP_HITCHANCE = Hit Chance
+L_BLOCK_BOT_DISTANCE = Block Bot Distance
+L_FOV_DEFAULT = Default FOV
+L_FOV_SNIPER_DEFAULT = Sniper Default FOV
+L_FOV_ZOOM_1 = Zoom 1 FOV
+L_FOV_ZOOM_2 = Zoom 2 FOV
+L_FLASH_MAX_ALPHA = Alpha
+L_HITSOUND_VOLUME = Volume
+L_KILLSOUND_VOLUME = Volume
+L_FAKE_LAG_TICKS = Ticks
+L_NADE_ACCURACY_RADIUS = Accuracy Radius
+L_NADE_THROWER_SMOOTHNESS = Throw Aim Smoothness
+L_MENU_ALPHA = Menu Alpha
+L_OPENGL_FPS = OpenGL FPS

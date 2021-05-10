@@ -4,33 +4,44 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.LinkLabel
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
-import rat.poison.overlay.App.uiMenu
 import rat.poison.scripts.ranksPlayerList
 import rat.poison.ui.uiRefreshing
-import rat.poison.ui.uiWindows.mainTabbedPane
-import rat.poison.ui.uiWindows.ranksTab
 import rat.poison.utils.RanksPlayer
-import rat.poison.utils.extensions.VisLabelExtension
+import rat.poison.utils.locale
 import rat.poison.utils.saving
 
 var updatingRanks = false
+
+//TODO move
+class VisLabelCustom(mainText: String): VisLabel(mainText.locale()) {
+    override fun setText(newText: CharSequence?) {
+        super.setText(newText.locale())
+    }
+}
+
+class VisTextButtonCustom(mainText: String): VisTextButton(mainText.locale()) {
+    override fun setText(newText: String?) {
+        super.setText(newText.locale())
+    }
+}
 
 class RanksTab : Tab(false, false) {
     private val table = VisTable(true)
 
     private var ranksListTable = VisTable(false)
-    private var teamsLabel = VisLabelExtension("Team" + "  \n")
+    private var teamsLabel = VisLabelCustom("Team" + "  \n")
 
     private var namesTable = VisTable(false)
-    private var namesLabel = VisLabelExtension("Name" + "  \n")
+    private var namesLabel = VisLabelCustom("Name" + "  \n")
 
-    private var ranksLabel = VisLabelExtension("Rank" + "  \n")
-    private var killsLabel = VisLabelExtension("Kills" + "  \n")
-    private var deathsLabel = VisLabelExtension("Deaths" + "  \n")
-    private var kdLabel = VisLabelExtension("K/D" + "  \n")
-    private var winsLabel = VisLabelExtension("Wins" + "  \n")
-    private var moneyLabel = VisLabelExtension("Money" + "  \n")
+    private var ranksLabel = VisLabelCustom("Rank" + "  \n")
+    private var killsLabel = VisLabelCustom("Kills" + "  \n")
+    private var deathsLabel = VisLabelCustom("Deaths" + "  \n")
+    private var kdLabel = VisLabelCustom("K/D" + "  \n")
+    private var winsLabel = VisLabelCustom("Wins" + "  \n")
+    private var moneyLabel = VisLabelCustom("Money" + "  \n")
 
     init {
         ranksListTable.add(teamsLabel)
@@ -57,7 +68,7 @@ class RanksTab : Tab(false, false) {
     }
 
     fun updateRanks() {
-        if (uiRefreshing || saving || updatingRanks || uiMenu.activeTab != ranksTab) return
+        if (uiRefreshing || saving || updatingRanks || !isActiveTab) return
         updatingRanks = true
         teamsLabel.setText("Team" + "  \n")
         namesLabel.setText("Name")

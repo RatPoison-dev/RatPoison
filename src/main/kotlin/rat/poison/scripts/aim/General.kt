@@ -335,7 +335,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		val destinationAngle = realCalcAngle(me, bonePosition)
 
 		if (!perfect) {
-			destinationAngle.finalize(currentAngle, (1F - AIM_SMOOTHNESS / 100.1F))
+			destinationAngle.finalize(currentAngle, (1F - AIM_SMOOTHNESS / 100F))
 
 			doAim(destinationAngle, currentAngle, AIM_SMOOTHNESS)
 		} else {

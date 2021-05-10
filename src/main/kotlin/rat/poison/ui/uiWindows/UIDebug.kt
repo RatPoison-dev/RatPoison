@@ -3,15 +3,15 @@ package rat.poison.ui.uiWindows
 import com.kotcrab.vis.ui.widget.*
 import rat.poison.settings.DEBUGTOG
 import rat.poison.ui.changed
-import rat.poison.utils.extensions.VisLabelExtension
+import rat.poison.ui.uiTabs.VisLabelCustom
 
 class UIDebug: VisWindow("") {
     val table = VisTable(false)
 
-    private val headerLabel = VisLabelExtension("DEBUG")
+    private val headerLabel = VisLabelCustom("DEBUG")
 
-    val contentLabelLeft = VisLabelExtension("")
-    val contentLabelRight = VisLabelExtension("")
+    val contentLabelLeft = VisLabelCustom("")
+    val contentLabelRight = VisLabelCustom("")
     private val toggleShow = VisTextButton("[[]]")
 
     init {

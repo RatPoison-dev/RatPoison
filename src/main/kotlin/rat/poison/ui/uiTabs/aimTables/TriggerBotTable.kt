@@ -15,13 +15,13 @@ class TriggerBotTable: VisTable(false) {
     val boneTriggerEnableKey = VisCheckBoxCustom("Trigger On Key", "TRIGGER_ENABLE_KEY")
     val boneTriggerKey = VisBindTableCustom("Trigger Key", "TRIGGER_KEY", keyWidth = 225F)
 
-    val trigEnable = AimVisCheckBox("Enable", "_TRIGGER") //Per weapon category
+    val trigEnable = AimVisCheckBox("Enable Trigger", "_TRIGGER") //Per weapon category
 
-    val trigAimbot = AimVisCheckBox("Aimbot", "_TRIGGER_AIMBOT")
-    val trigInCross = AimVisCheckBox("InCross", "_TRIGGER_INCROSS")
-    val trigInFov = AimVisCheckBox("InFov", "_TRIGGER_INFOV")
-    val trigFov = AimVisSlider("FOV", "_TRIGGER_FOV", .1F, 90F, .5F, false, 1, 225F, 225F)
-    val trigShootBacktrack = AimVisCheckBox("Shoot Backtrack", "_TRIGGER_BACKTRACK")
+    val trigAimbot = AimVisCheckBox("Use Aim", "_TRIGGER_AIMBOT")
+    val trigInCross = AimVisCheckBox("Check In Cross", "_TRIGGER_INCROSS")
+    val trigInFov = AimVisCheckBox("Check In Fov", "_TRIGGER_INFOV")
+    val trigFov = AimVisSlider("Trigger FOV", "_TRIGGER_FOV", .1F, 90F, .5F, false, 1, 225F, 225F)
+    val trigShootBacktrack = AimVisCheckBox("Enable Backtrack", "_TRIGGER_BACKTRACK")
     val initTrigDelay = AimVisSlider("First Shot Delay", "_TRIGGER_INIT_SHOT_DELAY", 0F, 500F, 10F, true, 0, 225F, 225F)
     val perShotTrigDelay = AimVisSlider("Per Shot Delay", "_TRIGGER_PER_SHOT_DELAY", 0F, 500F, 10F, true, 0, 225F, 225F)
 

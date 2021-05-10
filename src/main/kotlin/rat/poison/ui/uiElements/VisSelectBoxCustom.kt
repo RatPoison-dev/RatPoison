@@ -9,9 +9,11 @@ import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.ui.changed
+import rat.poison.ui.uiTabs.VisLabelCustom
 import rat.poison.ui.uiTabs.categorySelected
 import rat.poison.ui.uiTabs.updateDisableRCrosshair
 import rat.poison.utils.extensions.upper
+import rat.poison.utils.locale
 
 //Swap VisSelectBoxCustom to showText false is mainText is " "
 class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean, showText: Boolean = true, vararg items: String, textWidth: Float = 200F, boxWidth: Float = 100F): VisTable(false) {
@@ -22,7 +24,7 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
 
     private var dropDownWidth = boxWidth
 
-    private var boxLabel = VisLabel("$textLabel:")
+    private var boxLabel = VisLabelCustom("$textLabel:")
     private val selectBox = VisSelectBox<String>()
 
     private val boxItems = items
@@ -32,7 +34,7 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
     init {
         val itemsArray = Array<String>()
         for (i in boxItems) {
-            itemsArray.add(i)
+            itemsArray.add("L_$i".locale(i))
         }
 
         selectBox.items = itemsArray
@@ -68,6 +70,8 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
                 println("[DEBUG - Error Handling] -- $setting invalid, setting value to [${selectBox.selected}]")
             }
         }
+
+        boxLabel.setText("L$variableName".locale(textLabel))
 
         selected = selectBox.selected
         updateTooltip()
