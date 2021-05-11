@@ -14,7 +14,7 @@ fun loadLocale() {
             val curLine = line.trim().split(" ".toRegex(), 3) //Separate line into VARIABLE NAME : "=" : VALUE
 
             if (curLine.size == 3) {
-                curLocale[curLine[0]] = curLine[2].reversed()
+                curLocale[curLine[0]] = curLine[2]//.reversed()
             }
         }
     }

@@ -5,25 +5,28 @@ import rat.poison.ui.KeybindType
 import rat.poison.utils.maps.ListBasedMap
 import rat.poison.utils.common.ObservableBoolean
 import rat.poison.utils.common.keyPressed
-
-data class MutableTripple<KeybindType, ObservableBoolean, Boolean>(var first: KeybindType, var second: ObservableBoolean, var third: Boolean)
-var keyEvalMap = ListBasedMap<String, MutableTripple<KeybindType, ObservableBoolean, Boolean>>() //////////// <VARIABLE_NAME, <KeybindType, ObservableBoolean, Toggled>
+data class MutableQuad<KeybindType, ObservableBoolean, Boolean, Setting>(var first: KeybindType, var second: ObservableBoolean, var third: Boolean, var fourth: String?)
+var keyEvalMap = ListBasedMap<String, MutableQuad<KeybindType, ObservableBoolean, Boolean, String?>>() //////////// <VARIABLE_NAME, <KeybindType, ObservableBoolean, Toggled>
 
 //ong we forgotein smthn
-fun keybindRegister(varName: String, keyCode: Int) {
+fun keybindRegister(varName: String, keyCode: Int, settingName: String?) {
     val boolean = ObservableBoolean({ keyPressed(keyCode) })
 
-    keyEvalMap[varName] = MutableTripple(KeybindType[curSettings["${varName}_TYPE"]], boolean, false)
+    keyEvalMap[varName] = MutableQuad(KeybindType[curSettings["${varName}_TYPE"]], boolean, false, settingName)
 }
 
-fun keybindEval(varName: String): Boolean {
+fun keybindEval(varName: String, settingName: String? = null): Boolean {
     val keyCode = curSettings.int[varName]
 
     if (!keyEvalMap.containsKey(varName)) {
-        keybindRegister(varName, keyCode)
+        keybindRegister(varName, keyCode, settingName)
     }
 
     val map = keyEvalMap[varName] ?: return false
+
+    if (settingName != null) {
+        if (!curSettings.bool[settingName]) return false
+    }
 
     return when (map.first) {
         KeybindType.ON_HOTKEY -> {

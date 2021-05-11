@@ -116,7 +116,7 @@ fun updateCursorEnable() { //Call when needed
 
 var toneMapController = 0L
 private val positionVector = Vector()
-fun constructEntities() = every(500, continuous = true) {
+fun constructEntities() = every(1000, continuous = true) {
     updateCursorEnable()
     clientState = engineDLL.uint(dwClientState)
     signOnState = SignOnState[csgoEXE.int(clientState + dwSignOnState)]
@@ -159,8 +159,10 @@ fun constructEntities() = every(500, continuous = true) {
 
     val maxIndex = clientDLL.int(dwEntityList + 0x24) //Not right?
 
-    for (i in 64..maxIndex) {
-        val entity = clientDLL.uint(dwEntityList + (i * 0x10) - 0x10)
+    //println(maxIndex)
+
+    for (i in 64..1024) { //we cover a little extra..
+        val entity = clientDLL.uint(dwEntityList + (i * 0x10))
 
         if (entity != 0L) {
             val type = EntityType.byEntityAddress(entity)

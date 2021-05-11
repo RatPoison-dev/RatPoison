@@ -1,6 +1,7 @@
 package rat.poison.scripts.ui
 
 import rat.poison.BRANCH
+import rat.poison.curSettings
 import rat.poison.overlay.App
 import rat.poison.utils.keyEvalMap
 import java.util.*
@@ -38,6 +39,12 @@ fun getKeybinds(): StringBuilder {
         val value = keyEvalMap.values[i]
         val key = keyEvalMap.keys[i]
         if (value.third) { //Active
+            if (value.fourth != null) {
+                if (!curSettings.bool[value.fourth!!]) {
+                    continue
+                }
+            }
+
             stringList.append(key).append(" ").appendLine(value.first.prettyPrint)
         }
     }

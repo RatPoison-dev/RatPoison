@@ -309,15 +309,19 @@ enum class EntityType(val weapon: Boolean = false, val grenade: Boolean = false,
 			val vtMem = vtMemory.get()
 			csgoEXE.read(address + 0x8, vtMem, 4) ?: return NULL
 			val vt = (vtMem ?: return NULL).getInt(0).unsign() //iclientnetworkable vtable
+
 			val fnMemory = fnMemory.get()
 			csgoEXE.read(vt + 2 * 0x4, fnMemory, 4)
 			val fn = (fnMemory ?: return NULL).getInt(0).unsign() //3rd func
+
 			val clsMemory = clsMemory.get()
 			csgoEXE.read(fn + 0x1, clsMemory, 4)
 			val cls = (clsMemory ?: return NULL).getInt(0).unsign() //clientclass
+
 			val clsidMemory = clsidMemory.get()
 			csgoEXE.read(cls + 0x14, clsidMemory, 4)
 			val clsid = (clsidMemory ?: return NULL).getInt(0).unsign() //classid
+
 			return byID(clsid) ?: NULL
 		}
 	}

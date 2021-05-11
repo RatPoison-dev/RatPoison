@@ -28,8 +28,8 @@ fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: 
 	z = 0F
 	normalize()
 
-	x = currentAngle.x + x / 100 * (100 / smooth)
-	y = currentAngle.y + y / 100 * (100 / smooth)
+	x = currentAngle.x + (x / 100) * (100 / smooth)
+	y = currentAngle.y + (y / 100) * (100 / smooth)
 	normalize()
 }
 

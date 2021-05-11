@@ -49,7 +49,7 @@ class InputBindBox(mainText: String, varName: String): VisTextButton("_") {
 
         keybindTypeSelectBox.changed { _, _ ->
             curSettings["${variableName}_TYPE"] = keybindTypeSelectBox.selected
-            keybindRegister(variableName, curSettings.int[variableName])
+            keybindRegister(variableName, curSettings.int[variableName], variableName)
         }
 
         contextTable.apply {

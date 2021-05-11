@@ -84,7 +84,7 @@ fun dbgLog(str: String) {
 fun main() {
     System.setProperty("jna.nosys", "true")
 
-    //loadLocale()
+    loadLocale()
 
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
     loadSkinSettings("$SETTINGS_DIRECTORY/skinCFGS/DefaultSettings.cfg")
@@ -103,7 +103,8 @@ fun main() {
 
     loadMigration()
 
-    if (dbg) println("[DEBUG] Initializing scripts...")
+    dbgLog("Initializing scripts...")
+    
     //Init scripts
     if (!curSettings.bool["MENU"]) { //If we aren't using the menu disable everything that uses the menu
         if (dbg) println("[DEBUG] Menu disabled, disabling box, skeleton, rcrosshair, btimer, indicator, speclist, hitmarker, nade helper, nade tracer, draw fov, spread circle, visualize smokes")
@@ -123,114 +124,60 @@ fun main() {
         curSettings["SPREAD_CIRCLE"] = "false"
         curSettings["VISUALIZE_SMOKES"] = "false"
     } else {
-        dbgLog("[DEBUG] Initializing Recoil Ranks"); ranks()
+        dbgLog("Initializing Recoil Ranks"); ranks()
 
-        dbgLog("[DEBUG] Initializing Recoil Spectator List"); spectatorList()
-        dbgLog("[DEBUG] Initializing Recoil Bomb Timer"); bombTimer()
+        dbgLog("Initializing Recoil Spectator List"); spectatorList()
+        dbgLog("Initializing Recoil Bomb Timer"); bombTimer()
 
-        dbgLog("[DEBUG] Initializing Recoil Crosshair"); rCrosshair()
-        dbgLog("[DEBUG] Initializing Hit Marker"); hitMarker()
-        dbgLog("[DEBUG] Initializing Nade Helper"); nadeHelper()
-        dbgLog("[DEBUG] Initializing Nade Tracer"); nadeTracer()
-        dbgLog("[DEBUG] Initializing Draw Fov"); drawFov()
-        dbgLog("[DEBUG] Initializing Spread Circle"); spreadCircle()
-        dbgLog("[DEBUG] Initializing Draw Smokes"); drawSmokes()
+        dbgLog("Initializing Recoil Crosshair"); rCrosshair()
+        dbgLog("Initializing Hit Marker"); hitMarker()
+        dbgLog("Initializing Nade Helper"); nadeHelper()
+        dbgLog("Initializing Nade Tracer"); nadeTracer()
+        dbgLog("Initializing Draw Fov"); drawFov()
+        dbgLog("Initializing Spread Circle"); spreadCircle()
+        dbgLog("Initializing Draw Smokes"); drawSmokes()
     }
         
-            dbgLog("[DEBUG] Initializing Far Radar"); farRadar()
-            dbgLog("[DEBUG] Initializing Handle UI Watermark"); handleUIWatermark()
-            dbgLog("[DEBUG] Initializing Handle UI Debug"); handleUIDebug()
-            println("[DEBUG] Initializing Bunny Hop"); bunnyHop()
-        
-            println("[DEBUG] Initializing Auto Strafe"); strafeHelper()
-        
-            println("[DEBUG] Initializing Kill Bind")
-        killBind()
-        
-            println("[DEBUG] Initializing RCS")
-        rcs()
-        
-            println("[DEBUG] Initializing Flat Aim")
-        flatAim()
-        
-            println("[DEBUG] Initializing Path Aim")
-        pathAim()
-        
-            println("[DEBUG] Initializing Set Aim")
-        setAim()
-        
-            println("[DEBUG] Initializing Bone Trigger")
-        triggerBot()
-        
-            println("[DEBUG] Initializing Auto Knife")
-        autoKnife()
-        
-            println("[DEBUG] Initializing Reduced Flash")
-        reducedFlash()
-        
-            println("[DEBUG] Initializing ESPs")
-        esp()
-        
-            println("[DEBUG] Initializing Fast Stop")
-        fastStop()
-        
-            println("[DEBUG] Initializing Head Walk")
-        headWalk()
-        
-            println("[DEBUG] Initializing Adrenaline")
-        adrenaline()
-        
-            println("[DEBUG] Initializing FovChanger")
-        fovChanger()
-        
-            println("[DEBUG] Disabling Post Processing")
-        disablePostProcessing()
-        
-            println("[DEBUG] Initializing Weapon Changer")
-        skinChanger()
-        
-            println("[DEBUG] Initializing NightMode/FullBright")
-        nightMode()
-        
-            println("[DEBUG] Initializing Bomb Updater")
-        bombUpdater()
+    dbgLog("Initializing Far Radar"); farRadar()
+    dbgLog("Initializing Handle UI Watermark"); handleUIWatermark()
+    dbgLog("Initializing Handle UI Debug"); handleUIDebug()
+    dbgLog("Initializing Bunny Hop"); bunnyHop()
+    dbgLog("Initializing Auto Strafe"); strafeHelper()
+    dbgLog("Initializing Kill Bind"); killBind()
+    dbgLog("Initializing RCS"); rcs()
+    dbgLog("Initializing Flat Aim"); flatAim()
 
-        
-            println("[DEBUG] Initializing Backtrack")
-        setupBacktrack()
-        
-            println("[DEBUG] Initializing Draw Backtrack")
-         drawBacktrack()
-        
-            println("[DEBUG] Initializing GVars Updater")
-         updateGVars()
-        
-            println("[DEBUG] Initializing Nades Timer")
-        nadesTimer()
+    dbgLog("Initializing Path Aim"); pathAim()
 
-        
-            println("[DEBUG] Initializing Head Level Helper")
-         headLevelHelper()
-        
-            println("[DEBUG] Initializing Fake Lag")
-         fakeLag()
-        
-            println("[DEBUG] Initializing Nade Thrower")
-         nadeThrower()
-        
-            println("[DEBUG] Initializing Kill Sound")
-         killSoundEsp()
-        
-            println("[DEBUG] Initializing MusicKit Spoofer")
-         musicKitSpoofer()
-        
-            println("[DEBUG] Initializing Block Bot")
-         blockBot()
+    dbgLog("Initializing Set Aim"); setAim()
 
-    println("[DEBUG] dwbSendPackets: $dwbSendPackets")
+    dbgLog("Initializing Bone Trigger"); triggerBot()
+    dbgLog("Initializing Auto Knife"); autoKnife()
+    dbgLog("Initializing Reduced Flash"); reducedFlash()
+    dbgLog("Initializing ESPs"); esp()
+    dbgLog("Initializing Fast Stop"); fastStop()
+    dbgLog("Initializing Head Walk"); headWalk()
+    dbgLog("Initializing Adrenaline"); adrenaline()
+    dbgLog("Initializing FovChanger"); fovChanger()
+    dbgLog("Disabling Post Processing"); disablePostProcessing()
+    dbgLog("Initializing Weapon Changer"); skinChanger()
+    dbgLog("Initializing NightMode/FullBright"); nightMode()
+    dbgLog("Initializing Bomb Updater"); bombUpdater()
+    dbgLog("Initializing Backtrack"); setupBacktrack()
+    dbgLog("Initializing Draw Backtrack"); drawBacktrack()
+    dbgLog("Initializing GVars Updater"); updateGVars()
+
+    dbgLog("Initializing Nades Timer"); nadesTimer()
+    dbgLog("Initializing Head Level Helper"); headLevelHelper()
+    dbgLog("Initializing Fake Lag"); fakeLag()
+    dbgLog("Initializing Nade Thrower"); nadeThrower()
+    dbgLog("Initializing Kill Sound"); killSoundEsp()
+    dbgLog("Initializing MusicKit Spoofer"); musicKitSpoofer()
+    dbgLog("Initializing Block Bot"); blockBot()
+    dbgLog("dwbSendPackets: $dwbSendPackets")
 
 
-        handleUCMD()
+    handleUCMD()
 
         //if (EXPERIMENTAL) {
         //rayTraceTest()

@@ -62,7 +62,7 @@ fun nadeThrower() = every(10, inGameCheck = true) {
             val hLPos = it[2]
             if (fSpot[4] == nadeToCheck || nadeToCheck == "Decoy") {
                 if ((mPos.x in fSpot[0].cToDouble() - 20..fSpot[0].cToDouble() + 20) && (mPos.y in fSpot[1].cToDouble() - 20..fSpot[1].cToDouble() + 20)) {
-                    if (keybindEval("NADE_THROWER_KEY")) {
+                    if (keybindEval("NADE_THROWER_KEY", "ENABLE_NADE_THROWER")) {
                         val hLVec = Vector(hLPos[0].cToFloat(), hLPos[1].cToFloat(), hLPos[2].cToFloat())
                         val recoveredAngle = realCalcAngle(me, hLVec)
                         val dist = clientState.angle(vOut).distanceTo(recoveredAngle)

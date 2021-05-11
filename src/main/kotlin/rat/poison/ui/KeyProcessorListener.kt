@@ -20,7 +20,7 @@ class KeyProcessorListener: IKeyProcessorListener {
         }
         curSettings[needKeyPressVar] = newKey
 
-        keybindRegister(needKeyPressVar, newKey)
+        keybindRegister(needKeyPressVar, newKey, null)
 
         needKeyPressActor.update()
         keybindsUpdate(needKeyPressActor)

@@ -80,6 +80,8 @@ object App: ApplicationAdapter() {
     lateinit var uiSpecList: UISpectatorList
     lateinit var uiKeybinds: UIKeybinds
 
+    var firstUpdate = false
+
     val osBean = ManagementFactory.getOperatingSystemMXBean() as OperatingSystemMXBean
     var haveTarget = false
 
@@ -187,6 +189,11 @@ object App: ApplicationAdapter() {
                             assetManager.updateFonts()
 
                             if (MENUTOG) {
+                                if (!firstUpdate) {
+                                    uiUpdate()
+                                    firstUpdate = true
+                                }
+
                                 if (!WARNINGTOG) {
                                     menuStage.remove(uiWarning)
                                 } else {

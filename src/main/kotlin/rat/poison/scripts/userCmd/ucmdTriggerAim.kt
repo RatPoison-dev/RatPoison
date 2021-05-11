@@ -93,13 +93,12 @@ fun ucmdTriggerAim(silent: Boolean, trigEnt: Long): Boolean {
     }
 
     if (silent) {
-        silentHaveTarget = true
         cmdSetAngles(destinationAngle)
     } else {
-        silentHaveTarget = false
-
         if (!perfect) {
-            writeAim(currentAngle, destinationAngle, 101 - AIM_SMOOTHNESS)
+            destinationAngle.finalize(currentAngle, (1F - AIM_SMOOTHNESS / 100F))
+
+            writeAim(currentAngle, destinationAngle, AIM_SMOOTHNESS)
         } else {
             writeAim(currentAngle, destinationAngle, 1)
         }

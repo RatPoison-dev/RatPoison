@@ -6,11 +6,14 @@ import rat.poison.curSettings
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.gameHeight
 import rat.poison.game.CSGO.gameWidth
+import rat.poison.game.entity.isScoped
 import rat.poison.game.entity.punch
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meCurWep
+import rat.poison.settings.MENUTOG
+import rat.poison.ui.uiWindows.rcsTab
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.inGame
 import java.lang.Math.toRadians
@@ -21,9 +24,12 @@ internal fun rCrosshair() = App {
     if (!curSettings.bool["ENABLE_VISUALS"] || !inGame) return@App
 
     val eRC = curSettings.bool["ENABLE_RCROSSHAIR"]
-    val eSC = !curSettings.bool["RCROSSHAIR_SCOPE_COMPATIBLE"]
+    val eSC = curSettings.bool["RCROSSHAIR_SCOPE_COMPATIBLE"]
+    val scoped = me.isScoped()
 
-    if (!eRC) return@App
+    if (!(eRC || eSC) || (MENUTOG && uiMenu.activeTab.tabTitle != "RCS")) return@App
+
+    if (eSC && scoped) return@App
 
     //Crosshair X/Y offset
     val rccXo = curSettings.float["RCROSSHAIR_XOFFSET"]

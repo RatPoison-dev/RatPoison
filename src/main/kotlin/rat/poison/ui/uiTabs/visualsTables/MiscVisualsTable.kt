@@ -39,8 +39,6 @@ class MiscVisualsTable: VisTable(false) {
     val headLevelColor = VisColorPickerCustom("Head Line Color", "HEAD_LVL_COLOR")
     val headLevelDeadzone = VisSliderCustom("Deadzone", "HEAD_LVL_DEADZONE", .01F, 10F, .1F, false, labelWidth = 175F, barWidth = 117F)
 
-    val enableUIWatermark = VisCheckBoxCustom("UI Watermark", "UI_WATERMARK")
-
     init {
         val label = VisLabel("Miscellaneous")
         label.setColor(1F, 1F, 1F, 1F)
@@ -76,8 +74,6 @@ class MiscVisualsTable: VisTable(false) {
         add(headLevelColor).left().expandX().row()
 
         add(headLevelDeadzone).colspan(2).left().row()
-
-        add(enableUIWatermark).colspan(2).left().row()
     }
 }
 
@@ -103,7 +99,6 @@ fun miscVisualTabUpdate() {
         enableHeadLevel.update()
         headLevelColor.update()
         headLevelDeadzone.update()
-        enableUIWatermark.update()
     }
 }
 
@@ -146,6 +141,5 @@ fun miscVisualTableDisable(bool: Boolean, col: Color) {
         enableHeadLevel.disable(bool)
         headLevelColor.disable(bool)
         headLevelDeadzone.disable(bool, col)
-        enableUIWatermark.disable(bool)
     }
 }

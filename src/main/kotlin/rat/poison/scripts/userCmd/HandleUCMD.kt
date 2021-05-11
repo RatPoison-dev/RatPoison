@@ -115,7 +115,7 @@ fun sendUserCMD(userCMD: UserCMD, oldPtr: Int, oldVerifiedPtr: Int) {
 
     //Aim Key
     if (curSettings.bool["UCMD_HANDLE_FIRE_KEY"]) {
-        if (keyPressed(1) && !meDead && !inBackground && inGame) {
+        if (keyPressed(1) && !meDead && !inBackground && inGame && !MENUTOG) {
             if (curSettings.bool["UCMD_SILENT_AIM"]) {
                 if (curSettings.bool["UCMD_SILENT_REQUIRE_TARGET"] && !silentHaveTarget) {
                     //Nothin
@@ -158,6 +158,8 @@ var canSetCmdAngles = true
 fun cmdSetAngles(viewAngles: Vector) {
     if (canSetCmdAngles) {
         nextCMD.vecViewAngles = viewAngles
+
+        silentHaveTarget = true
 
         canSetCmdAngles = false
     }
