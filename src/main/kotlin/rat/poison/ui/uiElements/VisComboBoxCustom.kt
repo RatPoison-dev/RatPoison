@@ -3,11 +3,13 @@ package rat.poison.ui.uiElements
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.Tooltip
-import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curSettings
 import rat.poison.dbg
+import rat.poison.scripts.aim.boneToNum
+import rat.poison.scripts.aim.numToBone
+import rat.poison.scripts.aim.stringToBoneList
 import rat.poison.ui.changed
 import rat.poison.ui.uiTabs.VisLabelCustom
 import rat.poison.ui.uiTabs.categorySelected
@@ -15,8 +17,7 @@ import rat.poison.ui.uiTabs.updateDisableRCrosshair
 import rat.poison.utils.extensions.upper
 import rat.poison.utils.locale
 
-//Swap VisSelectBoxCustom to showText false is mainText is " "
-class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean, showText: Boolean = true, vararg items: String, textWidth: Float = 200F, boxWidth: Float = 100F): VisTable(false) {
+class VisComboBoxCustom(mainText: String, varName: String, useCategory: Boolean, showText: Boolean = true, vararg items: String, textWidth: Float = 200F, boxWidth: Float = 100F): VisTable(false) {
     private val textLabel = mainText
     private val variableName = varName
     private val useGunCategory = useCategory
@@ -29,24 +30,40 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
 
     private val boxItems = items
 
-    var selected = ""
+    var selectedItems = mutableListOf<Int>()
 
     init {
-        val itemsArray = Array<String>()
-        for (i in boxItems) {
-            itemsArray.add("L_$i".locale(i))
+        val curValue = curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }].stringToBoneList()
+
+        curValue.forEach {
+            selectedItems.add(boxItems.indexOf(it.numToBone())+1)
         }
-        selectBox.items = itemsArray
-        selected = selectBox.selected
 
         update()
         updateTooltip()
+        updateList()
 
         selectBox.changed { _, _ ->
-            curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }] = boxItems[selectBox.selectedIndex]
-            selected = selectBox.selected
+            val idx = selectBox.selectedIndex
 
-            updateDisableRCrosshair()
+            if (idx == 0) {
+                //Do nothin
+            } else {
+                if (selectedItems.contains(idx)) {
+                    selectedItems.remove(idx)
+                    updateList()
+                } else {
+                    selectedItems.add(idx)
+                    updateList()
+                }
+            }
+
+            val strItems = mutableListOf<String>()
+            for (i in selectedItems) {
+                strItems.add(boxItems[i-1])
+            }
+
+            curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }] = strItems
 
             false
         }
@@ -58,19 +75,32 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
         add(selectBox).width(dropDownWidth)
     }
 
-    fun update() {
+    fun updateList() {
         val itemsArray = Array<String>()
+
+        var str = ""
+        for (i in selectedItems) {
+            str += boxItems[i-1] + ", "
+        }
+
+        itemsArray.add(str)
+
         for (i in boxItems) {
             itemsArray.add("L_$i".locale(i))
         }
         selectBox.items = itemsArray
+        selectBox.selectedIndex = 0
+    }
 
+    fun update() {
         val setting = if (useGunCategory) { categorySelected + variableName } else { variableName }
 
         try {
             selectBox.selectedIndex = boxItems.indexOf(curSettings[setting].upper())
         } catch (e: Exception) {
-            selectBox.selectedIndex = 0
+            if (selectBox.items.size > 0) {
+                selectBox.selectedIndex = 0
+            }
 
             if (dbg) {
                 println("[DEBUG - Error Handling] -- $setting invalid, setting value to [${selectBox.selected}]")
@@ -79,7 +109,6 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
 
         boxLabel.setText("L$variableName".locale(textLabel))
 
-        selected = selectBox.selected
         updateTooltip()
     }
 

@@ -5,8 +5,8 @@ import rat.poison.ui.KeybindType
 import rat.poison.utils.maps.ListBasedMap
 import rat.poison.utils.common.ObservableBoolean
 import rat.poison.utils.common.keyPressed
-data class MutableQuad<KeybindType, ObservableBoolean, Boolean, Setting>(var first: KeybindType, var second: ObservableBoolean, var third: Boolean, var fourth: String?)
-var keyEvalMap = ListBasedMap<String, MutableQuad<KeybindType, ObservableBoolean, Boolean, String?>>() //////////// <VARIABLE_NAME, <KeybindType, ObservableBoolean, Toggled>
+data class MutableQuad<KeybindType, ObservableBoolean, Boolean, Setting>(var first: KeybindType, var second: ObservableBoolean, var third: Boolean, var fourth: Setting)
+var keyEvalMap = ListBasedMap<String, MutableQuad<KeybindType, ObservableBoolean, Boolean, String?>>() //////////// <VARIABLE_NAME, <KeybindType, ObservableBoolean, Toggled, Setting>
 
 //ong we forgotein smthn
 fun keybindRegister(varName: String, keyCode: Int, settingName: String?) {

@@ -36,7 +36,7 @@ class RcsTab : Tab(false, false) {
 
     var crosshairBuilderTable = VisTable()
 
-    val rCrosshairBuilderResolution = VisSliderCustom("Resolution", "RCROSSHAIR_BUILDER_RESOLUTION", 1F, 9F, 1.9F, true, 0, labelWidth = 100F, barWidth = 150F)
+    val rCrosshairBuilderResolution = VisSliderCustom("Resolution", "RCROSSHAIR_BUILDER_RESOLUTION", 1F, 9F, 2F, true, 0, labelWidth = 100F, barWidth = 150F)
     val rCrosshairBuilderSize = VisSliderCustom("Box Size", "RCROSSHAIR_BUILDER_SIZE", 1F, 100F, 1F, true, 0, labelWidth = 100F, barWidth = 150F)
 
     init {
