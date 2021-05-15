@@ -23,7 +23,7 @@ import rat.poison.ui.uiWindows.optionsTab
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
-    val menuKey = VisBindTableCustom("Menu Key", "MENU_KEY", 225F)
+    val menuKey = VisBindTableCustom("Menu Key", "MENU_KEY", keyWidth = 225F)
     val menuAlpha = VisSliderCustom("Menu Alpha", "MENU_ALPHA", .5F, 1F, .05F, false)
     val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true)
     val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")

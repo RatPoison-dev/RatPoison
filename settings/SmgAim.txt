@@ -23,7 +23,7 @@ SMG_AIM_FOV = 0.5
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-SMG_AIM_SMOOTHNESS = 5.0
+SMG_AIM_SMOOTHNESS = 5
 
 //Force Bone
 SMG_AIM_FORCE_BONE = NEAREST

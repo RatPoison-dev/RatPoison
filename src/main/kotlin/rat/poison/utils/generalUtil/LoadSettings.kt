@@ -55,6 +55,8 @@ fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
     settingsLoaded = true
     println("Settings loaded")
 }
+private var hasSkinVars = false
+val skinChangerVariables = mutableListOf<String>()
 
 fun loadSkinSettings(fileDir: String) {
     File(fileDir).readLines(UTF_8).forEach { line ->
@@ -63,11 +65,13 @@ fun loadSkinSettings(fileDir: String) {
 
             if (curLine.size == 3) {
                 skSettings[curLine[0]] = curLine[2]
+                if (!hasSkinVars) skinChangerVariables.add(curLine[0])
             } else {
                 println("Debug: Locale invalid -- $curLine")
             }
         }
     }
+    hasSkinVars = true
 }
 
 //fuck a beat i was tryna beat a case

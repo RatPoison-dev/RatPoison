@@ -9,6 +9,8 @@ import rat.poison.ui.uiElements.VisSelectBoxCustom
 import rat.poison.utils.keybindRegister
 import rat.poison.utils.vkKeycodeToString
 
+private val keybindTypesArray = arrayOf("ON_HOTKEY", "OFF_HOTKEY", "TOGGLE", "ALWAYS_ON")
+
 class InputBindBox(mainText: String, varName: String): VisTextButton("_") {
     private val textLabel = mainText
     private val variableName = varName
@@ -45,10 +47,10 @@ class InputBindBox(mainText: String, varName: String): VisTextButton("_") {
     private fun initContextTable() {
         val contextTable = VisTable(false)
 
-        val keybindTypeSelectBox = VisSelectBoxCustom("Key Type", "${variableName}_TYPE", false, textWidth = 75F, boxWidth = 75F, items = arrayOf("ON_HOTKEY", "OFF_HOTKEY", "TOGGLE", "ALWAYS_ON"))
+        val keybindTypeSelectBox = VisSelectBoxCustom("Key Type", "${variableName}_TYPE", false, textWidth = 75F, boxWidth = 75F, items = keybindTypesArray)
 
         keybindTypeSelectBox.changed { _, _ ->
-            curSettings["${variableName}_TYPE"] = keybindTypeSelectBox.selected
+            curSettings["${variableName}_TYPE"] = keybindTypesArray[keybindTypeSelectBox.selectBox.selectedIndex]
             keybindRegister(variableName, curSettings.int[variableName], variableName)
         }
 

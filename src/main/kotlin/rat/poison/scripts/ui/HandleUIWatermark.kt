@@ -35,6 +35,7 @@ private val stringList = StringBuilder()
 //the the uh fhthe uht htme uh the mf uh the tuhthut
 fun getKeybinds(): StringBuilder {
     stringList.clear()
+    //TODO doesnt work with any types of keybinds except on hotkey
     for (i in 0 until keyEvalMap.keys.size) {
         val value = keyEvalMap.values[i]
         val key = keyEvalMap.keys[i]

@@ -23,7 +23,7 @@ PISTOL_AIM_FOV = 2.0
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-PISTOL_AIM_SMOOTHNESS = 3.0
+PISTOL_AIM_SMOOTHNESS = 3
 
 //Force Bone
 PISTOL_AIM_FORCE_BONE = NEAREST

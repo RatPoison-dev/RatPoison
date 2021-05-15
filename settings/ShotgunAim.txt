@@ -23,7 +23,7 @@ SHOTGUN_AIM_FOV = 0.5
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-SHOTGUN_AIM_SMOOTHNESS = 5.0
+SHOTGUN_AIM_SMOOTHNESS = 5
 
 //Force Bone
 SHOTGUN_AIM_FORCE_BONE = NEAREST

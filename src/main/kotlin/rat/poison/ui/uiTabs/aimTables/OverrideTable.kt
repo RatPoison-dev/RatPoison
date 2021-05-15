@@ -263,7 +263,7 @@ fun copyTo(category: String, categoryVarName: String, myVarName: String) {
 
 fun copyFrom(category: String, categoryVarName: String, myVarName: String) {
     val setting = curSettings[category + categoryVarName]
-    val varIdx = getOverrideVarIndex(oWeapon().toString(), myVarName)
+    val varIdx = getOverrideVarIndex(DEFAULT_OWEAPON_STR, myVarName)
 
     setOverrideVar(weaponOverrideSelected, varIdx, setting)
 }

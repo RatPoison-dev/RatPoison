@@ -23,7 +23,7 @@ RIFLE_AIM_FOV = 10.0
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-RIFLE_AIM_SMOOTHNESS = 4.0
+RIFLE_AIM_SMOOTHNESS = 4
 
 //Force Bone
 RIFLE_AIM_FORCE_BONE = NEAREST

@@ -25,7 +25,7 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
     private var dropDownWidth = boxWidth
 
     private var boxLabel = VisLabelCustom("$textLabel:")
-    private val selectBox = VisSelectBox<String>()
+    val selectBox = VisSelectBox<String>()
 
     private val boxItems = items
 

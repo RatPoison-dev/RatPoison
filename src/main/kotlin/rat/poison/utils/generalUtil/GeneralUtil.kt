@@ -15,7 +15,15 @@ fun Any.strToBool(): Boolean {
     return stringRepr == "true" || this == true || this == 1.0 || this == 1 || this == 1F || stringRepr == "1"
 }
 fun Any.boolToStr() = this.toString()
-fun Any.cToInt() = this.toString().toInt()
+
+fun Any.cToInt(): Int {
+    val strRepr = this.toString()
+    val dotIdx = strRepr.indexOf(".")
+    if (dotIdx != -1) {
+        return strRepr.subSequence(0, dotIdx).cToInt()
+    }
+    return strRepr.toInt()
+}
 fun Any.cToLong() = this.toString().toLong()
 fun Any.strToColor() = convStrToColor(this.toString())
 fun Any.strToColorGDX() = convStrToColorGDX(this.toString())
@@ -75,7 +83,7 @@ fun String.toWeaponClass(): oWeapon {
             val size = tSA.size
             val finalOweapon = when (size < oWeaponSize) { //this should never happen?
                 true -> oWeapon()
-                false -> oWeapon(tOverride = tSA.pull(0).strToBool(), tFRecoil = tSA.pull(1).strToBool(), tOnShot = tSA.pull(2).strToBool(), tFlatAim = tSA.pull(3).strToBool(), tPathAim = tSA.pull(4).strToBool(), tAimBone = tSA.pull(5).stringToList(";"), tForceBone = tSA.pull(6).stringToList(";"), tAimFov = tSA.pull(7).toFloat(), tAimSmooth = tSA.pull(8).toInt(), tPerfectAim = tSA.pull(9).strToBool(), tPAimFov = tSA.pull(10).toFloat(), tPAimChance = tSA.pull(11).toInt(), tScopedOnly = tSA.pull(12).strToBool(), tAimAfterShots = tSA.pull(13).toInt(), tBoneTrig = tSA.pull(14).strToBool(), tBTrigAim = tSA.pull(15).strToBool(), tBTrigInCross = tSA.pull(16).strToBool(), tBTrigInFov = tSA.pull(17).strToBool(), tBTrigBacktrack = tSA.pull(18).strToBool(), tBTrigFov = tSA.pull(19).toFloat(), tBTrigInitDelay = tSA.pull(20).toInt(), tBTrigPerShotDelay = tSA.pull(21).toInt(), tBacktrack = tSA.pull(22).strToBool(), tBTMS = tSA.pull(23).toInt(), tAutowep = tSA.pull(24).strToBool(), tAutowepDelay = tSA.pull(25).toInt())
+                false -> oWeapon(tOverride = tSA.pull(0).strToBool(), tFRecoil = tSA.pull(1).strToBool(), tOnShot = tSA.pull(2).strToBool(), tFlatAim = tSA.pull(3).strToBool(), tPathAim = tSA.pull(4).strToBool(), tAimBone = tSA.pull(5).stringToList(";"), tForceBone = tSA.pull(6).stringToList(";"), tAimFov = tSA.pull(7).toFloat(), tAimSmooth = tSA.pull(8).cToInt(), tPerfectAim = tSA.pull(9).strToBool(), tPAimFov = tSA.pull(10).toFloat(), tPAimChance = tSA.pull(11).toInt(), tScopedOnly = tSA.pull(12).strToBool(), tAimAfterShots = tSA.pull(13).toInt(), tBoneTrig = tSA.pull(14).strToBool(), tBTrigAim = tSA.pull(15).strToBool(), tBTrigInCross = tSA.pull(16).strToBool(), tBTrigInFov = tSA.pull(17).strToBool(), tBTrigBacktrack = tSA.pull(18).strToBool(), tBTrigFov = tSA.pull(19).toFloat(), tBTrigInitDelay = tSA.pull(20).toInt(), tBTrigPerShotDelay = tSA.pull(21).toInt(), tBacktrack = tSA.pull(22).strToBool(), tBTMS = tSA.pull(23).toInt(), tAutowep = tSA.pull(24).strToBool(), tAutowepDelay = tSA.pull(25).toInt())
             }
             stringToWeaponClassCache[this] = finalOweapon
             finalOweapon

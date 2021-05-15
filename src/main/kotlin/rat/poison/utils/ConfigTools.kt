@@ -13,10 +13,12 @@ import rat.poison.ui.uiWindows.configsTab
 import rat.poison.utils.extensions.toBitString
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.loadSkinSettings
+import rat.poison.utils.generalUtil.skinChangerVariables
 import java.io.File
 import java.io.FileReader
 import java.nio.file.Files
 
+@Volatile
 var saving = false
 
 fun saveDefault() {
@@ -158,7 +160,7 @@ fun saveSkinCFG(cfgFileName: String) {
         }
 
         val sbLines = StringBuilder()
-        skSettings.savedValues.longToStringMap.values.forEach {
+        skinChangerVariables.forEach {
             sbLines.append("$it = ${skSettings[it]}\n")
         }
 

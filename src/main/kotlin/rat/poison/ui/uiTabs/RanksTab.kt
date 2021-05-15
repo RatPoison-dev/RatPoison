@@ -6,8 +6,10 @@ import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.overlay.App.uiMenu
 import rat.poison.scripts.ranksPlayerList
 import rat.poison.ui.uiRefreshing
+import rat.poison.ui.uiWindows.ranksTab
 import rat.poison.utils.RanksPlayer
 import rat.poison.utils.locale
 import rat.poison.utils.saving
@@ -68,7 +70,7 @@ class RanksTab : Tab(false, false) {
     }
 
     fun updateRanks() {
-        if (uiRefreshing || saving || updatingRanks || !isActiveTab) return
+        if (uiRefreshing || saving || updatingRanks || uiMenu.activeTab != ranksTab) return
         updatingRanks = true
         teamsLabel.setText("Team" + "  \n")
         namesLabel.setText("Name")

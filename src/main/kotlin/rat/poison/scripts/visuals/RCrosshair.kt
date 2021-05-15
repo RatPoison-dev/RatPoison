@@ -25,11 +25,10 @@ internal fun rCrosshair() = App {
 
     val eRC = curSettings.bool["ENABLE_RCROSSHAIR"]
     val eSC = curSettings.bool["RCROSSHAIR_SCOPE_COMPATIBLE"]
-    val scoped = me.isScoped()
+    val scoped = me.isScoped() || !meCurWep.sniper
 
-    if (!(eRC || eSC) || (MENUTOG && uiMenu.activeTab.tabTitle != "RCS")) return@App
-
-    if (eSC && scoped) return@App
+    if (!(eRC || eSC) || (MENUTOG && uiMenu.activeTab == rcsTab)) return@App
+    if (!eSC && !scoped) return@App
 
     //Crosshair X/Y offset
     val rccXo = curSettings.float["RCROSSHAIR_XOFFSET"]
