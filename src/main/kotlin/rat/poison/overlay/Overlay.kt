@@ -21,7 +21,7 @@ import kotlin.concurrent.thread
 import kotlin.properties.Delegates
 
 class Overlay(private val targetAppTitle: String, private val myAppTitle: String, private var accentStateWhenActive: AccentStates = AccentStates.ACCENT_ENABLE_ACRYLIC) : IOverlay {
-	private var myHWND = HWND_ZERO
+	var myHWND = HWND_ZERO
 	private var targetAppHWND = HWND_ZERO
 	private val rcClient = Rect()
 	private val rcWindow = Rect()
@@ -77,7 +77,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 					Thread.sleep(8)
 					monitorTargetApp()
 				}
-			} catch (e: InterruptedException) { println("InterruptedException"); e.printStackTrace() } catch (e: Exception) { println("StandardException"); e.printStackTrace() }
+			} catch (e: InterruptedException) { println("InterruptedException"); } catch (e: Exception) { println("StandardException"); }
 			run = false
 			if (clientDLL.int(dwForceAttack) == 5) {
 				clientDLL[dwForceAttack] = 4

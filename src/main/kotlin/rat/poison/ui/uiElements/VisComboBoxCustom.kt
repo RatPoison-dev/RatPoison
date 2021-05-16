@@ -66,6 +66,8 @@ class VisComboBoxCustom(mainText: String, varName: String, useCategory: Boolean,
     fun updateList() {
         val itemsArray = Array<String>()
 
+        selectedItems.sort()
+
         var str = ""
         for (i in selectedItems) {
             str += boxItems[i] + ", "

@@ -5,8 +5,6 @@ package rat.poison
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.lwjgl.glfw.GLFW.*
 import rat.poison.game.CSGO
 import rat.poison.game.offsets.EngineOffsets.dwbSendPackets
@@ -28,6 +26,7 @@ import rat.poison.utils.loadMigration
 import java.awt.Robot
 import java.io.File
 import java.util.*
+import kotlinx.coroutines.*
 
 //Override Weapon
 data class oWeapon(var tOverride: Boolean = false,          var tFRecoil: Boolean = false,          var tOnShot: Boolean = false,
@@ -184,55 +183,64 @@ fun main() {
         //drawMapWireframe()l
         //}
         //Overlay check, not updated?
+
+
+
     if (curSettings.bool["MENU"]) {
         println("Game found. Launching.")
 
+        initApp()
+    }
+
+    scanner()
+}
+
+
+fun initApp() {
+    GlobalScope.launch {
         App.open()
 
-        GlobalScope.launch {
-            glfwInit()
+        Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
+            setTitle("Rat Poison UI")
 
-            Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
-                setTitle("Rat Poison UI")
+            var w = CSGO.gameWidth
+            var h = CSGO.gameHeight
 
-                var w = CSGO.gameWidth
-                var h = CSGO.gameHeight
+            if ((w == 0 || h == 0) || curSettings["MENU_APP"] != "\"Counter-Strike: Global Offensive\"") {
+                w = curSettings.int["OVERLAY_WIDTH"]
+                h = curSettings.int["OVERLAY_HEIGHT"]
+            }
 
-                if ((w == 0 || h == 0) || curSettings["MENU_APP"] != "\"Counter-Strike: Global Offensive\"") {
-                    w = curSettings.int["OVERLAY_WIDTH"]
-                    h = curSettings.int["OVERLAY_HEIGHT"]
+            if (appless) {
+                w = curSettings.int["APPLESS_WIDTH"]
+                h = curSettings.int["APPLESS_HEIGHT"]
+            }
+
+            setWindowedMode(w, h)
+
+            if (curSettings.bool["OPENGL_3"]) {
+                useOpenGL3(true, 4, 0)
+                if (dbg) {
+                    println("[DEBUG] Using GL3")
                 }
-
-                if (appless) {
-                    w = curSettings.int["APPLESS_WIDTH"]
-                    h = curSettings.int["APPLESS_HEIGHT"]
+            } else {
+                useOpenGL3(false, 2, 0)
+                if (dbg) {
+                    println("[DEBUG] Using GL2")
                 }
+            }
 
-                setWindowedMode(w, h)
+            //Required to fix W2S offset
+            if (!appless) setWindowPosition(CSGO.gameX, CSGO.gameY) else setWindowPosition(curSettings.int["APPLESS_X"], curSettings.int["APPLESS_Y"])
+            setResizable(false)
+            setDecorated(appless)
+            useVsync(false)
 
-                if (curSettings.bool["OPENGL_3"]) {
-                    useOpenGL3(true, 4, 0)
-                    if (dbg) {
-                        println("[DEBUG] Using GL3")
-                    }
-                } else {
-                    useOpenGL3(false, 2, 0)
-                    if (dbg) {
-                        println("[DEBUG] Using GL2")
-                    }
-                }
+            glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE)
+            setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings.int["OPENGL_MSAA_SAMPLES"])
+        })
 
-                //Required to fix W2S offset
-                if (!appless) setWindowPosition(CSGO.gameX, CSGO.gameY) else setWindowPosition(curSettings.int["APPLESS_X"], curSettings.int["APPLESS_Y"])
-                setResizable(false)
-                setDecorated(appless)
-                useVsync(false)
-                glfwSwapInterval(0)
-                glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE)
-                setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings.int["OPENGL_MSAA_SAMPLES"])
-            })
-        }
-    } else {
-        scanner()
+        glfwTerminate()
+        glfwSetErrorCallback(null)!!.free()
     }
 }

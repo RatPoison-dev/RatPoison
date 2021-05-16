@@ -1,5 +1,6 @@
 package rat.poison.ui.uiWindows
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Align
@@ -12,6 +13,7 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import rat.poison.*
 import rat.poison.overlay.App
+import rat.poison.overlay.App.appOverlay
 import rat.poison.scripts.misc.sendPacket
 import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.changed
@@ -242,8 +244,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         haltProcess = true
         disableAllEsp()
         sendPacket(true)
-        App.open()
-        exitProcess(0)
+        Gdx.app.exit()
     }
 
 

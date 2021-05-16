@@ -1,10 +1,12 @@
 package rat.poison.scripts
 
+import com.badlogic.gdx.Gdx
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.rankName
 import rat.poison.haltProcess
+import rat.poison.initApp
 import rat.poison.scripts.misc.sendPacket
 import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.utils.deleteCFG
@@ -20,6 +22,7 @@ import java.nio.file.StandardOpenOption
 import java.util.*
 import javax.script.ScriptException
 import kotlin.system.exitProcess
+import kotlinx.coroutines.*
 
 private val forEnts = arrayOf(EntityType.CCSPlayer)
 fun scanner() {
@@ -49,15 +52,21 @@ fun scanner() {
                     }
                 }
             }
+            line.equals("initapp", true) -> {
+                initApp()
+            }
+
             line.equals("exit", true) -> {
                 haltProcess = true
                 disableAllEsp()
                 sendPacket(true)
                 exitProcess(0)
             }
+
             line.equals("reload", true) -> {
                 println(); loadSettingsFromFiles(SETTINGS_DIRECTORY)
             }
+
             line.equals("list", true) -> {
                 print("\n----Settings Files----\n")
                 File(SETTINGS_DIRECTORY).listFiles()?.forEach {
@@ -99,7 +108,7 @@ fun scanner() {
                 try {
                     try { //Check for file + variable
                         File(fileDir).readLines().forEach {
-                            prevFile = if (!it.startsWith("/") && !it.startsWith("*") && !it.startsWith(" ") && it.trim().isNotEmpty() && !it.startsWith("import") && it.startsWith(command.split(" ".toRegex(), 3)[0])) {
+                            prevFile = if (!it.startsWith("/") && !it.startsWith("*") && !it.startsWith(" ") && it.trim().isNotEmpty() && !it.startsWith("import") && it.split(" ".toRegex(), 3)[0] == command.split(" ".toRegex(), 3)[0]) {
                                 prevFile + command + System.lineSeparator()
                             } else {
                                 prevFile + it + System.lineSeparator()

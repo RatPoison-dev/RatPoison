@@ -4,6 +4,7 @@ package rat.poison.overlay
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.GL20.GL_BLEND
@@ -16,11 +17,10 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport
 import com.kotcrab.vis.ui.VisUI
 import com.sun.management.OperatingSystemMXBean
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import rat.poison.appless
-import rat.poison.curSettings
-import rat.poison.dbg
+import org.lwjgl.glfw.GLFW
+import org.lwjgl.opengl.GL
+import rat.poison.*
 import rat.poison.game.updateViewMatrix
-import rat.poison.haltProcess
 import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
 import rat.poison.jna.enums.AccentStates
@@ -58,7 +58,7 @@ object App: ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
-    private val appOverlay = Overlay(if (appless) {
+    val appOverlay = Overlay(if (appless) {
         "Counter-Strike: Global Offensive"
     } else {
         curSettings["MENU_APP"].replace("\"", "")
@@ -169,6 +169,22 @@ object App: ApplicationAdapter() {
     }
 
     override fun render() {
+        //println("yea yea we still here")
+
+        if (haltProcess) {
+            Gdx.gl.apply {
+                glClear(GL20.GL_COLOR_BUFFER_BIT)
+            }
+
+            appOverlay.bePassive()
+
+            //GLFW.glfwTerminate()
+
+            return
+        }
+
+        GL.createCapabilities()
+
         syncTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
             sync(curSettings.int["OPENGL_FPS"])
         }, TimeUnit.NANOSECONDS)
@@ -240,7 +256,7 @@ object App: ApplicationAdapter() {
                         uiMenu.changeAlpha()
                         appTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
                             updateViewMatrix()
-                            if (!appless && !haltProcess) {
+                            if (!appless) {
                                 for (i in 0 until bodies.size) {
                                     bodies[i]()
                                 }
@@ -271,7 +287,8 @@ object App: ApplicationAdapter() {
                             //textRenderer.draw(sb, sbText, CSGO.gameWidth / 3F, CSGO.gameHeight - 100F)
 
                             sb.end()
-                        } catch (e: Exception) {}
+                        } catch (e: Exception) {
+                        }
                     }
                 }
 
