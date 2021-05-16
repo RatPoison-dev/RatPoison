@@ -29,12 +29,6 @@ class VisComboBoxCustom(mainText: String, varName: String, useCategory: Boolean,
     var selectedItems = mutableListOf<Int>()
 
     init {
-        val curValue = curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }].stringToBoneList()
-
-        curValue.forEach {
-            selectedItems.add(boxItems.indexOf(it.numToBone())+1)
-        }
-
         update()
 
         selectBox.changed { _, _ ->
@@ -88,12 +82,17 @@ class VisComboBoxCustom(mainText: String, varName: String, useCategory: Boolean,
     }
 
     fun update() {
+        val curValue = curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }].stringToBoneList()
+
+        selectedItems.clear()
+        curValue.forEach {
+            selectedItems.add(boxItems.indexOf(it.numToBone())+1)
+        }
+
         updateList()
         updateTooltip()
 
         boxLabel.setText("L$variableName".locale(textLabel))
-
-        updateTooltip()
     }
 
     private fun updateTooltip() {
