@@ -11,7 +11,12 @@ import com.badlogic.gdx.graphics.GL20.GL_BLEND
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.scenes.scene2d.actions.Actions.delay
+import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.Scaling
 import com.badlogic.gdx.utils.viewport.ScalingViewport
 import com.kotcrab.vis.ui.VisUI
@@ -35,6 +40,7 @@ import rat.poison.ui.uiWindows.*
 import rat.poison.utils.AssetManager
 import rat.poison.utils.common.ObservableBoolean
 import rat.poison.utils.common.keyPressed
+import rat.poison.utils.updateFonts
 import java.lang.management.ManagementFactory
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
@@ -89,6 +95,57 @@ object App: ApplicationAdapter() {
         assetManager = AssetManager()
         assetManager.loadAssets()
         assetManager.updateFonts()
+
+        while (!VisUI.isLoaded()) {
+            println("Manually Loading VisUI...")
+            delay(1000F)
+
+            if (!VisUI.isLoaded()) {
+                assetManager.updateFontsList()
+
+                val defaultFont = "$SETTINGS_DIRECTORY\\Assets\\Fonts\\${curSettings["FONT"].replace("\"", "")}.ttf"
+                val font = assetManager.fonts[defaultFont]
+                if (font != null) {
+                    //apply font settings
+                    val parameter = FreeTypeFontParameter()
+                    parameter.size = curSettings.int["FONT_SIZE"]
+                    parameter.color = curSettings.colorGDX["FONT_COLOR"]
+
+                    //border
+                    parameter.borderWidth = curSettings.float["FONT_BORDER_WIDTH"]
+                    parameter.borderColor = curSettings.colorGDX["FONT_BORDER_COLOR"]
+                    parameter.borderStraight = curSettings.bool["FONT_BORDER_USE_STRAIGHT"]
+
+                    //shadow
+                    parameter.shadowColor = curSettings.colorGDX["FONT_SHADOW_COLOR"]
+                    parameter.shadowOffsetX = curSettings.int["FONT_SHADOW_OFFSET_X"]
+                    parameter.shadowOffsetY = curSettings.int["FONT_SHADOW_OFFSET_Y"]
+
+                    parameter.kerning = curSettings.bool["FONT_INCLUDE_KERNING"]
+
+                    //just a bruh moment
+                    parameter.characters += "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+                    parameter.characters += "aąbcćdeęfghijklłmnńoóprsśtuwyzźżAĄBCĆDEĘFGHIJKLŁMNŃOÓPRSŚTUWYZŹŻ"
+
+                    parameter.flip = curSettings.bool["FONT_FLIP"]
+                    parameter.genMipMaps = curSettings.bool["FON_GEN_MIP_MAPS"]
+                    parameter.gamma = curSettings.float["FONT_GAMMA"]
+
+                    val skin = Skin()
+
+                    val generatedFont = font.generateFont(parameter)
+                    textRenderer = generatedFont
+                    if (!VisUI.isLoaded()) {
+                        skin.add("default-font", generatedFont, BitmapFont::class.java)
+                        skin.addRegions(TextureAtlas(Gdx.files.internal(("skin/tinted.atlas"))))
+                        skin.load(Gdx.files.internal("skin/tinted.json"))
+                        VisUI.load(skin)
+                    }
+                } else {
+                    println("font nullll")
+                }
+            }
+        }
 
         //Implement key processor for menu
         keyProcessor = KeyProcessor()
@@ -172,13 +229,17 @@ object App: ApplicationAdapter() {
         //println("yea yea we still here")
 
         if (haltProcess) {
+            println("im awake and hiding")
+
             Gdx.gl.apply {
                 glClear(GL20.GL_COLOR_BUFFER_BIT)
             }
 
             appOverlay.bePassive()
 
-            //GLFW.glfwTerminate()
+            if (VisUI.isLoaded()) {
+                VisUI.dispose()
+            }
 
             return
         }
@@ -192,6 +253,8 @@ object App: ApplicationAdapter() {
         if (VisUI.isLoaded()) {
             if (!Thread.interrupted()) {
                 Gdx.gl.apply {
+                    GLFW.glfwWindowHint(GLFW.GLFW_DOUBLEBUFFER, GLFW.GLFW_TRUE)
+
                     glEnable(GL_BLEND)
                     glDisable(GL20.GL_DEPTH_TEST)
                     glClearColor(0F, 0F, 0F, 0F)

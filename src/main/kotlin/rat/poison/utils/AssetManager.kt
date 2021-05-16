@@ -101,6 +101,12 @@ class AssetManager: AssetManager() {
         updateFonts = false
     }
 
+    fun disposeSkin() {
+        if (VisUI.isLoaded()) {
+            VisUI.dispose()
+        }
+    }
+
 
     fun loadAssets() {
         loadMusic()

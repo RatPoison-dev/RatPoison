@@ -197,6 +197,8 @@ fun main() {
 
 
 fun initApp() {
+    haltProcess = false
+
     GlobalScope.launch {
         App.open()
 
@@ -236,11 +238,8 @@ fun initApp() {
             setDecorated(appless)
             useVsync(false)
 
-            glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE)
+            //glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE)
             setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings.int["OPENGL_MSAA_SAMPLES"])
         })
-
-        glfwTerminate()
-        glfwSetErrorCallback(null)!!.free()
     }
 }

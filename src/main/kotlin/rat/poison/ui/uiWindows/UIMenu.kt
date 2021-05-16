@@ -11,6 +11,7 @@ import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.VisWindow
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
+import org.lwjgl.glfw.GLFW
 import rat.poison.*
 import rat.poison.overlay.App
 import rat.poison.overlay.App.appOverlay
@@ -244,6 +245,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         haltProcess = true
         disableAllEsp()
         sendPacket(true)
+        //GLFW.glfwTerminate()
         Gdx.app.exit()
     }
 
