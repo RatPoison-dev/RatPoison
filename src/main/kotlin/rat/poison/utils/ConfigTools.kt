@@ -204,7 +204,6 @@ fun saveCFG(cfgFileName: String) {
                 FileReader(file).readLines().forEach { line ->
                     if (!line.startsWith("import") && !line.startsWith("/") && !line.startsWith(" *") && !line.startsWith("*") && line.trim().isNotEmpty()) {
                         val tempCurLine = line.trim().split(" ".toRegex(), 3) //Separate line into 'VARIABLE=VALUE' //no spaces bc of trim()
-                        println(tempCurLine)
                         if (tempCurLine[0] != "RCROSSHAIR_BUILDER_ARRAY") {
                             sbLines.append(tempCurLine[0] + " = " + curSettings[tempCurLine[0]] + "\n") //add spaces back
                         }
