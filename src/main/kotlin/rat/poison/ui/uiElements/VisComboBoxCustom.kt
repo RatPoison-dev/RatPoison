@@ -35,8 +35,6 @@ class VisComboBoxCustom(mainText: String, varName: String, useCategory: Boolean,
             selectedItems.add(boxItems.indexOf(it.numToBone())+1)
         }
 
-        println(selectedItems)
-
         update()
 
         selectBox.changed { _, _ ->
