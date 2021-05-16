@@ -125,7 +125,7 @@ fun drawIndicator(enemyEnt: Long, col: String)
     val dest = entAbs.apply { z = 0F }
 
     var tmpAng = calcAngle(src, dest, emptyVec)
-    tmpAng = angVec(meAngVec.set(-tmpAng.x , 90F - tmpAng.y + meEyeAngle.y, -tmpAng.z))
+    tmpAng = angVec(meAngVec.set(-tmpAng.x , 180F + tmpAng.y + meEyeAngle.y, -tmpAng.z))
 
     val triangPos = triangPos.set((tWidth / 2F) + (-tmpAng.x * dist), (tHeight / 2F) + (tmpAng.y * dist), 0F + (tmpAng.z * dist))
 
