@@ -6,7 +6,8 @@ import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.Align
 import com.kotcrab.vis.ui.util.dialog.Dialogs
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter
-import rat.poison.*
+import rat.poison.SETTINGS_DIRECTORY
+import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.entity.absPosition
 import rat.poison.game.entity.boneMatrix

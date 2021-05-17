@@ -1,6 +1,5 @@
 package rat.poison.scripts
 
-import com.badlogic.gdx.Gdx
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
@@ -22,7 +21,6 @@ import java.nio.file.StandardOpenOption
 import java.util.*
 import javax.script.ScriptException
 import kotlin.system.exitProcess
-import kotlinx.coroutines.*
 
 private val forEnts = arrayOf(EntityType.CCSPlayer)
 fun scanner() {

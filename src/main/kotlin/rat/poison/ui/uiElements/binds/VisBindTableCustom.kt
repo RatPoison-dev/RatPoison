@@ -3,7 +3,6 @@ package rat.poison.ui.uiElements.binds
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.kotcrab.vis.ui.widget.Tooltip
-import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curSettings
 import rat.poison.ui.uiTabs.VisLabelCustom

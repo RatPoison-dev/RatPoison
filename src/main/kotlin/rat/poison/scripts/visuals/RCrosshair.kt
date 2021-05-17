@@ -17,7 +17,8 @@ import rat.poison.ui.uiWindows.rcsTab
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.inGame
 import java.lang.Math.toRadians
-import kotlin.math.*
+import kotlin.math.atan
+import kotlin.math.tan
 
 private val mePunchVec = Vector()
 internal fun rCrosshair() = App {

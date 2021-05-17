@@ -1,6 +1,8 @@
 package rat.poison.ui.uiWindows
 
-import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisTextButton
+import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.settings.DEBUGTOG
 import rat.poison.ui.changed
 import rat.poison.ui.uiTabs.VisLabelCustom

@@ -12,7 +12,6 @@ import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.robot
 import rat.poison.scripts.userCmd.meDead
-import rat.poison.utils.*
 import rat.poison.utils.common.Angle
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.every

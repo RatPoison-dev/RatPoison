@@ -106,14 +106,20 @@ fun validateSetting(settingName: String, value: String): Boolean {
             tStr = tStr.replace("oWeapon(", "").replace(")", "")
             val tSA = tStr.split(", ") //temp String Array
             val weapon = oWeapon()
-
             if (size > 6 && tSA.pull(5).stringToList(";").all { isNumeric(it) }) {
                 weapon.tAimBone = tSA.pull(5).stringToIntList().map { it.numToBone() }
+            }
+            else {
+                weapon.tAimBone = tSA.pull(5).stringToList(";")
             }
 
             if (size > 7 && tSA.pull(6).stringToList(";").all { isNumeric(it) }) {
                 weapon.tForceBone = tSA.pull(6).stringToIntList().map { it.numToBone() }
             }
+            else {
+                weapon.tForceBone = tSA.pull(6).stringToList(";")
+            }
+
             weapon.apply {
                 tOverride = if (size > 1) tSA.pull(0).safeToBool(defaultValue = tOverride) else tOverride
                 tFRecoil = if (size > 2) tSA.pull(1).safeToBool(defaultValue = tFRecoil) else tFRecoil

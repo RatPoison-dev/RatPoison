@@ -5,7 +5,8 @@ package rat.poison
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
-import org.lwjgl.glfw.GLFW.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import rat.poison.game.CSGO
 import rat.poison.game.offsets.EngineOffsets.dwbSendPackets
 import rat.poison.overlay.App
@@ -23,11 +24,10 @@ import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.loadSkinSettings
 import rat.poison.utils.loadLocale
 import rat.poison.utils.loadMigration
+import rat.poison.utils.updateFonts
 import java.awt.Robot
 import java.io.File
 import java.util.*
-import kotlinx.coroutines.*
-import rat.poison.utils.updateFonts
 
 //Override Weapon
 data class oWeapon(var tOverride: Boolean = false,          var tFRecoil: Boolean = false,          var tOnShot: Boolean = false,
@@ -41,7 +41,11 @@ data class oWeapon(var tOverride: Boolean = false,          var tFRecoil: Boolea
                    var tBTrigInitDelay: Int = 0,            var tBTrigPerShotDelay: Int = 0,
 
                    var tBacktrack: Boolean = false,         var tBTMS: Int = 0,
-                   var tAutowep: Boolean = false,           var tAutowepDelay: Int = 0)
+                   var tAutowep: Boolean = false,           var tAutowepDelay: Int = 0) {
+    override fun toString(): String {
+        return "oWeapon(tOverride=$tOverride, tFRecoil=$tFRecoil, tOnShot=$tOnShot, tFlatAim=$tFlatAim, tPathAim=$tPathAim, tAimBone=${tAimBone.joinToString(prefix = "[", separator = ";", postfix = "]")}, tForceBone=${tForceBone.joinToString(prefix = "[", separator = ";", postfix = "]")}, tAimFov=$tAimFov, tAimSmooth=$tAimSmooth, tPerfectAim=$tPerfectAim, tPAimFov=$tPAimFov, tPAimChance=$tPAimChance, tScopedOnly=$tScopedOnly, tAimAfterShots=$tAimAfterShots, tBoneTrig=$tBoneTrig, tBTrigAim=$tBTrigAim, tBTrigInCross=$tBTrigInCross, tBTrigInFov=$tBTrigInCross, tBTrigBacktrack=$tBTrigBacktrack, tBTrigFov=$tBTrigFov, tBTrigInitDelay=$tBTrigInitDelay, tBTrigPerShotDelay=$tBTrigPerShotDelay, tBacktrack=$tBacktrack, tBTMS=$tBTMS, tAutowep=$tAutowep, tAutowepDelay=$tAutowepDelay)"
+    }
+}
 
 //Skinned Weapon
 data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var tSeed: Int)

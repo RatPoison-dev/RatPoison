@@ -2,7 +2,6 @@ package rat.poison.utils.maps
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
 import net.openhft.hashing.LongHashFunction
-import java.lang.StringBuilder
 
 @PublishedApi
 internal val hashFunction = LongHashFunction.farmNa()

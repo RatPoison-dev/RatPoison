@@ -1,10 +1,12 @@
 package rat.poison.scripts
 
 import rat.poison.curSettings
-import rat.poison.game.*
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
+import rat.poison.game.angle
+import rat.poison.game.clientState
 import rat.poison.game.entity.*
+import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.iCrossHairID
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack

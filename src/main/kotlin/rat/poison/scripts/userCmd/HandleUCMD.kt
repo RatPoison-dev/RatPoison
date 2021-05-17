@@ -1,19 +1,18 @@
 package rat.poison.scripts.userCmd
 
 import rat.poison.curSettings
-import rat.poison.dbg
-import rat.poison.game.*
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.entity.*
+import rat.poison.game.clientState
+import rat.poison.game.entity.dead
+import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.EngineOffsets
 import rat.poison.game.offsets.EngineOffsets.dwClientStateNetChannel
-import rat.poison.scripts.aim.*
 import rat.poison.scripts.attemptBacktrack
 import rat.poison.scripts.misc.gvars
 import rat.poison.scripts.misc.sendPacket
-import rat.poison.settings.*
+import rat.poison.settings.MENUTOG
 import rat.poison.utils.Structs.*
 import rat.poison.utils.common.*
 import java.lang.Thread.yield

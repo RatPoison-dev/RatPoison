@@ -5,9 +5,10 @@ import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.scripts.userCmd.meDead
 import rat.poison.settings.*
-import rat.poison.utils.*
 import rat.poison.utils.common.*
-import rat.poison.utils.generalUtil.*
+import rat.poison.utils.generalUtil.has
+import rat.poison.utils.keybindEval
+import rat.poison.utils.randInt
 import java.lang.Math.toRadians
 import kotlin.math.abs
 import kotlin.math.pow

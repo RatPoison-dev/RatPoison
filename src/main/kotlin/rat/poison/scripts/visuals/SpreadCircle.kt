@@ -7,7 +7,8 @@ import rat.poison.curSettings
 import rat.poison.game.CSGO
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.Weapons
-import rat.poison.game.entity.*
+import rat.poison.game.entity.shotsFired
+import rat.poison.game.entity.velocity
 import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.game.netvars.NetVarOffsets.m_weaponMode

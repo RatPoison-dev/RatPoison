@@ -6,13 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.widget.LinkLabel
 import com.kotcrab.vis.ui.widget.VisTable
-import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.overlay.App.uiBombWindow
 import rat.poison.overlay.App.uiSpecList
-import rat.poison.settings.WARNINGTOG
 import rat.poison.ui.changed
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.VisSliderCustom

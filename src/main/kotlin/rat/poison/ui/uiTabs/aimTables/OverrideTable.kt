@@ -5,9 +5,9 @@ import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.*
 import rat.poison.DEFAULT_OWEAPON_STR
 import rat.poison.curSettings
-import rat.poison.oWeapon
 import rat.poison.ui.*
 import rat.poison.ui.uiElements.VisCheckBoxCustom
+import rat.poison.ui.uiElements.override.OverrideCombobox
 import rat.poison.ui.uiElements.override.OverrideVisCheckBoxCustom
 import rat.poison.ui.uiElements.override.OverrideVisSliderCustom
 import rat.poison.ui.uiTabs.*
@@ -44,8 +44,8 @@ class OverrideTable: VisTable(false) {
     val enablePathAim = OverrideVisCheckBoxCustom("Path Aim", "tPathAim")
     val enableScopedOnly = OverrideVisCheckBoxCustom("Scoped Only", "tScopedOnly")
 
-    //val aimBoneBox = VisSelectBoxCustom("Bone", "tAimBone", true, *boneCategories)
-    //val forceBoneBox = OverrideCombobox("Force-Bone", "tForceBone", true, *boneCategories)
+    val aimBoneBox = OverrideCombobox("Bone", "tAimBone", true, items = boneCategories)
+    val forceBoneBox = OverrideCombobox("Force-Bone", "tForceBone", true, items = boneCategories)
 
     val aimFov = OverrideVisSliderCustom("FOV", "tAimFov", 0.5F, 90F, 0.5F, false, labelWidth = 225F, barWidth = 225F)
     val aimSmoothness = OverrideVisSliderCustom("Smooth", "tAimSmooth", 1F, 100F, 1F, true, labelWidth = 225F, barWidth = 225F)
@@ -184,13 +184,13 @@ class OverrideTable: VisTable(false) {
         }
 
         //Create Aim Bone Selector Box
-        //val aimBone = VisTable(false)
-        //aimBone.add(aimBoneBox)
+        val aimBone = VisTable(false)
+        aimBone.add(aimBoneBox)
         //End Aim Bone Selector Box
 
         //Create Force Bone Selector Box
-        //val forceBone = VisTable(false)
-        //forceBone.add(forceBoneBox)
+        val forceBone = VisTable(false)
+        forceBone.add(forceBoneBox)
         //End Force Bone Selector Box
 
 
@@ -225,8 +225,8 @@ class OverrideTable: VisTable(false) {
         add(enableFlatAim).left().row()
         add(enablePathAim).left().row()
         add(enableScopedOnly).left().row()
-        //add(aimBone).left().row()
-        //add(forceBone).left().row()
+        add(aimBone).left().row()
+        add(forceBone).left().row()
         add(aimFov).left().row()
         add(aimSmoothness).left().row()
         add(aimAfterShots).left().row()
@@ -314,8 +314,8 @@ fun overridenWeaponsUpdate() {
         trigEnable.update()
         trigAimbot.update()
         trigInCross.update()
-        //aimBoneBox.update()
-        //forceBoneBox.update()
+        aimBoneBox.update()
+        forceBoneBox.update()
         trigInFov.update()
         trigBacktrack.update()
         trigFov.update()

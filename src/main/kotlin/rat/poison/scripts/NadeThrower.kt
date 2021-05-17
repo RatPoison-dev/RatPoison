@@ -10,13 +10,16 @@ import rat.poison.game.realCalcAngle
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.userCmd.meDead
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.*
 import rat.poison.utils.common.Angle
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.distanceTo
 import rat.poison.utils.common.every
 import rat.poison.utils.generalUtil.cToDouble
 import rat.poison.utils.generalUtil.cToFloat
+import rat.poison.utils.jumpAndThrow
+import rat.poison.utils.keybindEval
+import rat.poison.utils.standAndThrow
+import rat.poison.utils.writeAim
 
 private var mPos = Vector()
 private var calcRes = 0F

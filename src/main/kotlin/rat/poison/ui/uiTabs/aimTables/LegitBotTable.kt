@@ -6,9 +6,8 @@ import com.kotcrab.vis.ui.widget.VisCheckBox
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curSettings
 import rat.poison.ui.changed
+import rat.poison.ui.uiElements.VisAimComboBox
 import rat.poison.ui.uiElements.VisCheckBoxCustom
-import rat.poison.ui.uiElements.VisComboBoxCustom
-import rat.poison.ui.uiElements.VisSelectBoxCustom
 import rat.poison.ui.uiElements.aim.AimVisCheckBox
 import rat.poison.ui.uiElements.aim.AimVisSlider
 import rat.poison.ui.uiTabs.boneCategories
@@ -25,8 +24,8 @@ class LegitBotTable: VisTable(false) {
     val enablePathAim = AimVisCheckBox("Mouse Movement", "_ENABLE_PATH_AIM")
     val enableScopedOnly = VisCheckBoxCustom("Scoped Only", "SNIPER_ENABLE_SCOPED_ONLY")
 
-    val aimBones = VisComboBoxCustom("Aim Bone", "_AIM_BONE", useCategory = true, showText = true, textWidth = 225F, items = boneCategories)
-    val forceAimBone = VisComboBoxCustom("Force Aim Bone", "_AIM_FORCE_BONE", useCategory = true, showText = true, textWidth = 225F, items = boneCategories)
+    val aimBones = VisAimComboBox("Aim Bone", "_AIM_BONE", showText = true, textWidth = 225F, items = boneCategories)
+    val forceAimBone = VisAimComboBox("Force Aim Bone", "_AIM_FORCE_BONE", showText = true, textWidth = 225F, items = boneCategories)
 
     val aimFov = AimVisSlider("Aim FOV", "_AIM_FOV", .5F, 90F, .5F, false, 1, 225F, 225F)
     val aimSmooth = AimVisSlider("Smoothness", "_AIM_SMOOTHNESS", 1F, 100F, 1F, true, 0, 225F, 225F)

@@ -1,7 +1,8 @@
 
 package rat.poison.utils
 
-import it.unimi.dsi.fastutil.objects.*
+import it.unimi.dsi.fastutil.objects.Object2IntMap
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
 import rat.poison.game.Color
 import rat.poison.utils.generalUtil.*
 import rat.poison.utils.maps.StringToAnyMap

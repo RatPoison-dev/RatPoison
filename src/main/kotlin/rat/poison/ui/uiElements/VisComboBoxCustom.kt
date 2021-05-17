@@ -6,17 +6,15 @@ import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curSettings
-import rat.poison.scripts.aim.numToBone
-import rat.poison.scripts.aim.stringToBoneList
 import rat.poison.ui.changed
 import rat.poison.ui.uiTabs.VisLabelCustom
 import rat.poison.ui.uiTabs.categorySelected
+import rat.poison.utils.generalUtil.stringToList
 import rat.poison.utils.locale
 
-class VisComboBoxCustom(mainText: String, varName: String, useCategory: Boolean, showText: Boolean = true, vararg items: String, textWidth: Float = 200F, boxWidth: Float = 100F): VisTable(false) {
+abstract class VisCombobox(mainText: String, varName: String, showText: Boolean = true, textWidth: Float = 200F, boxWidth: Float = 100F, items: kotlin.Array<out String>): VisTable(false) {
     private val textLabel = mainText
-    private val variableName = varName
-    private val useGunCategory = useCategory
+    open val variableName = varName
     private var hasTooltip = false
 
     private var dropDownWidth = boxWidth
@@ -29,6 +27,7 @@ class VisComboBoxCustom(mainText: String, varName: String, useCategory: Boolean,
     var selectedItems = mutableListOf<Int>()
 
     init {
+        initialize()
         update()
 
         selectBox.changed { _, _ ->
@@ -50,7 +49,8 @@ class VisComboBoxCustom(mainText: String, varName: String, useCategory: Boolean,
             for (i in selectedItems) {
                 strItems.add(boxItems[i-1])
             }
-            curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }] = strItems
+            saveItems(strItems)
+            //curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }] = strItems
 
             false
         }
@@ -61,6 +61,10 @@ class VisComboBoxCustom(mainText: String, varName: String, useCategory: Boolean,
 
         add(selectBox).width(dropDownWidth)
     }
+
+    abstract fun saveItems(items: MutableList<String>)
+    abstract fun getItems(): List<String>
+    abstract fun initialize()
 
     fun updateList() {
         val itemsArray = Array<String>()
@@ -82,11 +86,12 @@ class VisComboBoxCustom(mainText: String, varName: String, useCategory: Boolean,
     }
 
     fun update() {
-        val curValue = curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }].stringToBoneList()
+        //val curValue = curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }]
+        val curValue = getItems()
 
         selectedItems.clear()
         curValue.forEach {
-            selectedItems.add(boxItems.indexOf(it.numToBone())+1)
+            selectedItems.add(boxItems.indexOf(it)+1)
         }
 
         updateList()
@@ -111,4 +116,30 @@ class VisComboBoxCustom(mainText: String, varName: String, useCategory: Boolean,
         selectBox.color = col
         selectBox.isDisabled = bool
     }
+}
+
+class VisComboBoxCustom(val mainText: String, val varName: String, showText: Boolean = true, textWidth: Float = 200F, boxWidth: Float = 100F, vararg items: String): VisCombobox(mainText, varName, showText, textWidth, boxWidth, items) {
+    override fun saveItems(items: MutableList<String>) {
+        curSettings[variableName] = items
+    }
+
+    override fun getItems(): List<String> {
+        return curSettings[categorySelected + variableName].stringToList(",")
+    }
+
+    override fun initialize() {}
+
+}
+
+class VisAimComboBox(val mainText: String, val varName: String, showText: Boolean = true, textWidth: Float = 200F, boxWidth: Float = 100F, vararg items: String): VisCombobox(mainText, varName, showText, textWidth, boxWidth, items) {
+    override fun saveItems(items: MutableList<String>) {
+        curSettings[categorySelected + variableName] = items.joinToString(prefix = "[", separator = ";", postfix = "]")
+    }
+
+    override fun getItems(): List<String> {
+        return curSettings[categorySelected + variableName].stringToList(",")
+    }
+
+    override fun initialize() {}
+
 }

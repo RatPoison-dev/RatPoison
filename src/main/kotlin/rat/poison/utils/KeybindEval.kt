@@ -2,9 +2,10 @@ package rat.poison.utils
 
 import rat.poison.curSettings
 import rat.poison.ui.KeybindType
-import rat.poison.utils.maps.ListBasedMap
 import rat.poison.utils.common.ObservableBoolean
 import rat.poison.utils.common.keyPressed
+import rat.poison.utils.maps.ListBasedMap
+
 data class MutableQuad<KeybindType, ObservableBoolean, Boolean, Setting>(var first: KeybindType, var second: ObservableBoolean, var third: Boolean, var fourth: Setting)
 var keyEvalMap = ListBasedMap<String, MutableQuad<KeybindType, ObservableBoolean, Boolean, String?>>() //////////// <VARIABLE_NAME, <KeybindType, ObservableBoolean, Toggled, Setting>
 

@@ -7,7 +7,9 @@ import rat.poison.game.CSGO.gameX
 import rat.poison.game.CSGO.gameY
 import rat.poison.game.clientState
 import rat.poison.game.setAngle
-import rat.poison.settings.*
+import rat.poison.settings.GAME_PITCH
+import rat.poison.settings.GAME_SENSITIVITY
+import rat.poison.settings.GAME_YAW
 import rat.poison.utils.common.*
 import rat.poison.utils.extensions.refresh
 import kotlin.math.*

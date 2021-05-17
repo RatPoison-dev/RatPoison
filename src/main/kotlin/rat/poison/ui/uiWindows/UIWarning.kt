@@ -1,11 +1,11 @@
 package rat.poison.ui.uiWindows
 
-import com.kotcrab.vis.ui.widget.*
+import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.settings.WARNINGTOG
 import rat.poison.ui.changed
 import rat.poison.ui.uiTabs.VisLabelCustom
 import rat.poison.ui.uiTabs.VisTextButtonCustom
-import rat.poison.utils.locale
 
 class UIWarning: VisWindow("") {
     val table = VisTable(false)

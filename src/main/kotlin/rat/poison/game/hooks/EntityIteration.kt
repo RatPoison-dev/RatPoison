@@ -23,7 +23,6 @@ import rat.poison.game.offsets.EngineOffsets.dwSignOnState
 import rat.poison.scripts.detectMap
 import rat.poison.scripts.misc.sendPacket
 import rat.poison.settings.*
-import rat.poison.utils.*
 import rat.poison.utils.common.*
 import rat.poison.utils.extensions.uint
 import java.lang.Float.intBitsToFloat

@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.MathUtils.clamp
 import org.lwjgl.opengl.GL11.glDisable
 import org.lwjgl.opengl.GL11.glEnable
 import rat.poison.curSettings
-import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.absPosition
 import rat.poison.game.forEntities
