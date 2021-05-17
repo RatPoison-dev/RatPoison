@@ -48,7 +48,7 @@ class OverrideTable: VisTable(false) {
     //val forceBoneBox = OverrideCombobox("Force-Bone", "tForceBone", true, *boneCategories)
 
     val aimFov = OverrideVisSliderCustom("FOV", "tAimFov", 0.5F, 90F, 0.5F, false, labelWidth = 225F, barWidth = 225F)
-    val aimSmoothness = OverrideVisSliderCustom("Smooth", "tAimSmooth", 1F, 5F, .5F, false, labelWidth = 225F, barWidth = 225F)
+    val aimSmoothness = OverrideVisSliderCustom("Smooth", "tAimSmooth", 1F, 100F, 1F, true, labelWidth = 225F, barWidth = 225F)
     val aimAfterShots = OverrideVisSliderCustom("Aim After #", "tAimAfterShots", 0F, 10F, 1F, true, labelWidth = 225F, barWidth = 225F)
 
     //Perfect Aim Collapsible

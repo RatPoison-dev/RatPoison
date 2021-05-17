@@ -27,6 +27,7 @@ import java.awt.Robot
 import java.io.File
 import java.util.*
 import kotlinx.coroutines.*
+import rat.poison.utils.updateFonts
 
 //Override Weapon
 data class oWeapon(var tOverride: Boolean = false,          var tFRecoil: Boolean = false,          var tOnShot: Boolean = false,
@@ -175,7 +176,6 @@ fun main() {
     dbgLog("Initializing Block Bot"); blockBot()
     dbgLog("dwbSendPackets: $dwbSendPackets")
 
-
     handleUCMD()
 
         //if (EXPERIMENTAL) {
@@ -183,8 +183,6 @@ fun main() {
         //drawMapWireframe()l
         //}
         //Overlay check, not updated?
-
-
 
     if (curSettings.bool["MENU"]) {
         println("Game found. Launching.")
@@ -198,6 +196,7 @@ fun main() {
 
 fun initApp() {
     haltProcess = false
+    updateFonts = true
 
     GlobalScope.launch {
         App.open()

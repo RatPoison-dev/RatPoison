@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils.clamp
 import org.lwjgl.opengl.GL11.glDisable
 import org.lwjgl.opengl.GL11.glEnable
 import rat.poison.curSettings
+import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.absPosition
 import rat.poison.game.forEntities
@@ -51,19 +52,23 @@ fun nadeTracer() = App {
             }
         }
 
-        for (it in 0 until grenadeList.size) {
-            val i = grenadeList[it]
-            val entPos = i.absPosition(positionVector2)
-            val idx = grenadeList.indexOf(i)
+        grenadeList.removeIf {
+            val entPos = it.absPosition(positionVector2)
+            val idx = grenadeList.indexOf(it)
+
             if (entPos.x in -2F..2F && entPos.y in -2F..2F && entPos.z in -2F..2F) {
                 if (positionsList[idx].size > 2) {
                     positionsList[idx].removeAt(0)
                 } else {
-                    grenadeList.remove(i)
                     positionsList.removeAt(idx)
                 }
+
+                true
+            } else {
+                false
             }
         }
+
         sync = 0 //Reset
     }
     sync++ //Add 1 to tick

@@ -222,6 +222,7 @@ fun scanner() {
                         for (i in entMoney.length..4) {
                             entMoney += " "
                         }
+                        //TODO padEnd instead
 
                         println("$entTeam $entName $entRank $entKills $entDeaths $entKD $entWins $entMoney")
                     }

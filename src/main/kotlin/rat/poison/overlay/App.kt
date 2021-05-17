@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.GL20.GL_BLEND
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
@@ -40,7 +41,6 @@ import rat.poison.ui.uiWindows.*
 import rat.poison.utils.AssetManager
 import rat.poison.utils.common.ObservableBoolean
 import rat.poison.utils.common.keyPressed
-import rat.poison.utils.updateFonts
 import java.lang.management.ManagementFactory
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
@@ -94,57 +94,11 @@ object App: ApplicationAdapter() {
     override fun create() {
         assetManager = AssetManager()
         assetManager.loadAssets()
-        assetManager.updateFonts()
+        //assetManager.updateFonts()
 
         while (!VisUI.isLoaded()) {
-            println("Manually Loading VisUI...")
-            delay(1000F)
-
-            if (!VisUI.isLoaded()) {
-                assetManager.updateFontsList()
-
-                val defaultFont = "$SETTINGS_DIRECTORY\\Assets\\Fonts\\${curSettings["FONT"].replace("\"", "")}.ttf"
-                val font = assetManager.fonts[defaultFont]
-                if (font != null) {
-                    //apply font settings
-                    val parameter = FreeTypeFontParameter()
-                    parameter.size = curSettings.int["FONT_SIZE"]
-                    parameter.color = curSettings.colorGDX["FONT_COLOR"]
-
-                    //border
-                    parameter.borderWidth = curSettings.float["FONT_BORDER_WIDTH"]
-                    parameter.borderColor = curSettings.colorGDX["FONT_BORDER_COLOR"]
-                    parameter.borderStraight = curSettings.bool["FONT_BORDER_USE_STRAIGHT"]
-
-                    //shadow
-                    parameter.shadowColor = curSettings.colorGDX["FONT_SHADOW_COLOR"]
-                    parameter.shadowOffsetX = curSettings.int["FONT_SHADOW_OFFSET_X"]
-                    parameter.shadowOffsetY = curSettings.int["FONT_SHADOW_OFFSET_Y"]
-
-                    parameter.kerning = curSettings.bool["FONT_INCLUDE_KERNING"]
-
-                    //just a bruh moment
-                    parameter.characters += "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
-                    parameter.characters += "aąbcćdeęfghijklłmnńoóprsśtuwyzźżAĄBCĆDEĘFGHIJKLŁMNŃOÓPRSŚTUWYZŹŻ"
-
-                    parameter.flip = curSettings.bool["FONT_FLIP"]
-                    parameter.genMipMaps = curSettings.bool["FON_GEN_MIP_MAPS"]
-                    parameter.gamma = curSettings.float["FONT_GAMMA"]
-
-                    val skin = Skin()
-
-                    val generatedFont = font.generateFont(parameter)
-                    textRenderer = generatedFont
-                    if (!VisUI.isLoaded()) {
-                        skin.add("default-font", generatedFont, BitmapFont::class.java)
-                        skin.addRegions(TextureAtlas(Gdx.files.internal(("skin/tinted.atlas"))))
-                        skin.load(Gdx.files.internal("skin/tinted.json"))
-                        VisUI.load(skin)
-                    }
-                } else {
-                    println("font nullll")
-                }
-            }
+            println("Loading VisUI...")
+            assetManager.updateFonts()
         }
 
         //Implement key processor for menu
@@ -238,8 +192,9 @@ object App: ApplicationAdapter() {
             appOverlay.bePassive()
 
             if (VisUI.isLoaded()) {
-                VisUI.dispose()
+                VisUI.dispose(false)
             }
+            Gdx.app.exit()
 
             return
         }
@@ -265,8 +220,6 @@ object App: ApplicationAdapter() {
 
                     overlayTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
                         menuTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
-                            assetManager.updateFonts()
-
                             if (MENUTOG) {
                                 if (!firstUpdate) {
                                     uiUpdate()

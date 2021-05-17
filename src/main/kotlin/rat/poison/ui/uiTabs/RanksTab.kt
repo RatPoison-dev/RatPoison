@@ -30,7 +30,7 @@ class VisTextButtonCustom(mainText: String): VisTextButton(mainText.locale()) {
 }
 
 class RanksTab : Tab(false, false) {
-    private val table = VisTable(true)
+    private val table = VisTable(false)
 
     private var ranksListTable = VisTable(false)
     private var teamsLabel = VisLabelCustom("Team" + "  \n")
@@ -46,17 +46,16 @@ class RanksTab : Tab(false, false) {
     private var moneyLabel = VisLabelCustom("Money" + "  \n")
 
     init {
-        ranksListTable.add(teamsLabel)
+        namesTable.add(namesLabel).top()
 
-        namesTable.add(namesLabel).row()
+        ranksListTable.add(teamsLabel).top()
         ranksListTable.add(namesTable).top().padRight(4f) //Table
-
-        ranksListTable.add(ranksLabel)
-        ranksListTable.add(killsLabel)
-        ranksListTable.add(deathsLabel)
-        ranksListTable.add(kdLabel)
-        ranksListTable.add(winsLabel)
-        ranksListTable.add(moneyLabel)
+        ranksListTable.add(ranksLabel).top()
+        ranksListTable.add(killsLabel).top()
+        ranksListTable.add(deathsLabel).top()
+        ranksListTable.add(kdLabel).top()
+        ranksListTable.add(winsLabel).top()
+        ranksListTable.add(moneyLabel).top()
 
         table.add(ranksListTable).left().maxWidth(500F)
     }
@@ -87,6 +86,7 @@ class RanksTab : Tab(false, false) {
         ranksPlayerList.forEach {
             constructRank(it)
         }
+
         updatingRanks = false
     }
 
@@ -100,10 +100,11 @@ class RanksTab : Tab(false, false) {
         tmpName = tmpName.substring(0, if (tmpName.length > 23) 23 else tmpName.length)
 
         if (player.steamID != 0) { //Bot check
-            namesTable.add(LinkLabel(tmpName, "https://steamcommunity.com/profiles/%5BU:1:" + player.steamID + "%5B/")).height(20f).left().row()
+            namesTable.add(LinkLabel(tmpName, "https://steamcommunity.com/profiles/%5BU:1:" + player.steamID + "%5B/")).height(21F).left().top().row()
         } else {
-            namesTable.add(tmpName).height(20f).left().row()
+            namesTable.add(tmpName).height(21F).left().top().row()
         }
+
         ranksLabel.setText(ranksLabel.text.toString() + player.rank + "  \n")
         killsLabel.setText(killsLabel.text.toString() + player.kills + "  \n")
         deathsLabel.setText(deathsLabel.text.toString() + player.deaths + "  \n")
