@@ -1,0 +1,771 @@
+//Category: Misc
+Warning = 警告
+NONE = None
+Error = 错误
+TEAMMATES = 队友
+ENEMIES = 敌人
+HEALTH = 健康点
+ARMOR = 盔甲
+NAME = 名称
+GRENADES = 手榴弹
+TARGET = 目的
+WEAPON = 武器
+WARNING = 警告
+SCOPE = 望远镜
+AMMO = 弹药
+HELMET = 头盔
+KEVLAR = 凯夫拉尔
+SCOPED = 仔细看
+FLASHED = 蒙蔽
+WEAPONS = 武器
+T = T
+CT = CT
+BOMB = 炸弹
+BOMB_CARRIER = 轰炸机
+DEFUSERS = 炸弹处理器
+DEFUSER = 炸弹处理
+SELF = 你自己
+ENABLE = 使能够
+FOV = 视角
+
+//Category: Weapons
+// Player's weapon name and weapon's names might differ
+DESERT_EAGLE = 沙漠之鹰
+DEAGLE = 沙漠之鹰
+DUAL_BERETTA = 双持贝瑞塔
+ELITE = 双持贝瑞塔
+FIVE_SEVEN = FN57
+FIVESEVEN = FN57
+GLOCK = 格洛克18型
+AK47 = AK47
+M4A1 = M4A4
+CITEMHEALTHSHOT = 药品注射器
+CPROPDOORROTATING = 门卡住了
+TASER = 泰瑟枪
+AUG = AUG
+AWP = AWP
+FAMAS = 法玛斯
+G3SG1 = G3SG1
+GALIL = 加利尔
+GALILAR = 加利尔 AR
+M249 = M249
+M4A4 = M4A4
+MAC10 = MAC10
+P90 = P90
+MP5 = MP5
+UMP45 = UMP45
+XM1014 = XM1014
+PP_BIZON = PP_BIZON
+BIZON = PP_BIZON
+MAG7 = MAG7
+NEGEV = 内格夫
+SAWED_OFF = 短霰弹枪
+SAWEDOFF = 短霰弹枪
+TEC9 = TEC9
+ZEUS_X27 = ZEUS_X27
+P2000 = P2000
+MP7 = MP7
+MP9 = MP9
+NOVA = 新星
+P250 = P250
+SCAR20 = SCAR20
+SG553 = SG553
+SG556 = SG553
+SSG08 = SSG08
+CECONENTITY = 化解包
+KNIFE = 刀
+FLASH_GRENADE = 閃光彈
+EXPLOSIVE_GRENADE = 破片彈
+SMOKE_GRENADE = 手拋催淚彈
+MOLOTOV = 燃燒彈
+DECOY_GRENADE = 诱饵炸弹
+INCENDIARY_GRENADE = 燃燒彈
+C4 = C4 炸弹
+MEDISHOT = 药品注射器
+KNIFE_T = 刀_T
+M4A1_SILENCER = M4A1_消音器
+USP_SILENCER = USP_消音器
+CZ75A = CZ75A
+R8_REVOLVER = R8_左轮手枪
+FISTS = 拳头
+CHARGE = 冲击
+TABLET = 平板电脑 
+HAMMER = 锤子
+FIRE_BOMB = 燃燒彈
+DIVERSION_DEVICE = 诱饵炸弹
+KNIFE_BAYONET = 刀_刺刀
+KNIFE_CSS = 刀_CSS
+KNIFE_FLIP = 刀_翻转
+KNIFE_GUT = 刀_胆
+KNIFE_KARAMBIT = 刀_卡拉姆比特
+KNIFE_M9_BAYONET = 刀_M9_刺刀
+KNIFE_TACTICAL = 刀_战术上的
+KNIFE_FALCHION = 刀_短裙
+KNIFE_BOWIE = 刀_鲍伊
+KNIFE_BUTTERFLY = 刀_蝴蝶
+KNIFE_PUSH = 刀_按
+KNIFE_CORD = 刀_绳
+KNIFE_CANIS = 刀_CANIS
+KNIFE_URSUS = 刀_URSUS
+KNIFE_GYPSY = 刀_吉普赛人
+KNIFE_OUTDOOR = 刀_户外
+KNIFE_STILETTO = 刀_短剑
+KNIFE_WIDOWMAKER = 刀_寡妇制造者
+KNIFE_SKELETON = 刀_骨
+
+//Category: Tooltips
+ENABLE_BUNNY_HOP_TOOLTIP = 启用小兔子跳
+_ENABLE_PATH_AIM_TOOLTIP = 使用光标移动进行瞄准
+_ENABLE_FLAT_AIM_TOOLTIP = 将信息写入游戏
+_AIM_BONE_TOOLTIP = 默认瞄准的骨头
+_AIM_FORCE_BONE_TOOLTIP = 力量到骨头
+FORCE_AIM_BONE_KEY_TOOLTIP = 握住时启用特定骨骼
+GLOBAL_AUTOMATIC_WEAPONS_TOOLTIP = 半自动武器将在指定的毫秒间隔内自动射击
+_AIM_ONLY_ON_SHOT_TOOLTIP = 机器人应该只在你可以射击的时候进行瞄准
+_FACTOR_RECOIL_TOOLTIP = 射击时要考虑到后坐力
+ENABLE_AIM_TOOLTIP = 是否完全启用或禁用目标
+SNIPER_ENABLE_SCOPED_ONLY_TOOLTIP = 只在通过望远镜观察时使用该机器人
+ACTIVATE_FROM_AIM_KEY_TOOLTIP = 按键时启用机器人
+_AIM_FOV_TOOLTIP = 目标透视角度
+FOV_TYPE_TOOLTIP = 基于距离的动态透视（DISTANCE）或静态可画透视圈（STATIC)
+_AIM_SPEED_TOOLTIP = 数字越小越快
+_AIM_SMOOTHNESS_TOOLTIP = 较低的是不太平稳
+_AIM_AFTER_SHOTS_TOOLTIP = 经过几次拍摄后使用机器人
+TEAMMATES_ARE_ENEMIES_TOOLTIP = 使用机器人对付队友
+Save-CFG_TOOLTIP = 保存当前设置
+Load-CFG_TOOLTIP = 加载选定的设置
+Delete-CFG_TOOLTIP = 删除选定的设置
+Load-Locale_TOOLTIP = 加载选定的本地化
+MENU_KEY_TOOLTIP = 按下按钮，打开菜单
+Save-Current-Config-To-Default-Settings_TOOLTIP = 将当前设置保存为默认值
+ENABLE_NADE_HELPER_TOOLTIP = 让机器人帮助投掷手榴弹
+Create-Grenade-Position_TOOLTIP = 在当前位置创建手榴弹定义
+Save-As-File_TOOLTIP = 保存当前的手榴弹定义
+Load-From-File_TOOLTIP = 从选定的文件中加载手榴弹定义
+Delete-Selected-File_TOOLTIP = 删除选择
+Clear-Currently-Loaded_TOOLTIP = 清除所有手榴弹的定义
+Delete-At-Current-Position_TOOLTIP = 删除当前位置的手榴弹定义
+ENABLE_RCS_TOOLTIP = 启用后坐力控制系统
+RCS_SMOOTHING_X_TOOLTIP = X轴后坐力控制（数字越大，越有力)
+RCS_SMOOTHING_Y_TOOLTIP = Y轴后坐力控制（数字越大，越有力
+RCS_RETURNAIM_TOOLTIP = 后坐力后的重新定位
+ENABLE_RECOIL_CROSSHAIR_TOOLTIP = 启用额外的十字准线，显示你的后坐力
+ENABLE_SNIPER_CROSSHAIR_TOOLTIP = 无论你是否通过望远镜观察，十字准线都能发挥作用。
+RCROSSHAIR_WIDTH_TOOLTIP = 横线的宽度
+RCROSSHAIR_LENGTH_TOOLTIP = 十字线的长度
+RCROSSHAIR_XOFFSET_TOOLTIP = X轴偏移
+RCROSSHAIR_YOFFSET_TOOLTIP = Y轴偏移
+RCROSSHAIR_COLOR_TOOLTIP = 十字线的颜色
+SKELETON_ESP_TOOLTIP = 启用骨架ESP
+VISUALS_TOGGLE_KEY_TOOLTIP = 所有的视觉辅助工具将在这个键上被启用/禁用
+RADAR_ESP_TOOLTIP = 你附近的每个敌人都会被显示出来
+ENABLE_NIGHTMODE_TOOLTIP = 控制屏幕的亮度
+ENABLE_ADRENALINE_TOOLTIP = 打人时在屏幕上应用的效果
+ENABLE_BOX_ESP_TOOLTIP = 启用盒式ESP
+BOX_ESP_DETAILS_TOOLTIP = 在盒子上添加额外的细节
+FOOTSTEP_TTL_TOOLTIP = 脚步声将显示多长时间
+MODEL_TOOLTIP = 玩家模型将大放异彩
+AUTO_STRAFE_TOOLTIP = 根据你的光标移动，自动在空中扫射
+STRAFE_BHOP_ONLY_TOOLTIP = 只有在兔子跳跃时才自动启用空中扫射功能
+FAST_STOP_TOOLTIP = 启用快速停止功能
+HEAD_WALK_TOOLTIP = 在球员的头上行走
+ENABLE_FOV_CHANGER_TOOLTIP = 改变你的观点
+FOV_SMOOTH_TOOLTIP = 顺利地改变你的观点
+FOV_SNIPER_DEFAULT_TOOLTIP = 你持有狙击武器时的视角 (AWP, SSG 08 etc)
+FOV_ZOOM_1_TOOLTIP = 你在第一个望远镜配置中的观点
+FOV_ZOOM_2_TOOLTIP = 你在第二个望远镜配置中的观点
+ENABLE_BOMB_TIMER_TOOLTIP = 启用炸弹定时器 
+BOMB_TIMER_BARS_TOOLTIP = 在屏幕底部的栏中显示炸弹的计时器
+BOMB_TIMER_MENU_TOOLTIP = 启用炸弹定时器菜单
+Spectator-List_TOOLTIP = 显示正在关注你的球员名单
+ENABLE_AUTO_KNIFE_TOOLTIP = 使机器人能够自动用刀攻击
+LS_BOMB_TOOLTIP = 在0.00秒内自动拆除炸弹
+D_SPAM_TOOLTIP = 自动按E键
+W_SPAM_TOOLTIP = 自动按下鼠标右键
+ENABLE_REDUCED_FLASH_TOOLTIP = 减少眩晕手榴弹的致盲效果
+FLASH_MAX_ALPHA_TOOLTIP = 少即是多
+ENABLE_HITSOUND_TOOLTIP = 当你打人的时候，播放一个声音效果
+Self-Nade_TOOLTIP = 跳到空中，扔出一枚手榴弹，对自己造成98%的伤害
+Wear_TOOLTIP = 武器皮肤的划痕效果
+StatTrak_TOOLTIP = 武器皮肤上的杀伤力计数器
+Auto-Force-Update_TOOLTIP = 武器皮肤纹理的自动更新
+Manual-Force-Update_TOOLTIP = 单击以更新武器皮肤纹理
+HITMARKER_OUTLINE_TOOLTIP = 显示命中标记的轮廓
+HITMARKER_RECOIL_POSITION_TOOLTIP = 命中标记是否显示后坐力位置
+INDICATOR_SIZE_TOOLTIP = 指示器尺寸
+HOLD_AIM_TOOLTIP = 瞄准敌人，即使他们在机器人的视野之
+_VARIATION_DEADZONE_TOOLTIP = 在没有变异的地方出现了变异
+tPerfectAim_TOOLTIP = 如果选中的骨头在视线范围内，就立即瞄准它。
+CLEAR_POSITIONS_TOOLTIP = 清除当前加载的所有手榴弹定义
+INDICATOR_ESP_TOOLTIP = 表示被呈现的实体的位置的一个箭头
+BOX_ESP_HEALTH_TOOLTIP = 绘制健康水平图（作为一条线）
+BOX_ESP_ARMOR_TOOLTIP = 绘制装甲水平图（作为一条线）
+BOX_ESP_NAME_TOOLTIP = 被提交的实体名称
+BOX_ESP_WEAPON_TOOLTIP = 渲染地图周围的所有武器
+ENABLE_SNAPLINES_TOOLTIP = 显示指向实体的线条
+HeadLvl_TOOLTIP = 显示头部水平的线
+D_SPAM_KEY_TOOLTIP = 当一个键被按下时，继续按E键
+W_SPAM_KEY_TOOLTIP = 当一个键被按下时，继续按下鼠标右键
+KILL_BIND_TOOLTIP = 当你杀了人后，不断地按下一个特定的按钮
+BHOP_HITCHANCE_TOOLTIP = 兔跳时成功跳起的几率
+GLOW_SMOKE_CHECK_TOOLTIP = 当实体被烟雾隐藏时，禁用发光的ESP
+Advanced-Settings_TOOLTIP = 启用/禁用当前武器类别的高级瞄准设置（RCS、死区等）
+BOX_SMOKE_CHECK_TOOLTIP = 当实体被烟雾隐藏时，禁用盒子ESP
+SNAPLINES_SMOKE_CHECK_TOOLTIP = 当实体被烟雾隐藏时，禁用线条
+INDICATOR_SMOKE_CHECK_TOOLTIP = 当实体被烟雾隐藏时，禁用指示器
+CHAMS_TARGET_COLOR_TOOLTIP = 视觉教具将显示目标
+LEGIT_RADAR_TOOLTIP = 在雷达上显示在指定距离内发出声音的敌人
+_TRIGGER_INCROSS_TOOLTIP = 当目标在你的光标位置时发射你的武器
+_TRIGGER_INFOV_TOOLTIP = 当目标是你光标位置周围的指定区域时，发射你的武器
+ENABLE_ESP_TOOLTIP = 所有视觉教具的主开关
+ENABLE_FOOTSTEPS_TOOLTIP = 渲染所有奔跑的敌人的脚步声
+ENABLE_OVERRIDE_TOOLTIP = 允许为每个武器而不是武器类别配置瞄准设置
+LEGIT_RADAR_FOOTSTEPS_DISTANCE_TOOLTIP = 在雷达上显示发出声音的敌人的最大距离
+FIRST-SHOT_TOOLTIP = 机器人发射第一枪前的延迟时间
+BETWEEN-SHOTS_TOOLTIP = 机器人每次射击之间的延迟时间
+BOX_FAR_RADAR_TOOLTIP = 渲染离你很远的队友发现的实体
+Aim-After-#_TOOLTIP = 在发射了指定数量的子弹后，激活瞄准机器人
+Join-Discord_TOOLTIP = 与通信服务器的邀请链接
+MENU_ALPHA_TOOLTIP = 修改菜单的透明度
+GAUSSIAN_BLUR_TOOLTIP = 在菜单后面创建一个模糊的屏幕
+ENABLE_HITMARKER_TOOLTIP = 表示只要你打了人
+CHAMS_ESP_TOOLTIP = 启用3D视觉辅助工具
+NADE_THROWER_SMOOTHNESS_TOOLTIP = 自动投掷手榴弹机器人的平稳性
+
+//Category: Aim
+GLOBAL_AUTO_WEP_DELAY = 时间间隔，以毫秒为单位
+ENABLE_AIM = 宗旨
+AIM_TOGGLE_KEY = 切换键，自动瞄准
+ACTIVATE_FROM_AIM_KEY = 从按下开火按钮开始启动
+TEAMMATES_ARE_ENEMIES = 队友是敌人
+HOLD_AIM = 按下并按住瞄准按钮
+FORCE_AIM_BONE_KEY = 强制瞄准机器人与骨质键绑定
+FORCE_AIM_KEY = 强制定位机器人执行键盘绑定来定位。
+FORCE_AIM_ALWAYS = 始终强制瞄准机器人进行瞄准
+FORCE_AIM_THROUGH_WALLS = 始终强制瞄准机器人穿墙瞄准
+GLOBAL_AUTOMATIC_WEAPONS = 自动武器
+AIM_TARGET_SWAP_DELAY = 改变目标时有一个时间延迟
+SNIPER_ENABLE_SCOPED_ONLY = 只有在通过望远镜看时
+HEAD = 头
+NECK = 颈部
+CHEST = 胸部
+STOMACH = 胃
+PELVIS = 盆腔
+NEAREST = 最近的
+RANDOM = 随机
+EMPTY = 空
+FOV_TYPE = 观点的类型
+DISTANCE = DISTANCE
+STATIC = STATIC
+Weapon-Category = 武器类别
+_AIM_FOV = 视角
+_AIM_SPEED = 速度
+_AIM_SMOOTHNESS = 平滑性
+_AIM_AFTER_SHOTS = 在指定数量后瞄准
+_PERFECT_AIM_FOV = 视角
+_PERFECT_AIM_CHANCE = 一个具体的百分比
+_RANDOM_X_VARIATION = X轴的随机变化
+_RANDOM_Y_VARIATION = Y轴的随机变化
+_VARIATION_DEADZONE = 变化的死区
+_AIM_RCS_X = X轴的反冲力控制系统
+_AIM_RCS_Y = Y轴的反冲力控制系统
+_AIM_RCS_VARIATION = 后坐力控制系统的变化
+_AIM_SPEED_DIVISOR = 速度除数
+Enable-Perfect-Aim = 实现完美瞄准
+Advanced-Settings = 高级设置
+
+
+//Category: Trigger
+ENABLE_TRIGGER = 自动射击机器人的主开关
+TRIGGER_ENABLE_KEY = 如果你按下这个按钮，就会激活自动射击机器人
+TRIGGER_KEY = 激活自动射击机器人的按钮
+_TRIGGER_FOV = 视角
+_TRIGGER_INIT_SHOT_DELAY = 最初的拍摄延迟
+_TRIGGER = 启用
+_TRIGGER_BACKTRACK = 拍摄于 《Backtrack》
+_TRIGGER_PER_SHOT_DELAY = Per Shot Delay
+
+//Category: Backtrack
+ENABLE_BACKTRACK = 《Backtrack》 主开关
+ENABLE_BACKTRACK_ON_KEY = 当你按下按钮时就会激活
+BACKTRACK_KEY = 《Backtrack》 按钮
+BACKTRACK_MS = 毫秒
+BACKTRACK_SPOTTED = 只有在发现时
+_BACKTRACK = 《Backtrack》
+BACKTRACK_VISUALIZE = 显示 《Backtrack》
+BACKTRACK_VISUALIZE_SMOKE_CHECK = 《Backtrack》 显示并检查是否被烟雾覆盖
+
+//Category: Misc Esp
+RADAR_ESP = 雷达
+ENABLE_ESP = 启用
+VISUALS_TOGGLE_KEY = 按钮来切换视觉辅助工具
+
+//Subcategory: Nightmode
+ENABLE_NIGHTMODE = 让它看起来像夜晚
+NIGHTMODE_VALUE = %
+
+//Subcategory: Draw FOV
+DRAW_AIM_FOV_COLOR = 为视线渲染透视的颜色
+DRAW_TRIGGER_FOV_COLOR = 为发射装置渲染透视的颜色
+DRAW_AIM_FOV = 渲染目标设备的视角
+DRAW_TRIGGER_FOV = 渲染发射装置的视角
+
+//Subcategory: Head LVL
+HEAD_LVL_COLOR = 头部水平
+HEAD_LVL_DEADZONE = 死区
+
+//Subcategory: Legit Radar
+LEGIT_RADAR = 合法的雷达
+LEGIT_RADAR_FOOTSTEPS_DISTANCE = 距离
+
+//Subcategory: Spread Circle
+SPREAD_CIRCLE_COLOR = 圈子的颜色
+SpreadCircle = 圈出发射的子弹可能落地的地方
+
+//Subcategory: Adrenaline
+ENABLE_ADRENALINE = 启用肾上腺素
+ADRENALINE_STRENGTH = 肾上腺素的强度
+ADRENALINE_COOLDOWN = 肾上腺素冷却
+ADRENALINE_BOMB_TIME = 使用炸弹时间
+
+//Category: Glow Esp
+GLOW_ESP = 启用
+GLOW_SHOW_TEAM = 队友
+GLOW_SHOW_ENEMIES = 敌人
+GLOW_SHOW_BOMB = 武器
+GLOW_BOMB_ADAPTIVE = 自适应炸弹的光芒
+GLOW_SHOW_BOMB_CARRIER = 炸弹载体
+GLOW_SHOW_WEAPONS = 武器
+GLOW_SHOW_GRENADES = 手榴弹
+GLOW_SHOW_TARGET = 目标
+GLOW_TEAM_COLOR = 队友
+GLOW_ENEMY_COLOR = 敌人
+GLOW_BOMB_COLOR = 武器
+GLOW_BOMB_CARRIER_COLOR = 炸弹载体
+GLOW_WEAPON_COLOR = 武器
+GLOW_GRENADE_COLOR = 手榴弹
+GLOW_SHOW_HEALTH = 显示健康状况
+GLOW_ENEMY_TYPE = 敌人
+GLOW_TEAMMATE_TYPE = 队友
+GLOW_WEAPON_TYPE = 武器
+GLOW_TARGET_TYPE = 目标
+GLOW_GRENADE_TYPE = 手榴弹
+GLOW_BOMB_TYPE = 武器
+GLOW_BOMB_CARRIER_TYPE = 炸弹载体
+NORMAL = 正常
+MODEL = 模型
+VISIBLE = 可见
+VISIBLE-FLICKER = 可见的闪烁
+GLOW_TARGET_COLOR = 辉光目标颜色
+GLOW_SMOKE_CHECK = 烟雾检查
+
+
+//Category: Chams ESP
+CHAMS_ESP = 启用
+CHAMS_SHOW_HEALTH = 衬衫健康
+CHAMS_BRIGHTNESS = 亮度
+CHAMS_SHOW_TEAM = 队友
+CHAMS_SHOW_ENEMIES = 敌人
+CHAMS_SHOW_SELF = 自己
+CHAMS_TEAM_COLOR = 队友
+CHAMS_ENEMY_COLOR = 敌人
+CHAMS_SELF_COLOR = 自己
+CHAMS_TARGET_COLOR = 目标
+
+//Category: Indicator ESP
+INDICATOR_ESP = 启用
+INDICATOR_SHOW_TEAM = 队友
+INDICATOR_SHOW_ENEMIES = 敌人
+INDICATOR_SHOW_BOMB = 炸弹
+INDICATOR_SHOW_BOMB_CARRIER = 炸弹载体
+INDICATOR_SHOW_WEAPONS = 头盔
+INDICATOR_SHOW_GRENADES = 手榴弹
+INDICATOR_SHOW_DEFUSERS = 捍卫者
+INDICATOR_ENEMY_COLOR = 敌人
+INDICATOR_BOMB_COLOR = 炸弹
+INDICATOR_BOMB_CARRIER_COLOR = 炸弹载体
+INDICATOR_DEFUSER_COLOR = 捍卫者
+INDICATOR_WEAPON_COLOR = 头盔
+INDICATOR_GRENADE_COLOR = 手榴弹
+INDICATOR_DISTANCE = 距离
+INDICATOR_SIZE = Size
+INDICATOR_SMOKE_CHECK = 烟雾检查
+
+//Category: Box ESP
+ENABLE_BOX_ESP = 实体盒
+BOX_ESP_HELMET = 头盔
+BOX_ESP_KEVLAR = 凯芙拉
+BOX_ESP_AMMO = 弹药
+BOX_ESP_SCOPED = 通过望远镜观察
+BOX_ESP_FLASHED = 失明
+BOX_DETAILS_TEXT_COLOR = 文字颜色
+BOX_ESP_HEALTH = 健康
+BOX_ESP_HEALTH_POS = 健康
+BOX_ESP_ARMOR = 盔甲
+BOX_ESP_ARMOR_POS = 盔甲
+BOX_ESP_NAME = 命名
+BOX_ESP_NAME_POS = 命名
+BOX_ESP_WEAPON = 武器
+BOX_ESP_WEAPON_POS = 武器
+BOX_ESP_MONEY = 奖金
+BOX_ESP_MONEY_POS = 奖金
+BOX_ESP_HELMET_POS = 头盔
+BOX_ESP_KEVLAR_POS = 凯芙拉
+BOX_ESP_AMMO_POS = 弹药
+BOX_ESP_SCOPED_POS = 通过望远镜观察
+BOX_ESP_FLASHED_POS = 失明
+BOX_SHOW_TEAM = 队友
+BOX_SHOW_ENEMIES = 敌人
+BOX_ESP_DETAILS = 盒子的细节
+BOX_TEAM_COLOR = 队友
+BOX_ENEMY_COLOR = 敌人
+BOX_DEFUSER_COLOR = 捍卫者
+SKELETON_ESP = 骨架
+SKELETON_SHOW_TEAM = 队友
+SKELETON_SHOW_ENEMIES = 敌人
+LEFT = 左边
+RIGHT = RIGHT
+TOP = TOP
+BOTTOM = BOTTOM
+ADVANCED_BOUNDING_BOX = 完全动态的盒子
+BOX_WEAPON_COLOR = 头盔
+BOX_SMOKE_CHECK = 烟雾检查
+BOX_ESP_WEAPON_SCALE = 图标大小
+BOX_ESP_USE_ICONS = 使用图标
+
+//Category: Snaplines ESP
+ENABLE_SNAPLINES = 启用
+SNAPLINES_WIDTH = 宽度
+SNAPLINES_ENEMIES = 敌人
+SNAPLINES_ENEMY_COLOR = 敌人
+SNAPLINES_TEAMMATES = 队友
+SNAPLINES_TEAM_COLOR = 队友
+SNAPLINES_WEAPONS = 头盔
+SNAPLINES_WEAPON_COLOR = 头盔
+SNAPLINES_BOMB = 炸弹
+SNAPLINES_BOMB_COLOR = 炸弹
+SNAPLINES_BOMB_CARRIER = 炸弹载体
+SNAPLINES_BOMB_CARRIER_COLOR = 炸弹载体
+SNAPLINES_DEFUSE_KIT_COLOR = 化解工具箱
+SNAPLINES_SMOKE_CHECK = 烟雾检查
+
+
+//Category: Footsteps ESP
+ENABLE_FOOTSTEPS = 脚步声
+FOOTSTEP_TEAM = 队友
+FOOTSTEP_TEAM_COLOR = 队友
+FOOTSTEP_ENEMY = 敌人
+FOOTSTEP_ENEMY_COLOR = 敌人
+FOOTSTEP_UPDATE = 更新定时器
+FOOTSTEP_TTL = TTL
+TEXT = 文本
+
+//Category: Hitmarker ESP
+ENABLE_HITMARKER = 命中标记
+HITMARKER_WIDTH = 宽度
+HITMARKER_OUTLINE_COLOR = 概要颜色
+HITMARKER_OUTLINE = 概要
+HITMARKER_COMBO = 组合式
+HITMARKER_RECOIL_POSITION = 后坐力位置
+HITMARKER_SPACING = 株距
+HITMARKER_LENGTH = 长度
+HITMARKER_COLOR = 颜色
+HITMARKER_COMBO_COLOR = 组合式颜色
+
+//Category: Far Esp tab
+BOX_FAR_RADAR = 雷达距离盒
+SHARED_ESP = 共享的视觉辅助系统
+
+
+//Category: Others tab
+DISABLE_POST_PROCESSING = 禁用后处理
+D_SPAM = 开门机器人
+D_SPAM_KEY = 开门机器人钮扣
+W_SPAM = 武器垃圾邮件
+W_SPAM_KEY = 武器垃圾邮件钮扣
+SPECTATOR_LIST = 观察员名单
+ENABLE_HITSOUND = 打人时发出的声音
+Self-Nade = 自己 手榴弹
+KILL_BIND = 杀人时按指定按钮
+KILL_BIND_KEY = 钮扣
+Name-Change = 临时改名
+FAKE_LAG = 虚假的滞后系统
+FAKE_LAG_TICKS = 测量单位为 Ticks
+
+//Category: Fonts
+LOAD_FONT = 加载一个字体
+FONT_SIZE = 字体的大小
+FONT_BORDER_WIDTH = 边境宽度
+FONT_BORDER_USE_STRAIGHT = 边境直线
+FONT_BORDER_GAMMA = 边境伽玛
+FONT_SHADOW_OFFSET_X = X轴上的阴影偏移
+FONT_SHADOW_OFFSET_Y = Y轴上的阴影偏移
+FONT_INCLUDE_KERNING = 《Kerning》
+FONT_FLIP = 翻转字体
+FON_GEN_MIP_MAPS = 生成mipmaps
+FONT_COLOR = Font 颜色
+FONT_BORDER_COLOR = 边境 颜色
+FONT_GAMMA = 伽玛
+
+//Category: Skin Changer
+SKINCHANGER = 人为地改变你武器的质地
+FORCE_UPDATE_AUTO = 部队更新
+Skin-ID = 皮肤识别号码
+StatTrak = 杀戮计数器 《StatTrak》
+Wear = 磨损程度
+Manual-Force-Update = 手动强制更新
+Auto-Force-Update = 自动强制更新
+
+
+//Category: Nades tab
+NADE_TRACER = 手榴弹追踪器
+NADE_TRACER_UPDATE_TIME = 追踪器更新时间
+NADE_TRACER_TIMEOUT = 手榴弹追踪器超时
+NADE_TRACER_COLOR = 手榴弹追踪器颜色
+VISUALIZE_SMOKES_COLOR = 渲染烟雾颜色
+VISUALIZE_SMOKES_POLYS = 渲染烟雾多边形计数
+VISUALIZE_SMOKES_WIDTH = 渲染烟雾宽度
+VISUALIZE_SMOKES_HEIGHT = 渲染烟雾高度
+SMOKE_WEAR_OFF_TIME_COLOR = 烟雾定时器
+
+//Category: Override weapons
+_AIM_BONE = 骨骼
+_AIM_FORCE_BONE = 骨骼上的力
+_TRIGGER_INCROSS = InCross
+_TRIGGER_INFOV = InFOV
+_TRIGGER_AIMBOT = 瞄准机器人
+_AIM_ONLY_ON_SHOT = 只在拍摄时瞄准
+_FACTOR_RECOIL = 射击时要考虑到后坐力
+_ENABLE_FLAT_AIM = 写下目标
+_ENABLE_PATH_AIM = 瞄准时考虑到你鼠标的移动
+ENABLE_OVERRIDE = 启用覆盖
+tAutowep = 自动武器
+tAutowepDelay = 毫秒级的间隔
+tAimFov = 透视
+tAimSpeed = 速度
+tAimBone = 骨骼
+tForceBone = 力量骨骼
+tAimSmooth = 平滑性
+tAimAfterShots = 在指定的射击次数后进行瞄准
+tPAimFov = 透视
+tPAimChance = %
+tBTrigFov = 透视
+tBTrigInitDelay = 初次拍摄延迟
+tBTrigPerShotDelay = 每个镜头的延迟
+tBTMS = 毫秒
+Force-Bone = 力量骨骼
+_BACKTRACK_MS = 《Backtrack》
+tFRecoil = 射击时要考虑到后坐力
+tOnShot = 在拍摄过程中
+tFlatAim = 写下目标
+tPathAim = 瞄准时考虑到你鼠标的移动
+tScopedOnly = 只通过望远镜看
+tBoneTrig = 启用自动射击机器人
+tBTrigAim = 瞄准机器人
+tBTrigInCross = InCross
+tBTrigInFov = InFov
+tBTrigBacktrack = 抛出 《Backtrack》
+tBacktrack = 启用 《Backtrack》
+tOverride = 启用覆盖
+tPerfectAim = 完美的目标
+Bone = 骨骼
+速度 = 速度
+Smooth = 顺利
+Perfect-Aim = 完美的目标
+Chance = 机会
+Override-Weapons = 凌驾于武器之上
+Weapon = 武器
+
+
+
+//Category: Options tab
+MENU_KEY = 菜单钮扣
+OPENGL_FPS = OpenGL FPS
+MENU_STAY_FOCUSED = 保持专注
+DEBUG = 调试
+KEYBINDS = 钮扣
+GAUSSIAN_BLUR = 启用菜单模糊化
+MENU_ALPHA = 菜单的字母
+Join-Discord = 加入通信服务器
+Keybinds = 钮扣
+OVERLOAD_KEYBINDS = 禁用重复绑定
+Join-The-Giveaway = 网站，以获得预设的配置
+
+//Category: Configs tab
+FILE_NOT_FOUND_ERROR = 未找到文件
+SAVING_NOW_ERROR = 先等待保存完成
+OVERWRITE_CONFIG = 这个动作可能会覆盖你的配置
+SAVE_DEFAULT = 保存默认值
+Load-Locale = 加载区域性语言
+CONFIRM = 确认
+CANCEL = 取消
+Locale = 地点
+Save = 拯救
+Load = 负载
+Delete = 删除
+Open-configs-folder = 打开配置文件夹
+Refresh = 刷新
+Cloud-Configs = 存储在互联网上的配置
+Download = 下载
+DISPLAY_CLOUD_CONFIGS = 显示存储在互联网上的配置
+DISPLAY_CLOUD_CONFIGS_CATEGORIES = 类别
+CLOSET = Closet
+LEGIT = Legit
+SEMI = Semi
+RAGE = Rage
+
+//Category: Movement tab
+ENABLE_BUNNY_HOP = 兔子跳
+ENABLE_BUNNY_HOP_KEY = 兔子跳钮扣
+AUTO_STRAFE = 自动扫射
+STRAFE_BHOP_ONLY = 仅限兔子跳
+FAST_STOP = 迅速停止
+ENABLE_AUTO_KNIFE = 用刀自动攻击
+HEAD_WALK = 在玩家的头上行走
+SAME = 相同
+OPPOSITE = 对面
+BHOP_HITCHANCE = 成功的几率
+BLOCK_BOT = 自动屏蔽其他玩家
+BLOCK_BOT_KEY = 自动屏蔽其他玩家的键位绑定
+BLOCK_BOT_DISTANCE = 自动阻挡其他球员的距离
+
+//Category: FOV changer tab
+ENABLE_FOV_CHANGER = 观点改变者
+FOV_DEFAULT = 默认视角
+FOV_SMOOTH = 顺利改变视角
+FOV_SNIPER_DEFAULT = 使用狙击手武器时的视角
+FOV_ZOOM_1 = 望远镜的第一次设置
+FOV_ZOOM_2 = 望远镜的第二个设置
+
+//Category: Bomb Tab
+ENABLE_BOMB_TIMER = 炸弹定时器
+BOMB_TIMER_MENU = 计时器菜单
+BOMB_TIMER_BARS = 计时器条
+LS_BOMB = 完美的炸弹拆除
+BOMB_TIMER_BARS_SHOW_TTE = 离爆炸还剩多少时间
+//Subcategory: Bomb Timer Text
+Bomb-Not-Planted! = 炸弹没有被埋设
+Bomb-Planted! = 炸弹被埋下
+Time-To-Explode: = 离爆炸还剩多少时间:
+Location: = 炸弹的位置:
+Can-Defuse: = 它能被溶解吗？:
+Time-To-Defuse: 拆除前的时间:
+Time-Left-After: = 后的剩余时间:
+
+//Category: Misc tab
+ENABLE_REDUCED_FLASH = 能够减少盲目性
+FLASH_MAX_ALPHA = 最大阿尔法
+HITSOUND_VOLUME = 量
+ENABLE_KILLSOUND = 杀人时发出的声音
+MUSIC_KIT_SPOOFER = 音乐套件更换器
+KILLSOUND_VOLUME = 量
+CURRENTLY = 目前
+
+//Category: RCS tab
+ENABLE_RCS = 启用
+RCS_SMOOTHING_X = 后坐力控制系统的X轴精度
+RCS_SMOOTHING_Y = 后坐力控制系统的Y轴精度
+RCS_RETURNAIM = 返回到原来的瞄准位置
+ENABLE_RECOIL_CROSSHAIR = 后坐力十字准线
+ENABLE_SNIPER_CROSSHAIR = 与狙击手望远镜兼容
+RCROSSHAIR_WIDTH = 宽度
+RCROSSHAIR_LENGTH = 长度
+RCROSSHAIR_XOFFSET = X轴偏移
+RCS_TYPE = Y轴偏移
+STABLE = 稳定的
+LEGACY = 旧的
+RCROSSHAIR_YOFFSET = Y轴偏移
+RCROSSHAIR_ALPHA = 阿尔法
+RCROSSHAIR_COLOR = 颜色
+CIRCLE = 圆圈
+CROSSHAIR = 十字线
+RCROSSHAIR_RADIUS = 半径
+RCROSSHAIR_TYPE = 后坐力十字准线类型
+
+//Subcategory: RCrosshair
+RCROSSHAIR_YOFFSET = Y轴偏移
+RCROSSHAIR_ALPHA = 阿尔法
+RCROSSHAIR_COLOR = 颜色
+CIRCLE = 圆圈
+CROSSHAIR = 十字线
+RCROSSHAIR_RADIUS = 半径
+RCROSSHAIR_TYPE = 后坐力十字准线类型
+RCROSSHAIR_GAP = 后坐力十字准线间隙
+RCROSSHAIR_CENTER_DOT = 中心点
+RCROSSHAIR_DOT_RADIUS = 中心点半径
+RCROSSHAIR_TOP = 顶部
+RCROSSHAIR_BOTTOM = 底部
+RCROSSHAIR_LEFT = 左边
+RCROSSHAIR_RIGHT = 对
+RCROSSHAIR_OUTLINE = 概要
+RCROSSHAIR_OUTLINE_WIDTH = 概要 宽度
+RCROSSHAIR_DYNAMIC = 有活力
+RCROSSHAIR_MAX_SPREAD = 最大价差
+RCROSSHAIR_OUTLINE_COLOR = 概要 颜色
+
+//Category: Nade Helper tab
+ENABLE_NADE_HELPER = 启用
+Loaded:-N/A = 已加载: N/A
+Create-Grenade-Position = 创建新的手榴弹定义
+Save-As-File = 保存为文件
+Load-From-File = 从一个文件中加载
+Delete-Selected-File = 删除选定的文件
+Clear-Currently-Loaded = 清除当前加载的文件
+Delete-At-Current-Position = 在当前位置删除
+NADE_THROWER_SMOOTHNESS = 平滑性
+NADE_ACCURACY_RADIUS = 精度半径
+ENABLE_NADE_THROWER = 自动抛出
+NADE_THROWER_KEY = 钮扣
+CLEAR_POSITIONS = 清除所有当前加载的定义？
+
+
+//Category: Weapons Categories
+PISTOL = 手枪
+RIFLE = 步枪
+SMG = 冲锋枪
+SNIPER = 狙击步枪
+SHOTGUN = 霰弹枪
+
+//Category: Ranks Tab
+Team = 团队
+Name = 命名
+Rank = 级别
+Kills = 杀人
+Deaths = 死亡
+K/D = 杀死死亡率
+Wins = 胜利
+Money = 奖金
+
+//Category: Menu tabs names
+Misc = 杂项 
+Aim = 宗旨
+Visuals = 视觉教具
+RCS = 背隙控制系统
+Ranks = 级别
+Nade-Helper = 手榴弹
+Skins = 武器纹理
+Options = 选项
+Configs = 配置
+Glow = 光芒
+Chams = 三维视觉辅助工具
+Indicator = 指标
+Box = 箱子
+Snaplines = 线条
+FootSteps = 脚步声
+Hitmarker = 命中标记
+Nades = 手榴弹
+Bomb = 炸弹
+FOV-Changer = 观点的改变者
+Movement = 运动
+Others = 其他
+Fonts = 字体
+Aimbot = 自动瞄准机器人
+Triggerbot = 自动射击机器人
+Backtrack = 《Backtrack》
+Override = 覆盖
+
+//Category: VisWindows names
+Bomb-Timer = 炸弹定时器
+Spectator-List = 观众名单
+
+//Translated by windex/TheGuardian226
