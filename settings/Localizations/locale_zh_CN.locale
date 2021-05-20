@@ -1,0 +1,771 @@
+//Category: Misc
+Warning = jǐnggào 
+NONE = None
+Error = cuòwù 
+TEAMMATES = duìyǒu 
+ENEMIES = dírén 
+HEALTH = jiànkāng diǎn 
+ARMOR = kuījiǎ 
+NAME = míngchēng 
+GRENADES = shǒuliúdàn 
+TARGET = mùdì 
+WEAPON = wǔqì 
+WARNING = jǐnggào 
+SCOPE = wàngyuǎnjìng 
+AMMO = dànyào 
+HELMET = tóukuī 
+KEVLAR = kǎi fū lā ěr 
+SCOPED = zǐxì kàn 
+FLASHED = méngbì 
+WEAPONS = wǔqì 
+T = T
+CT = CT
+BOMB = zhàdàn 
+BOMB_CARRIER = hōngzhàjī 
+DEFUSERS = zhàdàn chǔlǐqì 
+DEFUSER = zhàdàn chǔlǐ 
+SELF = nǐzìjǐ 
+ENABLE = shǐ nénggòu 
+FOV = shìjiǎo 
+
+//Category: Weapons
+// Player's weapon name and weapon's names might differ
+DESERT_EAGLE = shāmò zhī yīng 
+DEAGLE = shāmò zhī yīng 
+DUAL_BERETTA = shuāng chí bèi ruì tǎ 
+ELITE = shuāng chí bèi ruì tǎ 
+FIVE_SEVEN = FN57
+FIVESEVEN = FN57
+GLOCK = gé luò kè 18 xíng 
+AK47 = AK47
+M4A1 = M4A4
+CITEMHEALTHSHOT = yàopǐn zhùshèqì 
+CPROPDOORROTATING = mén kǎzhù le 
+TASER = tàisèqiāng 
+AUG = AUG
+AWP = AWP
+FAMAS = fǎ mǎ sī 
+G3SG1 = G3SG1
+GALIL = jiā lì ěr 
+GALILAR = jiā lì ěr AR 
+M249 = M249
+M4A4 = M4A4
+MAC10 = MAC10
+P90 = P90
+MP5 = MP5
+UMP45 = UMP45
+XM1014 = XM1014
+PP_BIZON = PP_BIZON
+BIZON = PP_BIZON
+MAG7 = MAG7
+NEGEV = nèi gé fū 
+SAWED_OFF = duǎn xiàndànqiāng 
+SAWEDOFF = duǎn xiàndànqiāng 
+TEC9 = TEC9
+ZEUS_X27 = ZEUS_X27
+P2000 = P2000
+MP7 = MP7
+MP9 = MP9
+NOVA = xīnxīng 
+P250 = P250
+SCAR20 = SCAR20
+SG553 = SG553
+SG556 = SG553
+SSG08 = SSG08
+CECONENTITY = huàjiě bāo 
+KNIFE = dāo 
+FLASH_GRENADE = shǎnguāng tán 
+EXPLOSIVE_GRENADE = pòpiàn tán 
+SMOKE_GRENADE = shǒu pāo cuīlèidàn 
+MOLOTOV = ránshāodàn 
+DECOY_GRENADE = yòuěr zhàdàn 
+INCENDIARY_GRENADE = ránshāodàn 
+C4 = C4 zhàdàn 
+MEDISHOT = yàopǐn zhùshèqì 
+KNIFE_T = dāo_T 
+M4A1_SILENCER = M4A1_xiāoyīnqì 
+USP_SILENCER = USP_xiāoyīnqì 
+CZ75A = CZ75A
+R8_REVOLVER = R8_zuǒlúnshǒuqiāng 
+FISTS = quántou 
+CHARGE = chōngjī 
+TABLET = píngbǎndiànnǎo 
+HAMMER = chuízi 
+FIRE_BOMB = ránshāodàn 
+DIVERSION_DEVICE = yòuěr zhàdàn 
+KNIFE_BAYONET = dāo_cìdāo 
+KNIFE_CSS = dāo_CSS 
+KNIFE_FLIP = dāo_fānzhuǎn 
+KNIFE_GUT = dāo_dǎn 
+KNIFE_KARAMBIT = dāo_kǎ lā mǔ bǐtè 
+KNIFE_M9_BAYONET = dāo_M9_cìdāo 
+KNIFE_TACTICAL = dāo_zhànshù shàng de 
+KNIFE_FALCHION = dāo_duǎn qún 
+KNIFE_BOWIE = dāo_bào yī 
+KNIFE_BUTTERFLY = dāo_húdié 
+KNIFE_PUSH = dāo_àn 
+KNIFE_CORD = dāo_shéng 
+KNIFE_CANIS = dāo_CANIS 
+KNIFE_URSUS = dāo_URSUS 
+KNIFE_GYPSY = dāo_jípǔsàirén 
+KNIFE_OUTDOOR = dāo_hùwài 
+KNIFE_STILETTO = dāo_duǎnjiàn 
+KNIFE_WIDOWMAKER = dāo_guǎfu zhìzàozhě 
+KNIFE_SKELETON = dāo_gǔ 
+
+//Category: Tooltips
+ENABLE_BUNNY_HOP_TOOLTIP = qǐyòng xiǎo tùzi tiào 
+_ENABLE_PATH_AIM_TOOLTIP = shǐyòng guāngbiāo yídòng jìnxíng miáozhǔn 
+_ENABLE_FLAT_AIM_TOOLTIP = qiāng xìnxī xiě rù yóuxì 
+_AIM_BONE_TOOLTIP = mòrèn miáozhǔn de gǔtou 
+_AIM_FORCE_BONE_TOOLTIP = lìliang dào gǔtou 
+FORCE_AIM_BONE_KEY_TOOLTIP = wòzhù shí qǐyòng tèdìng gǔgé 
+GLOBAL_AUTOMATIC_WEAPONS_TOOLTIP = bànzìdòng wǔqì qiāng zài zhǐdìng de háomiǎo jiàngé nèi zìdòng shèjī 
+_AIM_ONLY_ON_SHOT_TOOLTIP = jīqìrén yīnggāi zhǐ zài nǐ kěyǐ shèjī deshíhòu jìnxíng miáozhǔn 
+_FACTOR_RECOIL_TOOLTIP = shèjī shí yào kǎolǜ dào hòuzuòlì 
+ENABLE_AIM_TOOLTIP = shìfǒu wánquán qǐyòng huò jìnyòng mùbiāo 
+SNIPER_ENABLE_SCOPED_ONLY_TOOLTIP = zhǐ zài tōngguò wàngyuǎnjìng guānchá shí shǐyòng gāi jīqìrén 
+ACTIVATE_FROM_AIM_KEY_TOOLTIP = ànjiàn shí qǐyòng jīqìrén 
+_AIM_FOV_TOOLTIP = mùbiāo tòushì jiǎodù 
+FOV_TYPE_TOOLTIP = jīyú jùlí de dòngtài tòushì （DISTANCE） huò jìngtài kě huà tòushì quān （STATIC) 
+_AIM_SPEED_TOOLTIP = shùzì yuè xiǎo yuè kuài 
+_AIM_SMOOTHNESS_TOOLTIP = jiào dī de shì bù tàipíng wěn 
+_AIM_AFTER_SHOTS_TOOLTIP = jīngguò jǐcì pāishè hòu shǐyòng jīqìrén 
+TEAMMATES_ARE_ENEMIES_TOOLTIP = shǐyòng jīqìrén duìfu duìyǒu 
+Save-CFG_TOOLTIP = bǎocún dāngqián shèzhì 
+Load-CFG_TOOLTIP = jiāzài xuǎndìng de shèzhì 
+Delete-CFG_TOOLTIP = shānchú xuǎndìng de shèzhì 
+Load-Locale_TOOLTIP = jiāzài xuǎndìng de běndìhuà 
+MENU_KEY_TOOLTIP = ànxià ànniǔ ， dǎkāi càidān 
+Save-Current-Config-To-Default-Se ttings_TOOLTIP = qiāng dāngqián shèzhì bǎocún wèi mòrèn zhí 
+ENABLE_NADE_HELPER_TOOLTIP = ràng jīqìrén bāngzhù tóuzhì shǒuliúdàn 
+Create-Grenade-Position_TOOLTIP = zài dāngqián wèizhi chuàngjiàn shǒuliúdàn dìngyì 
+Save-As-File_TOOLTIP = bǎocún dāngqián de shǒuliúdàn dìngyì 
+Load-From-File_TOOLTIP = zòng xuǎndìng de wénjiàn zhòng jiā zài shǒuliúdàn dìngyì 
+Delete-Selected-File_TOOLTIP = shānchú xuǎnzé 
+Clear-Currently-Loaded_TOOLTIP = qīngchú suǒyǒu shǒuliúdàn de dìngyì 
+Delete-At-Current-Position_TOOLTI P = shānchú dāngqián wèizhi de shǒuliúdàn dìngyì 
+ENABLE_RCS_TOOLTIP = qǐyòng hòuzuòlì kòng zhì jì tǒng 
+RCS_SMOOTHING_X_TOOLTIP = X zhòu hòuzuòlì kòngzhì （shùzì yuè dà， yuè yǒulì) 
+RCS_SMOOTHING_Y_TOOLTIP = Y zhòu hòuzuòlì kòngzhì （shùzì yuè dà， yuè yǒulì 
+RCS_RETURNAIM_TOOLTIP = hòuzuòlì hòu de chóngxīn dìngwèi 
+ENABLE_RECOIL_CROSSHAIR_TOOLTIP = qǐyòng éwài de shízì zhǔnxiàn ， xiǎnshì nǐde hòuzuòlì 
+ENABLE_SNIPER_CROSSHAIR_TOOLTIP = wúlùn nǐ shìfǒu tōngguò wàngyuǎnjìng guānchá ， shízì zhǔnxiàn dōu néng fāhuī zuòyòng 。 
+RCROSSHAIR_WIDTH_TOOLTIP = héngxiàn de kuāndù 
+RCROSSHAIR_LENGTH_TOOLTIP = shí zì xiàn de chángdù 
+RCROSSHAIR_XOFFSET_TOOLTIP = X zhòu piānyí 
+RCROSSHAIR_YOFFSET_TOOLTIP = Y zhòu piānyí 
+RCROSSHAIR_COLOR_TOOLTIP = shí zì xiàn de yánsè 
+SKELETON_ESP_TOOLTIP = qǐyòng gǔjià ESP 
+VISUALS_TOGGLE_KEY_TOOLTIP = suǒyǒu de shìjué fǔ zhù gōng jù qiāng zài zhège jiàn shàng bèi qǐyòng / jìnyòng 
+RADAR_ESP_TOOLTIP = nǐ fùjìn de měi gè dírén dūhuì bèi xiǎnshì chulai 
+ENABLE_NIGHTMODE_TOOLTIP = kòngzhì píngmù de liàngdù 
+ENABLE_ADRENALINE_TOOLTIP = dǎ rén shí zài píngmù shàng yìngyòng de xiàoguǒ 
+ENABLE_BOX_ESP_TOOLTIP = qǐyòng hé shì ESP 
+BOX_ESP_DETAILS_TOOLTIP = zài hézi shàng tiānjiā éwài de xìjié 
+FOOTSTEP_TTL_TOOLTIP = jiǎo bù shēng qiāng xiǎnshì duō cháng shíjiān 
+MODEL_TOOLTIP = wánjiā móxíng qiāng dàfàngyìcǎi 
+AUTO_STRAFE_TOOLTIP = gēnjù nǐde guāngbiāo yídòng ， zìdòng zài kōngzhōng sǎoshè 
+STRAFE_BHOP_ONLY_TOOLTIP = zhǐyǒu zài tùzi tiàoyuè shí cái zìdòng qǐyòng kōngzhōng sǎoshè gōngnéng 
+FAST_STOP_TOOLTIP = qǐyòng kuàisù tíngzhǐ gōngnéng 
+HEAD_WALK_TOOLTIP = zài qiúyuán de tóushàng xíngzǒu 
+ENABLE_FOV_CHANGER_TOOLTIP = gǎibiàn nǐde guāndiǎn 
+FOV_SMOOTH_TOOLTIP = shùnlì de gǎibiàn nǐde guāndiǎn 
+FOV_SNIPER_DEFAULT_TOOLTIP = nǐ chíyǒu jūjī wǔqì shí de shìjiǎo (AWP, SSG 08 etc) 
+FOV_ZOOM_1_TOOLTIP = nǐ zài dì yī gè wàngyuǎnjìng pèizhì zhòngdì guāndiǎn 
+FOV_ZOOM_2_TOOLTIP = nǐ zài dìèr gè wàngyuǎnjìng pèizhì zhòngdì guāndiǎn 
+ENABLE_BOMB_TIMER_TOOLTIP = qǐyòng zhàdàn dìng shí qì 
+BOMB_TIMER_BARS_TOOLTIP = zài píngmù dǐbù de lán zhòng xiǎnshì zhàdàn de jìshíqì 
+BOMB_TIMER_MENU_TOOLTIP = qǐyòng zhàdàn dìng shí qì càidān 
+Spectator-List_TOOLTIP = xiǎnshì zhèngzài guānzhù nǐde qiúyuán míngdān 
+ENABLE_AUTO_KNIFE_TOOLTIP = shǐ jīqìrén nénggòu zìdòng yòng dāo gōngjī 
+LS_BOMB_TOOLTIP = zài 0.00 miǎo nèi zìdòng chāichú zhàdàn 
+D_SPAM_TOOLTIP = zìdòng àn E jiàn 
+W_SPAM_TOOLTIP = zìdòng ànxià shǔbiāo yòu jiàn 
+ENABLE_REDUCED_FLASH_TOOLTIP = jiǎnshǎo xuànyùn shǒuliúdàn de zhì máng xiàoguǒ 
+FLASH_MAX_ALPHA_TOOLTIP = shào jí shì duō 
+ENABLE_HITSOUND_TOOLTIP = dàng nǐ dǎ rén deshíhòu， bōfàng yī gè shēngyīn xiàoguǒ 
+Self-Nade_TOOLTIP = tiào dào kōngzhōng， rēng chū yī méi shǒuliúdàn， duì zìjǐ zàochéng 98% de shānghài 
+Wear_TOOLTIP = wǔqì pífū de huáhén xiàoguǒ 
+StatTrak_TOOLTIP = wǔqì pífū shàng de shāshānglì jìshùqì 
+Auto-Force-Update_TOOLTIP = wǔqì pífū wénlǐ de zìdòng gēngxīn 
+Manual-Force-Update_TOOLTIP = dānjī yǐ gēngxīn wǔqì pífū wénlǐ 
+HITMARKER_OUTLINE_TOOLTIP = xiǎnshì mìngzhòng biāojì de lúnkuò 
+HITMARKER_RECOIL_POSITION_TOOLTIP = mìngzhòng biāojì shìfǒu xiǎnshì hòuzuòlì wèizhi 
+INDICATOR_SIZE_TOOLTIP = zhǐshìqì chǐcun 
+HOLD_AIM_TOOLTIP = miáozhǔn dírén， jíshǐ tāmen zài jīqìrén de shìyě zhī 
+_VARIATION_DEADZONE_TOOLTIP = zài méiyǒu biànyì de dìfang chūxiàn le biànyì 
+tPerfectAim_TOOLTIP = rúguǒ xuǎnzhòng de gǔtou zài shìxiàn fànwéi nèi， jiù lìjí miáozhǔn tā。 
+CLEAR_POSITIONS_TOOLTIP = qīngchú dāngqián jiāzài de suǒyǒu shǒuliúdàn dìngyì 
+INDICATOR_ESP_TOOLTIP = biǎoshì bèi chéngxiàn de shítǐ de wèizhi de yī gè jiàntóu 
+BOX_ESP_HEALTH_TOOLTIP = huìzhì jiànkāng shuǐpíng tú （zuòwéi yī tiáo xiàn） 
+BOX_ESP_ARMOR_TOOLTIP = huìzhì zhuāngjiǎ shuǐpíng tú （zuòwéi yī tiáo xiàn） 
+BOX_ESP_NAME_TOOLTIP = bèi tíjiāo de shítǐ míngchēng 
+BOX_ESP_WEAPON_TOOLTIP = xuànrǎn dìtú zhōuwéi de suǒyǒu wǔqì 
+ENABLE_SNAPLINES_TOOLTIP = xiǎnshì zhǐxiàng shítǐ de xiàntiáo 
+HeadLvl_TOOLTIP = xiǎnshì tóubù shuǐpíng de xiàn 
+D_SPAM_KEY_TOOLTIP = dàng yī gè jiàn bèi ànxià shí， jìxù àn E jiàn 
+W_SPAM_KEY_TOOLTIP = dàng yī gè jiàn bèi ànxià shí， jìxù ànxià shǔbiāo yòu jiàn 
+KILL_BIND_TOOLTIP = dàng nǐ shā le rén hòu， bùduàn de ànxià yī gè tèdìng de ànniǔ 
+BHOP_HITCHANCE_TOOLTIP = tù tiào shí chénggōng tiào qǐ de jīlǜ 
+GLOW_SMOKE_CHECK_TOOLTIP = dàng shítǐ bèi yānwù yǐncáng shí， jìnyòng fāguāng de ESP 
+Advanced-Settings_TOOLTIP = qǐyòng / jìnyòng dāngqián wǔqì lèibié de gāojí miáozhǔn shèzhì （RCS, sǐqū děng） 
+BOX_SMOKE_CHECK_TOOLTIP = dàng shítǐ bèi yānwù yǐncáng shí， jìnyòng hézi ESP 
+SNAPLINES_SMOKE_CHECK_TOOLTIP = dàng shítǐ bèi yānwù yǐncáng shí， jìnyòng xiàntiáo 
+INDICATOR_SMOKE_CHECK_TOOLTIP = dàng shítǐ bèi yānwù yǐncáng shí， jìnyòng zhǐshìqì 
+CHAMS_TARGET_COLOR_TOOLTIP = shìjué jiàojù qiāng xiǎnshì mùbiāo 
+LEGIT_RADAR_TOOLTIP = zài léidá shàng xiǎnshì zài zhǐdìng jùlí nèi fāchū shēngyīn de dírén 
+_TRIGGER_INCROSS_TOOLTIP = dàng mùbiāo zài nǐde guāngbiāo wèizhi shí fāshè nǐde wǔqì 
+_TRIGGER_INFOV_TOOLTIP = dàng mùbiāo shì nǐ guāngbiāo wèizhi zhōuwéi de zhǐdìng qūyù shí， fāshè nǐde wǔqì 
+ENABLE_ESP_TOOLTIP = suǒyǒu shìjué jiàojù de zhǔ kāiguān 
+ENABLE_FOOTSTEPS_TOOLTIP = xuànrǎn suǒyǒu bēnpǎo de dírén de jiǎo bù shēng 
+ENABLE_OVERRIDE_TOOLTIP = yǔnxǔ wèi měi gè wǔqì ér bùshì wǔqì lèibié pèizhì miáozhǔn shèzhì 
+LEGIT_RADAR_FOOTSTEPS_DISTANCE_TO OLTIP = zài léidá shàng xiǎnshì fāchū shēngyīn de dírén de zuìdà jùlí 
+FIRST-SHOT_TOOLTIP = jīqìrén fāshè dìyī qiāng qián de yánchí shíjiān 
+BETWEEN-SHOTS_TOOLTIP = jīqìrén měicì shèjī zhījiān de yánchí shíjiān 
+BOX_FAR_RADAR_TOOLTIP = xuànrǎn chī nǐ hěn yuàn de duìyǒu fāxiàn de shítǐ 
+Aim-After - #_TOOLTIP = zài fāshè le zhǐdìng shùliàng de zǐdàn hòu， jīhuó miáozhǔn jīqìrén 
+Join-Discord_TOOLTIP = yǔ tōngxìn fúwùqì de yāoqǐng liànjiē 
+MENU_ALPHA_TOOLTIP = xiūgǎi càidān de tòumíngdù 
+GAUSSIAN_BLUR_TOOLTIP = zài càidān hòumiàn chuàngjiàn yī gè móhu de píngmù 
+ENABLE_HITMARKER_TOOLTIP = biǎoshì zhǐyào nǐ dǎ le rén 
+CHAMS_ESP_TOOLTIP = qǐyòng 3D shìjué fǔ zhù gōng jù 
+NADE_THROWER_SMOOTHNESS_TOOLTIP = zìdòng tóuzhì shǒuliúdàn jīqìrén de píng wěn xìng 
+
+//Category: Aim
+GLOBAL_AUTO_WEP_DELAY = shíjiān jiàngé， yǐ háomiǎo wèi dānwèi 
+ENABLE_AIM = zōngzhǐ 
+AIM_TOGGLE_KEY = qiēhuàn jiàn， zìdòng miáozhǔn 
+ACTIVATE_FROM_AIM_KEY = zòng ànxià kāihuǒ ànniǔ kāishǐ qǐdòng 
+TEAMMATES_ARE_ENEMIES = duìyǒu shì dírén 
+HOLD_AIM = ànxià bìng àn zhù miáozhǔn ànniǔ 
+FORCE_AIM_BONE_KEY = qiángzhì miáozhǔn jīqìrén yǔ gǔ zhì jiàn bǎngdìng 
+FORCE_AIM_KEY = qiángzhì dìngwèi jīqìrén zhíxíng jiànpán bǎng dìng lái dìngwèi。 
+FORCE_AIM_ALWAYS = shǐzhōng qiángzhì miáozhǔn jīqìrén jìnxíng miáozhǔn 
+FORCE_AIM_THROUGH_WALLS = shǐzhōng qiángzhì miáozhǔn jīqìrén chuān qiáng miáozhǔn 
+GLOBAL_AUTOMATIC_WEAPONS = zìdòng wǔqì 
+AIM_TARGET_SWAP_DELAY = gǎibiàn mùbiāo shí yǒu yī gè shíjiān yánchí 
+SNIPER_ENABLE_SCOPED_ONLY = zhǐyǒu zài tōngguò wàngyuǎnjìng kàn shí 
+HEAD = tóu 
+NECK = jǐngbù 
+CHEST = xiōngbù 
+STOMACH = wèi 
+PELVIS = pénqiāng 
+NEAREST = zuìjìn de 
+RANDOM = suíjī 
+EMPTY = kòng 
+FOV_TYPE = guāndiǎn de lèixíng 
+DISTANCE = DISTANCE
+STATIC = STATIC
+Weapon-Category = wǔqì lèibié 
+_AIM_FOV = shìjiǎo 
+_AIM_SPEED = sùdù 
+_AIM_SMOOTHNESS = pínghuá xìng 
+_AIM_AFTER_SHOTS = zài zhǐdìng shùliàng hòu miáozhǔn 
+_PERFECT_AIM_FOV = shìjiǎo 
+_PERFECT_AIM_CHANCE = yī gè jùtǐ de bǎifēnbǐ 
+_RANDOM_X_VARIATION = X zhòu de suíjī biànhuà 
+_RANDOM_Y_VARIATION = Y zhòu de suíjī biànhuà 
+_VARIATION_DEADZONE = biànhuà de sǐqū 
+_AIM_RCS_X = X zhòu de fǎnchōnglì kòng zhì jì tǒng 
+_AIM_RCS_Y = Y zhòu de fǎnchōnglì kòng zhì jì tǒng 
+_AIM_RCS_VARIATION = hòuzuòlì kòng zhì jì tǒng de biànhuà 
+_AIM_SPEED_DIVISOR = sùdù chúshù 
+Enable-Perfect-Aim = shíxiàn wánměi miáozhǔn 
+Advanced-Settings = gāojí shèzhì 
+
+
+//Category: Trigger
+ENABLE_TRIGGER = zìdòng shèjī jīqìrén de zhǔ kāiguān 
+TRIGGER_ENABLE_KEY = rúguǒ nǐ ànxià zhège ànniǔ， jiù huì jīhuó zìdòng shèjī jīqìrén 
+TRIGGER_KEY = jīhuó zìdòng shèjī jīqìrén de ànniǔ 
+_TRIGGER_FOV = shìjiǎo 
+_TRIGGER_INIT_SHOT_DELAY = zuìchū de pāishè yánchí 
+_TRIGGER = qǐyòng 
+_TRIGGER_BACKTRACK = pāishè yú 《Backtrack》 
+_TRIGGER_PER_SHOT_DELAY = Per Shot Delay
+
+//Category: Backtrack
+ENABLE_BACKTRACK = 《Backtrack》 zhǔ kāiguān 
+ENABLE_BACKTRACK_ON_KEY = dàng nǐ ànxià ànniǔ shí jiù huì jīhuó 
+BACKTRACK_KEY = 《Backtrack》 ànniǔ 
+BACKTRACK_MS = háomiǎo 
+BACKTRACK_SPOTTED = zhǐyǒu zài fāxiàn shí 
+_BACKTRACK = 《Backtrack》
+BACKTRACK_VISUALIZE = xiǎnshì 《Backtrack》 
+BACKTRACK_VISUALIZE_SMOKE_CHECK = 《Backtrack》 xiǎnshì bìng jiǎnchá shìfǒu bèi yānwù fùgài 
+
+//Category: Misc Esp
+RADAR_ESP = léidá 
+ENABLE_ESP = qǐyòng 
+VISUALS_TOGGLE_KEY = ànniǔ lái qiēhuàn shìjué fǔ zhù gōng jù 
+
+//Subcategory: Nightmode
+ENABLE_NIGHTMODE = ràng tā kànqǐlai xiàng yèwǎn 
+NIGHTMODE_VALUE = %
+
+//Subcategory: Draw FOV
+DRAW_AIM_FOV_COLOR = wèi shìxiàn xuànrǎn tòushì de yánsè 
+DRAW_TRIGGER_FOV_COLOR = wèi fāshè zhuāngzhì xuànrǎn tòushì de yánsè 
+DRAW_AIM_FOV = xuànrǎn mùbiāo shèbèi de shìjiǎo 
+DRAW_TRIGGER_FOV = xuànrǎn fāshè zhuāngzhì de shìjiǎo 
+
+//Subcategory: Head LVL
+HEAD_LVL_COLOR = tóubù shuǐpíng 
+HEAD_LVL_DEADZONE = sǐqū 
+
+//Subcategory: Legit Radar
+LEGIT_RADAR = héfǎ de léidá 
+LEGIT_RADAR_FOOTSTEPS_DISTANCE = jùlí 
+
+//Subcategory: Spread Circle
+SPREAD_CIRCLE_COLOR = quānzi de yánsè 
+SpreadCircle = quān chū fāshè de zǐdàn kěnéng luòdì de dìfang 
+
+//Subcategory: Adrenaline
+ENABLE_ADRENALINE = qǐyòng shènshàngxiànsù 
+ADRENALINE_STRENGTH = shènshàngxiànsù de qiángdù 
+ADRENALINE_COOLDOWN = shènshàngxiànsù lěngquè 
+ADRENALINE_BOMB_TIME = shǐyòng zhàdàn shíjiān 
+
+//Category: Glow Esp
+GLOW_ESP = qǐyòng 
+GLOW_SHOW_TEAM = duìyǒu 
+GLOW_SHOW_ENEMIES = dírén 
+GLOW_SHOW_BOMB = wǔqì 
+GLOW_BOMB_ADAPTIVE = zìshìyìng zhàdàn de guāngmáng 
+GLOW_SHOW_BOMB_CARRIER = zhàdàn zàitǐ 
+GLOW_SHOW_WEAPONS = wǔqì 
+GLOW_SHOW_GRENADES = shǒuliúdàn 
+GLOW_SHOW_TARGET = mùbiāo 
+GLOW_TEAM_COLOR = duìyǒu 
+GLOW_ENEMY_COLOR = dírén 
+GLOW_BOMB_COLOR = wǔqì 
+GLOW_BOMB_CARRIER_COLOR = zhàdàn zàitǐ 
+GLOW_WEAPON_COLOR = wǔqì 
+GLOW_GRENADE_COLOR = shǒuliúdàn 
+GLOW_SHOW_HEALTH = xiǎnshì jiànkāngzhuàngkuàng 
+GLOW_ENEMY_TYPE = dírén 
+GLOW_TEAMMATE_TYPE = duìyǒu 
+GLOW_WEAPON_TYPE = wǔqì 
+GLOW_TARGET_TYPE = mùbiāo 
+GLOW_GRENADE_TYPE = shǒuliúdàn 
+GLOW_BOMB_TYPE = wǔqì 
+GLOW_BOMB_CARRIER_TYPE = zhàdàn zàitǐ 
+NORMAL = zhèngcháng 
+MODEL = móxíng 
+VISIBLE = kějiàn 
+VISIBLE-FLICKER = kějiàn de shǎnshuò 
+GLOW_TARGET_COLOR = huī guāng mùbiāo yánsè 
+GLOW_SMOKE_CHECK = yānwù jiǎnchá 
+
+
+//Category: Chams ESP
+CHAMS_ESP = qǐyòng 
+CHAMS_SHOW_HEALTH = chènshān jiànkāng 
+CHAMS_BRIGHTNESS = liàngdù 
+CHAMS_SHOW_TEAM = duìyǒu 
+CHAMS_SHOW_ENEMIES = dírén 
+CHAMS_SHOW_SELF = zìjǐ 
+CHAMS_TEAM_COLOR = duìyǒu 
+CHAMS_ENEMY_COLOR = dírén 
+CHAMS_SELF_COLOR = zìjǐ 
+CHAMS_TARGET_COLOR = mùbiāo 
+
+//Category: Indicator ESP
+INDICATOR_ESP = qǐyòng 
+INDICATOR_SHOW_TEAM = duìyǒu 
+INDICATOR_SHOW_ENEMIES = dírén 
+INDICATOR_SHOW_BOMB = zhàdàn 
+INDICATOR_SHOW_BOMB_CARRIER = zhàdàn zàitǐ 
+INDICATOR_SHOW_WEAPONS = tóukuī 
+INDICATOR_SHOW_GRENADES = shǒuliúdàn 
+INDICATOR_SHOW_DEFUSERS = hànwèizhě 
+INDICATOR_ENEMY_COLOR = dírén 
+INDICATOR_BOMB_COLOR = zhàdàn 
+INDICATOR_BOMB_CARRIER_COLOR = zhàdàn zàitǐ 
+INDICATOR_DEFUSER_COLOR = hànwèizhě 
+INDICATOR_WEAPON_COLOR = tóukuī 
+INDICATOR_GRENADE_COLOR = shǒuliúdàn 
+INDICATOR_DISTANCE = jùlí 
+INDICATOR_SIZE = Size
+INDICATOR_SMOKE_CHECK = yānwù jiǎnchá 
+
+//Category: Box ESP
+ENABLE_BOX_ESP = shítǐ hé 
+BOX_ESP_HELMET = tóukuī 
+BOX_ESP_KEVLAR = kǎifúlā 
+BOX_ESP_AMMO = dànyào 
+BOX_ESP_SCOPED = tōngguò wàngyuǎnjìng guānchá 
+BOX_ESP_FLASHED = shīmíng 
+BOX_DETAILS_TEXT_COLOR = wénzì yánsè 
+BOX_ESP_HEALTH = jiànkāng 
+BOX_ESP_HEALTH_POS = jiànkāng 
+BOX_ESP_ARMOR = kuījiǎ 
+BOX_ESP_ARMOR_POS = kuījiǎ 
+BOX_ESP_NAME = mìngmíng 
+BOX_ESP_NAME_POS = mìngmíng 
+BOX_ESP_WEAPON = wǔqì 
+BOX_ESP_WEAPON_POS = wǔqì 
+BOX_ESP_MONEY = jiǎngjīn 
+BOX_ESP_MONEY_POS = jiǎngjīn 
+BOX_ESP_HELMET_POS = tóukuī 
+BOX_ESP_KEVLAR_POS = kǎifúlā 
+BOX_ESP_AMMO_POS = dànyào 
+BOX_ESP_SCOPED_POS = tōngguò wàngyuǎnjìng guānchá 
+BOX_ESP_FLASHED_POS = shīmíng 
+BOX_SHOW_TEAM = duìyǒu 
+BOX_SHOW_ENEMIES = dírén 
+BOX_ESP_DETAILS = hézi de xìjié 
+BOX_TEAM_COLOR = duìyǒu 
+BOX_ENEMY_COLOR = dírén 
+BOX_DEFUSER_COLOR = hànwèizhě 
+SKELETON_ESP = gǔjià 
+SKELETON_SHOW_TEAM = duìyǒu 
+SKELETON_SHOW_ENEMIES = dírén 
+LEFT = zuǒbian 
+RIGHT = RIGHT
+TOP = TOP
+BOTTOM = BOTTOM
+ADVANCED_BOUNDING_BOX = wánquán dòngtài de hézi 
+BOX_WEAPON_COLOR = tóukuī 
+BOX_SMOKE_CHECK = yānwù jiǎnchá 
+BOX_ESP_WEAPON_SCALE = túbiāo dàxiǎo 
+BOX_ESP_USE_ICONS = shǐyòng túbiāo 
+
+//Category: Snaplines ESP
+ENABLE_SNAPLINES = qǐyòng 
+SNAPLINES_WIDTH = kuāndù 
+SNAPLINES_ENEMIES = dírén 
+SNAPLINES_ENEMY_COLOR = dírén 
+SNAPLINES_TEAMMATES = duìyǒu 
+SNAPLINES_TEAM_COLOR = duìyǒu 
+SNAPLINES_WEAPONS = tóukuī 
+SNAPLINES_WEAPON_COLOR = tóukuī 
+SNAPLINES_BOMB = zhàdàn 
+SNAPLINES_BOMB_COLOR = zhàdàn 
+SNAPLINES_BOMB_CARRIER = zhàdàn zàitǐ 
+SNAPLINES_BOMB_CARRIER_COLOR = zhàdàn zàitǐ 
+SNAPLINES_DEFUSE_KIT_COLOR = huàjiě gōngjùxiāng 
+SNAPLINES_SMOKE_CHECK = yānwù jiǎnchá 
+
+
+//Category: Footsteps ESP
+ENABLE_FOOTSTEPS = jiǎo bù shēng 
+FOOTSTEP_TEAM = duìyǒu 
+FOOTSTEP_TEAM_COLOR = duìyǒu 
+FOOTSTEP_ENEMY = dírén 
+FOOTSTEP_ENEMY_COLOR = dírén 
+FOOTSTEP_UPDATE = gēngxīn dìng shí qì 
+FOOTSTEP_TTL = TTL
+TEXT = wénběn 
+
+//Category: Hitmarker ESP
+ENABLE_HITMARKER = mìngzhòng biāojì 
+HITMARKER_WIDTH = kuāndù 
+HITMARKER_OUTLINE_COLOR = gàiyào yánsè 
+HITMARKER_OUTLINE = gàiyào 
+HITMARKER_COMBO = zǔ hé shì 
+HITMARKER_RECOIL_POSITION = hòuzuòlì wèizhi 
+HITMARKER_SPACING = zhūjù 
+HITMARKER_LENGTH = chángdù 
+HITMARKER_COLOR = yánsè 
+HITMARKER_COMBO_COLOR = zǔ hé shì yánsè 
+
+//Category: Far Esp tab
+BOX_FAR_RADAR = léidá jùlí hé 
+SHARED_ESP = gòngxiǎng de shìjué fǔzhù xìtǒng 
+
+
+//Category: Others tab
+DISABLE_POST_PROCESSING = jìnyòng hòu chǔlǐ 
+D_SPAM = kāimén jīqìrén 
+D_SPAM_KEY = kāimén jīqìrén niǔkòu 
+W_SPAM = wǔqì lājīyóujiàn 
+W_SPAM_KEY = wǔqì lājīyóujiàn niǔkòu 
+SPECTATOR_LIST = guāncháyuán míngdān 
+ENABLE_HITSOUND = dǎ rén shí fāchū de shēngyīn 
+Self-Nade = zìjǐ shǒuliúdàn 
+KILL_BIND = shā rén shí àn zhǐdìng ànniǔ 
+KILL_BIND_KEY = niǔkòu 
+Name-Change = línshí gǎimíng 
+FAKE_LAG = xūjiǎ de zhìhòu xìtǒng 
+FAKE_LAG_TICKS = cèliáng dānwèi wèi Ticks 
+
+//Category: Fonts
+LOAD_FONT = jiāzài yī gè zìtǐ 
+FONT_SIZE = zìtǐ de dàxiǎo 
+FONT_BORDER_WIDTH = biānjìng kuāndù 
+FONT_BORDER_USE_STRAIGHT = biānjìng zhíxiàn 
+FONT_BORDER_GAMMA = biānjìng jiā mǎ 
+FONT_SHADOW_OFFSET_X = X zhòu shàng de yīnyǐng piānyí 
+FONT_SHADOW_OFFSET_Y = Y zhòu shàng de yīnyǐng piānyí 
+FONT_INCLUDE_KERNING = 《Kerning》
+FONT_FLIP = fānzhuǎn zìtǐ 
+FON_GEN_MIP_MAPS = shēngchéng mipmaps 
+FONT_COLOR = Font yánsè 
+FONT_BORDER_COLOR = biānjìng yánsè 
+FONT_GAMMA = jiā mǎ 
+
+//Category: Skin Changer
+SKINCHANGER = rénwéi de gǎibiàn nǐ wǔqì de zhìdì 
+FORCE_UPDATE_AUTO = bùduì gēngxīn 
+Skin-ID = pífū shíbié hàomǎ 
+StatTrak = shālù jìshùqì 《StatTrak》 
+Wear = mósǔn chéngdù 
+Manual-Force-Update = shǒudòng qiángzhì gēngxīn 
+Auto-Force-Update = zìdòng qiángzhì gēngxīn 
+
+
+//Category: Nades tab
+NADE_TRACER = shǒuliúdàn zhuī zōng qì 
+NADE_TRACER_UPDATE_TIME = zhuī zōng qì gēngxīn shíjiān 
+NADE_TRACER_TIMEOUT = shǒuliúdàn zhuī zōng qì chāoshí 
+NADE_TRACER_COLOR = shǒuliúdàn zhuī zōng qì yánsè 
+VISUALIZE_SMOKES_COLOR = xuànrǎn yānwù yánsè 
+VISUALIZE_SMOKES_POLYS = xuànrǎn yānwù duōbiānxíng jìshù 
+VISUALIZE_SMOKES_WIDTH = xuànrǎn yānwù kuāndù 
+VISUALIZE_SMOKES_HEIGHT = xuànrǎn yānwù gāodù 
+SMOKE_WEAR_OFF_TIME_COLOR = yānwù dìng shí qì 
+
+//Category: Override weapons
+_AIM_BONE = gǔgé 
+_AIM_FORCE_BONE = gǔgé shàng de lì 
+_TRIGGER_INCROSS = InCross
+_TRIGGER_INFOV = InFOV
+_TRIGGER_AIMBOT = miáozhǔn jīqìrén 
+_AIM_ONLY_ON_SHOT = zhǐ zài pāishè shí miáozhǔn 
+_FACTOR_RECOIL = shèjī shí yào kǎolǜ dào hòuzuòlì 
+_ENABLE_FLAT_AIM = xiěxià mùbiāo 
+_ENABLE_PATH_AIM = miáozhǔn shí kǎolǜ dào nǐ shǔbiāo de yídòng 
+ENABLE_OVERRIDE = qǐyòng fùgài 
+tAutowep = zìdòng wǔqì 
+tAutowepDelay = háomiǎo jí de jiàngé 
+tAimFov = tòushì 
+tAimSpeed = sùdù 
+tAimBone = gǔgé 
+tForceBone = lìliang gǔgé 
+tAimSmooth = pínghuá xìng 
+tAimAfterShots = zài zhǐdìng de shèjī cìshù hòu jìnxíng miáozhǔn 
+tPAimFov = tòushì 
+tPAimChance = %
+tBTrigFov = tòushì 
+tBTrigInitDelay = chūcì pāishè yánchí 
+tBTrigPerShotDelay = měi gè jìngtóu de yánchí 
+tBTMS = háomiǎo 
+Force-Bone = lìliang gǔgé 
+_BACKTRACK_MS = 《Backtrack》
+tFRecoil = shèjī shí yào kǎolǜ dào hòuzuòlì 
+tOnShot = zài pāishè guòchéng zhòng 
+tFlatAim = xiěxià mùbiāo 
+tPathAim = miáozhǔn shí kǎolǜ dào nǐ shǔbiāo de yídòng 
+tScopedOnly = zhǐ tōngguò wàngyuǎnjìng kàn 
+tBoneTrig = qǐyòng zìdòng shèjī jīqìrén 
+tBTrigAim = miáozhǔn jīqìrén 
+tBTrigInCross = InCross
+tBTrigInFov = InFov
+tBTrigBacktrack = pāochū 《Backtrack》 
+tBacktrack = qǐyòng 《Backtrack》 
+tOverride = qǐyòng fùgài 
+tPerfectAim = wánměi de mùbiāo 
+Bone = gǔgé 
+sùdù = sùdù 
+Smooth = shùnlì 
+Perfect-Aim = wánměi de mùbiāo 
+Chance = jīhuì 
+Override-Weapons = língjià yú wǔqì zhīshàng 
+Weapon = wǔqì 
+
+
+
+//Category: Options tab
+MENU_KEY = càidān niǔkòu 
+OPENGL_FPS = OpenGL FPS
+MENU_STAY_FOCUSED = bǎochí zhuānzhù 
+DEBUG = tiáoshì 
+KEYBINDS = niǔkòu 
+GAUSSIAN_BLUR = qǐyòng càidān mó hù huà 
+MENU_ALPHA = càidān de zìmǔ 
+Join-Discord = jiārù tōngxìn fúwùqì 
+Keybinds = niǔkòu 
+OVERLOAD_KEYBINDS = jìnyòng chóngfù bǎngdìng 
+Join-The-Giveaway = wǎngzhàn， yǐ huòdé yùshè de pèizhì 
+
+//Category: Configs tab
+FILE_NOT_FOUND_ERROR = wèizhǎodào wénjiàn 
+SAVING_NOW_ERROR = xiān děngdài bǎocún wánchéng 
+OVERWRITE_CONFIG = zhège dòngzuò kěnéng huì fùgài nǐde pèizhì 
+SAVE_DEFAULT = bǎocún mòrèn zhí 
+Load-Locale = jiāzài qūyùxìng yǔyán 
+CONFIRM = quèrèn 
+CANCEL = qǔxiāo 
+Locale = dìdiǎn 
+Save = zhěngjiù 
+Load = fùzài 
+Delete = shānchú 
+Open-configs-folder = dǎkāi pèizhì wénjiànjiā 
+Refresh = shuāxīn 
+Cloud-Configs = cúnchǔ zài hùlián wǎngshàng de pèizhì 
+Download = xiàzǎi 
+DISPLAY_CLOUD_CONFIGS = xiǎnshì cúnchǔ zài hùlián wǎngshàng de pèizhì 
+DISPLAY_CLOUD_CONFIGS_CATEGORIES = lèibié 
+CLOSET = Closet
+LEGIT = Legit
+SEMI = Semi
+RAGE = Rage
+
+//Category: Movement tab
+ENABLE_BUNNY_HOP = tùzi tiào 
+ENABLE_BUNNY_HOP_KEY = tùzi tiào niǔkòu 
+AUTO_STRAFE = zìdòng sǎoshè 
+STRAFE_BHOP_ONLY = jǐn xiàn tùzi tiào 
+FAST_STOP = xùnsù tíngzhǐ 
+ENABLE_AUTO_KNIFE = yòng dāo zìdòng gōngjī 
+HEAD_WALK = zài wánjiā de tóushàng xíngzǒu 
+SAME = xiāngtóng 
+OPPOSITE = duìmiàn 
+BHOP_HITCHANCE = chénggōng de jīlǜ 
+BLOCK_BOT = zìdòng píngbì qítā wánjiā 
+BLOCK_BOT_KEY = zìdòng píngbì qítā wánjiā de jiàn wèi bǎngdìng 
+BLOCK_BOT_DISTANCE = zìdòng zǔdǎng qítā qiúyuán de jùlí 
+
+//Category: FOV changer tab
+ENABLE_FOV_CHANGER = guāndiǎn gǎibiàn zhě 
+FOV_DEFAULT = mòrèn shìjiǎo 
+FOV_SMOOTH = shùnlì gǎibiàn shìjiǎo 
+FOV_SNIPER_DEFAULT = shǐyòng jūjīshǒu wǔqì shí de shìjiǎo 
+FOV_ZOOM_1 = wàngyuǎnjìng de dìyīcì shèzhì 
+FOV_ZOOM_2 = wàngyuǎnjìng de dìèr gè shèzhì 
+
+//Category: Bomb Tab
+ENABLE_BOMB_TIMER = zhàdàn dìng shí qì 
+BOMB_TIMER_MENU = jìshíqì càidān 
+BOMB_TIMER_BARS = jìshíqì tiáo 
+LS_BOMB = wánměi de zhàdàn chāichú 
+BOMB_TIMER_BARS_SHOW_TTE = chī bàozhà hái shèng duōshao shíjiān 
+//Subcategory: Bomb Timer Text
+Bomb-Not-Planted ! = zhàdàn méiyǒu bèi máishè 
+Bomb-Planted ! = zhàdàn bèi mái xià 
+Time-To-Explode : = chī bàozhà hái shèng duōshao shíjiān : 
+Location : = zhàdàn de wèizhi : 
+Can-Defuse : = tā néng bèi róngjiě ma ？ : 
+Time-To-Defuse : chāichú qián de shíjiān : 
+Time-Left-After : = hòu de shèngyú shíjiān : 
+
+//Category: Misc tab
+ENABLE_REDUCED_FLASH = nénggòu jiǎnshǎo máng mù xìng 
+FLASH_MAX_ALPHA = zuìdà āěrfǎ 
+HITSOUND_VOLUME = liáng 
+ENABLE_KILLSOUND = shā rén shí fāchū de shēngyīn 
+MUSIC_KIT_SPOOFER = yīnyuè tàojiàn gēnghuàn qì 
+KILLSOUND_VOLUME = liáng 
+CURRENTLY = mùqián 
+
+//Category: RCS tab
+ENABLE_RCS = qǐyòng 
+RCS_SMOOTHING_X = hòuzuòlì kòng zhì jì tǒng de X zhòu jīngdù 
+RCS_SMOOTHING_Y = hòuzuòlì kòng zhì jì tǒng de Y zhòu jīngdù 
+RCS_RETURNAIM = fǎnhuí dào yuánlái de miáozhǔn wèizhi 
+ENABLE_RECOIL_CROSSHAIR = hòuzuòlì shízì zhǔnxiàn 
+ENABLE_SNIPER_CROSSHAIR = yǔ jūjīshǒu wàngyuǎnjìng jiānróng 
+RCROSSHAIR_WIDTH = kuāndù 
+RCROSSHAIR_LENGTH = chángdù 
+RCROSSHAIR_XOFFSET = X zhòu piānyí 
+RCS_TYPE = Y zhòu piānyí 
+STABLE = wěndìng de 
+LEGACY = jiù de 
+RCROSSHAIR_YOFFSET = Y zhòu piānyí 
+RCROSSHAIR_ALPHA = āěrfǎ 
+RCROSSHAIR_COLOR = yánsè 
+CIRCLE = yuánquān 
+CROSSHAIR = shí zì xiàn 
+RCROSSHAIR_RADIUS = bànjìng 
+RCROSSHAIR_TYPE = hòuzuòlì shízì zhǔnxiàn lèixíng 
+
+//Subcategory: RCrosshair
+RCROSSHAIR_YOFFSET = Y zhòu piānyí 
+RCROSSHAIR_ALPHA = āěrfǎ 
+RCROSSHAIR_COLOR = yánsè 
+CIRCLE = yuánquān 
+CROSSHAIR = shí zì xiàn 
+RCROSSHAIR_RADIUS = bànjìng 
+RCROSSHAIR_TYPE = hòuzuòlì shízì zhǔnxiàn lèixíng 
+RCROSSHAIR_GAP = hòuzuòlì shízì zhǔnxiàn jiànxì 
+RCROSSHAIR_CENTER_DOT = zhōngxīndiǎn 
+RCROSSHAIR_DOT_RADIUS = zhōngxīndiǎn bànjìng 
+RCROSSHAIR_TOP = dǐngbù 
+RCROSSHAIR_BOTTOM = dǐbù 
+RCROSSHAIR_LEFT = zuǒbian 
+RCROSSHAIR_RIGHT = duì 
+RCROSSHAIR_OUTLINE = gàiyào 
+RCROSSHAIR_OUTLINE_WIDTH = gàiyào kuāndù 
+RCROSSHAIR_DYNAMIC = yǒuhuólì 
+RCROSSHAIR_MAX_SPREAD = zuìdà jià chà 
+RCROSSHAIR_OUTLINE_COLOR = gàiyào yánsè 
+
+//Category: Nade Helper tab
+ENABLE_NADE_HELPER = qǐyòng 
+Loaded : - N / A = yǐ jiāzài : N / A 
+Create-Grenade-Position = chuàngjiàn xīn de shǒuliúdàn dìngyì 
+Save-As-File = bǎocún wèi wénjiàn 
+Load-From-File = zòng yī gè wénjiàn zhòng jiā zài 
+Delete-Selected-File = shānchú xuǎndìng de wénjiàn 
+Clear-Currently-Loaded = qīngchú dāngqián jiāzài de wénjiàn 
+Delete-At-Current-Position = zài dāngqián wèizhi shānchú 
+NADE_THROWER_SMOOTHNESS = pínghuá xìng 
+NADE_ACCURACY_RADIUS = jīngdù bànjìng 
+ENABLE_NADE_THROWER = zìdòng pāochū 
+NADE_THROWER_KEY = niǔkòu 
+CLEAR_POSITIONS = qīngchú suǒyǒu dāngqián jiāzài de dìngyì ？ 
+
+
+//Category: Weapons Categories
+PISTOL = shǒuqiāng 
+RIFLE = bùqiāng 
+SMG = chōngfēngqiāng 
+SNIPER = jūjī bùqiāng 
+SHOTGUN = xiàndànqiāng 
+
+//Category: Ranks Tab
+Team = tuánduì 
+Name = mìngmíng 
+Rank = jíbié 
+Kills = shārén 
+Deaths = sǐwáng 
+K / D = shāsǐ sǐwánglǜ 
+Wins = shènglì 
+Money = jiǎngjīn 
+
+//Category: Menu tabs names
+Misc = záxiàng 
+Aim = zōngzhǐ 
+Visuals = shìjué jiàojù 
+RCS = bèi xì kòng zhì jì tǒng 
+Ranks = jíbié 
+Nade-Helper = shǒuliúdàn 
+Skins = wǔqì wénlǐ 
+Options = xuǎnxiàng 
+Configs = pèizhì 
+Glow = guāngmáng 
+Chams = sānwéi shìjué fǔ zhù gōng jù 
+Indicator = zhǐbiāo 
+Box = xiāngzi 
+Snaplines = xiàntiáo 
+FootSteps = jiǎo bù shēng 
+Hitmarker = mìngzhòng biāojì 
+Nades = shǒuliúdàn 
+Bomb = zhàdàn 
+FOV-Changer = guāndiǎn de gǎibiàn zhě 
+Movement = yùndòng 
+Others = qítā 
+Fonts = zìtǐ 
+Aimbot = zìdòng miáozhǔn jīqìrén 
+Triggerbot = zìdòng shèjī jīqìrén 
+Backtrack = 《Backtrack》
+Override = fùgài 
+
+//Category: VisWindows names
+Bomb-Timer = zhàdàn dìng shí qì 
+Spectator-List = guānzhòng míngdān 
+
+//Translated by windex/TheGuardian226
