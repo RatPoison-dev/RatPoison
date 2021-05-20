@@ -29,7 +29,7 @@ abstract class VisComboBox(mainText: String, varName: String, showText: Boolean 
 
     private val boxItems = items
 
-    var selectedItems = mutableListOf<Int>(8, 7, 6)
+    var selectedItems = mutableListOf<Int>()
 
     init {
         initialize()
