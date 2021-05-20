@@ -5,14 +5,19 @@ import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
+import rat.poison.DEFAULT_OWEAPON_STR
 import rat.poison.curSettings
 import rat.poison.ui.changed
+import rat.poison.ui.getOverrideVar
+import rat.poison.ui.getOverrideVarIndex
+import rat.poison.ui.setOverrideVar
 import rat.poison.ui.uiTabs.VisLabelCustom
+import rat.poison.ui.uiTabs.aimTables.weaponOverrideSelected
 import rat.poison.ui.uiTabs.categorySelected
 import rat.poison.utils.generalUtil.stringToList
 import rat.poison.utils.locale
 
-abstract class VisCombobox(mainText: String, varName: String, showText: Boolean = true, textWidth: Float = 200F, boxWidth: Float = 100F, items: kotlin.Array<out String>): VisTable(false) {
+abstract class VisComboBox(mainText: String, varName: String, showText: Boolean = true, textWidth: Float = 200F, boxWidth: Float = 100F, items: kotlin.Array<out String>): VisTable(false) {
     private val textLabel = mainText
     open val variableName = varName
     private var hasTooltip = false
@@ -24,7 +29,7 @@ abstract class VisCombobox(mainText: String, varName: String, showText: Boolean 
 
     private val boxItems = items
 
-    var selectedItems = mutableListOf<Int>()
+    var selectedItems = mutableListOf<Int>(8, 7, 6)
 
     init {
         initialize()
@@ -33,24 +38,22 @@ abstract class VisCombobox(mainText: String, varName: String, showText: Boolean 
         selectBox.changed { _, _ ->
             val idx = selectBox.selectedIndex
 
-            if (idx == 0) {
-                return@changed true
+            if (idx == 0) return@changed false
+
+            if (selectedItems.contains(idx)) {
+                selectedItems.remove(idx)
             } else {
-                if (selectedItems.contains(idx)) {
-                    selectedItems.remove(idx)
-                    updateList()
-                } else {
-                    selectedItems.add(idx)
-                    updateList()
-                }
+                selectedItems.add(idx)
             }
+
 
             val strItems = mutableListOf<String>()
             for (i in selectedItems) {
                 strItems.add(boxItems[i-1])
             }
             saveItems(strItems)
-            //curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }] = strItems
+                    //curSettings[if (useGunCategory) { categorySelected + variableName } else { variableName }] = strItems
+            updateList()
 
             false
         }
@@ -69,14 +72,18 @@ abstract class VisCombobox(mainText: String, varName: String, showText: Boolean 
     fun updateList() {
         val itemsArray = Array<String>()
 
-        selectedItems.sort()
+        if (selectedItems.size > 0) {
+            selectedItems.sort()
 
-        var str = ""
-        for (i in selectedItems) {
-            str += boxItems[i-1] + ", "
+            var str = ""
+            for (i in selectedItems) {
+                str += boxItems[i - 1] + ", "
+            }
+
+            itemsArray.add(str)
+        } else {
+            itemsArray.add("NONE")
         }
-
-        itemsArray.add(str)
 
         for (i in boxItems) {
             itemsArray.add("L_$i".locale(i))
@@ -118,7 +125,7 @@ abstract class VisCombobox(mainText: String, varName: String, showText: Boolean 
     }
 }
 
-class VisComboBoxCustom(val mainText: String, val varName: String, showText: Boolean = true, textWidth: Float = 200F, boxWidth: Float = 100F, vararg items: String): VisCombobox(mainText, varName, showText, textWidth, boxWidth, items) {
+class VisComboBoxCustom(val mainText: String, val varName: String, showText: Boolean = true, textWidth: Float = 200F, boxWidth: Float = 100F, vararg items: String): VisComboBox(mainText, varName, showText, textWidth, boxWidth, items) {
     override fun saveItems(items: MutableList<String>) {
         curSettings[variableName] = items
     }
@@ -131,7 +138,7 @@ class VisComboBoxCustom(val mainText: String, val varName: String, showText: Boo
 
 }
 
-class VisAimComboBox(val mainText: String, val varName: String, showText: Boolean = true, textWidth: Float = 200F, boxWidth: Float = 100F, vararg items: String): VisCombobox(mainText, varName, showText, textWidth, boxWidth, items) {
+class VisAimComboBox(val mainText: String, val varName: String, showText: Boolean = true, textWidth: Float = 200F, boxWidth: Float = 100F, vararg items: String): VisComboBox(mainText, varName, showText, textWidth, boxWidth, items) {
     override fun saveItems(items: MutableList<String>) {
         curSettings[categorySelected + variableName] = items.joinToString(prefix = "[", separator = ";", postfix = "]")
     }
@@ -141,5 +148,21 @@ class VisAimComboBox(val mainText: String, val varName: String, showText: Boolea
     }
 
     override fun initialize() {}
+}
+
+class OverrideComboBox(mainText: String, varName: String, showText: Boolean = true, textWidth: Float = 200F, boxWidth: Float = 100F, vararg items: String) : VisComboBox(mainText, varName, showText, textWidth, boxWidth, items) {
+    var overrideIdx = 0
+
+    override fun initialize() {
+        this.overrideIdx = getOverrideVarIndex(DEFAULT_OWEAPON_STR, variableName)
+    }
+
+    override fun saveItems(items: MutableList<String>) {
+        setOverrideVar(weaponOverrideSelected, overrideIdx, items.joinToString(prefix = "[", separator = ";", postfix = "]"))
+    }
+
+    override fun getItems(): List<String> {
+        return getOverrideVar(weaponOverrideSelected, overrideIdx).stringToList(";")
+    }
 
 }

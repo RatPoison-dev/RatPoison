@@ -6,8 +6,8 @@ import com.kotcrab.vis.ui.widget.*
 import rat.poison.DEFAULT_OWEAPON_STR
 import rat.poison.curSettings
 import rat.poison.ui.*
+import rat.poison.ui.uiElements.OverrideComboBox
 import rat.poison.ui.uiElements.VisCheckBoxCustom
-import rat.poison.ui.uiElements.override.OverrideCombobox
 import rat.poison.ui.uiElements.override.OverrideVisCheckBoxCustom
 import rat.poison.ui.uiElements.override.OverrideVisSliderCustom
 import rat.poison.ui.uiTabs.*
@@ -44,8 +44,8 @@ class OverrideTable: VisTable(false) {
     val enablePathAim = OverrideVisCheckBoxCustom("Path Aim", "tPathAim")
     val enableScopedOnly = OverrideVisCheckBoxCustom("Scoped Only", "tScopedOnly")
 
-    val aimBoneBox = OverrideCombobox("Bone", "tAimBone", true, items = boneCategories)
-    val forceBoneBox = OverrideCombobox("Force-Bone", "tForceBone", true, items = boneCategories)
+    val aimBoneBox = OverrideComboBox("Bone", "tAimBone", true, items = boneCategories)
+    val forceBoneBox = OverrideComboBox("Force-Bone", "tForceBone", true, items = boneCategories)
 
     val aimFov = OverrideVisSliderCustom("FOV", "tAimFov", 0.5F, 90F, 0.5F, false, labelWidth = 225F, barWidth = 225F)
     val aimSmoothness = OverrideVisSliderCustom("Smooth", "tAimSmooth", 1F, 100F, 1F, true, labelWidth = 225F, barWidth = 225F)

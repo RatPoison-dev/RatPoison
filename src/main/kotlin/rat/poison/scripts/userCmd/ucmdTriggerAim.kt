@@ -64,6 +64,8 @@ fun ucmdTriggerAim(silent: Boolean, trigEnt: Long): Boolean {
         aB = FORCE_AIM_BONE
     }
 
+    if (aB.isEmpty()) return false
+
     var forceSpecificBone = -1
     val findNearest = aB.has { it == NEAREST_BONE }
     val findRandom = aB.has { 0 > it as Int }

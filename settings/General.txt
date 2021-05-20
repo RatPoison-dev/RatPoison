@@ -30,8 +30,8 @@ MENU_APP = "Counter-Strike: Global Offensive"
 
 //Appless settings
 APPLESS = false
-APPLESS_WIDTH = 1000
-APPLESS_HEIGHT = 1000
+APPLESS_WIDTH = 1100
+APPLESS_HEIGHT = 900
 APPLESS_X = 960
 APPLESS_Y = 100
 

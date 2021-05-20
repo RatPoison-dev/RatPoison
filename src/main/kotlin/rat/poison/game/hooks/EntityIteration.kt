@@ -45,7 +45,6 @@ private fun reset() {
 
 var forceResetIteration = false
 
-
 private const val strBufMemorySize = 128
 private val strBufMemory = threadLocalPointer(strBufMemorySize)
 private var signOnState by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new ->
@@ -156,7 +155,7 @@ fun constructEntities() = every(1000, continuous = true) {
         }
     }
 
-    val maxIndex = clientDLL.int(dwEntityList + 0x24) //Not right?
+    //val maxIndex = clientDLL.int(dwEntityList + 0x24) //Not right?
 
     //println(maxIndex)
 

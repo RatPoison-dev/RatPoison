@@ -30,11 +30,11 @@ val entities: EntityList = EntityList(EntityType.size).apply {
 fun entityByType(type: EntityType): EntityContext? = entities[type]?.firstOrNull()
 
 internal inline fun iterateByTypes(types: Array<EntityType>, crossinline body: (EntityContext) -> Unit) {
-	for (typeIdx in 0 until types.size) {
+	for (element in types) {
 		if (forceResetIteration) {
 			break
 		}
-		val let = entities[types[typeIdx]] ?: continue
+		val let = entities[element] ?: continue
 		let.completeTasks()
 		let.iterating = true
 		for (entIdx in 0 until let.cachedValues.size) {

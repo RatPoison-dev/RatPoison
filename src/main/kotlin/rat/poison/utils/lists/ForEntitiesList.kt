@@ -13,7 +13,6 @@ class ForEntitiesList {
     private val addTasks = mutableListOf<EntityContext>()
     var iterating = false
 
-
     fun firstOrNull(): EntityContext? = cachedValues.firstOrNull()
 
     operator fun get(idx: Int): EntityContext = cachedValues[idx]
@@ -31,23 +30,24 @@ class ForEntitiesList {
         while (iterating) {
             Thread.yield()
         }
+
         cachedValues.clear()
     }
 
     fun completeTasks() {
-        for (i in 0 until addTasks.size) {
-            val context = addTasks[i]
-            if (!contains(context)) {
-                cachedValues.add(context)
+        for (i in addTasks) {
+            if (!contains(i)) {
+                cachedValues.add(i)
             }
         }
+
+        addTasks.clear()
     }
 
     fun add(context: EntityContext) {
         if (!iterating) {
             cachedValues.add(context)
-        }
-        else {
+        } else {
             addTasks.add(context)
         }
     }
