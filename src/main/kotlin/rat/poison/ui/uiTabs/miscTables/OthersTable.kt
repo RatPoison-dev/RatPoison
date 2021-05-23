@@ -55,6 +55,7 @@ class OthersTable: VisTable(false) {
         musicKitArray.forEach {
             musicKitsAdapter.add(it.name)
         }
+
         postProcessingDisable.changed {_, _ ->
             miscVisualsTable.nightMode.disable(postProcessingDisable.isChecked)
             if (postProcessingDisable.isChecked) {

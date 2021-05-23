@@ -32,7 +32,7 @@ internal fun spectatorList() = every(100, inGameCheck = true) {
 
             if (entSpecTarget > -1 && entSpecTarget == playerSpecTarget) {
                 if (!sb.contains(entName)) {
-                    sb.append(entCount).append(". ").append(entName)
+                    sb.append(entCount).append(". ").appendLine(entName)
                     entCount++
                 }
             }

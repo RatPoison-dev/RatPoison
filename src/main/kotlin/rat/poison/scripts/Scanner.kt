@@ -5,6 +5,7 @@ import rat.poison.game.entity.*
 import rat.poison.game.forEntities
 import rat.poison.game.rankName
 import rat.poison.haltProcess
+import rat.poison.initApp
 import rat.poison.scripts.misc.sendPacket
 import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.utils.deleteCFG
@@ -49,15 +50,21 @@ fun scanner() {
                     }
                 }
             }
+            line.equals("initapp", true) -> {
+                initApp()
+            }
+
             line.equals("exit", true) -> {
                 haltProcess = true
                 disableAllEsp()
                 sendPacket(true)
                 exitProcess(0)
             }
+
             line.equals("reload", true) -> {
                 println(); loadSettingsFromFiles(SETTINGS_DIRECTORY)
             }
+
             line.equals("list", true) -> {
                 print("\n----Settings Files----\n")
                 File(SETTINGS_DIRECTORY).listFiles()?.forEach {
@@ -99,7 +106,7 @@ fun scanner() {
                 try {
                     try { //Check for file + variable
                         File(fileDir).readLines().forEach {
-                            prevFile = if (!it.startsWith("/") && !it.startsWith("*") && !it.startsWith(" ") && it.trim().isNotEmpty() && !it.startsWith("import") && it.startsWith(command.split(" ".toRegex(), 3)[0])) {
+                            prevFile = if (!it.startsWith("/") && !it.startsWith("*") && !it.startsWith(" ") && it.trim().isNotEmpty() && !it.startsWith("import") && it.split(" ".toRegex(), 3)[0] == command.split(" ".toRegex(), 3)[0]) {
                                 prevFile + command + System.lineSeparator()
                             } else {
                                 prevFile + it + System.lineSeparator()
@@ -213,6 +220,7 @@ fun scanner() {
                         for (i in entMoney.length..4) {
                             entMoney += " "
                         }
+                        //TODO padEnd instead
 
                         println("$entTeam $entName $entRank $entKills $entDeaths $entKD $entWins $entMoney")
                     }

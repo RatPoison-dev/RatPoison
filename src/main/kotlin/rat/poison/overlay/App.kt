@@ -16,6 +16,8 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport
 import com.kotcrab.vis.ui.VisUI
 import com.sun.management.OperatingSystemMXBean
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
+import org.lwjgl.glfw.GLFW
+import org.lwjgl.opengl.GL
 import rat.poison.appless
 import rat.poison.curSettings
 import rat.poison.dbg
@@ -30,6 +32,7 @@ import rat.poison.settings.MENUTOG
 import rat.poison.settings.WARNINGTOG
 import rat.poison.ui.MenuStage
 import rat.poison.ui.uiTabs.updateDisableAim
+import rat.poison.ui.uiUpdate
 import rat.poison.ui.uiWindows.*
 import rat.poison.utils.AssetManager
 import rat.poison.utils.common.ObservableBoolean
@@ -57,7 +60,7 @@ object App: ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
-    private val appOverlay = Overlay(if (appless) {
+    val appOverlay = Overlay(if (appless) {
         "Counter-Strike: Global Offensive"
     } else {
         curSettings["MENU_APP"].replace("\"", "")
@@ -79,13 +82,20 @@ object App: ApplicationAdapter() {
     lateinit var uiSpecList: UISpectatorList
     lateinit var uiKeybinds: UIKeybinds
 
+    var firstUpdate = false
+
     val osBean = ManagementFactory.getOperatingSystemMXBean() as OperatingSystemMXBean
     var haveTarget = false
 
     override fun create() {
         assetManager = AssetManager()
         assetManager.loadAssets()
-        assetManager.updateFonts()
+        //assetManager.updateFonts()
+
+        while (!VisUI.isLoaded()) {
+            println("Loading VisUI...")
+            assetManager.updateFonts()
+        }
 
         //Implement key processor for menu
         keyProcessor = KeyProcessor()
@@ -116,6 +126,8 @@ object App: ApplicationAdapter() {
         //Implement stage for menu
 
         appOverlay.start()
+
+        uiUpdate()
     }
 
     private var variableYieldTime = 0L
@@ -164,6 +176,27 @@ object App: ApplicationAdapter() {
     }
 
     override fun render() {
+        //println("yea yea we still here")
+
+        if (haltProcess) {
+            println("im awake and hiding")
+
+            Gdx.gl.apply {
+                glClear(GL20.GL_COLOR_BUFFER_BIT)
+            }
+
+            appOverlay.bePassive()
+
+            if (VisUI.isLoaded()) {
+                VisUI.dispose(false)
+            }
+            Gdx.app.exit()
+
+            return
+        }
+
+        GL.createCapabilities()
+
         syncTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
             sync(curSettings.int["OPENGL_FPS"])
         }, TimeUnit.NANOSECONDS)
@@ -171,6 +204,8 @@ object App: ApplicationAdapter() {
         if (VisUI.isLoaded()) {
             if (!Thread.interrupted()) {
                 Gdx.gl.apply {
+                    GLFW.glfwWindowHint(GLFW.GLFW_DOUBLEBUFFER, GLFW.GLFW_TRUE)
+
                     glEnable(GL_BLEND)
                     glDisable(GL20.GL_DEPTH_TEST)
                     glClearColor(0F, 0F, 0F, 0F)
@@ -181,9 +216,12 @@ object App: ApplicationAdapter() {
 
                     overlayTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
                         menuTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
-                            assetManager.updateFonts()
-
                             if (MENUTOG) {
+                                if (!firstUpdate) {
+                                    uiUpdate()
+                                    firstUpdate = true
+                                }
+
                                 if (!WARNINGTOG) {
                                     menuStage.remove(uiWarning)
                                 } else {
@@ -230,7 +268,7 @@ object App: ApplicationAdapter() {
                         uiMenu.changeAlpha()
                         appTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
                             updateViewMatrix()
-                            if (!appless && !haltProcess) {
+                            if (!appless) {
                                 for (i in 0 until bodies.size) {
                                     bodies[i]()
                                 }
@@ -261,7 +299,8 @@ object App: ApplicationAdapter() {
                             //textRenderer.draw(sb, sbText, CSGO.gameWidth / 3F, CSGO.gameHeight - 100F)
 
                             sb.end()
-                        } catch (e: Exception) {}
+                        } catch (e: Exception) {
+                        }
                     }
                 }
 

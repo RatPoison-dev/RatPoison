@@ -10,13 +10,16 @@ import rat.poison.game.realCalcAngle
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.userCmd.meDead
 import rat.poison.settings.MENUTOG
-import rat.poison.utils.*
 import rat.poison.utils.common.Angle
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.distanceTo
 import rat.poison.utils.common.every
 import rat.poison.utils.generalUtil.cToDouble
 import rat.poison.utils.generalUtil.cToFloat
+import rat.poison.utils.jumpAndThrow
+import rat.poison.utils.keybindEval
+import rat.poison.utils.standAndThrow
+import rat.poison.utils.writeAim
 
 private var mPos = Vector()
 private var calcRes = 0F
@@ -62,7 +65,7 @@ fun nadeThrower() = every(10, inGameCheck = true) {
             val hLPos = it[2]
             if (fSpot[4] == nadeToCheck || nadeToCheck == "Decoy") {
                 if ((mPos.x in fSpot[0].cToDouble() - 20..fSpot[0].cToDouble() + 20) && (mPos.y in fSpot[1].cToDouble() - 20..fSpot[1].cToDouble() + 20)) {
-                    if (keybindEval("NADE_THROWER_KEY")) {
+                    if (keybindEval("NADE_THROWER_KEY", "ENABLE_NADE_THROWER")) {
                         val hLVec = Vector(hLPos[0].cToFloat(), hLPos[1].cToFloat(), hLPos[2].cToFloat())
                         val recoveredAngle = realCalcAngle(me, hLVec)
                         val dist = clientState.angle(vOut).distanceTo(recoveredAngle)

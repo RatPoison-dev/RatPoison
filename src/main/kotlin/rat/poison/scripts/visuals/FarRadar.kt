@@ -6,7 +6,10 @@ import org.lwjgl.opengl.GL11.glEnable
 import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
-import rat.poison.game.entity.*
+import rat.poison.game.entity.EntityType
+import rat.poison.game.entity.dead
+import rat.poison.game.entity.dormant
+import rat.poison.game.entity.team
 import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.game.meTeam

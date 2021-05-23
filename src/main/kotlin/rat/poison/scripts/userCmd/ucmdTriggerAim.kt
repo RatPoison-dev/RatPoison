@@ -64,6 +64,8 @@ fun ucmdTriggerAim(silent: Boolean, trigEnt: Long): Boolean {
         aB = FORCE_AIM_BONE
     }
 
+    if (aB.isEmpty()) return false
+
     var forceSpecificBone = -1
     val findNearest = aB.has { it == NEAREST_BONE }
     val findRandom = aB.has { 0 > it as Int }
@@ -93,13 +95,12 @@ fun ucmdTriggerAim(silent: Boolean, trigEnt: Long): Boolean {
     }
 
     if (silent) {
-        silentHaveTarget = true
         cmdSetAngles(destinationAngle)
     } else {
-        silentHaveTarget = false
-
         if (!perfect) {
-            writeAim(currentAngle, destinationAngle, 101 - AIM_SMOOTHNESS)
+            destinationAngle.finalize(currentAngle, (1F - AIM_SMOOTHNESS / 100F))
+
+            writeAim(currentAngle, destinationAngle, AIM_SMOOTHNESS)
         } else {
             writeAim(currentAngle, destinationAngle, 1)
         }

@@ -2,10 +2,9 @@ package rat.poison.scripts.visuals
 
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.Align
-import rat.poison.*
+import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
-import rat.poison.game.forEntities
 import rat.poison.overlay.App
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.every

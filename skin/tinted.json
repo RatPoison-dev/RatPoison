@@ -1,4 +1,9 @@
 {
+//	com.badlogic.gdx.graphics.g2d.BitmapFont: {
+//		default-font: {file: default.fnt },
+//		small-font: {file: font-small.fnt }
+//	},
+
 	com.badlogic.gdx.graphics.Color: {
 		green: {a: 1, b: 0, g: 1, r: 0 },
 		red: {a: 1, b: 0, g: 0, r: 1 },
@@ -35,10 +40,10 @@
 		border-error: {name: t-border, color: t-warn },
 		button: {name: t-base, color: t-medium },
 		button-blue: {name: t-base, color: t-white }, //tab bars
-		button-blue-down: {name: t-base, color: t-highlight-dark },
-		button-blue-over: {name: t-base, color: t-highlight-medium },
-		button-down: {name: t-base, color: t-highlight-dark },
-		button-over: {name: t-base, color: t-highlight-medium },
+		button-blue-down: {name: t-base, color: t-medium },
+		button-blue-over: {name: t-base, color: t-medium },
+		button-down: {name: t-base, color: t-highlight},
+		button-over: {name: t-base, color: t-medium },
 		button-red: {name: t-base, color: t-warn },
 		button-window-bg: {name: t-base, color: t-very-dark },
 		check-off: {name: t-check, color: t-medium },
@@ -60,18 +65,18 @@
 		scroll: {name: t-hline, color: t-medium },
 		scroll-horizontal: {name: t-vline, color: t-medium },
 		scroll-knob-horizontal: {name: t-hknob, color: t-dark },
-		scroll-knob-vertical: {name: t-vknob, color: t-dark },
+		scroll-knob-vertical: {name: t-vknob, color: t-light },
 		select-box-list-bg: {name: t-dot, color: t-medium },
 		select-down: {name: t-select-down, color: t-light },
 		selection: {name: t-dot, color: t-highlight-dark },
 		select-up: {name: t-select-up, color: t-light },
 		separator: {name: t-dot, color: t-highlight },
 		separator-menu: {name: t-dot, color: t-highlight-medium },
-		slider: {name: t-hslider, color: t-medium },
+		slider: {name: t-hslider, color: t-light },
 		slider-knob: {name: t-base, color: t-light },
 		slider-knob-disabled: {name: t-base, color: t-medium-dark },
 		slider-knob-down: {name: t-base, color: t-highlight },
-		slider-knob-over: {name: t-base, color: t-light },
+		slider-knob-over: {name: t-base, color: t-medium },
 		slider-vertical: {name: t-vslider, color: t-medium-dark },
 		splitpane: {name: t-vslider, color: t-medium-dark },
 		splitpane-over: {name: t-vslider, color: t-light },

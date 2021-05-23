@@ -1,15 +1,18 @@
 package rat.poison.scripts
 
 import rat.poison.curSettings
-import rat.poison.game.entity.*
+import rat.poison.game.entity.EntityType
+import rat.poison.game.entity.dead
+import rat.poison.game.entity.eyeAngle
+import rat.poison.game.entity.position
 import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.robot
-import rat.poison.utils.*
 import rat.poison.utils.common.Angle
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.distanceTo
 import rat.poison.utils.common.every
+import rat.poison.utils.keybindEval
 import java.awt.event.KeyEvent
 import kotlin.math.atan2
 
@@ -47,7 +50,7 @@ private val meAng = Vector()
 private val closestPos = Vector()
 private val forEnts = arrayOf(EntityType.CCSPlayer)
 fun blockBot() = every(2, inGameCheck = true) {
-    if (!curSettings.bool["BLOCK_BOT"] || !keybindEval("BLOCK_BOT_KEY")) {
+    if (!curSettings.bool["BLOCK_BOT"] || !keybindEval("BLOCK_BOT_KEY", "BLOCK_BOT")) {
         unPress()
         return@every
     }

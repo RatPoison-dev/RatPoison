@@ -11,7 +11,7 @@ import rat.poison.ui.uiTabs.miscVisualsTable
 import rat.poison.ui.uiWindows.visualsTab
 
 class MiscVisualsTable: VisTable(false) {
-    val radarEsp = VisCheckBoxCustom("Radar Esp", "RADAR_ESP")
+    val radarEsp = VisCheckBoxCustom("Radar ESP", "RADAR_ESP")
     val legitRadar = VisCheckBoxCustom("Legit Radar", "LEGIT_RADAR")
     val legitRadarDistance = VisSliderCustom("Distance", "LEGIT_RADAR_FOOTSTEPS_DISTANCE", 100F, 5000F, 100F, true, 0, 175F, 117F)
 
@@ -38,8 +38,6 @@ class MiscVisualsTable: VisTable(false) {
     val enableHeadLevel = VisCheckBoxCustom("Head Line", "HEAD_LVL_ENABLE", false)
     val headLevelColor = VisColorPickerCustom("Head Line Color", "HEAD_LVL_COLOR")
     val headLevelDeadzone = VisSliderCustom("Deadzone", "HEAD_LVL_DEADZONE", .01F, 10F, .1F, false, labelWidth = 175F, barWidth = 117F)
-
-    val enableUIWatermark = VisCheckBoxCustom("UI Watermark", "UI_WATERMARK")
 
     init {
         val label = VisLabel("Miscellaneous")
@@ -76,8 +74,6 @@ class MiscVisualsTable: VisTable(false) {
         add(headLevelColor).left().expandX().row()
 
         add(headLevelDeadzone).colspan(2).left().row()
-
-        add(enableUIWatermark).colspan(2).left().row()
     }
 }
 
@@ -103,7 +99,6 @@ fun miscVisualTabUpdate() {
         enableHeadLevel.update()
         headLevelColor.update()
         headLevelDeadzone.update()
-        enableUIWatermark.update()
     }
 }
 
@@ -146,6 +141,5 @@ fun miscVisualTableDisable(bool: Boolean, col: Color) {
         enableHeadLevel.disable(bool)
         headLevelColor.disable(bool)
         headLevelDeadzone.disable(bool, col)
-        enableUIWatermark.disable(bool)
     }
 }

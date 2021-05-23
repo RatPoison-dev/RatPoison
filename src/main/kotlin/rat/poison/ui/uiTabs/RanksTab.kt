@@ -4,52 +4,58 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.widget.LinkLabel
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
+import rat.poison.overlay.App.uiMenu
 import rat.poison.scripts.ranksPlayerList
 import rat.poison.ui.uiRefreshing
+import rat.poison.ui.uiWindows.ranksTab
 import rat.poison.utils.RanksPlayer
+import rat.poison.utils.locale
 import rat.poison.utils.saving
 
 var updatingRanks = false
 
-
 //TODO move
-class VisLabelExtension(mainText: String): VisLabel(mainText) {
+class VisLabelCustom(mainText: String): VisLabel(mainText.locale()) {
     override fun setText(newText: CharSequence?) {
-        if (this.text != newText) {
-            super.setText(newText)
-        }
+        super.setText(newText.locale())
+    }
+}
+
+class VisTextButtonCustom(mainText: String): VisTextButton(mainText.locale()) {
+    override fun setText(newText: String?) {
+        super.setText(newText.locale())
     }
 }
 
 class RanksTab : Tab(false, false) {
-    private val table = VisTable(true)
+    private val table = VisTable(false)
 
     private var ranksListTable = VisTable(false)
-    private var teamsLabel = VisLabelExtension("Team" + "  \n")
+    private var teamsLabel = VisLabelCustom("Team" + "  \n")
 
     private var namesTable = VisTable(false)
-    private var namesLabel = VisLabelExtension("Name" + "  \n")
+    private var namesLabel = VisLabelCustom("Name" + "  \n")
 
-    private var ranksLabel = VisLabelExtension("Rank" + "  \n")
-    private var killsLabel = VisLabelExtension("Kills" + "  \n")
-    private var deathsLabel = VisLabelExtension("Deaths" + "  \n")
-    private var kdLabel = VisLabelExtension("K/D" + "  \n")
-    private var winsLabel = VisLabelExtension("Wins" + "  \n")
-    private var moneyLabel = VisLabelExtension("Money" + "  \n")
+    private var ranksLabel = VisLabelCustom("Rank" + "  \n")
+    private var killsLabel = VisLabelCustom("Kills" + "  \n")
+    private var deathsLabel = VisLabelCustom("Deaths" + "  \n")
+    private var kdLabel = VisLabelCustom("K/D" + "  \n")
+    private var winsLabel = VisLabelCustom("Wins" + "  \n")
+    private var moneyLabel = VisLabelCustom("Money" + "  \n")
 
     init {
-        ranksListTable.add(teamsLabel)
+        namesTable.add(namesLabel).top()
 
-        namesTable.add(namesLabel).row()
+        ranksListTable.add(teamsLabel).top()
         ranksListTable.add(namesTable).top().padRight(4f) //Table
-
-        ranksListTable.add(ranksLabel)
-        ranksListTable.add(killsLabel)
-        ranksListTable.add(deathsLabel)
-        ranksListTable.add(kdLabel)
-        ranksListTable.add(winsLabel)
-        ranksListTable.add(moneyLabel)
+        ranksListTable.add(ranksLabel).top()
+        ranksListTable.add(killsLabel).top()
+        ranksListTable.add(deathsLabel).top()
+        ranksListTable.add(kdLabel).top()
+        ranksListTable.add(winsLabel).top()
+        ranksListTable.add(moneyLabel).top()
 
         table.add(ranksListTable).left().maxWidth(500F)
     }
@@ -63,7 +69,7 @@ class RanksTab : Tab(false, false) {
     }
 
     fun updateRanks() {
-        if (uiRefreshing || saving || updatingRanks || !isActiveTab) return
+        if (uiRefreshing || saving || updatingRanks || uiMenu.activeTab != ranksTab) return
         updatingRanks = true
         teamsLabel.setText("Team" + "  \n")
         namesLabel.setText("Name")
@@ -80,6 +86,7 @@ class RanksTab : Tab(false, false) {
         ranksPlayerList.forEach {
             constructRank(it)
         }
+
         updatingRanks = false
     }
 
@@ -93,10 +100,11 @@ class RanksTab : Tab(false, false) {
         tmpName = tmpName.substring(0, if (tmpName.length > 23) 23 else tmpName.length)
 
         if (player.steamID != 0) { //Bot check
-            namesTable.add(LinkLabel(tmpName, "https://steamcommunity.com/profiles/%5BU:1:" + player.steamID + "%5B/")).height(20f).left().row()
+            namesTable.add(LinkLabel(tmpName, "https://steamcommunity.com/profiles/%5BU:1:" + player.steamID + "%5B/")).height(21F).left().top().row()
         } else {
-            namesTable.add(tmpName).height(20f).left().row()
+            namesTable.add(tmpName).height(21F).left().top().row()
         }
+
         ranksLabel.setText(ranksLabel.text.toString() + player.rank + "  \n")
         killsLabel.setText(killsLabel.text.toString() + player.kills + "  \n")
         deathsLabel.setText(deathsLabel.text.toString() + player.deaths + "  \n")

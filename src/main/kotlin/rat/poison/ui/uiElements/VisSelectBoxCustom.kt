@@ -3,15 +3,16 @@ package rat.poison.ui.uiElements
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.Tooltip
-import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.ui.changed
+import rat.poison.ui.uiTabs.VisLabelCustom
 import rat.poison.ui.uiTabs.categorySelected
 import rat.poison.ui.uiTabs.updateDisableRCrosshair
 import rat.poison.utils.extensions.upper
+import rat.poison.utils.locale
 
 //Swap VisSelectBoxCustom to showText false is mainText is " "
 class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean, showText: Boolean = true, vararg items: String, textWidth: Float = 200F, boxWidth: Float = 100F): VisTable(false) {
@@ -22,8 +23,8 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
 
     private var dropDownWidth = boxWidth
 
-    private var boxLabel = VisLabel("$textLabel:")
-    private val selectBox = VisSelectBox<String>()
+    private var boxLabel = VisLabelCustom("$textLabel:")
+    val selectBox = VisSelectBox<String>()
 
     private val boxItems = items
 
@@ -32,11 +33,11 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
     init {
         val itemsArray = Array<String>()
         for (i in boxItems) {
-            itemsArray.add(i)
+            itemsArray.add("L_$i".locale(i))
         }
-
         selectBox.items = itemsArray
         selected = selectBox.selected
+
         update()
         updateTooltip()
 
@@ -57,6 +58,12 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
     }
 
     fun update() {
+        val itemsArray = Array<String>()
+        for (i in boxItems) {
+            itemsArray.add("L_$i".locale(i))
+        }
+        selectBox.items = itemsArray
+
         val setting = if (useGunCategory) { categorySelected + variableName } else { variableName }
 
         try {
@@ -68,6 +75,8 @@ class VisSelectBoxCustom(mainText: String, varName: String, useCategory: Boolean
                 println("[DEBUG - Error Handling] -- $setting invalid, setting value to [${selectBox.selected}]")
             }
         }
+
+        boxLabel.setText("L$variableName".locale(textLabel))
 
         selected = selectBox.selected
         updateTooltip()

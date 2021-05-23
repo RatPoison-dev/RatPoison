@@ -6,13 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.widget.LinkLabel
 import com.kotcrab.vis.ui.widget.VisTable
-import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.overlay.App.uiBombWindow
 import rat.poison.overlay.App.uiSpecList
-import rat.poison.settings.WARNINGTOG
 import rat.poison.ui.changed
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.VisSliderCustom
@@ -23,7 +21,7 @@ import rat.poison.ui.uiWindows.optionsTab
 class OptionsTab : Tab(false, false) {
     private val table = VisTable(true)
 
-    val menuKey = VisBindTableCustom("Menu Key", "MENU_KEY", 225F)
+    val menuKey = VisBindTableCustom("Menu Key", "MENU_KEY", keyWidth = 225F)
     val menuAlpha = VisSliderCustom("Menu Alpha", "MENU_ALPHA", .5F, 1F, .05F, false)
     val oglFPS = VisSliderCustom("OpenGL FPS", "OPENGL_FPS", 30F, 245F, 5F, true)
     val stayFocused = VisCheckBoxCustom("Stay Focused", "MENU_STAY_FOCUSED")

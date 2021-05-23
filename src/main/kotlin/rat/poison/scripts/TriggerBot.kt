@@ -1,10 +1,12 @@
 package rat.poison.scripts
 
 import rat.poison.curSettings
-import rat.poison.game.*
 import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
+import rat.poison.game.angle
+import rat.poison.game.clientState
 import rat.poison.game.entity.*
+import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.iCrossHairID
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
@@ -26,20 +28,19 @@ private val boneList = listOf(-2)
 
 fun triggerBot() = every(5, inGameCheck = true) {
     if (curSettings.bool["UCMD_HANDLE_TRIGGER"]) {
-        keybindEval("TRIGGER_KEY")
         return@every
     }
 
     //Don't run if not needed
     if (DANGER_ZONE || meDead || !inGame || MENUTOG || !meCurWep.gun || !curSettings.bool["ENABLE_TRIGGER"] || !haveAimSettings) { //Precheck
-        keybindEval("TRIGGER_KEY")
+        keybindEval("TRIGGER_KEY", "ENABLE_TRIGGER")
         inTrigger = false
         triggerShots = 0
         return@every
     }
 
     //Trigger key check
-    if (curSettings.bool["TRIGGER_ENABLE_KEY"] && !keybindEval("TRIGGER_KEY")) {
+    if (!keybindEval("TRIGGER_KEY", "TRIGGER_ENABLE_KEY")) {
         inTrigger = false
         triggerShots = 0
         return@every

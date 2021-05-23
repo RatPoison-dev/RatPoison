@@ -89,6 +89,7 @@ class AssetManager: AssetManager() {
             App.textRenderer = generatedFont
             if (!VisUI.isLoaded()) {
                 skin.add("default-font", generatedFont, BitmapFont::class.java)
+                skin.add("small-font", generatedFont, BitmapFont::class.java)
                 skin.addRegions(TextureAtlas(Gdx.files.internal(("skin/tinted.atlas"))))
                 skin.load(Gdx.files.internal("skin/tinted.json"))
                 VisUI.load(skin)
@@ -98,9 +99,9 @@ class AssetManager: AssetManager() {
             curSettings["FONT"] = "VisOpenSans"
             updateFonts()
         }
+
         updateFonts = false
     }
-
 
     fun loadAssets() {
         loadMusic()

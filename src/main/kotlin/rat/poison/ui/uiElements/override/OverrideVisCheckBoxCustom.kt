@@ -9,6 +9,7 @@ import rat.poison.ui.setOverrideVar
 import rat.poison.ui.uiTabs.aimTables.weaponOverrideSelected
 import rat.poison.ui.uiTabs.overrideTable
 import rat.poison.utils.generalUtil.strToBool
+import rat.poison.utils.locale
 
 private val flatAimIdx = getOverrideVarIndex(DEFAULT_OWEAPON_STR, "tFlatAim")
 private val pathAimIdx = getOverrideVarIndex(DEFAULT_OWEAPON_STR, "tPathAim")
@@ -36,7 +37,7 @@ class OverrideVisCheckBoxCustom(mainText: String, varName: String) : VisCheckBox
     }
 
     fun update() {
-        setText(defaultText)
+        setText("L_$variableName".locale(defaultText))
         isChecked = getOverrideVar(weaponOverrideSelected, varIdx).strToBool()
     }
 

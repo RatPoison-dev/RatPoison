@@ -6,8 +6,8 @@ import com.kotcrab.vis.ui.widget.VisCheckBox
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curSettings
 import rat.poison.ui.changed
+import rat.poison.ui.uiElements.VisAimComboBox
 import rat.poison.ui.uiElements.VisCheckBoxCustom
-import rat.poison.ui.uiElements.VisSelectBoxCustom
 import rat.poison.ui.uiElements.aim.AimVisCheckBox
 import rat.poison.ui.uiElements.aim.AimVisSlider
 import rat.poison.ui.uiTabs.boneCategories
@@ -24,22 +24,22 @@ class LegitBotTable: VisTable(false) {
     val enablePathAim = AimVisCheckBox("Mouse Movement", "_ENABLE_PATH_AIM")
     val enableScopedOnly = VisCheckBoxCustom("Scoped Only", "SNIPER_ENABLE_SCOPED_ONLY")
 
-    val aimBones = VisSelectBoxCustom("Aim Bone", "_AIM_BONE", useCategory = true, showText = true, textWidth = 225F, items = boneCategories)
-    val forceAimBone = VisSelectBoxCustom("Force Aim Bone", "_AIM_FORCE_BONE", useCategory = true, showText = true, textWidth = 225F, items = boneCategories)
+    val aimBones = VisAimComboBox("Aim Bone", "_AIM_BONE", showText = true, textWidth = 225F, items = boneCategories)
+    val forceAimBone = VisAimComboBox("Force Aim Bone", "_AIM_FORCE_BONE", showText = true, textWidth = 225F, items = boneCategories)
 
     val aimFov = AimVisSlider("Aim FOV", "_AIM_FOV", .5F, 90F, .5F, false, 1, 225F, 225F)
     val aimSmooth = AimVisSlider("Smoothness", "_AIM_SMOOTHNESS", 1F, 100F, 1F, true, 0, 225F, 225F)
     val aimAfterShots = AimVisSlider("Aim After #", "_AIM_AFTER_SHOTS", 0F, 10F, 1F, true, 0, 225F, 225F)
 
     //Perfect Aim Collapsible
-    val perfectAimCheckBox = VisCheckBox("Enable-Perfect-Aim")
+    val perfectAimCheckBox = VisCheckBox("Enable Perfect Aim")
     private val perfectAimTable = VisTable(false)
     val perfectAimCollapsible = CollapsibleWidget(perfectAimTable)
-    val perfectAimFov = AimVisSlider("FOV", "_PERFECT_AIM_FOV", 1F, 90F, .5F, false, 1, 200F, 200F)
-    val perfectAimChance = AimVisSlider("Chance", "_PERFECT_AIM_CHANCE", 1F, 100F, 1F, true, 0, 200F, 200F)
+    val perfectAimFov = AimVisSlider("Perfect FOV", "_PERFECT_AIM_FOV", 1F, 90F, .5F, false, 1, 200F, 200F)
+    val perfectAimChance = AimVisSlider("Perfect Chance", "_PERFECT_AIM_CHANCE", 1F, 100F, 1F, true, 0, 200F, 200F)
 
     //Advanced Settings Collapsible
-    val advancedSettingsCheckBox = VisCheckBox("Advanced-Settings")
+    val advancedSettingsCheckBox = VisCheckBox("Advanced Settings")
     private val advancedSettingsTable = VisTable(false)
     val advancedSettingsCollapsible = CollapsibleWidget(advancedSettingsTable)
     val advancedRcsX = AimVisSlider("RCS X", "_AIM_RCS_X", 0.05F, 1F, 0.05F, false, 2, 200F, 200F)

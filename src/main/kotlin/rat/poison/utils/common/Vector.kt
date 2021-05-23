@@ -6,11 +6,12 @@ data class VectorLong(var x: Long = 0, var y: Long = 0, var z: Long = 0)
 data class VectorInt(var x: Int = 0, var y: Int = 0, var z: Int = 0) {
 	fun reset() {
 		this.x = 0
-		this.y = y
-		this.z = z
+		this.y = 0
+		this.z = 0
 	}
 }
 
+const val vectorZero = 0.01F
 data class Vector(var x: Float = 0.0F, var y: Float = 0.0F, var z: Float = 0.0F) {
 	fun set(x: Float, y: Float, z: Float) = apply {
 		this.x = x
@@ -18,7 +19,7 @@ data class Vector(var x: Float = 0.0F, var y: Float = 0.0F, var z: Float = 0.0F)
 		this.z = z
 	}
 
-	fun isZero() = (x < 0.01F && x > -0.01F) && (y < 0.01F && y > -0.01F) && (z < 0.01F && z > -0.01F)
+	fun isZero() = (x < vectorZero && x > -vectorZero) && (y < vectorZero && y > -vectorZero) && (z < vectorZero && z > -vectorZero)
 
 	fun valid() = !isZero()
 

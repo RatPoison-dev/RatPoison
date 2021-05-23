@@ -7,6 +7,7 @@ import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.ui.changed
 import rat.poison.ui.uiTabs.*
 import rat.poison.utils.generalUtil.boolToStr
+import rat.poison.utils.locale
 
 class VisCheckBoxCustom(mainText: String, varName: String, visibleText: Boolean = true) : VisCheckBox(mainText) {
     private val variableName = varName
@@ -33,7 +34,7 @@ class VisCheckBoxCustom(mainText: String, varName: String, visibleText: Boolean 
     }
 
     fun update() {
-        setText(labelText)
+        setText("L_$variableName".locale(labelText))
 
         isChecked = curSettings.bool[variableName]
 

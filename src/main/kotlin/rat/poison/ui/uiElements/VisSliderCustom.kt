@@ -7,6 +7,7 @@ import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curSettings
 import rat.poison.ui.changed
+import rat.poison.utils.locale
 import kotlin.math.pow
 import kotlin.math.round
 
@@ -49,8 +50,9 @@ class VisSliderCustom(mainText: String, varName: String, varMin: Float, varMax: 
             round(sliderBar.value * rnd)/rnd
         }
 
+        val sliderText = "L_$variableName".locale(labelText)
 
-        sliderLabel.setText("$labelText: $sliderVal")
+        sliderLabel.setText("$sliderText: $sliderVal")
 
         updateTooltip()
     }

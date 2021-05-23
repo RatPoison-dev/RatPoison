@@ -3,9 +3,10 @@ package rat.poison.scripts.visuals
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils.clamp
 import rat.poison.curSettings
-import rat.poison.game.*
+import rat.poison.game.CSGO
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.EntityType
+import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.m_iDefaultFov
 import rat.poison.game.netvars.NetVarOffsets.m_iFOV
 import rat.poison.overlay.App

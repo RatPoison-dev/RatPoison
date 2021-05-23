@@ -7,7 +7,6 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.lwjgl.glfw.GLFW.*
 import rat.poison.game.CSGO
 import rat.poison.game.offsets.EngineOffsets.dwbSendPackets
 import rat.poison.overlay.App
@@ -23,7 +22,9 @@ import rat.poison.scripts.visuals.*
 import rat.poison.utils.common.Settings
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.loadSkinSettings
+import rat.poison.utils.loadLocale
 import rat.poison.utils.loadMigration
+import rat.poison.utils.updateFonts
 import java.awt.Robot
 import java.io.File
 import java.util.*
@@ -40,7 +41,11 @@ data class oWeapon(var tOverride: Boolean = false,          var tFRecoil: Boolea
                    var tBTrigInitDelay: Int = 0,            var tBTrigPerShotDelay: Int = 0,
 
                    var tBacktrack: Boolean = false,         var tBTMS: Int = 0,
-                   var tAutowep: Boolean = false,           var tAutowepDelay: Int = 0)
+                   var tAutowep: Boolean = false,           var tAutowepDelay: Int = 0) {
+    override fun toString(): String {
+        return "oWeapon(tOverride=$tOverride, tFRecoil=$tFRecoil, tOnShot=$tOnShot, tFlatAim=$tFlatAim, tPathAim=$tPathAim, tAimBone=${tAimBone.joinToString(prefix = "[", separator = ";", postfix = "]")}, tForceBone=${tForceBone.joinToString(prefix = "[", separator = ";", postfix = "]")}, tAimFov=$tAimFov, tAimSmooth=$tAimSmooth, tPerfectAim=$tPerfectAim, tPAimFov=$tPAimFov, tPAimChance=$tPAimChance, tScopedOnly=$tScopedOnly, tAimAfterShots=$tAimAfterShots, tBoneTrig=$tBoneTrig, tBTrigAim=$tBTrigAim, tBTrigInCross=$tBTrigInCross, tBTrigInFov=$tBTrigInCross, tBTrigBacktrack=$tBTrigBacktrack, tBTrigFov=$tBTrigFov, tBTrigInitDelay=$tBTrigInitDelay, tBTrigPerShotDelay=$tBTrigPerShotDelay, tBacktrack=$tBacktrack, tBTMS=$tBTMS, tAutowep=$tAutowep, tAutowepDelay=$tAutowepDelay)"
+    }
+}
 
 //Skinned Weapon
 data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var tSeed: Int)
@@ -62,6 +67,7 @@ lateinit var MUSIC_KITS_FILE: File
 var settingsLoaded = false
 val curSettings = Settings()
 val skSettings = Settings()
+val curLocale = Settings()
 var crosshairArray = BitSet(81) //81 is max / 0 //RCROSSHAIR_BUILDER_ARRAY
 
 val DEFAULT_OWEAPON = oWeapon()
@@ -73,8 +79,16 @@ val robot = Robot().apply { this.autoDelay = 0 }
 
 var haltProcess = false
 
+fun dbgLog(str: String) {
+    if (dbg) {
+        println("[DEBUG] $str")
+    }
+}
+
 fun main() {
     System.setProperty("jna.nosys", "true")
+
+    loadLocale()
 
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
     loadSkinSettings("$SETTINGS_DIRECTORY/skinCFGS/DefaultSettings.cfg")
@@ -93,7 +107,8 @@ fun main() {
 
     loadMigration()
 
-    if (dbg) println("[DEBUG] Initializing scripts...")
+    dbgLog("Initializing scripts...")
+    
     //Init scripts
     if (!curSettings.bool["MENU"]) { //If we aren't using the menu disable everything that uses the menu
         if (dbg) println("[DEBUG] Menu disabled, disabling box, skeleton, rcrosshair, btimer, indicator, speclist, hitmarker, nade helper, nade tracer, draw fov, spread circle, visualize smokes")
@@ -113,110 +128,121 @@ fun main() {
         curSettings["SPREAD_CIRCLE"] = "false"
         curSettings["VISUALIZE_SMOKES"] = "false"
     } else {
-        if (dbg) { println("[DEBUG] Initializing Recoil Ranks") }; ranks()
+        dbgLog("Initializing Recoil Ranks"); ranks()
 
-        if (dbg) { println("[DEBUG] Initializing Recoil Spectator List") }; spectatorList()
-        if (dbg) { println("[DEBUG] Initializing Recoil Bomb Timer") }; bombTimer()
+        dbgLog("Initializing Recoil Spectator List"); spectatorList()
+        dbgLog("Initializing Recoil Bomb Timer"); bombTimer()
 
-        if (dbg) { println("[DEBUG] Initializing Recoil Crosshair") }; rCrosshair()
-        if (dbg) { println("[DEBUG] Initializing Hit Marker") }; hitMarker()
-        if (dbg) { println("[DEBUG] Initializing Nade Helper") }; nadeHelper()
-        if (dbg) { println("[DEBUG] Initializing Nade Tracer") }; nadeTracer()
-        if (dbg) { println("[DEBUG] Initializing Draw Fov") }; drawFov()
-        if (dbg) { println("[DEBUG] Initializing Spread Circle") }; spreadCircle()
-        if (dbg) { println("[DEBUG] Initializing Draw Smokes") }; drawSmokes()
-        if (dbg) { println("[DEBUG] Initializing Far Radar") }; farRadar()
-
-        if (dbg) { println("[DEBUG] Initializing Handle UI Watermark") }; handleUIWatermark()
-        if (dbg) { println("[DEBUG] Initializing Handle UI Debug") }; handleUIDebug()
-        //farEsp()
+        dbgLog("Initializing Recoil Crosshair"); rCrosshair()
+        dbgLog("Initializing Hit Marker"); hitMarker()
+        dbgLog("Initializing Nade Helper"); nadeHelper()
+        dbgLog("Initializing Nade Tracer"); nadeTracer()
+        dbgLog("Initializing Draw Fov"); drawFov()
+        dbgLog("Initializing Spread Circle"); spreadCircle()
+        dbgLog("Initializing Draw Smokes"); drawSmokes()
     }
+        
+    dbgLog("Initializing Far Radar"); farRadar()
+    dbgLog("Initializing Handle UI Watermark"); handleUIWatermark()
+    dbgLog("Initializing Handle UI Debug"); handleUIDebug()
+    dbgLog("Initializing Bunny Hop"); bunnyHop()
+    dbgLog("Initializing Auto Strafe"); strafeHelper()
+    dbgLog("Initializing Kill Bind"); killBind()
+    dbgLog("Initializing RCS"); rcs()
+    dbgLog("Initializing Flat Aim"); flatAim()
 
-    if (dbg) { println("[DEBUG] Initializing Bunny Hop") }; bunnyHop()
-    if (dbg) { println("[DEBUG] Initializing Auto Strafe") }; strafeHelper()
-    if (dbg) { println("[DEBUG] Initializing Kill Bind") }; killBind()
-    if (dbg) { println("[DEBUG] Initializing RCS") }; rcs()
-    if (dbg) { println("[DEBUG] Initializing Flat Aim") }; flatAim()
-    if (dbg) { println("[DEBUG] Initializing Path Aim") }; pathAim()
-    if (dbg) { println("[DEBUG] Initializing Set Aim") }; setAim()
-    if (dbg) { println("[DEBUG] Initializing Bone Trigger") }; triggerBot()
-    if (dbg) { println("[DEBUG] Initializing Auto Knife") }; autoKnife()
-    if (dbg) { println("[DEBUG] Initializing Reduced Flash") }; reducedFlash()
-    if (dbg) { println("[DEBUG] Initializing ESPs") }; esp()
-    if (dbg) { println("[DEBUG] Initializing Fast Stop") }; fastStop()
-    if (dbg) { println("[DEBUG] Initializing Head Walk") }; headWalk()
-    if (dbg) { println("[DEBUG] Initializing Adrenaline") }; adrenaline()
-    if (dbg) { println("[DEBUG] Initializing FovChanger") }; fovChanger()
-    if (dbg) { println("[DEBUG] Disabling Post Processing") }; disablePostProcessing()
-    if (dbg) { println("[DEBUG] Initializing Weapon Changer") }; skinChanger()
-    if (dbg) { println("[DEBUG] Initializing NightMode/FullBright") }; nightMode()
-    if (dbg) { println("[DEBUG] Initializing Bomb Updater")}; bombUpdater()
+    dbgLog("Initializing Path Aim"); pathAim()
 
-    if (dbg) { println("[DEBUG] Initializing Backtrack") }; setupBacktrack()
-    if (dbg) { println("[DEBUG] Initializing Draw Backtrack") }; drawBacktrack()
-    if (dbg) { println("[DEBUG] Initializing GVars Updater") }; updateGVars()
-    if (dbg) { println("[DEBUG] Initializing Nades Timer") }; nadesTimer()
+    dbgLog("Initializing Set Aim"); setAim()
 
-    if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
-    if (dbg) { println("[DEBUG] Initializing Fake Lag") }; fakeLag()
-    if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()
-    if (dbg) { println("[DEBUG] Initializing Kill Sound") }; killSoundEsp()
-    if (dbg) { println("[DEBUG] Initializing MusicKit Spoofer") }; musicKitSpoofer()
-    if (dbg) { println("[DEBUG] Initializing Block Bot") }; blockBot()
-    if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
+    dbgLog("Initializing Bone Trigger"); triggerBot()
+    dbgLog("Initializing Auto Knife"); autoKnife()
+    dbgLog("Initializing Reduced Flash"); reducedFlash()
+    dbgLog("Initializing ESPs"); esp()
+    dbgLog("Initializing Fast Stop"); fastStop()
+    dbgLog("Initializing Head Walk"); headWalk()
+    dbgLog("Initializing Adrenaline"); adrenaline()
+    dbgLog("Initializing FovChanger"); fovChanger()
+    dbgLog("Disabling Post Processing"); disablePostProcessing()
+    dbgLog("Initializing Weapon Changer"); skinChanger()
+    dbgLog("Initializing NightMode/FullBright"); nightMode()
+    dbgLog("Initializing Bomb Updater"); bombUpdater()
+    dbgLog("Initializing Backtrack"); setupBacktrack()
+    dbgLog("Initializing Draw Backtrack"); drawBacktrack()
+    dbgLog("Initializing GVars Updater"); updateGVars()
+
+    dbgLog("Initializing Nades Timer"); nadesTimer()
+    dbgLog("Initializing Head Level Helper"); headLevelHelper()
+    dbgLog("Initializing Fake Lag"); fakeLag()
+    dbgLog("Initializing Nade Thrower"); nadeThrower()
+    dbgLog("Initializing Kill Sound"); killSoundEsp()
+    dbgLog("Initializing MusicKit Spoofer"); musicKitSpoofer()
+    dbgLog("Initializing Block Bot"); blockBot()
+    dbgLog("dwbSendPackets: $dwbSendPackets")
 
     handleUCMD()
 
-    //if (EXPERIMENTAL) {
+        //if (EXPERIMENTAL) {
         //rayTraceTest()
         //drawMapWireframe()l
-    //}
-    //Overlay check, not updated?
+        //}
+        //Overlay check, not updated?
+
     if (curSettings.bool["MENU"]) {
         println("Game found. Launching.")
 
+        initApp()
+    }
+
+    scanner()
+}
+
+
+fun initApp() {
+    haltProcess = false
+    updateFonts = true
+
+    GlobalScope.launch {
         App.open()
 
-        GlobalScope.launch {
-            glfwInit()
+        Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
+            setTitle("Rat Poison UI")
 
-            Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
-                setTitle("Rat Poison UI")
+            var w = CSGO.gameWidth
+            var h = CSGO.gameHeight
 
-                var w = CSGO.gameWidth
-                var h = CSGO.gameHeight
+            if ((w == 0 || h == 0) || curSettings["MENU_APP"] != "\"Counter-Strike: Global Offensive\"") {
+                w = curSettings.int["OVERLAY_WIDTH"]
+                h = curSettings.int["OVERLAY_HEIGHT"]
+            }
 
-                if ((w == 0 || h == 0) || curSettings["MENU_APP"] != "\"Counter-Strike: Global Offensive\"") {
-                    w = curSettings.int["OVERLAY_WIDTH"]
-                    h = curSettings.int["OVERLAY_HEIGHT"]
+            if (appless) {
+                w = curSettings.int["APPLESS_WIDTH"]
+                h = curSettings.int["APPLESS_HEIGHT"]
+            }
+
+            setWindowedMode(w, h)
+
+            if (curSettings.bool["OPENGL_3"]) {
+                useOpenGL3(true, 4, 0)
+                if (dbg) {
+                    println("[DEBUG] Using GL3")
                 }
-
-                if (appless) {
-                    w = curSettings.int["APPLESS_WIDTH"]
-                    h = curSettings.int["APPLESS_HEIGHT"]
+            } else {
+                useOpenGL3(false, 2, 0)
+                if (dbg) {
+                    println("[DEBUG] Using GL2")
                 }
+            }
 
-                setWindowedMode(w, h)
+            //Required to fix W2S offset
+            if (!appless) setWindowPosition(CSGO.gameX, CSGO.gameY) else setWindowPosition(curSettings.int["APPLESS_X"], curSettings.int["APPLESS_Y"])
+            setResizable(false)
+            setDecorated(appless)
+            useVsync(false)
 
-                if (curSettings.bool["OPENGL_3"]) {
-                    useOpenGL3(true, 4, 0)
-                    if (dbg) { println("[DEBUG] Using GL3") }
-                } else {
-                    useOpenGL3(false, 2, 0)
-                    if (dbg) { println("[DEBUG] Using GL2") }
-                }
-
-                //Required to fix W2S offset
-                if (!appless) setWindowPosition(CSGO.gameX, CSGO.gameY) else setWindowPosition(curSettings.int["APPLESS_X"], curSettings.int["APPLESS_Y"])
-                setResizable(false)
-                setDecorated(appless)
-                useVsync(false)
-                glfwSwapInterval(0)
-                glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE)
-                setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings.int["OPENGL_MSAA_SAMPLES"])
-            })
-        }
-    } else {
-        scanner()
+            //glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE)
+            setBackBufferConfig(8, 8, 8, 8, 16, 0, curSettings.int["OPENGL_MSAA_SAMPLES"])
+        })
     }
 }

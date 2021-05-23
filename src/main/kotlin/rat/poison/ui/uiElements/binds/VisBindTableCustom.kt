@@ -3,13 +3,15 @@ package rat.poison.ui.uiElements.binds
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.kotcrab.vis.ui.widget.Tooltip
-import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.curSettings
+import rat.poison.ui.uiTabs.VisLabelCustom
+import rat.poison.utils.locale
 
 class VisBindTableCustom(mainText: String, varName: String, keyWidth: Float = 200F, spaceRight: Float = 6F, buttonWidth: Float = 50F): VisTable(false) {
     private val textLabel = mainText
-    private val keyLabel = VisLabel("$textLabel:")
+    private val variableName = varName
+    private val keyLabel = VisLabelCustom("$textLabel:")
     private val button = InputBindBox(mainText, varName)
     private var hasTooltip = false
 
@@ -26,6 +28,8 @@ class VisBindTableCustom(mainText: String, varName: String, keyWidth: Float = 20
         if (neglect != this) {
             button.update()
         }
+
+        keyLabel.setText("L_$variableName".locale(textLabel))
 
         updateTooltip()
     }

@@ -8,6 +8,7 @@ import com.kotcrab.vis.ui.util.dialog.OptionDialogAdapter
 import com.kotcrab.vis.ui.widget.VisTable
 import com.kotcrab.vis.ui.widget.VisTextButton
 import com.kotcrab.vis.ui.widget.VisWindow
+import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import rat.poison.*
 import rat.poison.overlay.App
@@ -17,7 +18,6 @@ import rat.poison.ui.changed
 import rat.poison.ui.uiTabs.*
 import rat.poison.ui.uiUpdate
 import kotlin.math.sign
-import kotlin.system.exitProcess
 
 val mainTabbedPane = TabbedPane()
     var aimTab = AimTab()
@@ -35,6 +35,7 @@ private var uid = 0//randInt(2, 999999)
 class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CONFIG - UID: $uid") {
     private val normHeight = 750F
     private val normWidth = 950F
+    var activeTab: Tab = aimTab
 
     //Changed through runtime
     var wantedHeight = normHeight
@@ -97,6 +98,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
             mainTabbedPaneContent.add(aimTab.contentTable).growX().left()
             lastCheckedTab.color = buttonColor
             lastCheckedTab = aimButton
+            activeTab = aimTab
             aimButton.color = buttonClicked
             true
         }
@@ -110,6 +112,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
             mainTabbedPaneContent.add(visualsTab.contentTable).growX().left()
             lastCheckedTab.color = buttonColor
             lastCheckedTab = visualsButton
+            activeTab = visualsTab
             visualsButton.color = buttonClicked
             true
         }
@@ -123,6 +126,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
             mainTabbedPaneContent.add(rcsTab.contentTable).growX().left()
             lastCheckedTab.color = buttonColor
             lastCheckedTab = rcsButton
+            activeTab = rcsTab
             rcsButton.color = buttonClicked
             true
         }
@@ -136,6 +140,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
             mainTabbedPaneContent.add(miscTab.contentTable).growX().left()
             lastCheckedTab.color = buttonColor
             lastCheckedTab = miscButton
+            activeTab = miscTab
             miscButton.color = buttonClicked
             true
         }
@@ -149,6 +154,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
             mainTabbedPaneContent.add(ranksTab.contentTable).growX().left()
             lastCheckedTab.color = buttonColor
             lastCheckedTab = ranksButton
+            activeTab = ranksTab
             ranksButton.color = buttonClicked
             true
         }
@@ -162,6 +168,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
             mainTabbedPaneContent.add(nadeHelperTab.contentTable).growX().left()
             lastCheckedTab.color = buttonColor
             lastCheckedTab = nadeHelperButton
+            activeTab = nadeHelperTab
             nadeHelperButton.color = buttonClicked
             true
         }
@@ -175,6 +182,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
             mainTabbedPaneContent.add(skinChangerTab.contentTable).growX().left()
             lastCheckedTab.color = buttonColor
             lastCheckedTab = skinsButton
+            activeTab = skinChangerTab
             skinsButton.color = buttonClicked
             true
         }
@@ -188,6 +196,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
             mainTabbedPaneContent.add(optionsTab.contentTable).growX().left()
             lastCheckedTab.color = buttonColor
             lastCheckedTab = optionsButton
+            activeTab = optionsTab
             optionsButton.color = buttonClicked
             true
         }
@@ -203,6 +212,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
             mainTabbedPaneContent.add(configsTab.contentTable).growX().left()
             lastCheckedTab.color = buttonColor
             lastCheckedTab = configsButton
+            activeTab = configsTab
             configsButton.color = buttonClicked
             true
         }
@@ -231,8 +241,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         haltProcess = true
         disableAllEsp()
         sendPacket(true)
-        App.open()
-        exitProcess(0)
+        //GLFW.glfwTerminate()
     }
 
 

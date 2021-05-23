@@ -3,10 +3,12 @@ package rat.poison.scripts.visuals
 import com.badlogic.gdx.graphics.Color
 import org.jire.arrowhead.unsign
 import rat.poison.curSettings
-import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
+import rat.poison.game.me
+import rat.poison.game.meTeam
+import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.settings.DANGER_ZONE
 import rat.poison.utils.common.Vector

@@ -1,19 +1,20 @@
 package rat.poison.ui.uiWindows
 
-import com.kotcrab.vis.ui.widget.*
-import rat.poison.overlay.App.uiMenu
+import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.settings.WARNINGTOG
 import rat.poison.ui.changed
-import rat.poison.ui.uiTabs.VisLabelExtension
+import rat.poison.ui.uiTabs.VisLabelCustom
+import rat.poison.ui.uiTabs.VisTextButtonCustom
 
 class UIWarning: VisWindow("") {
     val table = VisTable(false)
 
-    private val headerLabel = VisLabelExtension("WARNING")
+    private val headerLabel = VisLabelCustom("L_WARNING")
 
-    private val contentTable = VisLabelExtension("This is a debug build and is prone to bugs and various config issues, use at your own risk.")
+    private val contentTable = VisLabelCustom("L_WARNING_TEXT")
 
-    private val toggleUIWarning = VisTextButton("Hide")
+    private val toggleUIWarning = VisTextButtonCustom("L_HIDE")
 
     init {
         padTop(10F)

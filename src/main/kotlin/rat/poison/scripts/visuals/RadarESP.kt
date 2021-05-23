@@ -2,7 +2,10 @@ package rat.poison.scripts.visuals
 
 import it.unimi.dsi.fastutil.longs.LongArrayList
 import rat.poison.curSettings
-import rat.poison.game.entity.*
+import rat.poison.game.entity.EntityType
+import rat.poison.game.entity.dead
+import rat.poison.game.entity.dormant
+import rat.poison.game.entity.position
 import rat.poison.game.forEntities
 import rat.poison.game.me
 import rat.poison.settings.DANGER_ZONE

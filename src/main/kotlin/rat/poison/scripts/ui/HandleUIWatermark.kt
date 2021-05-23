@@ -1,6 +1,7 @@
 package rat.poison.scripts.ui
 
 import rat.poison.BRANCH
+import rat.poison.curSettings
 import rat.poison.overlay.App
 import rat.poison.utils.keyEvalMap
 import java.util.*
@@ -34,10 +35,17 @@ private val stringList = StringBuilder()
 //the the uh fhthe uht htme uh the mf uh the tuhthut
 fun getKeybinds(): StringBuilder {
     stringList.clear()
+    //TODO doesnt work with any types of keybinds except on hotkey
     for (i in 0 until keyEvalMap.keys.size) {
         val value = keyEvalMap.values[i]
         val key = keyEvalMap.keys[i]
         if (value.third) { //Active
+            if (value.fourth != null) {
+                if (!curSettings.bool[value.fourth!!]) {
+                    continue
+                }
+            }
+
             stringList.append(key).append(" ").appendLine(value.first.prettyPrint)
         }
     }

@@ -1,20 +1,19 @@
 package rat.poison.ui.uiWindows
 
-import com.badlogic.gdx.utils.Align
-import com.kotcrab.vis.ui.building.utilities.Alignment
-import com.kotcrab.vis.ui.widget.*
-import rat.poison.curSettings
+import com.kotcrab.vis.ui.widget.VisTable
+import com.kotcrab.vis.ui.widget.VisTextButton
+import com.kotcrab.vis.ui.widget.VisWindow
 import rat.poison.settings.DEBUGTOG
 import rat.poison.ui.changed
-import rat.poison.ui.uiTabs.VisLabelExtension
+import rat.poison.ui.uiTabs.VisLabelCustom
 
 class UIDebug: VisWindow("") {
     val table = VisTable(false)
 
-    private val headerLabel = VisLabelExtension("DEBUG")
+    private val headerLabel = VisLabelCustom("DEBUG")
 
-    val contentLabelLeft = VisLabelExtension("")
-    val contentLabelRight = VisLabelExtension("")
+    val contentLabelLeft = VisLabelCustom("")
+    val contentLabelRight = VisLabelCustom("")
     private val toggleShow = VisTextButton("[[]]")
 
     init {

@@ -7,7 +7,6 @@ import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.engineDLL
 import rat.poison.game.entity.*
-import rat.poison.game.forEntities
 import rat.poison.game.netvars.NetVarOffsets.m_hViewModel
 import rat.poison.game.offsets.ClientOffsets.dwEntityList
 import rat.poison.game.offsets.ClientOffsets.dwLocalPlayer
@@ -21,6 +20,7 @@ import rat.poison.utils.common.Vector
 import rat.poison.utils.common.every
 import rat.poison.utils.extensions.uint
 import java.lang.Float.floatToIntBits
+
 private val meAng = Vector()
 private val mePos = Vector()
 private val cCol = Color()

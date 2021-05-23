@@ -1,10 +1,7 @@
 package rat.poison.utils.maps
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
-import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap
 import net.openhft.hashing.LongHashFunction
-import org.jetbrains.kotlin.fir.extensions.predicate.has
-import java.lang.StringBuilder
 
 @PublishedApi
 internal val hashFunction = LongHashFunction.farmNa()
@@ -13,7 +10,6 @@ internal val hashFunction = LongHashFunction.farmNa()
 //credits to Jire
 
 class StringToAnyMap<V> {
-    val longToStringMap = Long2ObjectOpenHashMap<String>()
     private val cachedValues = Long2ObjectOpenHashMap<V>()
     operator fun set(k: String, v: V) {
         put(k, v)
@@ -28,9 +24,7 @@ class StringToAnyMap<V> {
         cachedValues[hashChars(k)] = v
     }
     private fun hashChars(k: String): Long {
-        val hashed = hashFunction.hashChars(k)
-        if (!longToStringMap.containsKey(hashed)) longToStringMap[hashed] = k //fk u
-        return hashed
+        return hashFunction.hashChars(k)
     }
     private fun hashChars(k: StringBuilder): Long = hashFunction.hashChars(k)
     fun remove(k: String) {

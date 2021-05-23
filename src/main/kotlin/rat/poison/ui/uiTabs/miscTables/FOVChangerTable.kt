@@ -6,7 +6,7 @@ import rat.poison.ui.uiElements.VisSliderCustom
 import rat.poison.ui.uiTabs.fovChangerTable
 
 class FOVChangerTable: VisTable(false) {
-    val fovChanger = VisCheckBoxCustom("Fov Changer", "ENABLE_FOV_CHANGER")
+    val fovChanger = VisCheckBoxCustom("FOV Changer", "ENABLE_FOV_CHANGER")
     val fovDefault = VisSliderCustom("Default FOV", "FOV_DEFAULT", 10F, 150F, 1F, true)
     val fovSmoothing = VisCheckBoxCustom("Smooth FOV Changes", "FOV_SMOOTH")
     val fovSniperDefault = VisSliderCustom("Default FOV", "FOV_SNIPER_DEFAULT", 10F, 150F, 1F, true)

@@ -5,8 +5,8 @@ import com.badlogic.gdx.utils.Array
 import com.kotcrab.vis.ui.widget.*
 import rat.poison.DEFAULT_OWEAPON_STR
 import rat.poison.curSettings
-import rat.poison.oWeapon
 import rat.poison.ui.*
+import rat.poison.ui.uiElements.OverrideComboBox
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.override.OverrideVisCheckBoxCustom
 import rat.poison.ui.uiElements.override.OverrideVisSliderCustom
@@ -44,11 +44,11 @@ class OverrideTable: VisTable(false) {
     val enablePathAim = OverrideVisCheckBoxCustom("Path Aim", "tPathAim")
     val enableScopedOnly = OverrideVisCheckBoxCustom("Scoped Only", "tScopedOnly")
 
-    //val aimBoneBox = VisSelectBoxCustom("Bone", "tAimBone", true, *boneCategories)
-    //val forceBoneBox = OverrideCombobox("Force-Bone", "tForceBone", true, *boneCategories)
+    val aimBoneBox = OverrideComboBox("Bone", "tAimBone", true, items = boneCategories)
+    val forceBoneBox = OverrideComboBox("Force-Bone", "tForceBone", true, items = boneCategories)
 
     val aimFov = OverrideVisSliderCustom("FOV", "tAimFov", 0.5F, 90F, 0.5F, false, labelWidth = 225F, barWidth = 225F)
-    val aimSmoothness = OverrideVisSliderCustom("Smooth", "tAimSmooth", 1F, 5F, .5F, false, labelWidth = 225F, barWidth = 225F)
+    val aimSmoothness = OverrideVisSliderCustom("Smooth", "tAimSmooth", 1F, 100F, 1F, true, labelWidth = 225F, barWidth = 225F)
     val aimAfterShots = OverrideVisSliderCustom("Aim After #", "tAimAfterShots", 0F, 10F, 1F, true, labelWidth = 225F, barWidth = 225F)
 
     //Perfect Aim Collapsible
@@ -62,7 +62,7 @@ class OverrideTable: VisTable(false) {
     val trigAimbot = OverrideVisCheckBoxCustom("Aimbot", "tBTrigAim")
     val trigInCross = OverrideVisCheckBoxCustom("InCross", "tBTrigInCross")
     val trigInFov = OverrideVisCheckBoxCustom("InFov", "tBTrigInFov")
-    val trigBacktrack = OverrideVisCheckBoxCustom("Shoot Backtrack", "tBTrigBacktrack")
+    val trigBacktrack = OverrideVisCheckBoxCustom("Enable Backtrack", "tBTrigBacktrack")
     val trigFov = OverrideVisSliderCustom("FOV", "tBTrigFov", 0.5F, 90F, 0.5F, false, labelWidth = 225F, barWidth = 225F)
     val trigInitDelay = OverrideVisSliderCustom("Init Shot Delay", "tBTrigInitDelay", 0F, 500F, 10F, true, labelWidth = 225F, barWidth = 225F)
     val trigPerShotDelay = OverrideVisSliderCustom("Per Shot Delay", "tBTrigPerShotDelay", 0F, 500F, 10F, true, labelWidth = 225F, barWidth = 225F)
@@ -184,13 +184,13 @@ class OverrideTable: VisTable(false) {
         }
 
         //Create Aim Bone Selector Box
-        //val aimBone = VisTable(false)
-        //aimBone.add(aimBoneBox)
+        val aimBone = VisTable(false)
+        aimBone.add(aimBoneBox)
         //End Aim Bone Selector Box
 
         //Create Force Bone Selector Box
-        //val forceBone = VisTable(false)
-        //forceBone.add(forceBoneBox)
+        val forceBone = VisTable(false)
+        forceBone.add(forceBoneBox)
         //End Force Bone Selector Box
 
 
@@ -225,8 +225,8 @@ class OverrideTable: VisTable(false) {
         add(enableFlatAim).left().row()
         add(enablePathAim).left().row()
         add(enableScopedOnly).left().row()
-        //add(aimBone).left().row()
-        //add(forceBone).left().row()
+        add(aimBone).left().row()
+        add(forceBone).left().row()
         add(aimFov).left().row()
         add(aimSmoothness).left().row()
         add(aimAfterShots).left().row()
@@ -263,7 +263,7 @@ fun copyTo(category: String, categoryVarName: String, myVarName: String) {
 
 fun copyFrom(category: String, categoryVarName: String, myVarName: String) {
     val setting = curSettings[category + categoryVarName]
-    val varIdx = getOverrideVarIndex(oWeapon().toString(), myVarName)
+    val varIdx = getOverrideVarIndex(DEFAULT_OWEAPON_STR, myVarName)
 
     setOverrideVar(weaponOverrideSelected, varIdx, setting)
 }
@@ -314,8 +314,8 @@ fun overridenWeaponsUpdate() {
         trigEnable.update()
         trigAimbot.update()
         trigInCross.update()
-        //aimBoneBox.update()
-        //forceBoneBox.update()
+        aimBoneBox.update()
+        forceBoneBox.update()
         trigInFov.update()
         trigBacktrack.update()
         trigFov.update()

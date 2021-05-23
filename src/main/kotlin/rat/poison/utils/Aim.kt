@@ -7,7 +7,9 @@ import rat.poison.game.CSGO.gameX
 import rat.poison.game.CSGO.gameY
 import rat.poison.game.clientState
 import rat.poison.game.setAngle
-import rat.poison.settings.*
+import rat.poison.settings.GAME_PITCH
+import rat.poison.settings.GAME_SENSITIVITY
+import rat.poison.settings.GAME_YAW
 import rat.poison.utils.common.*
 import rat.poison.utils.extensions.refresh
 import kotlin.math.*
@@ -28,8 +30,8 @@ fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: 
 	z = 0F
 	normalize()
 
-	x = currentAngle.x + (x / 100) * (smooth)
-	y = currentAngle.y + (y / 100) * (smooth)
+	x = currentAngle.x + (x / 100) * (100 / smooth)
+	y = currentAngle.y + (y / 100) * (100 / smooth)
 	normalize()
 }
 

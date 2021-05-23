@@ -6,13 +6,13 @@ import rat.poison.game.entity.Player
 import rat.poison.game.entity.position
 import rat.poison.game.entity.punch
 import rat.poison.game.netvars.NetVarOffsets.vecViewOffset
-import rat.poison.settings.*
+import rat.poison.settings.AIM_ADVANCED
+import rat.poison.settings.AIM_RCS_X
+import rat.poison.settings.AIM_RCS_Y
+import rat.poison.settings.FACTOR_RECOIL
 import rat.poison.utils.common.Angle
 import rat.poison.utils.common.Vector
 import rat.poison.utils.common.normalize
-import rat.poison.utils.generalUtil.toInt
-import rat.poison.utils.randBoolean
-import rat.poison.utils.randDouble
 import java.lang.Math.toDegrees
 import kotlin.math.atan
 import kotlin.math.atan2

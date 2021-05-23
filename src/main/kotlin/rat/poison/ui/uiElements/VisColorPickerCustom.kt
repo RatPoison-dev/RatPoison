@@ -8,6 +8,7 @@ import com.kotcrab.vis.ui.widget.color.ColorPickerAdapter
 import rat.poison.curSettings
 import rat.poison.overlay.App
 import rat.poison.ui.changed
+import rat.poison.utils.locale
 import rat.poison.game.Color as rColor
 
 class VisColorPickerCustom(mainText: String, varName: String) : VisTable(false) {
@@ -42,11 +43,8 @@ class VisColorPickerCustom(mainText: String, varName: String) : VisTable(false) 
         pickerImage.color = col
         colorPicker.color = col
 
-
-
-
-        //pickerButton.setText(labelText)
-        colorPicker.titleLabel.setText(labelText)
+        //pickerImage.setText(labelText)
+        colorPicker.titleLabel.setText("L_$variableName".locale(labelText))
     }
 
     fun disable(bool: Boolean) {

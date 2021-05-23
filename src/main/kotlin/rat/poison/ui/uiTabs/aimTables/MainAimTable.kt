@@ -94,6 +94,12 @@ class MainAimTable: VisTable(false) {
         add(handleFireKey).left().row()
         add(handleTrigger).left().row()
 
+        userCMD.isChecked = true
+        userCMD.isDisabled = true
+
+        handleTrigger.isChecked = true
+        handleTrigger.isDisabled = true
+
         val tmpTable = VisTable(false)
         tmpTable.add(silentAim).left().padRight(224F - silentAim.width)
         tmpTable.add(silentRequireTarget).left()

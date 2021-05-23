@@ -29,7 +29,7 @@ fun drawBacktrack() = App {
     if (!inGame || !curSettings.bool["BACKTRACK_VISUALIZE"] || !curSettings.bool["ENABLE_VISUALS"] || !curSettings.bool["ENABLE_BACKTRACK"]) return@App
 
     val backtrackOnKey = curSettings.bool["ENABLE_BACKTRACK_ON_KEY"]
-    val backtrackKeyPressed = keybindEval("BACKTRACK_KEY")
+    val backtrackKeyPressed = keybindEval("BACKTRACK_KEY", "ENABLE_BACKTRACK_ON_KEY")
 
     if (backtrackOnKey && !backtrackKeyPressed) return@App
 

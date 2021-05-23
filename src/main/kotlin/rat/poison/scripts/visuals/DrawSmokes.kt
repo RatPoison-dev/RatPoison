@@ -1,11 +1,12 @@
 package rat.poison.scripts.visuals
 
 import rat.poison.curSettings
-import rat.poison.game.*
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.entity.*
 import rat.poison.game.forEntities
+import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.bDidSmokeEffect
+import rat.poison.game.worldToScreen
 import rat.poison.overlay.App
 import rat.poison.overlay.App.shapeRenderer
 import rat.poison.utils.common.Vector

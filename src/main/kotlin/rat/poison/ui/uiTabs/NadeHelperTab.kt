@@ -25,12 +25,12 @@ class NadeHelperTab : Tab(false, false) {
     private val table = VisTable(true)
 
     //Init labels/sliders/boxes that show values here
-    val enableNadeHelper = VisCheckBoxCustom("Nade-Helper", "ENABLE_NADE_HELPER")
-    val accuracyRadius = VisSliderCustom("Accuracy radius", "NADE_ACCURACY_RADIUS", 100F, 5000F, 20F, true, 2, 175F, 100F)
-    val nadeHelperLoadedFile = VisLabel("Loaded:-N/A")
+    val enableNadeHelper = VisCheckBoxCustom("Nade Helper", "ENABLE_NADE_HELPER")
+    val accuracyRadius = VisSliderCustom("Accuracy Radius", "NADE_ACCURACY_RADIUS", 100F, 5000F, 20F, true, 2, 175F, 100F)
+    val nadeHelperLoadedFile = VisLabel("Loaded: N/A")
     val enableNadeThrower = VisCheckBoxCustom("Auto throw", "ENABLE_NADE_THROWER")
-    val nadeThrowerKey = VisBindTableCustom("Key", "NADE_THROWER_KEY")
-    val nadeThrowerSmooth = VisSliderCustom("Smoothness", "NADE_THROWER_SMOOTHNESS", 10F, 100F, 1F, true, 2, 150F, 100F)
+    val nadeThrowerKey = VisBindTableCustom("Throw Key", "NADE_THROWER_KEY")
+    val nadeThrowerSmooth = VisSliderCustom("Throw Aim Smoothness", "NADE_THROWER_SMOOTHNESS", 10F, 100F, 1F, true, 2, 150F, 100F)
     val nadeHelperFileSelectBox = VisSelectBox<String>()
 
     init {
