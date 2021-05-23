@@ -32,7 +32,6 @@ SNIPER_AIM_FORCE_BONE = []
 //Lower is less smooth (faster snapping)
 SNIPER_AIM_SMOOTHNESS = 50
 
-
 //If the aimbot should only aim when you can shoot
 SNIPER_AIM_ONLY_ON_SHOT = false
 
