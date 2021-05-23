@@ -4,29 +4,29 @@
 
 //Enable flat aim
 //Writes to angles ingame
-PISTOL_ENABLE_FLAT_AIM = true
+PISTOL_ENABLE_FLAT_AIM = false
 
 //Enable path aim
 //Uses mouse movement to aim
-PISTOL_ENABLE_PATH_AIM = false
+PISTOL_ENABLE_PATH_AIM = true
 
 //Factor recoil when shooting
 PISTOL_FACTOR_RECOIL = false
 
 //Aim Bone
 //Default bone to aim at
-PISTOL_AIM_BONE = NEAREST
+PISTOL_AIM_BONE = []
 
 //Aim FOV
 //Aims at entities inside this value
-PISTOL_AIM_FOV = 2.0
+PISTOL_AIM_FOV = 0.5
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-PISTOL_AIM_SMOOTHNESS = 3.0
+PISTOL_AIM_SMOOTHNESS = 50
 
 //Force Bone
-PISTOL_AIM_FORCE_BONE = NEAREST
+PISTOL_AIM_FORCE_BONE = []
 
 //If the aimbot should only aim when you can shoot
 PISTOL_AIM_ONLY_ON_SHOT = false

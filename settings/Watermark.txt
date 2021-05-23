@@ -1,5 +1,5 @@
 //Enable watermark
-ENABLE_WATERMARK = true
+ENABLE_WATERMARK = false
 
 UI_WATERMARK_X = 500.0
 UI_WATERMARK_Y = 500.0

@@ -4,29 +4,29 @@
 
 //Enable flat aim
 //Writes to angles ingame
-RIFLE_ENABLE_FLAT_AIM = true
+RIFLE_ENABLE_FLAT_AIM = false
 
 //Enable path aim
 //Uses mouse movement to aim
-RIFLE_ENABLE_PATH_AIM = false
+RIFLE_ENABLE_PATH_AIM = true
 
 //Factor recoil when shooting
 RIFLE_FACTOR_RECOIL = true
 
 //Aim Bone
 //Default bone to aim at
-RIFLE_AIM_BONE = NEAREST
+RIFLE_AIM_BONE = []
 
 //Aim FOV
 //Aims at entities inside this value
-RIFLE_AIM_FOV = 10.0
+RIFLE_AIM_FOV = 0.5
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-RIFLE_AIM_SMOOTHNESS = 4.0
+RIFLE_AIM_SMOOTHNESS = 50
 
 //Force Bone
-RIFLE_AIM_FORCE_BONE = NEAREST
+RIFLE_AIM_FORCE_BONE = []
 
 //Aim after X shots
 RIFLE_AIM_AFTER_SHOTS = 0

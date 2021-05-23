@@ -1,5 +1,5 @@
 //Visuals master switch
-ENABLE_VISUALS = true
+ENABLE_VISUALS = false
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles visibility of esp on/off
 //Default key is G
@@ -166,7 +166,7 @@ SKELETON_SHOW_ENEMIES = false
 //////////////////////////////////////////////////
 
 //Enable glow esp
-GLOW_ESP = true
+GLOW_ESP = false
 
 //Type of glow on entities (enemies & teammates)
 GLOW_ENEMY_TYPE = NORMAL
@@ -187,7 +187,7 @@ GLOW_SHOW_TEAM = false
 GLOW_SHOW_HEALTH = false
 
 //Enable glow esp on enemies
-GLOW_SHOW_ENEMIES = true
+GLOW_SHOW_ENEMIES = false
 
 //Enable glow esp on bomb
 GLOW_SHOW_BOMB = false
@@ -206,7 +206,7 @@ GLOW_SHOW_WEAPONS = false
 GLOW_SHOW_GRENADES = false
 
 //Enable glow esp on visible, in aimbot FOV players
-GLOW_SHOW_TARGET = true
+GLOW_SHOW_TARGET = false
 
 //Color of your teammates
 GLOW_TEAM_COLOR = Color(red=0, green=0, blue=255, alpha=1.0)
@@ -276,7 +276,7 @@ CHAMS_TARGET_COLOR = Color(red=0, green=174, blue=255, alpha=1.0)
 ENABLE_NADE_HELPER = false
 
 //Enable nade tracer (shows path of an already thrown grenade) - not throw prediction
-NADE_TRACER = true
+NADE_TRACER = false
 
 //The update speed of thrown nades - # out of OPENGL_FPS, per second with FPS of 60 is 60, recommended lowest is 5
 NADE_TRACER_UPDATE_TIME = 5
@@ -294,7 +294,7 @@ NADE_THROWER_KEY = -1
 NADE_THROWER_KEY_TYPE = ON_HOTKEY
 
 //Visualize smoke grenades
-VISUALIZE_SMOKES = true
+VISUALIZE_SMOKES = false
 
 VISUALIZE_SMOKES_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
 
@@ -304,7 +304,7 @@ VISUALIZE_SMOKES_WIDTH = 150
 
 VISUALIZE_SMOKES_HEIGHT = 125
 
-SMOKE_WEAR_OFF_TIME = true
+SMOKE_WEAR_OFF_TIME = false
 SMOKE_WEAR_OFF_TIME_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
 
 //////////////////////////////////////////////////
@@ -364,8 +364,8 @@ HITMARKER_OUTLINE_COLOR = Color(red=0, green=0, blue=0, alpha=1.0)
 //////////////////////////////////////////////////
 
 //Draw FOV (static only)
-DRAW_AIM_FOV = true
-DRAW_TRIGGER_FOV = true
+DRAW_AIM_FOV = false
+DRAW_TRIGGER_FOV = false
 
 //FOV Color
 DRAW_AIM_FOV_COLOR = Color(red=0, green=255, blue=13, alpha=1.0)
@@ -410,7 +410,7 @@ KILLSOUND_VOLUME = 0.1
 //Customizable crosshair that shows your recoil as you spray
 
 //Enable recoil crosshair
-ENABLE_RCROSSHAIR = true
+ENABLE_RCROSSHAIR = false
 RCROSSHAIR_TYPE = CROSSHAIR
 
 RCROSSHAIR_SCOPE_COMPATIBLE = false
@@ -427,7 +427,6 @@ RCROSSHAIR_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
 //Crosshair Builder Customization
 RCROSSHAIR_BUILDER_RESOLUTION = 5
 RCROSSHAIR_BUILDER_SIZE = 5
-RCROSSHAIR_BUILDER_ARRAY = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 
 //////////////////////////////////////////////////
 ////////// SPREAD CIRCLE
@@ -525,7 +524,7 @@ FOV_ZOOM_2 = 25
 //////////////////////////////////////////////////
 
 //Enable snaplines
-ENABLE_SNAPLINES = true
+ENABLE_SNAPLINES = false
 
 //Line width
 SNAPLINES_WIDTH = 3.0
@@ -534,7 +533,7 @@ SNAPLINES_WIDTH = 3.0
 SNAPLINES_SMOKE_CHECK = false
 
 //Enable snap lines for enemies
-SNAPLINES_ENEMIES = true
+SNAPLINES_ENEMIES = false
 
 //Enable snaplines for teammates
 SNAPLINES_TEAMMATES = false
@@ -568,5 +567,4 @@ SNAPLINES_WEAPON_COLOR = Color(red=251, green=0, blue=255, alpha=1.0)
 
 //Snaplines defuse kit color
 SNAPLINES_DEFUSE_KIT_COLOR = Color(red=255, green=255, blue=255, alpha=1.0)
-
 
