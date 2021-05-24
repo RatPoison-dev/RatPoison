@@ -1,5 +1,5 @@
 //Edit UserCMDs
-USER_CMD = false
+USER_CMD = true
 
 //Whether usercmd handles mouse 1 inpu
 UCMD_HANDLE_FIRE_KEY = true

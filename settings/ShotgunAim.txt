@@ -15,7 +15,7 @@ SHOTGUN_FACTOR_RECOIL = false
 
 //Aim Bone
 //Default bone to aim at
-SHOTGUN_AIM_BONE = NEAREST
+SHOTGUN_AIM_BONE = []
 
 //Aim FOV
 //Aims at entities inside this value
@@ -23,10 +23,10 @@ SHOTGUN_AIM_FOV = 0.5
 
 //Aim smoothness
 //Lower is less smooth (faster snapping)
-SHOTGUN_AIM_SMOOTHNESS = 5
+SHOTGUN_AIM_SMOOTHNESS = 50
 
 //Force Bone
-SHOTGUN_AIM_FORCE_BONE = NEAREST
+SHOTGUN_AIM_FORCE_BONE = []
 
 //If the aimbot should only aim when you can shoot
 SHOTGUN_AIM_ONLY_ON_SHOT = false

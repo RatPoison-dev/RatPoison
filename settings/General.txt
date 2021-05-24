@@ -13,7 +13,7 @@ MENU_ALPHA = 1.0
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), toggles visibility of the menu on the overlay
 //Default key is INSERT
-MENU_KEY = 112
+MENU_KEY = 45
 
 //Show tooltips
 MENU_TOOLTIPS = true
@@ -39,7 +39,7 @@ APPLESS_Y = 100
 UI_WATERMARK = true
 
 //Menu stays focused even when csgo isn't
-MENU_STAY_FOCUSED = true
+MENU_STAY_FOCUSED = false
 
 //Whether post processing is disabled or not
 DISABLE_POST_PROCESSING = false
@@ -75,7 +75,7 @@ W_SPAM = false
 W_SPAM_KEY = -1
 
 //Global enable aim
-ENABLE_AIM = true
+ENABLE_AIM = false
 
 //Hold target - If the aimbot should lock on a target as long as the aim key is pressed and the target is alive
 HOLD_TARGET = false
@@ -94,11 +94,11 @@ TEAMMATES_ARE_ENEMIES = false
 
 //VK Key Code (http://cherrytree.at/misc/vk.htm), enables aimbot when held
 //Default key is MOUSE_4
-FORCE_AIM_KEY = 5
+FORCE_AIM_KEY = -1
 FORCE_AIM_KEY_TYPE = ON_HOTKEY
 
 //Enables specific bone when held
-FORCE_AIM_BONE_KEY = 6
+FORCE_AIM_BONE_KEY = -1
 FORCE_AIM_BONE_KEY_TYPE = ON_HOTKEY
 
 //If force aim works through walls (no vis check)
