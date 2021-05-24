@@ -17,6 +17,8 @@ import rat.poison.ui.uiTabs.categorySelected
 import rat.poison.utils.generalUtil.stringToList
 import rat.poison.utils.locale
 
+//TODO the j non final blah in constructor
+
 abstract class VisComboBox(mainText: String, varName: String, showText: Boolean = true, textWidth: Float = 200F, boxWidth: Float = 100F, items: kotlin.Array<out String>): VisTable(false) {
     private val textLabel = mainText
     open val variableName = varName
@@ -140,7 +142,7 @@ class VisComboBoxCustom(val mainText: String, val varName: String, showText: Boo
 
 class VisAimComboBox(val mainText: String, val varName: String, showText: Boolean = true, textWidth: Float = 200F, boxWidth: Float = 100F, vararg items: String): VisComboBox(mainText, varName, showText, textWidth, boxWidth, items) {
     override fun saveItems(items: MutableList<String>) {
-        curSettings[categorySelected + variableName] = items.joinToString(prefix = "[", separator = ";", postfix = "]")
+        curSettings[categorySelected + variableName] = items.joinToString(prefix = "[", separator = ",", postfix = "]")
     }
 
     override fun getItems(): List<String> {
@@ -158,11 +160,11 @@ class OverrideComboBox(mainText: String, varName: String, showText: Boolean = tr
     }
 
     override fun saveItems(items: MutableList<String>) {
-        setOverrideVar(weaponOverrideSelected, overrideIdx, items.joinToString(prefix = "[", separator = ";", postfix = "]"))
+        setOverrideVar(weaponOverrideSelected, overrideIdx, items.joinToString(prefix = "[", separator = ",", postfix = "]"))
     }
 
     override fun getItems(): List<String> {
-        return getOverrideVar(weaponOverrideSelected, overrideIdx).stringToList(";")
+        return getOverrideVar(weaponOverrideSelected, overrideIdx).stringToList(",")
     }
 
 }

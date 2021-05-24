@@ -157,7 +157,6 @@ L_BACKTRACK_VISUALIZE_SMOKE_CHECK = Visualize Backtrack Smoke Check
 L_DRAW_TRIGGER_FOV = Draw Trigger FOV
 L_SPREAD_CIRCLE = Spread Circle
 L_HEAD_LVL_ENABLE = Head Line
-L_UI_WATERMARK = UI Watermark
 
 //RCS
 L_ENABLE_RCS = Enable RCS

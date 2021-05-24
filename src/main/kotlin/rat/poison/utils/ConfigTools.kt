@@ -56,11 +56,6 @@ fun saveDefault() {
                             sbLines.append(line + "\n")
                         }
                     }
-                    sbLines.append("RCROSSHAIR_BUILDER_ARRAY = ")
-                    for (i in 0..crosshairArray.length()) {
-                        sbLines.append(crosshairArray[i].toBitString())
-                    }
-                    sbLines.append("\n")
 
                     Files.delete(file.toPath())
                     Files.createFile(file.toPath())

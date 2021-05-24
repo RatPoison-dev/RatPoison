@@ -23,8 +23,12 @@ class HitMarkerTable: VisTable(false) {
     val hitMarkerOutlineColor = VisColorPickerCustom("Outline", "HITMARKER_OUTLINE_COLOR")
     val hitMarkerComboColor = VisColorPickerCustom("Combo", "HITMARKER_COMBO_COLOR")
 
+    val mainColorLabel = VisLabel("Main Color")
+    val outlineColorLabel = VisLabel("Outline Color")
+    val comboColorLabel = VisLabel("Combo Color")
+
     init {
-        var label = VisLabel("Hit Marker")
+        val label = VisLabel("Hit Marker")
         label.setColor(1F, 1F, 1F, 1F)
 
         add(label).colspan(2).expandX().padTop(4F).row()
@@ -38,16 +42,13 @@ class HitMarkerTable: VisTable(false) {
         add(hitMarkerLength).colspan(2).left().row()
         add(hitMarkerWidth).colspan(2).left().row()
 
-        label = VisLabel("Main Color")
-        add(label).left().padRight(175F - label.width)
+        add(mainColorLabel).left().padRight(175F - mainColorLabel.width)
         add(hitMarkerColor).left().expandX().row()
 
-        label = VisLabel("Outline Color")
-        add(label).left().padRight(175F - label.width)
+        add(outlineColorLabel).left().padRight(175F - outlineColorLabel.width)
         add(hitMarkerOutlineColor).left().expandX().row()
 
-        label = VisLabel("Combo Color")
-        add(label).left().padRight(175F - label.width)
+        add(comboColorLabel).left().padRight(175F - comboColorLabel.width)
         add(hitMarkerComboColor).left().expandX().row()
     }
 }
@@ -68,14 +69,20 @@ fun hitMarkerTabUpdate() {
 }
 
 fun hitMarkerTableDisable(bool: Boolean, col: Color) {
-    hitMarkerTable.hitMarker.disable(bool)
-    hitMarkerTable.hitMarkerOutline.disable(bool)
-    hitMarkerTable.hitMarkerCombo.disable(bool)
-    hitMarkerTable.hitMarkerRecoilPos.disable(bool)
-    hitMarkerTable.hitMarkerSpacing.disable(bool, col)
-    hitMarkerTable.hitMarkerLength.disable(bool, col)
-    hitMarkerTable.hitMarkerWidth.disable(bool, col)
-    hitMarkerTable.hitMarkerColor.disable(bool)
-    hitMarkerTable.hitMarkerOutlineColor.disable(bool)
-    hitMarkerTable.hitMarkerComboColor.disable(bool)
+    hitMarkerTable.apply {
+        hitMarker.disable(bool)
+        hitMarkerOutline.disable(bool)
+        hitMarkerCombo.disable(bool)
+        hitMarkerRecoilPos.disable(bool)
+        hitMarkerSpacing.disable(bool, col)
+        hitMarkerLength.disable(bool, col)
+        hitMarkerWidth.disable(bool, col)
+        hitMarkerColor.disable(bool)
+        hitMarkerOutlineColor.disable(bool)
+        hitMarkerComboColor.disable(bool)
+
+        mainColorLabel.color = col
+        outlineColorLabel.color = col
+        comboColorLabel.color = col
+    }
 }

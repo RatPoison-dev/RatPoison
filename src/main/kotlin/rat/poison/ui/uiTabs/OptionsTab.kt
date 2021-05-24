@@ -67,10 +67,10 @@ class OptionsTab : Tab(false, false) {
 
 fun updateWindows() {
     if (VisUI.isLoaded()) {
-        uiBombWindow.updatePosition(curSettings.float["BOMB_TIMER_X"], curSettings.float["BOMB_TIMER_Y"])
-        uiBombWindow.changeAlpha(curSettings.float["BOMB_TIMER_ALPHA"])
+        uiBombWindow.updatePosition(curSettings.float["BOMB_TIMER_X"], curSettings.float["BOMB_TIMER_Y"]) //TODO remove this bs
+        uiBombWindow.updateAlpha()
         uiSpecList.updatePosition(curSettings.float["SPECTATOR_LIST_X"], curSettings.float["SPECTATOR_LIST_Y"])
-        uiSpecList.changeAlpha(curSettings.float["SPECTATOR_LIST_ALPHA"])
+        uiSpecList.updateAlpha()
     }
 }
 

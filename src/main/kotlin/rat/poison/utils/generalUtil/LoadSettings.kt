@@ -47,6 +47,7 @@ fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
             }
         }
     }
+
     val arr = curSettings["RCROSSHAIR_BUILDER_ARRAY"]
     for (i in arr.indices) {
         crosshairArray[i] = arr[i].strToBool()

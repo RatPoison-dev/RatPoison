@@ -111,7 +111,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 
 		listener?.onAfterInit(this@Overlay)
 
-		println("Overlay initialized")
+		println("Overlay initialized!")
 	}
 
 	private fun monitorTargetApp() = with(User32) {

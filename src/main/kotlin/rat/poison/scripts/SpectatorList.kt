@@ -23,6 +23,8 @@ internal fun spectatorList() = every(100, inGameCheck = true) {
 
     val playerSpecTarget = csgoEXE.readIndex(me + dwIndex)
 
+    sb.clear()
+
     forEntities(forEnts) {
         val entity = it.entity
 

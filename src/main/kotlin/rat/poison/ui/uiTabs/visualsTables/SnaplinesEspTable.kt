@@ -84,17 +84,21 @@ fun snaplinesEspTabUpdate() {
 }
 
 fun snaplinesEspTableDisable(bool: Boolean, col: Color) {
-    snaplinesEspTable.enableSnaplines.disable(bool)
-    snaplinesEspTable.snaplinesWidth.disable(bool, col)
-    snaplinesEspTable.snaplinesSmokeCheck.disable(bool)
-    snaplinesEspTable.enemySnaplines.disable(bool)
-    snaplinesEspTable.enemySnaplinesColor.disable(bool)
-    snaplinesEspTable.teamSnaplines.disable(bool)
-    snaplinesEspTable.teamSnaplinesColor.disable(bool)
-    snaplinesEspTable.weaponSnaplines.disable(bool)
-    snaplinesEspTable.weaponSnaplinesColor.disable(bool)
-    snaplinesEspTable.bombSnaplines.disable(bool)
-    snaplinesEspTable.bombSnaplinesColor.disable(bool)
-    snaplinesEspTable.bombCarrierSnaplines.disable(bool)
-    snaplinesEspTable.bombCarrierSnaplinesColor.disable(bool)
+    snaplinesEspTable.apply {
+        enableSnaplines.disable(bool)
+        snaplinesWidth.disable(bool, col)
+        snaplinesSmokeCheck.disable(bool)
+        enemySnaplines.disable(bool)
+        enemySnaplinesColor.disable(bool)
+        teamSnaplines.disable(bool)
+        teamSnaplinesColor.disable(bool)
+        weaponSnaplines.disable(bool)
+        weaponSnaplinesColor.disable(bool)
+        bombSnaplines.disable(bool)
+        bombSnaplinesColor.disable(bool)
+        bombCarrierSnaplines.disable(bool)
+        bombCarrierSnaplinesColor.disable(bool)
+        defuseKitSnaplines.disable(bool)
+        defuseKitSnaplinesColor.disable(bool)
+    }
 }

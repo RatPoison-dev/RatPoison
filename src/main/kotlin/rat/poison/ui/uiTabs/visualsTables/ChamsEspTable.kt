@@ -67,11 +67,15 @@ fun chamsEspTabUpdate() {
 }
 
 fun chamsEspTableDisable(bool: Boolean, col: Color) {
-    chamsEspTable.chamsEsp.disable(bool)
-    chamsEspTable.chamsShowHealth.disable(bool)
-    chamsEspTable.chamsBrightness.disable(bool, col)
-    chamsEspTable.showTeam.disable(bool)
-    chamsEspTable.showEnemies.disable(bool)
-    chamsEspTable.chamsTeamColor.disable(bool)
-    chamsEspTable.chamsEnemyColor.disable(bool)
+    chamsEspTable.apply {
+        chamsEsp.disable(bool)
+        chamsShowHealth.disable(bool)
+        chamsBrightness.disable(bool, col)
+        showTeam.disable(bool)
+        showEnemies.disable(bool)
+        chamsTeamColor.disable(bool)
+        chamsEnemyColor.disable(bool)
+        chamsSelfColor.disable(bool)
+        chamsTargetColor.disable(bool)
+    }
 }

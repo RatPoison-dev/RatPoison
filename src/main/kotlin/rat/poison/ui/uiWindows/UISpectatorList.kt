@@ -1,5 +1,6 @@
 package rat.poison.ui.uiWindows
 
+import com.badlogic.gdx.graphics.g2d.Batch
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisSlider
 import com.kotcrab.vis.ui.widget.VisWindow
@@ -7,13 +8,16 @@ import rat.poison.curSettings
 import rat.poison.overlay.App.uiSpecList
 import rat.poison.overlay.opened
 import rat.poison.ui.changed
+import rat.poison.ui.uiUpdate
 import kotlin.math.round
 
 lateinit var specListText : VisLabel
 
 //Needs cleanup
 
-class UISpectatorList : VisWindow("Spectator-List") {
+class UISpectatorList : VisWindow("Spectator List") {
+    private val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, true)
+
     init {
         defaults().left()
         addCloseButton()
@@ -21,11 +25,13 @@ class UISpectatorList : VisWindow("Spectator-List") {
         specListText = VisLabel()
 
         //Create UI_Alpha Slider
-        val menuAlphaSlider = VisSlider(0.5F, 1F, 0.05F, true)
         menuAlphaSlider.value = curSettings.float["SPECTATOR_LIST_ALPHA"]
+        updateAlpha()
         menuAlphaSlider.changed { _, _ ->
             val alp = (round(menuAlphaSlider.value * 100F) / 100F)
-            changeAlpha(alp)
+            curSettings["SPECTATOR_LIST_ALPHA"] = alp
+            updateAlpha()
+
             true
         }
 
@@ -38,7 +44,6 @@ class UISpectatorList : VisWindow("Spectator-List") {
 
         setSize(300F, 350F)
         setPosition(curSettings.float["SPECTATOR_LIST_X"], curSettings.float["SPECTATOR_LIST_Y"])
-        updateAlpha()
         isResizable = false
     }
 
@@ -52,14 +57,16 @@ class UISpectatorList : VisWindow("Spectator-List") {
 
     override fun close() {
         curSettings["SPECTATOR_LIST"] = "false"
+        uiUpdate()
     }
 
     fun updateAlpha() {
-        changeAlpha(curSettings.float["SPECTATOR_LIST_ALPHA"])
+        color.a = curSettings.float["SPECTATOR_LIST_ALPHA"]
+        menuAlphaSlider.color.a = color.a
     }
 
-    fun changeAlpha(alpha: Float) {
-        color.a = alpha
+    override fun drawChildren(batch: Batch?, parentAlpha: Float) {
+        super.drawChildren(batch, 1/color.a)
     }
 
     fun updatePosition(x: Float, y: Float) {

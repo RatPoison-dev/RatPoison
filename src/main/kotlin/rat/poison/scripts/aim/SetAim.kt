@@ -99,6 +99,7 @@ fun setAim() = every(500, true, inGameCheck = true) {
 
         if (!curWepOverride) { //If the current weapon isn't checked to override
             if (curWepCategory != "") {
+
                 FACTOR_RECOIL = curSettings.bool[stringBuilder.clear().append(curWepCategory).append("_FACTOR_RECOIL")]
                 AIM_BONE = curSettings[stringBuilder.clear().append(curWepCategory).append("_AIM_BONE")].stringToBoneList()
                 FORCE_AIM_BONE = curSettings[stringBuilder.clear().append(curWepCategory).append("_AIM_FORCE_BONE")].stringToBoneList()
