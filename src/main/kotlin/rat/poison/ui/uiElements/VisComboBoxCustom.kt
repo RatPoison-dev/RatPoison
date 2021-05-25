@@ -160,11 +160,11 @@ class OverrideComboBox(mainText: String, varName: String, showText: Boolean = tr
     }
 
     override fun saveItems(items: MutableList<String>) {
-        setOverrideVar(weaponOverrideSelected, overrideIdx, items.joinToString(prefix = "[", separator = ",", postfix = "]"))
+        setOverrideVar(weaponOverrideSelected, overrideIdx, items.joinToString(prefix = "[", separator = ";", postfix = "]"))
     }
 
     override fun getItems(): List<String> {
-        return getOverrideVar(weaponOverrideSelected, overrideIdx).stringToList(",")
+        return getOverrideVar(weaponOverrideSelected, overrideIdx).stringToList(";")
     }
 
 }

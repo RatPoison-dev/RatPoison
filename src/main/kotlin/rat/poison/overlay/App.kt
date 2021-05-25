@@ -195,8 +195,6 @@ object App: ApplicationAdapter() {
             return
         }
 
-        GL.createCapabilities()
-
         syncTime = TimeUnit.NANOSECONDS.convert(measureNanoTime {
             sync(curSettings.int["OPENGL_FPS"])
         }, TimeUnit.NANOSECONDS)
