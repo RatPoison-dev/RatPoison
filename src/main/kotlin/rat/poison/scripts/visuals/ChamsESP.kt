@@ -7,10 +7,9 @@ import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.engineDLL
 import rat.poison.game.entity.*
-import rat.poison.game.netvars.NetVarOffsets.m_hViewModel
 import rat.poison.game.offsets.ClientOffsets.dwEntityList
 import rat.poison.game.offsets.ClientOffsets.dwLocalPlayer
-import rat.poison.game.offsets.EngineOffsets.dwModelAmbientMin
+//import rat.poison.game.offsets.EngineOffsets.dwModelAmbientMin
 import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.target
@@ -38,24 +37,24 @@ fun chamsEsp() = every(100, true, inGameCheck = true) {
 
     if (me > 0L && !meDead) {
         //Edit playermodel to counter weapon brightness
-        val clientVModEnt = csgoEXE.uint(clientDLL.address + dwEntityList + (((csgoEXE.uint(csgoEXE.uint(clientDLL.address + dwLocalPlayer) + m_hViewModel)) and 0xFFF) - 1) * 16)
+        //val clientVModEnt = csgoEXE.uint(clientDLL.address + dwEntityList + (((csgoEXE.uint(csgoEXE.uint(clientDLL.address + dwLocalPlayer) + m_hViewModel)) and 0xFFF) - 1) * 16)
 
         //Set VMod
-        val clientMColor = if (curSettings.bool["CHAMS_SHOW_SELF"]) {
-            curSettings.color["CHAMS_SELF_COLOR"]
-        } else {
-            cCol.set(brightnessCounter, brightnessCounter, brightnessCounter, 1.0)
-        }
+//        val clientMColor = if (curSettings.bool["CHAMS_SHOW_SELF"]) {
+//            curSettings.color["CHAMS_SELF_COLOR"]
+//        } else {
+//            cCol.set(brightnessCounter, brightnessCounter, brightnessCounter, 1.0)
+//        }
 
-        if (clientVModEnt > 0) {
-            csgoEXE[clientVModEnt + 0x70] = clientMColor.red.toByte()
-            csgoEXE[clientVModEnt + 0x71] = clientMColor.green.toByte()
-            csgoEXE[clientVModEnt + 0x72] = clientMColor.blue.toByte()
-        }
+        //if (clientVModEnt > 0) {
+            //csgoEXE[clientVModEnt + 0x70] = clientMColor.red.toByte()
+            //csgoEXE[clientVModEnt + 0x71] = clientMColor.green.toByte()
+            //csgoEXE[clientVModEnt + 0x72] = clientMColor.blue.toByte()
+        //}
     }
 
     //Set Cvar
-    engineDLL[dwModelAmbientMin] = floatToIntBits(curSettings.int["CHAMS_BRIGHTNESS"].toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
+    //engineDLL[dwModelAmbientMin] = floatToIntBits(curSettings.int["CHAMS_BRIGHTNESS"].toFloat()) xor (engineDLL.address + dwModelAmbientMin - 0x2C).toInt()
 
     val currentAngle = clientState.angle(meAng)
     val position = me.position(mePos)

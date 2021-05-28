@@ -267,10 +267,11 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 
 	val aim = curSettings.bool["ACTIVATE_FROM_AIM_KEY"] && keyPressed(AIM_KEY)
 	val pressedForceAimKey = keybindEval("FORCE_AIM_KEY")
-	val forceAim = pressedForceAimKey
+	val pressedForceAimBoneKey = keybindEval("FORCE_AIM_BONE_KEY")
+
 	val haveAmmo = meCurWepEnt.bullets() > 0
 					// || boneTrig
-	val pressed = ((aim) && !MENUTOG && haveAmmo) || forceAim
+	val pressed = ((aim) && !MENUTOG && haveAmmo) || pressedForceAimKey
 
 	if (!pressed) {
 		reset()
@@ -286,11 +287,11 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 
 	val currentAngle = clientState.angle(meAng)
 	val position = me.position(mePos)
-	val shouldVisCheck = !(forceAim && curSettings.bool["FORCE_AIM_THROUGH_WALLS"])
+	val shouldVisCheck = !(pressedForceAimKey && curSettings.bool["FORCE_AIM_THROUGH_WALLS"])
 
 	var aB = AIM_BONE
 
-	if (pressedForceAimKey) {
+	if (pressedForceAimBoneKey) {
 		aB = FORCE_AIM_BONE
 	}
 

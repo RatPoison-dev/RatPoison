@@ -50,6 +50,7 @@ fun ucmdAim(silent: Boolean = false, trigger: Boolean = false, trigEnt: Long = 0
 
     val aim = curSettings.bool["ACTIVATE_FROM_AIM_KEY"] && keyPressed(AIM_KEY)
     val pressedForceAimKey = keybindEval("FORCE_AIM_KEY")
+    val pressedForceAimBoneKey = keybindEval("FORCE_AIM_BONE_KEY")
     val haveAmmo = meCurWepEnt.bullets() > 0
 
     val pressed = ((aim || trigger) && !MENUTOG && haveAmmo) || pressedForceAimKey
@@ -74,7 +75,7 @@ fun ucmdAim(silent: Boolean = false, trigger: Boolean = false, trigEnt: Long = 0
 
     var aB = AIM_BONE
 
-    if (pressedForceAimKey) {
+    if (pressedForceAimBoneKey) {
         aB = FORCE_AIM_BONE
     }
 

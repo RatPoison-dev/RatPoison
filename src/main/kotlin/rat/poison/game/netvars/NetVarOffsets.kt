@@ -81,7 +81,7 @@ object NetVarOffsets {
 	
 	val iItemDefinitionIndex by netVar("DT_BaseCombatWeapon")
 
-	val m_hViewModel by netVar("DT_BasePlayer", "m_hViewModel[0]")
+	//val m_hViewModel by netVar("DT_BasePlayer", "m_hViewModel[0]")
 
 	val SurvivalGameRuleDecisionTypes by netVar("DT_CSGameRulesProxy")
 

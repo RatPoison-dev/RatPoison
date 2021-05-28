@@ -19,11 +19,11 @@ internal fun disableAllEsp() {
 
     val cWhite = Color(255, 255, 255, 1.0)
 
-    val clientVModEnt = CSGO.csgoEXE.uint(CSGO.clientDLL.address + ClientOffsets.dwEntityList + (((CSGO.csgoEXE.uint(CSGO.csgoEXE.uint(CSGO.clientDLL.address + ClientOffsets.dwLocalPlayer) + NetVarOffsets.m_hViewModel)) and 0xFFF) - 1) * 16)
-    CSGO.csgoEXE[clientVModEnt + 0x70] = 255.toByte()
-    CSGO.csgoEXE[clientVModEnt + 0x71] = 255.toByte()
-    CSGO.csgoEXE[clientVModEnt + 0x72] = 255.toByte()
-    CSGO.engineDLL[EngineOffsets.dwModelAmbientMin] = floatToIntBits(0F) xor (CSGO.engineDLL.address + EngineOffsets.dwModelAmbientMin - 0x2C).toInt()
+    //val clientVModEnt = CSGO.csgoEXE.uint(CSGO.clientDLL.address + ClientOffsets.dwEntityList + (((CSGO.csgoEXE.uint(CSGO.csgoEXE.uint(CSGO.clientDLL.address + ClientOffsets.dwLocalPlayer) + NetVarOffsets.m_hViewModel)) and 0xFFF) - 1) * 16)
+    //CSGO.csgoEXE[clientVModEnt + 0x70] = 255.toByte()
+    //CSGO.csgoEXE[clientVModEnt + 0x71] = 255.toByte()
+    //CSGO.csgoEXE[clientVModEnt + 0x72] = 255.toByte()
+    //CSGO.engineDLL[EngineOffsets.dwModelAmbientMin] = floatToIntBits(0F) xor (CSGO.engineDLL.address + EngineOffsets.dwModelAmbientMin - 0x2C).toInt()
 
     forEntities(forEnts, iterateGrenades = true, iterateWeapons = true) {
         val entity = it.entity
