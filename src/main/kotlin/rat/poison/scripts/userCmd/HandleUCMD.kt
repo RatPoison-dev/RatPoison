@@ -5,6 +5,8 @@ import rat.poison.game.CSGO.clientDLL
 import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.clientState
 import rat.poison.game.entity.dead
+import rat.poison.game.hooks.cursorEnable
+import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.EngineOffsets
@@ -114,7 +116,8 @@ fun sendUserCMD(userCMD: UserCMD, oldPtr: Int, oldVerifiedPtr: Int) {
 
     //Aim Key
     if (curSettings.bool["UCMD_HANDLE_FIRE_KEY"]) {
-        if (keyPressed(1) && !meDead && !inBackground && inGame && !MENUTOG) {
+        updateCursorEnable()
+        if (keyPressed(1) && !meDead && inGame && !cursorEnable) {
             if (curSettings.bool["UCMD_SILENT_AIM"]) {
                 if (curSettings.bool["UCMD_SILENT_REQUIRE_TARGET"] && !silentHaveTarget) {
                     //Nothin
