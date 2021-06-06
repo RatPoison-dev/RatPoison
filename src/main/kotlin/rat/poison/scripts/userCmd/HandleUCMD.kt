@@ -170,6 +170,8 @@ private fun resetCMD() {
 //const val button_in_move_left = (1 shl 9)
 //const val button_in_move_right = (1 shl 10)
 
+var ap = false
+
 fun sendUserCMD(userCMD: UserCMD, oldPtr: Int, oldVerifiedPtr: Int) = CoroutineScope(Dispatchers.Unconfined).launch {
     if (!canSetCmdAngles) { //Queued
         if (!nextCMD.vecViewAngles.isZero()) { //TODO there is an error somewhere...
@@ -186,21 +188,29 @@ fun sendUserCMD(userCMD: UserCMD, oldPtr: Int, oldVerifiedPtr: Int) = CoroutineS
     //Aim Key
     if (curSettings.bool["UCMD_HANDLE_FIRE_KEY"]) {
         updateCursorEnable()
-        if (keyPressed(1) && !meDead && inGame && !cursorEnable) {
-            if (curSettings.bool["UCMD_SILENT_AIM"]) {
-                if (curSettings.bool["UCMD_SILENT_REQUIRE_TARGET"] && !silentHaveTarget) {
-                    //Nothin
-                } else {
-                    //Shoot
-                    cmdShoot(userCMD)
+        if (!meDead && inGame && !cursorEnable) {
+            if (keyPressed(1)) {
+                if (curSettings.bool["UCMD_SILENT_AIM"]) {
+                    if (curSettings.bool["UCMD_SILENT_REQUIRE_TARGET"] && !silentHaveTarget) {
+                        //Nothin
+                    } else {
+                        //Shoot
+                        cmdShoot(userCMD)
 
-                    shouldSendNextCMD = true
+                        shouldSendNextCMD = true
+                    }
+                } else {
+                    if (!ap) {
+                        //Shoot
+                        cmdShoot(userCMD)
+
+                        shouldSendNextCMD = true
+
+                        ap = true
+                    }
                 }
             } else {
-                //Shoot
-                cmdShoot(userCMD)
-
-                shouldSendNextCMD = true
+                ap = false
             }
         }
     }

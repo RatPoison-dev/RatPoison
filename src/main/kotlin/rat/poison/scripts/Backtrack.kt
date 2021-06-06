@@ -14,6 +14,7 @@ import rat.poison.scripts.aim.*
 import rat.poison.scripts.misc.gvars
 import rat.poison.scripts.misc.haveGvars
 import rat.poison.scripts.misc.sendPacket
+import rat.poison.scripts.userCmd.ap
 import rat.poison.scripts.userCmd.cmdShoot
 import rat.poison.scripts.userCmd.nextCMD
 import rat.poison.utils.Structs.GlobalVars
@@ -53,7 +54,7 @@ fun attemptBacktrack(userCMD: UserCMD?): Boolean {
             return false
         }
 
-        if (keyPressed(1)) { //TODO backtrack on key???
+        if (keyPressed(1) && !ap) { //TODO backtrack on key???
             cmdShoot(null)
             nextCMD.iTickCount = timeToTicks(bestTime)
         }
