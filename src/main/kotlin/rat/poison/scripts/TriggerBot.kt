@@ -27,9 +27,11 @@ private val mePosition = Vector()
 private val boneList = listOf(-2)
 
 fun triggerBot() = every(5, inGameCheck = true) {
-    if (curSettings.bool["UCMD_HANDLE_TRIGGER"]) {
+    if (curSettings.bool["UCMD_HANDLE_TRIGGER"] || true) { //currently unplugged
         return@every
     }
+
+    println("trigger")
 
     //Don't run if not needed
     if (DANGER_ZONE || meDead || !inGame || MENUTOG || !meCurWep.gun || !curSettings.bool["ENABLE_TRIGGER"] || !haveAimSettings) { //Precheck

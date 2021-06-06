@@ -86,10 +86,14 @@ class UserCMD: Struct(), Structure.ByReference {
 
     @JvmField
     var iCmdNumber = 0
+
     @JvmField
     var iTickCount = 0
 
+
     var vecViewAngles = Vector()
+
+
     var vecAimDirection = Vector()
 
     @JvmField

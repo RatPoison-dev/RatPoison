@@ -37,6 +37,7 @@ class MainAimTable: VisTable(false) {
     val userCMD = VisCheckBoxCustom("User CMD", "USER_CMD")
     val handleFireKey = VisCheckBoxCustom("Handle Fire Key", "UCMD_HANDLE_FIRE_KEY")
     val handleTrigger = VisCheckBoxCustom("Handle Trigger", "UCMD_HANDLE_TRIGGER")
+    val handleBacktrack = VisCheckBoxCustom("Handle Backtrack", "UCMD_HANDLE_BACKTRACK")
     val silentAim = VisCheckBoxCustom("Silent Aim", "UCMD_SILENT_AIM")
     val silentRequireTarget = VisCheckBoxCustom("Require Target", "UCMD_SILENT_REQUIRE_TARGET")
 
@@ -93,12 +94,16 @@ class MainAimTable: VisTable(false) {
         add(userCMD).left().row()
         add(handleFireKey).left().row()
         add(handleTrigger).left().row()
+        add(handleBacktrack).left().row()
 
         userCMD.isChecked = true
         userCMD.isDisabled = true
 
         handleTrigger.isChecked = true
         handleTrigger.isDisabled = true
+
+        handleBacktrack.isChecked = true
+        handleBacktrack.isDisabled = true
 
         val tmpTable = VisTable(false)
         tmpTable.add(silentAim).left().padRight(224F - silentAim.width)

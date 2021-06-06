@@ -310,6 +310,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 				reset()
 				return@every
 			}
+
 			target = currentTarget
 			destBone = bestBone
 		}

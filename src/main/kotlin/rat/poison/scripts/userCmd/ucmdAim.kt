@@ -1,6 +1,7 @@
 package rat.poison.scripts.userCmd
 
 import rat.poison.curSettings
+import rat.poison.dbgLog
 import rat.poison.game.*
 import rat.poison.game.entity.*
 import rat.poison.scripts.aim.*
@@ -16,18 +17,16 @@ private val meAng = Vector()
 private val mePos = Vector()
 private val boneVec2 = Vector()
 
-fun ucmdAim(silent: Boolean = false, trigger: Boolean = false, trigEnt: Long = 0L): Boolean {
+fun ucmdAim(silent: Boolean = false): Boolean {
     if (!curSettings.bool["ENABLE_AIM"]) return false
 
     if (!canSetCmdAngles) return false
 
-    if (!trigger) {
-        if (aimTargetSwapTime > 0) {
-            if (curTime >= aimTargetSwapTime) {
-                aimTargetSwapTime = -1F
-            } else {
-                return false
-            }
+    if (aimTargetSwapTime > 0) {
+        if (curTime >= aimTargetSwapTime) {
+            aimTargetSwapTime = -1F
+        } else {
+            return false
         }
     }
 
@@ -53,7 +52,7 @@ fun ucmdAim(silent: Boolean = false, trigger: Boolean = false, trigEnt: Long = 0
     val pressedForceAimBoneKey = keybindEval("FORCE_AIM_BONE_KEY")
     val haveAmmo = meCurWepEnt.bullets() > 0
 
-    val pressed = ((aim || trigger) && !MENUTOG && haveAmmo) || pressedForceAimKey
+    val pressed = (aim && !MENUTOG && haveAmmo) || pressedForceAimKey
 
     if (!pressed) {
         reset()
@@ -108,65 +107,31 @@ fun ucmdAim(silent: Boolean = false, trigger: Boolean = false, trigEnt: Long = 0
         }
     }
 
-    if (!trigger) {
-        ////NORMAL AIM
+    val swapTarget = (bestTarget > 0 && currentTarget != bestTarget) && !curSettings.bool["HOLD_AIM"] && (meCurWep.automatic || AUTOMATIC_WEAPONS)
 
-        val swapTarget = (bestTarget > 0 && currentTarget != bestTarget) && !curSettings.bool["HOLD_AIM"] && (meCurWep.automatic || AUTOMATIC_WEAPONS)
-
-        if (swapTarget) {
-            reset()
-            return false
-        } else if (!currentTarget.canShoot(shouldVisCheck)) {
-            aimTargetSwapTime = curTime + curSettings.int["AIM_TARGET_SWAP_DELAY"] / 1000F
-            reset()
-            return false
-        } else {
-            val bonePosition = currentTarget.bones(destBone, boneVec2)
-
-            val destinationAngle = realCalcAngle(me, bonePosition)
-
-            if (silent) {
-                silentHaveTarget = true
-                cmdSetAngles(destinationAngle)
-            } else {
-                silentHaveTarget = false
-
-                if (!perfect) {
-                    destinationAngle.finalize(currentAngle, (1F - AIM_SMOOTHNESS / 100.1F))
-
-                    writeAim(destinationAngle, currentAngle, AIM_SMOOTHNESS)
-                } else {
-                    writeAim(destinationAngle, currentAngle, 1)
-                }
-            }
-
-            return true
-        }
+    if (swapTarget) {
+        reset()
+        return false
+    } else if (!currentTarget.canShoot(shouldVisCheck)) {
+        aimTargetSwapTime = curTime + curSettings.int["AIM_TARGET_SWAP_DELAY"] / 1000F
+        reset()
+        return false
     } else {
         val bonePosition = currentTarget.bones(destBone, boneVec2)
 
         val destinationAngle = realCalcAngle(me, bonePosition)
 
-        if (destinationAngle.isZero()) {
-            println("trigger destination is zero brosephhhh")
-        }
-
-        if (currentAngle.isZero()) {
-            println("trigger destination current angleio is zero bresphsphsph")
-        }
-
         if (silent) {
-            silentHaveTarget = true
+            destinationAngle.finalize(currentAngle, .99F) //yeah idk rn dude this line prolly aint even needed but ik it aint drake
+
             cmdSetAngles(destinationAngle)
         } else {
-            silentHaveTarget = false
-
             if (!perfect) {
-                //destinationAngle.finalize(currentAngle, (1.001F - AIM_SMOOTHNESS / 100F))
+                destinationAngle.finalize(currentAngle, (1F - AIM_SMOOTHNESS / 100F))
 
-                writeAim(destinationAngle, currentAngle, 1)
+                writeAim(currentAngle, destinationAngle, AIM_SMOOTHNESS)
             } else {
-                writeAim(destinationAngle, currentAngle, 1)
+                writeAim(currentAngle, destinationAngle, 1)
             }
         }
 

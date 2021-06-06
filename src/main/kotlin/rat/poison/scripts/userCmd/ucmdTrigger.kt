@@ -27,24 +27,24 @@ private fun reset() {
 private var triggerShots = 0
 private val meAngle = Vector()
 private val mePosition = Vector()
-private val boneList = listOf(-2)
 
-fun ucmdTrigger(userCMD: UserCMD): Boolean {
+fun ucmdTrigger(userCMD: UserCMD?): Boolean {
     val initDelay = TRIGGER_INIT_SHOT_DELAY
     val shotDelay = TRIGGER_PER_SHOT_DELAY
     val bFOV = TRIGGER_FOV
     val bINFOV = TRIGGER_USE_FOV
     val bINCROSS = TRIGGER_USE_INCROSS
-    val bAIMBOT = TRIGGER_USE_AIMBOT
+    //val bAIMBOT = TRIGGER_USE_AIMBOT
     val bBACKTRACK = TRIGGER_USE_BACKTRACK
 
+    ////Currently waiting for queued shot
     if (trigQueuedShotTime > 0) {
         keybindEval("TRIGGER_KEY")
         return false
     }
 
-    //Don't run if not needed
-    if (DANGER_ZONE || meDead || !inGame || MENUTOG || !meCurWep.gun || !curSettings.bool["ENABLE_TRIGGER"] || !haveAimSettings) { //Precheck
+    ////PRECHECK
+    if (DANGER_ZONE || meDead || !inGame || MENUTOG || !meCurWep.gun || !curSettings.bool["ENABLE_TRIGGER"] || !haveAimSettings) {
         reset()
         keybindEval("TRIGGER_KEY")
         return false
@@ -85,9 +85,6 @@ fun ucmdTrigger(userCMD: UserCMD): Boolean {
                 trigEnt = iC
                 return true
             }
-            else {
-                //boneTrig = bAIMBOT
-            }
         }
 
         ////CHECK INFOV
@@ -96,7 +93,7 @@ fun ucmdTrigger(userCMD: UserCMD): Boolean {
         if (bINFOV) { //If we should check in fov
             val currentAngle = clientState.angle(meAngle)
             val position = me.position(mePosition)
-            val target = findTarget(position, currentAngle, false, bFOV, boneList)
+            val target = findTarget(position, currentAngle, false, bFOV)
             if (target > 0L) {
                 if (target.canShoot()) {
                     canFOV = true
@@ -119,7 +116,6 @@ fun ucmdTrigger(userCMD: UserCMD): Boolean {
         if (canFOV) {
             trigQueueShot(useDelay)
             trigEnt = fovTarget
-            //ucmdAim(trigger = true, trigEnt = fovTarget)
             return true
         }
 

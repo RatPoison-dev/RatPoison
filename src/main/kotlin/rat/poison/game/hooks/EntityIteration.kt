@@ -105,6 +105,7 @@ private var signOnState by Delegates.observable(SignOnState.MAIN_MENU) { _, old,
 
 @Volatile
 var cursorEnable = false
+
 private val cursorEnableAddress by lazy(LazyThreadSafetyMode.NONE) { clientDLL.address + ClientOffsets.dwMouseEnable }
 private val cursorEnablePtr by lazy(LazyThreadSafetyMode.NONE) { clientDLL.address + ClientOffsets.dwMouseEnablePtr }
 

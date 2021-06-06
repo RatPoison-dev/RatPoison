@@ -19,6 +19,7 @@ private val delta = ThreadLocal.withInitial { Vector() }
 fun applyFlatSmoothing(currentAngle: Angle, destinationAngle: Angle, smoothing: Int) = destinationAngle.apply {
 	var smooth = smoothing.toFloat()
 
+	//TODO this smooth is currently useless...
 	if (smooth < 1) {
 		smooth = 1F
 	} else if (smooth > 100) {

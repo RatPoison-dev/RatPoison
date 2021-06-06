@@ -28,6 +28,7 @@ import rat.poison.utils.updateFonts
 import java.awt.Robot
 import java.io.File
 import java.util.*
+import kotlinx.coroutines.*
 
 //Override Weapon
 data class oWeapon(var tOverride: Boolean = false,          var tFRecoil: Boolean = false,          var tOnShot: Boolean = false,
@@ -182,6 +183,7 @@ fun main() {
 
     handleUCMD()
 
+
         //if (EXPERIMENTAL) {
         //rayTraceTest()
         //drawMapWireframe()l
@@ -202,7 +204,7 @@ fun initApp() {
     haltProcess = false
     updateFonts = true
 
-    GlobalScope.launch {
+    CoroutineScope(Dispatchers.Unconfined).launch {
         App.open()
 
         Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {

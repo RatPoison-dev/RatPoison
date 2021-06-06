@@ -11,7 +11,7 @@ data class VectorInt(var x: Int = 0, var y: Int = 0, var z: Int = 0) {
 	}
 }
 
-const val vectorZero = 0.01F
+const val vectorZero = 0.02F
 data class Vector(var x: Float = 0.0F, var y: Float = 0.0F, var z: Float = 0.0F) {
 	fun set(x: Float, y: Float, z: Float) = apply {
 		this.x = x

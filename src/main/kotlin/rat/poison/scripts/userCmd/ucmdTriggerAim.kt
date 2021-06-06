@@ -14,8 +14,9 @@ import rat.poison.utils.writeAim
 
 private val meAng = Vector()
 private val boneVec2 = Vector()
+private var destBone = -1
 
-fun ucmdTriggerAim(silent: Boolean, trigEnt: Long): Boolean {
+fun ucmdTriggerAim(silent: Boolean, ent: Long): Boolean {
     if (!curSettings.bool["ENABLE_AIM"]) {
         keybindEval("FORCE_AIM_KEY")
         return false
@@ -43,7 +44,7 @@ fun ucmdTriggerAim(silent: Boolean, trigEnt: Long): Boolean {
         return false
     }
 
-    if (!trigEnt.canShoot()) {
+    if (!ent.canShoot()) {
         keybindEval("FORCE_AIM_KEY")
         return false
     }
@@ -66,17 +67,16 @@ fun ucmdTriggerAim(silent: Boolean, trigEnt: Long): Boolean {
 
     if (aB.isEmpty()) return false
 
-    var forceSpecificBone = -1
     val findNearest = aB.has { it == NEAREST_BONE }
     val findRandom = aB.has { 0 > it as Int }
 
     if (findNearest) {
-        val nB = trigEnt.nearestBone()
-        if (nB != INVALID_NEAREST_BONE) forceSpecificBone = nB
+        val nB = ent.nearestBone()
+        if (nB != INVALID_NEAREST_BONE) destBone = nB
     } else if (findRandom) {
-        forceSpecificBone = 5 + randInt(0, 3)
+        destBone = 5 + randInt(0, 3)
     } else {
-        forceSpecificBone = aB[0]
+        destBone = aB[0]
     }
 
     var perfect = false
@@ -86,13 +86,9 @@ fun ucmdTriggerAim(silent: Boolean, trigEnt: Long): Boolean {
         }
     }
 
-    val bonePosition = trigEnt.bones(forceSpecificBone, boneVec2)
+    val bonePosition = ent.bones(destBone, boneVec2)
 
     val destinationAngle = realCalcAngle(me, bonePosition)
-
-    if (destinationAngle.isZero()) {
-        return false
-    }
 
     if (silent) {
         cmdSetAngles(destinationAngle)

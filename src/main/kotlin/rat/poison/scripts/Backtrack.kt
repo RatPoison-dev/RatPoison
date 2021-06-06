@@ -15,13 +15,11 @@ import rat.poison.scripts.misc.gvars
 import rat.poison.scripts.misc.haveGvars
 import rat.poison.scripts.misc.sendPacket
 import rat.poison.scripts.userCmd.cmdShoot
+import rat.poison.scripts.userCmd.nextCMD
 import rat.poison.utils.Structs.GlobalVars
 import rat.poison.utils.Structs.UserCMD
 import rat.poison.utils.Structs.memToGlobalVars
-import rat.poison.utils.common.Angle
-import rat.poison.utils.common.Vector
-import rat.poison.utils.common.every
-import rat.poison.utils.common.threadLocalPointer
+import rat.poison.utils.common.*
 import rat.poison.utils.extensions.uint
 import kotlin.math.abs
 import kotlin.math.atan
@@ -40,7 +38,7 @@ fun setupBacktrack() = every(10, true, inGameCheck = true) {
     constructRecords()
 }
 
-fun attemptBacktrack(userCMD: UserCMD): Boolean {
+fun attemptBacktrack(userCMD: UserCMD?): Boolean {
     if (((curSettings.bool["BACKTRACK_SPOTTED"] && bestBacktrackTarget.spotted()) || !curSettings.bool["BACKTRACK_SPOTTED"]) && bestBacktrackTarget > 0L && haveGvars) {
         inBacktrack = true
 
@@ -55,9 +53,10 @@ fun attemptBacktrack(userCMD: UserCMD): Boolean {
             return false
         }
 
-        cmdShoot(userCMD)
-        userCMD.iButtons = userCMD.iButtons or 1
-        userCMD.iTickCount = timeToTicks(bestTime)
+        if (keyPressed(1)) { //TODO backtrack on key???
+            cmdShoot(null)
+            nextCMD.iTickCount = timeToTicks(bestTime)
+        }
 
         inBacktrack = false
         return true

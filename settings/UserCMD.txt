@@ -1,3 +1,5 @@
+//EXPERIMENTAL
+
 //Edit UserCMDs
 USER_CMD = true
 
@@ -7,6 +9,12 @@ UCMD_HANDLE_FIRE_KEY = true
 //Activate trigger through ucmd
 UCMD_HANDLE_TRIGGER = true
 
+//Active backtrack through ucmd
+UCMD_HANDLE_BACKTRACK = true
+
 //Silent Aim
 UCMD_SILENT_AIM = false
 UCMD_SILENT_REQUIRE_TARGET = true
+
+//Fast Stop
+UCMD_FAST_STOP = true

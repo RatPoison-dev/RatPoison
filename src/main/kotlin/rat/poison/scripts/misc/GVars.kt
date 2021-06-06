@@ -8,7 +8,7 @@ import rat.poison.utils.common.every
 var haveGvars = false
 var gvars = GlobalVars()
 
-fun updateGVars() = every(15, true, inGameCheck = true){
+fun updateGVars() = every(14, true, inGameCheck = true){
     if (me <= 0) return@every
     val tGvars = getGlobalVars()
     if (tGvars != null) {
