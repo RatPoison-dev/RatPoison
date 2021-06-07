@@ -19,6 +19,8 @@ import rat.poison.utils.Structs.*
 import rat.poison.utils.common.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.launch
+import rat.poison.dbgLog
+import rat.poison.scripts.aim.meCurWep
 import rat.poison.settings.TRIGGER_USE_AIMBOT
 
 var lastCMDTime = 0F
@@ -102,7 +104,7 @@ fun handleUCMD() = CoroutineScope(Dispatchers.Default).launch {
                     break@loop
                 } else if (curCMDNumber >= currentCommandNumber) {
                     if (curCMDNumber > currentCommandNumber) {
-                        println("CMD Dif: ${curCMDNumber - currentCommandNumber} want: $currentCommandNumber got: $curCMDNumber")
+                        dbgLog("CMD Dif: ${curCMDNumber - currentCommandNumber} want: $currentCommandNumber got: $curCMDNumber")
                     }
 
                     val cur = input.pCommands + ((lastCMDNumber - 1) % 150) * 0x64 //perhaps...
@@ -206,7 +208,9 @@ fun sendUserCMD(userCMD: UserCMD, oldPtr: Int, oldVerifiedPtr: Int) = CoroutineS
 
                         shouldSendNextCMD = true
 
-                        ap = true
+                        if (!meCurWep.automatic) {
+                            ap = true
+                        }
                     }
                 }
             } else {
