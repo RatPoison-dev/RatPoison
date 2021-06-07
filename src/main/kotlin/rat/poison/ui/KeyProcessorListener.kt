@@ -4,8 +4,8 @@ import rat.poison.curSettings
 import rat.poison.interfaces.IKeyProcessorListener
 import rat.poison.ui.uiElements.binds.InputBindBox
 import rat.poison.ui.uiWindows.keybindsUpdate
-import rat.poison.utils.gdxButtons
-import rat.poison.utils.gdxToVk
+import rat.poison.utils.common.gdxButtons
+import rat.poison.utils.common.gdxToVk
 import rat.poison.utils.keybindRegister
 
 lateinit var needKeyPressVar: String

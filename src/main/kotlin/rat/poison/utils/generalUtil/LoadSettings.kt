@@ -3,6 +3,7 @@ package rat.poison.utils.generalUtil
 import org.apache.commons.lang3.StringUtils.isNumeric
 import rat.poison.*
 import rat.poison.scripts.aim.numToBone
+import rat.poison.utils.common.vkKeycodeToString
 import rat.poison.utils.extensions.upper
 import java.io.File
 import java.io.FileReader
@@ -55,6 +56,7 @@ fun loadSettingsFromFiles(fileDir: String, specificFile: Boolean = false) {
     curSettings["OVERLOAD_KEYBINDS"] = overloadKeybinds
     settingsLoaded = true
     println("Settings loaded")
+    println("Menu Key: ${vkKeycodeToString(curSettings.int["MENU_KEY"])}")
 }
 private var hasSkinVars = false
 val skinChangerVariables = mutableListOf<String>()

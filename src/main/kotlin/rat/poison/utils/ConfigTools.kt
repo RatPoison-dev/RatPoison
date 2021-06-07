@@ -10,6 +10,7 @@ import rat.poison.overlay.opened
 import rat.poison.ui.uiTabs.updateWindows
 import rat.poison.ui.uiUpdate
 import rat.poison.ui.uiWindows.configsTab
+import rat.poison.utils.common.vkKeycodeToString
 import rat.poison.utils.extensions.toBitString
 import rat.poison.utils.generalUtil.loadSettingsFromFiles
 import rat.poison.utils.generalUtil.loadSkinSettings
@@ -118,6 +119,7 @@ fun loadCFG(realCfgFileName: String, deleteCfgAfterLoad: Boolean = false) {
                 }
                 if (deleteCfgAfterLoad) { cfgFile.delete() }
                 saving = false
+                println("Menu Key: ${vkKeycodeToString(curSettings.int["MENU_KEY"])}")
             }
         }
     } else {

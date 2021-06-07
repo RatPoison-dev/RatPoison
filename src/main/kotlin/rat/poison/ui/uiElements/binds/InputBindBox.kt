@@ -7,7 +7,7 @@ import rat.poison.overlay.App.keyProcessor
 import rat.poison.ui.*
 import rat.poison.ui.uiElements.VisSelectBoxCustom
 import rat.poison.utils.keybindRegister
-import rat.poison.utils.vkKeycodeToString
+import rat.poison.utils.common.vkKeycodeToString
 
 private val keybindTypesArray = arrayOf("ON_HOTKEY", "OFF_HOTKEY", "TOGGLE", "ALWAYS_ON")
 

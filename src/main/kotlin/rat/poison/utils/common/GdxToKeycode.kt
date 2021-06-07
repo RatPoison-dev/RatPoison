@@ -1,4 +1,4 @@
-package rat.poison.utils
+package rat.poison.utils.common
 
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.Input.Keys.*
@@ -23,7 +23,8 @@ fun vkKeycodeToString(keycode: Int): String {
         if (keycode < 0 || keycode > 255) blankKey
         else toString(tmp)
     } else {
-        if (vkToMouse[keycode] in buttonsMap) {buttonsMap[vkToMouse[keycode]]!!}
+        if (vkToMouse[keycode] in buttonsMap) {
+            buttonsMap[vkToMouse[keycode]]!!}
         else {
             return blankKey
         }
