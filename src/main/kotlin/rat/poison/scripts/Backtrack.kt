@@ -48,9 +48,10 @@ fun attemptBacktrack(userCMD: UserCMD?): Boolean {
 
         val bestTime = bestSimTime()
 
-        if (bestTime == -1f) {
+        if (bestTime <= 0F) {
             sendPacket(true)
             inBacktrack = false
+            bestBacktrackTarget = -1L
             return false
         }
 
@@ -80,6 +81,7 @@ fun constructRecords() {
 
     val boneMemory = boneMemory.get()
 
+    bestBacktrackTarget = -1L
     forEntities(forEnts) {
         val ent = it.entity
 
@@ -108,8 +110,6 @@ fun constructRecords() {
         if (fov < bestFov && fov > 0) {
             bestFov = fov
             bestBacktrackTarget = ent
-        } else if (bestFov == 5F) {
-            bestBacktrackTarget = -1L
         }
 
         //Create records
@@ -133,6 +133,10 @@ fun constructRecords() {
             record.entity = ent
 
             btRecords[entID][tick] = record
+        }
+
+        if (bestFov >= 5F) {
+            bestBacktrackTarget = -1L
         }
 
         return@forEntities

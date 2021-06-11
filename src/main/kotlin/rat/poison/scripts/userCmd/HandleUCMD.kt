@@ -85,7 +85,7 @@ fun handleUCMD() = CoroutineScope(Dispatchers.Default).launch {
                 }
             }
 
-            val backtrack = async {
+            val backtrack = async{
                 //Backtrack : Do all the stuff, priority 3
                 if (curSettings.bool["UCMD_HANDLE_BACKTRACK"]) {
                     attemptBacktrack(null)

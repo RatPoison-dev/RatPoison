@@ -23,46 +23,6 @@ import java.lang.Math.toRadians
 private val forEnts = arrayOf(EntityType.CCSPlayer)
 
 fun drawFov() = App {
-//    forEntities(forEnts) {
-//        if (it.entity == me) return@forEntities
-//
-//        val position = me.position()
-//        val curAngle = clientState.angle()
-//
-//        val vec = Vector()
-//        val ePos: Angle = it.entity.bones(8, vec)
-//
-//        val distance = position.distanceTo(ePos)
-//
-//        val calcAng = getCalculatedAngle(me, ePos)
-//
-//        val pitchDiff = abs(curAngle.x - calcAng.x)
-//        var yawDiff = abs(curAngle.y - calcAng.y)
-//
-//        if (yawDiff > 180f) {
-//            yawDiff = 360f - yawDiff
-//        }
-//
-//        val fov = abs(sin(toRadians(yawDiff.toDouble())) * distance)
-//        val delta = abs((sin(toRadians(pitchDiff.toDouble())) + sin(toRadians(yawDiff.toDouble()))) * distance).roundToInt()
-//
-//        val entPos = Vector()
-//
-//        if (worldToScreen(ePos, entPos)) {
-//            if (!sb.isDrawing) {
-//                sb.begin()
-//            }
-//
-//            //draw details first
-//            val detailTextColor = curSettings.colorGDX["BOX_DETAILS_TEXT_COLOR"]
-//            textRenderer.color = detailTextColor
-//
-//            textRenderer.draw(sb, delta.toString(), entPos.x, entPos.y, 1F, Align.right, false)
-//
-//            sb.end()
-//        }
-//    }
-
     if (!curSettings.bool["ENABLE_VISUALS"] || MENUTOG || !inGame || meDead)
         return@App
 
@@ -106,7 +66,7 @@ fun drawFov() = App {
 
         begin()
 
-        if (curSettings.bool["DRAW_AIM_FOV"]) {
+        if (curSettings.bool["ENABLE_AIM"] && curSettings.bool["DRAW_AIM_FOV"]) {
             val col = curSettings.color["DRAW_AIM_FOV_COLOR"]
             setColor(col.red / 255F, col.green / 255F, col.blue / 255F, 1F)
             circle(x, y, clamp(aimRadius, 10F, 1000F))

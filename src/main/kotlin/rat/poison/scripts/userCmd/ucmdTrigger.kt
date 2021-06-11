@@ -9,7 +9,10 @@ import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.scripts.aim.*
+import rat.poison.scripts.attemptBacktrack
 import rat.poison.scripts.bestBacktrackTarget
+import rat.poison.scripts.bestSimTime
+import rat.poison.scripts.timeToTicks
 import rat.poison.settings.*
 import rat.poison.utils.Structs.UserCMD
 import rat.poison.utils.common.Vector
@@ -105,10 +108,15 @@ fun ucmdTrigger(userCMD: UserCMD?): Boolean {
         //BACKTRACK
         if (bBACKTRACK) { //If we should check backtrack
             if (bestBacktrackTarget.canShoot()) {
-                //Shoot
-                trigQueueShot(useDelay)
-                trigEnt = bestBacktrackTarget
-                return true
+                val bestTime = bestSimTime()
+
+                if (bestTime > 0F) {
+                    nextCMD.iTickCount = timeToTicks(bestTime)
+                    //Shoot
+                    trigQueueShot(useDelay)
+                    trigEnt = bestBacktrackTarget
+                    return true
+                }
             }
         }
 
