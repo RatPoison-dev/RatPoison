@@ -55,7 +55,6 @@ fun attemptBacktrack(userCMD: UserCMD?): Boolean {
         }
 
         if (keyPressed(1) && !ap) { //TODO backtrack on key???
-            println("backtrackiiiin")
             cmdShoot(null)
             nextCMD.iTickCount = timeToTicks(bestTime)
         }
