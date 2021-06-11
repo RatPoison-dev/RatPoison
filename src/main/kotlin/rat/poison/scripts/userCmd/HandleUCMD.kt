@@ -208,7 +208,7 @@ fun sendUserCMD(userCMD: UserCMD, oldPtr: Int, oldVerifiedPtr: Int) = CoroutineS
 
                         shouldSendNextCMD = true
 
-                        if (!meCurWep.automatic) {
+                        if (!meCurWep.automatic || userCMD.iButtons and 1 == 1) {
                             ap = true
                         }
                     }
@@ -217,6 +217,8 @@ fun sendUserCMD(userCMD: UserCMD, oldPtr: Int, oldVerifiedPtr: Int) = CoroutineS
                 ap = false
             }
         }
+    } else {
+        ap = false
     }
 
     //Trigger

@@ -23,12 +23,32 @@ fun loadLocale() {
 //We do a little using later :wink:
 val missedLocales = mutableListOf<String>()
 
+fun locale(string: String): String {
+    if (!string.startsWith("L_")) return string
+
+    val lc = curLocale[string]
+
+    return lc.ifEmpty {
+        if (!missedLocales.contains(string)) {
+            if (dbg) {
+                println("[DEBUG] missing locale for $string")
+                missedLocales.add(string)
+            }
+        }
+
+        //Use backup :smirk:
+        //TODO
+
+        string
+    }
+}
+
 fun String.locale(backupText: String? = null): String {
     if (!this.startsWith("L_")) return backupText?: this
 
     val lc = curLocale[this]
 
-    return if (lc.isEmpty()) {
+    return lc.ifEmpty {
         if (!missedLocales.contains(this)) {
             if (dbg) {
                 println("[DEBUG] missing locale for $this")
@@ -39,9 +59,7 @@ fun String.locale(backupText: String? = null): String {
         //Use backup :smirk:
         //TODO
 
-        backupText?: this
-    } else {
-        lc
+        backupText ?: this
     }
 }
 

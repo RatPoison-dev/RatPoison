@@ -49,13 +49,13 @@ fun attemptBacktrack(userCMD: UserCMD?): Boolean {
         val bestTime = bestSimTime()
 
         if (bestTime <= 0F) {
-            sendPacket(true)
             inBacktrack = false
             bestBacktrackTarget = -1L
             return false
         }
 
         if (keyPressed(1) && !ap) { //TODO backtrack on key???
+            println("backtrackiiiin")
             cmdShoot(null)
             nextCMD.iTickCount = timeToTicks(bestTime)
         }

@@ -17,6 +17,7 @@ import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.VisSliderCustom
 import rat.poison.ui.uiElements.binds.VisBindTableCustom
 import rat.poison.ui.uiWindows.nadeHelperTab
+import rat.poison.utils.locale
 import java.io.File
 
 var nadeHelperLoadedFileStr = "N/A"
@@ -35,41 +36,41 @@ class NadeHelperTab : Tab(false, false) {
 
     init {
         //Nade position create button
-        val addPosition = VisTextButton("Create-Grenade-Position")
+        val addPosition = VisTextButton(locale("L_CREATE_POSITION"))
         addPosition.changed { _, _ ->
             createPosition()
         }
 
-        val saveFileNadeHelper = VisTextButton("Save-As-File")
+        val saveFileNadeHelper = VisTextButton(locale("L_SAVE_AS_FILE"))
         saveFileNadeHelper.changed { _, _ ->
             savePositions()
         }
 
-        val loadFileNadeHelper = VisTextButton("Load-From-File")
+        val loadFileNadeHelper = VisTextButton(locale("L_LOAD_SELECTED_FILE"))
         loadFileNadeHelper.changed { _, _ ->
             if (nadeHelperFileSelectBox.items.count() > 0) {
                 loadPositions(nadeHelperFileSelectBox.selected)
             }
         }
 
-        val deleteFileNadeHelper = VisTextButton("Delete-Selected-File")
+        val deleteFileNadeHelper = VisTextButton(locale("L_DELETE_SELECTED_FILE"))
         deleteFileNadeHelper.changed { _, _ ->
             if (nadeHelperFileSelectBox.items.count() > 0) {
                 deleteNadeHelperFile(nadeHelperFileSelectBox.selected)
             }
         }
 
-        val clearNadeHelper = VisTextButton("Clear-Currently-Loaded")
+        val clearNadeHelper = VisTextButton(locale("L_CLEAR_POSITIONS"))
         clearNadeHelper.changed { _, _ ->
-            Dialogs.showOptionDialog(App.menuStage, "Warning", "CLEAR_POSITIONS", Dialogs.OptionDialogType.YES_NO, object: OptionDialogAdapter() {
+            Dialogs.showOptionDialog(App.menuStage, "Warning", locale("L_CLEAR_POSITIONS_WARNING"), Dialogs.OptionDialogType.YES_NO, object: OptionDialogAdapter() {
                 override fun yes() {
                     nadeHelperArrayList.clear()
-                    nadeHelperLoadedFile.setText("Loaded:-N/A")
+                    nadeHelperLoadedFile.setText("Loaded: N/A")
                 }
             })
         }
 
-        val deleteCurrentPositionHelper = VisTextButton("Delete-At-Current-Position")
+        val deleteCurrentPositionHelper = VisTextButton(locale("L_DELETE_CURRENT_POSITION"))
         deleteCurrentPositionHelper.changed { _, _ ->
             deletePosition()
         }
@@ -90,10 +91,9 @@ class NadeHelperTab : Tab(false, false) {
 
         table.add(nadeHelperFileSelectBox).row()
         table.add(sldTable).row()
-        table.add(clearNadeHelper).width(250F).row()
-
         table.add(addPosition).width(250F).row()
         table.add(deleteCurrentPositionHelper).width(250F).row()
+        table.add(clearNadeHelper).width(250F).row()
 
         table.add(nadeHelperLoadedFile).row()
     }

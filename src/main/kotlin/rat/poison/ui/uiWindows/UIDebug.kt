@@ -25,7 +25,7 @@ class UIDebug: VisWindow("") {
 
         padTop(10F)
 
-        table.add(headerLabel).colspan(2).expandX().top().row()
+        table.add(headerLabel).left().row()
         table.addSeparator().colspan(2).expandX().top().row()
         table.add(contentLabelLeft).expandX().left().top()
         table.add(contentLabelRight).expandX().left().top().row()

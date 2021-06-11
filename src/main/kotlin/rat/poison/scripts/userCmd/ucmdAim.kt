@@ -37,7 +37,7 @@ fun ucmdAim(silent: Boolean = false): Boolean {
     }
 
     //TODO                                 didShoot &&
-    if (AIM_ONLY_ON_SHOT && (!canFire || (!meCurWep.automatic && !AUTOMATIC_WEAPONS))) { //Onshot
+    if (AIM_ONLY_ON_SHOT && (!canFire || ap)) { //Onshot
         reset(false)
         return false
     }

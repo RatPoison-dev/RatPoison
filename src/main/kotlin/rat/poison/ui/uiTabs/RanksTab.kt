@@ -100,9 +100,9 @@ class RanksTab : Tab(false, false) {
         tmpName = tmpName.substring(0, if (tmpName.length > 23) 23 else tmpName.length)
 
         if (player.steamID != 0) { //Bot check
-            namesTable.add(LinkLabel(tmpName, "https://steamcommunity.com/profiles/%5BU:1:" + player.steamID + "%5B/")).height(21F).left().top().row()
+            namesTable.add(LinkLabel(tmpName, "https://steamcommunity.com/profiles/%5BU:1:" + player.steamID + "%5B/")).height(19F).left().top().row()
         } else {
-            namesTable.add(tmpName).height(21F).left().top().row()
+            namesTable.add(tmpName).height(20F).left().top().row()
         }
 
         ranksLabel.setText(ranksLabel.text.toString() + player.rank + "  \n")

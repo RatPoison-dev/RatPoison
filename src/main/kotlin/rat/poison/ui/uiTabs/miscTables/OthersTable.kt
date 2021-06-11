@@ -184,6 +184,8 @@ fun othersTabUpdate() {
         watermark.update()
         enableMusicKitSpoofer.update()
         updateHitSoundsList()
+
+        postProcessingDisable.disable(!curSettings.bool["ENABLE_VISUALS"])
     }
 }
 

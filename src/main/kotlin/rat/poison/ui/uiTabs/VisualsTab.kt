@@ -7,9 +7,11 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.curSettings
 import rat.poison.overlay.opened
 import rat.poison.scripts.visuals.disableAllEsp
+import rat.poison.ui.changed
 import rat.poison.ui.uiElements.VisCheckBoxCustom
 import rat.poison.ui.uiElements.binds.VisBindTableCustom
 import rat.poison.ui.uiTabs.visualsTables.*
+import rat.poison.ui.uiUpdate
 import rat.poison.ui.uiWindows.visualsTab
 
 //val espTabbedPane = TabbedPane()
@@ -36,6 +38,10 @@ class VisualsTab : Tab(false, false) {
         val leftTable = VisTable(false)
         val middleTable = VisTable(false)
         val rightTable = VisTable(false)
+
+        enableEsp.changed { _, _ ->
+            uiUpdate()
+        }
 
         leftTable.add(enableEsp).left().width(310F).row()
         leftTable.add(visualsToggleKey).left().width(310F).row()

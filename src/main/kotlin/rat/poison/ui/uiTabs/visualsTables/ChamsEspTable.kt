@@ -60,9 +60,11 @@ fun chamsEspTabUpdate() {
         showTeam.update()
         showEnemies.update()
         showSelf.update()
+        showTarget.update()
         chamsTeamColor.update()
         chamsEnemyColor.update()
         chamsSelfColor.update()
+        chamsTargetColor.update()
     }
 }
 
@@ -73,6 +75,8 @@ fun chamsEspTableDisable(bool: Boolean, col: Color) {
         chamsBrightness.disable(bool, col)
         showTeam.disable(bool)
         showEnemies.disable(bool)
+        showSelf.disable(bool)
+        showTarget.disable(bool)
         chamsTeamColor.disable(bool)
         chamsEnemyColor.disable(bool)
         chamsSelfColor.disable(bool)

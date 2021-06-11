@@ -46,6 +46,7 @@ L_UCMD_HANDLE_FIRE_KEY = UCMD Handle Fire Key
 L_UCMD_HANDLE_TRIGGER = UCMD Handle Trigger
 L_UCMD_SILENT_AIM = UCMD Silent Aim
 L_UCMD_SILENT_REQUIRE_TARGET = Require Aim Target
+L_UCMD_HANDLE_BACKTRACK = UCMD Handle Backtrack
 
 //Aim
 L_SNIPER_ENABLE_SCOPED_ONLY = Scoped Only
@@ -192,6 +193,13 @@ L_FAKE_LAG = Fake Lag
 //Nadehelper
 L_ENABLE_NADE_HELPER = Nade Helper
 L_ENABLE_NADE_THROWER = Auto Throw
+L_CREATE_POSITION = Create Position
+L_SAVE_AS_FILE = Save As File
+L_LOAD_SELECTED_FILE = Load Selected File
+L_DELETE_SELECTED_FILE = Delete Selected File
+L_CLEAR_POSITIONS = Clear Current Positions
+L_DELETE_CURRENT_POSITION = Delete Current Position
+L_CLEAR_POSITIONS_WARNING = This will clear all currently loaded positions, are you sure?
 
 //Skinchanger
 L_SKINCHANGER = Enable Skinchanger
