@@ -92,6 +92,7 @@ class AssetManager: AssetManager() {
                 skin.add("small-font", generatedFont, BitmapFont::class.java)
                 skin.addRegions(TextureAtlas(Gdx.files.internal(("skin/tinted.atlas"))))
                 skin.load(Gdx.files.internal("skin/tinted.json"))
+                skin.setScale(.5F)
                 VisUI.load(skin)
             }
         }

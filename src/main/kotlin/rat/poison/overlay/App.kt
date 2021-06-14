@@ -18,11 +18,8 @@ import com.sun.management.OperatingSystemMXBean
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.opengl.GL
-import rat.poison.appless
-import rat.poison.curSettings
-import rat.poison.dbg
+import rat.poison.*
 import rat.poison.game.updateViewMatrix
-import rat.poison.haltProcess
 import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
 import rat.poison.jna.enums.AccentStates
@@ -95,6 +92,7 @@ object App: ApplicationAdapter() {
         while (!VisUI.isLoaded()) {
             println("Loading VisUI...")
             assetManager.updateFonts()
+            Thread.sleep(1000)
         }
 
         //Implement key processor for menu
@@ -179,7 +177,7 @@ object App: ApplicationAdapter() {
         //println("yea yea we still here")
 
         if (haltProcess) {
-            println("im awake and hiding")
+            dbgLog("[HALT PROCESS] Killing overlay...")
 
             Gdx.gl.apply {
                 glClear(GL20.GL_COLOR_BUFFER_BIT)
