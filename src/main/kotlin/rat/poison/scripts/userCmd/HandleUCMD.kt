@@ -44,8 +44,6 @@ var aimTargetSwapTime = -1F
 
 fun handleUCMD() = CoroutineScope(Dispatchers.Default).launch {
     every@ while (true) {
-        meDead = me.dead()
-
         curTime = gvars.curTime
 
         //TODO prechecks

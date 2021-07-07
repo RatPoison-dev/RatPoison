@@ -9,6 +9,7 @@ import rat.poison.game.CSGO.csgoEXE
 import rat.poison.game.CSGO.engineDLL
 import rat.poison.game.entity.EntityType
 import rat.poison.game.entity.absPosition
+import rat.poison.game.entity.dead
 import rat.poison.game.entity.team
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwEntityList
@@ -22,6 +23,7 @@ import rat.poison.game.offsets.EngineOffsets.dwGameDir
 import rat.poison.game.offsets.EngineOffsets.dwSignOnState
 import rat.poison.scripts.detectMap
 import rat.poison.scripts.misc.sendPacket
+import rat.poison.scripts.userCmd.meDead
 import rat.poison.settings.*
 import rat.poison.utils.common.*
 import rat.poison.utils.extensions.uint
@@ -123,6 +125,7 @@ fun constructEntities() = every(1000, continuous = true) {
     me = clientDLL.uint(dwLocalPlayer)
     if (!inGame || me <= 0L) return@every
     meTeam = me.team()
+    meDead = me.dead()
 
     val glowObject = clientDLL.uint(dwGlowObject)
     val glowObjectCount = clientDLL.int(dwGlowObject + 4)
@@ -131,7 +134,7 @@ fun constructEntities() = every(1000, continuous = true) {
 
     var dzMode = false
     for (glowIndex in 0..glowObjectCount) {
-        val glowAddress = glowObject + (glowIndex * GLOW_OBJECT_SIZE)
+        val glowAddress = glowObject + (glowIndex * GLOW_OBJECT_SIZE) + 4
         val entity = csgoEXE.uint(glowAddress)
 
         if (entity > 0L) {
