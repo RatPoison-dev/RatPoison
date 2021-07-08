@@ -2,6 +2,7 @@ package rat.poison.utils.generalUtil
 
 import org.apache.commons.lang3.StringUtils.isNumeric
 import rat.poison.*
+import rat.poison.scripts.aim.numToBone
 import rat.poison.utils.extensions.upper
 import rat.poison.utils.saving
 import java.io.File
@@ -115,11 +116,11 @@ fun validateSetting(settingName: String, value: String): Boolean {
             tStr = tStr.replace("oWeapon(", "").replace(")", "")
             val tSA = tStr.split(", ") //temp String Array
             val weapon = oWeapon()
-            if (size > 6 && tSA.pull(5).stringToList(";").all { isNumeric(it) }) {
-                //weapon.tAimBone = tSA.pull(5).stringToIntList().map { it.numToBone() }
+            if (size > 6 && tSA.pull(5).stringToList(";").all { it.toIntOrNull() != null }) {
+                weapon.tAimBone = tSA.pull(5).stringToIntList().map { it.numToBone() }
             }
-            if (size > 7 && tSA.pull(6).stringToList(";").all { isNumeric(it) }) {
-                //weapon.tForceBone = tSA.pull(6).stringToIntList().map { it.numToBone() }
+            if (size > 7 && tSA.pull(6).stringToList(";").all { it.toIntOrNull() != null }) {
+                weapon.tForceBone = tSA.pull(6).stringToIntList().map { it.numToBone() }
             }
             weapon.apply {
                 tOverride = if (size > 1) tSA.pull(0).safeToBool(defaultValue = tOverride) else tOverride
