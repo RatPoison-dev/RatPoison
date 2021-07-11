@@ -66,6 +66,7 @@ dependencies {
 	implementation "io.ktor:ktor-client-websockets:1.5.2"
 	implementation "io.ktor:ktor-client-okhttp:1.5.2"
 	implementation 'com.google.code.gson:gson:2.8.6'
+	implementation "org.slf4j:slf4j-nop:1.7.31"
 }
 
 jar {
