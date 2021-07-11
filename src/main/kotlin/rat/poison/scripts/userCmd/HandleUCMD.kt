@@ -43,107 +43,108 @@ var trigQueuedShotTime = -1F
 var aimTargetSwapTime = -1F
 
 fun handleUCMD() = CoroutineScope(Dispatchers.Default).launch {
-    every@ while (true) {
-        curTime = gvars.curTime
+    every@while (true) {
+        try {
+            curTime = gvars.curTime
 
-        //TODO prechecks
-        if (meDead || !inGame || inBackground) continue
-
-        if (!curSettings.bool["USER_CMD"]) continue
-
-        val inputMemory = inputMemory.get()
-        val pNetChannel = csgoEXE.int(clientState + dwClientStateNetChannel)
-        val lastCommand = csgoEXE.int(pNetChannel + 0x18)//csgoEXE.int(clientState + EngineOffsets.dwClientState_LastOutgoingCommand)
-
-        if (lastCMDNumber != lastCommand) {
-            //println("Real Last: $lastCommand Logged Last: $lastCMDNumber Last Time: $lastCMDTime Delayed by: ${gvars.curTime - lastCMDTime} Thread Delay: ${lastCalcTime}")
-
-            sendPacket(false)
-
-            val currentCommandNumber = csgoEXE.int(clientState + EngineOffsets.dwClientState_LastOutgoingCommand) + 2
-
-            csgoEXE.read(clientDLL.address + ClientOffsets.dwInput, inputMemory, inputMemorySize)
-
-            val input = memToInput(inputMemory)
-            //val pUCMD = input.pCommands + (currentCommandNumber % 150) * 0x64
-
-            //perhaps IO dispatcher...
-            //TODO this nextCMD bs is retarded ong ong
-            val aim = async {
-                //Aimbot : Do all the stuff, priority 1
-                if (curSettings.bool["UCMD_SILENT_AIM"]) {
-                    ucmdAim(true)
-                }
+            if (meDead || !inGame || inBackground || !curSettings.bool["USER_CMD"]) {
+                continue
             }
 
-            val trigger = async {
-                //Trigger : Do all the stuff, priority 2
-                if (curSettings.bool["UCMD_HANDLE_TRIGGER"]) {
-                    ucmdTrigger(null)
+            val inputMemory = inputMemory.get()
+            val pNetChannel = csgoEXE.int(clientState + dwClientStateNetChannel)
+            val lastCommand = csgoEXE.int(pNetChannel + 0x18)//csgoEXE.int(clientState + EngineOffsets.dwClientState_LastOutgoingCommand)
+
+            if (lastCMDNumber != lastCommand) {
+                //println("Real Last: $lastCommand Logged Last: $lastCMDNumber Last Time: $lastCMDTime Delayed by: ${gvars.curTime - lastCMDTime} Thread Delay: ${lastCalcTime}")
+
+                sendPacket(false)
+
+                val currentCommandNumber = csgoEXE.int(clientState + EngineOffsets.dwClientState_LastOutgoingCommand) + 2
+
+                csgoEXE.read(clientDLL.address + ClientOffsets.dwInput, inputMemory, inputMemorySize)
+
+                val input = memToInput(inputMemory)
+                //val pUCMD = input.pCommands + (currentCommandNumber % 150) * 0x64
+
+                //perhaps IO dispatcher...
+                //TODO this nextCMD bs is retarded ong ong
+                val aim = async {
+                    //Aimbot : Do all the stuff, priority 1
+                    if (curSettings.bool["UCMD_SILENT_AIM"]) {
+                        ucmdAim(true)
+                    }
                 }
-            }
 
-            val backtrack = async{
-                //Backtrack : Do all the stuff, priority 3
-                if (curSettings.bool["UCMD_HANDLE_BACKTRACK"]) {
-                    attemptBacktrack(null)
+                val trigger = async {
+                    //Trigger : Do all the stuff, priority 2
+                    if (curSettings.bool["UCMD_HANDLE_TRIGGER"]) {
+                        ucmdTrigger(null)
+                    }
                 }
-            }
 
-            loop@ while (true) {
-                val curCMDNumber = csgoEXE.int(pNetChannel + 0x18) //find out what 0x18 supposd b
-                chokedCommands = csgoEXE.int(clientState + EngineOffsets.dwClientState_ChokedCommands) - 1  //TODO is this supposed to be - 1?
-                if (chokedCommands < 0) chokedCommands = 0
+                val backtrack = async {
+                    //Backtrack : Do all the stuff, priority 3
+                    if (curSettings.bool["UCMD_HANDLE_BACKTRACK"]) {
+                        attemptBacktrack(null)
+                    }
+                }
 
-                if (chokedCommands >= 7) {
-                    //TODO timeout fallback sillytime
-                    lastCMDNumber = curCMDNumber
+                loop@ while (true) {
+                    val curCMDNumber = csgoEXE.int(pNetChannel + 0x18) //find out what 0x18 supposd b
+                    chokedCommands = csgoEXE.int(clientState + EngineOffsets.dwClientState_ChokedCommands) - 1  //TODO is this supposed to be - 1?
+                    if (chokedCommands < 0) chokedCommands = 0
 
-                    break@loop
-                } else if (curCMDNumber >= currentCommandNumber) {
-                    if (curCMDNumber > currentCommandNumber) {
-                        dbgLog("CMD Dif: ${curCMDNumber - currentCommandNumber} want: $currentCommandNumber got: $curCMDNumber")
+                    if (chokedCommands >= 7) {
+                        //TODO timeout fallback sillytime
+                        lastCMDNumber = curCMDNumber
+
+                        break@loop
+                    } else if (curCMDNumber >= currentCommandNumber) {
+                        if (curCMDNumber > currentCommandNumber) {
+                            dbgLog("CMD Dif: ${curCMDNumber - currentCommandNumber} want: $currentCommandNumber got: $curCMDNumber")
+                        }
+
+                        val cur = input.pCommands + ((lastCMDNumber - 1) % 150) * 0x64 //perhaps...
+                        val oldUserCMDptr = input.pCommands + ((currentCommandNumber - 1) % 150) * 0x64
+                        val verifiedOldUserCMDptr = input.pVerifiedCommands + ((currentCommandNumber - 1) % 150) * 0x68
+
+                        val curcmd = UserCMD()
+
+                        lastCMDNumber = curCMDNumber
+
+                        val oldUserCmdMemory = oldUserCmdMemory.get()
+                        val curUserCmdMemory = curUserCmdMemory.get()
+
+                        csgoEXE.read(oldUserCMDptr, oldUserCmdMemory, oldUserCmdMemorySize)
+                        csgoEXE.read(cur, curUserCmdMemory, curUserCmdMemorySize)
+
+                        //perhaps read, copy current, then await...
+
+                        memToUserCMD(oldUserCmdMemory, oldUserCMD)
+                        memToUserCMD(curUserCmdMemory, curcmd)
+
+                        aim.await(); trigger.await(); backtrack.await()
+
+                        sendUserCMD(oldUserCMD, oldUserCMDptr, verifiedOldUserCMDptr)
+
+                        break@loop
                     }
 
-                    val cur = input.pCommands + ((lastCMDNumber - 1) % 150) * 0x64 //perhaps...
-                    val oldUserCMDptr = input.pCommands + ((currentCommandNumber - 1) % 150) * 0x64
-                    val verifiedOldUserCMDptr = input.pVerifiedCommands + ((currentCommandNumber - 1) % 150) * 0x68
-
-                    val curcmd = UserCMD()
-
-                    lastCMDNumber = curCMDNumber
-
-                    val oldUserCmdMemory = oldUserCmdMemory.get()
-                    val curUserCmdMemory = curUserCmdMemory.get()
-
-                    csgoEXE.read(oldUserCMDptr, oldUserCmdMemory, oldUserCmdMemorySize)
-                    csgoEXE.read(cur, curUserCmdMemory, curUserCmdMemorySize)
-
-                    //perhaps read, copy current, then await...
-
-                    memToUserCMD(oldUserCmdMemory, oldUserCMD)
-                    memToUserCMD(curUserCmdMemory, curcmd)
-
-                    aim.await(); trigger.await(); backtrack.await()
-
-                    sendUserCMD(oldUserCMD, oldUserCMDptr, verifiedOldUserCMDptr)
-
-                    break@loop
+                    delay(1)
                 }
 
-                delay(1)
+                sendPacket(true)
+                resetCMD()
+
+                lastCMDTime = gvars.curTime
+
+                val decimal = lastCMDTime - lastCMDTime.toInt()
+
+                delay(kotlin.math.floor(decimal % 15.625).toLong())
             }
-
-            sendPacket(true)
-            resetCMD()
-
-            lastCMDTime = gvars.curTime
-
-            val decimal = lastCMDTime - lastCMDTime.toInt()
-
-            delay(kotlin.math.floor(decimal % 15.625).toLong())
-
-            //delay(10)
+        } catch (e: Exception) {
+            dbgLog(e.stackTraceToString())
         }
     }
 }
@@ -164,11 +165,6 @@ private fun resetCMD() {
     shouldSendNextCMD = false
     silentHaveTarget = false
 }
-
-//const val button_in_forward = (1 shl 3)
-//const val button_in_back = (1 shl 4)
-//const val button_in_move_left = (1 shl 9)
-//const val button_in_move_right = (1 shl 10)
 
 var ap = false
 

@@ -124,6 +124,7 @@ fun constructEntities() = every(1000, continuous = true) {
 
     me = clientDLL.uint(dwLocalPlayer)
     if (!inGame || me <= 0L) return@every
+
     meTeam = me.team()
     meDead = me.dead()
 
@@ -159,11 +160,9 @@ fun constructEntities() = every(1000, continuous = true) {
         }
     }
 
-    //val maxIndex = clientDLL.int(dwEntityList + 0x24) //Not right?
+    val maxIndex = clientDLL.int(dwEntityList + 0x24) //Not right?
 
-    //println(maxIndex)
-
-    for (i in 64..1024) { //we cover a little extra..
+    for (i in 64..maxIndex) { //we cover a little extra..
         val entity = clientDLL.uint(dwEntityList + (i * 0x10))
 
         if (entity != 0L) {

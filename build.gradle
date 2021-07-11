@@ -2,19 +2,20 @@ import java.nio.file.Files
 import org.apache.commons.io.FileUtils
 
 buildscript {
-	ext.kotlin_version = '1.5.10'
-	ext.jnaVersion = '5.6.0'
-	ext.gdxVersion = '1.9.14'
+	ext.kotlin_version = '1.5.20'
+	ext.jnaVersion = '5.8.0'
+	ext.gdxVersion = '1.10.0'
 	ext.visuiVersion = "1.5.0"
 
 	repositories {
-		jcenter()
+		mavenCentral()
+		gradlePluginPortal()
 	}
 
 	dependencies {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-		classpath 'com.github.jengelman.gradle.plugins:shadow:6.1.0'
-		classpath "commons-io:commons-io:2.8.0"
+		classpath 'gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0'
+		classpath "commons-io:commons-io:2.10.0"
 	}
 }
 
@@ -33,9 +34,8 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
-	jcenter()
 	maven { url 'https://jitpack.io' }
-	maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+	gradlePluginPortal()
 }
 
 dependencies {
