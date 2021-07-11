@@ -21,14 +21,16 @@ class EfficientSettings(val settings: Settings) {
 
     @Suppress("UNCHECKED_CAST")
     operator fun <T> get(key: String, type: EfficientSettingType): T {
-        val map = type.map
-        val cached = map[key]
-        if (cached != null) return cached as T
+        while (true) {
+            val map = type.map
+            val cached = map[key]
+            if (cached != null) return cached as T
 
-        val settingsStr = settings[key]
-        val value = type.convert.invoke(settingsStr)
-        map[key] = value
-        return value as? T ?: throw UnsupportedOperationException("Couldn't get key \"$key\" type=$type")
+            val settingsStr = settings[key]
+            val value = type.convert.invoke(settingsStr)
+            map[key] = value
+            return value as? T ?: throw UnsupportedOperationException("Couldn't get key \"$key\" type=$type")
+        }
     }
 
     @Suppress("UNCHECKED_CAST")
