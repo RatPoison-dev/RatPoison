@@ -5,7 +5,7 @@
 [![Discord](https://discord.com/api/guilds/785830829439320095/widget.png)](https://discord.gg/TGsp8SNcFZ)
 ![Downloads](https://img.shields.io/github/downloads/TheFuckingRat/RatPoison/total.svg)
 
-## ![warning](https://i.imgur.com/TxCC3c4.png) __RatPoison is detected, use at own risk. More updates on our [Discord server](https://discord.gg/TGsp8SNcFZ)__ ![warning](https://i.imgur.com/TxCC3c4.png)
+## ![warning](https://i.imgur.com/TxCC3c4.png) __RatPoison is VAC detected, use at own risk. For more updates join our [Discord server](https://discord.gg/TGsp8SNcFZ)__ ![warning](https://i.imgur.com/TxCC3c4.png)
 
 
 ## Support our Team
