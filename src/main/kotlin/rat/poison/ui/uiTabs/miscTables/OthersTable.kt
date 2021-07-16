@@ -8,6 +8,9 @@ import com.kotcrab.vis.ui.widget.VisTable
 import rat.poison.MUSIC_KITS_FILE
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
+import rat.poison.game.CSGO.csgoEXE
+import rat.poison.game.me
+import rat.poison.game.netvars.NetVarOffsets.flFlashMaxAlpha
 import rat.poison.overlay.App.assetManager
 import rat.poison.overlay.opened
 import rat.poison.scripts.writeSpoof
@@ -54,6 +57,12 @@ class OthersTable: VisTable(false) {
 
         musicKitArray.forEach {
             musicKitsAdapter.add(it.name)
+        }
+
+        enableReducedFlash.changed { _, _ ->
+            if (!enableReducedFlash.isChecked) {
+                csgoEXE[me + flFlashMaxAlpha] = 255F
+            }
         }
 
         postProcessingDisable.changed {_, _ ->
