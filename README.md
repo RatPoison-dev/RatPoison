@@ -101,6 +101,18 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 
 ## Recent update <a name = "update"></a>
 
+1.7.1.4
+
+* Gradle 7.1.1 & Kotlin 1.5.21 support
+* Bumped dependencies
+* Updated to work with latest game update
+* Lowered default OpenGL requirement to 4.0
+
+1.7.1.3
+
+* Changed dwbSendPackets repository to [frk1/hazedumper](https://github.com/frk1/hazedumper/)
+* Box ESP crash fix
+
 1.7.1.2
 
 * Changed dwbSendPackets repository to [JokinAce/CSGO-Offsets](https://github.com/JokinAce/CSGO-Offsets)
