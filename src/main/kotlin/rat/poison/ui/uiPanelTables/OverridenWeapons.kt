@@ -170,7 +170,7 @@ class OverridenWeapons : VisTable(false) {
             boneArray.add(curLocale[i])
         }
         aimBoneBox.items = boneArray
-        aimBoneBox.selectedIndex = boneCategories.indexOf(curSettings[categorySelected + "_AIM_BONE"].toUpperCase())
+        aimBoneBox.selectedIndex = boneCategories.indexOf(curSettings[categorySelected + "_AIM_BONE"].uppercase())
         aimBone.add(aimBoneLabel).width(225F)
         aimBone.add(aimBoneBox).width(125F)
 
@@ -189,7 +189,7 @@ class OverridenWeapons : VisTable(false) {
 
         forceBoneBox.items = boneArray
 
-        forceBoneBox.selectedIndex = boneCategories.indexOf(curSettings[categorySelected + "_AIM_BONE"].toUpperCase())
+        forceBoneBox.selectedIndex = boneCategories.indexOf(curSettings[categorySelected + "_AIM_BONE"].uppercase())
         forceBone.add(forceBoneLabel).width(225F)
         forceBone.add(forceBoneBox).width(125F)
 

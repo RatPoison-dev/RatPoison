@@ -180,7 +180,7 @@ fun main() {
                 setWindowedMode(w, h)
 
                 if (curSettings["OPENGL_3"].strToBool()) {
-                    useOpenGL3(true, 4, 2)
+                    useOpenGL3(true, 4, 0)
                     if (dbg) { println("[DEBUG] Using GL3") }
                 } else {
                     useOpenGL3(false, 2, 2)

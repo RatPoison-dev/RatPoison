@@ -69,7 +69,7 @@ fun loadLocale(fileDir: String) {
 //vroom
 fun validateSetting(settingName: String, value: String): Boolean {
     var valid = true
-    val inpValue = value.toUpperCase()
+    val inpValue = value.uppercase()
 
 
     if (!validSettingsMap["SKIP"].stringToList().contains(settingName)) {

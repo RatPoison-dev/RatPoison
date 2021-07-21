@@ -120,7 +120,7 @@ fun setAim() = every(500, true, inGameCheck = true) {
 }
 
 fun String.boneToNum(): Int {
-    return when (this.toUpperCase()) {
+    return when (this.uppercase()) {
         "HEAD" -> HEAD_BONE
         "NECK" -> NECK_BONE
         "CHEST" -> CHEST_BONE

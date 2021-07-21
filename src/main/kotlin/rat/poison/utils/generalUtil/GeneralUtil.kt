@@ -6,7 +6,7 @@ import rat.poison.dbg
 import rat.poison.oWeapon
 import rat.poison.sWeapon
 
-fun Any.strToBool() = this.toString().toLowerCase() == "true" || this == true || this == 1.0 || this == 1 || this == 1F
+fun Any.strToBool() = this.toString().lowercase() == "true" || this == true || this == 1.0 || this == 1 || this == 1F
 fun Any.boolToStr() = this.toString()
 fun Any.strToColor() = convStrToColor(this.toString())
 fun Any.strToColorGDX() = convStrToColorGDX(this.toString())
