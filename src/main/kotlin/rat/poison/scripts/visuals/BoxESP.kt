@@ -219,7 +219,7 @@ fun boxEsp() {
 				if (isPlayer) {
 					boxDetailsLeftText.append("${ent.name()}\n")
 				} else {
-					boxDetailsLeftText.append("${it.type.name.replace("CWeapon", "").toUpperCase().toLocale()}\n")
+					boxDetailsLeftText.append("${it.type.name.replace("CWeapon", "").uppercase().toLocale()}\n")
 				}
 			}
 
@@ -285,7 +285,7 @@ fun boxEsp() {
 				if (isPlayer) {
 					boxDetailsRightText.append("${ent.name()}\n")
 				} else {
-					boxDetailsRightText.append("${it.type.name.replace("CWeapon", "").toUpperCase().toLocale()}\n")
+					boxDetailsRightText.append("${it.type.name.replace("CWeapon", "").uppercase().toLocale()}\n")
 				}
 			}
 
@@ -299,7 +299,7 @@ fun boxEsp() {
 				if (isPlayer) {
 					boxDetailsTopText.append("${ent.name()}\n")
 				} else {
-					boxDetailsTopText.append("${it.type.name.replace("CWeapon", "").toUpperCase().toLocale()}\n")
+					boxDetailsTopText.append("${it.type.name.replace("CWeapon", "").uppercase().toLocale()}\n")
 				}
 
 				topShift += 18
@@ -356,7 +356,7 @@ fun boxEsp() {
 				if (isPlayer) {
 					boxDetailsBottomText.append("${ent.name()}\n")
 				} else {
-					boxDetailsBottomText.append("${it.type.name.replace("CWeapon", "").toUpperCase().toLocale()}\n")
+					boxDetailsBottomText.append("${it.type.name.replace("CWeapon", "").uppercase().toLocale()}\n")
 				}
 			}
 

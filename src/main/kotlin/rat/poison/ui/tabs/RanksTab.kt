@@ -84,7 +84,7 @@ class RanksTab : Tab(false, false) {
         tmpName = tmpName.substring(0, if (tmpName.length > 24) 24 else tmpName.length)
 
         if (steamIDList[index].toInt() != 0) { //Bot check
-            namesTable.add(LinkLabel(tmpName, "https://steamcommunity.com/profiles/%5BU:1:" + steamIDList[index] + "%5B/")).height(21f).left().row()
+            namesTable.add(LinkLabel(tmpName, "https://steamcommunity.com/profiles/%5BU:1:" + steamIDList[index] + "%5D/")).height(21f).left().row()
         } else {
             namesTable.add(tmpName).height(21f).left().row()
         }

@@ -92,7 +92,7 @@ fun updateDisableRCrosshair() {
             rCrosshairWidth.disable(true, color)
             rCrosshairLength.disable(true, color)
         } else {
-            if (curSettings["RCROSSHAIR_TYPE"].toUpperCase() == "CROSSHAIR") {
+            if (curSettings["RCROSSHAIR_TYPE"].uppercase() == "CROSSHAIR") {
                 rCrosshairRadius.disable(true, Color(105F, 105F, 105F, .2F))
                 rCrosshairWidth.disable(false, Color(255F, 255F, 255F, 1F))
                 rCrosshairLength.disable(false, Color(255F, 255F, 255F, 1F))

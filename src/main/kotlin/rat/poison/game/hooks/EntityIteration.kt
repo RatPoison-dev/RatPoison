@@ -74,7 +74,7 @@ private var state by Delegates.observable(SignOnState.MAIN_MENU) { _, old, new -
 
             //Find correct tonemap values
 //        File("$SETTINGS_DIRECTORY\\Data\\ToneMaps.txt").forEachLine { line ->
-//            if (mapName.toLowerCase().contains(line.split(" : ")[0].toLowerCase())) {
+//            if (mapName.lowercase().contains(line.split(" : ")[0].lowercase())) {
 //                //this is working... not needed for now
 //            }
 //        }
@@ -154,9 +154,9 @@ fun constructEntities() = every(500, continuous = true) {
         }
     }
 
-    //val maxIndex = clientDLL.int(dwEntityList + 0x24) //Not right?
+    val maxIndex = clientDLL.int(dwEntityList + 0x24) //Not right?
 
-    for (i in 64..512) {
+    for (i in 64..maxIndex) {
         val entity = clientDLL.uint(dwEntityList + (i * 0x10) - 0x10)
 
         if (entity != 0L) {

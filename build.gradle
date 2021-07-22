@@ -2,19 +2,20 @@ import java.nio.file.Files
 import org.apache.commons.io.FileUtils
 
 buildscript {
-	ext.kotlin_version = '1.4.21'
-	ext.jnaVersion = '5.6.0'
-	ext.gdxVersion = '1.9.14'
+	ext.kotlin_version = '1.5.21'
+	ext.jnaVersion = '5.8.0'
+	ext.gdxVersion = '1.10.0'
 	ext.visuiVersion = "1.5.0"
 
 	repositories {
-		jcenter()
+		mavenCentral()
+		gradlePluginPortal()
 	}
 
 	dependencies {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-		classpath 'com.github.jengelman.gradle.plugins:shadow:6.1.0'
-		classpath "commons-io:commons-io:2.8.0"
+		classpath 'gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0'
+		classpath "commons-io:commons-io:2.11.0"
 	}
 }
 
@@ -25,7 +26,7 @@ apply plugin: "application"
 apply plugin: "com.github.johnrengelman.shadow"
 
 group "rat.poison"
-version "1.8"
+version "1.7"
 
 mainClassName = "rat.poison.RatPoison"
 
@@ -33,7 +34,7 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
-	jcenter()
+	gradlePluginPortal()
 	maven { url 'https://jitpack.io' }
 	maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
@@ -56,13 +57,13 @@ dependencies {
 	implementation group: 'org.jetbrains.kotlin', name: 'kotlin-script-util', version: kotlin_version
 	implementation group: 'org.jetbrains.kotlin', name: 'kotlin-compiler-embeddable', version: kotlin_version
 
-	implementation group: 'commons-io', name: 'commons-io', version: '2.8.0'
+	implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
 	implementation 'com.github.ata4:ioutils:b1f26588b5'
 	implementation 'com.github.ata4:bspsrc:v1.3.24'
 
-	implementation group: 'it.unimi.dsi', name: 'fastutil', version: '8.4.4'
+	implementation group: 'it.unimi.dsi', name: 'fastutil', version: '8.5.4'
 
-	implementation group: 'net.openhft', name: 'chronicle-core', version: '2.20.125'
+	implementation group: 'net.openhft', name: 'chronicle-core', version: '2.20.127.1'
 }
 
 jar {

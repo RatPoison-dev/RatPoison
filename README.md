@@ -5,8 +5,7 @@
 [![Discord](https://discord.com/api/guilds/785830829439320095/widget.png)](https://discord.gg/TGsp8SNcFZ)
 ![Downloads](https://img.shields.io/github/downloads/TheFuckingRat/RatPoison/total.svg)
 
-## ![warning](https://i.imgur.com/TxCC3c4.png) __RatPoison is VAC detected, use at own risk. For more updates join our [Discord server](https://discord.gg/TGsp8SNcFZ)__ ![warning](https://i.imgur.com/TxCC3c4.png)
-
+## ⚠️ __RatPoison is VAC detected, use at own risk. For more updates join our [Discord server](https://discord.gg/TGsp8SNcFZ)__ ⚠️
 
 ## Support our Team
 
@@ -101,6 +100,18 @@ Credit to [Mr. Noad](https://github.com/10urshin), [2772/Matt](https://github.co
 
 
 ## Recent update <a name = "update"></a>
+
+1.7.1.4
+
+* Gradle 7.1.1 & Kotlin 1.5.21 support
+* Bumped dependencies
+* Updated to work with latest game update
+* Lowered default OpenGL requirement to 4.0
+
+1.7.1.3
+
+* Changed dwbSendPackets repository to [frk1/hazedumper](https://github.com/frk1/hazedumper/)
+* Box ESP crash fix
 
 1.7.1.2
 

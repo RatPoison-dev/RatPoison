@@ -82,7 +82,7 @@ fun loadCFG(cfgFileName: String, deleteCfgAfterLoad: Boolean = false) {
                 updateWindows()
                 println("\nLoading Complete!\n")
                 saving = false
-                LOADED_CONFIG = "${cfgFileName.toLowerCase()}.cfg"
+                LOADED_CONFIG = "${cfgFileName.lowercase()}.cfg"
 
                 if (opened) {
                     App.uiMenu.updateTitle()
