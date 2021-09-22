@@ -82,7 +82,7 @@ private var leftShiftY = 0F
 private var rightShiftY = 0F
 private var barWidth = 0F
 
-private const val entityMemorySize = 45952
+private const val entityMemorySize = 70608
 private val entMemory = threadLocalPointer(entityMemorySize)
 private val forEntsList = arrayOf(EntityType.CCSPlayer, EntityType.CEconEntity)
 //p250 & cz75 share same classid, create enum for WeaponItemIndex using m_iItemDefinitionIndex
