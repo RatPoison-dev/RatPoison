@@ -7,7 +7,7 @@ fun String.upper(): String {
     val get = upperCaseCache[this]
     return when (get == null) {
         true -> {
-            val tmpStr = this.toUpperCase()
+            val tmpStr = this.uppercase()
             upperCaseCache[this] = tmpStr
             tmpStr
         }
@@ -20,7 +20,7 @@ fun String.lower(): String {
     val get = lowerCaseCache[this]
     return when (get == null) {
         true -> {
-            val tmpStr = this.toLowerCase()
+            val tmpStr = this.lowercase()
             lowerCaseCache[this] = tmpStr
             tmpStr
         }
