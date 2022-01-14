@@ -6,6 +6,7 @@ import com.sun.jna.ptr.LongByReference
 import org.jire.arrowhead.Module
 import org.jire.arrowhead.Process
 import org.jire.arrowhead.processByName
+import rat.poison.DEFAULT_MENU_APP
 import rat.poison.curSettings
 import rat.poison.dbg
 import rat.poison.game.hooks.constructEntities
@@ -80,7 +81,7 @@ object CSGO {
 		initialized = true
 
 		rect = WinDef.RECT()
-		val hwd = CUser32.FindWindowA(null, "Counter-Strike: Global Offensive")
+		val hwd = CUser32.FindWindowA(null, DEFAULT_MENU_APP)
 
 		//Get initially
 		if (!CUser32.GetClientRect(hwd, rect)) exitProcess(2)

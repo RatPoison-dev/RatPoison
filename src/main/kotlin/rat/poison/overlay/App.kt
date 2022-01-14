@@ -18,14 +18,11 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport
 import com.kotcrab.vis.ui.VisUI
 import com.sun.management.OperatingSystemMXBean
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import rat.poison.appless
-import rat.poison.curSettings
-import rat.poison.dbg
+import rat.poison.*
 import rat.poison.game.CSGO
 import rat.poison.game.entity.shotsFired
 import rat.poison.game.me
 import rat.poison.game.updateViewMatrix
-import rat.poison.haltProcess
 import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
 import rat.poison.jna.enums.AccentStates
@@ -64,9 +61,9 @@ object App : ApplicationAdapter() {
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
     val overlay = Overlay(if (appless) {
-        "Counter-Strike: Global Offensive"
+        DEFAULT_MENU_APP
     } else {
-        curSettings["MENU_APP"].replace("\"", "")
+        MENU_APP
     }, "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     lateinit var menuStage: Stage
     lateinit var assetManager: AssetManager

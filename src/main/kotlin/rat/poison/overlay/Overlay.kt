@@ -5,6 +5,7 @@ package rat.poison.overlay
 
 import com.sun.jna.platform.win32.WinUser
 import org.lwjgl.system.windows.User32.WS_MINIMIZEBOX
+import rat.poison.DEFAULT_MENU_APP
 import rat.poison.appless
 import rat.poison.curSettings
 import rat.poison.game.CSGO.clientDLL
@@ -165,7 +166,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 				}
 			} else {
 				if (isMyWindowVisible) {
-					if (menuApp == "Counter-Strike: Global Offensive") {
+					if (menuApp == DEFAULT_MENU_APP) {
 						if (!curSettings.bool["MENU_STAY_FOCUSED"]) {
 							ShowWindow(myHWND, WinUser.SW_HIDE)
 							listener?.onBackground(this@Overlay)

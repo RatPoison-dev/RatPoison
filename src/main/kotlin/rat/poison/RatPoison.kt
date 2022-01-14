@@ -48,9 +48,11 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Beta"
 const val F_VERSION = "1.8"
-const val M_VERSION = "1.8.5.9"
+const val M_VERSION = "1.8.5.10"
 var LOADED_CONFIG = "DEFAULT"
 var oWeaponSize = oWeapon::class.java.declaredFields.size
+val DEFAULT_MENU_APP = "Counter-Strike: Global Offensive - Direct3D 9"
+lateinit var MENU_APP: String
 
 //const val EXPERIMENTAL = false
 const val SETTINGS_DIRECTORY = "settings" //Internal
@@ -85,6 +87,7 @@ fun main() {
 
     dbg = curSettings.bool["DEBUG"]
     appless = curSettings.bool["APPLESS"]
+    MENU_APP = curSettings["MENU_APP"].replace("\"", "")
     if (dbg) println("DEBUG enabled")
 
     println("Waiting for ${curSettings["MENU_APP"]} process...")
@@ -158,8 +161,8 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing NightMode/FullBright") }; nightMode()
     if (dbg) { println("[DEBUG] Initializing Bomb Updater")}; bombUpdater()
 
-    if (dbg) { println("[DEBUG] Initializing Backtrack") }; setupBacktrack()
-    if (dbg) { println("[DEBUG] Initializing Draw Backtrack") }; drawBacktrack()
+    //if (dbg) { println("[DEBUG] Initializing Backtrack") }; setupBacktrack()
+    //if (dbg) { println("[DEBUG] Initializing Draw Backtrack") }; drawBacktrack()
     if (dbg) { println("[DEBUG] Initializing Handle Fire Key") }; handleFireKey()
     if (dbg) { println("[DEBUG] Initializing GVars updater") }; updateGVars()
     if (dbg) { println("[DEBUG] Initializing Nades Timer") }; nadesTimer()
@@ -193,7 +196,7 @@ fun main() {
                 var w = CSGO.gameWidth
                 var h = CSGO.gameHeight
 
-                if ((w == 0 || h == 0) || curSettings["MENU_APP"] != "\"Counter-Strike: Global Offensive\"") {
+                if ((w == 0 || h == 0) || MENU_APP != DEFAULT_MENU_APP) {
                     w = curSettings.int["OVERLAY_WIDTH"]
                     h = curSettings.int["OVERLAY_HEIGHT"]
                 }

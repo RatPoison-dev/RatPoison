@@ -300,14 +300,14 @@ fun updateDisableBacktrack() {
     if (!opened) return
 
     aimTab.tBacktrack.apply {
-        val bool = !aimTab.tBacktrack.enableBacktrack.isChecked
+        val bool = true
 
         var col = Color(255F, 255F, 255F, 1F)
         if (bool) {
             col = Color(105F, 105F, 105F, .2F)
         }
 
-        //enableBacktrack.disable(bool)
+        enableBacktrack.disable(bool)
         backtrackEnableKey.disable(bool)
         backtrackKey.disable(bool, col)
         backtrackMS.disable(bool, col)
