@@ -4,6 +4,9 @@
 package rat.poison.overlay
 
 import com.sun.jna.platform.win32.WinUser
+import rat.poison.DEFAULT_MENU_APP
+import rat.poison.MENU_APP
+import rat.poison.appless
 import rat.poison.curSettings
 import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
@@ -91,7 +94,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 
 		saveStyle()
 
-		if (!curSettings["APPLESS"].strToBool()) {
+		if (!appless) {
 			makeUndecorated()
 		}
 
@@ -126,7 +129,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 			x = rcWindow.left + (rcWindow.right - rcWindow.left - width) / 2 - 1
 			y = rcWindow.top + rcWindow.bottom - rcWindow.top - height - 1
 
-			if (!curSettings["APPLESS"].strToBool()) {
+			if (!appless) {
 				if (oldX != x || oldY != y || oldWidth != width || oldHeight != height) {
 					SetWindowPos(myHWND, HWND_TOPPOS, x, y, width, height, WinUser.SWP_NOSENDCHANGING or WinUser.SWP_NOZORDER or WinUser.SWP_DEFERERASE or WinUser.SWP_NOREDRAW or WinUser.SWP_ASYNCWINDOWPOS or WinUser.SWP_FRAMECHANGED)
 					listener?.onBoundsChange(this@Overlay, x, y, width, height)
@@ -140,7 +143,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 					}
 				} else {
 					if (isMyWindowVisible) {
-						if (curSettings["MENU_APP"].replace("\"", "") == "Counter-Strike: Global Offensive") {
+						if (MENU_APP == DEFAULT_MENU_APP) {
 							if (!curSettings["MENU_STAY_FOCUSED"].strToBool()) {
 								ShowWindow(myHWND, WinUser.SW_HIDE)
 								listener?.onBackground(this@Overlay)
@@ -276,7 +279,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 
 			AttachThreadInput(dwCurrentThread.toLong(), dwFGThread.toLong(), false)
 
-			if (!curSettings["APPLESS"].strToBool()) {
+			if (!appless) {
 				SetWindowPos(myHWND, HWND_TOPPOS, x, y, width, height, 0)
 			}
 
@@ -285,7 +288,7 @@ class Overlay(private val targetAppTitle: String, private val myAppTitle: String
 	}
 
 	private fun bePassive() = with(User32) {
-		if (!curSettings["APPLESS"].strToBool()) {
+		if (!appless) {
 			SetWindowLongA(myHWND, WinUser.GWL_EXSTYLE, WinUser.WS_EX_LAYERED or WinUser.WS_EX_TRANSPARENT or WS_EX_TOOLWINDOW or WS_EX_TOPMOST)
 			makeTransparent()
 		}

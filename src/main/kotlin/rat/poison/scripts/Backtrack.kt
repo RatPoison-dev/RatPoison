@@ -56,11 +56,11 @@ fun setupBacktrack() {
         }
     }
 
-    every(4, true, inGameCheck = true) {
-        if (!curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0 || !haveGvars) return@every
-
-        constructRecords()
-    }
+    //every(4, true, inGameCheck = true) {
+    //    if (!curSettings["ENABLE_BACKTRACK"].strToBool() || me <= 0 || !haveGvars) return@every
+//
+    //    constructRecords()
+    //}
 }
 
 fun attemptBacktrack(): Boolean {

@@ -45,12 +45,14 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Master"
 const val F_VERSION = "1.7"
-const val M_VERSION = "1.7.1.5"
+const val M_VERSION = "1.7.1.6"
 var LOADED_CONFIG = "DEFAULT"
 
 //const val EXPERIMENTAL = false
 const val SETTINGS_DIRECTORY = "settings" //Internal
-
+val DEFAULT_MENU_APP = "Counter-Strike: Global Offensive - Direct3D 9"
+var MENU_APP = ""
+var appless = false
 lateinit var WEAPON_STATS_FILE: File
 lateinit var SKIN_INFO_FILE: File
 
@@ -74,6 +76,8 @@ fun main() {
     if (dbg) println("DEBUG enabled")
 
     println("Launching...")
+    MENU_APP = curSettings["MENU_APP"].replace("\"", "")
+    appless = curSettings["APPLESS"].strToBool()
 
     CSGO.initialize()
 
@@ -142,15 +146,13 @@ fun main() {
     if (dbg) { println("[DEBUG] Initializing Weapon Changer") }; skinChanger()
     if (dbg) { println("[DEBUG] Initializing NightMode/FullBright") }; nightMode()
     if (dbg) { println("[DEBUG] Initializing Bomb Updater")}; bombUpdater()
-
-    if (dbg) { println("[DEBUG] Initializing Backtrack") }; setupBacktrack()
-    if (dbg) { println("[DEBUG] Initializing Draw Backtrack") }; drawBacktrack()
     if (dbg) { println("[DEBUG] Initializing Handle Fire Key") }; handleFireKey()
 
     if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
     if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()
     if (dbg) { println("[DEBUG] Initializing Name Changer") }; nameChanger()
     if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
+    println("Backtrack disabled")
 
     //if (EXPERIMENTAL) {
         //rayTraceTest()
@@ -172,7 +174,7 @@ fun main() {
                 var w = CSGO.gameWidth
                 var h = CSGO.gameHeight
 
-                if ((w == 0 || h == 0) || curSettings["MENU_APP"] != "\"Counter-Strike: Global Offensive\"" || curSettings["APPLESS"].strToBool()) {
+                if ((w == 0 || h == 0) || MENU_APP != DEFAULT_MENU_APP || appless) {
                     w = curSettings["OVERLAY_WIDTH"].toInt()
                     h = curSettings["OVERLAY_HEIGHT"].toInt()
                 }
@@ -189,7 +191,7 @@ fun main() {
 
                 //Required to fix W2S offset
                 setWindowPosition(CSGO.gameX, CSGO.gameY)
-                setDecorated(curSettings["APPLESS"].strToBool())
+                setDecorated(appless)
                 useVsync(false)
                 glfwSwapInterval(0)
                 glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE)

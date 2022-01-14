@@ -16,12 +16,10 @@ import com.kotcrab.vis.ui.VisUI
 import com.sun.management.OperatingSystemMXBean
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import org.jire.arrowhead.keyPressed
-import rat.poison.curSettings
-import rat.poison.dbg
+import rat.poison.*
 import rat.poison.game.CSGO
 import rat.poison.game.me
 import rat.poison.game.updateViewMatrix
-import rat.poison.haltProcess
 import rat.poison.interfaces.IOverlay
 import rat.poison.interfaces.IOverlayListener
 import rat.poison.jna.enums.AccentStates
@@ -57,7 +55,7 @@ object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
-    private val overlay = Overlay(if (curSettings["APPLESS"].strToBool()) { "Counter-Strike: Global Offensive" } else { curSettings["MENU_APP"].replace("\"", "") }, "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
+    private val overlay = Overlay(if (appless) { DEFAULT_MENU_APP } else { MENU_APP }, "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
     lateinit var menuStage: Stage
     private val bodies = ObjectArrayList<App.() -> Unit>()
     private lateinit var camera: OrthographicCamera
@@ -260,7 +258,7 @@ object App : ApplicationAdapter() {
                     aimTab.tAim.enableAim.isChecked = !aimTab.tAim.enableAim.isChecked
                 }
 
-                if (!curSettings["APPLESS"].strToBool()) {
+                if (!appless) {
                     val w = overlay.width
                     val h = overlay.height
 
