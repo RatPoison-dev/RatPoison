@@ -93,7 +93,7 @@ fun main() {
     println("Waiting for ${curSettings["MENU_APP"]} process...")
 
     CSGO.initialize()
-    WebSocket.initialize()
+    // WebSocket.initialize()
 
     WEAPON_STATS_FILE = File("$SETTINGS_DIRECTORY\\Data\\WeaponStats.txt")
     SKIN_INFO_FILE = File("$SETTINGS_DIRECTORY\\Data\\SkinInfo.txt")
