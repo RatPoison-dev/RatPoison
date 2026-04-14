@@ -8,6 +8,7 @@ import rat.poison.game.Color
 import rat.poison.game.entity.Entity
 import rat.poison.game.entity.EntityType
 import rat.poison.game.netvars.NetVarOffsets
+import rat.poison.safe_mode
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.generalUtil.toInt
@@ -22,12 +23,14 @@ fun esp() {
 		if (dbg) { println("[DEBUG] Initializing Skeleton ESP") }; skeletonEsp()
 		if (dbg) { println("[DEBUG] Initializing Snap Lines") }; snapLines()
 	}
+	if (!safe_mode) {
+		if (dbg) { println("[DEBUG] Menu disabled, using alternate glow esp") }; glowEspEvery()
+		if (dbg) { println("[DEBUG] Initializing Chams ESP") }; chamsEsp()
+		if (dbg) { println("[DEBUG] Initializing Radar ESP") }; radarEsp()
+	}
 
-	if (dbg) { println("[DEBUG] Menu disabled, using alternate glow esp") }; glowEspEvery()
 	if (dbg) { println("[DEBUG] Initializing Footstep ESP") }; footStepEsp() //Needed with & without menu
-	if (dbg) { println("[DEBUG] Initializing Chams ESP") }; chamsEsp()
 	if (dbg) { println("[DEBUG] Initializing Hitsound ESP") }; hitSoundEsp()
-	if (dbg) { println("[DEBUG] Initializing Radar ESP") }; radarEsp()
 }
 
 fun Entity.glow(color: Color, glowType: Int) {

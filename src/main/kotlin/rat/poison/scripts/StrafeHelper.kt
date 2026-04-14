@@ -8,7 +8,7 @@ import rat.poison.game.entity.onGround
 import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
-import rat.poison.robot
+import rat.poison.input
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
@@ -29,15 +29,15 @@ fun strafeHelper() = every(2, inGameCheck = true) {
     val curAngY = clientState.angle().y
     val grounded = me.onGround()
 
-    if ((curSettings["STRAFE_BHOP_ONLY"].strToBool() && keyPressed(VK_SPACE)) || (!curSettings["STRAFE_BHOP_ONLY"].strToBool())) {
+    if ((curSettings["STRAFE_BHOP_ONLY"].strToBool() && input.keyPressed(VK_SPACE)) || (!curSettings["STRAFE_BHOP_ONLY"].strToBool())) {
         if (!grounded) {
-            if (!keyPressed(KeyEvent.VK_A) && !keyPressed(KeyEvent.VK_D)) {
+            if (!input.keyPressed(KeyEvent.VK_A) && !input.keyPressed(KeyEvent.VK_D)) {
                 if (curAngY > lastAngY) {
-                    robot.keyPress(KeyEvent.VK_A)
-                    robot.keyRelease(KeyEvent.VK_A)
+                    input.keyPress(KeyEvent.VK_A)
+                    input.keyRelease(KeyEvent.VK_A)
                 } else if (curAngY < lastAngY) {
-                    robot.keyPress(KeyEvent.VK_D)
-                    robot.keyRelease(KeyEvent.VK_D)
+                    input.keyPress(KeyEvent.VK_D)
+                    input.keyRelease(KeyEvent.VK_D)
                 }
             }
         }

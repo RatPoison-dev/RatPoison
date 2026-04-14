@@ -4,6 +4,8 @@ import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.game.*
 import rat.poison.game.entity.*
+import rat.poison.input
+import rat.poison.scripts.inTrigger
 import rat.poison.settings.*
 import rat.poison.utils.*
 import rat.poison.utils.generalUtil.strToBool
@@ -149,11 +151,11 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 		return@every
 	}
 
-	val aim = curSettings["ACTIVATE_FROM_AIM_KEY"].strToBool() && keyPressed(AIM_KEY)
-	val forceAim = (keyPressed(curSettings["FORCE_AIM_KEY"].toInt()) || curSettings["FORCE_AIM_ALWAYS"].strToBool())
+	val aim = curSettings["ACTIVATE_FROM_AIM_KEY"].strToBool() && input.keyPressed(AIM_KEY)
+	val forceAim = (input.keyPressed(curSettings["FORCE_AIM_KEY"].toInt()) || curSettings["FORCE_AIM_ALWAYS"].strToBool())
 	val haveAmmo = meCurWepEnt.bullets() > 0
 
-	val pressed = ((aim || boneTrig) && !MENUTOG && haveAmmo &&
+	val pressed = ((aim || (inTrigger && boneTrig)) && !MENUTOG && haveAmmo &&
 			(if (meCurWep.rifle || meCurWep.smg) {
 				me.shotsFired() >= curSettings["AIM_AFTER_SHOTS"].toInt()
 			} else {
@@ -173,7 +175,7 @@ internal inline fun <R> aimScript(duration: Int, crossinline precheck: () -> Boo
 
 	var aB = curSettings["AIM_BONE"].toInt()
 
-	if (keyPressed(curSettings["FORCE_AIM_BONE_KEY"].toInt())) {
+	if (input.keyPressed(curSettings["FORCE_AIM_BONE_KEY"].toInt())) {
 		aB = curSettings["FORCE_AIM_BONE"].toInt()
 	}
 

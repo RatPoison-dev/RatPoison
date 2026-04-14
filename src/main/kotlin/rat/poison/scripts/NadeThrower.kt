@@ -6,6 +6,7 @@ import rat.poison.game.entity.absPosition
 import rat.poison.game.entity.eyeAngle
 import rat.poison.game.me
 import rat.poison.game.realCalcAngle
+import rat.poison.input
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
 import rat.poison.settings.MENUTOG
@@ -13,6 +14,7 @@ import rat.poison.utils.*
 import rat.poison.utils.generalUtil.cToDouble
 import rat.poison.utils.generalUtil.cToFloat
 import rat.poison.utils.generalUtil.strToBool
+import java.awt.event.MouseEvent
 
 private var mPos = Vector()
 private var calcRes = 0F
@@ -25,7 +27,9 @@ private var clfSpot = listOf<Any>()
 fun autoThrowNade(fSpot: List<Any>, recoveredAngle: Angle) {
     eyeAng = me.eyeAngle()
     calcRes = eyeAng.distanceTo(recoveredAngle)
-    writeAim(eyeAng, recoveredAngle, curSettings["NADE_THROWER_SMOOTHNESS"].cToFloat())
+    pathAim(eyeAng, recoveredAngle, 1, perfect = false, checkOnScreen = true, divisor = 3)
+    println(calcRes)
+    input.mouseRelease(MouseEvent.BUTTON3_DOWN_MASK)
     if (calcRes < 0.1) {
         when (fSpot[5]) {
             "J+T" -> jumpAndThrow()
@@ -56,7 +60,7 @@ fun nadeThrower() = every(10, inGameCheck = true) {
             val hLPos = it[2]
             if (fSpot[4] == nadeToCheck || nadeToCheck == "Decoy") {
                 if ((mPos.x in fSpot[0].cToDouble() - 20..fSpot[0].cToDouble() + 20) && (mPos.y in fSpot[1].cToDouble() - 20..fSpot[1].cToDouble() + 20)) {
-                    if (keyPressed(curSettings["NADE_THROWER_KEY"].toInt())) {
+                    if (input.keyPressed(curSettings["NADE_THROWER_KEY"].toInt())) {
                         val hLVec = Vector(hLPos[0].cToFloat(), hLPos[1].cToFloat(), hLPos[2].cToFloat())
                         val recoveredAngle = realCalcAngle(me, hLVec)
                         val dist = me.eyeAngle().distanceTo(recoveredAngle)

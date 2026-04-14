@@ -2,10 +2,11 @@
 [![Release](https://img.shields.io/github/release/TheRatCode/RatPoison.svg)](https://github.com/TheRatCode/RatPoison/releases/)
 ![Code size](https://img.shields.io/github/languages/code-size/TheRatCode/RatPoison.svg)
 ![GitHub repo size](https://img.shields.io/github/repo-size/TheRatCode/RatPoison.svg)
-[![Discord](https://discord.com/api/guilds/785830829439320095/widget.png)](https://discord.gg/nzNY2uFsaP)
+[![Discord](https://discord.com/api/guilds/785830829439320095/widget.png)](https://discord.gg/TGsp8SNcFZ)
 ![Downloads](https://img.shields.io/github/downloads/TheFuckingRat/RatPoison/total.svg)
 
-## ⚠️ __RatPoison is VAC detected, use at own risk. For more updates join our [Discord server](https://discord.gg/TGsp8SNcFZ)__ ⚠️
+~~## ⚠️ __RatPoison is VAC detected, use at own risk. For more updates join our [Discord server](https://discord.gg/TGsp8SNcFZ)__ ⚠️~~  
+Fixes to make RatPoison UD were published, but we can't provide any guaranties
 
 ## Support our Team
 

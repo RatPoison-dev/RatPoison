@@ -41,8 +41,8 @@ import kotlin.math.min
 import kotlin.system.measureNanoTime
 
 var opened = false
-var overlayMenuKey = ObservableBoolean({ keyPressed(1) })
-var toggleAimKey = ObservableBoolean({ keyPressed(1) })
+var overlayMenuKey = ObservableBoolean({ input.keyPressed(1) })
+var toggleAimKey = ObservableBoolean({ input.keyPressed(1) })
 
 var syncTime = 0L
 var glowTime = 0L
@@ -55,7 +55,7 @@ object App : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
     lateinit var textRenderer: BitmapFont
     lateinit var shapeRenderer: ShapeRenderer
-    private val overlay = Overlay(if (appless) { DEFAULT_MENU_APP } else { MENU_APP }, "Rat Poison UI", AccentStates.ACCENT_ENABLE_BLURBEHIND)
+    private val overlay = Overlay(if (appless) { DEFAULT_MENU_APP } else { MENU_APP }, app_title, AccentStates.ACCENT_ENABLE_BLURBEHIND)
     lateinit var menuStage: Stage
     private val bodies = ObjectArrayList<App.() -> Unit>()
     private lateinit var camera: OrthographicCamera
@@ -72,8 +72,8 @@ object App : ApplicationAdapter() {
     private var timer = 0
 
     override fun create() {
-        overlayMenuKey = ObservableBoolean({ keyPressed(curSettings["MENU_KEY"].toInt()) })
-        toggleAimKey = ObservableBoolean({ keyPressed(curSettings["AIM_TOGGLE_KEY"].toInt()) })
+        overlayMenuKey = ObservableBoolean({ input.keyPressed(curSettings["MENU_KEY"].toInt()) })
+        toggleAimKey = ObservableBoolean({ input.keyPressed(curSettings["AIM_TOGGLE_KEY"].toInt()) })
 
         VisUI.load(Gdx.files.internal("skin\\tinted.json"))
 

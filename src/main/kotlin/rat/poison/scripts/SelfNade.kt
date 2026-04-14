@@ -1,10 +1,9 @@
 package rat.poison.scripts
 
-import kotlinx.coroutines.Runnable
 import rat.poison.curSettings
 import rat.poison.game.angle
 import rat.poison.game.clientState
-import rat.poison.robot
+import rat.poison.input
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.Angle
 import rat.poison.utils.normalize
@@ -13,9 +12,9 @@ import java.awt.event.KeyEvent
 import java.awt.event.MouseEvent
 
 fun selfNade() {
-    Thread(Runnable {
+    Thread {
         if (MENUTOG) {
-            robot.keyPress(curSettings["MENU_KEY"].toInt())
+            input.keyPress(curSettings["MENU_KEY"].toInt())
         }
         Thread.sleep(50)
 
@@ -26,12 +25,12 @@ fun selfNade() {
 
         pathAim(curAng, destAng, 10, false, checkOnScreen = false)
         Thread.sleep(50)
-        robot.keyPress(KeyEvent.VK_CONTROL)
+        input.keyPress(KeyEvent.VK_CONTROL)
         Thread.sleep(50)
-        robot.mousePress(MouseEvent.BUTTON3_DOWN_MASK)
+        input.mousePress(MouseEvent.BUTTON3_DOWN_MASK)
         Thread.sleep(50)
-        robot.mouseRelease(MouseEvent.BUTTON3_DOWN_MASK)
+        input.mouseRelease(MouseEvent.BUTTON3_DOWN_MASK)
         Thread.sleep(2000)
-        robot.keyRelease(KeyEvent.VK_CONTROL)
-    }).start()
+        input.keyRelease(KeyEvent.VK_CONTROL)
+    }.start()
 }

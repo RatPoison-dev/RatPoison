@@ -1,3 +1,8 @@
+//disables ingame writing
+SAFE_MODE = false
+//input backend: INTERCEPTION or USERMODE
+INPUT_DEVICE_TYPE = USERMODE
+
 //Enable DEBUG
 DEBUG = false
 
@@ -30,7 +35,7 @@ MENU_APP = "Counter-Strike: Global Offensive - Direct3D 9"
 APPLESS = false
 
 //Menu stays focused even when csgo isn't
-MENU_STAY_FOCUSED = true
+MENU_STAY_FOCUSED = false
 
 //Whether post processing is disabled or not
 DISABLE_POST_PROCESSING = false

@@ -8,12 +8,15 @@ import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
+import rat.poison.input
+import rat.poison.safe_mode
 import rat.poison.scripts.*
 import rat.poison.settings.MENUTOG
 import rat.poison.utils.every
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inBackground
 import rat.poison.utils.inGame
+import java.awt.event.MouseEvent
 
 private var shouldShoot = false
 var didShoot = false
@@ -27,14 +30,14 @@ fun handleFireKey() = every(1, continuous = true) {
     }
 
     if (MENUTOG || (me > 0L && meDead) || inBackground) {
-        if (clientDLL.int(dwForceAttack) == 5) {
+        if (!safe_mode && clientDLL.int(dwForceAttack) == 5) {
             clientDLL[dwForceAttack] = 4
             Thread.sleep(1)
         }
         return@every
     }
 
-    if (keyPressed(1)) {
+    if (input.keyPressed(1)) {
         boneTrig = false
         if (!shouldShoot) {
             punchCheck = 0
@@ -45,7 +48,7 @@ fun handleFireKey() = every(1, continuous = true) {
         fireWeapon()
     } else if (inTrigger) {
         if (shouldShoot) { //Finish shooting...
-            if (clientDLL.int(dwForceAttack) == 5) {
+            if (!safe_mode && clientDLL.int(dwForceAttack) == 5) {
                 clientDLL[dwForceAttack] = 4
             }
             shouldShoot = false
@@ -54,7 +57,7 @@ fun handleFireKey() = every(1, continuous = true) {
         punchCheck = 0
         //Let trigger handle the rest
     } else {
-        clientDLL[dwForceAttack] = 4
+        if (!safe_mode) clientDLL[dwForceAttack] = 4
 
         shouldShoot = false
         didShoot = false
@@ -74,14 +77,14 @@ fun fireWeapon() {
 
     var shouldAuto = false
 
-    if (curSettings["AUTOMATIC_WEAPONS"].strToBool() && !meCurWep.automatic && meCurWep.gun && curSettings["ENABLE_AIM"].strToBool()) {
+    if (!safe_mode && curSettings["AUTOMATIC_WEAPONS"].strToBool() && !meCurWep.automatic && meCurWep.gun && curSettings["ENABLE_AIM"].strToBool()) {
         shouldAuto = automaticWeapons()
 
         if (!didShoot) { //Skip first delay
             shouldAuto = true
         }
 
-        if (clientDLL.int(dwForceAttack) == 5) {
+        if (!safe_mode && clientDLL.int(dwForceAttack) == 5) {
             clientDLL[dwForceAttack] = 4
         }
 
@@ -89,29 +92,30 @@ fun fireWeapon() {
             return
         }
     }
+    if (!safe_mode) {
+        val backtrackOnKey = curSettings["ENABLE_BACKTRACK_ON_KEY"].strToBool()
+        val backtrackKeyPressed = input.keyPressed(curSettings["BACKTRACK_KEY"].toInt())
 
-    val backtrackOnKey = curSettings["ENABLE_BACKTRACK_ON_KEY"].strToBool()
-    val backtrackKeyPressed = keyPressed(curSettings["BACKTRACK_KEY"].toInt())
-
-    if (((curSettings["ENABLE_BACKTRACK"].strToBool() && !curWepOverride) || (curWepOverride && curWepSettings.tBacktrack)) && ((!backtrackOnKey || (backtrackOnKey && backtrackKeyPressed)))) {
-        if (shouldAuto || (!shouldAuto && !didShoot) || meCurWep.automatic) {
-            if (attemptBacktrack()) {
-                if (!shouldAuto) {
-                    didShoot = true
+        if (((curSettings["ENABLE_BACKTRACK"].strToBool() && !curWepOverride) || (curWepOverride && curWepSettings.tBacktrack)) && ((!backtrackOnKey || (backtrackOnKey && backtrackKeyPressed)))) {
+            if (shouldAuto || (!shouldAuto && !didShoot) || meCurWep.automatic) {
+                if (attemptBacktrack()) {
+                    if (!shouldAuto) {
+                        didShoot = true
+                    }
+                    return
                 }
-                return
             }
         }
     }
 
     if (shouldAuto) {
-        clientDLL[dwForceAttack] = 6
+        if (!safe_mode) clientDLL[dwForceAttack] = 6 else input.mouseClick(MouseEvent.BUTTON1_DOWN_MASK)
     } else if (!didShoot || meCurWep.automatic) {
         if (!meCurWep.automatic && me.shotsFired() > 0) { //Dont use shotsFired var, this can be different
             return
         }
 
         didShoot = true
-        clientDLL[dwForceAttack] = 5
+        if (!safe_mode) clientDLL[dwForceAttack] = 5
     }
 }

@@ -16,7 +16,8 @@ import rat.poison.settings.PROCESS_ACCESS_FLAGS
 import rat.poison.settings.PROCESS_NAME
 import rat.poison.utils.every
 import rat.poison.utils.inBackground
-import rat.poison.utils.natives.CUser32
+import rat.poison.jna.User32
+import rat.poison.jna.structures.Rect
 import rat.poison.utils.retry
 import kotlin.system.exitProcess
 
@@ -57,30 +58,30 @@ object CSGO {
 			clientDLL = csgoEXE.modules[CLIENT_MODULE_NAME]!!
 		}
 
-		val rect = WinDef.RECT()
-		val hwd = CUser32.FindWindowA(null, DEFAULT_MENU_APP)
+		val rect = Rect()
+		val hwd = User32.FindWindowA(null, DEFAULT_MENU_APP)
 
 		//Get initially
-		if (!CUser32.GetClientRect(hwd, rect)) exitProcess(2)
+		if (!User32.GetClientRect(hwd, rect)) exitProcess(2)
 		gameWidth = rect.right - rect.left
 		gameHeight = rect.bottom - rect.top
 
-		if (!CUser32.GetWindowRect(hwd, rect)) exitProcess(3)
+		if (!User32.GetWindowRect(hwd, rect)) exitProcess(3)
 		gameX = rect.left + (((rect.right - rect.left) - gameWidth) / 2)
 		gameY = rect.top + ((rect.bottom - rect.top) - gameHeight)
 
 		every(1000) {
-			if (!CUser32.GetClientRect(hwd, rect)) exitProcess(2)
+			if (!User32.GetClientRect(hwd, rect)) exitProcess(2)
 			gameWidth = rect.right - rect.left
 			gameHeight = rect.bottom - rect.top
 
-			if (!CUser32.GetWindowRect(hwd, rect)) exitProcess(3)
+			if (!User32.GetWindowRect(hwd, rect)) exitProcess(3)
 			gameX = rect.left + (((rect.right - rect.left) - gameWidth) / 2)
 			gameY = rect.top + ((rect.bottom - rect.top) - gameHeight)
 		}
 
 		every(1000, continuous = true) {
-			inBackground = Pointer.nativeValue(hwd.pointer) != CUser32.GetForegroundWindow()
+			inBackground = hwd != User32.GetForegroundWindow()
 		}
 
 		NetVars.load()

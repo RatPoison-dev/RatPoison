@@ -2,8 +2,8 @@ import java.nio.file.Files
 import org.apache.commons.io.FileUtils
 
 buildscript {
-	ext.kotlin_version = '1.5.21'
-	ext.jnaVersion = '5.8.0'
+	ext.kotlin_version = '1.9.24'
+	ext.jnaVersion = '5.13.0'
 	ext.gdxVersion = '1.10.0'
 	ext.visuiVersion = "1.5.0"
 
@@ -34,6 +34,7 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
+	mavenCentral()
 	gradlePluginPortal()
 	maven { url 'https://jitpack.io' }
 	maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
@@ -54,8 +55,8 @@ dependencies {
 	implementation "com.kotcrab.vis:vis-ui:$visuiVersion"
 	implementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: kotlin_version
 	implementation group: 'org.jetbrains.kotlin', name: 'kotlin-script-runtime', version: kotlin_version
-	implementation group: 'org.jetbrains.kotlin', name: 'kotlin-script-util', version: kotlin_version
 	implementation group: 'org.jetbrains.kotlin', name: 'kotlin-compiler-embeddable', version: kotlin_version
+	implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
 
 	implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
 	implementation 'com.github.ata4:ioutils:b1f26588b5'
@@ -111,6 +112,11 @@ task RatPoison {
 		dirSkin.mkdirs()
 		def skins = file("skin")
 		FileUtils.copyDirectory(skins, dirSkin)
+
+		def dirDrivers = file(new File(dir, "drivers"))
+		dirDrivers.mkdirs()
+		def drivers = file("drivers")
+		FileUtils.copyDirectory(drivers, dirDrivers)
 	}
 }
 
@@ -126,6 +132,6 @@ sourceSets {
 compileKotlin {
 	kotlinOptions {
 		jvmTarget = "1.8"
-		freeCompilerArgs = ["-Xinline-classes"]
+		freeCompilerArgs = []
 	}
 }

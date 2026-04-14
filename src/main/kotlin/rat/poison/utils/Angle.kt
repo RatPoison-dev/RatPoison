@@ -3,7 +3,6 @@ package rat.poison.utils
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.math.Quaternion
-import java.lang.Math.abs
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -25,7 +24,9 @@ fun Vector.normalize() = apply {
     z = 0F
 }
 
-internal fun Angle.distanceTo(target: Angle) = abs(x - target.x) + abs(y - target.y) + abs(z - target.z)
+internal fun Angle.distanceTo(target: Angle) = kotlin.math.abs(x - target.x) + kotlin.math.abs(y - target.y) + kotlin.math.abs(
+    z - target.z
+)
 
 internal fun Angle.isValid() = !(z != 0F
         || x < -89 || x > 180
@@ -66,9 +67,9 @@ internal fun Angle.to(matrix: Matrix4? = null,
         val forwardY = cp * sy
         val forwardZ = -sp
         matrix?.apply {
-            `val`[Matrix4.M00] = forwardX.toFloat()
-            `val`[Matrix4.M10] = forwardY.toFloat()
-            `val`[Matrix4.M20] = forwardZ.toFloat()
+            `val`[Matrix4.M00] = forwardX
+            `val`[Matrix4.M10] = forwardY
+            `val`[Matrix4.M20] = forwardZ
             `val`[Matrix4.M30] = 0f
         }
         forward?.apply {
@@ -88,9 +89,9 @@ internal fun Angle.to(matrix: Matrix4? = null,
             val rightY = -sp * srXsy - crXcy
             val rightZ = -sr * cp
             matrix?.apply {
-                `val`[Matrix4.M01] = -rightX.toFloat()
-                `val`[Matrix4.M11] = -rightY.toFloat()
-                `val`[Matrix4.M21] = -rightZ.toFloat()
+                `val`[Matrix4.M01] = -rightX
+                `val`[Matrix4.M11] = -rightY
+                `val`[Matrix4.M21] = -rightZ
                 `val`[Matrix4.M31] = 0f
             }
             right?.apply {
@@ -104,9 +105,9 @@ internal fun Angle.to(matrix: Matrix4? = null,
             val upY = sp * crXsy - srXcy
             val upZ = cr * cp
             matrix?.apply {
-                `val`[Matrix4.M02] = upX.toFloat()
-                `val`[Matrix4.M12] = upY.toFloat()
-                `val`[Matrix4.M22] = upZ.toFloat()
+                `val`[Matrix4.M02] = upX
+                `val`[Matrix4.M12] = upY
+                `val`[Matrix4.M22] = upZ
                 `val`[Matrix4.M32] = 0f
             }
             up?.apply {
@@ -125,16 +126,16 @@ internal fun Angle.to(matrix: Matrix4? = null,
             val z = crXcp * sy - srXsp * cy // Z
             val w = crXcp * cy + srXsp * sy // W (real component)
 
-            quaternion.set(x.toFloat(), y.toFloat(), z.toFloat(), w.toFloat())
+            quaternion.set(x, y, z, w)
         }
     }
 
     //should i throw if there is translation but no matrix ?
 
     matrix?.apply {
-        `val`[Matrix4.M03] = translation?.x?.toFloat() ?: 0f
-        `val`[Matrix4.M13] = translation?.y?.toFloat() ?: 0f
-        `val`[Matrix4.M23] = translation?.z?.toFloat() ?: 0f
+        `val`[Matrix4.M03] = translation?.x ?: 0f
+        `val`[Matrix4.M13] = translation?.y ?: 0f
+        `val`[Matrix4.M23] = translation?.z ?: 0f
         `val`[Matrix4.M33] = 1f
     }
 }

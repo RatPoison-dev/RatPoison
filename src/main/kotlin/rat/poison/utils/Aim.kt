@@ -8,6 +8,8 @@ import rat.poison.game.CSGO.gameX
 import rat.poison.game.CSGO.gameY
 import rat.poison.game.clientState
 import rat.poison.game.setAngle
+import rat.poison.input
+import rat.poison.safe_mode
 import rat.poison.settings.GAME_PITCH
 import rat.poison.settings.GAME_SENSITIVITY
 import rat.poison.settings.GAME_YAW
@@ -48,6 +50,22 @@ fun writeAim(currentAngle: Angle, destinationAngle: Angle, smoothing: Float, div
 		val dAng = applyFlatSmoothing(currentAngle, destinationAngle, smoothing, divisor)
 		clientState.setAngle(dAng)
 	}
+}
+
+fun pathAim(currentX: Float, currentY: Float, destinationAngle: Angle) {
+	// doesn't count divisors and aim settings
+	var xFix = currentY - destinationAngle.y
+	while (xFix > 180) xFix -= 360F
+	while (xFix <= -180) xFix += 360F
+	if (xFix > 180) xFix = 180F
+	if (xFix < -180F) xFix = -180F
+
+	val x = xFix
+	val y = currentX - destinationAngle.x
+
+	val dx = round(x / (GAME_SENSITIVITY * GAME_PITCH))
+	val dy = round(-y / (GAME_SENSITIVITY * GAME_YAW))
+	input.mouseMove(dx.toInt(), dy.toInt())
 }
 
 fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect: Boolean = false, checkOnScreen: Boolean = true, divisor: Int = 1) {
@@ -94,7 +112,7 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 		}
 	}
 
-	if (perfect) {
+	if (!safe_mode && perfect) {
 		writeAim(currentAngle, destinationAngle, 1F)
 		Thread.sleep(50)
 	} else HumanMouse.fastSteps(mousePos, target) { steps, _ ->
@@ -105,9 +123,8 @@ fun pathAim(currentAngle: Angle, destinationAngle: Angle, aimSpeed: Int, perfect
 
 		var halfIndex = steps / 2
 		if (halfIndex == 0) halfIndex = 1
+		input.mouseMove(tx / halfIndex, ty / halfIndex)
 
-		mouseMove(tx / halfIndex, ty / halfIndex)
-
-		Thread.sleep(aimSpeed.toLong())
+		if (aimSpeed != 0) Thread.sleep(aimSpeed.toLong())
 	}
 }

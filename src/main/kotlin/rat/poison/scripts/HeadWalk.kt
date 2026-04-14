@@ -11,6 +11,7 @@ import rat.poison.game.forEntities
 import rat.poison.game.hooks.cursorEnable
 import rat.poison.game.hooks.updateCursorEnable
 import rat.poison.game.me
+import rat.poison.input
 import rat.poison.robot
 import rat.poison.scripts.aim.meDead
 import rat.poison.utils.Angle
@@ -35,7 +36,7 @@ var onEntPos = Vector()
 internal fun headWalk() = every(2, inGameCheck = true) {
     if (!curSettings["HEAD_WALK"].strToBool() || meDead) return@every
 
-    if (!keyPressed(KeyEvent.VK_W) && !keyPressed(KeyEvent.VK_A) && !keyPressed(KeyEvent.VK_S) && !keyPressed(KeyEvent.VK_D)) {
+    if (!input.keyPressed(KeyEvent.VK_W) && !input.keyPressed(KeyEvent.VK_A) && !input.keyPressed(KeyEvent.VK_S) && !input.keyPressed(KeyEvent.VK_D)) {
         mePos = me.absPosition()
         if (onPlayerHead()) {
             updateCursorEnable()
@@ -56,38 +57,38 @@ internal fun headWalk() = every(2, inGameCheck = true) {
             var dRelease = false
             when {
                 distX < 2 -> {
-                    robot.keyPress(KeyEvent.VK_W)
+                    input.keyPress(KeyEvent.VK_W)
                     wRelease = true
                 }
                 distX > 2 -> {
-                    robot.keyPress(KeyEvent.VK_S)
+                    input.keyPress(KeyEvent.VK_S)
                     sRelease = true
                 }
             }
 
             when {
                 distY < 2 -> {
-                    robot.keyPress(KeyEvent.VK_A)
+                    input.keyPress(KeyEvent.VK_A)
                     aRelease = true
                 }
                 distY > 2 -> {
-                    robot.keyPress(KeyEvent.VK_D)
+                    input.keyPress(KeyEvent.VK_D)
                     dRelease = true
                 }
             }
             //Sleep once instead of up to twice
             Thread.sleep(1)
             if (wRelease) {
-                robot.keyRelease(KeyEvent.VK_W)
+                input.keyRelease(KeyEvent.VK_W)
             }
             if (aRelease) {
-                robot.keyRelease(KeyEvent.VK_A)
+                input.keyRelease(KeyEvent.VK_A)
             }
             if (sRelease) {
-                robot.keyRelease(KeyEvent.VK_S)
+                input.keyRelease(KeyEvent.VK_S)
             }
             if (dRelease) {
-                robot.keyRelease(KeyEvent.VK_D)
+                input.keyRelease(KeyEvent.VK_D)
             }
         }
     }

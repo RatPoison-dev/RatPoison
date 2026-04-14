@@ -93,7 +93,7 @@ fun boxEsp() {
 			val isWeapon = it.type.weapon
 			val isDefuseKit = it.type == EntityType.CEconEntity
 
-			if (ent <= 0) return@forEntities
+			if (ent <= 0 || it.entity == me) return@forEntities
 
 			if (!isPlayer && !isWeapon && !isDefuseKit) return@forEntities
 

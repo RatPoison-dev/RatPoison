@@ -9,6 +9,7 @@ import com.kotcrab.vis.ui.widget.*
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab
 import rat.poison.SETTINGS_DIRECTORY
 import rat.poison.curSettings
+import rat.poison.safe_mode
 import rat.poison.scripts.changeName
 import rat.poison.scripts.selfNade
 import rat.poison.scripts.visuals.updateHitsound
@@ -68,9 +69,10 @@ class MiscTab : Tab(false, false) {
         selfNade.changed { _, _ ->
             selfNade()
         }
-
-        nameChange.changed { _, _ ->
-            changeName(nameChangeInput.text)
+        if (!safe_mode) {
+            nameChange.changed { _, _ ->
+                changeName(nameChangeInput.text)
+            }
         }
 
         //Create Hit Sound Toggle
@@ -119,13 +121,15 @@ class MiscTab : Tab(false, false) {
         leftTable.add(headWalk).left().padLeft(14F).row()
         leftTable.addSeparator().width(250F).left()
         //Bottom left pane (fov + bomb timer + spectator list)
-        leftTable.add(fovChanger).left().padLeft(14F).row()
-        leftTable.add(fovDefault).left().padLeft(14F).row()
-        leftTable.add(fovSmoothing).left().padLeft(14F).row()
-        leftTable.add(fovSniperDefault).left().padLeft(14F).row()
-        leftTable.add(fovSniperZoom1).left().padLeft(14F).row()
-        leftTable.add(fovSniperZoom2).left().padLeft(14F).row()
-        leftTable.addSeparator().width(250F).left()
+        if (!safe_mode) {
+            leftTable.add(fovChanger).left().padLeft(14F).row()
+            leftTable.add(fovDefault).left().padLeft(14F).row()
+            leftTable.add(fovSmoothing).left().padLeft(14F).row()
+            leftTable.add(fovSniperDefault).left().padLeft(14F).row()
+            leftTable.add(fovSniperZoom1).left().padLeft(14F).row()
+            leftTable.add(fovSniperZoom2).left().padLeft(14F).row()
+            leftTable.addSeparator().width(250F).left()
+        }
         leftTable.add(spectatorList).left().padLeft(14F).row()
         leftTable.add(bombTimer).left().padLeft(14F).row()
         leftTable.add(bombTimerEnableMenu).left().padLeft(24F).row()
@@ -134,9 +138,11 @@ class MiscTab : Tab(false, false) {
         rightTable.add(hitSound).left().padLeft(5F).row()
         rightTable.add(hitSoundVolume).left().padLeft(5F).row()
         rightTable.addSeparator().width(250F).left()
-        rightTable.add(enableReducedFlash).left().padLeft(5F).row()
-        rightTable.add(flashMaxAlpha).left().padLeft(5F).row()
-        rightTable.addSeparator().width(250F).left()
+        if (!safe_mode) {
+            rightTable.add(enableReducedFlash).left().padLeft(5F).row()
+            rightTable.add(flashMaxAlpha).left().padLeft(5F).row()
+            rightTable.addSeparator().width(250F).left()
+        }
         rightTable.add(knifeBot).left().padLeft(5F).row()
         rightTable.addSeparator().width(250F).left()
         rightTable.add(lsBomb).left().padLeft(5F).row()
@@ -151,10 +157,13 @@ class MiscTab : Tab(false, false) {
         rightTable.addSeparator().width(250F).left()
         rightTable.add(enableKillBind).left().padLeft(5F).row()
         rightTable.add(killBindKey).left().padLeft(5F).row()
-        rightTable.add(postProcessingDisable).left().padLeft(5F).row()
-        rightTable.addSeparator().width(250F).left()
-        rightTable.add(nameChangeInput).pad(5F).top().left().width(240F).row()
-        rightTable.add(nameChange).pad(5F).top().left().width(240F)
+        if (!safe_mode) {
+            rightTable.add(postProcessingDisable).left().padLeft(5F).row()
+            rightTable.addSeparator().width(250F).left()
+            rightTable.add(nameChangeInput).pad(5F).top().left().width(240F).row()
+            rightTable.add(nameChange).pad(5F).top().left().width(240F)
+        }
+
 
 
         table.add(superTable).size(500F, 520F).top().growX()
@@ -184,16 +193,20 @@ fun miscTabUpdate() {
         bunnyHop.update()
         bunnyHopHitChance.update()
         autoStrafe.update()
-        postProcessingDisable.update()
         autoStrafeBHopOnly.update()
         fastStop.update()
         knifeBot.update()
-        fovChanger.update()
-        fovDefault.update()
-        fovSmoothing.update()
-        fovSniperDefault.update()
-        fovSniperZoom1.update()
-        fovSniperZoom2.update()
+        if (!safe_mode) {
+            postProcessingDisable.update()
+            fovChanger.update()
+            fovDefault.update()
+            fovSmoothing.update()
+            fovSniperDefault.update()
+            fovSniperZoom1.update()
+            fovSniperZoom2.update()
+            enableReducedFlash.update()
+            flashMaxAlpha.update()
+        }
         doorSpam.update()
         doorSpamKey.update()
         weaponSpam.update()
@@ -203,8 +216,6 @@ fun miscTabUpdate() {
         bombTimerEnableBars.update()
         spectatorList.update()
         headWalk.update()
-        enableReducedFlash.update()
-        flashMaxAlpha.update()
         hitSoundCheckBox.update()
         hitSoundBox.selected = curSettings["HITSOUND_FILE_NAME"].replace("\"", "")
         hitSoundVolume.update()

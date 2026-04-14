@@ -5,11 +5,16 @@ package rat.poison
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
+import com.sun.jna.Callback
+import com.sun.jna.NativeLibrary
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.lwjgl.glfw.GLFW.*
 import rat.poison.game.CSGO
 import rat.poison.game.offsets.EngineOffsets.dwbSendPackets
+import rat.poison.jna.Interception
+import rat.poison.jna.Kernel32
+import rat.poison.jna.User32
 import rat.poison.overlay.App
 import rat.poison.scripts.*
 import rat.poison.scripts.aim.flatAim
@@ -24,7 +29,9 @@ import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.loadMigration
 import java.awt.Robot
 import java.io.File
+import java.nio.file.Paths
 import kotlin.collections.set
+
 
 //Override Weapon
 data class oWeapon(var tOverride: Boolean = false,      var tFRecoil: Boolean = false,          var tOnShot: Boolean = false,
@@ -45,29 +52,43 @@ data class sWeapon(var tSkinID: Int, var tStatTrak: Int, var tWear: Float, var t
 const val TITLE = "RatPoison"
 const val BRANCH = "Master"
 const val F_VERSION = "1.7"
-const val M_VERSION = "1.7.1.6"
+const val M_VERSION = "1.7.2"
 var LOADED_CONFIG = "DEFAULT"
+
+
+val charPool = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+fun randString(length: Int) : String {
+    return (1..length)
+        .map { charPool.random() }
+        .joinToString("")
+}
+
 
 //const val EXPERIMENTAL = false
 const val SETTINGS_DIRECTORY = "settings" //Internal
 val DEFAULT_MENU_APP = "Counter-Strike: Global Offensive - Direct3D 9"
 var MENU_APP = ""
+var safe_mode = true
 var appless = false
+var inputType = InputDeviceType.INTERCEPTION
+var app_title = randString(20)
 lateinit var WEAPON_STATS_FILE: File
 lateinit var SKIN_INFO_FILE: File
 
 var settingsLoaded = false
 val curSettings = Settings()
 val curLocale = Settings()
+lateinit var input: InputThread
 
-var dbg: Boolean = false
+var dbg: Boolean = true
 val robot = Robot().apply { this.autoDelay = 0 }
 
 var haltProcess = false
 
 fun main() {
     System.setProperty("jna.nosys", "true")
-
+    NativeLibrary.addSearchPath("interception", Paths.get("./drivers").toAbsolutePath().toString())
+    Kernel32.raiseProcessPriority()
     loadSettingsFromFiles(SETTINGS_DIRECTORY)
 
     detectLocale()
@@ -78,6 +99,26 @@ fun main() {
     println("Launching...")
     MENU_APP = curSettings["MENU_APP"].replace("\"", "")
     appless = curSettings["APPLESS"].strToBool()
+    safe_mode = curSettings["SAFE_MODE"].strToBool()
+    inputType = InputDeviceType.fromSetting(curSettings["INPUT_DEVICE_TYPE"])
+    input = when (inputType) {
+        InputDeviceType.INTERCEPTION -> {
+            try {
+                InterceptionInputThread()
+            } catch (e: UnsatisfiedLinkError) {
+                println("Interception library not found, falling back to USERMODE input.")
+                inputType = InputDeviceType.USERMODE
+                UsermodeInputThread()
+            } catch (e: Exception) {
+                println("Interception initialization failed, falling back to USERMODE input.")
+                inputType = InputDeviceType.USERMODE
+                UsermodeInputThread()
+            }
+        }
+
+        InputDeviceType.USERMODE -> UsermodeInputThread()
+    }
+    input.start()
 
     CSGO.initialize()
 
@@ -88,6 +129,8 @@ fun main() {
 
     if (dbg) println("[DEBUG] Initializing scripts...")
     //Init scripts
+    if (dbg) { println("[DEBUG] Initializing input") }
+
     if (!curSettings["MENU"].strToBool()) { //If we aren't using the menu disable everything that uses the menu
         if (dbg) println("[DEBUG] Menu disabled, disabling box, skeleton, rcrosshair, btimer, indicator, speclist, hitmarker, nade helper, nade tracer, draw fov, spread circle, visualize smokes")
 
@@ -106,7 +149,7 @@ fun main() {
         curSettings["SPREAD_CIRCLE"] = "false"
         curSettings["VISUALIZE_SMOKES"] = "false"
     } else {
-        if (dbg) { println("[DEBUG] Initializing Recoil Ranks") }; ranks()
+        if (dbg) { println("[DEBUG] Initializing Ranks") }; ranks()
 
         if (dbg) { println("[DEBUG] Initializing Recoil Spectator List") }; spectatorList()
         if (dbg) { println("[DEBUG] Initializing Recoil Bomb Timer") }; bombTimer()
@@ -123,53 +166,56 @@ fun main() {
 
         drawDebug()
     }
-
+    if (!safe_mode) {
+        if (dbg) { println("[DEBUG] Initializing Flat Aim") }; flatAim()
+        if (dbg) { println("[DEBUG] Initializing FovChanger") }; fovChanger()
+        if (dbg) { println("[DEBUG] Initializing Adrenaline") }; adrenaline()
+        if (dbg) { println("[DEBUG] Disabling Post Processing") }; disablePostProcessing()
+        if (dbg) { println("[DEBUG] Initializing Weapon Changer") }; skinChanger()
+        if (dbg) { println("[DEBUG] Initializing Name Changer") }; nameChanger()
+        if (dbg) { println("[DEBUG] Initializing Reduced Flash") }; reducedFlash()
+    }
+    else {
+        if (dbg && inputType == InputDeviceType.INTERCEPTION) { println("[DEBUG] Initializing automatic weapons for safe mode") }
+        if (inputType == InputDeviceType.INTERCEPTION) automaticWeaponsSafeMode().start()
+        println("Safe mode enabled. Staying safe, king.")
+    }
+    if (dbg) { println("[DEBUG] Initializing RCS") }; rcs()
     if (dbg) { println("[DEBUG] Initializing Bunny Hop") }; bunnyHop()
     if (dbg) { println("[DEBUG] Initializing Auto Strafe") }; strafeHelper()
     if (dbg) { println("[DEBUG] Initializing Kill Bind") }; killBind()
-    if (dbg) { println("[DEBUG] Initializing RCS") }; rcs()
-    if (dbg) { println("[DEBUG] Initializing Flat Aim") }; flatAim()
     if (dbg) { println("[DEBUG] Initializing Path Aim") }; pathAim()
     if (dbg) { println("[DEBUG] Initializing Set Aim") }; setAim()
     if (dbg) { println("[DEBUG] Initializing Bone Trigger") }; triggerBot()
     if (dbg) { println("[DEBUG] Initializing Auto Knife") }; autoKnife()
-    if (dbg) { println("[DEBUG] Initializing Reduced Flash") }; reducedFlash()
     if (dbg) { println("[DEBUG] Initializing ESPs") }; esp()
     if (dbg) { println("[DEBUG] Initializing Esp Toggle") }; espToggle()
     if (dbg) { println("[DEBUG] Initializing Fast Stop") }; fastStop()
     if (dbg) { println("[DEBUG] Initializing Head Walk") }; headWalk()
-    if (dbg) { println("[DEBUG] Initializing Adrenaline") }; adrenaline()
-    if (dbg) { println("[DEBUG] Initializing FovChanger") }; fovChanger()
-    if (dbg) { println("[DEBUG] Disabling Post Processing") }; disablePostProcessing()
     if (dbg) { println("[DEBUG] Initializing Door Spam") }; doorSpam()
     if (dbg) { println("[DEBUG] Initializing Weapon Spam") }; weaponSpam()
-    if (dbg) { println("[DEBUG] Initializing Weapon Changer") }; skinChanger()
     if (dbg) { println("[DEBUG] Initializing NightMode/FullBright") }; nightMode()
-    if (dbg) { println("[DEBUG] Initializing Bomb Updater")}; bombUpdater()
+    // if (dbg) { println("[DEBUG] Initializing Bomb Updater")}; bombUpdater()
     if (dbg) { println("[DEBUG] Initializing Handle Fire Key") }; handleFireKey()
 
     if (dbg) { println("[DEBUG] Initializing Head Level Helper") }; headLevelHelper()
     if (dbg) { println("[DEBUG] Initializing Nade Thrower") }; nadeThrower()
-    if (dbg) { println("[DEBUG] Initializing Name Changer") }; nameChanger()
-    if (dbg) { println("[DEBUG] dwbSendPackets: $dwbSendPackets")}
     println("Backtrack disabled")
 
     //if (EXPERIMENTAL) {
         //rayTraceTest()
         //drawMapWireframe()
     //}
-
     //Overlay check, not updated?
     if (curSettings["MENU"].strToBool()) {
         println("App Title: " + curSettings["MENU_APP"].replace("\"", ""))
-
         App.open()
 
         GlobalScope.launch {
             glfwInit()
 
             Lwjgl3Application(App, Lwjgl3ApplicationConfiguration().apply {
-                setTitle("Rat Poison UI")
+                setTitle(app_title)
 
                 var w = CSGO.gameWidth
                 var h = CSGO.gameHeight

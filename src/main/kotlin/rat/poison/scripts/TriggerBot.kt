@@ -11,7 +11,9 @@ import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets.iCrossHairID
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
+import rat.poison.input
 import rat.poison.safeToInt
+import rat.poison.safe_mode
 import rat.poison.scripts.aim.*
 import rat.poison.settings.AIM_KEY
 import rat.poison.settings.DANGER_ZONE
@@ -20,10 +22,11 @@ import rat.poison.utils.every
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.generalUtil.strToBool
 import rat.poison.utils.inGame
+import java.awt.event.MouseEvent
 
 var inTrigger = false
 private var triggerShots = 0
-
+// TODO trigger aimbot
 fun triggerBot() = every(5, inGameCheck = true) {
     //Don't run if not needed
     if (DANGER_ZONE || meDead || !inGame || MENUTOG || !meCurWep.gun || !curSettings["ENABLE_TRIGGER"].strToBool() || !haveAimSettings) { //Precheck
@@ -58,14 +61,14 @@ fun triggerBot() = every(5, inGameCheck = true) {
         val useDelay = if (triggerShots > 0) { shotDelay } else { initDelay }
 
         //Trigger precheck
-        if (meCurWepEnt.bullets() <= 0 || keyPressed(AIM_KEY)) { //Can shoot check???
+        if (meCurWepEnt.bullets() <= 0 || input.keyPressed(AIM_KEY)) { //Can shoot check???
             inTrigger = false
             triggerShots = 0
             return@every
         }
 
         //Trigger key check
-        if (curSettings["TRIGGER_ENABLE_KEY"].strToBool() && !keyPressed(curSettings["TRIGGER_KEY"].safeToInt("Trig key"))) {
+        if (curSettings["TRIGGER_ENABLE_KEY"].strToBool() && !input.keyPressed(curSettings["TRIGGER_KEY"].safeToInt("Trig key"))) {
             inTrigger = false
             triggerShots = 0
             return@every
@@ -122,7 +125,7 @@ private fun trigQueueShot(delay: Int, aimbot: Boolean = false, backtrack: Boolea
     }
 
     //Trigger key check
-    if (curSettings["TRIGGER_ENABLE_KEY"].strToBool() && !keyPressed(curSettings["TRIGGER_KEY"].toInt())) {
+    if (curSettings["TRIGGER_ENABLE_KEY"].strToBool() && !input.keyPressed(curSettings["TRIGGER_KEY"].toInt())) {
         inTrigger = false
         triggerShots = 0
         return
@@ -142,7 +145,7 @@ private fun triggerShoot(aimbot: Boolean = false, backtrack: Boolean = false, ba
 
     if (!backtrack || (backtrack && !didBacktrack && backtrackFallback)) {
         boneTrig = aimbot
-        clientDLL[dwForceAttack] = 6 //HandleFireKey.kt
+        if (safe_mode) clientDLL[dwForceAttack] = 6 else input.mouseClick(MouseEvent.BUTTON1_DOWN_MASK) //HandleFireKey.kt
     }
 
     Thread.sleep(10)

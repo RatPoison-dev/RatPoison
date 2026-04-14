@@ -6,6 +6,7 @@ import rat.poison.overlay.App.uiKeybinds
 import rat.poison.overlay.App.uiMenu
 import rat.poison.overlay.App.uiSpecList
 import rat.poison.overlay.opened
+import rat.poison.safe_mode
 import rat.poison.ui.tabs.*
 import rat.poison.ui.tabs.visualstabs.*
 import rat.poison.ui.uiPanelTables.OverridenWeapons
@@ -19,22 +20,23 @@ fun uiUpdate() {
 
     overridenWeaponsUpdate()
     visualsTabUpdate()
-    glowEspTabUpdate()
-    chamsEspTabUpdate()
+    rcsTabUpdate()
+    if (!safe_mode) {
+        glowEspTabUpdate()
+        chamsEspTabUpdate()
+        skinChangerTabUpdate()
+        updateBacktrack()
+    }
     indicatorEspTabUpdate()
     boxEspTabUpdate()
     hitMarkerTabUpdate()
-    skinChangerTabUpdate()
     nadesVTUpdate()
     snaplinesEspTabUpdate()
     footStepsEspTabUpdate()
     miscTabUpdate()
-    rcsTabUpdate()
     miscVisualTabUpdate()
     optionsTabUpdate()
     nadeHelperTabUpdate()
-    updateBacktrack()
-    optionsTabUpdate()
     updateTrig()
     updateAim()
     updateDisableEsp()

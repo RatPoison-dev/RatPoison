@@ -3,6 +3,8 @@
 package rat.poison.jna
 
 import com.sun.jna.Native
+import com.sun.jna.platform.win32.WinDef
+import com.sun.jna.platform.win32.WinUser
 import com.sun.jna.ptr.IntByReference
 import com.sun.jna.win32.StdCallLibrary
 import rat.poison.jna.structures.Rect
@@ -50,4 +52,20 @@ object User32 {
     external fun GetWindowThreadProcessId(hwnd: Long, intByReference: IntByReference?): Int
     external fun AttachThreadInput(dword: Long, dword1: Long, b: Boolean): Boolean
     external fun EnumWindows(enumProc: WndEnumProc): Boolean
+    external fun MapVirtualKeyA(uCode: Int, uMapType: Int): Int
+
+    @JvmStatic
+    external fun GetCursorPos(p: WinDef.POINT): Int
+    @JvmStatic
+    external fun GetForegroundWindow(): Long
+
+    @JvmStatic
+    external fun mouse_event(dwFlags: Int, dx: Int, dy: Int, dwData: Int, dwExtraInfo: Long)
+
+    fun vkToScan(code: Int): Int {
+        return MapVirtualKeyA(code, WinUser.MAPVK_VK_TO_VSC)
+    }
+    fun scanToVk(code: Int): Int {
+        return MapVirtualKeyA(code, WinUser.MAPVK_VSC_TO_VK)
+    }
 }

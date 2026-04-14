@@ -12,9 +12,11 @@ import rat.poison.game.entity.*
 import rat.poison.game.me
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack
 import rat.poison.game.offsets.ClientOffsets.dwForceAttack2
+import rat.poison.input
 import rat.poison.overlay.App
 import rat.poison.overlay.opened
 import rat.poison.robot
+import rat.poison.safe_mode
 import rat.poison.scripts.aim.findTarget
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meCurWepEnt
@@ -128,19 +130,19 @@ private enum class KnifeAttackType(private val frontNoArmorDmg: Float = 0f,
 }
 
 fun leftClick() {
-    if (TRIGGER_FORCE_VALUES) {
+    if (TRIGGER_FORCE_VALUES && !safe_mode) {
         clientDLL[dwForceAttack] = 6
     } else {
-        robot.mousePress(MouseEvent.BUTTON1_MASK)
-        robot.mouseRelease(MouseEvent.BUTTON1_MASK)
+        input.mousePress(MouseEvent.BUTTON1_DOWN_MASK)
+        input.mouseRelease(MouseEvent.BUTTON1_DOWN_MASK)
     }
 }
 
 fun rightClick() {
-    if (TRIGGER_FORCE_VALUES) {
+    if (TRIGGER_FORCE_VALUES && !safe_mode) {
         clientDLL[dwForceAttack2] = 6
     } else {
-        robot.mousePress(MouseEvent.BUTTON3_MASK)
-        robot.mouseRelease(MouseEvent.BUTTON3_MASK)
+        input.mousePress(MouseEvent.BUTTON3_DOWN_MASK)
+        input.mouseRelease(MouseEvent.BUTTON3_DOWN_MASK)
     }
 }

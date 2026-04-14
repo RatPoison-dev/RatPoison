@@ -10,6 +10,7 @@ import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPaneAdapter
 import rat.poison.curSettings
 import rat.poison.overlay.opened
+import rat.poison.safe_mode
 import rat.poison.scripts.visuals.disableAllEsp
 import rat.poison.toLocale
 import rat.poison.ui.tabs.visualstabs.*
@@ -39,8 +40,10 @@ class VisualsTab : Tab(false, false) {
 
     init {
         //ESP Tab
-        espTabbedPane.add(glowEspTab)
-        espTabbedPane.add(chamsEspTab)
+        if (!safe_mode) {
+            espTabbedPane.add(glowEspTab)
+            espTabbedPane.add(chamsEspTab)
+        }
         espTabbedPane.add(indicatorEspTab)
         espTabbedPane.add(boxEspTab)
         espTabbedPane.add(snaplinesEspTab)
@@ -49,7 +52,7 @@ class VisualsTab : Tab(false, false) {
         espTabbedPane.add(nadesTab)
         espTabbedPane.add(miscVisualsTab)
 
-        espTabbedPane.switchTab(glowEspTab)
+        espTabbedPane.switchTab(if (!safe_mode) glowEspTab else boxEspTab)
 
         val espTabbedPaneContent = VisTable()
         espTabbedPaneContent.padTop(10F)
@@ -108,8 +111,12 @@ fun updateDisableEsp() {
 
         val recTab = espTabbedPane.activeTab
 
-        espTabbedPane.disableTab(glowEspTab, bool)
-        espTabbedPane.disableTab(chamsEspTab, bool)
+        if (!safe_mode) {
+            espTabbedPane.disableTab(glowEspTab, bool)
+            espTabbedPane.disableTab(chamsEspTab, bool)
+        }
+
+
         espTabbedPane.disableTab(indicatorEspTab, bool)
         espTabbedPane.disableTab(boxEspTab, bool)
         espTabbedPane.disableTab(snaplinesEspTab, bool)
@@ -120,32 +127,34 @@ fun updateDisableEsp() {
 
         espTabbedPane.switchTab(recTab)
 
-        glowEspTab.glowEsp.disable(bool)
-        glowEspTab.glowShowHealth.disable(bool)
-        glowEspTab.glowSmokeCheck.disable(bool)
-        glowEspTab.showTeam.disable(bool)
-        glowEspTab.showEnemies.disable(bool)
-        glowEspTab.showBomb.disable(bool)
-        glowEspTab.showBombCarrier.disable(bool)
-        glowEspTab.showWeapons.disable(bool)
-        glowEspTab.showGrenades.disable(bool)
-        glowEspTab.showTarget.disable(bool)
-        glowEspTab.glowTeamColor.disable(bool)
-        glowEspTab.glowEnemyColor.disable(bool)
-        glowEspTab.glowBombColor.disable(bool)
-        glowEspTab.glowBombAdaptive.disable(bool)
-        glowEspTab.glowBombCarrierColor.disable(bool)
-        glowEspTab.glowWeaponColor.disable(bool)
-        glowEspTab.glowGrenadeColor.disable(bool)
-        glowEspTab.glowHighlightColor.disable(bool)
+        if (!safe_mode) {
+            glowEspTab.glowEsp.disable(bool)
+            glowEspTab.glowShowHealth.disable(bool)
+            glowEspTab.glowSmokeCheck.disable(bool)
+            glowEspTab.showTeam.disable(bool)
+            glowEspTab.showEnemies.disable(bool)
+            glowEspTab.showBomb.disable(bool)
+            glowEspTab.showBombCarrier.disable(bool)
+            glowEspTab.showWeapons.disable(bool)
+            glowEspTab.showGrenades.disable(bool)
+            glowEspTab.showTarget.disable(bool)
+            glowEspTab.glowTeamColor.disable(bool)
+            glowEspTab.glowEnemyColor.disable(bool)
+            glowEspTab.glowBombColor.disable(bool)
+            glowEspTab.glowBombAdaptive.disable(bool)
+            glowEspTab.glowBombCarrierColor.disable(bool)
+            glowEspTab.glowWeaponColor.disable(bool)
+            glowEspTab.glowGrenadeColor.disable(bool)
+            glowEspTab.glowHighlightColor.disable(bool)
 
-        chamsEspTab.chamsEsp.disable(bool)
-        chamsEspTab.chamsShowHealth.disable(bool)
-        chamsEspTab.chamsBrightness.disable(bool, col)
-        chamsEspTab.showTeam.disable(bool)
-        chamsEspTab.showEnemies.disable(bool)
-        chamsEspTab.chamsTeamColor.disable(bool)
-        chamsEspTab.chamsEnemyColor.disable(bool)
+            chamsEspTab.chamsEsp.disable(bool)
+            chamsEspTab.chamsShowHealth.disable(bool)
+            chamsEspTab.chamsBrightness.disable(bool, col)
+            chamsEspTab.showTeam.disable(bool)
+            chamsEspTab.showEnemies.disable(bool)
+            chamsEspTab.chamsTeamColor.disable(bool)
+            chamsEspTab.chamsEnemyColor.disable(bool)
+        }
 
         indicatorEspTab.indicatorEsp.disable(bool)
         indicatorEspTab.indicatorDistance.disable(bool, col)
@@ -238,9 +247,11 @@ fun updateDisableEsp() {
         hitMarkerTab.hitMarkerComboColor.disable(bool)
 
         miscVisualsTab.apply {
-            radarEsp.disable(bool)
-            legitRadar.disable(bool)
-            legitRadarDistance.disable(bool, col)
+            if (!safe_mode) {
+                radarEsp.disable(bool)
+                legitRadar.disable(bool)
+                legitRadarDistance.disable(bool, col)
+            }
             visAdrenaline.disable(bool)
             adrenalineBombTime.disable(bool)
             adrenalineStrength.disable(bool, col)

@@ -93,7 +93,7 @@ fun drawDebug() = App {
 
     sb.begin()
 
-    textRenderer.setColor(Color.YELLOW)
+    textRenderer.color = Color.YELLOW
     textRenderer.draw(sb, txtString, 8f, CSGO.gameHeight/4f + 512)
 
     sb.end()

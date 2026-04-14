@@ -3,6 +3,7 @@ package rat.poison.scripts
 import rat.poison.curSettings
 import rat.poison.game.entity.kills
 import rat.poison.game.me
+import rat.poison.input
 import rat.poison.robot
 import rat.poison.scripts.aim.meDead
 import rat.poison.utils.every
@@ -16,7 +17,7 @@ fun killBind() = every(600, inGameCheck = true) {
     val curKills = me.kills()
     if (curKills != totalKills) {
         totalKills = curKills
-        robot.keyPress(curSettings["KILL_BIND_KEY"].toInt())
-        robot.keyRelease(curSettings["KILL_BIND_KEY"].toInt())
+        input.keyPress(curSettings["KILL_BIND_KEY"].toInt())
+        input.keyRelease(curSettings["KILL_BIND_KEY"].toInt())
     }
 }

@@ -69,7 +69,7 @@ class UIMenu : VisWindow("$TITLE $F_VERSION - [$M_VERSION $BRANCH] - $LOADED_CON
         mainTabbedPane.add(miscTab)
         mainTabbedPane.add(ranksTab)
         mainTabbedPane.add(nadeHelperTab)
-        mainTabbedPane.add(skinChangerTab)
+        if (!safe_mode) mainTabbedPane.add(skinChangerTab)
         mainTabbedPane.add(optionsTab)
 
         //Set aim tab as the first (init) tab

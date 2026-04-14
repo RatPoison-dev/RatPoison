@@ -28,8 +28,8 @@ fun worldToScreen(from: Vector, vOut: Vector): Boolean {
 		vOut.x *= invw
 		vOut.y *= invw
 
-		var x = width / 2.0F
-		var y = height / 2.0F
+		var x = width * 0.5F
+		var y = height * 0.5F
 
 		x += 0.5F * vOut.x * width + 0.5F
 		y += 0.5F * vOut.y * height + 0.5F

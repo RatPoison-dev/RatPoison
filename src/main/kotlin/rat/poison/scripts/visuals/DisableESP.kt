@@ -8,6 +8,7 @@ import rat.poison.game.me
 import rat.poison.game.netvars.NetVarOffsets
 import rat.poison.game.offsets.ClientOffsets
 import rat.poison.game.offsets.EngineOffsets
+import rat.poison.safe_mode
 import rat.poison.utils.extensions.uint
 import rat.poison.utils.inGame
 import java.lang.Float.floatToIntBits
@@ -15,7 +16,7 @@ import java.lang.Float.floatToIntBits
 //Change to construct entities at call to prevent crashing?
 
 internal fun disableAllEsp() {
-    if (!inGame) return
+    if (!inGame || safe_mode) return
 
     val cWhite = Color(255, 255, 255, 1.0)
 

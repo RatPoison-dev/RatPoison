@@ -4,6 +4,7 @@ package rat.poison.utils
 
 import com.sun.jna.Memory
 
+@SuppressWarnings("DEPRECATION")
 open class DisposableMemory : Memory {
     constructor(size: Long) : super(size)
     constructor() : super()

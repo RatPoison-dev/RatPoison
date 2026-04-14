@@ -9,11 +9,11 @@ import rat.poison.game.entity.punch
 import rat.poison.game.entity.shotsFired
 import rat.poison.game.me
 import rat.poison.game.setAngle
+import rat.poison.safe_mode
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
-import rat.poison.utils.every
+import rat.poison.utils.*
 import rat.poison.utils.generalUtil.strToBool
-import rat.poison.utils.normalize
 
 private val lastAppliedRCS = Vector2()
 
@@ -39,13 +39,21 @@ fun rcs() = every(4, inGameCheck = true) {
 			punchToApply.scl(curSettings["RCS_SMOOTHING_Y"].toFloat(), curSettings["RCS_SMOOTHING_X"].toFloat())
 
 			val angle = clientState.angle()
+
+			val currentX = angle.x
+			val currentY = angle.y
+
 			angle.apply {
 				x -= punchToApply.x
 				y -= punchToApply.y
 				normalize()
 			}
-
-			clientState.setAngle(angle)
+			if (!safe_mode) {
+				clientState.setAngle(angle)
+			}
+			else {
+				pathAim(currentX, currentY, angle)
+			}
 
 			lastAppliedRCS.x += punchToApply.x
 			lastAppliedRCS.y += punchToApply.y
@@ -64,13 +72,20 @@ fun rcs() = every(4, inGameCheck = true) {
 			punchToApply.scl(1F + curSettings["RCS_SMOOTHING_Y"].toFloat(), 1F + curSettings["RCS_SMOOTHING_X"].toFloat())
 
 			val angle = clientState.angle()
+			val currentX = angle.x
+			val currentY = angle.y
 			angle.apply {
 				x -= punchToApply.x
 				y -= punchToApply.y
 				normalize()
 			}
+			if (!safe_mode) {
+				clientState.setAngle(angle)
+			}
+			else {
+				pathAim(currentX, currentY, angle)
+			}
 
-			clientState.setAngle(angle)
 			lastAppliedRCS.x = playerPunch.x
 			lastAppliedRCS.y = playerPunch.y
 

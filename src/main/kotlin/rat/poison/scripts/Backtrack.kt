@@ -16,6 +16,7 @@ import rat.poison.game.offsets.ClientOffsets.dwInput
 import rat.poison.game.offsets.EngineOffsets.dwClientState_LastOutgoingCommand
 import rat.poison.game.offsets.EngineOffsets.dwGlobalVars
 import rat.poison.game.offsets.EngineOffsets.dwbSendPackets
+import rat.poison.safe_mode
 import rat.poison.scripts.aim.*
 import rat.poison.utils.Angle
 import rat.poison.utils.Structs.*
@@ -64,6 +65,7 @@ fun setupBacktrack() {
 }
 
 fun attemptBacktrack(): Boolean {
+    if (safe_mode) return false
     if (((curSettings["BACKTRACK_SPOTTED"].strToBool() && bestBacktrackTarget.spotted()) || !curSettings["BACKTRACK_SPOTTED"].strToBool()) && bestBacktrackTarget > 0L && haveGvars) {
         inBacktrack = true
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color
 import org.jire.arrowhead.keyPressed
 import rat.poison.curSettings
 import rat.poison.game.worldToScreen
+import rat.poison.input
 import rat.poison.overlay.App
 import rat.poison.scripts.aim.meCurWep
 import rat.poison.scripts.aim.meDead
@@ -18,7 +19,7 @@ fun drawBacktrack() = App {
     if (!inGame || !curSettings["BACKTRACK_VISUALIZE"].strToBool() || !curSettings["ENABLE_ESP"].strToBool() || !curSettings["ENABLE_BACKTRACK"].strToBool()) return@App
 
     val backtrackOnKey = curSettings["ENABLE_BACKTRACK_ON_KEY"].strToBool()
-    val backtrackKeyPressed = keyPressed(curSettings["BACKTRACK_KEY"].toInt())
+    val backtrackKeyPressed = input.keyPressed(curSettings["BACKTRACK_KEY"].toInt())
 
     if (backtrackOnKey && !backtrackKeyPressed) return@App
 
