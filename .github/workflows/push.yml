@@ -12,7 +12,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - uses: suisei-cn/actions-download-file@v1
       id: downloadfile
       name: Download building script
@@ -24,7 +24,7 @@ jobs:
       run: |
         bruh/releaser.exe --tag=${{github.run_id}}
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ steps.build.outputs.zip }}
         path: ${{ steps.build.outputs.zip }}
