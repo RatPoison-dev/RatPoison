@@ -68,21 +68,21 @@ fun saveDefault() {
 
 fun loadCFG(cfgFileName: String, deleteCfgAfterLoad: Boolean = false) {
     if (!saving) {
-        cfgFileName.replace(".cfg", "")
+        val cleanCfgName = cfgFileName.replace(".cfg", "")
 
-        val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg")
+        val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cleanCfgName.cfg")
         if (!cfgFile.exists()) {
-            Dialogs.showErrorDialog(App.menuStage, "Error", "$cfgFileName not found, save your configuration first!")
+            Dialogs.showErrorDialog(App.menuStage, "Error", "$cleanCfgName not found, save your configuration first!")
         } else {
             saving = true
             GlobalScope.launch {
                 println("Loading\n")
-                loadSettingsFromFiles("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg", true)
+                loadSettingsFromFiles("$SETTINGS_DIRECTORY\\CFGS\\$cleanCfgName.cfg", true)
                 uiUpdate()
                 updateWindows()
                 println("\nLoading Complete!\n")
                 saving = false
-                LOADED_CONFIG = "${cfgFileName.lowercase()}.cfg"
+                LOADED_CONFIG = "${cleanCfgName.lowercase()}.cfg"
 
                 if (opened) {
                     App.uiMenu.updateTitle()
@@ -125,9 +125,9 @@ fun saveCFG(cfgFileName: String) {
                 Files.createDirectory(cfgDir.toPath())
             }
 
-            cfgFileName.replace(".cfg", "")
+            val cleanCfgName = cfgFileName.replace(".cfg", "")
 
-            val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg")
+            val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cleanCfgName.cfg")
             if (!cfgFile.exists()) {
                 cfgFile.createNewFile()
             }
@@ -162,14 +162,14 @@ fun saveCFG(cfgFileName: String) {
 }
 
 fun deleteCFG(cfgFileName: String) {
-    cfgFileName.replace(".cfg", "")
+    val cleanCfgName = cfgFileName.replace(".cfg", "")
 
-    val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cfgFileName.cfg")
+    val cfgFile = File("$SETTINGS_DIRECTORY\\CFGS\\$cleanCfgName.cfg")
     if (cfgFile.exists()) {
         cfgFile.delete()
     }
     if (VisUI.isLoaded()) {
         optionsTab.updateCFGList()
     }
-    println("Deleted $cfgFileName\n")
+    println("Deleted $cleanCfgName\n")
 }
