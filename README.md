@@ -1,9 +1,9 @@
-[![Pull Requests](https://img.shields.io/github/issues-pr/TheRatCode/RatPoison.svg)](https://github.com/TheRatCode/RatPoison/pulls/)
-[![Release](https://img.shields.io/github/release/TheRatCode/RatPoison.svg)](https://github.com/TheRatCode/RatPoison/releases/)
-![Code size](https://img.shields.io/github/languages/code-size/TheRatCode/RatPoison.svg)
-![GitHub repo size](https://img.shields.io/github/repo-size/TheRatCode/RatPoison.svg)
+[![Pull Requests](https://img.shields.io/github/issues-pr/RatPoison-dev/RatPoison.svg)](https://github.com/RatPoison-dev/RatPoison/pulls/)
+[![Release](https://img.shields.io/github/release/RatPoison-dev/RatPoison.svg)](https://github.com/RatPoison-dev/RatPoison/releases/)
+![Code size](https://img.shields.io/github/languages/code-size/RatPoison-dev/RatPoison.svg)
+![GitHub repo size](https://img.shields.io/github/repo-size/RatPoison-dev/RatPoison.svg)
 [![Discord](https://discord.com/api/guilds/785830829439320095/widget.png)](https://discord.gg/TGsp8SNcFZ)
-![Downloads](https://img.shields.io/github/downloads/TheFuckingRat/RatPoison/total.svg)
+![Downloads](https://img.shields.io/github/downloads/RatPoison-dev/RatPoison/total.svg)
 
 ~~## ⚠️ __RatPoison is VAC detected, use at own risk. For more updates join our [Discord server](https://discord.gg/TGsp8SNcFZ)__ ⚠️~~  
 Fixes to make RatPoison UD were published, but we can't provide any guaranties
@@ -22,7 +22,7 @@ Hundreds of hours have gone into developing Charlatano and RatPoison. Feel free 
 
 ---
 
-This branch is being updated at [TheFuckingRat's Github Repository](https://github.com/TheFuckingRat/RatPoison)
+This branch is being updated at [RatPoison-dev's Github Repository](https://github.com/RatPoison-dev/RatPoison)
 
 The official branch (Charlatano) is located at [Jire's GitHub Repository](https://github.com/Jire/Charlatano).
 
@@ -68,7 +68,7 @@ You can launch the cheat at any time after launching CSGO.
 * Console is being spammed with GLFW errors
     * Usually a result of unsupported or misconfigured hardware
     * In some cases <code>GLFW_PLATFORM_ERROR</code> can be fixed by [forcing dedicated GPU on java.exe process](https://github.com/libgdx/libgdx/issues/6048#issuecomment-660468942).
-    * If RatPoison 1.6 worked fine for you but 1.7 spams OpenGL errors, try editing [this](https://github.com/TheRatCode/RatPoison/blob/82f7a76e6115c8840e4188cffdb8f10b831ae385/src/main/kotlin/rat/poison/RatPoison.kt#L183) line to <code>useOpenGL3(true, 3, 2)</code> and rebuild the cheat.
+    * If RatPoison 1.6 worked fine for you but 1.7 spams OpenGL errors, try editing [this](https://github.com/RatPoison-dev/RatPoison/blob/82f7a76e6115c8840e4188cffdb8f10b831ae385/src/main/kotlin/rat/poison/RatPoison.kt#L183) line to <code>useOpenGL3(true, 3, 2)</code> and rebuild the cheat.
 
 * Game looks framey despite having normal FPS (example 144hz/144fps, but looks like 60)
     * Lowering opengl fps to 30 helps
